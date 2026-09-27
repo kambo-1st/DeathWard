@@ -43,6 +43,7 @@ struct KeyPickup {
     bool collected = false;
 };
 struct Arena {
+    uint64_t visualSeed = 0;
     // Default construction provides an empty test arena; expeditions always supply a seed.
     Box bounds{{-15, -1, -15}, {15, 4, 15}};
     std::array<RoomLayout, RoomCount> rooms{};

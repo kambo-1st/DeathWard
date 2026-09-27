@@ -1,0 +1,1578 @@
+{
+  "format": 1,
+  "assets": [
+    {
+      "name": "crate",
+      "prefab": "Prefabs/Props/SM_Prop_Crate_01.prefab",
+      "models": [
+        "Models/SM_Prop_Crate_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Crate_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1234376043896746
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 0.8441086,
+            "y": 0.8441086,
+            "z": 0.8441086
+          },
+          "m_Center": {
+            "x": 0,
+            "y": 0.4220543,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "barrel",
+      "prefab": "Prefabs/Props/SM_Prop_Barrel_01.prefab",
+      "models": [
+        "Models/SM_Prop_Barrel_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Barrel_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1358722407381910
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43267929025862752,
+            "guid": "1cb91b3841210914097abd9a57d25f93",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "sacks",
+      "prefab": "Prefabs/Props/SM_Prop_Sack_04.prefab",
+      "models": [
+        "Models/SM_Prop_Sack_04.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Sack_04": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1465202561660540
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43240942157910252,
+            "guid": "a46f8a31bf4caab4d8570bd9c52f3bf2",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "woodpile",
+      "prefab": "Prefabs/Props/SM_Prop_Wood_Pile_01.prefab",
+      "models": [
+        "Models/SM_Prop_Wood_Pile_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Wood_Pile_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1432690846606908
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43775316962039048,
+            "guid": "badd67d7a49e979479ae7b44277a18d7",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "lantern",
+      "prefab": "Prefabs/Props/SM_Prop_Lantern_01.prefab",
+      "models": [
+        "Models/SM_Prop_Lantern_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Lantern_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Prop_Lantern_01_Glass": [
+          "Glass"
+        ]
+      },
+      "unity_colliders": []
+    },
+    {
+      "name": "coffin",
+      "prefab": "Prefabs/Props/SM_Prop_Coffin_01.prefab",
+      "models": [
+        "Models/SM_Prop_Coffin_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Coffin_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Prop_Coffin_Lid_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1088537799813982
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43077040612302338,
+            "guid": "cd75b869c71e9e4428aefbd1aeea2195",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "cart",
+      "prefab": "Prefabs/Vehicles/SM_Veh_Cart_01.prefab",
+      "models": [
+        "Models/SM_Veh_Cart_01.fbx"
+      ],
+      "parts": {
+        "SM_Veh_Cart_Wheels_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Veh_Cart_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1943741715309942
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 3,
+          "m_Convex": 0,
+          "m_CookingOptions": 14,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300002,
+            "guid": "31182badf6f318447a3c36d11c544025",
+            "type": 3
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1449703425501984
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 3,
+          "m_Convex": 0,
+          "m_CookingOptions": 14,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "67e5b761b1e24a14c9a18e591912b80a",
+            "type": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "fence",
+      "prefab": "Prefabs/Buildings/SM_Bld_Fence_02.prefab",
+      "models": [
+        "Models/SM_Bld_Fence_02.fbx"
+      ],
+      "parts": {
+        "SM_Bld_Fence_02": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1021734874131146
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 3.2496347,
+            "y": 1.2267056,
+            "z": 0.21865606
+          },
+          "m_Center": {
+            "x": -1.5104365,
+            "y": 0.61340046,
+            "z": -0.03588605
+          }
+        }
+      ]
+    },
+    {
+      "name": "saloon",
+      "prefab": "Prefabs/Buildings/SM_Bld_Saloon_01.prefab",
+      "models": [
+        "Models/SM_Bld_Saloon_01.fbx"
+      ],
+      "parts": {
+        "SM_Bld_Saloon_Swinging_Doors_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Saloon_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Saloon_RoomDoor_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Saloon_UpstairsDoor_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Saloon_Swinging_Doors_02": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Saloon_UpstairsDoor_02_Glass": [
+          "Glass"
+        ],
+        "SM_Bld_Saloon_UpstairsDoor_01_Glass": [
+          "Glass"
+        ],
+        "SM_Bld_Saloon_RoomDoor_02": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Saloon_UpstairsDoor_02": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Saloon_Glass": [
+          "Glass"
+        ],
+        "SM_Bld_Saloon_RoomDoor_03": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1038178353131036
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43766716814564500,
+            "guid": "3029f9fcdd5a07642ae7e41d767dd0c7",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1768357081479842
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43955405074109876,
+            "guid": "d9acdb565409ba74ebf14f0e31f4f823",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1813071995597042
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43818405808689972,
+            "guid": "492974f292904c44aa42ea0c5942a089",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1769217604530678
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "4dda7b13f702e7c4e9f955c4a2163e37",
+            "type": 3
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1978997155468920
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43281083799243694,
+            "guid": "faa6fd7f503007b41859fabbcbf17055",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1600642932227374
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43333553944367962,
+            "guid": "f831cb8820a9ee645a44779d9132e432",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1510298145654636
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43870086437714864,
+            "guid": "17472ff63cb47284181ef0b1d2033581",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1590741876307364
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43625353201106864,
+            "guid": "aa52245595e4abf45adf2c1773c74ae3",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "jail",
+      "prefab": "Prefabs/Buildings/SM_Bld_Jail_01.prefab",
+      "models": [
+        "Models/SM_Bld_Jail_01.fbx"
+      ],
+      "parts": {
+        "SM_Building_Jail_FrontDoor_Window_01": [
+          "Glass"
+        ],
+        "SM_Bld_Jail_BackDoor_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Jail_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Building_Jail_FrontDoor_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Jail_Door_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Jail_Door_02": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Building_Jail_Window_01": [
+          "Glass"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1301596093087014
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 1.2174647,
+            "y": 2.1130784,
+            "z": 0.08509521
+          },
+          "m_Center": {
+            "x": -0.6018021,
+            "y": 1.0565392,
+            "z": 0.02810669
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1627664185657648
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 4,
+          "m_Convex": 0,
+          "m_CookingOptions": 30,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "e1bd2c75000b28d459ff7be0a2d31c1e",
+            "type": 3
+          }
+        },
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1727643803186524
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 1.210534,
+            "y": 2.2941139,
+            "z": 0.08900833
+          },
+          "m_Center": {
+            "x": -0.605267,
+            "y": 1.1470569,
+            "z": -0.04096009
+          }
+        },
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1763189944688872
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 0.07558333,
+            "y": 2.1118839,
+            "z": 1.2102387
+          },
+          "m_Center": {
+            "x": 0.029339317,
+            "y": 1.0559419,
+            "z": -0.6051184
+          }
+        },
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1836762475796642
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 0.07558333,
+            "y": 2.1118839,
+            "z": 1.2102382
+          },
+          "m_Center": {
+            "x": 0.029339317,
+            "y": 1.0559419,
+            "z": -0.6051184
+          }
+        }
+      ]
+    },
+    {
+      "name": "church",
+      "prefab": "Prefabs/Buildings/SM_Bld_Church_01.prefab",
+      "models": [
+        "Models/SM_Bld_Church_01.fbx"
+      ],
+      "parts": {
+        "SM_Bld_Church_Door_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Church_Tower_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Church_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_Church_Glass_01": [
+          "Glass"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1607269105168272
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "003bc867ea77aab419e44228ac3d91a9",
+            "type": 3
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1134513023205410
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "d7704ebc5494f5c44ab2262fcca06241",
+            "type": 3
+          }
+        },
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1723605563307230
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 1.2916038,
+            "y": 2.538355,
+            "z": 0.17768432
+          },
+          "m_Center": {
+            "x": -0.6458019,
+            "y": 1.3055278,
+            "z": -4.5448542e-07
+          }
+        }
+      ]
+    },
+    {
+      "name": "station",
+      "prefab": "Prefabs/Buildings/SM_Bld_TrainStation_01.prefab",
+      "models": [
+        "Models/SM_Bld_TrainStation_01.fbx"
+      ],
+      "parts": {
+        "SM_Bld_TrainStation_Glass": [
+          "Glass"
+        ],
+        "SM_Bld_TrainStation_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_TrainStation_Tower": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_TrainStation_Door_01": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_TrainStation_Door_02": [
+          "PolygonWestern_Material_01_A"
+        ],
+        "SM_Bld_TrainStation_Cover": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1130908925558842
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 4,
+          "m_Convex": 0,
+          "m_CookingOptions": 30,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "f9ed51ac5bef6c949a365d3383afc0fc",
+            "type": 3
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1382526711075020
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 4,
+          "m_Convex": 0,
+          "m_CookingOptions": 30,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "492436408a093bd46a7270dabc81fe23",
+            "type": 3
+          }
+        },
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1474529350561778
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 1.3198127,
+            "y": 2.1199281,
+            "z": 0.18667784
+          },
+          "m_Center": {
+            "x": -0.65989393,
+            "y": 1.0599641,
+            "z": -2.7827919e-06
+          }
+        },
+        {
+          "kind": "box",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1637420154135332
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Size": {
+            "x": 1.3198203,
+            "y": 2.1199281,
+            "z": 0.18667403
+          },
+          "m_Center": {
+            "x": 0.65989774,
+            "y": 1.0599641,
+            "z": -1.238659e-05
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1809716441539090
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 4,
+          "m_Convex": 0,
+          "m_CookingOptions": 30,
+          "m_Mesh": {
+            "fileID": 4300004,
+            "guid": "0ba8b75f41194c5478aa48a15f2b8b83",
+            "type": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "water_tower",
+      "prefab": "Prefabs/Buildings/SM_Bld_Water_Tower_01.prefab",
+      "models": [
+        "Models/SM_Prop_Water_Tower_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Water_Tower_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1265485326210068
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43909931704964832,
+            "guid": "f81e9b0e85631fc418829985ed3a5083",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1265485326210068
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43820019880634214,
+            "guid": "f81e9b0e85631fc418829985ed3a5083",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "well",
+      "prefab": "Prefabs/Buildings/SM_Bld_Well_01.prefab",
+      "models": [
+        "Models/SM_Bld_Well_01.fbx"
+      ],
+      "parts": {
+        "SM_Bld_Well_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1734975383238308
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43550889616255062,
+            "guid": "978d951ea3cabbb49ae6ce89fa486a80",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1734975383238308
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43402638353735470,
+            "guid": "978d951ea3cabbb49ae6ce89fa486a80",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "rail",
+      "prefab": "Prefabs/Environments/SM_Env_Train_Track_Straight_01.prefab",
+      "models": [
+        "Models/SM_Env_Train_Track_Straight_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Train_Track_Straight_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1239968384602276
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300002,
+            "guid": "3b4c5e3654c28dc45a10b8198accd7b6",
+            "type": 3
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1838325392004346
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "1b7bc680abbd7644a994151a79e6b261",
+            "type": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "ground",
+      "prefab": "Prefabs/Environments/SM_Env_Sand_Ground_01.prefab",
+      "models": [
+        "Models/SM_Env_Sand_Ground_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Sand_Ground_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1670278198964608
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "529837ecdd6004d4db99d3326c0569f3",
+            "type": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "rock_a",
+      "prefab": "Prefabs/Environments/SM_Env_Rock_01.prefab",
+      "models": [
+        "Models/SM_Env_Rock_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Rock_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1720305142932156
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43776988914138312,
+            "guid": "0ad34670f2eddf841bb2b586372c8041",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "rock_b",
+      "prefab": "Prefabs/Environments/SM_Env_Rock_02.prefab",
+      "models": [
+        "Models/SM_Env_Rock_02.fbx"
+      ],
+      "parts": {
+        "SM_Env_Rock_02": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1628725149435188
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43082683348747822,
+            "guid": "7f77a63dd4bd36b4c8fd8acce3ae0411",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "cactus_a",
+      "prefab": "Prefabs/Environments/SM_Env_Cactus_01.prefab",
+      "models": [
+        "Models/SM_Env_Cactus_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Cactus_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1887909896868874
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43930066607756100,
+            "guid": "d3fbc152be8076f4fbbbdc541eddac49",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "cactus_b",
+      "prefab": "Prefabs/Environments/SM_Env_Cactus_03.prefab",
+      "models": [
+        "Models/SM_Env_Cactus_03.fbx"
+      ],
+      "parts": {
+        "SM_Env_Cactus_03": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1972112274761530
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43705493029507380,
+            "guid": "ddbd318e118993b47a46d614245fb5ec",
+            "type": 2
+          }
+        }
+      ]
+    }
+  ],
+  "materials": {
+    "PolygonWestern_Material_01_A": {
+      "texture": "Textures/PolygonWestern_Texture_01_A.png",
+      "tint": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "uv_scale": {
+        "x": 1,
+        "y": 1
+      },
+      "uv_offset": {
+        "x": 0,
+        "y": 0
+      },
+      "metallic": 0,
+      "roughness": 0,
+      "transparent": false,
+      "source": "Materials/PolygonWestern_Material_01_A.mat"
+    },
+    "Glass": {
+      "texture": "Textures/PolygonWestern_Texture_01_A.png",
+      "tint": [
+        1,
+        1,
+        1,
+        0.159
+      ],
+      "uv_scale": {
+        "x": 1,
+        "y": 1
+      },
+      "uv_offset": {
+        "x": 0,
+        "y": 0
+      },
+      "metallic": 0.15,
+      "roughness": 0.804,
+      "transparent": true,
+      "source": "Materials/Glass.mat"
+    }
+  },
+  "source_sha256": {
+    "Prefabs/Props/SM_Prop_Crate_01.prefab": "86b1008fb43a2f21e7684f46e81e8c01964dacfac3d7454cbbe21a63cb14978c",
+    "Models/SM_Prop_Crate_01.fbx": "5d6cea6d203a737f5a42978bcef1cb15ebd469f2bf02de271918a2c7d07ae49b",
+    "Materials/PolygonWestern_Material_01_A.mat": "125a3aaa21f92cdcbece4c4d0396c214985da94aff3295cbefef628e08b51aea",
+    "Textures/PolygonWestern_Texture_01_A.png": "dee4b31bac06e9f67050abf8ab7ae343d265563d1714d4fc46bf0e87ad235b03",
+    "Prefabs/Props/SM_Prop_Barrel_01.prefab": "8be5caab5f395f8068a7dc7bf9a9ee098af8cafffdc13eb06a0576807ed838f8",
+    "Models/SM_Prop_Barrel_01.fbx": "c612209c0e1cee21145bead6b255cbba4a43bb1a4b444be40c4998e6d4978b94",
+    "Prefabs/Props/SM_Prop_Sack_04.prefab": "6dd4b6684d3c37cbb34825feb85655c57d997d1da39c7374cd95e5f20075c8d1",
+    "Models/SM_Prop_Sack_04.fbx": "87b50def024c68c4bab34547dd64afcd74731e108dc13a106657aa272a4102b9",
+    "Prefabs/Props/SM_Prop_Wood_Pile_01.prefab": "70dc5e8f7a6e67849965115033d2f9fd857e7dc4e8640441e9ee167bddfd9399",
+    "Models/SM_Prop_Wood_Pile_01.fbx": "4bf3a58d1cdb6b26d36034fae11fc3665a4968caf7d2a56b2cf39428de19daa3",
+    "Prefabs/Props/SM_Prop_Lantern_01.prefab": "3663e7987286633dd6a7b9f4146311b1853d87af62781bdbe29ba81d9a444cfc",
+    "Models/SM_Prop_Lantern_01.fbx": "e47107996b5441bfe1acc087544f9b618dbd9ac57f9f37c7a0adedf3b695b948",
+    "Materials/Glass.mat": "ead8637f57d09c44504a83f3bee56c3d616b2ca86939d7707093da1a0dd9ab33",
+    "Prefabs/Props/SM_Prop_Coffin_01.prefab": "24e46b3fb646df1f6823fa03af6117eb9c6446be2fbbbd31ce952abf2af5ca26",
+    "Models/SM_Prop_Coffin_01.fbx": "5c404f0a1d7b95a60f151b5deae4d61600de8f179a52f0f3faf0c9055eb1e29d",
+    "Prefabs/Vehicles/SM_Veh_Cart_01.prefab": "a9576b4bbd079bc835eae33c7fec85ecfa06e449ccc6cb7a5999e610b19bfb86",
+    "Models/SM_Veh_Cart_01.fbx": "18cecad666c1494c40efa96bd6bcd2666b8ab56f9353e0032c5da9c470ac5d53",
+    "Prefabs/Buildings/SM_Bld_Fence_02.prefab": "2d00abf8c0cacb2f35e85623876a26747300e8403c3172fae61e5af1f182f8fd",
+    "Models/SM_Bld_Fence_02.fbx": "5c4dc3762052c2cf75544be1b19c1e43035123cb453c12ae0e933df38fcef38f",
+    "Prefabs/Buildings/SM_Bld_Saloon_01.prefab": "d26bc57f37c34c31078c220df371e4ac46f3313841cd7f75cd73b7fa57e66dc9",
+    "Models/SM_Bld_Saloon_01.fbx": "faff3ce646b6846213f994c9975064bfbd96c9f1a049586aaf30b2b0e969b183",
+    "Prefabs/Buildings/SM_Bld_Jail_01.prefab": "e0c8ace54d797d849fa8cb59b5658b43f979e6ad98039259c6cb78b46201f972",
+    "Models/SM_Bld_Jail_01.fbx": "fb2258dffb6ac996db95b130845e9178bd543e651e0f297c47f94abbab71cb4a",
+    "Prefabs/Buildings/SM_Bld_Church_01.prefab": "9112fb7386b9e76ac50327475f2a82f56f1860e4b4298bd58e0ccf4d453ac7c9",
+    "Models/SM_Bld_Church_01.fbx": "06e343295e9ade8f456f4eef228ba147a4268848efd9e785583c5d7e55c39607",
+    "Prefabs/Buildings/SM_Bld_TrainStation_01.prefab": "5da7d736e9171628c58b4e849ad8a856ea04a5626b796b022711e8f08d109657",
+    "Models/SM_Bld_TrainStation_01.fbx": "870415a676b9442f377591b2ddb96cc35238c3ffa328c919f8d134688536ef1a",
+    "Prefabs/Buildings/SM_Bld_Water_Tower_01.prefab": "26ca16e2c9af28f7c13f6cc3aa762f262cf4b61cae4bc708528745fcb345c51d",
+    "Models/SM_Prop_Water_Tower_01.fbx": "98bace0b3cf08ede3a6c72ede87e8455bb14bccb5818921e5d89fe5983b63a8f",
+    "Prefabs/Buildings/SM_Bld_Well_01.prefab": "dd1da59b3548f18c24ad2a2e26064d5a7a4b10231529e2e9d6761d4040a29509",
+    "Models/SM_Bld_Well_01.fbx": "f60193e38d828cdcba4debefd188d1e174cb6e4e74f852c51c2fcb85325af698",
+    "Prefabs/Environments/SM_Env_Train_Track_Straight_01.prefab": "f536c24af42453f8b0395f8b27f34063494dba53091d009bbb7147a8c16de6c2",
+    "Models/SM_Env_Train_Track_Straight_01.fbx": "caefddd429c3ec51b31cf11fc36dc33c67234d9a5499ca0c025db016d1eb5d0f",
+    "Prefabs/Environments/SM_Env_Sand_Ground_01.prefab": "a8505ee6e8307185c44ae7ad10b16b19434bdea56a521ced9f445b199c095c5c",
+    "Models/SM_Env_Sand_Ground_01.fbx": "9bbe71a7b515b8d415163730d9b80eec167b193c42ce6f06fe251e505e4d3e8f",
+    "Prefabs/Environments/SM_Env_Rock_01.prefab": "feacdb710cee03081f85c1d58313f58aad0015ffdde1c654971ae3ea80f1d91e",
+    "Models/SM_Env_Rock_01.fbx": "a3c52a96fc67db9619241ddf6b160208c5e625a014313770deaa22f1c79ff201",
+    "Prefabs/Environments/SM_Env_Rock_02.prefab": "6834668c9a493802982503c7bba85217abc4ab99d6ffb65d4650f43eacfafa5a",
+    "Models/SM_Env_Rock_02.fbx": "3f3b79793580919f3196918792a9fad80924c4a79da693a0a622bdc28e3d978b",
+    "Prefabs/Environments/SM_Env_Cactus_01.prefab": "17a71073eb21c15af9be0e66f46f42afa27314c92928afed30b0756b65839fec",
+    "Models/SM_Env_Cactus_01.fbx": "46c26d02d54b12ef0c1bf3b788415f16bf821674b1063fbd52692bde902906a0",
+    "Prefabs/Environments/SM_Env_Cactus_03.prefab": "8ea2fed9ce287040d8ccfbd5dc5e720e84e1bc4b3a5293fc98da842199969ffc",
+    "Models/SM_Env_Cactus_03.fbx": "0b26a9ee46854ffb14eb946e1410a0dca213544e45313f8444524dae5c3dec75"
+  }
+}

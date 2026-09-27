@@ -80,7 +80,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 }
 } // namespace
 
-Arena::Arena(uint64_t seed) {
+Arena::Arena(uint64_t seed) : visualSeed(seed) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
     const auto graph = generateRoomGraph(seed);

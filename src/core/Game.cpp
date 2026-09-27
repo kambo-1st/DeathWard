@@ -5,6 +5,8 @@
 
 namespace dw {
 namespace {
+constexpr Vector3 CameraOffset{23, 30, 23};
+constexpr float MinCameraZoom = 0.35f, MaxCameraZoom = 1.5f;
 struct PointerTarget {
     EntityId enemy = 0;
     std::optional<Vector3> objective;
@@ -65,7 +67,7 @@ Game::Game(const std::filesystem::path &save) : campaign(save) {
         lastSummary = campaign.data().history.back();
         screen = Screen::Summary;
     }
-    camera.position = {23, 30, 23};
+    camera.position = CameraOffset;
     camera.target = {0, 0, 0};
     camera.up = {0, 1, 0};
     camera.fovy = 45;
@@ -87,8 +89,8 @@ void Game::launch() {
     accumulator = 0;
     error.clear();
     resetArmed = false;
-    camera.target = sub(run->player.position, {2, 0.85f, 2});
-    camera.position = add(camera.target, {23, 30, 23});
+    cameraZoom_ = cameraZoomTarget_;
+    snapCamera();
     resetPointerInput();
 }
 void Game::checkpoint() {
@@ -247,8 +249,7 @@ void Game::debugInput() {
         resetPointerInput();
         accumulator = 0;
         paused = false;
-        camera.target = sub(run->player.position, {2, 0.85f, 2});
-        camera.position = add(camera.target, {23, 30, 23});
+        snapCamera();
     }
     if (IsKeyPressed(KEY_F8)) {
         run->finishDebug(true);
@@ -276,13 +277,19 @@ void Game::debugInput() {
         run->checkpointNeeded = true;
     }
 }
+void Game::snapCamera() {
+    camera.target = sub(run->player.position, {2 * cameraZoom_, 0, 2 * cameraZoom_});
+    camera.target.y = 0;
+    camera.position = add(camera.target, mul(CameraOffset, cameraZoom_));
+}
 void Game::updateCamera(float dt) {
     if (!run)
         return;
-    Vector3 target = sub(run->player.position, {2, 0, 2});
+    cameraZoom_ += (cameraZoomTarget_ - cameraZoom_) * (1 - std::exp(-12 * dt));
+    Vector3 target = sub(run->player.position, {2 * cameraZoom_, 0, 2 * cameraZoom_});
     target.y = 0;
     camera.target = add(camera.target, mul(sub(target, camera.target), 1 - std::exp(-5 * dt)));
-    camera.position = add(camera.target, {23, 30, 23});
+    camera.position = add(camera.target, mul(CameraOffset, cameraZoom_));
 }
 bool Game::pointerOverControls() const {
     const Vector2 mouse = GetMousePosition();
@@ -362,6 +369,12 @@ void Game::update(float dt) {
         input.movement = add(mul(forward, float(IsKeyDown(KEY_W)) - float(IsKeyDown(KEY_S))),
                              mul(right, float(IsKeyDown(KEY_D)) - float(IsKeyDown(KEY_A))));
         const bool overControls = pointerOverControls();
+        if (!overControls) {
+            // Positive vertical wheel motion moves closer without changing the viewing angle.
+            const float wheel = std::clamp(GetMouseWheelMoveV().y, -20.0f, 20.0f);
+            cameraZoomTarget_ =
+                std::clamp(cameraZoomTarget_ * std::exp(-wheel * 0.12f), MinCameraZoom, MaxCameraZoom);
+        }
         input.aim = run->player.aim;
         Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
         Vector3 ground = input.aim;

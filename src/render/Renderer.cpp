@@ -58,8 +58,12 @@ void effectRings(Vector3 center, float radius, Color color) {
     }
     rlEnd();
 }
-void lantern(Vector3 p, Color color) {
+void lantern(Vector3 p, Color color, bool imported = false) {
     DrawCylinder({p.x, 0, p.z}, 0.10f, 0.15f, 2.4f, 6, Color{65, 54, 43, 255});
+    if (imported) {
+        DrawSphereEx({p.x, 2.18f, p.z}, 0.14f, 4, 6, color);
+        return;
+    }
     DrawCube({p.x, 2.25f, p.z}, 0.42f, 0.5f, 0.42f, color);
     DrawCylinder({p.x, 2.55f, p.z}, 0, 0.42f, 0.24f, 4, Color{46, 43, 37, 255});
 }
@@ -318,8 +322,12 @@ bool Renderer::button(const std::string &title, float x, float y, float w, float
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
                          EntityId hoveredEnemy, float deathTime) {
     playerModel_.update(run, deathTime);
+    westernScene_.prepare(run.arena);
     BeginMode3D(camera);
-    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {180, 180}, Color{26, 29, 28, 255});
+    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220},
+              westernScene_.loaded() ? Color{117, 94, 65, 255} : Color{26, 29, 28, 255});
+    if (westernScene_.loaded())
+        westernScene_.draw(run.player.position);
     auto visible = [&](Box box) {
         Vector3 nearest{std::clamp(run.player.position.x, box.min.x, box.max.x), run.player.position.y,
                         std::clamp(run.player.position.z, box.min.z, box.max.z)};
@@ -331,12 +339,18 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawCubeV(mul(add(box.min, box.max), 0.5f), sub(box.max, box.min), color);
         DrawLine3D({box.min.x, 0.012f, box.min.z}, {box.max.x, 0.012f, box.min.z}, Color{108, 91, 69, 255});
     };
-    for (const auto &box : run.arena.floors)
-        floor(box, Color{83, 71, 56, 255});
+    if (!westernScene_.loaded())
+        for (const auto &box : run.arena.floors)
+            floor(box, Color{83, 71, 56, 255});
     for (size_t i = 0; i < run.arena.walls.size(); ++i) {
         const auto &wall = run.arena.walls[i];
         if (i >= run.arena.boundaryWalls.size() + run.arena.obstacles.size() || !visible(wall))
             continue;
+        if (westernScene_.loaded()) {
+            if (collisions)
+                DrawBoundingBox({wall.min, wall.max}, Teal);
+            continue;
+        }
         Vector3 size = sub(wall.max, wall.min), center = mul(add(wall.min, wall.max), 0.5f);
         const bool boundary = i < run.arena.boundaryWalls.size();
         DrawCubeV(center, size, boundary ? Color{66, 61, 52, 255} : Color{94, 77, 55, 255});
@@ -356,21 +370,24 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         const bool eastWest = std::abs(direction.x) > 0.5f;
         const float span = distance(passage.from, passage.to);
         Vector3 midpoint = mul(add(passage.from, passage.to), 0.5f);
-        for (float offset : {-1.3f, 1.3f}) {
-            Vector3 rail = add(midpoint, mul(side, offset));
-            rail.y = 0.07f;
-            DrawCube(rail, eastWest ? span : 0.12f, 0.12f, eastWest ? 0.12f : span, Muted);
-        }
-        for (float t = 0; t <= span; t += 2) {
-            Vector3 tie = add(passage.from, mul(direction, t));
-            tie.y = 0.025f;
-            DrawCube(tie, eastWest ? 0.25f : 3.4f, 0.06f, eastWest ? 3.4f : 0.25f, Color{51, 45, 38, 255});
+        if (!westernScene_.loaded()) {
+            for (float offset : {-1.3f, 1.3f}) {
+                Vector3 rail = add(midpoint, mul(side, offset));
+                rail.y = 0.07f;
+                DrawCube(rail, eastWest ? span : 0.12f, 0.12f, eastWest ? 0.12f : span, Muted);
+            }
+            for (float t = 0; t <= span; t += 2) {
+                Vector3 tie = add(passage.from, mul(direction, t));
+                tie.y = 0.025f;
+                DrawCube(tie, eastWest ? 0.25f : 3.4f, 0.06f, eastWest ? 3.4f : 0.25f,
+                         Color{51, 45, 38, 255});
+            }
         }
         for (int end = 0; end < 2; ++end) {
             const auto at = end == 0 ? passage.from : passage.to;
             const Color color = passage.locked ? Gold : passage.closed(end) ? Rust : Teal;
-            lantern(add(at, mul(side, -3.5f)), color);
-            lantern(add(at, mul(side, 3.5f)), color);
+            lantern(add(at, mul(side, -3.5f)), color, westernScene_.loaded());
+            lantern(add(at, mul(side, 3.5f)), color, westernScene_.loaded());
             if (run.roomClear && passage.open() && passage.rooms[size_t(end)] == run.room &&
                 distance(run.player.position, at) < 26) {
                 // Small floor chevrons indicate open exits without floating instructions.
@@ -422,8 +439,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawSphereWires({p.x, 1.3f, p.z}, 0.7f, 6, 8, Gold);
         }
     }
-    lantern(run.arena.entrance, Gold);
-    lantern(run.arena.exit, run.room == Simulation::FinalRoom && run.roomClear ? Teal : Gold);
+    lantern(run.arena.entrance, Gold, westernScene_.loaded());
+    lantern(run.arena.exit, run.room == Simulation::FinalRoom && run.roomClear ? Teal : Gold,
+            westernScene_.loaded());
     if (run.room == Simulation::FinalRoom && run.roomClear)
         DrawCircle3D({run.arena.exit.x, 0.1f, run.arena.exit.z}, 1.8f, {1, 0, 0}, 90, Teal);
     if (distance(run.player.position, run.arena.miners) < 60) {
@@ -519,6 +537,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawSphereWires(run.player.position, 0.48f, 6, 8, Teal);
         DrawLine3D(run.player.position, run.player.aim, Teal);
     }
+    westernScene_.drawGlass();
     EndMode3D();
     for (const auto &e : run.enemies)
         if (e.alive && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {
@@ -583,8 +602,8 @@ Action Renderer::hub(const Game &game) {
     if (button("QUIT", 986, 700, 234, 48))
         return Action::Quit;
     text("F1 / CHEAT MODE", 60, 771, 11, game.debug ? Teal : Muted);
-    text("Click to move, attack or interact. Shift holds position. WASD moves. Space dodges.", 378, 772, 11,
-         Muted);
+    text("Click to move/attack/interact. Shift holds position. WASD moves. Space dodges. Wheel zooms.", 378,
+         772, 11, Muted);
     if (game.debug && game.debugPanelOpen) {
         panel(60, 660, 612, 89, Ink);
         text("CHEATS ON / F1 off / G toggles the haunting flag", 76, 674, 14, Teal);
@@ -875,6 +894,8 @@ Action Renderer::draw(const Game &game) {
         panel(24, 560, 1232, 81, Color{76, 34, 30, 250});
         wrap(game.error, 42, 578, 1196, 15, Paper);
     }
+    panel(1160, 2, 96, 18, Panel);
+    text(std::to_string(GetFPS()) + " FPS", 1170, 5, 12, Teal);
     return action;
 }
 } // namespace dw

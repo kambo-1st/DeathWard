@@ -10,7 +10,7 @@ void check(bool ok, const char *message) {
         throw std::runtime_error(message);
 }
 // Event IDs from the pinned raylib 5.5 automation format (rcore.c).
-constexpr unsigned MouseUp = 5, MouseDown = 6, MousePosition = 7;
+constexpr unsigned MouseUp = 5, MouseDown = 6, MousePosition = 7, MouseWheel = 8;
 constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
@@ -315,6 +315,64 @@ int main() {
               "F9 resolves defeat immediately from the power-choice modal");
         game.perform(dw::Action::Hub);
         game.launch();
+        auto cameraDistance = [&] { return dw::distance(game.camera.position, game.camera.target); };
+        auto settleCamera = [&] {
+            for (int i = 0; i < 60; ++i)
+                frame();
+        };
+        // Use open central floor, away from the entrance's clickable doorway.
+        game.run->player.position = game.run->arena.rooms[0].center;
+        const float defaultDistance = cameraDistance();
+        const auto originalAngle = dw::unit(dw::sub(game.camera.position, game.camera.target));
+        const auto beforeZoom = game.run->player.position;
+        mouseEvent(MouseWheel, 0, 100);
+        frame();
+        check(cameraDistance() < defaultDistance && cameraDistance() > defaultDistance * 0.35f,
+              "scrolling up smoothly moves the camera closer");
+        settleCamera();
+        const float closestDistance = cameraDistance();
+        check(std::abs(closestDistance - defaultDistance * 0.35f) < 0.01f,
+              "large wheel input stops at the close zoom limit");
+        check(dw::distance(beforeZoom, game.run->player.position) == 0 && game.run->stats.shots == 0 &&
+                  game.run->player.dodge == 0,
+              "scrolling never moves, shoots or dodges");
+        mouseEvent(MouseWheel, 0, -100);
+        frame(850, 711);
+        settleCamera();
+        check(std::abs(cameraDistance() - closestDistance) < 0.01f, "HUD controls ignore scrolling");
+        mouseEvent(MouseWheel, -100, 0);
+        frame();
+        game.paused = true;
+        mouseEvent(MouseWheel, 0, -100);
+        frame();
+        game.paused = false;
+        game.run->rewardOpen = true;
+        mouseEvent(MouseWheel, 0, -100);
+        frame();
+        game.run->rewardOpen = false;
+        settleCamera();
+        check(std::abs(cameraDistance() - closestDistance) < 0.01f,
+              "horizontal scroll, pause and power-choice screens leave zoom unchanged");
+        auto verifyZoomedGroundClick = [&](Vector3 goal) {
+            const auto pixel = GetWorldToScreen({goal.x, 0, goal.z}, game.camera);
+            click(int(pixel.x), int(pixel.y));
+            settleCamera();
+            check(dw::distance(game.run->player.position, goal) < 0.15f,
+                  "ground clicks stay accurate at both zoom limits");
+        };
+        verifyZoomedGroundClick(dw::sub(beforeZoom, {0, 0, 2}));
+        mouseEvent(MouseWheel, 0, -100);
+        frame();
+        check(cameraDistance() > closestDistance, "scrolling down pulls the camera back");
+        settleCamera();
+        const float widestDistance = cameraDistance();
+        check(std::abs(widestDistance - defaultDistance * 1.5f) < 0.01f &&
+                  dw::distance(originalAngle, dw::unit(dw::sub(game.camera.position, game.camera.target))) <
+                      0.0001f,
+              "zoom out has a safe limit and preserves the viewing angle");
+        verifyZoomedGroundClick(beforeZoom);
+        pressKey(KEY_F12, true);
+        check(std::abs(cameraDistance() - widestDistance) < 0.01f, "room jumps preserve the chosen zoom");
         game.run->player.hp = 0;
         frame();
         check(game.run && game.run->dead && game.screen == dw::Screen::Expedition,
@@ -332,6 +390,7 @@ int main() {
               "death animation finishes at the normal defeat summary");
         game.perform(dw::Action::Hub);
         game.launch();
+        check(std::abs(cameraDistance() - widestDistance) < 0.01f, "new expeditions retain session zoom");
         game.run->player.hp = 0;
         frame();
         game.close();
@@ -345,6 +404,7 @@ int main() {
                      "and retreat\n"
                   << "PASS mouse key pickup, locked doors and one-time power-room choice\n"
                   << "PASS function-key cheats, disabled-mode guards, room/boss replay and modal outcomes\n"
+                  << "PASS smooth wheel zoom, limits, modal guards, zoomed ground clicks and retained zoom\n"
                   << "PASS animated natural death, frozen combat and closing during death\n"
                   << "PASS HUD clicks never fire; sixth-shot effects covered by core contracts\n";
         return 0;

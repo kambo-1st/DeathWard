@@ -54,6 +54,8 @@ class Game {
     std::optional<Vector3> moveQueued_, fireQueued_;
     std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;
+    float cameraZoom_ = 1, cameraZoomTarget_ = 1;
+    void snapCamera();
     void resetPointerInput();
     void debugInput();
     void checkpoint();

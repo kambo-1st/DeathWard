@@ -1,5 +1,27 @@
 # Milestone 1 verification
 
+## Textured PolygonWestern scenery
+
+Content version `deathward-m1-13` integrates individual Western pieces into the generated rooms. Twenty selected Unity prefabs and an adapted flat sand tile produce 21 assets in 26 mesh/material sections. The GLB embeds the original 2048 × 2048 atlas; a decoded-pixel comparison matches the source PNG exactly. All 43 source-file hashes, the GLB manifest hash and packaged GLB/catalog copies match. The retained sources and import scripts rebuild without the external Unity project. Details and rendering limits are in [the Western asset notes](../assets/western/README.md).
+
+Crate stacks fit existing obstacle volumes, fence panels follow boundaries, and tracks and lanterns follow passages. Separately seeded buildings and props are rejected wherever they overlap playable floor. Ambient/directional lighting replaces Unity's URP setup; glass retains its tint and alpha and renders after opaque objects without writing depth. The room graph, gameplay collision volumes, encounter rules and gameplay RNG streams remain unchanged.
+
+The Release build and all four headless CTest suites passed (12.41 seconds). The complete graphics input suite passed, including zoomed mouse controls, room traversal, keys, power choices, cheats and animated death. `deathward_western_assets_tests` passed **9,356 placements across five seeds**, checking original texture/glass, meter scale, catalog/mesh bounds, finite transforms, complete cover volumes, floor coverage, unobstructed routes, identical-seed reproduction, drawing, missing-asset fallback and resource reload/cleanup. The same asset suite passed with AddressSanitizer/UndefinedBehaviorSanitizer and `ASAN_OPTIONS=detect_leaks=0`; leak detection is excluded because the previously isolated WSL/X11 shutdown allocations also occur with an empty raylib window. This is not a clean graphics LeakSanitizer claim.
+
+Quiet-room and combat captures were visually inspected at 1440 × 900, along with a close mouse-wheel view of the textured cover and bandit. The final **600-frame stress run** measured **11.39 ms mean**, **14.95 ms p95**, and **472.84 ms maximum**, including initial asset loading. Mean simulation/draw/presentation times were 0.95/4.58/5.87 ms. The workload retains 1,082 peak projectiles, 999 kills, depth 16 and 1,164 suppressed descendants. Mean and p95 meet the 16.67 ms budget; loading and occasional frame spikes remain, and this is not a guarantee for every room or machine.
+
+Logs: `artifacts/western-{build,core-tests,input-tests,assets-tests,assets-asan,benchmark}.log`. Captures: `artifacts/western-empty.png`, `artifacts/western-combat.png`, `artifacts/western-close.png`, and `artifacts/western-stress.png`.
+
+## Visible FPS counter
+
+A compact counter now shows raylib's measured frame rate in the top-right corner on every screen, independently of cheat mode and the shortcut panel. The Release build passed; 90-frame hub and combat smoke checks completed and their captures were visually inspected for legibility and placement above the existing HUD. Captures: `artifacts/fps-hub.png` and `artifacts/fps-combat.png`.
+
+## Mouse-wheel camera zoom
+
+Content version `deathward-m1-12` adds smooth vertical-wheel zoom, with upward scrolling moving closer and downward scrolling widening the view. Camera distance is bounded to 0.35–1.5 times the original distance. The viewing angle stays fixed, and the framing offset scales with zoom to keep the player visible. Zoom persists across room changes, debug room jumps and new expeditions within the same session. HUD controls, horizontal scrolling, pause and power-choice screens do not issue zoom commands; pressing the middle button still dodges.
+
+The Release build and complete graphics input suite passed. Added checks exercise smooth movement, both limits, unchanged viewing angle, no movement/fire/dodge caused by scrolling, ignored HUD/modal input, accurate ground clicks at both limits, and retained zoom across room jumps and expeditions. The close and wide views were rendered with the real Game/Renderer and visually inspected at 1440 × 900. Log: `artifacts/zoom-input-m1-12.log`; captures: `artifacts/zoom-close-m1-12.png` and `artifacts/zoom-wide-m1-12.png`.
+
 ## Animated bandit player
 
 Content version `deathward-m1-11` replaces the player's primitive character with the supplied FBX bandit and original embedded texture. A Blender 3.6.23 conversion produces one self-contained GLB with 48 bones and nine clips: idle, walk, run, fire, a running slide, two jumps and two deaths. Moving dodges use the slide; dodges from rest use the standing jump. The forward jump is retained as an additional imported clip. Planar root motion is removed; vertical motion is retained. Local bone transforms interpolate and crossfade, with firing blended over locomotion on the upper body. Animation follows simulation time, including pause, reward screens and slow time. Natural death freezes combat and plays a two-second animation before resolution; F9 still resolves immediately.
