@@ -78,6 +78,210 @@ void cowboy(Vector3 p, Vector3 direction, Color coat, float scale, bool boss = f
     DrawCube(add({p.x, 1.15f * scale, p.z}, mul(direction, 0.29f * scale)), 0.16f * scale, 0.16f * scale,
              0.16f * scale, Gold);
 }
+void enemyModel(const Enemy &enemy) {
+    static constexpr std::array<Color, size_t(EnemyKind::Count)> coats{{{159, 64, 48, 255},
+                                                                        {118, 105, 84, 255},
+                                                                        {159, 91, 38, 255},
+                                                                        {146, 158, 169, 255},
+                                                                        {180, 135, 43, 255},
+                                                                        {80, 94, 102, 255},
+                                                                        {107, 65, 40, 255},
+                                                                        {116, 67, 153, 255},
+                                                                        {154, 127, 63, 255},
+                                                                        {80, 99, 71, 255},
+                                                                        {130, 58, 28, 255},
+                                                                        {85, 114, 143, 255},
+                                                                        {153, 114, 197, 220},
+                                                                        {155, 62, 40, 255},
+                                                                        {83, 102, 111, 255},
+                                                                        {40, 58, 52, 255}}};
+    const Color coat = enemy.flash > 0 ? Paper : coats[size_t(enemy.kind)];
+    const Vector3 p = enemy.position, facing = enemy.facing;
+    const Vector3 side{-facing.z, 0, facing.x};
+    const bool winding = enemy.state == EnemyState::Windup;
+    const Vector3 hand = add({p.x, winding ? 1.65f : 1.05f, p.z}, mul(facing, 0.55f));
+    const Color metal{153, 164, 169, 255};
+    if (enemy.kind == EnemyKind::Spitter) {
+        shadow(p, 0.8f);
+        DrawSphereEx({p.x, 0.65f, p.z}, 0.78f, 8, 10, coat);
+        DrawSphereEx(add(p, mul(facing, 0.65f)), 0.3f, 6, 8, winding ? Gold : Rust);
+        for (float sign : {-1.0f, 1.0f})
+            DrawSphereEx(add({p.x, 1.15f, p.z}, mul(side, sign * 0.48f)), 0.16f, 4, 6, Gold);
+    } else if (enemy.kind == EnemyKind::PowderHusk) {
+        shadow(p, 0.8f);
+        DrawCylinder({p.x, 0.2f, p.z}, 0.6f, 0.55f, 1.25f, 10, coat);
+        for (float height : {0.4f, 1.2f})
+            DrawCylinder({p.x, height, p.z}, 0.62f, 0.62f, 0.12f, 10, Ink);
+        DrawLine3D({p.x, 1.45f, p.z}, {p.x + 0.3f, 1.85f, p.z}, Gold);
+        DrawSphereEx({p.x + 0.3f, 1.85f, p.z}, 0.12f, 4, 6, Rust);
+    } else if (enemy.kind == EnemyKind::Preacher || enemy.kind == EnemyKind::BellRinger ||
+               enemy.kind == EnemyKind::Wraith) {
+        const bool wraith = enemy.kind == EnemyKind::Wraith;
+        const float lift = wraith ? 0.25f + 0.12f * std::sin(enemy.age * 3) : 0;
+        shadow(p, 0.7f);
+        DrawCylinder({p.x, lift, p.z}, 0.3f, 0.65f, 1.5f, 8, coat);
+        DrawSphereEx({p.x, 1.8f + lift, p.z}, 0.32f, 6, 8, coat);
+        if (enemy.kind == EnemyKind::Preacher) {
+            DrawCube(hand, 0.85f, 0.16f, 0.55f, Paper);
+            DrawCube(add(hand, {0, 0.09f, 0}), 0.07f, 0.02f, 0.46f, Rust);
+        } else if (enemy.kind == EnemyKind::BellRinger) {
+            DrawCylinder(add(hand, {0, -0.55f, 0}), 0.22f, 0.65f, 0.8f, 10, Gold);
+            DrawSphereEx(add(hand, {0, -0.58f, 0}), 0.13f, 4, 6, Ink);
+        } else {
+            const Vector3 light = add(hand, mul(side, 0.6f));
+            DrawCube(light, 0.35f, 0.55f, 0.35f, coat);
+            DrawSphereWires(light, 0.42f, 5, 8, Paper);
+        }
+    } else if (enemy.kind == EnemyKind::Rusher || enemy.kind == EnemyKind::Prospector ||
+               enemy.kind == EnemyKind::Ironhide || enemy.kind == EnemyKind::Railbreaker) {
+        const float scale =
+            enemy.kind == EnemyKind::Ironhide || enemy.kind == EnemyKind::Railbreaker ? 1.35f : 1;
+        shadow(p, 0.65f * scale);
+        DrawCylinder({p.x, 0, p.z}, 0.38f * scale, 0.58f * scale, 1.25f * scale, 6, coat);
+        DrawSphereEx({p.x, 1.5f * scale, p.z}, 0.3f * scale, 6, 8, Color{181, 131, 82, 255});
+        if (enemy.kind == EnemyKind::Rusher) {
+            DrawCylinderEx(hand, add(hand, {0, 0.75f, 0}), 0.07f, 0.07f, 5, Gold);
+            DrawCylinderEx(add(add(hand, {0, 0.65f, 0}), mul(side, -0.48f)),
+                           add(add(hand, {0, 0.65f, 0}), mul(side, 0.48f)), 0.09f, 0.04f, 5, metal);
+        } else if (enemy.kind == EnemyKind::Prospector) {
+            for (float offset : {-0.2f, 0.0f, 0.2f})
+                DrawCylinderEx(add(hand, mul(side, offset)), add(add(hand, mul(side, offset)), {0, 0.55f, 0}),
+                               0.085f, 0.085f, 6, Rust);
+            DrawSphereEx({p.x, 1.72f, p.z}, 0.25f, 5, 6, Gold);
+        } else if (enemy.kind == EnemyKind::Ironhide) {
+            // Rotate the broad furnace plate with the armor's actual facing.
+            rlPushMatrix();
+            rlTranslatef(p.x + facing.x * 0.6f, 1.05f, p.z + facing.z * 0.6f);
+            rlRotatef(std::atan2(facing.x, facing.z) * 180 / Pi, 0, 1, 0);
+            DrawCube({}, 1.45f, 1.7f, 0.22f, metal);
+            DrawCube({0, 0.2f, 0.13f}, 0.85f, 0.16f, 0.06f, Rust);
+            rlPopMatrix();
+        } else {
+            for (float offset : {-0.7f, 0.7f}) {
+                Vector3 rail = add({p.x, 1.8f, p.z}, mul(side, offset));
+                DrawCylinderEx(sub(rail, mul(facing, 0.5f)), add(rail, mul(facing, 0.8f)), 0.18f, 0.18f, 4,
+                               metal);
+            }
+        }
+    } else {
+        cowboy(p, facing, coat, enemy.kind == EnemyKind::Boss ? 1.7f : 1, enemy.kind == EnemyKind::Boss);
+        if (enemy.kind == EnemyKind::Shotgun || enemy.kind == EnemyKind::Sharpshooter) {
+            Vector3 barrel = add({p.x, 1.05f, p.z}, mul(facing, 0.5f));
+            const float reach = enemy.kind == EnemyKind::Sharpshooter ? 1.25f : 0.75f;
+            for (float offset : {-0.08f, 0.08f})
+                DrawCylinderEx(add(barrel, mul(side, offset)),
+                               add(add(barrel, mul(side, offset)), mul(facing, reach)), 0.065f, 0.065f, 6,
+                               metal);
+            if (enemy.kind == EnemyKind::Sharpshooter)
+                DrawSphereEx(add(barrel, {0, 0.2f, 0}), 0.12f, 4, 6, Rust);
+        } else if (enemy.kind == EnemyKind::Hangman) {
+            DrawCircle3D(add(hand, mul(side, 0.4f)), 0.45f, {0, 1, 0}, 0, Gold);
+            DrawCylinderEx(hand, add(hand, {0.25f, 0.45f, 0}), 0.08f, 0.08f, 6, metal);
+        } else if (enemy.kind == EnemyKind::Marshal)
+            DrawSphereWires({p.x, 1.2f, p.z}, 0.45f, 4, 4, Paper);
+        else if (enemy.kind == EnemyKind::Chainbound)
+            for (float offset : {-0.6f, 0.6f})
+                DrawSphereWires(add(hand, mul(side, offset)), 0.2f, 4, 6, metal);
+    }
+}
+void enemyWarning(const Enemy &enemy, const Simulation &run) {
+    auto circle = [](Vector3 at, float radius, Color color) {
+        at.y = 0.09f;
+        DrawCircle3D(at, radius, {1, 0, 0}, 90, color);
+    };
+    if (enemy.aura > 0)
+        circle(enemy.position, 6, Color{183, 125, 216, 210});
+    if (enemy.state == EnemyState::Stunned) {
+        DrawSphereWires(add(enemy.position, {0, 1.6f, 0}), 0.35f, 4, 6, Gold);
+        return;
+    }
+    if (enemy.state == EnemyState::Teleporting) {
+        circle(enemy.target, 0.9f, Color{193, 148, 234, 255});
+        circle(enemy.target, 0.3f + enemy.stateTime, Paper);
+        DrawLine3D(enemy.position, enemy.target, Color{158, 119, 192, 120});
+        return;
+    }
+    if (enemy.state != EnemyState::Windup)
+        return;
+    const float progress = 1 - std::clamp(enemy.stateTime / enemyDefinition(enemy.kind).windup, 0.0f, 1.0f);
+    const Color warning{255, static_cast<unsigned char>(115 + progress * 80), 65, 255};
+    Vector3 direction = unit(sub(enemy.target, enemy.position));
+    auto line = [&](Vector3 aim, float range) {
+        Vector3 end = add(enemy.position, mul(aim, range));
+        float fraction = 1;
+        for (const auto &wall : run.arena.walls) {
+            const auto hit = segmentBox(enemy.position, end, wall);
+            if (hit.hit)
+                fraction = std::min(fraction, hit.t);
+        }
+        end = add(enemy.position, mul(sub(end, enemy.position), fraction));
+        DrawLine3D({enemy.position.x, 0.09f, enemy.position.z}, {end.x, 0.09f, end.z}, warning);
+    };
+    switch (enemy.kind) {
+    case EnemyKind::Prospector:
+    case EnemyKind::Spitter:
+        circle(enemy.target, enemy.kind == EnemyKind::Prospector ? 2.8f : 2.3f, warning);
+        break;
+    case EnemyKind::BellRinger:
+        circle(enemy.position, 1 + progress * 2, warning);
+        circle(enemy.position, 11, Color{203, 86, 63, 110});
+        break;
+    case EnemyKind::Rusher:
+    case EnemyKind::PowderHusk:
+    case EnemyKind::Ironhide:
+        line(rotateY(direction, -0.7f), enemy.kind == EnemyKind::Ironhide ? 2.6f : 2.1f);
+        line(rotateY(direction, 0.7f), enemy.kind == EnemyKind::Ironhide ? 2.6f : 2.1f);
+        break;
+    case EnemyKind::Shotgun:
+        for (float angle : {-0.34f, 0.0f, 0.34f})
+            line(rotateY(direction, angle), 9);
+        break;
+    case EnemyKind::Sharpshooter:
+        line(direction, 32);
+        break;
+    case EnemyKind::Railbreaker:
+        line(direction, 15.4f);
+        break;
+    case EnemyKind::Hangman:
+        line(direction, 14);
+        break;
+    case EnemyKind::Preacher:
+        circle(enemy.position, 6, warning);
+        break;
+    default:
+        break;
+    }
+    DrawSphereEx(add(enemy.position, mul(direction, enemy.radius + 0.2f)), 0.1f + progress * 0.15f, 4, 6,
+                 warning);
+}
+void drawHazard(const Hazard &hazard) {
+    Vector3 ground{hazard.position.x, 0.09f, hazard.position.z};
+    const bool warning = hazard.age < hazard.delay;
+    const Color color = hazard.kind == HazardKind::Ring ? Gold : Rust;
+    float radius = hazard.radius;
+    if (hazard.kind == HazardKind::Ring)
+        radius *= std::clamp((hazard.age - hazard.delay) / hazard.duration, 0.0f, 1.0f);
+    DrawCircle3D(ground, radius, {1, 0, 0}, 90, color);
+    if (warning) {
+        const float fraction = hazard.age / hazard.delay;
+        DrawCircle3D(ground, hazard.radius * fraction, {1, 0, 0}, 90, Gold);
+        Vector3 charge = add(hazard.origin, mul(sub(hazard.position, hazard.origin), fraction));
+        charge.y += std::sin(fraction * Pi) * 3;
+        if (hazard.kind == HazardKind::Powder) {
+            charge = hazard.position;
+            DrawCylinder({charge.x, 0, charge.z}, 0.4f, 0.4f, 0.7f, 8, Rust);
+        }
+        projectileMesh(charge, 0.18f, Gold);
+    } else if (hazard.kind == HazardKind::Fire) {
+        for (int i = 0; i < 7; ++i) {
+            const float angle = float(i) * 2 * Pi / 7;
+            Vector3 fire =
+                add(ground, {std::cos(angle) * radius * 0.65f, 0.2f, std::sin(angle) * radius * 0.65f});
+            DrawCylinder(fire, 0, 0.3f, 0.5f + 0.2f * std::sin(hazard.age * 9 + float(i)), 5, Gold);
+        }
+    } else if (hazard.kind == HazardKind::Ring)
+        DrawCircle3D(add(ground, {0, 0.18f, 0}), radius, {1, 0, 0}, 90, Rust);
+}
 } // namespace
 void Renderer::text(const std::string &value, float x, float y, int size, Color color) const {
     DrawText(value.c_str(), int(x * sx_), int(y * sy_), int(float(size) * std::min(sx_, sy_)), color);
@@ -166,6 +370,18 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             const Color color = passage.locked ? Gold : passage.closed(end) ? Rust : Teal;
             lantern(add(at, mul(side, -3.5f)), color);
             lantern(add(at, mul(side, 3.5f)), color);
+            if (run.roomClear && passage.open() && passage.rooms[size_t(end)] == run.room &&
+                distance(run.player.position, at) < 26) {
+                // Small floor chevrons indicate open exits without floating instructions.
+                const Vector3 outward = mul(direction, end == 0 ? 1.0f : -1.0f);
+                for (float inset : {1.0f, 2.0f}) {
+                    Vector3 tip = sub(at, mul(outward, inset));
+                    tip.y = 0.075f;
+                    const Vector3 base = sub(tip, mul(outward, 0.7f));
+                    DrawLine3D(add(base, mul(side, 0.7f)), tip, Teal);
+                    DrawLine3D(sub(base, mul(side, 0.7f)), tip, Teal);
+                }
+            }
             DrawCube({at.x, 3.1f, at.z}, eastWest ? 0.5f : 8, 0.4f, eastWest ? 8 : 0.5f,
                      Color{76, 58, 38, 255});
             if (passage.closed(end)) {
@@ -236,34 +452,42 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if (e.alive) {
             if (e.id == hoveredEnemy)
                 DrawCircle3D({e.position.x, 0.08f, e.position.z}, e.radius + 0.25f, {1, 0, 0}, 90, Rust);
-            Color color = e.flash > 0                   ? Paper
-                          : e.kind == EnemyKind::Rusher ? Color{159, 64, 48, 255}
-                          : e.kind == EnemyKind::Gunman ? Color{118, 105, 84, 255}
-                                                        : Color{40, 58, 52, 255};
-            if (e.kind == EnemyKind::Rusher) {
-                shadow(e.position, 0.65f);
-                DrawCylinder({e.position.x, 0, e.position.z}, 0.35f, 0.6f, 1.1f, 5, color);
-                DrawSphereEx({e.position.x, 1.3f, e.position.z}, 0.3f, 6, 8, Color{181, 131, 82, 255});
-            } else
-                cowboy(e.position, unit(sub(run.player.position, e.position)), color,
-                       e.kind == EnemyKind::Boss ? 1.7f : 1, e.kind == EnemyKind::Boss);
+            enemyModel(e);
+            enemyWarning(e, run);
+            if (e.id < e.partner && run.chainActive(e)) {
+                const auto *partner = run.findEnemy(e.partner);
+                DrawCylinderEx(e.position, partner->position, 0.05f, 0.05f, 5, Rust);
+                DrawLine3D(e.position, partner->position, Gold);
+            }
             if (collisions)
                 DrawSphereWires(e.position, e.radius, 6, 8, Rust);
         }
+    for (const auto &hazard : run.hazards)
+        drawHazard(hazard);
     cowboy(run.player.position, unit(sub(run.player.aim, run.player.position)),
            run.player.hurt > 0 ? Rust : Color{90, 145, 137, 255}, 1);
     if (run.player.dodge > 0)
         DrawSphereWires(run.player.position, 0.9f, 5, 8, Teal);
     for (const auto &p : run.projectiles) {
-        Color color = p.hostile ? Rust : p.ghost ? Teal : p.lastRound ? Paper : Gold;
+        Color color = p.hostile     ? (p.bounces > 0 ? Color{204, 132, 232, 255} : Rust)
+                      : p.ghost     ? Teal
+                      : p.lastRound ? Paper
+                                    : Gold;
         projectileMesh(p.position, p.radius, color);
     }
     // Keep triangles and lines in separate batches. Alternating for each projectile
     // creates thousands of tiny draw calls during a chain explosion.
     for (const auto &p : run.projectiles) {
-        Color color = p.hostile ? Rust : p.ghost ? Teal : p.lastRound ? Paper : Gold;
+        Color color = p.hostile     ? (p.bounces > 0 ? Color{204, 132, 232, 255} : Rust)
+                      : p.ghost     ? Teal
+                      : p.lastRound ? Paper
+                                    : Gold;
         Vector3 tail = sub(p.position, mul(unit(p.velocity), p.hostile ? 0.35f : 0.6f));
         DrawLine3D(tail, p.position, color);
+        if (p.kind == ProjectileKind::Hook) {
+            DrawLine3D(p.origin, p.position, Gold);
+            DrawSphereWires(p.position, 0.3f, 4, 6, Paper);
+        }
         if (collisions) {
             DrawLine3D(p.previous, p.position, Paper);
             DrawSphereWires(p.position, p.radius, 4, 6, Teal);
@@ -294,32 +518,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             Vector2 at = GetWorldToScreen(add(e.position, {0, 1.6f, 0}), camera);
             DrawRectangle(int(at.x) - 18, int(at.y) - 5, 36, 4, Ink);
             DrawRectangle(int(at.x) - 18, int(at.y) - 5, int(36 * std::max(0.0f, e.hp / e.maxHp)), 4, Rust);
-        }
-    auto marker = [&](Vector3 position, const char *label, Color color) {
-        Vector2 point = GetWorldToScreen(add(position, {0, 2.6f, 0}), camera);
-        int size = int(16 * std::min(sx_, sy_));
-        DrawText(label, int(point.x) - MeasureText(label, size) / 2, int(point.y), size, color);
-    };
-    if (!run.rescued && distance(run.player.position, run.arena.miners) < 30)
-        marker(run.arena.miners, "LMB / E: FREE THE MINERS", Teal);
-    if (!run.altarDestroyed && distance(run.player.position, run.arena.altar) < 30)
-        marker(run.arena.altar, "LMB / E: BREAK THE ALTAR", Rust);
-    for (const auto &key : run.arena.keys)
-        if (!key.collected && run.rooms[size_t(key.room)].cleared &&
-            distance(run.player.position, key.position) < 28)
-            marker(key.position, "LMB: TAKE KEY", Gold);
-    if (run.arena.rooms[size_t(run.room)].kind == RoomKind::Power && !run.rooms[size_t(run.room)].rewardTaken)
-        marker(run.arena.rooms[size_t(run.room)].objective, "LMB / E: CLAIM ONE POWER", Teal);
-    if (run.room == Simulation::FinalRoom && run.roomClear)
-        marker(run.arena.exit, "LMB / E: RETURN HOME", Teal);
-    if (run.roomClear)
-        for (int index : run.arena.rooms[size_t(run.room)].passages) {
-            const auto &passage = run.arena.passages[size_t(index)];
-            const int side = passage.rooms[0] == run.room ? 0 : 1;
-            const auto p = run.arena.doorApproach(index, side);
-            if (distance(run.player.position, p) < 26)
-                marker(p, passage.locked ? "LMB / E: UNLOCK (1 KEY)" : "LMB / E: USE PASSAGE",
-                       passage.locked ? Gold : Teal);
         }
 }
 Action Renderer::hub(const Game &game) {
@@ -378,8 +576,8 @@ Action Renderer::hub(const Game &game) {
     if (button("QUIT", 986, 700, 234, 48))
         return Action::Quit;
     text("F1 / CHEAT MODE", 60, 771, 11, game.debug ? Teal : Muted);
-    text("LMB move / attack / interact   SHIFT + LMB / RMB fire   WASD move   MMB / SPACE dodge", 378, 772,
-         11, Muted);
+    text("Click to move, attack or interact. Shift holds position. WASD moves. Space dodges.", 378, 772, 11,
+         Muted);
     if (game.debug && game.debugPanelOpen) {
         panel(60, 660, 612, 89, Ink);
         text("CHEATS ON / F1 off / G toggles the haunting flag", 76, 674, 14, Teal);
@@ -476,9 +674,7 @@ Action Renderer::expedition(const Game &game) {
                                                            : Color{54, 58, 52, 255});
     }
     text("ROUND " + std::to_string(run.player.nextRound) + " / 6", 209, 741, 13, Muted);
-    text(run.player.dodgeCooldown <= 0 ? "MMB / SPACE: DODGE READY" : "DODGE RECOVERING", 397, 752, 12,
-         Muted);
-    text("LMB move / attack / interact   SHIFT + LMB / RMB fire   WASD move", 397, 774, 11, Muted);
+    text(run.player.dodgeCooldown <= 0 ? "DODGE READY" : "DODGE RECOVERING", 397, 752, 12, Muted);
     text(game.debug ? "F1 / CHEATS ON" : "F1 / CHEATS", 806, 752, 12, game.debug ? Teal : Gold);
     Action controls = Action::None;
     if (!game.paused && !run.rewardOpen) {
@@ -488,7 +684,7 @@ Action Renderer::expedition(const Game &game) {
                 controls = Action::Interact;
         } else {
             panel(396, 690, 186, 44, Panel);
-            text("LMB / MOVE", 414, 704, 18, Muted);
+            text("EXPLORE", 414, 704, 18, Muted);
         }
         if (button("DODGE", 598, 690, 154, 44))
             controls = Action::Dodge;
@@ -530,6 +726,7 @@ Action Renderer::expedition(const Game &game) {
         text("TAKE A BREATH", 435, 269, 30, Paper);
         wrap("Retreat ends your build and changes Black Creek. Closing the game also counts as retreat.", 436,
              326, 402, 17, Muted);
+        text("Click to move, attack or interact. Shift holds position.", 436, 389, 12, Muted);
         if (button("KEEP GOING   [ESC]", 436, 423, 408, 45, true))
             return Action::Resume;
         if (button("RETREAT TO BLACK CREEK   [T]", 436, 486, 408, 45))

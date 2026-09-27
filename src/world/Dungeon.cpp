@@ -83,101 +83,52 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 Arena::Arena(uint64_t seed) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
-    const FloorCell missing{1 + int(layout.bounded(2)), 1 + int(layout.bounded(2))};
-    std::array<FloorCell, RoomCount> cells{};
-    std::set<FloorCell> assigned{{0, 0}, {3, 3}};
-    cells.back() = {3, 3};
+    const auto graph = generateRoomGraph(seed);
+    const int powerRooms = graph.powerRooms;
     rooms.back().kind = RoomKind::Boss;
-    const int powerRooms = 1 + int(layout.bounded(2));
-    std::array<FloorCell, 2> corners{{{0, 3}, {3, 0}}};
-    if (layout.bounded(2))
-        std::swap(corners[0], corners[1]);
-    for (int i = 0; i < powerRooms; ++i) {
-        const int index = RoomCount - 2 - i;
-        cells[size_t(index)] = corners[size_t(i)];
-        assigned.insert(corners[size_t(i)]);
-        rooms[size_t(index)].kind = RoomKind::Power;
-    }
-    std::vector<FloorCell> available;
-    for (int x = 0; x < 4; ++x)
-        for (int z = 0; z < 4; ++z)
-            if (FloorCell{x, z} != missing && !assigned.contains({x, z}))
-                available.push_back({x, z});
+    for (int i = 0; i < powerRooms; ++i)
+        rooms[size_t(RoomCount - 2 - i)].kind = RoomKind::Power;
     auto shuffle = [&](auto &values) {
         for (size_t i = values.size(); i > 1; --i)
             std::swap(values[i - 1], values[layout.bounded(uint32_t(i))]);
     };
-    shuffle(available);
-    for (int i = 1; i < RoomCount - 1; ++i)
-        if (rooms[size_t(i)].kind == RoomKind::Combat) {
-            cells[size_t(i)] = available.back();
-            available.pop_back();
-        }
-    auto adjacent = [&](int a, int b) {
-        return std::abs(cells[size_t(a)].first - cells[size_t(b)].first) +
-                   std::abs(cells[size_t(a)].second - cells[size_t(b)].second) ==
-               1;
-    };
-    std::array<int, RoomCount> parent;
-    for (int i = 0; i < RoomCount; ++i)
-        parent[size_t(i)] = i;
-    auto root = [&](int i) {
-        while (parent[size_t(i)] != i)
-            i = parent[size_t(i)];
-        return i;
-    };
-    auto link = [&](int a, int b, bool locked) {
+    for (auto edge : graph.links) {
         Passage passage;
-        passage.rooms = {a, b};
-        passage.locked = locked;
+        passage.rooms = edge;
+        passage.locked = rooms[size_t(edge[0])].kind != RoomKind::Combat ||
+                         rooms[size_t(edge[1])].kind != RoomKind::Combat;
         const int index = int(passages.size());
         passages.push_back(passage);
-        rooms[size_t(a)].passages.push_back(index);
-        rooms[size_t(b)].passages.push_back(index);
-        parent[size_t(root(a))] = root(b);
-    };
-    std::vector<std::pair<int, int>> candidates;
-    for (int a = 0; a < RoomCount; ++a)
-        for (int b = a + 1; b < RoomCount; ++b)
-            if (adjacent(a, b) && rooms[size_t(a)].kind == RoomKind::Combat &&
-                rooms[size_t(b)].kind == RoomKind::Combat) {
-                if (a == 0)
-                    link(a, b, false); // The starting room always presents two routes.
-                else
-                    candidates.push_back({a, b});
-            }
-    shuffle(candidates);
-    std::vector<std::pair<int, int>> loops;
-    for (auto [a, b] : candidates) {
-        if (root(a) != root(b))
-            link(a, b, false);
-        else
-            loops.push_back({a, b});
+        rooms[size_t(edge[0])].passages.push_back(index);
+        rooms[size_t(edge[1])].passages.push_back(index);
     }
-    for (size_t i = 0; i < std::min(size_t(3), loops.size()); ++i)
-        link(loops[i].first, loops[i].second, false);
-    for (int i = 1; i < RoomCount; ++i)
-        if (rooms[size_t(i)].kind != RoomKind::Combat) {
-            std::vector<int> neighbors;
-            for (int j = 0; j < RoomCount; ++j)
-                if (adjacent(i, j) && rooms[size_t(j)].kind == RoomKind::Combat)
-                    neighbors.push_back(j);
-            link(neighbors[layout.bounded(uint32_t(neighbors.size()))], i, true);
+    // Unequal row/column spacing changes corridor lengths while keeping crossings
+    // impossible: a corridor only joins neighboring occupied cells of the graph.
+    auto axis = [&](bool xAxis) {
+        int low = 0, high = 0;
+        for (auto cell : graph.cells) {
+            const int value = xAxis ? cell.first : cell.second;
+            low = std::min(low, value);
+            high = std::max(high, value);
         }
-    // Rotate the whole graph while keeping every passage aligned with room doorways.
-    const unsigned rotation = layout.bounded(4);
+        std::map<int, int> positions{{0, 0}};
+        for (int i = 1; i <= high; ++i)
+            positions[i] = positions[i - 1] + 24 + 2 * int(layout.bounded(5));
+        for (int i = -1; i >= low; --i)
+            positions[i] = positions[i + 1] - 24 - 2 * int(layout.bounded(5));
+        return positions;
+    };
+    const auto xs = axis(true), zs = axis(false);
     for (int i = 0; i < RoomCount; ++i) {
         auto &room = rooms[size_t(i)];
-        auto coarse = cells[size_t(i)];
-        for (unsigned turn = 0; turn < rotation; ++turn)
-            coarse = {-coarse.second, coarse.first};
-        room.center = {float(coarse.first) * 48, 0.85f, float(coarse.second) * 48};
+        const auto cell = graph.cells[size_t(i)];
+        const int cx = xs.at(cell.first), cz = zs.at(cell.second);
+        room.center = {float(cx) * FloorTile, 0.85f, float(cz) * FloorTile};
         int halfX, halfZ;
         do {
             halfX = 6 + int(layout.bounded(5));
             halfZ = 6 + int(layout.bounded(5));
         } while (!usedSizes.insert({halfX, halfZ}).second);
-        const int cx = coarse.first * 24, cz = coarse.second * 24;
         room.bounds = {
             {room.center.x - float(halfX) * FloorTile, 0, room.center.z - float(halfZ) * FloorTile},
             {room.center.x + float(halfX) * FloorTile, 3, room.center.z + float(halfZ) * FloorTile}};
@@ -396,6 +347,18 @@ Vector3 Arena::doorApproach(int passage, int side) const {
     const auto &p = passages[size_t(passage)];
     const auto at = doorPosition(passage, side);
     return add(at, mul(unit(sub(rooms[size_t(p.rooms[size_t(side)])].center, at)), 2));
+}
+float RoomLayout::usableArea() const {
+    // Generated floor strips and cover boxes do not overlap each other. Intersect
+    // cover with each strip so clipped corners and missing floor never count.
+    float area = 0;
+    for (const auto &floor : floors) {
+        area += (floor.max.x - floor.min.x) * (floor.max.z - floor.min.z);
+        for (const auto &cover : obstacles)
+            area -= std::max(0.0f, std::min(floor.max.x, cover.max.x) - std::max(floor.min.x, cover.min.x)) *
+                    std::max(0.0f, std::min(floor.max.z, cover.max.z) - std::max(floor.min.z, cover.min.z));
+    }
+    return std::max(0.0f, area);
 }
 int Arena::roomAt(Vector3 p) const {
     for (int i = 0; i < RoomCount; ++i)

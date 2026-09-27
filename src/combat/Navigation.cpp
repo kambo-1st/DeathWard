@@ -220,7 +220,7 @@ std::string Simulation::nearbyInteraction() const {
         for (size_t i = 0; i < arena.passages.size(); ++i)
             for (int side = 0; side < 2; ++side)
                 if (distance(player.position, arena.doorApproach(int(i), side)) < 2.8f)
-                    return arena.passages[i].locked ? "UNLOCK (1 KEY)" : "USE PASSAGE";
+                    return arena.passages[i].locked ? "UNLOCK (1 KEY)" : "ENTER";
     return {};
 }
 } // namespace dw

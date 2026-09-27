@@ -34,7 +34,13 @@ Type a seed in the hub (Backspace edits; N generates another), then press Enter 
 
 **The starting room is always enemy-free**, with open passages from the moment you enter. It counts toward the limit of 1–2 ordinary rooms with no enemies; the seed may choose one additional quiet room, separate from the peaceful power rooms. These quiet rooms have open passages, no enemies or power pedestal, and may contain a key. The miners, altar and boss retain their encounters.
 
+**The room network grows from the seed**: two or three starting routes, variable branch lengths and junctions, dead ends, and zero to three loops. Boss and power rooms attach at branch ends instead of fixed corners. Room spacing also varies, producing different corridor lengths. Press **N in the hub** to choose a new seed; keeping the same seed deliberately reproduces the same layout.
+
 Each room has different dimensions (24–40 units per side), with rectangular, clipped-corner, L-shaped and cross-shaped footprints. The seed chooses the graph, room shapes, objective positions, obstacles, key locations and power-room count. Clear routes are reserved for doors and objectives, and cover that isolates walkable floor is rejected. The same seed and content version reproduce the same map independently of campaign outcomes.
+
+**Fifteen ordinary enemy types are playable**, with distinct silhouettes and attacks: rushers, gunmen, shotgunners, sharpshooters, dynamite throwers, armored brutes, chargers, protective preachers, bell shockwaves, hook throwers, fire spitters, ricochet shooters, teleporting wraiths, explosive husks and chainbound pairs. See the [enemy roster](docs/enemy_roster_proposal.md) for their tells and counters.
+
+**Enemy count scales with the room's generated floor area:** subtract obstacle footprints, divide by 70, round up, then clamp to 4–24. Missing corners and corridors do not count. For example, 700 usable square units gives 10 enemies; 1,400 gives 20. Each group mixes up to three seeded types, with clear spawn space and a six-unit buffer around the player. Quiet rooms and power caches stay empty; the first boss encounter stays a single Sheriff. Revisits after defeating the Sheriff use an area-scaled ordinary group.
 
 **Power-ups only appear in 1–2 dedicated rooms per expedition.** Unlock a power room, approach its pedestal, and choose one of two items. Each pedestal works once, so normal play yields at most two power-ups for the entire run. Combat rooms do not award items.
 
@@ -57,11 +63,13 @@ The camera follows you through corridors. The mine map shows branches, your posi
 | T while paused | Retreat and resolve consequences |
 | H in the hub | Inspect previous runs |
 
-Start each expedition with **200 HP** and **48 revolver damage** (both doubled from the initial milestone). The revolver fires continuously while holding an enemy, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Enemy damage is unchanged; Judas Bullet still costs 20% of maximum health per copy.
+Start each expedition with **200 HP** and **48 revolver damage** (both doubled from the initial milestone). The revolver fires continuously while holding an enemy, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
 
 Left-click follows the contextual move/attack/interact pattern in [Blizzard's Diablo manual](https://ftp.blizzard.com/pub/misc/Diablo.PDF). Click ground to walk there, or hold to steer. Click an enemy's body to attack; holding keeps that target until release, and its death never turns the attack into a movement order. Attacking cancels the current mouse route. WASD overrides mouse navigation and remains available while firing; Shift holds position. RMB uses the prototype's only weapon, the revolver.
 
 Left-click the miners, altar, a key, a power pedestal, a doorway, or the return lantern to approach and use it. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse; pressing the wheel is an additional dodge shortcut.
+
+World interactions use visual cues instead of floating control instructions: open exits have small floor arrows and colored lanterns, locked doors have golden locks, and pickups and objectives have glow or ground markers. Control reminders live in the hub, pause screen and this guide.
 
 The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated boss becomes a follow-up encounter on subsequent visits.
 
@@ -87,7 +95,7 @@ Copies stack. Items do not check for specific item pairs. Stable registry hooks 
 | Backtick key | Show/hide the optional cheat shortcut panel |
 | F2 / Shift + F2 | Toggle invincibility / heal fully and reset cooldowns |
 | F3 / Shift + F3 | Kill current enemies / clear the whole room, remove pending effects and reopen combat seals |
-| F4 / F5 | Spawn 20 / 100 enemies |
+| F4 / F5 | Spawn 20 / 100 enemies drawn from all fifteen types |
 | F6 / Shift + F6 | Grant all five items / add three keys |
 | F7 | Start or replay the boss or follow-up encounter |
 | F8 / F9 | Finish successfully / die |
@@ -110,7 +118,7 @@ Linux saves to `$XDG_DATA_HOME/deathward/campaign.save`, or `~/.local/share/deat
 
 One checksummed, versioned snapshot contains world state, pending-run metadata and history. Writes use a temporary file and atomic replacement. Corrupt or unsupported saves produce an error and are preserved. Objective interactions, room completion and item acquisition checkpoint summary data; temporary combat state is never resumable. Only one process should use a given save file at a time.
 
-Layout, encounter, reward and combat RNG streams are independent. The same seed and content version reproduce the complete map; power-room offers are fixed per room, while initial campaign state and relevant choices also determine encounter setup. Full combat input replay is not implemented. History records the version, seed and starting world context, along with the lost build, counters and consequences.
+Room-network growth, room geometry, per-room enemy composition/placement, reward and combat RNG streams are independent. Room populations and types do not depend on visitation order. Spawn positions reproduce when entering from the same position; a different entrance can adjust placements to keep the player safe. The same seed and content version reproduce the complete map; power-room offers are fixed per room, while initial campaign state and relevant choices also determine encounter setup. Full combat input replay is not implemented. History records the version, seed and starting world context, along with the lost build, counters and consequences.
 
 ## Verify
 
@@ -124,7 +132,7 @@ ctest --test-dir build --output-on-failure
 
 The core CTest suite needs no graphics display. `deathward_input_tests` exercises mouse controls and function-key cheats through raylib's input system in a hidden window and requires an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
 
-Tests cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power and enemy-free rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. Cheat checks cover disabled hotkeys, unobstructed play with cheats enabled, single-group encounters, effect cleanup, room/boss replay, preserved rewards and paused/modal outcomes. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `empty`, `cheats`, `boss` and `summary`.
+Enemy tests cover all fifteen behaviors, attack warnings, armor and support, cover and dodge counters, delayed hazards and chain cleanup, plus area-scaled populations and safe placements across 32 seeds. Tests also cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Fast room-network checks cover 10,004 seeds, including rotation/reflection-independent footprint comparisons and graph diversity checks across 256 seeds. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power and enemy-free rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. Cheat checks cover disabled hotkeys, unobstructed play with cheats enabled, single-group encounters, effect cleanup, room/boss replay, preserved rewards and paused/modal outcomes. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `empty`, `cheats`, `boss` and `summary`.
 
 For sanitizer checks:
 
@@ -143,4 +151,4 @@ ctest --test-dir build-asan --output-on-failure
 - `src/render`: replaceable primitive 3D rendering and menus; no combat rules.
 - `tests`: gameplay and persistence contract checks.
 
-The [design brief](weird_west_3d_prototype_agent_brief.md) describes the wider experiment. This implementation targets Milestone 1; the 25-item catalog, five ordinary enemy types and three expeditions belong to Milestone 2.
+The [design brief](weird_west_3d_prototype_agent_brief.md) describes the wider experiment. This implementation extends Milestone 1 with fifteen ordinary enemy types and seeded room networks. The 25-item catalog and three expeditions remain future content work.

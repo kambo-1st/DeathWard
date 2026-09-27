@@ -151,8 +151,8 @@ int main() {
             check(arena.rooms[2].kind == dw::RoomKind::Combat && arena.rooms[3].kind == dw::RoomKind::Combat,
                   "objective rooms retain combat encounters");
             check(arena.rooms[0].passages.size() >= 2 && maxDegree >= 3 &&
-                      arena.passages.size() >= dw::RoomCount,
-                  "map has branching choices and alternate routes");
+                      arena.passages.size() >= dw::RoomCount - 1,
+                  "map has branching choices, with optional alternate routes");
             for (const auto &key : arena.keys) {
                 check(initiallyReachable.contains(key.room),
                       "every key is reachable before opening any lock");

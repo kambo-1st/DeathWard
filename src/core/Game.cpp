@@ -49,7 +49,7 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
                     result.door = std::pair{int(i), side};
                 }
     for (const auto &enemy : run.enemies) {
-        if (enemy.alive && hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.0f)) {
+        if (enemy.alive && hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.5f)) {
             result.enemy = enemy.id;
             result.objective.reset();
             result.door.reset();

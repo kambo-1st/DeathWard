@@ -8,6 +8,12 @@ inline constexpr int RoomCount = 15;
 inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
 enum class RoomKind { Combat, Power, Boss, Empty };
+struct RoomGraph {
+    std::array<FloorCell, RoomCount> cells{};
+    std::vector<std::array<int, 2>> links;
+    int powerRooms = 1;
+};
+RoomGraph generateRoomGraph(uint64_t seed);
 struct RoomLayout {
     Box bounds;
     Vector3 center{}, entry{}, exit{}, objective{}, bossSpawn{};
@@ -15,6 +21,7 @@ struct RoomLayout {
     RoomKind kind = RoomKind::Combat;
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;
+    float usableArea() const;
 };
 struct Passage {
     std::array<int, 2> rooms{};

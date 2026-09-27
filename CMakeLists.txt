@@ -20,7 +20,10 @@ FetchContent_MakeAvailable(raylib)
 add_library(deathward_core
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
+    src/world/RoomGraph.cpp
     src/combat/Simulation.cpp
+    src/combat/Enemies.cpp
+    src/combat/Encounters.cpp
     src/combat/Navigation.cpp
     src/items/Items.cpp
 )
@@ -45,9 +48,15 @@ if(BUILD_TESTING)
     add_executable(deathward_tests tests/tests.cpp)
     target_link_libraries(deathward_tests PRIVATE deathward_core)
     add_test(NAME core_contracts COMMAND deathward_tests)
+    add_executable(deathward_enemy_tests tests/enemy_tests.cpp)
+    target_link_libraries(deathward_enemy_tests PRIVATE deathward_core)
+    add_test(NAME enemy_behaviors COMMAND deathward_enemy_tests)
     add_executable(deathward_dungeon_tests tests/dungeon_tests.cpp)
     target_link_libraries(deathward_dungeon_tests PRIVATE deathward_core)
     add_test(NAME generated_dungeons COMMAND deathward_dungeon_tests)
+    add_executable(deathward_room_graph_tests tests/room_graph_tests.cpp)
+    target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
+    add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
     add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)

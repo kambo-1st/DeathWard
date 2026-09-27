@@ -50,11 +50,13 @@ The first milestone targets a 5–10 minute expedition. The expanded prototype t
 
 Use an elevated Diablo-like camera, not first person or over-the-shoulder. Support Diablo-style contextual left-click alongside WASD: click ground to move, hold LMB to steer, click an enemy's body to attack, and click an available objective to approach and interact on arrival. Holding an enemy keeps attacking that target as it moves; when it dies, do not turn the held attack into a movement order. Attacking cancels mouse navigation. Shift holds position; Shift + LMB fires toward the cursor. RMB directly fires the revolver (the prototype's only weapon). MMB or SPACE dodges; E remains an interaction shortcut. Provide clickable dodge, nearby-interaction and pause controls so a two-button mouse can operate the complete expedition. Mouse routes should avoid walls and obstacles; WASD overrides the current mouse route and remains available while firing unless Shift is held.
 
+Use visual cues for world interactions instead of floating control instructions. Open passages have floor arrows and lanterns, locked doors have golden locks, and pickups and objectives remain identifiable through their models and glow or ground markers. Keep control reminders in the hub, pause screen and documentation.
+
 Start with one revolver: continuous fire with no reload action or reload pause, moderate fire rate and real projectile entities. Preserve a repeating six-shot cycle, visibly showing the next round. Every sixth shot counts as the last round for item effects, then the cycle immediately starts again.
 
 Starting player health is 200 HP and base revolver damage is 48, both doubled from the initial milestone. Enemy damage stays unchanged. Percentage-based item costs still apply to the increased health pool.
 
-Generate a continuous mine from the expedition seed: fifteen rooms joined by traversable corridors, with branching junctions and alternate routes, different room dimensions and footprints, and seeded obstacle positions, sizes and heights. Use real 3D walls and cover for ricochets, line of sight and area effects. Reserve clear paths between entrances, exits and objectives, validate floor connectivity, and place enemies only on safe floor. Seal every doorway, including the previous entrance, after the player safely enters an uncleared combat room. Spawn one enemy group on entry and reopen doors when that group is defeated. Do not use waves or spawn later reinforcements. Cleared rooms stay cleared, with no repeated rewards or healing. Keep the camera, navigation and map working across the whole graph.
+Generate a continuous mine from the expedition seed: fifteen rooms joined by traversable corridors, with branching junctions and alternate routes, different room dimensions and footprints, and seeded obstacle positions, sizes and heights. Grow the room network from the seed with two or three starting routes, varied branches, junctions, dead ends, zero to three optional loops, and varied corridor lengths. Do not place the entire mine in a fixed rectangular template. Attach the boss deeper into the network and power rooms at seeded branch ends, with no fixed corner assignments. Keep topology randomness separate from room geometry and test variation independently of rotations, reflections and room numbering. Use real 3D walls and cover for ricochets, line of sight and area effects. Reserve clear paths between entrances, exits and objectives, validate floor connectivity, and place enemies only on safe floor. Seal every doorway, including the previous entrance, after the player safely enters an uncleared combat room. Spawn one enemy group on entry and reopen doors when that group is defeated. Do not use waves or spawn later reinforcements. Cleared rooms stay cleared, with no repeated rewards or healing. Keep the camera, navigation and map working across the whole graph.
 
 Always make the starting room enemy-free. Count it toward the limit of one or two ordinary quiet rooms per seed, in addition to the peaceful power rooms; optionally choose one additional quiet room from the seed. Keep their passages open, never spawn enemies on entry or revisit, and allow seeded keys there. Preserve combat in the objective and boss rooms. Mark quiet rooms with E on the map.
 
@@ -94,11 +96,11 @@ At expedition end, destroy RunState. Do not serialize the temporary build into p
 
 ## 10. Enemies and density
 
-Implement roughly five archetypes: Bandit, Rusher, Gunman, Abomination and Preacher. Primitive 3D shapes are sufficient.
+Implement all fifteen types in the [enemy roster](docs/enemy_roster_proposal.md), plus the Hollow Sheriff. Primitive 3D models need distinct silhouettes, attack warnings and recovery windows. Armor, protection, displacement, teleportation and ground hazards must have visible counters; cover and dodge remain useful. Preserve the event queue, item interactions and bounded chain accounting for delayed attacks and death explosions.
 
-The first milestone uses only Rusher and Gunman, plus the boss. Add the remaining archetypes after the complete campaign loop works.
+Calculate each ordinary combat room's enemy count as `clamp(ceil(usableFloorArea / 70), 4, 24)`. Sum its actual generated floor strips, subtract intersecting obstacle footprints, and exclude corridors and missing corners. Room depth may affect the available archetypes, but must not replace area-based population sizing. Keep starting, quiet and power rooms empty. The first boss encounter contains only the Sheriff; follow-up encounters use the normal density rule.
 
-Early encounters may contain 5–10 enemies, middle 10–20 and late 20–40. Stress testing should support around 100 enemies.
+Mix up to three seeded types per room, with a basic role forming roughly half of the group. Spawn each enemy on valid, unoccupied floor at least six units from the player. Chainbound enemies consume two existing group slots. Keep composition independent of visit order and combat draws. All enemies spawn with the room's initial group. Stress testing should still support explicit groups of 100 enemies.
 
 ## 11. Item philosophy
 
@@ -219,10 +221,10 @@ Milestone 1 is one complete 5–10 minute expedition on Linux. Keep every interm
 1. Bootable CMake/raylib project with a 3D arena, camera, player, mouse-to-world aiming, revolver and one enemy.
 2. Minimal hub, separate RunState/WorldState, placeholder expedition completion, saved consequences and Run History. Exercise the full loop using debug shortcuts immediately.
 3. Queued event/effect system with provenance, bounded processing, deterministic RNG streams and chain inspection. Add the five initial items and reward choices.
-4. Complete Red Hollow Mine with Rusher, Gunman, The Hollow Sheriff, a miner-rescue interaction and three outcome categories. Support revisits that reflect resolved and unresolved objectives.
+4. Complete Red Hollow Mine with the fifteen-enemy roster, The Hollow Sheriff, a miner-rescue interaction and three outcome categories. Support revisits that reflect resolved and unresolved objectives.
 5. Verify restart persistence, retreat on close, interrupted-run recovery, build destruction, interaction scenarios and a representative stress scenario. Tune the short expedition's reward pacing.
 
-Milestone 2 expands content only after Milestone 1 passes its acceptance checks: grow to 20–25 items, five enemy archetypes, three expedition definitions, about five persistent NPCs and 10–15 flags; extend expeditions toward 15–25 minutes; complete the remaining debug tools and validate Windows support. Continue stress testing as content expands.
+Milestone 2 expands content only after Milestone 1 passes its acceptance checks: grow to 20–25 items, three expedition definitions, about five persistent NPCs and 10–15 flags; extend expeditions toward 15–25 minutes; complete the remaining debug tools and validate Windows support. Continue stress testing as content expands.
 
 ## 26. Acceptance criteria
 

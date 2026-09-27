@@ -61,40 +61,6 @@ std::string Simulation::roomName(int index) {
         "The Broken Lift", "The Bone Gallery", "Smuggler's Cache", "The Reliquary", "The Hollow Court"};
     return names[std::clamp(index, 0, FinalRoom)];
 }
-EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
-    if (livingEnemies() >= limits.enemies) {
-        suppress({}, "enemy capacity");
-        return 0;
-    }
-    Enemy e;
-    e.id = nextEntity_++;
-    e.kind = kind;
-    e.position = position;
-    e.position.y = 0.85f;
-    e.maxHp = kind == EnemyKind::Boss ? 1100.0f : kind == EnemyKind::Gunman ? 48.0f : 36.0f;
-    e.hp = e.maxHp;
-    e.radius = kind == EnemyKind::Boss ? 1.2f : 0.6f;
-    e.cooldown = encounterRng.real(0.5f, 1.8f);
-    enemies.push_back(e);
-    return e.id;
-}
-void Simulation::spawnEnemies(int count) {
-    const auto &area = arena.rooms[size_t(room)].bounds;
-    for (int i = 0; i < count; ++i) {
-        Vector3 p{};
-        bool found = false;
-        for (int attempt = 0; attempt < 80; ++attempt) {
-            p = {encounterRng.real(area.min.x + 1.5f, area.max.x - 1.5f), 0.85f,
-                 encounterRng.real(area.min.z + 1.5f, area.max.z - 1.5f)};
-            if (!arena.blocked(p, 0.8f) && distance(p, player.position) > 6) {
-                found = true;
-                break;
-            }
-        }
-        if (found)
-            spawn(encounterRng.bounded(3) == 0 ? EnemyKind::Gunman : EnemyKind::Rusher, p);
-    }
-}
 void Simulation::grant(ItemId item) {
     if (int(item) < 0 || int(item) >= ItemCount || items.size() >= 256)
         return;
@@ -135,6 +101,8 @@ void Simulation::enterRoom(int index) {
     roomClear = progress.cleared;
     rewardOpen = false;
     projectiles.clear();
+    clearHazards();
+    player.pullTime = 0;
     queue_.clear();
     chains.clear();
     enemies.clear();
@@ -162,7 +130,7 @@ void Simulation::enterRoom(int index) {
         if (room == FinalRoom)
             beginBossEncounter();
         else
-            spawnEnemies(std::min(18, 6 + arena.rooms[size_t(room)].depth * 2));
+            spawnRoomEnemies();
     } else {
         arena.sealRoom(-1);
         announce(roomName() + " / already cleared", 3);
@@ -237,9 +205,10 @@ void Simulation::startBoss() {
     jumpDebug(FinalRoom, true);
 }
 void Simulation::beginBossEncounter() {
-    spawn(followup ? EnemyKind::Gunman : EnemyKind::Boss, arena.rooms.back().bossSpawn);
     if (followup)
-        spawnEnemies(12);
+        spawnRoomEnemies();
+    else
+        spawn(EnemyKind::Boss, arena.rooms.back().bossSpawn);
     announce(followup ? "Finish what remains" : "THE HOLLOW SHERIFF", 4);
 }
 void Simulation::killAll() {
@@ -259,6 +228,7 @@ void Simulation::killAll() {
 void Simulation::healDebug() {
     player.hp = player.maxHp;
     player.hurt = player.dodge = player.dodgeCooldown = player.fireCooldown = 0;
+    player.pullTime = 0;
     announce("CHEAT / full health and cooldowns reset");
 }
 void Simulation::clearRoomDebug() {
@@ -268,6 +238,8 @@ void Simulation::clearRoomDebug() {
     cancelMove();
     enemies.clear();
     projectiles.clear();
+    clearHazards();
+    player.pullTime = 0;
     queue_.clear();
     chains.clear();
     visuals.clear();
@@ -311,6 +283,8 @@ void Simulation::startStress() {
     roomClear = false;
     enemies.clear();
     projectiles.clear();
+    clearHazards();
+    player.pullTime = 0;
     queue_.clear();
     chains.clear();
     for (int i = 0; i < ItemCount; ++i)
@@ -443,6 +417,8 @@ void Simulation::createProjectile(const Event &event) {
     p.lastRound = event.lastRound;
     p.ghost = event.ghost;
     p.context = event.context;
+    p.kind = event.projectileKind;
+    p.bounces = event.bounces;
     if (event.target)
         p.hitEntities.push_back(event.target);
     if (p.hostile) {
@@ -474,8 +450,14 @@ void Simulation::process(const Event &e) {
         Enemy *target = findEnemy(e.target);
         if (!target || !target->alive)
             break;
-        stats.damageDealt += std::min(target->hp, e.damage);
-        target->hp -= e.damage;
+        const float damage = enemyDamage(*target, e);
+        stats.damageDealt += std::min(target->hp, damage);
+        target->hp -= damage;
+        if (target->kind == EnemyKind::Preacher && damage > 0) {
+            target->aura = 0;
+            target->state = EnemyState::Ready;
+            target->cooldown = 1.5f;
+        }
         target->flash = 0.12f;
         Event hit = e;
         hit.position = target->position;
@@ -483,6 +465,17 @@ void Simulation::process(const Event &e) {
         emit(hit, e.context);
         if (target->hp <= 0) {
             target->alive = false;
+            if (target->kind == EnemyKind::PowderHusk) {
+                Hazard hazard;
+                hazard.kind = HazardKind::Powder;
+                hazard.position = target->position;
+                hazard.origin = e.origin;
+                hazard.delay = 1.1f;
+                hazard.radius = 3.4f;
+                hazard.damage = 24;
+                hazard.context = e.context;
+                addHazard(hazard);
+            }
             ++stats.kills;
             auto &chain = chains[e.context.chainId];
             ++chain.kills;
@@ -506,6 +499,7 @@ void Simulation::process(const Event &e) {
                 Event damage = e;
                 damage.type = EventType::Damage;
                 damage.target = enemy.id;
+                damage.areaDamage = true;
                 emit(damage, e.context);
             }
         break;
@@ -584,6 +578,16 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         player.dodge -= dt;
     }
     player.position = arena.move(player.position, mul(movement, 6 * dt), 0.48f);
+    if (player.pullTime > 0) {
+        if (player.dodge > 0 || !arena.sight(player.position, player.pullTarget))
+            player.pullTime = 0;
+        else {
+            const Vector3 toward = sub(player.pullTarget, player.position);
+            player.position =
+                arena.move(player.position, mul(unit(toward), std::min(length(toward), 12 * dt)), 0.48f);
+            player.pullTime = std::max(0.0f, player.pullTime - dt);
+        }
+    }
     if (input.fire && player.fireCooldown <= 0) {
         player.fireCooldown = 0.29f;
         ++stats.shots;
@@ -598,104 +602,6 @@ void Simulation::updatePlayer(const Input &input, float dt) {
     }
     if (input.interact)
         interact();
-}
-void Simulation::updateEnemies(float dt) {
-    auto hurtPlayer = [&](float damage, const Context &parent) {
-        if (godMode || player.dodge > 0 || player.hurt > 0)
-            return;
-        player.hp -= damage;
-        stats.damageTaken += damage;
-        player.hurt = 0.45f;
-        Event hit;
-        hit.type = EventType::PlayerDamaged;
-        hit.damage = damage;
-        hit.position = player.position;
-        if (parent.chainId)
-            emit(hit, parent);
-        else
-            queueRoot(hit);
-    };
-    for (auto &e : enemies) {
-        if (!e.alive)
-            continue;
-        e.cooldown -= dt;
-        e.flash = std::max(0.0f, e.flash - dt);
-        e.age += dt;
-        Vector3 toward = sub(player.position, e.position);
-        float dist = length(toward);
-        Vector3 direction = unit(toward);
-        Vector3 movement{};
-        if (e.kind == EnemyKind::Rusher) {
-            movement = mul(direction, 2.0f + 0.12f * float(room));
-            if (dist < 1.3f && e.cooldown <= 0) {
-                hurtPlayer(10, {});
-                e.cooldown = 0.8f;
-            }
-        } else if (e.kind == EnemyKind::Gunman) {
-            if (dist > 9 || !arena.sight(e.position, player.position))
-                movement = mul(direction, 1.7f);
-            else if (dist < 5)
-                movement = mul(direction, -1.4f);
-            if (e.cooldown <= 0 && arena.sight(e.position, player.position)) {
-                Event shot;
-                shot.position = add(e.position, mul(direction, 0.8f));
-                shot.origin = shot.position;
-                shot.direction = direction;
-                shot.hostile = true;
-                shot.speed = 10;
-                shot.damage = 12;
-                shot.context.sourceEntity = e.id;
-                queueRoot(shot);
-                e.cooldown = 1.9f;
-            }
-        } else {
-            e.phase = e.hp > e.maxHp * 0.66f ? 0 : e.hp > e.maxHp * 0.33f ? 1 : 2;
-            movement = mul(direction, e.phase == 2 ? 2.7f : 1.0f);
-            if (dist < 1.9f)
-                hurtPlayer(18, {});
-            if (e.cooldown <= 0) {
-                int count = e.phase == 0 ? 5 : e.phase == 1 ? 12 : 18;
-                for (int i = 0; i < count; ++i) {
-                    float angle = e.phase == 0 ? (float(i) - 2) * 0.14f
-                                               : 2 * Pi * float(i) / float(count) + e.age * 0.18f;
-                    Vector3 aim = e.phase == 0 ? rotateY(direction, angle)
-                                               : Vector3{std::cos(angle), 0, std::sin(angle)};
-                    Event shot;
-                    shot.position = add(e.position, mul(aim, 1.3f));
-                    shot.origin = shot.position;
-                    shot.direction = aim;
-                    shot.hostile = true;
-                    shot.speed = e.phase == 2 ? 12 : 8;
-                    shot.damage = 14;
-                    shot.context.sourceEntity = e.id;
-                    queueRoot(shot);
-                }
-                e.cooldown = e.phase == 0 ? 1.5f : e.phase == 1 ? 1.7f : 1.0f;
-                effectVisual(e.position, 2.0f + float(e.phase), 4, 0.45f);
-            }
-        }
-        // Nearby separation and obstacle steering keep primitive crowds moving around cover.
-        Vector3 separation{};
-        for (size_t index : candidates(e.position, e.position, 1.6f)) {
-            const auto &other = enemies[index];
-            if (other.id == e.id || !other.alive)
-                continue;
-            Vector3 delta = sub(e.position, other.position);
-            float d = length(delta);
-            if (d > 0.01f && d < e.radius + other.radius + 0.15f)
-                separation = add(separation, mul(delta, (1.4f - d) / d));
-        }
-        movement = add(movement, mul(separation, 2));
-        Vector3 next = arena.move(e.position, mul(movement, dt), e.radius);
-        if (distance(next, e.position) < 0.015f && length(movement) > 0.2f) {
-            Vector3 side = rotateY(direction, Pi / 2);
-            if (e.id % 2)
-                side = mul(side, -1);
-            next = arena.move(e.position, mul(side, 2.4f * dt), e.radius);
-        }
-        e.velocity = mul(sub(next, e.position), 1 / dt);
-        e.position = next;
-    }
 }
 void Simulation::rebuildGrid() {
     const auto origin = arena.rooms[size_t(room)].center;
@@ -785,6 +691,7 @@ void Simulation::updateProjectiles(float dt) {
             event.lastRound = p.lastRound;
             event.ghost = p.ghost;
             event.hostile = p.hostile;
+            event.armorPiercing = p.pierce > 0;
             if (wall) {
                 if (p.bounces > 0 && length(normal) > 0.5f) {
                     --p.bounces;
@@ -797,12 +704,13 @@ void Simulation::updateProjectiles(float dt) {
                 } else
                     p.alive = false;
             } else if (playerHit) {
-                if (!godMode && player.dodge <= 0 && player.hurt <= 0) {
-                    player.hp -= p.damage;
-                    stats.damageTaken += p.damage;
-                    player.hurt = 0.35f;
-                    event.type = EventType::PlayerDamaged;
-                    emit(event, p.context);
+                if (hurtPlayer(p.damage, p.context) && p.kind == ProjectileKind::Hook) {
+                    const auto *source = findEnemy(p.context.sourceEntity);
+                    if (source && source->alive && arena.sight(player.position, source->position)) {
+                        cancelMove();
+                        player.pullTarget = source->position;
+                        player.pullTime = 0.35f;
+                    }
                 }
                 p.alive = false;
             } else {
@@ -847,6 +755,7 @@ void Simulation::step(const Input &input, float dt) {
     updateEnemies(dt);
     rebuildGrid();
     updateProjectiles(dt);
+    updateHazards(dt);
     drainEvents();
     for (auto &v : visuals)
         v.life -= dt;
