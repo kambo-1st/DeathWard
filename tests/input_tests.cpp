@@ -93,11 +93,25 @@ int main() {
         check(!game.campaign.data().pending && game.campaign.data().history.empty(),
               "town exploration does not create a pending mission or a campaign outcome");
         const auto blackCreekArrival = game.town.spawn;
-        click(590, 734);
-        click(620, 624);
+        const auto travelAngle = cameraAngle();
+        const auto travelRadius = dw::distance(game.camera.position, game.camera.target);
+        mouseEvent(MouseWheel, 0, 3);
+        frame(1050, 734);
+        frame(1050, 734, false, false, true);
+        frame(1120, 734, false, false, true);
+        frame(1050, 734);
+        check(dw::distance(travelAngle, cameraAngle()) < .0001f &&
+                  std::abs(dw::distance(game.camera.position, game.camera.target) - travelRadius) < .001f,
+              "the hub travel control blocks camera zoom and rotation behind it");
+        const auto beforeTravel = game.town.player.position;
+        frame(1050, 734, true);
+        check(game.activeHub == dw::HubKind::BlackCreek && !game.town.destination() &&
+                  dw::distance(beforeTravel, game.town.player.position) < .001f,
+              "pressing hub travel does not move the character or click through to the ground");
+        frame(1050, 734);
         check(game.activeHub == dw::HubKind::Frontier && game.screen == dw::Screen::Hub && !game.paused &&
                   game.town.loaded() && dw::distance(blackCreekArrival, game.town.spawn) > 20,
-              "pause-screen travel switches to the separate Frontier scene and navigation");
+              "the visible travel button switches directly to Frontier's scene and navigation");
         const auto frontierArrival = game.town.player.position;
         mouseEvent(KeyDown, KEY_W);
         for (int i = 0; i < 20; ++i)
@@ -117,12 +131,19 @@ int main() {
         check(game.editorRequested && game.hubDirectory().filename() == "frontier",
               "Frontier's editor targets its own pack instead of the first town");
         game.editorRequested = false;
-        click(590, 734);
-        click(620, 624);
+        click(1050, 734);
         check(game.activeHub == dw::HubKind::BlackCreek &&
                   dw::distance(game.town.spawn, blackCreekArrival) < .001f && !game.campaign.data().pending &&
                   game.campaign.data().history.empty(),
-              "travel back restores Black Creek without creating a campaign outcome");
+              "the visible return button restores Black Creek without creating a campaign outcome");
+        click(590, 734);
+        click(620, 624);
+        check(game.activeHub == dw::HubKind::Frontier && !game.paused,
+              "pause-screen travel remains available alongside the visible hub button");
+        click(590, 734);
+        click(620, 624);
+        check(game.activeHub == dw::HubKind::BlackCreek && !game.paused,
+              "pause-screen return travel remains available");
         pressKey(KEY_F4);
         check(game.editorRequested && game.screen == dw::Screen::Hub && !game.run &&
                   !game.campaign.data().pending,

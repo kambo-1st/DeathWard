@@ -2,7 +2,7 @@
 
 This second hub imports `PolygonWesternFrontier/Scenes/Demo.unity` from the supplied Unity project. Its authored village, fort, quarry, river, rocks, vegetation and background scenery keep their original placement and scale. Black Creek remains available as the first hub.
 
-Start with `./build/deathward --hub frontier`, or choose **Pause → Travel to Frontier** in Black Creek. The same button returns to Black Creek. Hub choice persists for the session, including mission departure and return. Both locations share the campaign. The only added scene objects are the playable bandit and the mission board; the imported scenery is not rearranged.
+Start with `./build/deathward --hub frontier`, or use **Travel to Frontier** at the bottom right while exploring Black Creek. In Frontier, the button becomes **Travel to Black Creek**. Both destinations are also available from Pause. Hub choice persists for the session, including mission departure and return. Both locations share the campaign. The only added scene objects are the playable bandit and the mission board; the imported scenery is not rearranged.
 
 ## Import fidelity
 

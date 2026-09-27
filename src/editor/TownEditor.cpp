@@ -559,7 +559,7 @@ void TownEditor::draw() {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
     scene_.prepareLighting(camera);
-    postProcess_.begin({142, 174, 188, 255});
+    postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target));
     BeginMode3D(camera);
     scene_.draw(camera.target);
     scene_.draw(camera.target, true);

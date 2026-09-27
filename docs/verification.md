@@ -1,5 +1,17 @@
 # Milestone 1 verification
 
+## Direct hub travel
+
+Both hubs now show a destination button at the bottom right during exploration: Travel to Frontier or Travel to Black Creek. Pause-screen travel remains available. Retreat, history and expedition-return labels follow the selected hub. Both locations share campaign progress, and missions return to their departure hub.
+
+The Release build and full graphics input suite pass, including direct travel in both directions, pause-screen travel, blocking ground clicks and camera gestures over the new control, Frontier movement, editor selection and mission return. Both hub layouts were rendered and visually checked. Logs and captures use `artifacts/hub-travel-*`.
+
+## Gentle blur and distance fog
+
+The world composite blends a 1.25-pixel cross filter at 22% strength for light softening. A sampled depth texture supplies perspective eye distance for lavender haze, starting near the camera's focal distance and capped at 18% opacity. The focal distance follows zoom; nearby geometry retains contrast. Menus, labels and health bars remain outside both effects. The pass adds no extra render targets or blur passes beyond the existing bloom pipeline.
+
+The Release build and expanded post-processing graphics suite pass. New pixel checks verify a softened edge with retained contrast, stronger fog on an otherwise identical distant surface, and exact UI pixels after fog and blur; the existing palette, bloom, resize and resource-reload checks also pass. Logs and previews use `artifacts/soft-fog-*`.
+
 ## Reference palette and post processing
 
 The world now renders through an HDR color target, a quarter-resolution highlight extraction and separable bloom blur, then a composite with edge antialiasing, amber/plum split toning, richer saturation, soft highlight compression and a restrained vignette. Both hubs, generated missions and the town editor share the treatment. Menus, text, mission labels and enemy health bars render after the composite. Window resizing recreates the targets; resource/shader failure falls back to direct world rendering.

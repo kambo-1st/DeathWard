@@ -325,7 +325,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     westernScene_.prepare(run.arena);
     const auto &theme = missionTheme(run.arena.theme);
     const bool canyon = run.arena.theme == MissionTheme::Canyon;
-    postProcess_.begin(theme.sky);
+    postProcess_.begin(theme.sky, distance(camera.position, camera.target));
     BeginMode3D(camera);
     DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
     if (westernScene_.loaded() || westernScene_.terrainReady())
@@ -568,7 +568,7 @@ Action Renderer::hub(const Game &game) {
     playerModel_.update(town.player, town.time, &town);
     townScene_.prepareLighting(game.camera,
                                [&](Shader depth) { playerModel_.draw(town.player, false, depth); });
-    postProcess_.begin(Color{154, 186, 199, 255});
+    postProcess_.begin(Color{154, 186, 199, 255}, distance(game.camera.position, game.camera.target));
     BeginMode3D(game.camera);
     townScene_.draw(town.player.position);
     const auto board = town.mission;
@@ -607,6 +607,10 @@ Action Renderer::hub(const Game &game) {
             return Action::History;
         if (button("PAUSE", 496, 712, 188, 44))
             return Action::Pause;
+        panel(856, 700, 400, 76, Panel);
+        if (button(game.activeHub == HubKind::BlackCreek ? "TRAVEL TO FRONTIER" : "TRAVEL TO BLACK CREEK",
+                   870, 712, 372, 44))
+            return Action::TravelHub;
     }
     if (game.debug && game.debugPanelOpen && !game.missionMenu && !game.paused) {
         panel(24, 140, 456, 105, Panel);
@@ -806,19 +810,22 @@ Action Renderer::expedition(const Game &game) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
         panel(407, 240, 466, 318, Panel);
         text("TAKE A BREATH", 435, 269, 30, Paper);
-        wrap("Retreat ends your build and changes Black Creek. Closing the game also counts as retreat.", 436,
+        wrap("Retreat ends your build and changes the town. Closing the game also counts as retreat.", 436,
              326, 402, 17, Muted);
         text("Click to move, attack or interact. Shift holds position.", 436, 389, 12, Muted);
         text("Hold middle + drag to rotate. Scroll to zoom. Space dodges.", 436, 407, 11, Muted);
         if (button("KEEP GOING   [ESC]", 436, 423, 408, 45, true))
             return Action::Resume;
-        if (button("RETREAT TO BLACK CREEK   [T]", 436, 486, 408, 45))
+        if (button(game.activeHub == HubKind::BlackCreek ? "RETREAT TO BLACK CREEK   [T]"
+                                                         : "RETREAT TO FRONTIER   [T]",
+                   436, 486, 408, 45))
             return Action::Retreat;
     }
     return controls;
 }
 Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
-    text(history ? "BLACK CREEK / RUN HISTORY" : "BLACK CREEK / EXPEDITION RESOLVED", 60, 42, 14, Gold);
+    text(std::string(hubName(game.activeHub)) + (history ? " / RUN HISTORY" : " / EXPEDITION RESOLVED"), 60,
+         42, 14, Gold);
     text(outcomeTitle(s), 58, 92, 38, Paper);
     text("RUN " + number(s.id) + "  /  SEED " + number(s.seed) + "  /  " + timeLabel(s.stats.duration) +
              "  /  " + s.expedition + (s.interrupted ? "  /  PARTIAL CHECKPOINT" : ""),
@@ -858,7 +865,8 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
         y += line.size() > 68 ? 49 : 32;
     }
     text("THE BUILD IS GONE. THE CONSEQUENCES REMAIN.", 60, 693, 23, Gold);
-    if (button("RETURN TO BLACK CREEK", 60, 740, 341, 42, true))
+    if (button(game.activeHub == HubKind::BlackCreek ? "RETURN TO BLACK CREEK" : "RETURN TO FRONTIER", 60,
+               740, 341, 42, true))
         return Action::Hub;
     if (history) {
         text(std::to_string(game.historyIndex + 1) + " / " +
@@ -940,7 +948,8 @@ Action Renderer::draw(const Game &game) {
         else {
             text("NO EXPEDITIONS YET", 80, 140, 40, Paper);
             text("Bring back a story worth remembering.", 82, 211, 20, Muted);
-            if (button("BACK TO BLACK CREEK", 82, 290, 365, 51, true))
+            if (button(game.activeHub == HubKind::BlackCreek ? "BACK TO BLACK CREEK" : "BACK TO FRONTIER", 82,
+                       290, 365, 51, true))
                 action = Action::Hub;
         }
         break;

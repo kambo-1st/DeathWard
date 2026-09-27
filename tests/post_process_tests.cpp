@@ -46,6 +46,43 @@ void verify(dw::PostProcess &post) {
     check(int(near.r) + near.g + near.b > int(far.r) + far.g + far.b + 3,
           "bright geometry produces a local bloom halo without lighting the whole frame");
     UnloadImage(frame);
+
+    BeginDrawing();
+    post.begin({40, 40, 40, 255});
+    DrawRectangle(w / 2, 0, w - w / 2, h, {100, 100, 100, 255});
+    post.end();
+    frame = LoadImageFromScreen();
+    EndDrawing();
+    const auto edge = GetImageColor(frame, w / 2 - 1, h / 2), flat = GetImageColor(frame, w / 2 - 10, h / 2);
+    const auto lightSide = GetImageColor(frame, w / 2 + 10, h / 2);
+    check(edge.g > flat.g && edge.g < lightSide.g,
+          "gentle blur softens an edge without flattening its contrast");
+    UnloadImage(frame);
+
+    const Camera3D camera{{0, 0, 0}, {0, 0, -1}, {0, 1, 0}, 45, CAMERA_PERSPECTIVE};
+    const Vector3 nearPosition{-5, 0, -20}, farPosition{25, 0, -100};
+    BeginDrawing();
+    post.begin(BLACK, 20);
+    BeginMode3D(camera);
+    // Equal screen-size/color surfaces at different distances isolate depth-based haze.
+    DrawCube(nearPosition, 8, 8, .1f, {50, 60, 70, 255});
+    DrawCube(farPosition, 40, 40, .1f, {50, 60, 70, 255});
+    EndMode3D();
+    post.end();
+    DrawRectangle(2, 2, 25, 20, ui);
+    rlDrawRenderBatchActive();
+    frame = LoadImageFromScreen();
+    EndDrawing();
+    const auto a = GetWorldToScreen(nearPosition, camera), b = GetWorldToScreen(farPosition, camera);
+    const auto closeColor = GetImageColor(frame, int(a.x), int(a.y));
+    const auto distantColor = GetImageColor(frame, int(b.x), int(b.y));
+    check(int(distantColor.r) + distantColor.g + distantColor.b >
+              int(closeColor.r) + closeColor.g + closeColor.b + 20,
+          "fog lifts distant geometry more than the near focal area");
+    const auto fogUI = GetImageColor(frame, 10, 10);
+    check(fogUI.r == ui.r && fogUI.g == ui.g && fogUI.b == ui.b,
+          "depth fog and blur leave UI pixels unchanged");
+    UnloadImage(frame);
 }
 } // namespace
 int main() {
@@ -70,7 +107,8 @@ int main() {
             post.unload();
         }
         CloseWindow();
-        std::cout << "PASS color grading, bloom locality, image orientation, unchanged UI, resize and "
+        std::cout << "PASS color grading, bloom locality, gentle blur, depth fog, image orientation, "
+                     "unchanged UI, resize and "
                      "resource reload\n";
         return 0;
     } catch (const std::exception &error) {

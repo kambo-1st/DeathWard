@@ -38,7 +38,11 @@ constexpr const char *Composite = R"GLSL(#version 330
 in vec2 fragTexCoord;
 uniform sampler2D texture0;
 uniform sampler2D bloomMap;
+uniform sampler2D depthMap;
 uniform vec2 texel;
+uniform vec2 nearFar;
+uniform float fogStart;
+uniform int fogEnabled;
 out vec4 finalColor;
 float luminance(vec3 c) { return dot(c,vec3(.299,.587,.114)); }
 vec3 antialias(vec2 uv) {
@@ -61,7 +65,14 @@ vec3 antialias(vec2 uv) {
 }
 void main() {
     vec2 uv = fragTexCoord;
-    vec3 c = antialias(uv) + texture(bloomMap,uv).rgb*.42;
+    // A small cross filter softens fine detail without defocusing the character or cover edges.
+    vec2 blurStep = texel*1.25;
+    vec3 soft = texture(texture0,uv).rgb*.4;
+    soft += (texture(texture0,uv+vec2(blurStep.x,0.)).rgb +
+             texture(texture0,uv-vec2(blurStep.x,0.)).rgb +
+             texture(texture0,uv+vec2(0.,blurStep.y)).rgb +
+             texture(texture0,uv-vec2(0.,blurStep.y)).rgb)*.15;
+    vec3 c = mix(antialias(uv),soft,.22) + texture(bloomMap,uv).rgb*.42;
     c *= 1.10;
     float luma = luminance(c);
     // Reference palette: lifted plum shadows, saturated amber mids, creamy gold highlights.
@@ -72,6 +83,12 @@ void main() {
     // A soft highlight shoulder retains the color of bright sand and pale roof tiles.
     c = max(c,vec3(0.));
     c /= 1.+max(c-.72,vec3(0.))*.60;
+    if (fogEnabled != 0) {
+        float depth = texture(depthMap,uv).r;
+        float eyeDistance = nearFar.x*nearFar.y / (nearFar.y-depth*(nearFar.y-nearFar.x));
+        float fog = .18*(1.-exp(-max(eyeDistance-fogStart,0.)/32.));
+        c = mix(c,vec3(.68,.58,.64),fog);
+    }
     float vignette = smoothstep(.24,.72,length(uv-.5))*.16;
     c = mix(c,c*vec3(.82,.76,.92)+vec3(.025,.008,.04),vignette);
     finalColor = vec4(clamp(c,0.,1.),1.);
@@ -85,8 +102,8 @@ RenderTexture2D target(int width, int height, bool depth) {
     result.texture = {rlLoadTexture(nullptr, width, height, PIXELFORMAT_UNCOMPRESSED_R16G16B16A16, 1), width,
                       height, 1, PIXELFORMAT_UNCOMPRESSED_R16G16B16A16};
     if (depth) {
-        result.depth = {rlLoadTextureDepth(width, height, true), width, height, 1, 0};
-        rlFramebufferAttach(result.id, result.depth.id, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_RENDERBUFFER, 0);
+        result.depth = {rlLoadTextureDepth(width, height, false), width, height, 1, 0};
+        rlFramebufferAttach(result.id, result.depth.id, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_TEXTURE2D, 0);
     }
     rlFramebufferAttach(result.id, result.texture.id, RL_ATTACHMENT_COLOR_CHANNEL0, RL_ATTACHMENT_TEXTURE2D,
                         0);
@@ -145,8 +162,9 @@ void PostProcess::resize(int width, int height) {
         TraceLog(LOG_WARNING, "POST: Framebuffer unavailable; using direct world rendering");
     }
 }
-void PostProcess::begin(Color background) {
+void PostProcess::begin(Color background, float focusDistance) {
     resize(std::max(1, GetRenderWidth()), std::max(1, GetRenderHeight()));
+    focusDistance_ = focusDistance;
     active_ = ready();
     if (active_)
         BeginTextureMode(scene_);
@@ -172,8 +190,15 @@ void PostProcess::end() {
     filter(bloom_[1].texture, bloom_[0], 0, {0, 2.0f});
     const Vector2 texel{1.0f / width_, 1.0f / height_};
     SetShaderValue(composite_, GetShaderLocation(composite_, "texel"), &texel, SHADER_UNIFORM_VEC2);
+    const Vector2 nearFar{float(rlGetCullDistanceNear()), float(rlGetCullDistanceFar())};
+    const float fogStart = std::max(12.0f, focusDistance_ * .85f);
+    const int fogEnabled = focusDistance_ > 0;
+    SetShaderValue(composite_, GetShaderLocation(composite_, "nearFar"), &nearFar, SHADER_UNIFORM_VEC2);
+    SetShaderValue(composite_, GetShaderLocation(composite_, "fogStart"), &fogStart, SHADER_UNIFORM_FLOAT);
+    SetShaderValue(composite_, GetShaderLocation(composite_, "fogEnabled"), &fogEnabled, SHADER_UNIFORM_INT);
     BeginShaderMode(composite_);
     SetShaderValueTexture(composite_, GetShaderLocation(composite_, "bloomMap"), bloom_[0].texture);
+    SetShaderValueTexture(composite_, GetShaderLocation(composite_, "depthMap"), scene_.depth);
     screenQuad(scene_.texture, GetScreenWidth(), GetScreenHeight());
     EndShaderMode();
     active_ = false;

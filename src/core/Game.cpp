@@ -414,7 +414,7 @@ bool Game::pointerOverControls() const {
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
     if (screen == Screen::Hub)
         return missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
-               (x >= 24 && x <= 700 && y >= 700) ||
+               (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 700) ||
                (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
     return (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
