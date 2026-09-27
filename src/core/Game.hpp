@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/Simulation.hpp"
+#include "world/HubWorld.hpp"
 #include <memory>
 
 namespace dw {
@@ -19,13 +20,18 @@ enum class Action {
     Reward1,
     Previous,
     Next,
-    Reset
+    Reset,
+    Missions,
+    CloseMissions,
+    NewSeed
 };
 class Game {
   public:
     explicit Game(const std::filesystem::path &save);
     CampaignStore campaign;
     std::unique_ptr<Simulation> run;
+    HubWorld town;
+    bool missionMenu = false, walkingToMission = false;
     Screen screen = Screen::Hub;
     RunSummary lastSummary;
     Camera3D camera{};
@@ -59,5 +65,7 @@ class Game {
     void resetPointerInput();
     void debugInput();
     void checkpoint();
+    void updateHub(float dt);
+    void newSeed();
 };
 } // namespace dw

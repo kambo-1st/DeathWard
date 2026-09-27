@@ -547,68 +547,89 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
 }
 Action Renderer::hub(const Game &game) {
+    const auto &town = game.town;
     const auto &world = game.campaign.data().world;
-    // The hub is intentionally a status screen; the expedition carries the 3D experiment.
-    for (int i = 0; i < 18; ++i)
-        DrawLine(int((float(i) * 95 - 200) * sx_), 0, int((float(i) * 95 + 180) * sx_), GetScreenHeight(),
-                 Color{25, 32, 34, 255});
-    text("BLACK CREEK  /  FRONTIER TERRITORY", 58, 40, 16, Gold);
-    text("DEATHWARD", 54, 92, 76, Paper);
-    text("POWER IS BORROWED.", 58, 185, 27, Muted);
-    text("THE TOWN REMEMBERS.", 58, 222, 27, Paper);
-    wrap("Six miners below ground. A dead man's badge. Every expedition leaves something behind.", 60, 286,
-         575, 20, Muted);
-    const std::array<std::pair<const char *, int>, 3> metrics{
-        {{"POPULATION", world.population}, {"PROSPERITY", world.prosperity}, {"LAW", world.law}}};
-    for (size_t i = 0; i < metrics.size(); ++i) {
-        float x = 60 + float(i) * 199;
-        panel(x, 376, 181, 102, Panel);
-        text(metrics[i].first, x + 16, 391, 13, Muted);
-        text(std::to_string(metrics[i].second), x + 16, 417, 34, Paper);
+    ClearBackground(Color{154, 186, 199, 255});
+    playerModel_.update(town.player, town.time, &town);
+    BeginMode3D(game.camera);
+    townScene_.draw(town.player.position);
+    const auto board = town.mission;
+    DrawCylinder({board.x, board.y, board.z}, .09f, .12f, 1.8f, 6, Color{62, 42, 30, 255});
+    DrawCube({board.x, board.y + 1.6f, board.z}, 1.5f, .95f, .12f, Color{91, 62, 39, 255});
+    DrawCube({board.x, board.y + 1.6f, board.z + .075f}, 1.05f, .65f, .025f, Paper);
+    DrawCircle3D({board.x, board.y + .06f, board.z}, 1.2f, {1, 0, 0}, 90, Gold);
+    if (playerModel_.loaded())
+        playerModel_.draw(town.player);
+    else
+        cowboy(town.player.position, town.player.facing, Teal, 1);
+    if (auto target = town.destination())
+        DrawCircle3D(add(*target, {0, .06f, 0}), .4f, {1, 0, 0}, 90, Teal);
+    if (game.collisionDebug)
+        for (auto p : town.route())
+            DrawCube(add(p, {0, .07f, 0}), .16f, .1f, .16f, Teal);
+    townScene_.draw(town.player.position, true);
+    EndMode3D();
+    const auto at = GetWorldToScreen(add(board, {0, 2.7f, 0}), game.camera);
+    if (at.x > 0 && at.x < GetScreenWidth() && at.y > 0 && at.y < GetScreenHeight()) {
+        panel(at.x / sx_ - 48, at.y / sy_ - 10, 96, 24, Panel);
+        text("MISSIONS", at.x / sx_ - 36, at.y / sy_ - 4, 13, Gold);
     }
-    text("VOICES FROM BLACK CREEK", 60, 516, 14, Gold);
-    for (size_t i = 0; i < world.npcs.size(); ++i) {
-        float y = 550 + float(i) * 39;
-        text(world.npcs[i].name, 60, y, 15, Paper);
-        std::string line = npcDialogue(world, i);
-        if (line.size() > 57)
-            line = line.substr(0, 54) + "...";
-        text(line, 206, y + 1, 13, Muted);
+    panel(24, 24, 386, 98, Panel);
+    text("BLACK CREEK", 42, 38, 28, Paper);
+    text("HOME / THE TOWN REMEMBERS", 43, 73, 12, Gold);
+    text("PEOPLE " + std::to_string(world.population) + "   PROSPERITY " + std::to_string(world.prosperity) +
+             "   LAW " + std::to_string(world.law),
+         43, 98, 11, Muted);
+    if (!game.missionMenu && !game.paused) {
+        panel(24, 700, 676, 76, Panel);
+        if (button(game.walkingToMission ? "WALKING TO STATION" : "MISSIONS", 38, 712, 255, 44, true))
+            return Action::Missions;
+        if (button("RUN HISTORY", 305, 712, 179, 44))
+            return Action::History;
+        if (button("PAUSE", 496, 712, 188, 44))
+            return Action::Pause;
     }
-    panel(732, 65, 488, 613, Panel);
-    text("EXPEDITION 01", 760, 91, 14, Gold);
-    text("RED HOLLOW", 757, 131, 43, Paper);
-    text("MINE", 758, 181, 43, Paper);
-    text(world.mineOpen                         ? "OPEN / THE WORK CONTINUES"
-         : world.flags.contains("mine_setback") ? "CLOSED / A CHANCE TO MAKE AMENDS"
-                                                : "SILENT / SIX SOULS BELOW",
-         760, 244, 13, world.mineOpen ? Teal : Rust);
-    DrawLine(int(760 * sx_), int(281 * sy_), int(1192 * sx_), int(281 * sy_), Border);
-    wrap(world.bossDefeated
-             ? "The Sheriff is gone. Return for unfinished rescues, silence the altar, and restore the mine."
-             : "Face the Hollow Sheriff. Bring the miners home. Break the altar if you can.",
-         760, 302, 415, 20, Paper);
-    wrap("Retreat costs the town. Lost ground can be recovered. Your temporary build ends with the "
-         "expedition.",
-         760, 398, 410, 16, Muted);
-    panel(760, 479, 432, 59, Ink);
-    text("SEED", 777, 490, 12, Muted);
-    text(game.seedText.empty() ? "Type a seed..." : game.seedText, 777, 509, 19, Gold);
-    text("Type digits / Backspace to edit / N for a new seed", 761, 548, 12, Muted);
-    if (button("ENTER THE MINE   [ENTER]", 760, 584, 432, 60, true))
-        return Action::Launch;
-    if (button("RUN HISTORY   [H]", 732, 700, 238, 48))
-        return Action::History;
-    if (button("QUIT", 986, 700, 234, 48))
-        return Action::Quit;
-    text("F1 / CHEAT MODE", 60, 771, 11, game.debug ? Teal : Muted);
-    text("Click to move/attack/interact. Shift holds position. WASD moves. Space dodges. Wheel zooms.", 378,
-         772, 11, Muted);
-    if (game.debug && game.debugPanelOpen) {
-        panel(60, 660, 612, 89, Ink);
-        text("CHEATS ON / F1 off / G toggles the haunting flag", 76, 674, 14, Teal);
-        if (button(game.resetArmed ? "CONFIRM RESET (backup saved)" : "RESET CAMPAIGN", 76, 702, 360, 34))
+    if (game.debug && game.debugPanelOpen && !game.missionMenu && !game.paused) {
+        panel(24, 140, 456, 105, Panel);
+        text("CHEATS ON / F10 route / G haunting", 40, 157, 13, Teal);
+        if (button(game.resetArmed ? "CONFIRM RESET (backup saved)" : "RESET CAMPAIGN", 40, 189, 420, 38))
             return Action::Reset;
+    }
+    if (game.missionMenu) {
+        panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
+        panel(240, 104, 800, 588, Panel);
+        text("THE STATION / MISSIONS", 270, 130, 17, Gold);
+        text("RED HOLLOW MINE", 267, 173, 38, Paper);
+        wrap(world.bossDefeated
+                 ? "Return to the mine. Bring home anyone still missing and settle unfinished business."
+                 : "Bring the miners home, break the altar and face the Hollow Sheriff.",
+             270, 238, 727, 21, Paper);
+        wrap("A new expedition through fifteen changing rooms. Your temporary powers end when you return; "
+             "Black Creek keeps the consequences.",
+             270, 323, 727, 17, Muted);
+        panel(270, 402, 460, 65, Ink);
+        text("MISSION SEED", 287, 413, 12, Muted);
+        text(game.seedText.empty() ? "Type a seed..." : game.seedText, 287, 437, 20, Gold);
+        if (button("NEW MISSION", 748, 408, 260, 51))
+            return Action::NewSeed;
+        text("Type a seed to revisit a layout. New missions choose a fresh one.", 270, 482, 13, Muted);
+        if (button("LEAVE FOR THE MINE", 270, 529, 738, 59, true))
+            return Action::Launch;
+        if (button("BACK TO TOWN", 270, 609, 738, 43))
+            return Action::CloseMissions;
+    } else if (game.paused) {
+        panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
+        panel(344, 134, 592, 522, Panel);
+        text("BLACK CREEK", 377, 167, 35, Paper);
+        wrap("Walk with WASD or click the ground. Scroll to zoom. Visit the station for missions; press "
+             "Escape to pause.",
+             378, 226, 514, 17, Muted);
+        for (size_t i = 0; i < world.npcs.size(); ++i)
+            wrap(world.npcs[i].name + ": " + npcDialogue(world, i), 378, 310 + float(i) * 48, 514, 13, Paper);
+        if (button("KEEP EXPLORING", 378, 485, 514, 50, true))
+            return Action::Resume;
+        if (button("QUIT", 378, 557, 514, 43))
+            return Action::Quit;
     }
     return Action::None;
 }

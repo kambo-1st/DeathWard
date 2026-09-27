@@ -153,18 +153,19 @@ Transform PlayerModel::sample(PlayerAnimation animation, float seconds, int bone
     return blend(clip.frames[first][size_t(bone)], clip.frames[next][size_t(bone)], frame - float(first));
 }
 void PlayerModel::update(const Simulation &run, float deathTime) {
+    update(run.player, run.stats.duration + deathTime, &run, run.dead, deathTime);
+}
+void PlayerModel::update(const Player &player, double time, const void *context, bool dead, float deathTime) {
     if (!attempted_)
         load();
     if (!loaded())
         return;
-    const double time = run.stats.duration + deathTime;
-    const bool reset = lastRun_ != &run || lastTime_ < 0 || time < lastTime_;
+    const bool reset = lastRun_ != context || lastTime_ < 0 || time < lastTime_;
     const float dt = reset ? 0 : float(time - lastTime_);
-    lastRun_ = &run;
+    lastRun_ = context;
     lastTime_ = time;
-    const auto &player = run.player;
     const float speed = length(player.velocity);
-    const bool firing = player.shootPose > 0 && !run.dead;
+    const bool firing = player.shootPose > 0 && !dead;
     PlayerAnimation desired = speed > 3.5f   ? PlayerAnimation::Run
                               : speed > 0.1f ? PlayerAnimation::Walk
                                              : PlayerAnimation::Idle;
@@ -172,7 +173,7 @@ void PlayerModel::update(const Simulation &run, float deathTime) {
         desired = PlayerAnimation::Fire;
     if (player.dodge > 0)
         desired = player.dodgeMoving ? PlayerAnimation::DodgeSlide : PlayerAnimation::DodgeStanding;
-    if (run.dead)
+    if (dead)
         desired = player.shootPose > 0 ? PlayerAnimation::DeathRifle : PlayerAnimation::Death;
     const bool dodge = desired == PlayerAnimation::DodgeSlide || desired == PlayerAnimation::DodgeForward ||
                        desired == PlayerAnimation::DodgeStanding;
@@ -193,14 +194,14 @@ void PlayerModel::update(const Simulation &run, float deathTime) {
     phase_ += dt * playback;
     if (dodge)
         phase_ = duration(current_) * std::clamp(1 - player.dodge / 0.22f, 0.0f, 1.0f);
-    if (run.dead)
+    if (dead)
         phase_ = duration(current_) * std::clamp(deathTime / PlayerDeathSeconds, 0.0f, 1.0f);
     transition_ = std::min(1.0f, transition_ + dt / (dodge ? 0.035f : 0.12f));
     firePhase_ = firing ? firePhase_ + dt : 0;
     firingBlend_ = std::clamp(firingBlend_ + (firing ? 1 : -1) * dt / 0.10f, 0.0f, 1.0f);
-    const bool movingShot = !dodge && !run.dead && current_ != PlayerAnimation::Fire && firingBlend_ > 0;
+    const bool movingShot = !dodge && !dead && current_ != PlayerAnimation::Fire && firingBlend_ > 0;
     for (int bone = 0; bone < model_.boneCount; ++bone) {
-        Transform target = sample(current_, phase_, bone, !dodge && !run.dead);
+        Transform target = sample(current_, phase_, bone, !dodge && !dead);
         if (movingShot && upperBody_[size_t(bone)])
             target = blend(target, sample(PlayerAnimation::Fire, firePhase_, bone, true), firingBlend_);
         pose_[size_t(bone)] = reset ? target : blend(blendFrom_[size_t(bone)], target, transition_);
@@ -220,15 +221,19 @@ void PlayerModel::update(const Simulation &run, float deathTime) {
     yaw_ += std::remainder(targetYaw - yaw_, 2 * Pi) * (firing || dodge ? 1.0f : 1 - std::exp(-18 * dt));
 }
 Vector3 PlayerModel::worldPoint(Vector3 point, const Player &player) const {
-    return add({player.position.x, floorOffset_, player.position.z}, rotateY(mul(point, scale_), yaw_));
+    return add({player.position.x, player.position.y - .85f + floorOffset_, player.position.z},
+               rotateY(mul(point, scale_), yaw_));
 }
 void PlayerModel::draw(const Simulation &run) const {
+    draw(run.player, run.dead);
+}
+void PlayerModel::draw(const Player &player, bool dead) const {
     if (!loaded())
         return;
-    const auto &player = run.player;
-    DrawModelEx(model_, {player.position.x, floorOffset_, player.position.z}, {0, 1, 0}, yaw_ * RAD2DEG,
-                {scale_, scale_, scale_}, player.hurt > 0 ? Color{255, 155, 135, 255} : WHITE);
-    if (hand_ < 0 || run.dead)
+    DrawModelEx(model_, {player.position.x, player.position.y - .85f + floorOffset_, player.position.z},
+                {0, 1, 0}, yaw_ * RAD2DEG, {scale_, scale_, scale_},
+                player.hurt > 0 ? Color{255, 155, 135, 255} : WHITE);
+    if (hand_ < 0 || dead)
         return;
     const Vector3 hand = worldPoint(worldPose_[size_t(hand_)].translation, player);
     Vector3 forward = player.shootPose > 0 ? unit(sub(player.aim, player.position))

@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Game.hpp"
 #include "render/PlayerModel.hpp"
+#include "render/TownScene.hpp"
 #include "render/WesternScene.hpp"
 
 namespace dw {
@@ -12,12 +13,14 @@ class Renderer {
     void unload() {
         playerModel_.unload();
         westernScene_.unload();
+        townScene_.unload();
     }
 
   private:
     float sx_ = 1, sy_ = 1;
     PlayerModel playerModel_;
     WesternScene westernScene_;
+    TownScene townScene_;
     void text(const std::string &value, float x, float y, int size, Color color) const;
     void wrap(const std::string &value, float x, float y, float width, int size, Color color) const;
     void panel(float x, float y, float w, float h, Color color) const;

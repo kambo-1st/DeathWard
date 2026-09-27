@@ -18,6 +18,7 @@ FetchContent_Declare(raylib
 FetchContent_MakeAvailable(raylib)
 
 add_library(deathward_core
+    src/world/HubWorld.cpp
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
     src/world/RoomGraph.cpp
@@ -55,9 +56,17 @@ function(deathward_assets target)
             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${western_asset}" "$<TARGET_FILE_DIR:${target}>/assets/western/${western_file}"
             VERBATIM)
     endforeach()
+    foreach(town_file town.glb town.scene town.nav)
+        set(town_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/town/${town_file}")
+        set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${town_asset}")
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/town"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${town_asset}" "$<TARGET_FILE_DIR:${target}>/assets/town/${town_file}"
+            VERBATIM)
+    endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(NOT MSVC)
@@ -65,6 +74,10 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_hub_tests tests/hub_tests.cpp)
+    target_link_libraries(deathward_hub_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_hub_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_test(NAME imported_town_navigation COMMAND deathward_hub_tests)
     add_executable(deathward_tests tests/tests.cpp)
     target_link_libraries(deathward_tests PRIVATE deathward_core)
     add_test(NAME core_contracts COMMAND deathward_tests)
@@ -78,12 +91,15 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
     add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
-    add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp)
+    add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_input_tests)
     add_executable(deathward_player_model_tests tests/player_model_tests.cpp src/render/PlayerModel.cpp)
     target_link_libraries(deathward_player_model_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_player_model_tests)
+    add_executable(deathward_town_assets_tests tests/town_assets_tests.cpp src/render/TownScene.cpp)
+    target_link_libraries(deathward_town_assets_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_town_assets_tests)
     add_executable(deathward_western_assets_tests tests/western_assets_tests.cpp src/render/WesternScene.cpp)
     target_link_libraries(deathward_western_assets_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_western_assets_tests)

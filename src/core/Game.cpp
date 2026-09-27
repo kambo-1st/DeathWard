@@ -1,5 +1,6 @@
 #include "core/Game.hpp"
 #include "render/PlayerModel.hpp"
+#include "render/TownScene.hpp"
 #include <charconv>
 #include <chrono>
 
@@ -72,6 +73,10 @@ Game::Game(const std::filesystem::path &save) : campaign(save) {
     camera.up = {0, 1, 0};
     camera.fovy = 45;
     camera.projection = CAMERA_PERSPECTIVE;
+    if (!town.load(TownScene::assetDirectory() / "town.nav"))
+        error = town.error;
+    snapCamera();
+    newSeed();
 }
 void Game::launch() {
     uint64_t seed = 0;
@@ -83,6 +88,8 @@ void Game::launch() {
     auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world);
     campaign.begin(seed);
     run = std::move(candidate);
+    missionMenu = walkingToMission = false;
+    town.stop();
     screen = Screen::Expedition;
     deathTime = 0;
     paused = false;
@@ -104,6 +111,8 @@ void Game::finish(EndReason reason) {
         return;
     lastSummary = campaign.resolve(run->summary(), reason);
     run.reset();
+    town.reset();
+    newSeed();
     screen = Screen::Summary;
     paused = false;
     accumulator = 0;
@@ -133,13 +142,39 @@ void Game::perform(Action action) {
             screen = Screen::History;
             historyIndex = std::max(0, int(campaign.data().history.size()) - 1);
             break;
+        case Action::Missions:
+            if (screen == Screen::Hub && town.loaded()) {
+                if (town.nearMission()) {
+                    missionMenu = true;
+                    town.stop();
+                } else
+                    walkingToMission = town.moveTo(town.mission);
+            }
+            break;
+        case Action::CloseMissions:
+            missionMenu = false;
+            walkingToMission = false;
+            town.stop();
+            break;
+        case Action::NewSeed:
+            newSeed();
+            error.clear();
+            break;
         case Action::Hub:
+            missionMenu = walkingToMission = false;
+            paused = false;
+            town.stop();
             screen = Screen::Hub;
             resetArmed = false;
             error.clear();
+            snapCamera();
             break;
         case Action::Pause:
             paused = true;
+            if (screen == Screen::Hub) {
+                town.stop();
+                walkingToMission = false;
+            }
             break;
         case Action::Resume:
             paused = false;
@@ -278,16 +313,16 @@ void Game::debugInput() {
     }
 }
 void Game::snapCamera() {
-    camera.target = sub(run->player.position, {2 * cameraZoom_, 0, 2 * cameraZoom_});
-    camera.target.y = 0;
+    const auto position = run ? run->player.position : town.player.position;
+    camera.target = sub(position, {2 * cameraZoom_, .85f, 2 * cameraZoom_});
     camera.position = add(camera.target, mul(CameraOffset, cameraZoom_));
 }
 void Game::updateCamera(float dt) {
-    if (!run)
+    if (!run && !town.loaded())
         return;
     cameraZoom_ += (cameraZoomTarget_ - cameraZoom_) * (1 - std::exp(-12 * dt));
-    Vector3 target = sub(run->player.position, {2 * cameraZoom_, 0, 2 * cameraZoom_});
-    target.y = 0;
+    const auto position = run ? run->player.position : town.player.position;
+    Vector3 target = sub(position, {2 * cameraZoom_, .85f, 2 * cameraZoom_});
     camera.target = add(camera.target, mul(sub(target, camera.target), 1 - std::exp(-5 * dt)));
     camera.position = add(camera.target, mul(CameraOffset, cameraZoom_));
 }
@@ -295,30 +330,92 @@ bool Game::pointerOverControls() const {
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
+    if (screen == Screen::Hub)
+        return missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
+               (x >= 24 && x <= 700 && y >= 700) ||
+               (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
     return (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
+}
+void Game::newSeed() {
+    // Fresh offers each time the player returns, while retaining editable seeds
+    // for replaying a particular mission layout.
+    static Random seeds(uint64_t(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
+    seedText = std::to_string(seeds.next() % 1000000000);
+}
+void Game::updateHub(float dt) {
+    if (debug && IsKeyPressed(KEY_G)) {
+        const bool set = campaign.data().world.flags.contains("something_followed");
+        campaign.setFlag("something_followed", !set);
+    }
+    if (IsKeyPressed(KEY_H)) {
+        perform(Action::History);
+        return;
+    }
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        if (missionMenu)
+            perform(Action::CloseMissions);
+        else {
+            paused = !paused;
+            town.stop();
+            walkingToMission = false;
+        }
+    }
+    if (missionMenu) {
+        for (int c = GetCharPressed(); c; c = GetCharPressed())
+            if (c >= '0' && c <= '9' && seedText.size() < 20)
+                seedText.push_back(char(c));
+        if (IsKeyPressed(KEY_BACKSPACE) && !seedText.empty())
+            seedText.pop_back();
+        if (IsKeyPressed(KEY_N))
+            newSeed();
+        if (IsKeyPressed(KEY_ENTER))
+            perform(Action::Launch);
+        return;
+    }
+    if (paused || !town.loaded())
+        return;
+    const bool over = pointerOverControls();
+    if (!over) {
+        const float wheel = std::clamp(GetMouseWheelMoveV().y, -20.0f, 20.0f);
+        cameraZoomTarget_ =
+            std::clamp(cameraZoomTarget_ * std::exp(-wheel * .12f), MinCameraZoom, MaxCameraZoom);
+    }
+    Vector3 forward = unit({camera.target.x - camera.position.x, 0, camera.target.z - camera.position.z});
+    Vector3 right{-forward.z, 0, forward.x};
+    Vector3 movement = add(mul(forward, float(IsKeyDown(KEY_W)) - float(IsKeyDown(KEY_S))),
+                           mul(right, float(IsKeyDown(KEY_D)) - float(IsKeyDown(KEY_A))));
+    if (length(movement) > .01f)
+        walkingToMission = false;
+    mouseMoveCooldown_ = std::max(0.0f, mouseMoveCooldown_ - dt);
+    if (!over && IsMouseButtonDown(MOUSE_BUTTON_LEFT) &&
+        (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || mouseMoveCooldown_ <= 0)) {
+        Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
+        const auto p = town.mission;
+        if (GetRayCollisionBox(ray, {{p.x - 1, p.y, p.z - 1}, {p.x + 1, p.y + 3, p.z + 1}}).hit)
+            perform(Action::Missions);
+        else if (auto point = town.pickGround(ray)) {
+            town.moveTo(*point);
+            walkingToMission = false;
+        }
+        mouseMoveCooldown_ = .15f;
+    }
+    if (IsKeyPressed(KEY_E) || IsKeyPressed(KEY_ENTER))
+        perform(Action::Missions);
+    town.step(movement, std::min(dt, .1f));
+    if (walkingToMission && town.nearMission()) {
+        walkingToMission = false;
+        missionMenu = true;
+        town.stop();
+    }
+    updateCamera(dt);
 }
 void Game::update(float dt) {
     try {
         debugInput();
         if (screen == Screen::Hub) {
-            for (int c = GetCharPressed(); c; c = GetCharPressed())
-                if (c >= '0' && c <= '9' && seedText.size() < 20)
-                    seedText.push_back(char(c));
-            if (IsKeyPressed(KEY_BACKSPACE) && !seedText.empty())
-                seedText.pop_back();
-            if (IsKeyPressed(KEY_N))
-                seedText = std::to_string(
-                    uint64_t(std::chrono::system_clock::now().time_since_epoch().count()) % 1000000000);
-            if (IsKeyPressed(KEY_ENTER))
-                perform(Action::Launch);
-            if (IsKeyPressed(KEY_H))
-                perform(Action::History);
-            if (debug && IsKeyPressed(KEY_G)) {
-                bool set = campaign.data().world.flags.contains("something_followed");
-                campaign.setFlag("something_followed", !set);
-            }
+            updateHub(dt);
             return;
         }
         if (screen == Screen::Summary) {

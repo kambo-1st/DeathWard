@@ -44,6 +44,8 @@ def documents(path):
     headers = re.findall(r"^--- !u!(\d+) &(-?\d+)(?: stripped)?", text, re.M)
     text = re.sub(r"^%.*\n", "", text, flags=re.M)
     text = re.sub(r"^--- !u!\d+ &-?\d+(?: stripped)?", "---", text, flags=re.M)
+    # Unity's hexadecimal buffers are strings even when they contain digits only.
+    text = re.sub(r'^(\s*(?:m_IndexBuffer|_typelessdata):) (.*)$', r'\1 "\2"', text, flags=re.M)
     loader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
     return [(int(kind), int(key), next(iter(doc.values())))
             for (kind, key), doc in zip(headers, yaml.load_all(text, Loader=loader))]

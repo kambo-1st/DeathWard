@@ -62,6 +62,8 @@ int main(int argc, char **argv) {
     }
     try {
         dw::Game game(save);
+        if (smoke || benchmark)
+            game.seedText = "1866";
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
         InitWindow(1440, 900, "DeathWard | The consequences remain");
         if (!IsWindowReady())

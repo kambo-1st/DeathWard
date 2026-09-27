@@ -55,7 +55,41 @@ int main() {
             frame();
         };
         frame();
-        click(950, 615);
+        check(game.screen == dw::Screen::Hub && !game.run && game.town.loaded(),
+              "new games start in the walkable original town without beginning a campaign run");
+        check(!game.campaign.data().pending && game.campaign.data().history.empty(),
+              "town exploration does not create a pending mission or a campaign outcome");
+        const auto arrival = game.town.player.position;
+        mouseEvent(KeyDown, KEY_W);
+        for (int i = 0; i < 20; ++i)
+            frame(700, 400);
+        mouseEvent(KeyUp, KEY_W);
+        frame();
+        check(dw::distance(arrival, game.town.player.position) > .3f &&
+                  game.town.walkable(game.town.player.position),
+              "WASD walks through the hub on imported terrain");
+        auto arrivalScreen = GetWorldToScreen(game.town.spawn, game.camera);
+        click(int(arrivalScreen.x), int(arrivalScreen.y));
+        for (int i = 0; i < 180; ++i)
+            frame();
+        check(dw::distance(game.town.player.position, arrival) < .7f,
+              "clicking town terrain routes the character to the correct elevation");
+        click(140, 735);
+        for (int i = 0; i < 1800 && !game.missionMenu; ++i)
+            frame();
+        check(game.missionMenu && game.town.nearMission() && !game.run,
+              "missions button walks to the station and opens mission selection on arrival");
+        check(dw::distance(arrival, game.town.player.position) > 2,
+              "the town character moves through the scene before selecting a mission");
+        const auto firstSeed = game.seedText;
+        click(850, 433);
+        check(game.seedText != firstSeed && !game.run, "new mission chooses a fresh seed without launching");
+        game.seedText = "invalid";
+        click(650, 550);
+        check(!game.run && game.missionMenu && !game.error.empty(),
+              "invalid seeds preserve the mission menu");
+        game.seedText = "1866";
+        click(650, 550);
         check(game.run && game.screen == dw::Screen::Expedition, "mouse launch opens expedition");
         check(game.debug && !game.debugPanelOpen && game.run->roomClear && game.run->livingEnemies() == 0,
               "new games start with hidden cheats enabled and an open, enemy-free starting room");
@@ -242,6 +276,10 @@ int main() {
         check(game.campaign.data().world.prosperity == 42 && game.campaign.data().world.population == 48,
               "mouse-only outcome saves retreat and rescue consequences");
         game.perform(dw::Action::Hub);
+        check(game.screen == dw::Screen::Hub && !game.run && !game.missionMenu &&
+                  !game.campaign.data().pending && game.seedText != "1866" &&
+                  dw::distance(game.town.player.position, dw::add(game.town.spawn, {0, .85f, 0})) < .01f,
+              "mission results return to the town arrival point with a new mission offer and no pending run");
         game.launch();
         game.run->jumpDebug(2);
         game.paused = true;
@@ -399,6 +437,7 @@ int main() {
         renderer.unload();
         CloseWindow();
         std::filesystem::remove_all(directory);
+        std::cout << "PASS original town movement, station approach, mission seeds, launch and return loop\n";
         std::cout << "PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire\n"
                   << "PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue "
                      "and retreat\n"

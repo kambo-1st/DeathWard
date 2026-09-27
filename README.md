@@ -30,11 +30,13 @@ Windows is kept in scope through CMake and portable C++, but this milestone is t
 
 ## Play
 
-Type a seed in the hub (Backspace edits; N generates another), then press Enter or click **Enter the Mine**. The mine now has **15 rooms**, with junctions and loops that let you choose between routes. Combat rooms seal every doorway, including the entrance behind you. Each combat room starts with one enemy group; defeat it to reopen the doors. There are no later reinforcements; the boss has one encounter with three attack phases. Cleared rooms stay cleared when revisited, without extra rewards or healing.
+You start as the bandit in **Black Creek**, a walkable import of the original PolygonWestern demo town, with its authored buildings, train, streets and original textures. Explore with WASD or click the ground; the mouse wheel zooms. Click **Missions** to walk to the railway station's mission board, or approach and click the board yourself. Choose **Leave for the Mine** to start a generated expedition. **New Mission** chooses another random seed; type digits or use Backspace to edit a seed when replaying a layout. Mission results return you to town with a fresh offer. Exploring the hub does not begin a campaign run.
+
+The mine has **15 rooms**, with junctions and loops that let you choose between routes. Combat rooms seal every doorway, including the entrance behind you. Each combat room starts with one enemy group; defeat it to reopen the doors. There are no later reinforcements; the boss has one encounter with three attack phases. Cleared rooms stay cleared when revisited, without extra rewards or healing.
 
 **The starting room is always enemy-free**, with open passages from the moment you enter. It counts toward the limit of 1–2 ordinary rooms with no enemies; the seed may choose one additional quiet room, separate from the peaceful power rooms. These quiet rooms have open passages, no enemies or power pedestal, and may contain a key. The miners, altar and boss retain their encounters.
 
-**The room network grows from the seed**: two or three starting routes, variable branch lengths and junctions, dead ends, and zero to three loops. Boss and power rooms attach at branch ends instead of fixed corners. Room spacing also varies, producing different corridor lengths. Press **N in the hub** to choose a new seed; keeping the same seed deliberately reproduces the same layout.
+**The room network grows from the seed**: two or three starting routes, variable branch lengths and junctions, dead ends, and zero to three loops. Boss and power rooms attach at branch ends instead of fixed corners. Room spacing also varies, producing different corridor lengths. Click **New Mission** or press **N in the station menu** to choose a new seed; keeping the same seed deliberately reproduces the same layout.
 
 Each room has different dimensions (24–40 units per side), with rectangular, clipped-corner, L-shaped and cross-shaped footprints. The seed chooses the graph, room shapes, objective positions, obstacles, key locations and power-room count. Clear routes are reserved for doors and objectives, and cover that isolates walkable floor is rejected. The same seed and content version reproduce the same map independently of campaign outcomes.
 
@@ -136,6 +138,7 @@ ctest --test-dir build --output-on-failure
 ./build/deathward_input_tests
 ./build/deathward_player_model_tests
 ./build/deathward_western_assets_tests
+./build/deathward_town_assets_tests
 ./build/deathward --smoke --frames 180 --screenshot artifacts/combat.png
 ./build/deathward --smoke --scene hub --frames 2 --screenshot artifacts/hub.png
 ./build/deathward --benchmark --frames 600 --screenshot artifacts/stress.png
@@ -160,6 +163,8 @@ Normal builds use the supplied FBXs' converted `assets/bandit/bandit.glb`, which
 Only rebuilding the asset requires Blender 3.6 LTS. Conversion instructions and clip mappings are in [the bandit asset notes](assets/bandit/README.md).
 
 Western scenery uses `assets/western/western.glb` and its matching catalog, also copied beside the executable. The original atlas is embedded; no reference to the external Unity project is needed at runtime. Source prefabs, FBXs, materials and texture are retained for rebuilding. See [the Western asset notes](assets/western/README.md) for conversion commands, placement and collision rules, and lighting differences from Unity.
+
+The hub separately imports the complete original Demo scene into `assets/town`: 1,516 active mesh placements with 12 embedded textures, original material variants, hierarchy and transforms. Its scene catalog and terrain navigation are packaged beside the GLB. See [the town import notes](assets/town/README.md) for the source audit, rebuilding commands and differences from Unity's rendering. CTest includes outdoor town navigation; `deathward_town_assets_tests` checks the original scene's graphics assets and requires a display.
 
 ## Code map
 

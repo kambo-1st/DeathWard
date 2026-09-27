@@ -29,6 +29,9 @@ class PlayerModel {
     void unload();
     void update(const Simulation &run, float deathTime = 0);
     void draw(const Simulation &run) const;
+    void update(const Player &player, double time, const void *context, bool dead = false,
+                float deathTime = 0);
+    void draw(const Player &player, bool dead = false) const;
     bool loaded() const {
         return model_.meshCount > 0;
     }
@@ -60,7 +63,7 @@ class PlayerModel {
     std::array<Clip, size_t(PlayerAnimation::Count)> clips_;
     std::vector<Transform> pose_, worldPose_, blendFrom_;
     std::vector<bool> upperBody_;
-    const Simulation *lastRun_ = nullptr;
+    const void *lastRun_ = nullptr;
     double lastTime_ = -1;
     PlayerAnimation current_ = PlayerAnimation::Idle;
     float phase_ = 0, transition_ = 1, firePhase_ = 0, firingBlend_ = 0;
