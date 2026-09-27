@@ -55,25 +55,26 @@ int main() {
         game.run->debugScenario = true;
         for (int i = 0; i < 100; ++i)
             frame(); // Settle the tracking camera before projecting a click.
-        Vector3 destination{6, 0, 10};
+        Vector3 destination = game.run->arena.rooms[0].center;
+        destination.y = 0;
         auto point = GetWorldToScreen(destination, game.camera);
         click(int(point.x), int(point.y));
         check(game.run->moveDestination().has_value(), "left-clicking ground queues a route");
-        for (int i = 0; i < 100; ++i)
+        for (int i = 0; i < 200; ++i)
             frame();
         destination.y = 0.85f;
         check(dw::distance(game.run->player.position, destination) < 0.15f,
               "mouse ray and navigation reach clicked ground point");
         check(game.run->stats.shots == 0, "left-clicking ground never fires");
         // Hold an enemy, move the cursor away, then move the enemy: attacks must track its body.
-        const auto target = game.run->spawn(dw::EnemyKind::Gunman, {6, 0.85f, 6});
+        const auto target = game.run->spawn(dw::EnemyKind::Gunman, {0, 0.85f, -6});
         game.run->findEnemy(target)->hp = game.run->findEnemy(target)->maxHp = 10000;
-        point = GetWorldToScreen({6, 1.5f, 6}, game.camera);
+        point = GetWorldToScreen({0, 1.5f, -6}, game.camera);
         frame(int(point.x), int(point.y));
         check(game.hoveredEnemy == target, "enemy body is selectable above the ground plane");
         frame(int(point.x), int(point.y), true);
         const auto attackPosition = game.run->player.position;
-        game.run->findEnemy(target)->position.x = 3;
+        game.run->findEnemy(target)->position.x = 2;
         for (int i = 0; i < 240; ++i)
             frame(680, 315, true);
         check(game.run->stats.shots >= 13, "holding an enemy fires continuously without reloading");
@@ -89,7 +90,7 @@ int main() {
               "a dead target never turns a held attack into ground movement");
         frame(680, 315);
         // Shift attacks empty ground without movement, even during an existing route.
-        point = GetWorldToScreen({10, 0, 10}, game.camera);
+        point = GetWorldToScreen({6, 0, 0}, game.camera);
         click(int(point.x), int(point.y));
         const auto shiftPosition = game.run->player.position;
         for (int i = 0; i < 40; ++i)
@@ -129,13 +130,34 @@ int main() {
         click(620, 445);
         check(!game.paused, "mouse resumes the expedition");
         check(game.run->stats.shots == shots, "HUD and paused clicks never fire the revolver");
-        game.run->room = 2;
-        game.run->player.position = {-10, 0.85f, -4};
+        game.run->roomClear = true;
+        game.run->arena.openPassage(0);
+        const auto doorway = game.run->arena.rooms[0].exit;
+        const auto direction = dw::unit(dw::sub(game.run->arena.passages[0].to, doorway));
+        game.run->player.position = dw::sub(doorway, dw::mul(direction, 3));
+        for (int i = 0; i < 100; ++i)
+            frame();
+        point = GetWorldToScreen({doorway.x, 1.5f, doorway.z}, game.camera);
+        click(int(point.x), int(point.y));
+        for (int i = 0; i < 600 && game.run->room == 0; ++i) {
+            const auto before = game.run->player.position;
+            frame();
+            check(dw::distance(before, game.run->player.position) < 0.11f,
+                  "mouse doorway traversal is continuous, without teleporting");
+        }
+        check(game.run->room == 1, "left-clicking an open doorway walks into the connected room");
+        for (int i = 0; i < 100; ++i)
+            frame();
+        const auto cameraGoal = dw::sub(game.run->player.position, {2, 0.85f, 2});
+        check(dw::distance(game.camera.target, cameraGoal) < 0.1f,
+              "camera follows the player to distant rooms");
+        game.run->enterRoom(2);
+        game.run->player.position = game.run->arena.rooms[2].center;
         for (int i = 0; i < 100; ++i)
             frame();
         point = GetWorldToScreen({game.run->arena.miners.x, 1.7f, game.run->arena.miners.z}, game.camera);
         click(int(point.x), int(point.y));
-        for (int i = 0; i < 80; ++i)
+        for (int i = 0; i < 220; ++i)
             frame();
         check(game.run->rescued, "left-clicking an objective's body approaches and interacts");
         click(850, 711);
@@ -148,7 +170,8 @@ int main() {
         CloseWindow();
         std::filesystem::remove_all(directory);
         std::cout << "PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire\n"
-                  << "PASS short clicks, no reload, mouse dodge, pause/resume, rescue and retreat\n"
+                  << "PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue "
+                     "and retreat\n"
                   << "PASS HUD clicks never fire; sixth-shot effects covered by core contracts\n";
         return 0;
     } catch (const std::exception &e) {

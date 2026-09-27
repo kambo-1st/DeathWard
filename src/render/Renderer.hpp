@@ -17,5 +17,6 @@ class Renderer {
     Action expedition(const Game &game);
     Action summary(const Game &game, const RunSummary &summary, bool history);
     void debugPanel(const Game &game);
+    void dungeonMap(const Game &game);
 };
 } // namespace dw

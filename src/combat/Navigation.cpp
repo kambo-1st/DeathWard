@@ -1,14 +1,100 @@
 #include "combat/Simulation.hpp"
+#include <map>
+#include <queue>
 
 namespace dw {
+namespace {
+Vector3 center(FloorCell c, float y) {
+    return {(float(c.first) + 0.5f) * FloorTile, y, (float(c.second) + 0.5f) * FloorTile};
+}
+std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target, float radius) {
+    const bool targetWasBlocked = arena.blocked(target, radius);
+    auto nearest = [&](Vector3 p, bool requireSight) -> std::optional<FloorCell> {
+        std::optional<FloorCell> result;
+        float best = std::numeric_limits<float>::infinity();
+        for (const auto &cell : arena.floorCells) {
+            Vector3 at = center(cell, from.y);
+            float d = distance(at, p);
+            if (d >= best || (requireSight && d > 6))
+                continue;
+            if (!arena.blocked(at, radius) && (!requireSight || arena.clear(p, at, radius))) {
+                result = cell;
+                best = d;
+            }
+        }
+        return result;
+    };
+    const auto start = nearest(from, true), goal = nearest(target, !targetWasBlocked);
+    if (!start || !goal)
+        return {};
+    if (targetWasBlocked)
+        target = center(*goal, from.y);
+    if (arena.clear(from, target, radius))
+        return {target};
+    struct Node {
+        float cost = std::numeric_limits<float>::infinity();
+        FloorCell previous{};
+    };
+    using Entry = std::pair<float, FloorCell>;
+    std::priority_queue<Entry, std::vector<Entry>, std::greater<Entry>> frontier;
+    std::map<FloorCell, Node> nodes;
+    auto heuristic = [&](FloorCell c) {
+        return float(std::abs(c.first - goal->first) + std::abs(c.second - goal->second)) * FloorTile;
+    };
+    nodes[*start] = {0, *start};
+    frontier.push({heuristic(*start), *start});
+    while (!frontier.empty()) {
+        auto [score, current] = frontier.top();
+        frontier.pop();
+        if (score > nodes[current].cost + heuristic(current) + 0.001f)
+            continue;
+        if (current == *goal)
+            break;
+        for (auto [dx, dz] : {FloorCell{0, -1}, FloorCell{1, 0}, FloorCell{0, 1}, FloorCell{-1, 0}}) {
+            FloorCell next{current.first + dx, current.second + dz};
+            if (!arena.floorCells.contains(next))
+                continue;
+            float cost = nodes[current].cost + FloorTile;
+            if (nodes.contains(next) && cost >= nodes[next].cost)
+                continue;
+            Vector3 p = center(next, from.y);
+            if (arena.blocked(p, radius) || !arena.clear(center(current, from.y), p, radius))
+                continue;
+            nodes[next] = {cost, current};
+            frontier.push({cost + heuristic(next), next});
+        }
+    }
+    if (!nodes.contains(*goal))
+        return {};
+    std::vector<Vector3> reverse{target};
+    for (auto at = *goal;; at = nodes[at].previous) {
+        reverse.push_back(center(at, from.y));
+        if (at == *start)
+            break;
+    }
+    std::reverse(reverse.begin(), reverse.end());
+    std::vector<Vector3> path;
+    // Smooth the tile route into long segments while retaining real 3D clearance.
+    Vector3 anchor = from;
+    for (size_t i = 0; i < reverse.size();) {
+        size_t end = i;
+        while (end + 1 < reverse.size() && arena.clear(anchor, reverse[end + 1], radius))
+            ++end;
+        path.push_back(reverse[end]);
+        anchor = reverse[end];
+        i = end + 1;
+    }
+    return path;
+}
+} // namespace
 std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) const {
     target.y = from.y;
-    target.x = std::clamp(target.x, -14.3f, 14.3f);
-    target.z = std::clamp(target.z, -14.3f, 14.3f);
+    if (!floorCells.empty())
+        return floorPath(*this, from, target, radius);
+    target.x = std::clamp(target.x, bounds.min.x + 0.7f, bounds.max.x - 0.7f);
+    target.z = std::clamp(target.z, bounds.min.z + 0.7f, bounds.max.z - 0.7f);
     const float margin = radius + 0.08f;
-    auto valid = [&](Vector3 p) {
-        return std::abs(p.x) <= 14.3f && std::abs(p.z) <= 14.3f && !blocked(p, radius);
-    };
+    auto valid = [&](Vector3 p) { return contains(p) && !blocked(p, radius); };
     // A click on solid cover lands at its nearest walkable edge.
     if (blocked(target, radius)) {
         std::optional<Vector3> nearest;
@@ -99,15 +185,15 @@ void Simulation::cancelMove() {
 void Simulation::requestMove(Vector3 target) {
     target.y = player.position.y;
     cancelMove();
-    if (room == 2 && !rescued && distance(target, arena.miners) < 2.4f) {
+    if (!rescued && distance(target, arena.miners) < 2.4f) {
         target = arena.miners;
         interactOnArrival_ = true;
-    } else if (room == 3 && !altarDestroyed && distance(target, arena.altar) < 2.4f) {
+    } else if (!altarDestroyed && distance(target, arena.altar) < 2.4f) {
         target = arena.altar;
         interactOnArrival_ = true;
-    } else if (roomClear && distance(target, arena.exit) < 2.4f) {
-        target = arena.exit;
-        interactOnArrival_ = true;
+    } else if (roomClear && distance(target, onwardDestination()) < 2.4f) {
+        target = onwardDestination();
+        interactOnArrival_ = room == FinalRoom;
     }
     movePath_ = arena.path(player.position, target, 0.48f);
     if (movePath_.empty()) {
@@ -116,12 +202,12 @@ void Simulation::requestMove(Vector3 target) {
     }
 }
 std::string Simulation::nearbyInteraction() const {
-    if (room == 2 && !rescued && distance(player.position, arena.miners) < 2.6f)
+    if (!rescued && distance(player.position, arena.miners) < 2.6f)
         return "FREE MINERS";
-    if (room == 3 && !altarDestroyed && distance(player.position, arena.altar) < 2.6f)
+    if (!altarDestroyed && distance(player.position, arena.altar) < 2.6f)
         return "BREAK ALTAR";
-    if (roomClear && distance(player.position, arena.exit) < 2.8f)
-        return room == FinalRoom ? "RETURN HOME" : "DESCEND";
+    if (roomClear && distance(player.position, arena.rooms[size_t(room)].exit) < 3.5f)
+        return room == FinalRoom ? "RETURN HOME" : "NEXT CHAMBER";
     return {};
 }
 } // namespace dw

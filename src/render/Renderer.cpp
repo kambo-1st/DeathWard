@@ -114,43 +114,72 @@ bool Renderer::button(const std::string &title, float x, float y, float w, float
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
                          EntityId hoveredEnemy) {
     BeginMode3D(camera);
-    DrawPlane({0, -0.09f, 0}, {140, 140}, Color{33, 36, 34, 255});
-    DrawCube({0, -0.22f, 0}, 32, 0.4f, 32, Color{92, 76, 57, 255});
-    // Primitive strata outside the play area establish the mine without an asset pipeline.
-    for (int i = 0; i < 13; ++i) {
-        float x = float(i) * 4 - 24;
-        float h = 3 + float((i * 7) % 5);
-        DrawCube({x, h / 2, -20 - float(i % 3)}, 3.8f, h, 4, Color{53, 49, 43, 255});
-    }
-    for (int i = -14; i <= 14; i += 2) {
-        DrawLine3D({-14, 0.01f, float(i)}, {14, 0.01f, float(i)}, Color{99, 81, 60, 255});
-        DrawCube({0, 0.02f, float(i)}, 3.9f, 0.07f, 0.27f, Color{51, 45, 38, 255});
-    }
-    DrawCube({-1.45f, 0.08f, 0}, 0.12f, 0.12f, 29, Color{126, 118, 95, 255});
-    DrawCube({1.45f, 0.08f, 0}, 0.12f, 0.12f, 29, Color{126, 118, 95, 255});
+    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {180, 180}, Color{26, 29, 28, 255});
+    auto visible = [&](Box box) {
+        Vector3 nearest{std::clamp(run.player.position.x, box.min.x, box.max.x), run.player.position.y,
+                        std::clamp(run.player.position.z, box.min.z, box.max.z)};
+        return distance(nearest, run.player.position) < 65;
+    };
+    auto floor = [&](Box box, Color color) {
+        if (!visible(box))
+            return;
+        DrawCubeV(mul(add(box.min, box.max), 0.5f), sub(box.max, box.min), color);
+        DrawLine3D({box.min.x, 0.012f, box.min.z}, {box.max.x, 0.012f, box.min.z}, Color{108, 91, 69, 255});
+    };
+    for (const auto &box : run.arena.floors)
+        floor(box, Color{83, 71, 56, 255});
     for (size_t i = 0; i < run.arena.walls.size(); ++i) {
         const auto &wall = run.arena.walls[i];
+        if (i >= run.arena.boundaryWalls.size() + run.arena.obstacles.size() || !visible(wall))
+            continue;
         Vector3 size = sub(wall.max, wall.min), center = mul(add(wall.min, wall.max), 0.5f);
-        Color base = i < 4 ? Color{66, 61, 52, 255} : Color{94, 77, 55, 255};
-        DrawCubeV(center, size, base);
+        const bool boundary = i < run.arena.boundaryWalls.size();
+        DrawCubeV(center, size, boundary ? Color{66, 61, 52, 255} : Color{94, 77, 55, 255});
         DrawCube({center.x, wall.max.y + 0.025f, center.z}, size.x, 0.05f, size.z, Color{133, 106, 72, 255});
-        if (i >= 4) {
+        if (!boundary) {
             DrawCubeWiresV(center, size, Color{47, 43, 37, 255});
             DrawCube({center.x, center.y, wall.min.z - 0.03f}, size.x, 0.2f, 0.08f, Color{47, 43, 37, 255});
         }
         if (collisions)
             DrawBoundingBox({wall.min, wall.max}, Teal);
     }
-    lantern({-3, 0, -13}, run.roomClear ? Teal : Gold);
-    lantern({3, 0, -13}, run.roomClear ? Teal : Gold);
-    DrawCube({0, 3, -13}, 6.8f, 0.5f, 0.5f, Color{76, 58, 38, 255});
-    if (run.roomClear) {
-        DrawCylinder({0, 0.03f, -13}, 1.4f, 1.4f, 0.04f, 32, Color{76, 133, 111, 255});
-        DrawCircle3D({0, 0.1f, -13}, 1.8f, {1, 0, 0}, 90, Teal);
+    for (const auto &passage : run.arena.passages) {
+        if (!visible(passage.floor))
+            continue;
+        Vector3 direction = unit(sub(passage.to, passage.from));
+        Vector3 side{-direction.z, 0, direction.x};
+        const bool eastWest = std::abs(direction.x) > 0.5f;
+        const float span = distance(passage.from, passage.to);
+        Vector3 midpoint = mul(add(passage.from, passage.to), 0.5f);
+        for (float offset : {-1.3f, 1.3f}) {
+            Vector3 rail = add(midpoint, mul(side, offset));
+            rail.y = 0.07f;
+            DrawCube(rail, eastWest ? span : 0.12f, 0.12f, eastWest ? 0.12f : span, Muted);
+        }
+        for (float t = 0; t <= span; t += 2) {
+            Vector3 tie = add(passage.from, mul(direction, t));
+            tie.y = 0.025f;
+            DrawCube(tie, eastWest ? 0.25f : 3.4f, 0.06f, eastWest ? 3.4f : 0.25f, Color{51, 45, 38, 255});
+        }
+        lantern(add(passage.from, mul(side, -3.5f)), passage.open ? Teal : Rust);
+        lantern(add(passage.from, mul(side, 3.5f)), passage.open ? Teal : Rust);
+        DrawCube({passage.from.x, 3.1f, passage.from.z}, eastWest ? 0.5f : 8, 0.4f, eastWest ? 8 : 0.5f,
+                 Color{76, 58, 38, 255});
+        if (!passage.open) {
+            for (float offset = -3.5f; offset <= 3.5f; offset += 0.7f) {
+                Vector3 bar = add(passage.from, mul(side, offset));
+                bar.y = 1.5f;
+                DrawCube(bar, 0.13f, 3, 0.13f, Rust);
+            }
+            if (collisions)
+                DrawBoundingBox({passage.gate.min, passage.gate.max}, Rust);
+        }
     }
-    lantern({-13, 0, 10}, Gold);
-    lantern({13, 0, -11}, Gold);
-    if (run.room == 2) {
+    lantern(run.arena.entrance, Gold);
+    lantern(run.arena.exit, run.room == Simulation::FinalRoom && run.roomClear ? Teal : Gold);
+    if (run.room == Simulation::FinalRoom && run.roomClear)
+        DrawCircle3D({run.arena.exit.x, 0.1f, run.arena.exit.z}, 1.8f, {1, 0, 0}, 90, Teal);
+    if (distance(run.player.position, run.arena.miners) < 60) {
         Vector3 p = run.arena.miners;
         for (int i = 0; i < 6; ++i) {
             Vector3 person = add(p, {float(i % 3) * 0.75f - 0.75f, 0, float(i / 3) * 0.7f});
@@ -164,7 +193,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 DrawCube({p.x - 1.6f + float(i) * 0.8f, 1.0f, p.z + 1.2f}, 0.07f, 2, 0.07f, Muted);
         DrawCircle3D({p.x, 0.1f, p.z}, 2.3f, {1, 0, 0}, 90, run.rescued ? Muted : Teal);
     }
-    if (run.room == 3) {
+    if (distance(run.player.position, run.arena.altar) < 60) {
         Vector3 p = run.arena.altar;
         DrawCube({p.x, 0.5f, p.z}, 1.8f, 1, 1.4f, Color{63, 51, 51, 255});
         if (!run.altarDestroyed) {
@@ -241,13 +270,13 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         int size = int(16 * std::min(sx_, sy_));
         DrawText(label, int(point.x) - MeasureText(label, size) / 2, int(point.y), size, color);
     };
-    if (run.room == 2 && !run.rescued)
+    if (!run.rescued && distance(run.player.position, run.arena.miners) < 30)
         marker(run.arena.miners, "LMB / E: FREE THE MINERS", Teal);
-    if (run.room == 3 && !run.altarDestroyed)
+    if (!run.altarDestroyed && distance(run.player.position, run.arena.altar) < 30)
         marker(run.arena.altar, "LMB / E: BREAK THE ALTAR", Rust);
     if (run.roomClear)
-        marker(run.arena.exit,
-               run.room == Simulation::FinalRoom ? "LMB / E: RETURN HOME" : "LMB / E: DESCEND", Teal);
+        marker(run.arena.rooms[size_t(run.room)].exit,
+               run.room == Simulation::FinalRoom ? "LMB / E: RETURN HOME" : "LMB / E: NEXT CHAMBER", Teal);
 }
 Action Renderer::hub(const Game &game) {
     const auto &world = game.campaign.data().world;
@@ -315,12 +344,40 @@ Action Renderer::hub(const Game &game) {
     }
     return Action::None;
 }
+void Renderer::dungeonMap(const Game &game) {
+    const auto &run = *game.run;
+    panel(1040, 170, 216, 192, Panel);
+    text("MINE PASSAGES", 1053, 183, 12, Gold);
+    const auto &bounds = run.arena.bounds;
+    const float scale = std::min(188 / (bounds.max.x - bounds.min.x), 136 / (bounds.max.z - bounds.min.z));
+    auto point = [&](Vector3 p) -> Vector2 {
+        return {1148 + (p.x - (bounds.min.x + bounds.max.x) / 2) * scale,
+                280 + (p.z - (bounds.min.z + bounds.max.z) / 2) * scale};
+    };
+    auto rectangle = [&](Box box, Color color) {
+        auto a = point(box.min), b = point(box.max);
+        DrawRectangleRec(
+            {a.x * sx_, a.y * sy_, std::max(1.0f, (b.x - a.x) * sx_), std::max(1.0f, (b.y - a.y) * sy_)},
+            color);
+    };
+    for (const auto &passage : run.arena.passages)
+        rectangle(passage.floor, passage.open ? Teal : Border);
+    for (int i = 0; i < RoomCount; ++i) {
+        for (const auto &box : run.arena.rooms[size_t(i)].floors)
+            rectangle(box, i == run.room ? Gold : i < run.room ? Teal : Border);
+        auto at = point(run.arena.rooms[size_t(i)].center);
+        text(std::to_string(i + 1), at.x - 3, at.y - 4, 9, Ink);
+    }
+    auto at = point(run.player.position);
+    DrawCircleV({at.x * sx_, at.y * sy_}, 3.5f * std::min(sx_, sy_), Paper);
+}
 Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy);
     panel(24, 22, 358, 90, Panel);
     text("RED HOLLOW / " + std::to_string(run.room + 1) + " OF 7", 42, 35, 12, Gold);
-    text(run.roomName(), 41, 58, 25, Paper);
+    const int physicalRoom = run.arena.roomAt(run.player.position);
+    text(physicalRoom < 0 ? "Mine Passage" : Simulation::roomName(physicalRoom), 41, 58, 25, Paper);
     text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
     panel(964, 22, 292, 131, Panel);
     text("BRING SOMETHING BACK", 982, 37, 13, Gold);
@@ -330,6 +387,7 @@ Action Renderer::expedition(const Game &game) {
          run.altarDestroyed ? Teal : Muted);
     text(run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / chamber 7", 982, 117, 15,
          run.bossKilled ? Teal : Muted);
+    dungeonMap(game);
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
         text("THE HOLLOW SHERIFF / PHASE " + std::to_string(boss->phase + 1), 429, 37, 14, Paper);

@@ -54,7 +54,7 @@ Start with one revolver: continuous fire with no reload action or reload pause, 
 
 Starting player health is 200 HP and base revolver damage is 48, both doubled from the initial milestone. Enemy damage stays unchanged. Percentage-based item costs still apply to the increased health pool.
 
-Create simple 3D arenas with walls and obstacles so ricochets, line of sight, crowd movement, explosions and area effects can be tested.
+Generate a continuous mine from the expedition seed: seven rooms joined by traversable corridors, with different room dimensions and footprints and seeded obstacle positions, sizes and heights. Use real 3D walls and cover for ricochets, line of sight and area effects. Reserve clear paths between entrances, exits and objectives, validate floor connectivity, and place enemies only on safe floor. Open the next doorway after the current room's reward choice; walk between rooms without teleporting. Keep cleared passages open for backtracking without repeating encounters, rewards or healing. The camera and navigation must work throughout the map, with a small map showing room connections and the player's position.
 
 Provide a debug toggle for collision volumes, projectile paths, effect radii and target points.
 
@@ -176,7 +176,7 @@ NPC dialogue must react to actual world flags. The important property is that th
 
 Every expedition has a visible seed and supports manual seed entry. Item choices, encounters and procedural decisions should be reproducible where practical.
 
-Derive independent encounter, reward and combat RNG streams from the expedition seed using stable stream identifiers. Combat randomness must not consume reward or encounter randomness. Record seed, game/content version and relevant starting campaign context in Run History.
+Derive independent layout, encounter, reward and combat RNG streams from the expedition seed using stable stream identifiers. Layout geometry must depend only on seed and content version, independently of campaign outcomes and combat/reward draws. Combat randomness must not consume reward or encounter randomness. Record seed, game/content version and relevant starting campaign context in Run History.
 
 The first milestone guarantees repeatable encounter setup and reward offers for the same seed, version, starting campaign context and sequence of relevant player choices. It does not promise full combat replay from a seed alone. Keep debug scenario setup reproducible so item interactions can be checked without replaying an entire run.
 

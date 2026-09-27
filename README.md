@@ -30,7 +30,11 @@ Windows is kept in scope through CMake and portable C++, but this milestone is t
 
 ## Play
 
-Type a seed in the hub (Backspace edits; N generates another), then press Enter or click **Enter the Mine**. Clear three waves per chamber, choose one of three items, and use the northern lantern to descend. Six encounters lead to the Hollow Sheriff and his three attack phases. There is no forced minimum duration; the 5–10 minute target still needs human playtesting, and strong combinations can finish sooner.
+Type a seed in the hub (Backspace edits; N generates another), then press Enter or click **Enter the Mine**. Clear three waves per chamber and choose one of three items to open the next doorway. Walk through its corridor, or click the doorway to travel to the next room. Six encounters lead to the Hollow Sheriff and his three attack phases. Use the final room's return lantern to finish. There is no forced minimum duration; the 5–10 minute target still needs human playtesting, and strong combinations can finish sooner.
+
+The mine is one continuous, seed-generated map of seven rooms connected by corridors. Each room has different dimensions (24–40 units per side), with rectangular, clipped-corner, L-shaped and cross-shaped footprints. The seed also chooses the route's turns, objective positions, and obstacle positions, sizes and heights. Layout generation reserves routes to doors and objectives and rejects cover that isolates walkable areas. The same seed and content version reproduce the same map, independently of combat, rewards and campaign outcomes.
+
+The camera follows you through corridors, and the mine map shows the connections and your position. Cleared passages stay open for backtracking; returning to a room does not restart its encounter or grant another reward. Unresolved miners and the altar remain accessible in their original rooms.
 
 | Control | Action |
 | --- | --- |
@@ -51,7 +55,7 @@ Start each expedition with **200 HP** and **48 revolver damage** (both doubled f
 
 Left-click follows the contextual move/attack/interact pattern in [Blizzard's Diablo manual](https://ftp.blizzard.com/pub/misc/Diablo.PDF). Click ground to walk there, or hold to steer. Click an enemy's body to attack; holding keeps that target until release, and its death never turns the attack into a movement order. Attacking cancels the current mouse route. WASD overrides mouse navigation and remains available while firing; Shift holds position. RMB uses the prototype's only weapon, the revolver.
 
-Left-click the miners, altar, or an open exit to walk over and interact automatically. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse; pressing the wheel is an additional dodge shortcut.
+Left-click the miners, altar, an open doorway, or the return lantern to approach and use it. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse; pressing the wheel is an additional dodge shortcut.
 
 The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated boss becomes a follow-up encounter on subsequent visits.
 
@@ -94,7 +98,7 @@ Linux saves to `$XDG_DATA_HOME/deathward/campaign.save`, or `~/.local/share/deat
 
 One checksummed, versioned snapshot contains world state, pending-run metadata and history. Writes use a temporary file and atomic replacement. Corrupt or unsupported saves produce an error and are preserved. Objective interactions, room completion and item acquisition checkpoint summary data; temporary combat state is never resumable. Only one process should use a given save file at a time.
 
-Encounter, reward and combat RNG streams are independent. The same seed, content version, initial campaign state and relevant choices reproduce encounter setup and offers. Full combat input replay is not implemented. History records the version, seed and starting world context, along with the lost build, counters and consequences.
+Layout, encounter, reward and combat RNG streams are independent. The same seed and content version reproduce the complete map; initial campaign state and relevant choices also determine encounter setup and offers. Full combat input replay is not implemented. History records the version, seed and starting world context, along with the lost build, counters and consequences.
 
 ## Verify
 
@@ -108,7 +112,7 @@ ctest --test-dir build --output-on-failure
 
 The core CTest suite needs no graphics display. `deathward_input_tests` exercises mouse controls through raylib's input system in a hidden window and requires an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
 
-Tests cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `reward`, `boss` and `summary`.
+Tests cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, gates, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `reward`, `boss` and `summary`.
 
 For sanitizer checks:
 
@@ -122,7 +126,7 @@ ctest --test-dir build-asan --output-on-failure
 
 - `src/combat`: fixed-step simulation, 3D collision, AI, spatial broad phase and event budgets.
 - `src/items`: the item registry and independent effect handlers.
-- `src/world`: persistent world state, consequences, history and atomic save transactions.
+- `src/world`: seeded dungeon geometry, persistent world state, consequences, history and atomic save transactions.
 - `src/core`: application flow, input, math and deterministic RNG.
 - `src/render`: replaceable primitive 3D rendering and menus; no combat rules.
 - `tests`: gameplay and persistence contract checks.

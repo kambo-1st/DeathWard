@@ -4,41 +4,15 @@
 #include <numeric>
 
 namespace dw {
-Arena::Arena() {
-    walls = {{{-16, -1, -16}, {16, 2, -15}}, {{-16, -1, 15}, {16, 2, 16}}, {{-16, -1, -15}, {-15, 2, 15}},
-             {{15, -1, -15}, {16, 2, 15}},   {{-7, 0, -4}, {-5, 2.5f, 0}}, {{5, 0, 1}, {7, 2.5f, 5}},
-             {{-11, 0, 5}, {-8, 1.8f, 7}},   {{8, 0, -6}, {11, 1.8f, -4}}};
-}
-bool Arena::blocked(Vector3 p, float radius) const {
-    for (const auto &wall : walls)
-        if (sphereBox(p, radius, wall))
-            return true;
-    return false;
-}
-bool Arena::sight(Vector3 from, Vector3 to) const {
-    for (const auto &wall : walls)
-        if (segmentBox(from, to, wall).hit)
-            return false;
-    return true;
-}
-Vector3 Arena::move(Vector3 from, Vector3 delta, float radius) const {
-    Vector3 x = add(from, {delta.x, 0, 0});
-    if (!blocked(x, radius))
-        from = x;
-    Vector3 z = add(from, {0, 0, delta.z});
-    if (!blocked(z, radius))
-        from = z;
-    from.x = std::clamp(from.x, -14.3f, 14.3f);
-    from.z = std::clamp(from.z, -14.3f, 14.3f);
-    return from;
-}
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world)
-    : encounterRng(seed ^ 0x454e434f554e5445ULL), rewardRng(seed ^ 0x5245574152445354ULL),
+    : arena(seed), encounterRng(seed ^ 0x454e434f554e5445ULL), rewardRng(seed ^ 0x5245574152445354ULL),
       combatRng(seed ^ 0x434f4d424154524eULL), seed_(seed), runId_(runId), startingWorld_(world) {
     rescued = world.minersRescued;
     altarDestroyed = world.altarDestroyed;
     bossKilled = world.bossDefeated;
     followup = world.bossDefeated;
+    player.position = arena.entrance;
+    player.aim = arena.rooms[0].center;
     enemies.reserve(256);
     projectiles.reserve(4096);
     announce(followup ? "RED HOLLOW / return to unfinished business"
@@ -66,10 +40,13 @@ const Enemy *Simulation::boss() const {
     return nullptr;
 }
 std::string Simulation::roomName() const {
+    return roomName(room);
+}
+std::string Simulation::roomName(int index) {
     static constexpr const char *names[] = {"The Old Claim",   "Timberfall",     "The Cageworks",
                                             "Ash Chapel",      "Dead Man's Cut", "The Deep Vein",
                                             "The Hollow Court"};
-    return names[std::clamp(room, 0, FinalRoom)];
+    return names[std::clamp(index, 0, FinalRoom)];
 }
 EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
     if (livingEnemies() >= limits.enemies) {
@@ -89,11 +66,13 @@ EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
     return e.id;
 }
 void Simulation::spawnWave(int count) {
+    const auto &area = arena.rooms[size_t(room)].bounds;
     for (int i = 0; i < count; ++i) {
         Vector3 p{};
         bool found = false;
         for (int attempt = 0; attempt < 80; ++attempt) {
-            p = {encounterRng.real(-13, 13), 0.85f, encounterRng.real(-13, 6)};
+            p = {encounterRng.real(area.min.x + 1.5f, area.max.x - 1.5f), 0.85f,
+                 encounterRng.real(area.min.z + 1.5f, area.max.z - 1.5f)};
             if (!arena.blocked(p, 0.8f) && distance(p, player.position) > 6) {
                 found = true;
                 break;
@@ -132,28 +111,33 @@ void Simulation::chooseReward(int index) {
         return;
     grant(offers[size_t(index)]);
     rewardOpen = false;
-    announce("Chamber cleared. Left-click the northern lantern to descend, or use E nearby.", 5);
+    arena.openPassage(room);
+    announce("Passage open. Walk through the lantern doorway to the next chamber.", 5);
+}
+Vector3 Simulation::onwardDestination() const {
+    return room == FinalRoom ? arena.exit : arena.rooms[size_t(room + 1)].entry;
 }
 void Simulation::nextRoom() {
     if (!roomClear || rewardOpen || finished)
         return;
-    cancelMove();
     if (room == FinalRoom) {
         finished = true;
         return;
     }
-    ++room;
+    arena.openPassage(room);
+    requestMove(onwardDestination());
+}
+void Simulation::enterRoom(int index) {
+    room = std::clamp(index, 0, FinalRoom);
     wave = 0;
     roomClear = false;
     waveDelay = 1.4f;
-    player.position = {0, 0.85f, 11};
     projectiles.clear();
     queue_.clear();
     chains.clear();
     enemies.clear();
     visuals.clear();
     player.hp = std::min(player.maxHp, player.hp + 15);
-    player.nextRound = 1;
     announce(room == FinalRoom ? (followup ? "The Court / drive out the remaining squatters"
                                            : "THE HOLLOW SHERIFF / the badge is an open wound")
                                : roomName(),
@@ -163,16 +147,16 @@ void Simulation::nextRoom() {
 void Simulation::startBoss() {
     cancelMove();
     debugScenario = false;
-    room = FinalRoom;
-    wave = 1;
-    roomClear = false;
+    enterRoom(FinalRoom);
     rewardOpen = false;
-    projectiles.clear();
-    queue_.clear();
-    chains.clear();
-    enemies.clear();
-    player.position = {0, 0.85f, 10};
-    spawn(followup ? EnemyKind::Gunman : EnemyKind::Boss, {0, 0.85f, -8});
+    for (int i = 0; i < FinalRoom; ++i)
+        arena.openPassage(i);
+    player.position = arena.rooms.back().entry;
+    beginBossEncounter();
+}
+void Simulation::beginBossEncounter() {
+    wave = 1;
+    spawn(followup ? EnemyKind::Gunman : EnemyKind::Boss, arena.rooms.back().bossSpawn);
     if (followup)
         spawnWave(12);
     announce(followup ? "Finish what remains" : "THE HOLLOW SHERIFF", 4);
@@ -219,20 +203,20 @@ void Simulation::startStress() {
 }
 void Simulation::interact() {
     cancelMove();
-    if (room == 2 && !rescued && distance(player.position, arena.miners) < 2.6f) {
+    if (!rescued && distance(player.position, arena.miners) < 2.6f) {
         rescued = true;
         checkpointNeeded = true;
         announce("Six miners escape through the old shaft. Mary will remember.", 5);
         return;
     }
-    if (room == 3 && !altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
+    if (!altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
         altarDestroyed = true;
         checkpointNeeded = true;
         effectVisual(arena.altar, 3, 0, 0.8f);
         announce("The altar breaks. Something loses your scent.", 5);
         return;
     }
-    if (roomClear && distance(player.position, arena.exit) < 2.8f)
+    if (roomClear && distance(player.position, arena.rooms[size_t(room)].exit) < 3.5f)
         nextRoom();
 }
 void Simulation::finishDebug(bool victory) {
@@ -564,17 +548,21 @@ void Simulation::updateEnemies(float dt) {
     }
 }
 void Simulation::rebuildGrid() {
+    const auto origin = arena.rooms[size_t(room)].center;
     for (auto &cell : grid_)
         cell.clear();
     for (size_t i = 0; i < enemies.size(); ++i)
         if (enemies[i].alive) {
             const auto p = enemies[i].position;
-            int x = std::clamp(int(std::floor((p.x + 20) / 4)), 0, 9),
-                z = std::clamp(int(std::floor((p.z + 20) / 4)), 0, 9);
+            int x = std::clamp(int(std::floor((p.x - origin.x + 20) / 4)), 0, 9),
+                z = std::clamp(int(std::floor((p.z - origin.z + 20) / 4)), 0, 9);
             grid_[size_t(z * 10 + x)].push_back(i);
         }
 }
 std::vector<size_t> Simulation::candidates(Vector3 a, Vector3 b, float radius) const {
+    const auto origin = arena.rooms[size_t(room)].center;
+    a = sub(a, origin);
+    b = sub(b, origin);
     int minX = std::clamp(int(std::floor((std::min(a.x, b.x) - radius + 20) / 4)), 0, 9),
         maxX = std::clamp(int(std::floor((std::max(a.x, b.x) + radius + 20) / 4)), 0, 9);
     int minZ = std::clamp(int(std::floor((std::min(a.z, b.z) - radius + 20) / 4)), 0, 9),
@@ -695,6 +683,8 @@ void Simulation::step(const Input &input, float dt) {
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);
     updatePlayer(input, dt);
+    if (roomClear && room < FinalRoom && arena.roomAt(player.position) == room + 1)
+        enterRoom(room + 1);
     rebuildGrid();
     updateEnemies(dt);
     rebuildGrid();
@@ -716,12 +706,12 @@ void Simulation::step(const Input &input, float dt) {
         if (waveDelay <= 0) {
             if (room == FinalRoom) {
                 if (wave == 0) {
-                    startBoss();
+                    beginBossEncounter();
                 } else {
                     roomClear = true;
                     ++stats.rooms;
                     checkpointNeeded = true;
-                    announce("The Court is silent. Return to Black Creek at the northern lantern.", 6);
+                    announce("The Court is silent. Use the return lantern to reach Black Creek.", 6);
                 }
             } else if (wave < 3) {
                 spawnWave(6 + room * 2 + wave * 2);

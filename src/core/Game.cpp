@@ -29,12 +29,12 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
         if (hits(p, radius, height))
             result.objective = p;
     };
-    if (run.room == 2 && !run.rescued)
+    if (!run.rescued)
         objective(run.arena.miners, 1.7f, 2.0f);
-    if (run.room == 3 && !run.altarDestroyed)
+    if (!run.altarDestroyed)
         objective(run.arena.altar, 1.0f, 2.9f);
-    if (run.roomClear)
-        objective(run.arena.exit, 1.8f, 0.3f);
+    if (run.roomClear && hits(run.arena.rooms[size_t(run.room)].exit, 3.0f, 3.2f))
+        result.objective = run.onwardDestination();
     for (const auto &enemy : run.enemies) {
         if (enemy.alive && hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.0f)) {
             result.enemy = enemy.id;
@@ -71,7 +71,7 @@ void Game::launch() {
     accumulator = 0;
     error.clear();
     resetArmed = false;
-    camera.target = {0, 0, 3};
+    camera.target = sub(run->player.position, {2, 0.85f, 2});
     camera.position = add(camera.target, {23, 30, 23});
     resetPointerInput();
 }
@@ -221,7 +221,7 @@ void Game::debugInput() {
 void Game::updateCamera(float dt) {
     if (!run)
         return;
-    Vector3 target = mul(run->player.position, 0.52f);
+    Vector3 target = sub(run->player.position, {2, 0, 2});
     target.y = 0;
     camera.target = add(camera.target, mul(sub(target, camera.target), 1 - std::exp(-5 * dt)));
     camera.position = add(camera.target, {23, 30, 23});
@@ -230,7 +230,7 @@ bool Game::pointerOverControls() const {
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
-    return x >= 396 && x <= 936 && y >= 690 && y <= 734;
+    return (x >= 396 && x <= 936 && y >= 690 && y <= 734) || (x >= 1040 && x <= 1256 && y >= 170 && y <= 362);
 }
 void Game::update(float dt) {
     try {

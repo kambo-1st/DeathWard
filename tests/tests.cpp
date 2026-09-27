@@ -16,6 +16,16 @@ void tick(dw::Simulation &run, int frames) {
 }
 dw::Simulation fixture() {
     dw::Simulation run(1866, 1, {});
+    // Item/collision contracts use a fixed arena, independent of procedural content.
+    run.arena = dw::Arena{};
+    run.arena.walls = {{{-16, -1, -16}, {16, 2, -15}}, {{-16, -1, 15}, {16, 2, 16}},
+                       {{-16, -1, -15}, {-15, 2, 15}}, {{15, -1, -15}, {16, 2, 15}},
+                       {{-7, 0, -4}, {-5, 2.5f, 0}},   {{5, 0, 1}, {7, 2.5f, 5}},
+                       {{-11, 0, 5}, {-8, 1.8f, 7}},   {{8, 0, -6}, {11, 1.8f, -4}}};
+    for (auto &room : run.arena.rooms) {
+        room.bounds = {{-15, 0, -15}, {15, 3, 15}};
+        room.exit = run.arena.exit;
+    }
     run.debugScenario = true;
     run.godMode = true;
     run.player.position = {0, 0.85f, 12};
@@ -201,12 +211,6 @@ void testMouseMovement() {
     run.step(click);
     tick(run, 600);
     check(run.altarDestroyed && !run.moveDestination(), "mouse destination destroys altar on arrival");
-    run.roomClear = true;
-    click.moveTarget = run.arena.exit;
-    run.step(click);
-    tick(run, 300);
-    check(run.room == 4 && !run.moveDestination(),
-          "mouse destination descends and clears navigation between rooms");
 }
 void testSafety() {
     auto run = fixture();
@@ -335,8 +339,18 @@ void testLoop() {
             run.interact();
             check(run.altarDestroyed, "in-world altar interaction");
         }
-        run.player.position = run.arena.exit;
-        run.interact();
+        run.nextRoom();
+        for (int frame = 0; frame < 1000 && run.room == room; ++frame) {
+            const auto previous = run.player.position;
+            run.step({});
+            check(dw::distance(previous, run.player.position) <= 0.101f,
+                  "walking between rooms never teleports the player");
+            check(!run.arena.blocked(run.player.position, 0.48f), "passages have collision-free traversal");
+        }
+        check(run.room == room + 1, "walking through a corridor starts the connected encounter");
+        // Finish the walk before testing the next wave's timing.
+        while (run.moveDestination())
+            run.step({});
     }
     tick(run, 120);
     check(run.boss() != nullptr, "final room contains boss");

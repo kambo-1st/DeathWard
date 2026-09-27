@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Types.hpp"
 #include "world/Campaign.hpp"
+#include "world/Dungeon.hpp"
 #include <deque>
 #include <functional>
 #include <optional>
@@ -77,15 +78,6 @@ struct Input {
     std::optional<Vector3> moveTarget;
     bool fire = false, dodge = false, interact = false, standStill = false;
 };
-struct Arena {
-    std::vector<Box> walls;
-    Vector3 exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};
-    Arena();
-    bool blocked(Vector3 p, float radius) const;
-    bool sight(Vector3 from, Vector3 to) const;
-    Vector3 move(Vector3 from, Vector3 delta, float radius) const;
-    std::vector<Vector3> path(Vector3 from, Vector3 target, float radius) const;
-};
 
 class Simulation {
   public:
@@ -114,6 +106,8 @@ class Simulation {
     void grant(ItemId item);
     void chooseReward(int index);
     void nextRoom();
+    void enterRoom(int index);
+    Vector3 onwardDestination() const;
     EntityId spawn(EnemyKind kind, Vector3 position);
     void spawnWave(int count);
     void startBoss();
@@ -134,6 +128,7 @@ class Simulation {
     Enemy *findEnemy(EntityId id);
     const Enemy *boss() const;
     std::string roomName() const;
+    static std::string roomName(int index);
     void announce(std::string text, float seconds = 3);
     void queueRoot(Event event);
     void emit(Event event, const Context &parent, int effect = -1);
@@ -156,6 +151,7 @@ class Simulation {
     void process(const Event &event);
     void createProjectile(const Event &event);
     void updatePlayer(const Input &input, float dt);
+    void beginBossEncounter();
     void updateEnemies(float dt);
     void updateProjectiles(float dt);
     void rebuildGrid();

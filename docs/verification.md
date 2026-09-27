@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## Connected, generated rooms
+
+Content version `deathward-m1-4` replaces the repeated arena with one continuous seven-room mine. Its independent layout RNG determines room dimensions, footprint orientation, corridor turns, objective positions and cover geometry. Dimensions are distinct within each expedition, between 24 and 40 units on each axis. Four footprint families are used: rectangle, clipped corners, L and cross. Gates open after rewards; cleared corridors remain traversable. The camera follows world-space movement, and the map shows connected rooms and the player's position.
+
+Release build and both CTest suites passed, including the complete AddressSanitizer/UndefinedBehaviorSanitizer run. `generated_dungeons` checks 64 seeds for exact geometry reproduction, variation, distinct room dimensions, obstacles in every room, connected walkable floor, blocked/open gates, reachable entry/exit/objective positions, a complete mine route and boss clearance. Additional checks cover campaign-independent geometry, valid enemy spawns in all seven rooms and continuous backtracking without repeated healing or encounter resets. The normal progression test now walks through all six corridors and asserts that transitions never teleport the player.
+
+The graphics input suite passed with the generated layout: ground and enemy clicks, target tracking, Shift/RMB firing, HUD controls, mouse doorway traversal, camera tracking into another room, objective approach, rescue and retreat. Scripted combat and boss scenes use room-relative aiming and isolated temporary campaigns. The updated room geometry and map were rendered for visual inspection.
+
+The 600-frame rendered stress check at 1440 × 900, seed `1866`, measured **6.56 ms mean**, **8.81 ms p95**, and **42.41 ms maximum**. Ten bursts each began with 100 enemies and 600 shots; peak active projectiles were 906, maximum chain depth 16, and 861 descendants were suppressed by the configured budgets. Mean simulation/draw/present times were 0.33/2.49/3.73 ms. This measures the current generated starting chamber and build, rather than performance across every seed or room. Logs and captures are in `artifacts/connected-rooms-*-m1-4.*`.
+
 ## Diablo-style control and balance update
 
 Content version `deathward-m1-3` changes LMB to contextual ground movement, enemy targeting, and objective interaction. Holding a selected enemy tracks it until release; target death does not issue a movement command. Shift holds position and Shift + LMB force-fires; RMB directly fires the revolver. Starting health is 200 HP and revolver damage is 48. Enemy damage and the reload-free six-shot cycle are unchanged.

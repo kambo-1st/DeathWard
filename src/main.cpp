@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
             const auto start = std::chrono::steady_clock::now();
             if ((smoke || benchmark) && game.run) {
                 dw::Input input;
-                input.aim = {0, 0.85f, -8};
+                input.aim = game.run->arena.rooms[size_t(game.run->room)].center;
                 input.fire = frame % 45 < 30;
                 if (benchmark && frame % 60 == 0 && frame > 0)
                     game.run->startStress();
