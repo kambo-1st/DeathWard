@@ -18,8 +18,7 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
     PointerTarget result;
     float nearest = std::numeric_limits<float>::infinity();
     if (run.arena.canyon) {
-        const auto hit = run.arena.canyon->trace(ray.position, add(ray.position, mul(ray.direction, 1000)), 0,
-                                                 &run.player.position, &ray.position);
+        const auto hit = run.arena.canyon->trace(ray.position, add(ray.position, mul(ray.direction, 1000)));
         if (hit.hit)
             nearest = hit.t * 1000;
     }
@@ -555,8 +554,7 @@ void Game::update(float dt) {
             float t = -ray.position.y / ray.direction.y;
             ground = t > 0 ? add(ray.position, mul(ray.direction, t)) : run->player.aim;
             if (t > 0 && run->arena.canyon) {
-                const auto hit =
-                    run->arena.canyon->trace(ray.position, ground, 0, &run->player.position, &ray.position);
+                const auto hit = run->arena.canyon->trace(ray.position, ground);
                 if (hit.hit) {
                     ground = add(ray.position, mul(ray.direction, t * hit.t));
                     ground.y = 0;

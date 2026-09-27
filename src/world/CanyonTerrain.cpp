@@ -53,17 +53,7 @@ bool CanyonTerrain::blocked(Vector3 p, float radius) const {
     }
     return false;
 }
-float CanyonTerrain::displayedHeight(Vector3 point, bool cliff, Vector3 focus, Vector3 camera) {
-    if (!cliff || point.y <= 2.2f)
-        return point.y;
-    const Vector3 delta{point.x - focus.x, 0, point.z - focus.z};
-    const Vector3 view{camera.x - focus.x, 0, camera.z - focus.z};
-    const float facing = dot(unit(delta), unit(view));
-    const float cut = smooth(.05f, .45f, facing) * (1 - smooth(24, 42, length(delta)));
-    return point.y + (2.2f - point.y) * cut;
-}
-SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius, const Vector3 *focus,
-                                const Vector3 *camera) const {
+SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius) const {
     const auto direction = sub(to, from);
     const auto volume =
         segmentBox(from, to, {{x, -10000, z}, {x + (width - 1) * step, 10000, z + (depth - 1) * step}});
@@ -73,15 +63,9 @@ SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius, const Ve
     const auto start = add(from, mul(direction, begin));
     int ix = std::clamp(int(std::floor((start.x - x) / step)), 0, width - 2);
     int iz = std::clamp(int(std::floor((start.z - z) / step)), 0, depth - 2);
-    auto node = [&](int a, int b) {
-        auto p = vertex(a, b);
-        if (focus && camera)
-            p.y = displayedHeight(p, cliffs[size_t(b * width + a)] != 0, *focus, *camera);
-        return p;
-    };
-    if (!focus && height(start.x, start.z) > start.y - radius) {
+    if (height(start.x, start.z) > start.y - radius) {
         const Vector3 normal =
-            unit(cross(sub(node(ix, iz + 1), node(ix, iz)), sub(node(ix + 1, iz), node(ix, iz))));
+            unit(cross(sub(vertex(ix, iz + 1), vertex(ix, iz)), sub(vertex(ix + 1, iz), vertex(ix, iz))));
         return {true, volume.t, normal};
     }
     const int sx = direction.x >= 0 ? 1 : -1, sz = direction.z >= 0 ? 1 : -1;
@@ -110,7 +94,8 @@ SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius, const Ve
             if (edge(a, b) >= -margin && edge(b, c) >= -margin && edge(c, a) >= -margin)
                 best = {true, t, normal};
         };
-        const auto a = node(ix, iz), b = node(ix + 1, iz), c = node(ix, iz + 1), d = node(ix + 1, iz + 1);
+        const auto a = vertex(ix, iz), b = vertex(ix + 1, iz), c = vertex(ix, iz + 1),
+                   d = vertex(ix + 1, iz + 1);
         triangle(a, d, b);
         triangle(a, c, d);
         if (best.hit)
@@ -227,7 +212,6 @@ void buildCanyon(Arena &arena) {
     field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;
     field->depth = int(std::ceil((arena.bounds.max.z + 40 - field->z) / field->step)) + 1;
     field->heights.resize(size_t(field->width * field->depth));
-    field->cliffs.resize(field->heights.size());
     for (int z = 0; z < field->depth; ++z)
         for (int x = 0; x < field->width; ++x) {
             Vector3 p{field->x + x * field->step, 0, field->z + z * field->step};
@@ -237,7 +221,6 @@ void buildCanyon(Arena &arena) {
             const float plateau =
                 7.6f + 1.7f * std::sin(p.x * .047f + p.z * .039f) + .8f * std::sin(p.z * .11f);
             float height = plateau * smooth(.35f, 4.8f + crag, d);
-            const bool cliff = height > .01f;
             for (const auto &r : rocks) {
                 const auto local = rotateY(sub(p, r.center), r.angle);
                 const float u = local.x / r.rx, v = local.z / r.rz;
@@ -246,7 +229,6 @@ void buildCanyon(Arena &arena) {
                 height = std::max(height, r.height * (1 - smooth(.32f, 1.f, q)));
             }
             field->heights[size_t(z * field->width + x)] = height;
-            field->cliffs[size_t(z * field->width + x)] = cliff;
         }
     arena.canyon = field;
     arena.floorCells.clear();

@@ -12,12 +12,12 @@ Movement tests the player's footprint against the terrain, and route smoothing s
 
 Rendering divides the shared surface into culled mesh chunks. It samples the original PolygonWestern sand and rock atlas and adds continuous horizontal strata, directional terrain shadows and distance haze. Small imported rocks and sparse cacti decorate banks and terraces. There are no repeated stretched cliff cards or rectangular border walls.
 
-Camera-facing cliffs lower smoothly within the player's vicinity. Outcrops never lower. Mouse target picking evaluates the displayed cutaway triangles, while physics keeps the solid terrain. Both use the same cutaway formula so visible targets remain clickable during camera rotation.
+Cliffs and outcrops stay at their full generated height as the player moves or rotates the camera. Mouse target picking and physics use the same visible terrain surface.
 
 ## Extension points
 
 - `src/world/MissionTheme.hpp`: theme identifiers, seeded resolution, titles and base colors.
-- `src/world/CanyonTerrain.cpp`: canyon terrain, navigation footprint, surface rays and camera cutaway formula.
+- `src/world/CanyonTerrain.cpp`: canyon terrain, navigation footprint and surface rays.
 - `src/world/Dungeon.cpp`: theme dispatch and shared collision/navigation entry points.
 - `src/render/CanyonScene.cpp`: terrain meshes, atlas sampling, lighting, shadows and dressing.
 - `src/render/WesternScene.cpp`: scenery loading, cache and mine placement. Changing arenas/themes releases old terrain resources.
@@ -27,4 +27,4 @@ Camera-facing cliffs lower smoothly within the player's vicinity. Outcrops never
 
 ## Verification
 
-`deathward_theme_tests` (CTest) checks terrain reproduction, routes to all doors/objectives, combat seals, safe repeatable encounters, vertical surface rays and saved canyon recovery. It includes seed 69175541 from the visual review. `deathward_western_assets_tests` compares vertical and oblique collision rays with uploaded terrain meshes, checks switching/resource cleanup, and verifies that camera cutaways preserve cover. `deathward_input_tests` launches Canyon and exercises the complete mouse, keyboard and camera controls in addition to the hub.
+`deathward_theme_tests` (CTest) checks terrain reproduction, routes to all doors/objectives, combat seals, safe repeatable encounters, vertical surface rays and saved canyon recovery. It includes seed 69175541 from the visual review. `deathward_western_assets_tests` compares vertical and oblique collision rays with uploaded terrain meshes, and checks switching/resource cleanup. `deathward_input_tests` launches Canyon and exercises the complete mouse, keyboard and camera controls in addition to the hub.

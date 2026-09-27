@@ -326,8 +326,8 @@ void WesternScene::generate(const Arena &arena) {
         }
     }
 }
-void WesternScene::draw(Vector3 focus, const Camera3D *camera) {
-    drawTerrain(focus, camera);
+void WesternScene::draw(Vector3 focus) {
+    drawTerrain(focus);
     if (!loaded())
         return;
     for (auto &batch : batches_)

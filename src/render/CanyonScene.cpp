@@ -11,24 +11,16 @@ in vec3 vertexNormal;
 in vec2 vertexTexCoord;
 in vec4 vertexColor;
 uniform mat4 mvp;
-uniform vec3 focus;
-uniform vec3 eye;
 out vec3 world;
 out vec3 normal;
 out vec2 uv;
 out vec3 tint;
 void main() {
     world = vertexPosition;
-    vec3 shown = world;
-    vec2 delta = world.xz-focus.xz;
-    vec2 view = eye.xz-focus.xz;
-    float facing = dot(delta/max(length(delta),.0001), view/max(length(view),.0001));
-    float cut = smoothstep(.05,.45,facing)*(1.-smoothstep(24.,42.,length(delta)));
-    if (vertexColor.a > .5 && shown.y > 2.2) shown.y = mix(shown.y,2.2,cut);
     normal = vertexNormal;
     uv = vertexTexCoord;
     tint = vertexColor.rgb;
-    gl_Position = mvp*vec4(shown,1.);
+    gl_Position = mvp*vec4(world,1.);
 }
 )GLSL";
 constexpr const char *TerrainFragment = R"GLSL(#version 330
@@ -150,8 +142,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
                     m.colors[4 * vertex] = static_cast<unsigned char>(tint.r * mottling);
                     m.colors[4 * vertex + 1] = static_cast<unsigned char>(tint.g * mottling);
                     m.colors[4 * vertex + 2] = static_cast<unsigned char>(tint.b * mottling);
-                    m.colors[4 * vertex + 3] =
-                        field.cliffs[size_t(cell.second * field.width + cell.first)] ? 255 : 0;
+                    m.colors[4 * vertex + 3] = 255;
                     ++vertex;
                 }
             };
@@ -191,12 +182,10 @@ void WesternScene::generateCanyon(const Arena &arena) {
                                    true});
         }
 }
-void WesternScene::drawTerrain(Vector3 focus, const Camera3D *camera) {
+void WesternScene::drawTerrain(Vector3 focus) {
     if (terrain_.empty())
         return;
-    const Vector3 eye = camera ? camera->position : add(focus, {23, 30, 23});
     SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "focus"), &focus, SHADER_UNIFORM_VEC3);
-    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "eye"), &eye, SHADER_UNIFORM_VEC3);
     for (const auto &chunk : terrain_) {
         const Vector3 closest{std::clamp(focus.x, chunk.bounds.min.x, chunk.bounds.max.x), focus.y,
                               std::clamp(focus.z, chunk.bounds.min.z, chunk.bounds.max.z)};

@@ -329,7 +329,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     BeginMode3D(camera);
     DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
     if (westernScene_.loaded() || westernScene_.terrainReady())
-        westernScene_.draw(run.player.position, &camera);
+        westernScene_.draw(run.player.position);
     auto visible = [&](Box box) {
         Vector3 nearest{std::clamp(run.player.position.x, box.min.x, box.max.x), run.player.position.y,
                         std::clamp(run.player.position.z, box.min.z, box.max.z)};

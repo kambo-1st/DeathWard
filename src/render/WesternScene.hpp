@@ -48,7 +48,7 @@ class WesternScene {
     bool load(const std::filesystem::path &directory = assetDirectory());
     void unload();
     void prepare(const Arena &arena);
-    void draw(Vector3 focus, const Camera3D *camera = nullptr);
+    void draw(Vector3 focus);
     void drawGlass();
     bool loaded() const {
         return model_.meshCount > 0;
@@ -95,7 +95,7 @@ class WesternScene {
     Texture2D heightTexture_{};
     void clearTerrain();
     void generateCanyon(const Arena &arena);
-    void drawTerrain(Vector3 focus, const Camera3D *camera);
+    void drawTerrain(Vector3 focus);
     void generate(const Arena &arena);
     void drawBatches(bool transparent);
 };

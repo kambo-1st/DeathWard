@@ -2,7 +2,7 @@
 
 ## Canyon terrain and mission themes
 
-Content version `deathward-m1-16` adds Seeded Theme, Western Mine and Canyon choices. Canyon has a dedicated terrain generator with irregular basins, curved trails, continuous mesas and rock outcrops. Navigation, bullets and sight use the same triangulated height field that is rendered. Enemy counts use navigable basin area. Original atlas colors, terrain shadows and world-space strata distinguish sand and rock; camera-facing walls lower without shrinking cover. Mouse target picking follows the displayed cutaway surface. Mission titles persist through checkpoints, results and history.
+Content version `deathward-m1-16` adds Seeded Theme, Western Mine and Canyon choices. Canyon has a dedicated terrain generator with irregular basins, curved trails, continuous mesas and rock outcrops. Navigation, bullets and sight use the same triangulated height field that is rendered. Enemy counts use navigable basin area. Original atlas colors, terrain shadows and world-space strata distinguish sand and rock; cliffs and cover retain their full generated height. Mouse target picking follows the visible terrain surface. Mission titles persist through checkpoints, results and history.
 
 The new terrain replaces the first canyon pass's rectangular borders, cube cover, stretched cliff pieces and overhead beams. The existing mine and town remain available. See [mission themes](mission_themes.md) for implementation boundaries and [Western asset notes](../assets/western/README.md) for source texture provenance.
 

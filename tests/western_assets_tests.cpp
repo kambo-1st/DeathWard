@@ -76,18 +76,12 @@ size_t verifyCanyon(WesternScene &scene) {
         BeginDrawing();
         ClearBackground(BLACK);
         BeginMode3D(camera);
-        scene.draw(focus, &camera);
+        scene.draw(focus);
         scene.drawGlass();
         EndMode3D();
         EndDrawing();
         total += first.size();
     }
-    check(std::abs(CanyonTerrain::displayedHeight({0, 9, 10}, true, {0, 0, 0}, {0, 20, 30}) - 2.2f) < .0001f,
-          "front cliffs lower to reveal the player and nearby combat");
-    check(CanyonTerrain::displayedHeight({0, 9, -10}, true, {0, 0, 0}, {0, 20, 30}) == 9,
-          "far-side cliffs retain their height");
-    check(CanyonTerrain::displayedHeight({0, 3, 10}, false, {0, 0, 0}, {0, 20, 30}) == 3,
-          "camera cutaways never change cover heights");
     return total;
 }
 void verify() {
@@ -186,7 +180,7 @@ void verify() {
     std::cout << "PASS Western textures, materials, meters, collision-fitting cover, clear routes and seeded "
                  "scenery ("
               << totalPlacements
-              << " placements across five seeds in both themes, including terrain mesh rays and cutaways)\n";
+              << " placements across five seeds in both themes, including terrain mesh rays)\n";
 }
 } // namespace
 int main() {
