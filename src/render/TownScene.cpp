@@ -1,7 +1,6 @@
 #include "render/TownScene.hpp"
 #include "raymath.h"
 #include "rlgl.h"
-#include <fstream>
 #include <set>
 #include <stdexcept>
 
@@ -27,45 +26,98 @@ void main() {
     gl_Position = mvp * p;
 }
 )GLSL";
+// Raylib CPU-skins the bandit; this shader consumes the same animated vertices.
+constexpr const char *ActorVertex = R"GLSL(#version 330
+in vec3 vertexPosition;
+in vec2 vertexTexCoord;
+in vec3 vertexNormal;
+in vec4 vertexColor;
+uniform mat4 mvp;
+uniform mat4 matModel;
+uniform mat4 matNormal;
+out vec2 uv;
+out vec3 normal;
+out vec3 world;
+out vec4 color;
+void main() {
+    uv = vertexTexCoord;
+    color = vertexColor;
+    world = (matModel * vec4(vertexPosition,1.)).xyz;
+    normal = normalize((matNormal * vec4(vertexNormal,0.)).xyz);
+    gl_Position = mvp * vec4(vertexPosition,1.);
+}
+)GLSL";
+constexpr const char *DepthFragment = R"GLSL(#version 330
+in vec2 uv;
+in vec4 color;
+uniform sampler2D texture0;
+uniform vec4 colDiffuse;
+out vec4 finalColor;
+void main() {
+    if ((texture(texture0,uv)*colDiffuse*color).a < .5) discard;
+    finalColor = vec4(1.);
+}
+)GLSL";
 constexpr const char *Fragment = R"GLSL(#version 330
 in vec2 uv;
 in vec3 normal;
 in vec3 world;
 in vec4 color;
 uniform sampler2D texture0;
+uniform sampler2D shadowMap;
+uniform mat4 lightVP;
 uniform vec4 colDiffuse;
 uniform int unlit;
 uniform int lightCount;
+uniform int sunIndex;
+uniform int shadowEnabled;
+uniform float shadowTexelDepth;
 uniform vec3 lightPositions[8];
 uniform vec3 lightDirections[8];
 uniform vec3 lightColors[8];
 uniform float lightRanges[8];
 out vec4 finalColor;
+float visibility(vec3 n, vec3 sun) {
+    if (shadowEnabled == 0) return 1.;
+    vec4 projected = lightVP * vec4(world,1.);
+    vec3 p = projected.xyz / projected.w * .5 + .5;
+    if (p.z <= 0. || p.z >= 1. || any(lessThan(p.xy,vec2(0.))) ||
+        any(greaterThan(p.xy,vec2(1.)))) return 1.;
+    // Account for the receiver's slope across the entire PCF footprint, including at wide zoom.
+    float cosine = max(dot(n,sun),.15);
+    float slope = sqrt(max(0.,1.-cosine*cosine))/cosine;
+    float bias = shadowTexelDepth*(1.25+2.*slope);
+    vec2 texel = 1. / vec2(textureSize(shadowMap,0));
+    float lit = 0.;
+    for (int x=-1; x<=1; ++x)
+        for (int y=-1; y<=1; ++y)
+            lit += p.z-bias <= texture(shadowMap,p.xy+vec2(x,y)*texel).r ? 1. : 0.;
+    float edge = max(abs(p.x*2.-1.),abs(p.y*2.-1.));
+    return mix(lit/9.,1.,smoothstep(.86,1.,edge));
+}
 void main() {
     vec4 surface = texture(texture0,uv) * colDiffuse * color;
     if(surface.a < .02) discard;
-    vec3 light = vec3(.46);
+    if(unlit != 0) { finalColor = surface; return; }
+    vec3 n = normalize(normal);
+    // Warm ground bounce and a cool sky fill keep shaded porches readable.
+    vec3 light = mix(vec3(.27,.245,.215),vec3(.43,.48,.55),n.y*.5+.5);
     for(int i=0;i<lightCount;i++) {
         vec3 d = lightDirections[i];
-        float attenuation = .62;
+        float attenuation = .78;
         if(lightRanges[i]>0.0) {
             vec3 delta = lightPositions[i]-world;
-            d = normalize(delta);
+            d = delta/max(length(delta),.001);
             attenuation = pow(max(0.0,1.0-length(delta)/lightRanges[i]),2.0);
         }
-        light += max(dot(normalize(normal),d),0.0)*lightColors[i]*attenuation;
+        float direct = max(dot(n,d),0.0);
+        float shade = i == sunIndex && direct > 0. ? visibility(n,d) : 1.;
+        light += direct*lightColors[i]*attenuation*shade;
     }
-    finalColor=vec4(surface.rgb*(unlit!=0?vec3(1.0):light),surface.a);
+    finalColor=vec4(surface.rgb*light,surface.a);
 }
 )GLSL";
-Matrix readMatrix(std::istream &in) {
-    // The scene catalog stores mathematical rows; raylib's fields are named by
-    // their column-major index even though the struct groups rows in memory.
-    Matrix m{};
-    in >> m.m0 >> m.m4 >> m.m8 >> m.m12 >> m.m1 >> m.m5 >> m.m9 >> m.m13 >> m.m2 >> m.m6 >> m.m10 >> m.m14 >>
-        m.m3 >> m.m7 >> m.m11 >> m.m15;
-    return m;
-}
+constexpr int ShadowSize = 2048;
 Box transformBounds(Box source, Matrix m) {
     Box box{{1e9f, 1e9f, 1e9f}, {-1e9f, -1e9f, -1e9f}};
     for (float x : {source.min.x, source.max.x})
@@ -100,14 +152,26 @@ void TownScene::unload() {
         }
     if (model_.meshCount)
         UnloadModel(model_);
-    if (shader_.id)
-        UnloadShader(shader_);
+    for (auto shader : {shader_, actorShader_, shadowShader_, actorShadowShader_})
+        if (shader.id)
+            UnloadShader(shader);
+    // The framebuffer owns its depth texture; it is only borrowed by draw materials.
+    if (shadowMap_.id)
+        UnloadRenderTexture(shadowMap_);
+    if (staticShadowMap_.id)
+        UnloadRenderTexture(staticShadowMap_);
+    actorShader_ = shadowShader_ = actorShadowShader_ = {};
+    shadowMap_ = staticShadowMap_ = {};
+    shadowsDirty_ = true;
+    shadowSpan_ = 0;
+    sunIndex_ = -1;
     model_ = {};
     shader_ = {};
     assets_.clear();
     instances_.clear();
     document_ = {};
     batches_.clear();
+    shadowBatches_.clear();
     attempted_ = false;
 }
 bool TownScene::load(const std::filesystem::path &directory) {
@@ -117,69 +181,53 @@ bool TownScene::load(const std::filesystem::path &directory) {
         std::string error;
         if (!document_.load(directory / "town.scene", error))
             throw std::runtime_error(error);
-        std::ifstream in(directory / "town.scene");
-        std::string token;
-        int version = 0;
-        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || version != 1)
-            throw std::runtime_error("Missing town scene catalog");
-        std::vector<Vector3> positions, directions, colors;
-        std::vector<float> ranges;
-        int meshCount = 0;
-        while (in >> token) {
-            if (token == "asset") {
-                std::string name;
-                Asset a{};
-                in >> name >> a.first >> a.count >> a.unlit >> a.bounds.min.x >> a.bounds.min.y >>
-                    a.bounds.min.z >> a.bounds.max.x >> a.bounds.max.y >> a.bounds.max.z;
-                if (a.first != meshCount || a.count <= 0)
-                    throw std::runtime_error("Invalid town mesh range");
-                meshCount += a.count;
-                assets_.push_back(a);
-            } else if (token == "instance") {
-                size_t asset;
-                in >> asset;
-                auto transform = readMatrix(in);
-                if (asset >= assets_.size())
-                    throw std::runtime_error("Invalid town asset index");
-                instances_.push_back({asset, transform, transformBounds(assets_[asset].bounds, transform)});
-            } else if (token == "light") {
-                int type;
-                Vector3 p, d, c;
-                float intensity, range;
-                in >> type >> p.x >> p.y >> p.z >> d.x >> d.y >> d.z >> c.x >> c.y >> c.z >> intensity >>
-                    range;
-                if (positions.size() < 8) {
-                    positions.push_back(p);
-                    directions.push_back(d);
-                    colors.push_back(mul(c, intensity));
-                    ranges.push_back(type == 1 ? 0 : range);
-                }
-            } else
-                throw std::runtime_error("Unknown town scene entry");
-            if (!in)
-                throw std::runtime_error("Truncated town scene catalog");
-        }
-        if (assets_.empty() || instances_.empty())
-            throw std::runtime_error("Empty town scene");
+        const int meshCount = document_.meshCount();
+        for (const auto &a : document_.assets)
+            assets_.push_back({a.first, a.count, a.unlit, a.bounds});
+        for (const auto &i : document_.instances)
+            instances_.push_back(
+                {i.asset, i.transform, transformBounds(assets_[i.asset].bounds, i.transform)});
         model_ = LoadModel((directory / "town.glb").string().c_str());
         if (model_.meshCount != meshCount)
             throw std::runtime_error("Town model/catalog mismatch");
         shader_ = LoadShaderFromMemory(Vertex, Fragment);
-        if (!shader_.id || shader_.id == rlGetShaderIdDefault())
-            throw std::runtime_error("Town shader failed to compile");
-        shader_.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocationAttrib(shader_, "instanceTransform");
-        const int count = int(positions.size());
-        SetShaderValue(shader_, GetShaderLocation(shader_, "lightCount"), &count, SHADER_UNIFORM_INT);
-        if (count) {
-            SetShaderValueV(shader_, GetShaderLocation(shader_, "lightPositions"), positions.data(),
-                            SHADER_UNIFORM_VEC3, count);
-            SetShaderValueV(shader_, GetShaderLocation(shader_, "lightDirections"), directions.data(),
-                            SHADER_UNIFORM_VEC3, count);
-            SetShaderValueV(shader_, GetShaderLocation(shader_, "lightColors"), colors.data(),
-                            SHADER_UNIFORM_VEC3, count);
-            SetShaderValueV(shader_, GetShaderLocation(shader_, "lightRanges"), ranges.data(),
-                            SHADER_UNIFORM_FLOAT, count);
+        actorShader_ = LoadShaderFromMemory(ActorVertex, Fragment);
+        shadowShader_ = LoadShaderFromMemory(Vertex, DepthFragment);
+        actorShadowShader_ = LoadShaderFromMemory(ActorVertex, DepthFragment);
+        for (auto shader : {shader_, actorShader_, shadowShader_, actorShadowShader_})
+            if (!shader.id || shader.id == rlGetShaderIdDefault())
+                throw std::runtime_error("Town lighting shader failed to compile");
+        for (auto shader : {shader_, shadowShader_})
+            shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocationAttrib(shader, "instanceTransform");
+        for (auto shader : {shader_, actorShader_})
+            shader.locs[SHADER_LOC_MAP_METALNESS] = GetShaderLocation(shader, "shadowMap");
+        const auto createShadowMap = [] {
+            RenderTexture2D target{};
+            target.id = rlLoadFramebuffer();
+            if (target.id) {
+                target.texture.width = target.texture.height = ShadowSize;
+                target.depth = {rlLoadTextureDepth(ShadowSize, ShadowSize, false), ShadowSize, ShadowSize, 1,
+                                0};
+                rlFramebufferAttach(target.id, target.depth.id, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_TEXTURE2D,
+                                    0);
+                if (!target.depth.id || !rlFramebufferComplete(target.id)) {
+                    UnloadRenderTexture(target);
+                    target = {};
+                }
+            }
+            return target;
+        };
+        shadowMap_ = createShadowMap();
+        staticShadowMap_ = createShadowMap();
+        if (!shadowMap_.id || !staticShadowMap_.id) {
+            if (shadowMap_.id)
+                UnloadRenderTexture(shadowMap_);
+            if (staticShadowMap_.id)
+                UnloadRenderTexture(staticShadowMap_);
+            shadowMap_ = staticShadowMap_ = {};
+            TraceLog(LOG_WARNING, "TOWN: Shadow buffer unavailable; using unshadowed lighting");
         }
+        updateLights();
         std::set<unsigned> filtered;
         for (int i = 0; i < model_.materialCount; ++i) {
             auto &m = model_.materials[i];
@@ -191,6 +239,7 @@ bool TownScene::load(const std::filesystem::path &directory) {
             }
         }
         batches_.resize(assets_.size());
+        shadowBatches_.resize(assets_.size());
         TraceLog(LOG_INFO, "TOWN: Original Demo scene loaded: %d placements, %d mesh sections",
                  int(instances_.size()), meshCount);
         return true;
@@ -206,10 +255,142 @@ void TownScene::applyDocument(const TownDocument &document) {
     if (document.meshCount() != model_.meshCount || document.assets.size() != assets_.size())
         throw std::runtime_error("The edited scene must use the loaded mesh library.");
     document_ = document;
+    updateLights();
     instances_.clear();
     for (size_t n = 0; n < document.instances.size(); ++n) {
         const auto &i = document.instances[n];
         instances_.push_back({i.asset, i.transform, document.bounds(n)});
+    }
+}
+void TownScene::updateLights() {
+    shadowsDirty_ = true;
+    auto lights = document_.lights;
+    auto sun = lights.end();
+    float brightness = 0;
+    for (auto i = lights.begin(); i != lights.end(); ++i) {
+        const float value = i->intensity * std::max({i->color.x, i->color.y, i->color.z});
+        if (i->type == 1 && length(i->direction) > .001f && value > brightness) {
+            brightness = value;
+            sun = i;
+        }
+    }
+    sunIndex_ = sun == lights.end() ? -1 : 0;
+    if (sunIndex_ == 0) {
+        std::iter_swap(lights.begin(), sun); // Reserve a slot for the sun even in scenes with many lamps.
+        sunDirection_ = Vector3Normalize(lights.front().direction);
+    }
+    std::vector<Vector3> positions, directions, colors;
+    std::vector<float> ranges;
+    for (size_t i = 0; i < std::min(size_t(8), lights.size()); ++i) {
+        const auto &l = lights[i];
+        positions.push_back(l.position);
+        directions.push_back(Vector3Normalize(l.direction));
+        colors.push_back(mul(l.color, l.intensity));
+        ranges.push_back(l.type == 1 ? 0 : std::max(.001f, l.range));
+    }
+    const int count = int(positions.size()), disabled = 0;
+    for (auto shader : {shader_, actorShader_}) {
+        SetShaderValue(shader, GetShaderLocation(shader, "lightCount"), &count, SHADER_UNIFORM_INT);
+        SetShaderValue(shader, GetShaderLocation(shader, "sunIndex"), &sunIndex_, SHADER_UNIFORM_INT);
+        SetShaderValue(shader, GetShaderLocation(shader, "shadowEnabled"), &disabled, SHADER_UNIFORM_INT);
+        if (count) {
+            SetShaderValueV(shader, GetShaderLocation(shader, "lightPositions"), positions.data(),
+                            SHADER_UNIFORM_VEC3, count);
+            SetShaderValueV(shader, GetShaderLocation(shader, "lightDirections"), directions.data(),
+                            SHADER_UNIFORM_VEC3, count);
+            SetShaderValueV(shader, GetShaderLocation(shader, "lightColors"), colors.data(),
+                            SHADER_UNIFORM_VEC3, count);
+            SetShaderValueV(shader, GetShaderLocation(shader, "lightRanges"), ranges.data(),
+                            SHADER_UNIFORM_FLOAT, count);
+        }
+    }
+}
+void TownScene::prepareLighting(const Camera3D &camera, const std::function<void(Shader)> &actors) {
+    if (!shadowsReady())
+        return;
+    // A square orthographic sun map follows the camera's focus, including at wide zoom.
+    // Quantized coverage and texel-snapped translation keep slow pans from shimmering.
+    const float span =
+        std::clamp(std::ceil(distance(camera.position, camera.target) * 2 / 16) * 16, 96.0f, 256.0f);
+    const float texel = span / ShadowSize;
+    const Vector3 up = std::abs(sunDirection_.y) > .98f ? Vector3{0, 0, 1} : Vector3{0, 1, 0};
+    const auto right = Vector3Normalize(Vector3CrossProduct(up, sunDirection_));
+    const auto sky = Vector3CrossProduct(sunDirection_, right);
+    const bool rebuild =
+        shadowsDirty_ || shadowSpan_ != span || distance(camera.target, shadowFocus_) > span * .075f;
+    auto focus = rebuild ? camera.target : shadowFocus_;
+    for (auto axis : {right, sky, sunDirection_}) {
+        const float coordinate = Vector3DotProduct(focus, axis);
+        focus = add(focus, mul(axis, std::round(coordinate / texel) * texel - coordinate));
+    }
+    Camera3D lightCamera{add(focus, mul(sunDirection_, 180)), focus, up, span, CAMERA_ORTHOGRAPHIC};
+    const auto projection = MatrixOrtho(-span * .5, span * .5, -span * .5, span * .5, 1, 360);
+    const auto lightVP = MatrixMultiply(GetCameraMatrix(lightCamera), projection);
+    // Reuse the expensive town depth pass until the camera leaves its central area.
+    // Only the animated character is redrawn each frame; editor changes invalidate the cache.
+    if (rebuild) {
+        BeginTextureMode(staticShadowMap_);
+        ClearBackground(WHITE);
+        BeginMode3D(lightCamera);
+        rlSetMatrixProjection(MatrixOrtho(-span * .5, span * .5, -span * .5, span * .5, 1, 360));
+        const auto view = rlGetMatrixModelview();
+        for (auto &batch : shadowBatches_)
+            batch.clear();
+        for (const auto &i : instances_) {
+            const auto &asset = document_.assets[i.asset];
+            if (asset.unlit || asset.label.find("BackgroundCard") != std::string::npos)
+                continue;
+            const auto b = transformBounds(i.bounds, view);
+            const float edge = span * .5f + 2;
+            if (b.max.x < -edge || b.min.x > edge || b.max.y < -edge || b.min.y > edge || b.max.z < -360 ||
+                b.min.z > -1)
+                continue;
+            shadowBatches_[i.asset].push_back(i.transform);
+        }
+        rlDisableBackfaceCulling(); // Mirrored prefab transforms and thin boards also cast shadows.
+        for (size_t i = 0; i < assets_.size(); ++i) {
+            const auto &a = assets_[i];
+            const auto &batch = shadowBatches_[i];
+            if (batch.empty())
+                continue;
+            for (int j = a.first; j < a.first + a.count; ++j) {
+                auto material = model_.materials[model_.meshMaterial[j]];
+                if (material.maps[MATERIAL_MAP_ALBEDO].color.a < 255)
+                    continue; // Glass and water transmit the sun; their planes must not black out interiors.
+                material.shader = shadowShader_;
+                DrawMeshInstanced(model_.meshes[j], material, batch.data(), int(batch.size()));
+            }
+        }
+        rlDrawRenderBatchActive();
+        rlEnableBackfaceCulling();
+        EndMode3D();
+        EndTextureMode();
+        shadowFocus_ = focus;
+        shadowSpan_ = span;
+        shadowsDirty_ = false;
+    }
+    BeginTextureMode(shadowMap_);
+    rlBindFramebuffer(RL_READ_FRAMEBUFFER, staticShadowMap_.id);
+    rlBindFramebuffer(RL_DRAW_FRAMEBUFFER, shadowMap_.id);
+    rlBlitFramebuffer(0, 0, ShadowSize, ShadowSize, 0, 0, ShadowSize, ShadowSize,
+                      0x00000100); // GL_DEPTH_BUFFER_BIT
+    rlEnableFramebuffer(shadowMap_.id);
+    BeginMode3D(lightCamera);
+    rlSetMatrixProjection(projection);
+    rlDisableBackfaceCulling();
+    if (actors)
+        actors(actorShadowShader_);
+    rlDrawRenderBatchActive();
+    rlEnableBackfaceCulling();
+    EndMode3D();
+    EndTextureMode();
+    const int enabled = 1;
+    const float texelDepth = texel / 359;
+    for (auto shader : {shader_, actorShader_}) {
+        SetShaderValueMatrix(shader, GetShaderLocation(shader, "lightVP"), lightVP);
+        SetShaderValue(shader, GetShaderLocation(shader, "shadowEnabled"), &enabled, SHADER_UNIFORM_INT);
+        SetShaderValue(shader, GetShaderLocation(shader, "shadowTexelDepth"), &texelDepth,
+                       SHADER_UNIFORM_FLOAT);
     }
 }
 std::optional<size_t> TownScene::pick(Ray ray) const {
@@ -259,10 +440,13 @@ void TownScene::draw(Vector3 focus, bool glass) {
             continue;
         SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &a.unlit, SHADER_UNIFORM_INT);
         for (int j = a.first; j < a.first + a.count; ++j) {
-            const auto &m = model_.materials[model_.meshMaterial[j]];
+            auto &m = model_.materials[model_.meshMaterial[j]];
             if ((m.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != glass)
                 continue;
+            const auto previous = m.maps[MATERIAL_MAP_METALNESS].texture;
+            m.maps[MATERIAL_MAP_METALNESS].texture = shadowMap_.depth;
             DrawMeshInstanced(model_.meshes[j], m, batch.data(), int(batch.size()));
+            m.maps[MATERIAL_MAP_METALNESS].texture = previous;
         }
     }
     if (glass)

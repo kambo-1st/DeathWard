@@ -8,6 +8,54 @@ void check(bool condition, const char *message) {
     if (!condition)
         throw std::runtime_error(message);
 }
+void lightingCheck(TownScene &scene, Vector3 focus) {
+    const Camera3D camera{add(focus, {23, 30, 23}), focus, {0, 1, 0}, 45, CAMERA_PERSPECTIVE};
+    const auto render = [&](bool shadows) {
+        BeginDrawing();
+        ClearBackground(SKYBLUE);
+        if (shadows)
+            scene.prepareLighting(camera);
+        BeginMode3D(camera);
+        scene.draw(focus);
+        scene.draw(focus, true);
+        EndMode3D();
+        auto image = LoadImageFromScreen();
+        EndDrawing();
+        return image;
+    };
+    check(scene.shadowsReady(), "sun and shadow framebuffer are available");
+    auto unshadowed = render(false), shadowed = render(true);
+    auto before = LoadImageColors(unshadowed), after = LoadImageColors(shadowed);
+    auto cached = render(true);
+    auto reused = LoadImageColors(cached);
+    int darkened = 0, unchanged = 0, brighter = 0;
+    int cacheDifferences = 0;
+    for (int i = 0; i < unshadowed.width * unshadowed.height; ++i) {
+        const int delta =
+            int(before[i].r) + before[i].g + before[i].b - int(after[i].r) - after[i].g - after[i].b;
+        darkened += delta > 30;
+        unchanged += std::abs(delta) <= 3;
+        brighter += delta < -9;
+        cacheDifferences +=
+            after[i].r != reused[i].r || after[i].g != reused[i].g || after[i].b != reused[i].b;
+    }
+    UnloadImageColors(before);
+    UnloadImageColors(after);
+    UnloadImageColors(reused);
+    UnloadImage(unshadowed);
+    UnloadImage(shadowed);
+    UnloadImage(cached);
+    check(cacheDifferences < 20, "cached static depth reproduces the original shadow pass");
+    check(darkened > 1000 && unchanged > 20000 && brighter < 100,
+          "sun occlusion darkens visible regions while retaining sunlit surfaces and original textures");
+    const auto original = scene.document();
+    auto withoutSun = original;
+    std::erase_if(withoutSun.lights, [](const auto &light) { return light.type == 1; });
+    scene.applyDocument(withoutSun);
+    check(!scene.shadowsReady(), "editing away the sun disables its shadows");
+    scene.applyDocument(original);
+    check(scene.shadowsReady(), "restoring the scene restores its original sun");
+}
 int main() {
     try {
         SetTraceLogLevel(LOG_ERROR);
@@ -38,10 +86,13 @@ int main() {
             }
             check(textures.size() >= (frontier ? 5 : 12) && glass,
                   "original atlases, signs, sky and transparent materials are loaded");
+            lightingCheck(scene, town.spawn);
             for (Vector3 p : std::array<Vector3, 3>{{town.spawn, town.mission, {-1, 2, -65}}}) {
                 BeginDrawing();
                 ClearBackground(SKYBLUE);
-                BeginMode3D({add(p, {23, 30, 23}), p, {0, 1, 0}, 45, CAMERA_PERSPECTIVE});
+                const Camera3D camera{add(p, {23, 30, 23}), p, {0, 1, 0}, 45, CAMERA_PERSPECTIVE};
+                scene.prepareLighting(camera);
+                BeginMode3D(camera);
                 scene.draw(p);
                 scene.draw(p, true);
                 EndMode3D();
@@ -54,7 +105,7 @@ int main() {
         }
         CloseWindow();
         std::cout << "PASS both original hub scenes, exact placements and mesh sections, textures, glass, "
-                     "rendering "
+                     "sun shadows, lighting edits, rendering "
                      "and resource cleanup\n";
     } catch (const std::exception &e) {
         std::cerr << "FAIL " << e.what() << '\n';

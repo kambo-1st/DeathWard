@@ -3,6 +3,7 @@
 #include "world/HubDefinition.hpp"
 #include "world/TownDocument.hpp"
 #include <filesystem>
+#include <functional>
 
 namespace dw {
 class TownScene {
@@ -14,6 +15,17 @@ class TownScene {
     bool load(const std::filesystem::path &directory = assetDirectory(HubKind::BlackCreek));
     void unload();
     void draw(Vector3 focus, bool glass = false);
+    // Call before BeginMode3D. Actors use the supplied depth shader in this pass.
+    void prepareLighting(const Camera3D &camera, const std::function<void(Shader)> &actors = {});
+    Shader actorShader() const {
+        return actorShader_;
+    }
+    Texture2D shadowTexture() const {
+        return shadowMap_.depth;
+    }
+    bool shadowsReady() const {
+        return shadowMap_.id != 0 && sunIndex_ >= 0;
+    }
     bool loaded() const {
         return model_.meshCount > 0;
     }
@@ -43,9 +55,18 @@ class TownScene {
     Model model_{};
     TownDocument document_;
     Shader shader_{};
+    Shader actorShader_{}, shadowShader_{}, actorShadowShader_{};
+    RenderTexture2D shadowMap_{}, staticShadowMap_{};
+    Vector3 shadowFocus_{};
+    float shadowSpan_ = 0;
+    bool shadowsDirty_ = true;
+    Vector3 sunDirection_{0, 1, 0};
+    int sunIndex_ = -1;
     std::vector<Asset> assets_;
     std::vector<Instance> instances_;
     std::vector<std::vector<Matrix>> batches_;
+    std::vector<std::vector<Matrix>> shadowBatches_;
     bool attempted_ = false;
+    void updateLights();
 };
 } // namespace dw

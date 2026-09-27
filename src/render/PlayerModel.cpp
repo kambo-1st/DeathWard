@@ -227,12 +227,31 @@ Vector3 PlayerModel::worldPoint(Vector3 point, const Player &player) const {
 void PlayerModel::draw(const Simulation &run) const {
     draw(run.player, run.dead);
 }
-void PlayerModel::draw(const Player &player, bool dead) const {
+void PlayerModel::draw(const Player &player, bool dead, Shader shader, Texture2D shadowMap) const {
     if (!loaded())
         return;
-    DrawModelEx(model_, {player.position.x, player.position.y - .85f + floorOffset_, player.position.z},
-                {0, 1, 0}, yaw_ * RAD2DEG, {scale_, scale_, scale_},
-                player.hurt > 0 ? Color{255, 155, 135, 255} : WHITE);
+    const auto position =
+        Vector3{player.position.x, player.position.y - .85f + floorOffset_, player.position.z};
+    const auto transform = MatrixMultiply(
+        model_.transform,
+        MatrixMultiply(MatrixMultiply(MatrixScale(scale_, scale_, scale_), MatrixRotateY(yaw_)),
+                       MatrixTranslate(position.x, position.y, position.z)));
+    for (int i = 0; i < model_.meshCount; ++i) {
+        auto material = model_.materials[model_.meshMaterial[i]];
+        // raylib 5.5 DrawMesh reads all 12 slots, including the reserved slot after BRDF.
+        std::array<MaterialMap, 12> maps;
+        std::copy_n(material.maps, maps.size(), maps.begin());
+        material.maps = maps.data();
+        if (shader.id) {
+            material.shader = shader;
+            maps[MATERIAL_MAP_METALNESS].texture = shadowMap;
+        }
+        if (player.hurt > 0) {
+            maps[MATERIAL_MAP_ALBEDO].color.g *= 155.0f / 255;
+            maps[MATERIAL_MAP_ALBEDO].color.b *= 135.0f / 255;
+        }
+        DrawMesh(model_.meshes[i], material, transform);
+    }
     if (hand_ < 0 || dead)
         return;
     const Vector3 hand = worldPoint(worldPose_[size_t(hand_)].translation, player);

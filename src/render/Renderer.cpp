@@ -566,6 +566,8 @@ Action Renderer::hub(const Game &game) {
     const auto &world = game.campaign.data().world;
     ClearBackground(Color{154, 186, 199, 255});
     playerModel_.update(town.player, town.time, &town);
+    townScene_.prepareLighting(game.camera,
+                               [&](Shader depth) { playerModel_.draw(town.player, false, depth); });
     BeginMode3D(game.camera);
     townScene_.draw(town.player.position);
     const auto board = town.mission;
@@ -574,7 +576,7 @@ Action Renderer::hub(const Game &game) {
     DrawCube({board.x, board.y + 1.6f, board.z + .075f}, 1.05f, .65f, .025f, Paper);
     DrawCircle3D({board.x, board.y + .06f, board.z}, 1.2f, {1, 0, 0}, 90, Gold);
     if (playerModel_.loaded())
-        playerModel_.draw(town.player);
+        playerModel_.draw(town.player, false, townScene_.actorShader(), townScene_.shadowTexture());
     else
         cowboy(town.player.position, town.player.facing, Teal, 1);
     if (auto target = town.destination())

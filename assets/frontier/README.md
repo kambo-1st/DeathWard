@@ -14,7 +14,7 @@ Start with `./build/deathward --hub frontier`, or choose **Pause → Travel to F
 - Auxiliary vertex colors on tree meshes are ignored, matching the source Standard/URP Lit shaders. These channels contain magenta and zero-alpha data; using them as albedo would recolor trunks and hide foliage. The original FBXs retain them.
 - Unity's built-in water plane is reproduced at its original dimensions and transform. Distant background cards remain visible despite ordinary scenery distance culling.
 
-This is an exact import of the authored static arrangement, not a pixel-identical Unity renderer. Raylib uses the source textures, UVs, material tints, transparency and directional light. Unity's baked lighting, reflections, water shader effects, post-processing and Animator controllers are not executed. Outdoor navigation excludes disconnected roofs and does not supply multi-floor interiors.
+This is an exact import of the authored static arrangement, not a pixel-identical Unity renderer. Raylib uses the source textures, UVs, material tints, transparency and directional light. The hub renderer adds filtered sun shadows for scenery and the animated bandit, with sky fill and ground bounce. Unity's baked lighting, reflections, water shader effects, post-processing and Animator controllers are not executed. Outdoor navigation excludes disconnected roofs and does not supply multi-floor interiors.
 
 ## Files and editing
 

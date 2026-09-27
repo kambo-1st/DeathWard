@@ -40,7 +40,7 @@ Navigation uses the imported box/capsule and triangle colliders, including Unity
 
 The added arrival point and mission board lie on connected street terrain. Click-to-walk preserves the selected terrain point, moves directly across open ground, and smooths routes around obstacles without cutting blocked corners. Holding a ground click steers; holding a board click keeps approaching the board until release. WASD moves relative to the camera with collision checks. The mission button walks to the board before opening its menu. Hub exploration does not begin a campaign run or resolve an outcome. New offers receive a random seed, which remains editable for replay. The original scene arrangement remains fixed while mission layouts vary.
 
-Raylib uses the original textures, UVs, vertex colors, material tints, alpha and scene light transforms/colors with an instanced diffuse shader. Glass and water transparency draw after opaque geometry; the sky is unlit. Unity URP post-processing, baked lighting, shadow maps, water effects and material-specific shader behavior are not reproduced pixel for pixel. No Unity scripts execute in DeathWard.
+Raylib uses the original textures, UVs, vertex colors, material tints, alpha and scene light transforms/colors with an instanced lighting shader. Filtered sun shadows cover scenery and the animated bandit, with warm ground bounce and cooler sky fill. Glass and water transparency draw after opaque geometry; the sky is unlit. Unity URP post-processing, baked lighting, water effects and material-specific shader behavior are not reproduced pixel for pixel. No Unity scripts execute in DeathWard.
 
 ## Verify
 

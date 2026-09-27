@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## Hub sunlight and shadows
+
+Black Creek and Western Frontier now share filtered sun shadows, sky fill and warm ground bounce. The strongest imported directional light supplies the shadow direction and color; original secondary lights and lamps remain active. The animated bandit casts and receives the same lighting. Transparent glass/water and unlit sky/background scenery do not cast opaque shadows. The editor uses the same renderer and refreshes shadows after geometry edits.
+
+A 2048-square depth map uses nine comparison taps, slope-aware bias, texel-aligned projection and an edge fade. A separate static depth cache avoids redrawing the town every frame; camera travel, zoom and document edits refresh it. Each frame starts from that cache and draws the current animated character, preventing trails from previous poses. The original scene catalogs, GLBs, textures, navigation and campaign format are unchanged. This is a native raylib lighting pass; Unity baked lighting, reflections and water effects remain outside the import.
+
+The Release build and all six headless CTest suites pass. Graphics asset tests cover both packs, actual pixels darkened by occlusion, preserved sunlit pixels, identical cached shadow output, removing/restoring the sun, reload and cleanup. Editor, bandit and full input suites pass, including hub travel, mission return, movement, camera controls and combat. Viewpoint captures cover Frontier's village, fort, quarry, river, camera orbit and close/wide zoom, plus Black Creek. Logs and captures use the `artifacts/lighting-*` prefix.
+
+At 1440 × 900 with 4× MSAA and the frame cap disabled, eight stationary-camera views with an animated character measured 8.84–13.14 ms mean and 10.63–16.31 ms p95 over 200 frames per view after warmup. The Frontier arrival measured 10.04 ms mean; Black Creek measured 13.14 ms. These measurements use the static shadow cache on the current WSL display, and do not guarantee frame times during travel, cache rebuilds or on other hardware.
+
 ## Second hub: PolygonWesternFrontier
 
 The original `PolygonWesternFrontier/Scenes/Demo.unity` now forms a separate hub alongside Black Creek. Pause-screen travel switches packs; `--hub frontier` starts there directly. Mouse/WASD movement, camera controls, the mission board and expedition return use the selected hub. F4 and `--editor --hub frontier` select Frontier's own scene and navigation.

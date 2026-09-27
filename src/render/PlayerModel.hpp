@@ -31,7 +31,7 @@ class PlayerModel {
     void draw(const Simulation &run) const;
     void update(const Player &player, double time, const void *context, bool dead = false,
                 float deathTime = 0);
-    void draw(const Player &player, bool dead = false) const;
+    void draw(const Player &player, bool dead = false, Shader shader = {}, Texture2D shadowMap = {}) const;
     bool loaded() const {
         return model_.meshCount > 0;
     }
