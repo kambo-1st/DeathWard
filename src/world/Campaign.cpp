@@ -200,13 +200,14 @@ std::string CampaignStore::worldContext(const WorldState &w) {
     c.world = w;
     return serialize(c);
 }
-uint64_t CampaignStore::begin(uint64_t seed) {
+uint64_t CampaignStore::begin(uint64_t seed, const std::string &expedition) {
     if (campaign_.pending)
         throw std::runtime_error("An expedition is already pending");
     Campaign next = campaign_;
     RunSummary s;
     s.id = next.nextRunId++;
     s.seed = seed;
+    s.expedition = expedition;
     s.startingContext = worldContext(next.world);
     next.pending = s;
     commit(std::move(next));

@@ -7,9 +7,10 @@
 namespace dw {
 namespace {
 constexpr std::array<const char *, size_t(WesternAsset::Count)> Names{
-    "crate", "barrel", "sacks",  "woodpile", "lantern",  "coffin",      "cart",
-    "fence", "saloon", "jail",   "church",   "station",  "water_tower", "well",
-    "rail",  "ground", "rock_a", "rock_b",   "cactus_a", "cactus_b",    "floor"};
+    "crate",      "barrel",       "sacks",     "woodpile", "lantern",  "coffin",      "cart",
+    "fence",      "saloon",       "jail",      "church",   "station",  "water_tower", "well",
+    "rail",       "ground",       "rock_a",    "rock_b",   "cactus_a", "cactus_b",    "floor",
+    "cliff_wall", "cliff_pillar", "cliff_cap", "sandstone"};
 constexpr const char *VertexShader = R"GLSL(#version 330
 in vec3 vertexPosition;
 in vec2 vertexTexCoord;
@@ -29,12 +30,14 @@ in vec2 uv;
 in vec3 normal;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
+uniform vec3 sceneryTint;
 out vec4 finalColor;
 void main() {
     vec4 surface = texture(texture0, uv) * colDiffuse;
     if (surface.a < 0.02) discard;
-    float sunlight = max(dot(normalize(normal), normalize(vec3(-0.45, 0.85, 0.3))), 0.0);
-    finalColor = vec4(surface.rgb * (0.62 + 0.43 * sunlight), surface.a);
+    vec3 litNormal = gl_FrontFacing ? normalize(normal) : -normalize(normal);
+    float sunlight = max(dot(litNormal, normalize(vec3(-0.45, 0.85, 0.3))), 0.0);
+    finalColor = vec4(surface.rgb * sceneryTint * (0.62 + 0.43 * sunlight), surface.a);
 }
 )GLSL";
 bool overlaps(Box a, Box b, float margin = 0) {
@@ -56,6 +59,7 @@ WesternScene::~WesternScene() {
     unload();
 }
 void WesternScene::unload() {
+    clearTerrain();
     std::set<unsigned int> textures;
     for (int i = 0; i < model_.materialCount; ++i)
         for (int map = MATERIAL_MAP_ALBEDO; map <= MATERIAL_MAP_BRDF; ++map) {
@@ -180,16 +184,22 @@ Matrix WesternScene::placementTransform(Box source, const WesternPlacement &plac
 void WesternScene::prepare(const Arena &arena) {
     if (!attempted_)
         load();
-    if (!loaded())
+    if (!loaded() && !arena.canyon)
         return;
-    if (lastArena_ != &arena || lastSeed_ != arena.visualSeed) {
+    if (lastArena_ != &arena || lastSeed_ != arena.visualSeed || lastTheme_ != arena.theme) {
         generate(arena);
         lastArena_ = &arena;
         lastSeed_ = arena.visualSeed;
+        lastTheme_ = arena.theme;
     }
 }
 void WesternScene::generate(const Arena &arena) {
     placements_.clear();
+    clearTerrain();
+    if (arena.theme == MissionTheme::Canyon && arena.canyon) {
+        generateCanyon(arena);
+        return;
+    }
     Random random(arena.visualSeed ^ 0x7765737465726e31ULL);
     auto place = [&](WesternAsset asset, Box box, float yaw = 0, bool exterior = false) {
         placements_.push_back({asset, box, yaw, exterior});
@@ -316,7 +326,8 @@ void WesternScene::generate(const Arena &arena) {
         }
     }
 }
-void WesternScene::draw(Vector3 focus) {
+void WesternScene::draw(Vector3 focus, const Camera3D *camera) {
+    drawTerrain(focus, camera);
     if (!loaded())
         return;
     for (auto &batch : batches_)
@@ -348,12 +359,25 @@ void WesternScene::drawBatches(bool transparent) {
         if (batch.empty())
             continue;
         const auto &asset = assets_[i];
+        const Vector3 tint = lastTheme_ == MissionTheme::Canyon
+                                 ? (i == size_t(WesternAsset::Floor) ? Vector3{1.22f, 1.04f, .85f}
+                                                                     : Vector3{1.18f, .94f, .78f})
+                                 : Vector3{1, 1, 1};
+        SetShaderValue(shader_, GetShaderLocation(shader_, "sceneryTint"), &tint, SHADER_UNIFORM_VEC3);
+        const bool cliff = i == size_t(WesternAsset::CliffWall) || i == size_t(WesternAsset::CliffCap) ||
+                           i == size_t(WesternAsset::CliffPillar);
+        // Unity cliff faces are open at the back. Orbiting can see them from
+        // either side; draw both sides instead of exposing holes and slivers.
+        if (cliff)
+            rlDisableBackfaceCulling();
         for (int mesh = asset.firstMesh; mesh < asset.firstMesh + asset.meshCount; ++mesh) {
             const auto &material = model_.materials[model_.meshMaterial[mesh]];
             if ((material.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != transparent)
                 continue;
             DrawMeshInstanced(model_.meshes[mesh], material, batch.data(), int(batch.size()));
         }
+        if (cliff)
+            rlEnableBackfaceCulling();
     }
 }
 } // namespace dw

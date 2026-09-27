@@ -17,6 +17,12 @@ struct PointerTarget {
 PointerTarget pickTarget(const Simulation &run, Ray ray) {
     PointerTarget result;
     float nearest = std::numeric_limits<float>::infinity();
+    if (run.arena.canyon) {
+        const auto hit = run.arena.canyon->trace(ray.position, add(ray.position, mul(ray.direction, 1000)), 0,
+                                                 &run.player.position, &ray.position);
+        if (hit.hit)
+            nearest = hit.t * 1000;
+    }
     // A wall in front of a body prevents clicking through it.
     for (const auto &wall : run.arena.walls) {
         const auto hit = GetRayCollisionBox(ray, {wall.min, wall.max});
@@ -88,8 +94,10 @@ void Game::launch() {
         error = "Enter a whole-number seed (up to 20 digits).";
         return;
     }
-    auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world);
-    campaign.begin(seed);
+    const auto theme = resolveTheme(themeChoice, seed);
+    auto candidate =
+        std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world, theme);
+    campaign.begin(seed, missionTheme(theme).title);
     run = std::move(candidate);
     missionMenu = walkingToMission = false;
     town.stop();
@@ -139,6 +147,14 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::ThemeSeeded:
+        case Action::ThemeMine:
+        case Action::ThemeCanyon:
+            if (screen == Screen::Hub && !run)
+                themeChoice = action == Action::ThemeSeeded ? ThemeChoice::Seeded
+                              : action == Action::ThemeMine ? ThemeChoice::Mine
+                                                            : ThemeChoice::Canyon;
+            break;
         case Action::EditTown:
             if (screen == Screen::Hub && !run) {
                 editorRequested = true;
@@ -383,6 +399,13 @@ bool Game::pointerOverControls() const {
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
 }
+MissionTheme Game::offeredTheme() const {
+    uint64_t seed = 0;
+    const auto parsed = std::from_chars(seedText.data(), seedText.data() + seedText.size(), seed);
+    if (parsed.ec != std::errc{} || parsed.ptr != seedText.data() + seedText.size())
+        seed = 0;
+    return resolveTheme(themeChoice, seed);
+}
 void Game::newSeed() {
     // Fresh offers each time the player returns, while retaining editable seeds
     // for replaying a particular mission layout.
@@ -531,6 +554,14 @@ void Game::update(float dt) {
         if (!overControls && std::abs(ray.direction.y) > 0.0001f) {
             float t = -ray.position.y / ray.direction.y;
             ground = t > 0 ? add(ray.position, mul(ray.direction, t)) : run->player.aim;
+            if (t > 0 && run->arena.canyon) {
+                const auto hit =
+                    run->arena.canyon->trace(ray.position, ground, 0, &run->player.position, &ray.position);
+                if (hit.hit) {
+                    ground = add(ray.position, mul(ray.direction, t * hit.t));
+                    ground.y = 0;
+                }
+            }
             input.aim = ground;
         }
         const auto pointed = overControls ? PointerTarget{} : pickTarget(*run, ray);

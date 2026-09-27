@@ -1484,6 +1484,129 @@
           }
         }
       ]
+    },
+    {
+      "name": "cliff_wall",
+      "prefab": "Prefabs/Environments/SM_Env_Cliff_Straight_02.prefab",
+      "models": [
+        "Models/SM_Env_Cliff_Straight_02.fbx"
+      ],
+      "parts": {
+        "SM_Env_Cliff_Straight_02": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1622761423952994
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "2c8c4306394a5de499de0d78926f75c1",
+            "type": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "cliff_pillar",
+      "prefab": "Prefabs/Environments/SM_Env_Cliff_Pillar_01.prefab",
+      "models": [
+        "Models/SM_Env_Cliff_Pillar_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Cliff_Pillar_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1202651007892856
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "64ab0039246d10443990ed6caaa70c6e",
+            "type": 3
+          }
+        }
+      ]
+    },
+    {
+      "name": "cliff_cap",
+      "prefab": "Prefabs/Environments/SM_Env_Cliff_Cap_01.prefab",
+      "models": [
+        "Models/SM_Env_Cliff_Cap_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Cliff_Cap_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1473162748274636
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 0,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 4300000,
+            "guid": "585bb6ce4d8140d4aa2a371d45351367",
+            "type": 3
+          }
+        }
+      ]
     }
   ],
   "materials": {
@@ -1573,6 +1696,12 @@
     "Prefabs/Environments/SM_Env_Cactus_01.prefab": "17a71073eb21c15af9be0e66f46f42afa27314c92928afed30b0756b65839fec",
     "Models/SM_Env_Cactus_01.fbx": "46c26d02d54b12ef0c1bf3b788415f16bf821674b1063fbd52692bde902906a0",
     "Prefabs/Environments/SM_Env_Cactus_03.prefab": "8ea2fed9ce287040d8ccfbd5dc5e720e84e1bc4b3a5293fc98da842199969ffc",
-    "Models/SM_Env_Cactus_03.fbx": "0b26a9ee46854ffb14eb946e1410a0dca213544e45313f8444524dae5c3dec75"
+    "Models/SM_Env_Cactus_03.fbx": "0b26a9ee46854ffb14eb946e1410a0dca213544e45313f8444524dae5c3dec75",
+    "Prefabs/Environments/SM_Env_Cliff_Straight_02.prefab": "1d6f6838c925933ccdf267a73aa3e3b6d14bbff6d94e0c2361c8f84b6b2f29e5",
+    "Models/SM_Env_Cliff_Straight_02.fbx": "3f038ebc80cbdbbbb3bb3555109e736348e30685ad6e7e2c34e2bde598cfc3ab",
+    "Prefabs/Environments/SM_Env_Cliff_Pillar_01.prefab": "ae29b951abdf3849b761a3fa4f269c086b42a2ea5e1695d08af74e42eaa44a24",
+    "Models/SM_Env_Cliff_Pillar_01.fbx": "1fb290892304567d671a7349baccffd92a2a04ede0efae25f128b2f6b13adf86",
+    "Prefabs/Environments/SM_Env_Cliff_Cap_01.prefab": "a0f12405b31cce26702cf828a51b77fe0c311ae85206f899c5f24cf55176ada3",
+    "Models/SM_Env_Cliff_Cap_01.fbx": "1d44709c37c7baaf2a0acbcc0c231e7e5d86556d96753f05aafdf3881afc7f41"
   }
 }

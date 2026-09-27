@@ -11,6 +11,7 @@
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false;
+    dw::ThemeChoice themeChoice = dw::ThemeChoice::Seeded;
     std::filesystem::path editorDirectory;
     std::string screenshot, scene = "combat";
     int frames = 180;
@@ -26,7 +27,19 @@ int main(int argc, char **argv) {
             smoke = true;
         else if (arg == "--benchmark")
             benchmark = true;
-        else if (arg == "--screenshot" && i + 1 < argc)
+        else if (arg == "--theme" && i + 1 < argc) {
+            const std::string theme = argv[++i];
+            if (theme == "seeded")
+                themeChoice = dw::ThemeChoice::Seeded;
+            else if (theme == "mine")
+                themeChoice = dw::ThemeChoice::Mine;
+            else if (theme == "canyon")
+                themeChoice = dw::ThemeChoice::Canyon;
+            else {
+                std::cerr << "--theme must be seeded, mine or canyon\n";
+                return 2;
+            }
+        } else if (arg == "--screenshot" && i + 1 < argc)
             screenshot = argv[++i];
         else if (arg == "--scene" && i + 1 < argc)
             scene = argv[++i];
@@ -40,7 +53,7 @@ int main(int argc, char **argv) {
         } else if (arg == "--help") {
             std::cout << "DeathWard\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
-                         " --smoke              "
+                         " --theme NAME         seeded, mine or canyon\n  --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
                          "power, reward, empty, cheats, "
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
@@ -70,6 +83,7 @@ int main(int argc, char **argv) {
     }
     try {
         dw::Game game(save);
+        game.themeChoice = themeChoice;
         if (smoke || benchmark)
             game.seedText = "1866";
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);

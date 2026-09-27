@@ -362,6 +362,60 @@
       "first_mesh": 24,
       "mesh_count": 1
     },
+    "cliff_wall": {
+      "bounds": [
+        [
+          -17.19971466064453,
+          0.0,
+          -8.233047485351562
+        ],
+        [
+          17.19971466064453,
+          10.365206718444824,
+          8.233047485351562
+        ]
+      ],
+      "vertices": 1056,
+      "triangles": 1986,
+      "first_mesh": 25,
+      "mesh_count": 1
+    },
+    "cliff_pillar": {
+      "bounds": [
+        [
+          -5.954574108123779,
+          0.0,
+          -6.158872604370117
+        ],
+        [
+          5.954574108123779,
+          12.920878410339355,
+          6.158872604370117
+        ]
+      ],
+      "vertices": 155,
+      "triangles": 287,
+      "first_mesh": 26,
+      "mesh_count": 1
+    },
+    "cliff_cap": {
+      "bounds": [
+        [
+          -14.037765502929688,
+          0.0,
+          -14.095817565917969
+        ],
+        [
+          14.037765502929688,
+          13.440162658691406,
+          14.095817565917969
+        ]
+      ],
+      "vertices": 909,
+      "triangles": 1797,
+      "first_mesh": 27,
+      "mesh_count": 1
+    },
     "floor": {
       "bounds": [
         [
@@ -377,7 +431,25 @@
       ],
       "vertices": 4,
       "triangles": 2,
-      "first_mesh": 25,
+      "first_mesh": 28,
+      "mesh_count": 1
+    },
+    "sandstone": {
+      "bounds": [
+        [
+          -0.5,
+          0,
+          -0.5
+        ],
+        [
+          0.5,
+          1,
+          0.5
+        ]
+      ],
+      "vertices": 104,
+      "triangles": 52,
+      "first_mesh": 29,
       "mesh_count": 1
     }
   },
@@ -386,6 +458,6 @@
     "Glass"
   ],
   "embedded_images": 1,
-  "mesh_count": 26,
-  "glb_sha256": "c32df8c9e1b471904f4d34fb4a5077e18ae4cb2e82e4e17ce587bae2c9d9d1d8"
+  "mesh_count": 30,
+  "glb_sha256": "da215c3c8cbe4f0514466d9b9267be62768a552507eba74eef32dd730e7d90d5"
 }

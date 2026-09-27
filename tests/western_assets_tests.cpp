@@ -18,6 +18,78 @@ bool same(const WesternPlacement &a, const WesternPlacement &b) {
     return a.asset == b.asset && a.yaw == b.yaw && a.exterior == b.exterior &&
            distance(a.bounds.min, b.bounds.min) < 0.0001f && distance(a.bounds.max, b.bounds.max) < 0.0001f;
 }
+size_t verifyCanyon(WesternScene &scene) {
+    size_t total = 0;
+    for (uint64_t seed : {0ULL, 1ULL, 42ULL, 1866ULL, 69175541ULL}) {
+        Arena arena(seed, MissionTheme::Canyon);
+        scene.prepare(arena);
+        check(scene.terrainReady(), "canyon builds one continuous triangulated terrain");
+        const auto first = scene.placements();
+        const auto &field = *arena.canyon;
+        for (const auto &p : first)
+            check(p.asset == WesternAsset::RockA || p.asset == WesternAsset::CactusA ||
+                      p.asset == WesternAsset::CactusB,
+                  "canyon decorations contain no cube cover, straight walls or repeated cliff cards");
+        for (const auto &chunk : scene.terrainChunks()) {
+            check(chunk.mesh.vertexCount > 0, "terrain chunks upload visible triangles");
+            const auto p = mul(add(chunk.bounds.min, chunk.bounds.max), .5f);
+            const Vector3 from{p.x + .19f, 30, p.z + .37f}, to{p.x + .19f, -1, p.z + .37f};
+            const auto hit = field.trace(from, to);
+            const auto meshHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
+            check(hit.hit && meshHit.hit && std::abs(hit.t * 31 - meshHit.distance) < .003f,
+                  "rendered terrain triangles and collision rays agree across every chunk");
+        }
+        // Exercise oblique rays through cliff faces and cover, not only vertical ground probes.
+        // Keep reference rays off exact lattice seams: raylib's float barycentric
+        // mesh picker can reject both triangles at an edge. Core checks also probe seams.
+        const auto center = add(arena.rooms[2].center, {.173f, 0, .217f});
+        for (int n = 0; n < 12; ++n) {
+            const float angle = n * Pi / 6;
+            const Vector3 from = add(center, {std::cos(angle) * 35, 18, std::sin(angle) * 35});
+            const auto direction = unit(sub(center, from));
+            const auto hit = field.trace(from, add(from, mul(direction, 70)));
+            float closest = 1000;
+            for (const auto &chunk : scene.terrainChunks()) {
+                if (!segmentBox(from, add(from, mul(direction, 70)), chunk.bounds).hit)
+                    continue;
+                const auto rendered = GetRayCollisionMesh({from, direction}, chunk.mesh, MatrixIdentity());
+                if (rendered.hit)
+                    closest = std::min(closest, rendered.distance);
+            }
+            if (!hit.hit || std::abs(hit.t * 70 - closest) >= .01f)
+                std::cerr << "Ray seed " << seed << " angle " << n << " hit " << hit.hit << " terrain "
+                          << hit.t * 70 << " mesh " << closest << " from " << from.x << "," << from.y << ","
+                          << from.z << "\n";
+            check(hit.hit && std::abs(hit.t * 70 - closest) < .01f,
+                  "oblique terrain rays match the visible mesh");
+        }
+        Arena mine(seed);
+        scene.prepare(mine);
+        check(!scene.terrainReady(), "switching to the mine releases canyon terrain resources");
+        scene.prepare(arena);
+        check(first.size() == scene.placements().size(),
+              "seeded canyon props reproduce after switching themes");
+        for (size_t i = 0; i < first.size(); ++i)
+            check(same(first[i], scene.placements()[i]), "canyon prop transforms reproduce");
+        const auto focus = arena.rooms[0].center;
+        Camera3D camera{add(focus, {30, 35, 30}), focus, {0, 1, 0}, 45, CAMERA_PERSPECTIVE};
+        BeginDrawing();
+        ClearBackground(BLACK);
+        BeginMode3D(camera);
+        scene.draw(focus, &camera);
+        scene.drawGlass();
+        EndMode3D();
+        EndDrawing();
+        total += first.size();
+    }
+    check(std::abs(CanyonTerrain::displayedHeight({0, 9, 10}, true, {0, 0, 0}, {0, 20, 30}) - 2.2f) < .0001f,
+          "front cliffs lower to reveal the player and nearby combat");
+    check(CanyonTerrain::displayedHeight({0, 9, -10}, true, {0, 0, 0}, {0, 20, 30}) == 9,
+          "far-side cliffs retain their height");
+    check(CanyonTerrain::displayedHeight({0, 3, 10}, false, {0, 0, 0}, {0, 20, 30}) == 3,
+          "camera cutaways never change cover heights");
+    return total;
+}
 void verify() {
     WesternScene scene;
     const auto originalDirectory = std::filesystem::current_path();
@@ -105,6 +177,7 @@ void verify() {
     check(kinds.contains(WesternAsset::Saloon) && kinds.contains(WesternAsset::Church) &&
               kinds.contains(WesternAsset::Jail) && kinds.contains(WesternAsset::Station),
           "seeded scenes use the imported Western landmarks");
+    totalPlacements += verifyCanyon(scene);
     check(!scene.load(WesternScene::assetDirectory() / "missing"),
           "missing pack selects the primitive fallback");
     check(scene.load(), "asset resources can be reloaded after cleanup");
@@ -112,7 +185,8 @@ void verify() {
     scene.unload();
     std::cout << "PASS Western textures, materials, meters, collision-fitting cover, clear routes and seeded "
                  "scenery ("
-              << totalPlacements << " placements across five seeds)\n";
+              << totalPlacements
+              << " placements across five seeds in both themes, including terrain mesh rays and cutaways)\n";
 }
 } // namespace
 int main() {

@@ -24,7 +24,10 @@ enum class Action {
     Missions,
     CloseMissions,
     NewSeed,
-    EditTown
+    EditTown,
+    ThemeSeeded,
+    ThemeMine,
+    ThemeCanyon
 };
 class Game {
   public:
@@ -38,6 +41,8 @@ class Game {
     RunSummary lastSummary;
     Camera3D camera{};
     std::string seedText = "1866", error;
+    ThemeChoice themeChoice = ThemeChoice::Seeded;
+    MissionTheme offeredTheme() const;
     bool quit = false, paused = false, slow = false, debug = true, collisionDebug = false, resetArmed = false;
     bool debugPanelOpen = false;
     int selectedItem = 0, historyIndex = 0, selectedFlag = 0;

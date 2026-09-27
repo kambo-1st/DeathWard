@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## Canyon terrain and mission themes
+
+Content version `deathward-m1-16` adds Seeded Theme, Western Mine and Canyon choices. Canyon has a dedicated terrain generator with irregular basins, curved trails, continuous mesas and rock outcrops. Navigation, bullets and sight use the same triangulated height field that is rendered. Enemy counts use navigable basin area. Original atlas colors, terrain shadows and world-space strata distinguish sand and rock; camera-facing walls lower without shrinking cover. Mouse target picking follows the displayed cutaway surface. Mission titles persist through checkpoints, results and history.
+
+The new terrain replaces the first canyon pass's rectangular borders, cube cover, stretched cliff pieces and overhead beams. The existing mine and town remain available. See [mission themes](mission_themes.md) for implementation boundaries and [Western asset notes](../assets/western/README.md) for source texture provenance.
+
+The Release build, all six headless suites, full graphics input suite and terrain asset suite pass. Coverage includes routes to every objective/door, sealed canyon necks, repeatable encounters, safe spawns and terrain ray agreement with rendered triangles. The terrain suites also pass AddressSanitizer/UndefinedBehaviorSanitizer; graphics uses the existing `ASAN_OPTIONS=detect_leaks=0` driver shutdown exclusion.
+
+Verification artifacts use the `artifacts/canyon-v2-` prefix. Visual review includes the supplied seed 69175541 and room 10, plus combat, quiet rooms and low-angle rotated camera views. Tests use temporary campaigns. Human review remains the final check for the environment's visual quality.
+
 ## Native 3D town editor
 
 The town now has an in-game placement editor, opened with F4 in the hub, the pause-screen Town Editor button, or `--editor`. It renders the original textured library with mesh picking, a searchable scene list and asset palette, move/rotate/scale handles, numeric transforms, snapping, duplication/deletion, 80-step undo/redo, free camera controls and gameplay markers. Saving retains backups, validates staged files and rebuilds outdoor navigation from the edited visible geometry. Returning to the hub after saving reloads both resources. The editor and game use source town assets in a checkout and fall back to assets beside the executable in a packaged build. See [the editor guide](town_editor.md) for controls and navigation limits.

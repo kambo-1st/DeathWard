@@ -2,7 +2,7 @@
 
 Selected assets from the user's `PolygonWestern` Unity project now furnish DeathWard's seeded rooms. `western.glb` embeds the original **2048 × 2048 PolygonWestern_Texture_01_A.png** atlas, mesh UVs, Unity material assignments, color tints and glass alpha. The embedded image's decoded pixels match the source PNG exactly. Normal builds need neither Unity nor Blender.
 
-The library includes 20 source assets: a crate, barrel, sacks, woodpile, lantern, coffin, cart, fence, saloon, jail, church, railway station, water tower, well, straight track, sand ground, two rocks and two cacti. A rectangular floor tile samples the original sand mesh's atlas coordinates. Together these produce 21 catalog entries and 26 mesh/material sections sharing one embedded atlas.
+The library includes 23 source assets: a crate, barrel, sacks, woodpile, lantern, coffin, cart, fence, saloon, jail, church, railway station, water tower, well, straight track, sand ground, two rocks, two cacti and three cliff pieces (wall, cap and pillar). A rectangular floor tile samples the original sand mesh's atlas coordinates. A solid sandstone box samples the original cliff atlas in six strata; its six closed faces exactly fill an obstacle collider. Together these produce 25 catalog entries and 30 mesh/material sections sharing one embedded atlas.
 
 ## In the game
 
@@ -10,9 +10,10 @@ The library includes 20 source assets: a crate, barrel, sacks, woodpile, lantern
 - Fence panels follow room and passage boundaries. These remain solid gameplay barriers, including the visual gaps between fence rails.
 - Tracks follow connecting passages; imported lanterns retain colored door-state lights.
 - Buildings and other props surround rooms, with overlap rejection keeping them outside every playable floor strip. They are scenery, with no accessible interiors.
+- Canyon missions use a continuous triangulated terrain generated from seeded basins, curved trails and irregular outcrops. This surface defines collision as well as rendering; there are no rectangular cover proxies or low border walls. The terrain samples the original sand/cliff atlas, with world-space strata, directional shadows and small imported rocks/cacti. Front-facing canyon walls lower for camera visibility, while outcrops keep their full height.
 - Flat textured floors follow the exact generated footprint. The irregular sand mesh supplies its palette; it does not introduce holes or terrain collision.
 
-Placement uses a separate seeded random stream. It does not consume gameplay randomness or change room connections, keys, encounters or navigation. Rendering groups repeated models into GPU instances and omits distant scenery. Ambient and directional diffuse lighting replace Unity's URP lighting; glass draws after opaque objects without writing depth. Unity baked lighting, reflections, metallic/smoothness texture effects and dynamic scenery shadows are not reproduced.
+Scenery uses a separate seeded random stream. Mine scenery preserves its gameplay geometry. Canyon terrain uses its own seeded geometry stream and retains the room graph, objectives and locks; encounter counts follow the resulting navigable area. Rendering groups repeated models into GPU instances and omits distant scenery. Ambient and directional diffuse lighting replace Unity's URP lighting; glass draws after opaque objects without writing depth. Canyon terrain additionally casts directional shadows using its height map. Unity baked lighting, reflections, metallic/smoothness texture effects and dynamic scenery shadows are not reproduced.
 
 ## Rebuild
 
@@ -40,4 +41,4 @@ CMake copies the GLB and catalog into `assets/western` beside each graphics exec
 ./build/deathward_western_assets_tests
 ```
 
-The graphics test checks the texture, glass, meter scale, matching mesh/catalog bounds, fitted cover, route clearance, repeatable placement across five seeds, drawing and resource reload/cleanup. It needs an OpenGL display.
+The graphics test checks the texture, glass, meter scale, matching mesh/catalog bounds, fitted cover, route clearance, repeatable placement across five seeds in both themes, terrain collision/mesh agreement with vertical and oblique rays, scenery cache invalidation, cliff cutaways, drawing and resource reload/cleanup. It needs an OpenGL display.

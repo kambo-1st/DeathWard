@@ -36,6 +36,9 @@ ASSETS = {
     "rock_b": "Environments/SM_Env_Rock_02",
     "cactus_a": "Environments/SM_Env_Cactus_01",
     "cactus_b": "Environments/SM_Env_Cactus_03",
+    "cliff_wall": "Environments/SM_Env_Cliff_Straight_02",
+    "cliff_pillar": "Environments/SM_Env_Cliff_Pillar_01",
+    "cliff_cap": "Environments/SM_Env_Cliff_Cap_01",
 }
 
 

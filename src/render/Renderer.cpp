@@ -323,11 +323,13 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                          EntityId hoveredEnemy, float deathTime) {
     playerModel_.update(run, deathTime);
     westernScene_.prepare(run.arena);
+    const auto &theme = missionTheme(run.arena.theme);
+    const bool canyon = run.arena.theme == MissionTheme::Canyon;
+    ClearBackground(theme.sky);
     BeginMode3D(camera);
-    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220},
-              westernScene_.loaded() ? Color{117, 94, 65, 255} : Color{26, 29, 28, 255});
-    if (westernScene_.loaded())
-        westernScene_.draw(run.player.position);
+    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
+    if (westernScene_.loaded() || westernScene_.terrainReady())
+        westernScene_.draw(run.player.position, &camera);
     auto visible = [&](Box box) {
         Vector3 nearest{std::clamp(run.player.position.x, box.min.x, box.max.x), run.player.position.y,
                         std::clamp(run.player.position.z, box.min.z, box.max.z)};
@@ -339,9 +341,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawCubeV(mul(add(box.min, box.max), 0.5f), sub(box.max, box.min), color);
         DrawLine3D({box.min.x, 0.012f, box.min.z}, {box.max.x, 0.012f, box.min.z}, Color{108, 91, 69, 255});
     };
-    if (!westernScene_.loaded())
+    if (!westernScene_.loaded() && !westernScene_.terrainReady())
         for (const auto &box : run.arena.floors)
-            floor(box, Color{83, 71, 56, 255});
+            floor(box, theme.floor);
     for (size_t i = 0; i < run.arena.walls.size(); ++i) {
         const auto &wall = run.arena.walls[i];
         if (i >= run.arena.boundaryWalls.size() + run.arena.obstacles.size() || !visible(wall))
@@ -353,8 +355,8 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
         Vector3 size = sub(wall.max, wall.min), center = mul(add(wall.min, wall.max), 0.5f);
         const bool boundary = i < run.arena.boundaryWalls.size();
-        DrawCubeV(center, size, boundary ? Color{66, 61, 52, 255} : Color{94, 77, 55, 255});
-        DrawCube({center.x, wall.max.y + 0.025f, center.z}, size.x, 0.05f, size.z, Color{133, 106, 72, 255});
+        DrawCubeV(center, size, boundary && !canyon ? Color{66, 61, 52, 255} : theme.stone);
+        DrawCube({center.x, wall.max.y + 0.025f, center.z}, size.x, 0.05f, size.z, theme.edge);
         if (!boundary) {
             DrawCubeWiresV(center, size, Color{47, 43, 37, 255});
             DrawCube({center.x, center.y, wall.min.z - 0.03f}, size.x, 0.2f, 0.08f, Color{47, 43, 37, 255});
@@ -370,7 +372,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         const bool eastWest = std::abs(direction.x) > 0.5f;
         const float span = distance(passage.from, passage.to);
         Vector3 midpoint = mul(add(passage.from, passage.to), 0.5f);
-        if (!westernScene_.loaded()) {
+        if (!westernScene_.loaded() && !canyon) {
             for (float offset : {-1.3f, 1.3f}) {
                 Vector3 rail = add(midpoint, mul(side, offset));
                 rail.y = 0.07f;
@@ -400,13 +402,22 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                     DrawLine3D(sub(base, mul(side, 0.7f)), tip, Teal);
                 }
             }
-            DrawCube({at.x, 3.1f, at.z}, eastWest ? 0.5f : 8, 0.4f, eastWest ? 8 : 0.5f,
-                     Color{76, 58, 38, 255});
+            if (!canyon)
+                DrawCube({at.x, 3.1f, at.z}, eastWest ? 0.5f : 8, 0.4f, eastWest ? 8 : 0.5f, theme.gate);
             if (passage.closed(end)) {
+                if (canyon) {
+                    auto veil = color;
+                    veil.a = 65;
+                    DrawCubeV(mul(add(passage.gates[size_t(end)].min, passage.gates[size_t(end)].max), .5f),
+                              sub(passage.gates[size_t(end)].max, passage.gates[size_t(end)].min), veil);
+                }
                 for (float offset = -3.5f; offset <= 3.5f; offset += 0.7f) {
                     Vector3 bar = add(at, mul(side, offset));
                     bar.y = 1.5f;
-                    DrawCube(bar, 0.13f, 3, 0.13f, color);
+                    if (!canyon)
+                        DrawCube(bar, 0.13f, 3, 0.13f, color);
+                    else
+                        DrawSphere({bar.x, .12f, bar.z}, .09f, color);
                 }
                 if (passage.locked) {
                     DrawCube({at.x, 1.6f, at.z}, 0.6f, 0.7f, 0.6f, Gold);
@@ -596,24 +607,32 @@ Action Renderer::hub(const Game &game) {
             return Action::Reset;
     }
     if (game.missionMenu) {
+        const auto &theme = missionTheme(game.offeredTheme());
         panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
         panel(240, 104, 800, 588, Panel);
         text("THE STATION / MISSIONS", 270, 130, 17, Gold);
-        text("RED HOLLOW MINE", 267, 173, 38, Paper);
+        text(theme.title, 267, 173, 38, Paper);
         wrap(world.bossDefeated
-                 ? "Return to the mine. Bring home anyone still missing and settle unfinished business."
+                 ? "Bring home anyone still missing and settle unfinished business on the frontier."
                  : "Bring the miners home, break the altar and face the Hollow Sheriff.",
              270, 238, 727, 21, Paper);
-        wrap("A new expedition through fifteen changing rooms. Your temporary powers end when you return; "
-             "Black Creek keeps the consequences.",
-             270, 323, 727, 17, Muted);
+        text("Fifteen changing rooms. Choose the setting; your seed repeats its layout.", 270, 323, 15,
+             Muted);
+        if (button("SEEDED THEME", 270, 354, 230, 34, game.themeChoice == ThemeChoice::Seeded))
+            return Action::ThemeSeeded;
+        if (button("WESTERN MINE", 510, 354, 239, 34, game.themeChoice == ThemeChoice::Mine))
+            return Action::ThemeMine;
+        if (button("CANYON", 759, 354, 249, 34, game.themeChoice == ThemeChoice::Canyon))
+            return Action::ThemeCanyon;
         panel(270, 402, 460, 65, Ink);
         text("MISSION SEED", 287, 413, 12, Muted);
         text(game.seedText.empty() ? "Type a seed..." : game.seedText, 287, 437, 20, Gold);
         if (button("NEW MISSION", 748, 408, 260, 51))
             return Action::NewSeed;
-        text("Type a seed to revisit a layout. New missions choose a fresh one.", 270, 482, 13, Muted);
-        if (button("LEAVE FOR THE MINE", 270, 529, 738, 59, true))
+        text("Replay with the same seed and theme. New Mission chooses a fresh seed.", 270, 482, 13, Muted);
+        if (button(game.offeredTheme() == MissionTheme::Canyon ? "LEAVE FOR THE CANYON"
+                                                               : "LEAVE FOR THE MINE",
+                   270, 529, 738, 59, true))
             return Action::Launch;
         if (button("BACK TO TOWN", 270, 609, 738, 43))
             return Action::CloseMissions;
@@ -638,7 +657,7 @@ Action Renderer::hub(const Game &game) {
 void Renderer::dungeonMap(const Game &game) {
     const auto &run = *game.run;
     panel(1040, 170, 216, 192, Panel);
-    text("MINE PASSAGES", 1053, 183, 12, Gold);
+    text(run.arena.theme == MissionTheme::Canyon ? "CANYON TRAILS" : "MINE PASSAGES", 1053, 183, 12, Gold);
     const auto totalPowers =
         std::count_if(run.arena.rooms.begin(), run.arena.rooms.end(),
                       [](const RoomLayout &room) { return room.kind == RoomKind::Power; });
@@ -680,10 +699,13 @@ Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime);
     panel(24, 22, 358, 90, Panel);
-    text("RED HOLLOW / " + std::to_string(run.room + 1) + " OF " + std::to_string(RoomCount), 42, 35, 12,
-         Gold);
+    text(std::string(missionTheme(run.arena.theme).region) + " / " + std::to_string(run.room + 1) + " OF " +
+             std::to_string(RoomCount),
+         42, 35, 12, Gold);
     const int physicalRoom = run.arena.roomAt(run.player.position);
-    text(physicalRoom < 0 ? "Mine Passage" : Simulation::roomName(physicalRoom), 41, 58, 25, Paper);
+    text(physicalRoom < 0 ? missionTheme(run.arena.theme).passage
+                          : Simulation::roomName(physicalRoom, run.arena.theme),
+         41, 58, 25, Paper);
     text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
     panel(964, 22, 292, 131, Panel);
     text("BRING SOMETHING BACK", 982, 37, 13, Gold);
@@ -788,7 +810,7 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
     text(history ? "BLACK CREEK / RUN HISTORY" : "BLACK CREEK / EXPEDITION RESOLVED", 60, 42, 14, Gold);
     text(outcomeTitle(s), 58, 92, 38, Paper);
     text("RUN " + number(s.id) + "  /  SEED " + number(s.seed) + "  /  " + timeLabel(s.stats.duration) +
-             (s.interrupted ? "  /  PARTIAL CHECKPOINT" : ""),
+             "  /  " + s.expedition + (s.interrupted ? "  /  PARTIAL CHECKPOINT" : ""),
          60, 150, 15, Muted);
     const std::array<std::pair<std::string, std::string>, 4> values{
         {{"ENEMIES KILLED", number(s.stats.kills)},

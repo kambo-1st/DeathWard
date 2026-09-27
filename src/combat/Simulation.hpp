@@ -134,7 +134,8 @@ struct RoomProgress {
 
 class Simulation {
   public:
-    Simulation(uint64_t seed, uint64_t runId, const WorldState &world);
+    Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
+               MissionTheme theme = MissionTheme::Mine);
     Player player;
     Arena arena;
     Stats stats;
@@ -192,7 +193,7 @@ class Simulation {
     const Enemy *findEnemy(EntityId id) const;
     bool chainActive(const Enemy &enemy) const;
     std::string roomName() const;
-    static std::string roomName(int index);
+    static std::string roomName(int index, MissionTheme theme = MissionTheme::Mine);
     void announce(std::string text, float seconds = 3);
     void queueRoot(Event event);
     void emit(Event event, const Context &parent, int effect = -1);

@@ -1,5 +1,8 @@
 #pragma once
 #include "core/Types.hpp"
+#include "world/CanyonTerrain.hpp"
+#include "world/MissionTheme.hpp"
+#include <memory>
 #include <optional>
 #include <set>
 
@@ -18,6 +21,7 @@ struct RoomLayout {
     Box bounds;
     Vector3 center{}, entry{}, exit{}, objective{}, bossSpawn{};
     int shape = 0, depth = 0;
+    float floorArea = -1;
     RoomKind kind = RoomKind::Combat;
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;
@@ -44,6 +48,8 @@ struct KeyPickup {
 };
 struct Arena {
     uint64_t visualSeed = 0;
+    MissionTheme theme = MissionTheme::Mine;
+    std::shared_ptr<CanyonTerrain> canyon;
     // Default construction provides an empty test arena; expeditions always supply a seed.
     Box bounds{{-15, -1, -15}, {15, 4, 15}};
     std::array<RoomLayout, RoomCount> rooms{};
@@ -53,7 +59,7 @@ struct Arena {
     std::set<FloorCell> floorCells;
     Vector3 entrance{0, 0.85f, 10}, exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};
     Arena() = default;
-    explicit Arena(uint64_t seed);
+    explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine);
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;
@@ -63,6 +69,7 @@ struct Arena {
     bool blocked(Vector3 p, float radius) const;
     bool sight(Vector3 from, Vector3 to) const;
     bool clear(Vector3 from, Vector3 to, float radius) const;
+    SegmentHit trace(Vector3 from, Vector3 to, float radius = 0) const;
     Vector3 move(Vector3 from, Vector3 delta, float radius) const;
     std::vector<Vector3> path(Vector3 from, Vector3 target, float radius) const;
 };

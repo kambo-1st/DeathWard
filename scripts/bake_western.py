@@ -106,6 +106,44 @@ def main():
     bpy.context.collection.objects.link(floor_obj)
     records["floor"] = {"bounds": [[-1, 0, -1], [1, 0, 1]], "vertices": 4, "triangles": 2}
 
+    # Solid stratified cover: all six faces exactly fill the collision box.
+    # Sample the original cliff atlas rather than fitting a rounded boulder
+    # into an invisible rectangular collision envelope.
+    cliff = bpy.data.objects["cliff_wall"]
+    samples = []
+    for polygon in cliff.data.polygons:
+        sample = sum((cliff.data.uv_layers.active.data[i].uv for i in polygon.loop_indices), Vector((0, 0))) / len(polygon.loop_indices)
+        samples.append((polygon.center.z, polygon.normal.z, sample))
+    samples.sort(key=lambda entry: entry[0])
+    vertices, faces, colors = [], [], []
+    def quad(points, sample):
+        start = len(vertices)
+        vertices.extend(points)
+        faces.append(tuple(range(start, start + 4)))
+        colors.append(sample)
+    corners = [(-.5, -.5), (.5, -.5), (.5, .5), (-.5, .5)]
+    bands = 6
+    for side in range(4):
+        a, b = corners[side], corners[(side + 1) % 4]
+        for band in range(bands):
+            low, high = band / bands, (band + 1) / bands
+            sample = samples[min(len(samples)-1, int((band + .5) / bands * len(samples)))][2]
+            quad([(*a, low), (*b, low), (*b, high), (*a, high)], sample)
+    tops = [entry for entry in samples if entry[1] > .65]
+    top_uv = tops[-1][2] if tops else samples[-1][2]
+    quad([(*p, 1) for p in corners], top_uv)
+    quad([(*p, 0) for p in reversed(corners)], samples[0][2])
+    stone_mesh = bpy.data.meshes.new("sandstone")
+    stone_mesh.from_pydata(vertices, [], faces)
+    stone_mesh.materials.append(cliff.data.materials[0])
+    stone_uv = stone_mesh.uv_layers.new()
+    for polygon, sample in zip(stone_mesh.polygons, colors):
+        for loop in polygon.loop_indices:
+            stone_uv.data[loop].uv = sample
+    stone = bpy.data.objects.new("sandstone", stone_mesh)
+    bpy.context.collection.objects.link(stone)
+    records["sandstone"] = {"bounds": [[-.5, 0, -.5], [.5, 1, .5]], "vertices": len(vertices), "triangles": 2 * len(faces)}
+
     bpy.ops.object.select_all(action="SELECT")
     glb = output / "western.glb"
     bpy.ops.export_scene.gltf(filepath=str(glb), export_format="GLB", use_selection=True,

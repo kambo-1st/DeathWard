@@ -23,6 +23,7 @@ add_library(deathward_core
     src/world/HubWorld.cpp
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
+    src/world/CanyonTerrain.cpp
     src/world/RoomGraph.cpp
     src/combat/Simulation.cpp
     src/combat/Enemies.cpp
@@ -68,7 +69,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(NOT MSVC)
@@ -76,6 +77,9 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_theme_tests tests/theme_tests.cpp)
+    target_link_libraries(deathward_theme_tests PRIVATE deathward_core)
+    add_test(NAME mission_themes COMMAND deathward_theme_tests)
     add_executable(deathward_hub_tests tests/hub_tests.cpp)
     target_link_libraries(deathward_hub_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_hub_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
@@ -96,7 +100,7 @@ if(BUILD_TESTING)
     add_executable(deathward_editor_tests tests/editor_tests.cpp src/editor/TownEditor.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_editor_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_editor_tests)
-    add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/TownScene.cpp)
+    add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_input_tests)
     add_executable(deathward_player_model_tests tests/player_model_tests.cpp src/render/PlayerModel.cpp)
@@ -105,7 +109,7 @@ if(BUILD_TESTING)
     add_executable(deathward_town_assets_tests tests/town_assets_tests.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_town_assets_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_town_assets_tests)
-    add_executable(deathward_western_assets_tests tests/western_assets_tests.cpp src/render/WesternScene.cpp)
+    add_executable(deathward_western_assets_tests tests/western_assets_tests.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp)
     target_link_libraries(deathward_western_assets_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_western_assets_tests)
 endif()

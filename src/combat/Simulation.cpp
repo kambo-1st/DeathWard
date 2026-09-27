@@ -4,8 +4,8 @@
 #include <numeric>
 
 namespace dw {
-Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world)
-    : arena(seed), encounterRng(seed ^ 0x454e434f554e5445ULL), rewardRng(seed ^ 0x5245574152445354ULL),
+Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme)
+    : arena(seed, theme), encounterRng(seed ^ 0x454e434f554e5445ULL), rewardRng(seed ^ 0x5245574152445354ULL),
       combatRng(seed ^ 0x434f4d424154524eULL), seed_(seed), runId_(runId), startingWorld_(world) {
     rescued = world.minersRescued;
     altarDestroyed = world.altarDestroyed;
@@ -28,8 +28,8 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world)
         }
     }
     enterRoom(0);
-    announce(followup ? "RED HOLLOW / return to unfinished business"
-                      : "RED HOLLOW / find the six missing miners",
+    announce(std::string(missionTheme(theme).region) +
+                 (followup ? " / return to unfinished business" : " / find the six missing miners"),
              5);
 }
 void Simulation::announce(std::string text, float seconds) {
@@ -53,14 +53,20 @@ const Enemy *Simulation::boss() const {
     return nullptr;
 }
 std::string Simulation::roomName() const {
-    return roomName(room);
+    return roomName(room, arena.theme);
 }
-std::string Simulation::roomName(int index) {
-    static constexpr const char *names[] = {
+std::string Simulation::roomName(int index, MissionTheme theme) {
+    static constexpr std::array<const char *, RoomCount> names{
         "The Old Claim",   "Timberfall",       "The Cageworks",    "Ash Chapel",    "Dead Man's Cut",
         "The Deep Vein",   "The Switchyard",   "Old Powder Store", "The Dry Well",  "Iron Junction",
         "The Broken Lift", "The Bone Gallery", "Smuggler's Cache", "The Reliquary", "The Hollow Court"};
-    return names[std::clamp(index, 0, FinalRoom)];
+    static constexpr std::array<const char *, RoomCount> canyonNames{
+        "Dustwind Approach",  "The Red Narrows",   "Captives' Gulch",   "Sunbleached Shrine",
+        "Dead Man's Bend",    "Splitrock Basin",   "The Dry Wash",      "Powder Bluff",
+        "Coyote Hollow",      "Twin Mesas",        "Fallen Spire",      "Bone Dry Ravine",
+        "Prospector's Cache", "The Sun Reliquary", "The Sheriff's Mesa"};
+    const auto &selected = theme == MissionTheme::Canyon ? canyonNames : names;
+    return selected[size_t(std::clamp(index, 0, FinalRoom))];
 }
 void Simulation::grant(ItemId item) {
     if (int(item) < 0 || int(item) >= ItemCount || items.size() >= 256)
@@ -353,6 +359,7 @@ RunSummary Simulation::summary() const {
     RunSummary s;
     s.id = runId_;
     s.seed = seed_;
+    s.expedition = missionTheme(arena.theme).title;
     s.startingContext = CampaignStore::worldContext(startingWorld_);
     s.rescued = rescued;
     s.altarDestroyed = altarDestroyed;
@@ -664,13 +671,11 @@ void Simulation::updateProjectiles(float dt) {
             Vector3 normal{};
             EntityId target = 0;
             bool wall = false, playerHit = false;
-            for (const auto &box : arena.walls) {
-                auto hit = segmentBox(p.position, end, box, p.radius);
-                if (hit.hit && hit.t < best) {
-                    best = hit.t;
-                    normal = hit.normal;
-                    wall = true;
-                }
+            const auto terrainHit = arena.trace(p.position, end, p.radius);
+            if (terrainHit.hit) {
+                best = terrainHit.t;
+                normal = terrainHit.normal;
+                wall = true;
             }
             if (p.hostile) {
                 float hit = segmentSphere(p.position, end, player.position, 0.48f + p.radius);

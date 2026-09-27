@@ -174,8 +174,22 @@ int main() {
         check(!game.run && game.missionMenu && !game.error.empty(),
               "invalid seeds preserve the mission menu");
         game.seedText = "1866";
+        click(630, 372);
+        check(game.themeChoice == dw::ThemeChoice::Mine && game.offeredTheme() == dw::MissionTheme::Mine,
+              "the mine theme can be selected with the mouse");
+        click(380, 372);
+        check(game.themeChoice == dw::ThemeChoice::Seeded &&
+                  game.offeredTheme() == dw::resolveTheme(dw::ThemeChoice::Seeded, 1866),
+              "the seeded theme preview matches the offered seed");
+        click(860, 372);
+        check(game.themeChoice == dw::ThemeChoice::Canyon &&
+                  game.offeredTheme() == dw::MissionTheme::Canyon && game.seedText == "1866" && !game.run,
+              "canyon selection preserves the editable seed and waits for launch");
         click(650, 550);
         check(game.run && game.screen == dw::Screen::Expedition, "mouse launch opens expedition");
+        check(game.run->arena.theme == dw::MissionTheme::Canyon &&
+                  game.campaign.data().pending->expedition == "Redstone Canyon",
+              "the selected canyon theme reaches gameplay and the initial campaign checkpoint");
         check(game.debug && !game.debugPanelOpen && game.run->roomClear && game.run->livingEnemies() == 0,
               "new games start with hidden cheats enabled and an open, enemy-free starting room");
         frame(100, 200);

@@ -25,6 +25,10 @@ enum class WesternAsset {
     CactusA,
     CactusB,
     Floor,
+    CliffWall,
+    CliffPillar,
+    CliffCap,
+    Sandstone,
     Count
 };
 struct WesternPlacement {
@@ -44,10 +48,16 @@ class WesternScene {
     bool load(const std::filesystem::path &directory = assetDirectory());
     void unload();
     void prepare(const Arena &arena);
-    void draw(Vector3 focus);
+    void draw(Vector3 focus, const Camera3D *camera = nullptr);
     void drawGlass();
     bool loaded() const {
         return model_.meshCount > 0;
+    }
+    bool terrainReady() const {
+        return !terrain_.empty();
+    }
+    const auto &terrainChunks() const {
+        return terrain_;
     }
     const std::vector<WesternPlacement> &placements() const {
         return placements_;
@@ -73,7 +83,19 @@ class WesternScene {
     std::vector<WesternPlacement> placements_;
     const Arena *lastArena_ = nullptr;
     uint64_t lastSeed_ = 0;
+    MissionTheme lastTheme_ = MissionTheme::Mine;
     bool attempted_ = false;
+    struct TerrainChunk {
+        Mesh mesh{};
+        Box bounds{};
+    };
+    std::vector<TerrainChunk> terrain_;
+    Shader terrainShader_{};
+    Material terrainMaterial_{};
+    Texture2D heightTexture_{};
+    void clearTerrain();
+    void generateCanyon(const Arena &arena);
+    void drawTerrain(Vector3 focus, const Camera3D *camera);
     void generate(const Arena &arena);
     void drawBatches(bool transparent);
 };

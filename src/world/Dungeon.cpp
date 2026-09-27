@@ -80,7 +80,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 }
 } // namespace
 
-Arena::Arena(uint64_t seed) : visualSeed(seed) {
+Arena::Arena(uint64_t seed, MissionTheme missionTheme) : visualSeed(seed), theme(missionTheme) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
     const auto graph = generateRoomGraph(seed);
@@ -324,6 +324,8 @@ Arena::Arena(uint64_t seed) : visualSeed(seed) {
     for (int i = 1; i < quietCount; ++i)
         rooms[size_t(quietRooms[size_t(i - 1)])].kind = RoomKind::Empty;
     rebuildWalls();
+    if (theme == MissionTheme::Canyon)
+        buildCanyon(*this);
 }
 void Arena::rebuildWalls() {
     walls = boundaryWalls;
@@ -349,6 +351,8 @@ Vector3 Arena::doorApproach(int passage, int side) const {
     return add(at, mul(unit(sub(rooms[size_t(p.rooms[size_t(side)])].center, at)), 2));
 }
 float RoomLayout::usableArea() const {
+    if (floorArea >= 0)
+        return floorArea;
     // Generated floor strips and cover boxes do not overlap each other. Intersect
     // cover with each strip so clipped corners and missing floor never count.
     float area = 0;
@@ -367,11 +371,15 @@ int Arena::roomAt(Vector3 p) const {
     return -1;
 }
 bool Arena::contains(Vector3 p) const {
+    if (canyon)
+        return canyon->height(p.x, p.z) <= .12f;
     if (floorCells.empty())
         return inside(p, bounds);
     return floorCells.contains({int(std::floor(p.x / FloorTile)), int(std::floor(p.z / FloorTile))});
 }
 bool Arena::blocked(Vector3 p, float radius) const {
+    if (canyon && canyon->blocked(p, radius))
+        return true;
     if (!contains(p))
         return true;
     for (const auto &wall : walls)
@@ -380,10 +388,34 @@ bool Arena::blocked(Vector3 p, float radius) const {
     return false;
 }
 bool Arena::clear(Vector3 from, Vector3 to, float radius) const {
+    if (canyon) {
+        if (radius > .25f) {
+            auto a = from, b = to;
+            a.y = b.y = .12f;
+            if (canyon->trace(a, b).hit)
+                return false;
+            for (int n = 0; n < 8; ++n) {
+                const float angle = float(n) * Pi / 4;
+                const Vector3 offset{radius * std::cos(angle), 0, radius * std::sin(angle)};
+                if (canyon->trace(add(a, offset), add(b, offset)).hit)
+                    return false;
+            }
+        } else if (canyon->trace(from, to, radius).hit)
+            return false;
+    }
     for (const auto &wall : walls)
         if (segmentBox(from, to, wall, radius).hit)
             return false;
     return true;
+}
+SegmentHit Arena::trace(Vector3 from, Vector3 to, float radius) const {
+    auto best = canyon ? canyon->trace(from, to, radius) : SegmentHit{};
+    for (const auto &wall : walls) {
+        const auto hit = segmentBox(from, to, wall, radius);
+        if (hit.hit && (!best.hit || hit.t < best.t))
+            best = hit;
+    }
+    return best;
 }
 bool Arena::sight(Vector3 from, Vector3 to) const {
     return clear(from, to, 0);
