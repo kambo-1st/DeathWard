@@ -3,4 +3,6 @@
 *.tmp
 *.save
 *.save.bak
+/assets/town/town.scene.bak
+/assets/town/town.nav.bak
 *:Zone.Identifier

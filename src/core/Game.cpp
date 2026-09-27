@@ -139,6 +139,14 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::EditTown:
+            if (screen == Screen::Hub && !run) {
+                editorRequested = true;
+                missionMenu = paused = walkingToMission = false;
+                town.stop();
+                resetPointerInput();
+            }
+            break;
         case Action::Launch:
             launch();
             break;
@@ -382,6 +390,10 @@ void Game::newSeed() {
     seedText = std::to_string(seeds.next() % 1000000000);
 }
 void Game::updateHub(float dt) {
+    if (IsKeyPressed(KEY_F4)) {
+        perform(Action::EditTown);
+        return;
+    }
     if (debug && IsKeyPressed(KEY_G)) {
         const bool set = campaign.data().world.flags.contains("something_followed");
         campaign.setFlag("something_followed", !set);

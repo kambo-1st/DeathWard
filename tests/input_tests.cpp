@@ -92,6 +92,11 @@ int main() {
               "new games start in the walkable original town without beginning a campaign run");
         check(!game.campaign.data().pending && game.campaign.data().history.empty(),
               "town exploration does not create a pending mission or a campaign outcome");
+        pressKey(KEY_F4);
+        check(game.editorRequested && game.screen == dw::Screen::Hub && !game.run &&
+                  !game.campaign.data().pending,
+              "F4 requests the town editor without starting an expedition");
+        game.editorRequested = false;
         const auto arrival = game.town.player.position;
         mouseEvent(KeyDown, KEY_W);
         for (int i = 0; i < 20; ++i)

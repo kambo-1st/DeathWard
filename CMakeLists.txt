@@ -18,6 +18,8 @@ FetchContent_Declare(raylib
 FetchContent_MakeAvailable(raylib)
 
 add_library(deathward_core
+    src/world/TownDocument.cpp
+    src/world/TownNavigation.cpp
     src/world/HubWorld.cpp
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
@@ -56,7 +58,7 @@ function(deathward_assets target)
             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${western_asset}" "$<TARGET_FILE_DIR:${target}>/assets/western/${western_file}"
             VERBATIM)
     endforeach()
-    foreach(town_file town.glb town.scene town.nav)
+    foreach(town_file town.glb town.scene town.nav town.labels)
         set(town_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/town/${town_file}")
         set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${town_asset}")
         add_custom_command(TARGET ${target} POST_BUILD
@@ -66,7 +68,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(NOT MSVC)
@@ -91,6 +93,9 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
     add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
+    add_executable(deathward_editor_tests tests/editor_tests.cpp src/editor/TownEditor.cpp src/render/TownScene.cpp)
+    target_link_libraries(deathward_editor_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_editor_tests)
     add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_input_tests)

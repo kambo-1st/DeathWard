@@ -628,7 +628,9 @@ Action Renderer::hub(const Game &game) {
             wrap(world.npcs[i].name + ": " + npcDialogue(world, i), 378, 310 + float(i) * 48, 514, 13, Paper);
         if (button("KEEP EXPLORING", 378, 485, 514, 50, true))
             return Action::Resume;
-        if (button("QUIT", 378, 557, 514, 43))
+        if (button("TOWN EDITOR", 378, 547, 250, 43))
+            return Action::EditTown;
+        if (button("QUIT", 642, 547, 250, 43))
             return Action::Quit;
     }
     return Action::None;

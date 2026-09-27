@@ -8,6 +8,9 @@ namespace dw {
 class Renderer {
   public:
     Action draw(const Game &game);
+    void reloadTown() {
+        townScene_.unload();
+    }
     void drawWorld(const Simulation &run, const Camera3D &camera, bool collisions, EntityId hoveredEnemy = 0,
                    float deathTime = 0);
     void unload() {

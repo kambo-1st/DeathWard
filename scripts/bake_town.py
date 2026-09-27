@@ -290,6 +290,12 @@ def main():
             )
         )
     (out / "town.scene").write_text("\n".join(lines) + "\n")
+    labels = {}
+    for placement in placements:
+        labels.setdefault(placement["asset"], Path(placement["prefab"]).stem)
+    (out / "town.labels").write_text(
+        "".join(f"{asset} {labels.get(asset, asset)}\n" for asset in order)
+    )
     # Use original collision meshes, convex pieces and primitive colliders for an
     # outdoor height grid. Roofs remain disconnected from street navigation.
     verts = []

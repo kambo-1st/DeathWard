@@ -1,4 +1,5 @@
 #include "core/Game.hpp"
+#include "editor/TownEditor.hpp"
 #include "render/Renderer.hpp"
 #include <algorithm>
 #include <charconv>
@@ -9,13 +10,18 @@
 
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
-    bool smoke = false, benchmark = false;
+    bool smoke = false, benchmark = false, startEditor = false;
+    std::filesystem::path editorDirectory;
     std::string screenshot, scene = "combat";
     int frames = 180;
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
         if (arg == "--save" && i + 1 < argc)
             save = argv[++i];
+        else if (arg == "--editor")
+            startEditor = true;
+        else if (arg == "--town" && i + 1 < argc)
+            editorDirectory = argv[++i];
         else if (arg == "--smoke")
             smoke = true;
         else if (arg == "--benchmark")
@@ -32,7 +38,9 @@ int main(int argc, char **argv) {
                 return 2;
             }
         } else if (arg == "--help") {
-            std::cout << "DeathWard\n  --save PATH          Separate campaign file\n  --smoke              "
+            std::cout << "DeathWard\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
+                         "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
+                         " --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
                          "power, reward, empty, cheats, "
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
@@ -50,7 +58,7 @@ int main(int argc, char **argv) {
         return 2;
     }
     // Scripted verification never modifies the player's campaign by default.
-    if (smoke || benchmark) {
+    if (smoke || benchmark || startEditor) {
         bool explicitSave = false;
         for (int i = 1; i < argc; ++i)
             if (std::string(argv[i]) == "--save")
@@ -72,6 +80,14 @@ int main(int argc, char **argv) {
         SetExitKey(KEY_NULL);
         SetTargetFPS(benchmark ? 0 : 60);
         dw::Renderer renderer;
+        dw::TownEditor editor;
+        if (startEditor) {
+            const auto directory =
+                editorDirectory.empty() ? dw::TownScene::assetDirectory() : editorDirectory;
+            if (!editor.open(directory, game.camera))
+                throw std::runtime_error(editor.status);
+            SetWindowTitle("DeathWard | Town editor");
+        }
         if ((smoke && scene != "hub") || benchmark) {
             game.launch();
             if (!game.run)
@@ -126,9 +142,27 @@ int main(int argc, char **argv) {
         size_t minEnemies = 1000, minProjectiles = 100000;
         uint64_t totalSuppressed = 0, maxProjectiles = 0, maxChain = 0, totalKills = 0;
         int frame = 0;
-        while (!WindowShouldClose() && !game.quit) {
+        while (!game.quit) {
+            if (WindowShouldClose()) {
+                if (editor.active)
+                    editor.requestClose(true);
+                else
+                    break;
+            }
+            if (editor.quitRequested)
+                break;
+            if (game.editorRequested) {
+                game.editorRequested = false;
+                if (!editor.open(dw::TownScene::assetDirectory(), game.camera))
+                    game.error = editor.status;
+                else
+                    SetWindowTitle("DeathWard | Town editor");
+            }
+            const bool editing = editor.active;
             const auto start = std::chrono::steady_clock::now();
-            if ((smoke || benchmark) && game.run) {
+            if (editing) {
+                editor.update(GetFrameTime());
+            } else if ((smoke || benchmark) && game.run) {
                 dw::Input input;
                 input.aim = game.run->arena.rooms[size_t(game.run->room)].center;
                 input.fire = frame % 45 < 30;
@@ -148,10 +182,22 @@ int main(int argc, char **argv) {
                 game.update(GetFrameTime());
             const auto simulated = std::chrono::steady_clock::now();
             BeginDrawing();
-            dw::Action action = renderer.draw(game);
+            dw::Action action = dw::Action::None;
+            if (editing)
+                editor.draw();
+            else
+                action = renderer.draw(game);
             const auto drawn = std::chrono::steady_clock::now();
             EndDrawing();
             game.perform(action);
+            if (editing && !editor.active && !editor.quitRequested) {
+                if (editor.saved) {
+                    game.town.load(dw::TownScene::assetDirectory() / "town.nav");
+                    renderer.reloadTown();
+                }
+                game.perform(dw::Action::Hub);
+                SetWindowTitle("DeathWard | The consequences remain");
+            }
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {
                 timings.push_back(std::chrono::duration<double, std::milli>(end - start).count());
@@ -186,6 +232,7 @@ int main(int argc, char **argv) {
                       << " suppressed=" << totalSuppressed << " simulation_ms=" << simulationMs / frame
                       << " draw_ms=" << drawMs / frame << " present_ms=" << presentMs / frame << '\n';
         }
+        editor.unload();
         game.close();
         renderer.unload();
         CloseWindow();

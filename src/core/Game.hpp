@@ -23,7 +23,8 @@ enum class Action {
     Reset,
     Missions,
     CloseMissions,
-    NewSeed
+    NewSeed,
+    EditTown
 };
 class Game {
   public:
@@ -32,6 +33,7 @@ class Game {
     std::unique_ptr<Simulation> run;
     HubWorld town;
     bool missionMenu = false, walkingToMission = false;
+    bool editorRequested = false;
     Screen screen = Screen::Hub;
     RunSummary lastSummary;
     Camera3D camera{};

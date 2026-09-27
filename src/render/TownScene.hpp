@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Types.hpp"
+#include "world/TownDocument.hpp"
 #include <filesystem>
 
 namespace dw {
@@ -22,6 +23,11 @@ class TownScene {
         return model_;
     }
     static std::filesystem::path assetDirectory();
+    const TownDocument &document() const {
+        return document_;
+    }
+    void applyDocument(const TownDocument &document);
+    std::optional<size_t> pick(Ray ray) const;
 
   private:
     struct Asset {
@@ -34,6 +40,7 @@ class TownScene {
         Box bounds;
     };
     Model model_{};
+    TownDocument document_;
     Shader shader_{};
     std::vector<Asset> assets_;
     std::vector<Instance> instances_;

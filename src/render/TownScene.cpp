@@ -81,6 +81,9 @@ Box transformBounds(Box source, Matrix m) {
 }
 } // namespace
 std::filesystem::path TownScene::assetDirectory() {
+    const auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / "town";
+    if (std::filesystem::is_regular_file(source / "town.scene"))
+        return source; // Editor saves in the checkout survive rebuilds; shipped builds use their own pack.
     auto packaged = std::filesystem::path(GetApplicationDirectory()) / "assets/town";
     return std::filesystem::is_regular_file(packaged / "town.scene")
                ? packaged
@@ -105,6 +108,7 @@ void TownScene::unload() {
     shader_ = {};
     assets_.clear();
     instances_.clear();
+    document_ = {};
     batches_.clear();
     attempted_ = false;
 }
@@ -112,6 +116,9 @@ bool TownScene::load(const std::filesystem::path &directory) {
     unload();
     attempted_ = true;
     try {
+        std::string error;
+        if (!document_.load(directory / "town.scene", error))
+            throw std::runtime_error(error);
         std::ifstream in(directory / "town.scene");
         std::string token;
         int version = 0;
@@ -195,6 +202,35 @@ bool TownScene::load(const std::filesystem::path &directory) {
         attempted_ = true;
         return false;
     }
+}
+void TownScene::applyDocument(const TownDocument &document) {
+    document.validate();
+    if (document.meshCount() != model_.meshCount || document.assets.size() != assets_.size())
+        throw std::runtime_error("The edited scene must use the loaded mesh library.");
+    document_ = document;
+    instances_.clear();
+    for (size_t n = 0; n < document.instances.size(); ++n) {
+        const auto &i = document.instances[n];
+        instances_.push_back({i.asset, i.transform, document.bounds(n)});
+    }
+}
+std::optional<size_t> TownScene::pick(Ray ray) const {
+    std::optional<size_t> selected;
+    float nearest = std::numeric_limits<float>::infinity();
+    for (size_t n = 0; n < instances_.size(); ++n) {
+        const auto &i = instances_[n];
+        const auto &a = assets_[i.asset];
+        if (a.unlit || !GetRayCollisionBox(ray, {i.bounds.min, i.bounds.max}).hit)
+            continue;
+        for (int mesh = a.first; mesh < a.first + a.count; ++mesh) {
+            const auto hit = GetRayCollisionMesh(ray, model_.meshes[mesh], i.transform);
+            if (hit.hit && hit.distance < nearest) {
+                selected = n;
+                nearest = hit.distance;
+            }
+        }
+    }
+    return selected;
 }
 void TownScene::draw(Vector3 focus, bool glass) {
     if (!attempted_)

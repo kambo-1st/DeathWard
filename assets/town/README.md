@@ -9,11 +9,14 @@ The source scene contains **1,269 prefab instances**. Resolving the prefab hiera
 - `town.glb`: shared local meshes and material variants, with embedded textures.
 - `town.scene`: mesh ranges, original instance matrices and directional/point lights.
 - `town.nav`: outdoor navigation sampled from original scene colliders.
+- `town.labels`: optional asset names for the 3D editor's scene list and palette.
 - `town.source.json`: resolved Unity recipe, source references and hashes.
 - `town.manifest.json`: output hashes, placement audit, mesh bounds and navigation summary.
 - `source/`: the original scene and all resolved prefabs, FBXs, collider meshes, materials, textures and metadata needed to rebuild it.
 
-Normal builds only package the GLB, scene catalog and navigation file. They do not need Unity, Blender, Python or access to the Windows project folder. Keep `assets/town` beside the executable when moving a build.
+Normal builds package the GLB, scene catalog, navigation file and editor labels. They do not need Unity, Blender, Python or access to the Windows project folder. Keep `assets/town` beside the executable when moving a build. In a development checkout, the game and editor prefer the source `assets/town` folder so saved edits survive builds.
+
+Use **F4 in the hub** or `./build/deathward --editor` to edit placements in 3D. Saving updates the scene and rebuilds navigation from the edited visible geometry, preserving the original model library and textures. See the [editor guide](../../docs/town_editor.md) for controls, backups and the outdoor navigation limits. The source manifest describes the original import; intentionally edited scene/navigation files no longer match its original hashes.
 
 Rebuilding requires Python 3 with NumPy and PyYAML, plus Blender 3.6 LTS:
 
