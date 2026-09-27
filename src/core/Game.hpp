@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/Simulation.hpp"
+#include "world/HubDefinition.hpp"
 #include "world/HubWorld.hpp"
 #include <memory>
 
@@ -27,14 +28,18 @@ enum class Action {
     EditTown,
     ThemeSeeded,
     ThemeMine,
-    ThemeCanyon
+    ThemeCanyon,
+    TravelHub
 };
 class Game {
   public:
-    explicit Game(const std::filesystem::path &save);
+    explicit Game(const std::filesystem::path &save, HubKind initialHub = HubKind::BlackCreek);
     CampaignStore campaign;
     std::unique_ptr<Simulation> run;
     HubWorld town;
+    HubKind activeHub = HubKind::BlackCreek;
+    std::filesystem::path hubDirectory() const;
+    bool selectHub(HubKind hub);
     bool missionMenu = false, walkingToMission = false;
     bool editorRequested = false;
     Screen screen = Screen::Hub;

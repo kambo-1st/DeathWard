@@ -1,5 +1,13 @@
 # Milestone 1 verification
 
+## Second hub: PolygonWesternFrontier
+
+The original `PolygonWesternFrontier/Scenes/Demo.unity` now forms a separate hub alongside Black Creek. Pause-screen travel switches packs; `--hub frontier` starts there directly. Mouse/WASD movement, camera controls, the mission board and expedition return use the selected hub. F4 and `--editor --hub frontier` select Frontier's own scene and navigation.
+
+The import accounts for all 2,031 scene prefab instances and retains 2,216 active mesh placements, 346 mesh/material sections, 11 materials and five original textures. The audit verifies the actual runtime catalog as well as the manifest: transforms, mesh/material assignments, 1,366 source/metadata hashes, runtime hashes and pixel-identical embedded images all match. All 2,496 original collider components resolve; the navigation pack contains 316,697 connected cells. The imported Unity arrangement remains fixed; the avatar and mission board are gameplay additions. Original textures and source material semantics are retained, including ignoring the auxiliary tree vertex channels that Unity Lit does not use. Rendering differences from Unity are documented in [the Frontier asset notes](../assets/frontier/README.md).
+
+The Release build, all six core suites, both-hub navigation/rendering checks and the full graphics input suite pass. Input coverage includes pause-screen travel in both directions, Frontier mouse/WASD movement, editor pack selection, preventing travel during expeditions and returning to Frontier after a mission. The original Black Creek asset audit also passes. Actual village, fort, quarry and river views plus direct Frontier editor entry were rendered and inspected. Logs and captures use `artifacts/frontier-*`; normal campaign files and the original Black Creek pack were not modified by these checks.
+
 ## Faceted canyon reference style
 
 Content version `deathward-m1-17` gives canyon walls steeper irregular shoulders and broad, seeded cap facets. Brown faces and pale caps sample the original cliff atlas directly. Horizontal shader bands are removed, and flat normals plus a soft sky fill keep shaded rock faces readable. Cover has broader tops. Automatic cliff lowering stays disabled; mouse picking, navigation and bullets use the rendered terrain triangles.

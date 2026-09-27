@@ -558,6 +558,10 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
 }
 Action Renderer::hub(const Game &game) {
+    if (!loadedHub_ || *loadedHub_ != game.activeHub) {
+        townScene_.load(game.hubDirectory());
+        loadedHub_ = game.activeHub;
+    }
     const auto &town = game.town;
     const auto &world = game.campaign.data().world;
     ClearBackground(Color{154, 186, 199, 255});
@@ -586,14 +590,14 @@ Action Renderer::hub(const Game &game) {
         text("MISSIONS", at.x / sx_ - 36, at.y / sy_ - 4, 13, Gold);
     }
     panel(24, 24, 386, 98, Panel);
-    text("BLACK CREEK", 42, 38, 28, Paper);
+    text(hubName(game.activeHub), 42, 38, 28, Paper);
     text("HOME / THE TOWN REMEMBERS", 43, 73, 12, Gold);
     text("PEOPLE " + std::to_string(world.population) + "   PROSPERITY " + std::to_string(world.prosperity) +
              "   LAW " + std::to_string(world.law),
          43, 98, 11, Muted);
     if (!game.missionMenu && !game.paused) {
         panel(24, 700, 676, 76, Panel);
-        if (button(game.walkingToMission ? "WALKING TO STATION" : "MISSIONS", 38, 712, 255, 44, true))
+        if (button(game.walkingToMission ? "WALKING TO MISSIONS" : "MISSIONS", 38, 712, 255, 44, true))
             return Action::Missions;
         if (button("RUN HISTORY", 305, 712, 179, 44))
             return Action::History;
@@ -610,7 +614,7 @@ Action Renderer::hub(const Game &game) {
         const auto &theme = missionTheme(game.offeredTheme());
         panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
         panel(240, 104, 800, 588, Panel);
-        text("THE STATION / MISSIONS", 270, 130, 17, Gold);
+        text(std::string(hubName(game.activeHub)) + " / MISSIONS", 270, 130, 17, Gold);
         text(theme.title, 267, 173, 38, Paper);
         wrap(world.bossDefeated
                  ? "Bring home anyone still missing and settle unfinished business on the frontier."
@@ -639,9 +643,9 @@ Action Renderer::hub(const Game &game) {
     } else if (game.paused) {
         panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
         panel(344, 134, 592, 522, Panel);
-        text("BLACK CREEK", 377, 167, 35, Paper);
+        text(hubName(game.activeHub), 377, 167, 30, Paper);
         wrap("Walk with WASD or click the ground. Scroll to zoom; hold the middle button and drag to "
-             "rotate. Visit the station for missions.",
+             "rotate. Visit the mission board to depart.",
              378, 226, 514, 17, Muted);
         for (size_t i = 0; i < world.npcs.size(); ++i)
             wrap(world.npcs[i].name + ": " + npcDialogue(world, i), 378, 310 + float(i) * 48, 514, 13, Paper);
@@ -651,6 +655,9 @@ Action Renderer::hub(const Game &game) {
             return Action::EditTown;
         if (button("QUIT", 642, 547, 250, 43))
             return Action::Quit;
+        if (button(game.activeHub == HubKind::BlackCreek ? "TRAVEL TO FRONTIER" : "TRAVEL TO BLACK CREEK",
+                   378, 603, 514, 43))
+            return Action::TravelHub;
     }
     return Action::None;
 }

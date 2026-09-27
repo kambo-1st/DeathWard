@@ -6,6 +6,8 @@ Press **F4 in the hub**, or choose **Town Editor** from its pause screen. You ca
 ./build/deathward --editor
 ```
 
+The editor opens the active hub: Black Creek or Western Frontier. Use `./build/deathward --editor --hub frontier` to edit the second hub directly. Each has its own scene, mesh library and navigation.
+
 The editor uses the town's original textured meshes. It edits their placements: select, move, rotate, scale, add, duplicate or delete an object. Gameplay is suspended while editing. **Back to town** returns to the game; after a save, the game reloads the edited scene and navigation.
 
 ## Working with objects
@@ -34,7 +36,7 @@ Snapping uses 0.5-unit movement, 15-degree rotation and 0.1 scale increments. Ho
 
 **Save** or **Ctrl+S** validates and saves `town.scene` and rebuilds `town.nav`. It retains the preceding versions as `town.scene.bak` and `town.nav.bak`. Both replacements are staged and validated first; reported replacement failures roll back to the backups. The model library, embedded textures and retained Unity sources are unchanged. **Reload** restores the last saved files. Leaving, reloading or closing the window with unsaved edits offers save/discard/cancel as appropriate.
 
-In a source checkout, the game and editor use `assets/town/`, so edits survive a rebuild. A packaged game without the checkout uses the `assets/town/` folder beside its executable. To work on a separate copy of a town pack:
+In a source checkout, the game and editor use `assets/town/` for Black Creek or `assets/frontier/` for Frontier, so edits survive a rebuild. A packaged game without the checkout uses the matching folder beside its executable. To work on a separate copy of a town pack:
 
 ```sh
 ./build/deathward --editor --town /path/to/copied/town
@@ -42,7 +44,7 @@ In a source checkout, the game and editor use `assets/town/`, so edits survive a
 
 That option edits the supplied pack; returning to gameplay uses the game's normal town pack. The direct editor launch uses a temporary campaign and does not resolve an existing player's expedition.
 
-The native navigation rebuild samples the edited **visible geometry**, rather than Unity's original collider components. It keeps the original outdoor grid: 0.4-unit cells, X from -120 to 120, Z from -90 to 150, surface heights between -5 and 12, obstacle clearance and a 0.6-unit step limit. Only ground connected to Arrival is playable. This supports rearranging the outdoor town; it does not add building interiors or multiple walkable floors. Check Paths and play the edited streets after substantial changes.
+The native navigation rebuild samples the edited **visible geometry**, rather than Unity's original collider components. It keeps the selected hub's original outdoor grid: 0.4-unit cells, surface heights between -5 and 12, obstacle clearance and a 0.6-unit step limit. Black Creek spans X -120 to 120 and Z -90 to 150; Frontier spans X -160 to 170 and Z -120 to 140. Only ground connected to Arrival is playable. This supports rearranging the outdoor town; it does not add building interiors or multiple walkable floors. Check Paths and play the edited streets after substantial changes.
 
 The original import manifest remains an audit of the Unity demo. `scripts/verify_town.py` checks that original conversion and will report scene/navigation hash differences after intentional edits. Reimporting the Unity scene replaces editor changes, so keep the edited files in version control or a separate pack.
 

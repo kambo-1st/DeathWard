@@ -14,17 +14,19 @@ int main() {
         SetConfigFlags(FLAG_WINDOW_HIDDEN);
         InitWindow(800, 600, "Original town verification");
         check(IsWindowReady(), "graphics display required");
-        {
+        for (auto hub : {HubKind::BlackCreek, HubKind::Frontier}) {
+            const bool frontier = hub == HubKind::Frontier;
+            const auto pack = std::filesystem::path(GetApplicationDirectory()) / "assets" / hubFolder(hub);
             TownScene scene;
             HubWorld town;
             auto original = std::filesystem::current_path();
             std::filesystem::current_path(std::filesystem::temp_directory_path());
-            check(scene.load(), "packaged original scene loads outside repository");
-            check(town.load(TownScene::assetDirectory() / "town.nav"), "packaged town navigation loads");
+            check(scene.load(pack), "packaged original scene loads outside repository");
+            check(town.load(pack / "town.nav"), "packaged town navigation loads");
             std::filesystem::current_path(original);
-            check(scene.instanceCount() == 1516,
+            check(scene.instanceCount() == (frontier ? 2216 : 1516),
                   "all active mesh placements from the original scene are present");
-            check(scene.model().meshCount == 398,
+            check(scene.model().meshCount == (frontier ? 346 : 398),
                   "original scene library contains every material variant and submesh");
             std::set<unsigned> textures;
             bool glass = false;
@@ -34,7 +36,7 @@ int main() {
                     textures.insert(m.texture.id);
                 glass |= m.color.a < 255;
             }
-            check(textures.size() >= 12 && glass,
+            check(textures.size() >= (frontier ? 5 : 12) && glass,
                   "original atlases, signs, sky and transparent materials are loaded");
             for (Vector3 p : std::array<Vector3, 3>{{town.spawn, town.mission, {-1, 2, -65}}}) {
                 BeginDrawing();
@@ -45,13 +47,14 @@ int main() {
                 EndMode3D();
                 EndDrawing();
             }
-            check(!scene.load(TownScene::assetDirectory() / "missing"), "missing source pack fails safely");
-            check(scene.load(), "town resource reload succeeds");
+            check(!scene.load(pack / "missing"), "missing source pack fails safely");
+            check(scene.load(pack), "town resource reload succeeds");
             scene.unload();
             scene.unload();
         }
         CloseWindow();
-        std::cout << "PASS original town's 1516 placements, 398 mesh sections, textures, glass, rendering "
+        std::cout << "PASS both original hub scenes, exact placements and mesh sections, textures, glass, "
+                     "rendering "
                      "and resource cleanup\n";
     } catch (const std::exception &e) {
         std::cerr << "FAIL " << e.what() << '\n';

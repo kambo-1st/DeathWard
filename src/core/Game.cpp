@@ -69,7 +69,7 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
 }
 } // namespace
 
-Game::Game(const std::filesystem::path &save) : campaign(save) {
+Game::Game(const std::filesystem::path &save, HubKind initialHub) : campaign(save), activeHub(initialHub) {
     if (campaign.recover()) {
         lastSummary = campaign.data().history.back();
         screen = Screen::Summary;
@@ -81,10 +81,29 @@ Game::Game(const std::filesystem::path &save) : campaign(save) {
     camera.projection = CAMERA_PERSPECTIVE;
     cameraYaw_ = std::atan2(CameraOffset.z, CameraOffset.x);
     cameraPitch_ = std::atan2(CameraOffset.y, std::hypot(CameraOffset.x, CameraOffset.z));
-    if (!town.load(TownScene::assetDirectory() / "town.nav"))
+    if (!town.load(hubDirectory() / "town.nav"))
         error = town.error;
     snapCamera();
     newSeed();
+}
+std::filesystem::path Game::hubDirectory() const {
+    return TownScene::assetDirectory(activeHub);
+}
+bool Game::selectHub(HubKind hub) {
+    if (screen != Screen::Hub || run || editorRequested)
+        return false;
+    HubWorld candidate;
+    if (!candidate.load(TownScene::assetDirectory(hub) / "town.nav")) {
+        error = candidate.error;
+        return false;
+    }
+    town = std::move(candidate);
+    activeHub = hub;
+    paused = missionMenu = walkingToMission = false;
+    error.clear();
+    resetPointerInput();
+    snapCamera();
+    return true;
 }
 void Game::launch() {
     uint64_t seed = 0;
@@ -146,6 +165,9 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::TravelHub:
+            selectHub(activeHub == HubKind::BlackCreek ? HubKind::Frontier : HubKind::BlackCreek);
+            break;
         case Action::ThemeSeeded:
         case Action::ThemeMine:
         case Action::ThemeCanyon:

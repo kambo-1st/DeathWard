@@ -59,13 +59,15 @@ function(deathward_assets target)
             COMMAND ${CMAKE_COMMAND} -E copy_if_different "${western_asset}" "$<TARGET_FILE_DIR:${target}>/assets/western/${western_file}"
             VERBATIM)
     endforeach()
-    foreach(town_file town.glb town.scene town.nav town.labels)
-        set(town_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/town/${town_file}")
-        set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${town_asset}")
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/town"
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${town_asset}" "$<TARGET_FILE_DIR:${target}>/assets/town/${town_file}"
-            VERBATIM)
+    foreach(hub_pack town frontier)
+        foreach(town_file town.glb town.scene town.nav town.labels)
+            set(town_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/${hub_pack}/${town_file}")
+            set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${town_asset}")
+            add_custom_command(TARGET ${target} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/${hub_pack}"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different "${town_asset}" "$<TARGET_FILE_DIR:${target}>/assets/${hub_pack}/${town_file}"
+                VERBATIM)
+        endforeach()
     endforeach()
 endfunction()
 

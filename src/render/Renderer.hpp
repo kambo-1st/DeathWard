@@ -10,6 +10,7 @@ class Renderer {
     Action draw(const Game &game);
     void reloadTown() {
         townScene_.unload();
+        loadedHub_.reset();
     }
     void drawWorld(const Simulation &run, const Camera3D &camera, bool collisions, EntityId hoveredEnemy = 0,
                    float deathTime = 0);
@@ -17,6 +18,7 @@ class Renderer {
         playerModel_.unload();
         westernScene_.unload();
         townScene_.unload();
+        loadedHub_.reset();
     }
 
   private:
@@ -24,6 +26,7 @@ class Renderer {
     PlayerModel playerModel_;
     WesternScene westernScene_;
     TownScene townScene_;
+    std::optional<HubKind> loadedHub_;
     void text(const std::string &value, float x, float y, int size, Color color) const;
     void wrap(const std::string &value, float x, float y, float width, int size, Color color) const;
     void panel(float x, float y, float w, float h, Color color) const;

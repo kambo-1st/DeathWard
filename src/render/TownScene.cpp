@@ -80,14 +80,12 @@ Box transformBounds(Box source, Matrix m) {
     return box;
 }
 } // namespace
-std::filesystem::path TownScene::assetDirectory() {
-    const auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / "town";
+std::filesystem::path TownScene::assetDirectory(HubKind hub) {
+    const auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / hubFolder(hub);
     if (std::filesystem::is_regular_file(source / "town.scene"))
         return source; // Editor saves in the checkout survive rebuilds; shipped builds use their own pack.
-    auto packaged = std::filesystem::path(GetApplicationDirectory()) / "assets/town";
-    return std::filesystem::is_regular_file(packaged / "town.scene")
-               ? packaged
-               : std::filesystem::path(DEATHWARD_ASSET_DIR) / "town";
+    auto packaged = std::filesystem::path(GetApplicationDirectory()) / "assets" / hubFolder(hub);
+    return std::filesystem::is_regular_file(packaged / "town.scene") ? packaged : source;
 }
 TownScene::~TownScene() {
     unload();
@@ -244,7 +242,8 @@ void TownScene::draw(Vector3 focus, bool glass) {
             const auto &b = i.bounds;
             Vector3 nearest{std::clamp(focus.x, b.min.x, b.max.x), focus.y,
                             std::clamp(focus.z, b.min.z, b.max.z)};
-            if (distance(focus, nearest) > 120 && !assets_[i.asset].unlit)
+            const bool backdrop = document_.assets[i.asset].label.find("BackgroundCard") != std::string::npos;
+            if (distance(focus, nearest) > 120 && !assets_[i.asset].unlit && !backdrop)
                 continue;
             batches_[i.asset].push_back(i.transform);
         }

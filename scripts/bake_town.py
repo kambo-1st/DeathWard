@@ -85,10 +85,29 @@ def main():
             meshes[key] = mesh_asset(info)
             continue
         if "primitive" in info:
-            bpy.ops.mesh.primitive_cube_add(size=1)
-            o = bpy.context.object
-            meshes[key] = o.data.copy()
-            bpy.data.objects.remove(o, do_unlink=True)
+            if info["primitive"] == "plane":
+                # Unity's built-in plane is a 10 m square with ten subdivisions.
+                data = bpy.data.meshes.new("Unity_Plane")
+                vertices = [
+                    UNITY_TO_BLENDER @ Vector((x - 5, 0, z - 5))
+                    for z in range(11) for x in range(11)
+                ]
+                faces = [
+                    (z * 11 + x, z * 11 + x + 1,
+                     (z + 1) * 11 + x + 1, (z + 1) * 11 + x)
+                    for z in range(10) for x in range(10)
+                ]
+                data.from_pydata(vertices, [], faces)
+                uv = data.uv_layers.new()
+                for loop in data.loops:
+                    i = loop.vertex_index
+                    uv.data[loop.index].uv = (i % 11 / 10, i // 11 / 10)
+                meshes[key] = data
+            else:
+                bpy.ops.mesh.primitive_cube_add(size=1)
+                o = bpy.context.object
+                meshes[key] = o.data.copy()
+                bpy.data.objects.remove(o, do_unlink=True)
             continue
         model = info["model"]
         if model not in models:
@@ -220,6 +239,14 @@ def main():
     raw = glb.read_bytes()
     length = struct.unpack_from("<I", raw, 12)[0]
     gltf = json.loads(raw[20 : 20 + length])
+    ignored_color_streams = 0
+    for mesh in gltf["meshes"]:
+        for primitive in mesh["primitives"]:
+            material = gltf["materials"][primitive["material"]]
+            info = recipe["materials"][material["name"]]
+            if not info.get("uses_vertex_colors", True):
+                ignored_color_streams += "COLOR_0" in primitive["attributes"]
+                primitive["attributes"].pop("COLOR_0", None)
     for m in gltf["materials"]:
         info = recipe["materials"][m["name"]]
         m["pbrMetallicRoughness"]["baseColorFactor"] = info["tint"]
@@ -292,7 +319,11 @@ def main():
     (out / "town.scene").write_text("\n".join(lines) + "\n")
     labels = {}
     for placement in placements:
-        labels.setdefault(placement["asset"], Path(placement["prefab"]).stem)
+        label = (
+            placement["name"] if placement["prefab"] == recipe["scene"]
+            else Path(placement["prefab"]).stem
+        )
+        labels.setdefault(placement["asset"], label)
     (out / "town.labels").write_text(
         "".join(f"{asset} {labels.get(asset, asset)}\n" for asset in order)
     )
@@ -352,7 +383,8 @@ def main():
     # The useful town sits around the main street. Include all terrain except the
     # huge demo support cube and far scenic mountains/clouds in navigation bounds.
     step = 0.4
-    minx, minz, maxx, maxz = -120, -90, 120, 150
+    navigation = recipe.get("navigation", {})
+    minx, minz, maxx, maxz = navigation.get("bounds", [-120, -90, 120, 150])
     nx = round((maxx - minx) / step)
     nz = round((maxz - minz) / step)
     heights = np.full((nz, nx), np.nan, dtype=np.float32)
@@ -394,7 +426,7 @@ def main():
         )
         return int(zz[best]), int(xx[best])
 
-    spawn_cell = nearest((0, -5), clear)
+    spawn_cell = nearest(navigation.get("spawn", (0, -5)), clear)
     connected = np.zeros_like(clear)
     connected[spawn_cell] = True
     queue = deque([spawn_cell])
@@ -417,7 +449,7 @@ def main():
     if station:
         t = station[0]["transform"]
         station_position = [t[3], t[11]]
-    mission_cell = nearest(station_position, connected)
+    mission_cell = nearest(navigation.get("mission", station_position), connected)
 
     def point(cell):
         z, x = cell
@@ -441,6 +473,7 @@ def main():
         "materials": recipe["materials"],
         "source_sha256": recipe["source_sha256"],
         "fbx_pivots": pivots_checked,
+        "ignored_vertex_color_streams": ignored_color_streams,
         "collision_components": len(recipe["colliders"]),
         "missing_collider_fallbacks": recipe["missing_collider_fallbacks"],
         "navigation": {
@@ -453,7 +486,7 @@ def main():
         },
         "output_sha256": {
             name: hashlib.sha256((out / name).read_bytes()).hexdigest()
-            for name in ("town.glb", "town.scene", "town.nav")
+            for name in ("town.glb", "town.scene", "town.nav", "town.labels")
         },
     }
     (out / "town.manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

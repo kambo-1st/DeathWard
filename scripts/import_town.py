@@ -1,4 +1,4 @@
-"""Resolve the original PolygonWestern Demo.unity, retaining hierarchy and overrides.
+"""Resolve a PolygonWestern Demo.unity, retaining hierarchy and overrides.
 
 Requires PyYAML, NumPy and Blender 3.6. No authoring tools are needed at runtime.
 """
@@ -37,10 +37,18 @@ def trs(obj):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=ROOT / "assets/town/source")
+    parser.add_argument("--output", type=Path, default=ROOT / "assets/town")
     parser.add_argument("--blender", default="blender")
+    parser.add_argument("--resolve-only", action="store_true")
+    parser.add_argument(
+        "--nav-bounds", type=float, nargs=4,
+        metavar=("MIN_X", "MIN_Z", "MAX_X", "MAX_Z")
+    )
+    parser.add_argument("--spawn", type=float, nargs=2, metavar=("X", "Z"))
+    parser.add_argument("--mission", type=float, nargs=2, metavar=("X", "Z"))
     args = parser.parse_args()
     source = args.source.resolve()
-    out = ROOT / "assets/town"
+    out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
     copied = out / "source"
     index = {}
@@ -53,6 +61,8 @@ def main():
 
     def collect(p):
         rel = p.relative_to(source)
+        if str(rel) in hashes:
+            return str(rel)
         target = copied / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         if p != target:
@@ -62,6 +72,10 @@ def main():
         dest = target.with_name(target.name + ".meta")
         if meta.exists() and meta != dest:
             shutil.copyfile(meta, dest)
+        if meta.exists():
+            hashes[str(meta.relative_to(source))] = hashlib.sha256(
+                meta.read_bytes()
+            ).hexdigest()
         return str(rel)
 
     def docs(p):
@@ -202,11 +216,12 @@ def main():
         key = f"{ref.get('guid','')}_{ref['fileID']}"
         if key in mesh_defs:
             return key
+        primitives = {10202: "cube", 10209: "plane"}
         if (
             ref.get("guid") == "0000000000000000e000000000000000"
-            and ref["fileID"] == 10202
+            and ref["fileID"] in primitives
         ):
-            mesh_defs[key] = {"primitive": "cube"}
+            mesh_defs[key] = {"primitive": primitives[ref["fileID"]]}
             return key
         p = resolve(ref)
         collect(p)
@@ -254,11 +269,21 @@ def main():
         tex = {k: v for e in props.get("m_TexEnvs", []) for k, v in e.items()}
         colors = {k: v for e in props.get("m_Colors", []) for k, v in e.items()}
         floats = {k: v for e in props.get("m_Floats", []) for k, v in e.items()}
+        shader = o.get("m_Shader", {})
+        # Unity Standard and URP/Lit do not consume mesh COLOR attributes.
+        # Frontier trees contain auxiliary painted channels, including zero alpha.
+        # Treating them as albedo would turn trunks magenta and erase foliage.
+        standard_lit = shader.get("guid") == "933532a4fcc9baf4fa0491de14d08ed7" or (
+            shader.get("guid") == "0000000000000000f000000000000000"
+            and shader.get("fileID") == 10755
+        )
         base = tex.get("_BaseMap", tex.get("_MainTex", {}))
         t = base.get("m_Texture", {})
         tint = colors.get("_BaseColor", colors.get("_Color", dict(r=1, g=1, b=1, a=1)))
         material_defs[key] = {
             "name": p.stem,
+            "shader": shader,
+            "uses_vertex_colors": not standard_lit,
             "tint": [tint[a] for a in "rgba"],
             "texture": collect(resolve(t)) if t.get("guid") else None,
             "uv_scale": base.get("m_Scale", dict(x=1, y=1)),
@@ -336,12 +361,21 @@ def main():
         "inactive_nodes": sum(not n["active"] for n in nodes.values()),
         "stale_overrides": stale_overrides,
     }
+    recipe["navigation"] = {
+        name: value
+        for name, value in (
+            ("bounds", args.nav_bounds), ("spawn", args.spawn), ("mission", args.mission)
+        )
+        if value is not None
+    }
     target = out / "town.source.json"
     target.write_text(json.dumps(recipe, separators=(",", ":")) + "\n")
     print(
         f"RESOLVED {len(instances)} prefab instances, {len(rendered)} visible mesh placements, {len(colliders)} colliders, {len(material_defs)} materials; {len(missing_colliders)} missing collider references use render meshes",
         flush=True,
     )
+    if args.resolve_only:
+        return
     subprocess.run(
         [
             args.blender,

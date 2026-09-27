@@ -92,6 +92,37 @@ int main() {
               "new games start in the walkable original town without beginning a campaign run");
         check(!game.campaign.data().pending && game.campaign.data().history.empty(),
               "town exploration does not create a pending mission or a campaign outcome");
+        const auto blackCreekArrival = game.town.spawn;
+        click(590, 734);
+        click(620, 624);
+        check(game.activeHub == dw::HubKind::Frontier && game.screen == dw::Screen::Hub && !game.paused &&
+                  game.town.loaded() && dw::distance(blackCreekArrival, game.town.spawn) > 20,
+              "pause-screen travel switches to the separate Frontier scene and navigation");
+        const auto frontierArrival = game.town.player.position;
+        mouseEvent(KeyDown, KEY_W);
+        for (int i = 0; i < 20; ++i)
+            frame(700, 400);
+        mouseEvent(KeyUp, KEY_W);
+        frame();
+        check(dw::distance(frontierArrival, game.town.player.position) > .3f &&
+                  game.town.walkable(game.town.player.position),
+              "WASD moves through the second hub's imported terrain");
+        const auto frontierPixel = GetWorldToScreen(game.town.spawn, game.camera);
+        click(int(frontierPixel.x), int(frontierPixel.y));
+        for (int i = 0; i < 120; ++i)
+            frame();
+        check(dw::distance(frontierArrival, game.town.player.position) < .7f,
+              "mouse ground targeting reaches the correct elevation in Frontier");
+        pressKey(KEY_F4);
+        check(game.editorRequested && game.hubDirectory().filename() == "frontier",
+              "Frontier's editor targets its own pack instead of the first town");
+        game.editorRequested = false;
+        click(590, 734);
+        click(620, 624);
+        check(game.activeHub == dw::HubKind::BlackCreek &&
+                  dw::distance(game.town.spawn, blackCreekArrival) < .001f && !game.campaign.data().pending &&
+                  game.campaign.data().history.empty(),
+              "travel back restores Black Creek without creating a campaign outcome");
         pressKey(KEY_F4);
         check(game.editorRequested && game.screen == dw::Screen::Hub && !game.run &&
                   !game.campaign.data().pending,
@@ -592,9 +623,30 @@ int main() {
         check(game.lastSummary.reason == dw::EndReason::Death,
               "closing during a death animation records death, not retreat");
         renderer.unload();
+        {
+            dw::Game frontier(directory / "frontier.save", dw::HubKind::Frontier);
+            check(frontier.town.loaded() && frontier.activeHub == dw::HubKind::Frontier,
+                  "explicit startup hub loads Frontier directly");
+            const auto arrival = frontier.town.spawn;
+            frontier.perform(dw::Action::Missions);
+            for (int i = 0; i < 1200 && !frontier.missionMenu; ++i)
+                frontier.update(dw::Tick);
+            check(frontier.missionMenu, "Frontier mission board is reachable through normal hub controls");
+            frontier.seedText = "1866";
+            frontier.launch();
+            check(frontier.run && !frontier.selectHub(dw::HubKind::BlackCreek),
+                  "an active mission prevents hub travel");
+            frontier.finish(dw::EndReason::Retreat);
+            frontier.perform(dw::Action::Hub);
+            check(frontier.activeHub == dw::HubKind::Frontier && !frontier.campaign.data().pending &&
+                      dw::distance(frontier.town.player.position, dw::add(arrival, {0, .85f, 0})) < .001f,
+                  "mission results return to the same Frontier hub and its arrival point");
+            frontier.close();
+        }
         CloseWindow();
         std::filesystem::remove_all(directory);
         std::cout << "PASS original town movement, station approach, mission seeds, launch and return loop\n";
+        std::cout << "PASS Frontier travel, movement, picking, editor selection and mission return\n";
         std::cout
             << "PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire\n"
             << "PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue "

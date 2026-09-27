@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Seeded;
+    dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
     std::string screenshot, scene = "combat";
     int frames = 180;
@@ -39,6 +40,16 @@ int main(int argc, char **argv) {
                 std::cerr << "--theme must be seeded, mine or canyon\n";
                 return 2;
             }
+        } else if (arg == "--hub" && i + 1 < argc) {
+            const std::string hub = argv[++i];
+            if (hub == "black-creek")
+                initialHub = dw::HubKind::BlackCreek;
+            else if (hub == "frontier")
+                initialHub = dw::HubKind::Frontier;
+            else {
+                std::cerr << "--hub must be black-creek or frontier\n";
+                return 2;
+            }
         } else if (arg == "--screenshot" && i + 1 < argc)
             screenshot = argv[++i];
         else if (arg == "--scene" && i + 1 < argc)
@@ -53,7 +64,8 @@ int main(int argc, char **argv) {
         } else if (arg == "--help") {
             std::cout << "DeathWard\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
-                         " --theme NAME         seeded, mine or canyon\n  --smoke              "
+                         " --theme NAME         seeded, mine or canyon\n  --hub NAME           black-creek "
+                         "or frontier\n  --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
                          "power, reward, empty, cheats, "
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
@@ -82,7 +94,7 @@ int main(int argc, char **argv) {
                     std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()) + ".save");
     }
     try {
-        dw::Game game(save);
+        dw::Game game(save, initialHub);
         game.themeChoice = themeChoice;
         if (smoke || benchmark)
             game.seedText = "1866";
@@ -96,8 +108,7 @@ int main(int argc, char **argv) {
         dw::Renderer renderer;
         dw::TownEditor editor;
         if (startEditor) {
-            const auto directory =
-                editorDirectory.empty() ? dw::TownScene::assetDirectory() : editorDirectory;
+            const auto directory = editorDirectory.empty() ? game.hubDirectory() : editorDirectory;
             if (!editor.open(directory, game.camera))
                 throw std::runtime_error(editor.status);
             SetWindowTitle("DeathWard | Town editor");
@@ -167,7 +178,7 @@ int main(int argc, char **argv) {
                 break;
             if (game.editorRequested) {
                 game.editorRequested = false;
-                if (!editor.open(dw::TownScene::assetDirectory(), game.camera))
+                if (!editor.open(game.hubDirectory(), game.camera))
                     game.error = editor.status;
                 else
                     SetWindowTitle("DeathWard | Town editor");
@@ -206,7 +217,7 @@ int main(int argc, char **argv) {
             game.perform(action);
             if (editing && !editor.active && !editor.quitRequested) {
                 if (editor.saved) {
-                    game.town.load(dw::TownScene::assetDirectory() / "town.nav");
+                    game.town.load(game.hubDirectory() / "town.nav");
                     renderer.reloadTown();
                 }
                 game.perform(dw::Action::Hub);

@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Types.hpp"
+#include "world/HubDefinition.hpp"
 #include "world/TownDocument.hpp"
 #include <filesystem>
 
@@ -10,7 +11,7 @@ class TownScene {
     TownScene() = default;
     TownScene(const TownScene &) = delete;
     TownScene &operator=(const TownScene &) = delete;
-    bool load(const std::filesystem::path &directory = assetDirectory());
+    bool load(const std::filesystem::path &directory = assetDirectory(HubKind::BlackCreek));
     void unload();
     void draw(Vector3 focus, bool glass = false);
     bool loaded() const {
@@ -22,7 +23,7 @@ class TownScene {
     const Model &model() const {
         return model_;
     }
-    static std::filesystem::path assetDirectory();
+    static std::filesystem::path assetDirectory(HubKind hub = HubKind::BlackCreek);
     const TownDocument &document() const {
         return document_;
     }
