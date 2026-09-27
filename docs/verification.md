@@ -1,5 +1,13 @@
 # Milestone 1 verification
 
+## Reference palette and post processing
+
+The world now renders through an HDR color target, a quarter-resolution highlight extraction and separable bloom blur, then a composite with edge antialiasing, amber/plum split toning, richer saturation, soft highlight compression and a restrained vignette. Both hubs, generated missions and the town editor share the treatment. Menus, text, mission labels and enemy health bars render after the composite. Window resizing recreates the targets; resource/shader failure falls back to direct world rendering.
+
+Frontier birch and tree-clump assets receive copper/gold variation on their green leaf swatches, derived from each placement. Bark, evergreens, ground and desert plants keep their source material colors. Sun intensity is tuned for the brighter art treatment. The source assets, saved scene placements, navigation, input coordinates and campaign format are unchanged.
+
+The Release build, all six headless suites, both hub asset checks, editor suite and full input suite pass. `deathward_post_process_tests` verifies shadow/highlight grading, image orientation, a localized bloom halo, exact UI pixels after compositing, odd-sized window resizing and repeated resource unload/reload. Captures and logs use the `artifacts/post-*` prefix.
+
 ## Hub sunlight and shadows
 
 Black Creek and Western Frontier now share filtered sun shadows, sky fill and warm ground bounce. The strongest imported directional light supplies the shadow direction and color; original secondary lights and lamps remain active. The animated bandit casts and receives the same lighting. Transparent glass/water and unlit sky/background scenery do not cast opaque shadows. The editor uses the same renderer and refreshes shadows after geometry edits.

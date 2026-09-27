@@ -1,4 +1,5 @@
 #pragma once
+#include "render/PostProcess.hpp"
 #include "render/TownScene.hpp"
 #include "world/TownNavigation.hpp"
 #include <deque>
@@ -15,6 +16,7 @@ class TownEditor {
     void requestClose(bool quit = false);
     void unload() {
         scene_.unload();
+        postProcess_.unload();
     }
     bool dirty() const {
         return revision_ != savedRevision_;
@@ -50,6 +52,7 @@ class TownEditor {
     };
     enum class Tool { Move, Rotate, Scale };
     TownScene scene_;
+    PostProcess postProcess_;
     TownDocument document_;
     TownNavigation navigation_;
     std::filesystem::path directory_;

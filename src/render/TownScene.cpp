@@ -17,9 +17,11 @@ out vec2 uv;
 out vec3 normal;
 out vec3 world;
 out vec4 color;
+out float paletteVariation;
 void main() {
     uv = vertexTexCoord;
     color = vertexColor;
+    paletteVariation = fract(sin(dot(instanceTransform[3].xz,vec2(12.9898,78.233)))*43758.5453);
     vec4 p = instanceTransform * vec4(vertexPosition,1.0);
     world = p.xyz;
     normal = normalize(transpose(inverse(mat3(instanceTransform))) * vertexNormal);
@@ -39,9 +41,11 @@ out vec2 uv;
 out vec3 normal;
 out vec3 world;
 out vec4 color;
+out float paletteVariation;
 void main() {
     uv = vertexTexCoord;
     color = vertexColor;
+    paletteVariation = 0.;
     world = (matModel * vec4(vertexPosition,1.)).xyz;
     normal = normalize((matNormal * vec4(vertexNormal,0.)).xyz);
     gl_Position = mvp * vec4(vertexPosition,1.);
@@ -63,11 +67,13 @@ in vec2 uv;
 in vec3 normal;
 in vec3 world;
 in vec4 color;
+in float paletteVariation;
 uniform sampler2D texture0;
 uniform sampler2D shadowMap;
 uniform mat4 lightVP;
 uniform vec4 colDiffuse;
 uniform int unlit;
+uniform int autumnFoliage;
 uniform int lightCount;
 uniform int sunIndex;
 uniform int shadowEnabled;
@@ -98,13 +104,21 @@ float visibility(vec3 n, vec3 sun) {
 void main() {
     vec4 surface = texture(texture0,uv) * colDiffuse * color;
     if(surface.a < .02) discard;
+    if (autumnFoliage != 0) {
+        // Recolor only green leaf swatches; the original bark and texture detail remain visible.
+        float leaf = smoothstep(.012,.070,surface.g-surface.b) *
+                     smoothstep(-.01,.045,surface.g-surface.r*.92);
+        vec3 autumn = mix(vec3(1.12,.33,.12),vec3(1.25,.79,.22),paletteVariation);
+        float value = dot(surface.rgb,vec3(.25,.65,.10))*1.5;
+        surface.rgb = mix(surface.rgb,autumn*value,leaf*.94);
+    }
     if(unlit != 0) { finalColor = surface; return; }
     vec3 n = normalize(normal);
     // Warm ground bounce and a cool sky fill keep shaded porches readable.
     vec3 light = mix(vec3(.27,.245,.215),vec3(.43,.48,.55),n.y*.5+.5);
     for(int i=0;i<lightCount;i++) {
         vec3 d = lightDirections[i];
-        float attenuation = .78;
+        float attenuation = .90;
         if(lightRanges[i]>0.0) {
             vec3 delta = lightPositions[i]-world;
             d = delta/max(length(delta),.001);
@@ -439,6 +453,10 @@ void TownScene::draw(Vector3 focus, bool glass) {
         if (batch.empty())
             continue;
         SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &a.unlit, SHADER_UNIFORM_INT);
+        const auto &label = document_.assets[i].label;
+        const int foliage =
+            label.find("Tree_Clump") != std::string::npos || label.find("Birch") != std::string::npos;
+        SetShaderValue(shader_, GetShaderLocation(shader_, "autumnFoliage"), &foliage, SHADER_UNIFORM_INT);
         for (int j = a.first; j < a.first + a.count; ++j) {
             auto &m = model_.materials[model_.meshMaterial[j]];
             if ((m.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != glass)

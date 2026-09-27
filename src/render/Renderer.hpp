@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Game.hpp"
 #include "render/PlayerModel.hpp"
+#include "render/PostProcess.hpp"
 #include "render/TownScene.hpp"
 #include "render/WesternScene.hpp"
 
@@ -18,12 +19,14 @@ class Renderer {
         playerModel_.unload();
         westernScene_.unload();
         townScene_.unload();
+        postProcess_.unload();
         loadedHub_.reset();
     }
 
   private:
     float sx_ = 1, sy_ = 1;
     PlayerModel playerModel_;
+    PostProcess postProcess_;
     WesternScene westernScene_;
     TownScene townScene_;
     std::optional<HubKind> loadedHub_;

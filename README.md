@@ -36,6 +36,8 @@ A second hub imports the original **PolygonWesternFrontier Demo** with its villa
 
 Both hubs use their imported sunlight and lamps, with warm ground bounce, cooler sky fill and sun-cast shadows from scenery and the animated bandit. Shadows follow the camera as you walk, orbit and zoom. The town editor previews the same lighting while objects move. Original textures and placements remain intact.
 
+The world uses an autumn color treatment inspired by the supplied visual reference: amber highlights, plum shadows, richer colors, soft bloom and a subtle vignette. Frontier's leafy trees vary between copper and gold; bark, grass and evergreen foliage keep their source palette. The same post processing covers both hubs, missions and the editor. Menus, text and enemy health bars are drawn afterward to stay sharp and retain their original colors.
+
 Press **F4 in town** or choose **Town Editor** in the pause screen to edit the city in 3D. Select objects, drag move/rotate/scale handles, enter exact transforms, or add models from the asset palette. The editor includes search, duplication, deletion, undo/redo and arrival/mission markers. **Ctrl+S** saves the layout and rebuilds navigation, retaining backups. Launch it directly with `./build/deathward --editor`. See the [town editor guide](docs/town_editor.md) for controls, save locations and navigation details.
 
 Each mission has **15 rooms**, with junctions and loops that let you choose between routes. Combat rooms seal every doorway, including the entrance behind you. Each combat room starts with one enemy group; defeat it to reopen the doors. There are no later reinforcements; the boss has one encounter with three attack phases. Cleared rooms stay cleared when revisited, without extra rewards or healing.

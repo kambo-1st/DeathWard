@@ -12,6 +12,8 @@ The editor uses the town's original textured meshes. It edits their placements: 
 
 The viewport shares the hub's sunlight, ambient fill and filtered sun shadows. Moving, adding or deleting geometry updates its shadow immediately; orbiting and zooming preserve the scene's original sun direction.
 
+The viewport also previews the game's autumn palette, bloom and color grade. Editor panels and text stay outside the post-processing pass. These effects are runtime rendering choices and do not rewrite textures or the scene catalog when saving.
+
 ## Working with objects
 
 Click a visible mesh, or select it in the **Scene** list. Search by asset name or object number, and scroll the list to browse. The **Assets** tab lists reusable models; select one and choose **Add at view center**. Imported placements remain separate mesh instances, as stored in `town.scene`.

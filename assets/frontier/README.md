@@ -16,6 +16,8 @@ Start with `./build/deathward --hub frontier`, or choose **Pause → Travel to F
 
 This is an exact import of the authored static arrangement, not a pixel-identical Unity renderer. Raylib uses the source textures, UVs, material tints, transparency and directional light. The hub renderer adds filtered sun shadows for scenery and the animated bandit, with sky fill and ground bounce. Unity's baked lighting, reflections, water shader effects, post-processing and Animator controllers are not executed. Outdoor navigation excludes disconnected roofs and does not supply multi-floor interiors.
 
+The current DeathWard art treatment adds amber/plum color grading and bloom, plus a runtime autumn palette on green leaf swatches in birch and tree-clump assets. Copper/gold variation follows each tree's placement. This intentionally changes their displayed colors while preserving the embedded source textures, bark swatches, geometry and original placements. Evergreens, grass and desert plants retain their material colors before the shared color grade.
+
 ## Files and editing
 
 `town.glb`, `town.scene`, `town.nav` and `town.labels` are the standalone runtime pack. `town.source.json`, `town.manifest.json` and `source/` retain the conversion recipe, audit and original dependencies. Normal builds need no Unity, Blender or Windows source folder.

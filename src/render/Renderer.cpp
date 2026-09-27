@@ -325,7 +325,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     westernScene_.prepare(run.arena);
     const auto &theme = missionTheme(run.arena.theme);
     const bool canyon = run.arena.theme == MissionTheme::Canyon;
-    ClearBackground(theme.sky);
+    postProcess_.begin(theme.sky);
     BeginMode3D(camera);
     DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
     if (westernScene_.loaded() || westernScene_.terrainReady())
@@ -550,6 +550,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     }
     westernScene_.drawGlass();
     EndMode3D();
+    postProcess_.end();
     for (const auto &e : run.enemies)
         if (e.alive && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {
             Vector2 at = GetWorldToScreen(add(e.position, {0, 1.6f, 0}), camera);
@@ -564,10 +565,10 @@ Action Renderer::hub(const Game &game) {
     }
     const auto &town = game.town;
     const auto &world = game.campaign.data().world;
-    ClearBackground(Color{154, 186, 199, 255});
     playerModel_.update(town.player, town.time, &town);
     townScene_.prepareLighting(game.camera,
                                [&](Shader depth) { playerModel_.draw(town.player, false, depth); });
+    postProcess_.begin(Color{154, 186, 199, 255});
     BeginMode3D(game.camera);
     townScene_.draw(town.player.position);
     const auto board = town.mission;
@@ -586,6 +587,7 @@ Action Renderer::hub(const Game &game) {
             DrawCube(add(p, {0, .07f, 0}), .16f, .1f, .16f, Teal);
     townScene_.draw(town.player.position, true);
     EndMode3D();
+    postProcess_.end();
     const auto at = GetWorldToScreen(add(board, {0, 2.7f, 0}), game.camera);
     if (at.x > 0 && at.x < GetScreenWidth() && at.y > 0 && at.y < GetScreenHeight()) {
         panel(at.x / sx_ - 48, at.y / sy_ - 10, 96, 24, Panel);

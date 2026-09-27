@@ -558,8 +558,8 @@ bool TownEditor::button(const std::string &text, Rectangle r, bool selected, boo
 void TownEditor::draw() {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
-    ClearBackground({142, 174, 188, 255});
     scene_.prepareLighting(camera);
+    postProcess_.begin({142, 174, 188, 255});
     BeginMode3D(camera);
     scene_.draw(camera.target);
     scene_.draw(camera.target, true);
@@ -598,6 +598,7 @@ void TownEditor::draw() {
         rlEnableDepthTest();
     }
     EndMode3D();
+    postProcess_.end();
     drawUI();
 }
 void TownEditor::drawUI() {
