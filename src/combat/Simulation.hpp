@@ -104,11 +104,10 @@ class Simulation {
     bool godMode = false, rewardOpen = false, roomClear = false, finished = false, dead = false;
     bool rescued = false, altarDestroyed = false, bossKilled = false, checkpointNeeded = false;
     bool followup = false, debugScenario = false;
-    int room = 0, wave = 0;
-    float waveDelay = 1.0f, messageTime = 0;
+    int room = 0;
+    float messageTime = 0;
     std::string message;
     static constexpr int FinalRoom = RoomCount - 1;
-    static constexpr int WavesPerRoom = 2;
 
     void step(const Input &input, float dt = Tick);
     void grant(ItemId item);
@@ -118,9 +117,12 @@ class Simulation {
     void requestDoor(int passage, int side);
     bool useDoor(int passage, int side);
     EntityId spawn(EnemyKind kind, Vector3 position);
-    void spawnWave(int count);
+    void spawnEnemies(int count);
     void startBoss();
     void killAll();
+    void clearRoomDebug();
+    void jumpDebug(int index, bool restart = false);
+    void healDebug();
     void startStress();
     void interact();
     std::string nearbyInteraction() const;

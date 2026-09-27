@@ -30,15 +30,17 @@ Windows is kept in scope through CMake and portable C++, but this milestone is t
 
 ## Play
 
-Type a seed in the hub (Backspace edits; N generates another), then press Enter or click **Enter the Mine**. The mine now has **15 rooms**, with junctions and loops that let you choose between routes. Combat rooms seal every doorway, including the entrance behind you. Clear two waves to reopen them; the boss has one encounter with three attack phases. Cleared rooms stay cleared when revisited, without extra rewards or healing.
+Type a seed in the hub (Backspace edits; N generates another), then press Enter or click **Enter the Mine**. The mine now has **15 rooms**, with junctions and loops that let you choose between routes. Combat rooms seal every doorway, including the entrance behind you. Each combat room starts with one enemy group; defeat it to reopen the doors. There are no later reinforcements; the boss has one encounter with three attack phases. Cleared rooms stay cleared when revisited, without extra rewards or healing.
+
+**The starting room is always enemy-free**, with open passages from the moment you enter. It counts toward the limit of 1–2 ordinary rooms with no enemies; the seed may choose one additional quiet room, separate from the peaceful power rooms. These quiet rooms have open passages, no enemies or power pedestal, and may contain a key. The miners, altar and boss retain their encounters.
 
 Each room has different dimensions (24–40 units per side), with rectangular, clipped-corner, L-shaped and cross-shaped footprints. The seed chooses the graph, room shapes, objective positions, obstacles, key locations and power-room count. Clear routes are reserved for doors and objectives, and cover that isolates walkable floor is rejected. The same seed and content version reproduce the same map independently of campaign outcomes.
 
 **Power-ups only appear in 1–2 dedicated rooms per expedition.** Unlock a power room, approach its pedestal, and choose one of two items. Each pedestal works once, so normal play yields at most two power-ups for the entire run. Combat rooms do not award items.
 
-**Golden doors require one key.** Keys appear at seeded locations in combat rooms after those rooms are cleared; left-click a key or walk over it to collect it. Keys are consumed when unlocking a power room or the boss room. Unlocks persist for the run. All keys are placed in the connected area accessible without spending a key, and there are enough for every lock, so choosing a power room first cannot make the boss unreachable.
+**Golden doors require one key.** Keys appear at seeded locations in combat rooms after those rooms are cleared, or immediately upon entering a quiet room; left-click a key or walk over it to collect it. Keys are consumed when unlocking a power room or the boss room. Unlocks persist for the run. All keys are placed in the connected area accessible without spending a key, and there are enough for every lock, so choosing a power room first cannot make the boss unreachable.
 
-The camera follows you through corridors. The mine map shows branches, your position, keys carried, and powers claimed: **P** marks a power room, **B** the boss, and **K** a discovered, uncollected key. Red gates are sealed for combat, golden gates need a key, and green gates are open. Use the boss room's return lantern to finish. Expedition length with the larger map and rarer powers still needs human playtesting.
+The camera follows you through corridors. The mine map shows branches, your position, keys carried, and powers claimed: **P** marks a power room, **E** an enemy-free room, **B** the boss, and **K** a discovered, uncollected key. Red gates are sealed for combat, golden gates need a key, and green gates are open. Use the boss room's return lantern to finish. Expedition length with the larger map and rarer powers still needs human playtesting.
 
 | Control | Action |
 | --- | --- |
@@ -75,26 +77,32 @@ The miners are in chamber 3. The altar is in chamber 4. Both are optional; the t
 
 Copies stack. Items do not check for specific item pairs. Stable registry hooks modify projectile creation and react to queued hit, kill, explosion and other events. Generated work preserves chain provenance; depth, event and entity budgets bound pathological branching without banning secondary effects.
 
-## Debug tools
+## Cheat mode / quick testing
 
-Press **F1** to expose and enable the debug controls. They intentionally affect the current campaign; use `--save /tmp/deathward-playground.save` for an isolated playground.
+**Cheat mode is enabled by default**, with hotkeys ready immediately and the shortcut panel hidden so it does not cover the game or block mouse controls. The backtick key opens or hides the optional shortcut panel independently. Press **F1** to disable cheat hotkeys, invincibility, slow time and collision overlays; press it again to re-enable the mode. Invincibility itself is still toggled with F2. Granted items/keys and completed actions remain. Cheats affect the current campaign; use `--save /tmp/deathward-playground.save` for an isolated playground.
 
 | Control | Action |
 | --- | --- |
-| F2 / F3 | Toggle god mode / kill all |
+| F1 | Toggle cheat mode; enabling it keeps the panel hidden |
+| Backtick key | Show/hide the optional cheat shortcut panel |
+| F2 / Shift + F2 | Toggle invincibility / heal fully and reset cooldowns |
+| F3 / Shift + F3 | Kill current enemies / clear the whole room, remove pending effects and reopen combat seals |
 | F4 / F5 | Spawn 20 / 100 enemies |
-| F6 | Grant all five items |
-| F7 | Jump to boss or follow-up encounter |
+| F6 / Shift + F6 | Grant all five items / add three keys |
+| F7 | Start or replay the boss or follow-up encounter |
 | F8 / F9 | Finish successfully / die |
 | F10 | Toggle 3D collision volumes and projectile paths |
 | F11 | Stress scene: 100 enemies and 600 shots with all five effects |
+| F12 / Shift + F12 | Jump to the next numbered room (wraps after the boss) / restart the current room |
 | [ / ] then I | Select and grant an item |
 | V | Grant five random items |
 | P / O | Freeze / slow simulation |
 | M | Mark miners rescued |
 | G in the hub | Set/clear the haunting flag and observe NPC dialogue |
 
-The hub debug panel also offers campaign reset with a confirmation click and a `.bak` copy. The combat panel exposes entity, projectile, queue and chain counts, maximum depth, suppression diagnostics and effect counters.
+Room jumps and restarts heal you, resume play and move the camera immediately. They preserve the seed, build, keys, unlocked doors and claimed power rewards. Restarting a claimed power room does not grant another normal reward. Shift + F3 or a room restart also ends a stress scene. Cheat keys work while paused or choosing a power; victory/death resolve immediately.
+
+The hub cheat panel also offers campaign reset with a confirmation click and a `.bak` copy. The optional combat panel exposes entity, projectile, queue and chain counts, maximum depth, suppression diagnostics and effect counters.
 
 ## Save files and determinism
 
@@ -114,9 +122,9 @@ ctest --test-dir build --output-on-failure
 ./build/deathward --benchmark --frames 600 --screenshot artifacts/stress.png
 ```
 
-The core CTest suite needs no graphics display. `deathward_input_tests` exercises mouse controls through raylib's input system in a hidden window and requires an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
+The core CTest suite needs no graphics display. `deathward_input_tests` exercises mouse controls and function-key cheats through raylib's input system in a hidden window and requires an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
 
-Tests cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `boss` and `summary`.
+Tests cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power and enemy-free rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. Cheat checks cover disabled hotkeys, unobstructed play with cheats enabled, single-group encounters, effect cleanup, room/boss replay, preserved rewards and paused/modal outcomes. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `empty`, `cheats`, `boss` and `summary`.
 
 For sanitizer checks:
 

@@ -187,35 +187,77 @@ const RunSummary *Game::inspectedHistory() const {
     return historyIndex >= 0 && size_t(historyIndex) < h.size() ? &h[size_t(historyIndex)] : nullptr;
 }
 void Game::debugInput() {
-    if (IsKeyPressed(KEY_F1))
+    if (IsKeyPressed(KEY_F1)) {
         debug = !debug;
-    if (IsKeyPressed(KEY_F10))
-        collisionDebug = !collisionDebug;
+        if (!debug) {
+            collisionDebug = slow = debugPanelOpen = false;
+            if (run)
+                run->godMode = false;
+        }
+    }
     if (!debug)
         return;
+    if (IsKeyPressed(KEY_GRAVE))
+        debugPanelOpen = !debugPanelOpen;
+    if (IsKeyPressed(KEY_F10))
+        collisionDebug = !collisionDebug;
     if (IsKeyPressed(KEY_LEFT_BRACKET))
         selectedItem = (selectedItem + ItemCount - 1) % ItemCount;
     if (IsKeyPressed(KEY_RIGHT_BRACKET))
         selectedItem = (selectedItem + 1) % ItemCount;
     if (!run)
         return;
-    if (IsKeyPressed(KEY_F2))
-        run->godMode = !run->godMode;
-    if (IsKeyPressed(KEY_F3))
-        run->killAll();
+    const bool shift = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
+    if (IsKeyPressed(KEY_F2)) {
+        if (shift)
+            run->healDebug();
+        else {
+            run->godMode = !run->godMode;
+            run->announce(run->godMode ? "CHEAT / invincible ON" : "CHEAT / invincible OFF");
+        }
+    }
+    if (IsKeyPressed(KEY_F3)) {
+        if (shift) {
+            run->clearRoomDebug();
+            resetPointerInput();
+        } else {
+            run->killAll();
+            run->announce("CHEAT / enemies killed.");
+        }
+    }
     if (IsKeyPressed(KEY_F4))
-        run->spawnWave(20);
+        run->spawnEnemies(20);
     if (IsKeyPressed(KEY_F5))
-        run->spawnWave(100);
-    if (IsKeyPressed(KEY_F6))
-        for (int i = 0; i < ItemCount; ++i)
-            run->grant(ItemId(i));
-    if (IsKeyPressed(KEY_F7))
-        run->startBoss();
-    if (IsKeyPressed(KEY_F8))
+        run->spawnEnemies(100);
+    if (IsKeyPressed(KEY_F6)) {
+        if (shift) {
+            run->keys += 3;
+            run->announce("CHEAT / added 3 keys");
+        } else
+            for (int i = 0; i < ItemCount; ++i)
+                run->grant(ItemId(i));
+    }
+    if (IsKeyPressed(KEY_F7) || IsKeyPressed(KEY_F12)) {
+        if (IsKeyPressed(KEY_F7))
+            run->startBoss();
+        else
+            run->jumpDebug(shift ? run->room : (run->room + 1) % RoomCount, shift);
+        resetPointerInput();
+        accumulator = 0;
+        paused = false;
+        camera.target = sub(run->player.position, {2, 0.85f, 2});
+        camera.position = add(camera.target, {23, 30, 23});
+    }
+    if (IsKeyPressed(KEY_F8)) {
         run->finishDebug(true);
-    if (IsKeyPressed(KEY_F9))
+        finish(EndReason::Victory);
+        return;
+    }
+    if (IsKeyPressed(KEY_F9)) {
         run->finishDebug(false);
+        finish(EndReason::Death);
+        return;
+    }
     if (IsKeyPressed(KEY_F11))
         run->startStress();
     if (IsKeyPressed(KEY_I))
@@ -244,7 +286,9 @@ bool Game::pointerOverControls() const {
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
-    return (x >= 396 && x <= 936 && y >= 690 && y <= 734) || (x >= 1040 && x <= 1256 && y >= 170 && y <= 362);
+    return (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
+           (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
+           (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
 }
 void Game::update(float dt) {
     try {

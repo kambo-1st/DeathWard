@@ -360,6 +360,18 @@ Arena::Arena(uint64_t seed) {
             }
         }
     }
+    // Keep objective rooms combat-ready. Quiet rooms belong to
+    // the unlocked network and can still contain a key, but never a power pedestal.
+    std::vector<int> quietRooms;
+    for (int i = 1; i < RoomCount; ++i)
+        if (rooms[size_t(i)].kind == RoomKind::Combat && rooms[size_t(i)].depth > 1 && i != 2 && i != 3)
+            quietRooms.push_back(i);
+    shuffle(quietRooms);
+    const int quietCount = 1 + int(layout.bounded(2));
+    // The entrance is always quiet and counts toward the one-to-two-room limit.
+    rooms.front().kind = RoomKind::Empty;
+    for (int i = 1; i < quietCount; ++i)
+        rooms[size_t(quietRooms[size_t(i - 1)])].kind = RoomKind::Empty;
     rebuildWalls();
 }
 void Arena::rebuildWalls() {

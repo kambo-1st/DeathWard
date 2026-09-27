@@ -377,12 +377,12 @@ Action Renderer::hub(const Game &game) {
         return Action::History;
     if (button("QUIT", 986, 700, 234, 48))
         return Action::Quit;
-    text("BLACK CREEK REMEMBERS.", 60, 771, 11, Muted);
+    text("F1 / CHEAT MODE", 60, 771, 11, game.debug ? Teal : Muted);
     text("LMB move / attack / interact   SHIFT + LMB / RMB fire   WASD move   MMB / SPACE dodge", 378, 772,
          11, Muted);
-    if (game.debug) {
+    if (game.debug && game.debugPanelOpen) {
         panel(60, 660, 612, 89, Ink);
-        text("DEBUG / G toggles the something_followed world flag", 76, 674, 14, Teal);
+        text("CHEATS ON / F1 off / G toggles the haunting flag", 76, 674, 14, Teal);
         if (button(game.resetArmed ? "CONFIRM RESET (backup saved)" : "RESET CAMPAIGN", 76, 702, 360, 34))
             return Action::Reset;
     }
@@ -417,9 +417,10 @@ void Renderer::dungeonMap(const Game &game) {
             rectangle(box, i == run.room ? Gold : run.rooms[size_t(i)].cleared ? Teal : Border);
         auto at = point(run.arena.rooms[size_t(i)].center);
         const auto kind = run.arena.rooms[size_t(i)].kind;
-        std::string label = kind == RoomKind::Power  ? "P"
-                            : kind == RoomKind::Boss ? "B"
-                                                     : std::to_string(i + 1);
+        std::string label = kind == RoomKind::Power   ? "P"
+                            : kind == RoomKind::Boss  ? "B"
+                            : kind == RoomKind::Empty ? "E"
+                                                      : std::to_string(i + 1);
         for (const auto &key : run.arena.keys)
             if (key.room == i && !key.collected && run.rooms[size_t(i)].visited)
                 label = "K";
@@ -453,10 +454,11 @@ Action Renderer::expedition(const Game &game) {
         DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * std::max(0.0f, boss->hp / boss->maxHp)),
                       int(9 * sy_), Rust);
     } else {
-        text(run.roomClear ? "CHAMBER CLEARED"
-                           : "WAVE " + std::to_string(std::max(1, run.wave)) + " / " +
-                                 std::to_string(Simulation::WavesPerRoom) + "    " +
-                                 number(run.livingEnemies()) + " HOSTILES",
+        const auto kind = run.arena.rooms[size_t(run.room)].kind;
+        text(run.roomClear ? (kind == RoomKind::Empty   ? "QUIET ROOM / NO ENEMIES"
+                              : kind == RoomKind::Power ? "POWER CACHE"
+                                                        : "CHAMBER CLEARED")
+                           : number(run.livingEnemies()) + " HOSTILES",
              440, 38, 14, run.roomClear ? Teal : Paper);
     }
     panel(24, 674, 344, 101, Panel);
@@ -477,6 +479,7 @@ Action Renderer::expedition(const Game &game) {
     text(run.player.dodgeCooldown <= 0 ? "MMB / SPACE: DODGE READY" : "DODGE RECOVERING", 397, 752, 12,
          Muted);
     text("LMB move / attack / interact   SHIFT + LMB / RMB fire   WASD move", 397, 774, 11, Muted);
+    text(game.debug ? "F1 / CHEATS ON" : "F1 / CHEATS", 806, 752, 12, game.debug ? Teal : Gold);
     Action controls = Action::None;
     if (!game.paused && !run.rewardOpen) {
         const std::string interaction = run.nearbyInteraction();
@@ -502,7 +505,7 @@ Action Renderer::expedition(const Game &game) {
                  981, 612 + float(i) * 29, 14, stacks ? Paper : Color{79, 89, 82, 255});
         }
     }
-    if (run.messageTime > 0 && !game.debug) {
+    if (run.messageTime > 0) {
         panel(333, 605, 611, 51, Panel);
         wrap(run.message, 351, 620, 575, 14, Paper);
     }
@@ -593,24 +596,30 @@ void Renderer::debugPanel(const Game &game) {
     if (!game.run)
         return;
     const auto &run = *game.run;
-    panel(24, 133, 469, 423, Color{12, 22, 25, 240});
-    text("DEBUG / F1 TO HIDE", 41, 148, 16, Teal);
-    text("F2 god " + std::string(run.godMode ? "ON" : "OFF") + "  F3 kill  F4 +20  F5 +100", 41, 179, 13,
+    panel(24, 133, 515, 459, Color{12, 22, 25, 240});
+    text("CHEAT SHORTCUTS / ` TO HIDE", 41, 148, 16, Teal);
+    text("F2 invincible " + std::string(run.godMode ? "ON" : "OFF") + "    Shift+F2 heal", 41, 179, 13,
          Paper);
-    text("F6 all items  F7 boss  F8 win  F9 die", 41, 204, 13, Paper);
-    text("F10 volumes  F11 stress  P freeze  O slow", 41, 229, 13, Paper);
-    text("[ / ] select  I grant  V random five  M rescue", 41, 254, 13, Paper);
-    text("ITEM: " + std::string(itemDefinition(ItemId(game.selectedItem)).name), 41, 284, 15, Gold);
+    text("F3 kill enemies    Shift+F3 clear whole room", 41, 199, 13, Paper);
+    text("F4 spawn 20    F5 spawn 100 enemies", 41, 219, 13, Paper);
+    text("F6 all items       Shift+F6 add 3 keys", 41, 239, 13, Paper);
+    text("F7 replay boss     F8 win    F9 die", 41, 259, 13, Paper);
+    text("F10 collisions     F11 stress scene", 41, 279, 13, Paper);
+    text("F12 next room      Shift+F12 restart room", 41, 299, 13, Paper);
+    text("P freeze " + std::string(game.paused ? "ON" : "OFF") + "    O slow " + (game.slow ? "ON" : "OFF"),
+         41, 319, 13, Paper);
+    text("[/] select   I grant   V random five   M rescue", 41, 339, 13, Paper);
+    text("ITEM: " + std::string(itemDefinition(ItemId(game.selectedItem)).name), 41, 366, 15, Gold);
     text("ENEMIES " + number(run.livingEnemies()) + "   PROJECTILES " + number(run.projectiles.size()) +
              "   EVENTS " + number(run.queuedEvents()),
-         41, 319, 13, Paper);
+         41, 397, 13, Paper);
     text("CHAINS " + number(run.chains.size()) + "   DEPTH " + number(run.stats.maxDepth) + "   SUPPRESSED " +
              number(run.stats.suppressed),
-         41, 344, 13, Paper);
+         41, 420, 13, Paper);
     text("SPLITS " + number(run.stats.splits) + "   BOUNCES " + number(run.stats.bounces) + "   GHOSTS " +
              number(run.stats.ghosts),
-         41, 369, 13, Paper);
-    text(std::string(game.slow ? "0.2x TIME" : "1.0x TIME") + "   FPS " + std::to_string(GetFPS()), 41, 394,
+         41, 443, 13, Paper);
+    text(std::string(game.slow ? "0.2x TIME" : "1.0x TIME") + "   FPS " + std::to_string(GetFPS()), 41, 466,
          13, Teal);
     if (!run.chains.empty()) {
         auto oldest = std::min_element(run.chains.begin(), run.chains.end(),
@@ -618,13 +627,13 @@ void Renderer::debugPanel(const Game &game) {
         const auto &chain = oldest->second;
         text("LIVE #" + number(oldest->first) + "  work " + number(chain.accepted) + "  queued " +
                  number(chain.queued) + "  flying " + number(chain.active),
-             41, 423, 12, Teal);
+             41, 493, 12, Teal);
     }
-    float y = 452;
+    float y = 519;
     int rows = 0;
     for (auto it = run.logs.rbegin(); it != run.logs.rend() && rows < 3; ++it, ++rows) {
         text("#" + number(it->id) + " " + it->reason + " x" + number(it->suppressed), 41, y, 12, Muted);
-        y += 23;
+        y += 20;
     }
     if (run.logs.empty())
         text("No chains have reached a safety limit.", 41, y, 12, Muted);
@@ -656,7 +665,7 @@ Action Renderer::draw(const Game &game) {
         }
         break;
     }
-    if (game.debug && game.run && !game.paused && !game.run->rewardOpen)
+    if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen)
         debugPanel(game);
     if (!game.error.empty()) {
         panel(24, 560, 1232, 81, Color{76, 34, 30, 250});

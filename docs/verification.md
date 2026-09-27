@@ -1,5 +1,31 @@
 # Milestone 1 verification
 
+## Unobstructed cheats and one enemy group per room
+
+Content version `deathward-m1-8` keeps cheats enabled by default with the shortcut panel hidden. Hidden panels do not intercept mouse controls. F1 toggles cheats without opening the panel; the backtick key separately opens or hides the optional shortcuts and diagnostics, in the hub or expedition.
+
+Combat rooms spawn a single enemy group on entry. Defeating it reopens the combat seals immediately; waiting or revisiting cannot spawn reinforcements. Wave counters, timers and the wave HUD are removed. The starting room remains enemy-free. Room and boss replays position the player before spawning enemies and begin exactly one encounter.
+
+Release build, both CTest suites (including 64 generated seeds), raylib mouse/function-key input checks, and the gameplay contracts under AddressSanitizer/UndefinedBehaviorSanitizer passed. The complete expedition test verifies enemies on entry, immediate clearing after one group, no respawn after waiting, and empty revisits. Mouse checks now run with cheats enabled and the panel hidden, and verify the separate panel toggle. Sanitizer gameplay results are in `artifacts/asan-core-m1-8.log`; input results are in `artifacts/input-m1-8.log`. The unobstructed combat view was rendered and visually inspected in `artifacts/hidden-cheats-m1-8.png`.
+
+## Default cheats and a quiet starting room
+
+Content version `deathward-m1-7` enables cheat mode and its shortcut panel on application startup. F1 still toggles the mode and F2 separately toggles invincibility. The starting room is always enemy-free with open exits, including on revisits and room restarts. It counts toward the existing one-to-two quiet-room limit; the seed may choose one additional quiet room.
+
+Release build, both CTest suites and the raylib input suite passed. All 64 generated seeds have a quiet starting room while preserving the quiet-room limit and combat at objectives. Input checks verify that cheats work immediately without first pressing F1 and can still be disabled. The starting-room scene was rendered and visually inspected in `artifacts/start-room-m1-7.png`; input results are in `artifacts/input-m1-7.log`.
+
+## Quiet rooms and function-key cheats
+
+Content version `deathward-m1-6` chooses one or two ordinary enemy-free rooms per seed, in addition to the separate power caches. Quiet rooms open immediately, never start waves, and stay cleared on revisits without repeated healing or completion credit. They can contain a seeded key and are marked E on the map. Opening, objective and boss encounters remain intact.
+
+F1 now exposes a labeled cheat mode with a complete shortcut legend. New shortcuts heal/reset cooldowns, grant keys, clear all remaining waves, jump to the next numbered room and replay the current room. Replays preserve the seed, build, keys, unlocked doors and claimed powers. Boss replay resets the encounter and seals its entrance even after a previous defeat. Whole-room clearing discards pending projectiles and effects, including stress-scene work. Victory and defeat work immediately from pause and reward screens. Disabling cheat mode gates the shortcuts and turns off invincibility, slow time and collision overlays.
+
+Release CTest and the raylib input suite passed. The 64-seed suite checks deterministic placement and the one-to-two limit separately for quiet rooms and power rooms, alongside the existing connectivity and key checks. Gameplay contracts cover peaceful-room revisits, wave skipping, stress cleanup, room completion counts, preserved power rewards and repeated boss encounters. Real function-key events verify disabled-mode guards, healing, killing, full clears, item/key grants, room/camera jumps, replays and paused/modal outcomes.
+
+Both CTest suites also passed under AddressSanitizer/UndefinedBehaviorSanitizer: gameplay contracts in 24.45 seconds and generated maps in 240.38 seconds. Results are recorded in `artifacts/sanitizers-m1-6.log`.
+
+The cheat panel and quiet-room scene were rendered and visually inspected at 1440 × 900 in `artifacts/cheats-m1-6.png` and `artifacts/empty-m1-6.png`. Input results are recorded in `artifacts/input-m1-6.log`.
+
 ## Branches, combat doors, power rooms and keys
 
 Content version `deathward-m1-5` expands the mine to 15 rooms with a connected combat network, junctions and three additional loop connections. The starting room always has two routes. One or two separate power rooms and the boss room have key-locked entrances. Each power pedestal offers two choices and can grant exactly one item once; normal combat rooms grant none. All keys are placed in the unlocked combat network, with one key available per locked door. Entering an uncleared combat room seals all of its doorways, including the previous entrance, only after the player has safely crossed the threshold. Clearing the room reopens the combat seals. Room clears, collected keys, unlocked doors and claimed powers persist for the run.

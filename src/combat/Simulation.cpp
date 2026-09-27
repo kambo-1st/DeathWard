@@ -78,7 +78,7 @@ EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
     enemies.push_back(e);
     return e.id;
 }
-void Simulation::spawnWave(int count) {
+void Simulation::spawnEnemies(int count) {
     const auto &area = arena.rooms[size_t(room)].bounds;
     for (int i = 0; i < count; ++i) {
         Vector3 p{};
@@ -134,8 +134,6 @@ void Simulation::enterRoom(int index) {
     progress.visited = true;
     roomClear = progress.cleared;
     rewardOpen = false;
-    wave = 0;
-    waveDelay = 1.2f;
     projectiles.clear();
     queue_.clear();
     chains.clear();
@@ -143,15 +141,17 @@ void Simulation::enterRoom(int index) {
     visuals.clear();
     if (firstVisit && room != 0)
         player.hp = std::min(player.maxHp, player.hp + 15);
-    if (arena.rooms[size_t(room)].kind == RoomKind::Power) {
+    const auto kind = arena.rooms[size_t(room)].kind;
+    if (kind == RoomKind::Power || kind == RoomKind::Empty) {
         if (!progress.cleared) {
             progress.cleared = true;
             ++stats.rooms;
         }
         roomClear = true;
         arena.sealRoom(-1);
-        announce(progress.rewardTaken ? "An empty power cache."
-                                      : "POWER CACHE / approach the pedestal and choose one item.",
+        announce(kind == RoomKind::Empty ? "QUIET ROOM / no enemies. Explore the open passages."
+                 : progress.rewardTaken  ? "An empty power cache."
+                                         : "POWER CACHE / approach the pedestal and choose one item.",
                  5);
     } else if (!roomClear) {
         cancelMove();
@@ -159,6 +159,10 @@ void Simulation::enterRoom(int index) {
         announce(room == FinalRoom ? "THE HOLLOW COURT / all exits sealed"
                                    : roomName() + " / doors sealed until the fight is over",
                  4);
+        if (room == FinalRoom)
+            beginBossEncounter();
+        else
+            spawnEnemies(std::min(18, 6 + arena.rooms[size_t(room)].depth * 2));
     } else {
         arena.sealRoom(-1);
         announce(roomName() + " / already cleared", 3);
@@ -230,18 +234,12 @@ void Simulation::requestDoor(int passage, int side) {
     doorOnArrival_ = std::pair{passage, side};
 }
 void Simulation::startBoss() {
-    cancelMove();
-    debugScenario = false;
-    enterRoom(FinalRoom);
-    rewardOpen = false;
-    player.position = arena.rooms.back().entry;
-    beginBossEncounter();
+    jumpDebug(FinalRoom, true);
 }
 void Simulation::beginBossEncounter() {
-    wave = 1;
     spawn(followup ? EnemyKind::Gunman : EnemyKind::Boss, arena.rooms.back().bossSpawn);
     if (followup)
-        spawnWave(12);
+        spawnEnemies(12);
     announce(followup ? "Finish what remains" : "THE HOLLOW SHERIFF", 4);
 }
 void Simulation::killAll() {
@@ -258,6 +256,53 @@ void Simulation::killAll() {
         }
     drainEvents();
 }
+void Simulation::healDebug() {
+    player.hp = player.maxHp;
+    player.hurt = player.dodge = player.dodgeCooldown = player.fireCooldown = 0;
+    announce("CHEAT / full health and cooldowns reset");
+}
+void Simulation::clearRoomDebug() {
+    killAll();
+    // End all pending damage and secondary effects, including bounded work left
+    // over from a stress scene.
+    cancelMove();
+    enemies.clear();
+    projectiles.clear();
+    queue_.clear();
+    chains.clear();
+    visuals.clear();
+    rewardOpen = debugScenario = false;
+    if (room == FinalRoom)
+        bossKilled = true;
+    clearRoom();
+    // A stress scenario may have started in an already-cleared room.
+    roomClear = true;
+    arena.sealRoom(-1);
+    drainEvents();
+    collectChains();
+    checkpointNeeded = true;
+    announce("CHEAT / room cleared. All combat seals open.");
+}
+void Simulation::jumpDebug(int index, bool restart) {
+    index = std::clamp(index, 0, FinalRoom);
+    cancelMove();
+    debugScenario = finished = dead = false;
+    auto &progress = rooms[size_t(index)];
+    if (restart && progress.cleared) {
+        progress.cleared = false;
+        --stats.rooms;
+    }
+    if (restart && index == FinalRoom)
+        bossKilled = false;
+    healDebug();
+    // Place the player before spawning the group so enemies respect its safe radius.
+    player.position =
+        index == FinalRoom ? arena.rooms[size_t(index)].entry : arena.rooms[size_t(index)].center;
+    enterRoom(index);
+    player.aim = arena.rooms[size_t(index)].exit;
+    // Keep the build, keys, unlocked doors and claimed rewards when replaying.
+    announce(std::string("CHEAT / ") + (restart ? "restarted " : "jumped to ") + roomName());
+}
 void Simulation::startStress() {
     cancelMove();
     debugScenario = true;
@@ -271,7 +316,7 @@ void Simulation::startStress() {
     for (int i = 0; i < ItemCount; ++i)
         if (!itemStacks(ItemId(i)))
             grant(ItemId(i));
-    spawnWave(100);
+    spawnEnemies(100);
     for (int i = 0; i < 600; ++i) {
         float angle = float(i) * 2 * Pi / 600;
         Event e;
@@ -814,23 +859,7 @@ void Simulation::step(const Input &input, float dt) {
     }
     if (debugScenario)
         return;
-    if (!roomClear && livingEnemies() == 0 && queue_.empty()) {
-        waveDelay -= dt;
-        if (waveDelay <= 0) {
-            if (room == FinalRoom) {
-                if (wave == 0) {
-                    beginBossEncounter();
-                } else {
-                    clearRoom();
-                }
-            } else if (wave < WavesPerRoom) {
-                spawnWave(std::min(18, 6 + arena.rooms[size_t(room)].depth * 2 + wave * 2));
-                ++wave;
-                waveDelay = 1.8f;
-            } else {
-                clearRoom();
-            }
-        }
-    }
+    if (!roomClear && livingEnemies() == 0 && queue_.empty())
+        clearRoom();
 }
 } // namespace dw

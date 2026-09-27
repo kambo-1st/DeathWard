@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
         } else if (arg == "--help") {
             std::cout << "DeathWard\n  --save PATH          Separate campaign file\n  --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
-                         "power, reward, "
+                         "power, reward, empty, cheats, "
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n";
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
         }
     }
     if (scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
-        scene != "boss" && scene != "summary") {
+        scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats") {
         std::cerr << "Unknown smoke scene: " << scene << '\n';
         return 2;
     }
@@ -79,17 +79,28 @@ int main(int argc, char **argv) {
             if (benchmark)
                 game.run->startStress();
             else {
-                game.run->spawnWave(12);
+                if (scene == "combat" || scene == "cheats")
+                    game.run->jumpDebug(2);
                 if (scene == "combat" || scene == "boss" || scene == "summary")
                     for (int i = 0; i < dw::ItemCount; ++i)
                         game.run->grant(dw::ItemId(i));
             }
             if (smoke && scene == "boss")
                 game.run->startBoss();
+            if (smoke && scene == "cheats")
+                game.debug = true;
+            if (smoke && scene == "empty") {
+                for (int i = 0; i < dw::RoomCount; ++i)
+                    if (game.run->arena.rooms[size_t(i)].kind == dw::RoomKind::Empty) {
+                        game.run->jumpDebug(i);
+                        game.run->announce("QUIET ROOM / no enemies. Explore the open passages.", 5);
+                        break;
+                    }
+            }
             if (smoke && scene == "key") {
                 game.run->enterRoom(game.run->arena.keys.front().room);
                 game.run->player.position = game.run->arena.rooms[size_t(game.run->room)].center;
-                game.run->clearRoom();
+                game.run->clearRoomDebug();
             }
             if (smoke && (scene == "power" || scene == "reward")) {
                 const int passage = game.run->arena.rooms[dw::RoomCount - 2].passages.front();

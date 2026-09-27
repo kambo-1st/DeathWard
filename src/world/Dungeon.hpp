@@ -7,7 +7,7 @@ namespace dw {
 inline constexpr int RoomCount = 15;
 inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
-enum class RoomKind { Combat, Power, Boss };
+enum class RoomKind { Combat, Power, Boss, Empty };
 struct RoomLayout {
     Box bounds;
     Vector3 center{}, entry{}, exit{}, objective{}, bossSpawn{};

@@ -128,21 +128,28 @@ int main() {
             check(sizes.size() == dw::RoomCount && shapes.size() == 4,
                   "every expedition varies room sizes and footprints");
             const auto initiallyReachable = reachable(arena);
-            int powers = 0, locked = 0, maxDegree = 0;
+            int powers = 0, empty = 0, locked = 0, maxDegree = 0;
             for (int i = 0; i < dw::RoomCount; ++i) {
                 const auto &room = arena.rooms[size_t(i)];
                 maxDegree = std::max(maxDegree, int(room.passages.size()));
                 if (room.kind == dw::RoomKind::Power)
                     ++powers;
-                if (room.kind == dw::RoomKind::Combat)
+                if (room.kind == dw::RoomKind::Empty)
+                    ++empty;
+                if (room.kind == dw::RoomKind::Combat || room.kind == dw::RoomKind::Empty)
                     check(initiallyReachable.contains(i),
-                          "all combat rooms are accessible without spending a key");
+                          "combat and empty rooms are accessible without spending a key");
                 else {
                     check(room.passages.size() == 1 && !initiallyReachable.contains(i),
                           "special rooms have one locked entrance");
                 }
             }
             check(powers >= 1 && powers <= 2, "one or two separate power rooms");
+            check(empty >= 1 && empty <= 2, "one or two additional enemy-free rooms");
+            check(arena.rooms[0].kind == dw::RoomKind::Empty,
+                  "the starting room is enemy-free for every seed");
+            check(arena.rooms[2].kind == dw::RoomKind::Combat && arena.rooms[3].kind == dw::RoomKind::Combat,
+                  "objective rooms retain combat encounters");
             check(arena.rooms[0].passages.size() >= 2 && maxDegree >= 3 &&
                       arena.passages.size() >= dw::RoomCount,
                   "map has branching choices and alternate routes");
@@ -184,10 +191,11 @@ int main() {
               "campaign outcomes and run IDs do not change the seeded map");
         a.godMode = a.debugScenario = true;
         for (int i = 0; i < dw::RoomCount; ++i) {
-            a.enterRoom(i);
             a.player.position = a.arena.rooms[size_t(i)].entry;
-            a.spawnWave(40);
-            check(a.livingEnemies() == 40, "generated chambers support full enemy waves");
+            a.enterRoom(i);
+            const auto initial = a.livingEnemies();
+            a.spawnEnemies(40);
+            check(a.livingEnemies() == initial + 40, "generated chambers support additional test enemies");
             for (const auto &enemy : a.enemies) {
                 check(a.arena.roomAt(enemy.position) == i && !a.arena.blocked(enemy.position, enemy.radius),
                       "enemy spawns remain inside their chamber and clear of generated cover");

@@ -48,9 +48,31 @@ int main() {
                   button == MOUSE_BUTTON_MIDDLE);
             frame(x, y);
         };
+        auto pressKey = [&](int key, bool shift = false) {
+            mouseEvent(KeyDown, key);
+            frame(10, 10, false, false, false, shift);
+            mouseEvent(KeyUp, key);
+            frame();
+        };
         frame();
         click(950, 615);
         check(game.run && game.screen == dw::Screen::Expedition, "mouse launch opens expedition");
+        check(game.debug && !game.debugPanelOpen && game.run->roomClear && game.run->livingEnemies() == 0,
+              "new games start with hidden cheats enabled and an open, enemy-free starting room");
+        frame(100, 200);
+        check(!game.pointerOverControls(), "hidden cheat panel never blocks world mouse input");
+        pressKey(KEY_GRAVE);
+        frame(100, 200);
+        check(game.debugPanelOpen && game.pointerOverControls(),
+              "the optional shortcut panel opens only on request and captures its own clicks");
+        pressKey(KEY_GRAVE);
+        check(!game.debugPanelOpen && game.debug, "hiding shortcuts leaves cheat hotkeys active");
+        pressKey(KEY_F2);
+        check(game.run->godMode, "cheat hotkeys work immediately without pressing F1 first");
+        pressKey(KEY_F1);
+        check(!game.debug && !game.run->godMode, "F1 can disable the default cheat mode");
+        pressKey(KEY_F1);
+        check(game.debug && !game.debugPanelOpen, "enabling cheats never reopens the shortcut panel");
         game.run->godMode = true;
         game.run->debugScenario = true;
         for (int i = 0; i < 100; ++i)
@@ -130,7 +152,7 @@ int main() {
         click(620, 445);
         check(!game.paused, "mouse resumes the expedition");
         check(game.run->stats.shots == shots, "HUD and paused clicks never fire the revolver");
-        game.run->clearRoom();
+        game.run->clearRoomDebug();
         const int passageIndex = game.run->arena.rooms[0].passages.front();
         const auto &passage = game.run->arena.passages[size_t(passageIndex)];
         const int side = passage.rooms[0] == 0 ? 0 : 1;
@@ -158,6 +180,7 @@ int main() {
         check(dw::distance(game.camera.target, cameraGoal) < 0.1f,
               "camera follows the player to distant rooms");
         game.run->enterRoom(2);
+        game.run->clearRoomDebug();
         game.run->player.position = game.run->arena.rooms[2].center;
         for (int i = 0; i < 100; ++i)
             frame();
@@ -173,7 +196,7 @@ int main() {
         const int approachRoom = lock.rooms[size_t(outside)];
         auto approachLock = [&] {
             game.run->enterRoom(approachRoom);
-            game.run->clearRoom();
+            game.run->clearRoomDebug();
             game.run->player.position = game.run->arena.doorApproach(lockIndex, outside);
             for (int i = 0; i < 100; ++i)
                 frame();
@@ -186,7 +209,7 @@ int main() {
         check(game.run->keys == 0 && lock.locked, "mouse cannot unlock a golden door without a key");
         auto &key = game.run->arena.keys.front();
         game.run->enterRoom(key.room);
-        game.run->clearRoom();
+        game.run->clearRoomDebug();
         game.run->player.position = game.run->arena.rooms[size_t(key.room)].center;
         for (int i = 0; i < 100; ++i)
             frame();
@@ -218,6 +241,78 @@ int main() {
         check(game.lastSummary.stats.shots == shots, "retreat click does not produce an extra shot");
         check(game.campaign.data().world.prosperity == 42 && game.campaign.data().world.population == 48,
               "mouse-only outcome saves retreat and rescue consequences");
+        game.perform(dw::Action::Hub);
+        game.launch();
+        game.run->jumpDebug(2);
+        game.paused = true;
+        pressKey(KEY_F1);
+        game.run->spawnEnemies(1);
+        const auto initialEnemies = game.run->livingEnemies();
+        pressKey(KEY_F3);
+        pressKey(KEY_F10);
+        check(game.run->livingEnemies() == initialEnemies && !game.collisionDebug,
+              "cheat keys are inactive until F1 enables the mode");
+        pressKey(KEY_F1);
+        pressKey(KEY_F2);
+        check(game.debug && game.run->godMode, "F1 enables cheats and F2 toggles invincibility");
+        game.run->player.hp = 1;
+        game.run->player.dodgeCooldown = 2;
+        pressKey(KEY_F2, true);
+        check(game.run->player.hp == game.run->player.maxHp && game.run->player.dodgeCooldown == 0,
+              "Shift+F2 heals and resets cooldowns even while paused");
+        pressKey(KEY_F3);
+        check(game.run->livingEnemies() == 0 && !game.run->roomClear,
+              "F3 kills current enemies without skipping the encounter");
+        pressKey(KEY_F3, true);
+        check(game.run->roomClear, "Shift+F3 clears the entire room immediately while paused");
+        game.paused = false;
+        for (int i = 0; i < 180; ++i)
+            frame();
+        check(game.run->livingEnemies() == 0, "cleared-room cheat never spawns another group");
+        pressKey(KEY_F4);
+        check(game.run->livingEnemies() == 20, "F4 spawns testing enemies");
+        pressKey(KEY_F3, true);
+        pressKey(KEY_F6);
+        pressKey(KEY_F6, true);
+        check(game.run->items.size() == dw::ItemCount && game.run->keys == 3,
+              "F6 grants all effects and Shift+F6 supplies testing keys");
+        pressKey(KEY_F12, true);
+        check(game.run->room == 2 && !game.run->roomClear && game.run->livingEnemies() > 0,
+              "Shift+F12 restarts the current room with its enemy group already present");
+        game.paused = true;
+        pressKey(KEY_F12);
+        check(game.run->room == 3 && !game.paused &&
+                  dw::distance(game.camera.target, dw::sub(game.run->player.position, {2, 0.85f, 2})) < 0.01f,
+              "F12 skips to the next room, resumes and immediately follows with the camera");
+        pressKey(KEY_F7);
+        check(game.run->room == dw::Simulation::FinalRoom && game.run->boss(),
+              "F7 jumps directly to the boss");
+        pressKey(KEY_F3, true);
+        pressKey(KEY_F7);
+        check(!game.run->roomClear && !game.run->bossKilled && game.run->livingEnemies() == 1,
+              "F7 can replay a defeated boss");
+        pressKey(KEY_F10);
+        pressKey(KEY_O);
+        pressKey(KEY_F1);
+        check(!game.debug && !game.run->godMode && !game.slow && !game.collisionDebug,
+              "turning cheat mode off disables invincibility, slow time and collision overlays");
+        pressKey(KEY_F3);
+        check(game.run->livingEnemies() == 1, "F3 is disabled again after leaving cheat mode");
+        pressKey(KEY_F1);
+        game.paused = true;
+        pressKey(KEY_F8);
+        check(!game.run && game.screen == dw::Screen::Summary &&
+                  game.lastSummary.reason == dw::EndReason::Victory,
+              "F8 completes the expedition immediately while paused");
+        game.perform(dw::Action::Hub);
+        game.launch();
+        game.run->jumpDebug(dw::RoomCount - 2);
+        game.run->player.position = game.run->arena.rooms[dw::RoomCount - 2].objective;
+        game.run->interact();
+        check(game.run->rewardOpen, "power-choice modal is open for terminal-cheat verification");
+        pressKey(KEY_F9);
+        check(!game.run && game.lastSummary.reason == dw::EndReason::Death,
+              "F9 resolves defeat immediately from the power-choice modal");
         game.close();
         CloseWindow();
         std::filesystem::remove_all(directory);
@@ -225,6 +320,7 @@ int main() {
                   << "PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue "
                      "and retreat\n"
                   << "PASS mouse key pickup, locked doors and one-time power-room choice\n"
+                  << "PASS function-key cheats, disabled-mode guards, room/boss replay and modal outcomes\n"
                   << "PASS HUD clicks never fire; sixth-shot effects covered by core contracts\n";
         return 0;
     } catch (const std::exception &e) {

@@ -221,7 +221,7 @@ void testSafety() {
     for (int i = 0; i < 10; ++i)
         run.grant(dw::ItemId::Split);
     run.grant(dw::ItemId::Powder);
-    run.spawnWave(100);
+    run.spawnEnemies(100);
     fire(run, {0, 0.85f, 8}, {0, 0, -1}, 1000);
     tick(run, 420);
     check(run.queuedEvents() <= run.limits.queuedEvents && run.projectiles.size() <= run.limits.projectiles,
@@ -242,8 +242,8 @@ void testDeterminism() {
     auto a = fixture(), b = fixture();
     for (int i = 0; i < 20000; ++i)
         b.combatRng.next();
-    a.spawnWave(40);
-    b.spawnWave(40);
+    a.spawnEnemies(40);
+    b.spawnEnemies(40);
     check(a.enemies.size() == b.enemies.size(), "same encounter size");
     for (size_t i = 0; i < a.enemies.size(); ++i)
         check(dw::distance(a.enemies[i].position, b.enemies[i].position) == 0 &&
@@ -252,8 +252,8 @@ void testDeterminism() {
     a.debugScenario = b.debugScenario = false;
     a.enemies.clear();
     b.enemies.clear();
-    a.wave = b.wave = dw::Simulation::WavesPerRoom;
-    a.waveDelay = b.waveDelay = 0;
+    a.roomClear = b.roomClear = false;
+    a.rooms[0].cleared = b.rooms[0].cleared = false;
     a.step({});
     b.step({});
     check(a.roomClear && b.roomClear && !a.rewardOpen && !b.rewardOpen,
@@ -320,13 +320,69 @@ void testCampaign(const std::filesystem::path &path) {
     }
     check(rejected, "damaged save is rejected instead of overwritten");
 }
+void testCheats() {
+    dw::Simulation run(1866, 1, {});
+    run.godMode = true;
+    run.jumpDebug(2);
+    const auto before = run.stats.rooms;
+    run.spawnEnemies(20);
+    run.queueRoot({});
+    run.clearRoomDebug();
+    check(run.roomClear && run.livingEnemies() == 0 && run.projectiles.empty() && run.queuedEvents() == 0 &&
+              run.chains.empty(),
+          "clear-room cheat removes enemies and all pending combat effects");
+    tick(run, 600);
+    check(run.livingEnemies() == 0 && run.stats.rooms == before + 1,
+          "clear-room cheat keeps the room empty and counts completion once");
+    run.startStress();
+    check(run.debugScenario && run.livingEnemies() > 0, "stress scenario starts in a cleared room");
+    run.clearRoomDebug();
+    check(run.roomClear && !run.debugScenario && run.stats.rooms == before + 1,
+          "clearing a stress scene restores room state without counting another clear");
+    const auto items = run.items.size();
+    run.keys = 3;
+    run.player.hp = 1;
+    run.player.dodgeCooldown = 2;
+    run.jumpDebug(2, true);
+    check(!run.roomClear && run.livingEnemies() > 0 && run.stats.rooms == before &&
+              run.player.hp == run.player.maxHp && run.player.dodgeCooldown == 0 &&
+              run.items.size() == items && run.keys == 3 && !run.moveDestination(),
+          "room restart heals, resets progression and keeps the testing build and keys");
+    for (const auto &enemy : run.enemies)
+        check(dw::distance(enemy.position, run.player.position) > 6,
+              "room restart spawns its enemy group safely away from the new player position");
+    const int power = dw::RoomCount - 2;
+    run.jumpDebug(power);
+    run.player.position = run.arena.rooms[size_t(power)].objective;
+    run.interact();
+    run.chooseReward(0);
+    run.jumpDebug(power, true);
+    run.player.position = run.arena.rooms[size_t(power)].objective;
+    run.interact();
+    check(!run.rewardOpen && run.powerUpsTaken == 1 && run.items.size() == items + 1,
+          "room replay preserves claimed powers and cannot grant a second normal reward");
+    run.startBoss();
+    run.clearRoomDebug();
+    const auto clears = run.stats.rooms;
+    check(run.bossKilled && run.roomClear, "boss skip marks the objective complete");
+    run.startBoss();
+    check(!run.bossKilled && !run.roomClear && run.livingEnemies() == 1 && run.stats.rooms == clears - 1,
+          "boss replay resets cleared state and starts exactly one encounter");
+    for (int index : run.arena.rooms.back().passages) {
+        const auto &door = run.arena.passages[size_t(index)];
+        check(door.sealed[0] || door.sealed[1], "boss replay seals the entrance again");
+    }
+    run.clearRoomDebug();
+    run.clearRoomDebug();
+    check(run.stats.rooms == clears, "replayed and repeated clears keep room counts consistent");
+}
 void testLoop() {
     dw::Simulation run(1866, 1, {});
     run.godMode = true;
     int powers = 0;
     for (int room = 0; room < dw::RoomCount; ++room) {
-        run.enterRoom(room);
         run.player.position = run.arena.rooms[size_t(room)].center;
+        run.enterRoom(room);
         const auto before = run.items.size();
         if (run.arena.rooms[size_t(room)].kind == dw::RoomKind::Power) {
             check(run.roomClear && !run.rewardOpen,
@@ -341,16 +397,28 @@ void testLoop() {
             run.chooseReward(1);
             check(!run.rewardOpen && run.items.size() == before + 1,
                   "one power per cache; repeat interactions give nothing");
+        } else if (run.arena.rooms[size_t(room)].kind == dw::RoomKind::Empty) {
+            const auto cleared = run.stats.rooms;
+            tick(run, 600);
+            check(run.roomClear && run.livingEnemies() == 0 && !run.rewardOpen && run.items.size() == before,
+                  "empty rooms stay peaceful without enemies or power rewards");
+            run.player.hp = 100;
+            run.enterRoom(room);
+            check(run.player.hp == 100 && run.stats.rooms == cleared,
+                  "revisiting an empty room never repeats healing or room completion");
         } else {
-            const int count = room == dw::Simulation::FinalRoom ? 1 : dw::Simulation::WavesPerRoom;
-            for (int wave = 0; wave < count; ++wave) {
-                tick(run, 120);
-                check(run.livingEnemies() > 0, "encounter wave spawns");
-                run.killAll();
-            }
-            tick(run, 120);
+            check(run.livingEnemies() > 0, "one enemy group is present immediately on room entry");
+            run.killAll();
+            tick(run, 1);
             check(run.roomClear && !run.rewardOpen && run.items.size() == before,
-                  "combat completion opens doors without granting an item");
+                  "defeating the single group immediately opens doors without granting an item");
+            const auto cleared = run.stats.rooms;
+            tick(run, 600);
+            check(run.livingEnemies() == 0 && run.stats.rooms == cleared,
+                  "cleared rooms never spawn a second group after waiting");
+            run.enterRoom(room);
+            check(run.livingEnemies() == 0 && run.roomClear && run.stats.rooms == cleared,
+                  "revisiting a cleared combat room never spawns another group");
         }
         if (room == 2) {
             run.player.position = run.arena.miners;
@@ -396,6 +464,8 @@ int main() {
         std::cout << "PASS persistence, recovery, consequences and revisits\n";
         testLoop();
         std::cout << "PASS full expedition progression\n";
+        testCheats();
+        std::cout << "PASS cheat clears, stress cleanup, room restart and repeatable boss\n";
         std::filesystem::remove_all(directory);
         return 0;
     } catch (const std::exception &e) {
