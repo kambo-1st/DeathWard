@@ -7,6 +7,7 @@ namespace {
 struct PointerTarget {
     EntityId enemy = 0;
     std::optional<Vector3> objective;
+    std::optional<std::pair<int, int>> door;
 };
 PointerTarget pickTarget(const Simulation &run, Ray ray) {
     PointerTarget result;
@@ -33,12 +34,25 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
         objective(run.arena.miners, 1.7f, 2.0f);
     if (!run.altarDestroyed)
         objective(run.arena.altar, 1.0f, 2.9f);
-    if (run.roomClear && hits(run.arena.rooms[size_t(run.room)].exit, 3.0f, 3.2f))
-        result.objective = run.onwardDestination();
+    if (run.room == Simulation::FinalRoom && run.roomClear)
+        objective(run.arena.exit, 2.0f, 3.2f);
+    if (run.arena.rooms[size_t(run.room)].kind == RoomKind::Power && !run.rooms[size_t(run.room)].rewardTaken)
+        objective(run.arena.rooms[size_t(run.room)].objective, 1.2f, 2.4f);
+    for (const auto &key : run.arena.keys)
+        if (!key.collected && run.rooms[size_t(key.room)].cleared)
+            objective(key.position, 1.0f, 2.0f);
+    if (run.roomClear)
+        for (size_t i = 0; i < run.arena.passages.size(); ++i)
+            for (int side = 0; side < 2; ++side)
+                if (hits(run.arena.doorApproach(int(i), side), 2.5f, 3.2f)) {
+                    result.objective.reset();
+                    result.door = std::pair{int(i), side};
+                }
     for (const auto &enemy : run.enemies) {
         if (enemy.alive && hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.0f)) {
             result.enemy = enemy.id;
             result.objective.reset();
+            result.door.reset();
         }
     }
     return result;
@@ -96,6 +110,7 @@ void Game::resetPointerInput() {
     attackTarget_ = hoveredEnemy = 0;
     dodgeQueued_ = interactQueued_ = standStillQueued_ = false;
     moveQueued_.reset();
+    doorQueued_.reset();
     fireQueued_.reset();
     mouseMoveCooldown_ = 0;
 }
@@ -141,7 +156,6 @@ void Game::perform(Action action) {
             break;
         case Action::Reward0:
         case Action::Reward1:
-        case Action::Reward2:
             if (run) {
                 run->chooseReward(int(action) - int(Action::Reward0));
                 checkpoint();
@@ -284,8 +298,6 @@ void Game::update(float dt) {
                 perform(Action::Reward0);
             if (IsKeyPressed(KEY_TWO))
                 perform(Action::Reward1);
-            if (IsKeyPressed(KEY_THREE))
-                perform(Action::Reward2);
             return;
         }
         Input input;
@@ -318,12 +330,18 @@ void Game::update(float dt) {
             attackTarget_ = 0;
         }
         if (!overControls && leftPressed) {
+            moveQueued_.reset();
+            doorQueued_.reset();
             attackTarget_ = pointed.enemy;
-            leftCommand_ = attackTarget_       ? LeftCommand::Attack
-                           : pointed.objective ? LeftCommand::Interact
-                                               : LeftCommand::Move;
-            if (leftCommand_ == LeftCommand::Interact && !input.standStill && !rightDown)
-                moveQueued_ = pointed.objective;
+            leftCommand_ = attackTarget_                         ? LeftCommand::Attack
+                           : (pointed.objective || pointed.door) ? LeftCommand::Interact
+                                                                 : LeftCommand::Move;
+            if (leftCommand_ == LeftCommand::Interact && !input.standStill && !rightDown) {
+                if (pointed.door)
+                    doorQueued_ = pointed.door;
+                else
+                    moveQueued_ = pointed.objective;
+            }
         }
         if (!overControls) {
             if (rightDown || (leftDown && input.standStill)) {
@@ -350,12 +368,15 @@ void Game::update(float dt) {
             input.aim = *fireQueued_;
         input.fire = input.fire || fireQueued_.has_value();
         input.standStill = input.standStill || standStillQueued_;
-        if (input.fire || input.standStill)
+        if (input.fire || input.standStill) {
             moveQueued_.reset();
+            doorQueued_.reset();
+        }
         dodgeQueued_ = dodgeQueued_ || IsKeyPressed(KEY_SPACE) ||
                        (!overControls && IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE));
         interactQueued_ = interactQueued_ || IsKeyPressed(KEY_E);
         input.moveTarget = moveQueued_;
+        input.doorTarget = doorQueued_;
         input.dodge = dodgeQueued_;
         input.interact = interactQueued_;
         accumulator += std::min(dt, 0.1f) * (slow ? 0.2f : 1.0f);
@@ -364,7 +385,9 @@ void Game::update(float dt) {
             accumulator -= Tick;
             input.dodge = input.interact = false;
             input.moveTarget.reset();
+            input.doorTarget.reset();
             moveQueued_.reset();
+            doorQueued_.reset();
             fireQueued_.reset();
             standStillQueued_ = false;
             dodgeQueued_ = interactQueued_ = false;

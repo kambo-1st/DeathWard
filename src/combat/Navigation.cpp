@@ -181,6 +181,7 @@ void Simulation::cancelMove() {
     movePath_.clear();
     waypoint_ = 0;
     interactOnArrival_ = false;
+    doorOnArrival_.reset();
 }
 void Simulation::requestMove(Vector3 target) {
     target.y = player.position.y;
@@ -191,9 +192,13 @@ void Simulation::requestMove(Vector3 target) {
     } else if (!altarDestroyed && distance(target, arena.altar) < 2.4f) {
         target = arena.altar;
         interactOnArrival_ = true;
-    } else if (roomClear && distance(target, onwardDestination()) < 2.4f) {
-        target = onwardDestination();
-        interactOnArrival_ = room == FinalRoom;
+    } else if (room == FinalRoom && roomClear && distance(target, arena.exit) < 2.4f) {
+        target = arena.exit;
+        interactOnArrival_ = true;
+    } else if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
+               distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
+        target = arena.rooms[size_t(room)].objective;
+        interactOnArrival_ = true;
     }
     movePath_ = arena.path(player.position, target, 0.48f);
     if (movePath_.empty()) {
@@ -202,12 +207,20 @@ void Simulation::requestMove(Vector3 target) {
     }
 }
 std::string Simulation::nearbyInteraction() const {
+    if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
+        distance(player.position, arena.rooms[size_t(room)].objective) < 2.6f)
+        return "CLAIM POWER";
     if (!rescued && distance(player.position, arena.miners) < 2.6f)
         return "FREE MINERS";
     if (!altarDestroyed && distance(player.position, arena.altar) < 2.6f)
         return "BREAK ALTAR";
-    if (roomClear && distance(player.position, arena.rooms[size_t(room)].exit) < 3.5f)
-        return room == FinalRoom ? "RETURN HOME" : "NEXT CHAMBER";
+    if (room == FinalRoom && roomClear && distance(player.position, arena.exit) < 2.8f)
+        return "RETURN HOME";
+    if (roomClear)
+        for (size_t i = 0; i < arena.passages.size(); ++i)
+            for (int side = 0; side < 2; ++side)
+                if (distance(player.position, arena.doorApproach(int(i), side)) < 2.8f)
+                    return arena.passages[i].locked ? "UNLOCK (1 KEY)" : "USE PASSAGE";
     return {};
 }
 } // namespace dw

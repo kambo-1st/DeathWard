@@ -36,11 +36,29 @@ std::vector<Box> strips(const std::set<FloorCell> &cells) {
 }
 bool connectedFloor(const Arena &arena, Box bounds, float radius) {
     std::set<FloorCell> walkable;
-    for (auto cell : arena.floorCells) {
-        auto p = cellCenter(cell);
-        if (inside(p, bounds) && !arena.blocked(p, radius))
-            walkable.insert(cell);
-    }
+    std::vector<Box> localWalls;
+    for (auto wall : arena.walls)
+        if (wall.max.x >= bounds.min.x - 2 && wall.min.x <= bounds.max.x + 2 &&
+            wall.max.z >= bounds.min.z - 2 && wall.min.z <= bounds.max.z + 2)
+            localWalls.push_back(wall);
+    auto clear = [&](Vector3 a, Vector3 b) {
+        for (auto wall : localWalls)
+            if (segmentBox(a, b, wall, radius).hit)
+                return false;
+        return true;
+    };
+    for (int x = int(bounds.min.x / FloorTile); x < int(bounds.max.x / FloorTile); ++x)
+        for (int z = int(bounds.min.z / FloorTile); z < int(bounds.max.z / FloorTile); ++z) {
+            FloorCell cell{x, z};
+            if (!arena.floorCells.contains(cell))
+                continue;
+            auto p = cellCenter(cell);
+            bool blocked = false;
+            for (auto wall : localWalls)
+                blocked = blocked || sphereBox(p, radius, wall);
+            if (!blocked)
+                walkable.insert(cell);
+        }
     if (walkable.empty())
         return false;
     std::set<FloorCell> reached{*walkable.begin()};
@@ -52,7 +70,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
         for (auto [dx, dz] : {FloorCell{0, -1}, FloorCell{1, 0}, FloorCell{0, 1}, FloorCell{-1, 0}}) {
             FloorCell next{cell.first + dx, cell.second + dz};
             if (walkable.contains(next) && !reached.contains(next) &&
-                arena.clear(cellCenter(cell), cellCenter(next), radius)) {
+                clear(cellCenter(cell), cellCenter(next))) {
                 reached.insert(next);
                 frontier.push(next);
             }
@@ -65,17 +83,94 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 Arena::Arena(uint64_t seed) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
-    FloorCell coarse{0, 0};
-    // A monotonic north/east walk cannot overlap itself. Mirroring varies its handedness.
-    const int horizontal = layout.bounded(2) ? 1 : -1;
+    const FloorCell missing{1 + int(layout.bounded(2)), 1 + int(layout.bounded(2))};
+    std::array<FloorCell, RoomCount> cells{};
+    std::set<FloorCell> assigned{{0, 0}, {3, 3}};
+    cells.back() = {3, 3};
+    rooms.back().kind = RoomKind::Boss;
+    const int powerRooms = 1 + int(layout.bounded(2));
+    std::array<FloorCell, 2> corners{{{0, 3}, {3, 0}}};
+    if (layout.bounded(2))
+        std::swap(corners[0], corners[1]);
+    for (int i = 0; i < powerRooms; ++i) {
+        const int index = RoomCount - 2 - i;
+        cells[size_t(index)] = corners[size_t(i)];
+        assigned.insert(corners[size_t(i)]);
+        rooms[size_t(index)].kind = RoomKind::Power;
+    }
+    std::vector<FloorCell> available;
+    for (int x = 0; x < 4; ++x)
+        for (int z = 0; z < 4; ++z)
+            if (FloorCell{x, z} != missing && !assigned.contains({x, z}))
+                available.push_back({x, z});
+    auto shuffle = [&](auto &values) {
+        for (size_t i = values.size(); i > 1; --i)
+            std::swap(values[i - 1], values[layout.bounded(uint32_t(i))]);
+    };
+    shuffle(available);
+    for (int i = 1; i < RoomCount - 1; ++i)
+        if (rooms[size_t(i)].kind == RoomKind::Combat) {
+            cells[size_t(i)] = available.back();
+            available.pop_back();
+        }
+    auto adjacent = [&](int a, int b) {
+        return std::abs(cells[size_t(a)].first - cells[size_t(b)].first) +
+                   std::abs(cells[size_t(a)].second - cells[size_t(b)].second) ==
+               1;
+    };
+    std::array<int, RoomCount> parent;
+    for (int i = 0; i < RoomCount; ++i)
+        parent[size_t(i)] = i;
+    auto root = [&](int i) {
+        while (parent[size_t(i)] != i)
+            i = parent[size_t(i)];
+        return i;
+    };
+    auto link = [&](int a, int b, bool locked) {
+        Passage passage;
+        passage.rooms = {a, b};
+        passage.locked = locked;
+        const int index = int(passages.size());
+        passages.push_back(passage);
+        rooms[size_t(a)].passages.push_back(index);
+        rooms[size_t(b)].passages.push_back(index);
+        parent[size_t(root(a))] = root(b);
+    };
+    std::vector<std::pair<int, int>> candidates;
+    for (int a = 0; a < RoomCount; ++a)
+        for (int b = a + 1; b < RoomCount; ++b)
+            if (adjacent(a, b) && rooms[size_t(a)].kind == RoomKind::Combat &&
+                rooms[size_t(b)].kind == RoomKind::Combat) {
+                if (a == 0)
+                    link(a, b, false); // The starting room always presents two routes.
+                else
+                    candidates.push_back({a, b});
+            }
+    shuffle(candidates);
+    std::vector<std::pair<int, int>> loops;
+    for (auto [a, b] : candidates) {
+        if (root(a) != root(b))
+            link(a, b, false);
+        else
+            loops.push_back({a, b});
+    }
+    for (size_t i = 0; i < std::min(size_t(3), loops.size()); ++i)
+        link(loops[i].first, loops[i].second, false);
+    for (int i = 1; i < RoomCount; ++i)
+        if (rooms[size_t(i)].kind != RoomKind::Combat) {
+            std::vector<int> neighbors;
+            for (int j = 0; j < RoomCount; ++j)
+                if (adjacent(i, j) && rooms[size_t(j)].kind == RoomKind::Combat)
+                    neighbors.push_back(j);
+            link(neighbors[layout.bounded(uint32_t(neighbors.size()))], i, true);
+        }
+    // Rotate the whole graph while keeping every passage aligned with room doorways.
+    const unsigned rotation = layout.bounded(4);
     for (int i = 0; i < RoomCount; ++i) {
         auto &room = rooms[size_t(i)];
-        if (i) {
-            if (layout.bounded(2))
-                coarse.first += horizontal;
-            else
-                --coarse.second;
-        }
+        auto coarse = cells[size_t(i)];
+        for (unsigned turn = 0; turn < rotation; ++turn)
+            coarse = {-coarse.second, coarse.first};
         room.center = {float(coarse.first) * 48, 0.85f, float(coarse.second) * 48};
         int halfX, halfZ;
         do {
@@ -123,10 +218,10 @@ Arena::Arena(uint64_t seed) {
             room.objective = sites[layout.bounded(uint32_t(sites.size()))];
         room.bossSpawn = room.center;
     }
-    for (int i = 0; i < RoomCount - 1; ++i) {
-        auto &a = rooms[size_t(i)];
-        auto &b = rooms[size_t(i + 1)];
-        auto &passage = passages[size_t(i)];
+    std::array<bool, RoomCount> hasEntry{};
+    for (auto &passage : passages) {
+        auto &a = rooms[size_t(passage.rooms[0])];
+        auto &b = rooms[size_t(passage.rooms[1])];
         Vector3 direction = unit(sub(b.center, a.center));
         const bool eastWest = std::abs(direction.x) > 0.5f;
         const float extentA =
@@ -135,15 +230,25 @@ Arena::Arena(uint64_t seed) {
             eastWest ? (b.bounds.max.x - b.bounds.min.x) / 2 : (b.bounds.max.z - b.bounds.min.z) / 2;
         passage.from = add(a.center, mul(direction, extentA));
         passage.to = sub(b.center, mul(direction, extentB));
-        a.exit = sub(passage.from, mul(direction, 2));
-        b.entry = add(passage.to, mul(direction, 2));
+        if (!hasEntry[size_t(passage.rooms[0])]) {
+            a.entry = a.exit = sub(passage.from, mul(direction, 2));
+            hasEntry[size_t(passage.rooms[0])] = true;
+        }
+        if (!hasEntry[size_t(passage.rooms[1])]) {
+            b.entry = b.exit = add(passage.to, mul(direction, 2));
+            hasEntry[size_t(passage.rooms[1])] = true;
+        }
         // Four floor cells across (8 units), with no discontinuity at either doorway.
         passage.floor = {{std::min(passage.from.x, passage.to.x) - (eastWest ? 0 : 4), -0.4f,
                           std::min(passage.from.z, passage.to.z) - (eastWest ? 4 : 0)},
                          {std::max(passage.from.x, passage.to.x) + (eastWest ? 0 : 4), 0,
                           std::max(passage.from.z, passage.to.z) + (eastWest ? 4 : 0)}};
-        passage.gate = {sub(passage.from, eastWest ? Vector3{0.25f, 0.85f, 4} : Vector3{4, 0.85f, 0.25f}),
-                        add(passage.from, eastWest ? Vector3{0.25f, 2.15f, 4} : Vector3{4, 2.15f, 0.25f})};
+        for (int side = 0; side < 2; ++side) {
+            const auto at = side == 0 ? passage.from : passage.to;
+            passage.gates[size_t(side)] = {
+                sub(at, eastWest ? Vector3{0.25f, 0.85f, 4} : Vector3{4, 0.85f, 0.25f}),
+                add(at, eastWest ? Vector3{0.25f, 2.15f, 4} : Vector3{4, 2.15f, 0.25f})};
+        }
         for (int x = int(passage.floor.min.x / FloorTile); x < int(passage.floor.max.x / FloorTile); ++x)
             for (int z = int(passage.floor.min.z / FloorTile); z < int(passage.floor.max.z / FloorTile); ++z)
                 floorCells.insert({x, z});
@@ -230,20 +335,55 @@ Arena::Arena(uint64_t seed) {
             }
         }
     }
+    // Every key starts in the unlocked combat network, never behind the lock it opens.
+    std::vector<int> keyRooms;
+    for (int i = 0; i < RoomCount; ++i)
+        if (rooms[size_t(i)].kind == RoomKind::Combat && i != 2 && i != 3)
+            keyRooms.push_back(i);
+    shuffle(keyRooms);
+    for (int i = 0; i < powerRooms + 1; ++i)
+        keys.push_back({keyRooms[size_t(i)], rooms[size_t(keyRooms[size_t(i)])].objective, false});
+    std::queue<int> breadth;
+    std::array<bool, RoomCount> seen{};
+    seen[0] = true;
+    breadth.push(0);
+    while (!breadth.empty()) {
+        const int at = breadth.front();
+        breadth.pop();
+        for (int index : rooms[size_t(at)].passages) {
+            const auto &p = passages[size_t(index)];
+            const int next = p.rooms[0] == at ? p.rooms[1] : p.rooms[0];
+            if (!seen[size_t(next)]) {
+                seen[size_t(next)] = true;
+                rooms[size_t(next)].depth = rooms[size_t(at)].depth + 1;
+                breadth.push(next);
+            }
+        }
+    }
     rebuildWalls();
 }
 void Arena::rebuildWalls() {
     walls = boundaryWalls;
     walls.insert(walls.end(), obstacles.begin(), obstacles.end());
     for (const auto &passage : passages)
-        if (!passage.open)
-            walls.push_back(passage.gate);
+        for (int side = 0; side < 2; ++side)
+            if (passage.closed(side))
+                walls.push_back(passage.gates[size_t(side)]);
 }
-void Arena::openPassage(int index) {
-    if (index < 0 || index >= int(passages.size()))
-        return;
-    passages[size_t(index)].open = true;
+void Arena::sealRoom(int index) {
+    for (auto &passage : passages)
+        for (int side = 0; side < 2; ++side)
+            passage.sealed[size_t(side)] = passage.rooms[size_t(side)] == index;
     rebuildWalls();
+}
+Vector3 Arena::doorPosition(int passage, int side) const {
+    const auto &p = passages[size_t(passage)];
+    return side == 0 ? p.from : p.to;
+}
+Vector3 Arena::doorApproach(int passage, int side) const {
+    const auto &p = passages[size_t(passage)];
+    const auto at = doorPosition(passage, side);
+    return add(at, mul(unit(sub(rooms[size_t(p.rooms[size_t(side)])].center, at)), 2));
 }
 int Arena::roomAt(Vector3 p) const {
     for (int i = 0; i < RoomCount; ++i)

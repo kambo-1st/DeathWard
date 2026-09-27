@@ -130,10 +130,14 @@ int main() {
         click(620, 445);
         check(!game.paused, "mouse resumes the expedition");
         check(game.run->stats.shots == shots, "HUD and paused clicks never fire the revolver");
-        game.run->roomClear = true;
-        game.run->arena.openPassage(0);
-        const auto doorway = game.run->arena.rooms[0].exit;
-        const auto direction = dw::unit(dw::sub(game.run->arena.passages[0].to, doorway));
+        game.run->clearRoom();
+        const int passageIndex = game.run->arena.rooms[0].passages.front();
+        const auto &passage = game.run->arena.passages[size_t(passageIndex)];
+        const int side = passage.rooms[0] == 0 ? 0 : 1;
+        const int nextRoom = passage.rooms[size_t(1 - side)];
+        const auto doorway = game.run->arena.doorApproach(passageIndex, side);
+        const auto direction =
+            dw::unit(dw::sub(game.run->arena.doorApproach(passageIndex, 1 - side), doorway));
         game.run->player.position = dw::sub(doorway, dw::mul(direction, 3));
         for (int i = 0; i < 100; ++i)
             frame();
@@ -145,7 +149,9 @@ int main() {
             check(dw::distance(before, game.run->player.position) < 0.11f,
                   "mouse doorway traversal is continuous, without teleporting");
         }
-        check(game.run->room == 1, "left-clicking an open doorway walks into the connected room");
+        check(game.run->room == nextRoom, "left-clicking an open doorway walks into the connected room");
+        check(game.run->arena.passages[size_t(passageIndex)].closed(1 - side),
+              "the entrance seals behind the player");
         for (int i = 0; i < 100; ++i)
             frame();
         const auto cameraGoal = dw::sub(game.run->player.position, {2, 0.85f, 2});
@@ -160,6 +166,52 @@ int main() {
         for (int i = 0; i < 220; ++i)
             frame();
         check(game.run->rescued, "left-clicking an objective's body approaches and interacts");
+        const int powerRoom = dw::RoomCount - 2;
+        const int lockIndex = game.run->arena.rooms[size_t(powerRoom)].passages.front();
+        const auto &lock = game.run->arena.passages[size_t(lockIndex)];
+        const int outside = lock.rooms[0] == powerRoom ? 1 : 0;
+        const int approachRoom = lock.rooms[size_t(outside)];
+        auto approachLock = [&] {
+            game.run->enterRoom(approachRoom);
+            game.run->clearRoom();
+            game.run->player.position = game.run->arena.doorApproach(lockIndex, outside);
+            for (int i = 0; i < 100; ++i)
+                frame();
+            auto at = game.run->arena.doorApproach(lockIndex, outside);
+            at.y = 1.5f;
+            const auto screen = GetWorldToScreen(at, game.camera);
+            click(int(screen.x), int(screen.y));
+        };
+        approachLock();
+        check(game.run->keys == 0 && lock.locked, "mouse cannot unlock a golden door without a key");
+        auto &key = game.run->arena.keys.front();
+        game.run->enterRoom(key.room);
+        game.run->clearRoom();
+        game.run->player.position = game.run->arena.rooms[size_t(key.room)].center;
+        for (int i = 0; i < 100; ++i)
+            frame();
+        point = GetWorldToScreen({key.position.x, 1.2f, key.position.z}, game.camera);
+        click(int(point.x), int(point.y));
+        for (int i = 0; i < 280; ++i)
+            frame();
+        check(key.collected && game.run->keys == 1, "left-clicking a key approaches and picks it up once");
+        approachLock();
+        for (int i = 0; i < 600 && game.run->room != powerRoom; ++i)
+            frame();
+        check(game.run->room == powerRoom && !lock.locked && game.run->keys == 0,
+              "mouse unlock spends one key and walks into the power room");
+        check(!game.run->rewardOpen, "entering a power room does not automatically claim its item");
+        for (int i = 0; i < 100; ++i)
+            frame();
+        const auto pedestal = game.run->arena.rooms[size_t(powerRoom)].objective;
+        point = GetWorldToScreen({pedestal.x, 1.3f, pedestal.z}, game.camera);
+        click(int(point.x), int(point.y));
+        for (int i = 0; i < 350 && !game.run->rewardOpen; ++i)
+            frame();
+        check(game.run->rewardOpen, "left-clicking the pedestal opens its two choices");
+        click(470, 556);
+        check(!game.run->rewardOpen && game.run->powerUpsTaken == 1 && game.run->items.size() == 1,
+              "mouse chooses exactly one power from the separate room");
         click(850, 711);
         click(620, 507);
         check(!game.run && game.screen == dw::Screen::Summary, "mouse retreat ends the run");
@@ -172,6 +224,7 @@ int main() {
         std::cout << "PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire\n"
                   << "PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue "
                      "and retreat\n"
+                  << "PASS mouse key pickup, locked doors and one-time power-room choice\n"
                   << "PASS HUD clicks never fire; sixth-shot effects covered by core contracts\n";
         return 0;
     } catch (const std::exception &e) {

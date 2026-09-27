@@ -54,7 +54,9 @@ Start with one revolver: continuous fire with no reload action or reload pause, 
 
 Starting player health is 200 HP and base revolver damage is 48, both doubled from the initial milestone. Enemy damage stays unchanged. Percentage-based item costs still apply to the increased health pool.
 
-Generate a continuous mine from the expedition seed: seven rooms joined by traversable corridors, with different room dimensions and footprints and seeded obstacle positions, sizes and heights. Use real 3D walls and cover for ricochets, line of sight and area effects. Reserve clear paths between entrances, exits and objectives, validate floor connectivity, and place enemies only on safe floor. Open the next doorway after the current room's reward choice; walk between rooms without teleporting. Keep cleared passages open for backtracking without repeating encounters, rewards or healing. The camera and navigation must work throughout the map, with a small map showing room connections and the player's position.
+Generate a continuous mine from the expedition seed: fifteen rooms joined by traversable corridors, with branching junctions and alternate routes, different room dimensions and footprints, and seeded obstacle positions, sizes and heights. Use real 3D walls and cover for ricochets, line of sight and area effects. Reserve clear paths between entrances, exits and objectives, validate floor connectivity, and place enemies only on safe floor. Seal every doorway, including the previous entrance, after the player safely enters an uncleared combat room. Reopen doors after its two waves are defeated. Cleared rooms stay cleared, with no repeated rewards or healing. Keep the camera, navigation and map working across the whole graph.
+
+Place power-ups only in one or two dedicated rooms per expedition. Each room offers a choice of two items, but the player can claim only one, once: at most two power-ups per normal run. Combat rooms do not grant items. Lock power rooms and the boss room with doors that each consume one key on first unlock. Place enough keys at seeded locations in the unlocked, connected combat area, visible and collectible once their room is cleared. No key may require spending another key to reach it. Preserve unlocked doors and collected-key state for the run.
 
 Provide a debug toggle for collision volumes, projectile paths, effect radii and target points.
 
@@ -140,7 +142,7 @@ Use only COMMON, STRANGE and CURSED initially. Cursed items should provide trans
 
 For the expanded 15–25 minute expedition: 0 min: ordinary cowboy and plain revolver. 5 min: weapon noticeably altered. 10 min: clear synergy. 15 min: player intentionally exploits interactions. 20 min: build may be absurd.
 
-Compress reward pacing for the first 5–10 minute milestone: offer an early transformation, allow several items before the boss, and give the player time to use their combined build.
+The current milestone limits normal rewards to one or two dedicated power rooms, one item per room. Reassess encounter difficulty and expedition length through playtesting with this rarer power-up pacing.
 
 Do not immediately nerf a combination because it deletes a room or boss. A genuinely broken run is an intended experimental result.
 

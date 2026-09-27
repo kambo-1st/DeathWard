@@ -33,7 +33,8 @@ int main(int argc, char **argv) {
             }
         } else if (arg == "--help") {
             std::cout << "DeathWard\n  --save PATH          Separate campaign file\n  --smoke              "
-                         "Render a scripted scene, then exit\n  --scene NAME         combat, hub, reward, "
+                         "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
+                         "power, reward, "
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n";
@@ -43,7 +44,8 @@ int main(int argc, char **argv) {
             return 2;
         }
     }
-    if (scene != "combat" && scene != "hub" && scene != "reward" && scene != "boss" && scene != "summary") {
+    if (scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
+        scene != "boss" && scene != "summary") {
         std::cerr << "Unknown smoke scene: " << scene << '\n';
         return 2;
     }
@@ -78,14 +80,27 @@ int main(int argc, char **argv) {
                 game.run->startStress();
             else {
                 game.run->spawnWave(12);
-                for (int i = 0; i < dw::ItemCount; ++i)
-                    game.run->grant(dw::ItemId(i));
+                if (scene == "combat" || scene == "boss" || scene == "summary")
+                    for (int i = 0; i < dw::ItemCount; ++i)
+                        game.run->grant(dw::ItemId(i));
             }
             if (smoke && scene == "boss")
                 game.run->startBoss();
+            if (smoke && scene == "key") {
+                game.run->enterRoom(game.run->arena.keys.front().room);
+                game.run->player.position = game.run->arena.rooms[size_t(game.run->room)].center;
+                game.run->clearRoom();
+            }
+            if (smoke && (scene == "power" || scene == "reward")) {
+                const int passage = game.run->arena.rooms[dw::RoomCount - 2].passages.front();
+                game.run->arena.passages[size_t(passage)].locked = false;
+                game.run->enterRoom(dw::RoomCount - 2);
+                game.run->player.position = game.run->arena.rooms[size_t(game.run->room)].center;
+            }
             if (smoke && scene == "reward") {
-                game.run->rewardOpen = true;
-                game.run->offers = {dw::ItemId::Ricochet, dw::ItemId::Judas, dw::ItemId::Split};
+                game.run->enterRoom(dw::RoomCount - 2);
+                game.run->player.position = game.run->arena.rooms[size_t(game.run->room)].objective;
+                game.run->interact();
             }
             if (smoke && scene == "summary") {
                 game.run->rescued = true;

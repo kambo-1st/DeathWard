@@ -161,18 +161,48 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             tie.y = 0.025f;
             DrawCube(tie, eastWest ? 0.25f : 3.4f, 0.06f, eastWest ? 3.4f : 0.25f, Color{51, 45, 38, 255});
         }
-        lantern(add(passage.from, mul(side, -3.5f)), passage.open ? Teal : Rust);
-        lantern(add(passage.from, mul(side, 3.5f)), passage.open ? Teal : Rust);
-        DrawCube({passage.from.x, 3.1f, passage.from.z}, eastWest ? 0.5f : 8, 0.4f, eastWest ? 8 : 0.5f,
-                 Color{76, 58, 38, 255});
-        if (!passage.open) {
-            for (float offset = -3.5f; offset <= 3.5f; offset += 0.7f) {
-                Vector3 bar = add(passage.from, mul(side, offset));
-                bar.y = 1.5f;
-                DrawCube(bar, 0.13f, 3, 0.13f, Rust);
+        for (int end = 0; end < 2; ++end) {
+            const auto at = end == 0 ? passage.from : passage.to;
+            const Color color = passage.locked ? Gold : passage.closed(end) ? Rust : Teal;
+            lantern(add(at, mul(side, -3.5f)), color);
+            lantern(add(at, mul(side, 3.5f)), color);
+            DrawCube({at.x, 3.1f, at.z}, eastWest ? 0.5f : 8, 0.4f, eastWest ? 8 : 0.5f,
+                     Color{76, 58, 38, 255});
+            if (passage.closed(end)) {
+                for (float offset = -3.5f; offset <= 3.5f; offset += 0.7f) {
+                    Vector3 bar = add(at, mul(side, offset));
+                    bar.y = 1.5f;
+                    DrawCube(bar, 0.13f, 3, 0.13f, color);
+                }
+                if (passage.locked) {
+                    DrawCube({at.x, 1.6f, at.z}, 0.6f, 0.7f, 0.6f, Gold);
+                    DrawSphere({at.x, 1.6f, at.z}, 0.17f, Ink);
+                }
+                if (collisions)
+                    DrawBoundingBox({passage.gates[size_t(end)].min, passage.gates[size_t(end)].max}, color);
             }
-            if (collisions)
-                DrawBoundingBox({passage.gate.min, passage.gate.max}, Rust);
+        }
+    }
+    for (const auto &key : run.arena.keys) {
+        if (key.collected || !run.rooms[size_t(key.room)].cleared ||
+            distance(run.player.position, key.position) > 60)
+            continue;
+        auto p = key.position;
+        p.y = 1.1f + 0.1f * std::sin(float(run.stats.duration) * 3);
+        DrawCircle3D(p, 0.28f, {0, 1, 0}, 0, Gold);
+        DrawCube({p.x + 0.43f, p.y, p.z}, 0.65f, 0.12f, 0.12f, Gold);
+        DrawCube({p.x + 0.65f, p.y - 0.14f, p.z}, 0.12f, 0.3f, 0.12f, Gold);
+        DrawCircle3D({p.x, 0.06f, p.z}, 0.85f, {1, 0, 0}, 90, Gold);
+    }
+    for (int i = 0; i < RoomCount; ++i) {
+        const auto &room = run.arena.rooms[size_t(i)];
+        if (room.kind != RoomKind::Power || distance(run.player.position, room.objective) > 60)
+            continue;
+        const auto p = room.objective;
+        DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
+        if (!run.rooms[size_t(i)].rewardTaken) {
+            DrawSphere({p.x, 1.3f, p.z}, 0.45f, Teal);
+            DrawSphereWires({p.x, 1.3f, p.z}, 0.7f, 6, 8, Gold);
         }
     }
     lantern(run.arena.entrance, Gold);
@@ -274,9 +304,23 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         marker(run.arena.miners, "LMB / E: FREE THE MINERS", Teal);
     if (!run.altarDestroyed && distance(run.player.position, run.arena.altar) < 30)
         marker(run.arena.altar, "LMB / E: BREAK THE ALTAR", Rust);
+    for (const auto &key : run.arena.keys)
+        if (!key.collected && run.rooms[size_t(key.room)].cleared &&
+            distance(run.player.position, key.position) < 28)
+            marker(key.position, "LMB: TAKE KEY", Gold);
+    if (run.arena.rooms[size_t(run.room)].kind == RoomKind::Power && !run.rooms[size_t(run.room)].rewardTaken)
+        marker(run.arena.rooms[size_t(run.room)].objective, "LMB / E: CLAIM ONE POWER", Teal);
+    if (run.room == Simulation::FinalRoom && run.roomClear)
+        marker(run.arena.exit, "LMB / E: RETURN HOME", Teal);
     if (run.roomClear)
-        marker(run.arena.rooms[size_t(run.room)].exit,
-               run.room == Simulation::FinalRoom ? "LMB / E: RETURN HOME" : "LMB / E: NEXT CHAMBER", Teal);
+        for (int index : run.arena.rooms[size_t(run.room)].passages) {
+            const auto &passage = run.arena.passages[size_t(index)];
+            const int side = passage.rooms[0] == run.room ? 0 : 1;
+            const auto p = run.arena.doorApproach(index, side);
+            if (distance(run.player.position, p) < 26)
+                marker(p, passage.locked ? "LMB / E: UNLOCK (1 KEY)" : "LMB / E: USE PASSAGE",
+                       passage.locked ? Gold : Teal);
+        }
 }
 Action Renderer::hub(const Game &game) {
     const auto &world = game.campaign.data().world;
@@ -348,11 +392,17 @@ void Renderer::dungeonMap(const Game &game) {
     const auto &run = *game.run;
     panel(1040, 170, 216, 192, Panel);
     text("MINE PASSAGES", 1053, 183, 12, Gold);
+    const auto totalPowers =
+        std::count_if(run.arena.rooms.begin(), run.arena.rooms.end(),
+                      [](const RoomLayout &room) { return room.kind == RoomKind::Power; });
+    text("KEYS " + std::to_string(run.keys) + "   POWERS " + std::to_string(run.powerUpsTaken) + " / " +
+             std::to_string(totalPowers),
+         1053, 201, 11, Paper);
     const auto &bounds = run.arena.bounds;
-    const float scale = std::min(188 / (bounds.max.x - bounds.min.x), 136 / (bounds.max.z - bounds.min.z));
+    const float scale = std::min(188 / (bounds.max.x - bounds.min.x), 120 / (bounds.max.z - bounds.min.z));
     auto point = [&](Vector3 p) -> Vector2 {
         return {1148 + (p.x - (bounds.min.x + bounds.max.x) / 2) * scale,
-                280 + (p.z - (bounds.min.z + bounds.max.z) / 2) * scale};
+                287 + (p.z - (bounds.min.z + bounds.max.z) / 2) * scale};
     };
     auto rectangle = [&](Box box, Color color) {
         auto a = point(box.min), b = point(box.max);
@@ -361,12 +411,19 @@ void Renderer::dungeonMap(const Game &game) {
             color);
     };
     for (const auto &passage : run.arena.passages)
-        rectangle(passage.floor, passage.open ? Teal : Border);
+        rectangle(passage.floor, passage.locked ? Gold : passage.open() ? Teal : Rust);
     for (int i = 0; i < RoomCount; ++i) {
         for (const auto &box : run.arena.rooms[size_t(i)].floors)
-            rectangle(box, i == run.room ? Gold : i < run.room ? Teal : Border);
+            rectangle(box, i == run.room ? Gold : run.rooms[size_t(i)].cleared ? Teal : Border);
         auto at = point(run.arena.rooms[size_t(i)].center);
-        text(std::to_string(i + 1), at.x - 3, at.y - 4, 9, Ink);
+        const auto kind = run.arena.rooms[size_t(i)].kind;
+        std::string label = kind == RoomKind::Power  ? "P"
+                            : kind == RoomKind::Boss ? "B"
+                                                     : std::to_string(i + 1);
+        for (const auto &key : run.arena.keys)
+            if (key.room == i && !key.collected && run.rooms[size_t(i)].visited)
+                label = "K";
+        text(label, at.x - 4, at.y - 4, 9, run.rooms[size_t(i)].visited ? Ink : Paper);
     }
     auto at = point(run.player.position);
     DrawCircleV({at.x * sx_, at.y * sy_}, 3.5f * std::min(sx_, sy_), Paper);
@@ -375,7 +432,8 @@ Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy);
     panel(24, 22, 358, 90, Panel);
-    text("RED HOLLOW / " + std::to_string(run.room + 1) + " OF 7", 42, 35, 12, Gold);
+    text("RED HOLLOW / " + std::to_string(run.room + 1) + " OF " + std::to_string(RoomCount), 42, 35, 12,
+         Gold);
     const int physicalRoom = run.arena.roomAt(run.player.position);
     text(physicalRoom < 0 ? "Mine Passage" : Simulation::roomName(physicalRoom), 41, 58, 25, Paper);
     text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
@@ -385,7 +443,7 @@ Action Renderer::expedition(const Game &game) {
          run.rescued ? Teal : Paper);
     text(run.altarDestroyed ? "[+] Altar destroyed" : "[ ] Altar / chamber 4", 982, 91, 15,
          run.altarDestroyed ? Teal : Muted);
-    text(run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / chamber 7", 982, 117, 15,
+    text(run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / locked court", 982, 117, 15,
          run.bossKilled ? Teal : Muted);
     dungeonMap(game);
     if (const auto *boss = run.boss()) {
@@ -396,7 +454,8 @@ Action Renderer::expedition(const Game &game) {
                       int(9 * sy_), Rust);
     } else {
         text(run.roomClear ? "CHAMBER CLEARED"
-                           : "WAVE " + std::to_string(std::max(1, run.wave)) + " / 3    " +
+                           : "WAVE " + std::to_string(std::max(1, run.wave)) + " / " +
+                                 std::to_string(Simulation::WavesPerRoom) + "    " +
                                  number(run.livingEnemies()) + " HOSTILES",
              440, 38, 14, run.roomClear ? Teal : Paper);
     }
@@ -450,10 +509,9 @@ Action Renderer::expedition(const Game &game) {
     if (run.rewardOpen && !game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
         text("THE MINE OFFERS A BARGAIN", 204, 213, 37, Paper);
-        text("Choose a rule to break. Copies stack. Everything is lost when this run ends.", 204, 265, 16,
-             Muted);
-        for (int i = 0; i < 3; ++i) {
-            float x = 204 + float(i) * 301;
+        text("Take ONE power. The other is lost. This cache can only be used once.", 204, 265, 16, Muted);
+        for (int i = 0; i < int(run.offers.size()); ++i) {
+            float x = 339 + float(i) * 301;
             const auto &item = itemDefinition(run.offers[size_t(i)]);
             panel(x, 314, 279, 279, Panel);
             text(item.rarity, x + 20, 337, 12, std::string(item.rarity) == "CURSED" ? Rust : Gold);

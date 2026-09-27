@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## Branches, combat doors, power rooms and keys
+
+Content version `deathward-m1-5` expands the mine to 15 rooms with a connected combat network, junctions and three additional loop connections. The starting room always has two routes. One or two separate power rooms and the boss room have key-locked entrances. Each power pedestal offers two choices and can grant exactly one item once; normal combat rooms grant none. All keys are placed in the unlocked combat network, with one key available per locked door. Entering an uncleared combat room seals all of its doorways, including the previous entrance, only after the player has safely crossed the threshold. Clearing the room reopens the combat seals. Room clears, collected keys, unlocked doors and claimed powers persist for the run.
+
+Release CTest, graphics input checks, and both CTest suites under AddressSanitizer/UndefinedBehaviorSanitizer passed. The 64-seed map suite verifies deterministic geometry and pickups, 15 distinct room dimensions, branching/loops, one or two power rooms, key reachability before any lock is opened, sufficient keys, closed-door collision, forward/reverse passage routes, objectives, boss clearance and floor connectivity. Gameplay checks verify entrance sealing without trapping or teleporting the player, reopened doors, no repeated healing, keys collected once, exactly one key spent per unlock, and no second charge on an unlocked door. The full expedition contract clears all 15 rooms and verifies the two-power maximum.
+
+The mouse suite follows the complete pickup/unlock/claim flow through the real Game and Renderer: an attempted unlock without a key fails, clicking a key collects it, clicking a locked doorway spends one key and walks into the power room, and clicking its pedestal and reward button claims exactly one item. Existing combat, pause, rescue, retreat and persistence checks also pass. Key-room, power-room and two-choice reward captures were visually inspected in `artifacts/*-m1-5.png`.
+
+The 600-frame stress check at 1440 × 900, seed `1866`, measured **10.38 ms mean**, **13.45 ms p95**, and **41.73 ms maximum**. Peak active projectiles: 1,073; maximum chain depth: 16; suppressed descendants: 311. Each of ten bursts starts with 100 enemies and 600 shots. Mean simulation/draw/present times: 1.02/4.11/5.26 ms. These measurements cover the current starting chamber and stress build; logs are in `artifacts/branching-benchmark-m1-5.log`.
+
 ## Connected, generated rooms
 
 Content version `deathward-m1-4` replaces the repeated arena with one continuous seven-room mine. Its independent layout RNG determines room dimensions, footprint orientation, corridor turns, objective positions and cover geometry. Dimensions are distinct within each expedition, between 24 and 40 units on each axis. Four footprint families are used: rectangle, clipped corners, L and cross. Gates open after rewards; cleared corridors remain traversable. The camera follows world-space movement, and the map shows connected rooms and the player's position.

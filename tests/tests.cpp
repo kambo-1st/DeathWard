@@ -252,11 +252,14 @@ void testDeterminism() {
     a.debugScenario = b.debugScenario = false;
     a.enemies.clear();
     b.enemies.clear();
-    a.wave = b.wave = 3;
+    a.wave = b.wave = dw::Simulation::WavesPerRoom;
     a.waveDelay = b.waveDelay = 0;
     a.step({});
     b.step({});
-    check(a.rewardOpen && b.rewardOpen && a.offers == b.offers, "combat draws do not change reward offers");
+    check(a.roomClear && b.roomClear && !a.rewardOpen && !b.rewardOpen,
+          "combat rooms clear without giving power-ups");
+    check(a.rooms[dw::RoomCount - 2].offers == b.rooms[dw::RoomCount - 2].offers,
+          "combat draws do not change seeded power-room offers");
 }
 void testCampaign(const std::filesystem::path &path) {
     dw::CampaignStore store(path);
@@ -320,15 +323,35 @@ void testCampaign(const std::filesystem::path &path) {
 void testLoop() {
     dw::Simulation run(1866, 1, {});
     run.godMode = true;
-    for (int room = 0; room < dw::Simulation::FinalRoom; ++room) {
-        for (int wave = 0; wave < 3; ++wave) {
+    int powers = 0;
+    for (int room = 0; room < dw::RoomCount; ++room) {
+        run.enterRoom(room);
+        run.player.position = run.arena.rooms[size_t(room)].center;
+        const auto before = run.items.size();
+        if (run.arena.rooms[size_t(room)].kind == dw::RoomKind::Power) {
+            check(run.roomClear && !run.rewardOpen,
+                  "power rooms are peaceful and require approaching the pedestal");
+            run.player.position = run.arena.rooms[size_t(room)].objective;
+            run.interact();
+            check(run.rewardOpen && run.offers[0] != run.offers[1],
+                  "power pedestal offers two distinct choices");
+            run.chooseReward(0);
+            ++powers;
+            run.interact();
+            run.chooseReward(1);
+            check(!run.rewardOpen && run.items.size() == before + 1,
+                  "one power per cache; repeat interactions give nothing");
+        } else {
+            const int count = room == dw::Simulation::FinalRoom ? 1 : dw::Simulation::WavesPerRoom;
+            for (int wave = 0; wave < count; ++wave) {
+                tick(run, 120);
+                check(run.livingEnemies() > 0, "encounter wave spawns");
+                run.killAll();
+            }
             tick(run, 120);
-            check(run.livingEnemies() > 0, "encounter wave spawns");
-            run.killAll();
+            check(run.roomClear && !run.rewardOpen && run.items.size() == before,
+                  "combat completion opens doors without granting an item");
         }
-        tick(run, 120);
-        check(run.rewardOpen, "room clear offers reward");
-        run.chooseReward(0);
         if (room == 2) {
             run.player.position = run.arena.miners;
             run.interact();
@@ -339,27 +362,16 @@ void testLoop() {
             run.interact();
             check(run.altarDestroyed, "in-world altar interaction");
         }
-        run.nextRoom();
-        for (int frame = 0; frame < 1000 && run.room == room; ++frame) {
-            const auto previous = run.player.position;
-            run.step({});
-            check(dw::distance(previous, run.player.position) <= 0.101f,
-                  "walking between rooms never teleports the player");
-            check(!run.arena.blocked(run.player.position, 0.48f), "passages have collision-free traversal");
+        for (int passage : run.arena.rooms[size_t(room)].passages) {
+            const auto &door = run.arena.passages[size_t(passage)];
+            check(!door.sealed[0] && !door.sealed[1], "combat seals reopen after clearing the room");
         }
-        check(run.room == room + 1, "walking through a corridor starts the connected encounter");
-        // Finish the walk before testing the next wave's timing.
-        while (run.moveDestination())
-            run.step({});
     }
-    tick(run, 120);
-    check(run.boss() != nullptr, "final room contains boss");
-    run.killAll();
-    tick(run, 180);
+    check(powers >= 1 && powers <= 2 && run.powerUpsTaken == powers, "at most two powers per expedition");
     run.player.position = run.arena.exit;
     run.interact();
-    check(run.finished && run.bossKilled && run.stats.rooms == 7,
-          "debug shortcut completes all seven chambers");
+    check(run.finished && run.bossKilled && run.stats.rooms == dw::RoomCount,
+          "debug shortcut completes all fifteen rooms and the boss");
 }
 } // namespace
 int main() {

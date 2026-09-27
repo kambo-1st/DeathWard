@@ -76,7 +76,12 @@ struct ChainLog {
 struct Input {
     Vector3 movement{}, aim{0, 0.85f, 0};
     std::optional<Vector3> moveTarget;
+    std::optional<std::pair<int, int>> doorTarget;
     bool fire = false, dodge = false, interact = false, standStill = false;
+};
+struct RoomProgress {
+    bool visited = false, cleared = false, rewardTaken = false;
+    std::array<ItemId, 2> offers{};
 };
 
 class Simulation {
@@ -91,7 +96,9 @@ class Simulation {
     std::vector<Projectile> projectiles;
     std::vector<VisualEffect> visuals;
     std::vector<ItemId> items;
-    std::array<ItemId, 3> offers{};
+    std::array<ItemId, 2> offers{};
+    std::array<RoomProgress, RoomCount> rooms{};
+    int keys = 0, powerUpsTaken = 0;
     std::deque<ChainLog> logs;
     std::unordered_map<uint64_t, Chain> chains;
     bool godMode = false, rewardOpen = false, roomClear = false, finished = false, dead = false;
@@ -100,14 +107,16 @@ class Simulation {
     int room = 0, wave = 0;
     float waveDelay = 1.0f, messageTime = 0;
     std::string message;
-    static constexpr int FinalRoom = 6;
+    static constexpr int FinalRoom = RoomCount - 1;
+    static constexpr int WavesPerRoom = 2;
 
     void step(const Input &input, float dt = Tick);
     void grant(ItemId item);
     void chooseReward(int index);
-    void nextRoom();
     void enterRoom(int index);
-    Vector3 onwardDestination() const;
+    void clearRoom();
+    void requestDoor(int passage, int side);
+    bool useDoor(int passage, int side);
     EntityId spawn(EnemyKind kind, Vector3 position);
     void spawnWave(int count);
     void startBoss();
@@ -145,6 +154,7 @@ class Simulation {
     std::vector<Vector3> movePath_;
     size_t waypoint_ = 0;
     bool interactOnArrival_ = false;
+    std::optional<std::pair<int, int>> doorOnArrival_;
     void requestMove(Vector3 target);
     void cancelMove();
     bool accept(Event event);
@@ -158,5 +168,6 @@ class Simulation {
     std::vector<size_t> candidates(Vector3 from, Vector3 to, float radius) const;
     void collectChains();
     void offerReward();
+    void collectKeys();
 };
 } // namespace dw

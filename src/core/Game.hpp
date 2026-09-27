@@ -17,7 +17,6 @@ enum class Action {
     Quit,
     Reward0,
     Reward1,
-    Reward2,
     Previous,
     Next,
     Reset
@@ -52,6 +51,7 @@ class Game {
     bool dodgeQueued_ = false, interactQueued_ = false;
     bool standStillQueued_ = false;
     std::optional<Vector3> moveQueued_, fireQueued_;
+    std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;
     void resetPointerInput();
     void debugInput();

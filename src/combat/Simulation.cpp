@@ -15,6 +15,18 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world)
     player.aim = arena.rooms[0].center;
     enemies.reserve(256);
     projectiles.reserve(4096);
+    for (int index = 0; index < RoomCount; ++index) {
+        if (arena.rooms[size_t(index)].kind != RoomKind::Power)
+            continue;
+        std::array<ItemId, ItemCount> pool{ItemId::Ricochet, ItemId::Split, ItemId::Judas, ItemId::Powder,
+                                           ItemId::Ghost};
+        for (int i = 0; i < 2; ++i) {
+            const int other = i + int(rewardRng.bounded(uint32_t(ItemCount - i)));
+            std::swap(pool[size_t(i)], pool[size_t(other)]);
+            rooms[size_t(index)].offers[size_t(i)] = pool[size_t(i)];
+        }
+    }
+    enterRoom(0);
     announce(followup ? "RED HOLLOW / return to unfinished business"
                       : "RED HOLLOW / find the six missing miners",
              5);
@@ -43,9 +55,10 @@ std::string Simulation::roomName() const {
     return roomName(room);
 }
 std::string Simulation::roomName(int index) {
-    static constexpr const char *names[] = {"The Old Claim",   "Timberfall",     "The Cageworks",
-                                            "Ash Chapel",      "Dead Man's Cut", "The Deep Vein",
-                                            "The Hollow Court"};
+    static constexpr const char *names[] = {
+        "The Old Claim",   "Timberfall",       "The Cageworks",    "Ash Chapel",    "Dead Man's Cut",
+        "The Deep Vein",   "The Switchyard",   "Old Powder Store", "The Dry Well",  "Iron Junction",
+        "The Broken Lift", "The Bone Gallery", "Smuggler's Cache", "The Reliquary", "The Hollow Court"};
     return names[std::clamp(index, 0, FinalRoom)];
 }
 EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
@@ -97,60 +110,130 @@ void Simulation::grant(ItemId item) {
     checkpointNeeded = true;
 }
 void Simulation::offerReward() {
-    std::array<ItemId, ItemCount> pool{ItemId::Ricochet, ItemId::Split, ItemId::Judas, ItemId::Powder,
-                                       ItemId::Ghost};
-    for (int i = 0; i < 3; ++i) {
-        int other = i + int(rewardRng.bounded(uint32_t(ItemCount - i)));
-        std::swap(pool[i], pool[other]);
-        offers[i] = pool[i];
-    }
+    const auto &progress = rooms[size_t(room)];
+    if (arena.rooms[size_t(room)].kind != RoomKind::Power || progress.rewardTaken)
+        return;
+    offers = progress.offers;
     rewardOpen = true;
 }
 void Simulation::chooseReward(int index) {
-    if (!rewardOpen || index < 0 || index > 2)
+    auto &progress = rooms[size_t(room)];
+    if (!rewardOpen || index < 0 || index >= int(offers.size()) || progress.rewardTaken ||
+        arena.rooms[size_t(room)].kind != RoomKind::Power)
         return;
+    progress.rewardTaken = true;
+    ++powerUpsTaken;
     grant(offers[size_t(index)]);
     rewardOpen = false;
-    arena.openPassage(room);
-    announce("Passage open. Walk through the lantern doorway to the next chamber.", 5);
-}
-Vector3 Simulation::onwardDestination() const {
-    return room == FinalRoom ? arena.exit : arena.rooms[size_t(room + 1)].entry;
-}
-void Simulation::nextRoom() {
-    if (!roomClear || rewardOpen || finished)
-        return;
-    if (room == FinalRoom) {
-        finished = true;
-        return;
-    }
-    arena.openPassage(room);
-    requestMove(onwardDestination());
+    announce("Power claimed. This cache is empty; explore another passage.", 4);
 }
 void Simulation::enterRoom(int index) {
     room = std::clamp(index, 0, FinalRoom);
+    auto &progress = rooms[size_t(room)];
+    const bool firstVisit = !progress.visited;
+    progress.visited = true;
+    roomClear = progress.cleared;
+    rewardOpen = false;
     wave = 0;
-    roomClear = false;
-    waveDelay = 1.4f;
+    waveDelay = 1.2f;
     projectiles.clear();
     queue_.clear();
     chains.clear();
     enemies.clear();
     visuals.clear();
-    player.hp = std::min(player.maxHp, player.hp + 15);
-    announce(room == FinalRoom ? (followup ? "The Court / drive out the remaining squatters"
-                                           : "THE HOLLOW SHERIFF / the badge is an open wound")
-                               : roomName(),
-             4);
+    if (firstVisit && room != 0)
+        player.hp = std::min(player.maxHp, player.hp + 15);
+    if (arena.rooms[size_t(room)].kind == RoomKind::Power) {
+        if (!progress.cleared) {
+            progress.cleared = true;
+            ++stats.rooms;
+        }
+        roomClear = true;
+        arena.sealRoom(-1);
+        announce(progress.rewardTaken ? "An empty power cache."
+                                      : "POWER CACHE / approach the pedestal and choose one item.",
+                 5);
+    } else if (!roomClear) {
+        cancelMove();
+        arena.sealRoom(room);
+        announce(room == FinalRoom ? "THE HOLLOW COURT / all exits sealed"
+                                   : roomName() + " / doors sealed until the fight is over",
+                 4);
+    } else {
+        arena.sealRoom(-1);
+        announce(roomName() + " / already cleared", 3);
+    }
     checkpointNeeded = true;
+}
+void Simulation::clearRoom() {
+    auto &progress = rooms[size_t(room)];
+    if (progress.cleared)
+        return;
+    progress.cleared = roomClear = true;
+    arena.sealRoom(-1);
+    ++stats.rooms;
+    player.hp = std::min(player.maxHp, player.hp + 20);
+    checkpointNeeded = true;
+    Event event;
+    event.type = EventType::RoomCleared;
+    queueRoot(event);
+    announce(room == FinalRoom
+                 ? "The Court is silent. Use the return lantern to reach Black Creek."
+                 : "Room cleared. Doors reopened. Choose a passage; look for keys and power caches.",
+             5);
+}
+void Simulation::collectKeys() {
+    for (auto &key : arena.keys) {
+        if (!key.collected && rooms[size_t(key.room)].cleared &&
+            distance(player.position, key.position) < 1.6f && arena.sight(player.position, key.position)) {
+            key.collected = true;
+            ++keys;
+            announce("KEY FOUND / unlock a golden door. Keys carried: " + std::to_string(keys), 4);
+        }
+    }
+}
+bool Simulation::useDoor(int passage, int side) {
+    if (passage < 0 || passage >= int(arena.passages.size()) || side < 0 || side > 1)
+        return false;
+    auto &door = arena.passages[size_t(passage)];
+    if (distance(player.position, arena.doorApproach(passage, side)) > 3 || !roomClear || door.sealed[0] ||
+        door.sealed[1]) {
+        announce("Clear the room before leaving.", 2);
+        return false;
+    }
+    if (door.locked) {
+        if (keys == 0) {
+            announce("A key is needed. Search the open passages.", 3);
+            return false;
+        }
+        --keys;
+        door.locked = false;
+        arena.rebuildWalls();
+        announce("Door unlocked. Keys carried: " + std::to_string(keys), 3);
+    }
+    requestMove(arena.doorApproach(passage, 1 - side));
+    return true;
+}
+void Simulation::requestDoor(int passage, int side) {
+    if (passage < 0 || passage >= int(arena.passages.size()) || side < 0 || side > 1)
+        return;
+    const auto &door = arena.passages[size_t(passage)];
+    if (!roomClear || door.sealed[0] || door.sealed[1]) {
+        announce("Clear the room before leaving.", 2);
+        return;
+    }
+    if (!door.locked) {
+        requestMove(arena.doorApproach(passage, 1 - side));
+        return;
+    }
+    requestMove(arena.doorApproach(passage, side));
+    doorOnArrival_ = std::pair{passage, side};
 }
 void Simulation::startBoss() {
     cancelMove();
     debugScenario = false;
     enterRoom(FinalRoom);
     rewardOpen = false;
-    for (int i = 0; i < FinalRoom; ++i)
-        arena.openPassage(i);
     player.position = arena.rooms.back().entry;
     beginBossEncounter();
 }
@@ -203,6 +286,12 @@ void Simulation::startStress() {
 }
 void Simulation::interact() {
     cancelMove();
+    collectKeys();
+    if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
+        distance(player.position, arena.rooms[size_t(room)].objective) < 2.6f) {
+        offerReward();
+        return;
+    }
     if (!rescued && distance(player.position, arena.miners) < 2.6f) {
         rescued = true;
         checkpointNeeded = true;
@@ -216,8 +305,16 @@ void Simulation::interact() {
         announce("The altar breaks. Something loses your scent.", 5);
         return;
     }
-    if (roomClear && distance(player.position, arena.rooms[size_t(room)].exit) < 3.5f)
-        nextRoom();
+    if (room == FinalRoom && roomClear && distance(player.position, arena.exit) < 2.8f) {
+        finished = true;
+        return;
+    }
+    for (size_t i = 0; i < arena.passages.size(); ++i)
+        for (int side = 0; side < 2; ++side)
+            if (distance(player.position, arena.doorApproach(int(i), side)) < 2.8f) {
+                useDoor(int(i), side);
+                return;
+            }
 }
 void Simulation::finishDebug(bool victory) {
     if (victory) {
@@ -406,8 +503,16 @@ void Simulation::updatePlayer(const Input &input, float dt) {
     } else if (length(movement) > 0.01f) {
         cancelMove(); // Keyboard movement immediately takes over from click-to-move.
     } else if (!input.fire) {
-        if (input.moveTarget)
+        if (input.doorTarget)
+            requestDoor(input.doorTarget->first, input.doorTarget->second);
+        else if (input.moveTarget)
             requestMove(*input.moveTarget);
+        if (doorOnArrival_ && distance(player.position, arena.doorApproach(doorOnArrival_->first,
+                                                                           doorOnArrival_->second)) < 1.0f) {
+            const auto target = *doorOnArrival_;
+            cancelMove();
+            useDoor(target.first, target.second);
+        }
         if (!movePath_.empty() && interactOnArrival_ && distance(player.position, movePath_.back()) < 2.0f &&
             arena.sight(player.position, movePath_.back())) {
             interact();
@@ -683,8 +788,16 @@ void Simulation::step(const Input &input, float dt) {
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);
     updatePlayer(input, dt);
-    if (roomClear && room < FinalRoom && arena.roomAt(player.position) == room + 1)
-        enterRoom(room + 1);
+    const int location = arena.roomAt(player.position);
+    if (roomClear && location >= 0 && location != room) {
+        const auto &bounds = arena.rooms[size_t(location)].bounds;
+        const auto p = player.position;
+        // Close doors only once the entire player is safely beyond the threshold.
+        if (p.x > bounds.min.x + 1.1f && p.x < bounds.max.x - 1.1f && p.z > bounds.min.z + 1.1f &&
+            p.z < bounds.max.z - 1.1f)
+            enterRoom(location);
+    }
+    collectKeys();
     rebuildGrid();
     updateEnemies(dt);
     rebuildGrid();
@@ -708,24 +821,14 @@ void Simulation::step(const Input &input, float dt) {
                 if (wave == 0) {
                     beginBossEncounter();
                 } else {
-                    roomClear = true;
-                    ++stats.rooms;
-                    checkpointNeeded = true;
-                    announce("The Court is silent. Use the return lantern to reach Black Creek.", 6);
+                    clearRoom();
                 }
-            } else if (wave < 3) {
-                spawnWave(6 + room * 2 + wave * 2);
+            } else if (wave < WavesPerRoom) {
+                spawnWave(std::min(18, 6 + arena.rooms[size_t(room)].depth * 2 + wave * 2));
                 ++wave;
                 waveDelay = 1.8f;
             } else {
-                roomClear = true;
-                ++stats.rooms;
-                checkpointNeeded = true;
-                player.hp = std::min(player.maxHp, player.hp + 20);
-                Event e;
-                e.type = EventType::RoomCleared;
-                queueRoot(e);
-                offerReward();
+                clearRoom();
             }
         }
     }
