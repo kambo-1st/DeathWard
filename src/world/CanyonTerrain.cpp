@@ -212,21 +212,37 @@ void buildCanyon(Arena &arena) {
     field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;
     field->depth = int(std::ceil((arena.bounds.max.z + 40 - field->z) / field->step)) + 1;
     field->heights.resize(size_t(field->width * field->depth));
+    // Broad, planar cap facets subdivide exactly onto the collision lattice.
+    // A separate stream keeps this surface detail independent of trails/cover.
+    CanyonTerrain mesa;
+    mesa.x = field->x;
+    mesa.z = field->z;
+    mesa.step = field->step * 3;
+    mesa.width = (field->width + 2) / 3 + 1;
+    mesa.depth = (field->depth + 2) / 3 + 1;
+    Random capRng(arena.visualSeed ^ 0x4d45534143415053ULL);
+    for (int z = 0; z < mesa.depth; ++z)
+        for (int x = 0; x < mesa.width; ++x) {
+            const float px = mesa.x + x * mesa.step, pz = mesa.z + z * mesa.step;
+            mesa.heights.push_back(7.6f + 1.7f * std::sin(px * .047f + pz * .039f) +
+                                   .8f * std::sin(pz * .11f) + capRng.real(-.65f, .65f));
+        }
     for (int z = 0; z < field->depth; ++z)
         for (int x = 0; x < field->width; ++x) {
             Vector3 p{field->x + x * field->step, 0, field->z + z * field->step};
             const float d = distanceToFloor(p);
             const float crag =
-                .55f * std::sin(p.x * .53f + p.z * .37f) + .35f * std::sin(p.z * .91f - p.x * .29f);
-            const float plateau =
-                7.6f + 1.7f * std::sin(p.x * .047f + p.z * .039f) + .8f * std::sin(p.z * .11f);
-            float height = plateau * smooth(.35f, 4.8f + crag, d);
+                .65f * std::sin(p.x * .63f + p.z * .41f) + .4f * std::sin(p.z * .87f - p.x * .33f);
+            const float plateau = mesa.height(p.x, p.z);
+            // A short, irregular shoulder produces tall angular faces, rather
+            // than a broad ramp. The foot still starts outside the reserved floor.
+            float height = plateau * smooth(.35f, 2.8f + crag, d);
             for (const auto &r : rocks) {
                 const auto local = rotateY(sub(p, r.center), r.angle);
                 const float u = local.x / r.rx, v = local.z / r.rz;
                 const float q =
                     std::sqrt(u * u + v * v) / (1 + .11f * std::sin(3 * std::atan2(v, u) + r.phase));
-                height = std::max(height, r.height * (1 - smooth(.32f, 1.f, q)));
+                height = std::max(height, r.height * (1 - smooth(.48f, 1.f, q)));
             }
             field->heights[size_t(z * field->width + x)] = height;
         }

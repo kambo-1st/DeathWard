@@ -46,9 +46,11 @@ void main() {
         shade = min(shade, mix(1.,.22,smoothstep(-.5,.5,ground(ray.xz)-ray.y-.28)));
     }
     float direct = max(dot(n,sun),0.);
-    float grain = .98+.025*sin(world.x*.59+world.z*.19)*sin(world.z*.43-world.x*.22);
-    float strata = world.y > .15 ? .93+.07*sin(world.y*3.1+world.x*.055+world.z*.035) : 1.;
-    vec3 color = texture(texture0,uv).rgb*tint*grain*strata*(.55+.62*direct*shade);
+    // A broad sky fill keeps facets readable on faces turned away from the sun.
+    float sky = max(dot(n,normalize(vec3(.7,.55,-.45))),0.);
+    float up = max(n.y,0.);
+    float fill = .19*sky*(1.-.6*up);
+    vec3 color = texture(texture0,uv).rgb*tint*(.64+.06*up+fill+.38*direct*shade);
     float fog = smoothstep(60.,110.,length(world.xz-focus.xz))*.6;
     color = mix(color,vec3(.69,.54,.39),fog);
     finalColor=vec4(color,1.);
@@ -77,8 +79,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
     terrainShader_ = LoadShaderFromMemory(TerrainVertex, TerrainFragment);
     terrainMaterial_ = LoadMaterialDefault();
     terrainMaterial_.shader = terrainShader_;
-    Vector2 sandUv{};
-    std::vector<Vector2> rockUvs;
+    Vector2 sandUv{}, wallUv{}, capUv{};
     if (loaded()) {
         const int floorMesh = assets_[size_t(WesternAsset::Floor)].firstMesh;
         const auto &mesh = model_.meshes[floorMesh];
@@ -86,17 +87,21 @@ void WesternScene::generateCanyon(const Arena &arena) {
         terrainMaterial_.maps[MATERIAL_MAP_ALBEDO].texture =
             model_.materials[model_.meshMaterial[floorMesh]].maps[MATERIAL_MAP_ALBEDO].texture;
         const auto &rock = model_.meshes[assets_[size_t(WesternAsset::CliffWall)].firstMesh];
-        std::vector<std::pair<float, Vector2>> samples;
-        for (int i = 0; i < rock.vertexCount; ++i)
-            if (std::abs(rock.normals[i * 3 + 1]) < .7f)
-                samples.push_back(
-                    {rock.vertices[i * 3 + 1], {rock.texcoords[i * 2], rock.texcoords[i * 2 + 1]}});
-        std::sort(samples.begin(), samples.end(), [](auto a, auto b) { return a.first < b.first; });
-        for (int i = 0; i < 12 && !samples.empty(); ++i)
-            rockUvs.push_back(samples[size_t((i + .5f) / 12 * samples.size())].second);
+        // Use the original cliff's two atlas swatches: brown faces and sandy caps.
+        // Sampling the most vertical/upward normals avoids bevels between materials.
+        float wallScore = 2, capScore = -2;
+        for (int i = 0; i < rock.vertexCount; ++i) {
+            const float up = rock.normals[i * 3 + 1];
+            if (std::abs(up) < wallScore) {
+                wallScore = std::abs(up);
+                wallUv = {rock.texcoords[i * 2], rock.texcoords[i * 2 + 1]};
+            }
+            if (up > capScore) {
+                capScore = up;
+                capUv = {rock.texcoords[i * 2], rock.texcoords[i * 2 + 1]};
+            }
+        }
     }
-    if (rockUvs.empty())
-        rockUvs.push_back({});
     Image heightImage{const_cast<float *>(field.heights.data()), field.width, field.depth, 1,
                       PIXELFORMAT_UNCOMPRESSED_R32};
     heightTexture_ = LoadTextureFromImage(heightImage);
@@ -124,11 +129,13 @@ void WesternScene::generateCanyon(const Arena &arena) {
                 const auto a = field.vertex(ax, az), b = field.vertex(bx, bz), c = field.vertex(cx, cz);
                 const auto normal = Vector3Normalize(Vector3CrossProduct(sub(b, a), sub(c, a)));
                 const bool rock = std::max({a.y, b.y, c.y}) > .15f;
-                // Retain the source rock/sand palette; continuous strata are shaded
-                // in world space so they don't expose the triangulation grid.
-                const auto uv = rock ? rockUvs[rockUvs.size() / 2] : sandUv;
-                const float mottling = rock ? .985f + .015f * std::sin(a.x * .83f + a.z * .37f) : 1.f;
-                const Color tint = rock ? Color{255, 207, 169, 255} : Color{255, 249, 221, 255};
+                const bool cap = normal.y > .72f;
+                const auto uv = rock ? (cap ? capUv : wallUv) : sandUv;
+                // Flat face normals supply the facets; per-triangle color noise
+                // would expose the regular collision grid on broad mesa tops.
+                const Color tint = cap ? Color{255, 252, 235, 255} : WHITE;
+                const float variation =
+                    rock && !cap ? .96f + .04f * std::sin(dot(add(add(a, b), c), {1.17f, .73f, 2.31f})) : 1.f;
                 for (auto cell : {std::pair{ax, az}, std::pair{bx, bz}, std::pair{cx, cz}}) {
                     const auto p = field.vertex(cell.first, cell.second);
                     m.vertices[3 * vertex] = p.x;
@@ -139,9 +146,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
                     m.normals[3 * vertex + 2] = normal.z;
                     m.texcoords[2 * vertex] = uv.x;
                     m.texcoords[2 * vertex + 1] = uv.y;
-                    m.colors[4 * vertex] = static_cast<unsigned char>(tint.r * mottling);
-                    m.colors[4 * vertex + 1] = static_cast<unsigned char>(tint.g * mottling);
-                    m.colors[4 * vertex + 2] = static_cast<unsigned char>(tint.b * mottling);
+                    m.colors[4 * vertex] = static_cast<unsigned char>(tint.r * variation);
+                    m.colors[4 * vertex + 1] = static_cast<unsigned char>(tint.g * variation);
+                    m.colors[4 * vertex + 2] = static_cast<unsigned char>(tint.b * variation);
                     m.colors[4 * vertex + 3] = 255;
                     ++vertex;
                 }

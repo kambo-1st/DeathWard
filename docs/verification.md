@@ -1,5 +1,11 @@
 # Milestone 1 verification
 
+## Faceted canyon reference style
+
+Content version `deathward-m1-17` gives canyon walls steeper irregular shoulders and broad, seeded cap facets. Brown faces and pale caps sample the original cliff atlas directly. Horizontal shader bands are removed, and flat normals plus a soft sky fill keep shaded rock faces readable. Cover has broader tops. Automatic cliff lowering stays disabled; mouse picking, navigation and bullets use the rendered terrain triangles.
+
+The Release build, all six core suites, full input suite and Western graphics asset checks pass. Coverage includes five canyon seeds, route clearance, sealed entrances, safe spawns and vertical/oblique collision rays against uploaded meshes. Close and wide views of seed 69175541, room 10 were rendered and inspected using the actual game renderer. Logs and captures: `artifacts/canyon-faceted-*`. Campaign files were not used by the visual checks.
+
 ## Canyon terrain and mission themes
 
 Content version `deathward-m1-16` adds Seeded Theme, Western Mine and Canyon choices. Canyon has a dedicated terrain generator with irregular basins, curved trails, continuous mesas and rock outcrops. Navigation, bullets and sight use the same triangulated height field that is rendered. Enemy counts use navigable basin area. Original atlas colors, terrain shadows and world-space strata distinguish sand and rock; cliffs and cover retain their full generated height. Mouse target picking follows the visible terrain surface. Mission titles persist through checkpoints, results and history.

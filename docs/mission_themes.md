@@ -6,11 +6,11 @@ The settings share the 15-room graph, locks, keys, objective structure and Black
 
 ## Canyon geometry and rendering
 
-`CanyonTerrain` cuts the union of irregular basin shapes and curved trail segments into a continuous height field. Paths to every gate and objective are reserved before adding seeded outcrops. The surface is triangulated on a 1.25-unit grid. Navigation tiles are derived from the resulting ground; the renderer does not add a separate box-shaped collision envelope around rocks.
+`CanyonTerrain` cuts the union of irregular basin shapes and curved trail segments into a continuous height field. Paths to every gate and objective are reserved before adding seeded outcrops. The surface is triangulated on a 1.25-unit grid, with cap facets spanning 3.75 units. Navigation tiles are derived from the resulting ground; the renderer does not add a separate box-shaped collision envelope around rocks.
 
 Movement tests the player's footprint against the terrain, and route smoothing sweeps that footprint continuously along the mesh. Bullets and sight rays traverse grid cells and intersect the same triangles used for rendering. Enemy placement checks the terrain before spawning. The mine retains its original wall/cover collision path. Gates remain explicit barriers at canyon necks: colored veils and ground marks replace the mine's overhead beams and bars.
 
-Rendering divides the shared surface into culled mesh chunks. It samples the original PolygonWestern sand and rock atlas and adds continuous horizontal strata, directional terrain shadows and distance haze. Small imported rocks and sparse cacti decorate banks and terraces. There are no repeated stretched cliff cards or rectangular border walls.
+Rendering divides the shared surface into culled mesh chunks. Steep irregular shoulders form tall rock faces; a coarser seeded surface supplies broad, planar cap facets. Cliff faces and caps sample separate brown and sandy swatches from the original PolygonWestern atlas. Flat face normals, directional terrain shadows and distance haze provide shading without horizontal stripes or color noise on mesa tops. Small imported rocks and sparse cacti decorate banks and terraces. There are no repeated stretched cliff cards or rectangular border walls.
 
 Cliffs and outcrops stay at their full generated height as the player moves or rotates the camera. Mouse target picking and physics use the same visible terrain surface.
 
