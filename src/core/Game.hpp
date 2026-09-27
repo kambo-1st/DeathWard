@@ -61,6 +61,12 @@ class Game {
     std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;
     float cameraZoom_ = 1, cameraZoomTarget_ = 1;
+    float cameraYaw_ = 0, cameraPitch_ = 0;
+    bool cameraDragging_ = false;
+    Vector2 cameraDragPosition_{};
+    Vector3 cameraOffset() const;
+    Vector3 cameraFocus() const;
+    void updateCameraInput();
     void snapCamera();
     void resetPointerInput();
     void debugInput();

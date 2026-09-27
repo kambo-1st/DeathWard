@@ -58,7 +58,8 @@ The camera follows you through corridors. The mine map shows branches, your posi
 | Left-click an objective | Approach and interact automatically |
 | Shift + left button | Fire toward the cursor while standing still |
 | Right button | Fire the revolver directly toward the cursor |
-| Middle button / Space / Dodge button | Dodge; brief invulnerability, then cooldown |
+| Hold middle button + drag | Rotate around the character; drag vertically to tilt |
+| Space / Dodge button | Dodge; brief invulnerability, then cooldown |
 | Mouse wheel | Zoom in / out; scroll up to move closer, down to pull back |
 | E / nearby interaction button | Interact near a cage, altar, or exit lantern |
 | 1 / 2 | Choose one item at a power-room pedestal |
@@ -70,9 +71,11 @@ Start each expedition with **200 HP** and **48 revolver damage** (both doubled f
 
 Left-click follows the contextual move/attack/interact pattern in [Blizzard's Diablo manual](https://ftp.blizzard.com/pub/misc/Diablo.PDF). Click ground to walk there, or hold to steer. Click an enemy's body to attack; holding keeps that target until release, and its death never turns the attack into a movement order. Attacking cancels the current mouse route. WASD overrides mouse navigation and remains available while firing; Shift holds position. RMB uses the prototype's only weapon, the revolver.
 
-Left-click the miners, altar, a key, a power pedestal, a doorway, or the return lantern to approach and use it. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse; pressing the wheel is an additional dodge shortcut.
+Left-click the miners, altar, a key, a power pedestal, a doorway, or the return lantern to approach and use it. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse.
 
-Mouse-wheel zoom moves smoothly between a close character view and a wider room view while preserving the camera angle. Your chosen zoom persists between rooms and expeditions during the session. Scrolling over the HUD controls, map or open cheat panel, or while paused or choosing a power, does not change zoom.
+Hold the middle mouse button and drag to orbit the camera in town or a mission. Horizontal dragging rotates around the character; vertical dragging tilts between 25 and 75 degrees above the ground. Release to keep that angle. WASD follows the current camera direction, and ground clicks use the rotated view. Start the drag over the world; HUD controls and open menus do not start camera gestures.
+
+Mouse-wheel zoom moves smoothly between a close character view and a wider room view while preserving the camera angle. Your chosen angle and zoom persist between rooms, town and expeditions during the session. Scrolling over the HUD controls, map or open cheat panel, or while paused or choosing a power, does not change zoom.
 
 A small FPS counter in the top-right corner shows the rendering frame rate on every screen.
 

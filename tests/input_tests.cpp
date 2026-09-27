@@ -54,6 +54,39 @@ int main() {
             mouseEvent(KeyUp, key);
             frame();
         };
+        auto cameraAngle = [&] { return dw::unit(dw::sub(game.camera.position, game.camera.target)); };
+        auto orbit = [&](int dx, int dy) {
+            frame(600, 350);
+            frame(600, 350, false, false, true);
+            frame(600 + dx, 350 + dy, false, false, true);
+            frame();
+        };
+        auto verifyOrbit = [&](auto verifyRotatedView) {
+            const auto beforeAngle = cameraAngle();
+            const float beforeRadius = dw::distance(game.camera.position, game.camera.target);
+            const auto beforePosition = game.run ? game.run->player.position : game.town.player.position;
+            frame(600, 350, false, false, true);
+            check(dw::distance(beforeAngle, cameraAngle()) < .0001f,
+                  "pressing the middle button starts rotation without a camera jump");
+            frame(750, 390, false, false, true);
+            const auto rotated = cameraAngle();
+            check(dw::distance(beforeAngle, rotated) > .1f && rotated.y > beforeAngle.y &&
+                      std::abs(dw::distance(game.camera.position, game.camera.target) - beforeRadius) < .001f,
+                  "middle drag orbits and tilts the camera without changing zoom");
+            check(dw::distance(beforePosition,
+                               game.run ? game.run->player.position : game.town.player.position) < .001f,
+                  "rotating the camera never moves the player");
+            frame();
+            frame(850, 450);
+            check(dw::distance(rotated, cameraAngle()) < .0001f,
+                  "releasing the middle button stops rotation immediately");
+            verifyRotatedView();
+            orbit(-150, -40);
+            check(dw::distance(beforeAngle, cameraAngle()) < .0001f,
+                  "opposite mouse drags restore the previous camera orientation");
+            for (int i = 0; i < 120; ++i)
+                frame();
+        };
         frame();
         check(game.screen == dw::Screen::Hub && !game.run && game.town.loaded(),
               "new games start in the walkable original town without beginning a campaign run");
@@ -74,6 +107,53 @@ int main() {
             frame();
         check(dw::distance(game.town.player.position, arrival) < .7f,
               "clicking town terrain routes the character to the correct elevation");
+        auto townClick = [&](Vector3 goal) {
+            goal.y = game.town.height(goal);
+            const auto pixel = GetWorldToScreen(goal, game.camera);
+            frame(int(pixel.x), int(pixel.y));
+            const auto picked = game.town.pickGround(GetScreenToWorldRay(GetMousePosition(), game.camera));
+            check(picked.has_value(), "town ground under the cursor can be picked");
+            frame(int(pixel.x), int(pixel.y), true);
+            check(game.town.destination() && dw::distance(*game.town.destination(), *picked) < .001f,
+                  "town ground clicks preserve the exact point instead of snapping to cell centers");
+            for (int i = 0; i < 180; ++i)
+                frame();
+            check(dw::distance(game.town.player.position, dw::add(*picked, {0, .85f, 0})) < .001f,
+                  "the town character reaches the selected point and elevation");
+        };
+        townClick(dw::add(game.town.spawn, {.12f, 0, -4.13f}));
+        mouseEvent(MouseWheel, 0, 3);
+        for (int i = 0; i < 120; ++i)
+            frame();
+        townClick(dw::add(game.town.spawn, {.07f, 0, -.08f}));
+        mouseEvent(MouseWheel, 0, -3);
+        for (int i = 0; i < 120; ++i)
+            frame();
+        verifyOrbit([&] { townClick(dw::add(game.town.spawn, {.09f, 0, -2.17f})); });
+        const auto beforeHudOrbit = cameraAngle();
+        frame(100, 70, false, false, true);
+        frame(800, 450, false, false, true);
+        check(dw::distance(beforeHudOrbit, cameraAngle()) < .0001f,
+              "middle drags that start on hub controls never rotate the view");
+        frame();
+        const auto beforeHudDrag = game.town.player.position;
+        frame(100, 70, true);
+        auto groundPixel = GetWorldToScreen(dw::add(game.town.spawn, {0, 0, -4}), game.camera);
+        for (int i = 0; i < 20; ++i)
+            frame(int(groundPixel.x), int(groundPixel.y), true);
+        check(!game.town.destination() && dw::distance(beforeHudDrag, game.town.player.position) < .001f,
+              "dragging a held HUD click into town never starts ground movement");
+        frame();
+        const auto boardPixel = GetWorldToScreen(dw::add(game.town.mission, {0, 1.5f, 0}), game.camera);
+        frame(int(boardPixel.x), int(boardPixel.y), true);
+        check(game.walkingToMission, "clicking the board starts its approach");
+        for (int i = 0; i < 30; ++i)
+            frame(int(groundPixel.x), int(groundPixel.y), true);
+        check(game.walkingToMission || game.missionMenu,
+              "holding a board click keeps approaching it after the cursor moves onto ground");
+        frame();
+        game.town.stop();
+        game.walkingToMission = false;
         click(140, 735);
         for (int i = 0; i < 1800 && !game.missionMenu; ++i)
             frame();
@@ -170,7 +250,29 @@ int main() {
               "a short attack click between simulation ticks is preserved");
         const auto shots = game.run->stats.shots;
         click(680, 315, MOUSE_BUTTON_MIDDLE);
-        check(game.run->player.dodge > 0, "middle mouse button triggers dodge");
+        check(game.run->player.dodge == 0, "middle mouse button is reserved for camera rotation");
+        verifyOrbit([&] {
+            check(game.run->player.dodge == 0 && game.run->stats.shots == shots,
+                  "middle dragging never dodges or fires");
+            const auto start = game.run->player.position;
+            const auto angle = cameraAngle();
+            const auto forward = dw::unit(Vector3{-angle.x, 0, -angle.z});
+            pressKey(KEY_W);
+            auto movement = dw::sub(game.run->player.position, start);
+            movement.y = 0;
+            check(dw::length(movement) > .01f && dw::distance(dw::unit(movement), forward) < .001f,
+                  "WASD remains relative to the rotated camera");
+            for (int i = 0; i < 120; ++i)
+                frame(); // Settle the following camera before projecting a world-space test target.
+            const auto pixel = GetWorldToScreen({start.x, 0, start.z}, game.camera);
+            click(int(pixel.x), int(pixel.y));
+            for (int i = 0; i < 120; ++i)
+                frame();
+            check(dw::distance(start, game.run->player.position) < .15f,
+                  "ground clicking remains accurate with a rotated mission camera");
+        });
+        pressKey(KEY_SPACE);
+        check(game.run->player.dodge > 0, "Space still triggers dodge");
         for (int i = 0; i < 80; ++i)
             frame();
         click(670, 711);
@@ -409,8 +511,36 @@ int main() {
                       0.0001f,
               "zoom out has a safe limit and preserves the viewing angle");
         verifyZoomedGroundClick(beforeZoom);
+        orbit(0, 400);
+        check(std::abs(std::asin(cameraAngle().y) * RAD2DEG - 75) < .001f,
+              "upward camera tilt stops before the view can flip over");
+        orbit(0, -400);
+        check(std::abs(std::asin(cameraAngle().y) * RAD2DEG - 25) < .001f,
+              "downward camera tilt stays above the ground");
+        orbit(90, 60);
+        auto retainedAngle = cameraAngle();
+        frame(850, 711, false, false, true);
+        frame(600, 350, false, false, true);
+        frame();
+        check(dw::distance(retainedAngle, cameraAngle()) < .0001f,
+              "middle drags from mission HUD controls do not rotate the camera");
+        frame(600, 350, false, false, true);
+        frame(650, 350, false, false, true);
+        retainedAngle = cameraAngle();
+        game.paused = true;
+        frame(750, 450, false, false, true);
+        game.paused = false;
+        frame(850, 550, false, false, true);
+        frame();
+        check(dw::distance(retainedAngle, cameraAngle()) < .0001f,
+              "pausing cancels an active camera drag until a new middle press");
+        game.run->rewardOpen = true;
+        orbit(150, 100);
+        game.run->rewardOpen = false;
+        check(dw::distance(retainedAngle, cameraAngle()) < .0001f, "power selection blocks camera rotation");
         pressKey(KEY_F12, true);
         check(std::abs(cameraDistance() - widestDistance) < 0.01f, "room jumps preserve the chosen zoom");
+        check(dw::distance(retainedAngle, cameraAngle()) < .0001f, "room jumps preserve camera rotation");
         game.run->player.hp = 0;
         frame();
         check(game.run && game.run->dead && game.screen == dw::Screen::Expedition,
@@ -427,8 +557,16 @@ int main() {
         check(!game.run && game.lastSummary.reason == dw::EndReason::Death,
               "death animation finishes at the normal defeat summary");
         game.perform(dw::Action::Hub);
+        check(dw::distance(retainedAngle, cameraAngle()) < .0001f,
+              "returning to town preserves camera rotation");
+        game.missionMenu = true;
+        orbit(150, 100);
+        check(dw::distance(retainedAngle, cameraAngle()) < .0001f, "the station menu blocks camera rotation");
+        game.missionMenu = false;
         game.launch();
         check(std::abs(cameraDistance() - widestDistance) < 0.01f, "new expeditions retain session zoom");
+        check(dw::distance(retainedAngle, cameraAngle()) < .0001f,
+              "new expeditions retain session camera rotation");
         game.run->player.hp = 0;
         frame();
         game.close();
@@ -438,14 +576,16 @@ int main() {
         CloseWindow();
         std::filesystem::remove_all(directory);
         std::cout << "PASS original town movement, station approach, mission seeds, launch and return loop\n";
-        std::cout << "PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire\n"
-                  << "PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue "
-                     "and retreat\n"
-                  << "PASS mouse key pickup, locked doors and one-time power-room choice\n"
-                  << "PASS function-key cheats, disabled-mode guards, room/boss replay and modal outcomes\n"
-                  << "PASS smooth wheel zoom, limits, modal guards, zoomed ground clicks and retained zoom\n"
-                  << "PASS animated natural death, frozen combat and closing during death\n"
-                  << "PASS HUD clicks never fire; sixth-shot effects covered by core contracts\n";
+        std::cout
+            << "PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire\n"
+            << "PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue "
+               "and retreat\n"
+            << "PASS mouse key pickup, locked doors and one-time power-room choice\n"
+            << "PASS function-key cheats, disabled-mode guards, room/boss replay and modal outcomes\n"
+            << "PASS smooth wheel zoom, limits, modal guards, zoomed ground clicks and retained zoom\n"
+            << "PASS middle-drag orbit, tilt limits, rotated controls, modal guards and retained angle\n"
+            << "PASS animated natural death, frozen combat and closing during death\n"
+            << "PASS HUD clicks never fire; sixth-shot effects covered by core contracts\n";
         return 0;
     } catch (const std::exception &e) {
         std::cerr << "FAIL: " << e.what() << "\nTemporary campaign: " << directory << '\n';

@@ -62,6 +62,44 @@ bool HubWorld::traversable(int from, int to) const {
     return from >= 0 && to >= 0 && std::isfinite(heights_[size_t(to)]) &&
            std::abs(heights_[size_t(from)] - heights_[size_t(to)]) <= .6f;
 }
+bool HubWorld::clear(Vector3 from, Vector3 to) const {
+    int current = index(from);
+    const int goal = index(to);
+    if (!walkable(from) || !walkable(to))
+        return false;
+    int x = current % int(width_), z = current / int(width_);
+    const float dx = to.x - from.x, dz = to.z - from.z;
+    const int sx = dx > 0 ? 1 : -1, sz = dz > 0 ? 1 : -1;
+    const float infinity = std::numeric_limits<float>::infinity();
+    const float stepX = dx != 0 ? cell_ / std::abs(dx) : infinity;
+    const float stepZ = dz != 0 ? cell_ / std::abs(dz) : infinity;
+    float crossX = dx != 0 ? (minX_ + float(x + (sx > 0)) * cell_ - from.x) / dx : infinity;
+    float crossZ = dz != 0 ? (minZ_ + float(z + (sz > 0)) * cell_ - from.z) / dz : infinity;
+    // Check every crossed cell, including both sides of an exact corner. Point
+    // sampling can miss a thin corner and produce a shortcut through a barrier.
+    while (current != goal) {
+        const bool both = std::abs(crossX - crossZ) < .000001f;
+        const bool moveX = both || crossX < crossZ, moveZ = both || crossZ < crossX;
+        const int nx = x + (moveX ? sx : 0), nz = z + (moveZ ? sz : 0);
+        if (nx < 0 || nz < 0 || nx >= int(width_) || nz >= int(depth_))
+            return false;
+        const int next = nz * int(width_) + nx;
+        if (!traversable(current, next))
+            return false;
+        if (both &&
+            (!traversable(current, z * int(width_) + nx) || !traversable(current, nz * int(width_) + x) ||
+             !traversable(z * int(width_) + nx, next) || !traversable(nz * int(width_) + x, next)))
+            return false;
+        if (moveX)
+            crossX += stepX;
+        if (moveZ)
+            crossZ += stepZ;
+        x = nx;
+        z = nz;
+        current = next;
+    }
+    return true;
+}
 void HubWorld::reset() {
     player = {};
     player.position = add(spawn, {0, .85f, 0});
@@ -86,7 +124,7 @@ std::optional<Vector3> HubWorld::destination() const {
 }
 bool HubWorld::moveTo(Vector3 target) {
     const int start = index(player.position);
-    if (start < 0)
+    if (start < 0 || !walkable(player.position) || !std::isfinite(target.x) || !std::isfinite(target.z))
         return false;
     int end = index(target);
     if (end < 0 || !walkable(target)) {
@@ -103,6 +141,13 @@ bool HubWorld::moveTo(Vector3 target) {
         }
         if (best == 36)
             return false;
+        target = point(end);
+    }
+    target.y = height(target);
+    if (clear(player.position, target)) {
+        route_ = {target};
+        next_ = 0;
+        return true;
     }
     std::vector<float> costs(heights_.size(), std::numeric_limits<float>::infinity());
     std::vector<int> previous(heights_.size(), -1);
@@ -139,13 +184,28 @@ bool HubWorld::moveTo(Vector3 target) {
     }
     if (start != end && previous[size_t(end)] < 0)
         return false;
-    route_.clear();
+    std::vector<Vector3> waypoints;
+    for (int at = end;; at = previous[size_t(at)]) {
+        waypoints.push_back(point(at));
+        if (at == start)
+            break;
+    }
+    std::reverse(waypoints.begin(), waypoints.end());
+    waypoints.push_back(target); // Keep the exact click instead of the grid-cell center.
+    std::vector<Vector3> smooth;
+    Vector3 anchor = player.position;
+    for (size_t i = 0; i < waypoints.size();) {
+        size_t farthest = i;
+        if (!clear(anchor, waypoints[i]))
+            return false;
+        while (farthest + 1 < waypoints.size() && clear(anchor, waypoints[farthest + 1]))
+            ++farthest;
+        smooth.push_back(waypoints[farthest]);
+        anchor = waypoints[farthest];
+        i = farthest + 1;
+    }
+    route_ = std::move(smooth);
     next_ = 0;
-    for (int at = end; at != start; at = previous[size_t(at)])
-        route_.push_back(point(at));
-    std::reverse(route_.begin(), route_.end());
-    if (route_.empty())
-        route_.push_back(point(end));
     return true;
 }
 void HubWorld::step(Vector3 movement, float dt) {
@@ -167,7 +227,7 @@ void HubWorld::step(Vector3 movement, float dt) {
         else if (next_ < route_.size()) {
             auto delta = sub(route_[next_], player.position);
             delta.y = 0;
-            if (length(delta) < .025f) {
+            if (length(delta) < .00001f) {
                 ++next_;
                 continue;
             }
@@ -201,15 +261,66 @@ void HubWorld::step(Vector3 movement, float dt) {
         player.facing = unit(player.velocity);
 }
 std::optional<Vector3> HubWorld::pickGround(Ray ray) const {
-    if (ray.direction.y >= -.001f)
+    if (!loaded() || ray.direction.y >= -.001f)
         return {};
-    // March the terrain heightfield instead of intersecting a flat y=0 plane.
-    for (float t = 0; t < 700; t += .2f) {
-        const auto p = add(ray.position, mul(ray.direction, t));
-        const float h = height(p);
-        if (std::isfinite(h) && p.y <= h && p.y > h - .5f)
-            return Vector3{p.x, h, p.z};
+    // Intersect each crossed terrain cell analytically. Fixed-distance ray
+    // marching could step past small visible patches or shift the clicked point.
+    float enter = 0, leave = 700;
+    auto clip = [&](float origin, float direction, float low, float high) {
+        if (std::abs(direction) < .000001f)
+            return origin >= low && origin < high;
+        float a = (low - origin) / direction, b = (high - origin) / direction;
+        if (a > b)
+            std::swap(a, b);
+        enter = std::max(enter, a);
+        leave = std::min(leave, b);
+        return enter <= leave;
+    };
+    if (!clip(ray.position.x, ray.direction.x, minX_, minX_ + width_ * cell_) ||
+        !clip(ray.position.z, ray.direction.z, minZ_, minZ_ + depth_ * cell_))
+        return {};
+    auto first = add(ray.position, mul(ray.direction, enter));
+    int x = std::clamp(int(std::floor((first.x - minX_) / cell_)), 0, int(width_) - 1);
+    int z = std::clamp(int(std::floor((first.z - minZ_) / cell_)), 0, int(depth_) - 1);
+    const int sx = ray.direction.x > 0 ? 1 : -1, sz = ray.direction.z > 0 ? 1 : -1;
+    const float infinity = std::numeric_limits<float>::infinity();
+    const float stepX = ray.direction.x != 0 ? cell_ / std::abs(ray.direction.x) : infinity;
+    const float stepZ = ray.direction.z != 0 ? cell_ / std::abs(ray.direction.z) : infinity;
+    float crossX = ray.direction.x != 0
+                       ? (minX_ + float(x + (sx > 0)) * cell_ - ray.position.x) / ray.direction.x
+                       : infinity;
+    float crossZ = ray.direction.z != 0
+                       ? (minZ_ + float(z + (sz > 0)) * cell_ - ray.position.z) / ray.direction.z
+                       : infinity;
+    while (x >= 0 && z >= 0 && x < int(width_) && z < int(depth_) && enter <= leave) {
+        const float exit = std::min({crossX, crossZ, leave});
+        const float h = heights_[size_t(z) * width_ + size_t(x)];
+        const float t = (h - ray.position.y) / ray.direction.y;
+        if (std::isfinite(h) && t >= enter - .00001f && t <= exit + .00001f) {
+            auto hit = add(ray.position, mul(ray.direction, t));
+            hit.y = h;
+            return hit;
+        }
+        if (exit >= leave)
+            break;
+        const bool both = std::abs(crossX - crossZ) < .000001f;
+        const bool moveX = both || crossX < crossZ, moveZ = both || crossZ < crossX;
+        enter = exit;
+        if (moveX) {
+            x += sx;
+            crossX += stepX;
+        }
+        if (moveZ) {
+            z += sz;
+            crossZ += stepZ;
+        }
     }
+    // Like mission clicks on cover, a blocked ground click still requests the
+    // nearest walkable edge. The navigation grid has no height in blocked cells.
+    const float t = (player.position.y - .85f - ray.position.y) / ray.direction.y;
+    const auto projected = add(ray.position, mul(ray.direction, t));
+    if (t >= 0 && t <= leave && index(projected) >= 0)
+        return projected;
     return {};
 }
 } // namespace dw

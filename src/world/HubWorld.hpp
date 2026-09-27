@@ -38,5 +38,6 @@ class HubWorld {
     int index(Vector3 point) const;
     Vector3 point(int index) const;
     bool traversable(int from, int to) const;
+    bool clear(Vector3 from, Vector3 to) const;
 };
 } // namespace dw

@@ -621,8 +621,8 @@ Action Renderer::hub(const Game &game) {
         panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
         panel(344, 134, 592, 522, Panel);
         text("BLACK CREEK", 377, 167, 35, Paper);
-        wrap("Walk with WASD or click the ground. Scroll to zoom. Visit the station for missions; press "
-             "Escape to pause.",
+        wrap("Walk with WASD or click the ground. Scroll to zoom; hold the middle button and drag to "
+             "rotate. Visit the station for missions.",
              378, 226, 514, 17, Muted);
         for (size_t i = 0; i < world.npcs.size(); ++i)
             wrap(world.npcs[i].name + ": " + npcDialogue(world, i), 378, 310 + float(i) * 48, 514, 13, Paper);
@@ -774,6 +774,7 @@ Action Renderer::expedition(const Game &game) {
         wrap("Retreat ends your build and changes Black Creek. Closing the game also counts as retreat.", 436,
              326, 402, 17, Muted);
         text("Click to move, attack or interact. Shift holds position.", 436, 389, 12, Muted);
+        text("Hold middle + drag to rotate. Scroll to zoom. Space dodges.", 436, 407, 11, Muted);
         if (button("KEEP GOING   [ESC]", 436, 423, 408, 45, true))
             return Action::Resume;
         if (button("RETREAT TO BLACK CREEK   [T]", 436, 486, 408, 45))

@@ -8,6 +8,7 @@ namespace dw {
 namespace {
 constexpr Vector3 CameraOffset{23, 30, 23};
 constexpr float MinCameraZoom = 0.35f, MaxCameraZoom = 1.5f;
+constexpr float MinCameraPitch = 25 * DEG2RAD, MaxCameraPitch = 75 * DEG2RAD;
 struct PointerTarget {
     EntityId enemy = 0;
     std::optional<Vector3> objective;
@@ -73,6 +74,8 @@ Game::Game(const std::filesystem::path &save) : campaign(save) {
     camera.up = {0, 1, 0};
     camera.fovy = 45;
     camera.projection = CAMERA_PERSPECTIVE;
+    cameraYaw_ = std::atan2(CameraOffset.z, CameraOffset.x);
+    cameraPitch_ = std::atan2(CameraOffset.y, std::hypot(CameraOffset.x, CameraOffset.z));
     if (!town.load(TownScene::assetDirectory() / "town.nav"))
         error = town.error;
     snapCamera();
@@ -119,6 +122,7 @@ void Game::finish(EndReason reason) {
     resetPointerInput();
 }
 void Game::resetPointerInput() {
+    cameraDragging_ = false;
     leftCommand_ = LeftCommand::None;
     attackTarget_ = hoveredEnemy = 0;
     dodgeQueued_ = interactQueued_ = standStillQueued_ = false;
@@ -161,6 +165,7 @@ void Game::perform(Action action) {
             error.clear();
             break;
         case Action::Hub:
+            resetPointerInput();
             missionMenu = walkingToMission = false;
             paused = false;
             town.stop();
@@ -312,19 +317,51 @@ void Game::debugInput() {
         run->checkpointNeeded = true;
     }
 }
-void Game::snapCamera() {
+Vector3 Game::cameraOffset() const {
+    const float radius = length(CameraOffset) * cameraZoom_;
+    const float horizontal = radius * std::cos(cameraPitch_);
+    return {horizontal * std::cos(cameraYaw_), radius * std::sin(cameraPitch_),
+            horizontal * std::sin(cameraYaw_)};
+}
+Vector3 Game::cameraFocus() const {
     const auto position = run ? run->player.position : town.player.position;
-    camera.target = sub(position, {2 * cameraZoom_, .85f, 2 * cameraZoom_});
-    camera.position = add(camera.target, mul(CameraOffset, cameraZoom_));
+    const float framing = std::sqrt(8.0f) * cameraZoom_;
+    return sub(position, {framing * std::cos(cameraYaw_), .85f, framing * std::sin(cameraYaw_)});
+}
+void Game::updateCameraInput() {
+    const bool over = pointerOverControls();
+    if (!over) {
+        const float wheel = std::clamp(GetMouseWheelMoveV().y, -20.0f, 20.0f);
+        cameraZoomTarget_ =
+            std::clamp(cameraZoomTarget_ * std::exp(-wheel * .12f), MinCameraZoom, MaxCameraZoom);
+    }
+    const auto mouse = GetMousePosition();
+    if (!IsMouseButtonDown(MOUSE_BUTTON_MIDDLE))
+        cameraDragging_ = false;
+    if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE)) {
+        cameraDragging_ = !over;
+        cameraDragPosition_ = mouse; // Pressing starts a gesture without jumping to the cursor.
+    }
+    if (cameraDragging_) {
+        cameraYaw_ = std::remainder(cameraYaw_ - (mouse.x - cameraDragPosition_.x) * .006f, 2 * PI);
+        cameraPitch_ = std::clamp(cameraPitch_ + (mouse.y - cameraDragPosition_.y) * .004f, MinCameraPitch,
+                                  MaxCameraPitch);
+        // Apply the angle before movement and picking so WASD and clicks use the current view.
+        camera.position = add(camera.target, cameraOffset());
+    }
+    cameraDragPosition_ = mouse;
+}
+void Game::snapCamera() {
+    camera.target = cameraFocus();
+    camera.position = add(camera.target, cameraOffset());
 }
 void Game::updateCamera(float dt) {
     if (!run && !town.loaded())
         return;
     cameraZoom_ += (cameraZoomTarget_ - cameraZoom_) * (1 - std::exp(-12 * dt));
-    const auto position = run ? run->player.position : town.player.position;
-    Vector3 target = sub(position, {2 * cameraZoom_, .85f, 2 * cameraZoom_});
+    const Vector3 target = cameraFocus();
     camera.target = add(camera.target, mul(sub(target, camera.target), 1 - std::exp(-5 * dt)));
-    camera.position = add(camera.target, mul(CameraOffset, cameraZoom_));
+    camera.position = add(camera.target, cameraOffset());
 }
 bool Game::pointerOverControls() const {
     const Vector2 mouse = GetMousePosition();
@@ -363,6 +400,7 @@ void Game::updateHub(float dt) {
         }
     }
     if (missionMenu) {
+        cameraDragging_ = false;
         for (int c = GetCharPressed(); c; c = GetCharPressed())
             if (c >= '0' && c <= '9' && seedText.size() < 20)
                 seedText.push_back(char(c));
@@ -374,14 +412,12 @@ void Game::updateHub(float dt) {
             perform(Action::Launch);
         return;
     }
-    if (paused || !town.loaded())
+    if (paused || !town.loaded()) {
+        cameraDragging_ = false;
         return;
-    const bool over = pointerOverControls();
-    if (!over) {
-        const float wheel = std::clamp(GetMouseWheelMoveV().y, -20.0f, 20.0f);
-        cameraZoomTarget_ =
-            std::clamp(cameraZoomTarget_ * std::exp(-wheel * .12f), MinCameraZoom, MaxCameraZoom);
     }
+    const bool over = pointerOverControls();
+    updateCameraInput();
     Vector3 forward = unit({camera.target.x - camera.position.x, 0, camera.target.z - camera.position.z});
     Vector3 right{-forward.z, 0, forward.x};
     Vector3 movement = add(mul(forward, float(IsKeyDown(KEY_W)) - float(IsKeyDown(KEY_S))),
@@ -389,17 +425,25 @@ void Game::updateHub(float dt) {
     if (length(movement) > .01f)
         walkingToMission = false;
     mouseMoveCooldown_ = std::max(0.0f, mouseMoveCooldown_ - dt);
-    if (!over && IsMouseButtonDown(MOUSE_BUTTON_LEFT) &&
-        (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || mouseMoveCooldown_ <= 0)) {
-        Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
+    const bool leftDown = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
+    const bool leftPressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+    const Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
+    if (!leftDown)
+        leftCommand_ = LeftCommand::None;
+    if (!over && leftPressed) {
         const auto p = town.mission;
-        if (GetRayCollisionBox(ray, {{p.x - 1, p.y, p.z - 1}, {p.x + 1, p.y + 3, p.z + 1}}).hit)
+        const bool board =
+            GetRayCollisionBox(ray, {{p.x - 1, p.y, p.z - 1}, {p.x + 1, p.y + 3, p.z + 1}}).hit;
+        leftCommand_ = board ? LeftCommand::Interact : LeftCommand::Move;
+        if (board)
             perform(Action::Missions);
-        else if (auto point = town.pickGround(ray)) {
+    }
+    if (!over && leftDown && leftCommand_ == LeftCommand::Move && (leftPressed || mouseMoveCooldown_ <= 0)) {
+        if (auto point = town.pickGround(ray)) {
             town.moveTo(*point);
             walkingToMission = false;
         }
-        mouseMoveCooldown_ = .15f;
+        mouseMoveCooldown_ = .1f;
     }
     if (IsKeyPressed(KEY_E) || IsKeyPressed(KEY_ENTER))
         perform(Action::Missions);
@@ -419,11 +463,13 @@ void Game::update(float dt) {
             return;
         }
         if (screen == Screen::Summary) {
+            cameraDragging_ = false;
             if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_ESCAPE))
                 perform(Action::Hub);
             return;
         }
         if (screen == Screen::History) {
+            cameraDragging_ = false;
             if (IsKeyPressed(KEY_ESCAPE))
                 perform(Action::Hub);
             if (IsKeyPressed(KEY_LEFT))
@@ -458,6 +504,7 @@ void Game::update(float dt) {
                 perform(Action::Reward1);
             return;
         }
+        updateCameraInput();
         Input input;
         // Camera-relative movement projected onto XZ, so W moves up the screen.
         Vector3 forward =
@@ -466,12 +513,6 @@ void Game::update(float dt) {
         input.movement = add(mul(forward, float(IsKeyDown(KEY_W)) - float(IsKeyDown(KEY_S))),
                              mul(right, float(IsKeyDown(KEY_D)) - float(IsKeyDown(KEY_A))));
         const bool overControls = pointerOverControls();
-        if (!overControls) {
-            // Positive vertical wheel motion moves closer without changing the viewing angle.
-            const float wheel = std::clamp(GetMouseWheelMoveV().y, -20.0f, 20.0f);
-            cameraZoomTarget_ =
-                std::clamp(cameraZoomTarget_ * std::exp(-wheel * 0.12f), MinCameraZoom, MaxCameraZoom);
-        }
         input.aim = run->player.aim;
         Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
         Vector3 ground = input.aim;
@@ -536,8 +577,7 @@ void Game::update(float dt) {
             moveQueued_.reset();
             doorQueued_.reset();
         }
-        dodgeQueued_ = dodgeQueued_ || IsKeyPressed(KEY_SPACE) ||
-                       (!overControls && IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE));
+        dodgeQueued_ = dodgeQueued_ || IsKeyPressed(KEY_SPACE);
         interactQueued_ = interactQueued_ || IsKeyPressed(KEY_E);
         input.moveTarget = moveQueued_;
         input.doorTarget = doorQueued_;

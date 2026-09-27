@@ -1,5 +1,17 @@
 # Milestone 1 verification
 
+## Middle-button camera rotation
+
+Holding the middle mouse button and dragging now orbits the camera in both town and expeditions. Horizontal movement rotates around the character; vertical movement tilts between 25 and 75 degrees. Rotation keeps the current zoom, stops on release, and persists through room changes, returning to town and launching another expedition. WASD and ground picking use the current view. HUD-origin drags and modal screens do not rotate; pausing cancels an active drag until another press. Middle-click no longer dodges; Space and the Dodge button remain available.
+
+The Release build and full graphics input suite passed. New checks exercise rotation without a press-time jump, immediate release, constant camera distance, both tilt limits, precise ground clicks in rotated town/mission views, camera-relative WASD, unchanged position/shots/dodge from rotation alone, HUD and modal guards, and retained angles across room/mission transitions. Existing zoom, combat, interaction, navigation, cheat and death checks also pass. Logs: `artifacts/camera-orbit-build.log` and `artifacts/camera-orbit-input-tests.log`.
+
+## Hub mouse navigation correction
+
+Town mouse movement now follows direct segments over clear terrain and smooths obstacle routes instead of visiting every grid-cell center. Valid clicks retain their exact position, including clicks within the player's current cell. Segment checks preserve blocked corners and the terrain's step-height limits. Analytic ray intersections replace fixed-distance terrain sampling so small visible patches can be selected. Clicks on blocked ground request a nearby walkable edge. Holding a mission-board click retains the interaction when the cursor moves away; dragging a HUD click into the world does not start movement. WASD movement is unchanged.
+
+The Release build, all five headless CTest suites (12.52 seconds), and the complete graphics input suite passed. New regressions cover direct diagonal travel, precise arrival, repeated steering requests, obstacle detours, blocked corners, gradual slopes, and oblique/vertical rays near terrain-cell edges. Graphics checks cover precise town clicks at normal and closer zoom, HUD drags, and held board interactions alongside existing WASD, mission, combat and camera checks. Town navigation also passes AddressSanitizer/UndefinedBehaviorSanitizer. Logs: `artifacts/hub-mouse-{build,core-tests,input-tests,nav-asan}.log`.
+
 ## Original demo town as the starting hub
 
 Content version `deathward-m1-14` replaces the status-only start screen with a walkable import of `PolygonWestern/Scenes/Demo.unity`. The authored town stays fixed; the station's added mission board launches the existing randomly seeded expeditions. Clicking Missions automatically walks to the station. The menu offers a fresh seed, an editable seed for replay, and departure. Victory, death and retreat resolve through the existing result screen and return to the town arrival point with another mission offer. Walking around town does not create a pending expedition or change campaign outcomes.
