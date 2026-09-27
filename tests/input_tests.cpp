@@ -313,7 +313,31 @@ int main() {
         pressKey(KEY_F9);
         check(!game.run && game.lastSummary.reason == dw::EndReason::Death,
               "F9 resolves defeat immediately from the power-choice modal");
+        game.perform(dw::Action::Hub);
+        game.launch();
+        game.run->player.hp = 0;
+        frame();
+        check(game.run && game.run->dead && game.screen == dw::Screen::Expedition,
+              "natural death keeps the character visible for its animation");
+        const auto deathDuration = game.run->stats.duration;
+        const auto deathPosition = game.run->player.position;
+        for (int i = 0; i < 60; ++i)
+            frame();
+        check(game.run && game.run->stats.duration == deathDuration &&
+                  dw::distance(game.run->player.position, deathPosition) == 0,
+              "death presentation does not keep simulating combat or movement");
+        for (int i = 0; i < 70; ++i)
+            frame();
+        check(!game.run && game.lastSummary.reason == dw::EndReason::Death,
+              "death animation finishes at the normal defeat summary");
+        game.perform(dw::Action::Hub);
+        game.launch();
+        game.run->player.hp = 0;
+        frame();
         game.close();
+        check(game.lastSummary.reason == dw::EndReason::Death,
+              "closing during a death animation records death, not retreat");
+        renderer.unload();
         CloseWindow();
         std::filesystem::remove_all(directory);
         std::cout << "PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire\n"
@@ -321,6 +345,7 @@ int main() {
                      "and retreat\n"
                   << "PASS mouse key pickup, locked doors and one-time power-room choice\n"
                   << "PASS function-key cheats, disabled-mode guards, room/boss replay and modal outcomes\n"
+                  << "PASS animated natural death, frozen combat and closing during death\n"
                   << "PASS HUD clicks never fire; sixth-shot effects covered by core contracts\n";
         return 0;
     } catch (const std::exception &e) {

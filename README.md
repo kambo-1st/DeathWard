@@ -71,7 +71,9 @@ Left-click the miners, altar, a key, a power pedestal, a doorway, or the return 
 
 World interactions use visual cues instead of floating control instructions: open exits have small floor arrows and colored lanterns, locked doors have golden locks, and pickups and objectives have glow or ground markers. Control reminders live in the hub, pause screen and this guide.
 
-The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated boss becomes a follow-up encounter on subsequent visits.
+The player uses the textured **bandit model supplied in `assets/bandit`**. Its FBX clips drive breathing idle, walking, running, firing, sliding or jumping dodges and two death animations. Moving attacks blend the firing pose over the legs' movement; turning follows movement or aim. Animation pauses and slows with gameplay. Natural death plays a two-second animation before the results screen; the F9 testing shortcut still resolves immediately.
+
+The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat, or death if the character is already dying. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated boss becomes a follow-up encounter on subsequent visits.
 
 ## Five starting items
 
@@ -125,12 +127,13 @@ Room-network growth, room geometry, per-room enemy composition/placement, reward
 ```sh
 ctest --test-dir build --output-on-failure
 ./build/deathward_input_tests
+./build/deathward_player_model_tests
 ./build/deathward --smoke --frames 180 --screenshot artifacts/combat.png
 ./build/deathward --smoke --scene hub --frames 2 --screenshot artifacts/hub.png
 ./build/deathward --benchmark --frames 600 --screenshot artifacts/stress.png
 ```
 
-The core CTest suite needs no graphics display. `deathward_input_tests` exercises mouse controls and function-key cheats through raylib's input system in a hidden window and requires an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
+The core CTest suite needs no graphics display. `deathward_input_tests` exercises mouse controls and function-key cheats through raylib's input system in a hidden window. `deathward_player_model_tests` checks the packaged mesh, texture, all nine clips, blending, simulation timing, root-motion removal and resource cleanup. Both require an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
 
 Enemy tests cover all fifteen behaviors, attack warnings, armor and support, cover and dodge counters, delayed hazards and chain cleanup, plus area-scaled populations and safe placements across 32 seeds. Tests also cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Fast room-network checks cover 10,004 seeds, including rotation/reflection-independent footprint comparisons and graph diversity checks across 256 seeds. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power and enemy-free rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. Cheat checks cover disabled hotkeys, unobstructed play with cheats enabled, single-group encounters, effect cleanup, room/boss replay, preserved rewards and paused/modal outcomes. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `empty`, `cheats`, `boss` and `summary`.
 
@@ -142,13 +145,19 @@ cmake --build build-asan --parallel 4
 ctest --test-dir build-asan --output-on-failure
 ```
 
+## Player assets
+
+Normal builds use the supplied FBXs' converted `assets/bandit/bandit.glb`, which includes the original texture and animations. CMake copies it into `assets/bandit` beside the executable, so launching from a different working directory works. Keep that asset directory with the executable when moving a build. The source-tree asset is a development fallback; a missing model falls back to the primitive character.
+
+Only rebuilding the asset requires Blender 3.6 LTS. Conversion instructions and clip mappings are in [the bandit asset notes](assets/bandit/README.md).
+
 ## Code map
 
 - `src/combat`: fixed-step simulation, 3D collision, AI, spatial broad phase and event budgets.
 - `src/items`: the item registry and independent effect handlers.
 - `src/world`: seeded dungeon geometry, persistent world state, consequences, history and atomic save transactions.
 - `src/core`: application flow, input, math and deterministic RNG.
-- `src/render`: replaceable primitive 3D rendering and menus; no combat rules.
+- `src/render`: 3D rendering, player animation blending and menus; no combat rules.
 - `tests`: gameplay and persistence contract checks.
 
 The [design brief](weird_west_3d_prototype_agent_brief.md) describes the wider experiment. This implementation extends Milestone 1 with fifteen ordinary enemy types and seeded room networks. The 25-item catalog and three expeditions remain future content work.

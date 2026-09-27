@@ -49,6 +49,9 @@ struct Enemy {
 };
 struct Player {
     Vector3 position{0, 0.85f, 10}, aim{0, 0.85f, 0};
+    Vector3 velocity{}, facing{0, 0, -1};
+    float shootPose = 0;
+    bool dodgeMoving = false;
     float hp = StartingHealth, maxHp = StartingHealth, fireCooldown = 0, dodge = 0, dodgeCooldown = 0,
           hurt = 0;
     Vector3 dodgeDirection{0, 0, -1};

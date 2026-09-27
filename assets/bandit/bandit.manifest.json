@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "blender": "3.6.23",
+  "clips": {
+    "Idle": {
+      "source": "Breathing Idle.fbx",
+      "sha256": "843640cc95e28411c58cb07f8d1048442157a6383668643ebe2b5a47859bd1e4",
+      "frames": 299,
+      "fps": 30,
+      "duration": 9.933333333333334
+    },
+    "Walk": {
+      "source": "Walking.fbx",
+      "sha256": "e5c169306fbe18f3036ab9dc8fdbfea2b9b49d7b5e7dda5e217e6d36ae7ec347",
+      "frames": 32,
+      "fps": 30,
+      "duration": 1.0333333333333334
+    },
+    "Run": {
+      "source": "Run Forward.fbx",
+      "sha256": "a1350a40e94e1b3136639c0d318cf49bae1e20bd593ef919cdc710865468121d",
+      "frames": 16,
+      "fps": 30,
+      "duration": 0.5
+    },
+    "Fire": {
+      "source": "Firing Rifle.fbx",
+      "sha256": "1aa17bb330d5dea16d8b308c181096ab9a016bc361ba794d6e5897fa8120d3e7",
+      "frames": 42,
+      "fps": 30,
+      "duration": 1.3666666666666667
+    },
+    "DodgeSlide": {
+      "source": "Running Slide.fbx",
+      "sha256": "93d5c0495ea76c231309a1e5176da06e53140635e9030461b902aeaac4c9e045",
+      "frames": 47,
+      "fps": 30,
+      "duration": 1.5333333333333334
+    },
+    "DodgeForward": {
+      "source": "Jump Forward.fbx",
+      "sha256": "7b0a8593d27cc2c7624ca59929b818e830dad3f943611a9b3c30f316e711524c",
+      "frames": 28,
+      "fps": 30,
+      "duration": 0.9
+    },
+    "DodgeStanding": {
+      "source": "Jumping.fbx",
+      "sha256": "e5c63fc207e6c8bedf0e1ceedaedbb6c9749db9063cfabf3c72b352e213208e3",
+      "frames": 87,
+      "fps": 30,
+      "duration": 2.8666666666666667
+    },
+    "Death": {
+      "source": "Death.fbx",
+      "sha256": "093c5ba0884a54d3bf552e7d0e307984c6e7e76d3b533350965f9967d718ecf0",
+      "frames": 92,
+      "fps": 30,
+      "duration": 3.033333333333333
+    },
+    "DeathRifle": {
+      "source": "Rifle Death.fbx",
+      "sha256": "ee4f0c9267e4b1c230f84e4ee82cc785cfebdb88b57004ceefc8f4a048319e3f",
+      "frames": 115,
+      "fps": 30,
+      "duration": 3.8
+    }
+  },
+  "vertices": 1243,
+  "triangles": 2398,
+  "bones": 48,
+  "output_sha256": "05065568f5740dc741debb916162915d9151a4ec8b93ea00fbf5f8515bcc1ea8"
+}

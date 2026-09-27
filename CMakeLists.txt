@@ -27,7 +27,8 @@ add_library(deathward_core
     src/combat/Navigation.cpp
     src/items/Items.cpp
 )
-target_include_directories(deathward_core PUBLIC src ${raylib_SOURCE_DIR}/src)
+target_include_directories(deathward_core PUBLIC src)
+target_include_directories(deathward_core SYSTEM PUBLIC ${raylib_SOURCE_DIR}/src)
 if(MSVC)
     target_compile_options(deathward_core PRIVATE /W4 /permissive-)
 else()
@@ -38,8 +39,19 @@ if(DEATHWARD_SANITIZERS AND NOT MSVC)
     target_link_options(deathward_core PUBLIC -fsanitize=address,undefined)
 endif()
 
-add_executable(deathward src/main.cpp src/render/Renderer.cpp src/core/Game.cpp)
+function(deathward_player_asset target)
+    set(bandit_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/bandit/bandit.glb")
+    target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${bandit_asset}")
+    add_custom_command(TARGET ${target} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/bandit"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${bandit_asset}" "$<TARGET_FILE_DIR:${target}>/assets/bandit/bandit.glb"
+        VERBATIM)
+endfunction()
+
+add_executable(deathward src/main.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
+deathward_player_asset(deathward)
 if(NOT MSVC)
     target_compile_options(deathward PRIVATE -Wall -Wextra -Wpedantic)
 endif()
@@ -58,6 +70,10 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
     add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
-    add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp)
+    add_executable(deathward_input_tests tests/input_tests.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)
+    deathward_player_asset(deathward_input_tests)
+    add_executable(deathward_player_model_tests tests/player_model_tests.cpp src/render/PlayerModel.cpp)
+    target_link_libraries(deathward_player_model_tests PRIVATE deathward_core raylib)
+    deathward_player_asset(deathward_player_model_tests)
 endif()

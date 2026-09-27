@@ -1,4 +1,5 @@
 #include "core/Game.hpp"
+#include "render/PlayerModel.hpp"
 #include <charconv>
 #include <chrono>
 
@@ -81,6 +82,7 @@ void Game::launch() {
     campaign.begin(seed);
     run = std::move(candidate);
     screen = Screen::Expedition;
+    deathTime = 0;
     paused = false;
     accumulator = 0;
     error.clear();
@@ -116,7 +118,7 @@ void Game::resetPointerInput() {
 }
 void Game::close() {
     if (run)
-        finish(EndReason::Retreat);
+        finish(run->dead ? EndReason::Death : EndReason::Retreat);
     quit = true;
 }
 void Game::perform(Action action) {
@@ -328,6 +330,14 @@ void Game::update(float dt) {
         }
         if (!run)
             return;
+        if (run->dead) {
+            resetPointerInput();
+            deathTime += std::min(dt, 0.1f);
+            if (deathTime >= PlayerDeathSeconds)
+                finish(EndReason::Death);
+            return;
+        }
+        deathTime = 0;
         if (IsKeyPressed(KEY_ESCAPE))
             paused = !paused;
         if (paused) {
@@ -439,9 +449,7 @@ void Game::update(float dt) {
                 break;
         }
         checkpoint();
-        if (run->dead)
-            finish(EndReason::Death);
-        else if (run->finished)
+        if (run->finished && !run->dead)
             finish(EndReason::Victory);
         updateCamera(dt);
     } catch (const std::exception &e) {

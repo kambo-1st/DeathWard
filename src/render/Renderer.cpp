@@ -316,7 +316,8 @@ bool Renderer::button(const std::string &title, float x, float y, float w, float
     return hover && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
 }
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
-                         EntityId hoveredEnemy) {
+                         EntityId hoveredEnemy, float deathTime) {
+    playerModel_.update(run, deathTime);
     BeginMode3D(camera);
     DrawPlane({camera.target.x, -0.5f, camera.target.z}, {180, 180}, Color{26, 29, 28, 255});
     auto visible = [&](Box box) {
@@ -464,8 +465,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
     for (const auto &hazard : run.hazards)
         drawHazard(hazard);
-    cowboy(run.player.position, unit(sub(run.player.aim, run.player.position)),
-           run.player.hurt > 0 ? Rust : Color{90, 145, 137, 255}, 1);
+    if (playerModel_.loaded()) {
+        shadow(run.player.position, 0.65f);
+        if (!run.dead)
+            DrawCircle3D({run.player.position.x, 0.06f, run.player.position.z}, 0.65f, {1, 0, 0}, 90, Teal);
+        playerModel_.draw(run);
+    } else
+        cowboy(run.player.position, run.player.facing, run.player.hurt > 0 ? Rust : Color{90, 145, 137, 255},
+               1);
     if (run.player.dodge > 0)
         DrawSphereWires(run.player.position, 0.9f, 5, 8, Teal);
     for (const auto &p : run.projectiles) {
@@ -629,7 +636,7 @@ void Renderer::dungeonMap(const Game &game) {
 }
 Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
-    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy);
+    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime);
     panel(24, 22, 358, 90, Panel);
     text("RED HOLLOW / " + std::to_string(run.room + 1) + " OF " + std::to_string(RoomCount), 42, 35, 12,
          Gold);
@@ -677,7 +684,7 @@ Action Renderer::expedition(const Game &game) {
     text(run.player.dodgeCooldown <= 0 ? "DODGE READY" : "DODGE RECOVERING", 397, 752, 12, Muted);
     text(game.debug ? "F1 / CHEATS ON" : "F1 / CHEATS", 806, 752, 12, game.debug ? Teal : Gold);
     Action controls = Action::None;
-    if (!game.paused && !run.rewardOpen) {
+    if (!game.paused && !run.rewardOpen && !run.dead) {
         const std::string interaction = run.nearbyInteraction();
         if (!interaction.empty()) {
             if (button(interaction, 396, 690, 186, 44, true))

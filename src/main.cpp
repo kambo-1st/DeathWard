@@ -185,6 +185,7 @@ int main(int argc, char **argv) {
                       << " draw_ms=" << drawMs / frame << " present_ms=" << presentMs / frame << '\n';
         }
         game.close();
+        renderer.unload();
         CloseWindow();
         return 0;
     } catch (const std::exception &e) {

@@ -13,6 +13,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world)
     followup = world.bossDefeated;
     player.position = arena.entrance;
     player.aim = arena.rooms[0].center;
+    player.facing = unit(sub(player.aim, player.position));
     enemies.reserve(256);
     projectiles.reserve(4096);
     for (int index = 0; index < RoomCount; ++index) {
@@ -103,6 +104,8 @@ void Simulation::enterRoom(int index) {
     projectiles.clear();
     clearHazards();
     player.pullTime = 0;
+    player.velocity = {};
+    player.shootPose = 0;
     queue_.clear();
     chains.clear();
     enemies.clear();
@@ -229,6 +232,8 @@ void Simulation::healDebug() {
     player.hp = player.maxHp;
     player.hurt = player.dodge = player.dodgeCooldown = player.fireCooldown = 0;
     player.pullTime = 0;
+    player.velocity = {};
+    player.shootPose = 0;
     announce("CHEAT / full health and cooldowns reset");
 }
 void Simulation::clearRoomDebug() {
@@ -529,11 +534,13 @@ void Simulation::collectChains() {
     }
 }
 void Simulation::updatePlayer(const Input &input, float dt) {
+    const Vector3 previousPosition = player.position;
     player.aim = input.aim;
     player.aim.y = player.position.y;
     player.fireCooldown = std::max(0.0f, player.fireCooldown - dt);
     player.dodgeCooldown = std::max(0.0f, player.dodgeCooldown - dt);
     player.hurt = std::max(0.0f, player.hurt - dt);
+    player.shootPose = std::max(0.0f, player.shootPose - dt);
     Vector3 movement = input.movement;
     if (input.fire || input.standStill)
         cancelMove(); // Attacking never continues an old click-to-move order.
@@ -566,6 +573,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         }
     }
     if (input.dodge && player.dodgeCooldown <= 0) {
+        player.dodgeMoving = length(movement) > 0.1f;
         player.dodge = 0.22f;
         player.dodgeCooldown = 1.1f;
         player.dodgeDirection =
@@ -589,6 +597,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         }
     }
     if (input.fire && player.fireCooldown <= 0) {
+        player.shootPose = 0.32f;
         player.fireCooldown = 0.29f;
         ++stats.shots;
         Event e;
@@ -600,6 +609,13 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         queueRoot(e);
         effectVisual(e.position, 0.35f, 3, 0.09f);
     }
+    player.velocity = mul(sub(player.position, previousPosition), 1 / dt);
+    if (player.dodge > 0)
+        player.facing = player.dodgeDirection;
+    else if (input.fire || player.shootPose > 0)
+        player.facing = unit(sub(player.aim, player.position));
+    else if (length(player.velocity) > 0.1f)
+        player.facing = unit(player.velocity);
     if (input.interact)
         interact();
 }

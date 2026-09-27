@@ -34,6 +34,7 @@ class Game {
     bool debugPanelOpen = false;
     int selectedItem = 0, historyIndex = 0, selectedFlag = 0;
     float accumulator = 0;
+    float deathTime = 0;
     EntityId hoveredEnemy = 0;
     void update(float dt);
     void perform(Action action);

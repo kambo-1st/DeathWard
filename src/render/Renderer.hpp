@@ -1,14 +1,20 @@
 #pragma once
 #include "core/Game.hpp"
+#include "render/PlayerModel.hpp"
 
 namespace dw {
 class Renderer {
   public:
     Action draw(const Game &game);
-    void drawWorld(const Simulation &run, const Camera3D &camera, bool collisions, EntityId hoveredEnemy = 0);
+    void drawWorld(const Simulation &run, const Camera3D &camera, bool collisions, EntityId hoveredEnemy = 0,
+                   float deathTime = 0);
+    void unload() {
+        playerModel_.unload();
+    }
 
   private:
     float sx_ = 1, sy_ = 1;
+    PlayerModel playerModel_;
     void text(const std::string &value, float x, float y, int size, Color color) const;
     void wrap(const std::string &value, float x, float y, float width, int size, Color color) const;
     void panel(float x, float y, float w, float h, Color color) const;
