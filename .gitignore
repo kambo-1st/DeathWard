@@ -1,0 +1,6 @@
+/build*/
+/artifacts/
+*.tmp
+*.save
+*.save.bak
+*:Zone.Identifier
