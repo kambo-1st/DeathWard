@@ -458,6 +458,7 @@ void WesternScene::drawOccluders() {
                 rlEnableBackfaceCulling();
         }
     }
+    drawTerrainOutlines();
     rlEnableDepthMask();
 }
 } // namespace dw

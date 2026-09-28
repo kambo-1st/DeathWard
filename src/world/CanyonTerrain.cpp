@@ -44,11 +44,11 @@ float CanyonTerrain::height(float px, float pz) const {
     return u >= v ? a + u * (b - a) + v * (d - b) : a + v * (c - a) + u * (d - c);
 }
 bool CanyonTerrain::blocked(Vector3 p, float radius) const {
-    if (height(p.x, p.z) > .12f)
+    if (height(p.x, p.z) > WalkableHeight)
         return true;
     for (int n = 0; n < 8; ++n) {
         const float angle = float(n) * Pi / 4;
-        if (height(p.x + radius * std::cos(angle), p.z + radius * std::sin(angle)) > .12f)
+        if (height(p.x + radius * std::cos(angle), p.z + radius * std::sin(angle)) > WalkableHeight)
             return true;
     }
     return false;

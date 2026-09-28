@@ -1,5 +1,11 @@
 # Milestone 1 verification
 
+## Canyon boundary outlines
+
+Faded canyon walls and outcrops retain a thin gray contour at the edge of the playable ground. The contour uses the same walkable-height threshold as terrain collision and follows the original triangles. It draws after translucent scenery with depth testing, so the player and opaque objects still cover it. Only faded canyon sections receive the line.
+
+The Release build, mission-theme checks, occlusion graphics suite and Western asset/terrain suite pass. Close/wide captures were visually reviewed to confirm that the boundary stays readable through the faded cliff and the player remains visible. Logs and before/after captures use `artifacts/canyon-outline-*`.
+
 ## Player visibility through scenery
 
 Town objects that obstruct body/head/shoulder sight rays render in full at 22% opacity, including every material section. Normal scenery stays in its instanced opaque batch; obstructing objects draw afterward without depth writes. The same behavior applies to mine props and complete canyon rock outcrops or basin-wall sections, including props supported by those sections. Canyon terrain and its props share a back-to-front translucent pass after actors. Floor meshes remain opaque, and a textured sand underlay prevents holes beneath faded mesas. Original collision and terrain heights stay intact. Scenery restores automatically when it no longer obstructs the player; the editor uses the full scene.

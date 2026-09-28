@@ -6,6 +6,7 @@ struct Arena;
 // One triangulated height field supplies both the visible rock and its collision.
 // Heights are world-space meters; cells split along their NW-to-SE diagonal.
 struct CanyonTerrain {
+    static constexpr float WalkableHeight = .12f;
     float x = 0, z = 0, step = 1.25f;
     int width = 0, depth = 0;
     std::vector<float> heights;

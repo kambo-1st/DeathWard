@@ -372,7 +372,7 @@ int Arena::roomAt(Vector3 p) const {
 }
 bool Arena::contains(Vector3 p) const {
     if (canyon)
-        return canyon->height(p.x, p.z) <= .12f;
+        return canyon->height(p.x, p.z) <= CanyonTerrain::WalkableHeight;
     if (floorCells.empty())
         return inside(p, bounds);
     return floorCells.contains({int(std::floor(p.x / FloorTile)), int(std::floor(p.z / FloorTile))});

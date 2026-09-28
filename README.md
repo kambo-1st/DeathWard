@@ -91,7 +91,7 @@ Hold the middle mouse button and drag to orbit the camera in town or a mission. 
 
 Mouse-wheel zoom moves smoothly between a close character view and a wider room view while preserving the camera angle. Your chosen angle and zoom persist between rooms, town and expeditions during the session. Scrolling over the HUD controls, map or open cheat panel, or while paused or choosing a power, does not change zoom.
 
-In both towns, an entire rock or building object becomes semi-transparent when it blocks the player. Canyon wall sections and rock outcrops use the same 22% opacity, including props resting on them. Scenery returns to full opacity when the camera has a clear view. Playable floors and collision stay intact; this is a rendering effect.
+In both towns, an entire rock or building object becomes semi-transparent when it blocks the player. Canyon wall sections and rock outcrops use the same 22% opacity, including props resting on them. A thin gray line follows the ground boundary of faded canyon rock so you can still see where the playable floor ends. Scenery returns to full opacity when the camera has a clear view. Playable floors and collision stay intact; this is a rendering effect.
 
 A small FPS counter in the top-right corner shows the rendering frame rate on every screen. In hubs and missions, the current camera zoom appears beside it. New sessions start at **160% zoom**; 100% remains the reference scale, higher percentages are closer, and lower percentages are wider. The value follows the camera smoothly as you scroll. Your chosen zoom carries between hubs and missions for the session.
 

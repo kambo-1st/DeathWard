@@ -96,6 +96,7 @@ class WesternScene {
     struct TerrainChunk {
         Mesh mesh{};
         Box bounds{};
+        std::vector<std::array<Vector3, 2>> floorOutline;
         bool rock = false, faded = false;
     };
     std::vector<TerrainChunk> terrain_;
@@ -108,6 +109,7 @@ class WesternScene {
     void clearTerrain();
     void generateCanyon(const Arena &arena);
     void drawTerrain(Vector3 focus);
+    void drawTerrainOutlines();
     void generate(const Arena &arena);
     void drawBatches(bool transparent);
 };

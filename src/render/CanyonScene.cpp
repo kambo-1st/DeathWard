@@ -209,8 +209,24 @@ void WesternScene::generateCanyon(const Arena &arena) {
         const auto bounds = GetMeshBoundingBox(chunk.mesh);
         chunk.bounds = {bounds.min, bounds.max};
         chunk.rock = key >= 0;
+        if (chunk.rock)
+            for (const auto &triangle : triangles) {
+                // Intersect the actual terrain with its walkable-height contour. This follows
+                // irregular basin edges and outcrops without drawing mesh or section seams.
+                std::array<Vector3, 2> edge{};
+                int crossings = 0;
+                for (int i = 0; i < 3; ++i) {
+                    const auto a = triangle[size_t(i)], b = triangle[size_t((i + 1) % 3)];
+                    constexpr float level = CanyonTerrain::WalkableHeight;
+                    if ((a.y > level) != (b.y > level))
+                        edge[size_t(crossings++)] =
+                            add(add(a, mul(sub(b, a), (level - a.y) / (b.y - a.y))), {0, .025f, 0});
+                }
+                if (crossings == 2 && distance(edge[0], edge[1]) > .001f)
+                    chunk.floorOutline.push_back(edge);
+            }
         sectionIndices[key] = int(terrain_.size());
-        terrain_.push_back(chunk);
+        terrain_.push_back(std::move(chunk));
     }
     for (auto &key : terrainSections_)
         key = key < 0 ? -1 : sectionIndices.at(key);
@@ -302,5 +318,20 @@ void WesternScene::drawTerrain(Vector3 focus) {
         if (!chunk.faded && distance(closest, focus) < 110)
             DrawMesh(chunk.mesh, terrainMaterial_, MatrixIdentity());
     }
+}
+void WesternScene::drawTerrainOutlines() {
+    if (terrain_.empty())
+        return;
+    // Draw after faded rock so the ground boundary remains legible through its surface.
+    // Keep depth testing: opaque scenery and the character still cover the line normally.
+    const float lineWidth = rlGetLineWidth();
+    rlDrawRenderBatchActive();
+    rlSetLineWidth(2);
+    for (const auto &section : terrain_)
+        if (section.faded)
+            for (const auto &edge : section.floorOutline)
+                DrawLine3D(edge[0], edge[1], {106, 112, 117, 220});
+    rlDrawRenderBatchActive();
+    rlSetLineWidth(lineWidth);
 }
 } // namespace dw
