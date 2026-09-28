@@ -128,7 +128,7 @@ int main() {
             check(sizes.size() == dw::RoomCount && shapes.size() == 4,
                   "every expedition varies room sizes and footprints");
             const auto initiallyReachable = reachable(arena);
-            int powers = 0, empty = 0, locked = 0, maxDegree = 0;
+            int powers = 0, empty = 0, shops = 0, locked = 0, maxDegree = 0;
             for (int i = 0; i < dw::RoomCount; ++i) {
                 const auto &room = arena.rooms[size_t(i)];
                 maxDegree = std::max(maxDegree, int(room.passages.size()));
@@ -136,7 +136,10 @@ int main() {
                     ++powers;
                 if (room.kind == dw::RoomKind::Empty)
                     ++empty;
-                if (room.kind == dw::RoomKind::Combat || room.kind == dw::RoomKind::Empty)
+                if (room.kind == dw::RoomKind::Shop)
+                    ++shops;
+                if (room.kind == dw::RoomKind::Combat || room.kind == dw::RoomKind::Empty ||
+                    room.kind == dw::RoomKind::Shop)
                     check(initiallyReachable.contains(i),
                           "combat and empty rooms are accessible without spending a key");
                 else {
@@ -145,6 +148,7 @@ int main() {
                 }
             }
             check(powers >= 1 && powers <= 2, "one or two separate power rooms");
+            check(shops == 1, "exactly one unlocked shop room");
             check(empty >= 1 && empty <= 2, "one or two additional enemy-free rooms");
             check(arena.rooms[0].kind == dw::RoomKind::Empty,
                   "the starting room is enemy-free for every seed");

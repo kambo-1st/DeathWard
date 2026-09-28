@@ -455,14 +455,15 @@ void testLoop() {
             run.chooseReward(1);
             check(!run.rewardOpen && run.items.size() == before + 1,
                   "one power per cache; repeat interactions give nothing");
-        } else if (run.arena.rooms[size_t(room)].kind == dw::RoomKind::Empty) {
+        } else if (run.arena.rooms[size_t(room)].kind == dw::RoomKind::Empty ||
+                   run.arena.rooms[size_t(room)].kind == dw::RoomKind::Shop) {
             const auto cleared = run.stats.rooms;
             tick(run, 600);
             check(run.roomClear && run.livingEnemies() == 0 && !run.rewardOpen && run.items.size() == before,
-                  "empty rooms stay peaceful without enemies or power rewards");
+                  "empty and shop rooms stay peaceful without enemies or free power rewards");
             run.enterRoom(room);
             check(run.player.hp == 30 && run.stats.rooms == cleared,
-                  "revisiting an empty room preserves health and room completion");
+                  "revisiting a peaceful room preserves health and room completion");
         } else {
             check(run.livingEnemies() > 0, "one enemy group is present immediately on room entry");
             run.killAll();

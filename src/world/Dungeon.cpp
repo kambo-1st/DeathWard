@@ -323,6 +323,16 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme) : visualSeed(seed), theme
     rooms.front().kind = RoomKind::Empty;
     for (int i = 1; i < quietCount; ++i)
         rooms[size_t(quietRooms[size_t(i - 1)])].kind = RoomKind::Empty;
+    // Convert one ordinary room in the unlocked network into a peaceful shop.
+    // Preserve the entrance, objective rooms, key sites and separate power caches.
+    std::vector<int> shopSites;
+    for (int i = 4; i < RoomCount; ++i)
+        if (rooms[size_t(i)].kind == RoomKind::Combat &&
+            std::none_of(keys.begin(), keys.end(), [i](const auto &key) { return key.room == i; }))
+            shopSites.push_back(i);
+    Random shop(seed ^ 0x53484f50524f4f4dULL);
+    shopRoom = shopSites.at(shop.bounded(uint32_t(shopSites.size())));
+    rooms[size_t(shopRoom)].kind = RoomKind::Shop;
     rebuildWalls();
     if (theme == MissionTheme::Canyon)
         buildCanyon(*this);

@@ -35,6 +35,7 @@ add_library(deathward_core
     src/world/RoomGraph.cpp
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
+    src/combat/Shop.cpp
     src/combat/Enemies.cpp
     src/combat/Encounters.cpp
     src/combat/Monsters.cpp
@@ -126,6 +127,9 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_shop_tests tests/shop_tests.cpp)
+    target_link_libraries(deathward_shop_tests PRIVATE deathward_core)
+    add_test(NAME mission_shop COMMAND deathward_shop_tests)
     add_executable(deathward_money_tests tests/money_tests.cpp)
     target_link_libraries(deathward_money_tests PRIVATE deathward_core)
     add_test(NAME money_pickups COMMAND deathward_money_tests)

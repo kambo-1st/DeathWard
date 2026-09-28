@@ -16,8 +16,100 @@ constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
 }
+void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme theme) {
+    const std::string name = theme == dw::MissionTheme::Canyon ? "canyon" : "mine";
+    dw::Game game(directory / ("shop-" + name + ".save"));
+    game.campaign.begin(1);
+    auto funding = *game.campaign.data().pending;
+    funding.moneyCollected = 100;
+    game.campaign.resolve(funding, dw::EndReason::Victory);
+    game.seedText = "1866";
+    game.themeChoice = theme == dw::MissionTheme::Canyon ? dw::ThemeChoice::Canyon : dw::ThemeChoice::Mine;
+    game.launch();
+    auto &run = *game.run;
+    run.jumpDebug(run.arena.shopRoom);
+    const auto merchant = run.arena.rooms[size_t(run.room)].objective;
+    run.player.position =
+        dw::add(merchant, dw::mul(dw::unit(dw::sub(run.arena.rooms[size_t(run.room)].center, merchant)), 4));
+    run.player.hp = 55;
+    game.updateCamera(10);
+    dw::Renderer renderer;
+    const dw::Game::SceneryPicker picker = [&](const auto &simulation, const auto &camera, Ray ray) {
+        return renderer.pickScenery(simulation, camera, ray);
+    };
+    auto frame = [&](int x = 10, int y = 10, bool left = false, bool right = false) {
+        mouseEvent(MousePosition, x, y);
+        mouseEvent(left ? MouseDown : MouseUp, MOUSE_BUTTON_LEFT);
+        mouseEvent(right ? MouseDown : MouseUp, MOUSE_BUTTON_RIGHT);
+        game.update(dw::Tick, picker);
+        BeginDrawing();
+        const auto action = renderer.draw(game);
+        EndDrawing();
+        game.perform(action);
+        check(game.error.empty(), "shop input does not cause a game error");
+    };
+    auto click = [&](int x, int y) {
+        frame(x, y);
+        frame(x, y, true);
+        frame(x, y);
+    };
+    auto capture = [&](const std::string &stage) {
+        BeginDrawing();
+        renderer.draw(game);
+        rlDrawRenderBatchActive();
+        const auto image = LoadImageFromScreen();
+        std::filesystem::create_directories("artifacts");
+        check(ExportImage(image, ("artifacts/shop-" + name + "-" + stage + ".png").c_str()),
+              "save the shop capture");
+        UnloadImage(image);
+        EndDrawing();
+    };
+    frame();
+    capture("merchant");
+    const auto pixel = GetWorldToScreen(dw::add(merchant, {0, .8f, 0}), game.camera);
+    click(int(pixel.x), int(pixel.y));
+    for (int i = 0; i < 240 && !run.shopOpen; ++i)
+        frame();
+    check(run.shopOpen && run.enemies.empty() && run.stats.shots == 0,
+          "clicking the actual shopkeeper approaches and opens trade without shooting");
+    const auto position = run.player.position;
+    const auto duration = run.stats.duration;
+    mouseEvent(KeyDown, KEY_W);
+    for (int i = 0; i < 10; ++i)
+        frame(600, 700, true, true);
+    mouseEvent(KeyUp, KEY_W);
+    frame();
+    check(game.pointerOverControls() && dw::distance(position, run.player.position) == 0 &&
+              run.stats.duration == duration && run.stats.shots == 0,
+          "the trade window captures gameplay mouse/key input and freezes the world");
+    click(330, 535);
+    check(run.player.hp == 95 && run.money() == 90 && run.shopOffers[0].sold,
+          "the medicine buy button heals and charges its displayed price");
+    click(630, 535);
+    check(run.money() == 65 && run.items.size() == 1 && game.campaign.data().pending->moneySpent == 35,
+          "the power buy button applies its item and checkpoints spending immediately");
+    click(630, 535);
+    check(run.money() == 65 && run.items.size() == 1, "sold-out buttons do not charge again");
+    capture("stock");
+    click(925, 610);
+    check(!run.shopOpen && run.stats.shots == 0, "leaving the shop never fires through the panel");
+    mouseEvent(KeyDown, KEY_E);
+    frame();
+    mouseEvent(KeyUp, KEY_E);
+    frame();
+    check(run.shopOpen && run.shopOffers[1].sold, "reopening preserves sold stock");
+    mouseEvent(KeyDown, KEY_ESCAPE);
+    frame();
+    mouseEvent(KeyUp, KEY_ESCAPE);
+    frame();
+    check(!run.shopOpen && !game.paused, "Escape closes trade without opening Pause");
+    game.finish(dw::EndReason::Retreat);
+    check(game.campaign.data().world.money == 65, "returning from the shop preserves the wallet debit");
+    std::cout << "PASS " << name
+              << " shopkeeper approach, purchases, UI guards, closing and saved spending\n";
+}
 } // namespace
-int main() {
+int main(int argc, char **argv) {
     const auto directory =
         std::filesystem::temp_directory_path() /
         ("deathward-input-" + std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
@@ -28,6 +120,13 @@ int main() {
         check(IsWindowReady(), "a graphics display is required for input verification");
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
+        for (auto theme : {dw::MissionTheme::Mine, dw::MissionTheme::Canyon})
+            shopInputCheck(directory, theme);
+        if (argc > 1 && std::string(argv[1]) == "--shop-only") {
+            CloseWindow();
+            std::filesystem::remove_all(directory);
+            return 0;
+        }
         dw::Game game(directory / "campaign.save");
         check(game.musicScene() == dw::MusicScene::Town, "default hub selects its town score");
         dw::Renderer renderer;

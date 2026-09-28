@@ -69,7 +69,7 @@ void Simulation::updateMoney(float dt) {
             distance(player.position, coin.position) > 1.25f ||
             !arena.clear(player.position, coin.position, .1f))
             continue;
-        const auto amount = std::min(uint64_t(coin.value), MaxMoney - money());
+        const auto amount = std::min({uint64_t(coin.value), MaxMoney - money(), MaxMoney - moneyCollected});
         if (!amount)
             continue;
         moneyCollected += amount;

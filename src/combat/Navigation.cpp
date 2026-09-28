@@ -186,7 +186,10 @@ void Simulation::cancelMove() {
 void Simulation::requestMove(Vector3 target) {
     target.y = player.position.y;
     cancelMove();
-    if (!rescued && distance(target, arena.miners) < 2.4f) {
+    if (room == arena.shopRoom && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
+        target = arena.rooms[size_t(room)].objective;
+        interactOnArrival_ = true;
+    } else if (!rescued && distance(target, arena.miners) < 2.4f) {
         target = arena.miners;
         interactOnArrival_ = true;
     } else if (!altarDestroyed && distance(target, arena.altar) < 2.4f) {
@@ -207,6 +210,9 @@ void Simulation::requestMove(Vector3 target) {
     }
 }
 std::string Simulation::nearbyInteraction() const {
+    if (room == arena.shopRoom && distance(player.position, arena.rooms[size_t(room)].objective) <= 2.6f &&
+        arena.sight(player.position, arena.rooms[size_t(room)].objective))
+        return "TRADE";
     if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
         distance(player.position, arena.rooms[size_t(room)].objective) < 2.6f)
         return "CLAIM POWER";

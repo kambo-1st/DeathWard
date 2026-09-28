@@ -111,7 +111,7 @@ void Simulation::spawnEnemies(int count) {
 
 int Simulation::roomEnemyCount(int index) const {
     const auto &layout = arena.rooms.at(size_t(index));
-    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power)
+    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop)
         return 0;
     if (layout.kind == RoomKind::Boss && arena.theme == MissionTheme::Mine && !followup)
         return 1;
@@ -157,7 +157,7 @@ void Simulation::prepareRoomEnemies(int index) {
 
 void Simulation::spawnRoomEnemies() {
     const auto &layout = arena.rooms[size_t(room)];
-    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power)
+    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop)
         return;
     if (room == FinalRoom && arena.theme == MissionTheme::Mine && !followup) {
         spawn(EnemyKind::Boss, layout.bossSpawn);

@@ -28,6 +28,7 @@ struct RunSummary {
     bool rescued = false, bossKilled = false, altarDestroyed = false, interrupted = false;
     Stats stats;
     uint64_t moneyCollected = 0;
+    uint64_t moneySpent = 0;
     std::vector<ItemId> items;
     std::vector<std::string> consequences;
 };

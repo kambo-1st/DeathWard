@@ -10,7 +10,7 @@ namespace dw {
 inline constexpr int RoomCount = 15;
 inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
-enum class RoomKind { Combat, Power, Boss, Empty };
+enum class RoomKind { Combat, Power, Boss, Empty, Shop };
 struct RoomGraph {
     std::array<FloorCell, RoomCount> cells{};
     std::vector<std::array<int, 2>> links;
@@ -55,6 +55,7 @@ struct Arena {
     std::array<RoomLayout, RoomCount> rooms{};
     std::vector<Passage> passages;
     std::vector<KeyPickup> keys;
+    int shopRoom = -1;
     std::vector<Box> floors, boundaryWalls, obstacles, walls;
     std::set<FloorCell> floorCells;
     Vector3 entrance{0, 0.85f, 10}, exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};

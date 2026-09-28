@@ -165,6 +165,11 @@ struct MoneyPickup {
     float age = 0;
     bool dropped = false;
 };
+struct ShopOffer {
+    ItemId item = ItemId::Ricochet;
+    int price = 25;
+    bool medicine = false, sold = false;
+};
 
 class Simulation {
   public:
@@ -181,6 +186,9 @@ class Simulation {
     std::vector<Hazard> hazards;
     std::vector<MoneyPickup> moneyPickups;
     uint64_t moneyCollected = 0;
+    uint64_t moneySpent = 0;
+    std::array<ShopOffer, 3> shopOffers{};
+    bool shopOpen = false;
     AudioCueQueue audioCues;
     uint64_t audioEpoch = 0;
     std::vector<ItemId> items;
@@ -220,6 +228,10 @@ class Simulation {
     void tunePlayer(float baseHealth, float shotDamage);
     void startStress();
     void interact();
+    void openShop();
+    void closeShop();
+    bool buyShop(int index);
+    std::string shopUnavailable(int index) const;
     std::string nearbyInteraction() const;
     std::optional<Vector3> moveDestination() const {
         return movePath_.empty() ? std::nullopt : std::optional<Vector3>(movePath_.back());
@@ -227,7 +239,7 @@ class Simulation {
     void finishDebug(bool victory);
     RunSummary summary() const;
     uint64_t money() const {
-        return startingWorld_.money + moneyCollected;
+        return startingWorld_.money + moneyCollected - moneySpent;
     }
     size_t livingEnemies() const;
     size_t queuedEvents() const {
@@ -307,5 +319,6 @@ class Simulation {
     void prepareMoney();
     void dropMoney(const Enemy &enemy);
     void updateMoney(float dt);
+    void prepareShop();
 };
 } // namespace dw

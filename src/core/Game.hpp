@@ -44,7 +44,11 @@ enum class Action {
     MusicDown,
     MusicUp,
     AudioMute,
-    AudioTest
+    AudioTest,
+    BuyShop0,
+    BuyShop1,
+    BuyShop2,
+    CloseShop
 };
 class Game {
   public:

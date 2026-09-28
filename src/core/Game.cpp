@@ -65,9 +65,13 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
                     result.objective.reset();
                     result.door = std::pair{int(i), side};
                 }
-    // Small visible pickups take priority over the generous passage click area.
+    // Visible pickups and the shopkeeper take priority over passage click areas.
     // Keep opaque scenery and actual interaction objects in front of them solid.
     nearest = objectiveDistance;
+    if (run.arena.shopRoom >= 0 && hits(run.arena.rooms[size_t(run.arena.shopRoom)].objective, .9f, 2.8f)) {
+        result.objective = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
+        result.door.reset();
+    }
     for (const auto &coin : run.moneyPickups)
         if (hits(coin.position, .65f, 1.1f)) {
             result.objective = coin.position;
@@ -324,15 +328,27 @@ void Game::perform(Action action) {
             paused = false;
             break;
         case Action::Dodge:
-            if (run && !paused && !run->rewardOpen)
+            if (run && !paused && !run->rewardOpen && !run->shopOpen)
                 dodgeQueued_ = true;
             break;
         case Action::Interact:
-            if (run && !paused && !run->rewardOpen)
+            if (run && !paused && !run->rewardOpen && !run->shopOpen)
                 interactQueued_ = true;
             break;
         case Action::Retreat:
             finish(EndReason::Retreat);
+            break;
+        case Action::BuyShop0:
+        case Action::BuyShop1:
+        case Action::BuyShop2:
+            if (run && !paused && run->buyShop(int(action) - int(Action::BuyShop0)))
+                checkpoint();
+            break;
+        case Action::CloseShop:
+            if (run) {
+                run->closeShop();
+                resetPointerInput();
+            }
             break;
         case Action::Quit:
             close();
@@ -523,6 +539,8 @@ bool Game::pointerOverControls() const {
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
+    if (screen == Screen::Expedition && run && run->shopOpen)
+        return true;
     if (x >= 1040 && x <= 1256 && y >= 2 && y <= 20)
         return true;
     if (screen == Screen::Hub)
@@ -657,6 +675,18 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             return;
         }
         deathTime = 0;
+        if (run->shopOpen && !paused) {
+            resetPointerInput();
+            if (IsKeyPressed(KEY_ESCAPE))
+                perform(Action::CloseShop);
+            else if (IsKeyPressed(KEY_ONE))
+                perform(Action::BuyShop0);
+            else if (IsKeyPressed(KEY_TWO))
+                perform(Action::BuyShop1);
+            else if (IsKeyPressed(KEY_THREE))
+                perform(Action::BuyShop2);
+            return;
+        }
         if (IsKeyPressed(KEY_ESCAPE))
             paused = !paused;
         if (paused) {
@@ -779,7 +809,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             fireQueued_.reset();
             standStillQueued_ = false;
             dodgeQueued_ = interactQueued_ = false;
-            if (run->finished || run->dead || run->rewardOpen)
+            if (run->finished || run->dead || run->rewardOpen || run->shopOpen)
                 break;
         }
         checkpoint();

@@ -1,5 +1,17 @@
 # Milestone 1 verification
 
+## Seeded mission shop
+
+Content version `deathward-m1-24` adds one shop to every mine and canyon mission. A dedicated seed stream selects an ordinary room in the unlocked network, preserving the entrance, mission objectives, key sites, free power caches and separate quiet-room allowance. Shop rooms have no active or resident enemies. A shopkeeper and counter stand at the room's reachable objective; the map marks the room **S**. Click the merchant to approach and trade, or use the nearby Trade button.
+
+The three once-per-mission offers are medicine (up to 40 HP for 10 coins) and two distinct seeded power-ups (25 coins each). Full health, insufficient money, sold stock, full inventory, dead players and remote access cannot consume money. Trading freezes gameplay and captures mouse/keyboard controls. Escape or Leave Shop returns to play; revisits and debug room replay retain sold stock. Bought powers use the existing item effects and expire with the expedition.
+
+Save format 3 adds run spending alongside earnings. Purchases immediately checkpoint their debit, and all mission outcomes—including interrupted-run recovery—settle the remaining balance once. Format 1 and 2 saves migrate without losing existing wallet balances or pending earnings. Summary/history displays the amount spent.
+
+Native and WebAssembly Release builds pass. All eleven headless suites pass. The new shop suite covers both themes, seeded placement and stock, key-free reachability, peaceful residents, purchase guards, healing limits, item effects, simulation pause, revisits, independent RNG, all four outcomes, recovery idempotence and format-2 migration. Existing money checks retain format-1 migration coverage. Native shop input checks pass in both themes through actual raylib mouse and keyboard events, including merchant approach, purchases, immediate checkpoints, sold-out buttons, modal input capture and closing without firing. Merchant and stock-window captures under `artifacts/shop-*` were visually reviewed.
+
+The full native input suite also passes. Chromium verifies the empty shop, actual merchant click/approach, movement capture, unaffordable mouse/keyboard purchases, leaving and reopening, and Escape without Pause. Existing browser hub, combat, currency, audio, editor and reload checks pass with no reported JavaScript or WebGL errors. The browser shop capture was visually reviewed. The refreshed `dist/deathward-web.zip` passes archive integrity, manifest hash and current-WASM checks.
+
 ## Ground money, enemy drops and saved wallet
 
 Content version `deathward-m1-23` adds seeded room-floor coin piles and a 35% chance for eligible enemy deaths to drop 1–5 coins. Ground placement uses a dedicated stream; drop rolls use seed/entity identity, so kill order and combat randomness do not affect loot. Placement checks walkable ground and room routes; airborne deaths relocate drops onto nearby clear ground. Drops bounce for 0.45 seconds before collection. Walking over or clicking to approach a pile collects it with pickup audio and a checkpoint. Solid cover blocks collection. Collected piles stay gone on room revisits. Friendly creatures, summoned offspring, permanent hazards and temporary collapses do not pay.

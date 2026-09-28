@@ -31,6 +31,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
         prepareRoomEnemies(index);
     enemies = std::move(rooms[0].residents);
     prepareMoney();
+    prepareShop();
     enterRoom(0);
     announce(std::string(missionTheme(theme).region) +
                  (followup ? " / return to unfinished business" : " / find the six missing miners"),
@@ -57,6 +58,8 @@ const Enemy *Simulation::boss() const {
     return nullptr;
 }
 std::string Simulation::roomName() const {
+    if (arena.rooms[size_t(room)].kind == RoomKind::Shop)
+        return "Trader's Rest";
     return roomName(room, arena.theme);
 }
 std::string Simulation::roomName(int index, MissionTheme theme) {
@@ -117,7 +120,7 @@ void Simulation::chooseReward(int index) {
     progress.rewardTaken = true;
     ++powerUpsTaken;
     grant(offers[size_t(index)]);
-    rewardOpen = false;
+    rewardOpen = shopOpen = false;
     announce("Power claimed. This cache is empty; explore another passage.", 4);
 }
 void Simulation::enterRoom(int index) {
@@ -132,7 +135,7 @@ void Simulation::enterRoom(int index) {
     auto &progress = rooms[size_t(room)];
     progress.visited = true;
     roomClear = progress.cleared;
-    rewardOpen = false;
+    rewardOpen = shopOpen = false;
     projectiles.clear();
     clearHazards();
     player.pullTime = 0;
@@ -143,16 +146,17 @@ void Simulation::enterRoom(int index) {
     pendingMonsters_.clear();
     visuals.clear();
     const auto kind = arena.rooms[size_t(room)].kind;
-    if (kind == RoomKind::Power || kind == RoomKind::Empty) {
+    if (kind == RoomKind::Power || kind == RoomKind::Empty || kind == RoomKind::Shop) {
         if (!progress.cleared) {
             progress.cleared = true;
             ++stats.rooms;
         }
         roomClear = true;
         arena.sealRoom(-1);
-        announce(kind == RoomKind::Empty ? "QUIET ROOM / no enemies. Explore the open passages."
-                 : progress.rewardTaken  ? "An empty power cache."
-                                         : "POWER CACHE / approach the pedestal and choose one item.",
+        announce(kind == RoomKind::Shop    ? "TRADER'S REST / approach the shopkeeper to trade."
+                 : kind == RoomKind::Empty ? "QUIET ROOM / no enemies. Explore the open passages."
+                 : progress.rewardTaken    ? "An empty power cache."
+                                           : "POWER CACHE / approach the pedestal and choose one item.",
                  5);
     } else if (!roomClear) {
         cancelMove();
@@ -284,7 +288,7 @@ void Simulation::clearRoomDebug() {
     queue_.clear();
     chains.clear();
     visuals.clear();
-    rewardOpen = debugScenario = false;
+    rewardOpen = shopOpen = debugScenario = false;
     if (room == FinalRoom)
         bossKilled = true;
     clearRoom();
@@ -332,7 +336,7 @@ void Simulation::startStress() {
     cancelMove();
     debugScenario = true;
     godMode = true;
-    rewardOpen = false;
+    rewardOpen = shopOpen = false;
     roomClear = false;
     enemies.clear();
     projectiles.clear();
@@ -358,6 +362,11 @@ void Simulation::startStress() {
 }
 void Simulation::interact() {
     cancelMove();
+    if (room == arena.shopRoom) {
+        openShop();
+        if (shopOpen)
+            return;
+    }
     collectKeys();
     if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
         distance(player.position, arena.rooms[size_t(room)].objective) < 2.6f) {
@@ -413,6 +422,7 @@ RunSummary Simulation::summary() const {
     s.stats = stats;
     s.items = items;
     s.moneyCollected = moneyCollected;
+    s.moneySpent = moneySpent;
     return s;
 }
 void Simulation::suppress(const Context &ctx, const std::string &reason) {
@@ -873,13 +883,15 @@ void Simulation::updateProjectiles(float dt) {
     std::erase_if(projectiles, [](const Projectile &p) { return !p.alive; });
 }
 void Simulation::step(const Input &input, float dt) {
-    if (rewardOpen || finished || dead)
+    if (rewardOpen || shopOpen || finished || dead)
         return;
     stats.duration += dt;
     if (boss() || (arena.theme == MissionTheme::Canyon && room == FinalRoom && !roomClear))
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);
     updatePlayer(input, dt);
+    if (shopOpen)
+        return;
     const int location = arena.roomAt(player.position);
     if (roomClear && location >= 0 && location != room) {
         const auto &bounds = arena.rooms[size_t(location)].bounds;

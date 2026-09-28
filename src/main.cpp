@@ -294,7 +294,8 @@ int main(int argc, char **argv) {
                                              : dw::AudioEnvironment::Mine;
                 audioFrame.player = game.run->player.position;
                 audioFrame.room = game.run->audioEpoch;
-                audioFrame.paused = audioFrame.paused || game.run->rewardOpen || game.run->dead;
+                audioFrame.paused =
+                    audioFrame.paused || game.run->rewardOpen || game.run->shopOpen || game.run->dead;
                 audioFrame.footsteps = game.run->player.dodge <= 0 && game.run->player.pullTime <= 0;
             }
             audio.update(audioFrame, game.audioSettings,
@@ -324,6 +325,14 @@ int main(int argc, char **argv) {
                 coinPixel = GetWorldToScreen(point, game.camera);
                 coinPixel.x *= 1280.f / float(GetScreenWidth());
                 coinPixel.y *= 800.f / float(GetScreenHeight());
+            }
+            Vector2 shopPixel{-1, -1};
+            if (game.run && game.run->arena.shopRoom >= 0) {
+                auto point = game.run->arena.rooms[size_t(game.run->arena.shopRoom)].objective;
+                point.y += .8f;
+                shopPixel = GetWorldToScreen(point, game.camera);
+                shopPixel.x *= 1280.f / float(GetScreenWidth());
+                shopPixel.y *= 800.f / float(GetScreenHeight());
             }
             EM_ASM(
                 {
@@ -371,6 +380,18 @@ int main(int argc, char **argv) {
                 int(game.run ? game.run->money() : game.campaign.data().world.money),
                 game.run ? int(game.run->moneyCollected) : 0, coinPixel.x, coinPixel.y,
                 probeCoin ? probeCoin->value : 0);
+            EM_ASM(
+                {
+                    if (Module.state) {
+                        Module.state.shopRoom = $0;
+                        Module.state.shopOpen = !!$1;
+                        Module.state.shopX = $2;
+                        Module.state.shopY = $3;
+                        Module.state.spent = $4;
+                    }
+                },
+                game.run ? game.run->arena.shopRoom : -1, game.run && game.run->shopOpen, shopPixel.x,
+                shopPixel.y, game.run ? int(game.run->moneySpent) : 0);
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

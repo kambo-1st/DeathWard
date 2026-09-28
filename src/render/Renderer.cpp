@@ -203,6 +203,31 @@ void enemyModel(const Enemy &enemy, bool drawShadow = true) {
     }
     rlPopMatrix();
 }
+void shopkeeper(Vector3 p, float time) {
+    const Color timber{100, 63, 39, 255}, apron{66, 120, 110, 255}, skin{203, 166, 123, 255};
+    const float bob = .025f * std::sin(time * 2);
+    shadow(p, .75f);
+    DrawCylinder({p.x, .03f, p.z}, 1.6f, 1.6f, .025f, 12, Color{135, 85, 48, 255});
+    for (float side : {-.2f, .2f}) {
+        DrawCube({p.x + side, .38f, p.z}, .26f, .76f, .34f, Ink);
+        DrawCube({p.x + side, .1f, p.z + .09f}, .3f, .2f, .52f, timber);
+        DrawCylinderEx({p.x + side * 2, 1.32f + bob, p.z}, {p.x + side * 2.2f, .92f + bob, p.z + .3f}, .12f,
+                       .12f, 6, skin);
+    }
+    DrawCube({p.x, 1.13f + bob, p.z}, .76f, .75f, .5f, Paper);
+    DrawCube({p.x, 1 + bob, p.z + .28f}, .6f, .85f, .05f, apron);
+    DrawSphereEx({p.x, 1.73f + bob, p.z}, .27f, 6, 8, skin);
+    DrawCylinder({p.x, 1.92f + bob, p.z}, .55f, .55f, .08f, 12, timber);
+    DrawCylinder({p.x, 1.97f + bob, p.z}, .31f, .35f, .25f, 8, timber);
+    DrawCube({p.x, .78f, p.z + 1.1f}, 2.4f, .22f, .85f, timber);
+    for (float side : {-.9f, .9f})
+        DrawCube({p.x + side, .38f, p.z + 1.1f}, .18f, .76f, .6f, timber);
+    DrawCube({p.x - .65f, 1.04f, p.z + 1.1f}, .42f, .34f, .35f, Paper);
+    DrawCube({p.x - .65f, 1.04f, p.z + 1.29f}, .09f, .23f, .02f, Rust);
+    DrawCube({p.x - .65f, 1.04f, p.z + 1.3f}, .25f, .07f, .02f, Rust);
+    DrawSphereEx({p.x + .6f, 1.12f, p.z + 1.1f}, .22f, 6, 8, Teal);
+    DrawCylinder({p.x + .1f, .93f, p.z + 1.1f}, .18f, .18f, .09f, 10, Gold);
+}
 void enemyWarning(const Enemy &enemy, const Simulation &run) {
     if (enemy.kind == EnemyKind::Monster) {
         drawMonsterWarning(enemy, run);
@@ -476,6 +501,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             }
         }
     }
+    if (run.arena.shopRoom >= 0) {
+        const auto merchant = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
+        if (distance(run.player.position, merchant) < 60)
+            shopkeeper(merchant, float(run.stats.duration));
+    }
     for (const auto &coin : run.moneyPickups) {
         if (distance(run.player.position, coin.position) > 60)
             continue;
@@ -643,6 +673,12 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     westernScene_.drawGlass();
     EndMode3D();
     postProcess_.end();
+    if (run.room == run.arena.shopRoom) {
+        const auto p = run.arena.rooms[size_t(run.room)].objective;
+        const auto at = GetWorldToScreen({p.x, 2.6f, p.z}, camera);
+        if (at.x > 0 && at.x < GetScreenWidth() && at.y > 0 && at.y < GetScreenHeight())
+            text("SHOPKEEPER", at.x / sx_ - 39, at.y / sy_ - 8, 12, Gold);
+    }
     auto outlineEligible = [](const Enemy &e) {
         return e.alive && !e.friendly && e.state != EnemyState::Buried && e.state != EnemyState::Teleporting;
     };
@@ -811,7 +847,8 @@ void Renderer::dungeonMap(const Game &game) {
             rectangle(box, i == run.room ? Gold : run.rooms[size_t(i)].cleared ? Teal : Border);
         auto at = point(run.arena.rooms[size_t(i)].center);
         const auto kind = run.arena.rooms[size_t(i)].kind;
-        std::string label = kind == RoomKind::Power   ? "P"
+        std::string label = kind == RoomKind::Shop    ? "S"
+                            : kind == RoomKind::Power ? "P"
                             : kind == RoomKind::Boss  ? "B"
                             : kind == RoomKind::Empty ? "E"
                                                       : std::to_string(i + 1);
@@ -831,8 +868,9 @@ Action Renderer::expedition(const Game &game) {
              std::to_string(RoomCount),
          42, 35, 12, Gold);
     const int physicalRoom = run.arena.roomAt(run.player.position);
-    text(physicalRoom < 0 ? missionTheme(run.arena.theme).passage
-                          : Simulation::roomName(physicalRoom, run.arena.theme),
+    text(physicalRoom < 0                     ? missionTheme(run.arena.theme).passage
+         : physicalRoom == run.arena.shopRoom ? "Trader's Rest"
+                                              : Simulation::roomName(physicalRoom, run.arena.theme),
          41, 58, 25, Paper);
     text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
     panel(964, 22, 292, 131, Panel);
@@ -854,7 +892,8 @@ Action Renderer::expedition(const Game &game) {
                       int(9 * sy_), Rust);
     } else {
         const auto kind = run.arena.rooms[size_t(run.room)].kind;
-        text(run.roomClear ? (kind == RoomKind::Empty   ? "QUIET ROOM / NO ENEMIES"
+        text(run.roomClear ? (kind == RoomKind::Shop    ? "SHOP / NO ENEMIES"
+                              : kind == RoomKind::Empty ? "QUIET ROOM / NO ENEMIES"
                               : kind == RoomKind::Power ? "POWER CACHE"
                                                         : "CHAMBER CLEARED")
                            : number(run.roomThreats()) + " HOSTILES",
@@ -878,7 +917,7 @@ Action Renderer::expedition(const Game &game) {
     text(run.player.dodgeCooldown <= 0 ? "DODGE READY" : "DODGE RECOVERING", 397, 752, 12, Muted);
     text(game.debug ? "F1 / CHEATS ON" : "F1 / CHEATS", 806, 752, 12, game.debug ? Teal : Gold);
     Action controls = Action::None;
-    if (!game.paused && !run.rewardOpen && !run.dead) {
+    if (!game.paused && !run.rewardOpen && !run.shopOpen && !run.dead) {
         const std::string interaction = run.nearbyInteraction();
         if (!interaction.empty()) {
             if (button(interaction, 396, 690, 186, 44, true))
@@ -920,6 +959,36 @@ Action Renderer::expedition(const Game &game) {
             if (button("TAKE IT  [" + std::to_string(i + 1) + "]", x + 20, 540, 239, 36, true))
                 return Action(int(Action::Reward0) + i);
         }
+    }
+    if (run.shopOpen && !game.paused) {
+        panel(0, 0, 1280, 800, Color{9, 15, 18, 210});
+        panel(170, 155, 940, 495, Panel);
+        text("TRADER'S REST", 199, 181, 34, Paper);
+        text("MONEY " + number(run.money()), 854, 189, 20, Gold);
+        text("One of each, traveler. Powers last for this expedition.", 200, 231, 17, Muted);
+        for (int i = 0; i < int(run.shopOffers.size()); ++i) {
+            const auto &offer = run.shopOffers[size_t(i)];
+            const auto &item = itemDefinition(offer.item);
+            const float x = 200 + float(i) * 295;
+            panel(x, 280, 275, 287, Ink);
+            text(offer.medicine ? "SUPPLIES" : item.rarity, x + 18, 298, 12,
+                 !offer.medicine && offer.item == ItemId::Judas ? Rust : Gold);
+            wrap(offer.medicine ? "Field Medicine" : item.name, x + 18, 335, 235, 25, Paper);
+            wrap(offer.medicine ? "Restore up to 40 health. Maximum health stays the same."
+                                : item.description,
+                 x + 18, 410, 237, 15, Muted);
+            text(std::to_string(offer.price) + " COINS", x + 18, 488, 16, Gold);
+            const auto unavailable = run.shopUnavailable(i);
+            if (unavailable.empty()) {
+                if (button("BUY", x + 18, 519, 239, 34, true))
+                    return Action(int(Action::BuyShop0) + i);
+            } else {
+                panel(x + 18, 519, 239, 34, Border);
+                text(unavailable, x + 29, 530, 12, Muted);
+            }
+        }
+        if (button("LEAVE SHOP", 779, 591, 295, 38))
+            return Action::CloseShop;
     }
     if (game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
@@ -966,6 +1035,7 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
              "  /  " + s.expedition + (s.interrupted ? "  /  PARTIAL CHECKPOINT" : ""),
          60, 150, 15, Muted);
     text("WALLET " + number(game.campaign.data().world.money), 60, 178, 13, Gold);
+    text("SPENT THIS RUN " + number(s.moneySpent), 730, 178, 13, Muted);
     const std::array<std::pair<std::string, std::string>, 5> values{
         {{"ENEMIES KILLED", number(s.stats.kills)},
          {"BULLETS / PROJECTILES", number(s.stats.shots) + " / " + number(s.stats.projectiles)},
@@ -1121,7 +1191,8 @@ Action Renderer::draw(const Game &game) {
         if (audioAction != Action::None)
             action = audioAction;
     }
-    if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen)
+    if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen &&
+        !game.run->shopOpen)
         debugPanel(game);
     if (!game.error.empty()) {
         panel(24, 560, 1232, 81, Color{76, 34, 30, 250});
