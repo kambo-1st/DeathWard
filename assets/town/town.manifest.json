@@ -45584,27 +45584,29 @@
       600,
       600
     ],
-    "cell": 0.4,
-    "walkable_cells": 202780,
+    "cell": 0.4000000059604645,
+    "walkable_cells": 198082,
     "spawn": [
-      -0.19999999999998863,
-      -0.041378021240234375,
+      -0.1999969482421875,
+      -0.041373856365680695,
       -5.0
     ],
     "mission": [
-      2.200000000000003,
-      -0.33147430419921875,
-      5.400000000000006
+      1.8000030517578125,
+      -0.3380568027496338,
+      5.400001525878906
     ],
     "station": [
       2.2100000381469727,
       10.640000343322754
-    ]
+    ],
+    "algorithm": "geometry_headroom_v1",
+    "standing_clearance": 1.9
   },
   "output_sha256": {
     "town.glb": "b931bd09b0873de30ff2aefd674aec1a609c83bfa30b4a16b31c6df423c8b8a8",
-    "town.scene": "0b4d5c94386025698711dd5d2c700a77a706fe3e411ec35dfb390588894cfa30",
-    "town.nav": "c9705b44edda493377ff9dfd55079bd740c41e8d9e968a94dc9fb71e20e83457"
+    "town.scene": "53597feab433dfebb85dfed3f2e4aa759d13f3a1e57395361decc1a893480be3",
+    "town.nav": "6d8038f5f802023fd8db6af78d5222ec9a1c1afec962b53c1864a33899609fec"
   },
   "object_motion": {
     "488115655:1367905150670218": [

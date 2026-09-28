@@ -27,6 +27,19 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
   page.on('pageerror', error => failures.push(error.stack || error.message));
   const state = () => page.evaluate(() => Module.state);
   const wait = (test, arg) => page.waitForFunction(test, arg, {timeout: 60000});
+  const checkGateNavigation = async navPath => {
+    const result = await page.evaluate(navPath => {
+      const bytes = FS.readFile(navPath);
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const width = view.getUint32(8, true), minX = view.getFloat32(16, true),
+            minZ = view.getFloat32(20, true), cell = view.getFloat32(24, true);
+      const height = (x, z) => view.getFloat32(52 + 4 *
+        (Math.floor((z - minZ) / cell) * width + Math.floor((x - minX) / cell)), true);
+      return {opening: Number.isFinite(height(-34.32, .48)),
+        posts: [Number.isFinite(height(-34.32, -3.7)), Number.isFinite(height(-34.32, 4.67))]};
+    }, navPath);
+    assert.deepEqual(result, {opening: true, posts: [false, false]});
+  };
   const key = async code => {
     // Keep transitions across rendered frames, including expensive scene loads.
     let frame = (await state()).frame;
@@ -40,16 +53,35 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     const box = await page.locator('#canvas').boundingBox();
     await page.mouse.click(box.x + x * box.width / 1280, box.y + y * box.height / 800, {delay: 100});
   };
-  const start = async url => {
+  const start = async (url, beforeStart) => {
     await page.goto(url);
     await wait(() => window.Module && Module.ready);
+    if (beforeStart) await beforeStart();
     await page.locator('#start').click({noWaitAfter: true});
     await wait(() => Module.state?.frame > 3 || document.querySelector('#problem').textContent);
     assert.equal(await page.locator('#problem').textContent(), '');
     assert.equal((await state()).error, '');
   };
   try {
-    await start(base + '?verify');
+    let legacyScene;
+    await start(base + '?verify', async () => {
+      legacyScene = await page.evaluate(() => {
+        FS.mkdirTree('/persist/town');
+        const scene = FS.readFile('/assets/town/town.scene', {encoding: 'utf8'}) + '\n';
+        FS.writeFile('/persist/town/town.scene', scene);
+        const bytes = FS.readFile('/assets/town/town.nav');
+        bytes[7] = '1'.charCodeAt(0); // Simulate an old navigation bake with a blocked gate.
+        const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+        const width = view.getUint32(8, true), minX = view.getFloat32(16, true),
+              minZ = view.getFloat32(20, true), cell = view.getFloat32(24, true);
+        view.setFloat32(52 + 4 * (Math.floor((.48 - minZ) / cell) * width + Math.floor((-34.32 - minX) / cell)), NaN, true);
+        FS.writeFile('/persist/town/town.nav', bytes);
+        return scene;
+      });
+    });
+    assert.equal(await page.evaluate(() => FS.readFile('/persist/town/town.scene', {encoding: 'utf8'})), legacyScene);
+    assert.equal(await page.evaluate(() => FS.readFile('/persist/town/town.nav')[7]), '2'.charCodeAt(0));
+    console.log('PASS old browser navigation upgrades without replacing the saved town scene');
     const animalFiles = await page.evaluate(() => FS.readdir('/assets/animals'));
     const expectedAnimals = JSON.parse(fs.readFileSync(path.join(root, 'assets/animals/animals.source.json')))
       .animals.map(animal => animal.id + '.glb').sort();
@@ -57,6 +89,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal(animalFiles.includes('source'), false);
     console.log(`PASS all ${expectedAnimals.length} converted animal models packaged without source FBXs`);
     assert.equal((await state()).hub, 0);
+    await checkGateNavigation('/persist/town/town.nav');
     assert.equal((await state()).audio, 2);
     assert.equal((await state()).zoom, 160);
     assert.equal(await page.evaluate(() => Module.animals.count), 5);
@@ -312,6 +345,8 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await page.keyboard.down('Control'); await key('s'); await page.keyboard.up('Control');
     await wait(() => Module.state.editorSaved && !Module.saving);
     const savedScene = await page.evaluate(() => Module.FS.readFile('/persist/town/town.scene', {encoding: 'utf8'}));
+    await checkGateNavigation('/persist/town/town.nav');
+    console.log('PASS town gate opening and solid posts survive browser editor navigation rebake');
     assert(savedScene !== originalScene, 'editor input changes and saves the selected prop');
     assert(savedScene.includes('character cowgirl-street-walk cowgirl'), 'authored cowgirl route persists in town.scene');
     assert(savedScene.startsWith('DEATHWARD_TOWN 5\n'));

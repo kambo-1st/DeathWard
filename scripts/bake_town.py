@@ -345,8 +345,9 @@ def main():
     (out / "town.labels").write_text(
         "".join(f"{asset} {labels.get(asset, asset)}\n" for asset in order)
     )
-    # Use original collision meshes, convex pieces and primitive colliders for an
-    # outdoor height grid. Roofs remain disconnected from street navigation.
+    # Seed grid bounds and gameplay markers from the original colliders.
+    # import_town.py then runs the shared native geometry/headroom baker; this
+    # intermediate DWTNAV01 grid is also upgraded automatically by the game.
     verts = []
     faces = []
     for entry in recipe["colliders"]:

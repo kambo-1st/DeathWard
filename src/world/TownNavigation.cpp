@@ -18,6 +18,32 @@
 
 namespace dw {
 namespace {
+// Clip a triangle to one navigation cell. This includes vertical and sub-cell
+// walls that a ray through the cell center could miss entirely.
+struct Polygon {
+    std::array<Vector3, 12> points{};
+    int count = 0;
+};
+Polygon clip(Polygon polygon, int axis, float edge, bool greater) {
+    Polygon result;
+    auto coordinate = [axis](Vector3 p) { return axis == 0 ? p.x : p.z; };
+    for (int n = 0; n < polygon.count; ++n) {
+        const auto a = polygon.points[size_t(n)], b = polygon.points[size_t((n + 1) % polygon.count)];
+        const float da = coordinate(a) - edge, db = coordinate(b) - edge;
+        const bool insideA = greater ? da >= 0 : da <= 0, insideB = greater ? db >= 0 : db <= 0;
+        if (insideA) result.points[size_t(result.count++)] = a;
+        if (insideA != insideB) result.points[size_t(result.count++)] = add(a, mul(sub(b, a), da / (da - db)));
+    }
+    return result;
+}
+constexpr float StepHeight = .6f, StandingClearance = 1.9f;
+struct SolidSpan {
+    float low = std::numeric_limits<float>::infinity();
+    float high = -std::numeric_limits<float>::infinity();
+    float surface = -std::numeric_limits<float>::infinity();
+    bool flat = false;
+};
+struct WalkSurface { float height; bool clear = false; };
 void replaceFile(const std::filesystem::path &from, const std::filesystem::path &to) {
 #ifdef _WIN32
     if (!MoveFileExW(from.c_str(), to.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
@@ -33,7 +59,9 @@ void TownNavigation::load(const std::filesystem::path &path) {
         throw std::runtime_error(check.error);
     TownNavigation n;
     std::ifstream in(path, std::ios::binary);
-    in.seekg(8);
+    char magic[8]{};
+    in.read(magic, 8);
+    n.bakeVersion = magic[7] == '2' ? 2 : 1;
     auto read = [&](auto &value) { in.read(reinterpret_cast<char *>(&value), sizeof(value)); };
     read(n.width);
     read(n.depth);
@@ -56,7 +84,7 @@ void TownNavigation::write(const std::filesystem::path &path) const {
     if (heights.size() != size_t(width) * depth || !width || !depth)
         throw std::runtime_error("No navigation to save.");
     std::ofstream out(path, std::ios::binary | std::ios::trunc);
-    out.write("DWTNAV01", 8);
+    out.write(bakeVersion >= 2 ? "DWTNAV02" : "DWTNAV01", 8);
     auto write = [&](const auto &v) { out.write(reinterpret_cast<const char *>(&v), sizeof(v)); };
     write(width);
     write(depth);
@@ -93,110 +121,155 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
         document.meshCount() != model.meshCount)
         throw std::runtime_error("Invalid navigation bounds or mesh library.");
     const float nan = std::numeric_limits<float>::quiet_NaN();
-    std::vector<float> top(size_t(width) * depth, -std::numeric_limits<float>::infinity());
-    std::vector<bool> flat(top.size(), false);
+    const size_t count = size_t(width) * depth;
+    std::vector<std::vector<SolidSpan>> columns(count);
     for (size_t i = 0; i < document.instances.size(); ++i) {
         const auto &instance = document.instances[i];
-        if (instance.animated())
-            continue; // Decorative moving props must not leave a baked collision footprint.
+        if (instance.animated()) continue;
         const auto &asset = document.assets[instance.asset];
         const auto bounds = document.bounds(i);
-        if (asset.unlit || asset.label.find("Cloud") != std::string::npos || bounds.min.y > 12 ||
+        if (asset.unlit || asset.label.find("Cloud") != std::string::npos || bounds.min.y > 14 ||
             bounds.max.x < minX || bounds.min.x > minX + width * cell || bounds.max.z < minZ ||
-            bounds.min.z > minZ + depth * cell)
-            continue;
+            bounds.min.z > minZ + depth * cell) continue;
+        const auto cellX = [&](float x) { return int(std::floor((x - minX) / cell)); };
+        const auto cellZ = [&](float z) { return int(std::floor((z - minZ) / cell)); };
+        const int left = std::max(0, cellX(bounds.min.x)), right = std::min(int(width) - 1, cellX(bounds.max.x));
+        const int frontRow = std::max(0, cellZ(bounds.min.z)), backRow = std::min(int(depth) - 1, cellZ(bounds.max.z));
+        const int row = right - left + 1;
+        if (row <= 0 || backRow < frontRow) continue;
+        std::vector<SolidSpan> spans(size_t(row) * size_t(backRow - frontRow + 1));
         for (int m = asset.first; m < asset.first + asset.count; ++m) {
             const auto &mesh = model.meshes[m];
             for (int t = 0; t < mesh.triangleCount; ++t) {
                 Vector3 p[3];
                 for (int k = 0; k < 3; ++k) {
                     const int v = mesh.indices ? mesh.indices[3 * t + k] : 3 * t + k;
-                    p[k] = Vector3Transform(
-                        {mesh.vertices[3 * v], mesh.vertices[3 * v + 1], mesh.vertices[3 * v + 2]},
-                        instance.transform);
+                    p[k] = Vector3Transform({mesh.vertices[3 * v], mesh.vertices[3 * v + 1], mesh.vertices[3 * v + 2]}, instance.transform);
                 }
                 const auto normal = Vector3CrossProduct(sub(p[1], p[0]), sub(p[2], p[0]));
-                const float denom =
-                    (p[1].z - p[2].z) * (p[0].x - p[2].x) + (p[2].x - p[1].x) * (p[0].z - p[2].z);
-                if (std::abs(denom) < .000001f)
-                    continue;
-                const int x0 =
-                    std::max(0, int(std::floor((std::min({p[0].x, p[1].x, p[2].x}) - minX) / cell)));
-                const int x1 = std::min(int(width) - 1,
-                                        int(std::floor((std::max({p[0].x, p[1].x, p[2].x}) - minX) / cell)));
-                const int z0 =
-                    std::max(0, int(std::floor((std::min({p[0].z, p[1].z, p[2].z}) - minZ) / cell)));
-                const int z1 = std::min(int(depth) - 1,
-                                        int(std::floor((std::max({p[0].z, p[1].z, p[2].z}) - minZ) / cell)));
-                const bool surface = std::abs(normal.y) / length(normal) > .7f;
+                const float denom = (p[1].z - p[2].z) * (p[0].x - p[2].x) + (p[2].x - p[1].x) * (p[0].z - p[2].z);
+                const bool flat = length(normal) > .000001f && std::abs(normal.y) / length(normal) > .7f;
+                const int x0 = std::max(left, cellX(std::min({p[0].x, p[1].x, p[2].x})));
+                const int x1 = std::min(right, cellX(std::max({p[0].x, p[1].x, p[2].x})));
+                const int z0 = std::max(frontRow, cellZ(std::min({p[0].z, p[1].z, p[2].z})));
+                const int z1 = std::min(backRow, cellZ(std::max({p[0].z, p[1].z, p[2].z})));
                 for (int z = z0; z <= z1; ++z)
                     for (int x = x0; x <= x1; ++x) {
-                        const float px = minX + (float(x) + .5f) * cell, pz = minZ + (float(z) + .5f) * cell;
-                        const float a =
-                            ((p[1].z - p[2].z) * (px - p[2].x) + (p[2].x - p[1].x) * (pz - p[2].z)) / denom;
-                        const float b =
-                            ((p[2].z - p[0].z) * (px - p[2].x) + (p[0].x - p[2].x) * (pz - p[2].z)) / denom;
-                        if (a < -.00001f || b < -.00001f || a + b > 1.00001f)
-                            continue;
-                        const float h = a * p[0].y + b * p[1].y + (1 - a - b) * p[2].y;
-                        const size_t at = size_t(z) * width + size_t(x);
-                        if (h > top[at]) {
-                            top[at] = h;
-                            flat[at] = surface && h > -5 && h < 12;
+                        const float xMin = minX + float(x) * cell, zMin = minZ + float(z) * cell;
+                        Polygon polygon;
+                        polygon.count = 3;
+                        std::copy_n(p, 3, polygon.points.begin());
+                        polygon = clip(polygon, 0, xMin, true);
+                        polygon = clip(polygon, 0, xMin + cell, false);
+                        polygon = clip(polygon, 2, zMin, true);
+                        polygon = clip(polygon, 2, zMin + cell, false);
+                        if (!polygon.count) continue;
+                        auto &span = spans[size_t(z - frontRow) * size_t(row) + size_t(x - left)];
+                        for (int n = 0; n < polygon.count; ++n) {
+                            span.low = std::min(span.low, polygon.points[size_t(n)].y);
+                            span.high = std::max(span.high, polygon.points[size_t(n)].y);
                         }
+                        if (std::abs(denom) < .000001f) continue;
+                        const float px = xMin + .5f * cell, pz = zMin + .5f * cell;
+                        const float a = ((p[1].z - p[2].z) * (px - p[2].x) + (p[2].x - p[1].x) * (pz - p[2].z)) / denom;
+                        const float b = ((p[2].z - p[0].z) * (px - p[2].x) + (p[0].x - p[2].x) * (pz - p[2].z)) / denom;
+                        if (a < -.00001f || b < -.00001f || a + b > 1.00001f) continue;
+                        const float height = a * p[0].y + b * p[1].y + (1 - a - b) * p[2].y;
+                        if (height > span.surface) { span.surface = height; span.flat = flat; }
                     }
             }
         }
+        for (int z = frontRow; z <= backRow; ++z)
+            for (int x = left; x <= right; ++x) {
+                const auto &span = spans[size_t(z - frontRow) * size_t(row) + size_t(x - left)];
+                if (std::isfinite(span.high)) columns[size_t(z) * width + size_t(x)].push_back(span);
+            }
     }
-    std::vector<bool> clear(top.size(), false), connected(top.size(), false);
+    // Keep street surfaces below bridges/signs as well as roof candidates. A
+    // solid object crossing the standing body rejects a surface; overhead
+    // geometry with sufficient headroom does not become a wall on the street.
+    std::vector<std::vector<WalkSurface>> surfaces(count);
+    for (size_t at = 0; at < count; ++at) {
+        for (const auto &candidate : columns[at]) {
+            const float h = candidate.surface;
+            if (!candidate.flat || h <= -5 || h >= 12) continue;
+            bool clear = true;
+            for (const auto &solid : columns[at])
+                if (solid.high > h + StepHeight && solid.low < h + StandingClearance) { clear = false; break; }
+            if (clear && std::none_of(surfaces[at].begin(), surfaces[at].end(),
+                [&](const auto &s) { return std::abs(s.height - h) < .001f; })) surfaces[at].push_back({h});
+        }
+    }
+    columns.clear();
+    columns.shrink_to_fit();
     for (uint32_t z = 1; z + 1 < depth; ++z)
         for (uint32_t x = 1; x + 1 < width; ++x) {
             const size_t at = size_t(z) * width + x;
-            bool valid = flat[at];
-            for (int dz = -1; dz <= 1; ++dz)
-                for (int dx = -1; dx <= 1; ++dx) {
-                    const size_t n = size_t(int(z) + dz) * width + size_t(int(x) + dx);
-                    valid = valid && flat[n] && std::abs(top[at] - top[n]) < .6f;
-                }
-            clear[at] = valid;
-        }
-    auto nearest = [&](Vector3 target, const std::vector<bool> &allowed) {
-        size_t result = top.size();
-        float best = 64; // Do not silently move gameplay markers far away from their edited location.
-        for (size_t i = 0; i < top.size(); ++i) {
-            const float dx = minX + (float(i % width) + .5f) * cell - target.x;
-            const float dz = minZ + (float(i / width) + .5f) * cell - target.z;
-            if (allowed[i] && dx * dx + dz * dz < best) {
-                best = dx * dx + dz * dz;
-                result = i;
+            for (auto &surface : surfaces[at]) {
+                bool clear = true;
+                for (int dz = -1; dz <= 1; ++dz)
+                    for (int dx = -1; dx <= 1; ++dx) {
+                        const auto &neighbors = surfaces[size_t(int(z) + dz) * width + size_t(int(x) + dx)];
+                        clear &= std::any_of(neighbors.begin(), neighbors.end(), [&](const auto &n) {
+                            return std::abs(surface.height - n.height) < StepHeight;
+                        });
+                    }
+                surface.clear = clear;
             }
         }
-        if (result == top.size())
-            throw std::runtime_error(
-                "No connected ground near a marker. Move Arrival / Missions onto an open street.");
-        return result;
-    };
-    const auto start = nearest(spawn, clear);
+    size_t start = count;
+    float startHeight = 0, best = 64;
+    for (size_t at = 0; at < count; ++at)
+        for (const auto &surface : surfaces[at]) {
+            const Vector3 point{minX + (float(at % width) + .5f) * cell, surface.height,
+                                minZ + (float(at / width) + .5f) * cell};
+            const float d = distance(point, spawn);
+            if (surface.clear && d * d < best) { best = d * d; start = at; startHeight = surface.height; }
+        }
+    if (start == count) throw std::runtime_error("No connected ground near Arrival. Move it onto an open street.");
+    std::vector<float> result(count, nan);
+    result[start] = startHeight;
     std::queue<size_t> queue;
     queue.push(start);
-    connected[start] = true;
     while (!queue.empty()) {
-        const size_t at = queue.front();
-        queue.pop();
-        for (size_t next : {at - 1, at + 1, at - width, at + width})
-            if (next < top.size() && clear[next] && !connected[next] &&
-                std::abs(top[at] - top[next]) <= .6f) {
-                connected[next] = true;
-                queue.push(next);
-            }
+        const auto at = queue.front(); queue.pop();
+        for (size_t next : {at - 1, at + 1, at - width, at + width}) {
+            if (next >= count || std::isfinite(result[next])) continue;
+            const WalkSurface *chosen = nullptr;
+            for (const auto &surface : surfaces[next])
+                if (surface.clear && std::abs(surface.height - result[at]) <= StepHeight &&
+                    (!chosen || std::abs(surface.height - result[at]) < std::abs(chosen->height - result[at]))) chosen = &surface;
+            if (chosen) { result[next] = chosen->height; queue.push(next); }
+        }
     }
-    const auto board = nearest(mission, connected);
-    for (size_t i = 0; i < top.size(); ++i)
-        if (!connected[i])
-            top[i] = nan;
-    heights = std::move(top);
+    size_t board = count;
+    best = 64;
+    for (size_t at = 0; at < count; ++at) {
+        const float dx = minX + (float(at % width) + .5f) * cell - mission.x;
+        const float dz = minZ + (float(at / width) + .5f) * cell - mission.z;
+        if (std::isfinite(result[at]) && dx * dx + dz * dz < best) { best = dx * dx + dz * dz; board = at; }
+    }
+    if (board == count) throw std::runtime_error("No connected ground near Missions. Move it onto an open street.");
+    bakeVersion = 2;
+    heights = std::move(result);
     spawn = point(start);
     mission = point(board);
+}
+void saveTownNavigation(const std::filesystem::path &directory, const TownNavigation &navigation) {
+    const auto path = directory / "town.nav", staged = directory / "town.nav.tmp";
+    try {
+        navigation.write(staged);
+        HubWorld check;
+        if (!check.load(staged) || !check.moveTo(check.mission))
+            throw std::runtime_error("Rebuilt town navigation failed validation.");
+        std::filesystem::copy_file(path, directory / "town.nav.bak", std::filesystem::copy_options::overwrite_existing);
+        replaceFile(staged, path);
+        persistBrowserFiles();
+    } catch (...) {
+        std::error_code ignored;
+        std::filesystem::remove(staged, ignored);
+        throw;
+    }
 }
 void saveTownProject(const std::filesystem::path &directory, const TownDocument &document,
                      const TownNavigation &navigation) {

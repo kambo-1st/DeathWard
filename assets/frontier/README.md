@@ -26,9 +26,10 @@ F4 edits the active hub. `./build/deathward --editor --hub frontier` opens this 
 
 ## Rebuild and verify
 
-Python with NumPy/PyYAML and Blender 3.6 are required only for conversion. Rebuild entirely from retained sources:
+Python with NumPy/PyYAML, Blender 3.6 and the native navigation baker are required only for conversion. Rebuild entirely from retained sources:
 
 ```sh
+cmake --build build --target deathward_bake_navigation
 python3 scripts/import_town.py \
   --source assets/frontier/source --output assets/frontier \
   --nav-bounds -160 -120 170 140 --spawn 61 -25 --mission 50 -24 \
@@ -47,3 +48,5 @@ python3 scripts/verify_town.py --pack assets/frontier
 ```
 
 The source audit requires NumPy/Pillow. Navigation checks run headlessly; rendering and input checks require an OpenGL display. Tests exercise both hubs, switching, mouse/WASD controls, editor pack selection, and returning to Frontier after a mission.
+
+Navigation now uses the same geometry/headroom bake as the editor. High overhead structures allow walking underneath; upright supports and low ceilings remain solid. Run `python3 scripts/bake_navigation.py --pack assets/frontier` to rebuild only navigation and its manifest metadata. The game upgrades older navigation once while preserving edited scenes.

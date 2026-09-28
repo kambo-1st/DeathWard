@@ -55,6 +55,25 @@ void navigationChecks() {
     doc.instances.pop_back();
     nav.bake(doc, model);
     check(std::isfinite(nav.heights[moved]), "deleting an object reopens its terrain");
+    // An overhead object must not cast a navigation barrier down to the floor.
+    doc.instances.push_back({1, MatrixTranslate(0, 5, 0)});
+    nav.bake(doc, model);
+    check(std::isfinite(nav.heights[middle]) && std::abs(nav.heights[middle]) < .001f,
+          "high crossbeam preserves the actual street below it");
+    HubWorld passage;
+    passage.setNavigation(nav);
+    check(passage.canTraverse({-6, 0, 0}, {6, 0, 0}), "direct movement passes beneath an overhead crossbeam");
+    doc.instances[1].transform = MatrixTranslate(0, 3.5f, 0);
+    nav.bake(doc, model);
+    check(!std::isfinite(nav.heights[middle]), "a low ceiling still blocks a standing character");
+    doc.instances[1].transform = MatrixTranslate(0, 5, 0);
+    doc.instances.push_back({1, MatrixMultiply(MatrixScale(.03f, 1, .03f), MatrixTranslate(.02f, 2, .02f))});
+    nav.bake(doc, model);
+    check(!std::isfinite(nav.height({.02f, 0, .02f})),
+          "thin gate posts between ray sample centers still block the whole player footprint");
+    doc.instances.pop_back();
+    nav.bake(doc, model);
+    check(std::isfinite(nav.heights[middle]), "removing a post reopens the passage beneath the crossbeam");
     UnloadMesh(floor);
     UnloadMesh(cube);
 }
@@ -444,12 +463,13 @@ int main() {
               editor.document().animals[5].kind == AnimalKind::Cat, "species palette adds the chosen animal");
         // Choose a visible clear home through actual viewport input.
         editor.placeAnimal({-4, 0, 2});
+        check(std::abs(editor.document().animals[5].home.z - 2) < .01f, editor.status);
         editor.focusSelection();
         click({1180, 257}); // Place home.
-        const auto homePixel = GetWorldToScreen({-4, nav.height({-4, 0, 1}), 1}, editor.camera);
+        const auto homePixel = GetWorldToScreen({-4, editor.navigation().height({-4, 0, 1}), 1}, editor.camera);
         click(homePixel);
         check(std::abs(editor.document().animals[5].home.z - 1) < .1f,
-              "ground click places the animal on navigation terrain");
+              "ground click places the animal on navigation terrain: " + editor.status + " z=" + std::to_string(editor.document().animals[5].home.z));
         editor.setAnimalSettings(.8f, 2, 110, 8765);
         editor.setAnimalSpecies(AnimalKind::CatBlack);
         check(editor.document().animals[5].kind == AnimalKind::CatBlack, "placed animal species can be changed");

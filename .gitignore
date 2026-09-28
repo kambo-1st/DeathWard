@@ -9,3 +9,6 @@ audio.cfg
 /assets/town/town.scene.bak
 /assets/town/town.nav.bak
 *:Zone.Identifier
+
+/assets/frontier/town.nav.bak
+__pycache__/

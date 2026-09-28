@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## Open town entrances and standing headroom
+
+Content version `deathward-m1-33` fixes the invisible barrier under Black Creek's wooden entrance. The old navigation bake selected the topmost surface, turning its overhead crossbeam into a street obstruction. The shared baker now keeps candidate ground below overhead geometry, checks 1.9 m of standing clearance, clips triangles to cell footprints so thin posts and vertical walls remain blockers, and retains connected ground with the existing step/footprint rules. Low ceilings and solid volumes still block walking. The navigation map remains one traversable height per cell, without multi-floor interior support.
+
+Both town navigation packs are rebuilt. Their imported meshes, original instance transforms, material mappings and texture pixels pass the source audits. The command-line baker and `scripts/import_town.py` use the same rules as editor saves. `DWTNAV02` records the new bake version while version 1 remains readable. Game startup rebuilds older navigation once, keeps a navigation backup and preserves authored scene files; this also upgrades saved browser layouts.
+
+Native and WASM builds pass. All 16 headless suites pass, including mouse travel through Black Creek's gate in both directions, direct keyboard traversal and solid upright posts. Geometry fixtures cover high crossbeams, low ceilings, thin posts between sample centers, removing/moving obstacles and disconnected roofs. Both original-scene audits pass. Logs use `artifacts/gate-*`.
+
+The native editor suite passes with the new baker in both hubs, including animal and cowgirl placement/preview/save checks. Chromium starts from a deliberately blocked version-1 navigation file, upgrades it to version 2 while retaining the exact saved scene bytes, and verifies the open gate and solid posts again after a browser editor save. The full gameplay, audio, editor and persistence suite passes without JavaScript exceptions, shader failures or WebGL errors. The refreshed 71.6 MiB upload ZIP passes integrity, manifest hashes/sizes, exact runtime-byte comparisons and relative hosting-path checks.
+
 ## Animal placement in the town editor
 
 Content version `deathward-m1-32` adds an Animals tab with the 98 converted variants, catalog search, selection from the resident list or viewport, ground-click placement, species replacement, size, facing, roaming radius and independent seed. Focus, duplicate, delete, undo/redo and Play/Pause/Reset preview include animals. The preview renders original textures and animations with town lighting and shadows, samples the same ground/obstacle simulation as gameplay, and shows the authored home and roaming radius. Runtime and editor clocks remain separate. Flight and water habitats remain outside the current ground-based simulation.

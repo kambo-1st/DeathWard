@@ -14,6 +14,33 @@
 EM_ASYNC_JS(void, nextBrowserFrame, (), { await new Promise(requestAnimationFrame); });
 #endif
 
+namespace {
+bool upgradeTownNavigation(dw::HubKind hub) {
+    const auto directory = dw::TownScene::assetDirectory(hub);
+    dw::TownNavigation navigation;
+    navigation.load(directory / "town.nav");
+    if (navigation.bakeVersion >= 2) return false;
+    dw::TownDocument document;
+    std::string error;
+    if (!document.load(directory / "town.scene", error)) throw std::runtime_error(error);
+#ifdef __EMSCRIPTEN__
+    const auto modelFile = std::filesystem::path("/assets") / dw::hubFolder(hub) / "town.glb";
+#else
+    const auto modelFile = directory / "town.glb";
+#endif
+    auto model = LoadModel(modelFile.string().c_str());
+    try {
+        navigation.bake(document, model);
+        dw::saveTownNavigation(directory, navigation);
+    } catch (...) {
+        if (model.meshCount) UnloadModel(model);
+        throw;
+    }
+    UnloadModel(model);
+    return true;
+}
+} // namespace
+
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false;
@@ -132,6 +159,12 @@ int main(int argc, char **argv) {
             game.audioSettings = dw::loadAudioSettings(audioPreferences);
         auto savedAudioSettings = game.audioSettings;
         game.audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
+        for (const auto hub : {dw::HubKind::BlackCreek, dw::HubKind::Frontier})
+            if (upgradeTownNavigation(hub) && hub == game.activeHub) {
+                if (!game.town.load(game.hubDirectory() / "town.nav") || !game.reloadTownObjects())
+                    throw std::runtime_error("Could not reload the upgraded town navigation.");
+                game.updateCamera(1);
+            }
         dw::Renderer renderer;
         const dw::Game::SceneryPicker pickScenery = [&](const auto &run, const auto &camera, Ray ray) {
             return renderer.pickScenery(run, camera, ray);

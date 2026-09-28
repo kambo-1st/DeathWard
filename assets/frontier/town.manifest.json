@@ -61809,27 +61809,29 @@
       825,
       650
     ],
-    "cell": 0.4,
-    "walkable_cells": 316697,
+    "cell": 0.4000000059604645,
+    "walkable_cells": 319205,
     "spawn": [
       61.0,
-      1.4527931213378906,
+      1.452796459197998,
       -25.0
     ],
     "mission": [
-      49.400000000000006,
-      2.245960235595703,
-      -23.799999999999997
+      49.40000915527344,
+      1.8177064657211304,
+      -23.79999542236328
     ],
     "station": [
       0,
       0
-    ]
+    ],
+    "algorithm": "geometry_headroom_v1",
+    "standing_clearance": 1.9
   },
   "output_sha256": {
     "town.glb": "3d55bed81ff81654d82bb8126d13d3b734a477a12e7527f3b12c8a5bbb411c19",
     "town.scene": "edde240992c7a6d00afe37ca27f9a9f450104c3dc1040a487edcd83cce70f437",
-    "town.nav": "dd3015297aac29202578da1b24f2144231d779d09fe120231afb6b45eb29c699",
+    "town.nav": "1f91c1b900bd577ee0eb02e546d6c91c3a4b93944466764d783c05d9bab31ab1",
     "town.labels": "425b6b3a789ffa25a255667325cb8c1a54c8252c68f615dd848d07a2ea1b7467"
   }
 }

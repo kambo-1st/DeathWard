@@ -92,6 +92,8 @@ Animals remain ambient residents. Flying and aquatic models can be placed and an
 
 ## Saving and playing
 
+Navigation checks standing headroom below overhead structures. Open entrances remain walkable beneath their beams; upright supports, thin walls and low ceilings remain blockers. Saving uses these same rules. The navigation format remains a single traversable height per cell, so this does not add multi-floor building interiors. Older navigation files are rebuilt once at game startup without replacing the saved scene.
+
 **Save** or **Ctrl+S** validates and saves `town.scene` and rebuilds `town.nav`. It retains the preceding versions as `town.scene.bak` and `town.nav.bak`. Both replacements are staged and validated first; reported replacement failures roll back to the backups. The model library, embedded textures and retained Unity sources are unchanged. **Reload** restores the last saved files. Leaving, reloading or closing the window with unsaved edits offers save/discard/cancel as appropriate.
 
 In a source checkout, the game and editor use `assets/town/` for Black Creek or `assets/frontier/` for Frontier, so edits survive a rebuild. A packaged game without the checkout uses the matching folder beside its executable. To work on a separate copy of a town pack:

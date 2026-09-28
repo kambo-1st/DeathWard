@@ -159,6 +159,21 @@ int main() {
             check(hub.load(std::filesystem::path(DEATHWARD_ASSET_DIR) / pack / "town.nav"),
                   "original town navigation loads");
             check(hub.walkableCells() > 10000, "town includes broad connected outdoor streets");
+            if (std::string_view(pack) == "town") {
+                const Vector3 outside{-38, 0, .48f}, inside{-30, 0, .48f};
+                check(hub.canTraverse(outside, inside) && hub.canTraverse(inside, outside),
+                      "Black Creek's wooden entrance is open below its overhead beam in both directions");
+                check(!hub.walkable({-34.32f, 0, -3.7f}) && !hub.walkable({-34.32f, 0, 4.67f}),
+                      "the entrance's two upright posts remain solid");
+                hub.player.position = add(outside, {0, hub.height(outside) + .85f, 0});
+                check(hub.moveTo(inside) && hub.route().size() == 1, "mouse movement uses the gate opening directly");
+                follow(hub, inside);
+                check(hub.moveTo(outside) && hub.route().size() == 1, "mouse movement returns through the gate directly");
+                follow(hub, outside);
+                for (int n = 0; n < 240 && hub.player.position.x < inside.x; ++n) hub.step({1, 0, 0}, Tick);
+                check(hub.player.position.x >= inside.x, "keyboard movement crosses the town entrance");
+                hub.reset();
+            }
             check(hub.walkable(hub.spawn) && hub.walkable(hub.mission),
                   "spawn and mission entrance are valid terrain");
             check(hub.moveTo(hub.mission), "mission station is reachable from the arrival point");

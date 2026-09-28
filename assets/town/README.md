@@ -8,7 +8,7 @@ The source scene contains **1,269 prefab instances**. Resolving the prefab hiera
 
 - `town.glb`: shared local meshes and material variants, with embedded textures.
 - `town.scene`: mesh ranges, original instance matrices, lights, prop motion and stable train path/group bindings.
-- `town.nav`: outdoor navigation sampled from original scene colliders, excluding moving props/vehicles.
+- `town.nav`: outdoor navigation baked from the scene geometry with standing headroom; moving props/vehicles supply their own collision.
 - `town.labels`: optional asset names for the 3D editor's scene list and palette.
 - `town.source.json`: resolved Unity recipe, source references and hashes.
 - `town.manifest.json`: output hashes, placement audit, mesh bounds and navigation summary.
@@ -18,9 +18,10 @@ Normal builds package the GLB, scene catalog, navigation file and editor labels.
 
 Use **F4 in the hub** or `./build/deathward --editor` to edit placements in 3D. Saving updates the scene and rebuilds navigation from the edited visible geometry, preserving the original model library and textures. See the [editor guide](../../docs/town_editor.md) for controls, backups and the outdoor navigation limits. The source manifest describes the original import; intentionally edited scene/navigation files no longer match its original hashes.
 
-Rebuilding requires Python 3 with NumPy and PyYAML, plus Blender 3.6 LTS:
+Rebuilding requires Python 3 with NumPy and PyYAML, plus Blender 3.6 LTS and the native navigation baker:
 
 ```sh
+cmake --build build --target deathward_bake_navigation
 python3 scripts/import_town.py --blender /path/to/blender
 ```
 
@@ -55,3 +56,11 @@ python3 scripts/verify_town.py  # NumPy and Pillow; verifies source/output hashe
 ```
 
 The audit compares every imported placement and material mapping with the resolved source, verifies all 691 source hashes and 12 embedded images, and checks the original sky scale. Tests cover navigation, station reachability, elevation, barriers, seed selection, launch/return, asset loading away from the repository, rendering and resource cleanup.
+
+The navigation baker is also available without reimporting meshes or textures:
+
+```sh
+python3 scripts/bake_navigation.py --pack assets/town
+```
+
+It uses the same geometry and headroom rules as an editor save, allowing passage beneath high entrance beams while retaining posts and low ceilings. It updates only navigation and its manifest metadata and keeps `town.nav.bak`. `DWTNAV02` marks these rules; older navigation remains readable and is rebuilt once on game startup, including saved browser layouts, without replacing the authored scene.

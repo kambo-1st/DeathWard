@@ -14,6 +14,7 @@ import subprocess
 import numpy as np
 import yaml
 from import_western import documents, ROOT
+from bake_navigation import rebake_navigation
 
 
 def trs(obj):
@@ -40,6 +41,7 @@ def main():
     parser.add_argument("--output", type=Path, default=ROOT / "assets/town")
     parser.add_argument("--blender", default="blender")
     parser.add_argument("--resolve-only", action="store_true")
+    parser.add_argument("--navigation-baker", type=Path, default=ROOT / "build/deathward_bake_navigation")
     parser.add_argument(
         "--nav-bounds", type=float, nargs=4,
         metavar=("MIN_X", "MIN_Z", "MAX_X", "MAX_Z")
@@ -47,6 +49,8 @@ def main():
     parser.add_argument("--spawn", type=float, nargs=2, metavar=("X", "Z"))
     parser.add_argument("--mission", type=float, nargs=2, metavar=("X", "Z"))
     args = parser.parse_args()
+    if not args.resolve_only and not args.navigation_baker.is_file():
+        parser.error("Build the native navigation baker first: cmake --build build --target deathward_bake_navigation")
     source = args.source.resolve()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -391,6 +395,8 @@ def main():
         ],
         check=True,
     )
+
+    rebake_navigation(out, args.navigation_baker)
 
 
 if __name__ == "__main__":

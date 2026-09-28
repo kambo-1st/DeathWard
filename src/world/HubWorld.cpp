@@ -28,7 +28,7 @@ bool HubWorld::load(const std::filesystem::path &path) {
         read(mission.x);
         read(mission.y);
         read(mission.z);
-        if (!f || std::memcmp(magic, "DWTNAV01", 8) || !width_ || !depth_ || width_ > 4096 || depth_ > 4096 ||
+        if (!f || (std::memcmp(magic, "DWTNAV01", 8) && std::memcmp(magic, "DWTNAV02", 8)) || !width_ || !depth_ || width_ > 4096 || depth_ > 4096 ||
             !std::isfinite(cell_) || cell_ < .1f || cell_ > 2 || !std::isfinite(minX_) ||
             !std::isfinite(minZ_))
             throw std::runtime_error("The town navigation asset is missing or invalid.");
