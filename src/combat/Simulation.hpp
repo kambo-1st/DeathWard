@@ -140,6 +140,7 @@ struct Hazard {
     Context context;
     Vector3 velocity{};
     bool settled = false;
+    bool playerContact = false;
 };
 // Shared by live charges and the mouse aiming preview.
 void advanceDynamite(Hazard &charge, const Arena &arena, float dt);
@@ -322,6 +323,7 @@ class Simulation {
     void process(const Event &event);
     void createProjectile(const Event &event);
     void updatePlayer(const Input &input, float dt);
+    void kickDynamiteOnContact(Vector3 previousPosition);
     void beginBossEncounter();
     void prepareRoomEnemies(int index);
     bool roomSpawnClear(Vector3 position, float radius) const;

@@ -3,7 +3,8 @@
 namespace dw {
 namespace {
 constexpr float Gravity = 18, ChargeRadius = .18f, FlightTime = .7f;
-}
+constexpr float KickContactRadius = .72f, KickSpeed = 5.5f, KickLift = 1.4f;
+} // namespace
 void advanceDynamite(Hazard &charge, const Arena &arena, float dt) {
     if (charge.settled || dt <= 0)
         return;
@@ -99,7 +100,37 @@ bool Simulation::placeDynamite() {
     charge.origin = player.position;
     charge.velocity = {};
     charge.settled = true;
+    charge.playerContact = true; // Step away before walking back into a freshly placed bundle.
     return deployDynamite(charge);
+}
+void Simulation::kickDynamiteOnContact(Vector3 previousPosition) {
+    if (dead || finished || shopOpen || rewardOpen || player.hp <= 0)
+        return;
+    const Vector3 movement{player.position.x - previousPosition.x, 0, player.position.z - previousPosition.z};
+    const float travelSquared = dot(movement, movement);
+    for (auto &charge : hazards) {
+        if (charge.kind != HazardKind::PlayerDynamite || !charge.alive || charge.age >= charge.delay)
+            continue;
+        const Vector3 toward{charge.position.x - previousPosition.x, 0,
+                             charge.position.z - previousPosition.z};
+        const bool low = std::abs(charge.position.y - (player.position.y - .55f)) <= .65f;
+        const bool touching = low && length(sub(toward, movement)) <= KickContactRadius;
+        // Sweep the feet so a fast step/dodge cannot miss a bundle. Only entering
+        // contact while approaching it kicks; overlap is not a kick every frame.
+        const float t =
+            travelSquared > .000001f ? std::clamp(dot(toward, movement) / travelSquared, 0.f, 1.f) : 0;
+        const auto contact = add(previousPosition, mul(movement, t));
+        if (!charge.playerContact && low && travelSquared > .000001f && dot(toward, movement) > 0 &&
+            length(sub(toward, mul(movement, t))) <= KickContactRadius &&
+            arena.sight(add(contact, {0, -.55f, 0}), charge.position)) {
+            charge.velocity = add(mul(unit(toward), KickSpeed), {0, KickLift, 0});
+            charge.settled = false;
+            audioCues.push(arena.theme == MissionTheme::Canyon ? AudioCueKind::StepGravel
+                                                               : AudioCueKind::StepMine,
+                           charge.position);
+        }
+        charge.playerContact = touching;
+    }
 }
 bool Simulation::deployDynamite(Hazard charge) {
     if (dead || finished || shopOpen || rewardOpen || player.hp <= 0 || dynamiteCooldown > 0)

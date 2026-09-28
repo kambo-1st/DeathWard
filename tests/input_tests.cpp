@@ -178,11 +178,37 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     game.perform(dw::Action::Pause);
     const float age = run.hazards.front().age;
     mouseEvent(KeyDown, KEY_B);
+    mouseEvent(KeyDown, KEY_E);
     for (int i = 0; i < 10; ++i)
         frame(x, y);
     mouseEvent(KeyUp, KEY_B);
-    check(run.hazards.front().age == age && run.dynamite == 2, "pause freezes fuses and rejects throws");
+    mouseEvent(KeyUp, KEY_E);
+    frame(x, y); // Let raylib observe the releases before the next E press.
+    check(run.hazards.front().age == age && run.hazards.front().settled && run.dynamite == 2,
+          "pause freezes fuses and rejects deployment and kicks");
     game.perform(dw::Action::Resume);
+    check(run.nearbyInteraction() != "KICK DYNAMITE", "contact kicking needs no HUD control");
+    mouseEvent(KeyDown, KEY_E);
+    frame(x, y);
+    mouseEvent(KeyUp, KEY_E);
+    frame(x, y);
+    check(run.hazards.front().settled, "E no longer kicks dynamite");
+    mouseEvent(KeyDown, KEY_W);
+    for (int i = 0; i < 10; ++i)
+        frame(x, y);
+    mouseEvent(KeyUp, KEY_W);
+    frame(x, y);
+    check(run.hazards.front().settled && dw::distance(planted, run.hazards.front().position) == 0,
+          "WASD walking away leaves the planted charge in place");
+    mouseEvent(KeyDown, KEY_S);
+    for (int i = 0; i < 5; ++i)
+        frame(x, y);
+    mouseEvent(KeyUp, KEY_S);
+    frame(x, y);
+    check(!run.hazards.front().settled && run.hazards.front().age > age && run.dynamite == 2 &&
+              run.stats.shots == 0,
+          "walking back into a charge kicks it automatically without spending ammo or firing");
+    capture("kicked");
     for (int i = 0; i < 130 && run.stats.explosions == 0; ++i)
         frame(x, y);
     check(run.stats.explosions == 1 && run.dynamite == 2, "the charge detonates once after resuming");
@@ -240,9 +266,46 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
               !game.dynamiteArmed && run.stats.shots == 0,
           "the Place Dynamite button immediately places at the player's feet without a targeting click");
     capture("placed");
+    const auto placedAt = placed.position;
+    // Exercise ordinary ground clicks during combat, when the starting passage's
+    // broad interaction area does not redirect them into a door approach.
+    run.roomClear = false;
+    run.debugScenario = true;
+    Vector3 away{};
+    bool found = false;
+    for (const auto direction : {Vector3{1, 0, 0}, Vector3{0, 0, 1}, Vector3{-1, 0, 0}, Vector3{0, 0, -1}}) {
+        away = dw::add(run.player.position, dw::mul(direction, 1.3f));
+        if (!run.arena.blocked(away, .48f) && run.arena.clear(run.player.position, away, .48f)) {
+            found = true;
+            break;
+        }
+    }
+    check(found, "there is room to step away from the planted charge");
+    auto worldClick = [&](Vector3 at) {
+        at.y = 0;
+        const auto screen = GetWorldToScreen(at, game.camera);
+        click(int(screen.x), int(screen.y));
+    };
+    worldClick(away);
+    for (int i = 0; i < 25 && run.moveDestination(); ++i)
+        frame(640, 400);
+    check(dw::distance(run.player.position, placedAt) > 1,
+          "mouse movement separates the feet from the bundle");
+    check(dw::distance(placedAt, run.hazards.back().position) == 0 && run.hazards.back().settled,
+          "click-to-move away leaves the bundle at the placement point");
+    worldClick(placedAt);
+    for (int i = 0; i < 25 && run.hazards.back().settled; ++i)
+        frame(640, 400);
+    check(!run.hazards.back().settled && run.dynamite == dw::MaxDynamite - 1 && run.stats.shots == 0,
+          "click-to-move into dynamite nudges it without a special button");
+    for (int i = 0; i < 25; ++i)
+        frame(640, 400);
+    const float nudged = dw::distance(placedAt, run.hazards.back().position);
+    check(nudged > .4f && nudged < 1.5f, "the mouse contact kick travels only a short distance");
     game.close();
-    std::cout << "PASS " << name
-              << " dynamite ground placement, mode switch, throws, pause, cancellation and refill\n";
+    std::cout
+        << "PASS " << name
+        << " dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill\n";
 }
 } // namespace
 int main(int argc, char **argv) {

@@ -695,6 +695,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
             player.pullTime = std::max(0.0f, player.pullTime - dt);
         }
     }
+    kickDynamiteOnContact(previousPosition);
     if (input.placeDynamite)
         placeDynamite();
     else if (input.dynamiteTarget)

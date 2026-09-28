@@ -91,6 +91,8 @@ Mine rooms have different dimensions (24–40 units per side), with rectangular,
 
 **Dynamite starts at three charges per expedition and defaults to ground placement.** Press **B** or click **Place Dynamite** above the health bar to put a charge at your feet. It stays on the ground and explodes after a two-second fuse, giving you time to move away. The cursor does not choose the placement location.
 
+**Walk into lit dynamite to give it a small nudge.** Both WASD and click-to-move kick it automatically on contact, moving it roughly one character width. Walking away after placing a charge leaves it at your feet until you return and bump into it. Kicking uses no key or button, costs no ammo, and keeps the original fuse burning. The bundle bounces off solid scenery; high airborne charges remain out of foot reach.
+
 Click the **Mode: Place / Mode: Throw** switch above that button to enable the retained throwing mode. In Throw mode, **B** throws at the cursor; **Throw Dynamite** selects a trajectory preview, then a world click throws. Escape, the right button, or the action button cancels targeting. Switching back to Place also cancels targeting without spending ammo. Mode choice lasts for the current game session; new sessions default to Place.
 
 Both modes use the same red dynamite bundle, sparking fuse, explosion sound, fire and smoke. The blast deals 100 damage within a 4.5-unit radius and can hurt you for 25 HP. Solid cover blocks blast damage; dodging and invulnerability protect the player. Optional throws aim up to 12 units away and bounce off scenery; the preview includes bouncing and the blast area. Low cover can be cleared, while tall walls and canyon rock stop a throw. Dynamite kills trigger your existing kill effects.
@@ -114,6 +116,7 @@ The camera follows you through corridors. The mission map shows branches, your p
 | Mouse wheel | Zoom in / out; scroll up to move closer, down to pull back |
 | B / Place Dynamite button | Place a charge at your feet (default mode) |
 | Mode: Place / Throw button | Switch between ground placement and optional throwing |
+| Walk into lit dynamite | Automatically nudge it a short distance |
 | E / nearby interaction button | Interact near an objective or shopkeeper |
 | 1 / 2 | Choose one item at a power-room pedestal |
 | 1 / 2 / 3 / 4 in the shop | Buy medicine / first power / second power / dynamite pack |

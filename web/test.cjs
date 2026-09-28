@@ -123,12 +123,37 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal((await state()).placedDynamite, 1);
     assert.equal((await state()).shots, 0);
     await page.screenshot({path: path.join(artifacts, 'web-dynamite-lit.png')});
+    const beforeKick = await state();
+    await key('e');
+    assert.equal((await state()).placedDynamite, 1); // Interaction is no longer a kick.
+    // Step back toward the route we just used to collect the coin, then walk into the bundle.
+    const routes = [
+      {out: 'w', back: 's', x: -1, z: -1}, {out: 's', back: 'w', x: 1, z: 1},
+      {out: 'a', back: 'd', x: -1, z: 1}, {out: 'd', back: 'a', x: 1, z: -1},
+    ];
+    routes.sort((a, b) => (b.x - a.x) * (coin.x - beforeKick.x) + (b.z - a.z) * (coin.z - beforeKick.z));
+    const route = routes[0];
+    await page.keyboard.down(route.out);
+    await wait(start => Math.hypot(Module.state.x - start.x, Module.state.z - start.z) > .95, beforeKick);
+    await page.keyboard.up(route.out);
+    assert.equal((await state()).placedDynamite, 1);
+    await page.keyboard.down(route.back);
+    await wait(() => Module.state.litDynamite === 1 && Module.state.placedDynamite === 0);
+    await page.keyboard.up(route.back);
+    assert.equal((await state()).dynamite, 2);
+    assert.equal((await state()).shots, 0);
+    await page.screenshot({path: path.join(artifacts, 'web-dynamite-kicked.png')});
     await wait(() => Module.state.explosions === 1 && Module.state.litDynamite === 0);
     await page.screenshot({path: path.join(artifacts, 'web-dynamite-blast.png')});
     await click(160, 640);
     await wait(() => Module.state.dynamite === 1 && Module.state.placedDynamite === 1);
     assert.equal((await state()).dynamiteArmed, false);
     await page.screenshot({path: path.join(artifacts, 'web-dynamite-placed.png')});
+    // A freshly placed charge remains stationary without movement or contact.
+    await key('e');
+    assert.equal((await state()).placedDynamite, 1);
+    assert.equal((await state()).dynamite, 1);
+    assert.equal((await state()).shots, 0);
     await wait(() => Module.state.explosions === 2 && Module.state.litDynamite === 0);
     await click(160, 608);
     await wait(() => Module.state.dynamiteThrowMode);
@@ -144,7 +169,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await click(680, 400);
     await wait(() => Module.state.dynamite === 0 && Module.state.litDynamite === 1);
     assert.equal((await state()).shots, 0);
-    console.log('PASS default dynamite ground placement, mode switch, throws, fuse and targeting cancellation');
+    console.log('PASS dynamite ground placement, automatic contact kicks, throws, fuse and targeting cancellation');
     while ((await state()).room !== (await state()).shopRoom) await key('F12');
     assert.equal((await state()).enemies, 0);
     await page.waitForTimeout(700);
