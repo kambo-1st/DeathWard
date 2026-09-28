@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Types.hpp"
+#include "render/PlayerOcclusion.hpp"
 #include "world/HubDefinition.hpp"
 #include "world/TownDocument.hpp"
 #include <filesystem>
@@ -15,6 +16,11 @@ class TownScene {
     bool load(const std::filesystem::path &directory = assetDirectory(HubKind::BlackCreek));
     void unload();
     void draw(Vector3 focus, bool glass = false);
+    void setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled = true) {
+        occlusion_.set(camera, player);
+        occlusion_.enabled = enabled;
+    }
+    void drawOccluders();
     // Call before BeginMode3D. Actors use the supplied depth shader in this pass.
     void prepareLighting(const Camera3D &camera, const std::function<void(Shader)> &actors = {});
     Shader actorShader() const {
@@ -64,9 +70,11 @@ class TownScene {
     int sunIndex_ = -1;
     std::vector<Asset> assets_;
     std::vector<Instance> instances_;
+    std::vector<const Instance *> occluders_;
     std::vector<std::vector<Matrix>> batches_;
     std::vector<std::vector<Matrix>> shadowBatches_;
     bool attempted_ = false;
+    PlayerOcclusion occlusion_;
     void updateLights();
 };
 } // namespace dw

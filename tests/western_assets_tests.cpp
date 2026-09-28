@@ -32,8 +32,10 @@ size_t verifyCanyon(WesternScene &scene) {
                   "canyon decorations contain no cube cover, straight walls or repeated cliff cards");
         for (const auto &chunk : scene.terrainChunks()) {
             check(chunk.mesh.vertexCount > 0, "terrain chunks upload visible triangles");
-            const auto p = mul(add(chunk.bounds.min, chunk.bounds.max), .5f);
-            const Vector3 from{p.x + .19f, 30, p.z + .37f}, to{p.x + .19f, -1, p.z + .37f};
+            // Rock sections and floor chunks have irregular footprints; sample an actual triangle.
+            const auto *v = chunk.mesh.vertices;
+            const Vector3 p{(v[0] + v[3] + v[6]) / 3, 0, (v[2] + v[5] + v[8]) / 3};
+            const Vector3 from{p.x, 30, p.z}, to{p.x, -1, p.z};
             const auto hit = field.trace(from, to);
             const auto meshHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
             check(hit.hit && meshHit.hit && std::abs(hit.t * 31 - meshHit.distance) < .003f,

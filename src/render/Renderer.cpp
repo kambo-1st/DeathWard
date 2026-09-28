@@ -353,6 +353,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                          EntityId hoveredEnemy, float deathTime) {
     playerModel_.update(run, deathTime);
     westernScene_.prepare(run.arena);
+    westernScene_.setPlayerOcclusion(camera, run.player.position);
     const auto &theme = missionTheme(run.arena.theme);
     const bool canyon = run.arena.theme == MissionTheme::Canyon;
     postProcess_.begin(theme.sky, distance(camera.position, camera.target));
@@ -588,6 +589,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawSphereWires(run.player.position, 0.48f, 6, 8, Teal);
         DrawLine3D(run.player.position, run.player.aim, Teal);
     }
+    westernScene_.drawOccluders();
     westernScene_.drawGlass();
     EndMode3D();
     postProcess_.end();
@@ -611,6 +613,7 @@ Action Renderer::hub(const Game &game) {
     const auto &town = game.town;
     const auto &world = game.campaign.data().world;
     playerModel_.update(town.player, town.time, &town);
+    townScene_.setPlayerOcclusion(game.camera, town.player.position);
     townScene_.prepareLighting(game.camera,
                                [&](Shader depth) { playerModel_.draw(town.player, false, depth); });
     postProcess_.begin(Color{154, 186, 199, 255}, distance(game.camera.position, game.camera.target));
@@ -630,6 +633,7 @@ Action Renderer::hub(const Game &game) {
     if (game.collisionDebug)
         for (auto p : town.route())
             DrawCube(add(p, {0, .07f, 0}), .16f, .1f, .16f, Teal);
+    townScene_.drawOccluders();
     townScene_.draw(town.player.position, true);
     EndMode3D();
     postProcess_.end();

@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include "render/WesternScene.hpp"
 #include "rlgl.h"
+#include <map>
 
 namespace dw {
 namespace {
@@ -32,6 +33,7 @@ uniform sampler2D texture0;
 uniform sampler2D heightMap;
 uniform vec4 terrainGrid;
 uniform vec3 focus;
+uniform int terrainUnderlay;
 out vec4 finalColor;
 float ground(vec2 p) {
     return texture(heightMap,(p-terrainGrid.xy)/terrainGrid.zw).r;
@@ -40,7 +42,7 @@ void main() {
     vec3 n = normalize(normal);
     vec3 sun = normalize(vec3(-.55,.85,.38));
     float shade = 1.;
-    for (int i=1;i<=14;++i) {
+    for (int i=1;i<=14 && terrainUnderlay==0;++i) {
         float travel = float(i)*1.7;
         vec3 ray = world+sun*travel;
         shade = min(shade, mix(1.,.22,smoothstep(-.5,.5,ground(ray.xz)-ray.y-.28)));
@@ -53,7 +55,7 @@ void main() {
     vec3 color = texture(texture0,uv).rgb*tint*(.64+.06*up+fill+.38*direct*shade);
     float fog = smoothstep(60.,110.,length(world.xz-focus.xz))*.6;
     color = mix(color,vec3(.69,.54,.39),fog);
-    finalColor=vec4(color,1.);
+    finalColor=playerOcclusionSurface(world,vec4(color,1.));
 }
 )GLSL";
 } // namespace
@@ -61,6 +63,11 @@ void WesternScene::clearTerrain() {
     for (auto &chunk : terrain_)
         UnloadMesh(chunk.mesh);
     terrain_.clear();
+    terrainField_.reset();
+    terrainSections_.clear();
+    if (terrainBase_.vaoId)
+        UnloadMesh(terrainBase_);
+    terrainBase_ = {};
     if (terrainShader_.id)
         UnloadShader(terrainShader_);
     if (heightTexture_.id)
@@ -76,7 +83,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
     if (!arena.canyon)
         return;
     const auto &field = *arena.canyon;
-    terrainShader_ = LoadShaderFromMemory(TerrainVertex, TerrainFragment);
+    terrainField_ = arena.canyon;
+    const auto fragment = withPlayerOcclusion(TerrainFragment);
+    terrainShader_ = LoadShaderFromMemory(TerrainVertex, fragment.c_str());
     terrainMaterial_ = LoadMaterialDefault();
     terrainMaterial_.shader = terrainShader_;
     Vector2 sandUv{}, wallUv{}, capUv{};
@@ -113,56 +122,102 @@ void WesternScene::generateCanyon(const Arena &arena) {
                        field.depth * field.step};
     SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "terrainGrid"), &grid,
                    SHADER_UNIFORM_VEC4);
-    for (int iz = 0; iz < field.depth - 1; iz += 24)
-        for (int ix = 0; ix < field.width - 1; ix += 24) {
-            TerrainChunk chunk;
-            const int right = std::min(ix + 24, field.width - 1), bottom = std::min(iz + 24, field.depth - 1);
-            auto &m = chunk.mesh;
-            m.triangleCount = (right - ix) * (bottom - iz) * 2;
-            m.vertexCount = m.triangleCount * 3;
-            m.vertices = static_cast<float *>(MemAlloc(unsigned(m.vertexCount * 3 * sizeof(float))));
-            m.normals = static_cast<float *>(MemAlloc(unsigned(m.vertexCount * 3 * sizeof(float))));
-            m.texcoords = static_cast<float *>(MemAlloc(unsigned(m.vertexCount * 2 * sizeof(float))));
-            m.colors = static_cast<unsigned char *>(MemAlloc(unsigned(m.vertexCount * 4)));
-            int vertex = 0;
-            auto triangle = [&](int ax, int az, int bx, int bz, int cx, int cz) {
-                const auto a = field.vertex(ax, az), b = field.vertex(bx, bz), c = field.vertex(cx, cz);
-                const auto normal = Vector3Normalize(Vector3CrossProduct(sub(b, a), sub(c, a)));
-                const bool rock = std::max({a.y, b.y, c.y}) > .15f;
-                const bool cap = normal.y > .72f;
-                const auto uv = rock ? (cap ? capUv : wallUv) : sandUv;
-                // Flat face normals supply the facets; per-triangle color noise
-                // would expose the regular collision grid on broad mesa tops.
-                const Color tint = cap ? Color{255, 252, 235, 255} : WHITE;
-                const float variation =
-                    rock && !cap ? .96f + .04f * std::sin(dot(add(add(a, b), c), {1.17f, .73f, 2.31f})) : 1.f;
-                for (auto cell : {std::pair{ax, az}, std::pair{bx, bz}, std::pair{cx, cz}}) {
-                    const auto p = field.vertex(cell.first, cell.second);
-                    m.vertices[3 * vertex] = p.x;
-                    m.vertices[3 * vertex + 1] = p.y;
-                    m.vertices[3 * vertex + 2] = p.z;
-                    m.normals[3 * vertex] = normal.x;
-                    m.normals[3 * vertex + 1] = normal.y;
-                    m.normals[3 * vertex + 2] = normal.z;
-                    m.texcoords[2 * vertex] = uv.x;
-                    m.texcoords[2 * vertex + 1] = uv.y;
-                    m.colors[4 * vertex] = static_cast<unsigned char>(tint.r * variation);
-                    m.colors[4 * vertex + 1] = static_cast<unsigned char>(tint.g * variation);
-                    m.colors[4 * vertex + 2] = static_cast<unsigned char>(tint.b * variation);
-                    m.colors[4 * vertex + 3] = 255;
-                    ++vertex;
-                }
-            };
-            for (int z = iz; z < bottom; ++z)
-                for (int x = ix; x < right; ++x) {
-                    triangle(x, z, x + 1, z + 1, x + 1, z);
-                    triangle(x, z, x, z + 1, x + 1, z + 1);
-                }
-            chunk.bounds = {{field.x + ix * field.step, 0, field.z + iz * field.step},
-                            {field.x + right * field.step, 12, field.z + bottom * field.step}};
-            UploadMesh(&m, false);
-            terrain_.push_back(chunk);
+    using Triangle = std::array<Vector3, 3>;
+    std::vector<Box> outcrops;
+    for (const auto &room : arena.rooms)
+        outcrops.insert(outcrops.end(), room.obstacles.begin(), room.obstacles.end());
+    std::map<int, std::vector<Triangle>> sections;
+    terrainSections_.reserve(size_t((field.width - 1) * (field.depth - 1) * 2));
+    auto sectionFor = [&](Vector3 center) {
+        for (size_t i = 0; i < outcrops.size(); ++i) {
+            const auto &box = outcrops[i];
+            if (center.x >= box.min.x - field.step && center.x <= box.max.x + field.step &&
+                center.z >= box.min.z - field.step && center.z <= box.max.z + field.step)
+                return int(i);
         }
+        size_t closest = 0;
+        float best = 1e9f;
+        for (size_t i = 0; i < arena.rooms.size(); ++i) {
+            const auto delta = sub(center, arena.rooms[i].center);
+            const float range = delta.x * delta.x + delta.z * delta.z;
+            if (range < best) {
+                closest = i;
+                best = range;
+            }
+        }
+        const auto delta = sub(center, arena.rooms[closest].center);
+        const int side = std::clamp(int((std::atan2(delta.z, delta.x) + Pi) / (Pi / 4)), 0, 7);
+        return int(outcrops.size()) + int(closest) * 8 + side;
+    };
+    for (int z = 0; z < field.depth - 1; ++z)
+        for (int x = 0; x < field.width - 1; ++x) {
+            const auto a = field.vertex(x, z), b = field.vertex(x + 1, z), c = field.vertex(x, z + 1),
+                       d = field.vertex(x + 1, z + 1);
+            for (const auto triangle : {Triangle{a, d, b}, Triangle{a, c, d}}) {
+                // Include the low foot of the wall so fading does not leave opaque triangular stubs.
+                const bool rock = std::max({triangle[0].y, triangle[1].y, triangle[2].y}) > .001f;
+                // Outcrops remain complete objects; each basin rim has eight wall sections.
+                // Floor chunks are independent so fading rock leaves playable surfaces opaque.
+                const int key =
+                    rock ? sectionFor(mul(add(add(triangle[0], triangle[1]), triangle[2]), 1.f / 3))
+                         : -1 - (z / 24) * ((field.width + 22) / 24) - x / 24;
+                sections[key].push_back(triangle);
+                terrainSections_.push_back(key);
+            }
+        }
+    auto makeMesh = [&](const std::vector<Triangle> &triangles) {
+        Mesh mesh{};
+        mesh.triangleCount = int(triangles.size());
+        mesh.vertexCount = mesh.triangleCount * 3;
+        mesh.vertices = static_cast<float *>(MemAlloc(unsigned(mesh.vertexCount * 3 * sizeof(float))));
+        mesh.normals = static_cast<float *>(MemAlloc(unsigned(mesh.vertexCount * 3 * sizeof(float))));
+        mesh.texcoords = static_cast<float *>(MemAlloc(unsigned(mesh.vertexCount * 2 * sizeof(float))));
+        mesh.colors = static_cast<unsigned char *>(MemAlloc(unsigned(mesh.vertexCount * 4)));
+        int vertex = 0;
+        for (const auto &triangle : triangles) {
+            const auto a = triangle[0], b = triangle[1], c = triangle[2];
+            const auto normal = Vector3Normalize(Vector3CrossProduct(sub(b, a), sub(c, a)));
+            const bool rock = std::max({a.y, b.y, c.y}) > .15f;
+            const bool cap = normal.y > .72f;
+            const auto uv = rock ? (cap ? capUv : wallUv) : sandUv;
+            const Color tint = cap ? Color{255, 252, 235, 255} : WHITE;
+            const float variation =
+                rock && !cap ? .96f + .04f * std::sin(dot(add(add(a, b), c), {1.17f, .73f, 2.31f})) : 1.f;
+            for (auto p : triangle) {
+                mesh.vertices[3 * vertex] = p.x;
+                mesh.vertices[3 * vertex + 1] = p.y;
+                mesh.vertices[3 * vertex + 2] = p.z;
+                mesh.normals[3 * vertex] = normal.x;
+                mesh.normals[3 * vertex + 1] = normal.y;
+                mesh.normals[3 * vertex + 2] = normal.z;
+                mesh.texcoords[2 * vertex] = uv.x;
+                mesh.texcoords[2 * vertex + 1] = uv.y;
+                mesh.colors[4 * vertex] = static_cast<unsigned char>(tint.r * variation);
+                mesh.colors[4 * vertex + 1] = static_cast<unsigned char>(tint.g * variation);
+                mesh.colors[4 * vertex + 2] = static_cast<unsigned char>(tint.b * variation);
+                mesh.colors[4 * vertex + 3] = 255;
+                ++vertex;
+            }
+        }
+        UploadMesh(&mesh, false);
+        return mesh;
+    };
+    std::map<int, int> sectionIndices;
+    for (const auto &[key, triangles] : sections) {
+        TerrainChunk chunk;
+        chunk.mesh = makeMesh(triangles);
+        const auto bounds = GetMeshBoundingBox(chunk.mesh);
+        chunk.bounds = {bounds.min, bounds.max};
+        chunk.rock = key >= 0;
+        sectionIndices[key] = int(terrain_.size());
+        terrain_.push_back(chunk);
+    }
+    for (auto &key : terrainSections_)
+        key = key < 0 ? -1 : sectionIndices.at(key);
+    // Sand remains visible through faded mesas; the original floor and physics stay intact.
+    const Vector3 a{field.x, -.05f, field.z}, b{field.x + (field.width - 1) * field.step, -.05f, field.z},
+        c{field.x, -.05f, field.z + (field.depth - 1) * field.step}, d{b.x, -.05f, c.z};
+    terrainBase_ = makeMesh({Triangle{a, d, b}, Triangle{a, c, d}});
     if (!loaded())
         return;
     Random rng(arena.visualSeed ^ 0x43414e594f4e4152ULL);
@@ -193,10 +248,58 @@ void WesternScene::drawTerrain(Vector3 focus) {
     if (terrain_.empty())
         return;
     SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "focus"), &focus, SHADER_UNIFORM_VEC3);
-    for (const auto &chunk : terrain_) {
+    for (auto &section : terrain_)
+        section.faded = false;
+    if (occlusion_.enabled) {
+        const auto &field = *terrainField_;
+        // Test only height-field cells between the camera and the body. This avoids raycasting
+        // every triangle in large mesa meshes, while using the exact rendered triangles.
+        for (auto target : occlusion_.targets()) {
+            const auto ray = occlusion_.rayTo(target);
+            const float reach = distance(ray.position, target) - .15f;
+            const int left =
+                std::clamp(int(std::floor((std::min(ray.position.x, target.x) - field.x) / field.step)), 0,
+                           field.width - 2);
+            const int right =
+                std::clamp(int(std::floor((std::max(ray.position.x, target.x) - field.x) / field.step)), 0,
+                           field.width - 2);
+            const int top =
+                std::clamp(int(std::floor((std::min(ray.position.z, target.z) - field.z) / field.step)), 0,
+                           field.depth - 2);
+            const int bottom =
+                std::clamp(int(std::floor((std::max(ray.position.z, target.z) - field.z) / field.step)), 0,
+                           field.depth - 2);
+            for (int z = top; z <= bottom; ++z)
+                for (int x = left; x <= right; ++x) {
+                    const auto a = field.vertex(x, z), b = field.vertex(x + 1, z), c = field.vertex(x, z + 1),
+                               d = field.vertex(x + 1, z + 1);
+                    for (int triangle = 0; triangle < 2; ++triangle) {
+                        const int index =
+                            terrainSections_[size_t((z * (field.width - 1) + x) * 2 + triangle)];
+                        if (index < 0 || terrain_[size_t(index)].faded)
+                            continue;
+                        const auto hit = triangle == 0 ? GetRayCollisionTriangle(ray, a, d, b)
+                                                       : GetRayCollisionTriangle(ray, a, c, d);
+                        if (hit.hit && hit.distance > .05f && hit.distance < reach &&
+                            hit.point.y > occlusion_.player.y - .85f)
+                            terrain_[size_t(index)].faded = true;
+                    }
+                }
+        }
+    }
+    occlusion_.bind(terrainShader_, false);
+    // The buried base must not self-shadow against the translucent rock above it.
+    int underlay = 1;
+    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "terrainUnderlay"), &underlay,
+                   SHADER_UNIFORM_INT);
+    DrawMesh(terrainBase_, terrainMaterial_, MatrixIdentity());
+    underlay = 0;
+    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "terrainUnderlay"), &underlay,
+                   SHADER_UNIFORM_INT);
+    for (auto &chunk : terrain_) {
         const Vector3 closest{std::clamp(focus.x, chunk.bounds.min.x, chunk.bounds.max.x), focus.y,
                               std::clamp(focus.z, chunk.bounds.min.z, chunk.bounds.max.z)};
-        if (distance(closest, focus) < 110)
+        if (!chunk.faded && distance(closest, focus) < 110)
             DrawMesh(chunk.mesh, terrainMaterial_, MatrixIdentity());
     }
 }

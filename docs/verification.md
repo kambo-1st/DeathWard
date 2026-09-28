@@ -1,5 +1,11 @@
 # Milestone 1 verification
 
+## Player visibility through scenery
+
+Town objects that obstruct body/head/shoulder sight rays render in full at 22% opacity, including every material section. Normal scenery stays in its instanced opaque batch; obstructing objects draw afterward without depth writes. The same behavior applies to mine props and complete canyon rock outcrops or basin-wall sections, including props supported by those sections. Canyon terrain and its props share a back-to-front translucent pass after actors. Floor meshes remain opaque, and a textured sand underlay prevents holes beneath faded mesas. Original collision and terrain heights stay intact. Scenery restores automatically when it no longer obstructs the player; the editor uses the full scene.
+
+The Release build, full graphics input suite, town asset/lighting suite, Western terrain suite and occlusion graphics suite pass. Pixel comparisons verify changes across entire objects beyond the player's silhouette, restored player visibility, and exact restoration when the effect is disabled. Canyon checks verify opaque floor sections and collision rays against the original terrain across five seeds. The canyon transparency update additionally compares the translucent pass against complete removal to ensure walls remain visible; the Release build, occlusion suite and Western terrain suite were rerun for this update. Before/after canyon captures at normal/wide zoom were visually reviewed. Logs use `artifacts/whole-occlusion-*` and `artifacts/canyon-transparency-*`; captures use `artifacts/occlusion-*-before.png` and `artifacts/occlusion-*-after.png`.
+
 ## No automatic room healing
 
 Removed the 15 HP bonus on first room entry and the 20 HP bonus on room completion. The expedition-loop contract now uses a wounded player and verifies health through first entry, final-enemy kills, room clears and peaceful-room revisits. The Release build and all seven headless suites pass. Logs use `artifacts/no-room-healing-*`.

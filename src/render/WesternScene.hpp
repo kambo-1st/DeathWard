@@ -1,4 +1,5 @@
 #pragma once
+#include "render/PlayerOcclusion.hpp"
 #include "world/Dungeon.hpp"
 #include <filesystem>
 
@@ -50,6 +51,11 @@ class WesternScene {
     void prepare(const Arena &arena);
     void draw(Vector3 focus);
     void drawGlass();
+    void setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled = true) {
+        occlusion_.set(camera, player);
+        occlusion_.enabled = enabled;
+    }
+    void drawOccluders();
     bool loaded() const {
         return model_.meshCount > 0;
     }
@@ -81,15 +87,21 @@ class WesternScene {
     std::array<Asset, size_t(WesternAsset::Count)> assets_{};
     std::array<std::vector<Matrix>, size_t(WesternAsset::Count)> batches_;
     std::vector<WesternPlacement> placements_;
+    std::vector<const WesternPlacement *> occluders_;
     const Arena *lastArena_ = nullptr;
     uint64_t lastSeed_ = 0;
     MissionTheme lastTheme_ = MissionTheme::Mine;
     bool attempted_ = false;
+    PlayerOcclusion occlusion_;
     struct TerrainChunk {
         Mesh mesh{};
         Box bounds{};
+        bool rock = false, faded = false;
     };
     std::vector<TerrainChunk> terrain_;
+    Mesh terrainBase_{};
+    std::shared_ptr<const CanyonTerrain> terrainField_;
+    std::vector<int> terrainSections_;
     Shader terrainShader_{};
     Material terrainMaterial_{};
     Texture2D heightTexture_{};

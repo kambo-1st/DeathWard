@@ -104,6 +104,7 @@ float visibility(vec3 n, vec3 sun) {
 void main() {
     vec4 surface = texture(texture0,uv) * colDiffuse * color;
     if(surface.a < .02) discard;
+    if(unlit == 0) surface = playerOcclusionSurface(world,surface);
     if (autumnFoliage != 0) {
         // Recolor only green leaf swatches; the original bark and texture detail remain visible.
         float leaf = smoothstep(.012,.070,surface.g-surface.b) *
@@ -183,10 +184,12 @@ void TownScene::unload() {
     shader_ = {};
     assets_.clear();
     instances_.clear();
+    occluders_.clear();
     document_ = {};
     batches_.clear();
     shadowBatches_.clear();
     attempted_ = false;
+    occlusion_ = {};
 }
 bool TownScene::load(const std::filesystem::path &directory) {
     unload();
@@ -204,8 +207,9 @@ bool TownScene::load(const std::filesystem::path &directory) {
         model_ = LoadModel((directory / "town.glb").string().c_str());
         if (model_.meshCount != meshCount)
             throw std::runtime_error("Town model/catalog mismatch");
-        shader_ = LoadShaderFromMemory(Vertex, Fragment);
-        actorShader_ = LoadShaderFromMemory(ActorVertex, Fragment);
+        const auto fragment = withPlayerOcclusion(Fragment);
+        shader_ = LoadShaderFromMemory(Vertex, fragment.c_str());
+        actorShader_ = LoadShaderFromMemory(ActorVertex, fragment.c_str());
         shadowShader_ = LoadShaderFromMemory(Vertex, DepthFragment);
         actorShadowShader_ = LoadShaderFromMemory(ActorVertex, DepthFragment);
         for (auto shader : {shader_, actorShader_, shadowShader_, actorShadowShader_})
@@ -271,6 +275,7 @@ void TownScene::applyDocument(const TownDocument &document) {
     document_ = document;
     updateLights();
     instances_.clear();
+    occluders_.clear();
     for (size_t n = 0; n < document.instances.size(); ++n) {
         const auto &i = document.instances[n];
         instances_.push_back({i.asset, i.transform, document.bounds(n)});
@@ -431,6 +436,7 @@ void TownScene::draw(Vector3 focus, bool glass) {
     if (!loaded())
         return;
     if (!glass) {
+        occluders_.clear();
         for (auto &b : batches_)
             b.clear();
         for (const auto &i : instances_) {
@@ -440,11 +446,20 @@ void TownScene::draw(Vector3 focus, bool glass) {
             const bool backdrop = document_.assets[i.asset].label.find("BackgroundCard") != std::string::npos;
             if (distance(focus, nearest) > 120 && !assets_[i.asset].unlit && !backdrop)
                 continue;
-            batches_[i.asset].push_back(i.transform);
+            const auto &asset = assets_[i.asset];
+            bool blocked = false;
+            if (!asset.unlit && occlusion_.intersects(b))
+                for (int mesh = asset.first; mesh < asset.first + asset.count && !blocked; ++mesh)
+                    blocked = occlusion_.blocks(model_.meshes[mesh], i.transform);
+            if (blocked)
+                occluders_.push_back(&i);
+            else
+                batches_[i.asset].push_back(i.transform);
         }
     }
     rlDrawRenderBatchActive();
     rlDisableBackfaceCulling(); // Original scene includes negative scales and two-sided materials.
+    occlusion_.bind(shader_, false);
     if (glass)
         rlDisableDepthMask();
     for (size_t i = 0; i < assets_.size(); ++i) {
@@ -469,6 +484,36 @@ void TownScene::draw(Vector3 focus, bool glass) {
     }
     if (glass)
         rlEnableDepthMask();
+    rlEnableBackfaceCulling();
+}
+void TownScene::drawOccluders() {
+    if (!loaded() || !occlusion_.enabled)
+        return;
+    std::sort(occluders_.begin(), occluders_.end(), [&](const Instance *a, const Instance *b) {
+        return distance(mul(add(a->bounds.min, a->bounds.max), .5f), occlusion_.camera.position) >
+               distance(mul(add(b->bounds.min, b->bounds.max), .5f), occlusion_.camera.position);
+    });
+    rlDrawRenderBatchActive();
+    rlDisableBackfaceCulling();
+    rlDisableDepthMask();
+    occlusion_.bind(shader_, true);
+    const int unlit = 0;
+    SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &unlit, SHADER_UNIFORM_INT);
+    for (const auto *instance : occluders_) {
+        const auto &asset = assets_[instance->asset];
+        const auto &label = document_.assets[instance->asset].label;
+        const int foliage =
+            label.find("Tree_Clump") != std::string::npos || label.find("Birch") != std::string::npos;
+        SetShaderValue(shader_, GetShaderLocation(shader_, "autumnFoliage"), &foliage, SHADER_UNIFORM_INT);
+        for (int j = asset.first; j < asset.first + asset.count; ++j) {
+            auto &material = model_.materials[model_.meshMaterial[j]];
+            const auto previous = material.maps[MATERIAL_MAP_METALNESS].texture;
+            material.maps[MATERIAL_MAP_METALNESS].texture = shadowMap_.depth;
+            DrawMeshInstanced(model_.meshes[j], material, &instance->transform, 1);
+            material.maps[MATERIAL_MAP_METALNESS].texture = previous;
+        }
+    }
+    rlEnableDepthMask();
     rlEnableBackfaceCulling();
 }
 } // namespace dw

@@ -19,15 +19,19 @@ in mat4 instanceTransform;
 uniform mat4 mvp;
 out vec2 uv;
 out vec3 normal;
+out vec3 world;
 void main() {
     uv = vertexTexCoord;
     normal = normalize(transpose(inverse(mat3(instanceTransform))) * vertexNormal);
-    gl_Position = mvp * instanceTransform * vec4(vertexPosition, 1.0);
+    vec4 p = instanceTransform * vec4(vertexPosition, 1.0);
+    world = p.xyz;
+    gl_Position = mvp * p;
 }
 )GLSL";
 constexpr const char *FragmentShader = R"GLSL(#version 330
 in vec2 uv;
 in vec3 normal;
+in vec3 world;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 uniform vec3 sceneryTint;
@@ -35,6 +39,7 @@ out vec4 finalColor;
 void main() {
     vec4 surface = texture(texture0, uv) * colDiffuse;
     if (surface.a < 0.02) discard;
+    surface = playerOcclusionSurface(world,surface);
     vec3 litNormal = gl_FrontFacing ? normalize(normal) : -normalize(normal);
     float sunlight = max(dot(litNormal, normalize(vec3(-0.45, 0.85, 0.3))), 0.0);
     finalColor = vec4(surface.rgb * sceneryTint * (0.62 + 0.43 * sunlight), surface.a);
@@ -75,10 +80,12 @@ void WesternScene::unload() {
     shader_ = {};
     assets_ = {};
     placements_.clear();
+    occluders_.clear();
     for (auto &batch : batches_)
         batch.clear();
     lastArena_ = nullptr;
     attempted_ = false;
+    occlusion_ = {};
 }
 bool WesternScene::load(const std::filesystem::path &directory) {
     unload();
@@ -144,7 +151,8 @@ bool WesternScene::load(const std::filesystem::path &directory) {
                 distance(actual.max, asset.bounds.max) < 0.01f;
     }
     if (valid) {
-        shader_ = LoadShaderFromMemory(VertexShader, FragmentShader);
+        const auto fragment = withPlayerOcclusion(FragmentShader);
+        shader_ = LoadShaderFromMemory(VertexShader, fragment.c_str());
         valid = shader_.id && shader_.id != rlGetShaderIdDefault();
     }
     if (!valid) {
@@ -328,6 +336,7 @@ void WesternScene::generate(const Arena &arena) {
 }
 void WesternScene::draw(Vector3 focus) {
     drawTerrain(focus);
+    occluders_.clear();
     if (!loaded())
         return;
     for (auto &batch : batches_)
@@ -338,8 +347,26 @@ void WesternScene::draw(Vector3 focus) {
                               std::clamp(focus.z, box.min.z, box.max.z)};
         if (distance(nearest, focus) > 75)
             continue;
+        bool blocked = false;
+        if (lastTheme_ == MissionTheme::Canyon) {
+            const Vector3 base{(box.min.x + box.max.x) * .5f, 32, (box.min.z + box.max.z) * .5f};
+            // Props on a faded cliff share its opacity instead of appearing to float above it.
+            blocked = std::any_of(terrain_.begin(), terrain_.end(), [&](const auto &section) {
+                return section.faded && base.x >= section.bounds.min.x && base.x <= section.bounds.max.x &&
+                       base.z >= section.bounds.min.z && base.z <= section.bounds.max.z &&
+                       GetRayCollisionMesh({base, {0, -1, 0}}, section.mesh, MatrixIdentity()).hit;
+            });
+        }
         const auto index = size_t(placement.asset);
-        batches_[index].push_back(placementTransform(assets_[index].bounds, placement));
+        const auto &asset = assets_[index];
+        const auto transform = placementTransform(asset.bounds, placement);
+        if (occlusion_.intersects(box))
+            for (int mesh = asset.firstMesh; mesh < asset.firstMesh + asset.meshCount && !blocked; ++mesh)
+                blocked = occlusion_.blocks(model_.meshes[mesh], transform);
+        if (blocked)
+            occluders_.push_back(&placement);
+        else
+            batches_[index].push_back(transform);
     }
     drawBatches(false);
 }
@@ -354,6 +381,7 @@ void WesternScene::drawGlass() {
     rlEnableDepthMask();
 }
 void WesternScene::drawBatches(bool transparent) {
+    occlusion_.bind(shader_, false);
     for (size_t i = 0; i < assets_.size(); ++i) {
         const auto &batch = batches_[i];
         if (batch.empty())
@@ -379,5 +407,57 @@ void WesternScene::drawBatches(bool transparent) {
         if (cliff)
             rlEnableBackfaceCulling();
     }
+}
+void WesternScene::drawOccluders() {
+    if (!occlusion_.enabled)
+        return;
+    struct Surface {
+        const TerrainChunk *terrain;
+        const WesternPlacement *placement;
+        float depth;
+    };
+    std::vector<Surface> surfaces;
+    const auto forward = unit(sub(occlusion_.camera.target, occlusion_.camera.position));
+    auto depth = [&](Box bounds) {
+        return dot(sub(mul(add(bounds.min, bounds.max), .5f), occlusion_.camera.position), forward);
+    };
+    for (const auto &section : terrain_)
+        if (section.faded)
+            surfaces.push_back({&section, nullptr, depth(section.bounds)});
+    for (const auto *placement : occluders_)
+        surfaces.push_back({nullptr, placement, depth(placement->bounds)});
+    // Terrain and its props share one back-to-front pass after actors, without depth writes.
+    std::sort(surfaces.begin(), surfaces.end(),
+              [](const auto &a, const auto &b) { return a.depth > b.depth; });
+    rlDrawRenderBatchActive();
+    rlDisableDepthMask();
+    if (terrainShader_.id)
+        occlusion_.bind(terrainShader_, true);
+    if (loaded())
+        occlusion_.bind(shader_, true);
+    for (const auto &surface : surfaces) {
+        if (surface.terrain) {
+            DrawMesh(surface.terrain->mesh, terrainMaterial_, MatrixIdentity());
+        } else {
+            const auto *placement = surface.placement;
+            const auto &asset = assets_[size_t(placement->asset)];
+            const auto transform = placementTransform(asset.bounds, *placement);
+            const Vector3 tint =
+                lastTheme_ == MissionTheme::Canyon ? Vector3{1.18f, .94f, .78f} : Vector3{1, 1, 1};
+            SetShaderValue(shader_, GetShaderLocation(shader_, "sceneryTint"), &tint, SHADER_UNIFORM_VEC3);
+            const bool cliff = placement->asset == WesternAsset::CliffWall ||
+                               placement->asset == WesternAsset::CliffCap ||
+                               placement->asset == WesternAsset::CliffPillar;
+            if (cliff)
+                rlDisableBackfaceCulling();
+            for (int j = asset.firstMesh; j < asset.firstMesh + asset.meshCount; ++j) {
+                const auto &material = model_.materials[model_.meshMaterial[j]];
+                DrawMeshInstanced(model_.meshes[j], material, &transform, 1);
+            }
+            if (cliff)
+                rlEnableBackfaceCulling();
+        }
+    }
+    rlEnableDepthMask();
 }
 } // namespace dw
