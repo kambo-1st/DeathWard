@@ -388,10 +388,29 @@ int main(int argc, char **argv) {
                         Module.state.shopX = $2;
                         Module.state.shopY = $3;
                         Module.state.spent = $4;
+                        Module.state.dynamite = $5;
+                        Module.state.dynamiteArmed = !!$6;
+                        Module.state.litDynamite = $7;
+                        Module.state.explosions = $8;
+                        Module.state.dynamiteThrowMode = !!$9;
+                        Module.state.placedDynamite = $10;
                     }
                 },
                 game.run ? game.run->arena.shopRoom : -1, game.run && game.run->shopOpen, shopPixel.x,
-                shopPixel.y, game.run ? int(game.run->moneySpent) : 0);
+                shopPixel.y, game.run ? int(game.run->moneySpent) : 0, game.run ? game.run->dynamite : 0,
+                game.dynamiteArmed,
+                game.run ? int(std::count_if(game.run->hazards.begin(), game.run->hazards.end(),
+                                             [](const auto &hazard) {
+                                                 return hazard.kind == dw::HazardKind::PlayerDynamite;
+                                             }))
+                         : 0,
+                game.run ? int(game.run->stats.explosions) : 0, game.dynamiteThrowMode,
+                game.run ? int(std::count_if(game.run->hazards.begin(), game.run->hazards.end(),
+                                             [](const auto &hazard) {
+                                                 return hazard.kind == dw::HazardKind::PlayerDynamite &&
+                                                        hazard.settled;
+                                             }))
+                         : 0);
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

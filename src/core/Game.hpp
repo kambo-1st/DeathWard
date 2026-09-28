@@ -48,7 +48,10 @@ enum class Action {
     BuyShop0,
     BuyShop1,
     BuyShop2,
-    CloseShop
+    BuyShop3,
+    CloseShop,
+    Dynamite,
+    DynamiteMode
 };
 class Game {
   public:
@@ -66,6 +69,8 @@ class Game {
     Screen screen = Screen::Hub;
     RunSummary lastSummary;
     Camera3D camera{};
+    bool dynamiteArmed = false;
+    bool dynamiteThrowMode = false;
     AudioSettings audioSettings;
     MusicScene musicScene() const;
     AudioStatus audioStatus = AudioStatus::Disabled;
@@ -100,7 +105,10 @@ class Game {
     EntityId attackTarget_ = 0;
     bool dodgeQueued_ = false, interactQueued_ = false;
     bool standStillQueued_ = false;
+    bool cancelFireHeld_ = false;
     std::optional<Vector3> moveQueued_, fireQueued_;
+    std::optional<Vector3> dynamiteQueued_;
+    bool placeDynamiteQueued_ = false;
     std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;
     float cameraZoom_ = 100.0f / 160.0f, cameraZoomTarget_ = cameraZoom_;

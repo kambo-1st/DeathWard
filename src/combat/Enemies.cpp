@@ -15,11 +15,12 @@ bool Simulation::chainActive(const Enemy &enemy) const {
            arena.sight(enemy.position, partner->position);
 }
 
-bool Simulation::hurtPlayer(float damage, const Context &context) {
+bool Simulation::hurtPlayer(float damage, const Context &context, bool hostile) {
     if (godMode || player.dodge > 0 || player.hurt > 0)
         return false;
     // Apply once at impact for enemy contact, shots and hazards, including split shots.
-    damage *= EnemyDamageMultiplier;
+    if (hostile)
+        damage *= EnemyDamageMultiplier;
     player.hp -= damage;
     audioCues.push(AudioCueKind::Hurt, player.position);
     stats.damageTaken += damage;
@@ -109,12 +110,28 @@ void Simulation::clearHazards() {
 void Simulation::updateHazards(float dt) {
     for (auto &hazard : hazards) {
         const float previousAge = hazard.age;
+        if (hazard.kind == HazardKind::PlayerDynamite)
+            advanceDynamite(hazard, arena, std::min(dt, std::max(0.f, hazard.delay - hazard.age)));
         hazard.age += dt;
         if (hazard.age < hazard.delay)
             continue;
         const float dist = distance(player.position, hazard.position);
         const bool visible = arena.sight(hazard.position, player.position);
-        if (hazard.kind == HazardKind::Beam) {
+        if (hazard.kind == HazardKind::PlayerDynamite) {
+            Event blast;
+            blast.type = EventType::Explosion;
+            blast.position = hazard.position;
+            blast.origin = hazard.origin;
+            blast.direction = unit(sub(hazard.position, hazard.origin));
+            blast.damage = DynamiteDamage;
+            blast.radius = hazard.radius;
+            blast.areaDamage = true;
+            emit(blast, hazard.context);
+            effectVisual(hazard.position, hazard.radius, 5, .75f);
+            if (dist < hazard.radius + .48f && visible)
+                hurtPlayer(DynamiteSelfDamage, hazard.context, false);
+            hazard.alive = false;
+        } else if (hazard.kind == HazardKind::Beam) {
             if (segmentSphere(hazard.origin, hazard.position, player.position, hazard.radius + .48f) <= 1 &&
                 arena.sight(hazard.origin, player.position))
                 hurtPlayer(hazard.damage, hazard.context);

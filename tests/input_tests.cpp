@@ -75,12 +75,14 @@ void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme the
     const auto position = run.player.position;
     const auto duration = run.stats.duration;
     mouseEvent(KeyDown, KEY_W);
+    mouseEvent(KeyDown, KEY_B);
     for (int i = 0; i < 10; ++i)
         frame(600, 700, true, true);
     mouseEvent(KeyUp, KEY_W);
+    mouseEvent(KeyUp, KEY_B);
     frame();
     check(game.pointerOverControls() && dw::distance(position, run.player.position) == 0 &&
-              run.stats.duration == duration && run.stats.shots == 0,
+              run.stats.duration == duration && run.stats.shots == 0 && run.dynamite == 3,
           "the trade window captures gameplay mouse/key input and freezes the world");
     click(330, 535);
     check(run.player.hp == 95 && run.money() == 90 && run.shopOffers[0].sold,
@@ -90,6 +92,10 @@ void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme the
           "the power buy button applies its item and checkpoints spending immediately");
     click(630, 535);
     check(run.money() == 65 && run.items.size() == 1, "sold-out buttons do not charge again");
+    click(450, 610);
+    check(run.money() == 50 && run.dynamite == 6 && run.shopOffers[3].sold &&
+              game.campaign.data().pending->moneySpent == 50,
+          "the dynamite pack button adds three charges and saves the purchase");
     capture("stock");
     click(925, 610);
     check(!run.shopOpen && run.stats.shots == 0, "leaving the shop never fires through the panel");
@@ -104,9 +110,139 @@ void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme the
     frame();
     check(!run.shopOpen && !game.paused, "Escape closes trade without opening Pause");
     game.finish(dw::EndReason::Retreat);
-    check(game.campaign.data().world.money == 65, "returning from the shop preserves the wallet debit");
+    check(game.campaign.data().world.money == 50, "returning from the shop preserves the wallet debit");
     std::cout << "PASS " << name
               << " shopkeeper approach, purchases, UI guards, closing and saved spending\n";
+}
+void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme theme) {
+    const std::string name = theme == dw::MissionTheme::Canyon ? "canyon" : "mine";
+    dw::Game game(directory / ("dynamite-" + name + ".save"));
+    game.seedText = "1866";
+    game.themeChoice = theme == dw::MissionTheme::Canyon ? dw::ThemeChoice::Canyon : dw::ThemeChoice::Mine;
+    game.launch();
+    auto &run = *game.run;
+    run.godMode = true;
+    check(!game.dynamiteThrowMode, "dynamite defaults to ground placement");
+    game.updateCamera(10);
+    dw::Renderer renderer;
+    const dw::Game::SceneryPicker picker = [&](const auto &simulation, const auto &camera, Ray ray) {
+        return renderer.pickScenery(simulation, camera, ray);
+    };
+    auto frame = [&](int x, int y, bool left = false, bool right = false, float dt = dw::Tick) {
+        mouseEvent(MousePosition, x, y);
+        mouseEvent(left ? MouseDown : MouseUp, MOUSE_BUTTON_LEFT);
+        mouseEvent(right ? MouseDown : MouseUp, MOUSE_BUTTON_RIGHT);
+        game.update(dt, picker);
+        BeginDrawing();
+        const auto action = renderer.draw(game);
+        EndDrawing();
+        game.perform(action);
+        check(game.error.empty(), "dynamite input causes no game errors");
+    };
+    auto click = [&](int x, int y) {
+        frame(x, y);
+        frame(x, y, true);
+        frame(x, y);
+    };
+    auto capture = [&](const std::string &stage) {
+        BeginDrawing();
+        renderer.draw(game);
+        rlDrawRenderBatchActive();
+        auto image = LoadImageFromScreen();
+        std::filesystem::create_directories("artifacts");
+        check(ExportImage(image, ("artifacts/dynamite-" + name + "-" + stage + ".png").c_str()),
+              "save dynamite capture");
+        UnloadImage(image);
+        EndDrawing();
+    };
+    const auto aim = dw::add(run.player.position, {0, -.85f, -5});
+    const auto pixel = GetWorldToScreen(aim, game.camera);
+    const int x = int(pixel.x), y = int(pixel.y);
+    frame(x, y);
+    game.accumulator = 0;
+    mouseEvent(KeyDown, KEY_B);
+    frame(x, y, false, false, .001f);
+    mouseEvent(KeyUp, KEY_B);
+    frame(x, y, false, false, .001f);
+    check(run.dynamite == 3, "short B press waits for the next fixed simulation step");
+    frame(x, y);
+    check(run.dynamite == 2 && run.hazards.size() == 1 && run.stats.shots == 0,
+          "a short B press places exactly one dynamite without firing the revolver");
+    const auto planted = run.hazards.front().position;
+    check(run.hazards.front().settled && planted.x == run.player.position.x &&
+              planted.z == run.player.position.z,
+          "B places at the player's feet rather than at the cursor");
+    for (int i = 0; i < 20; ++i)
+        frame(x, y);
+    capture("lit");
+    game.perform(dw::Action::Pause);
+    const float age = run.hazards.front().age;
+    mouseEvent(KeyDown, KEY_B);
+    for (int i = 0; i < 10; ++i)
+        frame(x, y);
+    mouseEvent(KeyUp, KEY_B);
+    check(run.hazards.front().age == age && run.dynamite == 2, "pause freezes fuses and rejects throws");
+    game.perform(dw::Action::Resume);
+    for (int i = 0; i < 130 && run.stats.explosions == 0; ++i)
+        frame(x, y);
+    check(run.stats.explosions == 1 && run.dynamite == 2, "the charge detonates once after resuming");
+    for (int i = 0; i < 12; ++i)
+        frame(x, y);
+    capture("blast");
+    for (int i = 0; i < 40; ++i)
+        frame(x, y);
+    click(160, 608);
+    check(game.dynamiteThrowMode && run.dynamite == 2 && run.stats.shots == 0,
+          "the mode switch enables throwing without spending ammo or firing");
+    click(160, 640);
+    check(game.dynamiteArmed && run.dynamite == 2, "the HUD button arms aiming without spending ammo");
+    frame(x, y);
+    capture("preview");
+    const auto before = run.player.position;
+    frame(x, y);
+    frame(x, y, true);
+    for (int i = 0; i < 12; ++i)
+        frame(x, y, true);
+    frame(x, y);
+    check(!game.dynamiteArmed && run.dynamite == 1 && run.stats.shots == 0 &&
+              dw::distance(before, run.player.position) < .001f,
+          "mouse targeting throws once without a movement order or revolver shot");
+    click(160, 640);
+    for (int i = 0; i < 8; ++i)
+        frame(x, y, false, true);
+    frame(x, y);
+    check(!game.dynamiteArmed && run.dynamite == 1 && run.stats.shots == 0,
+          "holding the right button after cancel never fires through the cancellation");
+    click(160, 640);
+    mouseEvent(KeyDown, KEY_ESCAPE);
+    frame(x, y);
+    mouseEvent(KeyUp, KEY_ESCAPE);
+    frame(x, y);
+    check(!game.dynamiteArmed && !game.paused && run.dynamite == 1,
+          "Escape cancels targeting without pausing or spending ammo");
+    mouseEvent(KeyDown, KEY_LEFT_SHIFT);
+    mouseEvent(KeyDown, KEY_B);
+    frame(x, y);
+    mouseEvent(KeyUp, KEY_B);
+    mouseEvent(KeyUp, KEY_LEFT_SHIFT);
+    frame(x, y);
+    check(run.dynamite == dw::MaxDynamite, "Shift+B refills dynamite for testing without throwing");
+    click(160, 640);
+    check(game.dynamiteArmed, "refilled dynamite can target a throw");
+    click(160, 608);
+    check(!game.dynamiteThrowMode && !game.dynamiteArmed && run.dynamite == dw::MaxDynamite,
+          "switching to placement cancels an armed throw without spending ammo");
+    click(160, 640);
+    frame(160, 640);
+    const auto &placed = run.hazards.back();
+    check(run.dynamite == dw::MaxDynamite - 1 && placed.settled &&
+              placed.position.x == run.player.position.x && placed.position.z == run.player.position.z &&
+              !game.dynamiteArmed && run.stats.shots == 0,
+          "the Place Dynamite button immediately places at the player's feet without a targeting click");
+    capture("placed");
+    game.close();
+    std::cout << "PASS " << name
+              << " dynamite ground placement, mode switch, throws, pause, cancellation and refill\n";
 }
 } // namespace
 int main(int argc, char **argv) {
@@ -120,9 +256,14 @@ int main(int argc, char **argv) {
         check(IsWindowReady(), "a graphics display is required for input verification");
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
-        for (auto theme : {dw::MissionTheme::Mine, dw::MissionTheme::Canyon})
-            shopInputCheck(directory, theme);
-        if (argc > 1 && std::string(argv[1]) == "--shop-only") {
+        const std::string mode = argc > 1 ? argv[1] : "";
+        for (auto theme : {dw::MissionTheme::Mine, dw::MissionTheme::Canyon}) {
+            if (mode != "--dynamite-only")
+                shopInputCheck(directory, theme);
+            if (mode != "--shop-only")
+                dynamiteInputCheck(directory, theme);
+        }
+        if (mode == "--shop-only" || mode == "--dynamite-only") {
             CloseWindow();
             std::filesystem::remove_all(directory);
             return 0;

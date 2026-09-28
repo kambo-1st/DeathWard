@@ -36,6 +36,7 @@ add_library(deathward_core
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
     src/combat/Shop.cpp
+    src/combat/Dynamite.cpp
     src/combat/Enemies.cpp
     src/combat/Encounters.cpp
     src/combat/Monsters.cpp
@@ -127,6 +128,9 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_dynamite_tests tests/dynamite_tests.cpp)
+    target_link_libraries(deathward_dynamite_tests PRIVATE deathward_core)
+    add_test(NAME player_dynamite COMMAND deathward_dynamite_tests)
     add_executable(deathward_shop_tests tests/shop_tests.cpp)
     target_link_libraries(deathward_shop_tests PRIVATE deathward_core)
     add_test(NAME mission_shop COMMAND deathward_shop_tests)

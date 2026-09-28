@@ -303,6 +303,29 @@ void enemyWarning(const Enemy &enemy, const Simulation &run) {
                  warning);
 }
 void drawHazard(const Hazard &hazard) {
+    if (hazard.kind == HazardKind::PlayerDynamite) {
+        const auto p = hazard.position;
+        const float fuse = std::clamp(hazard.age / hazard.delay, 0.f, 1.f);
+        DrawCircle3D({p.x, .07f, p.z}, hazard.radius, {1, 0, 0}, 90, Rust);
+        DrawCircle3D({p.x, .08f, p.z}, hazard.radius * fuse, {1, 0, 0}, 90, Gold);
+        shadow(p, .45f);
+        rlPushMatrix();
+        rlTranslatef(p.x, p.y, p.z);
+        rlRotatef(hazard.settled ? 25 : hazard.age * 210, 0, 1, 0);
+        for (float z : {-.12f, .12f})
+            DrawCylinderEx({-.4f, 0, z}, {.4f, 0, z}, .12f, .12f, 8, Rust);
+        DrawCylinderEx({-.4f, .17f, 0}, {.4f, .17f, 0}, .12f, .12f, 8, Color{194, 63, 40, 255});
+        DrawCube({0, .055f, 0}, .14f, .38f, .5f, Paper);
+        DrawCylinderEx({.4f, .17f, 0}, {.58f, .3f, 0}, .025f, .02f, 4, Gold);
+        DrawSphereEx({.58f, .3f, 0}, .09f + .04f * std::sin(hazard.age * 65), 4, 6, Gold);
+        for (int i = 0; i < 4; ++i) {
+            const float phase = std::fmod(hazard.age * 4 + float(i) * .25f, 1.f);
+            DrawLine3D({.58f, .3f, 0}, {.58f + phase * .2f, .3f + phase * .55f, (float(i) - 1.5f) * .1f},
+                       Gold);
+        }
+        rlPopMatrix();
+        return;
+    }
     if (hazard.kind == HazardKind::Beam) {
         const bool warning = hazard.age < hazard.delay;
         if (warning)
@@ -392,7 +415,7 @@ std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const C
     return westernScene_.pick(ray, run.player.position);
 }
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
-                         EntityId hoveredEnemy, float deathTime) {
+                         EntityId hoveredEnemy, float deathTime, bool dynamiteArmed) {
     playerModel_.update(run, deathTime);
     westernScene_.prepare(run.arena);
     westernScene_.setPlayerOcclusion(camera, run.player.position);
@@ -613,6 +636,15 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     }
     for (const auto &hazard : run.hazards)
         drawHazard(hazard);
+    if (dynamiteArmed) {
+        const auto trajectory = run.dynamiteTrajectory(run.player.aim);
+        for (size_t i = 1; i < trajectory.size(); ++i)
+            DrawLine3D(trajectory[i - 1], trajectory[i], Gold);
+        auto landing = trajectory.back();
+        DrawSphereWires(landing, .25f, 4, 8, Paper);
+        landing.y = .09f;
+        DrawCircle3D(landing, DynamiteRadius, {1, 0, 0}, 90, Gold);
+    }
     if (playerModel_.loaded()) {
         shadow(run.player.position, 0.65f);
         if (!run.dead)
@@ -654,7 +686,15 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         float t = 1 - effect.life / effect.maxLife;
         Color color = effect.kind == 0 ? Gold : effect.kind == 2 ? Teal : effect.kind == 4 ? Rust : Paper;
         color.a = static_cast<unsigned char>(180 * (1 - t));
-        if (effect.kind == 0 || effect.kind == 4) {
+        if (effect.kind == 5) {
+            for (int i = 0; i < 8; ++i) {
+                const float angle = float(i) * 2 * Pi / 8;
+                auto p = add(effect.position, {std::cos(angle) * t * effect.radius * .6f, .3f + t * 1.8f,
+                                               std::sin(angle) * t * effect.radius * .6f});
+                const Color smoke = t < .3f ? Color{246, 163, 59, color.a} : Color{88, 77, 72, color.a};
+                DrawSphereEx(p, (.3f + t * .65f) * (1 - t), 4, 6, smoke);
+            }
+        } else if (effect.kind == 0 || effect.kind == 4) {
             effectRings(effect.position, effect.radius * (0.3f + 0.7f * t), color);
         } else
             projectileMesh(effect.position, effect.radius * (1 - t), color);
@@ -862,7 +902,7 @@ void Renderer::dungeonMap(const Game &game) {
 }
 Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
-    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime);
+    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime, game.dynamiteArmed);
     panel(24, 22, 358, 90, Panel);
     text(std::string(missionTheme(run.arena.theme).region) + " / " + std::to_string(run.room + 1) + " OF " +
              std::to_string(RoomCount),
@@ -917,7 +957,15 @@ Action Renderer::expedition(const Game &game) {
     text(run.player.dodgeCooldown <= 0 ? "DODGE READY" : "DODGE RECOVERING", 397, 752, 12, Muted);
     text(game.debug ? "F1 / CHEATS ON" : "F1 / CHEATS", 806, 752, 12, game.debug ? Teal : Gold);
     Action controls = Action::None;
+    const std::string dynamiteLabel = std::string(game.dynamiteArmed       ? "CANCEL THROW / "
+                                                  : game.dynamiteThrowMode ? "THROW DYNAMITE / "
+                                                                           : "PLACE DYNAMITE / ") +
+                                      std::to_string(run.dynamite);
     if (!game.paused && !run.rewardOpen && !run.shopOpen && !run.dead) {
+        if (button(game.dynamiteThrowMode ? "MODE: THROW" : "MODE: PLACE", 24, 594, 276, 28))
+            controls = Action::DynamiteMode;
+        if (button(dynamiteLabel, 24, 626, 276, 34, game.dynamiteArmed))
+            controls = Action::Dynamite;
         const std::string interaction = run.nearbyInteraction();
         if (!interaction.empty()) {
             if (button(interaction, 396, 690, 186, 44, true))
@@ -966,16 +1014,16 @@ Action Renderer::expedition(const Game &game) {
         text("TRADER'S REST", 199, 181, 34, Paper);
         text("MONEY " + number(run.money()), 854, 189, 20, Gold);
         text("One of each, traveler. Powers last for this expedition.", 200, 231, 17, Muted);
-        for (int i = 0; i < int(run.shopOffers.size()); ++i) {
+        for (int i = 0; i < 3; ++i) {
             const auto &offer = run.shopOffers[size_t(i)];
+            const bool medicine = offer.kind == ShopOfferKind::Medicine;
             const auto &item = itemDefinition(offer.item);
             const float x = 200 + float(i) * 295;
             panel(x, 280, 275, 287, Ink);
-            text(offer.medicine ? "SUPPLIES" : item.rarity, x + 18, 298, 12,
-                 !offer.medicine && offer.item == ItemId::Judas ? Rust : Gold);
-            wrap(offer.medicine ? "Field Medicine" : item.name, x + 18, 335, 235, 25, Paper);
-            wrap(offer.medicine ? "Restore up to 40 health. Maximum health stays the same."
-                                : item.description,
+            text(medicine ? "SUPPLIES" : item.rarity, x + 18, 298, 12,
+                 !medicine && offer.item == ItemId::Judas ? Rust : Gold);
+            wrap(medicine ? "Field Medicine" : item.name, x + 18, 335, 235, 25, Paper);
+            wrap(medicine ? "Restore up to 40 health. Maximum health stays the same." : item.description,
                  x + 18, 410, 237, 15, Muted);
             text(std::to_string(offer.price) + " COINS", x + 18, 488, 16, Gold);
             const auto unavailable = run.shopUnavailable(i);
@@ -986,6 +1034,14 @@ Action Renderer::expedition(const Game &game) {
                 panel(x + 18, 519, 239, 34, Border);
                 text(unavailable, x + 29, 530, 12, Muted);
             }
+        }
+        const auto refillUnavailable = run.shopUnavailable(3);
+        if (refillUnavailable.empty()) {
+            if (button("BUY 3 DYNAMITE / 15 COINS", 200, 591, 552, 38, true))
+                return Action::BuyShop3;
+        } else {
+            panel(200, 591, 552, 38, Border);
+            text("3 DYNAMITE / " + refillUnavailable, 218, 604, 13, Muted);
         }
         if (button("LEAVE SHOP", 779, 591, 295, 38))
             return Action::CloseShop;
@@ -1115,7 +1171,7 @@ void Renderer::debugPanel(const Game &game) {
     text("SPLITS " + number(run.stats.splits) + "   BOUNCES " + number(run.stats.bounces) + "   GHOSTS " +
              number(run.stats.ghosts),
          41, 443, 13, Paper);
-    text("-/+ damage   Shift + -/+ health   Home defaults", 41, 466, 13, Teal);
+    text("Shift+B refill dynamite   -/+ damage   Home defaults", 41, 466, 13, Teal);
     if (!run.chains.empty()) {
         auto oldest = std::min_element(run.chains.begin(), run.chains.end(),
                                        [](const auto &a, const auto &b) { return a.first < b.first; });

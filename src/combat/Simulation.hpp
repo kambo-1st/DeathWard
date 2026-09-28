@@ -119,14 +119,30 @@ struct Event {
     int bounces = 0;
     ProjectileKind projectileKind = ProjectileKind::Bullet;
 };
-enum class HazardKind { Dynamite, Fire, Ring, Powder, Creep, Tar, Beam, HolyLight, Gas, MonsterBomb };
+enum class HazardKind {
+    Dynamite,
+    Fire,
+    Ring,
+    Powder,
+    Creep,
+    Tar,
+    Beam,
+    HolyLight,
+    Gas,
+    MonsterBomb,
+    PlayerDynamite
+};
 struct Hazard {
     HazardKind kind = HazardKind::Dynamite;
     Vector3 position{}, origin{};
     float age = 0, delay = 1, duration = 0, radius = 3, damage = 20;
     bool alive = true, hitPlayer = false;
     Context context;
+    Vector3 velocity{};
+    bool settled = false;
 };
+// Shared by live charges and the mouse aiming preview.
+void advanceDynamite(Hazard &charge, const Arena &arena, float dt);
 struct VisualEffect {
     Vector3 position{};
     float radius = 1, life = 0.4f, maxLife = 0.4f;
@@ -151,6 +167,8 @@ struct Input {
     Vector3 movement{}, aim{0, 0.85f, 0};
     std::optional<Vector3> moveTarget;
     std::optional<std::pair<int, int>> doorTarget;
+    std::optional<Vector3> dynamiteTarget;
+    bool placeDynamite = false;
     bool fire = false, dodge = false, interact = false, standStill = false;
 };
 struct RoomProgress {
@@ -165,10 +183,12 @@ struct MoneyPickup {
     float age = 0;
     bool dropped = false;
 };
+enum class ShopOfferKind { Power, Medicine, Dynamite };
 struct ShopOffer {
     ItemId item = ItemId::Ricochet;
     int price = 25;
-    bool medicine = false, sold = false;
+    ShopOfferKind kind = ShopOfferKind::Power;
+    bool sold = false;
 };
 
 class Simulation {
@@ -187,7 +207,7 @@ class Simulation {
     std::vector<MoneyPickup> moneyPickups;
     uint64_t moneyCollected = 0;
     uint64_t moneySpent = 0;
-    std::array<ShopOffer, 3> shopOffers{};
+    std::array<ShopOffer, 4> shopOffers{};
     bool shopOpen = false;
     AudioCueQueue audioCues;
     uint64_t audioEpoch = 0;
@@ -195,6 +215,8 @@ class Simulation {
     std::array<ItemId, 2> offers{};
     std::array<RoomProgress, RoomCount> rooms{};
     int keys = 0, powerUpsTaken = 0;
+    int dynamite = StartingDynamite;
+    float dynamiteCooldown = 0;
     std::deque<ChainLog> logs;
     std::unordered_map<uint64_t, Chain> chains;
     bool godMode = false, rewardOpen = false, roomClear = false, finished = false, dead = false;
@@ -231,6 +253,9 @@ class Simulation {
     void openShop();
     void closeShop();
     bool buyShop(int index);
+    bool throwDynamite(Vector3 target);
+    bool placeDynamite();
+    std::vector<Vector3> dynamiteTrajectory(Vector3 target) const;
     std::string shopUnavailable(int index) const;
     std::string nearbyInteraction() const;
     std::optional<Vector3> moveDestination() const {
@@ -305,7 +330,7 @@ class Simulation {
     void updateHazards(float dt);
     void addHazard(Hazard hazard);
     void clearHazards();
-    bool hurtPlayer(float damage, const Context &context = {});
+    bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);
     float enemyDamage(const Enemy &enemy, const Event &event) const;
     void shootEnemy(const Enemy &enemy, Vector3 direction, float damage, float speed, int bounces = 0,
                     ProjectileKind kind = ProjectileKind::Bullet);
@@ -320,5 +345,7 @@ class Simulation {
     void dropMoney(const Enemy &enemy);
     void updateMoney(float dt);
     void prepareShop();
+    Hazard makeDynamite(Vector3 target) const;
+    bool deployDynamite(Hazard charge);
 };
 } // namespace dw

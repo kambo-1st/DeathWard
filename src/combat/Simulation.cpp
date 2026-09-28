@@ -273,6 +273,7 @@ void Simulation::healDebug() {
     player.pullTime = 0;
     player.velocity = {};
     player.shootPose = 0;
+    dynamiteCooldown = 0;
     announce("CHEAT / full health and cooldowns reset");
 }
 void Simulation::clearRoomDebug() {
@@ -632,18 +633,19 @@ void Simulation::updatePlayer(const Input &input, float dt) {
     player.aim = input.aim;
     player.aim.y = player.position.y;
     player.fireCooldown = std::max(0.0f, player.fireCooldown - dt);
+    dynamiteCooldown = std::max(0.0f, dynamiteCooldown - dt);
     player.dodgeCooldown = std::max(0.0f, player.dodgeCooldown - dt);
     player.hurt = std::max(0.0f, player.hurt - dt);
     player.shootPose = std::max(0.0f, player.shootPose - dt);
     player.slowTime = std::max(0.0f, player.slowTime - dt);
     Vector3 movement = input.movement;
-    if (input.fire || input.standStill)
+    if (input.fire || input.standStill || input.dynamiteTarget)
         cancelMove(); // Attacking never continues an old click-to-move order.
     if (input.standStill) {
         movement = {};
     } else if (length(movement) > 0.01f) {
         cancelMove(); // Keyboard movement immediately takes over from click-to-move.
-    } else if (!input.fire) {
+    } else if (!input.fire && !input.dynamiteTarget) {
         if (input.doorTarget)
             requestDoor(input.doorTarget->first, input.doorTarget->second);
         else if (input.moveTarget)
@@ -693,7 +695,11 @@ void Simulation::updatePlayer(const Input &input, float dt) {
             player.pullTime = std::max(0.0f, player.pullTime - dt);
         }
     }
-    if (input.fire && player.fireCooldown <= 0) {
+    if (input.placeDynamite)
+        placeDynamite();
+    else if (input.dynamiteTarget)
+        throwDynamite(*input.dynamiteTarget);
+    if (input.fire && player.fireCooldown <= 0 && !input.dynamiteTarget && !input.placeDynamite) {
         player.shootPose = 0.32f;
         player.fireCooldown = 0.29f;
         ++stats.shots;

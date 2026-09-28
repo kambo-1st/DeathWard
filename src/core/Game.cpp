@@ -194,6 +194,9 @@ void Game::finish(EndReason reason) {
     resetPointerInput();
 }
 void Game::resetPointerInput() {
+    dynamiteArmed = cancelFireHeld_ = false;
+    dynamiteQueued_.reset();
+    placeDynamiteQueued_ = false;
     cameraDragging_ = false;
     leftCommand_ = LeftCommand::None;
     attackTarget_ = hoveredEnemy = 0;
@@ -331,6 +334,28 @@ void Game::perform(Action action) {
             if (run && !paused && !run->rewardOpen && !run->shopOpen)
                 dodgeQueued_ = true;
             break;
+        case Action::Dynamite:
+            if (run && !paused && !run->dead && !run->rewardOpen && !run->shopOpen) {
+                if (!dynamiteThrowMode) {
+                    resetPointerInput();
+                    placeDynamiteQueued_ = true;
+                    break;
+                }
+                const bool arm = !dynamiteArmed && run->dynamite > 0;
+                resetPointerInput();
+                dynamiteArmed = arm;
+                if (arm)
+                    run->announce("Choose where to throw. Cancel with Escape or the right button.");
+                else if (run->dynamite == 0)
+                    run->announce("Out of dynamite. The shop sells a refill pack.");
+            }
+            break;
+        case Action::DynamiteMode:
+            if (run && !paused && !run->dead && !run->rewardOpen && !run->shopOpen) {
+                resetPointerInput();
+                dynamiteThrowMode = !dynamiteThrowMode;
+            }
+            break;
         case Action::Interact:
             if (run && !paused && !run->rewardOpen && !run->shopOpen)
                 interactQueued_ = true;
@@ -341,6 +366,7 @@ void Game::perform(Action action) {
         case Action::BuyShop0:
         case Action::BuyShop1:
         case Action::BuyShop2:
+        case Action::BuyShop3:
             if (run && !paused && run->buyShop(int(action) - int(Action::BuyShop0)))
                 checkpoint();
             break;
@@ -410,6 +436,11 @@ void Game::debugInput() {
     if (!run)
         return;
     const bool shift = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
+    if (shift && IsKeyPressed(KEY_B)) {
+        run->dynamite = MaxDynamite;
+        run->dynamiteCooldown = 0;
+        run->announce("CHEAT / dynamite refilled");
+    }
     if (IsKeyPressed(KEY_MINUS) || IsKeyPressed(KEY_KP_SUBTRACT))
         perform(shift ? Action::HealthDown : Action::DamageDown);
     if (IsKeyPressed(KEY_EQUAL) || IsKeyPressed(KEY_KP_ADD))
@@ -547,7 +578,7 @@ bool Game::pointerOverControls() const {
         return missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
                (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 700) ||
                (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
-    return (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
+    return (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
 }
@@ -685,6 +716,12 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
                 perform(Action::BuyShop1);
             else if (IsKeyPressed(KEY_THREE))
                 perform(Action::BuyShop2);
+            else if (IsKeyPressed(KEY_FOUR))
+                perform(Action::BuyShop3);
+            return;
+        }
+        if (dynamiteArmed && IsKeyPressed(KEY_ESCAPE)) {
+            resetPointerInput();
             return;
         }
         if (IsKeyPressed(KEY_ESCAPE))
@@ -742,13 +779,34 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
         const bool leftDown = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
         const bool leftPressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
         const bool rightDown = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
+        if (!rightDown)
+            cancelFireHeld_ = false;
+        const bool dynamiteKey = IsKeyPressed(KEY_B) && !overControls &&
+                                 !(debug && (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)));
+        const bool dynamiteGesture =
+            dynamiteArmed || dynamiteQueued_.has_value() || placeDynamiteQueued_ || dynamiteKey;
+        if (dynamiteArmed && rightDown) {
+            dynamiteArmed = false;
+            cancelFireHeld_ = true;
+        } else if ((dynamiteArmed && leftPressed && !overControls) || dynamiteKey) {
+            if (dynamiteThrowMode)
+                dynamiteQueued_ = input.aim;
+            else
+                placeDynamiteQueued_ = true;
+            dynamiteArmed = false;
+            moveQueued_.reset();
+            doorQueued_.reset();
+            fireQueued_.reset();
+            leftCommand_ = LeftCommand::None;
+            attackTarget_ = 0;
+        }
         input.standStill = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
         mouseMoveCooldown_ = std::max(0.0f, mouseMoveCooldown_ - dt);
         if (!leftDown) {
             leftCommand_ = LeftCommand::None;
             attackTarget_ = 0;
         }
-        if (!overControls && leftPressed) {
+        if (!overControls && leftPressed && !dynamiteGesture) {
             moveQueued_.reset();
             doorQueued_.reset();
             attackTarget_ = pointed.enemy;
@@ -762,7 +820,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
                     moveQueued_ = pointed.objective;
             }
         }
-        if (!overControls) {
+        if (!overControls && !dynamiteGesture && !cancelFireHeld_) {
             if (rightDown || (leftDown && input.standStill)) {
                 // The prototype has one weapon: RMB also force-fires the revolver.
                 input.fire = true;
@@ -797,11 +855,16 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
         input.doorTarget = doorQueued_;
         input.dodge = dodgeQueued_;
         input.interact = interactQueued_;
+        input.dynamiteTarget = dynamiteQueued_;
+        input.placeDynamite = placeDynamiteQueued_;
         accumulator += std::min(dt, 0.1f) * (slow ? 0.2f : 1.0f);
         while (accumulator >= Tick) {
             run->step(input);
             accumulator -= Tick;
             input.dodge = input.interact = false;
+            input.dynamiteTarget.reset();
+            input.placeDynamite = placeDynamiteQueued_ = false;
+            dynamiteQueued_.reset();
             input.moveTarget.reset();
             input.doorTarget.reset();
             moveQueued_.reset();

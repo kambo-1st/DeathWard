@@ -15,7 +15,7 @@ class Renderer {
         loadedHub_.reset();
     }
     void drawWorld(const Simulation &run, const Camera3D &camera, bool collisions, EntityId hoveredEnemy = 0,
-                   float deathTime = 0);
+                   float deathTime = 0, bool dynamiteArmed = false);
     void unload() {
         playerModel_.unload();
         westernScene_.unload();

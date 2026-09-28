@@ -75,7 +75,7 @@ void purchases() {
     approach(run);
     const auto combat = run.combatRng.state, rewards = run.rewardRng.state,
                encounters = run.encounterRng.state;
-    check(!run.buyShop(-1) && !run.buyShop(3), "invalid stock indexes are rejected");
+    check(!run.buyShop(-1) && !run.buyShop(4), "invalid stock indexes are rejected");
     check(!run.buyShop(0) && run.money() == 100 && !run.shopOffers[0].sold,
           "full health never consumes medicine or money");
     const auto duration = run.stats.duration;
