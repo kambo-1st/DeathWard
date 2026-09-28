@@ -53,11 +53,17 @@ AudioSettings loadAudioSettings(const std::filesystem::path &file) {
     std::ifstream input(file);
     std::string version;
     int muted = 0;
-    if (input >> version >> parsed.master >> parsed.effects >> parsed.ambience >> muted &&
-        version == "DW_AUDIO_1" && std::isfinite(parsed.master) && std::isfinite(parsed.effects) &&
-        std::isfinite(parsed.ambience) && (muted == 0 || muted == 1)) {
-        settings = {volume(parsed.master), volume(parsed.effects), volume(parsed.ambience), muted != 0};
-    }
+    if (!(input >> version >> parsed.master >> parsed.effects >> parsed.ambience >> muted))
+        return settings;
+    if (version == "DW_AUDIO_2") {
+        if (!(input >> parsed.music))
+            return settings;
+    } else if (version != "DW_AUDIO_1")
+        return settings;
+    if (std::isfinite(parsed.master) && std::isfinite(parsed.effects) && std::isfinite(parsed.ambience) &&
+        std::isfinite(parsed.music) && (muted == 0 || muted == 1))
+        settings = {volume(parsed.master), volume(parsed.effects), volume(parsed.ambience), muted != 0,
+                    volume(parsed.music)};
     return settings;
 }
 bool saveAudioSettings(const std::filesystem::path &file, const AudioSettings &settings) {
@@ -69,9 +75,9 @@ bool saveAudioSettings(const std::filesystem::path &file, const AudioSettings &s
     if (error)
         return false;
     std::ofstream output(file);
-    output << "DW_AUDIO_1\n"
+    output << "DW_AUDIO_2\n"
            << volume(settings.master) << ' ' << volume(settings.effects) << ' ' << volume(settings.ambience)
-           << ' ' << int(settings.muted) << '\n';
+           << ' ' << int(settings.muted) << ' ' << volume(settings.music) << '\n';
     output.close();
     return bool(output);
 }
@@ -132,6 +138,7 @@ AudioStatus AudioSystem::initialize(bool enabled, const std::filesystem::path &d
         attempted_ = true;
         return AudioStatus::Unavailable;
     }
+    music_.load(directory / "music");
     return AudioStatus::Ready;
 }
 void AudioSystem::stopVoices() {
@@ -201,6 +208,7 @@ void AudioSystem::update(const AudioFrame &frame, const AudioSettings &settings,
         stepDistance_ = 0;
     }
     SetMasterVolume(muted ? 0 : volume(settings.master));
+    music_.update(frame.music, frame.context, dt, frame.paused, settings);
     for (size_t i = 0; i < ambience_.size(); ++i) {
         const float target = i == size_t(frame.environment) && !muted ? 1.f : 0.f;
         ambienceGain_[i] += (target - ambienceGain_[i]) * (1 - std::exp(-dt * 2.5f));
@@ -257,6 +265,7 @@ void AudioSystem::update(const AudioFrame &frame, const AudioSettings &settings,
 }
 void AudioSystem::unload() {
     if (ready_) {
+        music_.unload();
         stopVoices();
         for (auto &voice : voices_)
             if (voice.source)

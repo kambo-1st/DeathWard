@@ -47,7 +47,7 @@ if(DEATHWARD_SANITIZERS AND NOT MSVC)
 endif()
 
 function(deathward_assets target)
-    file(GLOB audio_assets CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.wav" "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.ogg")
+    file(GLOB_RECURSE audio_assets CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.wav" "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.ogg")
     set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS ${audio_assets})
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio" "$<TARGET_FILE_DIR:${target}>/assets/audio"
@@ -79,7 +79,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(NOT MSVC)
@@ -91,7 +91,7 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_audio_cue_tests PRIVATE deathward_core)
     add_test(NAME audio_presentation COMMAND deathward_audio_cue_tests)
     # Explicit device check; regular CTest remains independent of audio hardware/WSLg.
-    add_executable(deathward_audio_tests tests/audio_tests.cpp src/audio/AudioSystem.cpp)
+    add_executable(deathward_audio_tests tests/audio_tests.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp)
     target_link_libraries(deathward_audio_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_audio_tests)
     add_executable(deathward_monster_tests tests/monster_tests.cpp)

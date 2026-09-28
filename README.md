@@ -32,13 +32,13 @@ Windows is kept in scope through CMake and portable C++, but this milestone is t
 
 Sound is enabled for ordinary play. The first audio pack includes revolver/enemy shots, stone and flesh impacts, hurt/death feedback, dodges, attack warnings, pickups, doors, room completion, UI sounds and footsteps. Both hubs, the canyon and the mine have distinct ambient loops that crossfade on travel. Effects pan with the camera and become quieter with distance; cover does not silence enemy attack warnings.
 
-Open **Pause** in a hub or mission for **Master**, **Effects** and **Ambience** volume, **Mute**, and a **Test** chime. Settings are saved in `audio.cfg` beside the campaign file. Pause reduces ambience and stops combat sounds. Dead or dodging players do not make walking sounds.
+Open **Pause** in a hub or mission for **Master**, **Effects**, **Ambience** and **Music** volume, **Mute**, and a **Test** chime. Settings are saved in `audio.cfg` beside the campaign file; existing preferences retain their levels when the music channel is added. Pause reduces music/ambience and stops combat sounds. Dead or dodging players do not make walking sounds.
 
 On **WSL2 with WSLg**, raylib connects to WSLg's PulseAudio server through the existing `PULSE_SERVER` environment, normally `unix:/mnt/wslg/PulseServer`. Keep that environment when launching from a terminal or IDE. No additional Windows sound server is needed for this setup. If the output device cannot be opened, the game continues silently and the pause panel shows **Audio unavailable**. Older WSL2 installations without WSLg need an audio server before playback is available. Native Windows uses raylib/miniaudio's Windows audio backend.
 
 Use `./build/deathward --mute` to skip audio initialization entirely. Smoke tests and benchmarks are silent by default; add `--audio` to test their sound. `--mute` takes precedence. Scripted checks do not change saved volume preferences.
 
-The checked-in [audio pack](assets/audio/README.md) contains original synthesized effects and soundscapes. This is the first sound pass; there is no music score or recorded voice acting yet. Footstep variants follow the location rather than per-mesh surface materials.
+The checked-in [audio pack](assets/audio/README.md) contains original synthesized effects and soundscapes. Footstep variants follow the location rather than per-mesh surface materials. The imported [Western Music score](assets/audio/music/README.md) adds eight full tracks: separate hub and exploration themes, combat/finale arrangements, victory and defeat. Music crossfades without restarting at every room; the three Hunt arrangements keep their shared playback position. Four stingers mark mission departure, boss entry, victory and defeat, briefly lowering the score underneath. The **Music** slider controls both the score and stingers, initially at 40%. The music files ship with the game and require no access to the original Unity project at runtime.
 
 ## Play
 

@@ -1,0 +1,137 @@
+{
+  "source_pack": "Western Music",
+  "files": [
+    {
+      "file": "town.ogg",
+      "source": "12. In This Town.wav",
+      "source_sha256": "d544173867334a243e5372febb12b1b23bcc3cae85b591433c290a883d1745bf",
+      "sha256": "0eceb38a765e7df4bee462d4ce93c658f641a0c088af8345e996cc9a2e52ed98",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 9333164,
+      "duration": 211.63637188208617,
+      "gain": 0.47603953804728455
+    },
+    {
+      "file": "frontier.ogg",
+      "source": "Update v1_5/Rebuilding.wav",
+      "source_sha256": "457ebcdba16d443f46991e09aa563b095c180b9fd79d6c76dafb254776f0037f",
+      "sha256": "054be616212598691f067337dea3cb200094f1ff27e848234843be8933e399ff",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 5644800,
+      "duration": 128.0,
+      "gain": 0.7974604184316278
+    },
+    {
+      "file": "canyon.ogg",
+      "source": "07. The Hunt - The Journey.wav",
+      "source_sha256": "9d27b1f4af4480704daab8ba8b0c88d1e9b6d7fbd3a5458704ebf2bba7948bea",
+      "sha256": "8ebd4b82a3688d2d6f3cd9f6b3ed2efb51ccf6bf77f5bb67b5bd3678b6c86196",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 5462710,
+      "duration": 123.87097505668935,
+      "gain": 2.0
+    },
+    {
+      "file": "mine.ogg",
+      "source": "04. Mystery at Sundown.wav",
+      "source_sha256": "bd3a620ebc2dad4b83cf0bdf4d6973831d5e11469cb184295a7036bc1867b791",
+      "sha256": "a057ff412c92fda9e3d8974a103adcf2d6d595f679610359a61326c8c2fcd771",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 8290800,
+      "duration": 188.0,
+      "gain": 0.62307204486721
+    },
+    {
+      "file": "combat.ogg",
+      "source": "08. The Hunt - The Thrill.wav",
+      "source_sha256": "d14f17dce25221f5b140311f1c875cf14897f765092c87550bb4308951b62e5c",
+      "sha256": "43ed33d28de93700464d79e21046b4ce90774f5b6efe372545d075381c5feb41",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 5462710,
+      "duration": 123.87097505668935,
+      "gain": 1.3279686717362598
+    },
+    {
+      "file": "boss.ogg",
+      "source": "09. The Hunt - The Terror.wav",
+      "source_sha256": "a5cfac8fa31d6a0e4ed11a47b88e059802e02bfa16f5883e9b93dfc56bff800d",
+      "sha256": "857f51fe857eee2511ddc8e66f6ac33ffc680f074dac331bdc79597529af59c8",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 5462710,
+      "duration": 123.87097505668935,
+      "gain": 0.6411056415185521
+    },
+    {
+      "file": "victory.ogg",
+      "source": "10. Chasing Victory.wav",
+      "source_sha256": "4cf5991941743bebf5f0bafb4648d88183d3e3db0250f1e690bfe6d0bf7b9c88",
+      "sha256": "30025f7b92f2da1c5dbc0c543ff05af81d5b076cd99658c1b33dcfa72b04c324",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 5036524,
+      "duration": 114.20689342403628,
+      "gain": 0.43765338252162184
+    },
+    {
+      "file": "defeat.ogg",
+      "source": "Update v1_5/Sad Emotions.wav",
+      "source_sha256": "694164354b4730c463eeadfbb240c6bc00507eded8e639fa195e694fc4473639",
+      "sha256": "adcd7bbf945191f5980e1c809ab2172fbcf47a5be0e2eee740ea2d007969d69d",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 3078982,
+      "duration": 69.81818594104308,
+      "gain": 2.0
+    },
+    {
+      "file": "departure.wav",
+      "source": "Stingers/Stinger - 01 - Whistle & Guitar.wav",
+      "source_sha256": "7829aa5441ed7055a82253c6ca0e60bbd130d01e1b65c19b9dba0e9f4f77566c",
+      "sha256": "de39b55f8ab02a63f9bb847ab536aa8f90b2e61b8db325a39587c34257fe7b47",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 396900,
+      "duration": 9.0,
+      "gain": 2.0
+    },
+    {
+      "file": "boss_entry.wav",
+      "source": "Stingers/Stinger - 05 - Rattle.wav",
+      "source_sha256": "cbe0c3a2468832357343263b1d46627bff861c43d2ab8b0538b07e8ab89def92",
+      "sha256": "2dadb5127f30cc882082d55f3536f597be32f515b0430aedfa62ef13cf4399e1",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 168000,
+      "duration": 3.8095238095238093,
+      "gain": 2.0
+    },
+    {
+      "file": "victory_stinger.wav",
+      "source": "Stingers/Stinger - 07 - Guitar Shimmer.wav",
+      "source_sha256": "9e6a1133ce70c3a35d61dcf661e2a4593ab3e891f43b6eb1dae40c8d8ab275ab",
+      "sha256": "9ba419158fe618439b6e78df6dec21f263e36b4c9afeda14ba27fe30b0a1c20a",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 167959,
+      "duration": 3.80859410430839,
+      "gain": 2.0
+    },
+    {
+      "file": "defeat_stinger.wav",
+      "source": "Stingers/Stinger - 02 - Snare & Bell - B.wav",
+      "source_sha256": "92888a4fbbb9244cfecf0be6845758432c788e2d41babf6cb299a885345f9cf9",
+      "sha256": "209beefe40cf541b22fb6f8f520f06058a38d4f6cd275fe81180addce0687496",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 255150,
+      "duration": 5.785714285714286,
+      "gain": 2.0
+    }
+  ]
+}

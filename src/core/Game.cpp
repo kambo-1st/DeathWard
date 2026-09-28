@@ -90,6 +90,22 @@ Game::Game(const std::filesystem::path &save, HubKind initialHub) : campaign(sav
 std::filesystem::path Game::hubDirectory() const {
     return TownScene::assetDirectory(activeHub);
 }
+MusicScene Game::musicScene() const {
+    if (screen == Screen::Expedition && run) {
+        if (run->dead)
+            return MusicScene::Defeat;
+        if (!run->roomClear && run->roomThreats() > 0)
+            return run->room == Simulation::FinalRoom || run->boss() ? MusicScene::Boss : MusicScene::Combat;
+        return run->arena.theme == MissionTheme::Canyon ? MusicScene::Canyon : MusicScene::Mine;
+    }
+    if (screen == Screen::Summary) {
+        if (lastSummary.reason == EndReason::Victory)
+            return MusicScene::Victory;
+        if (lastSummary.reason == EndReason::Death)
+            return MusicScene::Defeat;
+    }
+    return activeHub == HubKind::BlackCreek ? MusicScene::Town : MusicScene::Frontier;
+}
 bool Game::selectHub(HubKind hub) {
     if (screen != Screen::Hub || run || editorRequested)
         return false;
@@ -190,6 +206,11 @@ void Game::perform(Action action) {
             break;
         case Action::AudioMute:
             audioSettings.muted = !audioSettings.muted;
+            break;
+        case Action::MusicDown:
+        case Action::MusicUp:
+            audioSettings.music =
+                std::clamp(audioSettings.music + (action == Action::MusicUp ? .1f : -.1f), 0.f, 1.f);
             break;
         case Action::AudioTest:
             audioCues.push(AudioCueKind::Test);

@@ -41,6 +41,8 @@ enum class Action {
     EffectsUp,
     AmbienceDown,
     AmbienceUp,
+    MusicDown,
+    MusicUp,
     AudioMute,
     AudioTest
 };
@@ -59,6 +61,7 @@ class Game {
     RunSummary lastSummary;
     Camera3D camera{};
     AudioSettings audioSettings;
+    MusicScene musicScene() const;
     AudioStatus audioStatus = AudioStatus::Disabled;
     AudioCueQueue audioCues;
     uint64_t audioContext = 0;

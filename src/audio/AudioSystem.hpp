@@ -1,5 +1,6 @@
 #pragma once
 #include "audio/AudioState.hpp"
+#include "audio/MusicDirector.hpp"
 #include <filesystem>
 
 namespace dw {
@@ -7,6 +8,7 @@ struct AudioFrame {
     Camera3D camera{};
     Vector3 player{};
     AudioEnvironment environment = AudioEnvironment::Town;
+    MusicScene music = MusicScene::Town;
     uint64_t context = 0, room = 0;
     bool paused = false, footsteps = true;
     float dt = 0;
@@ -43,6 +45,9 @@ class AudioSystem {
         return ambienceGain_[size_t(env)];
     }
     static std::filesystem::path assetDirectory();
+    const MusicDirector &music() const {
+        return music_;
+    }
 
   private:
     struct Voice {
@@ -58,6 +63,7 @@ class AudioSystem {
     std::array<Music, size_t(AudioEnvironment::Count)> ambience_{};
     std::array<float, size_t(AudioEnvironment::Count)> ambienceGain_{};
     std::array<double, size_t(AudioCueKind::Count)> nextCue_{};
+    MusicDirector music_;
     Random random_{0x415544494fULL};
     double time_ = 0;
     float stepDistance_ = 0;

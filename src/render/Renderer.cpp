@@ -1017,15 +1017,15 @@ void Renderer::debugPanel(const Game &game) {
         text("No chains have reached a safety limit.", 41, y, 12, Muted);
 }
 Action Renderer::audioPanel(const Game &game) {
-    panel(24, 240, 296, 318, Panel);
+    panel(24, 240, 296, 370, Panel);
     text("AUDIO", 43, 263, 22, Gold);
     const char *status = game.audioStatus == AudioStatus::Disabled      ? "Disabled for this launch"
                          : game.audioStatus == AudioStatus::Unavailable ? "Audio unavailable"
-                                                                        : "Sound and surroundings";
+                                                                        : "Sound, music and surroundings";
     text(status, 43, 294, 12, Muted);
-    const std::array<const char *, 3> labels{"MASTER", "EFFECTS", "AMBIENCE"};
+    const std::array<const char *, 4> labels{"MASTER", "EFFECTS", "AMBIENCE", "MUSIC"};
     const auto &s = game.audioSettings;
-    const std::array<float, 3> values{s.master, s.effects, s.ambience};
+    const std::array<float, 4> values{s.master, s.effects, s.ambience, s.music};
     for (size_t i = 0; i < labels.size(); ++i) {
         const float y = 321 + float(i) * 52;
         text(labels[i], 43, y, 12, Muted);
@@ -1035,9 +1035,9 @@ Action Renderer::audioPanel(const Game &game) {
         if (button("+", 264, y, 38, 37))
             return Action(int(Action::MasterUp) + int(i) * 2);
     }
-    if (button(s.muted ? "UNMUTE" : "MUTE", 43, 498, 122, 39))
+    if (button(s.muted ? "UNMUTE" : "MUTE", 43, 550, 122, 39))
         return Action::AudioMute;
-    if (button("TEST", 180, 498, 122, 39))
+    if (button("TEST", 180, 550, 122, 39))
         return Action::AudioTest;
     return Action::None;
 }

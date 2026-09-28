@@ -243,6 +243,7 @@ int main(int argc, char **argv) {
             audioFrame.camera = game.camera;
             audioFrame.dt = GetFrameTime();
             audioFrame.context = game.audioContext;
+            audioFrame.music = editing ? dw::MusicScene::Silent : game.musicScene();
             audioFrame.paused = editing || game.paused ||
                                 (game.screen != dw::Screen::Hub && game.screen != dw::Screen::Expedition);
             audioFrame.environment = game.activeHub == dw::HubKind::BlackCreek

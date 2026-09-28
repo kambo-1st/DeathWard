@@ -1,6 +1,6 @@
 # Audio implementation plan
 
-Implemented on 2026-09-28. The first pack uses original synthesized effects and soundscapes; recorded effects and a score remain future art work. Runtime controls, WSLg playback, bounded mixing and silent fallback are available. See [the audio pack](../assets/audio/README.md), [player instructions](../README.md#audio) and [verification results](verification.md#first-audio-milestone).
+Implemented on 2026-09-28. The first pack uses original synthesized effects and soundscapes; the subsequent [Western Music import](../assets/audio/music/README.md) adds the user's score and stingers. Recorded replacement effects remain future art work. Runtime controls, WSLg playback, bounded mixing and silent fallback are available. See [the audio pack](../assets/audio/README.md), [player instructions](../README.md#audio) and [verification results](verification.md#first-audio-milestone). The original milestone plan follows.
 
 Use the audio module already supplied by pinned raylib 5.5, through a small `AudioSystem` owned by the application. Keep device access and sound assets outside `deathward_core` so simulation tests remain headless and deterministic.
 

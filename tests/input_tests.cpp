@@ -28,6 +28,7 @@ int main() {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         dw::Game game(directory / "campaign.save");
+        check(game.musicScene() == dw::MusicScene::Town, "default hub selects its town score");
         dw::Renderer renderer;
         auto frame = [&](int x = 10, int y = 10, bool left = false, bool right = false, bool middle = false,
                          bool shift = false, float dt = dw::Tick) {
@@ -248,6 +249,7 @@ int main() {
               "canyon selection preserves the editable seed and waits for launch");
         click(650, 550);
         check(game.run && game.screen == dw::Screen::Expedition, "mouse launch opens expedition");
+        check(game.musicScene() == dw::MusicScene::Canyon, "peaceful canyon arrival uses exploration music");
         check(game.run->arena.theme == dw::MissionTheme::Canyon &&
                   game.campaign.data().pending->expedition == "Redstone Canyon",
               "the selected canyon theme reaches gameplay and the initial campaign checkpoint");
@@ -369,14 +371,16 @@ int main() {
         click(230, 338);
         click(282, 390);
         click(230, 442);
+        click(282, 494);
         check(std::abs(game.audioSettings.master - (audioDefaults.master - .1f)) < .001f &&
                   std::abs(game.audioSettings.effects - (audioDefaults.effects + .1f)) < .001f &&
-                  std::abs(game.audioSettings.ambience - (audioDefaults.ambience - .1f)) < .001f,
+                  std::abs(game.audioSettings.ambience - (audioDefaults.ambience - .1f)) < .001f &&
+                  std::abs(game.audioSettings.music - (audioDefaults.music + .1f)) < .001f,
               "pause audio controls adjust each independent volume");
-        click(90, 517);
+        click(90, 569);
         check(game.audioSettings.muted, "pause audio mute toggles independently of cheats");
-        click(90, 517);
-        click(237, 517);
+        click(90, 569);
+        click(237, 569);
         check(!game.audioSettings.muted &&
                   std::any_of(game.audioCues.cues().begin(), game.audioCues.cues().end(),
                               [](const auto &cue) { return cue.kind == dw::AudioCueKind::Test; }),
@@ -387,6 +391,10 @@ int main() {
         for (int i = 0; i < 12; ++i)
             game.perform(dw::Action::MasterDown);
         check(game.audioSettings.master == 0, "audio volume cannot become negative");
+        for (int i = 0; i < 12; ++i)
+            game.perform(dw::Action::MusicDown);
+        check(game.audioSettings.music == 0 && game.audioSettings.effects == audioDefaults.effects + .1f,
+              "music can be muted independently of effects");
         game.audioSettings = audioDefaults;
         frame();
         std::filesystem::create_directories("artifacts");
@@ -579,6 +587,8 @@ int main() {
         pressKey(KEY_F12, true);
         check(game.run->room == 2 && !game.run->roomClear && game.run->livingEnemies() > 0,
               "Shift+F12 restarts the current room with its enemy group already present");
+        check(game.musicScene() == dw::MusicScene::Combat,
+              "an active ordinary encounter selects combat music");
         game.paused = true;
         pressKey(KEY_F12);
         check(game.run->room == 3 && !game.paused &&
@@ -588,6 +598,7 @@ int main() {
         pressKey(KEY_F7);
         check(game.run->room == dw::Simulation::FinalRoom && !game.run->boss() && game.run->roomThreats() > 0,
               "F7 jumps to the canyon's final monster encounter without a Western boss");
+        check(game.musicScene() == dw::MusicScene::Boss, "canyon finale uses boss music without a Sheriff");
         pressKey(KEY_F3, true);
         pressKey(KEY_F7);
         check(!game.run->roomClear && !game.run->bossKilled && game.run->roomThreats() > 0,
@@ -608,6 +619,8 @@ int main() {
         check(!game.run && game.screen == dw::Screen::Summary &&
                   game.lastSummary.reason == dw::EndReason::Victory,
               "F8 completes the expedition immediately while paused");
+        check(game.musicScene() == dw::MusicScene::Victory,
+              "successful completion selects the victory score");
         game.perform(dw::Action::Hub);
         game.selectHub(dw::HubKind::Frontier);
         game.launch();
@@ -724,6 +737,7 @@ int main() {
         frame();
         check(game.run && game.run->dead && game.screen == dw::Screen::Expedition,
               "natural death keeps the character visible for its animation");
+        check(game.musicScene() == dw::MusicScene::Defeat, "death changes the score immediately");
         const auto deathDuration = game.run->stats.duration;
         const auto deathPosition = game.run->player.position;
         for (int i = 0; i < 60; ++i)
@@ -735,6 +749,8 @@ int main() {
             frame();
         check(!game.run && game.lastSummary.reason == dw::EndReason::Death,
               "death animation finishes at the normal defeat summary");
+        check(game.musicScene() == dw::MusicScene::Defeat,
+              "defeat music continues across the summary transition");
         game.perform(dw::Action::Hub);
         check(dw::distance(retainedAngle, cameraAngle()) < .0001f,
               "returning to town preserves camera rotation");
@@ -756,16 +772,20 @@ int main() {
             dw::Game frontier(directory / "frontier.save", dw::HubKind::Frontier);
             check(frontier.town.loaded() && frontier.activeHub == dw::HubKind::Frontier,
                   "explicit startup hub loads Frontier directly");
+            check(frontier.musicScene() == dw::MusicScene::Frontier, "Frontier selects its own hub score");
             const auto arrival = frontier.town.spawn;
             frontier.perform(dw::Action::Missions);
             for (int i = 0; i < 1200 && !frontier.missionMenu; ++i)
                 frontier.update(dw::Tick);
             check(frontier.missionMenu, "Frontier mission board is reachable through normal hub controls");
             frontier.seedText = "1866";
+            frontier.themeChoice = dw::ThemeChoice::Mine;
             frontier.launch();
+            check(frontier.musicScene() == dw::MusicScene::Mine, "mine exploration has its own score");
             check(frontier.run && !frontier.selectHub(dw::HubKind::BlackCreek),
                   "an active mission prevents hub travel");
             frontier.finish(dw::EndReason::Retreat);
+            check(frontier.musicScene() == dw::MusicScene::Frontier, "retreat does not play victory music");
             frontier.perform(dw::Action::Hub);
             check(frontier.activeHub == dw::HubKind::Frontier && !frontier.campaign.data().pending &&
                       dw::distance(frontier.town.player.position, dw::add(arrival, {0, .85f, 0})) < .001f,

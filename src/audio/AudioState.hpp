@@ -81,8 +81,11 @@ class AudioCueQueue {
 struct AudioSettings {
     float master = .65f, effects = .75f, ambience = .45f;
     bool muted = false;
+    float music = .4f;
     bool operator==(const AudioSettings &) const = default;
 };
 enum class AudioStatus { Disabled, Unavailable, Ready };
 enum class AudioEnvironment { Town, Frontier, Canyon, Mine, Count };
+enum class MusicScene { Town, Frontier, Canyon, Mine, Combat, Boss, Victory, Defeat, Silent, Count };
+enum class MusicStinger { Departure, Boss, Victory, Defeat, Count };
 } // namespace dw
