@@ -4,6 +4,42 @@
 
 namespace dw {
 namespace {
+constexpr const char *Silhouette = R"GLSL(#version 330
+out vec4 finalColor;
+void main() { finalColor = vec4(1.); }
+)GLSL";
+constexpr const char *Outline = R"GLSL(#version 330
+in vec2 fragTexCoord;
+uniform sampler2D texture0;
+uniform sampler2D modelDepth;
+uniform sampler2D sceneDepth;
+uniform vec2 texel;
+uniform vec2 nearFar;
+uniform int orthographic;
+out vec4 finalColor;
+float eyeDistance(float depth) {
+    if (orthographic != 0) return mix(nearFar.x,nearFar.y,depth);
+    return nearFar.x*nearFar.y/(nearFar.y-depth*(nearFar.y-nearFar.x));
+}
+void main() {
+    vec2 uv = fragTexCoord;
+    // Keep the interior clear; only the external silhouette gets a two-pixel outline.
+    if (texture(texture0,uv).r > .5) discard;
+    float edge = 0.;
+    for (int y=-1;y<=1;++y) for (int x=-1;x<=1;++x) {
+        if (x==0 && y==0) continue;
+        vec2 p = uv+vec2(x,y)*texel*2.;
+        if (any(lessThan(p,vec2(0.))) || any(greaterThan(p,vec2(1.)))) continue;
+        if (texture(texture0,p).r <= .5) continue;
+        float model = eyeDistance(texture(modelDepth,p).r);
+        float scene = eyeDistance(texture(sceneDepth,p).r);
+        // Comparing the nearest model surface avoids outlining its own hidden back faces.
+        if (model > scene+.06+scene*.0001) edge = 1.;
+    }
+    if (edge == 0.) discard;
+    finalColor = vec4(1.,.34,.20,.9);
+}
+)GLSL";
 constexpr const char *Filter = R"GLSL(#version 330
 in vec2 fragTexCoord;
 uniform sampler2D texture0;
@@ -125,16 +161,19 @@ PostProcess::~PostProcess() {
     unload();
 }
 void PostProcess::unload() {
-    for (auto texture : {scene_, bloom_[0], bloom_[1]})
+    for (auto texture : {scene_, bloom_[0], bloom_[1], silhouette_})
         if (texture.id)
             UnloadRenderTexture(texture);
-    for (auto shader : {composite_, filter_})
+    for (auto shader : {composite_, filter_, silhouetteShader_, outlineShader_})
         if (shader.id && shader.id != rlGetShaderIdDefault())
             UnloadShader(shader);
     scene_ = bloom_[0] = bloom_[1] = {};
     composite_ = filter_ = {};
+    silhouette_ = {};
+    silhouetteShader_ = outlineShader_ = {};
     width_ = height_ = 0;
     active_ = false;
+    outlineAttempted_ = false;
 }
 void PostProcess::resize(int width, int height) {
     if (width == width_ && height == height_)
@@ -202,5 +241,43 @@ void PostProcess::end() {
     screenQuad(scene_.texture, GetScreenWidth(), GetScreenHeight());
     EndShaderMode();
     active_ = false;
+}
+void PostProcess::outlineOccluded(const Camera3D &camera, const std::function<void()> &drawModels) {
+    if (active_ || !ready())
+        return;
+    if (!outlineAttempted_) {
+        outlineAttempted_ = true;
+        silhouetteShader_ = LoadShaderFromMemory(nullptr, Silhouette);
+        outlineShader_ = LoadShaderFromMemory(nullptr, Outline);
+        silhouette_ = target(width_, height_, true);
+        if (silhouette_.id)
+            SetTextureFilter(silhouette_.texture, TEXTURE_FILTER_POINT);
+    }
+    if (!silhouette_.id || !silhouetteShader_.id || !outlineShader_.id ||
+        silhouetteShader_.id == rlGetShaderIdDefault() || outlineShader_.id == rlGetShaderIdDefault())
+        return;
+    // A separate nearest-surface mask preserves the actual animated body and appendages.
+    BeginTextureMode(silhouette_);
+    ClearBackground(BLACK);
+    BeginMode3D(camera);
+    BeginShaderMode(silhouetteShader_);
+    drawModels();
+    EndShaderMode();
+    EndMode3D();
+    EndTextureMode();
+
+    const Vector2 texel{1.f / width_, 1.f / height_};
+    const Vector2 nearFar{float(rlGetCullDistanceNear()), float(rlGetCullDistanceFar())};
+    const int orthographic = camera.projection == CAMERA_ORTHOGRAPHIC;
+    SetShaderValue(outlineShader_, GetShaderLocation(outlineShader_, "texel"), &texel, SHADER_UNIFORM_VEC2);
+    SetShaderValue(outlineShader_, GetShaderLocation(outlineShader_, "nearFar"), &nearFar,
+                   SHADER_UNIFORM_VEC2);
+    SetShaderValue(outlineShader_, GetShaderLocation(outlineShader_, "orthographic"), &orthographic,
+                   SHADER_UNIFORM_INT);
+    BeginShaderMode(outlineShader_);
+    SetShaderValueTexture(outlineShader_, GetShaderLocation(outlineShader_, "modelDepth"), silhouette_.depth);
+    SetShaderValueTexture(outlineShader_, GetShaderLocation(outlineShader_, "sceneDepth"), scene_.depth);
+    screenQuad(silhouette_.texture, GetScreenWidth(), GetScreenHeight());
+    EndShaderMode();
 }
 } // namespace dw

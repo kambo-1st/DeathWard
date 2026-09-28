@@ -2,7 +2,7 @@
 #include "combat/Simulation.hpp"
 
 namespace dw {
-inline void drawMonsterModel(const Enemy &e) {
+inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
     const auto &d = *monsterDefinition(e.monster);
     const int type = e.monster / 10000, variant = e.monster / 100 % 100;
     const std::array<Color, 8> palette{{{177, 92, 85, 255},
@@ -21,7 +21,8 @@ inline void drawMonsterModel(const Enemy &e) {
     auto p = e.position;
     p.y += e.lift;
     const float r = e.radius;
-    DrawCircle3D({p.x, .04f, p.z}, r, {1, 0, 0}, 90, {43, 34, 35, 110});
+    if (drawShadow)
+        DrawCircle3D({p.x, .04f, p.z}, r, {1, 0, 0}, 90, {43, 34, 35, 110});
     if (e.state == EnemyState::Buried || e.state == EnemyState::Teleporting) {
         DrawCircle3D({p.x, .08f, p.z}, r * .8f, {1, 0, 0}, 90, skin);
         return;

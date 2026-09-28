@@ -103,7 +103,7 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
     add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
-    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp)
+    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/Renderer.cpp src/core/Game.cpp)
     target_link_libraries(deathward_occlusion_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_occlusion_tests)
     add_executable(deathward_post_process_tests tests/post_process_tests.cpp src/render/PostProcess.cpp)

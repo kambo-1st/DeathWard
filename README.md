@@ -93,6 +93,8 @@ Mouse-wheel zoom moves smoothly between a close character view and a wider room 
 
 In both towns, an entire rock or building object becomes semi-transparent when it blocks the player. Canyon wall sections and rock outcrops use the same 22% opacity, including props resting on them. A thin gray line follows the ground boundary of faded canyon rock so you can still see where the playable floor ends. Scenery returns to full opacity when the camera has a clear view. Playable floors and collision stay intact; this is a rendering effect.
 
+Enemies hidden behind scenery have a thin warm-red silhouette outline in both mission themes. The outline follows their animated shape and appears only along concealed edges. Dead, friendly, buried and teleporting enemies do not receive it.
+
 A small FPS counter in the top-right corner shows the rendering frame rate on every screen. In hubs and missions, the current camera zoom appears beside it. New sessions start at **160% zoom**; 100% remains the reference scale, higher percentages are closer, and lower percentages are wider. The value follows the camera smoothly as you scroll. Your chosen zoom carries between hubs and missions for the session.
 
 World interactions use visual cues instead of floating control instructions: open exits have small floor arrows and colored lanterns, locked doors have golden locks, and pickups and objectives have glow or ground markers. Control reminders live in the hub, pause screen and this guide.
@@ -168,6 +170,7 @@ ctest --test-dir build --output-on-failure
 ./build/deathward_western_assets_tests
 ./build/deathward_town_assets_tests
 ./build/deathward_occlusion_tests
+./build/deathward_post_process_tests
 ./build/deathward --smoke --theme mine --frames 180 --screenshot artifacts/combat.png
 ./build/deathward --smoke --theme canyon --scene combat --frames 90 --screenshot artifacts/canyon-combat.png
 ./build/deathward --smoke --scene hub --frames 2 --screenshot artifacts/hub.png

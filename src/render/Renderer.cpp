@@ -68,8 +68,10 @@ void lantern(Vector3 p, Color color, bool imported = false) {
     DrawCube({p.x, 2.25f, p.z}, 0.42f, 0.5f, 0.42f, color);
     DrawCylinder({p.x, 2.55f, p.z}, 0, 0.42f, 0.24f, 4, Color{46, 43, 37, 255});
 }
-void cowboy(Vector3 p, Vector3 direction, Color coat, float scale, bool boss = false) {
-    shadow(p, 0.7f * scale);
+void cowboy(Vector3 p, Vector3 direction, Color coat, float scale, bool boss = false,
+            bool drawShadow = true) {
+    if (drawShadow)
+        shadow(p, 0.7f * scale);
     DrawCube({p.x, 0.45f * scale, p.z}, 0.55f * scale, 0.9f * scale, 0.45f * scale, coat);
     DrawCube({p.x, 1.0f * scale, p.z}, 0.8f * scale, 0.6f * scale, 0.5f * scale, coat);
     DrawSphereEx({p.x, 1.5f * scale, p.z}, 0.27f * scale, 6, 8, boss ? Teal : Color{195, 159, 112, 255});
@@ -83,9 +85,9 @@ void cowboy(Vector3 p, Vector3 direction, Color coat, float scale, bool boss = f
     DrawCube(add({p.x, 1.15f * scale, p.z}, mul(direction, 0.29f * scale)), 0.16f * scale, 0.16f * scale,
              0.16f * scale, Gold);
 }
-void enemyModel(const Enemy &enemy) {
+void enemyModel(const Enemy &enemy, bool drawShadow = true) {
     if (enemy.kind == EnemyKind::Monster) {
-        drawMonsterModel(enemy);
+        drawMonsterModel(enemy, drawShadow);
         return;
     }
     static constexpr std::array<Color, size_t(EnemyKind::Count)> coats{{{159, 64, 48, 255},
@@ -111,13 +113,15 @@ void enemyModel(const Enemy &enemy) {
     const Vector3 hand = add({p.x, winding ? 1.65f : 1.05f, p.z}, mul(facing, 0.55f));
     const Color metal{153, 164, 169, 255};
     if (enemy.kind == EnemyKind::Spitter) {
-        shadow(p, 0.8f);
+        if (drawShadow)
+            shadow(p, 0.8f);
         DrawSphereEx({p.x, 0.65f, p.z}, 0.78f, 8, 10, coat);
         DrawSphereEx(add(p, mul(facing, 0.65f)), 0.3f, 6, 8, winding ? Gold : Rust);
         for (float sign : {-1.0f, 1.0f})
             DrawSphereEx(add({p.x, 1.15f, p.z}, mul(side, sign * 0.48f)), 0.16f, 4, 6, Gold);
     } else if (enemy.kind == EnemyKind::PowderHusk) {
-        shadow(p, 0.8f);
+        if (drawShadow)
+            shadow(p, 0.8f);
         DrawCylinder({p.x, 0.2f, p.z}, 0.6f, 0.55f, 1.25f, 10, coat);
         for (float height : {0.4f, 1.2f})
             DrawCylinder({p.x, height, p.z}, 0.62f, 0.62f, 0.12f, 10, Ink);
@@ -127,7 +131,8 @@ void enemyModel(const Enemy &enemy) {
                enemy.kind == EnemyKind::Wraith) {
         const bool wraith = enemy.kind == EnemyKind::Wraith;
         const float lift = wraith ? 0.25f + 0.12f * std::sin(enemy.age * 3) : 0;
-        shadow(p, 0.7f);
+        if (drawShadow)
+            shadow(p, 0.7f);
         DrawCylinder({p.x, lift, p.z}, 0.3f, 0.65f, 1.5f, 8, coat);
         DrawSphereEx({p.x, 1.8f + lift, p.z}, 0.32f, 6, 8, coat);
         if (enemy.kind == EnemyKind::Preacher) {
@@ -145,7 +150,8 @@ void enemyModel(const Enemy &enemy) {
                enemy.kind == EnemyKind::Ironhide || enemy.kind == EnemyKind::Railbreaker) {
         const float scale =
             enemy.kind == EnemyKind::Ironhide || enemy.kind == EnemyKind::Railbreaker ? 1.35f : 1;
-        shadow(p, 0.65f * scale);
+        if (drawShadow)
+            shadow(p, 0.65f * scale);
         DrawCylinder({p.x, 0, p.z}, 0.38f * scale, 0.58f * scale, 1.25f * scale, 6, coat);
         DrawSphereEx({p.x, 1.5f * scale, p.z}, 0.3f * scale, 6, 8, Color{181, 131, 82, 255});
         if (enemy.kind == EnemyKind::Rusher) {
@@ -173,7 +179,8 @@ void enemyModel(const Enemy &enemy) {
             }
         }
     } else {
-        cowboy(p, facing, coat, enemy.kind == EnemyKind::Boss ? 1.7f : 1, enemy.kind == EnemyKind::Boss);
+        cowboy(p, facing, coat, enemy.kind == EnemyKind::Boss ? 1.7f : 1, enemy.kind == EnemyKind::Boss,
+               drawShadow);
         if (enemy.kind == EnemyKind::Shotgun || enemy.kind == EnemyKind::Sharpshooter) {
             Vector3 barrel = add({p.x, 1.05f, p.z}, mul(facing, 0.5f));
             const float reach = enemy.kind == EnemyKind::Sharpshooter ? 1.25f : 0.75f;
@@ -593,6 +600,15 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     westernScene_.drawGlass();
     EndMode3D();
     postProcess_.end();
+    auto outlineEligible = [](const Enemy &e) {
+        return e.alive && !e.friendly && e.state != EnemyState::Buried && e.state != EnemyState::Teleporting;
+    };
+    if (std::any_of(run.enemies.begin(), run.enemies.end(), outlineEligible))
+        postProcess_.outlineOccluded(camera, [&] {
+            for (const auto &e : run.enemies)
+                if (outlineEligible(e))
+                    enemyModel(e, false);
+        });
     for (const auto &e : run.enemies)
         if (e.alive && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {
             Vector2 at = GetWorldToScreen(add(e.position, {0, 1.6f, 0}), camera);

@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include "render/PlayerModel.hpp"
 #include "render/PostProcess.hpp"
+#include "render/Renderer.hpp"
 #include "render/TownScene.hpp"
 #include "render/WesternScene.hpp"
 #include "rlgl.h"
@@ -146,6 +147,79 @@ void townCheck(HubKind hub) {
         [&](bool enabled) { scene.setPlayerOcclusion(camera, player, enabled); }, hubFolder(hub));
     check(town.walkable(player), "rendering leaves town collision unchanged");
 }
+void enemyOutlineCheck(Vector3 enemyPosition, const Camera3D &camera, const std::string &name) {
+    Simulation run(69175541, 1, {}, MissionTheme::Canyon);
+    bool found = false;
+    for (const auto &room : run.arena.rooms) {
+        for (float z = room.bounds.min.z; z < room.bounds.max.z && !found; z += 2)
+            for (float x = room.bounds.min.x; x < room.bounds.max.x && !found; x += 2) {
+                const Vector3 p{x, .85f, z};
+                if (run.arena.blocked(p, .6f) || distance(p, enemyPosition) > 40)
+                    continue;
+                PlayerOcclusion sight;
+                sight.set(camera, p);
+                bool clear = true;
+                for (auto target : sight.targets())
+                    clear = clear && !run.arena.canyon->trace(camera.position, target).hit;
+                if (clear) {
+                    found = true;
+                    run.player.position = p;
+                }
+            }
+        if (found)
+            break;
+    }
+    check(found, "find a clear player view while the enemy stays behind an opaque canyon wall");
+    Renderer renderer;
+    auto capture = [&] {
+        BeginDrawing();
+        renderer.drawWorld(run, camera, false);
+        rlDrawRenderBatchActive();
+        auto result = LoadImageFromScreen();
+        EndDrawing();
+        return result;
+    };
+    run.enemies.clear();
+    auto baseline = capture();
+    auto outlinePixels = [&](Image frame) {
+        int result = 0;
+        for (int y = 0; y < frame.height; ++y)
+            for (int x = 0; x < frame.width; ++x) {
+                const auto c = GetImageColor(frame, x, y);
+                result += c.r > 230 && c.g < 130 && c.b < 100 &&
+                          colorDifference(c, GetImageColor(baseline, x, y)) > 30;
+            }
+        return result;
+    };
+    for (int type : {10, 13, 21}) {
+        run.enemies.clear();
+        check(run.spawnMonster(monsterId(type), enemyPosition) != 0, "spawn an occluded catalog enemy");
+        auto frame = capture();
+        const int pixels = outlinePixels(frame);
+        std::cout << name << " enemy " << type << " outline pixels " << pixels << std::endl;
+        check(pixels > 15, "actual hidden monster geometry gets a visible outline through the canyon");
+        ExportImage(frame, ("artifacts/enemy-outline-" + name + "-" + std::to_string(type) + ".png").c_str());
+        UnloadImage(frame);
+    }
+    auto &enemy = run.enemies.front();
+    for (auto state : {EnemyState::Buried, EnemyState::Teleporting}) {
+        enemy.state = state;
+        auto frame = capture();
+        check(outlinePixels(frame) == 0, "burrowing and teleporting do not reveal an absent body");
+        UnloadImage(frame);
+    }
+    enemy.state = EnemyState::Ready;
+    enemy.friendly = true;
+    auto friendly = capture();
+    check(outlinePixels(friendly) == 0, "friendly monsters do not get hostile outlines");
+    UnloadImage(friendly);
+    enemy.friendly = false;
+    enemy.alive = false;
+    auto dead = capture();
+    check(outlinePixels(dead) == 0, "dead enemies leave no stale silhouette");
+    UnloadImage(dead);
+    UnloadImage(baseline);
+}
 void canyonCheck() {
     Arena arena(69175541, MissionTheme::Canyon);
     WesternScene scene;
@@ -194,6 +268,7 @@ void canyonCheck() {
             retained += section.rock && !section.faded;
         }
         check(faded > 0 && retained > 0, "only obstructing canyon rock sections become translucent");
+        enemyOutlineCheck(player, camera, zoom < 1 ? "canyon" : "canyon-wide");
     }
 }
 } // namespace
@@ -207,7 +282,7 @@ int main() {
         townCheck(HubKind::Frontier);
         canyonCheck();
         CloseWindow();
-        std::cout << "PASS whole-object town/canyon transparency, restoration, zoom and collision\n";
+        std::cout << "PASS town/canyon transparency, enemy outlines, restoration, zoom and collision\n";
     } catch (const std::exception &e) {
         std::cerr << "FAIL: " << e.what() << '\n';
         if (IsWindowReady())

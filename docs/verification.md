@@ -1,5 +1,11 @@
 # Milestone 1 verification
 
+## Occluded enemy silhouettes
+
+Living hostile enemies receive a hollow warm-red outline along silhouette edges hidden by the rendered world. A separate mask renders their actual animated geometry without ground shadows, then compares its nearest depth against the scene depth. The outline is composited after world post processing and before UI. Visible edges stay unchanged; dead, friendly, buried and teleporting enemies are excluded. Both mission rosters use the same pass, and mask resources resize and unload with the world targets.
+
+The Release build, full gameplay input suite and post-processing graphics checks pass, including full/partial occlusion, no outline on visible geometry, hollow interiors, empty-frame cleanup, UI layering, resizing and resource reload. The occlusion suite verifies actual walker, fly and worm models behind canyon terrain at close/wide zoom, along with excluded enemy states and existing player transparency. Captures were visually reviewed. Logs and images use `artifacts/enemy-outline-*`.
+
 ## Canyon boundary outlines
 
 Faded canyon walls and outcrops retain a thin gray contour at the edge of the playable ground. The contour uses the same walkable-height threshold as terrain collision and follows the original triangles. It draws after translucent scenery with depth testing, so the player and opaque objects still cover it. Only faded canyon sections receive the line.
