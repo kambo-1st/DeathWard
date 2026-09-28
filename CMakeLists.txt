@@ -57,6 +57,8 @@ if(DEATHWARD_SANITIZERS AND NOT MSVC)
     target_link_options(deathward_core PUBLIC -fsanitize=address,undefined)
 endif()
 
+file(GLOB animal_models CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals"
+    "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals/*.glb")
 function(deathward_assets target)
     if(EMSCRIPTEN)
         target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="/assets")
@@ -67,7 +69,7 @@ function(deathward_assets target)
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio" "$<TARGET_FILE_DIR:${target}>/assets/audio"
         VERBATIM)
-    foreach(animal_file horse.glb hen.glb cow.glb cat.glb town.animals)
+    foreach(animal_file ${animal_models} town.animals)
         set(animal_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals/${animal_file}")
         set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${animal_asset}")
         add_custom_command(TARGET ${target} POST_BUILD
@@ -116,7 +118,7 @@ if(EMSCRIPTEN)
         -lidbfs.js "SHELL:--shell-file '${CMAKE_CURRENT_SOURCE_DIR}/web/shell.html'")
     set(web_assets
         assets/bandit/bandit.glb assets/western/western.glb assets/western/western.catalog)
-    foreach(animal_file horse.glb hen.glb cow.glb cat.glb town.animals)
+    foreach(animal_file ${animal_models} town.animals)
         list(APPEND web_assets assets/animals/${animal_file})
     endforeach()
     foreach(hub town frontier)

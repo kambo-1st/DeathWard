@@ -1,5 +1,17 @@
 # Milestone 1 verification
 
+## Complete Polyperfect animal catalog
+
+Content version `deathward-m1-30` expands the import to all 98 current animal prefab variants from 66 animal folders. The GLBs contain 784 clip entries, including shared takes across variants, Unity-configured FBX slices and 65 standalone Unity transform-animation files. Archived Legacy alternatives and demo scenes are outside this catalog. All original texture RGB pixels and Unity tints are retained; unused alpha is made opaque to match the source materials. Retained originals remain unchanged.
+
+The importer generates runtime IDs, placement footprints and `assets/animals/CATALOG.md`, and checks the complete prefab inventory. Separate animation-library scale differences are corrected for the chimpanzee, wolf, tiger and toucan. The male elephant retains its original textured mesh with a repaired bind skeleton and object scale. The wool sheep uses the compatible ordinary sheep skeleton and 13 corresponding clips because its separate FBX also deforms incorrectly when played directly in Blender. Source selections and conversion metadata document these adaptations.
+
+Animal rendering now handles nonuniform bone scaling and inverse-transpose normals, with a correction for the pinned raylib 5.5 animation loader's omission of parent scale from child translations. Regression fixtures cover inherited scales and a translated, rotated, nonuniformly scaled bone. All catalog models are available for placement and load on demand. Black Creek retains its existing five residents; the current ambient simulation remains ground navigation, so aquatic/flying habitats and editor placement controls are still separate work.
+
+Native and WebAssembly builds pass, as do all 15 headless suites and graphics checks for all 98 variants. Graphics checks sample every preserved clip at its start, middle and end, exercise 180 blended poses per variant, and verify deterministic independent clocks. The source audit passes for complete inventory coverage, original RGB/tint, opaque alpha, source/output hashes, weights, joints and clip durations. Walk/idle previews and catalog contact sheets were reviewed. The refreshed 70.8 MiB upload ZIP passes archive integrity, every manifest size/hash, exact current WASM/data/JavaScript comparisons and relative hosting-path checks. Logs use `artifacts/animals-final-*`; previews use `artifacts/animal-*`.
+
+The full Chromium suite passes, including an exact check that all 98 GLBs are present and source FBXs are excluded. It also verifies the five town residents, roaming, pause, editor behavior, hub switching, audio and the existing combat/persistence flow, with no JavaScript exceptions, shader failures or WebGL errors. The final browser town capture was visually reviewed.
+
 ## Textured Polyperfect animals
 
 Content version `deathward-m1-29` adds a horse, cow, orange cat and two independently animated hens near Black Creek's starting street. Four source FBX rigs are converted to self-contained GLBs with original 2048×2048 albedo pixels, Unity tint and 38 animation takes. Unit/ancestor transforms are baked; mesh-only bone tips follow animated parents. Runtime blends Idle, Walk and Eat where available, with separate resident clocks and matching animated shadows. Town lighting and post processing apply to all four species.

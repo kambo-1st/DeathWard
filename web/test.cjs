@@ -50,6 +50,12 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
   };
   try {
     await start(base + '?verify');
+    const animalFiles = await page.evaluate(() => FS.readdir('/assets/animals'));
+    const expectedAnimals = JSON.parse(fs.readFileSync(path.join(root, 'assets/animals/animals.source.json')))
+      .animals.map(animal => animal.id + '.glb').sort();
+    assert.deepEqual(animalFiles.filter(name => name.endsWith('.glb')).sort(), expectedAnimals);
+    assert.equal(animalFiles.includes('source'), false);
+    console.log(`PASS all ${expectedAnimals.length} converted animal models packaged without source FBXs`);
     assert.equal((await state()).hub, 0);
     assert.equal((await state()).audio, 2);
     assert.equal((await state()).zoom, 160);

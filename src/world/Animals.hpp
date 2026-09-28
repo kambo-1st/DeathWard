@@ -2,7 +2,12 @@
 #include "world/HubWorld.hpp"
 
 namespace dw {
-enum class AnimalKind { Horse, Hen, Cow, Cat, Count };
+enum class AnimalKind {
+#define DW_ANIMAL(symbol, name, radius, speed) symbol,
+#include "world/AnimalCatalog.inc"
+#undef DW_ANIMAL
+    Count
+};
 const char *animalName(AnimalKind kind);
 float animalRadius(AnimalKind kind);
 float animalWalkSpeed(AnimalKind kind);

@@ -1,6 +1,7 @@
 #include "render/AnimalModels.hpp"
 #include "raymath.h"
 #include "rlgl.h"
+#include <cctype>
 #include <cstring>
 #include <set>
 
@@ -22,7 +23,70 @@ Transform mix(const Transform &a, const Transform &b, float t) {
     return {Vector3Lerp(a.translation, b.translation, t), QuaternionSlerp(a.rotation, b.rotation, t),
             Vector3Lerp(a.scale, b.scale, t)};
 }
+Matrix matrix(const Transform &t) {
+    return MatrixMultiply(MatrixMultiply(MatrixScale(t.scale.x, t.scale.y, t.scale.z),
+                                         QuaternionToMatrix(t.rotation)),
+                          MatrixTranslate(t.translation.x, t.translation.y, t.translation.z));
+}
 } // namespace
+void AnimalModels::correctAnimationScale(ModelAnimation &animation) {
+    // raylib 5.5 composes imported translations without parent scale. Recover
+    // its local transforms, then rebuild the hierarchy with full TRS semantics.
+    for (int frame = 0; frame < animation.frameCount; ++frame) {
+        auto *pose = animation.framePoses[frame];
+        for (int bone = animation.boneCount - 1; bone >= 0; --bone) {
+            const int parent = animation.bones[bone].parent;
+            if (parent < 0)
+                continue;
+            const auto translation = Vector3RotateByQuaternion(
+                sub(pose[bone].translation, pose[parent].translation), QuaternionInvert(pose[parent].rotation));
+            pose[bone] = local(pose[parent], pose[bone]);
+            pose[bone].translation = translation;
+        }
+        for (int bone = 0; bone < animation.boneCount; ++bone) {
+            const int parent = animation.bones[bone].parent;
+            if (parent >= 0)
+                pose[bone] = combine(pose[parent], pose[bone]);
+        }
+    }
+}
+void AnimalModels::applyPose(Model model, const Transform *pose) {
+    std::vector<Matrix> transforms(size_t(model.boneCount)), normals(size_t(model.boneCount));
+    for (int bone = 0; bone < model.boneCount; ++bone) {
+        auto &transform = transforms[size_t(bone)];
+        transform = MatrixMultiply(MatrixInvert(matrix(model.bindPose[bone])), matrix(pose[bone]));
+        auto &normal = normals[size_t(bone)];
+        normal = MatrixTranspose(MatrixInvert(transform));
+        normal.m12 = normal.m13 = normal.m14 = 0;
+    }
+    for (int m = 0; m < model.meshCount; ++m) {
+        auto &mesh = model.meshes[m];
+        for (int v = 0; v < mesh.vertexCount; ++v) {
+            const Vector3 original{mesh.vertices[3*v], mesh.vertices[3*v+1], mesh.vertices[3*v+2]};
+            const Vector3 normal = mesh.normals
+                ? Vector3{mesh.normals[3*v], mesh.normals[3*v+1], mesh.normals[3*v+2]} : Vector3{};
+            Vector3 position{}, direction{};
+            for (int influence = 0; influence < 4; ++influence) {
+                const float weight = mesh.boneWeights[4*v+influence];
+                if (weight == 0)
+                    continue;
+                const auto bone = mesh.boneIds[4*v+influence];
+                position = Vector3Add(position, Vector3Scale(Vector3Transform(original, transforms[bone]), weight));
+                direction = Vector3Add(direction, Vector3Scale(Vector3Transform(normal, normals[bone]), weight));
+            }
+            direction = Vector3Normalize(direction);
+            const std::array<float, 3> xyz{position.x, position.y, position.z};
+            std::copy(xyz.begin(), xyz.end(), mesh.animVertices + 3*v);
+            if (mesh.animNormals) {
+                const std::array<float, 3> normalXYZ{direction.x, direction.y, direction.z};
+                std::copy(normalXYZ.begin(), normalXYZ.end(), mesh.animNormals + 3*v);
+            }
+        }
+        rlUpdateVertexBuffer(mesh.vboId[0], mesh.animVertices, mesh.vertexCount*3*sizeof(float), 0);
+        if (mesh.animNormals)
+            rlUpdateVertexBuffer(mesh.vboId[2], mesh.animNormals, mesh.vertexCount*3*sizeof(float), 0);
+    }
+}
 std::filesystem::path AnimalModels::assetDirectory() {
 #ifdef __EMSCRIPTEN__
     return "/assets/animals";
@@ -79,25 +143,47 @@ bool AnimalModels::load(AnimalKind kind, const std::filesystem::path &path) {
                  a.model.bindPose;
     for (int n = 0; valid && n < a.model.boneCount; ++n)
         valid = a.model.bones[n].parent >= -1 && a.model.bones[n].parent < n;
+    std::vector<std::string> names;
+    for (int n = 0; n < count; ++n) {
+        std::string name = clips[n].name;
+        for (auto &c : name)
+            c = char(std::tolower(static_cast<unsigned char>(c)));
+        names.push_back(std::move(name));
+    }
+    const auto choose = [&](std::initializer_list<const char *> preferred) {
+        for (const auto *name : preferred)
+            for (int n = 0; n < count; ++n)
+                if (names[size_t(n)] == name)
+                    return n;
+        return -1;
+    };
+    int idle = choose({"idle", "idlea", "idle2", "idleleft", "idle1", "idlebreathing", "idlebreath"});
+    int move = choose({"walk", "walking", "slowwalk", "slither", "swim", "fly", "slow", "run", "fast"});
+    if (idle < 0)
+        idle = move >= 0 ? move : 0;
+    if (move < 0)
+        move = idle;
+    const std::array<int, 3> selected{idle, move, choose({"eat", "eating", "eatingloop"})};
     for (int n = 0; valid && n < count; ++n) {
         const auto &clip = clips[n];
         valid = clip.frameCount >= 2 && IsModelAnimationValid(a.model, clip);
-        int slot = std::strcmp(clip.name, "Idle") == 0   ? 0
-                   : std::strcmp(clip.name, "Walk") == 0 ? 1
-                   : std::strcmp(clip.name, "Eat") == 0  ? 2
-                                                         : -1;
-        if (!valid || slot < 0)
+        if (!valid)
             continue;
-        auto &output = a.clips[size_t(slot)];
-        output.duration = (clip.frameCount - 1) * SampleSeconds;
-        for (int frame = 0; frame < clip.frameCount; ++frame) {
-            auto &pose = output.frames.emplace_back();
-            pose.resize(size_t(a.model.boneCount));
-            for (int bone = 0; bone < a.model.boneCount; ++bone) {
-                const int parent = a.model.bones[bone].parent;
-                pose[size_t(bone)] =
-                    parent < 0 ? clip.framePoses[frame][bone]
-                               : local(clip.framePoses[frame][parent], clip.framePoses[frame][bone]);
+        correctAnimationScale(clips[n]);
+        for (size_t slot = 0; slot < selected.size(); ++slot) {
+            if (selected[slot] != n)
+                continue;
+            auto &output = a.clips[slot];
+            output.duration = (clip.frameCount - 1) * SampleSeconds;
+            for (int frame = 0; frame < clip.frameCount; ++frame) {
+                auto &pose = output.frames.emplace_back();
+                pose.resize(size_t(a.model.boneCount));
+                for (int bone = 0; bone < a.model.boneCount; ++bone) {
+                    const int parent = a.model.bones[bone].parent;
+                    pose[size_t(bone)] =
+                        parent < 0 ? clip.framePoses[frame][bone]
+                                   : local(clip.framePoses[frame][parent], clip.framePoses[frame][bone]);
+                }
             }
         }
     }
@@ -143,13 +229,7 @@ bool AnimalModels::pose(const Animal &animal) {
         const int parent = a.model.bones[bone].parent;
         a.world[bone] = parent < 0 ? value : combine(a.world[size_t(parent)], value);
     }
-    Transform *frame = a.world.data();
-    ModelAnimation animation{};
-    animation.boneCount = a.model.boneCount;
-    animation.frameCount = 1;
-    animation.bones = a.model.bones;
-    animation.framePoses = &frame;
-    UpdateModelAnimation(a.model, animation, 0);
+    applyPose(a.model, a.world.data());
     return true;
 }
 void AnimalModels::draw(const Animals &animals, Shader shader, Texture2D shadowMap) {

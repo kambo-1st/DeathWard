@@ -19,6 +19,9 @@ class AnimalModels {
     const Model &model(AnimalKind kind) const;
     const std::vector<Transform> &bonePose(AnimalKind kind) const;
     static std::filesystem::path assetDirectory();
+    // Apply a world-space skeletal pose, including nonuniform bone scales.
+    static void applyPose(Model model, const Transform *pose);
+    static void correctAnimationScale(ModelAnimation &animation);
 
   private:
     struct Clip {

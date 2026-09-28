@@ -13,6 +13,11 @@ ROOT = Path(__file__).resolve().parents[1] / 'assets/animals'
 def main():
     recipe = json.loads((ROOT / 'animals.source.json').read_text())
     manifest = json.loads((ROOT / 'animals.manifest.json').read_text())
+    assert not manifest.get('failures'), manifest.get('failures')
+    assert len(recipe['animals']) == recipe['prefab_count'] == 98
+    assert len({entry['family'] for entry in recipe['animals']}) == recipe['family_count'] == 66
+    assert {entry['id'] for entry in recipe['animals']} == set(manifest['animals'])
+    assert {entry['id'] for entry in recipe['animals']} == {p.stem for p in ROOT.glob('*.glb')}
     assert recipe['source_sha256'] == manifest['source_sha256']
     for name, digest in manifest['source_sha256'].items():
         assert hashlib.sha256((ROOT / 'source' / name).read_bytes()).hexdigest() == digest, name
@@ -43,7 +48,8 @@ def main():
         original = Image.open(ROOT / 'source' / entry['texture']).convert('RGBA')
         embedded = Image.open(io.BytesIO(view(doc['images'][0]['bufferView']))).convert('RGBA')
         assert original.size == embedded.size == tuple(record['texture_size'])
-        assert original.tobytes() == embedded.tobytes(), (name, 'texture pixels changed')
+        assert original.convert('RGB').tobytes() == embedded.convert('RGB').tobytes(), (name, 'albedo RGB changed')
+        assert embedded.getextrema()[-1] == (255, 255), (name, 'opaque material must ignore source alpha')
         assert all(m['pbrMetallicRoughness']['baseColorFactor'] == entry['tint'] for m in doc['materials'])
         joints = doc['skins'][0]['joints']
         assert len(joints) == record['bones'] and len(joints) <= 255
@@ -62,7 +68,7 @@ def main():
                 times = accessor(sampler['input']).ravel()
                 assert len(times) >= 2 and abs(times[0]) < .00001 and abs(times[-1]-duration) < .00001
                 assert np.all(np.diff(times) > 0) and np.isfinite(accessor(sampler['output'])).all()
-        print(f"PASS {name}: original {original.width}px texture/tint, {len(joints)} bones, "
+        print(f"PASS {name}: original {original.width}px RGB/tint, opaque alpha, {len(joints)} bones, "
               f"{len(doc['animations'])} clips, normalized weights and source/output hashes")
 
 

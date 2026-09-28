@@ -1,0 +1,896 @@
+{
+  "format": 1,
+  "animals": [
+    {
+      "id": "horse",
+      "prefab": "Prefabs/Animals/Horse_Brown.prefab",
+      "rig": "Meshes/Animals/Horse/SKM_Horse_Rig.fbx",
+      "meshes": [
+        "HorseThoroughbred"
+      ],
+      "material": "Materials/Animals/Horse_Brown.mat"
+    },
+    {
+      "id": "hen",
+      "prefab": "Prefabs/Animals/Hen.prefab",
+      "rig": "Meshes/Animals/Hen/SKM_Hen_Rig.fbx",
+      "meshes": [
+        "Hen"
+      ],
+      "material": "Materials/Animals/Hen.mat"
+    },
+    {
+      "id": "cow",
+      "prefab": "Prefabs/Animals/Cow_Brown.prefab",
+      "rig": "Meshes/Animals/Cow/SKM_Cow_Rig.fbx",
+      "meshes": [
+        "Cow_NoHorns"
+      ],
+      "material": "Materials/Animals/Cow_Brown.mat"
+    },
+    {
+      "id": "cat",
+      "prefab": "Prefabs/Animals/Cat_Orange.prefab",
+      "rig": "Meshes/Animals/Cat/SKM_Cat_Rig.fbx",
+      "meshes": [
+        "cat"
+      ],
+      "material": "Materials/Animals/Cat_Orange.mat"
+    },
+    {
+      "id": "anteater",
+      "prefab": "Prefabs/Animals/Anteater.prefab",
+      "rig": "Meshes/Animals/Anteater/SKM_Anteater_Animation.fbx",
+      "meshes": [
+        "Anteater"
+      ],
+      "material": "Materials/Animals/Anteater.mat"
+    },
+    {
+      "id": "bear_grizzly",
+      "prefab": "Prefabs/Animals/Bear_Grizzly.prefab",
+      "rig": "Meshes/Animals/Bear/SKM_Bear_Rig.fbx",
+      "meshes": [
+        "BearGrizzly"
+      ],
+      "material": "Materials/Animals/Bear_Grizzly.mat"
+    },
+    {
+      "id": "bear_grizzly_black",
+      "prefab": "Prefabs/Animals/Bear_Grizzly_Black.prefab",
+      "rig": "Meshes/Animals/Bear/SKM_Bear_Rig.fbx",
+      "meshes": [
+        "BearGrizzly"
+      ],
+      "material": "Materials/Animals/Bear_Grizzly_Black.mat"
+    },
+    {
+      "id": "bear_grizzly_wild",
+      "prefab": "Prefabs/Animals/Bear_Grizzly_Wild.prefab",
+      "rig": "Meshes/Animals/Bear/SKM_Bear_Rig.fbx",
+      "meshes": [
+        "BearWild"
+      ],
+      "material": "Materials/Animals/Bear_Grizzly_Wild.mat"
+    },
+    {
+      "id": "bear_grizzly_wild_black",
+      "prefab": "Prefabs/Animals/Bear_Grizzly_Wild_Black.prefab",
+      "rig": "Meshes/Animals/Bear/SKM_Bear_Rig.fbx",
+      "meshes": [
+        "BearWild"
+      ],
+      "material": "Materials/Animals/Bear_Grizzly_Wild_Black.mat"
+    },
+    {
+      "id": "bear_polar",
+      "prefab": "Prefabs/Animals/Bear_Polar.prefab",
+      "rig": "Meshes/Animals/Bear/SKM_Bear_Rig.fbx",
+      "meshes": [
+        "BearGrizzly"
+      ],
+      "material": "Materials/Animals/Bear_Polar.mat"
+    },
+    {
+      "id": "bear_polar_wild",
+      "prefab": "Prefabs/Animals/Bear_Polar_Wild.prefab",
+      "rig": "Meshes/Animals/Bear/SKM_Bear_Rig.fbx",
+      "meshes": [
+        "BearWild"
+      ],
+      "material": "Materials/Animals/Bear_Polar_Wild.mat"
+    },
+    {
+      "id": "beaver",
+      "prefab": "Prefabs/Animals/Beaver.prefab",
+      "rig": "Meshes/Animals/Beaver/SKM_Beaver_Animations.fbx",
+      "meshes": [
+        "Beaver"
+      ],
+      "material": "Materials/Animals/Beaver.mat"
+    },
+    {
+      "id": "boar",
+      "prefab": "Prefabs/Animals/Boar.prefab",
+      "rig": "Meshes/Animals/Boar/SKM_Boar_Rig.fbx",
+      "meshes": [
+        "Boar"
+      ],
+      "material": "Materials/Animals/Boar.mat"
+    },
+    {
+      "id": "buffalo",
+      "prefab": "Prefabs/Animals/Buffalo.prefab",
+      "rig": "Meshes/Animals/Buffalo/SKM_Buffalo_Rig.fbx",
+      "meshes": [
+        "Buffalo-cape"
+      ],
+      "material": "Materials/Animals/Buffalo.mat"
+    },
+    {
+      "id": "bumblebee",
+      "prefab": "Prefabs/Animals/Bumblebee.prefab",
+      "rig": "Meshes/Animals/Bees/SKM_Bees_Rig.fbx",
+      "meshes": [
+        "Bumblebee"
+      ],
+      "material": "Materials/Animals/Bees.mat"
+    },
+    {
+      "id": "camel_bactrain",
+      "prefab": "Prefabs/Animals/Camel_Bactrain.prefab",
+      "rig": "Meshes/Animals/Camel/SKM_Camel_Bactrian_Rig.fbx",
+      "meshes": [
+        "Camel_Bactrian"
+      ],
+      "material": "Materials/Animals/Camel_Bactrain.mat"
+    },
+    {
+      "id": "camel_dromedary",
+      "prefab": "Prefabs/Animals/Camel_Dromedary.prefab",
+      "rig": "Meshes/Animals/Camel/SKM_Camel_Dromedary_Rig.fbx",
+      "meshes": [
+        "Camel_Dromedary"
+      ],
+      "material": "Materials/Animals/Camel_Dromedary.mat"
+    },
+    {
+      "id": "capybara",
+      "prefab": "Prefabs/Animals/Capybara.prefab",
+      "rig": "Meshes/Animals/Capybara/SKM_Capybara_Animations.fbx",
+      "meshes": [
+        "SKM_Capybara"
+      ],
+      "material": "Materials/Animals/Capybara.mat"
+    },
+    {
+      "id": "cat_black",
+      "prefab": "Prefabs/Animals/Cat_Black.prefab",
+      "rig": "Meshes/Animals/Cat/SKM_Cat_Rig.fbx",
+      "meshes": [
+        "cat"
+      ],
+      "material": "Materials/Animals/Cat_Black.mat"
+    },
+    {
+      "id": "cat_white",
+      "prefab": "Prefabs/Animals/Cat_White.prefab",
+      "rig": "Meshes/Animals/Cat/SKM_Cat_Rig.fbx",
+      "meshes": [
+        "cat"
+      ],
+      "material": "Materials/Animals/Cat_White.mat"
+    },
+    {
+      "id": "chick",
+      "prefab": "Prefabs/Animals/Chick.prefab",
+      "rig": "Meshes/Animals/Chick/SKM_Chick_Animations.fbx",
+      "meshes": [
+        "Chick"
+      ],
+      "material": "Materials/Animals/Chick.mat"
+    },
+    {
+      "id": "chimpanzee",
+      "prefab": "Prefabs/Animals/Chimpanzee.prefab",
+      "rig": "Meshes/Animals/Chimpanzee/SKM_Chimpanzee_Rig.fbx",
+      "meshes": [
+        "chimpanzee"
+      ],
+      "material": "Materials/Animals/Chimapanzee.mat"
+    },
+    {
+      "id": "cockroach",
+      "prefab": "Prefabs/Animals/Cockroach.prefab",
+      "rig": "Meshes/Animals/Cockroach/SKM_Cockroach_Rig.fbx",
+      "meshes": [
+        "Cockroach"
+      ],
+      "material": "Materials/Animals/Cockroach.mat"
+    },
+    {
+      "id": "cow_black",
+      "prefab": "Prefabs/Animals/Cow_Black.prefab",
+      "rig": "Meshes/Animals/Cow/SKM_Cow_Rig.fbx",
+      "meshes": [
+        "Cow_NoHorns"
+      ],
+      "material": "Materials/Animals/Cow_Black.mat"
+    },
+    {
+      "id": "cow_horns_black",
+      "prefab": "Prefabs/Animals/Cow_Horns_Black.prefab",
+      "rig": "Meshes/Animals/Cow/SKM_Cow_Rig.fbx",
+      "meshes": [
+        "Cow_NoHorns",
+        "Horns_Seperated"
+      ],
+      "material": "Materials/Animals/Cow_Black.mat"
+    },
+    {
+      "id": "cow_horns_brown",
+      "prefab": "Prefabs/Animals/Cow_Horns_Brown.prefab",
+      "rig": "Meshes/Animals/Cow/SKM_Cow_Rig.fbx",
+      "meshes": [
+        "Cow_NoHorns",
+        "Horns_Seperated"
+      ],
+      "material": "Materials/Animals/Cow_Brown.mat"
+    },
+    {
+      "id": "cow_horns_white",
+      "prefab": "Prefabs/Animals/Cow_Horns_White.prefab",
+      "rig": "Meshes/Animals/Cow/SKM_Cow_Rig.fbx",
+      "meshes": [
+        "Cow_NoHorns",
+        "Horns_Seperated"
+      ],
+      "material": "Materials/Animals/Cow_White.mat"
+    },
+    {
+      "id": "cow_white",
+      "prefab": "Prefabs/Animals/Cow_White.prefab",
+      "rig": "Meshes/Animals/Cow/SKM_Cow_Rig.fbx",
+      "meshes": [
+        "Cow_NoHorns"
+      ],
+      "material": "Materials/Animals/Cow_White.mat"
+    },
+    {
+      "id": "crab",
+      "prefab": "Prefabs/Animals/Crab.prefab",
+      "rig": "Meshes/Animals/Crab/SKM_Crab_Rig.fbx",
+      "meshes": [
+        "Crab"
+      ],
+      "material": "Materials/Animals/Crab.mat"
+    },
+    {
+      "id": "crocodile",
+      "prefab": "Prefabs/Animals/Crocodile.prefab",
+      "rig": "Meshes/Animals/Crocodile/SKM_Crocodile_Rig.fbx",
+      "meshes": [
+        "Croc"
+      ],
+      "material": "Materials/Animals/Crocodile.mat"
+    },
+    {
+      "id": "deer",
+      "prefab": "Prefabs/Animals/Deer.prefab",
+      "rig": "Meshes/Animals/Deer/SKM_Deer_Rig.fbx",
+      "meshes": [
+        "deer"
+      ],
+      "material": "Materials/Animals/Deer.mat"
+    },
+    {
+      "id": "deer_gray",
+      "prefab": "Prefabs/Animals/Deer_Gray.prefab",
+      "rig": "Meshes/Animals/Deer/SKM_Deer_Rig.fbx",
+      "meshes": [
+        "deer"
+      ],
+      "material": "Materials/Animals/Deer_Grey.mat"
+    },
+    {
+      "id": "dog_chihuahua",
+      "prefab": "Prefabs/Animals/Dog_Chihuahua.prefab",
+      "rig": "Meshes/Animals/Dog_Chihauhau/SKM_Dog_Chihuahua_Rig.fbx",
+      "meshes": [
+        "Dog-Chihuahua"
+      ],
+      "material": "Materials/Animals/Dog_Chihauhau.mat"
+    },
+    {
+      "id": "dog_chihuahua_black",
+      "prefab": "Prefabs/Animals/Dog_Chihuahua_Black.prefab",
+      "rig": "Meshes/Animals/Dog_Chihauhau/SKM_Dog_Chihuahua_Rig.fbx",
+      "meshes": [
+        "Dog-Chihuahua"
+      ],
+      "material": "Materials/Animals/Dog_Chihauhau_Black.mat"
+    },
+    {
+      "id": "dog_goldenretriever",
+      "prefab": "Prefabs/Animals/Dog_GoldenRetriever.prefab",
+      "rig": "Meshes/Animals/Dog_GoldenRetriever/SKM_Dog_GoldenRetriever_Rig.fbx",
+      "meshes": [
+        "Dog-GoldenRetriever"
+      ],
+      "material": "Materials/Animals/Dog_GoldenRetriever.mat"
+    },
+    {
+      "id": "dog_greatdane",
+      "prefab": "Prefabs/Animals/Dog_GreatDane.prefab",
+      "rig": "Meshes/Animals/Dog_GreatDane/SKM_Dog_GreatDane_Rig.fbx",
+      "meshes": [
+        "Dog-GreatDane"
+      ],
+      "material": "Materials/Animals/Dog_GreatDane_Brown.mat"
+    },
+    {
+      "id": "dog_greatdane_black",
+      "prefab": "Prefabs/Animals/Dog_GreatDane_Black.prefab",
+      "rig": "Meshes/Animals/Dog_GreatDane/SKM_Dog_GreatDane_Rig.fbx",
+      "meshes": [
+        "Dog-GreatDane"
+      ],
+      "material": "Materials/Animals/Dog_GreatDane_Black.mat"
+    },
+    {
+      "id": "dolphin",
+      "prefab": "Prefabs/Animals/Dolphin.prefab",
+      "rig": "Meshes/Animals/Dolphin/SKM_Dolphin_Animations.fbx",
+      "meshes": [
+        "Dolphin"
+      ],
+      "material": "Materials/Animals/Dolphin.mat"
+    },
+    {
+      "id": "dove_rock",
+      "prefab": "Prefabs/Animals/Dove_Rock.prefab",
+      "rig": "Meshes/Animals/DoveRock/SKM_DoveRock_Rig.fbx",
+      "meshes": [
+        "Dove-rock"
+      ],
+      "material": "Materials/Animals/Dove_Rock.mat"
+    },
+    {
+      "id": "eagle",
+      "prefab": "Prefabs/Animals/Eagle.prefab",
+      "rig": "Meshes/Animals/Eagle/SKM_Eagle_Animations.fbx",
+      "meshes": [
+        "Eagle"
+      ],
+      "material": "Materials/Animals/Eagle.mat"
+    },
+    {
+      "id": "elephant_female",
+      "prefab": "Prefabs/Animals/Elephant_Female.prefab",
+      "rig": "Meshes/Animals/Elephant/SKM_Elephant_Female_Rig.fbx",
+      "meshes": [
+        "SKM_Elephant_African_Female"
+      ],
+      "material": "Materials/Animals/Elephant_Female.mat"
+    },
+    {
+      "id": "elephant_male",
+      "prefab": "Prefabs/Animals/Elephant_Male.prefab",
+      "rig": "Meshes/Animals/Elephant/SKM_Elephant_Rig.fbx",
+      "meshes": [
+        "elephant"
+      ],
+      "material": "Materials/Animals/Elephant.mat",
+      "bind_source": "Meshes/Animals/Elephant/SKM_Elephant_Animations.fbx",
+      "normalize_mesh_scale": true
+    },
+    {
+      "id": "fish",
+      "prefab": "Prefabs/Animals/Fish.prefab",
+      "rig": "Meshes/Animals/Fish/SKM_Fish.fbx",
+      "meshes": [
+        "fish"
+      ],
+      "material": "Materials/Animals/Fish.mat"
+    },
+    {
+      "id": "flamingo",
+      "prefab": "Prefabs/Animals/Flamingo.prefab",
+      "rig": "Meshes/Animals/Flamingo/SKM_Flamingo_Rig.fbx",
+      "meshes": [
+        "Flamingo"
+      ],
+      "material": "Materials/Animals/Flamingo.mat"
+    },
+    {
+      "id": "fox",
+      "prefab": "Prefabs/Animals/Fox.prefab",
+      "rig": "Meshes/Animals/Fox/SKM_Fox.fbx",
+      "meshes": [
+        "Fox"
+      ],
+      "material": "Materials/Animals/Fox.mat"
+    },
+    {
+      "id": "giraffe",
+      "prefab": "Prefabs/Animals/Giraffe.prefab",
+      "rig": "Meshes/Animals/Giraffe/SKM_Giraffe_Rig.fbx",
+      "meshes": [
+        "Giraffe"
+      ],
+      "material": "Materials/Animals/Giraffe.mat"
+    },
+    {
+      "id": "giraffe_spots",
+      "prefab": "Prefabs/Animals/Giraffe_Spots.prefab",
+      "rig": "Meshes/Animals/Giraffe/SKM_Giraffe_Rig.fbx",
+      "meshes": [
+        "GiraffeSpots"
+      ],
+      "material": "Materials/Animals/Giraffe_Spots.mat"
+    },
+    {
+      "id": "goat",
+      "prefab": "Prefabs/Animals/Goat.prefab",
+      "rig": "Meshes/Animals/Goat/SKM_Goat_Animation.fbx",
+      "meshes": [
+        "Goat"
+      ],
+      "material": "Materials/Animals/Goat.mat"
+    },
+    {
+      "id": "goose",
+      "prefab": "Prefabs/Animals/Goose.prefab",
+      "rig": "Meshes/Animals/Goose/SKM_Goose_Rig.fbx",
+      "meshes": [
+        "Goos"
+      ],
+      "material": "Materials/Animals/Goose.mat"
+    },
+    {
+      "id": "gorilla_black",
+      "prefab": "Prefabs/Animals/Gorilla_Black.prefab",
+      "rig": "Meshes/Animals/Gorilla/SKM_Gorilla_Rig.fbx",
+      "meshes": [
+        "Gorilla"
+      ],
+      "material": "Materials/Animals/Gorilla_Black.mat"
+    },
+    {
+      "id": "gorilla_brown",
+      "prefab": "Prefabs/Animals/Gorilla_Brown.prefab",
+      "rig": "Meshes/Animals/Gorilla/SKM_Gorilla_Rig.fbx",
+      "meshes": [
+        "Gorilla"
+      ],
+      "material": "Materials/Animals/Gorilla_Brown.mat"
+    },
+    {
+      "id": "gorilla_silver",
+      "prefab": "Prefabs/Animals/Gorilla_Silver.prefab",
+      "rig": "Meshes/Animals/Gorilla/SKM_Gorilla_Rig.fbx",
+      "meshes": [
+        "Gorilla"
+      ],
+      "material": "Materials/Animals/Gorilla_Silver.mat"
+    },
+    {
+      "id": "hippo",
+      "prefab": "Prefabs/Animals/Hippo.prefab",
+      "rig": "Meshes/Animals/Hippo/SKM_Hippo_Rig.fbx",
+      "meshes": [
+        "Hippo"
+      ],
+      "material": "Materials/Animals/Hippo.mat"
+    },
+    {
+      "id": "honeybee",
+      "prefab": "Prefabs/Animals/Honeybee.prefab",
+      "rig": "Meshes/Animals/Bees/SKM_Bees_Rig.fbx",
+      "meshes": [
+        "Honeybee"
+      ],
+      "material": "Materials/Animals/Bees.mat"
+    },
+    {
+      "id": "horse_black",
+      "prefab": "Prefabs/Animals/Horse_Black.prefab",
+      "rig": "Meshes/Animals/Horse/SKM_Horse_Rig.fbx",
+      "meshes": [
+        "HorseThoroughbred"
+      ],
+      "material": "Materials/Animals/Horse_Black.mat"
+    },
+    {
+      "id": "horse_grey",
+      "prefab": "Prefabs/Animals/Horse_Grey.prefab",
+      "rig": "Meshes/Animals/Horse/SKM_Horse_Rig.fbx",
+      "meshes": [
+        "HorseThoroughbred"
+      ],
+      "material": "Materials/Animals/Horse_Grey.mat"
+    },
+    {
+      "id": "jellyfish_blue",
+      "prefab": "Prefabs/Animals/Jellyfish_Blue.prefab",
+      "rig": "Meshes/Animals/JellyFish/SKM_Jellyfish_Rig.fbx",
+      "meshes": [
+        "Jellyfish"
+      ],
+      "material": "Materials/Animals/Jellyfish_Blue.mat"
+    },
+    {
+      "id": "jellyfish_orange",
+      "prefab": "Prefabs/Animals/Jellyfish_Orange.prefab",
+      "rig": "Meshes/Animals/JellyFish/SKM_Jellyfish_Rig.fbx",
+      "meshes": [
+        "Jellyfish"
+      ],
+      "material": "Materials/Animals/Jellyfish_Orange.mat"
+    },
+    {
+      "id": "jellyfish_white",
+      "prefab": "Prefabs/Animals/JellyFish_White.prefab",
+      "rig": "Meshes/Animals/JellyFish/SKM_Jellyfish_Rig.fbx",
+      "meshes": [
+        "Jellyfish"
+      ],
+      "material": "Materials/Animals/Jellyfish_White.mat"
+    },
+    {
+      "id": "lion_female",
+      "prefab": "Prefabs/Animals/Lion_Female.prefab",
+      "rig": "Meshes/Animals/Lion/SKM_Lion_Female_Rig.fbx",
+      "meshes": [
+        "SKM_Lion_Female"
+      ],
+      "material": "Materials/Animals/Lion_Female.mat"
+    },
+    {
+      "id": "lion_male",
+      "prefab": "Prefabs/Animals/Lion_Male.prefab",
+      "rig": "Meshes/Animals/Lion/SKM_Lion_Male_Rig.fbx",
+      "meshes": [
+        "SKM_Lion_Male"
+      ],
+      "material": "Materials/Animals/Lion.mat"
+    },
+    {
+      "id": "meerkat",
+      "prefab": "Prefabs/Animals/Meerkat.prefab",
+      "rig": "Meshes/Animals/Meerkat/SKM_Meerkat_Rig.fbx",
+      "meshes": [
+        "Meerkat"
+      ],
+      "material": "Materials/Animals/Meerkat.mat"
+    },
+    {
+      "id": "octopus",
+      "prefab": "Prefabs/Animals/Octopus.prefab",
+      "rig": "Meshes/Animals/Octopus/SKM_Octopus_Animations.fbx",
+      "meshes": [
+        "Octopus"
+      ],
+      "material": "Materials/Animals/Octopus.mat"
+    },
+    {
+      "id": "orca",
+      "prefab": "Prefabs/Animals/Orca.prefab",
+      "rig": "Meshes/Animals/Orca/SKM_Orca_Rig.fbx",
+      "meshes": [
+        "orca"
+      ],
+      "material": "Materials/Animals/Orca.mat"
+    },
+    {
+      "id": "ostrich",
+      "prefab": "Prefabs/Animals/Ostrich.prefab",
+      "rig": "Meshes/Animals/Ostrich/SKM_Ostrich_Rig.fbx",
+      "meshes": [
+        "Ostrich"
+      ],
+      "material": "Materials/Animals/Ostrich.mat"
+    },
+    {
+      "id": "panda",
+      "prefab": "Prefabs/Animals/Panda.prefab",
+      "rig": "Meshes/Animals/Panda/SKM_Panda_Rig.fbx",
+      "meshes": [
+        "Panda"
+      ],
+      "material": "Materials/Animals/Panda.mat"
+    },
+    {
+      "id": "parrot",
+      "prefab": "Prefabs/Animals/Parrot.prefab",
+      "rig": "Meshes/Animals/Parrot/SKM_Parrot_Rig.fbx",
+      "meshes": [
+        "Parrot"
+      ],
+      "material": "Materials/Animals/Parrot.mat"
+    },
+    {
+      "id": "penguin",
+      "prefab": "Prefabs/Animals/Penguin.prefab",
+      "rig": "Meshes/Animals/Penguin/SKM_Penguin_Rig.fbx",
+      "meshes": [
+        "penguin"
+      ],
+      "material": "Materials/Animals/Penguin.mat"
+    },
+    {
+      "id": "pig",
+      "prefab": "Prefabs/Animals/Pig.prefab",
+      "rig": "Meshes/Animals/Pig/SKM_Pig_Animations.fbx",
+      "meshes": [
+        "pig_mesh"
+      ],
+      "material": "Materials/Animals/Pig.mat"
+    },
+    {
+      "id": "rabbit_brown",
+      "prefab": "Prefabs/Animals/Rabbit_Brown.prefab",
+      "rig": "Meshes/Animals/Rabbit/SKM_Rabbit_Rig.fbx",
+      "meshes": [
+        "actor:Rabbit"
+      ],
+      "material": "Materials/Animals/Rabbit.mat"
+    },
+    {
+      "id": "rabbit_white",
+      "prefab": "Prefabs/Animals/Rabbit_White.prefab",
+      "rig": "Meshes/Animals/Rabbit/SKM_Rabbit_Rig.fbx",
+      "meshes": [
+        "actor:Rabbit"
+      ],
+      "material": "Materials/Animals/Rabbit_White.mat"
+    },
+    {
+      "id": "rat",
+      "prefab": "Prefabs/Animals/Rat.prefab",
+      "rig": "Meshes/Animals/Rat/SKM_Rat_Rig.fbx",
+      "meshes": [
+        "Rat"
+      ],
+      "material": "Materials/Animals/Rat.mat"
+    },
+    {
+      "id": "reindeer",
+      "prefab": "Prefabs/Animals/Reindeer.prefab",
+      "rig": "Meshes/Animals/Reindeer/SKM_Reindeer_Rig.fbx",
+      "meshes": [
+        "Reindeer.001"
+      ],
+      "material": "Materials/Animals/Reindeer.mat"
+    },
+    {
+      "id": "rhino",
+      "prefab": "Prefabs/Animals/Rhino.prefab",
+      "rig": "Meshes/Animals/Rhino/SKM_Rhino_Rig.fbx",
+      "meshes": [
+        "Rhino"
+      ],
+      "material": "Materials/Animals/Rhino.mat"
+    },
+    {
+      "id": "rooster",
+      "prefab": "Prefabs/Animals/Rooster.prefab",
+      "rig": "Meshes/Animals/Rooster/SKM_Rooster_Animations.fbx",
+      "meshes": [
+        "Roaster"
+      ],
+      "material": "Materials/Animals/Roaster.mat"
+    },
+    {
+      "id": "seagul",
+      "prefab": "Prefabs/Animals/Seagul.prefab",
+      "rig": "Meshes/Animals/Seagull/SKM_Seagull_Rig.fbx",
+      "meshes": [
+        "seagull"
+      ],
+      "material": "Materials/Animals/Seagull.mat"
+    },
+    {
+      "id": "seahorse",
+      "prefab": "Prefabs/Animals/Seahorse.prefab",
+      "rig": "Meshes/Animals/Seahorse/SKM_Seahorse_Rig.fbx",
+      "meshes": [
+        "Seahorse"
+      ],
+      "material": "Materials/Animals/Seahorse.mat"
+    },
+    {
+      "id": "seal",
+      "prefab": "Prefabs/Animals/Seal.prefab",
+      "rig": "Meshes/Animals/Seal/SKM_Seal_Animations.fbx",
+      "meshes": [
+        "Seal"
+      ],
+      "material": "Materials/Animals/Seal.mat"
+    },
+    {
+      "id": "shark_black",
+      "prefab": "Prefabs/Animals/Shark_Black.prefab",
+      "rig": "Meshes/Animals/Shark/SKM_Shark_Rig.fbx",
+      "meshes": [
+        "shark"
+      ],
+      "material": "Materials/Animals/Shark.mat"
+    },
+    {
+      "id": "shark_white",
+      "prefab": "Prefabs/Animals/Shark_White.prefab",
+      "rig": "Meshes/Animals/Shark/SKM_Shark_Rig.fbx",
+      "meshes": [
+        "shark"
+      ],
+      "material": "Materials/Animals/Shark_White.mat"
+    },
+    {
+      "id": "sheep",
+      "prefab": "Prefabs/Animals/Sheep.prefab",
+      "rig": "Meshes/Animals/Sheep/SKM_Sheep_Animations.fbx",
+      "meshes": [
+        "Sheep"
+      ],
+      "material": "Materials/Animals/Sheep.mat"
+    },
+    {
+      "id": "sheep_wool",
+      "prefab": "Prefabs/Animals/Sheep_Wool.prefab",
+      "rig": "Meshes/Animals/Sheep/SKM_Sheep_Wool_Animations.fbx",
+      "meshes": [
+        "Sheep-wool"
+      ],
+      "material": "Materials/Animals/Sheep Wool.mat",
+      "bind_source": "Meshes/Animals/Sheep/SKM_Sheep_Animations.fbx",
+      "animation_sources": [
+        "Meshes/Animals/Sheep/SKM_Sheep_Animations.fbx"
+      ]
+    },
+    {
+      "id": "snake_red",
+      "prefab": "Prefabs/Animals/Snake_Red.prefab",
+      "rig": "Meshes/Animals/Snake/SKM_Snake_Rig.fbx",
+      "meshes": [
+        "Null:snake"
+      ],
+      "material": "Materials/Animals/Snake_Red.mat"
+    },
+    {
+      "id": "snake_yellow",
+      "prefab": "Prefabs/Animals/Snake_Yellow.prefab",
+      "rig": "Meshes/Animals/Snake/SKM_Snake_Rig.fbx",
+      "meshes": [
+        "Null:snake"
+      ],
+      "material": "Materials/Animals/Snake.mat"
+    },
+    {
+      "id": "spider_green",
+      "prefab": "Prefabs/Animals/Spider_Green.prefab",
+      "rig": "Meshes/Animals/Spider/SKM_Spider_Rig.fbx",
+      "meshes": [
+        "spider2"
+      ],
+      "material": "Materials/Animals/Spider_Green.mat"
+    },
+    {
+      "id": "spider_red",
+      "prefab": "Prefabs/Animals/Spider_Red.prefab",
+      "rig": "Meshes/Animals/Spider/SKM_Spider_Rig.fbx",
+      "meshes": [
+        "spider2"
+      ],
+      "material": "Materials/Animals/Spider_Red.mat"
+    },
+    {
+      "id": "spider_yellow",
+      "prefab": "Prefabs/Animals/Spider_Yellow.prefab",
+      "rig": "Meshes/Animals/Spider/SKM_Spider_Rig.fbx",
+      "meshes": [
+        "spider2"
+      ],
+      "material": "Materials/Animals/Spider.mat"
+    },
+    {
+      "id": "squid",
+      "prefab": "Prefabs/Animals/Squid.prefab",
+      "rig": "Meshes/Animals/Squid/SKM_Squid_Animations.fbx",
+      "meshes": [
+        "Squid"
+      ],
+      "material": "Materials/Animals/Squid.mat"
+    },
+    {
+      "id": "squirrel",
+      "prefab": "Prefabs/Animals/Squirrel.prefab",
+      "rig": "Meshes/Animals/Squirrel/SKM_Squirrel_Animations.fbx",
+      "meshes": [
+        "Squirrel"
+      ],
+      "material": "Materials/Animals/Squirrel.mat"
+    },
+    {
+      "id": "starfish",
+      "prefab": "Prefabs/Animals/Starfish.prefab",
+      "rig": "Meshes/Animals/StarFish/SKM_Starfish_Rig.fbx",
+      "meshes": [
+        "starfish"
+      ],
+      "material": "Materials/Animals/StarFish.mat"
+    },
+    {
+      "id": "tapir",
+      "prefab": "Prefabs/Animals/Tapir.prefab",
+      "rig": "Meshes/Animals/Tapir/SKM_Tapir_Rig.fbx",
+      "meshes": [
+        "Tapir"
+      ],
+      "material": "Materials/Animals/Tapir.mat"
+    },
+    {
+      "id": "tiger",
+      "prefab": "Prefabs/Animals/Tiger.prefab",
+      "rig": "Meshes/Animals/Tiger/SKM_Tiger_Rig.fbx",
+      "meshes": [
+        "tiger_rig"
+      ],
+      "material": "Materials/Animals/Tiger.mat"
+    },
+    {
+      "id": "tucan",
+      "prefab": "Prefabs/Animals/Tucan.prefab",
+      "rig": "Meshes/Animals/Tucan/SKM_Tucan_Rig.fbx",
+      "meshes": [
+        "tucan_rig"
+      ],
+      "material": "Materials/Animals/Tucan.mat"
+    },
+    {
+      "id": "vulture",
+      "prefab": "Prefabs/Animals/Vulture.prefab",
+      "rig": "Meshes/Animals/Vulture/SKM_Vulture_Rig.fbx",
+      "meshes": [
+        "Vulture"
+      ],
+      "material": "Materials/Animals/Vulture.mat"
+    },
+    {
+      "id": "walrus",
+      "prefab": "Prefabs/Animals/Walrus.prefab",
+      "rig": "Meshes/Animals/Walrus/SKM_Walrus_Animations.fbx",
+      "meshes": [
+        "Walrus"
+      ],
+      "material": "Materials/Animals/Walrus.mat"
+    },
+    {
+      "id": "whale",
+      "prefab": "Prefabs/Animals/Whale.prefab",
+      "rig": "Meshes/Animals/Whale/SKM_Whale_Rig.fbx",
+      "meshes": [
+        "Whale"
+      ],
+      "material": "Materials/Animals/Whale.mat"
+    },
+    {
+      "id": "wolf",
+      "prefab": "Prefabs/Animals/Wolf.prefab",
+      "rig": "Meshes/Animals/Wolf/SKM_Wolf_Rig.fbx",
+      "meshes": [
+        "wolf-new"
+      ],
+      "material": "Materials/Animals/Wolf.mat"
+    },
+    {
+      "id": "zebra",
+      "prefab": "Prefabs/Animals/Zebra.prefab",
+      "rig": "Meshes/Animals/Zebra/SKM_Zebra_Rig.fbx",
+      "meshes": [
+        "Zebra"
+      ],
+      "material": "Materials/Animals/Zebra.mat"
+    }
+  ]
+}

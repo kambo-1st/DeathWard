@@ -5,15 +5,27 @@
 
 namespace dw {
 const char *animalName(AnimalKind kind) {
-    static constexpr std::array<const char *, 4> names{"horse", "hen", "cow", "cat"};
+    static constexpr std::array<const char *, size_t(AnimalKind::Count)> names{
+#define DW_ANIMAL(symbol, name, radius, speed) name,
+#include "world/AnimalCatalog.inc"
+#undef DW_ANIMAL
+    };
     return names.at(size_t(kind));
 }
 float animalRadius(AnimalKind kind) {
-    static constexpr std::array<float, 4> radii{1.6f, .35f, 1.5f, .4f};
+    static constexpr std::array<float, size_t(AnimalKind::Count)> radii{
+#define DW_ANIMAL(symbol, name, radius, speed) radius,
+#include "world/AnimalCatalog.inc"
+#undef DW_ANIMAL
+    };
     return radii.at(size_t(kind));
 }
 float animalWalkSpeed(AnimalKind kind) {
-    static constexpr std::array<float, 4> speeds{1.2f, .55f, .8f, .65f};
+    static constexpr std::array<float, size_t(AnimalKind::Count)> speeds{
+#define DW_ANIMAL(symbol, name, radius, speed) speed,
+#include "world/AnimalCatalog.inc"
+#undef DW_ANIMAL
+    };
     return speeds.at(size_t(kind));
 }
 bool Animals::clear(const Animal &a, Vector3 point, const HubWorld &ground, bool residents) const {
