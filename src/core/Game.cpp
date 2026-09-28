@@ -135,6 +135,7 @@ bool Game::reloadTownObjects() {
     if (!document.load(hubDirectory() / "town.scene", error))
         return false;
     townObjects.reset(document);
+    town.setMovingSolids(townObjects.solids());
     return true;
 }
 bool Game::selectHub(HubKind hub) {
@@ -150,6 +151,7 @@ bool Game::selectHub(HubKind hub) {
         return false;
     townObjects.reset(document);
     town = std::move(candidate);
+    town.setMovingSolids(townObjects.solids());
     ++audioContext;
     audioCues.clear();
     activeHub = hub;
@@ -647,7 +649,8 @@ void Game::updateHub(float dt) {
         cameraDragging_ = false;
         return;
     }
-    townObjects.update(std::min(dt, .1f), [&](Vector3 p) { return town.height(p); });
+    townObjects.update(std::min(dt, .1f), [&](Vector3 p) { return town.height(p); }, town.player.position);
+    town.setMovingSolids(townObjects.solids());
     const bool over = pointerOverControls();
     updateCameraInput();
     Vector3 forward = unit({camera.target.x - camera.position.x, 0, camera.target.z - camera.position.z});

@@ -7,6 +7,9 @@
 namespace dw {
 bool HubWorld::load(const std::filesystem::path &path) {
     heights_.clear();
+    solids_.clear();
+    occupied_.clear();
+    occupiedCells_.clear();
     error.clear();
     try {
         std::ifstream f(path, std::ios::binary);
@@ -29,6 +32,7 @@ bool HubWorld::load(const std::filesystem::path &path) {
             !std::isfinite(minZ_))
             throw std::runtime_error("The town navigation asset is missing or invalid.");
         heights_.resize(size_t(width_) * depth_);
+        occupied_.resize(heights_.size(), false);
         f.read(reinterpret_cast<char *>(heights_.data()), std::streamsize(heights_.size() * sizeof(float)));
         if (!f || !walkable(spawn) || !walkable(mission))
             throw std::runtime_error("The town has no valid arrival or mission entrance.");
@@ -50,16 +54,42 @@ Vector3 HubWorld::point(int i) const {
     return {minX_ + (float(i % int(width_)) + .5f) * cell_, heights_[size_t(i)],
             minZ_ + (float(i / int(width_)) + .5f) * cell_};
 }
+void HubWorld::setMovingSolids(const std::vector<MovingSolid> &solids) {
+    for (const auto i : occupiedCells_)
+        occupied_[i] = false;
+    occupiedCells_.clear();
+    solids_ = solids;
+    if (!loaded())
+        return;
+    const float clearance = .45f + cell_ * .7072f;
+    for (const auto &solid : solids_) {
+        const auto b = solid.bounds();
+        const int x0 = std::max(0, int(std::floor((b.min.x - clearance - minX_) / cell_)));
+        const int x1 = std::min(int(width_) - 1, int(std::floor((b.max.x + clearance - minX_) / cell_)));
+        const int z0 = std::max(0, int(std::floor((b.min.z - clearance - minZ_) / cell_)));
+        const int z1 = std::min(int(depth_) - 1, int(std::floor((b.max.z + clearance - minZ_) / cell_)));
+        for (int z = z0; z <= z1; ++z)
+            for (int x = x0; x <= x1; ++x) {
+                const size_t at = size_t(z) * width_ + size_t(x);
+                if (occupied_[at] || !std::isfinite(heights_[at]))
+                    continue;
+                if (solid.contains(add(point(int(at)), {0, .85f, 0}), clearance)) {
+                    occupied_[at] = true;
+                    occupiedCells_.push_back(at);
+                }
+            }
+    }
+}
 bool HubWorld::walkable(Vector3 p) const {
     const int i = index(p);
-    return i >= 0 && std::isfinite(heights_[size_t(i)]);
+    return i >= 0 && std::isfinite(heights_[size_t(i)]) && !occupied_[size_t(i)];
 }
 float HubWorld::height(Vector3 p) const {
     const int i = index(p);
     return i >= 0 ? heights_[size_t(i)] : std::numeric_limits<float>::quiet_NaN();
 }
 bool HubWorld::traversable(int from, int to) const {
-    return from >= 0 && to >= 0 && std::isfinite(heights_[size_t(to)]) &&
+    return from >= 0 && to >= 0 && !occupied_[size_t(to)] && std::isfinite(heights_[size_t(to)]) &&
            std::abs(heights_[size_t(from)] - heights_[size_t(to)]) <= .6f;
 }
 bool HubWorld::clear(Vector3 from, Vector3 to) const {
@@ -130,7 +160,7 @@ bool HubWorld::moveTo(Vector3 target) {
     if (end < 0 || !walkable(target)) {
         float best = 36;
         for (size_t i = 0; i < heights_.size(); ++i) {
-            if (!std::isfinite(heights_[i]))
+            if (!std::isfinite(heights_[i]) || occupied_[i])
                 continue;
             auto d = sub(point(int(i)), target);
             d.y = 0;
@@ -213,6 +243,7 @@ void HubWorld::step(Vector3 movement, float dt) {
         return;
     dt = std::clamp(dt, 0.0f, .1f);
     time += dt;
+    repathWait_ = std::max(0.f, repathWait_ - dt);
     movement.y = 0;
     const bool direct = length(movement) > .01f;
     if (direct)
@@ -246,8 +277,12 @@ void HubWorld::step(Vector3 movement, float dt) {
             else if (direct && traversable(index(player.position), index(z)))
                 candidate = z;
             else {
-                if (!direct)
-                    stop();
+                if (!direct && repathWait_ <= 0) {
+                    const auto target = destination();
+                    if (target && walkable(*target))
+                        moveTo(*target);
+                    repathWait_ = .4f;
+                }
                 break;
             }
         }

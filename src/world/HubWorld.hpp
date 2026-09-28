@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/Simulation.hpp"
+#include "world/ObjectAnimation.hpp"
 #include <filesystem>
 #include <optional>
 
@@ -28,12 +29,17 @@ class HubWorld {
     }
     bool nearMission() const;
     size_t walkableCells() const;
+    void setMovingSolids(const std::vector<MovingSolid> &solids);
 
   private:
     uint32_t width_ = 0, depth_ = 0;
     float minX_ = 0, minZ_ = 0, cell_ = 0;
     std::vector<float> heights_;
     std::vector<Vector3> route_;
+    std::vector<MovingSolid> solids_;
+    std::vector<bool> occupied_;
+    std::vector<size_t> occupiedCells_;
+    float repathWait_ = 0;
     size_t next_ = 0;
     int index(Vector3 point) const;
     Vector3 point(int index) const;

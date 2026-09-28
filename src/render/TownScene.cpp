@@ -206,8 +206,8 @@ bool TownScene::load(const std::filesystem::path &directory) {
         for (const auto &a : document_.assets)
             assets_.push_back({a.first, a.count, a.unlit, a.bounds});
         for (const auto &i : document_.instances)
-            instances_.push_back({i.asset, i.transform, transformBounds(assets_[i.asset].bounds, i.transform),
-                                  i.motion.kind != ObjectMotionKind::None});
+            instances_.push_back(
+                {i.asset, i.transform, transformBounds(assets_[i.asset].bounds, i.transform), i.animated()});
 #ifdef __EMSCRIPTEN__
         const auto modelFile = std::filesystem::path("/assets") / directory.filename() / "town.glb";
 #else
@@ -287,8 +287,7 @@ void TownScene::applyDocument(const TownDocument &document) {
     occluders_.clear();
     for (size_t n = 0; n < document.instances.size(); ++n) {
         const auto &i = document.instances[n];
-        instances_.push_back(
-            {i.asset, i.transform, document.bounds(n), i.motion.kind != ObjectMotionKind::None});
+        instances_.push_back({i.asset, i.transform, document.bounds(n), i.animated()});
     }
 }
 void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {

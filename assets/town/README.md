@@ -7,8 +7,8 @@ The source scene contains **1,269 prefab instances**. Resolving the prefab hiera
 ## Assets and conversion
 
 - `town.glb`: shared local meshes and material variants, with embedded textures.
-- `town.scene`: mesh ranges, original instance matrices and directional/point lights.
-- `town.nav`: outdoor navigation sampled from original scene colliders.
+- `town.scene`: mesh ranges, original instance matrices, lights, prop motion and stable train path/group bindings.
+- `town.nav`: outdoor navigation sampled from original scene colliders, excluding moving props/vehicles.
 - `town.labels`: optional asset names for the 3D editor's scene list and palette.
 - `town.source.json`: resolved Unity recipe, source references and hashes.
 - `town.manifest.json`: output hashes, placement audit, mesh bounds and navigation summary.
@@ -37,6 +37,8 @@ The resolver follows scene and prefab transform hierarchies, added child objects
 ## Navigation and rendering
 
 Navigation uses the imported box/capsule and triangle colliders, including Unity's serialized convex mesh assets. Three collider references are missing from the supplied source pack; their matching visible mesh is used and the substitutions are recorded. An outdoor height grid has 0.4-unit spacing, rejects steep/disconnected surfaces, allows steps up to 0.6 units, and reserves clearance around obstacles. It follows street elevation and excludes disconnected roofs. Building interiors, upper floors and distant scenic terrain are not a navigable hub feature.
+
+Both original trains now follow the existing rail loop as eight vehicle groups. The sixteen separately modeled locomotive wheels rotate around their imported axles. Current vehicle hulls provide moving collision and navigation occupancy; their old static footprints are removed. The two tumbleweeds use wind-driven rolling. All original meshes, materials, textures and rest matrices remain intact. See the [motion design](../../docs/object_animation_proposal.md) for behavior and remaining mechanical/editor limitations.
 
 The added arrival point and mission board lie on connected street terrain. Click-to-walk preserves the selected terrain point, moves directly across open ground, and smooths routes around obstacles without cutting blocked corners. Holding a ground click steers; holding a board click keeps approaching the board until release. WASD moves relative to the camera with collision checks. The mission button walks to the board before opening its menu. Hub exploration does not begin a campaign run or resolve an outcome. New offers receive a random seed, which remains editable for replay. The original scene arrangement remains fixed while mission layouts vary.
 

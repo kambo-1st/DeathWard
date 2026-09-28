@@ -45,6 +45,8 @@ class TownEditor {
     void setMotion(ObjectMotion motion);
     void setPreviewPlaying(bool playing);
     void resetPreview();
+    void detachVehicle();
+    void setPathSettings(float speed, float acceleration, float dwell);
     bool previewPlaying() const {
         return previewPlaying_;
     }
@@ -98,5 +100,7 @@ class TownEditor {
     void panel(Rectangle r, Color color) const;
     void drawUI();
     void drawAnimationUI();
+    const TownMotionGroup *selectedGroup() const;
+    Box selectionBounds() const;
 };
 } // namespace dw

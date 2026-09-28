@@ -53,7 +53,9 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal((await state()).hub, 0);
     assert.equal((await state()).audio, 2);
     assert.equal((await state()).zoom, 160);
-    assert.equal(await page.evaluate(() => Module.motion.count), 2);
+    assert.equal(await page.evaluate(() => Module.motion.count), 64);
+    assert.equal(await page.evaluate(() => Module.motion.vehicles), 8);
+    await wait(() => Module.motion.trainDistance > .2);
     const movingProp = await page.evaluate(() => Module.motion);
     await wait(before => Math.hypot(Module.motion.x - before.x, Module.motion.z - before.z) > .2, movingProp);
     assert.notEqual(await page.evaluate(() => Module.motion.rotation), movingProp.rotation);
@@ -91,7 +93,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await key('Escape');
     await wait(() => !Module.state.paused);
     console.log('PASS town rendering, WebAudio initialization, movement and wheel zoom');
-    console.log('PASS two independently animated tumbleweeds and exact pause behavior');
+    console.log('PASS two trains, independent tumbleweeds and exact pause behavior');
     await key('Escape');
     assert.equal((await state()).paused, true);
     await click(230, 494);

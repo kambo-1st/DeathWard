@@ -58,8 +58,46 @@ void TownDocument::validate() const {
             throw std::runtime_error("Invalid town mesh catalog.");
         next += a.count;
     }
-    std::unordered_set<std::string> ids;
+    auto validId = [](const std::string &s) {
+        return !s.empty() && s.size() <= 128 && s.find_first_of(" \t\n\r") == std::string::npos;
+    };
+    std::unordered_set<std::string> pathIds, groupIds;
+    if (paths.size() > 256 || groups.size() > 4096)
+        throw std::runtime_error("Too many motion paths or groups.");
+    for (const auto &p : paths) {
+        if (!validId(p.id) || !pathIds.insert(p.id).second || !std::isfinite(p.speed) || p.speed < 0 ||
+            p.speed > 10 || !std::isfinite(p.acceleration) || p.acceleration < .1f || p.acceleration > 5 ||
+            !std::isfinite(p.dwell) || p.dwell < 0 || p.dwell > 120 || p.points.size() < 3 ||
+            p.points.size() > 4096)
+            throw std::runtime_error("Invalid motion path.");
+        for (size_t n = 0; n < p.points.size(); ++n) {
+            const auto a = p.points[n], b = p.points[(n + 1) % p.points.size()];
+            if (!finite(a) || length(a) > 10000 || distance(a, b) < .001f || distance(a, b) > 15 ||
+                std::abs(a.y - b.y) > .001f)
+                throw std::runtime_error("Motion path must be a continuous level loop.");
+        }
+    }
+    for (const auto &g : groups) {
+        if (!validId(g.id) || !groupIds.insert(g.id).second || !pathIds.contains(g.path) ||
+            !std::isfinite(g.offset) || std::abs(g.offset) > 100000 || !std::isfinite(g.wheelbase) ||
+            g.wheelbase < 0 || g.wheelbase > 30)
+            throw std::runtime_error("Invalid motion group or path binding.");
+        const auto &p =
+            *std::find_if(paths.begin(), paths.end(), [&](const auto &p) { return p.id == g.path; });
+        float length = 0;
+        for (size_t n = 0; n < p.points.size(); ++n)
+            length += distance(p.points[n], p.points[(n + 1) % p.points.size()]);
+        if (length < std::max(1.f, g.wheelbase * 2))
+            throw std::runtime_error("The rail loop is too short for this vehicle.");
+    }
+    std::unordered_set<std::string> ids, usedGroups;
     for (const auto &i : instances) {
+        if ((!i.group.empty() && (!groupIds.contains(i.group) || i.motion.kind != ObjectMotionKind::None)) ||
+            !std::isfinite(i.wheelRadius) || i.wheelRadius < 0 ||
+            (i.wheelRadius > 0 && i.wheelRadius < .05f) || i.wheelRadius > 10 ||
+            (i.wheelRadius > 0 && i.group.empty()))
+            throw std::runtime_error("Invalid vehicle or wheel binding.");
+        usedGroups.insert(i.group);
         if (!i.id.empty() && (i.id.size() > 128 || i.id.find_first_of(" \t\n\r") != std::string::npos ||
                               !ids.insert(i.id).second))
             throw std::runtime_error("Invalid or duplicate object ID.");
@@ -80,6 +118,9 @@ void TownDocument::validate() const {
             std::abs(i.transform.m15 - 1) > .0001f)
             throw std::runtime_error("Invalid object reference or singular transform.");
     }
+    for (const auto &g : groups)
+        if (!usedGroups.contains(g.id))
+            throw std::runtime_error("A motion group must contain objects.");
     for (const auto &l : lights)
         if (!finite(l.position) || !finite(l.direction) || !finite(l.color) || !std::isfinite(l.intensity) ||
             !std::isfinite(l.range))
@@ -90,10 +131,15 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
         std::ifstream in(path);
         std::string token;
         int version = 0;
-        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version != 1 && version != 2))
+        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 3))
             throw std::runtime_error("Missing or unsupported town scene.");
         TownDocument candidate;
         std::vector<std::pair<std::string, ObjectMotion>> motions;
+        struct Binding {
+            std::string id, group;
+            float radius;
+        };
+        std::vector<Binding> bindings;
         while (in >> token) {
             if (token == "asset") {
                 TownAsset a;
@@ -104,13 +150,13 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
             } else if (token == "instance") {
                 TownInstance i;
                 in >> i.asset;
-                if (version == 2)
+                if (version >= 2)
                     in >> i.id;
                 else
                     i.id = "legacy-" + std::to_string(candidate.instances.size() + 1);
                 readMatrix(in, i.transform);
                 candidate.instances.push_back(i);
-            } else if (token == "motion" && version == 2) {
+            } else if (token == "motion" && version >= 2) {
                 std::string id;
                 ObjectMotion m;
                 int kind = 0;
@@ -118,6 +164,24 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                     m.axis.z >> m.pivot.x >> m.pivot.y >> m.pivot.z;
                 m.kind = ObjectMotionKind(kind);
                 motions.emplace_back(id, m);
+            } else if (token == "path" && version >= 3) {
+                TownMotionPath p;
+                size_t count = 0;
+                in >> p.id >> p.speed >> p.acceleration >> p.dwell >> count;
+                if (!in || count > 4096)
+                    throw std::runtime_error("Invalid path point count.");
+                p.points.resize(count);
+                for (auto &point : p.points)
+                    in >> point.x >> point.y >> point.z;
+                candidate.paths.push_back(std::move(p));
+            } else if (token == "group" && version >= 3) {
+                TownMotionGroup g;
+                in >> g.id >> g.path >> g.offset >> g.wheelbase;
+                candidate.groups.push_back(g);
+            } else if (token == "member" && version >= 3) {
+                Binding b;
+                in >> b.id >> b.group >> b.radius;
+                bindings.push_back(b);
             } else if (token == "light") {
                 TownLight l;
                 in >> l.type >> l.position.x >> l.position.y >> l.position.z >> l.direction.x >>
@@ -127,7 +191,8 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
             } else
                 throw std::runtime_error("Unknown town scene entry: " + token);
             if (!in || candidate.assets.size() > 100000 || candidate.instances.size() > 100000 ||
-                motions.size() > 100000)
+                motions.size() > 100000 || bindings.size() > 100000 || candidate.paths.size() > 256 ||
+                candidate.groups.size() > 4096)
                 throw std::runtime_error("Truncated or oversized town scene.");
         }
         std::unordered_set<std::string> bound;
@@ -137,6 +202,15 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
             if (at == candidate.instances.end() || !bound.insert(id).second)
                 throw std::runtime_error("Animation references a missing or duplicate object.");
             at->motion = motion;
+        }
+        bound.clear();
+        for (const auto &binding : bindings) {
+            auto at = std::find_if(candidate.instances.begin(), candidate.instances.end(),
+                                   [&](const auto &i) { return i.id == binding.id; });
+            if (at == candidate.instances.end() || !bound.insert(binding.id).second)
+                throw std::runtime_error("Vehicle references a missing or duplicate object.");
+            at->group = binding.group;
+            at->wheelRadius = binding.radius;
         }
         candidate.validate();
         // Optional human-readable labels do not change the original scene format.
@@ -166,7 +240,8 @@ void TownDocument::write(const std::filesystem::path &path) const {
     for (auto &i : identified.instances)
         if (i.id.empty())
             i.id = identified.nextInstanceId();
-    out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN 2\n";
+    out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN "
+        << (paths.empty() ? 2 : 3) << '\n';
     for (const auto &a : assets)
         out << "asset " << a.name << ' ' << a.first << ' ' << a.count << ' ' << a.unlit << ' '
             << a.bounds.min.x << ' ' << a.bounds.min.y << ' ' << a.bounds.min.z << ' ' << a.bounds.max.x
@@ -175,12 +250,23 @@ void TownDocument::write(const std::filesystem::path &path) const {
         out << "instance " << i.asset << ' ' << i.id << ' ';
         writeMatrix(out, i.transform);
         out << '\n';
+        if (!i.group.empty())
+            out << "member " << i.id << ' ' << i.group << ' ' << i.wheelRadius << '\n';
         const auto &m = i.motion;
         if (m.kind != ObjectMotionKind::None)
             out << "motion " << i.id << ' ' << int(m.kind) << ' ' << m.speed << ' ' << m.amplitude << ' '
                 << m.period << ' ' << m.seed << ' ' << m.axis.x << ' ' << m.axis.y << ' ' << m.axis.z << ' '
                 << m.pivot.x << ' ' << m.pivot.y << ' ' << m.pivot.z << '\n';
     }
+    for (const auto &p : paths) {
+        out << "path " << p.id << ' ' << p.speed << ' ' << p.acceleration << ' ' << p.dwell << ' '
+            << p.points.size();
+        for (const auto &point : p.points)
+            out << ' ' << point.x << ' ' << point.y << ' ' << point.z;
+        out << '\n';
+    }
+    for (const auto &g : groups)
+        out << "group " << g.id << ' ' << g.path << ' ' << g.offset << ' ' << g.wheelbase << '\n';
     for (const auto &l : lights)
         out << "light " << l.type << ' ' << l.position.x << ' ' << l.position.y << ' ' << l.position.z << ' '
             << l.direction.x << ' ' << l.direction.y << ' ' << l.direction.z << ' ' << l.color.x << ' '

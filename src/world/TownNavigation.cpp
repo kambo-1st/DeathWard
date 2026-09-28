@@ -96,7 +96,7 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
     std::vector<bool> flat(top.size(), false);
     for (size_t i = 0; i < document.instances.size(); ++i) {
         const auto &instance = document.instances[i];
-        if (instance.motion.kind != ObjectMotionKind::None)
+        if (instance.animated())
             continue; // Decorative moving props must not leave a baked collision footprint.
         const auto &asset = document.assets[instance.asset];
         const auto bounds = document.bounds(i);

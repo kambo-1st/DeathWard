@@ -9,6 +9,8 @@ from pathlib import Path
 import struct
 import sys
 import bpy
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from town_train_motion import train_motion, train_lines
 from mathutils import Matrix, Vector
 from mathutils.bvhtree import BVHTree
 from io_scene_fbx import parse_fbx
@@ -271,8 +273,10 @@ def main():
         + tail
     )
     glb.write_bytes(raw)
-    lines = ["DEATHWARD_TOWN 2"]
     motions = {p["object"]: default_motion(p) for p in placements if default_motion(p)}
+    paths, groups, members = train_motion(placements, records)
+    lines = ["DEATHWARD_TOWN " + ("3" if paths else "2")]
+    moving_prefabs = {object_id.split(":")[0] for object_id in members}
     offset = 0
     order = {}
     for n in gltf["nodes"]:
@@ -329,6 +333,7 @@ def main():
                 ]
             )
         )
+    lines.extend(train_lines(paths, groups, members))
     (out / "town.scene").write_text("\n".join(lines) + "\n")
     labels = {}
     for placement in placements:
@@ -345,7 +350,7 @@ def main():
     verts = []
     faces = []
     for entry in recipe["colliders"]:
-        if entry["object"] in motions or any(s in entry["prefab"] for s in ("Cloud", "SkyDome")):
+        if entry["object"] in motions or entry["object"].split(":")[0] in moving_prefabs or any(s in entry["prefab"] for s in ("Cloud", "SkyDome")):
             continue
         world = UNITY_TO_BLENDER @ Matrix(entry["matrix"]) @ UNITY_TO_BLENDER.inverted()
         if "mesh" in entry:
@@ -482,6 +487,7 @@ def main():
         "assets": records,
         "placements": placements,
         "object_motion": motions,
+        "train_motion": {"paths": paths, "groups": groups, "members": members},
         "mesh_count": offset,
         "embedded_images": len(gltf.get("images", [])),
         "materials": recipe["materials"],

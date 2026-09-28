@@ -312,12 +312,7 @@ int main(int argc, char **argv) {
             }
 #ifdef __EMSCRIPTEN__
             // Read-only state for browser integration checks; absent during ordinary play.
-            const dw::ObjectPose *probeProp = nullptr;
-            for (const auto &pose : game.townObjects.poses())
-                if (pose.animated) {
-                    probeProp = &pose;
-                    break;
-                }
+            const auto *probeProp = game.townObjects.firstPropPose();
             EM_ASM(
                 {
                     if (Module.verify)
@@ -328,13 +323,18 @@ int main(int argc, char **argv) {
                             z : $3,
                             rotation : $4,
                             preview : !!$5,
-                            previewTime : $6
+                            previewTime : $6,
+                            vehicles : $7,
+                            trainDistance : $8,
+                            trainSpeed : $9
                         });
                 },
                 int(game.townObjects.activeCount()), game.townObjects.time(),
                 probeProp ? probeProp->transform.m12 : 0, probeProp ? probeProp->transform.m14 : 0,
                 probeProp ? probeProp->transform.m0 : 0, editor.previewPlaying(),
-                editor.animationPreview().time());
+                editor.animationPreview().time(), int(game.townObjects.solids().size()),
+                game.townObjects.solids().empty() ? 0. : game.townObjects.pathDistance(),
+                game.townObjects.solids().empty() ? 0.f : game.townObjects.pathSpeed());
             const dw::MoneyPickup *probeCoin = nullptr;
             if (game.run)
                 for (const auto &coin : game.run->moneyPickups)

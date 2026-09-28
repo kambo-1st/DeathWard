@@ -119,6 +119,10 @@ Vector3 TownEditor::pivot() const {
     return {m.m12, m.m13, m.m14};
 }
 void TownEditor::translate(Vector3 delta) {
+    if (selectedGroup()) {
+        status = "Detach this vehicle in Animation before changing its placement.";
+        return;
+    }
     if (!selected_ || length(delta) < .000001f)
         return;
     remember();
@@ -129,6 +133,8 @@ void TownEditor::translate(Vector3 delta) {
     sync();
 }
 void TownEditor::rotate(Vector3 axis, float degrees) {
+    if (selectedGroup())
+        return;
     if (!selected_ || std::abs(degrees) < .000001f)
         return;
     remember();
@@ -141,6 +147,8 @@ void TownEditor::rotate(Vector3 axis, float degrees) {
     sync();
 }
 void TownEditor::scale(Vector3 factors) {
+    if (selectedGroup())
+        return;
     if (!selected_ || std::min({factors.x, factors.y, factors.z}) < .01f ||
         std::max({factors.x, factors.y, factors.z}) > 100)
         return;
@@ -158,6 +166,10 @@ void TownEditor::scale(Vector3 factors) {
     sync();
 }
 void TownEditor::duplicate() {
+    if (selectedGroup()) {
+        status = "Detach the vehicle before duplicating its parts.";
+        return;
+    }
     if (!selected_)
         return;
     remember();
@@ -173,7 +185,12 @@ void TownEditor::remove() {
     if (!selected_ || document_.instances.size() <= 1)
         return;
     remember();
-    document_.instances.erase(document_.instances.begin() + std::ptrdiff_t(*selected_));
+    if (const auto *group = selectedGroup()) {
+        const auto id = group->id;
+        std::erase_if(document_.instances, [&](const auto &i) { return i.group == id; });
+        std::erase_if(document_.groups, [&](const auto &g) { return g.id == id; });
+    } else
+        document_.instances.erase(document_.instances.begin() + std::ptrdiff_t(*selected_));
     selected_.reset();
     field_ = -1;
     sync();
@@ -250,12 +267,63 @@ bool TownEditor::reload() {
 void TownEditor::focusSelection() {
     if (!selected_)
         return;
-    const auto b = scene_.instanceBounds(*selected_);
+    const auto b = selectionBounds();
     camera.target = center(b);
     radius_ = std::clamp(length(sub(b.max, b.min)) * 1.7f, 5.0f, 300.0f);
     updateView();
 }
+Box TownEditor::selectionBounds() const {
+    auto bounds = scene_.instanceBounds(*selected_);
+    if (const auto *g = selectedGroup())
+        for (size_t n = 0; n < document_.instances.size(); ++n)
+            if (document_.instances[n].group == g->id) {
+                const auto b = scene_.instanceBounds(n);
+                bounds.min = Vector3Min(bounds.min, b.min);
+                bounds.max = Vector3Max(bounds.max, b.max);
+            }
+    return bounds;
+}
+const TownMotionGroup *TownEditor::selectedGroup() const {
+    if (!selected_)
+        return nullptr;
+    const auto &id = document_.instances[*selected_].group;
+    for (const auto &g : document_.groups)
+        if (g.id == id)
+            return &g;
+    return nullptr;
+}
+void TownEditor::detachVehicle() {
+    const auto *group = selectedGroup();
+    if (!group)
+        return;
+    const auto id = group->id;
+    remember();
+    for (auto &i : document_.instances)
+        if (i.group == id) {
+            i.group.clear();
+            i.wheelRadius = 0;
+        }
+    std::erase_if(document_.groups, [&](const auto &g) { return g.id == id; });
+    sync();
+    status = "Vehicle detached at its authored placement. Its parts can now be edited.";
+}
+void TownEditor::setPathSettings(float speed, float acceleration, float dwell) {
+    const auto *group = selectedGroup();
+    if (!group)
+        return;
+    const auto id = group->path;
+    remember();
+    for (auto &p : document_.paths)
+        if (p.id == id) {
+            p.speed = speed;
+            p.acceleration = acceleration;
+            p.dwell = dwell;
+        }
+    sync();
+}
 void TownEditor::setMotion(ObjectMotion motion) {
+    if (selectedGroup())
+        return;
     if (!selected_)
         return;
     remember();
@@ -309,6 +377,30 @@ void TownEditor::commitField() {
     if (field_ < 0 || !selected_)
         return;
     try {
+        if (field_ >= 16) {
+            size_t end = 0;
+            const float value = std::stof(fieldText_, &end);
+            if (end != fieldText_.size() || !std::isfinite(value))
+                throw std::runtime_error("Enter a finite number.");
+            if (const auto *g = selectedGroup()) {
+                for (const auto &p : document_.paths)
+                    if (p.id == g->path) {
+                        const auto copy = p;
+                        const int field = field_;
+                        field_ = -1;
+                        setPathSettings(field == 16 ? value : copy.speed,
+                                        field == 17 ? value : copy.acceleration,
+                                        field == 18 ? value : copy.dwell);
+                        break;
+                    }
+            }
+            field_ = -1;
+            return;
+        }
+        if (selectedGroup()) {
+            field_ = -1;
+            return;
+        }
         if (field_ >= 9) {
             auto motion = document_.instances[*selected_].motion;
             size_t end = 0;
@@ -534,7 +626,7 @@ void TownEditor::update(float dt) {
             }
         } else {
             dragAxis_ = -1;
-            if (selected_ && preview_.time() == 0) {
+            if (selected_ && !selectedGroup() && preview_.time() == 0) {
                 const auto a = GetWorldToScreen(pivot(), camera);
                 const float size = radius_ * .12f;
                 float best = 10;
@@ -647,9 +739,9 @@ void TownEditor::draw() {
         DrawLine3D(p, add(p, {0, 3, 0}), i == 0 ? Teal : Accent);
     }
     if (selected_) {
-        const auto b = scene_.instanceBounds(*selected_);
+        const auto b = selectionBounds();
         DrawBoundingBox({b.min, b.max}, Teal);
-        if (preview_.time() == 0) {
+        if (!selectedGroup() && preview_.time() == 0) {
             const auto p = pivot();
             const float size = radius_ * .12f;
             rlDisableDepthTest();
@@ -667,14 +759,23 @@ void TownEditor::draw() {
             rlEnableDepthTest();
         }
     }
+    if (const auto *g = selectedGroup())
+        for (const auto &p : document_.paths)
+            if (p.id == g->path)
+                for (size_t n = 0; n < p.points.size(); ++n)
+                    DrawLine3D(add(p.points[n], {0, .45f, 0}),
+                               add(p.points[(n + 1) % p.points.size()], {0, .45f, 0}), Teal);
     EndMode3D();
     postProcess_.end();
     drawUI();
 }
 void TownEditor::drawAnimationUI() {
     const auto motion = selected_ ? document_.instances[*selected_].motion : ObjectMotion{};
-    label("MOTION PRESET", 1132, 207, 12, Accent);
-    for (int n = 0; n < 4; ++n) {
+    const auto *selected = selectedGroup();
+    const auto groupValue = selected ? std::optional<TownMotionGroup>(*selected) : std::nullopt;
+    const auto *group = groupValue ? &*groupValue : nullptr;
+    label(group ? "RAIL VEHICLE" : "MOTION PRESET", 1132, 207, 12, Accent);
+    for (int n = 0; !group && n < 4; ++n) {
         const auto kind = ObjectMotionKind(n);
         if (button(motionName(kind), {1132 + float(n % 2) * 149, 232 + float(n / 2) * 38, 137, 31},
                    motion.kind == kind, selected_.has_value())) {
@@ -707,7 +808,25 @@ void TownEditor::drawAnimationUI() {
             selectText_ = true;
         }
     };
-    if (selected_ && motion.kind != ObjectMotionKind::None) {
+    if (group) {
+        label(group->id, 1132, 241, 15, Text, 284);
+        label("All parts follow the rail route.", 1132, 274, 13, Muted, 284);
+        for (const auto &p : document_.paths)
+            if (p.id == group->path) {
+                const auto settings = p;
+                field(16, "Travel speed", number(settings.speed), 321);
+                field(17, "Acceleration", number(settings.acceleration), 367);
+                field(18, "Station wait / sec", number(settings.dwell), 413);
+                break;
+            }
+        label("Settings affect both trains on this loop.", 1132, 465, 12, Muted, 284);
+        label("Wheels turn with travel; carriages follow.", 1132, 496, 12, Muted, 284);
+        if (button("Detach vehicle", {1132, 556, 286, 34})) {
+            detachVehicle();
+            return;
+        }
+        label("Detaches every part at the original stop.", 1132, 609, 12, Muted, 284);
+    } else if (selected_ && motion.kind != ObjectMotionKind::None) {
         field(9,
               motion.kind == ObjectMotionKind::Spin   ? "Degrees / sec"
               : motion.kind == ObjectMotionKind::Sway ? "Playback speed"
@@ -745,8 +864,10 @@ void TownEditor::drawAnimationUI() {
     if (button("Reset preview", {1281, 683, 137, 32}))
         resetPreview();
     label("Preview " + number(float(preview_.time())) + " sec", 1132, 736, 13, Muted, 284);
-    label("Animated props do not block walking.", 1132, 771, 12, Muted, 284);
-    label("Reset preview to edit placement.", 1132, 798, 12, Muted, 284);
+    label(group ? "Trains are solid and stop for the player." : "Animated props do not block walking.", 1132,
+          771, 12, Muted, 284);
+    label(group ? "Route and vehicle placement are linked." : "Reset preview to edit placement.", 1132, 798,
+          12, Muted, 284);
 }
 void TownEditor::drawUI() {
     panel({0, 0, 1440, 86}, Background);

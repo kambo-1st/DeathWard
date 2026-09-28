@@ -24,7 +24,7 @@ Snapping uses 0.5-unit movement, 15-degree rotation and 0.1 scale increments. Ho
 
 ## Animating props
 
-Select an object and open **Animation** in its inspector. Available presets are **Static**, **Spin**, **Sway** and **Tumbleweed**. Black Creek's two original tumbleweeds already use the rolling preset; other imported objects start static.
+Select an object and open **Animation** in its inspector. Available presets are **Static**, **Spin**, **Sway** and **Tumbleweed**. Black Creek's two original tumbleweeds already use the rolling preset; other props start static. The two original trains use linked route groups, described below.
 
 | Preset | Settings |
 | --- | --- |
@@ -36,9 +36,17 @@ Select an object and open **Animation** in its inspector. Available presets are 
 
 Saving during preview writes the authored placement and motion settings, never the temporary pose. Preview does not itself mark the scene as changed. Preview uses the current edited navigation; when changes affect it, Play rebuilds a temporary navigation map first. Save rebuilds the persisted map normally.
 
-Animated props are **decorative and do not block the player**. They are excluded from static navigation and the static shadow cache. Tumbleweeds sample ground and clearance, turn at obstacles, roll in proportion to actual travel and make only small bounces. Put them on reachable street ground with room around their scaled bounds. Train routes and moving solid vehicles are a later milestone.
+Spin, Sway and Tumbleweed props are **decorative and do not block the player**. They are excluded from static navigation and the static shadow cache. Tumbleweeds sample ground and clearance, turn at obstacles, roll in proportion to actual travel and make only small bounces. Put them on reachable street ground with room around their scaled bounds.
 
 Settings live in scene format 2 with stable per-object IDs. Format-1 scenes and existing browser editor overrides still load as static scenes; assign presets in the editor to animate those custom layouts. Saving upgrades them to format 2 while preserving their original matrices. No mesh or texture conversion is required when changing presets.
+
+## Trains
+
+Select any part of a train and open **Animation**. Selection outlines the complete vehicle, and **Focus selection** frames that vehicle. The rail centerline appears in teal. **Travel speed**, **Acceleration** and **Station wait / sec** affect both trains on the shared loop. Defaults are 3, 0.8 and 6 respectively. **Play/Pause/Reset preview** works as it does for props; saving during preview preserves original placements and route settings.
+
+Locomotives, tenders, coaches and freight wagons follow the original rail curves as separate linked vehicles. The sixteen separate locomotive wheels turn with distance traveled. Wheels and linkage geometry already combined into coach/tender/freight body meshes remain rigid. Trains are solid: game movement and mouse paths avoid their current hulls, and trains stop for the player. Pause and missions freeze the hub simulation.
+
+Bound parts cannot be moved, rotated, scaled or duplicated independently. **Delete** removes the selected vehicle and all its parts; **Undo** restores its bindings. **Detach vehicle** releases that entire vehicle at its original placement, making its parts static and editable again. Route point editing and attaching additional vehicles are not yet exposed; keep the authored rails clear of new buildings. The train route and bindings use scene format 3, while older scene formats remain compatible.
 
 ## Camera and markers
 

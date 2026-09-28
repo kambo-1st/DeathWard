@@ -249,6 +249,57 @@ int main() {
         auto capture = LoadImageFromScreen();
         check(ExportImage(capture, "artifacts/town-editor.png"), "editor preview exports");
         UnloadImage(capture);
+        const auto train =
+            std::find_if(editor.document().instances.begin(), editor.document().instances.end(),
+                         [](const auto &i) { return i.id == "60904987:1235095919362174"; });
+        check(train != editor.document().instances.end(), "editor retains train grouping");
+        const size_t engine = size_t(train - editor.document().instances.begin());
+        editor.select(engine);
+        editor.focusSelection();
+        click({1345, 178});
+        const auto trainRest = editor.document().instances[engine].transform;
+        const auto beforeCount = editor.document().instances.size();
+        editor.translate({2, 0, 0});
+        editor.duplicate();
+        check(same(editor.document().instances[engine].transform, trainRest) &&
+                  editor.document().instances.size() == beforeCount,
+              "bound train parts cannot be pulled apart or duplicated onto the same track");
+        editor.setPathSettings(4, 1, 0);
+        check(editor.document().paths[0].speed == 4 && editor.dirty(),
+              "train route controls update the shared convoy");
+        editor.setPathSettings(-1, 1, 0);
+        check(editor.document().paths[0].speed == 4 && editor.document().groups.size() == 8,
+              "invalid route settings preserve the valid document and its bindings");
+        editor.setPreviewPlaying(true);
+        for (int n = 0; n < 120; ++n)
+            editor.update(Tick);
+        frame();
+        check(!same(editor.animationPreview().poses()[engine].transform, trainRest),
+              "train preview moves linked parts");
+        capture = LoadImageFromScreen();
+        ExportImage(capture, "artifacts/train-editor.png");
+        UnloadImage(capture);
+        check(editor.save(), editor.status);
+        TownDocument trainSaved;
+        check(trainSaved.load(directory / "town.scene", error), error);
+        check(trainSaved.groups.size() == 8 && trainSaved.paths[0].speed == 4 &&
+                  same(trainSaved.instances[engine].transform, trainRest),
+              "saving during train preview retains groups, settings and rest matrices");
+        editor.resetPreview();
+        editor.setPathSettings(3, .8f, 6);
+        editor.detachVehicle();
+        check(editor.document().instances[engine].group.empty() && editor.document().groups.size() == 7,
+              "detach releases every vehicle part together");
+        editor.undo();
+        check(editor.document().groups.size() == 8 && !editor.document().instances[engine].group.empty(),
+              "undo restores vehicle and wheel bindings");
+        editor.remove();
+        check(editor.document().instances.size() == beforeCount - 14 && editor.document().groups.size() == 7,
+              "delete removes the complete locomotive group");
+        editor.undo();
+        check(editor.document().instances.size() == beforeCount && editor.document().groups.size() == 8,
+              "undo restores deleted train parts");
+        check(editor.save(), editor.status);
         const auto moving =
             std::find_if(editor.document().instances.begin(), editor.document().instances.end(),
                          [](const auto &i) { return i.motion.kind == ObjectMotionKind::Tumbleweed; });

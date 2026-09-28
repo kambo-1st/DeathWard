@@ -47,8 +47,9 @@ assets = []
 placements = []
 lines = (root / "town.scene").read_text().splitlines()
 version = int(lines[0].split()[1])
-assert version in (1, 2)
+assert version in (1, 2, 3)
 motion = {}
+train_entries = []
 for line in lines[1:]:
     fields = line.split()
     if fields[0] == "asset":
@@ -58,13 +59,20 @@ for line in lines[1:]:
         assert np.allclose(np.array(fields[5:], dtype=float).reshape(2, 3), asset["bounds"], atol=.0001)
         assets.append(name)
     elif fields[0] == "instance":
-        offset = 3 if version == 2 else 2
-        source_id = fields[2] if version == 2 else None
+        offset = 3 if version >= 2 else 2
+        source_id = fields[2] if version >= 2 else None
         placements.append((assets[int(fields[1])], source_id, np.array(fields[offset:], dtype=float)))
+    elif fields[0] in ("path", "group", "member"):
+        train_entries.append(line)
     elif fields[0] == "motion":
         assert fields[1] not in motion
         motion[fields[1]] = [float(v) for v in fields[2:]]
 assert motion == m.get("object_motion", {})
+from town_train_motion import train_motion, train_lines
+paths, groups, members = train_motion(m['placements'], m['assets'])
+assert train_entries == train_lines(paths, groups, members)
+if paths:
+    assert m['train_motion'] == dict(paths=paths, groups=groups, members=members)
 assert len(placements) == len(m["placements"])
 for (asset, source_id, transform), placed in zip(placements, m["placements"]):
     assert asset == placed["asset"]

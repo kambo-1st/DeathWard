@@ -147,16 +147,16 @@ void townMotion() {
     check(doc.load(assets / "town.scene", error) && nav.load(assets / "town.nav"), "town assets load");
     ObjectAnimationSystem motion;
     motion.reset(doc);
-    check(motion.activeCount() == 2, "the imported town binds exactly two tumbleweeds");
+    check(motion.activeCount() == 64, "the imported town binds two tumbleweeds and 62 train parts");
     for (size_t n = 0; n < doc.instances.size(); ++n)
-        if (motion.poses()[n].animated) {
+        if (doc.instances[n].motion.kind == ObjectMotionKind::Tumbleweed) {
             const auto &m = doc.instances[n].transform;
             check(nav.walkable({m.m12, 0, m.m14}), "the tumbleweed's original footprint is walkable ground");
         }
     for (int n = 0; n < 600; ++n)
         motion.update(Tick, [&](Vector3 p) { return nav.height(p); });
     for (size_t n = 0; n < doc.instances.size(); ++n)
-        if (motion.poses()[n].animated)
+        if (doc.instances[n].motion.kind == ObjectMotionKind::Tumbleweed)
             check(!same(motion.poses()[n].transform, doc.instances[n].transform),
                   "each real tumbleweed moves on imported ground");
 }

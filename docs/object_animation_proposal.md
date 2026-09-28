@@ -1,68 +1,35 @@
 # Animation for objects without skeletons
 
-Status: milestone 1 implemented. The shared runtime, stable IDs, Spin/Sway/Tumbleweed presets, two rolling tumbleweeds, editor controls, moving shadows/bounds and navigation exclusions are available. Vehicle groups, path motion, rods and moving solid collisions remain the train milestone below.
+The shared prop runtime and train milestone are implemented. Object transforms animate without skeletons; meshes and textures remain shared and unchanged. Current controls are in the [editor guide](town_editor.md#animating-props).
 
-Use one reusable system that animates object transforms and groups of objects. Meshes and textures stay shared; moving a tumbleweed, spinning a wheel or opening a door changes the object's position and rotation. A skeleton is unnecessary for these rigid parts.
+## Runtime
 
-## Asset review before implementation
+`ObjectAnimationSystem` advances on a fixed simulation step and outputs current transforms and bounds. Authored matrices remain separate from runtime poses, including imported reflection and shear. Rendering, culling, picking, transparency and shadows consume the same poses. Animated parts are excluded from the cached static shadow pass and drawn into the dynamic pass. Pause freezes motion, missions retain hub motion state, and switching hubs resets that hub's motion. Editor preview has its own clock.
 
-- Black Creek contains two tumbleweed placements using `part_0154`. Their source IDs are `488115655:1367905150670218` and `1856232637:1367905150670218`. The mesh is approximately centered on its origin, which is suitable for rolling.
-- The two locomotive prefab instances each contain 14 visible parts, including individually named wheels, connecting rods, bell, smokestack and body. Carriages, freight cars and coal cars are also available. Grouping by prefab **instance** keeps separate vehicles independent.
-- `town.manifest.json` retains source object IDs, original names and prefab ownership. Before milestone 1, both runtime scenes stored only flat asset references and matrices, without stable IDs or motion bindings. Black Creek now uses format 2 with those IDs and bindings; Frontier remains compatible format 1. Both imports pass their updated manifest audits.
-- The importer resolves the Unity hierarchy and FBX pivots, but exports world transforms and loads FBX with animation disabled. Existing clips are not available to the runtime.
-- `TownScene` already uses per-instance transforms. Its static shadow cache, picking bounds and the baked navigation grid need explicit treatment when objects move.
+Spin and Sway rotate around a local axis and pivot. The Tumbleweed preset combines seeded wind, ground following, clearance checks, rolling proportional to actual travel and a small bounce. Black Creek's two original tumbleweeds use independent phases and do not block walking.
 
-Relevant implementation: [TownDocument](../src/world/TownDocument.hpp), [TownScene](../src/render/TownScene.cpp), [HubWorld](../src/world/HubWorld.hpp), [TownNavigation](../src/world/TownNavigation.cpp), [scene importer](../scripts/import_town.py), [mesh bake](../scripts/bake_town.py).
+## Trains
 
-## Design and remaining milestones
+The original town has a continuous rail loop with four 25-unit-radius corners. Both original trains follow it: a passenger train with a tender and two coaches, and a freight train with a tender and two wagons. Eight vehicle groups bind all 62 mesh instances by stable source IDs. Groups derive child bindings from the original world matrices, preserving their appearance at rest. Front/rear route samples determine each vehicle's position and heading, so carriages follow curves instead of pivoting around the locomotive.
 
-The following design covers both milestones. Milestone 1 implements per-object Spin, Sway and Tumbleweed presets; parent groups, routes, distance-driven wheels and moving solid collision are still planned. Current controls are documented in [the editor guide](town_editor.md#animating-props).
+The default shared route cruises at 3 units/second, accelerates at 0.8 units/second squared, and waits six seconds at the original starting positions before departure and after each circuit. Both trains share route progress, retaining their separation when one stops for the player. Route samples wrap continuously without teleporting. This is an authored route for the verified rail layout; importing another layout does not silently attach this route to similarly named vehicles.
 
-### Shared motion system
+Sixteen separate locomotive wheel meshes rotate around their original local X axles using traveled distance divided by wheel radius. The initial asset review misidentified three `Stick` meshes per locomotive: they are upright cab levers, not connecting rods. They remain attached to the cab. Coach/tender/freight wheels and the remaining linkage geometry are combined with body meshes and remain rigid parts of those meshes; splitting them for additional mechanical animation is future work.
 
-Introduce a renderer-independent `ObjectAnimationSystem` that outputs current transforms and bounds. Keep authored placements separate from runtime poses, so playing an animation never rewrites the scene or accumulates transform drift.
+## Collision and navigation
 
-Each object or group has a stable ID, optional parent, original matrix, pivot and motion settings. Retain complete original matrices: imported reflections and shear must survive loading, grouping, preview and saving. Compute child bind transforms relative to the group's original pose, preserving every part's original world position at rest. Apply motion around explicit local pivots and test matrix composition against raylib's conventions.
+Moving vehicles are excluded from both the original collider bake and the editor's visible-mesh bake. The ground underneath their original placements becomes available again. Current oriented vehicle hulls provide a dynamic occupancy layer for WASD movement, route searches, smoothing and replanning. Obsolete occupied cells are cleared as the train moves. Existing mouse destinations are retained while temporarily covered by a train.
 
-Provide a few composable motion sources:
+A route stops before its next pose overlaps the player's clearance, then accelerates again when clear. Distance-driven wheels stop with it. Tumbleweeds also avoid the current train hulls. Vehicles are not rideable platforms and have no damage/crushing simulation. The authored track route is assumed clear of static scenery; route-aware collision with newly placed buildings is not implemented.
 
-| Motion | Parameters | Examples |
-| --- | --- | --- |
-| Follow a path | Points, speed, stops, loop/reverse behavior | Train, cart, elevator |
-| Rotate | Local axis, pivot, speed or distance driver | Wheels, windmill, tumbleweed |
-| Oscillate | Axis, amplitude, period, phase | Hanging sign, bell, gentle bounce |
-| Wind movement | Seed, speed range, gusts, allowed ground area | Tumbleweed |
+## Persistence and editing
 
-Tumbleweed and train presets combine these motions. New objects use configuration rather than another renderer branch checking an asset name. Authored position/rotation keyframes can become another motion source later.
+Scene format 3 adds `path`, `group` and `member` records. Groups reference paths by ID, and instances reference groups by ID; member records also hold a wheel radius when applicable. Original instance matrices stay unchanged. Formats 1 and 2 remain readable, and scenes without paths still save as format 2. Loading validates missing/duplicate bindings, dimensions, finite settings and disconnected loop endpoints.
 
-Run updates from the game update, before movement queries and rendering. Use a fixed step for contact/wind behavior and a separate deterministic random stream per object. Drawing, culling and shadow passes must never advance animation. Pause freezes it; hub switches reload that hub's motion state; returning from a mission can resume its retained state. Editor preview uses its own clock.
+Selecting a vehicle part focuses and outlines its group. The Animation inspector exposes route speed, acceleration, station wait, centerline display and Play/Pause/Reset. Saving during playback retains authored poses and route settings. Deleting a bound part removes its complete vehicle; undo restores all bindings. Detach Vehicle returns the group to static, individually editable parts at their original placements. Bound parts cannot be independently moved or duplicated onto the same track. General route point authoring, adding trains and grouping arbitrary parts remain future editor features.
 
-## First applications
+## Verification
 
-**Tumbleweed:** drift slowly across valid street ground with gentle seeded gusts. Derive rolling rotation from actual distance traveled and the mesh's scaled radius, so it rolls instead of sliding. Use a small sphere for scenery contact, turn or bounce at obstacles, and follow ground height. Give each placement its own phase. Treat it as decoration that does not block the player. Avoid visible resets or teleporting across town.
+The train suite covers a complete circuit, curve/axle alignment, station stops, independent wheel pivots, 30/60/120 FPS agreement, original rest transforms, rigid attachments, player stops, resumed travel, dynamic navigation and format-3 persistence. Editor tests cover shared settings, rejected edits, group deletion/detach/undo and saving during preview. Graphics tests compare cached versus freshly rebuilt shadows and capture station/curve views with original textures. Browser tests cover route progress and exact pause behavior alongside normal gameplay.
 
-**Train:** move each vehicle root along an authored route aligned with the existing rails. Group its body and attachments under that root; rotate wheels around their original axles using traveled distance divided by wheel radius. Drive rods from the same wheel phase. Carriages follow positions farther back along the route so they turn correctly through curves. Station stops slow the train and stop its wheels together. Verify a continuous rail route before enabling travel; a loop must not teleport the train across disconnected endpoints.
-
-## Rendering and navigation
-
-Evaluate each animated pose once and use it consistently for visible meshes, culling bounds, picking, player-occlusion transparency and shadows. Remove animated parts from the static shadow bake. Draw their current poses into the dynamic shadow pass after copying cached static depth, alongside the character. Rebuilding the entire town shadow cache every frame would defeat the existing optimization.
-
-Remove moving objects from the static navigation bake as well. Both tumbleweeds currently have imported colliders: otherwise their old positions can remain blocked after they move. Apply the same exclusion policy in the Python import bake and the native editor bake.
-
-For a moving train, add simple moving collision volumes and a dynamic occupancy layer used by player movement and pathfinding. Leaving the train only in the old static grid would create invisible obstacles at the station and let the player walk through it elsewhere. Full rigid-body simulation and riding on the train can be separate later features.
-
-## Scene format and editor
-
-Extend `town.scene` with a backward-compatible version 2 containing stable IDs, groups, pivots and motion definitions. Existing version-1 scenes load as static scenes. Using the existing scene file keeps animation settings inside the current scene/navigation save transaction and browser persistence path.
-
-Migrate the current imports using their verified manifests. For edited scenes, require an unambiguous source match or assign new stable IDs; do not attach animations using a mutable list index. Duplicate creates new IDs and remaps duplicated group members; deletion, undo and redo update bindings with the objects. Export original parent/pivot metadata for future imports.
-
-Add an Animation inspector with preset, speed, axis/pivot, path, loop and seed controls, plus Play/Pause/Reset preview. Save authored settings and rest transforms, never the temporary preview pose. Group selection allows the train to move as a vehicle while wheels remain individually editable.
-
-## Suggested milestones
-
-1. **Two rolling tumbleweeds:** stable bindings, reusable motion evaluation, ground/scenery handling, moving bounds and shadows, editor preset/preview/save. Verify both native and WASM builds and remove their obsolete static collision footprints.
-2. **Train movement:** restore vehicle groups and axle pivots, author a valid rail route, synchronize wheels/rods and carriage spacing, implement moving collision and pathfinding occupancy.
-3. **More props:** reuse the same rotate, oscillate and path settings for windmills, signs, doors and carts; add keyframe tracks when an object needs authored timing.
-
-Acceptance checks should cover unchanged scene appearance at rest, frame-rate-independent motion, pause/resume, shared meshes with different instance phases, transformed pivots, no movement through scenery, matching shadow/picking/occlusion poses, no old collision footprints, and editor save/duplicate/delete/undo round trips. Browser and native checks should exercise the same motion definitions and renderer paths.
+Implementation: [ObjectAnimationSystem](../src/world/ObjectAnimation.cpp), [TownDocument](../src/world/TownDocument.hpp), [HubWorld](../src/world/HubWorld.cpp), [train authoring](../scripts/town_train_motion.py).

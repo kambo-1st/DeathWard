@@ -65,7 +65,7 @@ void motionCheck(TownScene &scene, HubWorld &ground) {
     if (!motion.activeCount())
         return;
     size_t selected = 0;
-    while (!motion.poses()[selected].animated)
+    while (document.instances[selected].motion.kind != ObjectMotionKind::Tumbleweed)
         ++selected;
     const auto start =
         mul(add(motion.poses()[selected].bounds.min, motion.poses()[selected].bounds.max), .5f);
@@ -131,6 +131,66 @@ void motionCheck(TownScene &scene, HubWorld &ground) {
     UnloadImage(rebuilt);
     scene.applyDocument(document);
 }
+void trainCheck(TownScene &scene) {
+    const auto document = scene.document();
+    if (document.groups.empty())
+        return;
+    ObjectAnimationSystem motion;
+    motion.reset(document);
+    const size_t body = 48;
+    check(document.instances[body].id == "60904987:1235095919362174", "locomotive capture fixture");
+    const auto capture = [&](const char *name, bool wide) {
+        const auto pose = motion.poses()[body].transform;
+        const Vector3 front = unit(Vector3{pose.m8, 0, pose.m10});
+        auto focus = Vector3{pose.m12, pose.m13 + 2, pose.m14};
+        if (wide)
+            focus = sub(focus, mul(front, 15));
+        Camera3D camera{add(focus, wide ? Vector3{32, 40, 32} : Vector3{5, 8, 18}),
+                        focus,
+                        {0, 1, 0},
+                        45,
+                        CAMERA_PERSPECTIVE};
+        const auto render = [&] {
+            scene.applyAnimation(motion);
+            BeginDrawing();
+            ClearBackground(SKYBLUE);
+            scene.prepareLighting(camera);
+            BeginMode3D(camera);
+            scene.draw(focus);
+            scene.draw(focus, true);
+            EndMode3D();
+            auto image = LoadImageFromScreen();
+            EndDrawing();
+            return image;
+        };
+        auto cached = render();
+        scene.applyDocument(document);
+        auto rebuilt = render();
+        auto a = LoadImageColors(cached), b = LoadImageColors(rebuilt);
+        int differences = 0;
+        for (int n = 0; n < cached.width * cached.height; ++n)
+            differences += a[n].r != b[n].r || a[n].g != b[n].g || a[n].b != b[n].b;
+        check(differences < 20, "train shadows match a fresh shadow bake, with no stationary ghost");
+        ExportImage(cached, name);
+        UnloadImageColors(a);
+        UnloadImageColors(b);
+        UnloadImage(cached);
+        UnloadImage(rebuilt);
+        const auto bounds = scene.instanceBounds(body);
+        check(distance(bounds.min, motion.poses()[body].bounds.min) < .001f,
+              "train bounds follow the vehicle");
+    };
+    capture("artifacts/train-station.png", true);
+    capture("artifacts/train-locomotive.png", false);
+    for (int n = 0; n < 27 * 60; ++n)
+        motion.update(Tick, {});
+    capture("artifacts/train-curve.png", true);
+    capture("artifacts/train-wheel-motion.png", false);
+    for (int n = 0; n < 70 * 60; ++n)
+        motion.update(Tick, {});
+    capture("artifacts/train-far-curve.png", true);
+    scene.applyDocument(document);
+}
 int main() {
     try {
         SetTraceLogLevel(LOG_ERROR);
@@ -163,6 +223,7 @@ int main() {
                   "original atlases, signs, sky and transparent materials are loaded");
             lightingCheck(scene, town.spawn);
             motionCheck(scene, town);
+            trainCheck(scene);
             for (Vector3 p : std::array<Vector3, 3>{{town.spawn, town.mission, {-1, 2, -65}}}) {
                 BeginDrawing();
                 ClearBackground(SKYBLUE);

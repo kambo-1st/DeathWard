@@ -1,5 +1,6 @@
 #include "world/ObjectAnimation.hpp"
 #include "raymath.h"
+#include <unordered_map>
 
 namespace dw {
 namespace {
@@ -28,12 +29,41 @@ void ObjectAnimationSystem::reset(const TownDocument &document) {
     document.validate();
     poses_.clear();
     moving_.clear();
+    paths_.clear();
+    groups_.clear();
+    members_.clear();
+    solids_.clear();
+    std::unordered_map<std::string, size_t> pathIds, groupIds;
+    for (const auto &definition : document.paths) {
+        Path p;
+        p.definition = definition;
+        p.wait = definition.dwell;
+        for (size_t n = 0; n < definition.points.size(); ++n) {
+            p.cumulative.push_back(p.length);
+            p.length += distance(definition.points[n], definition.points[(n + 1) % definition.points.size()]);
+        }
+        pathIds[definition.id] = paths_.size();
+        paths_.push_back(std::move(p));
+    }
+    for (const auto &definition : document.groups) {
+        groupIds[definition.id] = groups_.size();
+        groups_.push_back({pathIds.at(definition.path), definition.offset, definition.wheelbase});
+    }
     accumulator_ = time_ = 0;
     for (size_t n = 0; n < document.instances.size(); ++n) {
         const auto &i = document.instances[n];
         const auto local = document.assets[i.asset].bounds;
         const auto bounds = document.bounds(n);
-        poses_.push_back({i.transform, bounds, i.motion.kind != ObjectMotionKind::None});
+        poses_.push_back({i.transform, bounds, i.animated()});
+        if (!i.group.empty()) {
+            const auto group = groupIds.at(i.group);
+            const auto bind = MatrixMultiply(i.transform, MatrixInvert(groupFrame(groups_[group])));
+            members_.push_back({n, group, i.transform, bind, local, i.wheelRadius});
+            const auto b = objectBounds(local, bind);
+            auto &g = groups_[group];
+            g.bounds.min = Vector3Min(g.bounds.min, b.min);
+            g.bounds.max = Vector3Max(g.bounds.max, b.max);
+        }
         if (i.motion.kind == ObjectMotionKind::None)
             continue;
         Moving state{n, i.transform, local, i.motion};
@@ -48,15 +78,23 @@ void ObjectAnimationSystem::reset(const TownDocument &document) {
         state.heading = {std::cos(state.phase), 0, std::sin(state.phase)};
         moving_.push_back(state);
     }
+    evaluateGroups();
 }
-void ObjectAnimationSystem::update(float dt, const Ground &ground) {
-    if (!std::isfinite(dt) || dt <= 0 || moving_.empty())
+void ObjectAnimationSystem::update(float dt, const Ground &ground, std::optional<Vector3> player) {
+    if (!std::isfinite(dt) || dt <= 0 || (moving_.empty() && paths_.empty()))
         return;
     accumulator_ += std::min(double(dt), .25);
     while (accumulator_ + 1e-9 >= MotionTick) {
         accumulator_ -= MotionTick;
         time_ += MotionTick;
-        step(ground);
+        stepPaths(player);
+        step([&](Vector3 point) {
+            const float y = ground ? ground(point) : std::numeric_limits<float>::quiet_NaN();
+            for (const auto &solid : solids_)
+                if (solid.contains({point.x, y + .3f, point.z}, 0))
+                    return std::numeric_limits<float>::quiet_NaN();
+            return y;
+        });
     }
 }
 void ObjectAnimationSystem::step(const Ground &ground) {
@@ -107,5 +145,116 @@ void ObjectAnimationSystem::step(const Ground &ground) {
         }
         poses_[s.index] = {pose, objectBounds(s.local, pose), true};
     }
+}
+bool MovingSolid::contains(Vector3 point, float radius) const {
+    const auto d = sub(point, center);
+    if (std::abs(d.y) > halfSize.y + .85f)
+        return false;
+    const float x = std::max(0.f, std::abs(d.x * forward.x + d.z * forward.z) - halfSize.x);
+    const float z = std::max(0.f, std::abs(-d.x * forward.z + d.z * forward.x) - halfSize.z);
+    return x * x + z * z <= radius * radius;
+}
+Box MovingSolid::bounds() const {
+    const Vector3 extent{std::abs(forward.x) * halfSize.x + std::abs(forward.z) * halfSize.z, halfSize.y,
+                         std::abs(forward.z) * halfSize.x + std::abs(forward.x) * halfSize.z};
+    return {sub(center, extent), add(center, extent)};
+}
+Vector3 ObjectAnimationSystem::sample(const Path &p, float at) const {
+    at = std::fmod(at, p.length);
+    if (at < 0)
+        at += p.length;
+    const auto it = std::upper_bound(p.cumulative.begin(), p.cumulative.end(), at);
+    const size_t n = size_t(it - p.cumulative.begin() - 1);
+    const float end = n + 1 < p.cumulative.size() ? p.cumulative[n + 1] : p.length;
+    return Vector3Lerp(p.definition.points[n], p.definition.points[(n + 1) % p.definition.points.size()],
+                       (at - p.cumulative[n]) / (end - p.cumulative[n]));
+}
+Matrix ObjectAnimationSystem::groupFrame(const Group &g) const {
+    const auto &p = paths_[g.path];
+    const float at = g.offset + p.position, half = std::max(.1f, g.wheelbase * .5f);
+    const auto front = sample(p, at + half), back = sample(p, at - half);
+    const auto direction = unit(sub(front, back));
+    const auto center = g.wheelbase > 0 ? mul(add(front, back), .5f) : sample(p, at);
+    auto m = MatrixIdentity();
+    m.m0 = direction.x;
+    m.m2 = direction.z;
+    m.m8 = -direction.z;
+    m.m10 = direction.x;
+    m.m12 = center.x;
+    m.m13 = center.y;
+    m.m14 = center.z;
+    return m;
+}
+void ObjectAnimationSystem::evaluateGroups() {
+    std::vector<Matrix> frames;
+    solids_.clear();
+    for (const auto &g : groups_) {
+        const auto frame = groupFrame(g);
+        frames.push_back(frame);
+        solids_.push_back({Vector3Transform(mul(add(g.bounds.min, g.bounds.max), .5f), frame),
+                           {frame.m0, 0, frame.m2},
+                           mul(sub(g.bounds.max, g.bounds.min), .5f)});
+    }
+    for (const auto &m : members_) {
+        const auto &path = paths_[groups_[m.group].path];
+        auto bind = m.bind;
+        if (m.wheelRadius > 0)
+            bind = MatrixMultiply(MatrixRotateX(float(std::fmod(path.travel / m.wheelRadius, 2 * Pi))), bind);
+        // Keep the imported matrices bit-for-bit at rest, including reflection/shear.
+        const auto pose = path.travel == 0 ? m.rest : MatrixMultiply(bind, frames[m.group]);
+        poses_[m.index] = {pose, objectBounds(m.local, pose), true};
+    }
+}
+void ObjectAnimationSystem::stepPaths(std::optional<Vector3> player) {
+    if (paths_.empty())
+        return;
+    struct State {
+        double travel;
+        float position, speed, wait;
+    };
+    std::vector<State> previous;
+    for (auto &p : paths_) {
+        previous.push_back({p.travel, p.position, p.speed, p.wait});
+        if (p.wait > 0) {
+            p.wait = std::max(0.f, p.wait - float(MotionTick));
+            continue;
+        }
+        const float remaining = p.length - p.position;
+        const float limit =
+            std::min(p.definition.speed, std::sqrt(2 * p.definition.acceleration * remaining));
+        const float speed =
+            p.speed + std::clamp(limit - p.speed, -p.definition.acceleration * float(MotionTick),
+                                 p.definition.acceleration * float(MotionTick));
+        const float travel = std::min(remaining, (p.speed + speed) * .5f * float(MotionTick));
+        p.speed = speed;
+        p.position += travel;
+        p.travel += travel;
+        if (remaining - travel < .00001f) {
+            p.position = 0;
+            p.speed = 0;
+            p.wait = p.definition.dwell;
+        }
+    }
+    evaluateGroups();
+    if (!player)
+        return;
+    // A blocked route waits as one convoy, so its trains cannot catch each other.
+    std::vector<bool> blocked(paths_.size(), false);
+    for (size_t n = 0; n < solids_.size(); ++n)
+        if (solids_[n].contains(*player, .9f))
+            blocked[groups_[n].path] = true;
+    bool changed = false;
+    for (size_t n = 0; n < paths_.size(); ++n)
+        if (blocked[n]) {
+            auto &p = paths_[n];
+            const auto &old = previous[n];
+            p.travel = old.travel;
+            p.position = old.position;
+            p.wait = old.wait;
+            p.speed = 0;
+            changed = true;
+        }
+    if (changed)
+        evaluateGroups();
 }
 } // namespace dw

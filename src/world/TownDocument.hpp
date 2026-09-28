@@ -23,6 +23,20 @@ struct TownInstance {
     Matrix transform{};
     std::string id{};
     ObjectMotion motion{};
+    std::string group{};
+    float wheelRadius = 0; // Local X axle; rotation is driven by path distance.
+    bool animated() const {
+        return motion.kind != ObjectMotionKind::None || !group.empty();
+    }
+};
+struct TownMotionPath {
+    std::string id;
+    float speed = 3, acceleration = .8f, dwell = 6;
+    std::vector<Vector3> points; // Closed, continuous centerline, without repeated final point.
+};
+struct TownMotionGroup {
+    std::string id, path;
+    float offset = 0, wheelbase = 0;
 };
 struct TownLight {
     int type = 1;
@@ -33,6 +47,8 @@ struct TownDocument {
     std::vector<TownAsset> assets;
     std::vector<TownInstance> instances;
     std::vector<TownLight> lights;
+    std::vector<TownMotionPath> paths;
+    std::vector<TownMotionGroup> groups;
     bool load(const std::filesystem::path &path, std::string &error);
     void write(const std::filesystem::path &path) const;
     void validate() const;
