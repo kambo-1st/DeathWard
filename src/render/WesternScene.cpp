@@ -335,8 +335,8 @@ void WesternScene::generate(const Arena &arena) {
         }
     }
 }
-void WesternScene::draw(Vector3 focus) {
-    drawTerrain(focus);
+void WesternScene::updateDrawState(Vector3 focus) {
+    updateTerrainOcclusion();
     occluders_.clear();
     if (!loaded())
         return;
@@ -369,7 +369,46 @@ void WesternScene::draw(Vector3 focus) {
         else
             batches_[index].push_back(transform);
     }
-    drawBatches(false);
+}
+void WesternScene::draw(Vector3 focus) {
+    updateDrawState(focus);
+    drawTerrain(focus);
+    if (loaded())
+        drawBatches(false);
+}
+RayCollision WesternScene::pick(Ray ray, Vector3 focus) {
+    // Classify with the caller's current camera/player, including a rotation
+    // before this frame has rendered. Drawing uses the exact same classification.
+    updateDrawState(focus);
+    RayCollision nearest{};
+    nearest.distance = std::numeric_limits<float>::infinity();
+    auto couldHit = [&](Box bounds) {
+        const auto hit = GetRayCollisionBox(ray, {bounds.min, bounds.max});
+        return hit.hit && hit.distance < nearest.distance;
+    };
+    auto meshHit = [&](const Mesh &mesh, Matrix transform) {
+        const auto hit = GetRayCollisionMesh(ray, mesh, transform);
+        if (hit.hit && hit.distance < nearest.distance)
+            nearest = hit;
+    };
+    for (const auto &chunk : terrain_)
+        if (!chunk.faded && couldHit(chunk.bounds))
+            meshHit(chunk.mesh, MatrixIdentity());
+    if (loaded())
+        for (const auto &placement : placements_) {
+            const auto &box = placement.bounds;
+            const Vector3 closest{std::clamp(focus.x, box.min.x, box.max.x), focus.y,
+                                  std::clamp(focus.z, box.min.z, box.max.z)};
+            if (distance(closest, focus) > 75 || !couldHit(box) ||
+                std::find(occluders_.begin(), occluders_.end(), &placement) != occluders_.end())
+                continue;
+            const auto &asset = assets_[size_t(placement.asset)];
+            const auto transform = placementTransform(asset.bounds, placement);
+            for (int mesh = asset.firstMesh; mesh < asset.firstMesh + asset.meshCount; ++mesh)
+                if (model_.materials[model_.meshMaterial[mesh]].maps[MATERIAL_MAP_ALBEDO].color.a == 255)
+                    meshHit(model_.meshes[mesh], transform);
+        }
+    return nearest;
 }
 void WesternScene::drawGlass() {
     if (!loaded())

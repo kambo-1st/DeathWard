@@ -1,5 +1,23 @@
 # Milestone 1 verification
 
+## Ground money, enemy drops and saved wallet
+
+Content version `deathward-m1-23` adds seeded room-floor coin piles and a 35% chance for eligible enemy deaths to drop 1–5 coins. Ground placement uses a dedicated stream; drop rolls use seed/entity identity, so kill order and combat randomness do not affect loot. Placement checks walkable ground and room routes; airborne deaths relocate drops onto nearby clear ground. Drops bounce for 0.45 seconds before collection. Walking over or clicking to approach a pile collects it with pickup audio and a checkpoint. Solid cover blocks collection. Collected piles stay gone on room revisits. Friendly creatures, summoned offspring, permanent hazards and temporary collapses do not pay.
+
+The mission HUD, both hubs and summary/history show money. Wallets bank collected earnings on victory, retreat, death or interrupted-run recovery, once per resolved run. Save format 2 stores wallet and run earnings, while format 1 campaigns load with zero money and retain their history/pending runs. The wallet caps at 999,999,999; excess remains in a ground pile. Long stress sessions bound live pickups by merging drops after 1,024 piles.
+
+Native and WebAssembly Release builds pass. All ten headless suites pass, including a new money suite covering deterministic/reachable placement in both themes, room revisits, collection/audio/checkpoints, no healing, drop timing, cover, dead-player guards, limits, both rosters, reversed kill order, duplicate deaths, offspring/friendly exclusions, flying-enemy relocation, regenerating piles, all outcome types, idempotent recovery and format-1 migration. Logs and captures use `artifacts/money-*`.
+
+The full native input suite passes with coin approach/collection/checkpoint checks, including a seeded coin overlapping a doorway's larger click area at wide zoom. Visible coins take priority over passage click areas while opaque scenery and physical collision remain effective. Chromium verifies the same seeded pickup, its immediate checkpoint, wallet retention after victory/reload, both mission themes, hubs, audio and editor persistence with no reported JavaScript or WebGL errors. Native coin/summary captures and browser pickup captures were visually reviewed. The refreshed upload ZIP passes archive integrity, manifest hash and current-WASM checks.
+
+## Aiming through scenery
+
+Mission enemy selection ignores foreground scenery regardless of its opacity, so an enemy's body or occlusion outline remains clickable behind faded walls, solid rocks, props and gates. Right-click and Shift-click aim at the ground behind that geometry rather than snapping to its surface. Movement and interaction still use opaque rendered surfaces, sharing the current camera's terrain-section and whole-object fade classification with drawing. Gameplay gates continue to limit interaction targets. Projectile and movement collision remains unchanged. Without a renderer, enemy aiming follows the same rule while movement/interaction retain their collision-based fallback.
+
+Native and WebAssembly Release builds pass. Eight real-input scenery checks cover mine/canyon models, transparent/opaque surfaces and two camera angles. They verify enemy selection with and without the renderer, left-click damage through clear physical space, right-click and Shift-click ground aiming, stationary firing, physical cover stopping bullets, and selection behind gates. The opaque canyon capture was visually reviewed. Logs and captures use `artifacts/scenery-aim-*`; the preceding transparency-specific checks use `artifacts/transparent-picking-*`.
+
+The full native input suite also passes, including movement, objective interactions, doors, held attacks, camera controls and HUD input. Chromium gameplay checks pass for both hubs/themes, combat, audio and persistence, with no reported JavaScript or WebGL errors. The static upload ZIP was rebuilt and verified for archive integrity, manifest hashes and inclusion of the current WASM binary.
+
 ## Enemies present before room entry
 
 Content version `deathward-m1-22` prepares all seeded room groups at mission startup. Nearby rooms render their actual residents, including companions, tethers and occlusion outlines. Idle breathing and creature animation use a separate clock; dormant groups do not move, attack, summon, consume combat randomness or advance encounter timers. Crossing the existing room threshold transfers the same entities into combat, preserving IDs, positions, links and animation phase. Placement reserves a landing area at every doorway. Cleared rooms remain empty, quiet/power rooms stay peaceful, and explicit debug replay creates a fresh group.

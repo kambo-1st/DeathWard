@@ -14,16 +14,22 @@ struct PointerTarget {
     std::optional<Vector3> objective;
     std::optional<std::pair<int, int>> door;
 };
-PointerTarget pickTarget(const Simulation &run, Ray ray) {
+PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<RayCollision> &scenery) {
     PointerTarget result;
     float nearest = std::numeric_limits<float>::infinity();
-    if (run.arena.canyon) {
+    if (scenery) {
+        if (scenery->hit)
+            nearest = scenery->distance;
+    } else if (run.arena.canyon) {
         const auto hit = run.arena.canyon->trace(ray.position, add(ray.position, mul(ray.direction, 1000)));
         if (hit.hit)
             nearest = hit.t * 1000;
     }
-    // A wall in front of a body prevents clicking through it.
-    for (const auto &wall : run.arena.walls) {
+    // Scenery and gates limit interaction targets. Without a renderer, use the
+    // collision geometry for those targets instead.
+    const size_t firstWall = scenery ? run.arena.boundaryWalls.size() + run.arena.obstacles.size() : 0;
+    for (size_t i = firstWall; i < run.arena.walls.size(); ++i) {
+        const auto &wall = run.arena.walls[i];
         const auto hit = GetRayCollisionBox(ray, {wall.min, wall.max});
         if (hit.hit)
             nearest = std::min(nearest, hit.distance);
@@ -51,6 +57,7 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
     for (const auto &key : run.arena.keys)
         if (!key.collected && run.rooms[size_t(key.room)].cleared)
             objective(key.position, 1.0f, 2.0f);
+    const float objectiveDistance = nearest;
     if (run.roomClear)
         for (size_t i = 0; i < run.arena.passages.size(); ++i)
             for (int side = 0; side < 2; ++side)
@@ -58,6 +65,17 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
                     result.objective.reset();
                     result.door = std::pair{int(i), side};
                 }
+    // Small visible pickups take priority over the generous passage click area.
+    // Keep opaque scenery and actual interaction objects in front of them solid.
+    nearest = objectiveDistance;
+    for (const auto &coin : run.moneyPickups)
+        if (hits(coin.position, .65f, 1.1f)) {
+            result.objective = coin.position;
+            result.door.reset();
+        }
+    // Aim at enemy bodies (including their occlusion outlines) through scenery.
+    // Only the camera ray ignores cover; the fired projectile still collides.
+    nearest = std::numeric_limits<float>::infinity();
     for (const auto &enemy : run.enemies) {
         if (enemy.alive && !enemy.friendly && enemy.state != EnemyState::Buried &&
             hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.5f)) {
@@ -606,7 +624,7 @@ void Game::updateHub(float dt) {
     }
     updateCamera(dt);
 }
-void Game::update(float dt) {
+void Game::update(float dt, const SceneryPicker &pickScenery) {
     try {
         debugInput();
         if (screen == Screen::Hub) {
@@ -666,20 +684,28 @@ void Game::update(float dt) {
         const bool overControls = pointerOverControls();
         input.aim = run->player.aim;
         Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
+        const auto scenery = !overControls && pickScenery ? pickScenery(*run, camera, ray) : std::nullopt;
         Vector3 ground = input.aim;
         if (!overControls && std::abs(ray.direction.y) > 0.0001f) {
             float t = -ray.position.y / ray.direction.y;
             ground = t > 0 ? add(ray.position, mul(ray.direction, t)) : run->player.aim;
-            if (t > 0 && run->arena.canyon) {
+            // Aim through all foreground geometry. Keep the scenery hit below
+            // for movement/interaction so a wall click still approaches its edge.
+            input.aim = ground;
+            if (t > 0 && scenery) {
+                if (scenery->hit && scenery->distance < t) {
+                    ground = scenery->point;
+                    ground.y = 0;
+                }
+            } else if (t > 0 && run->arena.canyon) {
                 const auto hit = run->arena.canyon->trace(ray.position, ground);
                 if (hit.hit) {
                     ground = add(ray.position, mul(ray.direction, t * hit.t));
                     ground.y = 0;
                 }
             }
-            input.aim = ground;
         }
-        const auto pointed = overControls ? PointerTarget{} : pickTarget(*run, ray);
+        const auto pointed = overControls ? PointerTarget{} : pickTarget(*run, ray, scenery);
         hoveredEnemy = pointed.enemy;
         if (const auto *enemy = run->findEnemy(hoveredEnemy))
             input.aim = enemy->position;

@@ -48,6 +48,8 @@ enum class Action {
 };
 class Game {
   public:
+    using SceneryPicker =
+        std::function<std::optional<RayCollision>(const Simulation &, const Camera3D &, Ray)>;
     explicit Game(const std::filesystem::path &save, HubKind initialHub = HubKind::BlackCreek);
     CampaignStore campaign;
     std::unique_ptr<Simulation> run;
@@ -76,7 +78,7 @@ class Game {
     float accumulator = 0;
     float deathTime = 0;
     EntityId hoveredEnemy = 0;
-    void update(float dt);
+    void update(float dt, const SceneryPicker &pickScenery = {});
     void perform(Action action);
     void launch();
     void finish(EndReason reason);

@@ -159,6 +159,12 @@ struct RoomProgress {
     // The active room uses Simulation::enemies; other rooms keep their actual group here.
     std::vector<Enemy> residents;
 };
+struct MoneyPickup {
+    Vector3 position{};
+    int value = 1;
+    float age = 0;
+    bool dropped = false;
+};
 
 class Simulation {
   public:
@@ -173,6 +179,8 @@ class Simulation {
     std::vector<Projectile> projectiles;
     std::vector<VisualEffect> visuals;
     std::vector<Hazard> hazards;
+    std::vector<MoneyPickup> moneyPickups;
+    uint64_t moneyCollected = 0;
     AudioCueQueue audioCues;
     uint64_t audioEpoch = 0;
     std::vector<ItemId> items;
@@ -218,6 +226,9 @@ class Simulation {
     }
     void finishDebug(bool victory);
     RunSummary summary() const;
+    uint64_t money() const {
+        return startingWorld_.money + moneyCollected;
+    }
     size_t livingEnemies() const;
     size_t queuedEvents() const {
         return queue_.size();
@@ -293,5 +304,8 @@ class Simulation {
     void collectChains();
     void offerReward();
     void collectKeys();
+    void prepareMoney();
+    void dropMoney(const Enemy &enemy);
+    void updateMoney(float dt);
 };
 } // namespace dw

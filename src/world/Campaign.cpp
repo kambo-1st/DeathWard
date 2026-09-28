@@ -49,7 +49,7 @@ size_t count(std::istream &in, size_t limit) {
 void writeSummary(std::ostream &out, const RunSummary &s) {
     out << s.id << ' ' << s.seed << ' ' << std::quoted(s.version) << ' ' << std::quoted(s.expedition) << ' '
         << std::quoted(s.startingContext) << ' ' << int(s.reason) << ' ' << s.rescued << ' ' << s.bossKilled
-        << ' ' << s.altarDestroyed << ' ' << s.interrupted << '\n';
+        << ' ' << s.altarDestroyed << ' ' << s.interrupted << ' ' << s.moneyCollected << '\n';
     writeStats(out, s.stats);
     out << s.items.size();
     for (auto id : s.items)
@@ -58,12 +58,16 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
     for (const auto &line : s.consequences)
         out << std::quoted(line) << '\n';
 }
-RunSummary readSummary(std::istream &in) {
+RunSummary readSummary(std::istream &in, int version) {
     RunSummary s;
     int reason = 0;
     in >> s.id >> s.seed >> std::quoted(s.version) >> std::quoted(s.expedition) >>
         std::quoted(s.startingContext) >> reason >> s.rescued >> s.bossKilled >> s.altarDestroyed >>
         s.interrupted;
+    if (version >= 2)
+        in >> s.moneyCollected;
+    if (s.moneyCollected > MaxMoney)
+        throw std::runtime_error("Invalid collected money in save");
     if (reason < 0 || reason > 3)
         throw std::runtime_error("Invalid outcome in save");
     s.reason = EndReason(reason);
@@ -89,7 +93,7 @@ std::string serialize(const Campaign &c) {
     const auto &w = c.world;
     out << c.nextRunId << ' ' << w.population << ' ' << w.prosperity << ' ' << w.law << ' ' << w.minersRescued
         << ' ' << w.bossDefeated << ' ' << w.mineOpen << ' ' << w.altarDestroyed << ' ' << w.mineDebt << ' '
-        << w.completed << '\n';
+        << w.completed << ' ' << w.money << '\n';
     out << w.flags.size() << '\n';
     for (const auto &flag : w.flags)
         out << std::quoted(flag) << '\n';
@@ -103,12 +107,14 @@ std::string serialize(const Campaign &c) {
         writeSummary(out, s);
     return out.str();
 }
-Campaign deserialize(const std::string &payload) {
+Campaign deserialize(const std::string &payload, int version) {
     Campaign c;
     auto &w = c.world;
     std::istringstream in(payload);
     in >> c.nextRunId >> w.population >> w.prosperity >> w.law >> w.minersRescued >> w.bossDefeated >>
         w.mineOpen >> w.altarDestroyed >> w.mineDebt >> w.completed;
+    if (version >= 2)
+        in >> w.money;
     size_t n = count(in, 1024);
     for (size_t i = 0; i < n; ++i) {
         std::string flag;
@@ -120,12 +126,12 @@ Campaign deserialize(const std::string &payload) {
     bool pending = false;
     in >> pending;
     if (pending)
-        c.pending = readSummary(in);
+        c.pending = readSummary(in, version);
     n = count(in, 100000);
     for (size_t i = 0; i < n; ++i)
-        c.history.push_back(readSummary(in));
+        c.history.push_back(readSummary(in, version));
     if (!in || c.nextRunId == 0 || w.population < 0 || w.prosperity < 0 || w.prosperity > 100 ||
-        w.mineDebt < 0 || w.mineDebt > 50)
+        w.mineDebt < 0 || w.mineDebt > 50 || w.money > MaxMoney)
         throw std::runtime_error("Invalid campaign save");
     in >> std::ws;
     if (!in.eof())
@@ -148,7 +154,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 1 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 2 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -190,10 +196,10 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version != 1 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || (version != 1 && version != 2) || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
-    campaign_ = deserialize(payload);
+    campaign_ = deserialize(payload, version);
 }
 void CampaignStore::commit(Campaign next) {
     saveAtomic(path_, next);
@@ -237,6 +243,7 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
     s.interrupted = reason == EndReason::Interrupted;
     s.consequences.clear();
     auto note = [&](std::string message) { s.consequences.push_back(std::move(message)); };
+    w.money += std::min(s.moneyCollected, MaxMoney - w.money);
     if (s.rescued && !w.minersRescued) {
         w.minersRescued = true;
         w.population += 6;

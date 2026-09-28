@@ -359,6 +359,13 @@ bool Renderer::button(const std::string &title, float x, float y, float w, float
     text(title, x + 18, y + (h - 18) / 2, 18, primary ? Ink : Paper);
     return hover && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
 }
+std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const Camera3D &camera, Ray ray) {
+    westernScene_.prepare(run.arena);
+    if (!westernScene_.loaded() && !westernScene_.terrainReady())
+        return std::nullopt;
+    westernScene_.setPlayerOcclusion(camera, run.player.position);
+    return westernScene_.pick(ray, run.player.position);
+}
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
                          EntityId hoveredEnemy, float deathTime) {
     playerModel_.update(run, deathTime);
@@ -467,6 +474,23 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 if (collisions)
                     DrawBoundingBox({passage.gates[size_t(end)].min, passage.gates[size_t(end)].max}, color);
             }
+        }
+    }
+    for (const auto &coin : run.moneyPickups) {
+        if (distance(run.player.position, coin.position) > 60)
+            continue;
+        const float phase = float(run.stats.duration) * 2 + coin.position.x + coin.position.z;
+        const float bounce = coin.dropped && coin.age < .45f
+                                 ? std::abs(std::sin(coin.age / .45f * 2 * Pi)) * (1 - coin.age / .45f) * 1.1f
+                                 : 0;
+        DrawCircle3D({coin.position.x, .07f, coin.position.z}, .45f, {1, 0, 0}, 90, Color{234, 187, 75, 150});
+        for (int i = 0; i < std::min(coin.value, 3); ++i) {
+            Vector3 center = add(coin.position, {float(i - 1) * .18f, 0, float(i % 2) * .12f});
+            center.y = .4f + bounce + .05f * std::sin(phase + float(i));
+            const Vector3 axis{std::cos(phase), 0, std::sin(phase)};
+            const auto front = add(center, mul(axis, .07f));
+            DrawCylinderEx(sub(center, mul(axis, .07f)), front, .25f, .25f, 12, Gold);
+            DrawCylinderEx(front, add(front, mul(axis, .015f)), .16f, .16f, 12, Color{255, 225, 132, 255});
         }
     }
     for (const auto &key : run.arena.keys) {
@@ -680,7 +704,7 @@ Action Renderer::hub(const Game &game) {
     }
     panel(24, 24, 386, 98, Panel);
     text(hubName(game.activeHub), 42, 38, 28, Paper);
-    text("HOME / THE TOWN REMEMBERS", 43, 73, 12, Gold);
+    text("HOME / MONEY " + number(world.money), 43, 73, 12, Gold);
     text("PEOPLE " + std::to_string(world.population) + "   PROSPERITY " + std::to_string(world.prosperity) +
              "   LAW " + std::to_string(world.law),
          43, 98, 11, Muted);
@@ -767,6 +791,7 @@ void Renderer::dungeonMap(const Game &game) {
     text("KEYS " + std::to_string(run.keys) + "   POWERS " + std::to_string(run.powerUpsTaken) + " / " +
              std::to_string(totalPowers),
          1053, 201, 11, Paper);
+    text("MONEY " + number(run.money()), 1053, 216, 11, Gold);
     const auto &bounds = run.arena.bounds;
     const float scale = std::min(188 / (bounds.max.x - bounds.min.x), 120 / (bounds.max.z - bounds.min.z));
     auto point = [&](Vector3 p) -> Vector2 {
@@ -940,14 +965,16 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
     text("RUN " + number(s.id) + "  /  SEED " + number(s.seed) + "  /  " + timeLabel(s.stats.duration) +
              "  /  " + s.expedition + (s.interrupted ? "  /  PARTIAL CHECKPOINT" : ""),
          60, 150, 15, Muted);
-    const std::array<std::pair<std::string, std::string>, 4> values{
+    text("WALLET " + number(game.campaign.data().world.money), 60, 178, 13, Gold);
+    const std::array<std::pair<std::string, std::string>, 5> values{
         {{"ENEMIES KILLED", number(s.stats.kills)},
          {"BULLETS / PROJECTILES", number(s.stats.shots) + " / " + number(s.stats.projectiles)},
          {"EXPLOSIONS", number(s.stats.explosions)},
-         {"LARGEST KILL CHAIN", number(s.stats.largestKillChain)}}};
+         {"LARGEST KILL CHAIN", number(s.stats.largestKillChain)},
+         {"MONEY FOUND", number(s.moneyCollected)}}};
     for (size_t i = 0; i < values.size(); ++i) {
-        float x = 60 + float(i) * 296;
-        panel(x, 203, 276, 99, Panel);
+        float x = 60 + float(i) * 236;
+        panel(x, 203, 216, 99, Panel);
         text(values[i].first, x + 16, 219, 12, Muted);
         text(values[i].second, x + 16, 250, 29, Paper);
     }

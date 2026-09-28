@@ -7,6 +7,7 @@
 #include "render/WesternScene.hpp"
 #include "rlgl.h"
 #include "world/HubWorld.hpp"
+#include <chrono>
 #include <iostream>
 #include <stdexcept>
 
@@ -334,18 +335,189 @@ void residentRenderCheck(MissionTheme theme) {
     for (auto image : {empty, before, after})
         UnloadImage(image);
 }
+void sceneryInputCheck(MissionTheme theme, float yaw, bool transparent) {
+    const auto directory = std::filesystem::temp_directory_path() /
+                           ("deathward-transparent-input-" +
+                            std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
+    Game game(directory / "campaign.save");
+    game.seedText = "69175541";
+    game.themeChoice = theme == MissionTheme::Canyon ? ThemeChoice::Canyon : ThemeChoice::Mine;
+    game.launch();
+    check(bool(game.run), "launch the transparency input fixture");
+    auto &run = *game.run;
+    run.debugScenario = run.godMode = true;
+    run.roomClear = false;
+    for (auto &room : run.rooms)
+        room.residents.clear();
+    WesternScene scene;
+    scene.prepare(run.arena);
+    Vector3 player{}, enemyPoint{}, groundPoint{};
+    Vector2 enemyPixel{}, groundPixel{};
+    Camera3D camera{};
+    bool found = false;
+    std::array<int, 4> candidates{};
+    for (int room = 0; room < RoomCount && !found; ++room) {
+        const auto bounds = run.arena.rooms[size_t(room)].bounds;
+        for (float z = bounds.min.z + 2; z < bounds.max.z - 2 && !found; z += 2)
+            for (float x = bounds.min.x + 2; x < bounds.max.x - 2 && !found; x += 2) {
+                const Vector3 p{x, .85f, z};
+                if (run.arena.blocked(p, .65f))
+                    continue;
+                const auto candidate = view(p, yaw);
+                for (int direction = 0; direction < 8 && !found; ++direction) {
+                    const auto enemy =
+                        add(p, rotateY({transparent ? 1.8f : 6.f, 0, 0}, float(direction) * Pi / 4));
+                    if (run.arena.roomAt(enemy) != room || run.arena.blocked(enemy, .8f) ||
+                        !run.arena.clear(p, enemy, .3f))
+                        continue;
+                    auto pixel = GetWorldToScreen(add(enemy, {0, -.2f, 0}), candidate);
+                    pixel = {float(int(pixel.x)), float(int(pixel.y))};
+                    const auto ray = GetScreenToWorldRay(pixel, candidate);
+                    const auto body = GetRayCollisionBox(
+                        ray, {{enemy.x - .6f, 0, enemy.z - .6f}, {enemy.x + .6f, 2.5f, enemy.z + .6f}});
+                    if (!body.hit ||
+                        !run.arena.trace(ray.position, add(ray.position, mul(ray.direction, body.distance)))
+                             .hit)
+                        continue;
+                    ++candidates[0];
+                    scene.setPlayerOcclusion(candidate, p, false);
+                    const auto opaque = scene.pick(ray, p);
+                    if (!opaque.hit || opaque.distance >= body.distance - .1f)
+                        continue;
+                    ++candidates[1];
+                    scene.setPlayerOcclusion(candidate, p);
+                    const auto visibleHit = scene.pick(ray, p);
+                    const bool stillBlocked = visibleHit.hit && visibleHit.distance < body.distance;
+                    if (stillBlocked == transparent)
+                        continue;
+                    ++candidates[2];
+                    auto floorPixel = GetWorldToScreen({enemy.x, 0, enemy.z}, candidate);
+                    floorPixel = {float(int(floorPixel.x)), float(int(floorPixel.y))};
+                    const auto floorRay = GetScreenToWorldRay(floorPixel, candidate);
+                    const float t = -floorRay.position.y / floorRay.direction.y;
+                    const auto floorHit = scene.pick(floorRay, p);
+                    const bool floorBlocked = floorHit.hit && floorHit.distance < t - .15f;
+                    if (floorBlocked == transparent)
+                        continue;
+                    ++candidates[3];
+                    check(run.arena.trace(ray.position, add(ray.position, mul(ray.direction, body.distance)))
+                              .hit,
+                          "fading leaves the camera obstruction physically solid");
+                    player = p;
+                    enemyPoint = enemy;
+                    enemyPixel = pixel;
+                    groundPixel = floorPixel;
+                    groundPoint = add(floorRay.position, mul(floorRay.direction, t));
+                    groundPoint.y = .85f;
+                    camera = candidate;
+                    run.room = room;
+                    found = true;
+                }
+            }
+    }
+    std::cout << "Pointer fixture " << int(theme) << " yaw " << yaw << " transparent " << transparent
+              << " candidates " << candidates[0] << "/" << candidates[1] << "/" << candidates[2] << "/"
+              << candidates[3] << std::endl;
+    check(found, "find an enemy behind the requested transparent or opaque scenery");
+    run.player.position = player;
+    const auto target = run.spawnMonster(monsterId(12), enemyPoint); // Stationary Horf.
+    run.findEnemy(target)->cooldown = 1000;
+    run.findEnemy(target)->hp = run.findEnemy(target)->maxHp = 10000;
+    Renderer renderer;
+    const Game::SceneryPicker picker = [&](const auto &simulation, const auto &view, Ray ray) {
+        return renderer.pickScenery(simulation, view, ray);
+    };
+    auto frame = [&](Vector2 pixel, bool left = false, bool right = false, bool shift = false,
+                     bool renderedPicker = true) {
+        game.camera = camera;
+        PlayAutomationEvent({0, 7, {int(pixel.x), int(pixel.y), 0, 0}});
+        PlayAutomationEvent({0, left ? 6u : 5u, {MOUSE_BUTTON_LEFT, 0, 0, 0}});
+        PlayAutomationEvent({0, right ? 6u : 5u, {MOUSE_BUTTON_RIGHT, 0, 0, 0}});
+        PlayAutomationEvent({0, shift ? 2u : 1u, {KEY_LEFT_SHIFT, 0, 0, 0}});
+        game.update(Tick, renderedPicker ? picker : Game::SceneryPicker{});
+        BeginDrawing();
+        renderer.draw(game);
+        EndDrawing();
+        check(game.error.empty(), "transparency input never causes a game error");
+    };
+    frame(enemyPixel, false, false, false, false);
+    check(game.hoveredEnemy == target, "enemy aiming ignores scenery even without a renderer");
+    frame(enemyPixel);
+    check(game.hoveredEnemy == target, "transparent and opaque scenery permit enemy body selection");
+    const auto start = run.player.position;
+    frame(enemyPixel, true);
+    check(run.stats.shots == 1 && distance(start, run.player.position) < .001f,
+          "left click attacks through foreground scenery without issuing movement");
+    for (int i = 0; i < 24; ++i)
+        frame(enemyPixel, true);
+    check(run.findEnemy(target)->hp < 10000, "bullets reach the visible target along clear physical space");
+    const std::string name = (theme == MissionTheme::Canyon ? "canyon" : "mine") +
+                             std::string(yaw == 0 ? "" : "-rotated") +
+                             (transparent ? "-transparent" : "-solid");
+    BeginDrawing();
+    renderer.draw(game);
+    rlDrawRenderBatchActive();
+    const auto capture = LoadImageFromScreen();
+    check(ExportImage(capture, ("artifacts/scenery-aim-" + name + ".png").c_str()),
+          "save the transparency input capture");
+    UnloadImage(capture);
+    EndDrawing();
+    frame(enemyPixel);
+    run.findEnemy(target)->alive = false;
+    frame(groundPixel);
+    run.player.fireCooldown = 0;
+    auto shots = run.stats.shots;
+    frame(groundPixel, false, true);
+    check(run.stats.shots == shots + 1 && distance(run.player.aim, groundPoint) < .15f,
+          "right click aims at the floor behind scenery, not the model surface");
+    frame(groundPixel);
+    run.player.fireCooldown = 0;
+    shots = run.stats.shots;
+    frame(groundPixel, true, false, true);
+    check(run.stats.shots == shots + 1 && distance(run.player.aim, groundPoint) < .15f &&
+              distance(start, run.player.position) < .001f,
+          "Shift-left click also aims through scenery without moving");
+    frame(groundPixel);
+    // A real low obstacle between muzzle and target remains solid, even though
+    // the high camera ray sees over it and can still select the enemy.
+    run.projectiles.clear();
+    const auto blockedTarget = run.spawnMonster(monsterId(12), enemyPoint);
+    run.findEnemy(blockedTarget)->cooldown = 1000;
+    const auto midpoint = mul(add(player, enemyPoint), .5f);
+    run.arena.walls.push_back(
+        {{midpoint.x - .5f, 0, midpoint.z - .5f}, {midpoint.x + .5f, 1.2f, midpoint.z + .5f}});
+    const float health = run.findEnemy(blockedTarget)->hp;
+    for (int i = 0; i < 30; ++i)
+        frame(enemyPixel, false, true);
+    check(run.findEnemy(blockedTarget)->hp == health,
+          "transparency picking never lets bullets pass through physical cover");
+    // Gates obey the same aiming rule; their physical collision stays in place.
+    const auto ray = GetScreenToWorldRay(enemyPixel, camera);
+    const auto gate = add(ray.position, mul(ray.direction, distance(ray.position, enemyPoint) - 3));
+    run.arena.walls.push_back({sub(gate, {.8f, .8f, .8f}), add(gate, {.8f, .8f, .8f})});
+    frame(enemyPixel);
+    check(game.hoveredEnemy == blockedTarget, "solid gates do not intercept enemy aiming");
+    std::filesystem::remove_all(directory);
+    std::cout << "PASS " << name << " selection, left/force fire, aim and solid collision\n";
+}
 } // namespace
-int main() {
+int main(int argc, char **argv) {
     try {
         SetTraceLogLevel(LOG_WARNING);
         SetConfigFlags(FLAG_WINDOW_HIDDEN);
         InitWindow(960, 640, "Player occlusion verification");
         check(IsWindowReady(), "graphics display required");
-        townCheck(HubKind::BlackCreek);
-        townCheck(HubKind::Frontier);
-        canyonCheck();
-        residentRenderCheck(MissionTheme::Mine);
-        residentRenderCheck(MissionTheme::Canyon);
+        if (argc < 2 || std::string(argv[1]) != "--pointer-only") {
+            townCheck(HubKind::BlackCreek);
+            townCheck(HubKind::Frontier);
+            canyonCheck();
+            residentRenderCheck(MissionTheme::Mine);
+            residentRenderCheck(MissionTheme::Canyon);
+        }
+        for (auto theme : {MissionTheme::Mine, MissionTheme::Canyon})
+            for (float yaw : {0.f, 1.2f})
+                for (bool transparent : {true, false})
+                    sceneryInputCheck(theme, yaw, transparent);
         CloseWindow();
         std::cout << "PASS town/canyon transparency, enemy outlines, restoration, zoom and collision\n";
     } catch (const std::exception &e) {

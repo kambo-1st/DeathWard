@@ -97,10 +97,25 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     console.log('PASS music controls and direct Frontier travel');
     await key('Enter');
     await wait(() => Module.state.menu);
+    for (let i = 0; i < 12; ++i) await key('Backspace');
+    await page.keyboard.type('1866', {delay: 100});
     await key('Enter');
     await wait(() => Module.state.screen === 1 && Module.state.room === 0);
     assert.equal((await state()).theme, 1);
-    await key('F2'); // Invulnerability for repeatable input checks.
+    await key('F2'); // Invulnerability while checking pickups and combat.
+    await page.mouse.move(640, 450);
+    await page.mouse.wheel(0, 800);
+    await wait(() => Module.state.zoom < 120 && Module.state.coinValue > 0);
+    await page.waitForTimeout(700);
+    const coin = await state();
+    await page.screenshot({path: path.join(artifacts, 'web-money-before.png')});
+    await click(coin.coinX, coin.coinY);
+    await wait(value => Module.state.money >= value, coin.money + coin.coinValue);
+    const collectedMoney = (await state()).money;
+    assert.equal((await state()).shots, 0);
+    await wait(() => !Module.saving);
+    await page.screenshot({path: path.join(artifacts, 'web-money.png')});
+    console.log('PASS seeded ground money, click pickup and immediate checkpoint');
     await key('F12');
     await wait(() => Module.state.room === 1);
     await page.mouse.move(650, 445);
@@ -119,6 +134,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     console.log('PASS canyon launch, firing, camera orbit, final encounter and victory');
     await start(base + '?verify&theme=mine');
     assert.equal((await state()).history, 1);
+    assert((await state()).money >= collectedMoney, 'collected money survives resolution and browser reload');
     assert(Math.abs((await state()).music - .3) < .001);
     console.log('PASS campaign and music volume survive a browser reload');
     await key('F4');

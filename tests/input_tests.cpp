@@ -1,5 +1,6 @@
 #include "core/Game.hpp"
 #include "render/Renderer.hpp"
+#include "rlgl.h"
 #include <chrono>
 #include <iostream>
 #include <stdexcept>
@@ -30,6 +31,9 @@ int main() {
         dw::Game game(directory / "campaign.save");
         check(game.musicScene() == dw::MusicScene::Town, "default hub selects its town score");
         dw::Renderer renderer;
+        const dw::Game::SceneryPicker pickScenery = [&](const auto &run, const auto &camera, Ray ray) {
+            return renderer.pickScenery(run, camera, ray);
+        };
         auto frame = [&](int x = 10, int y = 10, bool left = false, bool right = false, bool middle = false,
                          bool shift = false, float dt = dw::Tick) {
             mouseEvent(MousePosition, x, y);
@@ -37,7 +41,7 @@ int main() {
             mouseEvent(right ? MouseDown : MouseUp, MOUSE_BUTTON_RIGHT);
             mouseEvent(middle ? MouseDown : MouseUp, MOUSE_BUTTON_MIDDLE);
             mouseEvent(shift ? KeyDown : KeyUp, KEY_LEFT_SHIFT);
-            game.update(dt);
+            game.update(dt, pickScenery);
             BeginDrawing();
             auto action = renderer.draw(game);
             EndDrawing();
@@ -255,6 +259,31 @@ int main() {
               "the selected canyon theme reaches gameplay and the initial campaign checkpoint");
         check(game.debug && !game.debugPanelOpen && game.run->roomClear && game.run->livingEnemies() == 0,
               "new games start with hidden cheats enabled and an open, enemy-free starting room");
+        // A real seeded pile overlaps a passage's generous click area at wide zoom.
+        // Clicking the pile must collect it rather than taking that passage.
+        const auto moneyArrival = game.run->player.position;
+        const auto moneyCamera = game.camera;
+        const auto nearbyCoin = *std::min_element(
+            game.run->moneyPickups.begin(), game.run->moneyPickups.end(), [&](const auto &a, const auto &b) {
+                return dw::distance(a.position, moneyArrival) < dw::distance(b.position, moneyArrival);
+            });
+        check(game.run->arena.roomAt(nearbyCoin.position) == 0, "pickup fixture uses the quiet room");
+        const auto startingMoney = game.run->money();
+        game.camera.target = dw::add(moneyArrival, {0, .1f, 0});
+        game.camera.position = dw::add(game.camera.target, dw::mul({23, 30, 23}, 1.284f));
+        auto moneyPoint = nearbyCoin.position;
+        moneyPoint.y = .4f;
+        const auto moneyPixel = GetWorldToScreen(moneyPoint, game.camera);
+        frame(int(moneyPixel.x), int(moneyPixel.y), true);
+        for (int i = 0; i < 240 && game.run->money() < startingMoney + nearbyCoin.value; ++i)
+            frame();
+        check(game.run->money() >= startingMoney + nearbyCoin.value && game.run->room == 0 &&
+                  game.run->stats.shots == 0,
+              "a coin near a passage takes priority without leaving the room or firing");
+        for (int i = 0; i < 60; ++i)
+            frame();
+        game.run->player.position = moneyArrival;
+        game.camera = moneyCamera;
         frame(100, 200);
         check(!game.pointerOverControls(), "hidden cheat panel never blocks world mouse input");
         pressKey(KEY_GRAVE);
@@ -274,8 +303,18 @@ int main() {
         for (int i = 0; i < 100; ++i)
             frame(); // Settle the tracking camera before projecting a click.
         Vector3 destination = game.run->arena.rooms[0].center;
+        game.run->moneyPickups = {{{destination.x, .85f, destination.z}, 3, 1, false}};
+        const auto moneyBeforePickup = game.run->money();
         destination.y = 0;
         auto point = GetWorldToScreen(destination, game.camera);
+        BeginDrawing();
+        renderer.draw(game);
+        rlDrawRenderBatchActive();
+        const auto coinImage = LoadImageFromScreen();
+        std::filesystem::create_directories("artifacts");
+        check(ExportImage(coinImage, "artifacts/money-ground.png"), "save the coin rendering capture");
+        UnloadImage(coinImage);
+        EndDrawing();
         click(int(point.x), int(point.y));
         check(game.run->moveDestination().has_value(), "left-clicking ground queues a route");
         for (int i = 0; i < 200; ++i)
@@ -284,6 +323,9 @@ int main() {
         check(dw::distance(game.run->player.position, destination) < 0.15f,
               "mouse ray and navigation reach clicked ground point");
         check(game.run->stats.shots == 0, "left-clicking ground never fires");
+        check(game.run->money() == moneyBeforePickup + 3 && game.run->moneyPickups.empty() &&
+                  game.campaign.data().pending->moneyCollected == game.run->moneyCollected,
+              "clicking a coin approaches it, collects it and saves the earnings without firing");
         // Hold an enemy, move the cursor away, then move the enemy: attacks must track its body.
         const auto target = game.run->spawn(dw::EnemyKind::Gunman, {0, 0.85f, -6});
         game.run->findEnemy(target)->hp = game.run->findEnemy(target)->maxHp = 10000;

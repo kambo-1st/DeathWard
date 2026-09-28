@@ -16,6 +16,7 @@ struct WorldState {
     bool minersRescued = false, bossDefeated = false, mineOpen = false, altarDestroyed = false;
     int mineDebt = 0;
     uint64_t completed = 0;
+    uint64_t money = 0;
     std::set<std::string> flags;
     std::array<Npc, 5> npcs{
         {{"Sheriff Cole"}, {"Mary Bell"}, {"Father Gabriel"}, {"Silas Reed"}, {"Dr. Whitmore"}}};
@@ -26,6 +27,7 @@ struct RunSummary {
     EndReason reason = EndReason::Retreat;
     bool rescued = false, bossKilled = false, altarDestroyed = false, interrupted = false;
     Stats stats;
+    uint64_t moneyCollected = 0;
     std::vector<ItemId> items;
     std::vector<std::string> consequences;
 };

@@ -30,6 +30,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     for (int index = 0; index < RoomCount; ++index)
         prepareRoomEnemies(index);
     enemies = std::move(rooms[0].residents);
+    prepareMoney();
     enterRoom(0);
     announce(std::string(missionTheme(theme).region) +
                  (followup ? " / return to unfinished business" : " / find the six missing miners"),
@@ -411,6 +412,7 @@ RunSummary Simulation::summary() const {
     s.bossKilled = bossKilled;
     s.stats = stats;
     s.items = items;
+    s.moneyCollected = moneyCollected;
     return s;
 }
 void Simulation::suppress(const Context &ctx, const std::string &reason) {
@@ -546,6 +548,7 @@ void Simulation::process(const Event &e) {
             if (!e.execution && target->kind == EnemyKind::Monster && collapseMonster(*target))
                 break;
             target->alive = false;
+            dropMoney(*target);
             audioCues.push(AudioCueKind::EnemyDeath, target->position);
             if (target->kind == EnemyKind::Monster && !e.execution)
                 monsterDeath(*target, e);
@@ -887,6 +890,7 @@ void Simulation::step(const Input &input, float dt) {
             enterRoom(location);
     }
     collectKeys();
+    updateMoney(dt);
     // After the room transition, each actor advances either its idle or combat
     // clock exactly once. Ambient animation never runs attacks or summons.
     for (auto &progress : rooms)

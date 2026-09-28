@@ -9,7 +9,8 @@
 #include <vector>
 
 namespace dw {
-inline constexpr const char *ContentVersion = "deathward-m1-22";
+inline constexpr const char *ContentVersion = "deathward-m1-23";
+inline constexpr uint64_t MaxMoney = 999999999;
 inline constexpr float StartingHealth = 100;
 inline constexpr float RevolverDamage = 24;
 inline constexpr float EnemyDamageMultiplier = 1.25f;

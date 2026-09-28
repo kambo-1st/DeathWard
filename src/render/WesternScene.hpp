@@ -50,6 +50,7 @@ class WesternScene {
     void unload();
     void prepare(const Arena &arena);
     void draw(Vector3 focus);
+    RayCollision pick(Ray ray, Vector3 focus);
     void drawGlass();
     void setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled = true) {
         occlusion_.set(camera, player);
@@ -109,6 +110,8 @@ class WesternScene {
     void clearTerrain();
     void generateCanyon(const Arena &arena);
     void drawTerrain(Vector3 focus);
+    void updateTerrainOcclusion();
+    void updateDrawState(Vector3 focus);
     void drawTerrainOutlines();
     void generate(const Arena &arena);
     void drawBatches(bool transparent);

@@ -133,6 +133,9 @@ int main(int argc, char **argv) {
         auto savedAudioSettings = game.audioSettings;
         game.audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
         dw::Renderer renderer;
+        const dw::Game::SceneryPicker pickScenery = [&](const auto &run, const auto &camera, Ray ray) {
+            return renderer.pickScenery(run, camera, ray);
+        };
         dw::TownEditor editor;
         if (startEditor) {
             const auto directory = editorDirectory.empty() ? game.hubDirectory() : editorDirectory;
@@ -255,7 +258,7 @@ int main(int argc, char **argv) {
                 maxChain = game.run->stats.maxDepth;
                 totalKills = game.run->stats.kills;
             } else if (!smoke && !benchmark)
-                game.update(GetFrameTime());
+                game.update(GetFrameTime(), pickScenery);
             const auto simulated = std::chrono::steady_clock::now();
             BeginDrawing();
             dw::Action action = dw::Action::None;
@@ -307,6 +310,21 @@ int main(int argc, char **argv) {
             }
 #ifdef __EMSCRIPTEN__
             // Read-only state for browser integration checks; absent during ordinary play.
+            const dw::MoneyPickup *probeCoin = nullptr;
+            if (game.run)
+                for (const auto &coin : game.run->moneyPickups)
+                    if (game.run->arena.roomAt(coin.position) == game.run->room &&
+                        (!probeCoin || dw::distance(coin.position, game.run->player.position) <
+                                           dw::distance(probeCoin->position, game.run->player.position)))
+                        probeCoin = &coin;
+            Vector2 coinPixel{-1, -1};
+            if (probeCoin) {
+                auto point = probeCoin->position;
+                point.y = .4f;
+                coinPixel = GetWorldToScreen(point, game.camera);
+                coinPixel.x *= 1280.f / float(GetScreenWidth());
+                coinPixel.y *= 800.f / float(GetScreenHeight());
+            }
             EM_ASM(
                 {
                     if (Module.verify)
@@ -342,9 +360,17 @@ int main(int argc, char **argv) {
                         Module.state.score = $1;
                         Module.state.editorSaved = !!$2;
                         Module.state.editorStatus = UTF8ToString($3);
+                        Module.state.money = $4;
+                        Module.state.earned = $5;
+                        Module.state.coinX = $6;
+                        Module.state.coinY = $7;
+                        Module.state.coinValue = $8;
                     }
                 },
-                editing, int(game.musicScene()), editor.saved, editor.status.c_str());
+                editing, int(game.musicScene()), editor.saved, editor.status.c_str(),
+                int(game.run ? game.run->money() : game.campaign.data().world.money),
+                game.run ? int(game.run->moneyCollected) : 0, coinPixel.x, coinPixel.y,
+                probeCoin ? probeCoin->value : 0);
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

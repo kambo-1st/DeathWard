@@ -261,10 +261,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
                                    true});
         }
 }
-void WesternScene::drawTerrain(Vector3 focus) {
+void WesternScene::updateTerrainOcclusion() {
     if (terrain_.empty())
         return;
-    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "focus"), &focus, SHADER_UNIFORM_VEC3);
     for (auto &section : terrain_)
         section.faded = false;
     if (occlusion_.enabled) {
@@ -304,6 +303,11 @@ void WesternScene::drawTerrain(Vector3 focus) {
                 }
         }
     }
+}
+void WesternScene::drawTerrain(Vector3 focus) {
+    if (terrain_.empty())
+        return;
+    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "focus"), &focus, SHADER_UNIFORM_VEC3);
     occlusion_.bind(terrainShader_, false);
     // The buried base must not self-shadow against the translucent rock above it.
     int underlay = 1;

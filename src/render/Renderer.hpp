@@ -9,6 +9,7 @@ namespace dw {
 class Renderer {
   public:
     Action draw(const Game &game);
+    std::optional<RayCollision> pickScenery(const Simulation &run, const Camera3D &camera, Ray ray);
     void reloadTown() {
         townScene_.unload();
         loadedHub_.reset();

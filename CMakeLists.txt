@@ -34,6 +34,7 @@ add_library(deathward_core
     src/world/CanyonTerrain.cpp
     src/world/RoomGraph.cpp
     src/combat/Simulation.cpp
+    src/combat/Loot.cpp
     src/combat/Enemies.cpp
     src/combat/Encounters.cpp
     src/combat/Monsters.cpp
@@ -125,6 +126,9 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_money_tests tests/money_tests.cpp)
+    target_link_libraries(deathward_money_tests PRIVATE deathward_core)
+    add_test(NAME money_pickups COMMAND deathward_money_tests)
     add_executable(deathward_resident_enemies_tests tests/resident_enemies_tests.cpp)
     target_link_libraries(deathward_resident_enemies_tests PRIVATE deathward_core)
     add_test(NAME resident_enemies COMMAND deathward_resident_enemies_tests)
