@@ -363,6 +363,11 @@ int main(int argc, char **argv) {
                 animalDefinition ? double(animalDefinition->seed) : 0., animalDefinition ? animalDefinition->home.x : 0.f,
                 animalDefinition ? animalDefinition->home.z : 0.f);
             const auto &previewCharacters = editor.characterPreview().residents();
+            const auto &particleEffects = editor.active ? editor.effects() : renderer.townEffects();
+            EM_ASM({
+                if (Module.verify) Module.particles = ({ready: !!$0, attachments: $1, count: $2, time: $3});
+            }, particleEffects.loaded(), int(particleEffects.attachmentCount()),
+               int(particleEffects.particleCount()), particleEffects.time());
             const auto selectedCharacter = editor.characterSelection();
             EM_ASM(
                 {

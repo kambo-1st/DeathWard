@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "source_pack": "PolygonParticleFX",
+  "source_sha256": {
+    "Prefabs/FX_Fire_Small_03.prefab": "c18e2ce21e09b0353ef59afe346854aab57055e5a747d779b0ec01cc3fec7c37",
+    "Prefabs/FX_Fire_Small_01.prefab": "8aae5dbb69de51e3cb02ef3df79b4f0352ac7dd3f1a5ac67fb48feb125f5356b",
+    "Models/SM_Flame_FX.fbx": "f2f38f19cae42147ddf8825f3c445d82d6780e04279034ae0ba99bf485941550",
+    "Models/SM_Flame_FX.fbx.meta": "4a7f4271c38ce446c86ad676a49c850e44b52f1b8434dcd491058f8fb940744f",
+    "Materials/PolygonParticleFX_Default_01.mat": "fb85f812ece6c3156112fe5d63e9767ba0f82921acee9cbbc7c16848a549c68b",
+    "Materials/PolygonParticleFX_Circle.mat": "43c35b5a4305d278b41b71ed8e25cf0f5553a18602a8360d94af72522cf40c59",
+    "Textures/PolygonParticles_Circle_01.png": "860962eec87a6e65ab97ee68948239cd87dde33554d2055c05989b14942cc1fb",
+    "Textures/PolygonParticles_Smoke_01.png": "860962eec87a6e65ab97ee68948239cd87dde33554d2055c05989b14942cc1fb"
+  },
+  "adaptations": [
+    "FX_Fire_Small_03 lifetime, rate, size curve, color/alpha gradients and spin; original flame mesh.",
+    "FX_Fire_Small_01 ember lifetime, rate, size/color/alpha, gravity and original Circle_01 texture.",
+    "Analytic sine turbulence replaces Unity noise; ember billboards replace stretched billboards.",
+    "DeathWard authors smoke, hearth offsets, effect scale, HDR emission and warm point lighting."
+  ],
+  "output_sha256": {
+    "flame.glb": "1697035c983b5412c16c5fe776455029c4e3fe9da74ff23790e7bb5b2f7a819b",
+    "ember.png": "860962eec87a6e65ab97ee68948239cd87dde33554d2055c05989b14942cc1fb",
+    "smoke.png": "860962eec87a6e65ab97ee68948239cd87dde33554d2055c05989b14942cc1fb",
+    "fire.particles": "5453200b2e631bc359c6ee7362bd00bb27bcb469fe67197ac3018c920a76b9c3"
+  }
+}

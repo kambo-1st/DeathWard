@@ -1,5 +1,43 @@
 # Milestone 1 verification
 
+## PolygonParticleFX fireplace proof of concept
+
+Content version `deathward-m1-34` ports the original `SM_Flame_FX` mesh and
+`FX_Fire_Small_03` particle curves, plus the original ember/smoke textures, into
+a portable continuous-emitter library. The selected fire effect uses prewarmed,
+deterministic sampling, Hermite size curves, color/opacity gradients, rising
+embers, restrained smoke and local flickering lights. Alpha particles sort by
+camera depth and retain scene occlusion; existing bloom, fog and color grading
+apply. Unity noise and stretched-billboard behavior are adapted; this is not a
+complete conversion of the pack's 180 prefabs.
+
+Black Creek has one additional `fireplace-poc` stone-ring prop in the open square
+at `(-2, .06, 0)`. The source audit still verifies all 1,516 original placements
+and records the extra prop separately. Both hubs' existing campfires use local
+attachments, so editor transforms, duplicate/delete, save/reload and preview
+pause/reset apply. Frontier's separate cooking pots receive their own label,
+avoiding duplicate fires; a targeted browser migration preserves saved scenes.
+The scene clock advances even when a hub has no moving props.
+
+Native and WASM builds pass. All 17 headless suites pass. Particle graphics
+checks cover actual flame/texture rendering, opaque-wall depth rejection,
+identical paused frames, changing animated frames, attachment/light transforms,
+duplicate/delete and exact Frontier attachment counts. Existing editor and
+town-rendering suites cover persistence, scene navigation, sunlight, cached
+shadows and animated geometry. The sun-shadow comparison holds fire lighting
+constant to isolate the behavior under test. Both source audits pass; the two
+particle textures retain their original bytes. Logs use `artifacts/particle-*`.
+
+The inspected close-up and gameplay captures are
+`artifacts/fireplace-poc-closeup.png` and `artifacts/fireplace-poc-town.png`.
+
+The complete Chromium suite passes with no JavaScript exceptions, shader failures
+or WebGL errors. It verifies stock scene bytes, migration of old Frontier labels,
+prewarmed fire populations, animation in both hubs, exact pause, editor preview
+time/pause, saved scene persistence and all existing gameplay flows. The refreshed
+71.6 MiB upload ZIP passes archive integrity, manifest size/hash checks, exact
+current JS/WASM/data comparisons and relative root/subdirectory hosting checks.
+
 ## Open town entrances and standing headroom
 
 Content version `deathward-m1-33` fixes the invisible barrier under Black Creek's wooden entrance. The old navigation bake selected the topmost surface, turning its overhead crossbeam into a street obstruction. The shared baker now keeps candidate ground below overhead geometry, checks 1.9 m of standing clearance, clips triangles to cell footprints so thin posts and vertical walls remain blockers, and retains connected ground with the existing step/footprint rules. Low ceilings and solid volumes still block walking. The navigation map remains one traversable height per cell, without multi-floor interior support.

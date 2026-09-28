@@ -45605,8 +45605,8 @@
   },
   "output_sha256": {
     "town.glb": "b931bd09b0873de30ff2aefd674aec1a609c83bfa30b4a16b31c6df423c8b8a8",
-    "town.scene": "53597feab433dfebb85dfed3f2e4aa759d13f3a1e57395361decc1a893480be3",
-    "town.nav": "6d8038f5f802023fd8db6af78d5222ec9a1c1afec962b53c1864a33899609fec"
+    "town.scene": "ca10b691c4a9dafe1c6ba735e95c3dfdbef1cfd1650c10ae6682b981e111e802",
+    "town.nav": "7cd50805d3a9742897f33cc6ca16eea884b4fa7d13cbc7a5ca07cb004e70b6c6"
   },
   "object_motion": {
     "488115655:1367905150670218": [
@@ -48397,5 +48397,29 @@
         0
       ]
     }
-  }
+  },
+  "authored_placements": [
+    {
+      "object": "fireplace-poc",
+      "asset": "part_0362",
+      "transform": [
+        1,
+        0,
+        0,
+        -2,
+        0,
+        1,
+        0,
+        0.06,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ]
 }

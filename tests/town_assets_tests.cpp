@@ -15,8 +15,11 @@ void lightingCheck(TownScene &scene, Vector3 focus) {
     const auto render = [&](bool shadows) {
         BeginDrawing();
         ClearBackground(SKYBLUE);
-        if (shadows)
-            scene.prepareLighting(camera);
+        // Keep local fire lights identical in both images; toggle only sun shadows.
+        scene.prepareLighting(camera);
+        const int shadowEnabled = shadows ? 1 : 0;
+        const auto shader = scene.model().materials[0].shader;
+        SetShaderValue(shader, GetShaderLocation(shader, "shadowEnabled"), &shadowEnabled, SHADER_UNIFORM_INT);
         BeginMode3D(camera);
         scene.draw(focus);
         scene.draw(focus, true);
@@ -207,8 +210,8 @@ int main() {
             check(scene.load(pack), "packaged original scene loads outside repository");
             check(town.load(pack / "town.nav"), "packaged town navigation loads");
             std::filesystem::current_path(original);
-            check(scene.instanceCount() == (frontier ? 2216 : 1516),
-                  "all active mesh placements from the original scene are present");
+            check(scene.instanceCount() == (frontier ? 2216 : 1517),
+                  "all original placements plus the Black Creek fireplace demo are present");
             check(scene.model().meshCount == (frontier ? 346 : 398),
                   "original scene library contains every material variant and submesh");
             std::set<unsigned> textures;

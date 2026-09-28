@@ -83,6 +83,10 @@ uniform vec3 lightPositions[8];
 uniform vec3 lightDirections[8];
 uniform vec3 lightColors[8];
 uniform float lightRanges[8];
+uniform int fireCount;
+uniform vec3 firePositions[4];
+uniform vec3 fireColors[4];
+uniform float fireRanges[4];
 out vec4 finalColor;
 float visibility(vec3 n, vec3 sun) {
     if (shadowEnabled == 0) return 1.;
@@ -130,6 +134,11 @@ void main() {
         float shade = i == sunIndex && direct > 0. ? visibility(n,d) : 1.;
         light += direct*lightColors[i]*attenuation*shade;
     }
+    for(int i=0;i<fireCount;i++) {
+        vec3 delta = firePositions[i]-world;
+        float attenuation = pow(max(0.,1.-length(delta)/fireRanges[i]),2.);
+        light += fireColors[i]*attenuation*max(.12,dot(n,normalize(delta+vec3(.0001))));
+    }
     finalColor=vec4(surface.rgb*light,surface.a);
 }
 )GLSL";
@@ -162,6 +171,7 @@ TownScene::~TownScene() {
     unload();
 }
 void TownScene::unload() {
+    effects_.unload();
     std::set<unsigned> textures;
     for (int i = 0; i < model_.materialCount; ++i)
         for (int j = MATERIAL_MAP_ALBEDO; j <= MATERIAL_MAP_BRDF; ++j) {
@@ -267,6 +277,7 @@ bool TownScene::load(const std::filesystem::path &directory) {
         }
         batches_.resize(assets_.size());
         shadowBatches_.resize(assets_.size());
+        if (effects_.load()) effects_.bind(document_);
         TraceLog(LOG_INFO, "TOWN: Original Demo scene loaded: %d placements, %d mesh sections",
                  int(instances_.size()), meshCount);
         return true;
@@ -282,6 +293,7 @@ void TownScene::applyDocument(const TownDocument &document) {
     if (document.meshCount() != model_.meshCount || document.assets.size() != assets_.size())
         throw std::runtime_error("The edited scene must use the loaded mesh library.");
     document_ = document;
+    effects_.bind(document_);
     updateLights();
     instances_.clear();
     occluders_.clear();
@@ -294,6 +306,7 @@ void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
     const auto &poses = animation.poses();
     if (poses.size() != instances_.size())
         return;
+    effects_.animate(animation);
     occluders_.clear();
     for (size_t n = 0; n < poses.size(); ++n) {
         if (!instances_[n].animated)
@@ -345,7 +358,27 @@ void TownScene::updateLights() {
         }
     }
 }
+void TownScene::updateEffectLights(const Camera3D &camera) {
+    effects_.prepare(camera);
+    const auto &lights = effects_.lights();
+    const int count = int(lights.size());
+    Vector3 positions[4]{}, colors[4]{};
+    float ranges[4]{};
+    for (int i = 0; i < count; ++i) {
+        positions[i] = lights[size_t(i)].position;
+        colors[i] = lights[size_t(i)].color;
+        ranges[i] = lights[size_t(i)].range;
+    }
+    for (auto shader : {shader_, actorShader_}) {
+        SetShaderValue(shader, GetShaderLocation(shader, "fireCount"), &count, SHADER_UNIFORM_INT);
+        if (!count) continue;
+        SetShaderValueV(shader, GetShaderLocation(shader, "firePositions"), positions, SHADER_UNIFORM_VEC3, count);
+        SetShaderValueV(shader, GetShaderLocation(shader, "fireColors"), colors, SHADER_UNIFORM_VEC3, count);
+        SetShaderValueV(shader, GetShaderLocation(shader, "fireRanges"), ranges, SHADER_UNIFORM_FLOAT, count);
+    }
+}
 void TownScene::prepareLighting(const Camera3D &camera, const std::function<void(Shader)> &actors) {
+    updateEffectLights(camera);
     if (!shadowsReady())
         return;
     // A square orthographic sun map follows the camera's focus, including at wide zoom.

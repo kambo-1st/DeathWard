@@ -4,6 +4,11 @@ DeathWard starts in the original `PolygonWestern/Scenes/Demo.unity` town. This i
 
 The source scene contains **1,269 prefab instances**. Resolving the prefab hierarchy, inactive objects and scene overrides produces **1,516 active mesh placements**, represented by 398 mesh/material sections, 20 materials and **12 original embedded textures**. These include the color atlases, signs and sky texture. Instance positions, rotations, scales, parent transforms, material replacements and mesh overrides are retained. Converting Unity's coordinate handedness reflects world X consistently; no objects are rearranged or fitted to generated room dimensions.
 
+One additional stone-ring campfire, `fireplace-poc`, sits beside the starting area
+at `(-2, .06, 0)`. Its animated flames, embers, smoke and warm light use the
+[PolygonParticleFX proof of concept](../particles/README.md). The original 1,516
+placements are preserved; the manifest records this extra prop separately.
+
 ## Assets and conversion
 
 - `town.glb`: shared local meshes and material variants, with embedded textures.

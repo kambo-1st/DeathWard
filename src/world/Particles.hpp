@@ -1,0 +1,41 @@
+#pragma once
+#include "world/TownDocument.hpp"
+
+namespace dw {
+enum class ParticleKind { Mesh, Billboard, Additive };
+struct ParticleKey {
+    float time = 0, value = 0, inSlope = 0, outSlope = 0;
+};
+struct ParticleColorKey {
+    float time = 0;
+    Vector3 value{};
+};
+struct ParticleEmitter {
+    std::string name, resource;
+    ParticleKind kind = ParticleKind::Mesh;
+    float rate = 8, gravity = 0, radius = .01f, noise = 0, frequency = 1, emission = 1;
+    Vector2 lifetime{1, 1}, size{1, 1}, speed{}, spin{};
+    std::vector<ParticleKey> sizes, alphas;
+    std::vector<ParticleColorKey> colors;
+};
+struct ParticleAttachment {
+    std::string label;
+    size_t emitter = 0;
+    Vector3 offset{};
+    float scale = 1, lightRange = 0;
+};
+struct ParticleSample {
+    Vector3 position{}, color{};
+    float size = 0, alpha = 0, rotation = 0;
+};
+// Evaluate only particles alive at the requested time. No frame RNG, accumulated
+// integration error, startup ramp or dependence on whether the emitter is visible.
+class ParticleLibrary {
+  public:
+    std::vector<ParticleEmitter> emitters;
+    std::vector<ParticleAttachment> attachments;
+    void load(const std::filesystem::path &directory);
+    static float curve(const std::vector<ParticleKey> &keys, float time, bool hermite = true);
+    static std::vector<ParticleSample> sample(const ParticleEmitter &emitter, double time, uint32_t seed);
+};
+} // namespace dw

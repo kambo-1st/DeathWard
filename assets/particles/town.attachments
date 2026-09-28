@@ -1,0 +1,15 @@
+# Asset label / emitter / local X Y Z / effect scale / point-light range (0 disables).
+# Attachments are in the prop's coordinates; editor transforms and copies carry them.
+SM_Env_CampFire_01 flame -.13 .12 0 10 4
+SM_Env_CampFire_01 flame .15 .14 .06 9 0
+SM_Env_CampFire_01 flame 0 .19 -.12 11 0
+SM_Env_CampFire_01 ember 0 .35 0 1.6 0
+SM_Env_CampFire_01 smoke 0 .64 0 1 0
+SM_Prop_Campfire_01 flame -.35 .45 0 22 7
+SM_Prop_Campfire_01 flame .38 .48 .16 18 0
+SM_Prop_Campfire_01 flame 0 .58 -.3 24 0
+SM_Prop_Campfire_01 ember 0 1.2 0 2.5 0
+SM_Prop_Campfire_01 smoke 0 2.1 0 1.6 0
+SM_Prop_Campfire_Small_01 flame 0 .12 0 8 3
+SM_Prop_Campfire_Small_01 ember 0 .26 0 1.1 0
+SM_Prop_Campfire_Small_01 smoke 0 .45 0 .75 0

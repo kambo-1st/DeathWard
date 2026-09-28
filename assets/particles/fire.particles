@@ -1,0 +1,62 @@
+DEATHWARD_PARTICLES 1
+emitter flame mesh flame.glb
+rate 8
+lifetime 0.8 1.2
+size 0.055 0.1
+speed 0 0
+gravity -0.0
+radius 0.01
+spin -1.7453293 1.7453293
+noise 0 0.5
+emission 1.65
+sizekey 0 0 10 10
+sizekey 1 5 0 0
+color 0.10745403219653621 1 1 1
+color 0.23356984817273213 1 0.8509096 0.3087625
+color 0.699824521248188 1 0.43416244 0
+color 1.0 0.49264705 0 0
+alpha 0.0 0
+alpha 0.1305561913481346 1
+alpha 0.581704432745861 1
+alpha 0.8641184100099184 0.6853976
+alpha 1.0 0
+end
+emitter ember additive ember.png
+rate 5
+lifetime 0.5 2
+size 0.0025 0.006
+speed 0 1
+gravity 0.9810000000000001
+radius 0.01
+spin 1.7453293 3.4906585
+noise 0.5 0.7
+emission 1
+sizekey 0 0 0 0
+sizekey 0.4404799 5 1.0404904 1.0404904
+sizekey 1 0 0.54697752 0.54697752
+color 0.0 1 0.6827587 0
+color 1.0 1 0.6827587 0
+alpha 0.0 0
+alpha 0.15463492790112154 1
+alpha 0.8649118791485466 0.97759134
+alpha 1.0 0
+end
+emitter smoke billboard smoke.png
+rate 4
+lifetime 2.4 3.4
+size .22 .36
+speed .35 .55
+gravity .08
+radius .11
+spin -.25 .25
+noise .1 .45
+emission 1
+sizekey 0 .6 1 1
+sizekey 1 2.7 1 1
+color 0 .40 .36 .32
+color 1 .55 .53 .50
+alpha 0 0
+alpha .18 .19
+alpha .6 .12
+alpha 1 0
+end

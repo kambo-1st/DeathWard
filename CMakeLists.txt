@@ -27,6 +27,7 @@ target_compile_definitions(raylib PRIVATE MA_NO_NULL)
 
 add_library(deathward_core
     src/world/TownDocument.cpp
+    src/world/Particles.cpp
     src/world/ObjectAnimation.cpp
     src/world/TownNavigation.cpp
     src/world/HubWorld.cpp
@@ -62,12 +63,32 @@ file(GLOB animal_models CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/
     "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals/*.glb")
 add_library(deathward_skinning src/render/SkinnedModel.cpp)
 target_link_libraries(deathward_skinning PUBLIC deathward_core raylib)
+add_library(deathward_particles src/render/ParticleEffects.cpp)
+target_link_libraries(deathward_particles PUBLIC deathward_core raylib)
+if(EMSCRIPTEN)
+    target_compile_definitions(deathward_particles PRIVATE DEATHWARD_ASSET_DIR="/assets")
+else()
+    target_compile_definitions(deathward_particles PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+endif()
 function(deathward_assets target)
-    target_link_libraries(${target} PRIVATE deathward_skinning)
+    target_link_libraries(${target} PRIVATE deathward_skinning deathward_particles)
     if(EMSCRIPTEN)
         target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="/assets")
         return()
     endif()
+    file(GLOB particle_assets CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.glb"
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.png"
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.particles"
+        "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.attachments")
+    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS ${particle_assets})
+    foreach(particle_asset ${particle_assets})
+        get_filename_component(particle_file "${particle_asset}" NAME)
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/particles"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${particle_asset}" "$<TARGET_FILE_DIR:${target}>/assets/particles/${particle_file}"
+            VERBATIM)
+    endforeach()
     file(GLOB_RECURSE audio_assets CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.wav" "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.ogg")
     set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS ${audio_assets})
     add_custom_command(TARGET ${target} POST_BUILD
@@ -128,6 +149,10 @@ if(EMSCRIPTEN)
         -lidbfs.js "SHELL:--shell-file '${CMAKE_CURRENT_SOURCE_DIR}/web/shell.html'")
     set(web_assets
         assets/bandit/bandit.glb assets/cowgirl/cowgirl.glb assets/western/western.glb assets/western/western.catalog)
+    file(GLOB web_particles CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+        "assets/particles/*.glb" "assets/particles/*.png"
+        "assets/particles/*.particles" "assets/particles/*.attachments")
+    list(APPEND web_assets ${web_particles})
     foreach(animal_file ${animal_models} town.animals)
         list(APPEND web_assets assets/animals/${animal_file})
     endforeach()
@@ -158,6 +183,13 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_particle_tests tests/particle_tests.cpp)
+    target_link_libraries(deathward_particle_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_particle_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_test(NAME particle_emission COMMAND deathward_particle_tests)
+    add_executable(deathward_particle_render_tests tests/particle_render_tests.cpp src/render/TownScene.cpp src/render/PostProcess.cpp)
+    target_link_libraries(deathward_particle_render_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_particle_render_tests)
     add_executable(deathward_character_tests tests/character_tests.cpp)
     target_link_libraries(deathward_character_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_character_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")

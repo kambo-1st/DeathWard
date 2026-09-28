@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Types.hpp"
 #include "render/PlayerOcclusion.hpp"
+#include "render/ParticleEffects.hpp"
 #include "world/HubDefinition.hpp"
 #include "world/ObjectAnimation.hpp"
 #include "world/TownDocument.hpp"
@@ -22,6 +23,8 @@ class TownScene {
         occlusion_.enabled = enabled;
     }
     void drawOccluders();
+    void drawEffects(const Camera3D &camera) { effects_.draw(camera); }
+    const ParticleEffects &effects() const { return effects_; }
     // Call before BeginMode3D. Actors use the supplied depth shader in this pass.
     void prepareLighting(const Camera3D &camera, const std::function<void(Shader)> &actors = {});
     Shader actorShader() const {
@@ -81,6 +84,8 @@ class TownScene {
     std::vector<std::vector<Matrix>> shadowBatches_;
     bool attempted_ = false;
     PlayerOcclusion occlusion_;
+    ParticleEffects effects_;
     void updateLights();
+    void updateEffectLights(const Camera3D &camera);
 };
 } // namespace dw

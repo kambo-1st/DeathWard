@@ -81,7 +81,8 @@ void ObjectAnimationSystem::reset(const TownDocument &document) {
     evaluateGroups();
 }
 void ObjectAnimationSystem::update(float dt, const Ground &ground, std::optional<Vector3> player) {
-    if (!std::isfinite(dt) || dt <= 0 || (moving_.empty() && paths_.empty()))
+    // The scene clock also drives attached effects, including hubs with no rigid motion.
+    if (!std::isfinite(dt) || dt <= 0)
         return;
     accumulator_ += std::min(double(dt), .25);
     while (accumulator_ + 1e-9 >= MotionTick) {

@@ -29,6 +29,7 @@ class TownEditor {
     const TownDocument &document() const {
         return document_;
     }
+    const ParticleEffects &effects() const { return scene_.effects(); }
     const TownNavigation &navigation() const {
         return navigation_;
     }

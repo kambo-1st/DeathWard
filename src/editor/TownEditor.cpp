@@ -904,6 +904,7 @@ void TownEditor::draw() {
     scene_.draw(camera.target);
     characterModels_.draw(characters_, scene_.actorShader(), scene_.shadowTexture());
     animalModels_.draw(animals_, scene_.actorShader(), scene_.shadowTexture());
+    scene_.drawEffects(camera);
     scene_.draw(camera.target, true);
     if (showGrid_)
         DrawGrid(80, 2);

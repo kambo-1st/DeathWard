@@ -777,6 +777,7 @@ Action Renderer::hub(const Game &game) {
     if (game.collisionDebug)
         for (auto p : town.route())
             DrawCube(add(p, {0, .07f, 0}), .16f, .1f, .16f, Teal);
+    townScene_.drawEffects(game.camera);
     townScene_.drawOccluders();
     townScene_.draw(town.player.position, true);
     EndMode3D();

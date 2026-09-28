@@ -73,8 +73,9 @@ paths, groups, members = train_motion(m['placements'], m['assets'])
 assert train_entries == train_lines(paths, groups, members)
 if paths:
     assert m['train_motion'] == dict(paths=paths, groups=groups, members=members)
-assert len(placements) == len(m["placements"])
-for (asset, source_id, transform), placed in zip(placements, m["placements"]):
+expected_placements = m["placements"] + m.get("authored_placements", [])
+assert len(placements) == len(expected_placements)
+for (asset, source_id, transform), placed in zip(placements, expected_placements):
     assert asset == placed["asset"]
     assert source_id is None or source_id == placed["object"]
     assert np.allclose(transform, placed["transform"], atol=.0001)

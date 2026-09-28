@@ -116,3 +116,14 @@ The original import manifest remains an audit of the Unity demo. `scripts/verify
 ```
 
 Editor tests use an isolated copy of the town. They cover mesh picking, handle dragging, transforms, placement/deletion, undo/redo, exact scene round trips, failed-save preservation, backup files, rebuilt navigation, camera controls and unsaved-close handling.
+
+## Attached fire effects
+
+Search **CampFire** in the Assets tab to place a stone-ring fireplace. Campfire
+props carry the PolygonParticleFX fire automatically, including flames, embers,
+smoke and warm light. **Play preview**, **Pause preview** and **Reset preview**
+control the effect clock. Moving, rotating, scaling, duplicating or deleting the
+prop also changes its attached effect; normal save/reload and undo apply.
+Black Creek includes a demo near the starting point at `(-2, .06, 0)`.
+Effects use the shared [particle library](../assets/particles/README.md); individual
+emitter settings are currently edited in its data files, without a particle panel.
