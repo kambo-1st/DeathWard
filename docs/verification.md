@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## Animal placement in the town editor
+
+Content version `deathward-m1-32` adds an Animals tab with the 98 converted variants, catalog search, selection from the resident list or viewport, ground-click placement, species replacement, size, facing, roaming radius and independent seed. Focus, duplicate, delete, undo/redo and Play/Pause/Reset preview include animals. The preview renders original textures and animations with town lighting and shadows, samples the same ground/obstacle simulation as gameplay, and shows the authored home and roaming radius. Runtime and editor clocks remain separate. Flight and water habitats remain outside the current ground-based simulation.
+
+Animal definitions now use `town.scene` format 5. Black Creek's five original placements and settings are retained exactly. Older formats still load, including Frontier's format-1 source; the first editor save upgrades them with stable object IDs and the existing animal definitions. Empty populations stay empty. Editor saves validate complete home footprints and separation on freshly baked navigation and preserve authored positions rather than temporary preview poses. Runtime loading retains the existing nearby-clearance fallback for externally edited scenery.
+
+Native and WebAssembly builds pass without compiler warnings. All 16 headless suites pass, including unchanged deterministic roaming and frame-rate behavior, source migration equivalence, format-5 round trips, the full seed range, malformed definitions and intentionally empty populations. The native editor suite passes real catalog/add/ground-click input, species replacement, undo/redo, invalid home/size rejection, duplicate identity, overlap-save rejection without changing saved files, independent roaming and stationary preview, exact pause, saving/reloading settings, removing every resident, and adding/saving an animal in Frontier. The native editor capture was visually inspected. Logs use `artifacts/animal-editor-*`.
+
+The full Chromium suite passes animal catalog search, adding a hen, undo/redo, zero-radius and maximum-seed fields, stationary animation preview, exact pause, saving, reloading the gameplay population and persistence across a browser reload. Existing cowgirl, prop, train, combat, audio and campaign checks also pass, without JavaScript exceptions, shader failures or WebGL errors. The browser animal editor capture was visually inspected. The updated 71.4 MiB upload ZIP passes archive integrity, manifest sizes/hashes, current runtime byte comparisons and relative hosting-path checks.
+
 ## Cowgirl placement and walking routes
 
 Content version `deathward-m1-31` imports the supplied textured cowgirl with 48 bones, 2,024 source triangles, an embedded 2048×2048 texture and all three Mixamo clips: two idle takes and walking. Source/output hashes, embedded texture, UVs, weights, joints and clip durations pass `scripts/verify_cowgirl.py`. The three rendered poses were visually inspected. The shared `SkinnedModel` renderer preserves independent clocks, local-space blending, nonuniform scale handling and correct normals for both characters and animals.

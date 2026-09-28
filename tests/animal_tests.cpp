@@ -121,6 +121,47 @@ int main() {
         check(!b.load(file.path / "missing", hub), "missing config reported");
         check(a.load({}, hub) && a.residents().empty() && a.time() == 0,
               "hub without placements clears residents");
+        TownDocument document;
+        std::string error;
+        check(document.load(assets / "town/town.scene", error), "town scene loads");
+        check(document.ownsAnimals && document.animals.size() == 5, "format 5 owns the five original homes");
+        const auto definitions = loadAnimalPlacements(placements);
+        for (size_t n = 0; n < definitions.size(); ++n) {
+            const auto &expected = definitions[n], &actual = document.animals[n];
+            check(expected.id == actual.id && expected.kind == actual.kind && expected.seed == actual.seed &&
+                  expected.yaw == actual.yaw && expected.scale == actual.scale && expected.roam == actual.roam &&
+                  horizontal(expected.home, actual.home) == 0, "migration retains exact authored animal settings");
+        }
+        check(a.reset(document.animals, hub) && b.load(placements, hub), "both animal formats load");
+        same(a, b);
+        document.animals.back().kind = AnimalKind(size_t(AnimalKind::Count) - 1);
+        document.animals.back().seed = UINT32_MAX;
+        document.write(file.path);
+        TownDocument roundtrip;
+        check(roundtrip.load(file.path, error) && roundtrip.ownsAnimals &&
+              roundtrip.animals.back().kind == document.animals.back().kind &&
+              roundtrip.animals.back().seed == UINT32_MAX, "last catalog species and full seed round trip");
+        document.animals.clear();
+        document.write(file.path);
+        check(roundtrip.load(file.path, error) && roundtrip.ownsAnimals && roundtrip.animals.empty(),
+              "an intentionally empty population never restores legacy animals");
+        check(a.reset(roundtrip.animals, hub) && a.residents().empty(), "runtime respects empty scene population");
+        file.write("DEATHWARD_ANIMALS 1\nanimal huge horse 0 0 0 1 3 4294967296\n");
+        check(!a.load(file.path, hub), "oversized seeds are rejected");
+        file.write("DEATHWARD_ANIMALS 1\nanimal same horse 0 0 0 1 3 -1\n");
+        check(!a.load(file.path, hub), "negative seeds are rejected");
+        auto invalid = definitions;
+        invalid[0].roam = 21;
+        check(!a.reset(invalid, hub), "invalid roaming radius is rejected");
+        invalid = definitions;
+        invalid[0].kind = AnimalKind::Count;
+        check(!a.reset(invalid, hub), "invalid catalog index is rejected before rendering");
+        invalid = definitions;
+        invalid[0].home = {9999, 0, 9999};
+        check(a.reset(invalid, hub, false) && a.residents().size() == invalid.size(),
+              "editor can display blocked authored homes so they can be repaired");
+        check(horizontal(a.residents()[0].home, invalid[0].home) == 0,
+              "editor initialization never silently relocates authored homes");
         std::cout << "PASS animals: seeded roaming, clearance, trains, "
                      "frame rates and reset\n";
     } catch (const std::exception &e) {

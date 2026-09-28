@@ -38,7 +38,7 @@ Saving during preview writes the authored placement and motion settings, never t
 
 Spin, Sway and Tumbleweed props are **decorative and do not block the player**. They are excluded from static navigation and the static shadow cache. Tumbleweeds sample ground and clearance, turn at obstacles, roll in proportion to actual travel and make only small bounces. Put them on reachable street ground with room around their scaled bounds.
 
-Settings live in scene format 2 with stable per-object IDs. Format-1 scenes and existing browser editor overrides still load as static scenes; assign presets in the editor to animate those custom layouts. Saving upgrades them to format 2 while preserving their original matrices. No mesh or texture conversion is required when changing presets.
+Settings live in scene format 2 with stable per-object IDs. Format-1 scenes and existing browser editor overrides still load as static scenes; assign presets in the editor to animate those custom layouts. Saving preserves their original matrices and upgrades to the current scene format. No mesh or texture conversion is required when changing presets.
 
 ## Trains
 
@@ -62,7 +62,19 @@ The route line follows navigable streets around buildings. Invalid connections a
 
 Click a cowgirl in the viewport while the People tab is active to select her. Moving her starting point leaves existing route stops in place. **Duplicate**, **Delete**, **Undo** and **Redo** include the character and route. Duplicates get separate IDs; place the copy on clear ground. Changing settings resets preview. Saving during playback records authored positions and stops, never the preview's temporary pose. A town supports up to 64 characters with 128 additional stops each.
 
-Character data uses `town.scene` format 4; formats 1–3 still load. Characters are separate from static mesh instances and navigation blockers. They are ambient residents, with no combat or dialogue behavior. Their gameplay simulation stops during pause, mission selection and expeditions. Editor preview runs separately from the suspended game.
+Character records were introduced in `town.scene` format 4 and remain in format 5 alongside animal placements; formats 1–4 still load. Characters are separate from static mesh instances and navigation blockers. They are ambient residents, with no combat or dialogue behavior. Their gameplay simulation stops during pause, mission selection and expeditions. Editor preview runs separately from the suspended game.
+
+## Animals
+
+The **Animals** tab supports all 98 textured, animated variants in either hub. **In town** lists the existing residents, including Black Creek's horse, cow, cat and two hens. Click one in the list or viewport to edit it. **Species** provides a searchable, scrollable catalog; choose a variant, click **Add animal**, then click clear ground for its home. Escape ends placement.
+
+**Place home** moves the selected animal with another ground click. **Change species** opens the catalog and **Apply species** replaces its model while retaining its home and settings. The inspector edits **Size** (0.25–3), **Roaming radius** (0–20 metres), **Facing** and **Roaming seed**. Radius zero keeps the animal stationary while its idle/eating animation plays. The home marker and ring show the authored center and roaming area. The whole animal footprint needs clear ground, with space from other homes and the mission board; large species may need a more open area or smaller scale.
+
+**Play preview**, **Pause preview** and **Reset preview** use the same textured models, animations, lighting and ground-following roaming as gameplay. The preview has its own clock and respects scenery, other residents and the moving trains. Changing settings resets preview. **Focus**, **Duplicate**, **Delete**, **Undo** and **Redo** include animals; duplicates receive separate IDs and seeds and must be placed on clear ground before saving. Up to 64 animals can be placed in each town.
+
+Save includes animal definitions in `town.scene` format 5 and checks their homes against freshly rebuilt navigation. Saving during preview retains the authored homes, not temporary roaming positions. Deleting every animal remains an empty population on reload. The five original Black Creek placements are preserved; Frontier starts empty. Older game scenes use the legacy `town.animals` definitions until their first editor save. Browser persistence includes the same records.
+
+Animals remain ambient residents. Flying and aquatic models can be placed and animated, but their movement currently follows ground navigation; flight and water habitats are not implemented.
 
 ## Camera and markers
 

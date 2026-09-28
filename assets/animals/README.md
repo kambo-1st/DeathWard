@@ -14,13 +14,17 @@ The additional variants are available for placement, rather than automatically a
 
 ## Placements
 
-Edit `town.animals` to change residents. The header is `DEATHWARD_ANIMALS 1`, followed by one row per resident:
+Use **F4 → Animals** in either hub. **In town** selects existing residents; **Species** searches all 98 variants. Choose **Add animal**, then click clear ground for its home. The inspector edits species, size, facing, roaming radius and seed; it also provides focus, duplication, deletion and Play/Pause/Reset preview. A radius of zero keeps the animal at home with its idle animations. See the [editor controls](../../docs/town_editor.md#animals).
+
+Placements now live in each hub's `town.scene`, using `DEATHWARD_TOWN 5` with one row per resident:
 
 ```text
 animal stable-id species home-x home-z yaw-degrees scale roam-radius random-seed
 ```
 
-Use any species ID from [CATALOG.md](CATALOG.md). The original `horse`, `hen`, `cow` and `cat` IDs remain stable. Y is sampled from navigation; yaw zero faces +Z. IDs must be unique. Scale is 0.25–3, radius 0–20, and the population limit is 64. Large animals need an appropriately clear area. If terrain was edited, loading searches up to five units around the home for a clear footprint and skips residents with no suitable placement. Placements are separate from `town.scene` and are **not yet selectable or editable in the town editor**. Reload the town/game after editing this file.
+Use any species ID from [CATALOG.md](CATALOG.md). The original `horse`, `hen`, `cow` and `cat` IDs remain stable. Y is sampled from navigation; yaw zero faces +Z. IDs must be unique. Scale is 0.25–3, radius 0–20, and the population limit is 64. Large animals need an appropriately clear area. If terrain was edited, loading searches up to five units around the home for a clear footprint and skips residents with no suitable placement. The editor previews authored homes without silently relocating them, and refuses saves where homes overlap scenery, the mission board or another home. The home marker and roaming ring help show placement. Saving records authored settings, never a temporary preview position; undo/redo and browser saves include animals. An empty population stays empty after saving.
+
+The original `town.animals` remains a compatibility source for Black Creek scenes saved before format 5. The game passes those original definitions to the editor when opening an older scene; its next save stores them with the scene. Current scenes, including an intentionally empty town, no longer read that legacy file.
 
 ## Rebuild and verify
 

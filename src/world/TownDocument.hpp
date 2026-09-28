@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Types.hpp"
+#include "world/AnimalPlacement.hpp"
 #include <filesystem>
 #include <optional>
 
@@ -57,6 +58,8 @@ struct TownDocument {
     std::vector<TownMotionPath> paths;
     std::vector<TownMotionGroup> groups;
     std::vector<TownCharacter> characters;
+    std::vector<AnimalPlacement> animals;
+    bool ownsAnimals = false; // Format 5 also preserves an intentionally empty population.
     bool load(const std::filesystem::path &path, std::string &error);
     void write(const std::filesystem::path &path) const;
     void validate() const;
@@ -64,5 +67,6 @@ struct TownDocument {
     int meshCount() const;
     std::string nextInstanceId() const;
     std::string nextCharacterId() const;
+    std::string nextAnimalId() const;
 };
 } // namespace dw

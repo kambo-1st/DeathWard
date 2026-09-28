@@ -253,13 +253,13 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     const editorCharacters = await page.evaluate(() => Module.characters);
     const originalScene = await page.evaluate(() => Module.FS.readFile('/persist/town/town.scene', {encoding: 'utf8'}));
     const editorClick = (x, y) => click(x * 1280 / 1440, y * 800 / 900);
-    await editorClick(110, 160);
+    await editorClick(110, 199);
     await page.keyboard.type('Barrel', {delay: 80});
-    await editorClick(110, 231);
+    await editorClick(110, 270);
     await editorClick(1270, 285); // Set this prop's height through the position inspector.
     await page.keyboard.type('2', {delay: 80});
     await key('Enter');
-    await editorClick(210, 118); // People tab selects the demo cowgirl.
+    await editorClick(65, 157); // People tab selects the demo cowgirl.
     await wait(() => Module.characterEditor.selected === 0 && Module.characterEditor.stops === 3);
     await editorClick(130, 814); // Add another character, then undo the placement.
     await wait(() => Module.characterEditor.count === 2);
@@ -277,15 +277,53 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.deepEqual(await page.evaluate(() => Module.characterEditor), pausedCharacterEditor);
     assert.deepEqual(await page.evaluate(() => Module.characters), editorCharacters);
     await page.screenshot({path: path.join(artifacts, 'web-cowgirl-editor.png')});
+    await editorClick(196, 157); // Animals tab.
+    await wait(() => Module.animalEditor.count === 5 && Module.animalEditor.selected === 0);
+    await editorClick(196, 245); // Species catalog.
+    await editorClick(110, 199);
+    await page.keyboard.type('hen', {delay: 80});
+    await editorClick(110, 303); // Select the first matching species.
+    await editorClick(130, 814); // Add animal on clear ground near the view.
+    await wait(() => Module.animalEditor.count === 6 && Module.animalEditor.species === 1);
+    await key('Escape'); // Finish ground placement.
+    await page.keyboard.down('Control'); await key('z'); await page.keyboard.up('Control');
+    await wait(() => Module.animalEditor.count === 5);
+    await page.keyboard.down('Control'); await key('y'); await page.keyboard.up('Control');
+    await wait(() => Module.animalEditor.count === 6 && Module.animalEditor.selected === 5);
+    await editorClick(1320, 345); // Roaming radius: keep this hen at its authored home.
+    await page.keyboard.type('0', {delay: 80});
+    await key('Enter');
+    await editorClick(1320, 415); // Independent seed.
+    await page.keyboard.type('4294967295', {delay: 40});
+    await key('Enter');
+    await wait(() => Module.animalEditor.radius === 0 && Module.animalEditor.seed === 4294967295);
+    await editorClick(1180, 710); // Focus.
+    const beforeAnimalPreview = await page.evaluate(() => Module.animalEditor);
+    await editorClick(1180, 603); // Play preview.
+    await wait(before => Module.animalEditor.phase > before.phase + 3, beforeAnimalPreview);
+    await editorClick(1180, 603); // Pause preview.
+    const pausedAnimalEditor = await page.evaluate(() => Module.animalEditor);
+    assert.equal(pausedAnimalEditor.x, beforeAnimalPreview.x);
+    assert.equal(pausedAnimalEditor.z, beforeAnimalPreview.z);
+    await page.waitForTimeout(200);
+    assert.deepEqual(await page.evaluate(() => Module.animalEditor), pausedAnimalEditor);
+    assert.deepEqual(await page.evaluate(() => Module.animals), editorAnimals);
+    await page.screenshot({path: path.join(artifacts, 'web-animal-editor.png')});
     await page.keyboard.down('Control'); await key('s'); await page.keyboard.up('Control');
     await wait(() => Module.state.editorSaved && !Module.saving);
     const savedScene = await page.evaluate(() => Module.FS.readFile('/persist/town/town.scene', {encoding: 'utf8'}));
     assert(savedScene !== originalScene, 'editor input changes and saves the selected prop');
     assert(savedScene.includes('character cowgirl-street-walk cowgirl'), 'authored cowgirl route persists in town.scene');
+    assert(savedScene.startsWith('DEATHWARD_TOWN 5\n'));
+    const savedAnimals = savedScene.split('\n').filter(row => row.startsWith('animal '));
+    assert.equal(savedAnimals.length, 6);
+    assert(savedAnimals.some(row => / hen .* 0 4294967295$/.test(row)), 'animal settings persist in the scene');
     assert.deepEqual(await page.evaluate(() => Module.animals), editorAnimals);
     await page.screenshot({path: path.join(artifacts, 'web-editor.png')});
     await key('Escape');
     await wait(() => !Module.state.editor);
+    await wait(() => Module.animals.count === 6);
+    console.log('PASS animal catalog search, placement, undo/redo, seed, idle preview, pause, save and game reload');
     console.log('PASS browser town editor opens and returns to the hub');
     console.log('PASS cowgirl roaming, pause, hub population, editor placement, undo, route preview and saving');
     await key('Enter');

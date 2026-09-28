@@ -15,6 +15,7 @@ class SkinnedModel {
     bool attempted() const { return asset_.attempted; }
     bool pose(double phase, float walking, float alternate = 0);
     void draw(Vector3 position, Vector3 facing, float scale, Shader shader = {}, Texture2D shadowMap = {});
+    Box bounds(Vector3 position, Vector3 facing, float scale) const;
     const Model &model() const { return asset_.model; }
     const std::vector<Transform> &bonePose() const { return asset_.world; }
     static void applyPose(Model model, const Transform *pose);

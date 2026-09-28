@@ -50,10 +50,17 @@ std::string TownDocument::nextCharacterId() const {
             return id;
     }
 }
+std::string TownDocument::nextAnimalId() const {
+    for (size_t n = 1;; ++n) {
+        auto id = "animal-" + std::to_string(n);
+        if (std::none_of(animals.begin(), animals.end(), [&](const auto &a) { return a.id == id; })) return id;
+    }
+}
 int TownDocument::meshCount() const {
     return assets.empty() ? 0 : assets.back().first + assets.back().count;
 }
 void TownDocument::validate() const {
+    validateAnimalPlacements(animals);
     if (assets.empty() || instances.empty() || assets.size() > 100000 || instances.size() > 100000)
         throw std::runtime_error("The town must contain assets and at least one object.");
     int next = 0;
@@ -155,9 +162,10 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
         std::ifstream in(path);
         std::string token;
         int version = 0;
-        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 4))
+        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 5))
             throw std::runtime_error("Missing or unsupported town scene.");
         TownDocument candidate;
+        candidate.ownsAnimals = version >= 5;
         std::vector<std::pair<std::string, ObjectMotion>> motions;
         struct Binding {
             std::string id, group;
@@ -218,6 +226,8 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                 c.stops.resize(count);
                 for (auto &p : c.stops) in >> p.x >> p.y >> p.z;
                 candidate.characters.push_back(std::move(c));
+            } else if (token == "animal" && version >= 5) {
+                candidate.animals.push_back(readAnimalPlacement(in));
             } else if (token == "light") {
                 TownLight l;
                 in >> l.type >> l.position.x >> l.position.y >> l.position.z >> l.direction.x >>
@@ -228,7 +238,7 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                 throw std::runtime_error("Unknown town scene entry: " + token);
             if (!in || candidate.assets.size() > 100000 || candidate.instances.size() > 100000 ||
                 motions.size() > 100000 || bindings.size() > 100000 || candidate.paths.size() > 256 ||
-                candidate.groups.size() > 4096 || candidate.characters.size() > 64)
+                candidate.groups.size() > 4096 || candidate.characters.size() > 64 || candidate.animals.size() > 64)
                 throw std::runtime_error("Truncated or oversized town scene.");
         }
         std::unordered_set<std::string> bound;
@@ -277,7 +287,7 @@ void TownDocument::write(const std::filesystem::path &path) const {
         if (i.id.empty())
             i.id = identified.nextInstanceId();
     out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN "
-        << (!characters.empty() ? 4 : paths.empty() ? 2 : 3) << '\n';
+        << (ownsAnimals || !animals.empty() ? 5 : !characters.empty() ? 4 : paths.empty() ? 2 : 3) << '\n';
     for (const auto &a : assets)
         out << "asset " << a.name << ' ' << a.first << ' ' << a.count << ' ' << a.unlit << ' '
             << a.bounds.min.x << ' ' << a.bounds.min.y << ' ' << a.bounds.min.z << ' ' << a.bounds.max.x
@@ -310,6 +320,7 @@ void TownDocument::write(const std::filesystem::path &path) const {
         for (const auto &p : c.stops) out << ' ' << p.x << ' ' << p.y << ' ' << p.z;
         out << '\n';
     }
+    for (const auto &a : animals) writeAnimalPlacement(out, a);
     for (const auto &l : lights)
         out << "light " << l.type << ' ' << l.position.x << ' ' << l.position.y << ' ' << l.position.z << ' '
             << l.direction.x << ' ' << l.direction.y << ' ' << l.direction.z << ' ' << l.color.x << ' '

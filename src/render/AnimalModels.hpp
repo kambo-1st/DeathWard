@@ -17,6 +17,7 @@ class AnimalModels {
     void draw(const Animals &animals, Shader shader = {}, Texture2D shadowMap = {});
     void draw(const Animal &animal, Shader shader = {}, Texture2D shadowMap = {});
     bool pose(const Animal &animal);
+    Box bounds(const Animal &animal);
     const Model &model(AnimalKind kind) const;
     const std::vector<Transform> &bonePose(AnimalKind kind) const;
     static std::filesystem::path assetDirectory();

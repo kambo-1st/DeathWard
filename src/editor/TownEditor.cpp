@@ -35,12 +35,15 @@ float segmentDistance(Vector2 p, Vector2 a, Vector2 b) {
     return Vector2Distance(p, Vector2Add(a, Vector2Scale(d, t)));
 }
 } // namespace
-bool TownEditor::open(const std::filesystem::path &directory, Camera3D view) {
+bool TownEditor::open(const std::filesystem::path &directory, Camera3D view,
+                      const std::vector<AnimalPlacement> &legacyAnimals) {
     try {
         directory_ = directory;
         if (!scene_.load(directory))
             throw std::runtime_error("Could not load the town model and scene.");
         document_ = scene_.document();
+        legacyAnimals_ = legacyAnimals;
+        importLegacyAnimals();
         navigation_.load(directory / "town.nav");
         camera = view;
         const auto offset = sub(view.position, view.target);
@@ -56,6 +59,8 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view) {
         selectedCharacter_.reset();
         selectedStop_.reset();
         characterTab_ = false;
+        animalTab_ = animalPalette_ = animalPlacement_ = replacingAnimal_ = false;
+        selectedAnimal_.reset();
         characterPlacement_ = 0;
         paletteSelection_.reset();
         revision_ = savedRevision_ = nextRevision_ = 0;
@@ -79,7 +84,7 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view) {
     }
 }
 TownEditor::Snapshot TownEditor::snapshot() const {
-    return {document_, navigation_.spawn, navigation_.mission, selected_, selectedCharacter_, selectedStop_, revision_};
+    return {document_, navigation_.spawn, navigation_.mission, selected_, selectedCharacter_, selectedStop_, selectedAnimal_, revision_};
 }
 void TownEditor::restore(Snapshot state) {
     document_ = std::move(state.document);
@@ -88,6 +93,8 @@ void TownEditor::restore(Snapshot state) {
     selected_ = state.selected;
     selectedCharacter_ = state.character;
     selectedStop_ = state.stop;
+    selectedAnimal_ = state.animal;
+    animalPlacement_ = replacingAnimal_ = false;
     characterPlacement_ = 0;
     revision_ = state.revision;
     field_ = dragAxis_ = -1;
@@ -110,12 +117,16 @@ void TownEditor::sync() {
             auto previous = std::move(undo_.back());
             undo_.pop_back();
             restore(std::move(previous));
-        } else
+        } else {
             document_ = scene_.document();
+            importLegacyAnimals();
+        }
         status = "Change rejected: " + error;
     }
 }
 void TownEditor::select(std::optional<size_t> index) {
+    selectedAnimal_.reset();
+    animalPlacement_ = replacingAnimal_ = false;
     selectedCharacter_.reset();
     selectedStop_.reset();
     characterPlacement_ = 0;
@@ -123,6 +134,7 @@ void TownEditor::select(std::optional<size_t> index) {
     field_ = dragAxis_ = -1;
 }
 Vector3 TownEditor::pivot() const {
+    if (selectedAnimal_) return document_.animals[*selectedAnimal_].home;
     if (selectedCharacter_) return document_.characters[*selectedCharacter_].position;
     if (!selected_)
         return camera.target;
@@ -130,6 +142,7 @@ Vector3 TownEditor::pivot() const {
     return {m.m12, m.m13, m.m14};
 }
 void TownEditor::translate(Vector3 delta) {
+    if (selectedAnimal_) { placeAnimal(add(pivot(), delta)); return; }
     if (selectedCharacter_) { placeCharacter(add(pivot(), delta)); return; }
     if (selectedGroup()) {
         status = "Detach this vehicle in Animation before changing its placement.";
@@ -178,6 +191,19 @@ void TownEditor::scale(Vector3 factors) {
     sync();
 }
 void TownEditor::duplicate() {
+    if (selectedAnimal_) {
+        if (document_.animals.size() >= 64) { status = "The town already has 64 animals."; return; }
+        remember();
+        auto copy = document_.animals[*selectedAnimal_];
+        copy.id = document_.nextAnimalId();
+        copy.seed += uint32_t(document_.animals.size() + 1);
+        document_.animals.push_back(copy);
+        selectAnimal(document_.animals.size() - 1);
+        sync();
+        animalPlacement_ = true;
+        status = "Copy created. Click clear ground to place it.";
+        return;
+    }
     if (selectedCharacter_) {
         if (document_.characters.size() >= 64) return;
         remember();
@@ -206,6 +232,13 @@ void TownEditor::duplicate() {
     status = "Object duplicated. Drag an axis handle to place it.";
 }
 void TownEditor::remove() {
+    if (selectedAnimal_) {
+        remember();
+        document_.animals.erase(document_.animals.begin() + std::ptrdiff_t(*selectedAnimal_));
+        selectAnimal({});
+        sync();
+        return;
+    }
     if (selectedCharacter_) {
         remember();
         document_.characters.erase(document_.characters.begin() + std::ptrdiff_t(*selectedCharacter_));
@@ -271,6 +304,9 @@ bool TownEditor::save() {
                 previous = stop;
             }
         }
+        for (const auto &a : document_.animals)
+            if (!validAnimalHome(a, ground))
+                throw std::runtime_error(a.id + ": home overlaps scenery, the mission board or another animal.");
         saveTownProject(directory_, document_, nav);
         navigation_ = std::move(nav);
         navigationRevision_ = revision_;
@@ -293,6 +329,9 @@ bool TownEditor::reload() {
         nav.load(directory_ / "town.nav");
         scene_.applyDocument(next);
         document_ = std::move(next);
+        importLegacyAnimals();
+        selectedAnimal_.reset();
+        animalPlacement_ = replacingAnimal_ = false;
         navigation_ = std::move(nav);
         undo_.clear();
         redo_.clear();
@@ -312,7 +351,7 @@ bool TownEditor::reload() {
     }
 }
 void TownEditor::focusSelection() {
-    if (!selected_ && !selectedCharacter_)
+    if (!selected_ && !selectedCharacter_ && !selectedAnimal_)
         return;
     const auto b = selectionBounds();
     camera.target = center(b);
@@ -320,6 +359,7 @@ void TownEditor::focusSelection() {
     updateView();
 }
 Box TownEditor::selectionBounds() const {
+    if (selectedAnimal_) return animalBounds_.at(*selectedAnimal_);
     if (selectedCharacter_) {
         const auto &definition = document_.characters[*selectedCharacter_];
         const auto p = characters_.residents().at(*selectedCharacter_).position;
@@ -390,6 +430,10 @@ void TownEditor::resetPreview() {
     characterGround_.setNavigation(navigation_);
     characterGround_.setMovingSolids(preview_.solids());
     characters_.reset(document_, characterGround_);
+    // Keep authored homes visible, even when a later scenery edit obstructs them.
+    animals_.reset(document_.animals, characterGround_, false);
+    animalBounds_.clear();
+    for (const auto &a : animals_.residents()) animalBounds_.push_back(animalModels_.bounds(a));
     refreshCharacterRoute();
 }
 void TownEditor::setPreviewPlaying(bool playing) {
@@ -435,6 +479,7 @@ Vector3 TownEditor::values(int group) const {
     return group == 1 ? mul(QuaternionToEuler(q), RAD2DEG) : s;
 }
 void TownEditor::commitField() {
+    if (field_ >= 40 && selectedAnimal_) { commitAnimalField(); return; }
     if (field_ >= 32 && selectedCharacter_) {
         try {
             size_t end = 0;
@@ -579,6 +624,9 @@ void TownEditor::update(float dt) {
         scene_.applyAnimation(preview_);
         characterGround_.setMovingSolids(preview_.solids());
         characters_.update(std::min(dt, .1f), characterGround_);
+        animals_.update(std::min(dt, .1f), characterGround_);
+        for (size_t n = 0; n < animals_.residents().size(); ++n)
+            animalBounds_[n] = animalModels_.bounds(animals_.residents()[n]);
     }
     const auto mouse = GetMousePosition();
     const bool ctrl = IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL);
@@ -641,6 +689,8 @@ void TownEditor::update(float dt) {
                 if (dragChanged_)
                     undo();
                 dragAxis_ = -1;
+            } else if (animalPlacement_ || replacingAnimal_) {
+                animalPlacement_ = replacingAnimal_ = false;
             } else if (characterPlacement_)
                 characterPlacement_ = 0;
             else if (marker_)
@@ -690,6 +740,23 @@ void TownEditor::update(float dt) {
     if (!over && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         commitField();
         searchFocus_ = false;
+        if (animalTab_) {
+            if (animalPlacement_ && selectedAnimal_) {
+                if (const auto point = characterGroundPoint(mouse)) placeAnimal(*point);
+                else status = "Choose clear walkable ground for the animal.";
+            } else {
+                const auto ray = GetScreenToWorldRay(mouse, camera);
+                float nearest = 1e9f;
+                std::optional<size_t> hit;
+                for (size_t n = 0; n < animalBounds_.size(); ++n) {
+                    const auto &b = animalBounds_[n];
+                    const auto collision = GetRayCollisionBox(ray, {b.min, b.max});
+                    if (collision.hit && collision.distance < nearest) { nearest = collision.distance; hit = n; }
+                }
+                if (hit) { selectAnimal(hit); animalPalette_ = false; search_.clear(); scroll_ = 0; }
+            }
+            return;
+        }
         if (characterPlacement_ && selectedCharacter_) {
             if (auto point = characterGroundPoint(mouse)) {
                 if (characterPlacement_ == 1) { placeCharacter(*point); characterPlacement_ = 0; }
@@ -827,11 +894,16 @@ void TownEditor::draw() {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
     characterModels_.prepare(characters_);
-    scene_.prepareLighting(camera, [&](Shader depth) { characterModels_.draw(characters_, depth); });
+    animalModels_.prepare(animals_);
+    scene_.prepareLighting(camera, [&](Shader depth) {
+        characterModels_.draw(characters_, depth);
+        animalModels_.draw(animals_, depth);
+    });
     postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target));
     BeginMode3D(camera);
     scene_.draw(camera.target);
     characterModels_.draw(characters_, scene_.actorShader(), scene_.shadowTexture());
+    animalModels_.draw(animals_, scene_.actorShader(), scene_.shadowTexture());
     scene_.draw(camera.target, true);
     if (showGrid_)
         DrawGrid(80, 2);
@@ -849,7 +921,7 @@ void TownEditor::draw() {
         DrawCylinder(add(p, {0, .1f, 0}), .45f, .45f, .1f, 16, i == 0 ? Teal : Accent);
         DrawLine3D(p, add(p, {0, 3, 0}), i == 0 ? Teal : Accent);
     }
-    if (selected_ || selectedCharacter_) {
+    if (selected_ || selectedCharacter_ || selectedAnimal_) {
         const auto b = selectionBounds();
         DrawBoundingBox({b.min, b.max}, Teal);
         if (selected_ && !selectedGroup() && preview_.time() == 0) {
@@ -884,11 +956,30 @@ void TownEditor::draw() {
         for (size_t i = 0; i < c.stops.size(); ++i)
             DrawSphere(add(c.stops[i], {0, .15f, 0}), selectedStop_ == i ? .24f : .16f, selectedStop_ == i ? Accent : Teal);
     }
+    if (selectedAnimal_) {
+        const auto &a = document_.animals[*selectedAnimal_];
+        auto home = a.home;
+        home.y = characterGround_.height(home) + .12f;
+        const auto color = validAnimalHome(a, characterGround_) ? Teal : RED;
+        DrawSphere(home, .15f, Accent);
+        const float radius = std::max(.05f, a.roam);
+        for (int n = 0; n < 64; ++n) {
+            const float t = float(n) * 2 * Pi / 64, next = float(n + 1) * 2 * Pi / 64;
+            auto p = add(home, {radius * std::cos(t), 0, radius * std::sin(t)});
+            auto q = add(home, {radius * std::cos(next), 0, radius * std::sin(next)});
+            const float py = characterGround_.height(p), qy = characterGround_.height(q);
+            if (std::isfinite(py)) p.y = py + .12f;
+            if (std::isfinite(qy)) q.y = qy + .12f;
+            DrawLine3D(p, q, color);
+        }
+    }
     EndMode3D();
     postProcess_.end();
     drawUI();
 }
 void TownEditor::selectCharacter(std::optional<size_t> index) {
+    selectedAnimal_.reset();
+    animalPlacement_ = replacingAnimal_ = false;
     selected_.reset();
     selectedCharacter_ = index && *index < document_.characters.size() ? index : std::nullopt;
     selectedStop_.reset();
@@ -1181,85 +1272,82 @@ void TownEditor::drawUI() {
     label(std::to_string(GetFPS()) + " FPS", 1112, 28, 12, Muted, 96);
     label("Middle drag: orbit   Right drag: pan   Wheel: zoom   WASD / Q E: fly   F: focus", 278, 59, 13,
           Muted, 825);
-    if (button("Scene", {14, 103, 72, 31}, !palette_ && !characterTab_)) {
-        characterTab_ = false;
-        select({});
-        palette_ = false;
-        scroll_ = 0;
-    }
-    if (button("Assets", {92, 103, 72, 31}, palette_ && !characterTab_)) {
-        characterTab_ = false;
-        select({});
-        palette_ = true;
-        scroll_ = 0;
-    }
-    if (button("People", {170, 103, 84, 31}, characterTab_)) {
-        commitField();
-        search_.clear();
-        searchFocus_ = false;
-        characterTab_ = true;
-        palette_ = false;
-        selectCharacter(document_.characters.empty() ? std::nullopt : std::optional<size_t>(0));
-        scroll_ = 0;
-    }
-    const Rectangle searchBox{14, 149, 240, 33};
+    auto tab = [&](const char *name, Rectangle box, bool active, int kind) {
+        if (!button(name, box, active)) return;
+        commitField(); select({}); search_.clear(); searchFocus_ = false; scroll_ = 0; marker_ = 0;
+        animalTab_ = kind == 3; characterTab_ = kind == 2; palette_ = kind == 1;
+        if (characterTab_) selectCharacter(document_.characters.empty() ? std::nullopt : std::optional<size_t>(0));
+        if (animalTab_) {
+            animalPalette_ = document_.animals.empty();
+            selectAnimal(document_.animals.empty() ? std::nullopt : std::optional<size_t>(0));
+        }
+    };
+    tab("Scene", {14, 103, 115, 31}, !palette_ && !characterTab_ && !animalTab_, 0);
+    tab("Assets", {139, 103, 115, 31}, palette_ && !characterTab_ && !animalTab_, 1);
+    tab("People", {14, 142, 115, 31}, characterTab_, 2);
+    tab("Animals", {139, 142, 115, 31}, animalTab_, 3);
+    const Rectangle searchBox{14, 188, 240, 33};
     panel(searchBox, searchFocus_ ? Line : Background);
-    label(search_.empty() ? "Search objects..." : search_, 24, 159, 14, search_.empty() ? Muted : Text, 218);
+    label(search_.empty() ? (animalTab_ ? "Search animals..." : "Search objects...") : search_, 24, 198, 14, search_.empty() ? Muted : Text, 218);
     if (!closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), searchBox) &&
         IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         commitField();
         searchFocus_ = true;
         selectText_ = true;
     }
-    std::vector<size_t> filtered;
-    const auto query = lower(search_);
-    const size_t count = characterTab_ ? document_.characters.size() : palette_ ? document_.assets.size() : document_.instances.size();
-    for (size_t i = 0; i < count; ++i) {
-        if (characterTab_) {
-            if (lower(document_.characters[i].id + " cowgirl").find(query) != std::string::npos) filtered.push_back(i);
-            continue;
-        }
-        const auto asset = palette_ ? i : document_.instances[i].asset;
-        if (lower(document_.assets[asset].label + " #" + std::to_string(i)).find(query) != std::string::npos)
-            filtered.push_back(i);
-    }
-    constexpr int rows = 19;
-    if (!closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), {0, 190, 272, 610}))
-        scroll_ -= int(GetMouseWheelMoveV().y * 3);
-    scroll_ = std::clamp(scroll_, 0, std::max(0, int(filtered.size()) - rows));
-    label(std::to_string(filtered.size()) + (characterTab_ ? " characters" : palette_ ? " assets" : " objects"), 18, 196, 12, Muted);
-    for (int row = 0; row < rows && size_t(row + scroll_) < filtered.size(); ++row) {
-        if (characterTab_) {
-            const auto id = filtered[size_t(row + scroll_)];
-            if (button(document_.characters[id].id, {14, 219 + float(row) * 29, 240, 26}, selectedCharacter_ == id)) {
-                commitField(); searchFocus_ = false; selectCharacter(id);
+    if (animalTab_) drawAnimalPalette();
+    else {
+        std::vector<size_t> filtered;
+        const auto query = lower(search_);
+        const size_t count = characterTab_ ? document_.characters.size() : palette_ ? document_.assets.size() : document_.instances.size();
+        for (size_t i = 0; i < count; ++i) {
+            if (characterTab_) {
+                if (lower(document_.characters[i].id + " cowgirl").find(query) != std::string::npos) filtered.push_back(i);
+                continue;
             }
-            continue;
+            const auto asset = palette_ ? i : document_.instances[i].asset;
+            if (lower(document_.assets[asset].label + " #" + std::to_string(i)).find(query) != std::string::npos)
+                filtered.push_back(i);
         }
-        const size_t id = filtered[size_t(row + scroll_)],
-                     asset = palette_ ? id : document_.instances[id].asset;
-        auto name = document_.assets[asset].label;
-        if (name.starts_with("SM_"))
-            name = name.substr(3);
-        const bool chosen =
-            palette_ ? (paletteSelection_ && *paletteSelection_ == id) : (selected_ && *selected_ == id);
-        if (button(name, {14, 219 + float(row) * 29, 240, 26}, chosen)) {
-            commitField();
-            searchFocus_ = false;
-            if (palette_)
-                paletteSelection_ = id;
-            else
-                select(id);
+        constexpr int rows = 18;
+        if (!closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), {0, 235, 272, 545}))
+            scroll_ -= int(GetMouseWheelMoveV().y * 3);
+        scroll_ = std::clamp(scroll_, 0, std::max(0, int(filtered.size()) - rows));
+        label(std::to_string(filtered.size()) + (characterTab_ ? " characters" : palette_ ? " assets" : " objects"), 18, 235, 12, Muted);
+        for (int row = 0; row < rows && size_t(row + scroll_) < filtered.size(); ++row) {
+            if (characterTab_) {
+                const auto id = filtered[size_t(row + scroll_)];
+                if (button(document_.characters[id].id, {14, 258 + float(row) * 29, 240, 26}, selectedCharacter_ == id)) {
+                    commitField(); searchFocus_ = false; selectCharacter(id);
+                }
+                continue;
+            }
+            const size_t id = filtered[size_t(row + scroll_)],
+                         asset = palette_ ? id : document_.instances[id].asset;
+            auto name = document_.assets[asset].label;
+            if (name.starts_with("SM_"))
+                name = name.substr(3);
+            const bool chosen =
+                palette_ ? (paletteSelection_ && *paletteSelection_ == id) : (selected_ && *selected_ == id);
+            if (button(name, {14, 258 + float(row) * 29, 240, 26}, chosen)) {
+                commitField();
+                searchFocus_ = false;
+                if (palette_)
+                    paletteSelection_ = id;
+                else
+                    select(id);
+            }
         }
+        if (characterTab_) {
+            if (button("Add cowgirl", {14, 799, 240, 33}, false, document_.characters.size() < 64)) addCharacter();
+        } else if (palette_) {
+            if (button("Add at view center", {14, 799, 240, 33}, false, paletteSelection_.has_value()))
+                addAsset(*paletteSelection_);
+        } else if (button("Focus selection", {14, 799, 240, 33}, false, selected_.has_value()))
+            focusSelection();
     }
-    if (characterTab_) {
-        if (button("Add cowgirl", {14, 799, 240, 33}, false, document_.characters.size() < 64)) addCharacter();
-    } else if (palette_) {
-        if (button("Add at view center", {14, 799, 240, 33}, false, paletteSelection_.has_value()))
-            addAsset(*paletteSelection_);
-    } else if (button("Focus selection", {14, 799, 240, 33}, false, selected_.has_value()))
-        focusSelection();
-    if (characterTab_) drawCharacterUI();
+    if (animalTab_) drawAnimalUI();
+    else if (characterTab_) drawCharacterUI();
     else {
     label("INSPECTOR", 1132, 108, 13, Accent);
     label(selected_ ? document_.assets[document_.instances[*selected_].asset].label : "No object selected",
@@ -1326,7 +1414,7 @@ void TownEditor::drawUI() {
         label("Save rebuilds walkable ground.", 1132, 790, 13, Muted);
     }
     }
-    label(characterPlacement_ ? "Click walkable ground. Escape finishes placing route stops." : marker_ ? "Click the street to place the marker. Escape cancels." : status, 18, 862, 14,
+    label(animalPlacement_ ? "Click clear ground to place the animal. Escape finishes placement." : characterPlacement_ ? "Click walkable ground. Escape finishes placing route stops." : marker_ ? "Click the street to place the marker. Escape cancels." : status, 18, 862, 14,
           marker_ ? Accent : Text, 1375);
     label("Ctrl+S save   Ctrl+Z / Ctrl+Y undo / redo   Ctrl+D duplicate   Delete remove   F4 exit", 18, 884,
           11, Muted, 1350);

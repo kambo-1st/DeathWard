@@ -138,10 +138,9 @@ bool Game::reloadTownObjects() {
     townObjects.reset(document);
     town.setMovingSolids(townObjects.solids());
     characters.reset(document, town);
-    const bool loaded =
+    const bool loaded = document.ownsAnimals ? animals.reset(document.animals, town) :
         animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
-                                                      : std::filesystem::path{},
-                     town);
+                                                      : std::filesystem::path{}, town);
     if (!loaded)
         error = animals.error();
     return loaded;
@@ -164,9 +163,9 @@ bool Game::selectHub(HubKind hub) {
     ++audioContext;
     audioCues.clear();
     activeHub = hub;
-    animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
-                                                  : std::filesystem::path{},
-                 town);
+    if (document.ownsAnimals) animals.reset(document.animals, town);
+    else animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
+                                                      : std::filesystem::path{}, town);
     paused = missionMenu = walkingToMission = false;
     error = animals.error();
     resetPointerInput();

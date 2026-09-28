@@ -364,7 +364,7 @@ int main() {
                   editor.animationPreview().time() == 0,
               "reload restores motion settings with a fresh preview");
         const auto originalCharacters = editor.document().characters.size();
-        click({210, 118}); // People tab.
+        click({65, 157}); // People tab.
         click({130, 814}); // Add cowgirl.
         check(editor.characterSelection() && editor.document().characters.size() == originalCharacters + 1,
               "People palette adds a skinned character with independent selection");
@@ -417,6 +417,93 @@ int main() {
               "Duplicating a character assigns a unique stable ID");
         editor.undo();
         check(!editor.dirty(), "Undoing duplicate restores saved character state");
+        click({196, 157}); // Animals tab, including the original residents.
+        check(editor.animalSelection() == 0 && editor.document().animals.size() == 5 &&
+              editor.animalPreview().residents().size() == 5, "Animals tab exposes all original residents");
+        const auto originalHorse = editor.document().animals[0];
+        editor.setAnimalSettings(1, 0, 45, UINT32_MAX);
+        editor.setPreviewPlaying(true);
+        for (int n = 0; n < 400; ++n) editor.update(Tick);
+        check(distance(editor.animalPreview().residents()[0].position, editor.animalPreview().residents()[0].home) == 0 &&
+              editor.animalPreview().residents()[0].phase > 6, "zero radius keeps the animal at home while animation plays");
+        editor.setPreviewPlaying(false);
+        const auto pausedAnimals = editor.animalPreview().residents();
+        for (int n = 0; n < 10; ++n) editor.update(Tick);
+        check(editor.animalPreview().residents()[0].phase == pausedAnimals[0].phase,
+              "animal preview pauses exactly");
+        check(editor.document().animals[0].home.x == originalHorse.home.x &&
+              editor.document().animals[0].home.z == originalHorse.home.z,
+              "animal preview never changes the authored home");
+        editor.resetPreview();
+        editor.focusSelection();
+        frame();
+        click({196, 245}); // Species palette.
+        click({100, 390}); // Cat, the fourth catalog entry.
+        click({130, 814}); // Add animal.
+        check(editor.document().animals.size() == 6 && editor.animalSelection() == 5 &&
+              editor.document().animals[5].kind == AnimalKind::Cat, "species palette adds the chosen animal");
+        // Choose a visible clear home through actual viewport input.
+        editor.placeAnimal({-4, 0, 2});
+        editor.focusSelection();
+        click({1180, 257}); // Place home.
+        const auto homePixel = GetWorldToScreen({-4, nav.height({-4, 0, 1}), 1}, editor.camera);
+        click(homePixel);
+        check(std::abs(editor.document().animals[5].home.z - 1) < .1f,
+              "ground click places the animal on navigation terrain");
+        editor.setAnimalSettings(.8f, 2, 110, 8765);
+        editor.setAnimalSpecies(AnimalKind::CatBlack);
+        check(editor.document().animals[5].kind == AnimalKind::CatBlack, "placed animal species can be changed");
+        editor.undo();
+        check(editor.document().animals[5].kind == AnimalKind::Cat, "undo restores the species");
+        editor.redo();
+        const auto animalHome = editor.document().animals[5].home;
+        editor.placeAnimal({9999, 0, 9999});
+        check(distance(editor.document().animals[5].home, animalHome) == 0, "blocked animal homes are rejected");
+        editor.setAnimalSettings(100, 2, 110, 8765);
+        check(editor.document().animals[5].scale == .8f, "invalid animal sizes leave authored settings intact");
+        editor.duplicate();
+        check(editor.document().animals.size() == 7 && editor.document().animals[6].id != editor.document().animals[5].id &&
+              editor.document().animals[6].seed != editor.document().animals[5].seed, "duplicate has independent identity and random stream");
+        const auto beforeBadSave = bytes(directory / "town.scene");
+        check(!editor.save() && bytes(directory / "town.scene") == beforeBadSave,
+              "overlapping homes cannot overwrite the saved town");
+        editor.undo();
+        editor.selectAnimal(5);
+        editor.setPreviewPlaying(true);
+        float animalTravel = 0;
+        for (int n = 0; n < 1200; ++n) {
+            const auto before = editor.animalPreview().residents()[5].position;
+            editor.update(Tick);
+            animalTravel += distance(before, editor.animalPreview().residents()[5].position);
+        }
+        check(animalTravel > .5f && distance(editor.document().animals[5].home, animalHome) == 0,
+              "animal preview roams without overwriting the authored placement");
+        editor.setPreviewPlaying(false);
+        editor.focusSelection();
+        frame();
+        auto animalImage = LoadImageFromScreen();
+        ExportImage(animalImage, "artifacts/animal-editor.png");
+        UnloadImage(animalImage);
+        check(editor.save(), editor.status);
+        check(editor.reload() && editor.document().animals.size() == 6 &&
+              editor.document().animals[5].seed == 8765 && editor.document().animals[5].scale == .8f &&
+              editor.document().animals[5].kind == AnimalKind::CatBlack &&
+              distance(editor.document().animals[5].home, animalHome) < .001f,
+              "animal species, authored home, settings and seed survive save/reload");
+        while (!editor.document().animals.empty()) { editor.selectAnimal(0); editor.remove(); }
+        check(editor.save() && editor.reload() && editor.document().ownsAnimals && editor.document().animals.empty(),
+              "deleting all animals survives save/reload without repopulating the town");
+        // Frontier uses exactly the same placement and persistence controls.
+        const auto frontierDirectory = directory / "frontier";
+        std::filesystem::create_directories(frontierDirectory);
+        for (const auto *name : {"town.scene", "town.nav", "town.glb", "town.labels"})
+            std::filesystem::copy_file(TownScene::assetDirectory(HubKind::Frontier) / name, frontierDirectory / name);
+        check(editor.open(frontierDirectory, {add(nav.spawn, {23, 30, 23}), nav.spawn, {0, 1, 0}, 45, CAMERA_PERSPECTIVE}), editor.status);
+        editor.camera.target = editor.navigation().spawn;
+        editor.addAnimal(AnimalKind::Hen);
+        check(editor.document().animals.size() == 1, "Frontier supports new animal residents");
+        check(editor.save() && editor.reload() && editor.document().animals.size() == 1,
+              "Frontier animals survive save and reload");
         editor.requestClose();
         check(!editor.active && !editor.quitRequested, "clean editor closes back to town");
         editor.unload();

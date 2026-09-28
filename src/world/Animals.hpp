@@ -1,16 +1,8 @@
 #pragma once
 #include "world/HubWorld.hpp"
+#include "world/AnimalPlacement.hpp"
 
 namespace dw {
-enum class AnimalKind {
-#define DW_ANIMAL(symbol, name, radius, speed) symbol,
-#include "world/AnimalCatalog.inc"
-#undef DW_ANIMAL
-    Count
-};
-const char *animalName(AnimalKind kind);
-float animalRadius(AnimalKind kind);
-float animalWalkSpeed(AnimalKind kind);
 struct Animal {
     std::string id;
     AnimalKind kind = AnimalKind::Horse;
@@ -24,6 +16,9 @@ struct Animal {
 class Animals {
   public:
     bool load(const std::filesystem::path &file, const HubWorld &ground);
+    bool reset(const std::vector<AnimalPlacement> &placements, const HubWorld &ground, bool relocate = true);
+    static bool clearFootprint(const AnimalPlacement &animal, Vector3 point, const HubWorld &ground);
+    const std::vector<AnimalPlacement> &placements() const { return placements_; }
     void update(float dt, const HubWorld &ground);
     const std::vector<Animal> &residents() const {
         return animals_;
@@ -37,6 +32,7 @@ class Animals {
 
   private:
     std::vector<Animal> animals_;
+    std::vector<AnimalPlacement> placements_;
     std::string error_;
     double time_ = 0, accumulator_ = 0;
     bool clear(const Animal &animal, Vector3 point, const HubWorld &ground, bool residents) const;

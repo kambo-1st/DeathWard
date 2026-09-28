@@ -204,6 +204,23 @@ bool SkinnedModel::pose(double phase, float walking, float alternate) {
     applyPose(a.model, a.world.data());
     return true;
 }
+Box SkinnedModel::bounds(Vector3 position, Vector3 facing, float scale) const {
+    const auto p = add(position, {0, asset_.floor * scale, 0});
+    const auto transform = MatrixMultiply(asset_.model.transform,
+        MatrixMultiply(MatrixMultiply(MatrixScale(scale, scale, scale),
+                                      MatrixRotateY(std::atan2(facing.x, facing.z))), MatrixTranslate(p.x, p.y, p.z)));
+    Box result{{1e9f, 1e9f, 1e9f}, {-1e9f, -1e9f, -1e9f}};
+    for (int m = 0; m < asset_.model.meshCount; ++m) {
+        const auto &mesh = asset_.model.meshes[m];
+        const auto *vertices = mesh.animVertices ? mesh.animVertices : mesh.vertices;
+        for (int n = 0; n < mesh.vertexCount; ++n) {
+            const auto v = Vector3Transform({vertices[n * 3], vertices[n * 3 + 1], vertices[n * 3 + 2]}, transform);
+            result.min = Vector3Min(result.min, v);
+            result.max = Vector3Max(result.max, v);
+        }
+    }
+    return result;
+}
 void SkinnedModel::draw(Vector3 position, Vector3 facing, float scale, Shader shader, Texture2D shadowMap) {
     if (!loaded()) return;
     const auto &a = asset_;

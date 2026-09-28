@@ -2,6 +2,7 @@
 #include "render/PostProcess.hpp"
 #include "render/TownScene.hpp"
 #include "render/TownActorModels.hpp"
+#include "render/AnimalModels.hpp"
 #include "world/TownNavigation.hpp"
 #include <deque>
 
@@ -11,7 +12,8 @@ class TownEditor {
     bool active = false, quitRequested = false, saved = false;
     std::string status;
     Camera3D camera{};
-    bool open(const std::filesystem::path &directory, Camera3D view);
+    bool open(const std::filesystem::path &directory, Camera3D view,
+              const std::vector<AnimalPlacement> &legacyAnimals = {});
     void update(float dt);
     void draw();
     void requestClose(bool quit = false);
@@ -19,6 +21,7 @@ class TownEditor {
         scene_.unload();
         postProcess_.unload();
         characterModels_.unload();
+        animalModels_.unload();
     }
     bool dirty() const {
         return revision_ != savedRevision_;
@@ -49,6 +52,13 @@ class TownEditor {
     void resetPreview();
     void detachVehicle();
     void setPathSettings(float speed, float acceleration, float dwell);
+    void addAnimal(AnimalKind kind);
+    void selectAnimal(std::optional<size_t> index);
+    void placeAnimal(Vector3 position);
+    void setAnimalSettings(float scale, float roam, float yaw, uint32_t seed);
+    void setAnimalSpecies(AnimalKind kind);
+    std::optional<size_t> animalSelection() const { return selectedAnimal_; }
+    const Animals &animalPreview() const { return animals_; }
     void addCharacter();
     void selectCharacter(std::optional<size_t> index);
     void placeCharacter(Vector3 position);
@@ -70,7 +80,7 @@ class TownEditor {
         TownDocument document;
         Vector3 spawn, mission;
         std::optional<size_t> selected;
-        std::optional<size_t> character, stop;
+        std::optional<size_t> character, stop, animal;
         uint64_t revision;
     };
     enum class Tool { Move, Rotate, Scale };
@@ -82,6 +92,13 @@ class TownEditor {
     ObjectAnimationSystem preview_;
     TownActorModels characterModels_;
     TownCharacters characters_;
+    AnimalModels animalModels_;
+    Animals animals_;
+    std::vector<AnimalPlacement> legacyAnimals_;
+    std::vector<Box> animalBounds_;
+    std::optional<size_t> selectedAnimal_;
+    AnimalKind animalKind_ = AnimalKind::Horse;
+    bool animalTab_ = false, animalPalette_ = false, animalPlacement_ = false, replacingAnimal_ = false;
     HubWorld characterGround_;
     std::optional<size_t> selectedCharacter_, selectedStop_;
     bool characterTab_ = false;
@@ -122,6 +139,11 @@ class TownEditor {
     void drawUI();
     void drawAnimationUI();
     void drawCharacterUI();
+    void drawAnimalUI();
+    void drawAnimalPalette();
+    void commitAnimalField();
+    bool validAnimalHome(const AnimalPlacement &animal, const HubWorld &ground) const;
+    void importLegacyAnimals();
     void refreshCharacterRoute();
     std::optional<Vector3> characterGroundPoint(Vector2 pixel) const;
     bool validCharacterStop(Vector3 point, std::optional<size_t> replacing = {}) const;

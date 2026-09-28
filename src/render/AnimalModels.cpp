@@ -25,6 +25,11 @@ bool AnimalModels::pose(const Animal &animal) {
     if (!model.attempted()) load(animal.kind, assetDirectory() / (std::string(animalName(animal.kind)) + ".glb"));
     return model.pose(animal.phase, animal.walking, animal.eating);
 }
+Box AnimalModels::bounds(const Animal &animal) {
+    if (pose(animal)) return models_[size_t(animal.kind)].bounds(animal.position, animal.facing, animal.scale);
+    const float r = animalRadius(animal.kind) * animal.scale;
+    return {add(animal.position, {-r, 0, -r}), add(animal.position, {r, r * 2, r})};
+}
 void AnimalModels::draw(const Animals &animals, Shader shader, Texture2D shadowMap) {
     for (const auto &animal : animals.residents()) draw(animal, shader, shadowMap);
 }

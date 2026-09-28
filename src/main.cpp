@@ -139,7 +139,7 @@ int main(int argc, char **argv) {
         dw::TownEditor editor;
         if (startEditor) {
             const auto directory = editorDirectory.empty() ? game.hubDirectory() : editorDirectory;
-            if (!editor.open(directory, game.camera))
+            if (!editor.open(directory, game.camera, editorDirectory.empty() ? game.animals.placements() : std::vector<dw::AnimalPlacement>{}))
                 throw std::runtime_error(editor.status);
             SetWindowTitle("DeathWard | Town editor");
         }
@@ -232,7 +232,7 @@ int main(int argc, char **argv) {
 #endif
             if (game.editorRequested) {
                 game.editorRequested = false;
-                if (!editor.open(game.hubDirectory(), game.camera))
+                if (!editor.open(game.hubDirectory(), game.camera, game.animals.placements()))
                     game.error = editor.status;
                 else
                     SetWindowTitle("DeathWard | Town editor");
@@ -315,6 +315,20 @@ int main(int argc, char **argv) {
             const auto *probeProp = game.townObjects.firstPropPose();
             const auto &residents = game.animals.residents();
             const auto &characters = game.characters.residents();
+            const auto &previewAnimals = editor.animalPreview().residents();
+            const auto selectedAnimal = editor.animalSelection();
+            const auto animalIndex = selectedAnimal.value_or(0);
+            const auto *previewAnimal = animalIndex < previewAnimals.size() ? &previewAnimals[animalIndex] : nullptr;
+            const auto *animalDefinition = selectedAnimal ? &editor.document().animals[*selectedAnimal] : nullptr;
+            EM_ASM({
+                if (Module.verify) Module.animalEditor = ({count: $0, selected: $1, time: $2,
+                    phase: $3, x: $4, z: $5, species: $6, radius: $7, seed: $8, homeX: $9, homeZ: $10});
+                }, int(editor.document().animals.size()), selectedAnimal ? int(*selectedAnimal) : -1,
+                editor.animalPreview().time(), previewAnimal ? previewAnimal->phase : 0.,
+                previewAnimal ? previewAnimal->position.x : 0.f, previewAnimal ? previewAnimal->position.z : 0.f,
+                animalDefinition ? int(animalDefinition->kind) : -1, animalDefinition ? animalDefinition->roam : 0.f,
+                animalDefinition ? double(animalDefinition->seed) : 0., animalDefinition ? animalDefinition->home.x : 0.f,
+                animalDefinition ? animalDefinition->home.z : 0.f);
             const auto &previewCharacters = editor.characterPreview().residents();
             const auto selectedCharacter = editor.characterSelection();
             EM_ASM(
