@@ -65,6 +65,10 @@ struct Enemy {
     Vector3 home{};
     uint64_t observedShots = 0;
     bool awakened = false, friendly = false;
+    float idleTime = 0;
+    float animationTime() const {
+        return age + idleTime;
+    }
 };
 struct Player {
     Vector3 position{0, 0.85f, 10}, aim{0, 0.85f, 0};
@@ -152,6 +156,8 @@ struct Input {
 struct RoomProgress {
     bool visited = false, cleared = false, rewardTaken = false;
     std::array<ItemId, 2> offers{};
+    // The active room uses Simulation::enemies; other rooms keep their actual group here.
+    std::vector<Enemy> residents;
 };
 
 class Simulation {
@@ -196,6 +202,7 @@ class Simulation {
     size_t roomThreats() const;
     void spawnEnemies(int count);
     int roomEnemyCount(int index) const;
+    const std::vector<Enemy> &roomEnemies(int index) const;
     void spawnRoomEnemies();
     void startBoss();
     void killAll();
@@ -268,6 +275,8 @@ class Simulation {
     void createProjectile(const Event &event);
     void updatePlayer(const Input &input, float dt);
     void beginBossEncounter();
+    void prepareRoomEnemies(int index);
+    bool roomSpawnClear(Vector3 position, float radius) const;
     void updateEnemies(float dt);
     void performEnemyAttack(Enemy &enemy);
     void updateHazards(float dt);

@@ -1,5 +1,11 @@
 # Milestone 1 verification
 
+## Enemies present before room entry
+
+Content version `deathward-m1-22` prepares all seeded room groups at mission startup. Nearby rooms render their actual residents, including companions, tethers and occlusion outlines. Idle breathing and creature animation use a separate clock; dormant groups do not move, attack, summon, consume combat randomness or advance encounter timers. Crossing the existing room threshold transfers the same entities into combat, preserving IDs, positions, links and animation phase. Placement reserves a landing area at every doorway. Cleared rooms remain empty, quiet/power rooms stay peaceful, and explicit debug replay creates a fresh group.
+
+The native and WebAssembly Release builds pass. All nine headless suites pass, including a new resident-enemy suite covering both themes across four seeds, 20-second corridor waits, population budgets, globally unique IDs, companion links, doorway clearance, unchanged combat state/RNG, natural threshold activation, one animation tick on entry, cleared revisits and debug replay. The full native input suite and occlusion graphics suite pass. Pixel checks verify visible resident geometry and animated changes before entry in the mine and canyon; captures were visually reviewed. Chromium gameplay checks pass for both hubs/themes, combat, audio, editor persistence and interrupted-run recovery, without reported JavaScript or WebGL errors. The refreshed static package also passes root/subdirectory hosting checks. Logs and captures use `artifacts/resident-enemies-*`.
+
 ## Static upload package
 
 `scripts/package-web.py` produces a 37.5 MiB ZIP with relative runtime URLs, content-hashed JavaScript/WASM/data filenames, SHA-256 manifest and upload instructions. The package has no fixed hostname or deployment directory and needs no application runtime on the server.

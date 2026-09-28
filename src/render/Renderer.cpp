@@ -90,6 +90,8 @@ void enemyModel(const Enemy &enemy, bool drawShadow = true) {
         drawMonsterModel(enemy, drawShadow);
         return;
     }
+    rlPushMatrix();
+    rlScalef(1, 1 + .018f * std::sin(enemy.animationTime() * 2.2f + float(enemy.id)), 1);
     static constexpr std::array<Color, size_t(EnemyKind::Count)> coats{{{159, 64, 48, 255},
                                                                         {118, 105, 84, 255},
                                                                         {159, 91, 38, 255},
@@ -130,7 +132,7 @@ void enemyModel(const Enemy &enemy, bool drawShadow = true) {
     } else if (enemy.kind == EnemyKind::Preacher || enemy.kind == EnemyKind::BellRinger ||
                enemy.kind == EnemyKind::Wraith) {
         const bool wraith = enemy.kind == EnemyKind::Wraith;
-        const float lift = wraith ? 0.25f + 0.12f * std::sin(enemy.age * 3) : 0;
+        const float lift = wraith ? 0.25f + 0.12f * std::sin(enemy.animationTime() * 3) : 0;
         if (drawShadow)
             shadow(p, 0.7f);
         DrawCylinder({p.x, lift, p.z}, 0.3f, 0.65f, 1.5f, 8, coat);
@@ -199,6 +201,7 @@ void enemyModel(const Enemy &enemy, bool drawShadow = true) {
             for (float offset : {-0.6f, 0.6f})
                 DrawSphereWires(add(hand, mul(side, offset)), 0.2f, 4, 6, metal);
     }
+    rlPopMatrix();
 }
 void enemyWarning(const Enemy &enemy, const Simulation &run) {
     if (enemy.kind == EnemyKind::Monster) {
@@ -516,28 +519,44 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawSphere({p.x, 1.1f, p.z}, 0.35f, Teal);
         }
     }
-    for (const auto &e : run.enemies)
-        if (e.alive) {
+    std::vector<const Enemy *> drawnEnemies;
+    for (int room = 0; room < RoomCount; ++room) {
+        if (room != run.room && !visible(run.arena.rooms[size_t(room)].bounds))
+            continue;
+        const auto &group = run.roomEnemies(room);
+        const auto partnerOf = [&](const Enemy &enemy) -> const Enemy * {
+            const auto found = std::find_if(group.begin(), group.end(), [&](const Enemy &other) {
+                return other.id == enemy.partner && other.alive;
+            });
+            return found == group.end() ? nullptr : &*found;
+        };
+        for (const auto &e : group) {
+            if (!e.alive)
+                continue;
+            drawnEnemies.push_back(&e);
             if (e.id == hoveredEnemy)
                 DrawCircle3D({e.position.x, 0.08f, e.position.z}, e.radius + 0.25f, {1, 0, 0}, 90, Rust);
             enemyModel(e);
-            enemyWarning(e, run);
+            if (room == run.room)
+                enemyWarning(e, run);
+            const auto *partner = partnerOf(e);
             if (e.monster == monsterId(89) && e.partner) {
-                const auto *leader = run.findEnemy(e.partner);
-                if (leader && leader->alive && distance(e.position, leader->position) < 2.5f &&
-                    run.arena.sight(e.position, leader->position))
+                if (partner && distance(e.position, partner->position) < 2.5f &&
+                    run.arena.sight(e.position, partner->position))
                     DrawCylinderEx({e.position.x, .35f, e.position.z},
-                                   {leader->position.x, .35f, leader->position.z}, .19f, .19f, 6,
+                                   {partner->position.x, .35f, partner->position.z}, .19f, .19f, 6,
                                    Color{133, 86, 81, 255});
             }
-            if (e.id < e.partner && run.chainActive(e)) {
-                const auto *partner = run.findEnemy(e.partner);
+            if (e.kind == EnemyKind::Chainbound && e.id < e.partner && partner && partner->partner == e.id &&
+                distance(e.position, partner->position) <= 8 &&
+                run.arena.sight(e.position, partner->position)) {
                 DrawCylinderEx(e.position, partner->position, 0.05f, 0.05f, 5, Rust);
                 DrawLine3D(e.position, partner->position, Gold);
             }
             if (collisions)
                 DrawSphereWires(e.position, e.radius, 6, 8, Rust);
         }
+    }
     for (const auto &hazard : run.hazards)
         drawHazard(hazard);
     if (playerModel_.loaded()) {
@@ -603,11 +622,12 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     auto outlineEligible = [](const Enemy &e) {
         return e.alive && !e.friendly && e.state != EnemyState::Buried && e.state != EnemyState::Teleporting;
     };
-    if (std::any_of(run.enemies.begin(), run.enemies.end(), outlineEligible))
+    if (std::any_of(drawnEnemies.begin(), drawnEnemies.end(),
+                    [&](const Enemy *e) { return outlineEligible(*e); }))
         postProcess_.outlineOccluded(camera, [&] {
-            for (const auto &e : run.enemies)
-                if (outlineEligible(e))
-                    enemyModel(e, false);
+            for (const auto *e : drawnEnemies)
+                if (outlineEligible(*e))
+                    enemyModel(*e, false);
         });
     for (const auto &e : run.enemies)
         if (e.alive && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {

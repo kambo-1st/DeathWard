@@ -227,7 +227,7 @@ void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
                 at = add(request.position,
                          rotateY({.8f + float(attempt / 8) * .45f, 0, 0}, float(attempt % 8) * Pi / 4));
             at.y = .85f;
-            if ((placement && arena.roomAt(at) != room) || arena.blocked(at, d->radius) ||
+            if ((placement && !roomSpawnClear(at, d->radius)) || arena.blocked(at, d->radius) ||
                 distance(at, player.position) < std::max(playerClearance, d->radius + .65f))
                 continue;
             bool occupied = false;

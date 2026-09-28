@@ -49,6 +49,8 @@ bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monste
     auto valid = [&](Vector3 point) {
         if (arena.blocked(point, std::max(0.8f, radius)) || distance(point, player.position) < 6)
             return false;
+        if (spaced && !roomSpawnClear(point, radius))
+            return false;
         if (spaced)
             for (const auto &other : enemies)
                 if (other.alive && distance(point, other.position) < radius + other.radius + 0.35f)
@@ -116,8 +118,51 @@ int Simulation::roomEnemyCount(int index) const {
     return std::clamp(int(std::ceil(layout.usableArea() / 70.0f)), 4, 24);
 }
 
+const std::vector<Enemy> &Simulation::roomEnemies(int index) const {
+    return index == room ? enemies : rooms.at(size_t(index)).residents;
+}
+
+bool Simulation::roomSpawnClear(Vector3 point, float radius) const {
+    if (arena.roomAt(point) != room)
+        return false;
+    // Any doorway can become the player's first entrance. Keep its landing clear
+    // without moving an already-visible enemy when that doorway is crossed.
+    for (int passage : arena.rooms[size_t(room)].passages) {
+        const int side = arena.passages[size_t(passage)].rooms[0] == room ? 0 : 1;
+        if (distance(point, arena.doorApproach(passage, side)) < radius + 2.5f)
+            return false;
+    }
+    return true;
+}
+
+void Simulation::prepareRoomEnemies(int index) {
+    const int previousRoom = room;
+    const auto previousPosition = player.position;
+    const auto previousRng = encounterRng;
+    auto active = std::move(enemies);
+    auto pending = std::move(pendingMonsters_);
+    pendingMonsters_ = {};
+    enemies = {};
+    enemies.reserve(limits.enemies);
+    room = index;
+    player.position = arena.rooms[size_t(index)].entry;
+    spawnRoomEnemies();
+    rooms[size_t(index)].residents = std::move(enemies);
+    enemies = std::move(active);
+    room = previousRoom;
+    player.position = previousPosition;
+    encounterRng = previousRng;
+    pendingMonsters_ = std::move(pending);
+}
+
 void Simulation::spawnRoomEnemies() {
     const auto &layout = arena.rooms[size_t(room)];
+    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power)
+        return;
+    if (room == FinalRoom && arena.theme == MissionTheme::Mine && !followup) {
+        spawn(EnemyKind::Boss, layout.bossSpawn);
+        return;
+    }
     Random composition(seed_ ^ 0x524f4f4d47524f55ULL ^ (uint64_t(room + 1) * 0x9e3779b97f4a7c15ULL));
     if (arena.theme == MissionTheme::Canyon) {
         std::vector<int> pool;
@@ -147,7 +192,7 @@ void Simulation::spawnRoomEnemies() {
                     for (int direction = 0; direction < 16; ++direction) {
                         const auto point =
                             add(head->position, rotateY({1.45f, 0, 0}, float(direction) * Pi / 8));
-                        if (arena.roomAt(point) != room || arena.blocked(point, .6f) ||
+                        if (!roomSpawnClear(point, .6f) || arena.blocked(point, .6f) ||
                             distance(point, player.position) < 6 || !arena.sight(point, head->position))
                             continue;
                         bool occupied = false;
@@ -211,7 +256,7 @@ void Simulation::spawnRoomEnemies() {
         // Start the pair close enough to see the tether; never move through cover.
         for (int i = 0; i < 16; ++i) {
             Vector3 point = add(partner->position, rotateY({3, 0, 0}, float(i) * Pi / 8));
-            if (arena.roomAt(point) != room || arena.blocked(point, 0.8f) ||
+            if (!roomSpawnClear(point, enemy.radius) || arena.blocked(point, 0.8f) ||
                 !arena.sight(point, partner->position) || distance(point, player.position) < 6)
                 continue;
             bool occupied = false;

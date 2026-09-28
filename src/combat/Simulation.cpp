@@ -27,6 +27,9 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
             rooms[size_t(index)].offers[size_t(i)] = pool[size_t(i)];
         }
     }
+    for (int index = 0; index < RoomCount; ++index)
+        prepareRoomEnemies(index);
+    enemies = std::move(rooms[0].residents);
     enterRoom(0);
     announce(std::string(missionTheme(theme).region) +
                  (followup ? " / return to unfinished business" : " / find the six missing miners"),
@@ -120,7 +123,11 @@ void Simulation::enterRoom(int index) {
     audioCues.clear();
     ++audioEpoch;
     audioCues.push(AudioCueKind::Door, player.position);
+    if (rooms[size_t(room)].cleared)
+        enemies.clear();
+    rooms[size_t(room)].residents = std::move(enemies);
     room = std::clamp(index, 0, FinalRoom);
+    enemies = std::move(rooms[size_t(room)].residents);
     auto &progress = rooms[size_t(room)];
     progress.visited = true;
     roomClear = progress.cleared;
@@ -132,7 +139,6 @@ void Simulation::enterRoom(int index) {
     player.shootPose = 0;
     queue_.clear();
     chains.clear();
-    enemies.clear();
     pendingMonsters_.clear();
     visuals.clear();
     const auto kind = arena.rooms[size_t(room)].kind;
@@ -153,8 +159,6 @@ void Simulation::enterRoom(int index) {
         announce(roomName() + " / doors sealed until the fight is over", 4);
         if (room == FinalRoom)
             beginBossEncounter();
-        else
-            spawnRoomEnemies();
     } else {
         arena.sealRoom(-1);
         announce(roomName() + " / already cleared", 3);
@@ -237,10 +241,6 @@ void Simulation::startBoss() {
     jumpDebug(FinalRoom, true);
 }
 void Simulation::beginBossEncounter() {
-    if (arena.theme == MissionTheme::Canyon || followup)
-        spawnRoomEnemies();
-    else
-        spawn(EnemyKind::Boss, arena.rooms.back().bossSpawn);
     announce(arena.theme == MissionTheme::Canyon ? "THE INFESTED MESA / clear the final monster group"
              : followup                          ? "Finish what remains"
                                                  : "THE HOLLOW SHERIFF",
@@ -306,10 +306,20 @@ void Simulation::jumpDebug(int index, bool restart) {
     }
     if (restart && index == FinalRoom)
         bossKilled = false;
+    if (restart) {
+        prepareRoomEnemies(index);
+        if (index == room)
+            enemies = std::move(rooms[size_t(index)].residents);
+    }
     healDebug();
-    // Place the player before spawning the group so enemies respect its safe radius.
+    // Debug travel must not land inside a group that already occupies the room.
     player.position =
         index == FinalRoom ? arena.rooms[size_t(index)].entry : arena.rooms[size_t(index)].center;
+    for (const auto &enemy : roomEnemies(index))
+        if (enemy.alive && distance(player.position, enemy.position) < 6) {
+            player.position = arena.rooms[size_t(index)].entry;
+            break;
+        }
     enterRoom(index);
     player.aim = arena.rooms[size_t(index)].exit;
     // Keep the build, keys, unlocked doors and claimed rewards when replaying.
@@ -877,6 +887,12 @@ void Simulation::step(const Input &input, float dt) {
             enterRoom(location);
     }
     collectKeys();
+    // After the room transition, each actor advances either its idle or combat
+    // clock exactly once. Ambient animation never runs attacks or summons.
+    for (auto &progress : rooms)
+        for (auto &enemy : progress.residents)
+            if (enemy.alive)
+                enemy.idleTime += dt;
     rebuildGrid();
     updateEnemies(dt);
     flushMonsterSpawns();

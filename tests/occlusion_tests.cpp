@@ -149,6 +149,9 @@ void townCheck(HubKind hub) {
 }
 void enemyOutlineCheck(Vector3 enemyPosition, const Camera3D &camera, const std::string &name) {
     Simulation run(69175541, 1, {}, MissionTheme::Canyon);
+    // Isolate the actor under test from the mission's prepopulated neighboring rooms.
+    for (auto &room : run.rooms)
+        room.residents.clear();
     bool found = false;
     for (const auto &room : run.arena.rooms) {
         for (float z = room.bounds.min.z; z < room.bounds.max.z && !found; z += 2)
@@ -271,6 +274,66 @@ void canyonCheck() {
         enemyOutlineCheck(player, camera, zoom < 1 ? "canyon" : "canyon-wide");
     }
 }
+void residentRenderCheck(MissionTheme theme) {
+    Simulation run(1866, 1, {}, theme);
+    int room = 1;
+    while (run.roomEnemies(room).empty())
+        ++room;
+    const int passage = run.arena.rooms[size_t(room)].passages.front();
+    const auto &door = run.arena.passages[size_t(passage)];
+    auto watcher = mul(add(door.from, door.to), .5f);
+    if (run.arena.canyon)
+        for (const auto &point : run.arena.canyon->trails[size_t(passage)])
+            if (run.arena.roomAt(point) < 0) {
+                watcher = point;
+                break;
+            }
+    watcher.y = .85f;
+    check(run.arena.roomAt(watcher) < 0, "render fixture watches from the corridor");
+    run.player.position = watcher;
+    for (int other = 0; other < RoomCount; ++other)
+        if (other != room)
+            run.rooms[size_t(other)].residents.clear();
+    const auto &group = run.roomEnemies(room);
+    const auto nearest = std::min_element(group.begin(), group.end(), [&](const Enemy &a, const Enemy &b) {
+        return distance(a.position, watcher) < distance(b.position, watcher);
+    });
+    const auto camera = view(nearest->position, 0, .45f);
+    Renderer renderer;
+    auto capture = [&] {
+        BeginDrawing();
+        renderer.drawWorld(run, camera, false);
+        rlDrawRenderBatchActive();
+        const auto result = LoadImageFromScreen();
+        EndDrawing();
+        return result;
+    };
+    auto saved = std::move(run.rooms[size_t(room)].residents);
+    run.rooms[size_t(room)].residents = {};
+    auto empty = capture();
+    run.rooms[size_t(room)].residents = std::move(saved);
+    auto before = capture();
+    for (int i = 0; i < 23; ++i)
+        run.step({});
+    auto after = capture();
+    check(run.room == 0 && run.enemies.empty(), "rendered neighbors remain dormant in the corridor");
+    int actorPixels = 0, animationPixels = 0;
+    const auto center = GetWorldToScreen(nearest->position, camera);
+    for (int y = std::max(0, int(center.y) - 70); y < std::min(before.height, int(center.y) + 70); ++y)
+        for (int x = std::max(0, int(center.x) - 70); x < std::min(before.width, int(center.x) + 70); ++x) {
+            actorPixels += colorDifference(GetImageColor(empty, x, y), GetImageColor(before, x, y)) > 18;
+            animationPixels += colorDifference(GetImageColor(before, x, y), GetImageColor(after, x, y)) > 8;
+        }
+    const std::string name = theme == MissionTheme::Canyon ? "canyon" : "mine";
+    std::cout << name << " resident pixels " << actorPixels << ", animation pixels " << animationPixels
+              << std::endl;
+    check(actorPixels > 30 && animationPixels > 3,
+          "actual resident geometry is visible and animates before room entry");
+    ExportImage(before, ("artifacts/resident-enemies-" + name + "-before.png").c_str());
+    ExportImage(after, ("artifacts/resident-enemies-" + name + "-after.png").c_str());
+    for (auto image : {empty, before, after})
+        UnloadImage(image);
+}
 } // namespace
 int main() {
     try {
@@ -281,6 +344,8 @@ int main() {
         townCheck(HubKind::BlackCreek);
         townCheck(HubKind::Frontier);
         canyonCheck();
+        residentRenderCheck(MissionTheme::Mine);
+        residentRenderCheck(MissionTheme::Canyon);
         CloseWindow();
         std::cout << "PASS town/canyon transparency, enemy outlines, restoration, zoom and collision\n";
     } catch (const std::exception &e) {

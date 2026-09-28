@@ -14,7 +14,8 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
                                         {195, 109, 53, 255},
                                         {107, 63, 94, 255}}};
     Color skin = e.flash > 0 ? Color{245, 233, 206, 255} : palette[size_t((type + variant) % 8)];
-    if (type == 884 && std::fmod(e.age, .7f) < .16f)
+    const float time = e.animationTime();
+    if (type == 884 && std::fmod(time, .7f) < .16f)
         skin = {240, 206, 65, 255};
     const Color dark{41, 31, 35, 255}, bone{210, 193, 154, 255}, blood{153, 42, 49, 255};
     const auto dir = unit(e.facing), side = Vector3{-dir.z, 0, dir.x};
@@ -40,7 +41,7 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
             sphere(add(eye, mul(dir, r * .14f)), r * .11f * scale, dark);
         }
     };
-    const float bob = std::sin(e.age * 6 + float(e.id)) * .08f;
+    const float bob = std::sin(time * 6 + float(e.id)) * .08f;
     switch (d.shape) {
     case MonsterShape::Fly: {
         p.y += .25f + bob;
@@ -48,7 +49,7 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
         sphere(add(p, mul(dir, r * .65f)), r * .55f, dark);
         for (float sign : {-1.f, 1.f}) {
             const auto wing =
-                add(p, add(mul(side, sign * r * .85f), {0, .25f + std::sin(e.age * 45) * .15f, 0}));
+                add(p, add(mul(side, sign * r * .85f), {0, .25f + std::sin(time * 45) * .15f, 0}));
             DrawSphereEx(wing, r * .63f, 4, 6, {191, 199, 184, 190});
         }
         eyes(add(p, mul(dir, r * .4f)));
@@ -64,7 +65,7 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
         p.y = .42f + e.lift;
         for (int n = 3; n >= 0; --n) {
             auto at = add(p, mul(dir, -float(n) * r * .47f));
-            at.y += std::sin(e.age * 8 + float(n)) * .05f;
+            at.y += std::sin(time * 8 + float(n)) * .05f;
             sphere(at, r * (1 - float(n) * .15f), n % 2 ? ColorBrightness(skin, -.15f) : skin);
         }
         eyes(p);
@@ -80,7 +81,7 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
                 const auto joint =
                     add(p, add(mul(side, sign * r * 1.3f), mul(dir, (float(n) - 1.5f) * r * .55f)));
                 const auto toe =
-                    add(joint, {side.x * sign * r * .5f, -.3f + std::sin(e.age * 12 + float(n)) * .08f,
+                    add(joint, {side.x * sign * r * .5f, -.3f + std::sin(time * 12 + float(n)) * .08f,
                                 side.z * sign * r * .5f});
                 DrawCylinderEx(p, joint, .055f, .04f, 5, dark);
                 DrawCylinderEx(joint, toe, .04f, .02f, 5, dark);
@@ -126,7 +127,7 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
     case MonsterShape::Blob: {
         const float scale = type == 30 ? .55f + .45f * e.hp / e.maxHp : 1;
         p.y = .55f + e.lift;
-        sphere(p, r * scale, skin);
+        sphere(p, r * scale * (1 + bob * .25f), skin);
         for (int n = 0; n < 4; ++n)
             sphere(add(p, rotateY({r * .55f, -.25f, 0}, float(n) * Pi / 2)), r * .4f, skin);
         eyes(p);
@@ -139,15 +140,15 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
     }
     case MonsterShape::Walker:
     case MonsterShape::Headless: {
-        const float step = std::sin(e.age * 9) * std::min(.16f, length(e.velocity) * .06f);
+        const float step = std::sin(time * 9) * std::min(.16f, length(e.velocity) * .06f);
         for (float sign : {-1.f, 1.f}) {
             auto foot =
                 add({p.x, .17f + e.lift, p.z}, add(mul(side, sign * r * .45f), mul(dir, step * sign)));
             DrawCylinder(foot, r * .2f, r * .25f, .5f, 6, skin);
         }
-        DrawCylinder({p.x, .4f + e.lift, p.z}, r * .7f, r * .85f, .7f, 8, skin);
+        DrawCylinder({p.x, .4f + e.lift, p.z}, r * .7f, r * .85f, .7f + bob * .25f, 8, skin);
         if (d.shape == MonsterShape::Walker) {
-            auto head = add(p, {0, .57f, 0});
+            auto head = add(p, {0, .57f + bob * .25f, 0});
             sphere(head, r * .85f, skin);
             eyes(head);
             sphere(add(head, add(mul(dir, r * .76f), {0, -.25f, 0})), r * .28f, dark);
@@ -166,7 +167,7 @@ inline void drawMonsterModel(const Enemy &e, bool drawShadow = true) {
     if ((type == 10 && variant == 2) || type == 54 || (type == 15 && variant == 3)) {
         for (int n = 0; n < 3; ++n)
             DrawCylinder(add(p, rotateY({r * .6f, .2f, 0}, float(n) * 2 * Pi / 3)), 0, .2f,
-                         .8f + std::sin(e.age * 11) * .2f, 5, {227, 143, 47, 255});
+                         .8f + std::sin(time * 11) * .2f, 5, {227, 143, 47, 255});
     }
 }
 inline void drawMonsterWarning(const Enemy &e, const Simulation &run) {
