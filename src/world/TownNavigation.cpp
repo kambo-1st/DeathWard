@@ -78,6 +78,14 @@ void TownNavigation::write(const std::filesystem::path &path) const {
 Vector3 TownNavigation::point(size_t i) const {
     return {minX + (float(i % width) + .5f) * cell, heights[i], minZ + (float(i / width) + .5f) * cell};
 }
+float TownNavigation::height(Vector3 p) const {
+    if (!std::isfinite(p.x) || !std::isfinite(p.z) || cell <= 0)
+        return std::numeric_limits<float>::quiet_NaN();
+    const int x = int(std::floor((p.x - minX) / cell)), z = int(std::floor((p.z - minZ) / cell));
+    if (x < 0 || z < 0 || x >= int(width) || z >= int(depth))
+        return std::numeric_limits<float>::quiet_NaN();
+    return heights.at(size_t(z) * width + size_t(x));
+}
 void TownNavigation::bake(const TownDocument &document, const Model &model) {
     document.validate();
     if (!width || !depth || width > 4096 || depth > 4096 || cell < .1f ||
@@ -88,6 +96,8 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
     std::vector<bool> flat(top.size(), false);
     for (size_t i = 0; i < document.instances.size(); ++i) {
         const auto &instance = document.instances[i];
+        if (instance.motion.kind != ObjectMotionKind::None)
+            continue; // Decorative moving props must not leave a baked collision footprint.
         const auto &asset = document.assets[instance.asset];
         const auto bounds = document.bounds(i);
         if (asset.unlit || asset.label.find("Cloud") != std::string::npos || bounds.min.y > 12 ||

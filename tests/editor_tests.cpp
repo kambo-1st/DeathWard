@@ -43,6 +43,10 @@ void navigationChecks() {
     nav.bake(doc, model);
     const size_t middle = 25 * 50 + 25;
     check(!std::isfinite(nav.heights[middle]), "navigation blocks disconnected object roofs");
+    doc.instances[1].motion.kind = ObjectMotionKind::Spin;
+    nav.bake(doc, model);
+    check(std::isfinite(nav.heights[middle]), "animated decoration is excluded from static navigation");
+    doc.instances[1].motion.kind = ObjectMotionKind::None;
     doc.instances[1].transform.m12 = 5;
     nav.bake(doc, model);
     check(std::isfinite(nav.heights[middle]), "moving an object frees its previous footprint");
@@ -245,6 +249,69 @@ int main() {
         auto capture = LoadImageFromScreen();
         check(ExportImage(capture, "artifacts/town-editor.png"), "editor preview exports");
         UnloadImage(capture);
+        const auto moving =
+            std::find_if(editor.document().instances.begin(), editor.document().instances.end(),
+                         [](const auto &i) { return i.motion.kind == ObjectMotionKind::Tumbleweed; });
+        check(moving != editor.document().instances.end(), "town exposes tumbleweed animation in the editor");
+        const size_t weed = size_t(moving - editor.document().instances.begin());
+        const auto rest = moving->transform;
+        const auto stableId = moving->id;
+        editor.select(weed);
+        editor.focusSelection();
+        click({1345, 178}); // Animation inspector.
+        click({1190, 698}); // Play preview.
+        check(editor.previewPlaying(), "the Animation inspector starts preview playback");
+        for (int n = 0; n < 40; ++n)
+            frame();
+        check(!same(editor.animationPreview().poses()[weed].transform, rest) && !editor.dirty() &&
+                  same(editor.document().instances[weed].transform, rest),
+              "preview moves the mesh while preserving saved placement and clean state");
+        click({1190, 698});
+        const auto frozen = editor.animationPreview().poses()[weed].transform;
+        for (int n = 0; n < 5; ++n)
+            frame();
+        check(!editor.previewPlaying() && same(frozen, editor.animationPreview().poses()[weed].transform),
+              "the inspector pauses animation exactly");
+        capture = LoadImageFromScreen();
+        check(ExportImage(capture, "artifacts/town-animation-editor.png"),
+              "animation inspector capture exports");
+        UnloadImage(capture);
+        click({1340, 698}); // Reset.
+        check(same(editor.animationPreview().poses()[weed].transform, rest),
+              "reset restores the authored pose");
+        click({1340, 246}); // Spin preset.
+        check(editor.document().instances[weed].motion.kind == ObjectMotionKind::Spin && editor.dirty(),
+              "a reusable animation preset can be assigned through the inspector");
+        editor.undo();
+        check(editor.document().instances[weed].motion.kind == ObjectMotionKind::Tumbleweed &&
+                  !editor.dirty(),
+              "undo restores the previous animation settings and saved revision");
+        editor.duplicate();
+        check(editor.document().instances.back().id != stableId &&
+                  editor.document().instances.back().motion.kind == ObjectMotionKind::Tumbleweed,
+              "duplicated animated objects retain settings and get a distinct stable ID");
+        editor.remove();
+        editor.undo();
+        check(editor.document().instances.back().motion.kind == ObjectMotionKind::Tumbleweed,
+              "undoing deletion restores the animation with its object");
+        editor.undo();
+        editor.select(weed);
+        auto changedMotion = editor.document().instances[weed].motion;
+        changedMotion.speed = .9f;
+        editor.setMotion(changedMotion);
+        editor.setPreviewPlaying(true);
+        for (int n = 0; n < 30; ++n)
+            frame();
+        check(editor.save(), editor.status);
+        TownDocument animatedSaved;
+        check(animatedSaved.load(directory / "town.scene", error) &&
+                  animatedSaved.instances[weed].id == stableId &&
+                  animatedSaved.instances[weed].motion.speed == .9f &&
+                  same(animatedSaved.instances[weed].transform, rest),
+              "saving during playback writes settings and rest transforms, never the temporary pose");
+        check(editor.reload() && editor.document().instances[weed].motion.speed == .9f &&
+                  editor.animationPreview().time() == 0,
+              "reload restores motion settings with a fresh preview");
         editor.requestClose();
         check(!editor.active && !editor.quitRequested, "clean editor closes back to town");
         editor.unload();

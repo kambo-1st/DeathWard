@@ -27,6 +27,7 @@ target_compile_definitions(raylib PRIVATE MA_NO_NULL)
 
 add_library(deathward_core
     src/world/TownDocument.cpp
+    src/world/ObjectAnimation.cpp
     src/world/TownNavigation.cpp
     src/world/HubWorld.cpp
     src/world/Campaign.cpp
@@ -128,6 +129,9 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_object_animation_tests tests/object_animation_tests.cpp)
+    target_link_libraries(deathward_object_animation_tests PRIVATE deathward_core)
+    add_test(NAME object_animation COMMAND deathward_object_animation_tests)
     add_executable(deathward_dynamite_tests tests/dynamite_tests.cpp)
     target_link_libraries(deathward_dynamite_tests PRIVATE deathward_core)
     add_test(NAME player_dynamite COMMAND deathward_dynamite_tests)

@@ -1,3 +1,5 @@
+#include "raylib.h"
+#include "raymath.h"
 #include "render/TownScene.hpp"
 #include "world/HubWorld.hpp"
 #include <iostream>
@@ -56,6 +58,79 @@ void lightingCheck(TownScene &scene, Vector3 focus) {
     scene.applyDocument(original);
     check(scene.shadowsReady(), "restoring the scene restores its original sun");
 }
+void motionCheck(TownScene &scene, HubWorld &ground) {
+    ObjectAnimationSystem motion;
+    const auto document = scene.document();
+    motion.reset(document);
+    if (!motion.activeCount())
+        return;
+    size_t selected = 0;
+    while (!motion.poses()[selected].animated)
+        ++selected;
+    const auto start =
+        mul(add(motion.poses()[selected].bounds.min, motion.poses()[selected].bounds.max), .5f);
+    const Camera3D camera{add(start, {4, 5, 4}), start, {0, 1, 0}, 45, CAMERA_PERSPECTIVE};
+    const auto render = [&] {
+        BeginDrawing();
+        ClearBackground(SKYBLUE);
+        scene.prepareLighting(camera);
+        BeginMode3D(camera);
+        scene.draw(start);
+        scene.draw(start, true);
+        EndMode3D();
+        auto image = LoadImageFromScreen();
+        EndDrawing();
+        return image;
+    };
+    const auto before = render();
+    for (int n = 0; n < 150; ++n)
+        motion.update(Tick, [&](Vector3 p) { return ground.height(p); });
+    scene.applyAnimation(motion);
+    const auto &pose = motion.poses()[selected];
+    const auto bounds = scene.instanceBounds(selected);
+    check(distance(bounds.min, pose.bounds.min) < .0001f && distance(bounds.max, pose.bounds.max) < .0001f,
+          "rendering and picking bounds follow the current animated pose");
+    const auto &asset = document.assets[document.instances[selected].asset];
+    const auto &mesh = scene.model().meshes[asset.first];
+    bool picked = false;
+    for (int t = 0; t < std::min(32, mesh.triangleCount) && !picked; ++t) {
+        Vector3 triangle[3];
+        for (int k = 0; k < 3; ++k) {
+            const int v = mesh.indices ? mesh.indices[t * 3 + k] : t * 3 + k;
+            triangle[k] = Vector3Transform(
+                {mesh.vertices[v * 3], mesh.vertices[v * 3 + 1], mesh.vertices[v * 3 + 2]}, pose.transform);
+        }
+        const auto point = mul(add(add(triangle[0], triangle[1]), triangle[2]), 1.f / 3);
+        const auto normal =
+            unit(Vector3CrossProduct(sub(triangle[1], triangle[0]), sub(triangle[2], triangle[0])));
+        picked = scene.pick({add(point, mul(normal, .15f)), mul(normal, -1)}) == selected;
+    }
+    check(picked, "mesh picking hits the tumbleweed at its animated location");
+    auto cached = render();
+    scene.applyDocument(document); // Force a full static shadow rebuild at the same animated pose.
+    scene.applyAnimation(motion);
+    auto rebuilt = render();
+    auto rest = LoadImageColors(before), a = LoadImageColors(cached), b = LoadImageColors(rebuilt);
+    int differences = 0, changed = 0;
+    for (int n = 0; n < cached.width * cached.height; ++n) {
+        differences += a[n].r != b[n].r || a[n].g != b[n].g || a[n].b != b[n].b;
+        changed += std::abs(int(rest[n].r) - int(a[n].r)) + std::abs(int(rest[n].g) - int(a[n].g)) +
+                       std::abs(int(rest[n].b) - int(a[n].b)) >
+                   20;
+    }
+    check(differences < 20, "moving objects cast current shadows without stale cached silhouettes");
+    check(changed > 40, "the animated textured tumbleweed visibly changes position");
+    std::filesystem::create_directories("artifacts");
+    ExportImage(before, "artifacts/town-tumbleweed-before.png");
+    ExportImage(cached, "artifacts/town-tumbleweed-after.png");
+    UnloadImageColors(rest);
+    UnloadImageColors(a);
+    UnloadImageColors(b);
+    UnloadImage(before);
+    UnloadImage(cached);
+    UnloadImage(rebuilt);
+    scene.applyDocument(document);
+}
 int main() {
     try {
         SetTraceLogLevel(LOG_ERROR);
@@ -87,6 +162,7 @@ int main() {
             check(textures.size() >= (frontier ? 5 : 12) && glass,
                   "original atlases, signs, sky and transparent materials are loaded");
             lightingCheck(scene, town.spawn);
+            motionCheck(scene, town);
             for (Vector3 p : std::array<Vector3, 3>{{town.spawn, town.mission, {-1, 2, -65}}}) {
                 BeginDrawing();
                 ClearBackground(SKYBLUE);

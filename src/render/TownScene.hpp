@@ -2,6 +2,7 @@
 #include "core/Types.hpp"
 #include "render/PlayerOcclusion.hpp"
 #include "world/HubDefinition.hpp"
+#include "world/ObjectAnimation.hpp"
 #include "world/TownDocument.hpp"
 #include <filesystem>
 #include <functional>
@@ -46,6 +47,10 @@ class TownScene {
         return document_;
     }
     void applyDocument(const TownDocument &document);
+    void applyAnimation(const ObjectAnimationSystem &animation);
+    Box instanceBounds(size_t index) const {
+        return instances_.at(index).bounds;
+    }
     std::optional<size_t> pick(Ray ray) const;
 
   private:
@@ -57,6 +62,7 @@ class TownScene {
         size_t asset;
         Matrix transform;
         Box bounds;
+        bool animated = false;
     };
     Model model_{};
     TownDocument document_;

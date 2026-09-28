@@ -2,6 +2,7 @@
 #include "combat/Simulation.hpp"
 #include "world/HubDefinition.hpp"
 #include "world/HubWorld.hpp"
+#include "world/ObjectAnimation.hpp"
 #include <memory>
 
 namespace dw {
@@ -61,6 +62,8 @@ class Game {
     CampaignStore campaign;
     std::unique_ptr<Simulation> run;
     HubWorld town;
+    ObjectAnimationSystem townObjects;
+    bool reloadTownObjects();
     HubKind activeHub = HubKind::BlackCreek;
     std::filesystem::path hubDirectory() const;
     bool selectHub(HubKind hub);

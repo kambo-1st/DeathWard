@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
+#include <unordered_set>
 
 namespace dw {
 namespace {
@@ -20,6 +21,28 @@ bool finite(Vector3 p) {
     return std::isfinite(p.x) && std::isfinite(p.y) && std::isfinite(p.z);
 }
 } // namespace
+const char *motionName(ObjectMotionKind kind) {
+    switch (kind) {
+    case ObjectMotionKind::Spin:
+        return "Spin";
+    case ObjectMotionKind::Sway:
+        return "Sway";
+    case ObjectMotionKind::Tumbleweed:
+        return "Tumbleweed";
+    default:
+        return "Static";
+    }
+}
+std::string TownDocument::nextInstanceId() const {
+    std::unordered_set<std::string> ids;
+    for (const auto &i : instances)
+        ids.insert(i.id);
+    for (size_t n = 1;; ++n) {
+        auto id = "object-" + std::to_string(n);
+        if (!ids.contains(id))
+            return id;
+    }
+}
 int TownDocument::meshCount() const {
     return assets.empty() ? 0 : assets.back().first + assets.back().count;
 }
@@ -35,7 +58,19 @@ void TownDocument::validate() const {
             throw std::runtime_error("Invalid town mesh catalog.");
         next += a.count;
     }
+    std::unordered_set<std::string> ids;
     for (const auto &i : instances) {
+        if (!i.id.empty() && (i.id.size() > 128 || i.id.find_first_of(" \t\n\r") != std::string::npos ||
+                              !ids.insert(i.id).second))
+            throw std::runtime_error("Invalid or duplicate object ID.");
+        const auto &m = i.motion;
+        if (int(m.kind) < 0 || int(m.kind) > int(ObjectMotionKind::Tumbleweed) || !std::isfinite(m.speed) ||
+            m.speed < 0 || m.speed > 360 || (m.kind == ObjectMotionKind::Tumbleweed && m.speed > 5) ||
+            !std::isfinite(m.amplitude) || m.amplitude < 0 || m.amplitude > 90 ||
+            (m.kind == ObjectMotionKind::Tumbleweed && m.amplitude > .25f) || !std::isfinite(m.period) ||
+            m.period < .5f || m.period > 120 || !finite(m.axis) || length(m.axis) < .001f ||
+            length(m.axis) > 10000 || !finite(m.pivot) || length(m.pivot) > 10000)
+            throw std::runtime_error("Invalid object animation settings.");
         const auto values = MatrixToFloatV(i.transform);
         for (float v : values.v)
             if (!std::isfinite(v) || std::abs(v) > 1000000)
@@ -55,9 +90,10 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
         std::ifstream in(path);
         std::string token;
         int version = 0;
-        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || version != 1)
+        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version != 1 && version != 2))
             throw std::runtime_error("Missing or unsupported town scene.");
         TownDocument candidate;
+        std::vector<std::pair<std::string, ObjectMotion>> motions;
         while (in >> token) {
             if (token == "asset") {
                 TownAsset a;
@@ -68,8 +104,20 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
             } else if (token == "instance") {
                 TownInstance i;
                 in >> i.asset;
+                if (version == 2)
+                    in >> i.id;
+                else
+                    i.id = "legacy-" + std::to_string(candidate.instances.size() + 1);
                 readMatrix(in, i.transform);
                 candidate.instances.push_back(i);
+            } else if (token == "motion" && version == 2) {
+                std::string id;
+                ObjectMotion m;
+                int kind = 0;
+                in >> id >> kind >> m.speed >> m.amplitude >> m.period >> m.seed >> m.axis.x >> m.axis.y >>
+                    m.axis.z >> m.pivot.x >> m.pivot.y >> m.pivot.z;
+                m.kind = ObjectMotionKind(kind);
+                motions.emplace_back(id, m);
             } else if (token == "light") {
                 TownLight l;
                 in >> l.type >> l.position.x >> l.position.y >> l.position.z >> l.direction.x >>
@@ -78,8 +126,17 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                 candidate.lights.push_back(l);
             } else
                 throw std::runtime_error("Unknown town scene entry: " + token);
-            if (!in || candidate.assets.size() > 100000 || candidate.instances.size() > 100000)
+            if (!in || candidate.assets.size() > 100000 || candidate.instances.size() > 100000 ||
+                motions.size() > 100000)
                 throw std::runtime_error("Truncated or oversized town scene.");
+        }
+        std::unordered_set<std::string> bound;
+        for (const auto &[id, motion] : motions) {
+            auto at = std::find_if(candidate.instances.begin(), candidate.instances.end(),
+                                   [&](const auto &i) { return i.id == id; });
+            if (at == candidate.instances.end() || !bound.insert(id).second)
+                throw std::runtime_error("Animation references a missing or duplicate object.");
+            at->motion = motion;
         }
         candidate.validate();
         // Optional human-readable labels do not change the original scene format.
@@ -105,15 +162,24 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
 void TownDocument::write(const std::filesystem::path &path) const {
     validate();
     std::ofstream out(path, std::ios::trunc);
-    out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN 1\n";
+    auto identified = *this;
+    for (auto &i : identified.instances)
+        if (i.id.empty())
+            i.id = identified.nextInstanceId();
+    out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN 2\n";
     for (const auto &a : assets)
         out << "asset " << a.name << ' ' << a.first << ' ' << a.count << ' ' << a.unlit << ' '
             << a.bounds.min.x << ' ' << a.bounds.min.y << ' ' << a.bounds.min.z << ' ' << a.bounds.max.x
             << ' ' << a.bounds.max.y << ' ' << a.bounds.max.z << '\n';
-    for (const auto &i : instances) {
-        out << "instance " << i.asset << ' ';
+    for (const auto &i : identified.instances) {
+        out << "instance " << i.asset << ' ' << i.id << ' ';
         writeMatrix(out, i.transform);
         out << '\n';
+        const auto &m = i.motion;
+        if (m.kind != ObjectMotionKind::None)
+            out << "motion " << i.id << ' ' << int(m.kind) << ' ' << m.speed << ' ' << m.amplitude << ' '
+                << m.period << ' ' << m.seed << ' ' << m.axis.x << ' ' << m.axis.y << ' ' << m.axis.z << ' '
+                << m.pivot.x << ' ' << m.pivot.y << ' ' << m.pivot.z << '\n';
     }
     for (const auto &l : lights)
         out << "light " << l.type << ' ' << l.position.x << ' ' << l.position.y << ' ' << l.position.z << ' '
@@ -125,12 +191,14 @@ void TownDocument::write(const std::filesystem::path &path) const {
 }
 Box TownDocument::bounds(size_t instance) const {
     const auto &i = instances.at(instance);
-    const auto b = assets.at(i.asset).bounds;
+    return objectBounds(assets.at(i.asset).bounds, i.transform);
+}
+Box objectBounds(Box b, Matrix transform) {
     Box result{{1e9f, 1e9f, 1e9f}, {-1e9f, -1e9f, -1e9f}};
     for (float x : {b.min.x, b.max.x})
         for (float y : {b.min.y, b.max.y})
             for (float z : {b.min.z, b.max.z}) {
-                const auto p = Vector3Transform({x, y, z}, i.transform);
+                const auto p = Vector3Transform({x, y, z}, transform);
                 result.min = Vector3Min(result.min, p);
                 result.max = Vector3Max(result.max, p);
             }

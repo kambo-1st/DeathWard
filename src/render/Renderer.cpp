@@ -747,6 +747,7 @@ Action Renderer::hub(const Game &game) {
         loadedHub_ = game.activeHub;
     }
     const auto &town = game.town;
+    townScene_.applyAnimation(game.townObjects);
     const auto &world = game.campaign.data().world;
     playerModel_.update(town.player, town.time, &town);
     townScene_.setPlayerOcclusion(game.camera, town.player.position);

@@ -11,6 +11,7 @@ struct TownNavigation {
     void write(const std::filesystem::path &path) const;
     void bake(const TownDocument &document, const Model &model);
     Vector3 point(size_t index) const;
+    float height(Vector3 point) const;
 };
 // Validate both staged files before replacing either; keep backups and roll back on failure.
 void saveTownProject(const std::filesystem::path &directory, const TownDocument &document,

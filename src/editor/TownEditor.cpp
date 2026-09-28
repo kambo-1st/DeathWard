@@ -55,6 +55,9 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view) {
         selected_.reset();
         paletteSelection_.reset();
         revision_ = savedRevision_ = nextRevision_ = 0;
+        navigationRevision_ = 0;
+        animationTab_ = false;
+        resetPreview();
         active = true;
         quitRequested = saved = false;
         closePrompt_ = reloadPrompt_ = closingWindow_ = false;
@@ -93,6 +96,7 @@ void TownEditor::remember() {
 void TownEditor::sync() {
     try {
         scene_.applyDocument(document_);
+        resetPreview();
     } catch (const std::exception &e) {
         const std::string error = e.what();
         if (!undo_.empty()) {
@@ -158,6 +162,7 @@ void TownEditor::duplicate() {
         return;
     remember();
     auto copy = document_.instances[*selected_];
+    copy.id = document_.nextInstanceId();
     copy.transform.m12 += 2;
     document_.instances.push_back(copy);
     selected_ = document_.instances.size() - 1;
@@ -179,7 +184,7 @@ void TownEditor::addAsset(size_t asset) {
     remember();
     auto p = camera.target;
     p.y = navigation_.spawn.y - document_.assets[asset].bounds.min.y;
-    document_.instances.push_back({asset, MatrixTranslate(p.x, p.y, p.z)});
+    document_.instances.push_back({asset, MatrixTranslate(p.x, p.y, p.z), document_.nextInstanceId()});
     selected_ = document_.instances.size() - 1;
     sync();
     status = "Added " + document_.assets[asset].label;
@@ -207,6 +212,7 @@ bool TownEditor::save() {
         nav.bake(document_, scene_.model());
         saveTownProject(directory_, document_, nav);
         navigation_ = std::move(nav);
+        navigationRevision_ = revision_;
         savedRevision_ = revision_;
         saved = true;
         status = "Saved scene and rebuilt navigation. Previous files are in town.scene.bak / town.nav.bak.";
@@ -232,6 +238,8 @@ bool TownEditor::reload() {
         selected_.reset();
         field_ = -1;
         revision_ = savedRevision_ = ++nextRevision_;
+        navigationRevision_ = revision_;
+        resetPreview();
         status = "Reloaded the saved town.";
         return true;
     } catch (const std::exception &e) {
@@ -242,10 +250,36 @@ bool TownEditor::reload() {
 void TownEditor::focusSelection() {
     if (!selected_)
         return;
-    const auto b = document_.bounds(*selected_);
+    const auto b = scene_.instanceBounds(*selected_);
     camera.target = center(b);
     radius_ = std::clamp(length(sub(b.max, b.min)) * 1.7f, 5.0f, 300.0f);
     updateView();
+}
+void TownEditor::setMotion(ObjectMotion motion) {
+    if (!selected_)
+        return;
+    remember();
+    document_.instances[*selected_].motion = motion;
+    sync();
+}
+void TownEditor::resetPreview() {
+    previewPlaying_ = false;
+    preview_.reset(document_);
+    scene_.applyAnimation(preview_);
+}
+void TownEditor::setPreviewPlaying(bool playing) {
+    if (playing && !previewPlaying_) {
+        try {
+            previewNavigation_ = navigation_;
+            if (revision_ != navigationRevision_)
+                previewNavigation_.bake(document_, scene_.model());
+        } catch (const std::exception &e) {
+            status = std::string("Preview failed: ") + e.what();
+            return;
+        }
+        field_ = dragAxis_ = -1;
+    }
+    previewPlaying_ = playing;
 }
 void TownEditor::updateView() {
     camera.position =
@@ -275,6 +309,35 @@ void TownEditor::commitField() {
     if (field_ < 0 || !selected_)
         return;
     try {
+        if (field_ >= 9) {
+            auto motion = document_.instances[*selected_].motion;
+            size_t end = 0;
+            if (field_ == 12) {
+                const auto seed = std::stoull(fieldText_, &end);
+                if (end != fieldText_.size() || seed > UINT32_MAX || fieldText_.front() == '-')
+                    throw std::runtime_error("Seed must be a whole number from 0 to 4294967295.");
+                motion.seed = uint32_t(seed);
+            } else {
+                const float value = std::stof(fieldText_, &end);
+                if (end != fieldText_.size() || !std::isfinite(value))
+                    throw std::runtime_error("Enter a finite number.");
+                if (field_ == 9)
+                    motion.speed = value;
+                if (field_ == 10)
+                    motion.amplitude = value;
+                if (field_ == 11)
+                    motion.period = value;
+                if (field_ == 13)
+                    motion.pivot.x = value;
+                if (field_ == 14)
+                    motion.pivot.y = value;
+                if (field_ == 15)
+                    motion.pivot.z = value;
+            }
+            field_ = -1;
+            setMotion(motion);
+            return;
+        }
         size_t end = 0;
         const float value = std::stof(fieldText_, &end);
         if (end != fieldText_.size() || !std::isfinite(value) || std::abs(value) > 10000)
@@ -342,6 +405,10 @@ void TownEditor::update(float dt) {
     scaleY_ = float(GetScreenHeight()) / 900;
     if (!active || closePrompt_ || reloadPrompt_)
         return;
+    if (previewPlaying_) {
+        preview_.update(std::min(dt, .1f), [&](Vector3 p) { return previewNavigation_.height(p); });
+        scene_.applyAnimation(preview_);
+    }
     const auto mouse = GetMousePosition();
     const bool ctrl = IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL);
     const bool shift = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
@@ -467,7 +534,7 @@ void TownEditor::update(float dt) {
             }
         } else {
             dragAxis_ = -1;
-            if (selected_) {
+            if (selected_ && preview_.time() == 0) {
                 const auto a = GetWorldToScreen(pivot(), camera);
                 const float size = radius_ * .12f;
                 float best = 10;
@@ -580,26 +647,106 @@ void TownEditor::draw() {
         DrawLine3D(p, add(p, {0, 3, 0}), i == 0 ? Teal : Accent);
     }
     if (selected_) {
-        const auto b = document_.bounds(*selected_);
+        const auto b = scene_.instanceBounds(*selected_);
         DrawBoundingBox({b.min, b.max}, Teal);
-        const auto p = pivot();
-        const float size = radius_ * .12f;
-        rlDisableDepthTest();
-        for (size_t i = 0; i < 3; ++i) {
-            const auto end = add(p, mul(Axes[i], size));
-            DrawCylinderEx(p, end, size * .012f, size * .012f, 8, AxisColors[i]);
-            if (tool_ == Tool::Move)
-                DrawCylinderEx(end, add(end, mul(Axes[i], size * .15f)), size * .05f, 0, 8, AxisColors[i]);
-            else if (tool_ == Tool::Scale)
-                DrawCube(end, size * .09f, size * .09f, size * .09f, AxisColors[i]);
-            else
-                DrawSphereEx(end, size * .045f, 6, 8, AxisColors[i]);
+        if (preview_.time() == 0) {
+            const auto p = pivot();
+            const float size = radius_ * .12f;
+            rlDisableDepthTest();
+            for (size_t i = 0; i < 3; ++i) {
+                const auto end = add(p, mul(Axes[i], size));
+                DrawCylinderEx(p, end, size * .012f, size * .012f, 8, AxisColors[i]);
+                if (tool_ == Tool::Move)
+                    DrawCylinderEx(end, add(end, mul(Axes[i], size * .15f)), size * .05f, 0, 8,
+                                   AxisColors[i]);
+                else if (tool_ == Tool::Scale)
+                    DrawCube(end, size * .09f, size * .09f, size * .09f, AxisColors[i]);
+                else
+                    DrawSphereEx(end, size * .045f, 6, 8, AxisColors[i]);
+            }
+            rlEnableDepthTest();
         }
-        rlEnableDepthTest();
     }
     EndMode3D();
     postProcess_.end();
     drawUI();
+}
+void TownEditor::drawAnimationUI() {
+    const auto motion = selected_ ? document_.instances[*selected_].motion : ObjectMotion{};
+    label("MOTION PRESET", 1132, 207, 12, Accent);
+    for (int n = 0; n < 4; ++n) {
+        const auto kind = ObjectMotionKind(n);
+        if (button(motionName(kind), {1132 + float(n % 2) * 149, 232 + float(n / 2) * 38, 137, 31},
+                   motion.kind == kind, selected_.has_value())) {
+            ObjectMotion next;
+            next.kind = kind;
+            next.seed = motion.seed;
+            if (kind == ObjectMotionKind::Spin)
+                next.speed = 30;
+            if (kind == ObjectMotionKind::Sway) {
+                next.speed = 1;
+                next.amplitude = 8;
+                next.period = 4;
+                next.axis = {0, 0, 1};
+            }
+            commitField();
+            setMotion(next);
+        }
+    }
+    auto field = [&](int id, const std::string &caption, const std::string &value, float y) {
+        label(caption, 1132, y + 9, 13, Muted, 145);
+        const Rectangle box{1281, y, 137, 31};
+        panel(box, field_ == id ? Line : Background);
+        label(field_ == id ? fieldText_ : value, 1290, y + 9, 13, Text, 119);
+        if (selected_ && !closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), box) &&
+            IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            commitField();
+            searchFocus_ = false;
+            field_ = id;
+            fieldText_ = value;
+            selectText_ = true;
+        }
+    };
+    if (selected_ && motion.kind != ObjectMotionKind::None) {
+        field(9,
+              motion.kind == ObjectMotionKind::Spin   ? "Degrees / sec"
+              : motion.kind == ObjectMotionKind::Sway ? "Playback speed"
+                                                      : "Travel speed",
+              number(motion.speed), 321);
+        if (motion.kind != ObjectMotionKind::Spin) {
+            field(10, motion.kind == ObjectMotionKind::Sway ? "Swing degrees" : "Bounce height",
+                  number(motion.amplitude), 367);
+            field(11, motion.kind == ObjectMotionKind::Sway ? "Period / sec" : "Gust period / sec",
+                  number(motion.period), 413);
+        }
+        if (motion.kind == ObjectMotionKind::Tumbleweed) {
+            field(12, "Wind seed", std::to_string(motion.seed), 459);
+            label("Roll follows travel and ground.", 1132, 514, 13, Muted, 284);
+            label("Each copy gets its own wind.", 1132, 544, 13, Muted, 284);
+        } else {
+            label("LOCAL ROTATION AXIS", 1132, 465, 12, Accent);
+            for (size_t axis = 0; axis < Axes.size(); ++axis)
+                if (button(std::string(1, "XYZ"[axis]), {1132 + float(axis) * 96, 490, 90, 31},
+                           distance(motion.axis, Axes[axis]) < .001f)) {
+                    auto next = motion;
+                    next.axis = Axes[axis];
+                    setMotion(next);
+                }
+            field(13, "Local pivot X", number(motion.pivot.x), 537);
+            field(14, "Local pivot Y", number(motion.pivot.y), 574);
+            field(15, "Local pivot Z", number(motion.pivot.z), 611);
+        }
+    }
+    if (button(previewPlaying_ ? "Pause preview" : "Play preview", {1132, 683, 137, 32}, previewPlaying_)) {
+        const bool play = !previewPlaying_;
+        commitField();
+        setPreviewPlaying(play);
+    }
+    if (button("Reset preview", {1281, 683, 137, 32}))
+        resetPreview();
+    label("Preview " + number(float(preview_.time())) + " sec", 1132, 736, 13, Muted, 284);
+    label("Animated props do not block walking.", 1132, 771, 12, Muted, 284);
+    label("Reset preview to edit placement.", 1132, 798, 12, Muted, 284);
 }
 void TownEditor::drawUI() {
     panel({0, 0, 1440, 86}, Background);
@@ -683,57 +830,67 @@ void TownEditor::drawUI() {
     label("INSPECTOR", 1132, 108, 13, Accent);
     label(selected_ ? document_.assets[document_.instances[*selected_].asset].label : "No object selected",
           1132, 136, 18, Text, 284);
-    label(selected_ ? "Object #" + std::to_string(*selected_) : "Click a mesh or choose one in Scene.", 1132,
-          166, 13, Muted, 284);
-    if (button("Move  1", {1132, 201, 87, 31}, tool_ == Tool::Move))
-        tool_ = Tool::Move;
-    if (button("Rotate  2", {1225, 201, 87, 31}, tool_ == Tool::Rotate))
-        tool_ = Tool::Rotate;
-    if (button("Scale  3", {1318, 201, 100, 31}, tool_ == Tool::Scale))
-        tool_ = Tool::Scale;
-    for (int group = 0; group < 3; ++group) {
-        const float y = 251 + float(group) * 87;
-        label(group == 0 ? "POSITION" : group == 1 ? "ROTATION / DEGREES" : "SCALE", 1132, y, 12, Muted);
-        const auto v = values(group);
-        for (int axis = 0; axis < 3; ++axis) {
-            const int id = group * 3 + axis;
-            const float x = 1132 + float(axis) * 96;
-            label(std::string(1, "XYZ"[axis]), x, y + 26, 13, AxisColors[size_t(axis)]);
-            Rectangle r{x + 15, y + 19, 75, 30};
-            panel(r, field_ == id ? Line : Background);
-            label(field_ == id ? fieldText_
-                  : selected_  ? number(component(v, axis))
-                               : "--",
-                  x + 20, y + 28, 13, Text, 64);
-            if (selected_ && !closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), r) &&
-                IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-                commitField();
-                searchFocus_ = false;
-                field_ = id;
-                fieldText_ = number(component(v, axis));
-                selectText_ = true;
+    if (button("Transform", {1132, 164, 137, 28}, !animationTab_)) {
+        commitField();
+        animationTab_ = false;
+    }
+    if (button("Animation", {1281, 164, 137, 28}, animationTab_)) {
+        commitField();
+        animationTab_ = true;
+    }
+    if (animationTab_)
+        drawAnimationUI();
+    else {
+        if (button("Move  1", {1132, 201, 87, 31}, tool_ == Tool::Move))
+            tool_ = Tool::Move;
+        if (button("Rotate  2", {1225, 201, 87, 31}, tool_ == Tool::Rotate))
+            tool_ = Tool::Rotate;
+        if (button("Scale  3", {1318, 201, 100, 31}, tool_ == Tool::Scale))
+            tool_ = Tool::Scale;
+        for (int group = 0; group < 3; ++group) {
+            const float y = 251 + float(group) * 87;
+            label(group == 0 ? "POSITION" : group == 1 ? "ROTATION / DEGREES" : "SCALE", 1132, y, 12, Muted);
+            const auto v = values(group);
+            for (int axis = 0; axis < 3; ++axis) {
+                const int id = group * 3 + axis;
+                const float x = 1132 + float(axis) * 96;
+                label(std::string(1, "XYZ"[axis]), x, y + 26, 13, AxisColors[size_t(axis)]);
+                Rectangle r{x + 15, y + 19, 75, 30};
+                panel(r, field_ == id ? Line : Background);
+                label(field_ == id ? fieldText_
+                      : selected_  ? number(component(v, axis))
+                                   : "--",
+                      x + 20, y + 28, 13, Text, 64);
+                if (selected_ && !closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), r) &&
+                    IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                    commitField();
+                    searchFocus_ = false;
+                    field_ = id;
+                    fieldText_ = number(component(v, axis));
+                    selectText_ = true;
+                }
             }
         }
+        if (button(snap_ ? "Snap: ON" : "Snap: OFF", {1132, 523, 137, 31}, snap_))
+            snap_ = !snap_;
+        label("0.5 m / 15 deg", 1281, 533, 12, Muted, 135);
+        label(tool_ == Tool::Scale ? "Drag: uniform. Fields: per axis." : "Hold Shift to bypass snapping.",
+              1132, 566, 13, Muted, 285);
+        if (button("Duplicate", {1132, 599, 137, 33}, false, selected_.has_value()))
+            duplicate();
+        if (button("Delete", {1281, 599, 137, 33}, false, selected_.has_value()))
+            remove();
+        if (button(showGrid_ ? "Grid: ON" : "Grid: OFF", {1132, 654, 137, 31}, showGrid_))
+            showGrid_ = !showGrid_;
+        if (button(showNavigation_ ? "Paths: ON" : "Paths: OFF", {1281, 654, 137, 31}, showNavigation_))
+            showNavigation_ = !showNavigation_;
+        label("GAMEPLAY MARKERS", 1132, 709, 12, Accent);
+        if (button("Place Arrival", {1132, 735, 137, 32}, marker_ == 1))
+            marker_ = 1;
+        if (button("Place Missions", {1281, 735, 137, 32}, marker_ == 2))
+            marker_ = 2;
+        label("Save rebuilds walkable ground.", 1132, 790, 13, Muted);
     }
-    if (button(snap_ ? "Snap: ON" : "Snap: OFF", {1132, 523, 137, 31}, snap_))
-        snap_ = !snap_;
-    label("0.5 m / 15 deg", 1281, 533, 12, Muted, 135);
-    label(tool_ == Tool::Scale ? "Drag: uniform. Fields: per axis." : "Hold Shift to bypass snapping.", 1132,
-          566, 13, Muted, 285);
-    if (button("Duplicate", {1132, 599, 137, 33}, false, selected_.has_value()))
-        duplicate();
-    if (button("Delete", {1281, 599, 137, 33}, false, selected_.has_value()))
-        remove();
-    if (button(showGrid_ ? "Grid: ON" : "Grid: OFF", {1132, 654, 137, 31}, showGrid_))
-        showGrid_ = !showGrid_;
-    if (button(showNavigation_ ? "Paths: ON" : "Paths: OFF", {1281, 654, 137, 31}, showNavigation_))
-        showNavigation_ = !showNavigation_;
-    label("GAMEPLAY MARKERS", 1132, 709, 12, Accent);
-    if (button("Place Arrival", {1132, 735, 137, 32}, marker_ == 1))
-        marker_ = 1;
-    if (button("Place Missions", {1281, 735, 137, 32}, marker_ == 2))
-        marker_ = 2;
-    label("Save rebuilds walkable ground.", 1132, 790, 13, Muted);
     label(marker_ ? "Click the street to place the marker. Escape cancels." : status, 18, 862, 14,
           marker_ ? Accent : Text, 1375);
     label("Ctrl+S save   Ctrl+Z / Ctrl+Y undo / redo   Ctrl+D duplicate   Delete remove   F4 exit", 18, 884,

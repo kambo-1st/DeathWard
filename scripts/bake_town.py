@@ -71,6 +71,14 @@ def mesh_asset(info):
     return m
 
 
+def default_motion(placement):
+    # Author a reusable preset into the scene; the runtime never checks asset names.
+    if Path(placement["prefab"]).stem == "SM_Prop_Tumbleweed_01":
+        return [3, 1.2, .04, 6, int(placement["object"].split(":")[0]) & 0xffffffff,
+                0, 1, 0, 0, 0, 0]
+    return None
+
+
 def main():
     path = Path(sys.argv[sys.argv.index("--") + 1])
     recipe = json.loads(path.read_text())
@@ -263,7 +271,8 @@ def main():
         + tail
     )
     glb.write_bytes(raw)
-    lines = ["DEATHWARD_TOWN 1"]
+    lines = ["DEATHWARD_TOWN 2"]
+    motions = {p["object"]: default_motion(p) for p in placements if default_motion(p)}
     offset = 0
     order = {}
     for n in gltf["nodes"]:
@@ -293,8 +302,12 @@ def main():
             "instance "
             + str(order[p["asset"]])
             + " "
+            + p["object"]
+            + " "
             + " ".join(str(v) for v in p["transform"])
         )
+        if p["object"] in motions:
+            lines.append("motion " + p["object"] + " " + " ".join(map(str, motions[p["object"]])))
     for light in recipe["lights"]:
         if light["type"] not in (1, 2):
             continue
@@ -332,7 +345,7 @@ def main():
     verts = []
     faces = []
     for entry in recipe["colliders"]:
-        if any(s in entry["prefab"] for s in ("Cloud", "SkyDome")):
+        if entry["object"] in motions or any(s in entry["prefab"] for s in ("Cloud", "SkyDome")):
             continue
         world = UNITY_TO_BLENDER @ Matrix(entry["matrix"]) @ UNITY_TO_BLENDER.inverted()
         if "mesh" in entry:
@@ -468,6 +481,7 @@ def main():
         "active_mesh_placements": len(placements),
         "assets": records,
         "placements": placements,
+        "object_motion": motions,
         "mesh_count": offset,
         "embedded_images": len(gltf.get("images", [])),
         "materials": recipe["materials"],

@@ -45,7 +45,11 @@ for source, placed in zip(r["renderers"], m["placements"]):
 # Audit the actual runtime catalog as well as the conversion manifest.
 assets = []
 placements = []
-for line in (root / "town.scene").read_text().splitlines()[1:]:
+lines = (root / "town.scene").read_text().splitlines()
+version = int(lines[0].split()[1])
+assert version in (1, 2)
+motion = {}
+for line in lines[1:]:
     fields = line.split()
     if fields[0] == "asset":
         name = fields[1]
@@ -54,10 +58,17 @@ for line in (root / "town.scene").read_text().splitlines()[1:]:
         assert np.allclose(np.array(fields[5:], dtype=float).reshape(2, 3), asset["bounds"], atol=.0001)
         assets.append(name)
     elif fields[0] == "instance":
-        placements.append((assets[int(fields[1])], np.array(fields[2:], dtype=float)))
+        offset = 3 if version == 2 else 2
+        source_id = fields[2] if version == 2 else None
+        placements.append((assets[int(fields[1])], source_id, np.array(fields[offset:], dtype=float)))
+    elif fields[0] == "motion":
+        assert fields[1] not in motion
+        motion[fields[1]] = [float(v) for v in fields[2:]]
+assert motion == m.get("object_motion", {})
 assert len(placements) == len(m["placements"])
-for (asset, transform), placed in zip(placements, m["placements"]):
+for (asset, source_id, transform), placed in zip(placements, m["placements"]):
     assert asset == placed["asset"]
+    assert source_id is None or source_id == placed["object"]
     assert np.allclose(transform, placed["transform"], atol=.0001)
 raw = (root / "town.glb").read_bytes()
 n = struct.unpack_from("<I", raw, 12)[0]

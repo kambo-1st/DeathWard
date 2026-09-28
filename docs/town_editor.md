@@ -22,6 +22,24 @@ Choose **Move**, **Rotate** or **Scale** with the buttons or **1 / 2 / 3**. Drag
 
 Snapping uses 0.5-unit movement, 15-degree rotation and 0.1 scale increments. Hold Shift to bypass it or turn **Snap** off. **Ctrl+D** duplicates, **Delete** removes, and **Ctrl+Z / Ctrl+Y** undo and redo. A complete handle drag is one undo step. History retains up to 80 steps in the current session.
 
+## Animating props
+
+Select an object and open **Animation** in its inspector. Available presets are **Static**, **Spin**, **Sway** and **Tumbleweed**. Black Creek's two original tumbleweeds already use the rolling preset; other imported objects start static.
+
+| Preset | Settings |
+| --- | --- |
+| Spin | Degrees per second, local X/Y/Z rotation axis and local pivot coordinates |
+| Sway | Swing angle, period in seconds, playback speed, local axis and pivot |
+| Tumbleweed | Travel speed, small bounce height, gust period and wind seed |
+
+**Play preview** animates the scene; **Pause preview** holds the current pose; **Reset preview** restores the saved placement and enables the placement handles. Camera controls, selection and focus work during preview. Changing a setting resets preview. Duplicate copies the settings and assigns a new object ID, giving a copied tumbleweed its own wind phase. Undo/redo includes animation settings and restores them when undoing deletion.
+
+Saving during preview writes the authored placement and motion settings, never the temporary pose. Preview does not itself mark the scene as changed. Preview uses the current edited navigation; when changes affect it, Play rebuilds a temporary navigation map first. Save rebuilds the persisted map normally.
+
+Animated props are **decorative and do not block the player**. They are excluded from static navigation and the static shadow cache. Tumbleweeds sample ground and clearance, turn at obstacles, roll in proportion to actual travel and make only small bounces. Put them on reachable street ground with room around their scaled bounds. Train routes and moving solid vehicles are a later milestone.
+
+Settings live in scene format 2 with stable per-object IDs. Format-1 scenes and existing browser editor overrides still load as static scenes; assign presets in the editor to animate those custom layouts. Saving upgrades them to format 2 while preserving their original matrices. No mesh or texture conversion is required when changing presets.
+
 ## Camera and markers
 
 | Control | Action |

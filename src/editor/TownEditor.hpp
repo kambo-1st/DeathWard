@@ -42,6 +42,15 @@ class TownEditor {
     bool save();
     bool reload();
     void focusSelection();
+    void setMotion(ObjectMotion motion);
+    void setPreviewPlaying(bool playing);
+    void resetPreview();
+    bool previewPlaying() const {
+        return previewPlaying_;
+    }
+    const ObjectAnimationSystem &animationPreview() const {
+        return preview_;
+    }
 
   private:
     struct Snapshot {
@@ -55,6 +64,10 @@ class TownEditor {
     PostProcess postProcess_;
     TownDocument document_;
     TownNavigation navigation_;
+    TownNavigation previewNavigation_;
+    ObjectAnimationSystem preview_;
+    bool animationTab_ = false, previewPlaying_ = false;
+    uint64_t navigationRevision_ = 0;
     std::filesystem::path directory_;
     std::optional<size_t> selected_, paletteSelection_;
     std::deque<Snapshot> undo_, redo_;
@@ -84,5 +97,6 @@ class TownEditor {
     bool button(const std::string &text, Rectangle r, bool selected = false, bool enabled = true) const;
     void panel(Rectangle r, Color color) const;
     void drawUI();
+    void drawAnimationUI();
 };
 } // namespace dw

@@ -206,8 +206,8 @@ bool TownScene::load(const std::filesystem::path &directory) {
         for (const auto &a : document_.assets)
             assets_.push_back({a.first, a.count, a.unlit, a.bounds});
         for (const auto &i : document_.instances)
-            instances_.push_back(
-                {i.asset, i.transform, transformBounds(assets_[i.asset].bounds, i.transform)});
+            instances_.push_back({i.asset, i.transform, transformBounds(assets_[i.asset].bounds, i.transform),
+                                  i.motion.kind != ObjectMotionKind::None});
 #ifdef __EMSCRIPTEN__
         const auto modelFile = std::filesystem::path("/assets") / directory.filename() / "town.glb";
 #else
@@ -287,7 +287,20 @@ void TownScene::applyDocument(const TownDocument &document) {
     occluders_.clear();
     for (size_t n = 0; n < document.instances.size(); ++n) {
         const auto &i = document.instances[n];
-        instances_.push_back({i.asset, i.transform, document.bounds(n)});
+        instances_.push_back(
+            {i.asset, i.transform, document.bounds(n), i.motion.kind != ObjectMotionKind::None});
+    }
+}
+void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
+    const auto &poses = animation.poses();
+    if (poses.size() != instances_.size())
+        return;
+    occluders_.clear();
+    for (size_t n = 0; n < poses.size(); ++n) {
+        if (!instances_[n].animated)
+            continue;
+        instances_[n].transform = poses[n].transform;
+        instances_[n].bounds = poses[n].bounds;
     }
 }
 void TownScene::updateLights() {
@@ -355,7 +368,7 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
     const auto projection = MatrixOrtho(-span * .5, span * .5, -span * .5, span * .5, 1, 360);
     const auto lightVP = MatrixMultiply(GetCameraMatrix(lightCamera), projection);
     // Reuse the expensive town depth pass until the camera leaves its central area.
-    // Only the animated character is redrawn each frame; editor changes invalidate the cache.
+    // Moving objects and the character are redrawn separately; edits invalidate the cache.
     if (rebuild) {
         BeginTextureMode(staticShadowMap_);
         ClearBackground(WHITE);
@@ -366,7 +379,7 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
             batch.clear();
         for (const auto &i : instances_) {
             const auto &asset = document_.assets[i.asset];
-            if (asset.unlit || asset.label.find("BackgroundCard") != std::string::npos)
+            if (i.animated || asset.unlit || asset.label.find("BackgroundCard") != std::string::npos)
                 continue;
             const auto b = transformBounds(i.bounds, view);
             const float edge = span * .5f + 2;
@@ -406,6 +419,23 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
     BeginMode3D(lightCamera);
     rlSetMatrixProjection(projection);
     rlDisableBackfaceCulling();
+    for (const auto &i : instances_) {
+        const auto &asset = assets_[i.asset];
+        if (!i.animated || asset.unlit)
+            continue;
+        const auto b = transformBounds(i.bounds, rlGetMatrixModelview());
+        const float edge = span * .5f + 2;
+        if (b.max.x < -edge || b.min.x > edge || b.max.y < -edge || b.min.y > edge || b.max.z < -360 ||
+            b.min.z > -1)
+            continue;
+        for (int mesh = asset.first; mesh < asset.first + asset.count; ++mesh) {
+            auto material = model_.materials[model_.meshMaterial[mesh]];
+            if (material.maps[MATERIAL_MAP_ALBEDO].color.a < 255)
+                continue;
+            material.shader = shadowShader_;
+            DrawMeshInstanced(model_.meshes[mesh], material, &i.transform, 1);
+        }
+    }
     if (actors)
         actors(actorShadowShader_);
     rlDrawRenderBatchActive();

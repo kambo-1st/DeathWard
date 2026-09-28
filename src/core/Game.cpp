@@ -106,6 +106,8 @@ Game::Game(const std::filesystem::path &save, HubKind initialHub) : campaign(sav
     cameraPitch_ = std::atan2(CameraOffset.y, std::hypot(CameraOffset.x, CameraOffset.z));
     if (!town.load(hubDirectory() / "town.nav"))
         error = town.error;
+    else
+        reloadTownObjects();
     snapCamera();
     newSeed();
 }
@@ -128,6 +130,13 @@ MusicScene Game::musicScene() const {
     }
     return activeHub == HubKind::BlackCreek ? MusicScene::Town : MusicScene::Frontier;
 }
+bool Game::reloadTownObjects() {
+    TownDocument document;
+    if (!document.load(hubDirectory() / "town.scene", error))
+        return false;
+    townObjects.reset(document);
+    return true;
+}
 bool Game::selectHub(HubKind hub) {
     if (screen != Screen::Hub || run || editorRequested)
         return false;
@@ -136,6 +145,10 @@ bool Game::selectHub(HubKind hub) {
         error = candidate.error;
         return false;
     }
+    TownDocument document;
+    if (!document.load(TownScene::assetDirectory(hub) / "town.scene", error))
+        return false;
+    townObjects.reset(document);
     town = std::move(candidate);
     ++audioContext;
     audioCues.clear();
@@ -634,6 +647,7 @@ void Game::updateHub(float dt) {
         cameraDragging_ = false;
         return;
     }
+    townObjects.update(std::min(dt, .1f), [&](Vector3 p) { return town.height(p); });
     const bool over = pointerOverControls();
     updateCameraInput();
     Vector3 forward = unit({camera.target.x - camera.position.x, 0, camera.target.z - camera.position.z});

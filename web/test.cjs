@@ -53,6 +53,10 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal((await state()).hub, 0);
     assert.equal((await state()).audio, 2);
     assert.equal((await state()).zoom, 160);
+    assert.equal(await page.evaluate(() => Module.motion.count), 2);
+    const movingProp = await page.evaluate(() => Module.motion);
+    await wait(before => Math.hypot(Module.motion.x - before.x, Module.motion.z - before.z) > .2, movingProp);
+    assert.notEqual(await page.evaluate(() => Module.motion.rotation), movingProp.rotation);
     await page.evaluate(() => {
       Module.audioProbe = {frames: 0, peak: 0};
       const device = miniaudio.devices.find(Boolean);
@@ -81,9 +85,13 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     // hosts where tab visibility is intentionally overridden by automation.
     await page.evaluate(() => window.dispatchEvent(new Event('blur')));
     await wait(() => Module.state.paused);
+    const frozenMotion = await page.evaluate(() => Module.motion);
+    await page.waitForTimeout(250);
+    assert.deepEqual(await page.evaluate(() => Module.motion), frozenMotion);
     await key('Escape');
     await wait(() => !Module.state.paused);
     console.log('PASS town rendering, WebAudio initialization, movement and wheel zoom');
+    console.log('PASS two independently animated tumbleweeds and exact pause behavior');
     await key('Escape');
     assert.equal((await state()).paused, true);
     await click(230, 494);
@@ -92,6 +100,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await key('Escape');
     await click(1050, 734);
     await wait(() => Module.state.hub === 1 && Module.state.frame > 10);
+    assert.equal(await page.evaluate(() => Module.motion.count), 0);
     await page.waitForTimeout(1200);
     await page.screenshot({path: path.join(artifacts, 'web-frontier.png')});
     console.log('PASS music controls and direct Frontier travel');
