@@ -28,6 +28,7 @@ add_library(deathward_core
     src/combat/Simulation.cpp
     src/combat/Enemies.cpp
     src/combat/Encounters.cpp
+    src/combat/Monsters.cpp
     src/combat/Navigation.cpp
     src/items/Items.cpp
 )
@@ -79,6 +80,9 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_monster_tests tests/monster_tests.cpp)
+    target_link_libraries(deathward_monster_tests PRIVATE deathward_core)
+    add_test(NAME monster_behaviors COMMAND deathward_monster_tests)
     add_executable(deathward_theme_tests tests/theme_tests.cpp)
     target_link_libraries(deathward_theme_tests PRIVATE deathward_core)
     add_test(NAME mission_themes COMMAND deathward_theme_tests)

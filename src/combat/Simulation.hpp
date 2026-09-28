@@ -1,4 +1,5 @@
 #pragma once
+#include "combat/Monsters.hpp"
 #include "core/Types.hpp"
 #include "world/Campaign.hpp"
 #include "world/Dungeon.hpp"
@@ -25,6 +26,7 @@ enum class EnemyKind {
     PowderHusk,
     Chainbound,
     Boss,
+    Monster,
     Count
 };
 inline constexpr int OrdinaryEnemyCount = int(EnemyKind::Boss);
@@ -33,7 +35,18 @@ struct EnemyDefinition {
     float hp, radius, speed, windup, cooldown;
 };
 const EnemyDefinition &enemyDefinition(EnemyKind kind);
-enum class EnemyState { Ready, Windup, Charging, Stunned, Teleporting };
+enum class EnemyState {
+    Ready,
+    Windup,
+    Charging,
+    Stunned,
+    Teleporting,
+    Collapsed,
+    Buried,
+    Jumping,
+    Exposed,
+    Returning
+};
 struct Enemy {
     EntityId id = 0;
     EnemyKind kind = EnemyKind::Rusher;
@@ -46,20 +59,27 @@ struct Enemy {
     float stateTime = 0, aura = 0, pathTime = 0;
     EntityId partner = 0;
     std::vector<Vector3> path;
+    int monster = 0, generation = 0;
+    float auxiliary = 0, trailTime = 0, lift = 0;
+    Vector3 home{};
+    uint64_t observedShots = 0;
+    bool awakened = false, friendly = false;
 };
 struct Player {
     Vector3 position{0, 0.85f, 10}, aim{0, 0.85f, 0};
     Vector3 velocity{}, facing{0, 0, -1};
     float shootPose = 0;
     bool dodgeMoving = false;
+    float baseHealth = StartingHealth, shotDamage = RevolverDamage;
     float hp = StartingHealth, maxHp = StartingHealth, fireCooldown = 0, dodge = 0, dodgeCooldown = 0,
           hurt = 0;
     Vector3 dodgeDirection{0, 0, -1};
     int nextRound = 1;
     Vector3 pullTarget{};
     float pullTime = 0;
+    float slowTime = 0;
 };
-enum class ProjectileKind { Bullet, Hook };
+enum class ProjectileKind { Bullet, Hook, Homing, SplitShot, BurstShot, Tar, Flame, ReturningHead, Rock };
 struct Projectile {
     EntityId id = 0;
     Vector3 position{}, previous{}, origin{}, velocity{};
@@ -90,10 +110,11 @@ struct Event {
     float damage = RevolverDamage, radius = 3.3f, speed = 26;
     bool hostile = false, lastRound = false, ghost = false;
     bool armorPiercing = false, areaDamage = false;
+    bool execution = false;
     int bounces = 0;
     ProjectileKind projectileKind = ProjectileKind::Bullet;
 };
-enum class HazardKind { Dynamite, Fire, Ring, Powder };
+enum class HazardKind { Dynamite, Fire, Ring, Powder, Creep, Tar, Beam, HolyLight, Gas, MonsterBomb };
 struct Hazard {
     HazardKind kind = HazardKind::Dynamite;
     Vector3 position{}, origin{};
@@ -167,6 +188,9 @@ class Simulation {
     void requestDoor(int passage, int side);
     bool useDoor(int passage, int side);
     EntityId spawn(EnemyKind kind, Vector3 position);
+    EntityId spawnMonster(int id, Vector3 position);
+    void spawnMonsterDebug(int id);
+    size_t roomThreats() const;
     void spawnEnemies(int count);
     int roomEnemyCount(int index) const;
     void spawnRoomEnemies();
@@ -175,6 +199,7 @@ class Simulation {
     void clearRoomDebug();
     void jumpDebug(int index, bool restart = false);
     void healDebug();
+    void tunePlayer(float baseHealth, float shotDamage);
     void startStress();
     void interact();
     std::string nearbyInteraction() const;
@@ -211,6 +236,28 @@ class Simulation {
     size_t waypoint_ = 0;
     bool interactOnArrival_ = false;
     std::optional<std::pair<int, int>> doorOnArrival_;
+    struct MonsterSpawn {
+        int id;
+        Vector3 position;
+        EntityId partner = 0;
+        int generation = 0;
+        bool collapsed = false;
+    };
+    std::vector<MonsterSpawn> pendingMonsters_;
+    void flushMonsterSpawns(Random *placement = nullptr, float playerClearance = 0);
+    void queueMonster(int id, Vector3 position, EntityId partner = 0, int generation = 0,
+                      bool collapsed = false);
+    void updateMonster(Enemy &enemy, float dt);
+    void attackMonster(Enemy &enemy);
+    bool collapseMonster(Enemy &enemy);
+    void monsterDeath(const Enemy &enemy, const Event &event);
+    void monsterPattern(const Enemy &enemy, int count, float angle = 0, float speed = 9,
+                        ProjectileKind kind = ProjectileKind::Bullet);
+    void monsterPatch(const Enemy &enemy, HazardKind kind, Vector3 position, float radius, float delay = .5f,
+                      float duration = 3);
+    void monsterBeam(const Enemy &enemy, Vector3 direction, float delay = .4f);
+    void monsterLines(const Enemy &enemy, HazardKind kind, bool diagonal = false);
+    void moveMonster(Enemy &enemy, Vector3 velocity, float dt);
     void requestMove(Vector3 target);
     void cancelMove();
     bool accept(Event event);
@@ -227,7 +274,7 @@ class Simulation {
     float enemyDamage(const Enemy &enemy, const Event &event) const;
     void shootEnemy(const Enemy &enemy, Vector3 direction, float damage, float speed, int bounces = 0,
                     ProjectileKind kind = ProjectileKind::Bullet);
-    bool placeEnemy(EnemyKind kind, Random &rng, bool spaced);
+    bool placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monster = 0);
     void updateProjectiles(float dt);
     void rebuildGrid();
     std::vector<size_t> candidates(Vector3 from, Vector3 to, float radius) const;

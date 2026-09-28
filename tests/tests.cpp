@@ -74,7 +74,7 @@ void testItems() {
         fire(run, {0, 0.85f, 4}, {0, 0, -1}, 100, true);
         tick(run, 22);
         check(run.stats.kills == 2, "last round penetrates two enemies");
-        check(run.player.maxHp == 160, "Judas applies its health cost to the increased starting health");
+        check(run.player.maxHp == 80, "Judas applies its health cost to the 100 starting health");
     }
     {
         auto run = fixture();
@@ -125,9 +125,65 @@ void testItems() {
         check(run.stats.kills == 1, "queued duplicate hits kill once");
     }
 }
+void testPlayerTuning() {
+    auto run = fixture();
+    run.tunePlayer(200, 48);
+    run.player.hp = 100;
+    run.grant(dw::ItemId::Judas);
+    run.tunePlayer(400, 20);
+    check(run.player.maxHp == 320 && run.player.hp == 200 && run.player.shotDamage == 20,
+          "health tuning preserves the injured fraction and applies existing item penalties");
+    run.grant(dw::ItemId::Judas);
+    run.tunePlayer(500, 20);
+    check(run.player.maxHp == 320 && run.player.hp == 250,
+          "item penalties still stack after tuning without accumulating additional tuning penalties");
+    run.tunePlayer(200, 20);
+    run.healDebug();
+    check(run.player.hp == 128, "the heal shortcut fills the adjusted effective maximum");
+
+    run.arena.walls.clear();
+    dw::Input input;
+    input.fire = true;
+    input.aim = {0, 0.85f, -10};
+    run.step(input);
+    check(run.projectiles.size() == 1 && run.projectiles.front().damage == 20,
+          "real player fire uses the chosen damage");
+    run.tunePlayer(200, 100);
+    check(run.projectiles.front().damage == 20, "tuning does not rewrite bullets already in flight");
+    run.player.fireCooldown = 0;
+    run.step(input);
+    check(run.projectiles.back().damage == 100, "the next shot immediately uses adjusted damage");
+    run.grant(dw::ItemId::Split);
+    run.grant(dw::ItemId::Ghost);
+    run.tunePlayer(200, 20);
+    dw::Event hit;
+    hit.type = dw::EventType::ProjectileHit;
+    hit.damage = 20;
+    dw::dispatchItemEffects(run, hit);
+    run.drainEvents();
+    check(run.projectiles.back().damage == 16, "split bullets inherit adjusted damage once");
+    hit.type = dw::EventType::EnemyKilled;
+    hit.damage = 16;
+    dw::dispatchItemEffects(run, hit);
+    run.drainEvents();
+    check(run.projectiles.back().ghost && run.projectiles.back().damage == 20,
+          "ghost bullets honor damage below the original 48-point floor");
+    run.tunePlayer(-100, 9000);
+    check(run.player.baseHealth == 25 && run.player.shotDamage == 500 && run.player.hp > 0,
+          "tuning clamps health and damage to playable bounds");
+    run.tunePlayer(9000, -100);
+    check(run.player.baseHealth == 2000 && run.player.shotDamage == 1,
+          "the opposite tuning bounds are enforced");
+    run.tunePlayer(std::numeric_limits<float>::quiet_NaN(), 48);
+    check(run.player.baseHealth == 2000 && run.player.shotDamage == 1,
+          "invalid tuning cannot poison player stats");
+    run.finishDebug(false);
+    run.tunePlayer(200, 48);
+    check(run.dead && run.player.hp == 0 && run.player.shotDamage == 1, "tuning cannot revive a dead player");
+}
 void testContinuousFire() {
     auto run = fixture();
-    check(run.player.hp == 200 && run.player.maxHp == 200, "new expeditions start at 200 HP");
+    check(run.player.hp == 100 && run.player.maxHp == 100, "new expeditions start at 100 HP");
     run.arena.walls.clear();
     run.grant(dw::ItemId::Judas);
     dw::Input input;
@@ -141,7 +197,7 @@ void testContinuousFire() {
             continue;
         ++shots;
         const auto &projectile = run.projectiles.back();
-        check(projectile.damage == 48, "the player's revolver deals 48 base damage");
+        check(projectile.damage == 24, "the player's revolver deals 24 base damage");
         check(projectile.lastRound == (shots % 6 == 0), "every sixth shot retains last-round effects");
         check(projectile.pierce == (shots % 6 == 0 ? 6 : 0), "Judas pierces on each cylinder cycle");
         if (lastFrame >= 0) {
@@ -284,7 +340,7 @@ void testCampaign(const std::filesystem::path &path) {
     check(restart.data().history.size() == 1, "resolve is idempotent");
     id = restart.begin(456);
     dw::Simulation next(456, id, restart.data().world);
-    check(next.items.empty() && next.player.maxHp == 200, "temporary items and health costs reset");
+    check(next.items.empty() && next.player.maxHp == 100, "temporary items and health costs reset");
     next.bossKilled = true;
     next.altarDestroyed = true;
     auto won = restart.resolve(next.summary(), dw::EndReason::Victory);
@@ -454,6 +510,8 @@ int main() {
         std::cout << "PASS five items and composed effects\n";
         testContinuousFire();
         std::cout << "PASS continuous fire and sixth-shot effects\n";
+        testPlayerTuning();
+        std::cout << "PASS player health, damage and item tuning\n";
         testMouseMovement();
         std::cout << "PASS mouse routes, interactions and keyboard override\n";
         testSafety();

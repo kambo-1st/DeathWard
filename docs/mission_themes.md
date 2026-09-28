@@ -1,8 +1,12 @@
 # Mission themes
 
-The station offers **Seeded Theme**, **Western Mine** and **Canyon**. Seeded Theme resolves deterministically from the mission seed. An explicit setting persists for the session, including new offers. Replay with the same seed and theme. The CLI accepts `--theme seeded|mine|canyon` for normal play, smoke scenes and benchmarks.
+The station offers **Seeded Theme**, **Western Mine** and **Isaac Canyon** (the default). Seeded Theme resolves deterministically from the mission seed. An explicit setting persists for the session, including new offers. Replay with the same seed and theme. The CLI accepts `--theme seeded|mine|canyon` for normal play, smoke scenes and benchmarks.
 
 The settings share the 15-room graph, locks, keys, objective structure and Black Creek campaign consequences. Canyon uses its own geometry: irregular basins, winding connecting trails and rock outcrops. Its encounter count follows its navigable floor area. Each theme reproduces its own geometry and encounters for a given seed and content version. Mission names persist in results, history and interrupted checkpoints.
+
+## Enemy rosters
+
+Canyon exclusively uses Isaac catalog entries, including the final Infested Mesa group and random cheat/stress spawns. Mine retains the original Western roster and Hollow Sheriff. The specific-ID monster cheat is an explicit testing override available in either setting. Canyon clearance is stored independently in the existing campaign flags, preserving the mine boss for later. See [the enemy and character review](isaac_review.md).
 
 ## Canyon geometry and rendering
 

@@ -33,6 +33,23 @@ bool Simulation::hurtPlayer(float damage, const Context &context) {
 }
 
 float Simulation::enemyDamage(const Enemy &enemy, const Event &event) const {
+    if (event.execution)
+        return event.damage;
+    if (enemy.kind == EnemyKind::Monster) {
+        const auto *d = monsterDefinition(enemy.monster);
+        const int type = enemy.monster / 10000, variant = enemy.monster / 100 % 100;
+        if (d->roomHazard || enemy.friendly || enemy.state == EnemyState::Buried ||
+            enemy.state == EnemyState::Teleporting)
+            return 0;
+        if (type == 27 && variant != 1 && enemy.state != EnemyState::Windup &&
+            enemy.state != EnemyState::Exposed)
+            return 0;
+        if (((type == 41 && variant != 2 && variant != 3) || (type == 23 && variant == 3)) &&
+            !event.areaDamage && !event.armorPiercing && dot(unit(event.direction), enemy.facing) < .35f)
+            return 0;
+        if (type == 41 && variant == 3 && enemy.partner && findEnemy(enemy.partner))
+            return 0;
+    }
     float amount = event.damage;
     if (enemy.kind == EnemyKind::Ironhide && enemy.state != EnemyState::Stunned && !event.armorPiercing &&
         !event.areaDamage && dot(unit(event.direction), enemy.facing) < -0.25f)
@@ -92,21 +109,29 @@ void Simulation::updateHazards(float dt) {
             continue;
         const float dist = distance(player.position, hazard.position);
         const bool visible = arena.sight(hazard.position, player.position);
-        if (hazard.kind == HazardKind::Ring) {
+        if (hazard.kind == HazardKind::Beam) {
+            if (segmentSphere(hazard.origin, hazard.position, player.position, hazard.radius + .48f) <= 1 &&
+                arena.sight(hazard.origin, player.position))
+                hurtPlayer(hazard.damage, hazard.context);
+        } else if (hazard.kind == HazardKind::Tar) {
+            if (dist < hazard.radius + .3f && visible)
+                player.slowTime = .3f;
+        } else if (hazard.kind == HazardKind::Ring) {
             const float before =
                 hazard.radius * std::clamp((previousAge - hazard.delay) / hazard.duration, 0.0f, 1.0f);
             const float after =
                 hazard.radius * std::clamp((hazard.age - hazard.delay) / hazard.duration, 0.0f, 1.0f);
             if (!hazard.hitPlayer && dist + 0.5f >= before && dist - 0.5f <= after && visible)
                 hazard.hitPlayer = hurtPlayer(hazard.damage, hazard.context);
-        } else if (hazard.kind == HazardKind::Fire) {
+        } else if (hazard.kind == HazardKind::Fire || hazard.kind == HazardKind::Creep ||
+                   hazard.kind == HazardKind::Gas || hazard.kind == HazardKind::HolyLight) {
             if (dist < hazard.radius + 0.3f && visible)
                 hurtPlayer(hazard.damage, hazard.context);
         } else {
             if (dist < hazard.radius + 0.48f && visible)
                 hurtPlayer(hazard.damage, hazard.context);
             effectVisual(hazard.position, hazard.radius, 0, 0.5f);
-            if (hazard.kind == HazardKind::Powder) {
+            if (hazard.kind == HazardKind::Powder || hazard.kind == HazardKind::MonsterBomb) {
                 Event blast;
                 blast.type = EventType::Explosion;
                 blast.position = hazard.position;
@@ -114,6 +139,7 @@ void Simulation::updateHazards(float dt) {
                 blast.damage = 80;
                 blast.radius = hazard.radius;
                 blast.areaDamage = true;
+                blast.hostile = hazard.kind == HazardKind::MonsterBomb;
                 emit(blast, hazard.context);
             }
             hazard.alive = false;
@@ -203,9 +229,14 @@ void Simulation::performEnemyAttack(Enemy &enemy) {
 }
 
 void Simulation::updateEnemies(float dt) {
+    // Offspring are queued and flushed after this loop; no vector references are invalidated.
     for (auto &enemy : enemies) {
         if (!enemy.alive)
             continue;
+        if (enemy.kind == EnemyKind::Monster) {
+            updateMonster(enemy, dt);
+            continue;
+        }
         if (enemy.kind == EnemyKind::Chainbound) {
             const auto *partner = findEnemy(enemy.partner);
             if (!partner || !partner->alive) {

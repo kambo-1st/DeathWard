@@ -11,7 +11,7 @@
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false;
-    dw::ThemeChoice themeChoice = dw::ThemeChoice::Seeded;
+    dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
     std::string screenshot, scene = "combat";
@@ -64,7 +64,8 @@ int main(int argc, char **argv) {
         } else if (arg == "--help") {
             std::cout << "DeathWard\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
-                         " --theme NAME         seeded, mine or canyon\n  --hub NAME           black-creek "
+                         " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
+                         "black-creek "
                          "or frontier\n  --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
                          "power, reward, empty, cheats, "

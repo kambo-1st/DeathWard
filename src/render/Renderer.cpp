@@ -1,5 +1,6 @@
 #include "render/Renderer.hpp"
 #include "items/Items.hpp"
+#include "render/MonsterVisuals.hpp"
 #include "rlgl.h"
 #include <iomanip>
 #include <sstream>
@@ -83,6 +84,10 @@ void cowboy(Vector3 p, Vector3 direction, Color coat, float scale, bool boss = f
              0.16f * scale, Gold);
 }
 void enemyModel(const Enemy &enemy) {
+    if (enemy.kind == EnemyKind::Monster) {
+        drawMonsterModel(enemy);
+        return;
+    }
     static constexpr std::array<Color, size_t(EnemyKind::Count)> coats{{{159, 64, 48, 255},
                                                                         {118, 105, 84, 255},
                                                                         {159, 91, 38, 255},
@@ -189,6 +194,10 @@ void enemyModel(const Enemy &enemy) {
     }
 }
 void enemyWarning(const Enemy &enemy, const Simulation &run) {
+    if (enemy.kind == EnemyKind::Monster) {
+        drawMonsterWarning(enemy, run);
+        return;
+    }
     auto circle = [](Vector3 at, float radius, Color color) {
         at.y = 0.09f;
         DrawCircle3D(at, radius, {1, 0, 0}, 90, color);
@@ -259,6 +268,17 @@ void enemyWarning(const Enemy &enemy, const Simulation &run) {
                  warning);
 }
 void drawHazard(const Hazard &hazard) {
+    if (hazard.kind == HazardKind::Beam) {
+        const bool warning = hazard.age < hazard.delay;
+        if (warning)
+            DrawLine3D(hazard.origin, hazard.position, Gold);
+        else {
+            DrawCylinderEx(hazard.origin, hazard.position, hazard.radius, hazard.radius, 8, Rust);
+            DrawCylinderEx(hazard.origin, hazard.position, hazard.radius * .35f, hazard.radius * .35f, 6,
+                           Paper);
+        }
+        return;
+    }
     Vector3 ground{hazard.position.x, 0.09f, hazard.position.z};
     const bool warning = hazard.age < hazard.delay;
     const Color color = hazard.kind == HazardKind::Ring ? Gold : Rust;
@@ -283,6 +303,16 @@ void drawHazard(const Hazard &hazard) {
                 add(ground, {std::cos(angle) * radius * 0.65f, 0.2f, std::sin(angle) * radius * 0.65f});
             DrawCylinder(fire, 0, 0.3f, 0.5f + 0.2f * std::sin(hazard.age * 9 + float(i)), 5, Gold);
         }
+    } else if (hazard.kind == HazardKind::Tar || hazard.kind == HazardKind::Creep ||
+               hazard.kind == HazardKind::Gas) {
+        const Color pool = hazard.kind == HazardKind::Tar   ? Color{42, 35, 46, 200}
+                           : hazard.kind == HazardKind::Gas ? Color{117, 141, 62, 140}
+                                                            : Color{137, 43, 43, 190};
+        DrawCylinder(ground, radius, radius, .04f, 12, pool);
+        if (hazard.kind == HazardKind::Gas)
+            DrawSphereEx(add(ground, {0, .35f, 0}), radius * .65f, 5, 8, pool);
+    } else if (hazard.kind == HazardKind::HolyLight) {
+        DrawCylinder(ground, radius * .6f, radius, 8, 10, Color{236, 213, 133, 180});
     } else if (hazard.kind == HazardKind::Ring)
         DrawCircle3D(add(ground, {0, 0.18f, 0}), radius, {1, 0, 0}, 90, Rust);
 }
@@ -484,6 +514,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 DrawCircle3D({e.position.x, 0.08f, e.position.z}, e.radius + 0.25f, {1, 0, 0}, 90, Rust);
             enemyModel(e);
             enemyWarning(e, run);
+            if (e.monster == monsterId(89) && e.partner) {
+                const auto *leader = run.findEnemy(e.partner);
+                if (leader && leader->alive && distance(e.position, leader->position) < 2.5f &&
+                    run.arena.sight(e.position, leader->position))
+                    DrawCylinderEx({e.position.x, .35f, e.position.z},
+                                   {leader->position.x, .35f, leader->position.z}, .19f, .19f, 6,
+                                   Color{133, 86, 81, 255});
+            }
             if (e.id < e.partner && run.chainActive(e)) {
                 const auto *partner = run.findEnemy(e.partner);
                 DrawCylinderEx(e.position, partner->position, 0.05f, 0.05f, 5, Rust);
@@ -509,6 +547,8 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                       : p.ghost     ? Teal
                       : p.lastRound ? Paper
                                     : Gold;
+        if (p.kind == ProjectileKind::Rock || p.kind == ProjectileKind::ReturningHead)
+            color = Color{182, 171, 141, 255};
         projectileMesh(p.position, p.radius, color);
     }
     // Keep triangles and lines in separate batches. Alternating for each projectile
@@ -554,6 +594,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     for (const auto &e : run.enemies)
         if (e.alive && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {
             Vector2 at = GetWorldToScreen(add(e.position, {0, 1.6f, 0}), camera);
+            if (e.id == hoveredEnemy && e.kind == EnemyKind::Monster) {
+                const auto &d = *monsterDefinition(e.monster);
+                const std::string label = monsterIdText(d.id) + " / " + d.name;
+                text(label, at.x / sx_ - 60, at.y / sy_ - 25, 12, d.roomHazard ? Gold : Paper);
+            }
             DrawRectangle(int(at.x) - 18, int(at.y) - 5, 36, 4, Ink);
             DrawRectangle(int(at.x) - 18, int(at.y) - 5, int(36 * std::max(0.0f, e.hp / e.maxHp)), 4, Rust);
         }
@@ -624,9 +669,12 @@ Action Renderer::hub(const Game &game) {
         panel(240, 104, 800, 588, Panel);
         text(std::string(hubName(game.activeHub)) + " / MISSIONS", 270, 130, 17, Gold);
         text(theme.title, 267, 173, 38, Paper);
-        wrap(world.bossDefeated
+        wrap(game.offeredTheme() == MissionTheme::Canyon
+                 ? "Face Isaac's monsters. Rescue the miners, break the altar and clear the Infested Mesa."
+             : world.bossDefeated
                  ? "Bring home anyone still missing and settle unfinished business on the frontier."
-                 : "Bring the miners home, break the altar and face the Hollow Sheriff.",
+                 : "Face Western outlaws. Bring the miners home, break the altar and defeat the Hollow "
+                   "Sheriff.",
              270, 238, 727, 21, Paper);
         text("Fifteen changing rooms. Choose the setting; your seed repeats its layout.", 270, 323, 15,
              Muted);
@@ -634,7 +682,7 @@ Action Renderer::hub(const Game &game) {
             return Action::ThemeSeeded;
         if (button("WESTERN MINE", 510, 354, 239, 34, game.themeChoice == ThemeChoice::Mine))
             return Action::ThemeMine;
-        if (button("CANYON", 759, 354, 249, 34, game.themeChoice == ThemeChoice::Canyon))
+        if (button("ISAAC CANYON", 759, 354, 249, 34, game.themeChoice == ThemeChoice::Canyon))
             return Action::ThemeCanyon;
         panel(270, 402, 460, 65, Ink);
         text("MISSION SEED", 287, 413, 12, Muted);
@@ -728,8 +776,10 @@ Action Renderer::expedition(const Game &game) {
          run.rescued ? Teal : Paper);
     text(run.altarDestroyed ? "[+] Altar destroyed" : "[ ] Altar / chamber 4", 982, 91, 15,
          run.altarDestroyed ? Teal : Muted);
-    text(run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / locked court", 982, 117, 15,
-         run.bossKilled ? Teal : Muted);
+    text(run.arena.theme == MissionTheme::Canyon
+             ? (run.bossKilled ? "[+] Infested Mesa cleared" : "[ ] Clear the Infested Mesa")
+             : (run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / locked court"),
+         982, 117, 15, run.bossKilled ? Teal : Muted);
     dungeonMap(game);
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
@@ -742,7 +792,7 @@ Action Renderer::expedition(const Game &game) {
         text(run.roomClear ? (kind == RoomKind::Empty   ? "QUIET ROOM / NO ENEMIES"
                               : kind == RoomKind::Power ? "POWER CACHE"
                                                         : "CHAMBER CLEARED")
-                           : number(run.livingEnemies()) + " HOSTILES",
+                           : number(run.roomThreats()) + " HOSTILES",
              440, 38, 14, run.roomClear ? Teal : Paper);
     }
     panel(24, 674, 344, 101, Panel);
@@ -820,6 +870,26 @@ Action Renderer::expedition(const Game &game) {
                                                          : "RETREAT TO FRONTIER   [T]",
                    436, 486, 408, 45))
             return Action::Retreat;
+        if (game.debug && !run.dead) {
+            panel(895, 240, 361, 318, Panel);
+            text("PLAYER SETTINGS", 915, 263, 22, Gold);
+            text("BASE HEALTH", 915, 309, 13, Muted);
+            text(std::to_string(int(run.player.baseHealth)), 915, 333, 25, Paper);
+            if (button("-", 1134, 307, 44, 44))
+                return Action::HealthDown;
+            if (button("+", 1192, 307, 44, 44))
+                return Action::HealthUp;
+            text("Maximum with items: " + std::to_string(int(run.player.maxHp)), 915, 369, 13, Muted);
+            text("SHOT DAMAGE", 915, 403, 13, Muted);
+            text(std::to_string(int(run.player.shotDamage)), 915, 427, 25, Paper);
+            if (button("-", 1134, 402, 44, 44))
+                return Action::DamageDown;
+            if (button("+", 1192, 402, 44, 44))
+                return Action::DamageUp;
+            if (button("RESTORE DEFAULTS", 915, 474, 321, 40))
+                return Action::ResetPlayer;
+            text("Applies now and to later missions this session.", 915, 532, 11, Muted);
+        }
     }
     return controls;
 }
@@ -889,15 +959,16 @@ void Renderer::debugPanel(const Game &game) {
     text("F2 invincible " + std::string(run.godMode ? "ON" : "OFF") + "    Shift+F2 heal", 41, 179, 13,
          Paper);
     text("F3 kill enemies    Shift+F3 clear whole room", 41, 199, 13, Paper);
-    text("F4 spawn 20    F5 spawn 100 enemies", 41, 219, 13, Paper);
+    text("F4 spawn 20    F5 spawn 100    Shift+F4 selected", 41, 219, 13, Paper);
     text("F6 all items       Shift+F6 add 3 keys", 41, 239, 13, Paper);
-    text("F7 replay boss     F8 win    F9 die", 41, 259, 13, Paper);
+    text("F7 final encounter  F8 win   F9 die", 41, 259, 13, Paper);
     text("F10 collisions     F11 stress scene", 41, 279, 13, Paper);
     text("F12 next room      Shift+F12 restart room", 41, 299, 13, Paper);
     text("P freeze " + std::string(game.paused ? "ON" : "OFF") + "    O slow " + (game.slow ? "ON" : "OFF"),
          41, 319, 13, Paper);
-    text("[/] select   I grant   V random five   M rescue", 41, 339, 13, Paper);
-    text("ITEM: " + std::string(itemDefinition(ItemId(game.selectedItem)).name), 41, 366, 15, Gold);
+    text("[/] item   I grant   V five   M rescue   ,/. enemy", 41, 339, 13, Paper);
+    const auto &testEnemy = monsterCatalog()[size_t(game.selectedMonster)];
+    text(monsterIdText(testEnemy.id) + " / " + testEnemy.name, 41, 366, 14, Gold);
     text("ENEMIES " + number(run.livingEnemies()) + "   PROJECTILES " + number(run.projectiles.size()) +
              "   EVENTS " + number(run.queuedEvents()),
          41, 397, 13, Paper);
@@ -907,8 +978,7 @@ void Renderer::debugPanel(const Game &game) {
     text("SPLITS " + number(run.stats.splits) + "   BOUNCES " + number(run.stats.bounces) + "   GHOSTS " +
              number(run.stats.ghosts),
          41, 443, 13, Paper);
-    text(std::string(game.slow ? "0.2x TIME" : "1.0x TIME") + "   FPS " + std::to_string(GetFPS()), 41, 466,
-         13, Teal);
+    text("-/+ damage   Shift + -/+ health   Home defaults", 41, 466, 13, Teal);
     if (!run.chains.empty()) {
         auto oldest = std::min_element(run.chains.begin(), run.chains.end(),
                                        [](const auto &a, const auto &b) { return a.first < b.first; });
@@ -959,6 +1029,10 @@ Action Renderer::draw(const Game &game) {
     if (!game.error.empty()) {
         panel(24, 560, 1232, 81, Color{76, 34, 30, 250});
         wrap(game.error, 42, 578, 1196, 15, Paper);
+    }
+    if (game.screen == Screen::Hub || game.screen == Screen::Expedition) {
+        panel(1040, 2, 116, 18, Panel);
+        text("ZOOM " + std::to_string(int(std::lround(game.cameraZoomPercent()))) + "%", 1050, 5, 12, Teal);
     }
     panel(1160, 2, 96, 18, Panel);
     text(std::to_string(GetFPS()) + " FPS", 1170, 5, 12, Teal);

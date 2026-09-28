@@ -1,5 +1,35 @@
 # Milestone 1 verification
 
+## Starting camera zoom
+
+New sessions start at 160% zoom in both hubs and missions. The wheel limits and session zoom retention are unchanged. The Release build and full graphics input suite pass, including the starting zoom, camera framing, smooth wheel movement, both zoom limits and hub/mission transitions. The Black Creek startup capture was visually checked and displays 160%. Logs and the capture use `artifacts/zoom-default-*`.
+
+## Player balance and camera zoom display
+
+Content version `deathward-m1-20` starts the player with 100 HP and 24 shot damage. Player Settings, Home and Restore Defaults use those values. Enemy health and damage are unchanged. Hubs and missions display the current camera zoom beside FPS: 100% is the reference distance, higher values zoom in, and the value follows the actual smoothed camera. The readout blocks pointer input into the world behind it.
+
+The Release build, all seven headless suites and full graphics input suite pass. Existing checks verify the new starting stats, shot damage, item health penalties, reset defaults and session settings. Zoom checks verify the displayed value against actual camera distance and prevent wheel input through the readout. The pause screen was rendered and visually inspected with 100 HP, 24 damage and the zoom indicator. Logs and the capture use `artifacts/player-half-*` and `artifacts/player-zoom-*`.
+
+## Isaac review and separate mission rosters
+
+Content version `deathward-m1-19` defaults to Isaac Canyon. Natural canyon encounters, random debug/stress spawns and the final Infested Mesa group use only catalog monsters; the mine retains the Western roster and Sheriff. Canyon completion has an independent campaign flag, so its victory and replay do not remove the mine's boss. Both mission descriptions and the canyon objective HUD reflect the new encounter.
+
+Reference corrections remove Tainted Sucker contact damage, add a bounce to its splitting death shots, remove Bulb's invented dodge drain, and give Eggy distinct Swarm Spider offspring. Summoners now respect the six-child limit even when partially occupied. The catalog has 128 entries including offspring. Isaac's character stats and the remaining behavior differences are recorded in [the review](isaac_review.md); this pass retains the current character balance.
+
+The Release build and all seven headless suites pass. The new Swarm Spider hop check observes its randomized initial cooldown before checking movement. The full graphics input suite passes. Coverage includes all catalog entries, theme-exclusive groups and random spawns, area budgets including companions, reproducible placements, canyon final-room exit/replay, independent persisted completion, and the four enemy corrections. The mission menus and canyon finale were rendered and visually inspected. Logs and captures use `artifacts/isaac-review-*`.
+
+## Player health and damage controls
+
+The mission pause menu includes Player Settings while cheats are enabled. Base health changes in steps of 25 (25–2,000), and shot damage changes in steps of 4 (1–500). Minus/equals or keypad minus/plus work during play; Shift changes health instead of damage, and Home restores defaults. Values carry through missions and hub travel for the session. Changing health preserves the injured fraction and recalculates existing Judas penalties. Normal shots, split bullets and ghost bullets use the chosen damage; existing projectiles retain their values.
+
+The Release build, all seven headless suites and full graphics input suite pass. Added coverage verifies health penalties, healing, bounds, real player shots, derived bullets, frozen pause controls, live shortcuts, disabled-cheat guards, restoring defaults and a fresh mission after hub travel. The pause panel was rendered and visually checked. Logs and the capture use `artifacts/player-settings-*`.
+
+## Monster catalog, IDs 10–89
+
+Content version `deathward-m1-18` adds 120 catalog entries in the requested range, including variants and detachable head components, plus seven required offspring entries. Seeded combat groups choose from the Western roster or the monster catalog with depth gates, area budgets and safe placement. Invulnerable hazards do not block completion; queued offspring are created before checking completion. Cheats can select a specific catalog ID and spawn it with Shift+F4. See [the roster and adaptation notes](isaac_monsters.md).
+
+The Release build is warning-free. All seven headless suites pass; the monster suite simulates every catalog entry and checks attack warnings, directional armor, Host exposure, reflected shots, regeneration, bounded offspring, linked deaths, room hazards, beam cover/dodge behavior, explosion ownership, mirrored shooting, split projectiles and burrow placement. The monster behavior suite also passes AddressSanitizer and UndefinedBehaviorSanitizer with leak detection. Population checks include attached companions in the initial room budget and validate clear placements and reproducible timers. The full graphics input suite passes, including the new selector and spawn shortcut alongside hub travel and ordinary combat controls. Roster captures use the actual game renderer. Logs and images use `artifacts/monsters-*` and `artifacts/monster-roster-*`.
+
 ## Direct hub travel
 
 Both hubs now show a destination button at the bottom right during exploration: Travel to Frontier or Travel to Black Creek. Pause-screen travel remains available. Retreat, history and expedition-return labels follow the selected hub. Both locations share campaign progress, and missions return to their departure hub.

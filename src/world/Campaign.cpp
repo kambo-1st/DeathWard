@@ -240,7 +240,12 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         w.flags.insert("miners_home");
         note("Six miners return. Population +6; Mary Bell remembers.");
     }
-    if (s.bossKilled && !w.bossDefeated) {
+    if (s.bossKilled && s.expedition == "Redstone Canyon" && !w.flags.contains("canyon_cleared")) {
+        w.flags.insert("canyon_cleared");
+        w.law = std::min(100, w.law + 5);
+        note("The Infested Mesa is cleared. Law +5; the canyon route is safer.");
+    }
+    if (s.bossKilled && s.expedition != "Redstone Canyon" && !w.bossDefeated) {
         w.bossDefeated = true;
         w.law = std::min(100, w.law + 5);
         w.npcs[0].relationship++;

@@ -90,6 +90,9 @@ int main() {
         frame();
         check(game.screen == dw::Screen::Hub && !game.run && game.town.loaded(),
               "new games start in the walkable original town without beginning a campaign run");
+        check(std::abs(game.cameraZoomPercent() - 160) < .001f, "new hub sessions start at 160% zoom");
+        check(game.themeChoice == dw::ThemeChoice::Canyon,
+              "new sessions offer Isaac-only canyon missions by default");
         check(!game.campaign.data().pending && game.campaign.data().history.empty(),
               "town exploration does not create a pending mission or a campaign outcome");
         const auto blackCreekArrival = game.town.spawn;
@@ -201,6 +204,12 @@ int main() {
         check(!game.town.destination() && dw::distance(beforeHudDrag, game.town.player.position) < .001f,
               "dragging a held HUD click into town never starts ground movement");
         frame();
+        // Approach until the board is in view at the closer starting zoom.
+        check(game.town.moveTo(game.town.mission), "the board approach fixture has a walkable route");
+        for (int i = 0; i < 1800 && dw::distance(game.town.player.position, game.town.mission) > 6; ++i)
+            game.town.step({}, dw::Tick);
+        game.town.stop();
+        game.updateCamera(10);
         const auto boardPixel = GetWorldToScreen(dw::add(game.town.mission, {0, 1.5f, 0}), game.camera);
         frame(int(boardPixel.x), int(boardPixel.y), true);
         check(game.walkingToMission, "clicking the board starts its approach");
@@ -285,7 +294,7 @@ int main() {
         for (int i = 0; i < 240; ++i)
             frame(680, 315, true);
         check(game.run->stats.shots >= 13, "holding an enemy fires continuously without reloading");
-        check(game.run->findEnemy(target)->hp <= 10000 - 48 * 10,
+        check(game.run->findEnemy(target)->hp <= 10000 - dw::RevolverDamage * 10,
               "held attack tracks the moving enemy even when the cursor moves away");
         check(dw::distance(game.run->player.position, attackPosition) < 0.001f,
               "enemy attacks hold position instead of walking toward the cursor");
@@ -356,9 +365,47 @@ int main() {
             frame(100, 200, true);
         frame(100, 200);
         check(game.run->stats.duration == duration, "simulation remains frozen while paused");
+        click(1214, 329);
+        click(1214, 424);
+        check(game.run->player.maxHp == dw::StartingHealth + 25 &&
+                  game.run->player.hp == dw::StartingHealth + 25 &&
+                  game.run->player.shotDamage == dw::RevolverDamage + 4 && game.paused,
+              "pause controls adjust health and damage immediately without resuming");
+        click(1156, 329);
+        click(1156, 424);
+        check(game.run->player.maxHp == dw::StartingHealth &&
+                  game.run->player.shotDamage == dw::RevolverDamage,
+              "pause controls can lower health and damage");
+        pressKey(KEY_EQUAL);
+        pressKey(KEY_KP_ADD, true);
+        check(game.run->player.maxHp == dw::StartingHealth + 25 &&
+                  game.run->player.shotDamage == dw::RevolverDamage + 4,
+              "keyboard and keypad stat controls work while paused");
+        click(1050, 494);
+        check(game.run->player.maxHp == dw::StartingHealth &&
+                  game.run->player.shotDamage == dw::RevolverDamage && game.run->stats.duration == duration,
+              "restore defaults changes stats while simulation remains frozen");
         click(620, 445);
         check(!game.paused, "mouse resumes the expedition");
         check(game.run->stats.shots == shots, "HUD and paused clicks never fire the revolver");
+        pressKey(KEY_MINUS);
+        pressKey(KEY_EQUAL, true);
+        check(game.run->player.shotDamage == dw::RevolverDamage - 4 &&
+                  game.run->player.maxHp == dw::StartingHealth + 25 && !game.debugPanelOpen,
+              "live stat hotkeys work while the cheat overlay stays hidden");
+        pressKey(KEY_F1);
+        pressKey(KEY_EQUAL);
+        game.perform(dw::Action::HealthUp);
+        pressKey(KEY_HOME);
+        check(game.run->player.shotDamage == dw::RevolverDamage - 4 &&
+                  game.run->player.maxHp == dw::StartingHealth + 25,
+              "stat shortcuts and actions are disabled with cheats off");
+        pressKey(KEY_F1);
+        pressKey(KEY_HOME);
+        check(game.run->player.shotDamage == dw::RevolverDamage &&
+                  game.run->player.maxHp == dw::StartingHealth,
+              "Home restores defaults during play");
+        game.run->godMode = true;
         game.run->clearRoomDebug();
         const int passageIndex = game.run->arena.rooms[0].passages.front();
         const auto &passage = game.run->arena.passages[size_t(passageIndex)];
@@ -383,7 +430,8 @@ int main() {
               "the entrance seals behind the player");
         for (int i = 0; i < 100; ++i)
             frame();
-        const auto cameraGoal = dw::sub(game.run->player.position, {2, 0.85f, 2});
+        const float framingOffset = 200 / game.cameraZoomPercent();
+        const auto cameraGoal = dw::sub(game.run->player.position, {framingOffset, 0.85f, framingOffset});
         check(dw::distance(game.camera.target, cameraGoal) < 0.1f,
               "camera follows the player to distant rooms");
         game.run->enterRoom(2);
@@ -481,7 +529,18 @@ int main() {
             frame();
         check(game.run->livingEnemies() == 0, "cleared-room cheat never spawns another group");
         pressKey(KEY_F4);
-        check(game.run->livingEnemies() == 20, "F4 spawns testing enemies");
+        check(game.run->livingEnemies() >= 20 && game.run->livingEnemies() <= 40,
+              "F4 spawns twenty testing enemies plus any attached companions");
+        pressKey(KEY_F3, true);
+        const auto selectedBefore = game.selectedMonster;
+        pressKey(KEY_PERIOD);
+        check(game.selectedMonster == selectedBefore + 1, "period selects the next catalog monster");
+        pressKey(KEY_F4, true);
+        check(game.run->livingEnemies() == 1 &&
+                  game.run->enemies.front().monster == dw::monsterCatalog()[size_t(game.selectedMonster)].id,
+              "Shift+F4 spawns the selected ID instead of a random crowd");
+        pressKey(KEY_COMMA);
+        check(game.selectedMonster == selectedBefore, "comma selects the previous catalog monster");
         pressKey(KEY_F3, true);
         pressKey(KEY_F6);
         pressKey(KEY_F6, true);
@@ -493,30 +552,40 @@ int main() {
         game.paused = true;
         pressKey(KEY_F12);
         check(game.run->room == 3 && !game.paused &&
-                  dw::distance(game.camera.target, dw::sub(game.run->player.position, {2, 0.85f, 2})) < 0.01f,
+                  dw::distance(game.camera.target, dw::sub(game.run->player.position,
+                                                           {framingOffset, 0.85f, framingOffset})) < 0.01f,
               "F12 skips to the next room, resumes and immediately follows with the camera");
         pressKey(KEY_F7);
-        check(game.run->room == dw::Simulation::FinalRoom && game.run->boss(),
-              "F7 jumps directly to the boss");
+        check(game.run->room == dw::Simulation::FinalRoom && !game.run->boss() && game.run->roomThreats() > 0,
+              "F7 jumps to the canyon's final monster encounter without a Western boss");
         pressKey(KEY_F3, true);
         pressKey(KEY_F7);
-        check(!game.run->roomClear && !game.run->bossKilled && game.run->livingEnemies() == 1,
-              "F7 can replay a defeated boss");
+        check(!game.run->roomClear && !game.run->bossKilled && game.run->roomThreats() > 0,
+              "F7 can replay a cleared canyon finale");
+        const auto finalPopulation = game.run->livingEnemies();
         pressKey(KEY_F10);
         pressKey(KEY_O);
         pressKey(KEY_F1);
         check(!game.debug && !game.run->godMode && !game.slow && !game.collisionDebug,
               "turning cheat mode off disables invincibility, slow time and collision overlays");
         pressKey(KEY_F3);
-        check(game.run->livingEnemies() == 1, "F3 is disabled again after leaving cheat mode");
+        check(game.run->livingEnemies() == finalPopulation, "F3 is disabled again after leaving cheat mode");
         pressKey(KEY_F1);
         game.paused = true;
+        pressKey(KEY_EQUAL);
+        pressKey(KEY_EQUAL, true);
         pressKey(KEY_F8);
         check(!game.run && game.screen == dw::Screen::Summary &&
                   game.lastSummary.reason == dw::EndReason::Victory,
               "F8 completes the expedition immediately while paused");
         game.perform(dw::Action::Hub);
+        game.selectHub(dw::HubKind::Frontier);
         game.launch();
+        check(game.run->player.hp == dw::StartingHealth + 25 &&
+                  game.run->player.maxHp == dw::StartingHealth + 25 &&
+                  game.run->player.shotDamage == dw::RevolverDamage + 4 && game.run->items.empty(),
+              "player settings survive mission completion and hub travel without retaining item penalties");
+        pressKey(KEY_HOME);
         game.run->jumpDebug(dw::RoomCount - 2);
         game.run->player.position = game.run->arena.rooms[dw::RoomCount - 2].objective;
         game.run->interact();
@@ -534,15 +603,19 @@ int main() {
         // Use open central floor, away from the entrance's clickable doorway.
         game.run->player.position = game.run->arena.rooms[0].center;
         const float defaultDistance = cameraDistance();
+        check(std::abs(game.cameraZoomPercent() - 160) < .001f, "new missions retain the starting 160% zoom");
+        const float referenceDistance = defaultDistance * 1.6f;
         const auto originalAngle = dw::unit(dw::sub(game.camera.position, game.camera.target));
         const auto beforeZoom = game.run->player.position;
         mouseEvent(MouseWheel, 0, 100);
         frame();
-        check(cameraDistance() < defaultDistance && cameraDistance() > defaultDistance * 0.35f,
+        check(cameraDistance() < defaultDistance && cameraDistance() > referenceDistance * 0.35f,
               "scrolling up smoothly moves the camera closer");
+        check(std::abs(game.cameraZoomPercent() - 100 * referenceDistance / cameraDistance()) < .01f,
+              "zoom display follows the actual smoothed camera distance");
         settleCamera();
         const float closestDistance = cameraDistance();
-        check(std::abs(closestDistance - defaultDistance * 0.35f) < 0.01f,
+        check(std::abs(closestDistance - referenceDistance * 0.35f) < 0.01f,
               "large wheel input stops at the close zoom limit");
         check(dw::distance(beforeZoom, game.run->player.position) == 0 && game.run->stats.shots == 0 &&
                   game.run->player.dodge == 0,
@@ -551,6 +624,11 @@ int main() {
         frame(850, 711);
         settleCamera();
         check(std::abs(cameraDistance() - closestDistance) < 0.01f, "HUD controls ignore scrolling");
+        mouseEvent(MouseWheel, 0, -100);
+        frame(1100, 10);
+        settleCamera();
+        check(std::abs(cameraDistance() - closestDistance) < .01f,
+              "the zoom readout blocks scrolling through the HUD");
         mouseEvent(MouseWheel, -100, 0);
         frame();
         game.paused = true;
@@ -577,7 +655,7 @@ int main() {
         check(cameraDistance() > closestDistance, "scrolling down pulls the camera back");
         settleCamera();
         const float widestDistance = cameraDistance();
-        check(std::abs(widestDistance - defaultDistance * 1.5f) < 0.01f &&
+        check(std::abs(widestDistance - referenceDistance * 1.5f) < 0.01f &&
                   dw::distance(originalAngle, dw::unit(dw::sub(game.camera.position, game.camera.target))) <
                       0.0001f,
               "zoom out has a safe limit and preserves the viewing angle");

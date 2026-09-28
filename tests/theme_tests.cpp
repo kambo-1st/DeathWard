@@ -94,8 +94,13 @@ int main() {
                 a.jumpDebug(room);
                 b.jumpDebug(room);
                 check(a.enemies.size() == b.enemies.size(), "seeded canyon populations repeat");
+                check(int(a.livingEnemies()) == a.roomEnemyCount(room),
+                      "canyon groups including the finale and companions respect the area budget");
                 for (size_t i = 0; i < a.enemies.size(); ++i) {
+                    check(a.enemies[i].kind == EnemyKind::Monster && a.enemies[i].monster != 0,
+                          "every canyon enemy including the final encounter is from the Isaac catalog");
                     check(a.enemies[i].kind == b.enemies[i].kind &&
+                              a.enemies[i].monster == b.enemies[i].monster &&
                               distance(a.enemies[i].position, b.enemies[i].position) < .001f,
                           "canyon encounters repeat their types and positions");
                     check(!a.arena.blocked(a.enemies[i].position, a.enemies[i].radius),
@@ -112,6 +117,20 @@ int main() {
                     }
                 }
             }
+            a.killAll();
+            a.step({});
+            check(a.roomClear && a.bossKilled && !a.boss(),
+                  "clearing the canyon finale satisfies its objective without a Sheriff");
+            a.startBoss();
+            check(!a.roomClear && !a.bossKilled && !a.boss() && a.roomThreats() > 0,
+                  "replaying the canyon finale restores its monster group");
+            a.clearRoomDebug();
+            a.spawnEnemies(30);
+            a.godMode = true;
+            a.step({});
+            for (const auto &enemy : a.enemies)
+                check(enemy.kind == EnemyKind::Monster,
+                      "random canyon cheat spawns keep the Isaac-only roster");
             const auto &field = *a.arena.canyon;
             const float seamX = field.x + float(field.width / 2) * field.step;
             const float seamZ = field.z + float(field.depth / 2) * field.step;
@@ -141,6 +160,31 @@ int main() {
             check(store.recover(), "interrupted themed expedition recovers");
             check(store.data().history.back().expedition == "Redstone Canyon",
                   "interruption history preserves the canyon mission");
+            auto id = store.begin(1866, "Redstone Canyon");
+            Simulation run(1866, id, store.data().world, MissionTheme::Canyon);
+            run.startBoss();
+            run.killAll();
+            run.step({});
+            run.player.position = run.arena.exit;
+            run.interact();
+            check(run.finished, "the canyon exit works after defeating its monster group");
+            store.resolve(run.summary(), EndReason::Victory);
+            check(store.data().world.flags.contains("canyon_cleared") && !store.data().world.bossDefeated &&
+                      !store.data().world.flags.contains("hollow_sheriff_dead"),
+                  "canyon victory persists independently of the mine's Sheriff");
+            Simulation mineRun(1866, 3, store.data().world, MissionTheme::Mine);
+            mineRun.startBoss();
+            check(mineRun.boss() && !mineRun.followup,
+                  "the mine still contains its Sheriff after completing the canyon");
+            mineRun.clearRoomDebug();
+            mineRun.spawnEnemies(30);
+            mineRun.godMode = true;
+            mineRun.step({});
+            for (const auto &enemy : mineRun.enemies)
+                check(enemy.kind != EnemyKind::Monster, "random mine cheat spawns retain Western enemies");
+            Simulation canyonReturn(1866, 4, store.data().world, MissionTheme::Canyon);
+            check(canyonReturn.followup && canyonReturn.bossKilled,
+                  "a return canyon visit recognizes its own previous completion");
         }
         std::filesystem::remove(path);
         std::cout << "PASS seeded/explicit themes, organic terrain, connected routes, seals, reproducible "

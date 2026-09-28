@@ -29,7 +29,12 @@ enum class Action {
     ThemeSeeded,
     ThemeMine,
     ThemeCanyon,
-    TravelHub
+    TravelHub,
+    HealthDown,
+    HealthUp,
+    DamageDown,
+    DamageUp,
+    ResetPlayer
 };
 class Game {
   public:
@@ -46,11 +51,13 @@ class Game {
     RunSummary lastSummary;
     Camera3D camera{};
     std::string seedText = "1866", error;
-    ThemeChoice themeChoice = ThemeChoice::Seeded;
+    ThemeChoice themeChoice = ThemeChoice::Canyon;
     MissionTheme offeredTheme() const;
     bool quit = false, paused = false, slow = false, debug = true, collisionDebug = false, resetArmed = false;
     bool debugPanelOpen = false;
     int selectedItem = 0, historyIndex = 0, selectedFlag = 0;
+    int selectedMonster = 0;
+    float playerHealth = StartingHealth, playerDamage = RevolverDamage;
     float accumulator = 0;
     float deathTime = 0;
     EntityId hoveredEnemy = 0;
@@ -61,6 +68,9 @@ class Game {
     void close();
     const RunSummary *inspectedHistory() const;
     void updateCamera(float dt);
+    float cameraZoomPercent() const {
+        return 100.0f / cameraZoom_;
+    }
     bool pointerOverControls() const;
 
   private:
@@ -72,7 +82,7 @@ class Game {
     std::optional<Vector3> moveQueued_, fireQueued_;
     std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;
-    float cameraZoom_ = 1, cameraZoomTarget_ = 1;
+    float cameraZoom_ = 100.0f / 160.0f, cameraZoomTarget_ = cameraZoom_;
     float cameraYaw_ = 0, cameraPitch_ = 0;
     bool cameraDragging_ = false;
     Vector2 cameraDragPosition_{};

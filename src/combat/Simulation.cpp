@@ -9,8 +9,8 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
       combatRng(seed ^ 0x434f4d424154524eULL), seed_(seed), runId_(runId), startingWorld_(world) {
     rescued = world.minersRescued;
     altarDestroyed = world.altarDestroyed;
-    bossKilled = world.bossDefeated;
-    followup = world.bossDefeated;
+    bossKilled = theme == MissionTheme::Canyon ? world.flags.contains("canyon_cleared") : world.bossDefeated;
+    followup = bossKilled;
     player.position = arena.entrance;
     player.aim = arena.rooms[0].center;
     player.facing = unit(sub(player.aim, player.position));
@@ -61,10 +61,10 @@ std::string Simulation::roomName(int index, MissionTheme theme) {
         "The Deep Vein",   "The Switchyard",   "Old Powder Store", "The Dry Well",  "Iron Junction",
         "The Broken Lift", "The Bone Gallery", "Smuggler's Cache", "The Reliquary", "The Hollow Court"};
     static constexpr std::array<const char *, RoomCount> canyonNames{
-        "Dustwind Approach",  "The Red Narrows",   "Captives' Gulch",   "Sunbleached Shrine",
-        "Dead Man's Bend",    "Splitrock Basin",   "The Dry Wash",      "Powder Bluff",
-        "Coyote Hollow",      "Twin Mesas",        "Fallen Spire",      "Bone Dry Ravine",
-        "Prospector's Cache", "The Sun Reliquary", "The Sheriff's Mesa"};
+        "Dustwind Approach",  "The Red Narrows",   "Captives' Gulch",  "Sunbleached Shrine",
+        "Dead Man's Bend",    "Splitrock Basin",   "The Dry Wash",     "Powder Bluff",
+        "Coyote Hollow",      "Twin Mesas",        "Fallen Spire",     "Bone Dry Ravine",
+        "Prospector's Cache", "The Sun Reliquary", "The Infested Mesa"};
     const auto &selected = theme == MissionTheme::Canyon ? canyonNames : names;
     return selected[size_t(std::clamp(index, 0, FinalRoom))];
 }
@@ -81,6 +81,21 @@ void Simulation::grant(ItemId item) {
     queueRoot(e);
     announce(std::string(itemDefinition(item).name) + " / the rules have changed");
     checkpointNeeded = true;
+}
+void Simulation::tunePlayer(float baseHealth, float shotDamage) {
+    if (dead || finished || !std::isfinite(baseHealth) || !std::isfinite(shotDamage))
+        return;
+    baseHealth = std::clamp(baseHealth, 25.0f, 2000.0f);
+    shotDamage = std::clamp(shotDamage, 1.0f, 500.0f);
+    if (baseHealth != player.baseHealth) {
+        const float healthFraction = std::clamp(player.hp / player.maxHp, 0.0f, 1.0f);
+        player.baseHealth = baseHealth;
+        player.maxHp = baseHealth;
+        for (size_t i = 0; i < itemStacks(ItemId::Judas); ++i)
+            player.maxHp = std::max(10.0f, player.maxHp * 0.8f);
+        player.hp = player.maxHp * healthFraction;
+    }
+    player.shotDamage = shotDamage;
 }
 void Simulation::offerReward() {
     const auto &progress = rooms[size_t(room)];
@@ -115,6 +130,7 @@ void Simulation::enterRoom(int index) {
     queue_.clear();
     chains.clear();
     enemies.clear();
+    pendingMonsters_.clear();
     visuals.clear();
     if (firstVisit && room != 0)
         player.hp = std::min(player.maxHp, player.hp + 15);
@@ -133,9 +149,7 @@ void Simulation::enterRoom(int index) {
     } else if (!roomClear) {
         cancelMove();
         arena.sealRoom(room);
-        announce(room == FinalRoom ? "THE HOLLOW COURT / all exits sealed"
-                                   : roomName() + " / doors sealed until the fight is over",
-                 4);
+        announce(roomName() + " / doors sealed until the fight is over", 4);
         if (room == FinalRoom)
             beginBossEncounter();
         else
@@ -151,6 +165,12 @@ void Simulation::clearRoom() {
     if (progress.cleared)
         return;
     progress.cleared = roomClear = true;
+    if (room == FinalRoom && arena.theme == MissionTheme::Canyon)
+        bossKilled = true;
+    for (auto &enemy : enemies)
+        if (const auto *d = monsterDefinition(enemy.monster); d && d->roomHazard)
+            enemy.alive = false;
+    clearHazards();
     arena.sealRoom(-1);
     ++stats.rooms;
     player.hp = std::min(player.maxHp, player.hp + 20);
@@ -159,7 +179,7 @@ void Simulation::clearRoom() {
     event.type = EventType::RoomCleared;
     queueRoot(event);
     announce(room == FinalRoom
-                 ? "The Court is silent. Use the return lantern to reach Black Creek."
+                 ? "The final chamber is clear. Use the return lantern to reach town."
                  : "Room cleared. Doors reopened. Choose a passage; look for keys and power caches.",
              5);
 }
@@ -214,13 +234,17 @@ void Simulation::startBoss() {
     jumpDebug(FinalRoom, true);
 }
 void Simulation::beginBossEncounter() {
-    if (followup)
+    if (arena.theme == MissionTheme::Canyon || followup)
         spawnRoomEnemies();
     else
         spawn(EnemyKind::Boss, arena.rooms.back().bossSpawn);
-    announce(followup ? "Finish what remains" : "THE HOLLOW SHERIFF", 4);
+    announce(arena.theme == MissionTheme::Canyon ? "THE INFESTED MESA / clear the final monster group"
+             : followup                          ? "Finish what remains"
+                                                 : "THE HOLLOW SHERIFF",
+             4);
 }
 void Simulation::killAll() {
+    pendingMonsters_.clear();
     for (const auto &enemy : enemies)
         if (enemy.alive) {
             Event e;
@@ -230,6 +254,7 @@ void Simulation::killAll() {
             e.origin = player.position;
             e.direction = unit(sub(enemy.position, player.position));
             e.damage = 10000;
+            e.execution = true;
             queueRoot(e);
         }
     drainEvents();
@@ -248,6 +273,7 @@ void Simulation::clearRoomDebug() {
     // over from a stress scene.
     cancelMove();
     enemies.clear();
+    pendingMonsters_.clear();
     projectiles.clear();
     clearHazards();
     player.pullTime = 0;
@@ -436,6 +462,21 @@ void Simulation::createProjectile(const Event &event) {
     if (p.hostile) {
         p.radius = 0.22f;
         p.life = 5;
+        if (p.kind == ProjectileKind::BurstShot)
+            p.life = 1.2f;
+        if (p.kind == ProjectileKind::ReturningHead) {
+            p.life = 2;
+            p.radius = .4f;
+        }
+        if (p.kind == ProjectileKind::Rock) {
+            p.life = 2;
+            p.radius = .35f;
+        }
+        if (const auto *source = findEnemy(p.context.sourceEntity)) {
+            const int type = source->monster / 10000;
+            if ((type == 11 || type == 30 || type == 88) && p.kind == ProjectileKind::Bullet)
+                p.life = .8f;
+        }
     } else
         applyProjectileItems(*this, p);
     ++chains[p.context.chainId].active;
@@ -463,6 +504,11 @@ void Simulation::process(const Event &e) {
         if (!target || !target->alive)
             break;
         const float damage = enemyDamage(*target, e);
+        if (damage <= 0) {
+            if (target->monster == monsterId(41, 4) && !e.hostile && !e.areaDamage)
+                shootEnemy(*target, mul(unit(e.direction), -1), 10, 12);
+            break;
+        }
         stats.damageDealt += std::min(target->hp, damage);
         target->hp -= damage;
         if (target->kind == EnemyKind::Preacher && damage > 0) {
@@ -476,7 +522,11 @@ void Simulation::process(const Event &e) {
         hit.type = EventType::EnemyDamaged;
         emit(hit, e.context);
         if (target->hp <= 0) {
+            if (!e.execution && target->kind == EnemyKind::Monster && collapseMonster(*target))
+                break;
             target->alive = false;
+            if (target->kind == EnemyKind::Monster && !e.execution)
+                monsterDeath(*target, e);
             if (target->kind == EnemyKind::PowderHusk) {
                 Hazard hazard;
                 hazard.kind = HazardKind::Powder;
@@ -506,7 +556,8 @@ void Simulation::process(const Event &e) {
         ++stats.explosions;
         effectVisual(e.position, e.radius, 0, 0.5f);
         for (const auto &enemy : enemies)
-            if (enemy.alive && distance(enemy.position, e.position) < e.radius + enemy.radius &&
+            if (enemy.alive && !(e.hostile && enemy.id == e.context.sourceEntity) &&
+                distance(enemy.position, e.position) < e.radius + enemy.radius &&
                 arena.sight(e.position, enemy.position)) {
                 Event damage = e;
                 damage.type = EventType::Damage;
@@ -548,6 +599,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
     player.dodgeCooldown = std::max(0.0f, player.dodgeCooldown - dt);
     player.hurt = std::max(0.0f, player.hurt - dt);
     player.shootPose = std::max(0.0f, player.shootPose - dt);
+    player.slowTime = std::max(0.0f, player.slowTime - dt);
     Vector3 movement = input.movement;
     if (input.fire || input.standStill)
         cancelMove(); // Attacking never continues an old click-to-move order.
@@ -592,7 +644,8 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         movement = mul(player.dodgeDirection, 3.4f);
         player.dodge -= dt;
     }
-    player.position = arena.move(player.position, mul(movement, 6 * dt), 0.48f);
+    player.position = arena.move(
+        player.position, mul(movement, (player.slowTime > 0 && player.dodge <= 0 ? 3.2f : 6) * dt), 0.48f);
     if (player.pullTime > 0) {
         if (player.dodge > 0 || !arena.sight(player.position, player.pullTarget))
             player.pullTime = 0;
@@ -609,6 +662,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         ++stats.shots;
         Event e;
         e.direction = unit(sub(player.aim, player.position));
+        e.damage = player.shotDamage;
         e.position = add(player.position, mul(e.direction, 0.7f));
         e.origin = e.position;
         e.lastRound = player.nextRound == 6;
@@ -660,6 +714,18 @@ void Simulation::updateProjectiles(float dt) {
             continue;
         p.previous = p.position;
         p.life -= dt;
+        if (p.kind == ProjectileKind::Homing) {
+            auto wanted = sub(player.position, p.position);
+            wanted.y = 0;
+            p.velocity = mul(unit(add(unit(p.velocity), mul(unit(wanted), dt * 1.4f))), length(p.velocity));
+        }
+        if (p.kind == ProjectileKind::ReturningHead && p.life < 1.3f) {
+            const auto *source = findEnemy(p.context.sourceEntity);
+            if (!source || !source->alive || distance(p.position, source->position) < .8f)
+                p.alive = false;
+            else
+                p.velocity = mul(unit(sub(source->position, p.position)), 14);
+        }
         if (p.life <= 0) {
             p.alive = false;
             continue;
@@ -687,8 +753,9 @@ void Simulation::updateProjectiles(float dt) {
             } else
                 for (size_t index : candidates(p.position, end, 1.5f)) {
                     const Enemy &enemy = enemies[index];
-                    if (!enemy.alive || std::find(p.hitEntities.begin(), p.hitEntities.end(), enemy.id) !=
-                                            p.hitEntities.end())
+                    if (!enemy.alive || enemy.friendly || enemy.state == EnemyState::Buried ||
+                        std::find(p.hitEntities.begin(), p.hitEntities.end(), enemy.id) !=
+                            p.hitEntities.end())
                         continue;
                     float hit = segmentSphere(p.position, end, enemy.position, enemy.radius + p.radius);
                     if (hit < best) {
@@ -748,6 +815,28 @@ void Simulation::updateProjectiles(float dt) {
     }
     for (const auto &p : projectiles)
         if (!p.alive) {
+            if (p.hostile && (p.kind == ProjectileKind::SplitShot || p.kind == ProjectileKind::BurstShot)) {
+                const int count = p.kind == ProjectileKind::SplitShot ? 2 : 6;
+                for (int n = 0; n < count; ++n) {
+                    Event child;
+                    child.position = sub(p.position, mul(unit(p.velocity), .3f));
+                    child.origin = p.origin;
+                    child.direction = p.kind == ProjectileKind::SplitShot
+                                          ? rotateY(unit(p.velocity), n ? .8f : -.8f)
+                                          : rotateY({1, 0, 0}, float(n) * 2 * Pi / float(count));
+                    child.damage = p.damage;
+                    child.speed = 8;
+                    child.hostile = true;
+                    emit(child, p.context);
+                }
+            }
+            if (p.hostile && (p.kind == ProjectileKind::Tar || p.kind == ProjectileKind::Flame)) {
+                Enemy source;
+                source.id = p.context.sourceEntity;
+                source.position = p.position;
+                monsterPatch(source, p.kind == ProjectileKind::Tar ? HazardKind::Tar : HazardKind::Fire,
+                             p.position, .7f, .2f, 2.5f);
+            }
             auto it = chains.find(p.context.chainId);
             if (it != chains.end() && it->second.active)
                 --it->second.active;
@@ -758,7 +847,7 @@ void Simulation::step(const Input &input, float dt) {
     if (rewardOpen || finished || dead)
         return;
     stats.duration += dt;
-    if (boss())
+    if (boss() || (arena.theme == MissionTheme::Canyon && room == FinalRoom && !roomClear))
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);
     updatePlayer(input, dt);
@@ -774,10 +863,12 @@ void Simulation::step(const Input &input, float dt) {
     collectKeys();
     rebuildGrid();
     updateEnemies(dt);
+    flushMonsterSpawns();
     rebuildGrid();
     updateProjectiles(dt);
     updateHazards(dt);
     drainEvents();
+    flushMonsterSpawns();
     for (auto &v : visuals)
         v.life -= dt;
     std::erase_if(visuals, [](const VisualEffect &v) { return v.life <= 0; });
@@ -789,7 +880,7 @@ void Simulation::step(const Input &input, float dt) {
     }
     if (debugScenario)
         return;
-    if (!roomClear && livingEnemies() == 0 && queue_.empty())
+    if (!roomClear && roomThreats() == 0 && queue_.empty() && pendingMonsters_.empty())
         clearRoom();
 }
 } // namespace dw

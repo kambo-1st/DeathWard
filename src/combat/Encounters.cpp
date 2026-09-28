@@ -19,6 +19,7 @@ const EnemyDefinition &enemyDefinition(EnemyKind kind) {
         {"Powder Husk", 48, 0.7f, 1.9f, 0.65f, 1.3f},
         {"Chainbound Outlaw", 68, 0.6f, 1.7f, 0.65f, 2.2f},
         {"Hollow Sheriff", 1100, 1.2f, 1, 0, 1.5f},
+        {"Monster", 72, 0.6f, 2, .6f, 2.5f},
     }};
     return definitions.at(size_t(kind));
 }
@@ -42,9 +43,9 @@ EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
     return enemy.id;
 }
 
-bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced) {
+bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monster) {
     const auto &bounds = arena.rooms[size_t(room)].bounds;
-    const float radius = enemyDefinition(kind).radius;
+    const float radius = monster ? monsterDefinition(monster)->radius : enemyDefinition(kind).radius;
     auto valid = [&](Vector3 point) {
         if (arena.blocked(point, std::max(0.8f, radius)) || distance(point, player.position) < 6)
             return false;
@@ -55,7 +56,7 @@ bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced) {
         return true;
     };
     auto create = [&](Vector3 point) {
-        if (!spawn(kind, point))
+        if (!(monster ? spawnMonster(monster, point) : spawn(kind, point)))
             return false;
         // Normal rooms use their own stream, independent of prior room visits.
         enemies.back().cooldown = rng.real(0.6f, 1.8f);
@@ -76,9 +77,19 @@ bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced) {
 }
 
 void Simulation::spawnEnemies(int count) {
-    // Cheat/stress requests retain their explicit count and exercise the whole roster.
+    // Random testing spawns use the same roster as the current mission.
+    std::vector<int> monsters;
+    for (const auto &d : monsterCatalog())
+        if (d.natural)
+            monsters.push_back(d.id);
     EntityId unpaired = 0;
     for (int i = 0; i < count && livingEnemies() < limits.enemies; ++i) {
+        if (arena.theme == MissionTheme::Canyon) {
+            const int monster = monsters[encounterRng.bounded(uint32_t(monsters.size()))];
+            if (!placeEnemy(EnemyKind::Monster, encounterRng, false, monster))
+                break;
+            continue;
+        }
         EnemyKind kind =
             unpaired ? EnemyKind::Chainbound : EnemyKind(encounterRng.bounded(OrdinaryEnemyCount));
         if (kind == EnemyKind::Chainbound && !unpaired && i + 1 == count)
@@ -100,7 +111,7 @@ int Simulation::roomEnemyCount(int index) const {
     const auto &layout = arena.rooms.at(size_t(index));
     if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power)
         return 0;
-    if (layout.kind == RoomKind::Boss && !followup)
+    if (layout.kind == RoomKind::Boss && arena.theme == MissionTheme::Mine && !followup)
         return 1;
     return std::clamp(int(std::ceil(layout.usableArea() / 70.0f)), 4, 24);
 }
@@ -108,6 +119,56 @@ int Simulation::roomEnemyCount(int index) const {
 void Simulation::spawnRoomEnemies() {
     const auto &layout = arena.rooms[size_t(room)];
     Random composition(seed_ ^ 0x524f4f4d47524f55ULL ^ (uint64_t(room + 1) * 0x9e3779b97f4a7c15ULL));
+    if (arena.theme == MissionTheme::Canyon) {
+        std::vector<int> pool;
+        for (const auto &d : monsterCatalog())
+            if (d.natural && d.depth <= std::max(1, layout.depth))
+                pool.push_back(d.id);
+        const std::array<int, 6> basics{monsterId(10, 1), monsterId(14), monsterId(18),
+                                        monsterId(21),    monsterId(11), monsterId(85)};
+        const int basic = basics[composition.bounded(uint32_t(basics.size()))];
+        const int special = pool[composition.bounded(uint32_t(pool.size()))];
+        const auto &definition = *monsterDefinition(special);
+        const int count = roomEnemyCount(room);
+        const int specialCount = definition.roomHazard ? 1 : std::max(1, count / 3);
+        Random placement(seed_ ^ 0x535041574e524f4fULL ^ (uint64_t(room + 1) * 0xbf58476d1ce4e5b9ULL));
+        EntityId leader = 0;
+        for (int n = 0; n < count;) {
+            int id = n < specialCount ? special : basic;
+            const bool companion = id == monsterId(26, 2) || id == monsterId(55, 2) || id == monsterId(35) ||
+                                   id == monsterId(35, 2);
+            if (companion && n + 2 > count)
+                id = basic;
+            const auto before = livingEnemies();
+            if (!placeEnemy(EnemyKind::Monster, placement, true, id))
+                break;
+            if (id == monsterId(89)) {
+                if (const auto *head = findEnemy(leader)) {
+                    for (int direction = 0; direction < 16; ++direction) {
+                        const auto point =
+                            add(head->position, rotateY({1.45f, 0, 0}, float(direction) * Pi / 8));
+                        if (arena.roomAt(point) != room || arena.blocked(point, .6f) ||
+                            distance(point, player.position) < 6 || !arena.sight(point, head->position))
+                            continue;
+                        bool occupied = false;
+                        for (const auto &other : enemies)
+                            if (other.id != enemies.back().id &&
+                                distance(point, other.position) < other.radius + .7f)
+                                occupied = true;
+                        if (!occupied) {
+                            enemies.back().position = point;
+                            enemies.back().partner = leader;
+                            break;
+                        }
+                    }
+                }
+                leader = enemies.back().id;
+            }
+            flushMonsterSpawns(&placement, 6);
+            n += int(livingEnemies() - before);
+        }
+        return;
+    }
     const EnemyKind basic = composition.bounded(2) ? EnemyKind::Rusher : EnemyKind::Gunman;
     std::vector<EnemyKind> pool;
     for (int i = 0; i < OrdinaryEnemyCount; ++i) {

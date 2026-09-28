@@ -44,7 +44,7 @@ void ghost(Simulation &run, const Event &e) {
     shot.position = e.origin;
     shot.target = 0;
     shot.ghost = true;
-    shot.damage = std::max(RevolverDamage, e.damage);
+    shot.damage = std::max(run.player.shotDamage, e.damage);
     shot.direction = unit(e.direction);
     run.emit(shot, e.context, int(ItemId::Ghost));
     ++run.stats.ghosts;

@@ -50,6 +50,8 @@ Mine rooms have different dimensions (24–40 units per side), with rectangular,
 
 **Fifteen ordinary enemy types are playable**, with distinct silhouettes and attacks: rushers, gunmen, shotgunners, sharpshooters, dynamite throwers, armored brutes, chargers, protective preachers, bell shockwaves, hook throwers, fire spitters, ricochet shooters, teleporting wraiths, explosive husks and chainbound pairs. See the [enemy roster](docs/enemy_roster_proposal.md) for their tells and counters.
 
+**The Isaac monster roster for IDs 10–89 is also playable**, including variants, with new 3D creature silhouettes and seeded room groups. Special behaviors include regenerating piles, protective shells, directional armor, lasers, splitting shots, burrowing, linked enemies and offspring. Permanent hazards cannot prevent room completion. Use **comma / period**, then **Shift+F4**, to test a specific ID. See the [catalog and adaptation notes](docs/isaac_monsters.md).
+
 **Enemy count scales with the room's generated floor area:** subtract obstacle footprints, divide by 70, round up, then clamp to 4–24. Missing corners and corridors do not count. For example, 700 usable square units gives 10 enemies; 1,400 gives 20. Each group mixes up to three seeded types, with clear spawn space and a six-unit buffer around the player. Quiet rooms and power caches stay empty; the first boss encounter stays a single Sheriff. Revisits after defeating the Sheriff use an area-scaled ordinary group.
 
 **Power-ups only appear in 1–2 dedicated rooms per expedition.** Unlock a power room, approach its pedestal, and choose one of two items. Each pedestal works once, so normal play yields at most two power-ups for the entire run. Combat rooms do not award items.
@@ -75,7 +77,9 @@ The camera follows you through corridors. The mission map shows branches, your p
 | T while paused | Retreat and resolve consequences |
 | H in the hub | Inspect previous runs |
 
-Start each expedition with **200 HP** and **48 revolver damage** (both doubled from the initial milestone). The revolver fires continuously while holding an enemy, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
+Start each expedition with **100 HP** and **24 revolver damage**. The revolver fires continuously while holding an enemy, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
+
+With cheats enabled, pause a mission to use **Player Settings**: adjust base health in steps of 25 and shot damage in steps of 4. During play, **minus / equals** (or keypad minus / plus) adjust damage; hold **Shift** with those keys to adjust health. **Home** restores the 100 HP / 24 damage defaults. Base health is bounded to 25–2,000 and damage to 1–500. Health changes preserve your current health percentage and still apply Judas Bullet's health cost; Shift+F2 fully heals. Settings apply immediately to new shots and carry into subsequent missions and hub travel for this session. Restarting the game restores the defaults. Split and ghost bullets use the adjusted shot damage; Powder of Jericho keeps its own explosion damage.
 
 Left-click follows the contextual move/attack/interact pattern in [Blizzard's Diablo manual](https://ftp.blizzard.com/pub/misc/Diablo.PDF). Click ground to walk there, or hold to steer. Click an enemy's body to attack; holding keeps that target until release, and its death never turns the attack into a movement order. Attacking cancels the current mouse route. WASD overrides mouse navigation and remains available while firing; Shift holds position. RMB uses the prototype's only weapon, the revolver.
 
@@ -85,7 +89,7 @@ Hold the middle mouse button and drag to orbit the camera in town or a mission. 
 
 Mouse-wheel zoom moves smoothly between a close character view and a wider room view while preserving the camera angle. Your chosen angle and zoom persist between rooms, town and expeditions during the session. Scrolling over the HUD controls, map or open cheat panel, or while paused or choosing a power, does not change zoom.
 
-A small FPS counter in the top-right corner shows the rendering frame rate on every screen.
+A small FPS counter in the top-right corner shows the rendering frame rate on every screen. In hubs and missions, the current camera zoom appears beside it. New sessions start at **160% zoom**; 100% remains the reference scale, higher percentages are closer, and lower percentages are wider. The value follows the camera smoothly as you scroll. Your chosen zoom carries between hubs and missions for the session.
 
 World interactions use visual cues instead of floating control instructions: open exits have small floor arrows and colored lanterns, locked doors have golden locks, and pickups and objectives have glow or ground markers. Control reminders live in the hub, pause screen and this guide.
 
@@ -93,7 +97,9 @@ The player uses the textured **bandit model supplied in `assets/bandit`**. Its F
 
 The generated rooms use **textured PolygonWestern scenery**: stacked crates for cover, boundary fences, railway passages and lanterns. Seeded saloons, jails, churches, stations, water towers, carts, barrels, rocks and cacti surround the playable routes. The original texture atlas and material tints are embedded in the models, with directional lighting adapted for raylib. Cover fits the existing collision boxes; buildings are exterior scenery. Keeping the same seed and theme reproduces the scenery as well as the map.
 
-**Redstone Canyon** uses irregular basins and winding trails cut into a continuous rock terrain. Outcrops replace cube cover; the visible triangles also define movement, bullet and sight collisions. The original atlas supplies brown cliff faces and pale faceted caps, with directional terrain shadows and sparse rocks/cacti. Cliffs and cover keep their full generated height. The mine keeps its existing generator. A seed and theme reproduce their own geometry and encounters; canyon enemy counts use the basin's navigable floor area. Both settings share objectives and campaign consequences. See [mission theming](docs/mission_themes.md) for extension points.
+**Redstone Canyon** uses irregular basins and winding trails cut into a continuous rock terrain. Outcrops replace cube cover; the visible triangles also define movement, bullet and sight collisions. The original atlas supplies brown cliff faces and pale faceted caps, with directional terrain shadows and sparse rocks/cacti. Cliffs and cover keep their full generated height. The mine keeps its existing generator. A seed and theme reproduce their own geometry and encounters; canyon enemy counts use the basin's navigable floor area. Both settings share the miners and altar objectives. Canyon completion is tracked separately from defeating the mine’s Sheriff. See [mission theming](docs/mission_themes.md) for extension points.
+
+**Isaac Canyon is the default mission choice** and uses only the Isaac monster catalog, including its final encounter. **Western Mine** retains all fifteen original enemy types and the Hollow Sheriff. Random spawn cheats follow the selected theme; the specific-ID cheat remains available in either setting. See [the enemy review and Isaac character comparison](docs/isaac_review.md).
 
 The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat, or death if the character is already dying. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated boss becomes a follow-up encounter on subsequent visits.
 
@@ -117,11 +123,16 @@ Copies stack. Items do not check for specific item pairs. Stable registry hooks 
 | --- | --- |
 | F1 | Toggle cheat mode; enabling it keeps the panel hidden |
 | Backtick key | Show/hide the optional cheat shortcut panel |
+| Minus / equals, or keypad minus / plus | Decrease / increase shot damage by 4 |
+| Shift + minus / equals, or Shift + keypad minus / plus | Decrease / increase base health by 25 |
+| Home | Restore default base health and shot damage |
 | F2 / Shift + F2 | Toggle invincibility / heal fully and reset cooldowns |
 | F3 / Shift + F3 | Kill current enemies / clear the whole room, remove pending effects and reopen combat seals |
-| F4 / F5 | Spawn 20 / 100 enemies drawn from all fifteen types |
+| F4 / F5 | Spawn 20 / 100 enemy roots from the current mission's roster, plus attached companions |
+| Comma / period | Select the previous / next monster ID |
+| Shift + F4 | Spawn the selected monster on safe floor for testing |
 | F6 / Shift + F6 | Grant all five items / add three keys |
-| F7 | Start or replay the boss or follow-up encounter |
+| F7 | Start or replay the final encounter: Isaac group in Canyon, Sheriff/follow-up in Mine |
 | F8 / F9 | Finish successfully / die |
 | F10 | Toggle 3D collision volumes and projectile paths |
 | F11 | Stress scene: 100 enemies and 600 shots with all five effects |
@@ -189,4 +200,4 @@ The hub separately imports the complete original Demo scene into `assets/town`: 
 - `src/render`: 3D rendering, instanced seeded scenery, player animation blending and menus; no combat rules.
 - `tests`: gameplay and persistence contract checks.
 
-The [design brief](weird_west_3d_prototype_agent_brief.md) describes the wider experiment. This implementation extends Milestone 1 with fifteen ordinary enemy types and seeded room networks. The 25-item catalog and three expeditions remain future content work.
+The [design brief](weird_west_3d_prototype_agent_brief.md) describes the wider experiment. This implementation extends Milestone 1 with the Western and monster rosters and seeded room networks. The 25-item catalog and three expeditions remain future content work.

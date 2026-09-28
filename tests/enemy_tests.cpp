@@ -291,10 +291,12 @@ void testAreaAndEncounters() {
             populations.insert(int(generated.livingEnemies()));
             minArea = std::min(minArea, layout.usableArea());
             maxArea = std::max(maxArea, layout.usableArea());
-            std::set<EnemyKind> kinds;
+            std::set<int> kinds;
             for (const auto &enemy : generated.enemies) {
+                check(enemy.kind != EnemyKind::Monster,
+                      "mine encounters keep the Western roster exclusively");
                 seen.insert(enemy.kind);
-                kinds.insert(enemy.kind);
+                kinds.insert(enemy.kind == EnemyKind::Monster ? enemy.monster : -int(enemy.kind) - 1);
                 check(generated.arena.roomAt(enemy.position) == index &&
                           !generated.arena.blocked(enemy.position, enemy.radius) &&
                           distance(enemy.position, generated.player.position) >= 6,
@@ -309,12 +311,12 @@ void testAreaAndEncounters() {
                           "chainbound enemies occupy two existing slots and always have a partner");
                 }
             }
-            check(kinds.size() >= 2 && kinds.size() <= 3,
+            check(kinds.size() >= 1 && kinds.size() <= 3,
                   "rooms use a readable mixture of two or three roles");
         }
     }
     check(seen.size() == OrdinaryEnemyCount && populations.size() >= 8,
-          "seeded encounters include all fifteen types and varied population sizes");
+          "seeded mines include all original enemy types and varied population sizes");
     std::cout << "POPULATION seeds=32 area=" << minArea << ".." << maxArea
               << " enemies=" << *populations.begin() << ".." << *populations.rbegin()
               << " types=" << seen.size() << '\n';
@@ -327,7 +329,7 @@ void testAreaAndEncounters() {
     b.jumpDebug(2);
     check(a.enemies.size() == b.enemies.size(), "visit order never changes room population");
     for (size_t i = 0; i < a.enemies.size(); ++i)
-        check(a.enemies[i].kind == b.enemies[i].kind &&
+        check(a.enemies[i].kind == b.enemies[i].kind && a.enemies[i].monster == b.enemies[i].monster &&
                   distance(a.enemies[i].position, b.enemies[i].position) == 0 &&
                   a.enemies[i].cooldown == b.enemies[i].cooldown,
               "room composition, placements and initial timers reproduce independently of prior fights");

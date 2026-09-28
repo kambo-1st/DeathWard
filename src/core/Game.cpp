@@ -59,7 +59,8 @@ PointerTarget pickTarget(const Simulation &run, Ray ray) {
                     result.door = std::pair{int(i), side};
                 }
     for (const auto &enemy : run.enemies) {
-        if (enemy.alive && hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.5f)) {
+        if (enemy.alive && !enemy.friendly && enemy.state != EnemyState::Buried &&
+            hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.5f)) {
             result.enemy = enemy.id;
             result.objective.reset();
             result.door.reset();
@@ -115,6 +116,7 @@ void Game::launch() {
     const auto theme = resolveTheme(themeChoice, seed);
     auto candidate =
         std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world, theme);
+    candidate->tunePlayer(playerHealth, playerDamage);
     campaign.begin(seed, missionTheme(theme).title);
     run = std::move(candidate);
     missionMenu = walkingToMission = false;
@@ -165,6 +167,32 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::HealthDown:
+        case Action::HealthUp:
+        case Action::DamageDown:
+        case Action::DamageUp:
+        case Action::ResetPlayer:
+            if (debug && run && !run->dead && !run->finished) {
+                float health = playerHealth, damage = playerDamage;
+                if (action == Action::HealthDown)
+                    health -= 25;
+                if (action == Action::HealthUp)
+                    health += 25;
+                if (action == Action::DamageDown)
+                    damage -= 4;
+                if (action == Action::DamageUp)
+                    damage += 4;
+                if (action == Action::ResetPlayer) {
+                    health = StartingHealth;
+                    damage = RevolverDamage;
+                }
+                run->tunePlayer(health, damage);
+                playerHealth = run->player.baseHealth;
+                playerDamage = run->player.shotDamage;
+                run->announce("PLAYER / base health " + std::to_string(int(playerHealth)) +
+                              " / shot damage " + std::to_string(int(playerDamage)));
+            }
+            break;
         case Action::TravelHub:
             selectHub(activeHub == HubKind::BlackCreek ? HubKind::Frontier : HubKind::BlackCreek);
             break;
@@ -297,6 +325,20 @@ void Game::debugInput() {
     if (!run)
         return;
     const bool shift = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
+    if (IsKeyPressed(KEY_MINUS) || IsKeyPressed(KEY_KP_SUBTRACT))
+        perform(shift ? Action::HealthDown : Action::DamageDown);
+    if (IsKeyPressed(KEY_EQUAL) || IsKeyPressed(KEY_KP_ADD))
+        perform(shift ? Action::HealthUp : Action::DamageUp);
+    if (IsKeyPressed(KEY_HOME))
+        perform(Action::ResetPlayer);
+    if (IsKeyPressed(KEY_COMMA) || IsKeyPressed(KEY_PERIOD)) {
+        const int count = int(monsterCatalog().size());
+        selectedMonster = (selectedMonster + (IsKeyPressed(KEY_COMMA) ? count - 1 : 1)) % count;
+        const auto &d = monsterCatalog()[size_t(selectedMonster)];
+        run->announce("TEST ENEMY / " + monsterIdText(d.id) + " / " + d.name);
+    }
+    if (IsKeyPressed(KEY_F4) && shift)
+        run->spawnMonsterDebug(monsterCatalog()[size_t(selectedMonster)].id);
     if (IsKeyPressed(KEY_F2)) {
         if (shift)
             run->healDebug();
@@ -314,7 +356,7 @@ void Game::debugInput() {
             run->announce("CHEAT / enemies killed.");
         }
     }
-    if (IsKeyPressed(KEY_F4))
+    if (IsKeyPressed(KEY_F4) && !shift)
         run->spawnEnemies(20);
     if (IsKeyPressed(KEY_F5))
         run->spawnEnemies(100);
@@ -412,6 +454,8 @@ bool Game::pointerOverControls() const {
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
+    if (x >= 1040 && x <= 1256 && y >= 2 && y <= 20)
+        return true;
     if (screen == Screen::Hub)
         return missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
                (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 700) ||
