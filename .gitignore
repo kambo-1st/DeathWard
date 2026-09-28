@@ -1,5 +1,7 @@
 /build*/
 /artifacts/
+/dist/
+/web/node_modules/
 *.tmp
 *.save
 *.save.bak

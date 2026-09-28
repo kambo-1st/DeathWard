@@ -1,6 +1,7 @@
 #include "audio/AudioSystem.hpp"
 #include "core/Game.hpp"
 #include "editor/TownEditor.hpp"
+#include "platform/Browser.hpp"
 #include "render/Renderer.hpp"
 #include <algorithm>
 #include <charconv>
@@ -8,6 +9,10 @@
 #include <fstream>
 #include <iostream>
 #include <numeric>
+
+#ifdef __EMSCRIPTEN__
+EM_ASYNC_JS(void, nextBrowserFrame, (), { await new Promise(requestAnimationFrame); });
+#endif
 
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
@@ -103,6 +108,7 @@ int main(int argc, char **argv) {
                     std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()) + ".save");
     }
     try {
+        dw::prepareBrowserFiles();
         dw::Game game(save, initialHub);
         game.themeChoice = themeChoice;
         if (smoke || benchmark)
@@ -113,7 +119,12 @@ int main(int argc, char **argv) {
             throw std::runtime_error("Cannot create a graphics window");
         SetWindowMinSize(1024, 640);
         SetExitKey(KEY_NULL);
+#ifdef __EMSCRIPTEN__
+        // The browser schedules frames. Never busy-wait or nanosleep on its UI thread.
+        SetTargetFPS(0);
+#else
         SetTargetFPS(benchmark ? 0 : 60);
+#endif
         dw::AudioSystem audio;
         const auto audioPreferences =
             smoke || benchmark || startEditor ? std::filesystem::path{} : save.parent_path() / "audio.cfg";
@@ -183,15 +194,39 @@ int main(int argc, char **argv) {
         size_t minEnemies = 1000, minProjectiles = 100000;
         uint64_t totalSuppressed = 0, maxProjectiles = 0, maxChain = 0, totalKills = 0;
         int frame = 0;
+#ifdef __EMSCRIPTEN__
+        EM_ASM({
+            if (Module.gameReady)
+                Module.gameReady();
+        });
+#endif
         while (!game.quit) {
+#ifdef __EMSCRIPTEN__
+            nextBrowserFrame();
+            const int browserWidth = EM_ASM_INT({ return Math.round(Module.canvas.clientWidth); });
+            const int browserHeight = EM_ASM_INT({ return Math.round(Module.canvas.clientHeight); });
+            if (browserWidth > 0 && browserHeight > 0 &&
+                (browserWidth != GetScreenWidth() || browserHeight != GetScreenHeight()))
+                SetWindowSize(browserWidth, browserHeight);
+#else
             if (WindowShouldClose()) {
                 if (editor.active)
                     editor.requestClose(true);
                 else
                     break;
             }
+#endif
             if (editor.quitRequested)
                 break;
+#ifdef __EMSCRIPTEN__
+            if (EM_ASM_INT({
+                    const pause = Module.pauseRequested || document.hidden || !document.hasFocus();
+                    Module.pauseRequested = false;
+                    return pause;
+                })) {
+                game.paused = true;
+            }
+#endif
             if (game.editorRequested) {
                 game.editorRequested = false;
                 if (!editor.open(game.hubDirectory(), game.camera))
@@ -270,6 +305,47 @@ int main(int argc, char **argv) {
                     TraceLog(LOG_WARNING, "AUDIO: Could not save volume preferences");
                 savedAudioSettings = game.audioSettings;
             }
+#ifdef __EMSCRIPTEN__
+            // Read-only state for browser integration checks; absent during ordinary play.
+            EM_ASM(
+                {
+                    if (Module.verify)
+                        Module.state = ({
+                            frame : $0,
+                            screen : $1,
+                            hub : $2,
+                            paused : !!$3,
+                            menu : !!$4,
+                            x : $5,
+                            z : $6,
+                            zoom : $7,
+                            room : $8,
+                            enemies : $9,
+                            shots : $10,
+                            audio : $11,
+                            music : $12,
+                            theme : $13,
+                            history : $14,
+                            error : UTF8ToString($15)
+                        });
+                },
+                frame, int(game.screen), int(game.activeHub), game.paused, game.missionMenu,
+                audioFrame.player.x, audioFrame.player.z, game.cameraZoomPercent(),
+                game.run ? game.run->room : -1, game.run ? int(game.run->livingEnemies()) : 0,
+                game.run ? int(game.run->stats.shots) : 0, int(game.audioStatus), game.audioSettings.music,
+                game.run ? int(game.run->arena.theme) : -1, int(game.campaign.data().history.size()),
+                game.error.c_str());
+            EM_ASM(
+                {
+                    if (Module.state) {
+                        Module.state.editor = !!$0;
+                        Module.state.score = $1;
+                        Module.state.editorSaved = !!$2;
+                        Module.state.editorStatus = UTF8ToString($3);
+                    }
+                },
+                editing, int(game.musicScene()), editor.saved, editor.status.c_str());
+#endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {
                 timings.push_back(std::chrono::duration<double, std::milli>(end - start).count());
@@ -309,9 +385,24 @@ int main(int argc, char **argv) {
         renderer.unload();
         audio.unload();
         CloseWindow();
+#ifdef __EMSCRIPTEN__
+        EM_ASM({
+            Module.gameFinished = true;
+            if (Module.showEnd)
+                Module.showEnd();
+        });
+#endif
         return 0;
     } catch (const std::exception &e) {
         std::cerr << "DeathWard: " << e.what() << '\n';
+#ifdef __EMSCRIPTEN__
+        EM_ASM(
+            {
+                if (Module.showError)
+                    Module.showError(UTF8ToString($0));
+            },
+            e.what());
+#endif
         if (IsWindowReady())
             CloseWindow();
         return 1;

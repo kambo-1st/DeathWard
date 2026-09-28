@@ -1,4 +1,5 @@
 #include "world/Campaign.hpp"
+#include "platform/Browser.hpp"
 #include <cstdlib>
 #include <fstream>
 #include <iomanip>
@@ -155,6 +156,9 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
 #ifdef _WIN32
     if (!MoveFileExW(temp.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
         throw std::runtime_error("Cannot replace campaign save");
+#elif defined(__EMSCRIPTEN__)
+    std::filesystem::rename(temp, path);
+    persistBrowserFiles();
 #else
     int fd = ::open(temp.c_str(), O_RDONLY);
     if (fd < 0)
@@ -325,6 +329,9 @@ void CampaignStore::setFlag(const std::string &flag, bool value) {
     commit(std::move(next));
 }
 std::filesystem::path CampaignStore::defaultPath() {
+#ifdef __EMSCRIPTEN__
+    return "/persist/campaign.save";
+#endif
     if (const char *custom = std::getenv("DEATHWARD_SAVE_PATH"))
         return custom;
 #ifdef _WIN32

@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "raymath.h"
+#include "render/ShaderPlatform.hpp"
 #include "render/WesternScene.hpp"
 #include "rlgl.h"
 #include <map>
@@ -85,7 +86,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
     const auto &field = *arena.canyon;
     terrainField_ = arena.canyon;
     const auto fragment = withPlayerOcclusion(TerrainFragment);
-    terrainShader_ = LoadShaderFromMemory(TerrainVertex, fragment.c_str());
+    terrainShader_ = loadWorldShader(TerrainVertex, fragment.c_str());
     terrainMaterial_ = LoadMaterialDefault();
     terrainMaterial_.shader = terrainShader_;
     Vector2 sandUv{}, wallUv{}, capUv{};

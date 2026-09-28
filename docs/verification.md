@@ -1,5 +1,19 @@
 # Milestone 1 verification
 
+## Static upload package
+
+`scripts/package-web.py` produces a 37.5 MiB ZIP with relative runtime URLs, content-hashed JavaScript/WASM/data filenames, SHA-256 manifest and upload instructions. The package has no fixed hostname or deployment directory and needs no application runtime on the server.
+
+`npm run test:package --prefix web` passes against the actual extracted ZIP on a plain Python static HTTP server with no compression or rewrite rules. Chromium starts Black Creek at `/` and Frontier at `/deathward/`, fetches all three versioned runtime files from the correct directory without external requests, and reports no JavaScript, shader or WebGL errors. ZIP integrity, all manifest hashes, WASM MIME type, query-preserving directory redirects and direct `index.html` access pass. Logs and captures use `artifacts/web-upload-*`. No files were uploaded to `kambo.us`; production DNS, TLS and server configuration were not changed or tested.
+
+## Browser version
+
+The Emscripten 4.0.15 Release build packages the existing game and assets for WebGL 2 and Web Audio. Both hubs, both mission themes, the town editor, shadows, post processing, transparency, outlines and audio use the shared native implementation. Campaigns, volume preferences and editor scene/navigation files persist through IndexedDB. Build, local serving and hosting instructions are in [the browser guide](browser.md).
+
+The Chromium integration suite passes on WSLg with hardware acceleration through ANGLE/Mesa D3D12. It checks Black Creek and Frontier, movement, zoom, camera orbit, canvas resizing, pause on a dispatched browser blur event, music controls, canyon combat and victory, mine entry, saved campaign/settings reload, interrupted-run recovery, and a real editor property change saved and restored after reload. A probe of the Web Audio output callback confirms nonzero mixed PCM. Screenshots were visually reviewed. No JavaScript exceptions, shader failures or WebGL errors were reported. Separate checks block IndexedDB and the HDR extension to verify continued session-only play, the 8-bit color fallback, and muted startup without an audio device.
+
+The native Release build, all eight CTest suites, the full gameplay input suite and post-processing graphics suite also pass. Logs and captures use `artifacts/web-*`. Browser tests use an isolated profile and leave native saves untouched. Firefox, Safari, native Windows browsers and mobile devices have not been tested; automated PCM checks do not replace listening. The initial transfer is approximately 38 MiB compressed, and large synchronous scene loads can briefly interrupt the browser-thread audio mixer. These checks establish functionality rather than a frame-rate guarantee.
+
 ## Western Music score and stingers
 
 Eight full compositions and four stereo stingers from the user's Western Music pack are packaged with source/output hashes and an import script. Hubs, exploration, ordinary combat, final encounters, victory and defeat select their own score. Tracks crossfade; the three Hunt arrangements align playback positions. A two-second release avoids an immediate change at the last kill. Stingers mark departure, boss entry, victory and death, play once, and lower the score underneath. They share the independent Music volume control. Existing `DW_AUDIO_1` preferences migrate without losing prior levels. A missing music pack leaves effects and ambience available.

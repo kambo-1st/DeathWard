@@ -1,5 +1,6 @@
 #include "render/TownScene.hpp"
 #include "raymath.h"
+#include "render/ShaderPlatform.hpp"
 #include "rlgl.h"
 #include <set>
 #include <stdexcept>
@@ -148,6 +149,9 @@ Box transformBounds(Box source, Matrix m) {
 }
 } // namespace
 std::filesystem::path TownScene::assetDirectory(HubKind hub) {
+#ifdef __EMSCRIPTEN__
+    return std::filesystem::path("/persist") / hubFolder(hub);
+#endif
     const auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / hubFolder(hub);
     if (std::filesystem::is_regular_file(source / "town.scene"))
         return source; // Editor saves in the checkout survive rebuilds; shipped builds use their own pack.
@@ -204,14 +208,19 @@ bool TownScene::load(const std::filesystem::path &directory) {
         for (const auto &i : document_.instances)
             instances_.push_back(
                 {i.asset, i.transform, transformBounds(assets_[i.asset].bounds, i.transform)});
-        model_ = LoadModel((directory / "town.glb").string().c_str());
+#ifdef __EMSCRIPTEN__
+        const auto modelFile = std::filesystem::path("/assets") / directory.filename() / "town.glb";
+#else
+        const auto modelFile = directory / "town.glb";
+#endif
+        model_ = LoadModel(modelFile.string().c_str());
         if (model_.meshCount != meshCount)
             throw std::runtime_error("Town model/catalog mismatch");
         const auto fragment = withPlayerOcclusion(Fragment);
-        shader_ = LoadShaderFromMemory(Vertex, fragment.c_str());
-        actorShader_ = LoadShaderFromMemory(ActorVertex, fragment.c_str());
-        shadowShader_ = LoadShaderFromMemory(Vertex, DepthFragment);
-        actorShadowShader_ = LoadShaderFromMemory(ActorVertex, DepthFragment);
+        shader_ = loadWorldShader(Vertex, fragment.c_str());
+        actorShader_ = loadWorldShader(ActorVertex, fragment.c_str());
+        shadowShader_ = loadWorldShader(Vertex, DepthFragment);
+        actorShadowShader_ = loadWorldShader(ActorVertex, DepthFragment);
         for (auto shader : {shader_, actorShader_, shadowShader_, actorShadowShader_})
             if (!shader.id || shader.id == rlGetShaderIdDefault())
                 throw std::runtime_error("Town lighting shader failed to compile");
@@ -224,10 +233,10 @@ bool TownScene::load(const std::filesystem::path &directory) {
             target.id = rlLoadFramebuffer();
             if (target.id) {
                 target.texture.width = target.texture.height = ShadowSize;
-                target.depth = {rlLoadTextureDepth(ShadowSize, ShadowSize, false), ShadowSize, ShadowSize, 1,
-                                0};
+                target.depth = {loadDepthTexture(ShadowSize, ShadowSize), ShadowSize, ShadowSize, 1, 0};
                 rlFramebufferAttach(target.id, target.depth.id, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_TEXTURE2D,
                                     0);
+                depthOnlyFramebuffer(target.id);
                 if (!target.depth.id || !rlFramebufferComplete(target.id)) {
                     UnloadRenderTexture(target);
                     target = {};

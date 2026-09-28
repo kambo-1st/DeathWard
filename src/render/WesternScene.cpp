@@ -1,5 +1,6 @@
 #include "render/WesternScene.hpp"
 #include "raymath.h"
+#include "render/ShaderPlatform.hpp"
 #include "rlgl.h"
 #include <fstream>
 #include <set>
@@ -152,7 +153,7 @@ bool WesternScene::load(const std::filesystem::path &directory) {
     }
     if (valid) {
         const auto fragment = withPlayerOcclusion(FragmentShader);
-        shader_ = LoadShaderFromMemory(VertexShader, fragment.c_str());
+        shader_ = loadWorldShader(VertexShader, fragment.c_str());
         valid = shader_.id && shader_.id != rlGetShaderIdDefault();
     }
     if (!valid) {

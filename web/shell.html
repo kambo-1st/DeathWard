@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#192125">
+  <link rel="icon" href="data:,">
+  <title>DeathWard</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #111719; color: #e6e4d3; font: 15px system-ui, sans-serif; }
+    header { height: 48px; display: flex; align-items: center; gap: 22px; padding: 0 20px; border-bottom: 1px solid #344043; }
+    header strong { letter-spacing: .14em; color: #e1ab54; }
+    #save-status { margin-left: auto; font-size: 12px; color: #9faaa4; }
+    button { font: inherit; border: 1px solid #65716c; background: #222e30; color: #e6e4d3; padding: 8px 17px; cursor: pointer; }
+    button:hover { background: #344344; }
+    button:disabled { opacity: .45; cursor: wait; }
+    button:focus-visible { outline: 2px solid #77c8b4; outline-offset: 3px; }
+    main { height: calc(100% - 48px); display: flex; justify-content: center; align-items: center; position: relative; }
+    canvas { display: block; width: min(100vw, calc((100vh - 48px) * 1.6)); height: min(calc(100vh - 48px), 62.5vw); outline: none; touch-action: none; }
+    canvas:fullscreen { width: 100vw; height: 100vh; object-fit: contain; background: #111719; }
+    #cover { position: absolute; inset: 0; display: grid; place-content: center; padding: 24px; background: radial-gradient(ellipse at 50% 35%, #4b3830, #141b1d 75%); }
+    #cover[hidden] { display: none; }
+    article { max-width: 510px; padding: 36px; border: 1px solid #6f624c; background: #182123ed; box-shadow: 0 16px 80px #0006; }
+    .eyebrow { color: #dda955; letter-spacing: .25em; font-size: 12px; }
+    h1 { font: 48px Georgia, serif; margin: 12px 0; }
+    p { line-height: 1.6; color: #b9c1b5; }
+    #status { color: #e1ab54; min-height: 24px; }
+    #start { background: #dda955; color: #192125; border: none; padding: 13px 32px; font-weight: 700; }
+    .hint { font-size: 13px; margin-bottom: 0; }
+    #problem { color: #f0b196; white-space: pre-wrap; }
+    @media (max-width: 620px) { article { padding: 24px; } header { padding: 0 10px; gap: 10px; } h1 { font-size: 38px; } }
+  </style>
+</head>
+<body>
+  <header><strong>DEATHWARD</strong><span id="save-status">Saves stay in this browser</span><button id="fullscreen" type="button">Fullscreen</button></header>
+  <main>
+    <canvas id="canvas" width="1440" height="900" tabindex="0" aria-label="DeathWard game"></canvas>
+    <section id="cover"><article>
+      <span class="eyebrow">A WEIRD WEST EXPEDITION</span>
+      <h1>DeathWard</h1>
+      <p>The frontier remembers what you bring back.</p>
+      <p id="status" role="status" aria-live="polite">Loading the frontier…</p>
+      <button id="start" disabled type="button">Enter Black Creek</button>
+      <p id="problem" hidden></p>
+      <p class="hint">Click to move or attack. You can also move with W, A, S and D. Scroll to zoom; hold the middle mouse button to rotate. Escape pauses.</p>
+      <p class="hint">Sound starts when you enter. A keyboard and mouse are required.</p>
+    </article></section>
+  </main>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const cover = document.getElementById('cover');
+    const status = document.getElementById('status');
+    const start = document.getElementById('start');
+    const saveStatus = document.getElementById('save-status');
+    const query = new URLSearchParams(location.search);
+    let started = false, storageReady = false, saving = false, saveAgain = false;
+    function showError(message) {
+      cover.hidden = false;
+      status.textContent = 'The frontier could not load.';
+      const problem = document.getElementById('problem');
+      problem.hidden = false;
+      problem.textContent = message;
+      start.hidden = true;
+    }
+    var Module = {
+      canvas, noInitialRun: true, verify: query.has('verify'),
+      print: text => console.log(text),
+      printErr: text => console.error(text),
+      showError,
+      setStatus(text) { if (!started && text) status.textContent = text; },
+      monitorRunDependencies(left) { if (!started && left) status.textContent = 'Loading the frontier…'; },
+      onAbort: reason => showError('Please reload to try again. ' + reason),
+      preRun: [function() {
+        FS.mkdirTree('/persist');
+        FS.mount(IDBFS, {}, '/persist');
+        addRunDependency('deathward-saves');
+        FS.syncfs(true, error => {
+          storageReady = !error;
+          Module.storageReady = storageReady;
+          saveStatus.textContent = error ? 'Local saving unavailable in this browser' : 'Saves stay in this browser';
+          removeRunDependency('deathward-saves');
+        });
+      }],
+      flushSaves() {
+        if (!storageReady) return;
+        if (saving) { saveAgain = true; return; }
+        saving = true;
+        Module.saving = true;
+        saveStatus.textContent = 'Saving…';
+        FS.syncfs(false, error => {
+          saving = false;
+          Module.saving = false;
+          saveStatus.textContent = error ? 'Could not save locally' : 'Saved in this browser';
+          if (saveAgain) { saveAgain = false; Module.flushSaves(); }
+        });
+      },
+      onRuntimeInitialized() {
+        if (!document.createElement('canvas').getContext('webgl2')) {
+          showError('This browser needs WebGL 2. Try a desktop browser with graphics acceleration enabled.');
+          return;
+        }
+        Module.ready = true;
+        status.textContent = 'The frontier is ready.';
+        start.disabled = false;
+        if (query.get('hub') === 'frontier') start.textContent = 'Enter Frontier';
+      },
+      gameReady() { Module.playing = true; cover.hidden = true; canvas.focus(); },
+      showEnd() {
+        Module.flushSaves();
+        cover.hidden = false;
+        status.textContent = 'Your session has ended.';
+        start.disabled = false;
+        start.textContent = 'Play again';
+        start.onclick = () => location.reload();
+      }
+    };
+    start.onclick = () => {
+      if (started) return;
+      started = true;
+      start.disabled = true;
+      status.textContent = 'Entering the frontier…';
+      canvas.focus();
+      const args = [];
+      if (query.get('hub') === 'frontier') args.push('--hub', 'frontier');
+      if (['mine', 'canyon', 'seeded'].includes(query.get('theme'))) args.push('--theme', query.get('theme'));
+      if (query.has('mute')) args.push('--mute');
+      // Optional scripted capture paths use temporary saves, exactly like native checks.
+      if (query.has('smoke')) {
+        args.push('--smoke', '--scene', query.get('scene') || 'hub', '--frames', query.get('frames') || '180');
+        if (query.has('audio')) args.push('--audio');
+      }
+      try { Module.callMain(args); } catch (error) { showError(String(error)); }
+    };
+    canvas.addEventListener('contextmenu', event => event.preventDefault());
+    canvas.addEventListener('wheel', event => event.preventDefault(), {passive: false});
+    window.addEventListener('keydown', event => {
+      if (document.activeElement === canvas && (event.code.startsWith('F') && /^F\d+$/.test(event.code) ||
+          ['Space', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code) ||
+          event.ctrlKey && ['KeyS', 'KeyD', 'KeyZ', 'KeyY'].includes(event.code))) event.preventDefault();
+    });
+    canvas.addEventListener('webglcontextlost', event => {
+      event.preventDefault();
+      showError('The graphics connection was lost. Reload to return to your saved campaign.');
+    });
+    window.addEventListener('blur', () => { Module.pauseRequested = true; });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) Module.pauseRequested = true;
+    });
+    window.addEventListener('error', event => { if (started) showError(event.message); });
+    window.addEventListener('unhandledrejection', event => { if (started) showError(String(event.reason)); });
+    document.getElementById('fullscreen').onclick = () => {
+      canvas.requestFullscreen().then(() => canvas.focus()).catch(() => { canvas.focus(); });
+    };
+  </script>
+  {{{ SCRIPT }}}
+</body>
+</html>

@@ -1,4 +1,5 @@
 #include "audio/AudioSystem.hpp"
+#include "platform/Browser.hpp"
 #include <fstream>
 
 namespace dw {
@@ -79,6 +80,8 @@ bool saveAudioSettings(const std::filesystem::path &file, const AudioSettings &s
            << volume(settings.master) << ' ' << volume(settings.effects) << ' ' << volume(settings.ambience)
            << ' ' << int(settings.muted) << ' ' << volume(settings.music) << '\n';
     output.close();
+    if (output)
+        persistBrowserFiles();
     return bool(output);
 }
 std::filesystem::path AudioSystem::assetDirectory() {

@@ -1,4 +1,5 @@
 #include "world/TownNavigation.hpp"
+#include "platform/Browser.hpp"
 #include "raymath.h"
 #include "world/HubWorld.hpp"
 #include <cstring>
@@ -207,6 +208,7 @@ void saveTownProject(const std::filesystem::path &directory, const TownDocument 
         replacing = true;
         replaceFile(navTemp, nav);
         replaceFile(sceneTemp, scene);
+        persistBrowserFiles();
     } catch (...) {
         std::error_code ignored;
         if (replacing) {

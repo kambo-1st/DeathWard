@@ -1,0 +1,6 @@
+{
+  "name": "deathward-browser-checks",
+  "private": true,
+  "scripts": { "test": "node test.cjs && node fallback-test.cjs", "test:fallback": "node fallback-test.cjs", "test:package": "node package-test.cjs" },
+  "devDependencies": { "playwright": "1.58.2" }
+}

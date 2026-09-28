@@ -1,4 +1,5 @@
 #include "render/PostProcess.hpp"
+#include "render/ShaderPlatform.hpp"
 #include "rlgl.h"
 #include <algorithm>
 
@@ -135,10 +136,10 @@ RenderTexture2D target(int width, int height, bool depth) {
     result.id = rlLoadFramebuffer();
     if (!result.id)
         return result;
-    result.texture = {rlLoadTexture(nullptr, width, height, PIXELFORMAT_UNCOMPRESSED_R16G16B16A16, 1), width,
-                      height, 1, PIXELFORMAT_UNCOMPRESSED_R16G16B16A16};
+    const int format = worldColorFormat();
+    result.texture = {rlLoadTexture(nullptr, width, height, format, 1), width, height, 1, format};
     if (depth) {
-        result.depth = {rlLoadTextureDepth(width, height, false), width, height, 1, 0};
+        result.depth = {loadDepthTexture(width, height), width, height, 1, 0};
         rlFramebufferAttach(result.id, result.depth.id, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_TEXTURE2D, 0);
     }
     rlFramebufferAttach(result.id, result.texture.id, RL_ATTACHMENT_COLOR_CHANNEL0, RL_ATTACHMENT_TEXTURE2D,
@@ -181,8 +182,8 @@ void PostProcess::resize(int width, int height) {
     unload();
     width_ = width;
     height_ = height;
-    composite_ = LoadShaderFromMemory(nullptr, Composite);
-    filter_ = LoadShaderFromMemory(nullptr, Filter);
+    composite_ = loadWorldShader(nullptr, Composite);
+    filter_ = loadWorldShader(nullptr, Filter);
     if (!composite_.id || !filter_.id || composite_.id == rlGetShaderIdDefault() ||
         filter_.id == rlGetShaderIdDefault()) {
         unload();
@@ -247,8 +248,8 @@ void PostProcess::outlineOccluded(const Camera3D &camera, const std::function<vo
         return;
     if (!outlineAttempted_) {
         outlineAttempted_ = true;
-        silhouetteShader_ = LoadShaderFromMemory(nullptr, Silhouette);
-        outlineShader_ = LoadShaderFromMemory(nullptr, Outline);
+        silhouetteShader_ = loadWorldShader(nullptr, Silhouette);
+        outlineShader_ = loadWorldShader(nullptr, Outline);
         silhouette_ = target(width_, height_, true);
         if (silhouette_.id)
             SetTextureFilter(silhouette_.texture, TEXTURE_FILTER_POINT);

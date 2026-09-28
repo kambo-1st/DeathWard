@@ -28,6 +28,19 @@ cmake --build build --parallel 4
 
 Windows is kept in scope through CMake and portable C++, but this milestone is tested on Linux. On Windows, use a C++20-capable Visual Studio toolchain with `cmake --build build --config Release`, then run `build/Release/deathward.exe`.
 
+## Run in a browser
+
+With Emscripten activated (tested with 4.0.15):
+
+```sh
+./scripts/build-web.sh
+python3 scripts/serve-web.py
+```
+
+Open **http://127.0.0.1:8080/**, wait for loading and click **Enter Black Creek**. The WebAssembly version includes both hubs, missions, original textures, lighting, post processing, music and effects. It requires WebGL 2, a keyboard and a mouse. Campaigns, audio preferences and town-editor saves stay in that browser, separately from desktop saves. See the [browser guide](docs/browser.md) for setup, hosting, controls and verification.
+
+To prepare a static-server upload, run `python3 scripts/package-web.py` after building. Extract `dist/deathward-web.zip` into the destination's public directory. The same package works at a domain root or a subdirectory, including `deathward.kambo.us/` and `kambo.us/deathward/`, without editing paths.
+
 ## Audio
 
 Sound is enabled for ordinary play. The first audio pack includes revolver/enemy shots, stone and flesh impacts, hurt/death feedback, dodges, attack warnings, pickups, doors, room completion, UI sounds and footsteps. Both hubs, the canyon and the mine have distinct ambient loops that crossfade on travel. Effects pan with the camera and become quieter with distance; cover does not silence enemy attack warnings.
