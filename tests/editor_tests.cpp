@@ -363,6 +363,60 @@ int main() {
         check(editor.reload() && editor.document().instances[weed].motion.speed == .9f &&
                   editor.animationPreview().time() == 0,
               "reload restores motion settings with a fresh preview");
+        const auto originalCharacters = editor.document().characters.size();
+        click({210, 118}); // People tab.
+        click({130, 814}); // Add cowgirl.
+        check(editor.characterSelection() && editor.document().characters.size() == originalCharacters + 1,
+              "People palette adds a skinned character with independent selection");
+        editor.placeCharacter({-3, 0, -3});
+        editor.addCharacterStop({-3, 0, 1});
+        editor.addCharacterStop({3, 0, 1});
+        const auto characterIndex = *editor.characterSelection();
+        check(editor.document().characters[characterIndex].stops.size() == 2, "Route stops can be authored on clear ground");
+        editor.focusSelection();
+        frame();
+        click({1260, 247}); // Add route stops.
+        Vector3 clickedStop{-3, 0, -1};
+        clickedStop.y = editor.navigation().height(clickedStop);
+        click(GetWorldToScreen(clickedStop, editor.camera));
+        check(editor.document().characters[characterIndex].stops.size() == 3,
+              "Clicking the ground adds a route stop through the editor UI");
+        editor.undo();
+        editor.setCharacterSettings(1.5f, .5f, false, 1, 90);
+        editor.moveCharacterStop(1, {4, 0, 1});
+        editor.undo();
+        check(editor.document().characters[characterIndex].stops[1].x == 3, "Undo restores a moved route stop");
+        editor.redo();
+        editor.removeCharacterStop(1);
+        editor.undo();
+        check(editor.document().characters[characterIndex].stops.size() == 2, "Deleting stops is undoable");
+        const auto characterHome = editor.document().characters[characterIndex].position;
+        editor.setPreviewPlaying(true);
+        for (int i = 0; i < 120; ++i) frame();
+        check(distance(editor.characterPreview().residents()[characterIndex].position, characterHome) > .5f &&
+                  distance(editor.document().characters[characterIndex].position, characterHome) == 0,
+              "Preview follows the walking route without changing authored placement");
+        editor.setPreviewPlaying(false);
+        const auto pausedCharacter = editor.characterPreview().residents()[characterIndex].position;
+        for (int i = 0; i < 12; ++i) frame();
+        check(distance(editor.characterPreview().residents()[characterIndex].position, pausedCharacter) == 0,
+              "Pausing editor preview freezes the cowgirl");
+        editor.focusSelection();
+        frame();
+        auto characterImage = LoadImageFromScreen();
+        ExportImage(characterImage, "artifacts/cowgirl-editor.png");
+        UnloadImage(characterImage);
+        check(editor.save(), editor.status);
+        check(editor.reload() && editor.document().characters[characterIndex].stops.size() == 2 &&
+                  !editor.document().characters[characterIndex].loop &&
+                  editor.document().characters[characterIndex].speed == 1.5f,
+              "Saved character, walking settings and route survive reload");
+        editor.selectCharacter(characterIndex);
+        editor.duplicate();
+        check(editor.document().characters.back().id != editor.document().characters[characterIndex].id,
+              "Duplicating a character assigns a unique stable ID");
+        editor.undo();
+        check(!editor.dirty(), "Undoing duplicate restores saved character state");
         editor.requestClose();
         check(!editor.active && !editor.quitRequested, "clean editor closes back to town");
         editor.unload();

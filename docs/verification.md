@@ -1,5 +1,17 @@
 # Milestone 1 verification
 
+## Cowgirl placement and walking routes
+
+Content version `deathward-m1-31` imports the supplied textured cowgirl with 48 bones, 2,024 source triangles, an embedded 2048×2048 texture and all three Mixamo clips: two idle takes and walking. Source/output hashes, embedded texture, UVs, weights, joints and clip durations pass `scripts/verify_cowgirl.py`. The three rendered poses were visually inspected. The shared `SkinnedModel` renderer preserves independent clocks, local-space blending, nonuniform scale handling and correct normals for both characters and animals.
+
+Black Creek contains a four-stop walking demo near the starting street. Fixed-step character simulation uses the town's pathfinding, terrain heights and current moving obstacles. Characters wait and retry when blocked, pause at stops, and support loops or back-and-forth routes. A grid-boundary precision correction keeps small movement steps from spuriously failing traversal. Scene format 4 stores stable character IDs, placement, settings and stops; older town formats remain compatible.
+
+The editor's People tab supports placement by ground click, appending/moving/removing stops, speed/pause/scale/facing fields, loop mode, preview, duplication, deletion and undo/redo. Selected routes show navigable paths around scenery. Saving checks routes against freshly baked navigation and records authored state rather than a preview pose. Preview and gameplay clocks remain separate.
+
+Native and WASM builds pass. All 16 headless suites pass, including 30/60/120 FPS determinism, obstacle routing, dwell, temporarily blocked destinations, loop/back-and-forth traversal, scene round trips and repeated complete demo laps. The native editor suite passes real People-tab placement and ground-click route input, stop editing, undo/redo, paused preview and save/reload. Cowgirl graphics checks and the existing 98-animal graphics suite pass after extracting their shared renderer. The native editor preview was visually inspected. The refreshed 71.4 MiB upload ZIP passes integrity, manifest hashes/sizes, exact current runtime bytes and relative hosting-path checks. Logs use `artifacts/cowgirl-*`.
+
+The full Chromium suite passes cowgirl movement, exact pause, hub switching, editor placement and undo, settings, independent preview and saved routes, alongside the existing gameplay, audio and persistence checks. No JavaScript exceptions, shader failures or WebGL errors were reported. Browser town and cowgirl editor captures were visually reviewed.
+
 ## Complete Polyperfect animal catalog
 
 Content version `deathward-m1-30` expands the import to all 98 current animal prefab variants from 66 animal folders. The GLBs contain 784 clip entries, including shared takes across variants, Unity-configured FBX slices and 65 standalone Unity transform-animation files. Archived Legacy alternatives and demo scenes are outside this catalog. All original texture RGB pixels and Unity tints are retained; unused alpha is made opaque to match the source materials. Retained originals remain unchanged.

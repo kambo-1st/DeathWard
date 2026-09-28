@@ -81,7 +81,8 @@ Vector3 TownNavigation::point(size_t i) const {
 float TownNavigation::height(Vector3 p) const {
     if (!std::isfinite(p.x) || !std::isfinite(p.z) || cell <= 0)
         return std::numeric_limits<float>::quiet_NaN();
-    const int x = int(std::floor((p.x - minX) / cell)), z = int(std::floor((p.z - minZ) / cell));
+    const int x = int(std::floor((double(p.x) - minX) / cell)),
+              z = int(std::floor((double(p.z) - minZ) / cell));
     if (x < 0 || z < 0 || x >= int(width) || z >= int(depth))
         return std::numeric_limits<float>::quiet_NaN();
     return heights.at(size_t(z) * width + size_t(x));

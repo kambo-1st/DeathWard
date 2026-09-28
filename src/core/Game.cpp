@@ -137,6 +137,7 @@ bool Game::reloadTownObjects() {
         return false;
     townObjects.reset(document);
     town.setMovingSolids(townObjects.solids());
+    characters.reset(document, town);
     const bool loaded =
         animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
                                                       : std::filesystem::path{},
@@ -159,6 +160,7 @@ bool Game::selectHub(HubKind hub) {
     townObjects.reset(document);
     town = std::move(candidate);
     town.setMovingSolids(townObjects.solids());
+    characters.reset(document, town);
     ++audioContext;
     audioCues.clear();
     activeHub = hub;
@@ -694,6 +696,7 @@ void Game::updateHub(float dt) {
         perform(Action::Missions);
     town.step(movement, std::min(dt, .1f));
     animals.update(std::min(dt, .1f), town);
+    characters.update(std::min(dt, .1f), town);
     if (walkingToMission && town.nearMission()) {
         walkingToMission = false;
         missionMenu = true;

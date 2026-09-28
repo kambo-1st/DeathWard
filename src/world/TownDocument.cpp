@@ -43,6 +43,13 @@ std::string TownDocument::nextInstanceId() const {
             return id;
     }
 }
+std::string TownDocument::nextCharacterId() const {
+    for (size_t n = 1;; ++n) {
+        auto id = "cowgirl-" + std::to_string(n);
+        if (std::none_of(characters.begin(), characters.end(), [&](const auto &c) { return c.id == id; }))
+            return id;
+    }
+}
 int TownDocument::meshCount() const {
     return assets.empty() ? 0 : assets.back().first + assets.back().count;
 }
@@ -61,6 +68,23 @@ void TownDocument::validate() const {
     auto validId = [](const std::string &s) {
         return !s.empty() && s.size() <= 128 && s.find_first_of(" \t\n\r") == std::string::npos;
     };
+    if (characters.size() > 64)
+        throw std::runtime_error("A town supports at most 64 characters.");
+    std::unordered_set<std::string> characterIds;
+    for (const auto &c : characters) {
+        if (!validId(c.id) || !characterIds.insert(c.id).second || c.model != "cowgirl" ||
+            !finite(c.position) || length(c.position) > 10000 || !std::isfinite(c.yaw) ||
+            !std::isfinite(c.scale) || c.scale < .25f || c.scale > 3 ||
+            !std::isfinite(c.speed) || c.speed < 0 || c.speed > 4 ||
+            !std::isfinite(c.dwell) || c.dwell < 0 || c.dwell > 120 || c.stops.size() > 128)
+            throw std::runtime_error("Invalid character placement or walking settings.");
+        auto previous = c.position;
+        for (const auto &stop : c.stops) {
+            if (!finite(stop) || length(stop) > 10000 || distance(previous, stop) < .1f)
+                throw std::runtime_error("Route stops must be finite and at least 0.1 m apart.");
+            previous = stop;
+        }
+    }
     std::unordered_set<std::string> pathIds, groupIds;
     if (paths.size() > 256 || groups.size() > 4096)
         throw std::runtime_error("Too many motion paths or groups.");
@@ -131,7 +155,7 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
         std::ifstream in(path);
         std::string token;
         int version = 0;
-        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 3))
+        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 4))
             throw std::runtime_error("Missing or unsupported town scene.");
         TownDocument candidate;
         std::vector<std::pair<std::string, ObjectMotion>> motions;
@@ -182,6 +206,18 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                 Binding b;
                 in >> b.id >> b.group >> b.radius;
                 bindings.push_back(b);
+            } else if (token == "character" && version >= 4) {
+                TownCharacter c;
+                size_t count = 0;
+                int loop = 0;
+                in >> c.id >> c.model >> c.position.x >> c.position.y >> c.position.z >> c.yaw >>
+                    c.scale >> c.speed >> c.dwell >> loop >> count;
+                if (!in || count > 128 || (loop != 0 && loop != 1))
+                    throw std::runtime_error("Invalid character route.");
+                c.loop = loop != 0;
+                c.stops.resize(count);
+                for (auto &p : c.stops) in >> p.x >> p.y >> p.z;
+                candidate.characters.push_back(std::move(c));
             } else if (token == "light") {
                 TownLight l;
                 in >> l.type >> l.position.x >> l.position.y >> l.position.z >> l.direction.x >>
@@ -192,7 +228,7 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                 throw std::runtime_error("Unknown town scene entry: " + token);
             if (!in || candidate.assets.size() > 100000 || candidate.instances.size() > 100000 ||
                 motions.size() > 100000 || bindings.size() > 100000 || candidate.paths.size() > 256 ||
-                candidate.groups.size() > 4096)
+                candidate.groups.size() > 4096 || candidate.characters.size() > 64)
                 throw std::runtime_error("Truncated or oversized town scene.");
         }
         std::unordered_set<std::string> bound;
@@ -241,7 +277,7 @@ void TownDocument::write(const std::filesystem::path &path) const {
         if (i.id.empty())
             i.id = identified.nextInstanceId();
     out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN "
-        << (paths.empty() ? 2 : 3) << '\n';
+        << (!characters.empty() ? 4 : paths.empty() ? 2 : 3) << '\n';
     for (const auto &a : assets)
         out << "asset " << a.name << ' ' << a.first << ' ' << a.count << ' ' << a.unlit << ' '
             << a.bounds.min.x << ' ' << a.bounds.min.y << ' ' << a.bounds.min.z << ' ' << a.bounds.max.x
@@ -267,6 +303,13 @@ void TownDocument::write(const std::filesystem::path &path) const {
     }
     for (const auto &g : groups)
         out << "group " << g.id << ' ' << g.path << ' ' << g.offset << ' ' << g.wheelbase << '\n';
+    for (const auto &c : characters) {
+        out << "character " << c.id << ' ' << c.model << ' ' << c.position.x << ' ' << c.position.y << ' '
+            << c.position.z << ' ' << c.yaw << ' ' << c.scale << ' ' << c.speed << ' ' << c.dwell << ' '
+            << int(c.loop) << ' ' << c.stops.size();
+        for (const auto &p : c.stops) out << ' ' << p.x << ' ' << p.y << ' ' << p.z;
+        out << '\n';
+    }
     for (const auto &l : lights)
         out << "light " << l.type << ' ' << l.position.x << ' ' << l.position.y << ' ' << l.position.z << ' '
             << l.direction.x << ' ' << l.direction.y << ' ' << l.direction.z << ' ' << l.color.x << ' '

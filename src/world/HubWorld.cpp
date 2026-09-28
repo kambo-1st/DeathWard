@@ -1,4 +1,5 @@
 #include "world/HubWorld.hpp"
+#include "world/TownNavigation.hpp"
 #include <cstring>
 #include <fstream>
 #include <queue>
@@ -47,7 +48,10 @@ bool HubWorld::load(const std::filesystem::path &path) {
 int HubWorld::index(Vector3 p) const {
     if (!loaded() || !std::isfinite(p.x) || !std::isfinite(p.z))
         return -1;
-    const int x = int(std::floor((p.x - minX_) / cell_)), z = int(std::floor((p.z - minZ_) / cell_));
+    // Use the same precision for cell lookup and boundary crossings. Float
+    // cancellation near a grid line can otherwise block very small NPC steps.
+    const int x = int(std::floor((double(p.x) - minX_) / cell_)),
+              z = int(std::floor((double(p.z) - minZ_) / cell_));
     return x >= 0 && z >= 0 && x < int(width_) && z < int(depth_) ? z * int(width_) + x : -1;
 }
 Vector3 HubWorld::point(int i) const {
@@ -98,13 +102,13 @@ bool HubWorld::clear(Vector3 from, Vector3 to) const {
     if (!walkable(from) || !walkable(to))
         return false;
     int x = current % int(width_), z = current / int(width_);
-    const float dx = to.x - from.x, dz = to.z - from.z;
+    const double dx = double(to.x) - from.x, dz = double(to.z) - from.z;
     const int sx = dx > 0 ? 1 : -1, sz = dz > 0 ? 1 : -1;
-    const float infinity = std::numeric_limits<float>::infinity();
-    const float stepX = dx != 0 ? cell_ / std::abs(dx) : infinity;
-    const float stepZ = dz != 0 ? cell_ / std::abs(dz) : infinity;
-    float crossX = dx != 0 ? (minX_ + float(x + (sx > 0)) * cell_ - from.x) / dx : infinity;
-    float crossZ = dz != 0 ? (minZ_ + float(z + (sz > 0)) * cell_ - from.z) / dz : infinity;
+    const double infinity = std::numeric_limits<double>::infinity();
+    const double stepX = dx != 0 ? cell_ / std::abs(dx) : infinity;
+    const double stepZ = dz != 0 ? cell_ / std::abs(dz) : infinity;
+    double crossX = dx != 0 ? (minX_ + double(x + (sx > 0)) * cell_ - from.x) / dx : infinity;
+    double crossZ = dz != 0 ? (minZ_ + double(z + (sz > 0)) * cell_ - from.z) / dz : infinity;
     // Check every crossed cell, including both sides of an exact corner. Point
     // sampling can miss a thin corner and produce a shortcut through a barrier.
     while (current != goal) {
@@ -153,9 +157,22 @@ std::optional<Vector3> HubWorld::destination() const {
     return next_ < route_.size() ? std::optional(route_.back()) : std::nullopt;
 }
 bool HubWorld::moveTo(Vector3 target) {
-    const int start = index(player.position);
-    if (start < 0 || !walkable(player.position) || !std::isfinite(target.x) || !std::isfinite(target.z))
-        return false;
+    auto route = findRoute(player.position, target);
+    if (!route) return false;
+    route_ = std::move(*route);
+    next_ = 0;
+    return true;
+}
+void HubWorld::setNavigation(const TownNavigation &nav) {
+    width_ = nav.width; depth_ = nav.depth; minX_ = nav.minX; minZ_ = nav.minZ; cell_ = nav.cell;
+    heights_ = nav.heights; spawn = nav.spawn; mission = nav.mission;
+    solids_.clear(); occupiedCells_.clear(); occupied_.assign(heights_.size(), false);
+    reset();
+}
+std::optional<std::vector<Vector3>> HubWorld::findRoute(Vector3 from, Vector3 target) const {
+    const int start = index(from);
+    if (start < 0 || !walkable(from) || !std::isfinite(target.x) || !std::isfinite(target.z))
+        return std::nullopt;
     int end = index(target);
     if (end < 0 || !walkable(target)) {
         float best = 36;
@@ -170,14 +187,12 @@ bool HubWorld::moveTo(Vector3 target) {
             }
         }
         if (best == 36)
-            return false;
+            return std::nullopt;
         target = point(end);
     }
     target.y = height(target);
-    if (clear(player.position, target)) {
-        route_ = {target};
-        next_ = 0;
-        return true;
+    if (clear(from, target)) {
+        return std::vector<Vector3>{target};
     }
     std::vector<float> costs(heights_.size(), std::numeric_limits<float>::infinity());
     std::vector<int> previous(heights_.size(), -1);
@@ -213,7 +228,7 @@ bool HubWorld::moveTo(Vector3 target) {
         }
     }
     if (start != end && previous[size_t(end)] < 0)
-        return false;
+        return std::nullopt;
     std::vector<Vector3> waypoints;
     for (int at = end;; at = previous[size_t(at)]) {
         waypoints.push_back(point(at));
@@ -223,20 +238,18 @@ bool HubWorld::moveTo(Vector3 target) {
     std::reverse(waypoints.begin(), waypoints.end());
     waypoints.push_back(target); // Keep the exact click instead of the grid-cell center.
     std::vector<Vector3> smooth;
-    Vector3 anchor = player.position;
+    Vector3 anchor = from;
     for (size_t i = 0; i < waypoints.size();) {
         size_t farthest = i;
         if (!clear(anchor, waypoints[i]))
-            return false;
+            return std::nullopt;
         while (farthest + 1 < waypoints.size() && clear(anchor, waypoints[farthest + 1]))
             ++farthest;
         smooth.push_back(waypoints[farthest]);
         anchor = waypoints[farthest];
         i = farthest + 1;
     }
-    route_ = std::move(smooth);
-    next_ = 0;
-    return true;
+    return smooth;
 }
 void HubWorld::step(Vector3 movement, float dt) {
     if (!loaded())

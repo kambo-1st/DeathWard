@@ -31,6 +31,7 @@ add_library(deathward_core
     src/world/TownNavigation.cpp
     src/world/HubWorld.cpp
     src/world/Animals.cpp
+    src/world/TownCharacters.cpp
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
     src/world/CanyonTerrain.cpp
@@ -59,7 +60,10 @@ endif()
 
 file(GLOB animal_models CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals"
     "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals/*.glb")
+add_library(deathward_skinning src/render/SkinnedModel.cpp)
+target_link_libraries(deathward_skinning PUBLIC deathward_core raylib)
 function(deathward_assets target)
+    target_link_libraries(${target} PRIVATE deathward_skinning)
     if(EMSCRIPTEN)
         target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="/assets")
         return()
@@ -78,6 +82,12 @@ function(deathward_assets target)
             VERBATIM)
     endforeach()
     set(bandit_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/bandit/bandit.glb")
+    set(cowgirl_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/cowgirl/cowgirl.glb")
+    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${cowgirl_asset}")
+    add_custom_command(TARGET ${target} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/cowgirl"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${cowgirl_asset}" "$<TARGET_FILE_DIR:${target}>/assets/cowgirl/cowgirl.glb"
+        VERBATIM)
     target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
     set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${bandit_asset}")
     add_custom_command(TARGET ${target} POST_BUILD
@@ -117,7 +127,7 @@ if(EMSCRIPTEN)
         "-sEXPORTED_RUNTIME_METHODS=['callMain','FS','HEAPF32']"
         -lidbfs.js "SHELL:--shell-file '${CMAKE_CURRENT_SOURCE_DIR}/web/shell.html'")
     set(web_assets
-        assets/bandit/bandit.glb assets/western/western.glb assets/western/western.catalog)
+        assets/bandit/bandit.glb assets/cowgirl/cowgirl.glb assets/western/western.glb assets/western/western.catalog)
     foreach(animal_file ${animal_models} town.animals)
         list(APPEND web_assets assets/animals/${animal_file})
     endforeach()
@@ -143,6 +153,13 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_character_tests tests/character_tests.cpp)
+    target_link_libraries(deathward_character_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_character_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_test(NAME town_characters COMMAND deathward_character_tests)
+    add_executable(deathward_character_model_tests tests/character_model_tests.cpp)
+    target_link_libraries(deathward_character_model_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_character_model_tests)
     add_executable(deathward_animal_tests tests/animal_tests.cpp)
     target_link_libraries(deathward_animal_tests PRIVATE deathward_core)
     add_test(NAME ambient_animals COMMAND deathward_animal_tests)

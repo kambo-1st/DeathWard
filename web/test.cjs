@@ -60,6 +60,9 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal((await state()).audio, 2);
     assert.equal((await state()).zoom, 160);
     assert.equal(await page.evaluate(() => Module.animals.count), 5);
+    assert.equal(await page.evaluate(() => Module.characters.count), 1);
+    const cowgirlBefore = await page.evaluate(() => Module.characters);
+    await wait(before => Math.hypot(Module.characters.x - before.x, Module.characters.z - before.z) > .3, cowgirlBefore);
     const animalBefore = await page.evaluate(() => Module.animals);
     await wait(before => Module.animals.phase > before.phase + 2 &&
       Math.hypot(Module.animals.x - before.x, Module.animals.z - before.z) > .1, animalBefore);
@@ -99,9 +102,11 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await wait(() => Module.state.paused);
     const frozenMotion = await page.evaluate(() => Module.motion);
     const frozenAnimals = await page.evaluate(() => Module.animals);
+    const frozenCharacters = await page.evaluate(() => Module.characters);
     await page.waitForTimeout(250);
     assert.deepEqual(await page.evaluate(() => Module.motion), frozenMotion);
     assert.deepEqual(await page.evaluate(() => Module.animals), frozenAnimals);
+    assert.deepEqual(await page.evaluate(() => Module.characters), frozenCharacters);
     await key('Escape');
     await wait(() => !Module.state.paused);
     console.log('PASS town rendering, WebAudio initialization, movement and wheel zoom');
@@ -117,6 +122,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await wait(() => Module.state.hub === 1 && Module.state.frame > 10);
     assert.equal(await page.evaluate(() => Module.motion.count), 0);
     assert.equal(await page.evaluate(() => Module.animals.count), 0);
+    assert.equal(await page.evaluate(() => Module.characters.count), 0);
     await page.waitForTimeout(1200);
     await page.screenshot({path: path.join(artifacts, 'web-frontier.png')});
     console.log('PASS music controls and direct Frontier travel');
@@ -244,6 +250,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await key('F4');
     await wait(() => Module.state.editor);
     const editorAnimals = await page.evaluate(() => Module.animals);
+    const editorCharacters = await page.evaluate(() => Module.characters);
     const originalScene = await page.evaluate(() => Module.FS.readFile('/persist/town/town.scene', {encoding: 'utf8'}));
     const editorClick = (x, y) => click(x * 1280 / 1440, y * 800 / 900);
     await editorClick(110, 160);
@@ -252,15 +259,35 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await editorClick(1270, 285); // Set this prop's height through the position inspector.
     await page.keyboard.type('2', {delay: 80});
     await key('Enter');
+    await editorClick(210, 118); // People tab selects the demo cowgirl.
+    await wait(() => Module.characterEditor.selected === 0 && Module.characterEditor.stops === 3);
+    await editorClick(130, 814); // Add another character, then undo the placement.
+    await wait(() => Module.characterEditor.count === 2);
+    await page.keyboard.down('Control'); await key('z'); await page.keyboard.up('Control');
+    await wait(() => Module.characterEditor.count === 1);
+    await editorClick(1190, 583); // Walking speed.
+    await page.keyboard.type('1.1', {delay: 80});
+    await key('Enter');
+    await editorClick(1180, 767); // Focus the selected character.
+    await editorClick(1180, 729); // Play route preview.
+    await wait(() => Module.characterEditor.time > 3);
+    await editorClick(1180, 729); // Pause preview.
+    const pausedCharacterEditor = await page.evaluate(() => Module.characterEditor);
+    await page.waitForTimeout(200);
+    assert.deepEqual(await page.evaluate(() => Module.characterEditor), pausedCharacterEditor);
+    assert.deepEqual(await page.evaluate(() => Module.characters), editorCharacters);
+    await page.screenshot({path: path.join(artifacts, 'web-cowgirl-editor.png')});
     await page.keyboard.down('Control'); await key('s'); await page.keyboard.up('Control');
     await wait(() => Module.state.editorSaved && !Module.saving);
     const savedScene = await page.evaluate(() => Module.FS.readFile('/persist/town/town.scene', {encoding: 'utf8'}));
     assert(savedScene !== originalScene, 'editor input changes and saves the selected prop');
+    assert(savedScene.includes('character cowgirl-street-walk cowgirl'), 'authored cowgirl route persists in town.scene');
     assert.deepEqual(await page.evaluate(() => Module.animals), editorAnimals);
     await page.screenshot({path: path.join(artifacts, 'web-editor.png')});
     await key('Escape');
     await wait(() => !Module.state.editor);
     console.log('PASS browser town editor opens and returns to the hub');
+    console.log('PASS cowgirl roaming, pause, hub population, editor placement, undo, route preview and saving');
     await key('Enter');
     await wait(() => Module.state.menu);
     await key('Enter');

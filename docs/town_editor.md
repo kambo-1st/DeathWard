@@ -48,6 +48,22 @@ Locomotives, tenders, coaches and freight wagons follow the original rail curves
 
 Bound parts cannot be moved, rotated, scaled or duplicated independently. **Delete** removes the selected vehicle and all its parts; **Undo** restores its bindings. **Detach vehicle** releases that entire vehicle at its original placement, making its parts static and editable again. Route point editing and attaching additional vehicles are not yet exposed; keep the authored rails clear of new buildings. The train route and bindings use scene format 3, while older scene formats remain compatible.
 
+## Characters and walking routes
+
+The **People** tab places the textured, animated cowgirl in either hub. Black Creek includes a four-stop demo near the starting street; select `cowgirl-street-walk` to inspect it.
+
+1. Choose **Add cowgirl**, then click walkable ground for her starting point.
+2. Choose **Add route stops** and click each destination in order. Press **Escape** when finished.
+3. Select a numbered stop in the list or click its marker. **Move stop** lets you reposition it with another ground click; **Remove stop** deletes it. Scroll the list for longer routes, or choose **Clear route** to leave a stationary character.
+4. Set **Speed**, **Pause**, **Size** and **Facing**. **Loop** returns from the final stop to the start; **Back and forth** reverses through the stops. The starting point is also a stop. Pause applies there and at every destination; speed zero holds the character still.
+5. Use **Play preview**, **Pause preview** and **Reset preview** to review the route. **Focus** frames the selected cowgirl. Save, then choose **Back to town** to see her follow it in the game.
+
+The route line follows navigable streets around buildings. Invalid connections appear red. Unreachable destinations are rejected when adding stops; saving also checks the route against navigation rebuilt from edited scenery. A moving train can temporarily block a route; the character waits and retries. Characters follow terrain, turn toward their movement, blend the walking animation with idle poses, and use both supplied idle clips during stops. The preview shares the game's sunlight, shadows and post processing.
+
+Click a cowgirl in the viewport while the People tab is active to select her. Moving her starting point leaves existing route stops in place. **Duplicate**, **Delete**, **Undo** and **Redo** include the character and route. Duplicates get separate IDs; place the copy on clear ground. Changing settings resets preview. Saving during playback records authored positions and stops, never the preview's temporary pose. A town supports up to 64 characters with 128 additional stops each.
+
+Character data uses `town.scene` format 4; formats 1–3 still load. Characters are separate from static mesh instances and navigation blockers. They are ambient residents, with no combat or dialogue behavior. Their gameplay simulation stops during pause, mission selection and expeditions. Editor preview runs separately from the suspended game.
+
 ## Camera and markers
 
 | Control | Action |

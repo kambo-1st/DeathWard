@@ -53,6 +53,10 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view) {
         undo_.clear();
         redo_.clear();
         selected_.reset();
+        selectedCharacter_.reset();
+        selectedStop_.reset();
+        characterTab_ = false;
+        characterPlacement_ = 0;
         paletteSelection_.reset();
         revision_ = savedRevision_ = nextRevision_ = 0;
         navigationRevision_ = 0;
@@ -75,13 +79,16 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view) {
     }
 }
 TownEditor::Snapshot TownEditor::snapshot() const {
-    return {document_, navigation_.spawn, navigation_.mission, selected_, revision_};
+    return {document_, navigation_.spawn, navigation_.mission, selected_, selectedCharacter_, selectedStop_, revision_};
 }
 void TownEditor::restore(Snapshot state) {
     document_ = std::move(state.document);
     navigation_.spawn = state.spawn;
     navigation_.mission = state.mission;
     selected_ = state.selected;
+    selectedCharacter_ = state.character;
+    selectedStop_ = state.stop;
+    characterPlacement_ = 0;
     revision_ = state.revision;
     field_ = dragAxis_ = -1;
     sync();
@@ -109,16 +116,21 @@ void TownEditor::sync() {
     }
 }
 void TownEditor::select(std::optional<size_t> index) {
+    selectedCharacter_.reset();
+    selectedStop_.reset();
+    characterPlacement_ = 0;
     selected_ = index && *index < document_.instances.size() ? index : std::nullopt;
     field_ = dragAxis_ = -1;
 }
 Vector3 TownEditor::pivot() const {
+    if (selectedCharacter_) return document_.characters[*selectedCharacter_].position;
     if (!selected_)
         return camera.target;
     const auto &m = document_.instances[*selected_].transform;
     return {m.m12, m.m13, m.m14};
 }
 void TownEditor::translate(Vector3 delta) {
+    if (selectedCharacter_) { placeCharacter(add(pivot(), delta)); return; }
     if (selectedGroup()) {
         status = "Detach this vehicle in Animation before changing its placement.";
         return;
@@ -166,6 +178,18 @@ void TownEditor::scale(Vector3 factors) {
     sync();
 }
 void TownEditor::duplicate() {
+    if (selectedCharacter_) {
+        if (document_.characters.size() >= 64) return;
+        remember();
+        auto copy = document_.characters[*selectedCharacter_];
+        copy.id = document_.nextCharacterId();
+        document_.characters.push_back(copy);
+        selectCharacter(document_.characters.size() - 1);
+        sync();
+        characterPlacement_ = 1;
+        status = "Copy created. Click clear ground to place her.";
+        return;
+    }
     if (selectedGroup()) {
         status = "Detach the vehicle before duplicating its parts.";
         return;
@@ -182,6 +206,13 @@ void TownEditor::duplicate() {
     status = "Object duplicated. Drag an axis handle to place it.";
 }
 void TownEditor::remove() {
+    if (selectedCharacter_) {
+        remember();
+        document_.characters.erase(document_.characters.begin() + std::ptrdiff_t(*selectedCharacter_));
+        selectCharacter({});
+        sync();
+        return;
+    }
     if (!selected_ || document_.instances.size() <= 1)
         return;
     remember();
@@ -227,6 +258,19 @@ bool TownEditor::save() {
         commitField();
         auto nav = navigation_;
         nav.bake(document_, scene_.model());
+        HubWorld ground;
+        ground.setNavigation(nav);
+        for (const auto &c : document_.characters) {
+            auto previous = c.position;
+            if (!ground.walkable(previous)) throw std::runtime_error(c.id + ": starting point is blocked.");
+            auto stops = c.stops;
+            if (c.loop && !stops.empty()) stops.push_back(c.position);
+            for (const auto &stop : stops) {
+                if (!ground.walkable(stop) || !ground.findRoute(previous, stop))
+                    throw std::runtime_error(c.id + ": route crosses disconnected or blocked ground.");
+                previous = stop;
+            }
+        }
         saveTownProject(directory_, document_, nav);
         navigation_ = std::move(nav);
         navigationRevision_ = revision_;
@@ -253,6 +297,9 @@ bool TownEditor::reload() {
         undo_.clear();
         redo_.clear();
         selected_.reset();
+        selectedCharacter_.reset();
+        selectedStop_.reset();
+        characterPlacement_ = 0;
         field_ = -1;
         revision_ = savedRevision_ = ++nextRevision_;
         navigationRevision_ = revision_;
@@ -265,7 +312,7 @@ bool TownEditor::reload() {
     }
 }
 void TownEditor::focusSelection() {
-    if (!selected_)
+    if (!selected_ && !selectedCharacter_)
         return;
     const auto b = selectionBounds();
     camera.target = center(b);
@@ -273,6 +320,12 @@ void TownEditor::focusSelection() {
     updateView();
 }
 Box TownEditor::selectionBounds() const {
+    if (selectedCharacter_) {
+        const auto &definition = document_.characters[*selectedCharacter_];
+        const auto p = characters_.residents().at(*selectedCharacter_).position;
+        return {add(p, {-.4f * definition.scale, 0, -.4f * definition.scale}),
+                add(p, {.4f * definition.scale, 1.9f * definition.scale, .4f * definition.scale})};
+    }
     auto bounds = scene_.instanceBounds(*selected_);
     if (const auto *g = selectedGroup())
         for (size_t n = 0; n < document_.instances.size(); ++n)
@@ -334,13 +387,21 @@ void TownEditor::resetPreview() {
     previewPlaying_ = false;
     preview_.reset(document_);
     scene_.applyAnimation(preview_);
+    characterGround_.setNavigation(navigation_);
+    characterGround_.setMovingSolids(preview_.solids());
+    characters_.reset(document_, characterGround_);
+    refreshCharacterRoute();
 }
 void TownEditor::setPreviewPlaying(bool playing) {
+    commitField();
     if (playing && !previewPlaying_) {
         try {
             previewNavigation_ = navigation_;
             if (revision_ != navigationRevision_)
                 previewNavigation_.bake(document_, scene_.model());
+            characterGround_.setNavigation(previewNavigation_);
+            characterGround_.setMovingSolids(preview_.solids());
+            refreshCharacterRoute();
         } catch (const std::exception &e) {
             status = std::string("Preview failed: ") + e.what();
             return;
@@ -374,6 +435,22 @@ Vector3 TownEditor::values(int group) const {
     return group == 1 ? mul(QuaternionToEuler(q), RAD2DEG) : s;
 }
 void TownEditor::commitField() {
+    if (field_ >= 32 && selectedCharacter_) {
+        try {
+            size_t end = 0;
+            const float value = std::stof(fieldText_, &end);
+            if (end != fieldText_.size() || !std::isfinite(value)) throw std::runtime_error("Enter a finite number.");
+            auto c = document_.characters[*selectedCharacter_];
+            if (field_ == 32) c.speed = value;
+            if (field_ == 33) c.dwell = value;
+            if (field_ == 34) c.scale = value;
+            if (field_ == 35) c.yaw = value;
+            field_ = -1;
+            setCharacterSettings(c.speed, c.dwell, c.loop, c.scale, c.yaw);
+        } catch (const std::exception &e) { status = e.what(); }
+        field_ = -1;
+        return;
+    }
     if (field_ < 0 || !selected_)
         return;
     try {
@@ -500,6 +577,8 @@ void TownEditor::update(float dt) {
     if (previewPlaying_) {
         preview_.update(std::min(dt, .1f), [&](Vector3 p) { return previewNavigation_.height(p); });
         scene_.applyAnimation(preview_);
+        characterGround_.setMovingSolids(preview_.solids());
+        characters_.update(std::min(dt, .1f), characterGround_);
     }
     const auto mouse = GetMousePosition();
     const bool ctrl = IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL);
@@ -562,7 +641,9 @@ void TownEditor::update(float dt) {
                 if (dragChanged_)
                     undo();
                 dragAxis_ = -1;
-            } else if (marker_)
+            } else if (characterPlacement_)
+                characterPlacement_ = 0;
+            else if (marker_)
                 marker_ = 0;
             else
                 requestClose();
@@ -609,6 +690,34 @@ void TownEditor::update(float dt) {
     if (!over && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         commitField();
         searchFocus_ = false;
+        if (characterPlacement_ && selectedCharacter_) {
+            if (auto point = characterGroundPoint(mouse)) {
+                if (characterPlacement_ == 1) { placeCharacter(*point); characterPlacement_ = 0; }
+                else if (characterPlacement_ == 2) addCharacterStop(*point);
+                else if (selectedStop_) { moveCharacterStop(*selectedStop_, *point); characterPlacement_ = 0; }
+            } else status = "Choose walkable ground for the character or route stop.";
+            return;
+        }
+        if (characterTab_) {
+            const auto ray = GetScreenToWorldRay(mouse, camera);
+            float nearest = 1e9f;
+            std::optional<size_t> hit;
+            for (size_t i = 0; i < characters_.residents().size(); ++i) {
+                const auto &c = characters_.residents()[i];
+                const float radius = .4f * c.definition.scale;
+                auto collision = GetRayCollisionBox(ray, {add(c.position, {-radius, 0, -radius}),
+                    add(c.position, {radius, 1.9f * c.definition.scale, radius})});
+                if (collision.hit && collision.distance < nearest) { nearest = collision.distance; hit = i; }
+            }
+            if (hit) selectCharacter(hit);
+            if (selectedCharacter_ && !hit) {
+                const auto &stops = document_.characters[*selectedCharacter_].stops;
+                for (size_t i = 0; i < stops.size(); ++i)
+                    if (Vector2Distance(mouse, GetWorldToScreen(add(stops[i], {0, .15f, 0}), camera)) < 14)
+                        selectedStop_ = i;
+            }
+            return;
+        }
         if (marker_) {
             const auto ray = GetScreenToWorldRay(mouse, camera);
             if (ray.direction.y < -.001f) {
@@ -717,10 +826,12 @@ bool TownEditor::button(const std::string &text, Rectangle r, bool selected, boo
 void TownEditor::draw() {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
-    scene_.prepareLighting(camera);
+    characterModels_.prepare(characters_);
+    scene_.prepareLighting(camera, [&](Shader depth) { characterModels_.draw(characters_, depth); });
     postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target));
     BeginMode3D(camera);
     scene_.draw(camera.target);
+    characterModels_.draw(characters_, scene_.actorShader(), scene_.shadowTexture());
     scene_.draw(camera.target, true);
     if (showGrid_)
         DrawGrid(80, 2);
@@ -738,10 +849,10 @@ void TownEditor::draw() {
         DrawCylinder(add(p, {0, .1f, 0}), .45f, .45f, .1f, 16, i == 0 ? Teal : Accent);
         DrawLine3D(p, add(p, {0, 3, 0}), i == 0 ? Teal : Accent);
     }
-    if (selected_) {
+    if (selected_ || selectedCharacter_) {
         const auto b = selectionBounds();
         DrawBoundingBox({b.min, b.max}, Teal);
-        if (!selectedGroup() && preview_.time() == 0) {
+        if (selected_ && !selectedGroup() && preview_.time() == 0) {
             const auto p = pivot();
             const float size = radius_ * .12f;
             rlDisableDepthTest();
@@ -765,9 +876,183 @@ void TownEditor::draw() {
                 for (size_t n = 0; n < p.points.size(); ++n)
                     DrawLine3D(add(p.points[n], {0, .45f, 0}),
                                add(p.points[(n + 1) % p.points.size()], {0, .45f, 0}), Teal);
+    if (selectedCharacter_) {
+        const auto &c = document_.characters[*selectedCharacter_];
+        for (const auto &line : characterRoute_)
+            DrawLine3D(add(line.from, {0, .15f, 0}), add(line.to, {0, .15f, 0}), line.valid ? Teal : RED);
+        DrawSphere(add(c.position, {0, .15f, 0}), .18f, Accent);
+        for (size_t i = 0; i < c.stops.size(); ++i)
+            DrawSphere(add(c.stops[i], {0, .15f, 0}), selectedStop_ == i ? .24f : .16f, selectedStop_ == i ? Accent : Teal);
+    }
     EndMode3D();
     postProcess_.end();
     drawUI();
+}
+void TownEditor::selectCharacter(std::optional<size_t> index) {
+    selected_.reset();
+    selectedCharacter_ = index && *index < document_.characters.size() ? index : std::nullopt;
+    selectedStop_.reset();
+    field_ = dragAxis_ = -1;
+    characterPlacement_ = 0;
+    stopScroll_ = 0;
+    refreshCharacterRoute();
+}
+void TownEditor::addCharacter() {
+    if (document_.characters.size() >= 64) { status = "The town already has 64 characters."; return; }
+    auto position = camera.target;
+    if (!characterGround_.walkable(position)) position = navigation_.spawn;
+    position.y = characterGround_.height(position);
+    remember();
+    TownCharacter c;
+    c.id = document_.nextCharacterId();
+    c.position = position;
+    document_.characters.push_back(c);
+    characterTab_ = true;
+    selectCharacter(document_.characters.size() - 1);
+    sync();
+    characterPlacement_ = 1;
+    status = "Cowgirl added. Click clear ground to choose her starting point.";
+}
+std::optional<Vector3> TownEditor::characterGroundPoint(Vector2 pixel) const {
+    return characterGround_.pickGround(GetScreenToWorldRay(pixel, camera));
+}
+bool TownEditor::validCharacterStop(Vector3 point, std::optional<size_t> replacing) const {
+    if (!selectedCharacter_ || !characterGround_.walkable(point)) return false;
+    const auto &c = document_.characters[*selectedCharacter_];
+    const size_t stop = replacing.value_or(c.stops.size());
+    const auto previous = stop == 0 ? c.position : c.stops[stop - 1];
+    if (distance(previous, point) < .1f || !characterGround_.findRoute(previous, point)) return false;
+    if (stop + 1 < c.stops.size() &&
+        (distance(c.stops[stop + 1], point) < .1f || !characterGround_.findRoute(point, c.stops[stop + 1]))) return false;
+    return true;
+}
+void TownEditor::placeCharacter(Vector3 position) {
+    if (!selectedCharacter_ || !characterGround_.walkable(position)) {
+        status = "Place her on clear, walkable ground."; return;
+    }
+    const auto &c = document_.characters[*selectedCharacter_];
+    if (!c.stops.empty() && (distance(c.stops.front(), position) < .1f || !characterGround_.findRoute(position, c.stops.front()))) {
+        status = "The starting point must connect to the first route stop."; return;
+    }
+    position.y = characterGround_.height(position);
+    remember();
+    document_.characters[*selectedCharacter_].position = position;
+    sync();
+    status = "Starting point moved. The route stops keep their positions.";
+}
+void TownEditor::addCharacterStop(Vector3 position) {
+    if (!selectedCharacter_) return;
+    if (document_.characters[*selectedCharacter_].stops.size() >= 128) { status = "This route already has 128 stops."; return; }
+    position.y = characterGround_.height(position);
+    if (!validCharacterStop(position)) { status = "Choose a reachable stop, away from the previous stop."; return; }
+    remember();
+    auto &stops = document_.characters[*selectedCharacter_].stops;
+    stops.push_back(position);
+    selectedStop_ = stops.size() - 1;
+    stopScroll_ = std::max(0, int(stops.size()) - 7);
+    sync();
+    status = "Stop added. Keep clicking the street to extend the route; Escape finishes.";
+}
+void TownEditor::moveCharacterStop(size_t stop, Vector3 position) {
+    if (!selectedCharacter_ || stop >= document_.characters[*selectedCharacter_].stops.size()) return;
+    position.y = characterGround_.height(position);
+    if (!validCharacterStop(position, stop)) { status = "This stop must connect to its neighbors."; return; }
+    remember();
+    document_.characters[*selectedCharacter_].stops[stop] = position;
+    sync();
+    status = "Route stop moved.";
+}
+void TownEditor::removeCharacterStop(size_t stop) {
+    if (!selectedCharacter_ || stop >= document_.characters[*selectedCharacter_].stops.size()) return;
+    remember();
+    auto &stops = document_.characters[*selectedCharacter_].stops;
+    stops.erase(stops.begin() + std::ptrdiff_t(stop));
+    selectedStop_.reset();
+    sync();
+}
+void TownEditor::setCharacterSettings(float speed, float dwell, bool loop, float scale, float yaw) {
+    if (!selectedCharacter_) return;
+    if (!std::isfinite(speed) || speed < 0 || speed > 4 || !std::isfinite(dwell) || dwell < 0 || dwell > 120 ||
+        !std::isfinite(scale) || scale < .25f || scale > 3 || !std::isfinite(yaw)) {
+        status = "Speed: 0-4 m/s. Pause: 0-120 s. Size: 0.25-3."; return;
+    }
+    remember();
+    auto &c = document_.characters[*selectedCharacter_];
+    c.speed = speed; c.dwell = dwell; c.loop = loop; c.scale = scale; c.yaw = std::remainder(yaw, 360.f);
+    sync();
+}
+void TownEditor::refreshCharacterRoute() {
+    characterRoute_.clear();
+    if (!selectedCharacter_ || *selectedCharacter_ >= document_.characters.size()) return;
+    const auto &c = document_.characters[*selectedCharacter_];
+    auto previous = c.position;
+    auto destinations = c.stops;
+    if (c.loop && !destinations.empty()) destinations.push_back(c.position);
+    for (const auto &point : destinations) {
+        const auto route = characterGround_.findRoute(previous, point);
+        if (route) for (const auto &step : *route) {
+            characterRoute_.push_back({previous, step, true}); previous = step;
+        }
+        else characterRoute_.push_back({previous, point, false});
+        previous = point;
+    }
+}
+void TownEditor::drawCharacterUI() {
+    label("CHARACTER", 1132, 108, 13, Accent);
+    if (!selectedCharacter_) {
+        label("Choose or add a cowgirl", 1132, 140, 19, Text, 282);
+        label("Use Add cowgirl in the left panel.", 1132, 192, 14, Muted, 282);
+        label("Then place her and add route stops.", 1132, 224, 14, Muted, 282);
+        return;
+    }
+    const auto c = document_.characters[*selectedCharacter_];
+    label(c.id, 1132, 138, 20, Text, 284);
+    label("Start: " + number(c.position.x) + ", " + number(c.position.z), 1132, 170, 13, Muted, 284);
+    if (button("Place starting point", {1132, 194, 286, 31}, characterPlacement_ == 1)) {
+        resetPreview(); characterPlacement_ = 1;
+    }
+    if (button("Add route stops", {1132, 233, 286, 31}, characterPlacement_ == 2)) {
+        resetPreview(); characterPlacement_ = characterPlacement_ == 2 ? 0 : 2;
+    }
+    if (button("Move stop", {1132, 272, 137, 31}, characterPlacement_ == 3, selectedStop_.has_value())) {
+        resetPreview(); characterPlacement_ = 3;
+    }
+    if (button("Remove stop", {1281, 272, 137, 31}, false, selectedStop_.has_value())) {
+        removeCharacterStop(*selectedStop_); return;
+    }
+    if (button("Clear route", {1132, 311, 286, 31}, false, !c.stops.empty())) {
+        remember(); document_.characters[*selectedCharacter_].stops.clear(); selectedStop_.reset(); sync(); return;
+    }
+    label("STOPS / scroll to see more", 1132, 351, 12, Accent);
+    if (CheckCollisionPointRec(uiMouse(), {1132, 371, 286, 175})) stopScroll_ -= int(GetMouseWheelMoveV().y * 2);
+    stopScroll_ = std::clamp(stopScroll_, 0, std::max(0, int(c.stops.size()) - 7));
+    for (int row = 0; row < 7 && size_t(row + stopScroll_) < c.stops.size(); ++row) {
+        const size_t index = size_t(row + stopScroll_);
+        const auto p = c.stops[index];
+        if (button(std::to_string(index + 1) + "  " + number(p.x) + ", " + number(p.z),
+                   {1132, 371 + float(row) * 25, 286, 23}, selectedStop_ == index)) selectedStop_ = index;
+    }
+    if (c.stops.empty()) label("No stops: stays at the starting point.", 1132, 386, 13, Muted, 282);
+    const std::array<const char *, 4> titles{"SPEED / m/s", "PAUSE / seconds", "SIZE", "FACING / degrees"};
+    const std::array<float, 4> values{c.speed, c.dwell, c.scale, c.yaw};
+    for (int i = 0; i < 4; ++i) {
+        const float x = 1132 + float(i % 2) * 149, y = 553 + float(i / 2) * 60;
+        label(titles[size_t(i)], x, y, 12, Muted);
+        const Rectangle box{x, y + 18, 137, 31};
+        panel(box, field_ == i + 32 ? Line : Background);
+        label(field_ == i + 32 ? fieldText_ : number(values[size_t(i)]), x + 10, y + 27, 14, Text, 120);
+        if (!closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), box) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            commitField(); searchFocus_ = false; field_ = i + 32; fieldText_ = number(values[size_t(i)]); selectText_ = true;
+        }
+    }
+    if (button(c.loop ? "Route: Loop" : "Route: Back and forth", {1132, 675, 286, 31}))
+        setCharacterSettings(c.speed, c.dwell, !c.loop, c.scale, c.yaw);
+    if (button(previewPlaying_ ? "Pause preview" : "Play preview", {1132, 714, 137, 31}, previewPlaying_))
+        setPreviewPlaying(!previewPlaying_);
+    if (button("Reset preview", {1281, 714, 137, 31})) resetPreview();
+    if (button("Focus", {1132, 753, 137, 31})) focusSelection();
+    if (button("Duplicate", {1281, 753, 137, 31})) { duplicate(); return; }
+    if (button("Delete character", {1132, 792, 286, 31})) remove();
 }
 void TownEditor::drawAnimationUI() {
     const auto motion = selected_ ? document_.instances[*selected_].motion : ObjectMotion{};
@@ -896,12 +1181,25 @@ void TownEditor::drawUI() {
     label(std::to_string(GetFPS()) + " FPS", 1112, 28, 12, Muted, 96);
     label("Middle drag: orbit   Right drag: pan   Wheel: zoom   WASD / Q E: fly   F: focus", 278, 59, 13,
           Muted, 825);
-    if (button("Scene", {14, 103, 115, 31}, !palette_)) {
+    if (button("Scene", {14, 103, 72, 31}, !palette_ && !characterTab_)) {
+        characterTab_ = false;
+        select({});
         palette_ = false;
         scroll_ = 0;
     }
-    if (button("Assets", {139, 103, 115, 31}, palette_)) {
+    if (button("Assets", {92, 103, 72, 31}, palette_ && !characterTab_)) {
+        characterTab_ = false;
+        select({});
         palette_ = true;
+        scroll_ = 0;
+    }
+    if (button("People", {170, 103, 84, 31}, characterTab_)) {
+        commitField();
+        search_.clear();
+        searchFocus_ = false;
+        characterTab_ = true;
+        palette_ = false;
+        selectCharacter(document_.characters.empty() ? std::nullopt : std::optional<size_t>(0));
         scroll_ = 0;
     }
     const Rectangle searchBox{14, 149, 240, 33};
@@ -915,8 +1213,12 @@ void TownEditor::drawUI() {
     }
     std::vector<size_t> filtered;
     const auto query = lower(search_);
-    const size_t count = palette_ ? document_.assets.size() : document_.instances.size();
+    const size_t count = characterTab_ ? document_.characters.size() : palette_ ? document_.assets.size() : document_.instances.size();
     for (size_t i = 0; i < count; ++i) {
+        if (characterTab_) {
+            if (lower(document_.characters[i].id + " cowgirl").find(query) != std::string::npos) filtered.push_back(i);
+            continue;
+        }
         const auto asset = palette_ ? i : document_.instances[i].asset;
         if (lower(document_.assets[asset].label + " #" + std::to_string(i)).find(query) != std::string::npos)
             filtered.push_back(i);
@@ -925,8 +1227,15 @@ void TownEditor::drawUI() {
     if (!closePrompt_ && !reloadPrompt_ && CheckCollisionPointRec(uiMouse(), {0, 190, 272, 610}))
         scroll_ -= int(GetMouseWheelMoveV().y * 3);
     scroll_ = std::clamp(scroll_, 0, std::max(0, int(filtered.size()) - rows));
-    label(std::to_string(filtered.size()) + (palette_ ? " assets" : " objects"), 18, 196, 12, Muted);
+    label(std::to_string(filtered.size()) + (characterTab_ ? " characters" : palette_ ? " assets" : " objects"), 18, 196, 12, Muted);
     for (int row = 0; row < rows && size_t(row + scroll_) < filtered.size(); ++row) {
+        if (characterTab_) {
+            const auto id = filtered[size_t(row + scroll_)];
+            if (button(document_.characters[id].id, {14, 219 + float(row) * 29, 240, 26}, selectedCharacter_ == id)) {
+                commitField(); searchFocus_ = false; selectCharacter(id);
+            }
+            continue;
+        }
         const size_t id = filtered[size_t(row + scroll_)],
                      asset = palette_ ? id : document_.instances[id].asset;
         auto name = document_.assets[asset].label;
@@ -943,11 +1252,15 @@ void TownEditor::drawUI() {
                 select(id);
         }
     }
-    if (palette_) {
+    if (characterTab_) {
+        if (button("Add cowgirl", {14, 799, 240, 33}, false, document_.characters.size() < 64)) addCharacter();
+    } else if (palette_) {
         if (button("Add at view center", {14, 799, 240, 33}, false, paletteSelection_.has_value()))
             addAsset(*paletteSelection_);
     } else if (button("Focus selection", {14, 799, 240, 33}, false, selected_.has_value()))
         focusSelection();
+    if (characterTab_) drawCharacterUI();
+    else {
     label("INSPECTOR", 1132, 108, 13, Accent);
     label(selected_ ? document_.assets[document_.instances[*selected_].asset].label : "No object selected",
           1132, 136, 18, Text, 284);
@@ -1012,7 +1325,8 @@ void TownEditor::drawUI() {
             marker_ = 2;
         label("Save rebuilds walkable ground.", 1132, 790, 13, Muted);
     }
-    label(marker_ ? "Click the street to place the marker. Escape cancels." : status, 18, 862, 14,
+    }
+    label(characterPlacement_ ? "Click walkable ground. Escape finishes placing route stops." : marker_ ? "Click the street to place the marker. Escape cancels." : status, 18, 862, 14,
           marker_ ? Accent : Text, 1375);
     label("Ctrl+S save   Ctrl+Z / Ctrl+Y undo / redo   Ctrl+D duplicate   Delete remove   F4 exit", 18, 884,
           11, Muted, 1350);

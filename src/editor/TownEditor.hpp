@@ -1,6 +1,7 @@
 #pragma once
 #include "render/PostProcess.hpp"
 #include "render/TownScene.hpp"
+#include "render/TownActorModels.hpp"
 #include "world/TownNavigation.hpp"
 #include <deque>
 
@@ -17,6 +18,7 @@ class TownEditor {
     void unload() {
         scene_.unload();
         postProcess_.unload();
+        characterModels_.unload();
     }
     bool dirty() const {
         return revision_ != savedRevision_;
@@ -47,6 +49,15 @@ class TownEditor {
     void resetPreview();
     void detachVehicle();
     void setPathSettings(float speed, float acceleration, float dwell);
+    void addCharacter();
+    void selectCharacter(std::optional<size_t> index);
+    void placeCharacter(Vector3 position);
+    void addCharacterStop(Vector3 position);
+    void moveCharacterStop(size_t stop, Vector3 position);
+    void removeCharacterStop(size_t stop);
+    void setCharacterSettings(float speed, float dwell, bool loop, float scale, float yaw);
+    std::optional<size_t> characterSelection() const { return selectedCharacter_; }
+    const TownCharacters &characterPreview() const { return characters_; }
     bool previewPlaying() const {
         return previewPlaying_;
     }
@@ -59,6 +70,7 @@ class TownEditor {
         TownDocument document;
         Vector3 spawn, mission;
         std::optional<size_t> selected;
+        std::optional<size_t> character, stop;
         uint64_t revision;
     };
     enum class Tool { Move, Rotate, Scale };
@@ -68,6 +80,15 @@ class TownEditor {
     TownNavigation navigation_;
     TownNavigation previewNavigation_;
     ObjectAnimationSystem preview_;
+    TownActorModels characterModels_;
+    TownCharacters characters_;
+    HubWorld characterGround_;
+    std::optional<size_t> selectedCharacter_, selectedStop_;
+    bool characterTab_ = false;
+    int characterPlacement_ = 0; // 1: home, 2: append stop, 3: move selected stop.
+    int stopScroll_ = 0;
+    struct RouteLine { Vector3 from, to; bool valid; };
+    std::vector<RouteLine> characterRoute_;
     bool animationTab_ = false, previewPlaying_ = false;
     uint64_t navigationRevision_ = 0;
     std::filesystem::path directory_;
@@ -100,6 +121,10 @@ class TownEditor {
     void panel(Rectangle r, Color color) const;
     void drawUI();
     void drawAnimationUI();
+    void drawCharacterUI();
+    void refreshCharacterRoute();
+    std::optional<Vector3> characterGroundPoint(Vector2 pixel) const;
+    bool validCharacterStop(Vector3 point, std::optional<size_t> replacing = {}) const;
     const TownMotionGroup *selectedGroup() const;
     Box selectionBounds() const;
 };

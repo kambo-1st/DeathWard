@@ -1,11 +1,12 @@
 #pragma once
 #include "world/Animals.hpp"
+#include "render/SkinnedModel.hpp"
 
 namespace dw {
 // Shared textured meshes/clips. Every resident supplies its own pose clock and blending.
 class AnimalModels {
   public:
-    ~AnimalModels();
+    ~AnimalModels() = default;
     AnimalModels() = default;
     AnimalModels(const AnimalModels &) = delete;
     AnimalModels &operator=(const AnimalModels &) = delete;
@@ -20,23 +21,10 @@ class AnimalModels {
     const std::vector<Transform> &bonePose(AnimalKind kind) const;
     static std::filesystem::path assetDirectory();
     // Apply a world-space skeletal pose, including nonuniform bone scales.
-    static void applyPose(Model model, const Transform *pose);
-    static void correctAnimationScale(ModelAnimation &animation);
+    static void applyPose(Model model, const Transform *pose) { SkinnedModel::applyPose(model, pose); }
+    static void correctAnimationScale(ModelAnimation &animation) { SkinnedModel::correctAnimationScale(animation); }
 
   private:
-    struct Clip {
-        std::vector<std::vector<Transform>> frames;
-        float duration = 0;
-    };
-    struct Asset {
-        Model model{};
-        std::array<Clip, 3> clips;
-        std::vector<Transform> world;
-        float floor = 0;
-        bool attempted = false;
-    };
-    std::array<Asset, size_t(AnimalKind::Count)> assets_;
-    void unload(Asset &asset);
-    Transform sample(const Clip &clip, double seconds, size_t bone) const;
+    std::array<SkinnedModel, size_t(AnimalKind::Count)> models_;
 };
 } // namespace dw

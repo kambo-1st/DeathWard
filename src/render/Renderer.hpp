@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Game.hpp"
 #include "render/AnimalModels.hpp"
+#include "render/TownActorModels.hpp"
 #include "render/PlayerModel.hpp"
 #include "render/PostProcess.hpp"
 #include "render/TownScene.hpp"
@@ -20,6 +21,7 @@ class Renderer {
     void unload() {
         playerModel_.unload();
         animalModels_.unload();
+        characterModels_.unload();
         westernScene_.unload();
         townScene_.unload();
         postProcess_.unload();
@@ -30,6 +32,7 @@ class Renderer {
     float sx_ = 1, sy_ = 1;
     PlayerModel playerModel_;
     AnimalModels animalModels_;
+    TownActorModels characterModels_;
     PostProcess postProcess_;
     WesternScene westernScene_;
     TownScene townScene_;

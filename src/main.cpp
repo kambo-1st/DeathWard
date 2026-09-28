@@ -314,6 +314,22 @@ int main(int argc, char **argv) {
             // Read-only state for browser integration checks; absent during ordinary play.
             const auto *probeProp = game.townObjects.firstPropPose();
             const auto &residents = game.animals.residents();
+            const auto &characters = game.characters.residents();
+            const auto &previewCharacters = editor.characterPreview().residents();
+            const auto selectedCharacter = editor.characterSelection();
+            EM_ASM(
+                {
+                    if (Module.verify) {
+                        Module.characters = ({count: $0, time: $1, phase: $2, x: $3, z: $4, visits: $5});
+                        Module.characterEditor = ({count: $6, selected: $7, stops: $8, time: $9});
+                    }
+                },
+                int(characters.size()), game.characters.time(), characters.empty() ? 0. : characters[0].phase,
+                characters.empty() ? 0.f : characters[0].position.x, characters.empty() ? 0.f : characters[0].position.z,
+                characters.empty() ? 0 : int(characters[0].visits), int(previewCharacters.size()),
+                selectedCharacter ? int(*selectedCharacter) : -1,
+                selectedCharacter ? int(editor.document().characters[*selectedCharacter].stops.size()) : 0,
+                editor.characterPreview().time());
             EM_ASM(
                 {
                     if (Module.verify)

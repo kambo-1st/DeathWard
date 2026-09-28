@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "blender": "3.6.23",
+  "clips": {
+    "Idle": {
+      "source": "Idle.fbx",
+      "sha256": "624111ea14030f625f2f6c36b2e366b85b7a1eb5e5f9e689bd7e0c72d4045c79",
+      "frames": 500,
+      "fps": 30,
+      "duration": 16.633333333333333
+    },
+    "Idle2": {
+      "source": "Idle (1).fbx",
+      "sha256": "9b9bbebcb4a93b58f41dcd64444a8ecf5af3f9b2c7791bbcaca9a9ff79910c8a",
+      "frames": 60,
+      "fps": 30,
+      "duration": 1.9666666666666666
+    },
+    "Walk": {
+      "source": "Walking (1).fbx",
+      "sha256": "5aba241ae47ab6ac8b6d6e16a432049a922129c32c7673c246436aaa0858b6ac",
+      "frames": 30,
+      "fps": 30,
+      "duration": 0.9666666666666667
+    }
+  },
+  "vertices": 1049,
+  "triangles": 2024,
+  "bones": 48,
+  "output_sha256": "64976dc223a9f14f5251355c1e8c8fc136100a3f82d62ff02e0320cac2b801c4"
+}

@@ -5,6 +5,7 @@
 #include <optional>
 
 namespace dw {
+struct TownNavigation;
 // Outdoor navigation sampled from the imported scene's original colliders.
 class HubWorld {
   public:
@@ -20,6 +21,9 @@ class HubWorld {
     bool walkable(Vector3 point) const;
     float height(Vector3 point) const;
     bool moveTo(Vector3 target);
+    std::optional<std::vector<Vector3>> findRoute(Vector3 from, Vector3 target) const;
+    bool canTraverse(Vector3 from, Vector3 to) const { return clear(from, to); }
+    void setNavigation(const TownNavigation &navigation);
     void stop();
     void step(Vector3 movement, float dt);
     std::optional<Vector3> pickGround(Ray ray) const;

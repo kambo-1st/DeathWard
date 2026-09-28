@@ -43,17 +43,26 @@ struct TownLight {
     Vector3 position{}, direction{}, color{};
     float intensity = 1, range = 0;
 };
+struct TownCharacter {
+    std::string id, model = "cowgirl";
+    Vector3 position{};
+    float yaw = 0, scale = 1, speed = 1.2f, dwell = 2;
+    bool loop = true;
+    std::vector<Vector3> stops; // The placement is the first stop; these are subsequent destinations.
+};
 struct TownDocument {
     std::vector<TownAsset> assets;
     std::vector<TownInstance> instances;
     std::vector<TownLight> lights;
     std::vector<TownMotionPath> paths;
     std::vector<TownMotionGroup> groups;
+    std::vector<TownCharacter> characters;
     bool load(const std::filesystem::path &path, std::string &error);
     void write(const std::filesystem::path &path) const;
     void validate() const;
     Box bounds(size_t instance) const;
     int meshCount() const;
     std::string nextInstanceId() const;
+    std::string nextCharacterId() const;
 };
 } // namespace dw
