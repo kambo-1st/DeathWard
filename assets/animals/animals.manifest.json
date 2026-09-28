@@ -1,0 +1,324 @@
+{
+  "format": 1,
+  "blender": "3.6.23",
+  "source_sha256": {
+    "Meshes/Animals/Horse/SKM_Horse_Rig.fbx": "b172a2da615d0a44614fefb0731914239fa329016526165e0ee5cc45b4b8d1e4",
+    "Meshes/Animals/Horse/SKM_Horse_Rig.fbx.meta": "4388f16e26a3254d03912ef916f0e40a5279706f725795fffdcf462d969e1037",
+    "Meshes/Animals/Horse/SKM_Horse_Animations.fbx": "aba1d96529bdb9542de0b506685cf72c9683d1f93bf97b00a2a3a52cd5fbea8f",
+    "Meshes/Animals/Horse/SKM_Horse_Animations.fbx.meta": "d84dc0476c36d31908b0bce20ba077107f510437d2bac950b6a0597e8fd21de0",
+    "Materials/Animals/Horse_Brown.mat": "e30bd941c18b5370c36c17b75d4fd38b1d0576a8eb24589159537cc6fb4283d6",
+    "Materials/Animals/Horse_Brown.mat.meta": "0c1307212a8abe986c81b4a3652b45160cc0c696a5f56d4410040f89021102b1",
+    "Textures/Animals/Horse_Brown_COL_2k.png": "8655f6959ad1333895c7af74ddfddbdd9b1816cf629eb83d88624d2e8ba0a237",
+    "Textures/Animals/Horse_Brown_COL_2k.png.meta": "a17ba67b619566467ac335c529dac9394071b43c10ff07799e89b4847486f371",
+    "Prefabs/Animals/Horse_Brown.prefab": "319a25ba0e4d30065aca5603c4fa16a79f5bd118cf27a309b68070754c36be9c",
+    "Prefabs/Animals/Horse_Brown.prefab.meta": "6756c172648230f0207dc2380c94d5aa78c471d439be01c8821895fbbe491ea2",
+    "Meshes/Animals/Hen/SKM_Hen_Rig.fbx": "e08bfaeb22614f04027fbc057648e90d579c306d91b4ebfd2af0000211ebc7b7",
+    "Meshes/Animals/Hen/SKM_Hen_Rig.fbx.meta": "16ac12b9db68a34f1e3539ca0b5f115815b65735938d2367c512cc761bd3e8d0",
+    "Meshes/Animals/Hen/SKM_Hen_Animations.fbx": "d4c52545eccf5d6eea8de1603f2d23e3ee3f36c055ad97fdbebb1bf0a941eb78",
+    "Meshes/Animals/Hen/SKM_Hen_Animations.fbx.meta": "09fbfd8bc0c4e830bba11d7d39334047b6ffc2bd09ad4bdb741152c17b596240",
+    "Materials/Animals/Hen.mat": "86c085a03040fdd81156e42271e9f4a213f879e04a64b087fd813763e8b14ca7",
+    "Materials/Animals/Hen.mat.meta": "172fac28b496987fb02b2cd87f04c15e9f4b93335aba3fb883f4b88ed1e5a257",
+    "Textures/Animals/Hen_Brown_COL_2k.png": "6abb78b41108777b651abc14099f6440e3c8dc4160eda28896b522803889945e",
+    "Textures/Animals/Hen_Brown_COL_2k.png.meta": "942519c3ad70e9262947bd5bf88210d9dcadabc98d36780c9605e12c10da4b1b",
+    "Prefabs/Animals/Hen.prefab": "ca611ac3b0c00029b396fdc8ee47dd9a612f8f46e3677ba76f90769781fb76ca",
+    "Prefabs/Animals/Hen.prefab.meta": "4938f9629f99faa27e85de804ee9165a903d6401463785d2ec80f448f96c9f54",
+    "Meshes/Animals/Cow/SKM_Cow_Rig.fbx": "980dd4900fb06f2dded657517995d14d4b8bd6fbbc4f7e55dde1595c123982fd",
+    "Meshes/Animals/Cow/SKM_Cow_Rig.fbx.meta": "4b72c80e1d93696476171abe82ef250e910afe0e940e7d86bf8b6dd4f574af76",
+    "Meshes/Animals/Cow/SKM_Cow_Animations.fbx": "cb0807823becf39f7a2df29a40676f71e9407dc7b6db33e844b8a679c523e4ea",
+    "Meshes/Animals/Cow/SKM_Cow_Animations.fbx.meta": "b8e7cf989c9dd6d0a6cd1f9d236471fb51ed60895f89a3e2b035453bff597546",
+    "Materials/Animals/Cow_Brown.mat": "079e19c6293634df2ec16135bce6dbefd3eba6333df1c8e2cd6d7f6e1ca7ae0c",
+    "Materials/Animals/Cow_Brown.mat.meta": "53318f5744d267fd08309917d3a22ea02a739d14af68f69b15736accdd753e4d",
+    "Textures/Animals/Cow_Cattle_COL2_2k.png": "04b7767ca9652c85605983e5852c1adac241c2daef5e42cc2bfbe2e89154d45c",
+    "Textures/Animals/Cow_Cattle_COL2_2k.png.meta": "4d0c93ed6645adc5c30f9a73c1c006026f1ee85bf6b6d1b8a075938b0b616121",
+    "Prefabs/Animals/Cow_Brown.prefab": "93339dc7c07c123c45b23801e3dba19f97ea0c667cccadb99069ee34c9e1b511",
+    "Prefabs/Animals/Cow_Brown.prefab.meta": "0b860bd4d7a43717dae3f6f124cfd8626e22723ad85b0ab804257785757f507a",
+    "Meshes/Animals/Cat/SKM_Cat_Rig.fbx": "dc0c9dff2cd63b285e5e060c534c645aa810849b3732610b5b1714347115ac99",
+    "Meshes/Animals/Cat/SKM_Cat_Rig.fbx.meta": "fb983e92ec761bd5899f639a657319a05af74b8fbf4648981715bb05973f53e1",
+    "Meshes/Animals/Cat/SKM_Cat_Animations.fbx": "fa005c8227857553314f1407860e5852f142bad6b499aceff14b0cf17a8e469b",
+    "Meshes/Animals/Cat/SKM_Cat_Animations.fbx.meta": "4a269429df12c3c09b64a50458c419e96ebe25747863bf32717305064311c8d1",
+    "Materials/Animals/Cat_Orange.mat": "d8d410fbb99af59565cb02d457824ee70b6c334435906c71e7243595f54b3b80",
+    "Materials/Animals/Cat_Orange.mat.meta": "869f8739490ade8dce98e4f5da860420b58ac5ca533bac66c6231a336554095e",
+    "Textures/Animals/Cat_Orange_COL_1k.png": "5fa3c92bbf22554504fac64b988af97984f827d4ba69913387e49d0786850ff5",
+    "Textures/Animals/Cat_Orange_COL_1k.png.meta": "0c54fc52e4c9a6bb159e50473c671063c3f4a14175ce6225591b0dd8d995911e",
+    "Prefabs/Animals/Cat_Orange.prefab": "6aaa6880e7920aa0551a8c3d5c5a0a50bc3ccea234c04dad1b8dd45cd94b1982",
+    "Prefabs/Animals/Cat_Orange.prefab.meta": "98e0c62f0c7e53343bb6d3967fd06636f5c4ab421f1dbf4c65bf44f48a3d4719"
+  },
+  "animals": {
+    "horse": {
+      "clips": {
+        "Attack": {
+          "source_take": "Attack",
+          "frames": 47,
+          "fps": 24.0,
+          "duration": 1.9166666666666667
+        },
+        "Death": {
+          "source_take": "Death",
+          "frames": 79,
+          "fps": 24.0,
+          "duration": 3.25
+        },
+        "Eat": {
+          "source_take": "Eating",
+          "frames": 171,
+          "fps": 24.0,
+          "duration": 7.083333333333333
+        },
+        "Idle": {
+          "source_take": "Idle",
+          "frames": 72,
+          "fps": 24.0,
+          "duration": 2.9583333333333335
+        },
+        "Run": {
+          "source_take": "Run",
+          "frames": 16,
+          "fps": 24.0,
+          "duration": 0.625
+        },
+        "SleepStand": {
+          "source_take": "Sleep_Stand",
+          "frames": 76,
+          "fps": 24.0,
+          "duration": 3.125
+        },
+        "Sleeping": {
+          "source_take": "Sleeping",
+          "frames": 51,
+          "fps": 24.0,
+          "duration": 2.0833333333333335
+        },
+        "Walk": {
+          "source_take": "Walk",
+          "frames": 43,
+          "fps": 24.0,
+          "duration": 1.75
+        }
+      },
+      "bones": 72,
+      "texture": "Textures/Animals/Horse_Brown_COL_2k.png",
+      "texture_size": [
+        2048,
+        2048
+      ],
+      "vertices": 966,
+      "output_sha256": "06d3cbe5478320991a9e48c0332b962746fa7256287bcf34ab0539cc5f558327"
+    },
+    "hen": {
+      "clips": {
+        "Attack": {
+          "source_take": "Hen_Attack",
+          "frames": 37,
+          "fps": 24.0,
+          "duration": 1.5
+        },
+        "Death": {
+          "source_take": "Hen_Death",
+          "frames": 27,
+          "fps": 24.0,
+          "duration": 1.0833333333333333
+        },
+        "Eat": {
+          "source_take": "Hen_Eat",
+          "frames": 101,
+          "fps": 24.0,
+          "duration": 4.166666666666667
+        },
+        "Fly": {
+          "source_take": "Hen_Fly",
+          "frames": 21,
+          "fps": 24.0,
+          "duration": 0.8333333333333334
+        },
+        "Idle": {
+          "source_take": "Hen_Idle Breathing",
+          "frames": 61,
+          "fps": 24.0,
+          "duration": 2.5
+        },
+        "Idle2": {
+          "source_take": "Hen_Idle_2",
+          "frames": 109,
+          "fps": 24.0,
+          "duration": 4.5
+        },
+        "Idle3": {
+          "source_take": "Hen_Idle_3",
+          "frames": 31,
+          "fps": 24.0,
+          "duration": 1.25
+        },
+        "IdleRoost": {
+          "source_take": "Hen_Idle_Roost",
+          "frames": 61,
+          "fps": 24.0,
+          "duration": 2.5
+        },
+        "Run": {
+          "source_take": "Hen_Run",
+          "frames": 17,
+          "fps": 24.0,
+          "duration": 0.6666666666666666
+        },
+        "SleepStand": {
+          "source_take": "Hen_Sleep_Stand",
+          "frames": 26,
+          "fps": 24.0,
+          "duration": 1.0416666666666667
+        },
+        "Sleep": {
+          "source_take": "Hen_Sleep",
+          "frames": 51,
+          "fps": 24.0,
+          "duration": 2.0833333333333335
+        },
+        "Walk": {
+          "source_take": "Hen_Walk",
+          "frames": 31,
+          "fps": 24.0,
+          "duration": 1.25
+        }
+      },
+      "bones": 92,
+      "texture": "Textures/Animals/Hen_Brown_COL_2k.png",
+      "texture_size": [
+        2048,
+        2048
+      ],
+      "vertices": 449,
+      "output_sha256": "b614deec010214fd0db2f1aac0f6109119e37f00c998bc61358c37288dafb8bb"
+    },
+    "cow": {
+      "clips": {
+        "Attack": {
+          "source_take": "Attack",
+          "frames": 60,
+          "fps": 24.0,
+          "duration": 2.4583333333333335
+        },
+        "Death": {
+          "source_take": "Death",
+          "frames": 51,
+          "fps": 24.0,
+          "duration": 2.0833333333333335
+        },
+        "Eat": {
+          "source_take": "Eat",
+          "frames": 90,
+          "fps": 24.0,
+          "duration": 3.7083333333333335
+        },
+        "Idle": {
+          "source_take": "Idle1",
+          "frames": 77,
+          "fps": 24.0,
+          "duration": 3.1666666666666665
+        },
+        "Idle2": {
+          "source_take": "Idle2",
+          "frames": 78,
+          "fps": 24.0,
+          "duration": 3.2083333333333335
+        },
+        "Run": {
+          "source_take": "Run",
+          "frames": 15,
+          "fps": 24.0,
+          "duration": 0.5833333333333334
+        },
+        "SleepStand": {
+          "source_take": "Sleep-Stand",
+          "frames": 67,
+          "fps": 24.0,
+          "duration": 2.75
+        },
+        "Sleep": {
+          "source_take": "Sleep",
+          "frames": 31,
+          "fps": 24.0,
+          "duration": 1.25
+        },
+        "Walk": {
+          "source_take": "Walk",
+          "frames": 37,
+          "fps": 24.0,
+          "duration": 1.5
+        }
+      },
+      "bones": 67,
+      "texture": "Textures/Animals/Cow_Cattle_COL2_2k.png",
+      "texture_size": [
+        2048,
+        2048
+      ],
+      "vertices": 904,
+      "output_sha256": "d6296372c56bc7a469d92771bc61b9faeae37688be44db52515480ff5b9d5f6f"
+    },
+    "cat": {
+      "clips": {
+        "Attack": {
+          "source_take": "Cat_Attack",
+          "frames": 39,
+          "fps": 24.0,
+          "duration": 1.5833333333333333
+        },
+        "Death": {
+          "source_take": "Cat_Death",
+          "frames": 71,
+          "fps": 24.0,
+          "duration": 2.9166666666666665
+        },
+        "IdleToRun": {
+          "source_take": "Cat_Idle_To_Run",
+          "frames": 10,
+          "fps": 24.0,
+          "duration": 0.375
+        },
+        "IdleToWalk": {
+          "source_take": "Cat_Idle_To_Walk",
+          "frames": 17,
+          "fps": 24.0,
+          "duration": 0.6666666666666666
+        },
+        "Idle": {
+          "source_take": "Cat_Idle",
+          "frames": 81,
+          "fps": 24.0,
+          "duration": 3.3333333333333335
+        },
+        "RunToIdle": {
+          "source_take": "Cat_Run_To_Idle",
+          "frames": 12,
+          "fps": 24.0,
+          "duration": 0.4583333333333333
+        },
+        "Run": {
+          "source_take": "Cat_Run",
+          "frames": 15,
+          "fps": 24.0,
+          "duration": 0.5833333333333334
+        },
+        "WalkToRun": {
+          "source_take": "Cat_Walk_To_Run",
+          "frames": 17,
+          "fps": 24.0,
+          "duration": 0.6666666666666666
+        },
+        "Walk": {
+          "source_take": "Cat_Walk",
+          "frames": 37,
+          "fps": 24.0,
+          "duration": 1.5
+        }
+      },
+      "bones": 51,
+      "texture": "Textures/Animals/Cat_Orange_COL_1k.png",
+      "texture_size": [
+        2048,
+        2048
+      ],
+      "vertices": 371,
+      "output_sha256": "ac63c5e66af314f1ef459da92399f3a7a6c75572678f7e7e6aab46b3714a3fea"
+    }
+  }
+}

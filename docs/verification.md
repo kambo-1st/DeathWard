@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## Textured Polyperfect animals
+
+Content version `deathward-m1-29` adds a horse, cow, orange cat and two independently animated hens near Black Creek's starting street. Four source FBX rigs are converted to self-contained GLBs with original 2048×2048 albedo pixels, Unity tint and 38 animation takes. Unit/ancestor transforms are baked; mesh-only bone tips follow animated parents. Runtime blends Idle, Walk and Eat where available, with separate resident clocks and matching animated shadows. Town lighting and post processing apply to all four species.
+
+Seeded fixed-step roaming samples the imported navigation surface and checks footprint clearance, other residents, the board, player proximity and current train occupancy. Ambient animals do not block the player or participate in combat. Pause, mission selection and expeditions freeze their simulation; the editor runs its own update loop. Hub switching reloads placements, and Frontier has no animals yet. Placement configuration is separate from the town scene and is not exposed in the editor. See `assets/animals/README.md` for import and placement details.
+
+All fifteen headless suites, the native model graphics suite and the full native input suite pass. Animal tests cover matching 30/60/120 FPS results, two minutes of roaming for every resident, full footprint clearance, current vehicle hulls, deterministic phases, malformed placements and reset. Graphics tests load away from the repository, verify embedded textures, finite deformed vertices, clip blending and independent shared-model poses. The source audit checks every retained source/output hash, exact texture pixels and tint, skin weights, joint indices and all clip durations. Native and browser town captures were visually reviewed. Logs and previews use `artifacts/animals-*` and `artifacts/animal-*`.
+
+Native and WebAssembly builds pass. The full Chromium suite verifies animal movement, exact pause, editor freeze, hub population switching and the existing gameplay/persistence flow, without JavaScript, shader or WebGL errors. It passed when run on its own; the first run alongside native graphics tests timed out waiting for a transient dynamite kick state. The refreshed 39.2 MiB upload ZIP passes archive integrity, every manifest size/hash, exact current WASM/data/JavaScript comparisons and relative hosting-path checks. Source FBXs are excluded from this package.
+
 ## Trains on the original rails
 
 Content version `deathward-m1-28` binds all 62 original train mesh instances into eight vehicle groups on the verified Black Creek rail loop. The passenger and freight trains share progress, ease up to 3 units/second and wait six seconds at their original positions each lap. Front/rear route samples orient individual carriages through curves; the sixteen separate locomotive wheels turn with traveled distance around their original axles. Cab levers remain attached to their cab. Wheels/linkages combined into other body meshes remain rigid. Original meshes, materials, textures and authored placements are unchanged.

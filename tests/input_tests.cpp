@@ -332,6 +332,18 @@ int main(int argc, char **argv) {
             return 0;
         }
         dw::Game game(directory / "campaign.save");
+        check(game.animals.residents().size() == 5, "Black Creek loads five ambient animals");
+        game.update(dw::Tick);
+        const auto animalTime = game.animals.time();
+        check(animalTime > 0, "hub update advances animal simulation");
+        game.paused = true;
+        game.update(dw::Tick);
+        check(game.animals.time() == animalTime, "pause freezes animal poses and motion");
+        game.paused = false;
+        game.missionMenu = true;
+        game.update(dw::Tick);
+        check(game.animals.time() == animalTime, "mission selection freezes ambient animals");
+        game.missionMenu = false;
         check(game.musicScene() == dw::MusicScene::Town, "default hub selects its town score");
         dw::Renderer renderer;
         const dw::Game::SceneryPicker pickScenery = [&](const auto &run, const auto &camera, Ray ray) {
@@ -424,6 +436,7 @@ int main(int argc, char **argv) {
                   game.town.loaded() && dw::distance(blackCreekArrival, game.town.spawn) > 20,
               "the visible travel button switches directly to Frontier's scene and navigation");
         const auto frontierArrival = game.town.player.position;
+        check(game.animals.residents().empty(), "Black Creek animals do not leak into Frontier");
         mouseEvent(KeyDown, KEY_W);
         for (int i = 0; i < 20; ++i)
             frame(700, 400);
@@ -455,6 +468,7 @@ int main(int argc, char **argv) {
         click(620, 624);
         check(game.activeHub == dw::HubKind::BlackCreek && !game.paused,
               "pause-screen return travel remains available");
+        check(game.animals.residents().size() == 5, "return travel reloads town animals");
         pressKey(KEY_F4);
         check(game.editorRequested && game.screen == dw::Screen::Hub && !game.run &&
                   !game.campaign.data().pending,

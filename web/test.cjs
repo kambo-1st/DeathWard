@@ -53,6 +53,10 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal((await state()).hub, 0);
     assert.equal((await state()).audio, 2);
     assert.equal((await state()).zoom, 160);
+    assert.equal(await page.evaluate(() => Module.animals.count), 5);
+    const animalBefore = await page.evaluate(() => Module.animals);
+    await wait(before => Module.animals.phase > before.phase + 2 &&
+      Math.hypot(Module.animals.x - before.x, Module.animals.z - before.z) > .1, animalBefore);
     assert.equal(await page.evaluate(() => Module.motion.count), 64);
     assert.equal(await page.evaluate(() => Module.motion.vehicles), 8);
     await wait(() => Module.motion.trainDistance > .2);
@@ -88,12 +92,15 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await page.evaluate(() => window.dispatchEvent(new Event('blur')));
     await wait(() => Module.state.paused);
     const frozenMotion = await page.evaluate(() => Module.motion);
+    const frozenAnimals = await page.evaluate(() => Module.animals);
     await page.waitForTimeout(250);
     assert.deepEqual(await page.evaluate(() => Module.motion), frozenMotion);
+    assert.deepEqual(await page.evaluate(() => Module.animals), frozenAnimals);
     await key('Escape');
     await wait(() => !Module.state.paused);
     console.log('PASS town rendering, WebAudio initialization, movement and wheel zoom');
     console.log('PASS two trains, independent tumbleweeds and exact pause behavior');
+    console.log('PASS five animated animals, roaming and exact pause behavior');
     await key('Escape');
     assert.equal((await state()).paused, true);
     await click(230, 494);
@@ -103,6 +110,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await click(1050, 734);
     await wait(() => Module.state.hub === 1 && Module.state.frame > 10);
     assert.equal(await page.evaluate(() => Module.motion.count), 0);
+    assert.equal(await page.evaluate(() => Module.animals.count), 0);
     await page.waitForTimeout(1200);
     await page.screenshot({path: path.join(artifacts, 'web-frontier.png')});
     console.log('PASS music controls and direct Frontier travel');
@@ -222,12 +230,14 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await wait(() => Module.state.screen === 2 && Module.state.history === 1 && !Module.saving);
     console.log('PASS canyon launch, firing, camera orbit, final encounter and victory');
     await start(base + '?verify&theme=mine');
+    assert.equal(await page.evaluate(() => Module.animals.count), 5);
     assert.equal((await state()).history, 1);
     assert((await state()).money >= collectedMoney, 'collected money survives resolution and browser reload');
     assert(Math.abs((await state()).music - .3) < .001);
     console.log('PASS campaign and music volume survive a browser reload');
     await key('F4');
     await wait(() => Module.state.editor);
+    const editorAnimals = await page.evaluate(() => Module.animals);
     const originalScene = await page.evaluate(() => Module.FS.readFile('/persist/town/town.scene', {encoding: 'utf8'}));
     const editorClick = (x, y) => click(x * 1280 / 1440, y * 800 / 900);
     await editorClick(110, 160);
@@ -240,6 +250,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     await wait(() => Module.state.editorSaved && !Module.saving);
     const savedScene = await page.evaluate(() => Module.FS.readFile('/persist/town/town.scene', {encoding: 'utf8'}));
     assert(savedScene !== originalScene, 'editor input changes and saves the selected prop');
+    assert.deepEqual(await page.evaluate(() => Module.animals), editorAnimals);
     await page.screenshot({path: path.join(artifacts, 'web-editor.png')});
     await key('Escape');
     await wait(() => !Module.state.editor);

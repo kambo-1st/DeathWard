@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/Simulation.hpp"
+#include "world/Animals.hpp"
 #include "world/HubDefinition.hpp"
 #include "world/HubWorld.hpp"
 #include "world/ObjectAnimation.hpp"
@@ -63,6 +64,7 @@ class Game {
     std::unique_ptr<Simulation> run;
     HubWorld town;
     ObjectAnimationSystem townObjects;
+    Animals animals;
     bool reloadTownObjects();
     HubKind activeHub = HubKind::BlackCreek;
     std::filesystem::path hubDirectory() const;

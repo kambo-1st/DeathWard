@@ -30,6 +30,7 @@ add_library(deathward_core
     src/world/ObjectAnimation.cpp
     src/world/TownNavigation.cpp
     src/world/HubWorld.cpp
+    src/world/Animals.cpp
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
     src/world/CanyonTerrain.cpp
@@ -66,6 +67,14 @@ function(deathward_assets target)
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio" "$<TARGET_FILE_DIR:${target}>/assets/audio"
         VERBATIM)
+    foreach(animal_file horse.glb hen.glb cow.glb cat.glb town.animals)
+        set(animal_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals/${animal_file}")
+        set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${animal_asset}")
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/animals"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${animal_asset}" "$<TARGET_FILE_DIR:${target}>/assets/animals/${animal_file}"
+            VERBATIM)
+    endforeach()
     set(bandit_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/bandit/bandit.glb")
     target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
     set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${bandit_asset}")
@@ -93,7 +102,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(EMSCRIPTEN)
@@ -107,6 +116,9 @@ if(EMSCRIPTEN)
         -lidbfs.js "SHELL:--shell-file '${CMAKE_CURRENT_SOURCE_DIR}/web/shell.html'")
     set(web_assets
         assets/bandit/bandit.glb assets/western/western.glb assets/western/western.catalog)
+    foreach(animal_file horse.glb hen.glb cow.glb cat.glb town.animals)
+        list(APPEND web_assets assets/animals/${animal_file})
+    endforeach()
     foreach(hub town frontier)
         foreach(name town.glb town.scene town.nav town.labels)
             list(APPEND web_assets assets/${hub}/${name})
@@ -129,6 +141,12 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_animal_tests tests/animal_tests.cpp)
+    target_link_libraries(deathward_animal_tests PRIVATE deathward_core)
+    add_test(NAME ambient_animals COMMAND deathward_animal_tests)
+    add_executable(deathward_animal_model_tests tests/animal_model_tests.cpp src/render/AnimalModels.cpp)
+    target_link_libraries(deathward_animal_model_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_animal_model_tests)
     add_executable(deathward_train_tests tests/train_tests.cpp)
     target_link_libraries(deathward_train_tests PRIVATE deathward_core)
     add_test(NAME train_motion COMMAND deathward_train_tests)
@@ -177,7 +195,7 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
     add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
-    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/Renderer.cpp src/core/Game.cpp)
+    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/Renderer.cpp src/core/Game.cpp)
     target_link_libraries(deathward_occlusion_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_occlusion_tests)
     add_executable(deathward_post_process_tests tests/post_process_tests.cpp src/render/PostProcess.cpp)
@@ -186,7 +204,7 @@ if(BUILD_TESTING)
     add_executable(deathward_editor_tests tests/editor_tests.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_editor_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_editor_tests)
-    add_executable(deathward_input_tests tests/input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
+    add_executable(deathward_input_tests tests/input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_input_tests)
     add_executable(deathward_player_model_tests tests/player_model_tests.cpp src/render/PlayerModel.cpp)

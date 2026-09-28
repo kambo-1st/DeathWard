@@ -63,7 +63,9 @@ Black Creek's **two tumbleweeds roll through the streets**, following gentle see
 
 Black Creek's **passenger and freight trains run around the original rails**. Carriages follow the curves, locomotive wheels turn with travel, and the trains ease away from their stops. They stop for the player; WASD and mouse paths respect their current positions. Select a train part in the editor's **Animation** tab to change speed, acceleration and station wait or preview the route.
 
-Both hubs use their imported sunlight and lamps, with warm ground bounce, cooler sky fill and sun-cast shadows from scenery and the animated bandit. Shadows follow the camera as you walk, orbit and zoom. The town editor previews the same lighting while objects move. Original textures and placements remain intact.
+Black Creek now has **a horse, cow, orange cat and two hens** near the starting street. These Polyperfect animals use their original textures and skeletal animations, with independent idle, walking and eating poses and short roaming routes over clear ground. They are ambient residents. See the [animal import and placement guide](assets/animals/README.md) for source assets and configuration; animal placements are not yet part of the town editor.
+
+Both hubs use their imported sunlight and lamps, with warm ground bounce, cooler sky fill and sun-cast shadows from scenery, the animated bandit and town animals. Shadows follow the camera as you walk, orbit and zoom. The town editor previews the same lighting while objects move. Original textures and placements remain intact.
 
 The world uses an autumn color treatment inspired by the supplied visual reference: amber highlights, plum shadows, richer colors, soft bloom and a subtle vignette. A gentle blur softens fine detail, and light lavender fog builds with scene depth while keeping the camera's focal area clear. Frontier's leafy trees vary between copper and gold; bark, grass and evergreen foliage keep their source palette. The same post processing covers both hubs, missions and the editor. Menus, text and enemy health bars are drawn afterward to stay sharp and retain their original colors.
 

@@ -1,4 +1,5 @@
 #include "core/Game.hpp"
+#include "render/AnimalModels.hpp"
 #include "render/PlayerModel.hpp"
 #include "render/TownScene.hpp"
 #include <charconv>
@@ -136,7 +137,13 @@ bool Game::reloadTownObjects() {
         return false;
     townObjects.reset(document);
     town.setMovingSolids(townObjects.solids());
-    return true;
+    const bool loaded =
+        animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
+                                                      : std::filesystem::path{},
+                     town);
+    if (!loaded)
+        error = animals.error();
+    return loaded;
 }
 bool Game::selectHub(HubKind hub) {
     if (screen != Screen::Hub || run || editorRequested)
@@ -155,8 +162,11 @@ bool Game::selectHub(HubKind hub) {
     ++audioContext;
     audioCues.clear();
     activeHub = hub;
+    animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
+                                                  : std::filesystem::path{},
+                 town);
     paused = missionMenu = walkingToMission = false;
-    error.clear();
+    error = animals.error();
     resetPointerInput();
     snapCamera();
     return true;
@@ -683,6 +693,7 @@ void Game::updateHub(float dt) {
     if (IsKeyPressed(KEY_E) || IsKeyPressed(KEY_ENTER))
         perform(Action::Missions);
     town.step(movement, std::min(dt, .1f));
+    animals.update(std::min(dt, .1f), town);
     if (walkingToMission && town.nearMission()) {
         walkingToMission = false;
         missionMenu = true;

@@ -1,0 +1,135 @@
+{
+  "format": 1,
+  "animals": [
+    {
+      "id": "horse",
+      "mesh": "HorseThoroughbred",
+      "rig": "Meshes/Animals/Horse/SKM_Horse_Rig.fbx",
+      "animation": "Meshes/Animals/Horse/SKM_Horse_Animations.fbx",
+      "material": "Materials/Animals/Horse_Brown.mat",
+      "texture": "Textures/Animals/Horse_Brown_COL_2k.png",
+      "tint": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "uv_scale": [
+        1,
+        1
+      ],
+      "uv_offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "hen",
+      "mesh": "Hen",
+      "rig": "Meshes/Animals/Hen/SKM_Hen_Rig.fbx",
+      "animation": "Meshes/Animals/Hen/SKM_Hen_Animations.fbx",
+      "material": "Materials/Animals/Hen.mat",
+      "texture": "Textures/Animals/Hen_Brown_COL_2k.png",
+      "tint": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "uv_scale": [
+        1,
+        1
+      ],
+      "uv_offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cow",
+      "mesh": "Cow_NoHorns",
+      "rig": "Meshes/Animals/Cow/SKM_Cow_Rig.fbx",
+      "animation": "Meshes/Animals/Cow/SKM_Cow_Animations.fbx",
+      "material": "Materials/Animals/Cow_Brown.mat",
+      "texture": "Textures/Animals/Cow_Cattle_COL2_2k.png",
+      "tint": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "uv_scale": [
+        1,
+        1
+      ],
+      "uv_offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cat",
+      "mesh": "cat",
+      "rig": "Meshes/Animals/Cat/SKM_Cat_Rig.fbx",
+      "animation": "Meshes/Animals/Cat/SKM_Cat_Animations.fbx",
+      "material": "Materials/Animals/Cat_Orange.mat",
+      "texture": "Textures/Animals/Cat_Orange_COL_1k.png",
+      "tint": [
+        1,
+        0.78255576,
+        0.50735295,
+        1
+      ],
+      "uv_scale": [
+        1,
+        1
+      ],
+      "uv_offset": [
+        0,
+        0
+      ]
+    }
+  ],
+  "source_sha256": {
+    "Meshes/Animals/Horse/SKM_Horse_Rig.fbx": "b172a2da615d0a44614fefb0731914239fa329016526165e0ee5cc45b4b8d1e4",
+    "Meshes/Animals/Horse/SKM_Horse_Rig.fbx.meta": "4388f16e26a3254d03912ef916f0e40a5279706f725795fffdcf462d969e1037",
+    "Meshes/Animals/Horse/SKM_Horse_Animations.fbx": "aba1d96529bdb9542de0b506685cf72c9683d1f93bf97b00a2a3a52cd5fbea8f",
+    "Meshes/Animals/Horse/SKM_Horse_Animations.fbx.meta": "d84dc0476c36d31908b0bce20ba077107f510437d2bac950b6a0597e8fd21de0",
+    "Materials/Animals/Horse_Brown.mat": "e30bd941c18b5370c36c17b75d4fd38b1d0576a8eb24589159537cc6fb4283d6",
+    "Materials/Animals/Horse_Brown.mat.meta": "0c1307212a8abe986c81b4a3652b45160cc0c696a5f56d4410040f89021102b1",
+    "Textures/Animals/Horse_Brown_COL_2k.png": "8655f6959ad1333895c7af74ddfddbdd9b1816cf629eb83d88624d2e8ba0a237",
+    "Textures/Animals/Horse_Brown_COL_2k.png.meta": "a17ba67b619566467ac335c529dac9394071b43c10ff07799e89b4847486f371",
+    "Prefabs/Animals/Horse_Brown.prefab": "319a25ba0e4d30065aca5603c4fa16a79f5bd118cf27a309b68070754c36be9c",
+    "Prefabs/Animals/Horse_Brown.prefab.meta": "6756c172648230f0207dc2380c94d5aa78c471d439be01c8821895fbbe491ea2",
+    "Meshes/Animals/Hen/SKM_Hen_Rig.fbx": "e08bfaeb22614f04027fbc057648e90d579c306d91b4ebfd2af0000211ebc7b7",
+    "Meshes/Animals/Hen/SKM_Hen_Rig.fbx.meta": "16ac12b9db68a34f1e3539ca0b5f115815b65735938d2367c512cc761bd3e8d0",
+    "Meshes/Animals/Hen/SKM_Hen_Animations.fbx": "d4c52545eccf5d6eea8de1603f2d23e3ee3f36c055ad97fdbebb1bf0a941eb78",
+    "Meshes/Animals/Hen/SKM_Hen_Animations.fbx.meta": "09fbfd8bc0c4e830bba11d7d39334047b6ffc2bd09ad4bdb741152c17b596240",
+    "Materials/Animals/Hen.mat": "86c085a03040fdd81156e42271e9f4a213f879e04a64b087fd813763e8b14ca7",
+    "Materials/Animals/Hen.mat.meta": "172fac28b496987fb02b2cd87f04c15e9f4b93335aba3fb883f4b88ed1e5a257",
+    "Textures/Animals/Hen_Brown_COL_2k.png": "6abb78b41108777b651abc14099f6440e3c8dc4160eda28896b522803889945e",
+    "Textures/Animals/Hen_Brown_COL_2k.png.meta": "942519c3ad70e9262947bd5bf88210d9dcadabc98d36780c9605e12c10da4b1b",
+    "Prefabs/Animals/Hen.prefab": "ca611ac3b0c00029b396fdc8ee47dd9a612f8f46e3677ba76f90769781fb76ca",
+    "Prefabs/Animals/Hen.prefab.meta": "4938f9629f99faa27e85de804ee9165a903d6401463785d2ec80f448f96c9f54",
+    "Meshes/Animals/Cow/SKM_Cow_Rig.fbx": "980dd4900fb06f2dded657517995d14d4b8bd6fbbc4f7e55dde1595c123982fd",
+    "Meshes/Animals/Cow/SKM_Cow_Rig.fbx.meta": "4b72c80e1d93696476171abe82ef250e910afe0e940e7d86bf8b6dd4f574af76",
+    "Meshes/Animals/Cow/SKM_Cow_Animations.fbx": "cb0807823becf39f7a2df29a40676f71e9407dc7b6db33e844b8a679c523e4ea",
+    "Meshes/Animals/Cow/SKM_Cow_Animations.fbx.meta": "b8e7cf989c9dd6d0a6cd1f9d236471fb51ed60895f89a3e2b035453bff597546",
+    "Materials/Animals/Cow_Brown.mat": "079e19c6293634df2ec16135bce6dbefd3eba6333df1c8e2cd6d7f6e1ca7ae0c",
+    "Materials/Animals/Cow_Brown.mat.meta": "53318f5744d267fd08309917d3a22ea02a739d14af68f69b15736accdd753e4d",
+    "Textures/Animals/Cow_Cattle_COL2_2k.png": "04b7767ca9652c85605983e5852c1adac241c2daef5e42cc2bfbe2e89154d45c",
+    "Textures/Animals/Cow_Cattle_COL2_2k.png.meta": "4d0c93ed6645adc5c30f9a73c1c006026f1ee85bf6b6d1b8a075938b0b616121",
+    "Prefabs/Animals/Cow_Brown.prefab": "93339dc7c07c123c45b23801e3dba19f97ea0c667cccadb99069ee34c9e1b511",
+    "Prefabs/Animals/Cow_Brown.prefab.meta": "0b860bd4d7a43717dae3f6f124cfd8626e22723ad85b0ab804257785757f507a",
+    "Meshes/Animals/Cat/SKM_Cat_Rig.fbx": "dc0c9dff2cd63b285e5e060c534c645aa810849b3732610b5b1714347115ac99",
+    "Meshes/Animals/Cat/SKM_Cat_Rig.fbx.meta": "fb983e92ec761bd5899f639a657319a05af74b8fbf4648981715bb05973f53e1",
+    "Meshes/Animals/Cat/SKM_Cat_Animations.fbx": "fa005c8227857553314f1407860e5852f142bad6b499aceff14b0cf17a8e469b",
+    "Meshes/Animals/Cat/SKM_Cat_Animations.fbx.meta": "4a269429df12c3c09b64a50458c419e96ebe25747863bf32717305064311c8d1",
+    "Materials/Animals/Cat_Orange.mat": "d8d410fbb99af59565cb02d457824ee70b6c334435906c71e7243595f54b3b80",
+    "Materials/Animals/Cat_Orange.mat.meta": "869f8739490ade8dce98e4f5da860420b58ac5ca533bac66c6231a336554095e",
+    "Textures/Animals/Cat_Orange_COL_1k.png": "5fa3c92bbf22554504fac64b988af97984f827d4ba69913387e49d0786850ff5",
+    "Textures/Animals/Cat_Orange_COL_1k.png.meta": "0c54fc52e4c9a6bb159e50473c671063c3f4a14175ce6225591b0dd8d995911e",
+    "Prefabs/Animals/Cat_Orange.prefab": "6aaa6880e7920aa0551a8c3d5c5a0a50bc3ccea234c04dad1b8dd45cd94b1982",
+    "Prefabs/Animals/Cat_Orange.prefab.meta": "98e0c62f0c7e53343bb6d3967fd06636f5c4ab421f1dbf4c65bf44f48a3d4719"
+  }
+}

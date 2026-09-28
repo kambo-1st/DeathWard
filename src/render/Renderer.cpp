@@ -750,12 +750,16 @@ Action Renderer::hub(const Game &game) {
     townScene_.applyAnimation(game.townObjects);
     const auto &world = game.campaign.data().world;
     playerModel_.update(town.player, town.time, &town);
+    animalModels_.prepare(game.animals);
     townScene_.setPlayerOcclusion(game.camera, town.player.position);
-    townScene_.prepareLighting(game.camera,
-                               [&](Shader depth) { playerModel_.draw(town.player, false, depth); });
+    townScene_.prepareLighting(game.camera, [&](Shader depth) {
+        playerModel_.draw(town.player, false, depth);
+        animalModels_.draw(game.animals, depth);
+    });
     postProcess_.begin(Color{154, 186, 199, 255}, distance(game.camera.position, game.camera.target));
     BeginMode3D(game.camera);
     townScene_.draw(town.player.position);
+    animalModels_.draw(game.animals, townScene_.actorShader(), townScene_.shadowTexture());
     const auto board = town.mission;
     DrawCylinder({board.x, board.y, board.z}, .09f, .12f, 1.8f, 6, Color{62, 42, 30, 255});
     DrawCube({board.x, board.y + 1.6f, board.z}, 1.5f, .95f, .12f, Color{91, 62, 39, 255});

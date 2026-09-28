@@ -313,6 +313,15 @@ int main(int argc, char **argv) {
 #ifdef __EMSCRIPTEN__
             // Read-only state for browser integration checks; absent during ordinary play.
             const auto *probeProp = game.townObjects.firstPropPose();
+            const auto &residents = game.animals.residents();
+            EM_ASM(
+                {
+                    if (Module.verify)
+                        Module.animals = ({count : $0, time : $1, phase : $2, x : $3, z : $4});
+                },
+                int(residents.size()), game.animals.time(), residents.empty() ? 0. : residents[0].phase,
+                residents.empty() ? 0.f : residents[0].position.x,
+                residents.empty() ? 0.f : residents[0].position.z);
             EM_ASM(
                 {
                     if (Module.verify)
