@@ -1,5 +1,15 @@
 # Milestone 1 verification
 
+## No automatic room healing
+
+Removed the 15 HP bonus on first room entry and the 20 HP bonus on room completion. The expedition-loop contract now uses a wounded player and verifies health through first entry, final-enemy kills, room clears and peaceful-room revisits. The Release build and all seven headless suites pass. Logs use `artifacts/no-room-healing-*`.
+
+## Stronger, more aggressive enemies
+
+Content version `deathward-m1-21` applies 25% more damage at impact across enemy contact, projectiles and hazards, 10% faster ordinary movement, and 15% shorter attack cooldowns to both rosters and the Sheriff. Windups, committed jumps/charges, projectile speeds, enemy HP, dodge/hurt protection, mirror/orbit positioning and friendly-monster behavior retain their previous values.
+
+The Release build and all seven headless suites pass. Actual melee, contact, projectile, chain and ring damage are verified, alongside faster Rusher/Gaper pursuit and shorter Gunman/Horf attack cycles with full warnings. Existing coverage checks every catalog entry, obstacle collision, hazards, armor, spawning, room budgets and deterministic generation. Logs use `artifacts/enemy-pressure-*`.
+
 ## Starting camera zoom
 
 New sessions start at 160% zoom in both hubs and missions. The wheel limits and session zoom retention are unchanged. The Release build and full graphics input suite pass, including the starting zoom, camera framing, smooth wheel movement, both zoom limits and hub/mission transitions. The Black Creek startup capture was visually checked and displays 160%. Logs and the capture use `artifacts/zoom-default-*`.

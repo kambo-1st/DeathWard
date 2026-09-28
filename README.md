@@ -77,7 +77,9 @@ The camera follows you through corridors. The mission map shows branches, your p
 | T while paused | Retreat and resolve consequences |
 | H in the hub | Inspect previous runs |
 
-Start each expedition with **100 HP** and **24 revolver damage**. The revolver fires continuously while holding an enemy, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
+Start each expedition with **100 HP** and **24 revolver damage**. Enemy kills, room clears and room entry provide no automatic healing. The revolver fires continuously while holding an enemy, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
+
+Both enemy rosters now deal **25% more damage**, move **10% faster during ordinary movement**, and have **15% shorter attack cooldowns**. A former 10-damage hit now deals 12.5. The mine's Sheriff shares this tuning. Attack warnings, projectile speeds, committed charges/jumps, enemy health and the player's dodge/hurt protection retain their existing values; mirror movement, orbit positioning and friendly monsters retain their original movement behavior.
 
 With cheats enabled, pause a mission to use **Player Settings**: adjust base health in steps of 25 and shot damage in steps of 4. During play, **minus / equals** (or keypad minus / plus) adjust damage; hold **Shift** with those keys to adjust health. **Home** restores the 100 HP / 24 damage defaults. Base health is bounded to 25–2,000 and damage to 1–500. Health changes preserve your current health percentage and still apply Judas Bullet's health cost; Shift+F2 fully heals. Settings apply immediately to new shots and carry into subsequent missions and hub travel for this session. Restarting the game restores the defaults. Split and ghost bullets use the adjusted shot damage; Powder of Jericho keeps its own explosion damage.
 

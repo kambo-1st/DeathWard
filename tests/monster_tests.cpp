@@ -77,6 +77,15 @@ void gunsAndArmor() {
     check(s.findEnemy(id)->state == EnemyState::Windup && s.projectiles.empty(), "Horf warns before firing");
     tick(s, 35);
     check(s.stats.projectiles == 1, "Horf fires one actual projectile");
+    int frames = 0;
+    while (s.stats.projectiles < 2 && frames < 180) {
+        tick(s, 1);
+        ++frames;
+    }
+    check(frames >= 150 && frames <= 159 && s.stats.projectiles == 2,
+          "Horf attacks again sooner while retaining its full windup");
+    check(s.player.hp == StartingHealth - 12.5f && s.stats.damageTaken == 12.5f,
+          "Horf shots deal 25% more damage exactly once");
     auto c = fixture();
     ready(c, monsterId(15));
     tick(c, 36);
@@ -202,6 +211,16 @@ void hazardsAndCover() {
           "Gurgle blast spares its source and damages other enemies");
 }
 void movementAndProjectiles() {
+    auto chase = fixture();
+    const auto gaper = chase.spawnMonster(monsterId(10, 1), {0, .85f, 0});
+    tick(chase, 60);
+    check(std::abs(chase.findEnemy(gaper)->position.z - 2.42f) < .01f,
+          "Gapers pursue 10% faster across open floor");
+    chase.player.position = add(chase.findEnemy(gaper)->position, {0, 0, .75f});
+    tick(chase, 1);
+    check(chase.player.hp == StartingHealth - 12.5f, "monster contact deals the boosted damage");
+    tick(chase, 10);
+    check(chase.player.hp == StartingHealth - 12.5f, "contact damage still respects hurt invulnerability");
     auto mirror = fixture();
     auto id = mirror.spawnMonster(monsterId(53), {0, .85f, 0});
     Input input;

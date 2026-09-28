@@ -38,4 +38,4 @@ The [Isaac character page](https://bindingofisaacrebirth.fandom.com/wiki/Isaac) 
 
 This pass checks the character reference and retains the current player configuration. It does not replace the bandit or silently convert the health system. A coherent Isaac balance preset would need player hearts, incoming damage, enemy HP, shot damage, healing and item effects converted together: changing only 24 damage to 3.5 would make the existing enemies roughly 6.9 times as durable, while changing only health would make ordinary 10-point contact hits immediately lethal.
 
-The subsequent player-balance adjustment sets the DeathWard defaults to 100 HP and 24 shot damage; enemy values remain unchanged.
+The subsequent player-balance adjustment sets the DeathWard defaults to 100 HP and 24 shot damage. Enemy tuning in `deathward-m1-21` increases incoming enemy damage by 25%, ordinary movement speed by 10%, and reduces attack cooldowns by 15%. Warning times, committed charge/jump trajectories, enemy HP, mirroring, orbit positioning and friendly-monster behavior retain their prior values. Ordinary contact now deals 12.5 damage; Globin contact deals 25.

@@ -60,7 +60,9 @@ void testMeleeAndGuns() {
         check(run.findEnemy(id)->state == EnemyState::Windup && run.player.hp == StartingHealth,
               "melee attacks give warning before damage");
         resolveWindup(run, kind);
-        check(run.player.hp < StartingHealth, "a completed melee swing damages a player in reach");
+        const float hitDamage = kind == EnemyKind::Ironhide ? 27.5f : 12.5f;
+        check(run.player.hp == StartingHealth - hitDamage && run.stats.damageTaken == hitDamage,
+              "a completed melee swing deals 25% more damage and records the actual loss");
         auto miss = fixture();
         miss.player.position.z = 1.5f;
         prepare(miss, kind);
@@ -89,6 +91,27 @@ void testMeleeAndGuns() {
             check(run.stats.bounces > 0, "marshal bullet actually reflects from a wall");
         }
     }
+}
+
+void testEnemyPressure() {
+    auto chase = fixture();
+    const auto rusher = chase.spawn(EnemyKind::Rusher, {0, .85f, 0});
+    tick(chase, 60);
+    check(std::abs(chase.findEnemy(rusher)->position.z - 2.86f) < .01f,
+          "rushers pursue 10% faster across open floor");
+
+    auto gun = fixture();
+    prepare(gun, EnemyKind::Gunman);
+    resolveWindup(gun, EnemyKind::Gunman);
+    int frames = 0;
+    while (gun.stats.projectiles < 2 && frames < 160) {
+        tick(gun, 1);
+        ++frames;
+    }
+    check(frames >= 123 && frames <= 129 && gun.stats.projectiles == 2,
+          "gunmen fire again after the shorter cooldown and a full attack warning");
+    check(gun.player.hp == StartingHealth - 15 && gun.stats.damageTaken == 15,
+          "a gunman's projectile applies the damage increase once at impact");
 }
 
 void testArmorAndSupport() {
@@ -197,7 +220,7 @@ void testChargeAndRing() {
             ring.player.dodgeDirection = {};
         }
         tick(ring, 95);
-        check(ring.player.hp == (mode == 0 ? StartingHealth - 16 : StartingHealth),
+        check(ring.player.hp == (mode == 0 ? StartingHealth - 20 : StartingHealth),
               "bell ring hits once, respects cover and can be dodged");
     }
 }
@@ -245,7 +268,7 @@ void testHookWraithAndChain() {
     chain.findEnemy(second)->partner = first;
     check(chain.chainActive(*chain.findEnemy(first)), "a visible pair has an active tether");
     chain.step({});
-    check(chain.player.hp == StartingHealth - 12, "crossing the chain damages the player");
+    check(chain.player.hp == StartingHealth - 15, "crossing the chain deals the boosted enemy damage");
     chain.arena.walls.push_back({{-0.5f, 0, 7}, {0.5f, 3, 9}});
     check(!chain.chainActive(*chain.findEnemy(first)), "cover breaks the damaging chain");
     damage(chain, second, 1000);
@@ -341,6 +364,7 @@ void testAreaAndEncounters() {
 int main() {
     try {
         testMeleeAndGuns();
+        testEnemyPressure();
         testArmorAndSupport();
         testHazards();
         testChargeAndRing();

@@ -9,9 +9,12 @@
 #include <vector>
 
 namespace dw {
-inline constexpr const char *ContentVersion = "deathward-m1-20";
+inline constexpr const char *ContentVersion = "deathward-m1-21";
 inline constexpr float StartingHealth = 100;
 inline constexpr float RevolverDamage = 24;
+inline constexpr float EnemyDamageMultiplier = 1.25f;
+inline constexpr float EnemyMovementMultiplier = 1.10f;
+inline constexpr float EnemyCooldownMultiplier = .85f;
 inline constexpr float Tick = 1.0f / 60.0f;
 inline constexpr float Pi = 3.14159265358979323846f;
 inline Vector3 add(Vector3 a, Vector3 b) {

@@ -118,7 +118,6 @@ void Simulation::chooseReward(int index) {
 void Simulation::enterRoom(int index) {
     room = std::clamp(index, 0, FinalRoom);
     auto &progress = rooms[size_t(room)];
-    const bool firstVisit = !progress.visited;
     progress.visited = true;
     roomClear = progress.cleared;
     rewardOpen = false;
@@ -132,8 +131,6 @@ void Simulation::enterRoom(int index) {
     enemies.clear();
     pendingMonsters_.clear();
     visuals.clear();
-    if (firstVisit && room != 0)
-        player.hp = std::min(player.maxHp, player.hp + 15);
     const auto kind = arena.rooms[size_t(room)].kind;
     if (kind == RoomKind::Power || kind == RoomKind::Empty) {
         if (!progress.cleared) {
@@ -173,7 +170,6 @@ void Simulation::clearRoom() {
     clearHazards();
     arena.sealRoom(-1);
     ++stats.rooms;
-    player.hp = std::min(player.maxHp, player.hp + 20);
     checkpointNeeded = true;
     Event event;
     event.type = EventType::RoomCleared;

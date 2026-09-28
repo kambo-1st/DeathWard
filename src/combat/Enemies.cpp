@@ -18,6 +18,8 @@ bool Simulation::chainActive(const Enemy &enemy) const {
 bool Simulation::hurtPlayer(float damage, const Context &context) {
     if (godMode || player.dodge > 0 || player.hurt > 0)
         return false;
+    // Apply once at impact for enemy contact, shots and hazards, including split shots.
+    damage *= EnemyDamageMultiplier;
     player.hp -= damage;
     stats.damageTaken += damage;
     player.hurt = 0.45f;
@@ -247,7 +249,7 @@ void Simulation::updateEnemies(float dt) {
                 hurtPlayer(12);
         }
         const auto &definition = enemyDefinition(enemy.kind);
-        enemy.cooldown -= dt;
+        enemy.cooldown -= dt / EnemyCooldownMultiplier;
         enemy.flash = std::max(0.0f, enemy.flash - dt);
         enemy.aura = std::max(0.0f, enemy.aura - dt);
         enemy.pathTime -= dt;
@@ -409,6 +411,7 @@ void Simulation::updateEnemies(float dt) {
                 movement = mul(unit(sub(enemy.path.front(), enemy.position)), definition.speed);
         } else
             enemy.path.clear();
+        movement = mul(movement, EnemyMovementMultiplier);
         Vector3 separation{};
         for (size_t index : candidates(enemy.position, enemy.position, 2.2f)) {
             const auto &other = enemies[index];
@@ -423,7 +426,8 @@ void Simulation::updateEnemies(float dt) {
         Vector3 next = arena.move(enemy.position, mul(movement, dt), enemy.radius);
         if (distance(next, enemy.position) < 0.01f && length(movement) > 0.2f) {
             const Vector3 side = rotateY(direction, enemy.id % 2 ? Pi / 2 : -Pi / 2);
-            next = arena.move(enemy.position, mul(side, definition.speed * dt), enemy.radius);
+            next = arena.move(enemy.position, mul(side, definition.speed * EnemyMovementMultiplier * dt),
+                              enemy.radius);
         }
         enemy.velocity = mul(sub(next, enemy.position), 1 / dt);
         enemy.position = next;

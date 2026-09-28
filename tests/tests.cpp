@@ -437,8 +437,10 @@ void testLoop() {
     run.godMode = true;
     int powers = 0;
     for (int room = 0; room < dw::RoomCount; ++room) {
+        run.player.hp = 30;
         run.player.position = run.arena.rooms[size_t(room)].center;
         run.enterRoom(room);
+        check(run.player.hp == 30, "entering any room preserves the player's wounded health");
         const auto before = run.items.size();
         if (run.arena.rooms[size_t(room)].kind == dw::RoomKind::Power) {
             check(run.roomClear && !run.rewardOpen,
@@ -458,16 +460,16 @@ void testLoop() {
             tick(run, 600);
             check(run.roomClear && run.livingEnemies() == 0 && !run.rewardOpen && run.items.size() == before,
                   "empty rooms stay peaceful without enemies or power rewards");
-            run.player.hp = 100;
             run.enterRoom(room);
-            check(run.player.hp == 100 && run.stats.rooms == cleared,
-                  "revisiting an empty room never repeats healing or room completion");
+            check(run.player.hp == 30 && run.stats.rooms == cleared,
+                  "revisiting an empty room preserves health and room completion");
         } else {
             check(run.livingEnemies() > 0, "one enemy group is present immediately on room entry");
             run.killAll();
             tick(run, 1);
             check(run.roomClear && !run.rewardOpen && run.items.size() == before,
                   "defeating the single group immediately opens doors without granting an item");
+            check(run.player.hp == 30, "killing the last enemy and clearing the room never heals");
             const auto cleared = run.stats.rooms;
             tick(run, 600);
             check(run.livingEnemies() == 0 && run.stats.rooms == cleared,

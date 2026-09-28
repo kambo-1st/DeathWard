@@ -6,7 +6,7 @@ namespace {
 using M = MonsterMotion;
 using A = MonsterAttack;
 using S = MonsterShape;
-// HP and timing are tuned for DeathWard's 48-damage revolver and 200-health player.
+// DeathWard base stats; shared enemy tuning is applied during simulation.
 constexpr MonsterDefinition Catalog[]{
     {monsterId(10), "Frowning Gaper", M::Chase, A::None, S::Walker, 72},
     {monsterId(10, 1), "Gaper", M::Chase, A::None, S::Walker, 64},
@@ -471,7 +471,7 @@ void Simulation::moveMonster(Enemy &e, Vector3 velocity, float dt) {
 void Simulation::updateMonster(Enemy &e, float dt) {
     const auto &d = *monsterDefinition(e.monster);
     const int t = type(e), v = variant(e);
-    e.cooldown -= dt;
+    e.cooldown -= dt / (e.friendly ? 1.0f : EnemyCooldownMultiplier);
     e.auxiliary -= dt;
     e.trailTime -= dt;
     e.age += dt;
@@ -767,6 +767,9 @@ void Simulation::updateMonster(Enemy &e, float dt) {
             if (!e.path.empty())
                 movement = mul(flatDirection(e.position, e.path.front()), d.speed);
         }
+        // Preserve exact mirroring/orbit positioning and committed jump/charge trajectories.
+        if (!e.friendly && d.motion != M::Mirror && d.motion != M::Orbit)
+            movement = mul(movement, EnemyMovementMultiplier);
         const auto before = e.position;
         moveMonster(e, movement, dt);
         if (length(movement) > .1f && distance(before, e.position) < length(movement) * dt * .5f) {
