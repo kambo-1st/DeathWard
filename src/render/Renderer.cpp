@@ -1016,6 +1016,31 @@ void Renderer::debugPanel(const Game &game) {
     if (run.logs.empty())
         text("No chains have reached a safety limit.", 41, y, 12, Muted);
 }
+Action Renderer::audioPanel(const Game &game) {
+    panel(24, 240, 296, 318, Panel);
+    text("AUDIO", 43, 263, 22, Gold);
+    const char *status = game.audioStatus == AudioStatus::Disabled      ? "Disabled for this launch"
+                         : game.audioStatus == AudioStatus::Unavailable ? "Audio unavailable"
+                                                                        : "Sound and surroundings";
+    text(status, 43, 294, 12, Muted);
+    const std::array<const char *, 3> labels{"MASTER", "EFFECTS", "AMBIENCE"};
+    const auto &s = game.audioSettings;
+    const std::array<float, 3> values{s.master, s.effects, s.ambience};
+    for (size_t i = 0; i < labels.size(); ++i) {
+        const float y = 321 + float(i) * 52;
+        text(labels[i], 43, y, 12, Muted);
+        text(std::to_string(int(std::round(values[i] * 100))) + "%", 43, y + 19, 18, Paper);
+        if (button("-", 211, y, 38, 37))
+            return Action(int(Action::MasterDown) + int(i) * 2);
+        if (button("+", 264, y, 38, 37))
+            return Action(int(Action::MasterUp) + int(i) * 2);
+    }
+    if (button(s.muted ? "UNMUTE" : "MUTE", 43, 498, 122, 39))
+        return Action::AudioMute;
+    if (button("TEST", 180, 498, 122, 39))
+        return Action::AudioTest;
+    return Action::None;
+}
 Action Renderer::draw(const Game &game) {
     sx_ = float(GetScreenWidth()) / 1280;
     sy_ = float(GetScreenHeight()) / 800;
@@ -1043,6 +1068,11 @@ Action Renderer::draw(const Game &game) {
                 action = Action::Hub;
         }
         break;
+    }
+    if (game.paused && (game.screen == Screen::Hub || game.screen == Screen::Expedition)) {
+        const auto audioAction = audioPanel(game);
+        if (audioAction != Action::None)
+            action = audioAction;
     }
     if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen)
         debugPanel(game);

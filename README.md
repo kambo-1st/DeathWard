@@ -13,7 +13,7 @@ A playable C++20 / raylib 3D Weird West prototype. Borrow a broken build from Re
 The script configures a Release build, downloads pinned raylib 5.5 on the first build, compiles, and launches. No game assets or other third-party packages are downloaded. CMake 3.20+, a C++20 compiler, OpenGL and X11 development libraries are required. On Ubuntu/Debian:
 
 ```sh
-sudo apt install build-essential cmake libasound2-dev libx11-dev libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev
+sudo apt install build-essential cmake libasound2-dev libpulse0 libx11-dev libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev
 ```
 
 See the [raylib Linux build guide](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux) for other distributions.
@@ -27,6 +27,18 @@ cmake --build build --parallel 4
 ```
 
 Windows is kept in scope through CMake and portable C++, but this milestone is tested on Linux. On Windows, use a C++20-capable Visual Studio toolchain with `cmake --build build --config Release`, then run `build/Release/deathward.exe`.
+
+## Audio
+
+Sound is enabled for ordinary play. The first audio pack includes revolver/enemy shots, stone and flesh impacts, hurt/death feedback, dodges, attack warnings, pickups, doors, room completion, UI sounds and footsteps. Both hubs, the canyon and the mine have distinct ambient loops that crossfade on travel. Effects pan with the camera and become quieter with distance; cover does not silence enemy attack warnings.
+
+Open **Pause** in a hub or mission for **Master**, **Effects** and **Ambience** volume, **Mute**, and a **Test** chime. Settings are saved in `audio.cfg` beside the campaign file. Pause reduces ambience and stops combat sounds. Dead or dodging players do not make walking sounds.
+
+On **WSL2 with WSLg**, raylib connects to WSLg's PulseAudio server through the existing `PULSE_SERVER` environment, normally `unix:/mnt/wslg/PulseServer`. Keep that environment when launching from a terminal or IDE. No additional Windows sound server is needed for this setup. If the output device cannot be opened, the game continues silently and the pause panel shows **Audio unavailable**. Older WSL2 installations without WSLg need an audio server before playback is available. Native Windows uses raylib/miniaudio's Windows audio backend.
+
+Use `./build/deathward --mute` to skip audio initialization entirely. Smoke tests and benchmarks are silent by default; add `--audio` to test their sound. `--mute` takes precedence. Scripted checks do not change saved volume preferences.
+
+The checked-in [audio pack](assets/audio/README.md) contains original synthesized effects and soundscapes. This is the first sound pass; there is no music score or recorded voice acting yet. Footstep variants follow the location rather than per-mesh surface materials.
 
 ## Play
 
@@ -171,13 +183,14 @@ ctest --test-dir build --output-on-failure
 ./build/deathward_town_assets_tests
 ./build/deathward_occlusion_tests
 ./build/deathward_post_process_tests
+./build/deathward_audio_tests
 ./build/deathward --smoke --theme mine --frames 180 --screenshot artifacts/combat.png
 ./build/deathward --smoke --theme canyon --scene combat --frames 90 --screenshot artifacts/canyon-combat.png
 ./build/deathward --smoke --scene hub --frames 2 --screenshot artifacts/hub.png
 ./build/deathward --benchmark --frames 600 --screenshot artifacts/stress.png
 ```
 
-The seven core CTest suites need no graphics display. Mission-theme checks cover seeded selection, organic terrain reproduction, clear routes, sealed entrances, safe enemy placement, surface collision and persisted canyon checkpoints/history. `deathward_input_tests` exercises mouse controls and function-key cheats through raylib's input system in a hidden window. `deathward_player_model_tests` checks the packaged mesh, texture, all nine clips, blending, simulation timing, root-motion removal and resource cleanup. `deathward_western_assets_tests` checks the scenery atlas, glass, scale, collision alignment, route clearance, seed reproduction, canyon terrain/mesh alignment and resource cleanup. `deathward_occlusion_tests` compares whole-object transparency in towns and canyon wall sections at different zoom levels, checks that translucent scenery remains visible, verifies restoration and unchanged collision, and saves before/after captures under `artifacts`. These require an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
+The eight core CTest suites need no graphics display or audio device. Audio presentation checks cover confirmed cues, priorities, bounded queues and unchanged gameplay randomness. Mission-theme checks cover seeded selection, organic terrain reproduction, clear routes, sealed entrances, safe enemy placement, surface collision and persisted canyon checkpoints/history. `deathward_input_tests` exercises mouse controls and function-key cheats through raylib's input system in a hidden window. `deathward_player_model_tests` checks the packaged mesh, texture, all nine clips, blending, simulation timing, root-motion removal and resource cleanup. `deathward_western_assets_tests` checks the scenery atlas, glass, scale, collision alignment, route clearance, seed reproduction, canyon terrain/mesh alignment and resource cleanup. `deathward_occlusion_tests` compares whole-object transparency in towns and canyon wall sections at different zoom levels, checks that translucent scenery remains visible, verifies restoration and unchanged collision, and saves before/after captures under `artifacts`. `deathward_audio_tests` exercises the real audio device, packaged sounds, voice limits, panning, pause/mute, crossfades, looping, preferences and cleanup; it captures and silences its output unless passed `--audible`. The graphics suites require an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
 
 Enemy tests cover all fifteen behaviors, attack warnings, armor and support, cover and dodge counters, delayed hazards and chain cleanup, plus area-scaled populations and safe placements across 32 seeds. Tests also cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Fast room-network checks cover 10,004 seeds, including rotation/reflection-independent footprint comparisons and graph diversity checks across 256 seeds. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power and enemy-free rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. Cheat checks cover disabled hotkeys, unobstructed play with cheats enabled, single-group encounters, effect cleanup, room/boss replay, preserved rewards and paused/modal outcomes. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `empty`, `cheats`, `boss` and `summary`.
 

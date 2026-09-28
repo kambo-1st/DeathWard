@@ -1,4 +1,5 @@
 #pragma once
+#include "audio/AudioState.hpp"
 #include "combat/Monsters.hpp"
 #include "core/Types.hpp"
 #include "world/Campaign.hpp"
@@ -166,6 +167,8 @@ class Simulation {
     std::vector<Projectile> projectiles;
     std::vector<VisualEffect> visuals;
     std::vector<Hazard> hazards;
+    AudioCueQueue audioCues;
+    uint64_t audioEpoch = 0;
     std::vector<ItemId> items;
     std::array<ItemId, 2> offers{};
     std::array<RoomProgress, RoomCount> rooms{};

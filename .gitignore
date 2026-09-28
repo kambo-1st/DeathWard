@@ -3,6 +3,7 @@
 *.tmp
 *.save
 *.save.bak
+audio.cfg
 /assets/town/town.scene.bak
 /assets/town/town.nav.bak
 *:Zone.Identifier

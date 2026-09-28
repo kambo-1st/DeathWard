@@ -21,6 +21,7 @@ bool Simulation::hurtPlayer(float damage, const Context &context) {
     // Apply once at impact for enemy contact, shots and hazards, including split shots.
     damage *= EnemyDamageMultiplier;
     player.hp -= damage;
+    audioCues.push(AudioCueKind::Hurt, player.position);
     stats.damageTaken += damage;
     player.hurt = 0.45f;
     Event hit;
@@ -67,6 +68,8 @@ float Simulation::enemyDamage(const Enemy &enemy, const Event &event) const {
 
 void Simulation::shootEnemy(const Enemy &enemy, Vector3 direction, float damage, float speed, int bounces,
                             ProjectileKind kind) {
+    audioCues.push(enemy.kind == EnemyKind::Monster ? AudioCueKind::MonsterAttack : AudioCueKind::EnemyShot,
+                   enemy.position);
     Event shot;
     shot.position = add(enemy.position, mul(direction, enemy.radius + 0.15f));
     // A muzzle must not create a bullet through an adjacent wall.
@@ -279,6 +282,7 @@ void Simulation::updateEnemies(float dt) {
                     enemy.position = enemy.target;
                 }
                 enemy.state = EnemyState::Windup;
+                audioCues.push(AudioCueKind::Warning, enemy.position);
                 enemy.stateTime = definition.windup; // Always warn again after arrival.
                 enemy.target = player.position;
                 enemy.facing = unit(sub(enemy.target, enemy.position));
@@ -378,6 +382,7 @@ void Simulation::updateEnemies(float dt) {
                                    ? add(enemy.position, mul(enemy.facing, dist))
                                    : player.position;
                 enemy.state = EnemyState::Windup;
+                audioCues.push(AudioCueKind::Warning, enemy.position);
                 enemy.stateTime = definition.windup;
                 enemy.path.clear();
                 if (enemy.kind == EnemyKind::Wraith) {

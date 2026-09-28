@@ -34,7 +34,15 @@ enum class Action {
     HealthUp,
     DamageDown,
     DamageUp,
-    ResetPlayer
+    ResetPlayer,
+    MasterDown,
+    MasterUp,
+    EffectsDown,
+    EffectsUp,
+    AmbienceDown,
+    AmbienceUp,
+    AudioMute,
+    AudioTest
 };
 class Game {
   public:
@@ -50,6 +58,10 @@ class Game {
     Screen screen = Screen::Hub;
     RunSummary lastSummary;
     Camera3D camera{};
+    AudioSettings audioSettings;
+    AudioStatus audioStatus = AudioStatus::Disabled;
+    AudioCueQueue audioCues;
+    uint64_t audioContext = 0;
     std::string seedText = "1866", error;
     ThemeChoice themeChoice = ThemeChoice::Canyon;
     MissionTheme offeredTheme() const;

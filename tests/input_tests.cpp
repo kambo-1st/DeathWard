@@ -365,6 +365,36 @@ int main() {
             frame(100, 200, true);
         frame(100, 200);
         check(game.run->stats.duration == duration, "simulation remains frozen while paused");
+        const auto audioDefaults = game.audioSettings;
+        click(230, 338);
+        click(282, 390);
+        click(230, 442);
+        check(std::abs(game.audioSettings.master - (audioDefaults.master - .1f)) < .001f &&
+                  std::abs(game.audioSettings.effects - (audioDefaults.effects + .1f)) < .001f &&
+                  std::abs(game.audioSettings.ambience - (audioDefaults.ambience - .1f)) < .001f,
+              "pause audio controls adjust each independent volume");
+        click(90, 517);
+        check(game.audioSettings.muted, "pause audio mute toggles independently of cheats");
+        click(90, 517);
+        click(237, 517);
+        check(!game.audioSettings.muted &&
+                  std::any_of(game.audioCues.cues().begin(), game.audioCues.cues().end(),
+                              [](const auto &cue) { return cue.kind == dw::AudioCueKind::Test; }),
+              "test button queues an audio preview without advancing gameplay");
+        for (int i = 0; i < 12; ++i)
+            game.perform(dw::Action::MasterUp);
+        check(game.audioSettings.master == 1, "audio volume is capped at 100 percent");
+        for (int i = 0; i < 12; ++i)
+            game.perform(dw::Action::MasterDown);
+        check(game.audioSettings.master == 0, "audio volume cannot become negative");
+        game.audioSettings = audioDefaults;
+        frame();
+        std::filesystem::create_directories("artifacts");
+        auto audioPanel = LoadImageFromScreen();
+        ExportImage(audioPanel, "artifacts/audio-pause-controls.png");
+        UnloadImage(audioPanel);
+        check(game.run->stats.duration == duration && game.run->stats.shots == shots,
+              "audio controls never fire or resume the simulation");
         click(1214, 329);
         click(1214, 424);
         check(game.run->player.maxHp == dw::StartingHealth + 25 &&

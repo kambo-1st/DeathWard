@@ -72,6 +72,7 @@ void Simulation::grant(ItemId item) {
     if (int(item) < 0 || int(item) >= ItemCount || items.size() >= 256)
         return;
     items.push_back(item);
+    audioCues.push(AudioCueKind::Pickup, player.position);
     if (item == ItemId::Judas) {
         player.maxHp = std::max(10.0f, player.maxHp * 0.8f);
         player.hp = std::min(player.hp, player.maxHp);
@@ -116,6 +117,9 @@ void Simulation::chooseReward(int index) {
     announce("Power claimed. This cache is empty; explore another passage.", 4);
 }
 void Simulation::enterRoom(int index) {
+    audioCues.clear();
+    ++audioEpoch;
+    audioCues.push(AudioCueKind::Door, player.position);
     room = std::clamp(index, 0, FinalRoom);
     auto &progress = rooms[size_t(room)];
     progress.visited = true;
@@ -162,6 +166,7 @@ void Simulation::clearRoom() {
     if (progress.cleared)
         return;
     progress.cleared = roomClear = true;
+    audioCues.push(AudioCueKind::RoomClear, player.position);
     if (room == FinalRoom && arena.theme == MissionTheme::Canyon)
         bossKilled = true;
     for (auto &enemy : enemies)
@@ -185,6 +190,7 @@ void Simulation::collectKeys() {
             distance(player.position, key.position) < 1.6f && arena.sight(player.position, key.position)) {
             key.collected = true;
             ++keys;
+            audioCues.push(AudioCueKind::Pickup, key.position);
             announce("KEY FOUND / unlock a golden door. Keys carried: " + std::to_string(keys), 4);
         }
     }
@@ -204,6 +210,7 @@ bool Simulation::useDoor(int passage, int side) {
             return false;
         }
         --keys;
+        audioCues.push(AudioCueKind::Door, player.position);
         door.locked = false;
         arena.rebuildWalls();
         announce("Door unlocked. Keys carried: " + std::to_string(keys), 3);
@@ -309,6 +316,8 @@ void Simulation::jumpDebug(int index, bool restart) {
     announce(std::string("CHEAT / ") + (restart ? "restarted " : "jumped to ") + roomName());
 }
 void Simulation::startStress() {
+    audioCues.clear();
+    ++audioEpoch;
     cancelMove();
     debugScenario = true;
     godMode = true;
@@ -345,12 +354,14 @@ void Simulation::interact() {
         return;
     }
     if (!rescued && distance(player.position, arena.miners) < 2.6f) {
+        audioCues.push(AudioCueKind::Pickup, arena.miners);
         rescued = true;
         checkpointNeeded = true;
         announce("Six miners escape through the old shaft. Mary will remember.", 5);
         return;
     }
     if (!altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
+        audioCues.push(AudioCueKind::Explosion, arena.altar);
         altarDestroyed = true;
         checkpointNeeded = true;
         effectVisual(arena.altar, 3, 0, 0.8f);
@@ -374,6 +385,8 @@ void Simulation::finishDebug(bool victory) {
         finished = true;
     } else {
         player.hp = 0;
+        if (!dead)
+            audioCues.push(AudioCueKind::PlayerDeath, player.position);
         dead = true;
     }
 }
@@ -501,12 +514,14 @@ void Simulation::process(const Event &e) {
             break;
         const float damage = enemyDamage(*target, e);
         if (damage <= 0) {
+            audioCues.push(AudioCueKind::StoneHit, target->position);
             if (target->monster == monsterId(41, 4) && !e.hostile && !e.areaDamage)
                 shootEnemy(*target, mul(unit(e.direction), -1), 10, 12);
             break;
         }
         stats.damageDealt += std::min(target->hp, damage);
         target->hp -= damage;
+        audioCues.push(AudioCueKind::FleshHit, target->position);
         if (target->kind == EnemyKind::Preacher && damage > 0) {
             target->aura = 0;
             target->state = EnemyState::Ready;
@@ -521,6 +536,7 @@ void Simulation::process(const Event &e) {
             if (!e.execution && target->kind == EnemyKind::Monster && collapseMonster(*target))
                 break;
             target->alive = false;
+            audioCues.push(AudioCueKind::EnemyDeath, target->position);
             if (target->kind == EnemyKind::Monster && !e.execution)
                 monsterDeath(*target, e);
             if (target->kind == EnemyKind::PowderHusk) {
@@ -549,6 +565,7 @@ void Simulation::process(const Event &e) {
         break;
     }
     case EventType::Explosion: {
+        audioCues.push(AudioCueKind::Explosion, e.position);
         ++stats.explosions;
         effectVisual(e.position, e.radius, 0, 0.5f);
         for (const auto &enemy : enemies)
@@ -628,6 +645,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         }
     }
     if (input.dodge && player.dodgeCooldown <= 0) {
+        audioCues.push(AudioCueKind::Dodge, player.position);
         player.dodgeMoving = length(movement) > 0.1f;
         player.dodge = 0.22f;
         player.dodgeCooldown = 1.1f;
@@ -656,6 +674,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         player.shootPose = 0.32f;
         player.fireCooldown = 0.29f;
         ++stats.shots;
+        audioCues.push(AudioCueKind::Shot, player.position);
         Event e;
         e.direction = unit(sub(player.aim, player.position));
         e.damage = player.shotDamage;
@@ -777,6 +796,7 @@ void Simulation::updateProjectiles(float dt) {
             event.hostile = p.hostile;
             event.armorPiercing = p.pierce > 0;
             if (wall) {
+                audioCues.push(AudioCueKind::StoneHit, p.position);
                 if (p.bounces > 0 && length(normal) > 0.5f) {
                     --p.bounces;
                     ++stats.bounces;
@@ -871,6 +891,7 @@ void Simulation::step(const Input &input, float dt) {
     std::erase_if(enemies, [](const Enemy &e) { return !e.alive; });
     collectChains();
     if (player.hp <= 0) {
+        audioCues.push(AudioCueKind::PlayerDeath, player.position);
         dead = true;
         return;
     }

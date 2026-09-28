@@ -806,6 +806,8 @@ void Simulation::updateMonster(Enemy &e, float dt) {
             attack = true;
         if (e.cooldown <= 0 && attack) {
             e.state = EnemyState::Windup;
+            if (!e.friendly)
+                audioCues.push(AudioCueKind::Warning, e.position);
             e.stateTime = d.windup;
             e.target = target;
             if (d.motion == M::Hop && t != 34) {

@@ -9,13 +9,15 @@ include(FetchContent)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(BUILD_GAMES OFF CACHE BOOL "" FORCE)
 set(CUSTOMIZE_BUILD ON CACHE BOOL "" FORCE)
-set(SUPPORT_MODULE_RAUDIO OFF CACHE BOOL "" FORCE)
+set(SUPPORT_MODULE_RAUDIO ON CACHE BOOL "" FORCE)
 set(GLFW_BUILD_WAYLAND OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(raylib
     URL https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz
     URL_HASH SHA256=aea98ecf5bc5c5e0b789a76de0083a21a70457050ea4cc2aec7566935f5e258e
 )
 FetchContent_MakeAvailable(raylib)
+# A missing output must fail initialization instead of succeeding with a silent null device.
+target_compile_definitions(raylib PRIVATE MA_NO_NULL)
 
 add_library(deathward_core
     src/world/TownDocument.cpp
@@ -45,6 +47,11 @@ if(DEATHWARD_SANITIZERS AND NOT MSVC)
 endif()
 
 function(deathward_assets target)
+    file(GLOB audio_assets CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.wav" "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.ogg")
+    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS ${audio_assets})
+    add_custom_command(TARGET ${target} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio" "$<TARGET_FILE_DIR:${target}>/assets/audio"
+        VERBATIM)
     set(bandit_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/bandit/bandit.glb")
     target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
     set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${bandit_asset}")
@@ -72,7 +79,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(NOT MSVC)
@@ -80,6 +87,13 @@ if(NOT MSVC)
 endif()
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(deathward_audio_cue_tests tests/audio_cue_tests.cpp)
+    target_link_libraries(deathward_audio_cue_tests PRIVATE deathward_core)
+    add_test(NAME audio_presentation COMMAND deathward_audio_cue_tests)
+    # Explicit device check; regular CTest remains independent of audio hardware/WSLg.
+    add_executable(deathward_audio_tests tests/audio_tests.cpp src/audio/AudioSystem.cpp)
+    target_link_libraries(deathward_audio_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_audio_tests)
     add_executable(deathward_monster_tests tests/monster_tests.cpp)
     target_link_libraries(deathward_monster_tests PRIVATE deathward_core)
     add_test(NAME monster_behaviors COMMAND deathward_monster_tests)

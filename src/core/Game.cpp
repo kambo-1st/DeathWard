@@ -99,6 +99,8 @@ bool Game::selectHub(HubKind hub) {
         return false;
     }
     town = std::move(candidate);
+    ++audioContext;
+    audioCues.clear();
     activeHub = hub;
     paused = missionMenu = walkingToMission = false;
     error.clear();
@@ -119,6 +121,8 @@ void Game::launch() {
     candidate->tunePlayer(playerHealth, playerDamage);
     campaign.begin(seed, missionTheme(theme).title);
     run = std::move(candidate);
+    ++audioContext;
+    audioCues.clear();
     missionMenu = walkingToMission = false;
     town.stop();
     screen = Screen::Expedition;
@@ -142,6 +146,8 @@ void Game::finish(EndReason reason) {
         return;
     lastSummary = campaign.resolve(run->summary(), reason);
     run.reset();
+    ++audioContext;
+    audioCues.clear();
     town.reset();
     newSeed();
     screen = Screen::Summary;
@@ -167,6 +173,27 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::MasterDown:
+        case Action::MasterUp:
+            audioSettings.master =
+                std::clamp(audioSettings.master + (action == Action::MasterUp ? .1f : -.1f), 0.f, 1.f);
+            break;
+        case Action::EffectsDown:
+        case Action::EffectsUp:
+            audioSettings.effects =
+                std::clamp(audioSettings.effects + (action == Action::EffectsUp ? .1f : -.1f), 0.f, 1.f);
+            break;
+        case Action::AmbienceDown:
+        case Action::AmbienceUp:
+            audioSettings.ambience =
+                std::clamp(audioSettings.ambience + (action == Action::AmbienceUp ? .1f : -.1f), 0.f, 1.f);
+            break;
+        case Action::AudioMute:
+            audioSettings.muted = !audioSettings.muted;
+            break;
+        case Action::AudioTest:
+            audioCues.push(AudioCueKind::Test);
+            break;
         case Action::HealthDown:
         case Action::HealthUp:
         case Action::DamageDown:
@@ -294,6 +321,9 @@ void Game::perform(Action action) {
         default:
             break;
         }
+        if (action != Action::None && action != Action::AudioTest && action != Action::Dodge &&
+            action != Action::Interact)
+            audioCues.push(AudioCueKind::UI);
     } catch (const std::exception &e) {
         error = e.what();
         paused = true;

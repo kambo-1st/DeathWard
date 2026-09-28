@@ -1,3 +1,4 @@
+#include "audio/AudioSystem.hpp"
 #include "core/Game.hpp"
 #include "editor/TownEditor.hpp"
 #include "render/Renderer.hpp"
@@ -11,6 +12,7 @@
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false;
+    bool mute = false, explicitAudio = false;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
@@ -28,6 +30,10 @@ int main(int argc, char **argv) {
             smoke = true;
         else if (arg == "--benchmark")
             benchmark = true;
+        else if (arg == "--mute")
+            mute = true;
+        else if (arg == "--audio")
+            explicitAudio = true;
         else if (arg == "--theme" && i + 1 < argc) {
             const std::string theme = argv[++i];
             if (theme == "seeded")
@@ -71,7 +77,9 @@ int main(int argc, char **argv) {
                          "power, reward, empty, cheats, "
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
-                         "180)\n  --screenshot PATH    Save a PNG before scripted exit\n";
+                         "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
+                         "  --mute              Skip audio initialization\n"
+                         "  --audio             Enable audio in scripted checks (silent by default)\n";
             return 0;
         } else {
             std::cerr << "Unknown or incomplete option: " << arg << '\n';
@@ -106,6 +114,13 @@ int main(int argc, char **argv) {
         SetWindowMinSize(1024, 640);
         SetExitKey(KEY_NULL);
         SetTargetFPS(benchmark ? 0 : 60);
+        dw::AudioSystem audio;
+        const auto audioPreferences =
+            smoke || benchmark || startEditor ? std::filesystem::path{} : save.parent_path() / "audio.cfg";
+        if (!audioPreferences.empty())
+            game.audioSettings = dw::loadAudioSettings(audioPreferences);
+        auto savedAudioSettings = game.audioSettings;
+        game.audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
         dw::Renderer renderer;
         dw::TownEditor editor;
         if (startEditor) {
@@ -224,6 +239,36 @@ int main(int argc, char **argv) {
                 game.perform(dw::Action::Hub);
                 SetWindowTitle("DeathWard | The consequences remain");
             }
+            dw::AudioFrame audioFrame;
+            audioFrame.camera = game.camera;
+            audioFrame.dt = GetFrameTime();
+            audioFrame.context = game.audioContext;
+            audioFrame.paused = editing || game.paused ||
+                                (game.screen != dw::Screen::Hub && game.screen != dw::Screen::Expedition);
+            audioFrame.environment = game.activeHub == dw::HubKind::BlackCreek
+                                         ? dw::AudioEnvironment::Town
+                                         : dw::AudioEnvironment::Frontier;
+            audioFrame.player = game.town.player.position;
+            if (game.run) {
+                audioFrame.environment = game.run->arena.theme == dw::MissionTheme::Canyon
+                                             ? dw::AudioEnvironment::Canyon
+                                             : dw::AudioEnvironment::Mine;
+                audioFrame.player = game.run->player.position;
+                audioFrame.room = game.run->audioEpoch;
+                audioFrame.paused = audioFrame.paused || game.run->rewardOpen || game.run->dead;
+                audioFrame.footsteps = game.run->player.dodge <= 0 && game.run->player.pullTime <= 0;
+            }
+            audio.update(audioFrame, game.audioSettings,
+                         game.run ? game.run->audioCues.cues() : std::span<const dw::AudioCue>{},
+                         game.audioCues.cues());
+            game.audioCues.clear();
+            if (game.run)
+                game.run->audioCues.clear();
+            if (!(savedAudioSettings == game.audioSettings)) {
+                if (!dw::saveAudioSettings(audioPreferences, game.audioSettings))
+                    TraceLog(LOG_WARNING, "AUDIO: Could not save volume preferences");
+                savedAudioSettings = game.audioSettings;
+            }
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {
                 timings.push_back(std::chrono::duration<double, std::milli>(end - start).count());
@@ -261,6 +306,7 @@ int main(int argc, char **argv) {
         editor.unload();
         game.close();
         renderer.unload();
+        audio.unload();
         CloseWindow();
         return 0;
     } catch (const std::exception &e) {
