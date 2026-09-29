@@ -255,6 +255,11 @@ Only rebuilding the asset requires Blender 3.6 LTS. Conversion instructions and 
 
 Western scenery uses `assets/western/western.glb` and its matching catalog, also copied beside the executable. The original atlas is embedded; no reference to the external Unity project is needed at runtime. Source prefabs, FBXs, materials and texture are retained for rebuilding. See [the Western asset notes](assets/western/README.md) for conversion commands, placement and collision rules, and lighting differences from Unity.
 
+The shared [PolygonParticleFX library](assets/particles/README.md) provides campfire
+flames, textured gunfire/impact effects, dynamite bursts, locomotive steam trails
+and sparse seeded canyon dust. Campfire and steam attachments follow props in the
+town editor; effects pause with the game and work in native and browser builds.
+
 The hub separately imports the complete original Demo scene into `assets/town`: 1,516 active mesh placements with 12 embedded textures, original material variants, hierarchy and transforms. Its scene catalog and terrain navigation are packaged beside the GLB. See [the town import notes](assets/town/README.md) for the source audit, rebuilding commands and differences from Unity's rendering. CTest includes outdoor town navigation; `deathward_town_assets_tests` checks the original scene's graphics assets and requires a display.
 
 ## Code map

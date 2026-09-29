@@ -365,9 +365,16 @@ int main(int argc, char **argv) {
             const auto &previewCharacters = editor.characterPreview().residents();
             const auto &particleEffects = editor.active ? editor.effects() : renderer.townEffects();
             EM_ASM({
-                if (Module.verify) Module.particles = ({ready: !!$0, attachments: $1, count: $2, time: $3});
+                if (Module.verify) Module.particles = ({ready: !!$0, attachments: $1, count: $2, time: $3, steam: $4});
             }, particleEffects.loaded(), int(particleEffects.attachmentCount()),
-               int(particleEffects.particleCount()), particleEffects.time());
+               int(particleEffects.particleCount()), particleEffects.time(), int(particleEffects.count("steam")));
+            const auto &missionEffects = renderer.missionEffects();
+            EM_ASM({
+                if (Module.verify) Module.combatParticles = ({ready: !!$0, count: $1,
+                    dust: $2, explosion: $3, muzzle: $4, time: $5});
+            }, missionEffects.loaded(), int(missionEffects.particleCount()), int(missionEffects.count("canyondust")),
+               int(missionEffects.count("blastfire") + missionEffects.count("blastsmoke")),
+               int(missionEffects.count("muzzle") + missionEffects.count("gunsmoke")), missionEffects.time());
             const auto selectedCharacter = editor.characterSelection();
             EM_ASM(
                 {

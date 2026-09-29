@@ -85,6 +85,8 @@ void Simulation::shootEnemy(const Enemy &enemy, Vector3 direction, float damage,
     shot.projectileKind = kind;
     shot.context.sourceEntity = enemy.id;
     queueRoot(shot);
+    if (enemy.kind != EnemyKind::Monster && kind == ProjectileKind::Bullet)
+        particleEffect(ParticleEffect::Muzzle, shot.position, direction);
 }
 
 void Simulation::addHazard(Hazard hazard) {
@@ -153,6 +155,8 @@ void Simulation::updateHazards(float dt) {
             if (dist < hazard.radius + 0.48f && visible)
                 hurtPlayer(hazard.damage, hazard.context);
             effectVisual(hazard.position, hazard.radius, 0, 0.5f);
+            if (hazard.kind == HazardKind::Dynamite)
+                particleEffect(ParticleEffect::Explosion, hazard.position, {0,1,0}, hazard.radius / 3.3f);
             if (hazard.kind == HazardKind::Powder || hazard.kind == HazardKind::MonsterBomb) {
                 Event blast;
                 blast.type = EventType::Explosion;

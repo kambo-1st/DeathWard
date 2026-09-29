@@ -1,5 +1,35 @@
 # Milestone 1 verification
 
+## PolygonParticleFX combat and atmosphere
+
+Content version `deathward-m1-35` adds 16 imported/adapted particle layers:
+gunfire, material-specific impacts, four-layer dynamite explosions, locomotive
+steam and seeded canyon dust. Two additional low-poly meshes include the original
+woodchip UVs and byte-identical embedded atlas. The ordinary native and WASM builds
+use checked-in resources; Unity/Blender are only needed to reimport assets.
+
+`deathward_particle_tests` covers non-looping bursts, expiry/budgets, actual shot
+and collision triggers, gate/ground/canyon/mine materials, one dynamite burst per
+fuse, modal pause, room cleanup and independent cosmetic random state.
+`deathward_particle_render_tests` covers GPU resources, visible explosion layers,
+textured impacts, opaque depth, identical paused frames, canyon-only weather,
+world-space steam trails and editor duplication/reset. The existing 17 CPU suites
+and editor/input/occlusion checks cover regressions in gameplay and scene editing.
+
+Browser integration (`web/test.cjs`) also checks the legacy smokestack-label
+migration without replacing saved scenes, two engine attachments in Black Creek,
+visible steam, gunfire and dynamite particles, canyon dust and existing pause/editor
+flows. `web/package-test.cjs` exercises the upload archive at root and nested URLs.
+
+Logs: `artifacts/particle-combat-*`. Render captures include
+`artifacts/particle-explosion.png`, `artifacts/particle-impacts.png` and the browser
+`web-dynamite-blast.png` / `web-canyon.png` captures.
+
+Limitations are deliberate: Unity's particle collision/sub-emitter/light modules
+are not executed. Debris is cosmetic; smoke uses ordinary textured billboards.
+Source-system IDs, original hashes and all density/scale/color adaptations are
+recorded in `assets/particles/combat-manifest.json`.
+
 ## PolygonParticleFX fireplace proof of concept
 
 Content version `deathward-m1-34` ports the original `SM_Flame_FX` mesh and

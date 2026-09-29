@@ -1,8 +1,11 @@
 #pragma once
 #include "world/ObjectAnimation.hpp"
 #include "world/Particles.hpp"
+#include <deque>
+#include <optional>
 
 namespace dw {
+class Simulation;
 struct ParticleLight {
     Vector3 position{}, color{};
     float range = 0;
@@ -19,11 +22,14 @@ class ParticleEffects {
     void bind(const TownDocument &document);
     void animate(const ObjectAnimationSystem &animation);
     void prepare(const Camera3D &camera);
+    void prepareMission(const Simulation &run, const Camera3D &camera, Vector3 muzzle);
     void draw(const Camera3D &camera);
     size_t attachmentCount() const { return bound_.size(); }
     size_t particleCount() const { return particles_.size(); }
     bool loaded() const { return !resources_.empty(); }
     double time() const { return time_; }
+    size_t count(const std::string &emitter) const;
+    std::optional<Box> bounds(const std::string &emitter) const;
     const std::vector<ParticleLight> &lights() const { return lights_; }
 
   private:
@@ -32,6 +38,7 @@ class ParticleEffects {
         size_t instance = 0, attachment = 0;
         Matrix transform{};
         uint32_t seed = 1;
+        std::deque<std::pair<double, Vector3>> trail;
     };
     struct DrawParticle {
         size_t emitter = 0;
@@ -48,5 +55,11 @@ class ParticleEffects {
     Shader shader_{};
     int emissionLocation_ = -1;
     double time_ = 0;
+    uint64_t dustSeed_ = 0;
+    bool dustReady_ = false;
+    std::vector<Vector3> dustAnchors_;
+    void append(size_t emitter, const ParticleSample &sample, Vector3 position, float scale,
+                Matrix view, Vector3 direction = {0,1,0});
+    void sort();
 };
 } // namespace dw

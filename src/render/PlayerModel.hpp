@@ -29,6 +29,7 @@ class PlayerModel {
     void unload();
     void update(const Simulation &run, float deathTime = 0);
     void draw(const Simulation &run) const;
+    Vector3 muzzlePosition(const Player &player) const;
     void update(const Player &player, double time, const void *context, bool dead = false,
                 float deathTime = 0);
     void draw(const Player &player, bool dead = false, Shader shader = {}, Texture2D shadowMap = {}) const;

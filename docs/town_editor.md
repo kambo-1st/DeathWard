@@ -127,3 +127,8 @@ prop also changes its attached effect; normal save/reload and undo apply.
 Black Creek includes a demo near the starting point at `(-2, .06, 0)`.
 Effects use the shared [particle library](../assets/particles/README.md); individual
 emitter settings are currently edited in its data files, without a particle panel.
+
+Locomotive steam is attached to `SM_Veh_Train_01_Alt_Smokestack`. Train preview
+keeps emitted puffs behind a moving locomotive. Moving, scaling, duplicating and
+deleting a stack automatically updates its emitter; preview reset clears trails.
+The imported train groups and routes still control the vehicle itself.

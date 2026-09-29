@@ -145,6 +145,7 @@ void Simulation::enterRoom(int index) {
     chains.clear();
     pendingMonsters_.clear();
     visuals.clear();
+    particleBursts.clear();
     const auto kind = arena.rooms[size_t(room)].kind;
     if (kind == RoomKind::Power || kind == RoomKind::Empty || kind == RoomKind::Shop) {
         if (!progress.cleared) {
@@ -289,6 +290,7 @@ void Simulation::clearRoomDebug() {
     queue_.clear();
     chains.clear();
     visuals.clear();
+    particleBursts.clear();
     rewardOpen = shopOpen = debugScenario = false;
     if (room == FinalRoom)
         bossKilled = true;
@@ -516,6 +518,22 @@ void Simulation::createProjectile(const Event &event) {
     ++stats.projectiles;
     stats.maxProjectiles = std::max(stats.maxProjectiles, uint64_t(projectiles.size()));
 }
+void Simulation::particleEffect(ParticleEffect kind, Vector3 position, Vector3 direction, float scale) {
+    if (particleBursts.size() >= 128) particleBursts.erase(particleBursts.begin());
+    particleBursts.push_back({kind, position, direction, 0, std::clamp(scale,.3f,2.f),
+                             uint32_t(seed_) ^ (nextParticle_++ * 0x9e3779b9u)});
+}
+ParticleEffect Simulation::impactMaterial(Vector3 position, Vector3 normal) const {
+    for (const auto &passage : arena.passages)
+        for (int side = 0; side < 2; ++side) {
+            const auto &b = passage.gates[size_t(side)];
+            if (passage.closed(side) && position.x >= b.min.x-.3f && position.x <= b.max.x+.3f &&
+                position.z >= b.min.z-.3f && position.z <= b.max.z+.3f)
+                return ParticleEffect::Metal;
+        }
+    if (normal.y > .6f) return ParticleEffect::Dirt;
+    return arena.theme == MissionTheme::Canyon ? ParticleEffect::Stone : ParticleEffect::Wood;
+}
 void Simulation::effectVisual(Vector3 p, float radius, int kind, float duration) {
     if (visuals.size() < 512)
         visuals.push_back({p, radius, duration, duration, kind});
@@ -538,10 +556,14 @@ void Simulation::process(const Event &e) {
         const float damage = enemyDamage(*target, e);
         if (damage <= 0) {
             audioCues.push(AudioCueKind::StoneHit, target->position);
+            if (!e.areaDamage) particleEffect(ParticleEffect::Metal, e.position, mul(e.direction,-1));
             if (target->monster == monsterId(41, 4) && !e.hostile && !e.areaDamage)
                 shootEnemy(*target, mul(unit(e.direction), -1), 10, 12);
             break;
         }
+        if (!e.areaDamage)
+            particleEffect(target->kind == EnemyKind::Ironhide ? ParticleEffect::Metal : ParticleEffect::Flesh,
+                           e.position, mul(e.direction,-1));
         stats.damageDealt += std::min(target->hp, damage);
         target->hp -= damage;
         audioCues.push(AudioCueKind::FleshHit, target->position);
@@ -591,6 +613,7 @@ void Simulation::process(const Event &e) {
     case EventType::Explosion: {
         audioCues.push(AudioCueKind::Explosion, e.position);
         ++stats.explosions;
+        particleEffect(ParticleEffect::Explosion, e.position, {0,1,0}, e.radius / 3.3f);
         effectVisual(e.position, e.radius, 0, 0.5f);
         for (const auto &enemy : enemies)
             if (enemy.alive && !(e.hostile && enemy.id == e.context.sourceEntity) &&
@@ -713,7 +736,8 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         e.lastRound = player.nextRound == 6;
         player.nextRound = player.nextRound % 6 + 1;
         queueRoot(e);
-        effectVisual(e.position, 0.35f, 3, 0.09f);
+        particleEffect(ParticleEffect::PlayerMuzzle, e.position, e.direction);
+        effectVisual(e.position, 0.35f, 6, 0.09f);
     }
     player.velocity = mul(sub(player.position, previousPosition), 1 / dt);
     if (player.dodge > 0)
@@ -827,6 +851,7 @@ void Simulation::updateProjectiles(float dt) {
             event.armorPiercing = p.pierce > 0;
             if (wall) {
                 audioCues.push(AudioCueKind::StoneHit, p.position);
+                particleEffect(impactMaterial(p.position, normal), p.position, normal);
                 if (p.bounces > 0 && length(normal) > 0.5f) {
                     --p.bounces;
                     ++stats.bounces;
@@ -838,7 +863,9 @@ void Simulation::updateProjectiles(float dt) {
                 } else
                     p.alive = false;
             } else if (playerHit) {
-                if (hurtPlayer(p.damage, p.context) && p.kind == ProjectileKind::Hook) {
+                const bool hurt = hurtPlayer(p.damage, p.context);
+                if (hurt) particleEffect(ParticleEffect::Flesh, p.position, mul(event.direction,-1));
+                if (hurt && p.kind == ProjectileKind::Hook) {
                     const auto *source = findEnemy(p.context.sourceEntity);
                     if (source && source->alive && arena.sight(player.position, source->position)) {
                         cancelMove();
@@ -893,6 +920,8 @@ void Simulation::step(const Input &input, float dt) {
     if (rewardOpen || shopOpen || finished || dead)
         return;
     stats.duration += dt;
+    for (auto &burst : particleBursts) burst.age += dt;
+    std::erase_if(particleBursts, [](const auto &burst) { return burst.age >= 3; });
     if (boss() || (arena.theme == MissionTheme::Canyon && room == FinalRoom && !roomClear))
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);

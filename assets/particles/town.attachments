@@ -13,3 +13,6 @@ SM_Prop_Campfire_01 smoke 0 2.1 0 1.6 0
 SM_Prop_Campfire_Small_01 flame 0 .12 0 8 3
 SM_Prop_Campfire_Small_01 ember 0 .26 0 1.1 0
 SM_Prop_Campfire_Small_01 smoke 0 .45 0 .75 0
+
+# World-space steam follows only the engine smokestack, not every prefab child.
+SM_Veh_Train_01_Alt_Smokestack steam 0 5.8 3.12 1 0 trail

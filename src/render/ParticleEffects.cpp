@@ -1,4 +1,6 @@
 #include "render/ParticleEffects.hpp"
+#include "combat/Simulation.hpp"
+#include <set>
 #include "render/ShaderPlatform.hpp"
 #include "raymath.h"
 #include "rlgl.h"
@@ -9,23 +11,28 @@ namespace {
 constexpr const char *Vertex = R"GLSL(#version 330
 in vec3 vertexPosition;
 in vec3 vertexNormal;
+in vec2 vertexTexCoord;
 uniform mat4 mvp;
 uniform mat4 matNormal;
 out vec3 normal;
+out vec2 uv;
 void main() {
+    uv = vertexTexCoord;
     normal = normalize((matNormal * vec4(vertexNormal,0.)).xyz);
     gl_Position = mvp * vec4(vertexPosition,1.);
 }
 )GLSL";
 constexpr const char *Fragment = R"GLSL(#version 330
 in vec3 normal;
+in vec2 uv;
+uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 uniform float emission;
 out vec4 finalColor;
 void main() {
     // Emissive, but retain the original low-poly flame's facets.
     float facet = .82 + .18 * abs(dot(normalize(normal),normalize(vec3(.4,.7,.3))));
-    finalColor = vec4(colDiffuse.rgb * emission * facet,colDiffuse.a);
+    finalColor = texture(texture0, uv) * vec4(colDiffuse.rgb * emission * facet,colDiffuse.a);
 }
 )GLSL";
 float scaleOf(Matrix m) {
@@ -76,13 +83,22 @@ bool ParticleEffects::load(const std::filesystem::path &directory) {
 }
 void ParticleEffects::unload() {
     for (auto &r : resources_) {
-        if (r.model.meshCount) UnloadModel(r.model);
+        if (r.model.meshCount) {
+            std::set<unsigned int> textures;
+            for (int m = 0; m < r.model.materialCount; ++m) {
+                const auto texture = r.model.materials[m].maps[MATERIAL_MAP_ALBEDO].texture;
+                if (texture.id && texture.id != rlGetTextureIdDefault() && textures.insert(texture.id).second)
+                    UnloadTexture(texture);
+            }
+            UnloadModel(r.model);
+        }
         if (r.texture.id) UnloadTexture(r.texture);
     }
     if (shader_.id) UnloadShader(shader_);
     shader_ = {};
     resources_.clear(); bound_.clear(); particles_.clear(); lights_.clear();
     library_ = {};
+    dustAnchors_.clear(); dustReady_ = false;
     time_ = 0;
 }
 void ParticleEffects::bind(const TownDocument &document) {
@@ -92,13 +108,25 @@ void ParticleEffects::bind(const TownDocument &document) {
         const auto &i = document.instances[n];
         for (size_t a = 0; a < library_.attachments.size(); ++a)
             if (document.assets[i.asset].label == library_.attachments[a].label)
-                bound_.push_back({n, a, i.transform, seedFor(i.id.empty() ? std::to_string(n) : i.id, a)});
+                bound_.push_back({n, a, i.transform, seedFor(i.id.empty() ? std::to_string(n) : i.id, a),
+                    {{0, Vector3Transform(library_.attachments[a].offset, i.transform)}}});
     }
 }
 void ParticleEffects::animate(const ObjectAnimationSystem &animation) {
-    time_ = animation.time();
-    for (auto &b : bound_)
+    const double nextTime = animation.time();
+    for (auto &b : bound_) {
         if (b.instance < animation.poses().size()) b.transform = animation.poses()[b.instance].transform;
+        const auto &a = library_.attachments[b.attachment];
+        if (!a.trail) continue;
+        const auto center = Vector3Transform(a.offset,b.transform);
+        if (nextTime < time_ || (!b.trail.empty() && distance(center,b.trail.back().second) > 20))
+            b.trail.clear(); // Editor reset or teleport starts a fresh plume.
+        if (b.trail.empty() || nextTime > b.trail.back().first) b.trail.emplace_back(nextTime,center);
+        while (b.trail.size() > 2 && (b.trail.size() > 512 ||
+               nextTime - b.trail[1].first > library_.emitters[a.emitter].lifetime.y + .1))
+            b.trail.pop_front();
+    }
+    time_ = nextTime;
 }
 void ParticleEffects::prepare(const Camera3D &camera) {
     particles_.clear(); lights_.clear();
@@ -130,6 +158,20 @@ void ParticleEffects::prepare(const Camera3D &camera) {
             if (particles_.size() >= 4096) break;
             const float size = p.size * a.scale;
             const auto local = add(a.offset, mul(p.position, a.scale));
+            if (a.trail && !b.trail.empty()) {
+                // Place each puff where the stack was when it emitted it. World
+                // gravity/wind then act independently of the train's current pose.
+                const double birth = time_ - p.age;
+                Vector3 origin = b.trail.front().second;
+                for (size_t n = 1; n < b.trail.size(); ++n) {
+                    const auto &[ta, pa] = b.trail[n-1];
+                    const auto &[tb, pb] = b.trail[n];
+                    origin = Vector3Lerp(pa,pb,float(std::clamp((birth-ta)/(tb-ta),0.,1.)));
+                    if (birth <= tb) break;
+                }
+                append(a.emitter,p,add(origin,mul(p.position,a.scale*worldScale)),a.scale*worldScale,view);
+                continue;
+            }
             const auto position = Vector3Transform(local, b.transform);
             const auto transform = MatrixMultiply(MatrixMultiply(MatrixMultiply(MatrixScale(size,size,size),
                 MatrixRotateY(p.rotation)), MatrixTranslate(local.x,local.y,local.z)), b.transform);
@@ -138,10 +180,104 @@ void ParticleEffects::prepare(const Camera3D &camera) {
                 size * worldScale, p.rotation * RAD2DEG, -Vector3Transform(position, view).z});
         }
     }
-    // Alpha particles share one back-to-front list, even across different fires.
+    sort();
+}
+void ParticleEffects::sort() {
+    // Alpha particles share one back-to-front list, even across different sources.
     std::stable_sort(particles_.begin(), particles_.end(), [](const auto &a, const auto &b) {
         return a.depth > b.depth;
     });
+}
+void ParticleEffects::append(size_t emitter, const ParticleSample &p, Vector3 position, float scale,
+                             Matrix view, Vector3 direction) {
+    if (particles_.size() >= 4096) return;
+    const float size = p.size * scale;
+    // Debris tumbles around all axes; directional flashes follow the shot.
+    Matrix rotation = MatrixMultiply(MatrixRotateXYZ({p.rotation*.7f,p.rotation,p.rotation*.4f}),
+        QuaternionToMatrix(QuaternionFromVector3ToVector3({0,1,0},Vector3Normalize(direction))));
+    const auto transform = MatrixMultiply(MatrixMultiply(MatrixScale(size,size,size),rotation),
+                                           MatrixTranslate(position.x,position.y,position.z));
+    particles_.push_back({emitter,transform,position,
+        {byte(p.color.x),byte(p.color.y),byte(p.color.z),byte(p.alpha)}, size,p.rotation*RAD2DEG,
+        -Vector3Transform(position,view).z});
+}
+size_t ParticleEffects::count(const std::string &emitter) const {
+    return size_t(std::count_if(particles_.begin(),particles_.end(),[&](const auto &p) {
+        return library_.emitters[p.emitter].name == emitter;
+    }));
+}
+std::optional<Box> ParticleEffects::bounds(const std::string &emitter) const {
+    std::optional<Box> result;
+    for (const auto &p : particles_) {
+        if (library_.emitters[p.emitter].name != emitter) continue;
+        if (!result) result = Box{p.position,p.position};
+        result->min = Vector3Min(result->min,p.position);
+        result->max = Vector3Max(result->max,p.position);
+    }
+    return result;
+}
+void ParticleEffects::prepareMission(const Simulation &run, const Camera3D &camera, Vector3 muzzle) {
+    particles_.clear(); lights_.clear();
+    time_ = run.stats.duration;
+    const auto view = GetCameraMatrix(camera);
+    const auto find = [&](const std::string &name) {
+        return std::find_if(library_.emitters.begin(),library_.emitters.end(),
+                            [&](const auto &e) { return e.name == name; });
+    };
+    for (const auto &burst : run.particleBursts) {
+        if (distance(burst.position,camera.target) > 80) continue;
+        std::vector<std::string> layers;
+        switch (burst.kind) {
+        case ParticleEffect::PlayerMuzzle: case ParticleEffect::Muzzle: layers={"muzzle","gunsmoke"}; break;
+        case ParticleEffect::Stone: layers={"stonechip","stonedust"}; break;
+        case ParticleEffect::Wood: layers={"woodchip","wooddust"}; break;
+        case ParticleEffect::Metal: layers={"spark"}; break;
+        case ParticleEffect::Dirt: layers={"grit","dirtdust"}; break;
+        case ParticleEffect::Flesh: layers={"flesh"}; break;
+        case ParticleEffect::Explosion: layers={"blastfire","blastrock","blastember","blastsmoke"}; break;
+        }
+        for (const auto &name : layers) {
+            const auto e = find(name);
+            if (e == library_.emitters.end()) continue;
+            const auto index = size_t(e-library_.emitters.begin());
+            // Keep the very short flash on the animated revolver's actual muzzle.
+            const auto origin = name == "muzzle" && burst.kind == ParticleEffect::PlayerMuzzle ? muzzle : burst.position;
+            for (const auto &p : ParticleLibrary::burst(*e,burst.age,burst.seed ^ uint32_t(index*97),burst.direction)) {
+                const auto position = add(origin,mul(p.position,burst.scale));
+                if (position.y < .035f) continue;
+                append(index,p,position,burst.scale,view,burst.direction);
+            }
+        }
+    }
+    if (run.arena.theme == MissionTheme::Canyon && run.arena.canyon) {
+        if (!dustReady_ || dustSeed_ != run.arena.visualSeed) {
+            dustSeed_ = run.arena.visualSeed; dustReady_ = true; dustAnchors_.clear();
+            Random rng(dustSeed_ ^ 0xd057cafeULL);
+            for (const auto &room : run.arena.rooms)
+                for (int n = 0; n < 3; ++n)
+                    for (int attempt = 0; attempt < 20; ++attempt) {
+                        Vector3 p{rng.real(room.bounds.min.x,room.bounds.max.x),.22f,
+                                  rng.real(room.bounds.min.z,room.bounds.max.z)};
+                        if (run.arena.contains(p) && !run.arena.canyon->blocked(p,2.2f)) {
+                            dustAnchors_.push_back(p); break;
+                        }
+                    }
+        }
+        const auto e = find("canyondust");
+        if (e != library_.emitters.end())
+            for (size_t n = 0; n < dustAnchors_.size(); ++n) {
+                if (distance(dustAnchors_[n],camera.target) > 55) continue;
+                for (auto p : ParticleLibrary::sample(*e,time_,uint32_t(dustSeed_) ^ uint32_t(n*101))) {
+                    auto position = add(dustAnchors_[n],p.position);
+                    // Do not render clouds inside rocks, through sealed passages,
+                    // or across the player. Dust is atmosphere, never a vision penalty.
+                    if (!run.arena.contains(position) || run.arena.blocked(position,p.size*.5f)) continue;
+                    p.alpha *= std::clamp((distance(position,run.player.position)-1.5f)/4.f,0.f,1.f);
+                    if (p.alpha > .001f) append(size_t(e-library_.emitters.begin()),p,position,1,view);
+                }
+            }
+    } else { dustReady_ = false; dustAnchors_.clear(); }
+    sort();
 }
 void ParticleEffects::draw(const Camera3D &camera) {
     if (particles_.empty()) return;

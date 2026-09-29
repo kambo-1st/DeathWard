@@ -4,6 +4,7 @@
 #include "core/Types.hpp"
 #include "world/Campaign.hpp"
 #include "world/Dungeon.hpp"
+#include "world/Particles.hpp"
 #include <deque>
 #include <functional>
 #include <optional>
@@ -204,6 +205,7 @@ class Simulation {
     std::vector<Enemy> enemies;
     std::vector<Projectile> projectiles;
     std::vector<VisualEffect> visuals;
+    std::vector<ParticleBurst> particleBursts;
     std::vector<Hazard> hazards;
     std::vector<MoneyPickup> moneyPickups;
     uint64_t moneyCollected = 0;
@@ -283,10 +285,13 @@ class Simulation {
     void emit(Event event, const Context &parent, int effect = -1);
     void drainEvents();
     void suppress(const Context &context, const std::string &reason);
+    void particleEffect(ParticleEffect kind, Vector3 position, Vector3 direction = {0,1,0}, float scale = 1);
+    ParticleEffect impactMaterial(Vector3 position, Vector3 normal) const;
     void effectVisual(Vector3 position, float radius, int kind, float duration = 0.4f);
 
   private:
     uint64_t seed_, runId_, nextEntity_ = 1, nextChain_ = 1;
+    uint32_t nextParticle_ = 1; // Cosmetic stream: never consumes gameplay RNG.
     WorldState startingWorld_;
     std::deque<Event> queue_;
     // 4-unit XZ cells are a broad phase only; narrow phase uses swept 3D volumes.

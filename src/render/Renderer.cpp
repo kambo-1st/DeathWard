@@ -417,6 +417,8 @@ std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const C
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
                          EntityId hoveredEnemy, float deathTime, bool dynamiteArmed) {
     playerModel_.update(run, deathTime);
+    if (!particlesAttempted_) { particlesAttempted_ = true; missionEffects_.load(); }
+    missionEffects_.prepareMission(run,camera,playerModel_.muzzlePosition(run.player));
     westernScene_.prepare(run.arena);
     westernScene_.setPlayerOcclusion(camera, run.player.position);
     const auto &theme = missionTheme(run.arena.theme);
@@ -683,6 +685,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
     }
     for (const auto &effect : run.visuals) {
+        if (missionEffects_.loaded() && (effect.kind == 5 || effect.kind == 6)) continue;
         float t = 1 - effect.life / effect.maxLife;
         Color color = effect.kind == 0 ? Gold : effect.kind == 2 ? Teal : effect.kind == 4 ? Rust : Paper;
         color.a = static_cast<unsigned char>(180 * (1 - t));
@@ -709,6 +712,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawSphereWires(run.player.position, 0.48f, 6, 8, Teal);
         DrawLine3D(run.player.position, run.player.aim, Teal);
     }
+    missionEffects_.draw(camera);
     westernScene_.drawOccluders();
     westernScene_.drawGlass();
     EndMode3D();

@@ -343,7 +343,7 @@ def main():
         )
         # The cooking pot is a separate child of Frontier's small campfire.
         # Keep it distinct in the editor and avoid attaching a second fire to it.
-        if placement["name"] == "SM_Prop_Campfire_Pot_01":
+        if placement["name"] in ("SM_Prop_Campfire_Pot_01", "SM_Veh_Train_01_Alt_Smokestack"):
             label = placement["name"]
         labels.setdefault(placement["asset"], label)
     (out / "town.labels").write_text(

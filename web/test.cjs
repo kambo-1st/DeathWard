@@ -68,6 +68,9 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
       legacyScene = await page.evaluate(() => {
         FS.mkdirTree('/persist/town');
         FS.mkdirTree('/persist/frontier');
+        FS.writeFile('/persist/town/town.labels',
+          FS.readFile('/assets/town/town.labels', {encoding: 'utf8'})
+            .replace('part_0033 SM_Veh_Train_01_Alt_Smokestack', 'part_0033 SM_Veh_Train_01'));
         FS.writeFile('/persist/frontier/town.labels',
           FS.readFile('/assets/frontier/town.labels', {encoding: 'utf8'})
             .replace('part_0106 SM_Prop_Campfire_Pot_01', 'part_0106 SM_Prop_Campfire_Small_01'));
@@ -103,8 +106,11 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal(await page.evaluate(() => Module.animals.count), 5);
     assert.equal(await page.evaluate(() => Module.characters.count), 1);
     assert.equal(await page.evaluate(() => Module.particles.ready), true);
-    assert.equal(await page.evaluate(() => Module.particles.attachments), 10);
+    assert.equal(await page.evaluate(() => Module.particles.attachments), 12);
     assert.ok(await page.evaluate(() => Module.particles.count > 30));
+    assert.ok(await page.evaluate(() => Module.particles.steam > 0));
+    assert.ok(await page.evaluate(() => FS.readFile('/persist/town/town.labels', {encoding:'utf8'})
+      .includes('part_0033 SM_Veh_Train_01_Alt_Smokestack')));
     const particleBefore = await page.evaluate(() => Module.particles.time);
     await wait(before => Module.particles.time > before + .2, particleBefore);
     const cowgirlBefore = await page.evaluate(() => Module.characters);
@@ -228,6 +234,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal((await state()).shots, 0);
     await page.screenshot({path: path.join(artifacts, 'web-dynamite-kicked.png')});
     await wait(() => Module.state.explosions === 1 && Module.state.litDynamite === 0);
+    await wait(() => Module.combatParticles.explosion > 0);
     await page.screenshot({path: path.join(artifacts, 'web-dynamite-blast.png')});
     await click(160, 640);
     await wait(() => Module.state.dynamite === 1 && Module.state.placedDynamite === 1);
@@ -281,13 +288,16 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     while ((await state()).room !== 1) await key('F12');
     await wait(() => Module.state.room === 1);
     await page.mouse.move(650, 445);
-    await page.mouse.down({button: 'right'}); await page.waitForTimeout(750);
+    await page.mouse.down({button: 'right'});
+    await wait(() => Module.combatParticles.ready && Module.combatParticles.muzzle > 0);
+    await page.waitForTimeout(750);
     await page.mouse.up({button: 'right'});
     await wait(() => Module.state.shots > 0);
     await page.mouse.move(600, 400);
     await page.mouse.down({button: 'middle'});
     await page.mouse.move(740, 450, {steps: 12});
     await page.mouse.up({button: 'middle'});
+    assert.ok(await page.evaluate(() => Module.combatParticles.dust > 0));
     await page.screenshot({path: path.join(artifacts, 'web-canyon.png')});
     await key('F7');
     await wait(() => Module.state.room === 14 && Module.state.enemies > 0);

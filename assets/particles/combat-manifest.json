@@ -1,0 +1,443 @@
+{
+  "format": 1,
+  "source_pack": "PolygonParticleFX",
+  "layers": [
+    {
+      "name": "muzzle",
+      "prefab": "Prefabs/FX_Gunshot_01.prefab",
+      "system": 1095744272416284,
+      "renderer": "additive",
+      "resource": "ember.png",
+      "overrides": {
+        "size": [
+          0.38,
+          0.58
+        ]
+      },
+      "opacity": 1,
+      "tint": [
+        1,
+        0.79,
+        0.37
+      ]
+    },
+    {
+      "name": "gunsmoke",
+      "prefab": "Prefabs/FX_Gunshot_01.prefab",
+      "system": 1198663731479534,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "lifetime": [
+          0.25,
+          0.65
+        ],
+        "size": [
+          0.18,
+          0.34
+        ],
+        "speed": [
+          0.15,
+          0.5
+        ],
+        "burst": [
+          2,
+          3
+        ],
+        "gravity": 0.2,
+        "spread": 25
+      },
+      "opacity": 0.35,
+      "tint": null
+    },
+    {
+      "name": "stonechip",
+      "prefab": "Prefabs/FX_Impact_Stone_01.prefab",
+      "system": 1450638143650814,
+      "renderer": "mesh",
+      "resource": "rock.glb",
+      "overrides": {
+        "size": [
+          0.09,
+          0.18
+        ],
+        "speed": [
+          1,
+          3
+        ],
+        "gravity": -9.81
+      },
+      "opacity": 1,
+      "tint": null
+    },
+    {
+      "name": "stonedust",
+      "prefab": "Prefabs/FX_Impact_Stone_01.prefab",
+      "system": 1155220589040816,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "speed": [
+          0.5,
+          1.8
+        ]
+      },
+      "opacity": 0.38,
+      "tint": [
+        0.65,
+        0.51,
+        0.35
+      ]
+    },
+    {
+      "name": "woodchip",
+      "prefab": "Prefabs/FX_Impact_Wood_01.prefab",
+      "system": 1260334799937022,
+      "renderer": "mesh",
+      "resource": "woodchip.glb",
+      "overrides": {
+        "size": [
+          0.18,
+          0.32
+        ],
+        "speed": [
+          1.5,
+          3.5
+        ],
+        "spin": [
+          -8,
+          8
+        ]
+      },
+      "opacity": 1,
+      "tint": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "wooddust",
+      "prefab": "Prefabs/FX_Impact_Wood_01.prefab",
+      "system": 1882869293152400,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "speed": [
+          0.5,
+          1.5
+        ]
+      },
+      "opacity": 0.28,
+      "tint": [
+        0.54,
+        0.39,
+        0.24
+      ]
+    },
+    {
+      "name": "spark",
+      "prefab": "Prefabs/FX_Impact_Metal_01.prefab",
+      "system": 1067536016464596,
+      "renderer": "additive",
+      "resource": "ember.png",
+      "overrides": {
+        "size": [
+          0.04,
+          0.08
+        ],
+        "lifetime": [
+          0.15,
+          0.4
+        ],
+        "speed": [
+          2,
+          5
+        ]
+      },
+      "opacity": 1,
+      "tint": [
+        1,
+        0.8,
+        0.35
+      ]
+    },
+    {
+      "name": "grit",
+      "prefab": "Prefabs/FX_Impact_Dirt_01.prefab",
+      "system": 1643851402782444,
+      "renderer": "mesh",
+      "resource": "rock.glb",
+      "overrides": {
+        "size": [
+          0.03,
+          0.07
+        ]
+      },
+      "opacity": 1,
+      "tint": [
+        0.55,
+        0.38,
+        0.22
+      ]
+    },
+    {
+      "name": "dirtdust",
+      "prefab": "Prefabs/FX_Impact_Dirt_01.prefab",
+      "system": 1108849255783648,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "speed": [
+          0.4,
+          1.5
+        ]
+      },
+      "opacity": 0.32,
+      "tint": [
+        0.65,
+        0.49,
+        0.31
+      ]
+    },
+    {
+      "name": "flesh",
+      "prefab": "Prefabs/FX_Impact_Dirt_01.prefab",
+      "system": 1108849255783648,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "burst": [
+          3,
+          5
+        ],
+        "lifetime": [
+          0.12,
+          0.26
+        ],
+        "size": [
+          0.035,
+          0.085
+        ],
+        "speed": [
+          0.4,
+          1.4
+        ],
+        "gravity": -2
+      },
+      "opacity": 0.65,
+      "tint": [
+        0.48,
+        0.095,
+        0.05
+      ]
+    },
+    {
+      "name": "blastfire",
+      "prefab": "Prefabs/FX_Grenade_Explosive_01.prefab",
+      "system": 1301522060448880,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "size": [
+          0.25,
+          0.4
+        ],
+        "spread": 85
+      },
+      "opacity": 0.8,
+      "tint": null
+    },
+    {
+      "name": "blastrock",
+      "prefab": "Prefabs/FX_Grenade_Explosive_01.prefab",
+      "system": 1506149943302156,
+      "renderer": "mesh",
+      "resource": "rock.glb",
+      "overrides": {
+        "burst": [
+          8,
+          12
+        ],
+        "lifetime": [
+          0.7,
+          1.2
+        ],
+        "size": [
+          0.08,
+          0.22
+        ],
+        "speed": [
+          2,
+          6
+        ],
+        "spin": [
+          -9,
+          9
+        ]
+      },
+      "opacity": 1,
+      "tint": null
+    },
+    {
+      "name": "blastember",
+      "prefab": "Prefabs/FX_Grenade_Explosive_01.prefab",
+      "system": 1970785107967864,
+      "renderer": "additive",
+      "resource": "ember.png",
+      "overrides": {
+        "burst": [
+          12,
+          18
+        ],
+        "lifetime": [
+          0.3,
+          0.9
+        ],
+        "size": [
+          0.035,
+          0.07
+        ],
+        "speed": [
+          2,
+          7
+        ]
+      },
+      "opacity": 1,
+      "tint": null
+    },
+    {
+      "name": "blastsmoke",
+      "prefab": "Prefabs/FX_Grenade_Explosive_01.prefab",
+      "system": 1440436616046932,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "burst": [
+          5,
+          8
+        ],
+        "lifetime": [
+          0.7,
+          1.5
+        ],
+        "size": [
+          0.7,
+          1.4
+        ],
+        "speed": [
+          0.4,
+          1.4
+        ]
+      },
+      "opacity": 0.27,
+      "tint": [
+        0.35,
+        0.3,
+        0.25
+      ]
+    },
+    {
+      "name": "steam",
+      "prefab": "Prefabs/FX_Steam_03.prefab",
+      "system": 1542984833247318,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "rate": 7,
+        "lifetime": [
+          1.5,
+          2.7
+        ],
+        "size": [
+          0.65,
+          1.05
+        ],
+        "speed": [
+          0.8,
+          1.5
+        ],
+        "gravity": 0.05,
+        "drift": [
+          0.16,
+          0,
+          0.08
+        ],
+        "noise": [
+          0.12,
+          0.35
+        ],
+        "spin": [
+          -0.2,
+          0.2
+        ]
+      },
+      "opacity": 0.23,
+      "tint": null
+    },
+    {
+      "name": "canyondust",
+      "prefab": "Prefabs/FX_Dust_Blowing_Soft_01.prefab",
+      "system": 1754141063642386,
+      "renderer": "billboard",
+      "resource": "smoke.png",
+      "overrides": {
+        "rate": 0.65,
+        "lifetime": [
+          4,
+          6
+        ],
+        "size": [
+          2.5,
+          4
+        ],
+        "speed": [
+          0,
+          0
+        ],
+        "gravity": 0,
+        "radius": 1.3,
+        "drift": [
+          0.4,
+          0,
+          0.12
+        ],
+        "spin": [
+          -0.05,
+          0.05
+        ]
+      },
+      "opacity": 0.32,
+      "tint": null
+    }
+  ],
+  "adaptations": [
+    "Original size and opacity curves; tuned density, speed and scale for readable combat.",
+    "Raylib textured billboards replace Unity particle shaders, sphere clouds and stretched sparks.",
+    "Original woodchip UVs and embedded atlas; rock shard reused for stone and dirt fragments.",
+    "Debris meshes normalized to one metre maximum extent. Analytic cones and world gravity.",
+    "Steam uses world-space emission history; low dust has seeded walkable anchors.",
+    "No Unity collision, sub-emitter or Light-module simulation; existing explosion radius ring retained."
+  ],
+  "source_sha256": {
+    "Materials/PolygonParticles_Material_01_A.mat": "4401514ac9cfe230f15e241eb7b3d067b3171c09f4f0be886f322ef4a0fe374a",
+    "Models/FX_Shard_Rock_Small_01.fbx": "1efbd17f1d41072d667f2db5777e020a253f615322f3e746490bffa8c5e71b03",
+    "Models/FX_Shard_Rock_Small_01.fbx.meta": "75e93405dd0074a91481bceb3d4cc3ad72719ec9183f46776afa3400b79d68ab",
+    "Models/FX_WoodChip_01.fbx": "439ff1df9a7ba26e951650fc3815b2e037dcb8de058075f85ec56b2a161ef6f4",
+    "Models/FX_WoodChip_01.fbx.meta": "733eca241ba2a3a17a79f39ca2a9ec90a41a2022f876ca83249a60abe8e34550",
+    "Prefabs/FX_Dust_Blowing_Soft_01.prefab": "2b6c5283a88a4c470188551008d28c4c135b51b63b5df7583f5f8077fb4161dc",
+    "Prefabs/FX_Grenade_Explosive_01.prefab": "6ad9ddec604c3dd5bbc0b4afb1e8c5833b94972eda18886ae697fc5f26e95098",
+    "Prefabs/FX_Gunshot_01.prefab": "767ea58da7702d32749f632c45d41ec3ea0e6b641a88ca6282487aeb0d2daed7",
+    "Prefabs/FX_Impact_Dirt_01.prefab": "9d18092a9bece505e2467527bf8378cf5ca03349a0eac1a879056b094c4d25d7",
+    "Prefabs/FX_Impact_Metal_01.prefab": "adca7a41cf9a95eafb0a9ce72d8f5b2c867902b5a9a2db4b868b2ca3a4a1bdec",
+    "Prefabs/FX_Impact_Stone_01.prefab": "4de338e4be91cf04c62f099c32d8d26c34c73bdd86eda791014881024113b284",
+    "Prefabs/FX_Impact_Wood_01.prefab": "b239c8b0916bcf5be1a887d350303bbc88e8e7884b894803cf8a1db768e21942",
+    "Prefabs/FX_Steam_03.prefab": "75fb1c99970866b5d24954a2ec43e2e5f5724d959330b9310125dc13ab3d080c",
+    "Textures/PolygonParticles_Texture_01_A.png": "1b3f952e6d97f63b297aafcb03ee6ea3ded50650a913c8fdd23b37d8ec98027b"
+  },
+  "output_sha256": {
+    "combat.particles": "0e95a6a8c2de98f6a438c9bb0dcf575a94cacd35e2b4860fa166fcfc52f813e8",
+    "woodchip.glb": "47fac4efc7a2b995d8f6ea44344c1402756d05e1710b8127c78c26c1d0a06594",
+    "rock.glb": "40539dd685fa273c2120c2e5671cf809a2177ae4a1e8f2406b8a8da2cfa11566"
+  }
+}

@@ -224,6 +224,11 @@ Vector3 PlayerModel::worldPoint(Vector3 point, const Player &player) const {
     return add({player.position.x, player.position.y - .85f + floorOffset_, player.position.z},
                rotateY(mul(point, scale_), yaw_));
 }
+Vector3 PlayerModel::muzzlePosition(const Player &player) const {
+    const auto direction = unit(sub(player.aim,player.position));
+    if (hand_ < 0 || !loaded()) return add(player.position,mul(direction,.7f));
+    return add(worldPoint(worldPose_[size_t(hand_)].translation,player),mul(direction,.48f));
+}
 void PlayerModel::draw(const Simulation &run) const {
     draw(run.player, run.dead);
 }
@@ -262,7 +267,5 @@ void PlayerModel::draw(const Player &player, bool dead, Shader shader, Texture2D
     const Vector3 muzzle = add(hand, mul(forward, 0.48f));
     DrawCylinderEx(hand, muzzle, 0.055f, 0.045f, 6, Color{160, 167, 169, 255});
     DrawSphereEx(add(hand, mul(forward, 0.12f)), 0.09f, 4, 6, Color{75, 78, 80, 255});
-    if (player.fireCooldown > 0.24f)
-        DrawSphereEx(muzzle, 0.12f, 4, 6, Color{255, 205, 111, 255});
 }
 } // namespace dw

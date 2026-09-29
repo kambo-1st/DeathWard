@@ -11,6 +11,7 @@ namespace dw {
 class Renderer {
   public:
     Action draw(const Game &game);
+    const ParticleEffects &missionEffects() const { return missionEffects_; }
     const ParticleEffects &townEffects() const { return townScene_.effects(); }
     std::optional<RayCollision> pickScenery(const Simulation &run, const Camera3D &camera, Ray ray);
     void reloadTown() {
@@ -26,6 +27,8 @@ class Renderer {
         westernScene_.unload();
         townScene_.unload();
         postProcess_.unload();
+        missionEffects_.unload();
+        particlesAttempted_ = false;
         loadedHub_.reset();
     }
 
@@ -37,6 +40,8 @@ class Renderer {
     PostProcess postProcess_;
     WesternScene westernScene_;
     TownScene townScene_;
+    ParticleEffects missionEffects_;
+    bool particlesAttempted_ = false;
     std::optional<HubKind> loadedHub_;
     void text(const std::string &value, float x, float y, int size, Color color) const;
     void wrap(const std::string &value, float x, float y, float width, int size, Color color) const;

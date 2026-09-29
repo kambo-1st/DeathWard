@@ -1,4 +1,4 @@
-# PolygonParticleFX fireplace proof of concept
+# PolygonParticleFX effects
 
 The stone-ring fire beside Black Creek's starting point uses the original
 `SM_Flame_FX` mesh from `PolygonParticleFX`, the `FX_Fire_Small_03` emission,
@@ -11,7 +11,7 @@ This is a selected-effect port, not a Unity ParticleSystem interpreter. DeathWar
 adds hearth-sized placement/scaling, a restrained smoke layer, HDR emission,
 warm flickering point lighting and analytic turbulence in place of Unity noise.
 Embers use ordinary billboards rather than Unity's stretched billboard renderer.
-The pack contains 180 prefabs; only the fireplace effect is ported in this POC.
+The pack contains 180 prefabs. This library ports selected fire, combat and environment layers.
 
 ## Files and reuse
 
@@ -55,3 +55,38 @@ After a fresh original town import, `python3 scripts/add_fireplace_demo.py`
 restores the optional demo placement and rebakes navigation. It requires the
 native `deathward_bake_navigation` target. Source Unity assets are required only
 for rebuilding the imported effect.
+
+## Combat and atmosphere
+
+`combat.particles` adds 16 layers translated by `scripts/import_combat_particles.py`.
+`combat-manifest.json` identifies each source ParticleSystem, source/output hashes,
+renderer substitutions and explicit tuning. Source size curves and opacity/color
+keys are retained; density, lifetime, speed, scale and some colors are tuned for gameplay.
+
+- Actual revolver/Western enemy shots emit a short muzzle flash and smoke.
+  The player's flash follows the animated hand/revolver; Isaac projectiles have no gun flash.
+- Swept wall collisions emit wood splinters in the mine, rock chips in the canyon,
+  sparks at closed gates and dirt at ground-facing surfaces. Hits on enemies have
+  a small hit puff; armored/blocked hits spark. Wood chips retain their original UVs
+  and embedded `PolygonParticles_Texture_01_A` atlas. Rock shards use particle colors.
+- Explosions use fire, ember, rock and smoke bursts. The fuse, kick, damage, cover
+  checks and blast-radius ring are unchanged. Old smoke spheres are a fallback.
+- Both Black Creek locomotive stacks emit steam automatically, including in editor
+  preview. The stack uses its own exact label. Puffs keep their world-space emission
+  origin when the train moves; reset/teleport discards the old trail. A duplicated
+  stack receives a separate emitter. There is no separate steam tool in the editor.
+- Canyon dust has seeded anchors on walkable ground. Low opacity, ground/rock checks
+  and reduced opacity near the player preserve visibility. Mines have no canyon dust.
+
+Burst events use a separate cosmetic seed counter, never gameplay RNG or the audio
+queue. Pause freezes simulation and effects. Bursts expire within three seconds;
+only 128 recent events and 4,096 visible particles are retained. Train histories are
+bounded to the plume lifetime and 512 observations per stack. Smoke uses textured
+billboards; Unity particle collisions, stretched renderers and sub-emitters are not
+simulated. Debris disappears below ground; it is visual and never blocks movement.
+
+Rebuild the additional layers (normal builds use the checked-in files):
+
+```sh
+python3 scripts/import_combat_particles.py --blender /path/to/blender
+```
