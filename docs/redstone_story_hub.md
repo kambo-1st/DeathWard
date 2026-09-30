@@ -30,7 +30,8 @@ ruts converging toward the fort.
 The same feathered soil, varied wear and rounded bends now extend along the
 main road, through the fort and into the hitching and repair paths. These roads
 follow the ground; the raised rectangular road pieces are retained only as
-editor catalog assets for older saved layouts.
+editor catalog assets for older saved layouts. Solid sand ground bridges the
+gap beside the Badlands sign and joins the barricade's bank to the wagon road.
 
 ## Story commitments
 

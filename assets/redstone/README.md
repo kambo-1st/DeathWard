@@ -2,7 +2,7 @@
 
 A third, fixed hub combining Black Creek's canyon landscape and railway with
 Western Frontier's fortified compound and neighboring covered-wagon settler camp.
-It contains **1029 authored placements, 236 mesh assets and eight original embedded
+It contains **1030 authored placements, 236 mesh assets and eight original embedded
 textures**. It is an authored composition of the two packs, rather than another
 Unity demo import or a seed-generated mission.
 
@@ -89,6 +89,10 @@ Black Creek remains the default starting hub.
   Roads sample soil independently of cliffs, use soil face normals, and fade
   before rocks, steep banks and height steps between terrain tiles. This keeps
   grid-cut triangles and dark cliff normals out of the visible dirt edge.
+- A shallow original sand-ground tile closes the missing terrain beside the
+  Badlands sign. It joins the road and the barricade's low bank; the road is
+  refitted over this solid soil. `terrain_fills` in the layout authors these
+  repairs independently of props, so adding earth does not clear nearby scenery.
 - Fifteen provisional residents use the existing textured cowgirl and bandit
   models. The commander, outlaw, wife, spiritualist and scout have authored
   positions; ambient residents follow checked walking routes. Nearby role labels
@@ -109,10 +113,13 @@ The character inspector's **Model** button switches between cowgirl and bandit;
 placement, route editing, undo/redo and saving apply to both. New mesh assets
 append after the previous catalog entries (192, then 212, then 220, then 231, then 232).
 Browser startup upgrades known untouched shipped scene/navigation pairs through
-`deathward-m1-45`. Other saved layouts retain their
+`deathward-m1-46`. Other saved layouts retain their
 instances and settings while receiving the extra unused catalog entries and
 labels needed to load the expanded GLB. Road mesh pivots stay fixed; startup
 refreshes only their derived catalog bounds when loading an edited layout.
+Existing road-era browser saves also receive the Badlands fill once if its
+surrounding terrain still has the original placements. Their own navigation is
+rebuilt; customized terrain and later deliberate deletions are preserved.
 
 ## Rebuild and verify
 

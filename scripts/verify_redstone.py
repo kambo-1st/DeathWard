@@ -181,6 +181,15 @@ def verify(directory):
     soil = Ground([face for p in manifest['placements']
                    if 'Ground' in manifest['assets'][p['asset']]['label']
                    for face in triangles(library,p)[0]])
+    if manifest['story'].get('terrain_fills'):
+        # Previously these samples fell through to the backdrop roughly 98 m
+        # below the hub. Check the soil itself, independently of road overlays.
+        for x in np.arange(33,41.01,.25):
+            for z in np.arange(-1,2.01,.25):
+                height = soil.height(x,z)
+                assert -.8 < height < .5, (x,z,height,'Solid soil beside the Badlands sign')
+                assert abs(height-soil.height(x+.25,z)) < .3, 'No exposed terrain step across the filled gap'
+                assert abs(height-soil.height(x,z+.25)) < .3, 'No exposed terrain step along the filled gap'
     for p in manifest['placements']:
         kind = manifest['assets'][p['asset']].get('derived', {}).get('kind')
         if kind not in ('ground_path', 'ground_junction', 'road_network'):

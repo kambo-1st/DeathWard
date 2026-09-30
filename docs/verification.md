@@ -1,5 +1,30 @@
 # Milestone 1 verification
 
+## Badlands terrain gap
+
+Content version `deathward-m1-47` adds one original textured sand-ground tile
+beneath the gap beside the Badlands sign and refits the road over it. Ground
+sampling in the gap previously hit the distant backdrop roughly 98 metres below
+the hub. The new soil joins the road and low bank without exposing those tile
+edges. The pack has 1,030 instances, the same 236 assets and eight images, and
+827,303 connected navigation cells. All earlier placements remain exact.
+
+The source audit checks solid soil and neighboring heights across the gap;
+native route tests walk across it and verify direct traversal. Close-up renders
+from both sides show the filled edge. Native builds, source audit and hub-route
+checks pass. Logs and captures use `artifacts/badlands-ground-*`.
+
+Browser migration upgrades the untouched `m1-46` scene/nav pair. Edited road-era
+maps receive the fill once only when the surrounding terrain poses still match;
+startup rebuilds their navigation with their own markers and scenery. A marker
+records the migration, so a later intentional deletion stays deleted. Run
+`node web/redstone-migration-test.cjs` for isolated preservation/idempotence
+checks, including customized terrain and older layouts. The WASM build and real
+browser suite pass hub travel, editor save/reload, and repair of an edited old
+map with preservation of its custom prop and automatic navigation rebuild.
+The refreshed upload ZIP passes integrity checks and browser startup at the
+domain root and `/deathward/`, including Redstone Canyon.
+
 ## Redstone road/rock edge correction
 
 Content version `deathward-m1-46` projects road wear onto soil independently of

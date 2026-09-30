@@ -1,5 +1,5 @@
 {
-  "revision": 8,
+  "revision": 9,
   "title": "Stranded at Redstone",
   "spawn": [
     0,
@@ -2314,5 +2314,25 @@
         ]
       }
     ]
-  }
+  },
+  "terrain_fills": [
+    {
+      "id": "badlands-ground",
+      "pack": "town",
+      "prefab": "SM_Env_Sand_Ground_06",
+      "source_group": "1017155373",
+      "position": [
+        39,
+        -0.55,
+        -2
+      ],
+      "yaw": 0,
+      "scale": [
+        0.4,
+        0.13,
+        0.4
+      ],
+      "section": "terrain-repair"
+    }
+  ]
 }

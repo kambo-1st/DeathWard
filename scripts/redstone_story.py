@@ -59,7 +59,7 @@ def dress_story(town, frontier, library, placements, motion):
     shape_roads(placements, library.assets, layout['roads'])
 
     additions = []
-    for prop in layout['props']:
+    for prop in layout['props'] + layout.get('terrain_fills', []):
         pack = packs[prop['pack']]
         group = pack.groups[prop['source_group']] if 'source_group' in prop else next(
             g for g in pack.groups.values() if Path(g[0]['prefab']).stem == prop['prefab'])
@@ -82,7 +82,7 @@ def dress_story(town, frontier, library, placements, motion):
         transform[:3,3] += np.array(prop['position']) - [0,floor,0]
         for original in group:
             additions.append(dict(asset=library.asset(pack, original['asset']),
-                object='story-' + prop['id'] + ':' + original['object'].split(':')[-1],
+                object=('terrain-' if prop['section'] == 'terrain-repair' else 'story-') + prop['id'] + ':' + original['object'].split(':')[-1],
                 transform=(transform @ np.array(original['transform']).reshape(4,4)).flatten().tolist(),
                 source_pack=pack.name, source_object=original['object'], section=prop['section'],
                 composition_transform=transform.flatten().tolist()))
@@ -90,7 +90,8 @@ def dress_story(town, frontier, library, placements, motion):
     # Reserve full prefab extents (including ropes/shafts) and circulation spaces,
     # rather than just a radius around each object's origin. Only loose canyon
     # clutter is removed; cliffs, ground, fort and railway remain intact.
-    reserved = [(low - .7, high + .7) for p in additions
+    # Terrain fills support the existing scenery; they do not reserve a prop court.
+    reserved = [(low - .7, high + .7) for p in additions if p['section'] != 'terrain-repair'
                 for low, high in [footprint(p, library.assets)]]
     reserved += [(np.array(space['min']), np.array(space['max']))
                  for space in layout.get('clear_spaces', [])]

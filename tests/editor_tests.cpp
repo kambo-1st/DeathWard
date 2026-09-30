@@ -174,6 +174,53 @@ int main() {
         editor.redo();
         check(editor.dirty(), "redo restores the drag");
         editor.undo();
+        // Imported pivots can sit inside a mesh or below terrain. All three
+        // handles must remain visible and their arrowheads must be draggable.
+        editor.translate({0, -2, 0});
+        editor.focusSelection();
+        frame();
+        const auto buried = editor.document().instances[chosen].transform;
+        const Vector3 buriedPivot{buried.m12, buried.m13, buried.m14};
+        const float buriedHandle = distance(editor.camera.position, editor.camera.target) * .12f;
+        auto gizmoImage = LoadImageFromScreen();
+        std::filesystem::create_directories("artifacts");
+        ExportImage(gizmoImage, "artifacts/editor-gizmo-handles.png");
+        const std::array<Vector3,3> axes{{{1,0,0},{0,1,0},{0,0,1}}};
+        for (size_t axis = 0; axis < axes.size(); ++axis) {
+            int visible = 0;
+            for (float along : {.45f,.6f,.75f,.9f}) {
+                const auto pixel = GetWorldToScreen(add(buriedPivot,mul(axes[axis],buriedHandle*along)),editor.camera);
+                for (int y = -5; y <= 5; ++y)
+                    for (int x = -5; x <= 5; ++x) {
+                        const auto c = GetImageColor(gizmoImage,int(pixel.x)+x,int(pixel.y)+y);
+                        visible += axis == 0 ? c.r > c.g+40 && c.r > c.b+40 :
+                                   axis == 1 ? c.g > c.r+35 && c.g > c.b+35 : c.b > c.r+35 && c.b > c.g+25;
+                    }
+            }
+            std::cout << "Buried gizmo " << "XYZ"[axis] << " visible pixels " << visible << '\n';
+            check(visible > 20, "each gizmo axis renders over terrain around an imported pivot");
+        }
+        UnloadImage(gizmoImage);
+        for (size_t axis = 0; axis < axes.size(); ++axis) {
+            const auto tip = GetWorldToScreen(add(buriedPivot,mul(axes[axis],buriedHandle*1.12f)),editor.camera);
+            const auto destination = GetWorldToScreen(add(buriedPivot,mul(axes[axis],buriedHandle*2.f)),editor.camera);
+            frame(tip);
+            frame(tip,true);
+            frame(destination,true);
+            frame(destination);
+            check(editor.selection() == chosen, "clicking an arrow tip keeps the selected object");
+            const auto after = editor.document().instances[chosen].transform;
+            const auto delta = sub(Vector3{after.m12,after.m13,after.m14},buriedPivot);
+            const float amount = Vector3DotProduct(delta,axes[axis]);
+            check(amount > .25f && length(sub(delta,mul(axes[axis],amount))) < .0001f,
+                  "each arrow tip moves only its corresponding world axis");
+            editor.undo();
+            check(same(buried,editor.document().instances[chosen].transform), "one undo restores an axis drag");
+        }
+        editor.undo();
+        check(same(initial,editor.document().instances[chosen].transform) && !editor.dirty(),
+              "gizmo checks restore the original placement and clean state");
+        editor.focusSelection();
         editor.translate({.375f, 1, -.75f});
         auto moved = editor.document().instances[chosen].transform;
         editor.rotate({0, 1, 0}, 35);

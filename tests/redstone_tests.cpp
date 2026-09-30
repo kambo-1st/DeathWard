@@ -73,6 +73,10 @@ int main() {
         hub.setMovingSolids(parked.solids());
         const auto arrival = hub.spawn;
         walk(hub, hub.mission);
+        walk(hub, {35,0,0});
+        walk(hub, {39,0,0});
+        check(hub.canTraverse({33,0,0},{41,0,0}),
+              "Solid ground bridges the former terrain hole beside the Badlands sign");
         walk(hub, {4,0,-39});
         walk(hub, {7,0,-26});
         walk(hub, {-1,0,-13});

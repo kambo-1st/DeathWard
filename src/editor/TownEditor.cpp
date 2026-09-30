@@ -810,7 +810,10 @@ void TownEditor::update(float dt) {
                     const auto b = GetWorldToScreen(add(pivot(), mul(Axes[size_t(i)], size)), camera);
                     if (Vector2Distance(a, b) < 16)
                         continue;
-                    const float d = segmentDistance(mouse, Vector2Lerp(a, b, .2f), b);
+                    // Include the visible arrowhead/cap, not just its shaft.
+                    const float tip = tool_ == Tool::Move ? 1.15f : 1.05f;
+                    const auto end = GetWorldToScreen(add(pivot(), mul(Axes[size_t(i)], size * tip)), camera);
+                    const float d = segmentDistance(mouse, Vector2Lerp(a, b, .2f), end);
                     if (d < best) {
                         best = d;
                         dragAxis_ = i;
@@ -928,6 +931,9 @@ void TownEditor::draw() {
         if (selected_ && !selectedGroup() && preview_.time() == 0) {
             const auto p = pivot();
             const float size = radius_ * .12f;
+            // Raylib queues primitive draws. Flush on both sides of the depth
+            // change so terrain cannot hide handles at low or buried pivots.
+            rlDrawRenderBatchActive();
             rlDisableDepthTest();
             for (size_t i = 0; i < 3; ++i) {
                 const auto end = add(p, mul(Axes[i], size));
@@ -940,6 +946,7 @@ void TownEditor::draw() {
                 else
                     DrawSphereEx(end, size * .045f, 6, 8, AxisColors[i]);
             }
+            rlDrawRenderBatchActive();
             rlEnableDepthTest();
         }
     }

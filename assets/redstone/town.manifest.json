@@ -4,7 +4,7 @@
   "title": "Redstone Canyon",
   "description": "Stranded train, buried railway, fort and expanding settler camp for the Redstone story; no station.",
   "story": {
-    "revision": 8,
+    "revision": 9,
     "title": "Stranded at Redstone",
     "spawn": [
       0,
@@ -3387,6 +3387,26 @@
         }
       ]
     },
+    "terrain_fills": [
+      {
+        "id": "badlands-ground",
+        "pack": "town",
+        "prefab": "SM_Env_Sand_Ground_06",
+        "source_group": "1017155373",
+        "position": [
+          39,
+          -0.55,
+          -2
+        ],
+        "yaw": 0,
+        "scale": [
+          0.4,
+          0.13,
+          0.4
+        ],
+        "section": "terrain-repair"
+      }
+    ],
     "preserved_editor_removals": [
       "town-1720565495:1445815111663670",
       "town-300634513:1895439576520662",
@@ -8721,7 +8741,7 @@
       "bounds": [
         [
           -38.5,
-          97.53694915771484,
+          97.71083068847656,
           -8.0
         ],
         [
@@ -37349,6 +37369,49 @@
       "ground_offset_y": -0.00032093863171756
     },
     {
+      "asset": "town_part_0078",
+      "object": "terrain-badlands-ground:1829520066912572",
+      "transform": [
+        0.4,
+        0.0,
+        0.0,
+        39.0,
+        0.0,
+        0.13,
+        0.0,
+        -0.55,
+        0.0,
+        0.0,
+        0.4,
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_pack": "town",
+      "source_object": "1017155373:1829520066912572",
+      "section": "terrain-repair",
+      "composition_transform": [
+        0.4,
+        0.0,
+        0.0,
+        38.672000002861026,
+        0.0,
+        1.2999999806284908,
+        0.0,
+        0.04800000193715093,
+        0.0,
+        0.0,
+        0.4,
+        6.740000152587891,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
       "asset": "redstone_wall_bank",
       "object": "redstone-wall-bank",
       "transform": [
@@ -40179,7 +40242,7 @@
       1200
     ],
     "cell": 0.20000000298023224,
-    "walkable_cells": 824665,
+    "walkable_cells": 827303,
     "spawn": [
       0.09999847412109375,
       -0.3492904603481293,
@@ -40187,14 +40250,14 @@
     ],
     "mission": [
       30.900009155273438,
-      -0.42810168862342834,
+      -0.3588634133338928,
       -5.099998474121094
     ]
   },
   "output_sha256": {
-    "town.glb": "2027c182d618c556d5c23b6bfa499d3bfbe6888f301d8e0d9b88a1ab642d3d69",
-    "town.scene": "0399acfd87a0a9605ed3b3d09d5306cd909eaa0f03865fc83ab25697debd0a66",
+    "town.glb": "94d14287d3b22774d820449fbb5b2649104112585892b661f638de45979cdb37",
+    "town.scene": "05fa1a254bfc336c30c9d7b0bbe130490fdc8a307e7b7c0661091d9388645181",
     "town.labels": "37372b08275a6f5e3eb8ae5f8c23bd0bd020b05675f86afadc7f133a6510ec3d",
-    "town.nav": "c9d1c2ef41f3312258ee517b5769fdddfdfc293e89d5e5b5a637b8a517bc078f"
+    "town.nav": "5a13093d211d771fcd2a64b79503b7cd265086daab7a9380fe54888c370fd4a4"
   }
 }

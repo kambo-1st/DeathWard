@@ -110,6 +110,29 @@ const root = path.resolve(__dirname, '..');
     assert.equal(authored(upgraded), authored(legacy));
     assert((await page.evaluate(() => FS.readFile('/persist/redstone/town.labels', {encoding:'utf8'}))).includes('My_custom_ground'));
     console.log('PASS old edited maps keep placements, routes and custom labels with the expanded mesh library');
+    // An existing edited road-era save receives the missing soil without
+    // losing its placements. Startup rebakes its own navigation afterward.
+    const repairId = 'terrain-badlands-ground:1829520066912572';
+    const custom = await page.evaluate(({saved, repairId}) => {
+      const rows = saved.split('\n').filter(line => line.split(' ')[2] !== repairId);
+      const prop = rows.findIndex(line => line.split(' ')[2]?.startsWith('story-arrival-trunk-a:'));
+      const fields = rows[prop].split(' ');
+      fields[6] = String(Number(fields[6]) + .25);
+      rows[prop] = fields.join(' ');
+      const text = rows.join('\n');
+      FS.writeFile('/persist/redstone/town.scene', text);
+      FS.unlink('/persist/redstone/.badlands-ground-v1');
+      Module.flushSaves();
+      return {text, prop: rows[prop]};
+    }, {saved, repairId});
+    await wait(() => !Module.saving);
+    await start();
+    const repaired = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding:'utf8'}));
+    assert.equal(repaired.split('\n').filter(line => line.split(' ')[2] === repairId).length, 1);
+    assert(repaired.includes(custom.prop));
+    assert.equal(repaired.split('\n').filter(line => line.split(' ')[2] !== repairId).join('\n'), custom.text);
+    assert.equal(await page.evaluate(() => FS.readFile('/persist/redstone/town.nav')[7]), '3'.charCodeAt(0));
+    console.log('PASS edited road-era save receives solid Badlands ground, keeps custom props and rebuilds navigation');
     assert.deepEqual(errors, []);
     console.log('PASS independent canyon editor save, navigation rebuild, reload and clean WebGL rendering');
   } finally {

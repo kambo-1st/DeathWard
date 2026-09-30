@@ -20,6 +20,8 @@ Click a visible mesh, or select it in the **Scene** list. Search by asset name o
 
 Choose **Move**, **Rotate** or **Scale** with the buttons or **1 / 2 / 3**. Drag a colored X, Y or Z handle. Move uses world axes; rotation turns around the chosen axis at the object's pivot. Scale handles resize uniformly. The inspector's numeric position, rotation and scale fields provide precise values and per-axis scaling. Click a field, type its replacement and press Enter; Ctrl+A selects the current text. Imported reflected and sheared matrices are preserved when opening and saving.
 
+The colored handles remain visible over objects and terrain, including when an imported object's pivot is buried inside the mesh or below ground. Drag either the shaft or its arrowhead to move along that axis.
+
 Snapping uses 0.5-unit movement, 15-degree rotation and 0.1 scale increments. Hold Shift to bypass it or turn **Snap** off. **Ctrl+D** duplicates, **Delete** removes, and **Ctrl+Z / Ctrl+Y** undo and redo. A complete handle drag is one undo step. History retains up to 80 steps in the current session.
 
 ## Animating props
@@ -119,7 +121,7 @@ The original import manifest remains an audit of the Unity demo. `scripts/verify
 ./build/deathward_input_tests
 ```
 
-Editor tests use an isolated copy of the town. They cover mesh picking, handle dragging, transforms, placement/deletion, undo/redo, exact scene round trips, failed-save preservation, backup files, rebuilt navigation, camera controls and unsaved-close handling.
+Editor tests use an isolated copy of the town. They cover mesh picking, visibility of buried gizmos, dragging all three arrowheads, transforms, placement/deletion, undo/redo, exact scene round trips, failed-save preservation, backup files, rebuilt navigation, camera controls and unsaved-close handling.
 
 ## Attached fire effects
 

@@ -47,7 +47,9 @@ inline void prepareBrowserFiles() {
                     (matches('town.scene', 274646, 2447431695) &&
                      matches('town.nav', 5760052, 3827705978)) ||
                     (matches('town.scene', 271017, 1725496596) &&
-                     matches('town.nav', 5760052, 24843763))) {
+                     matches('town.nav', 5760052, 24843763)) ||
+                    (matches('town.scene', 271048, 847026121) &&
+                     matches('town.nav', 5760052, 4092110643))) {
                     for (const name of ['town.scene', 'town.nav'])
                         FS.writeFile(destination + '/' + name, FS.readFile('/assets/redstone/' + name));
                 }
@@ -89,6 +91,39 @@ inline void prepareBrowserFiles() {
                     const after = newAssets[n].trim().split(' ').filter(Boolean);
                     return before.slice(0,5).join(' ') === after.slice(0,5).join(' ');
                 })) FS.writeFile(path, saved.trimEnd() + '\n' + newAssets.slice(oldAssets.length).join('\n') + '\n');
+                // Add the missing soil once to existing road-era editor saves
+                // when the surrounding terrain is still at its authored poses.
+                // A later deliberate deletion of the fill must stay deleted.
+                const repairMarker = destination + '/.badlands-ground-v1';
+                if (!FS.analyzePath(repairMarker).exists) {
+                    const instances = text => new Map(text.split('\n').filter(line => line.startsWith('instance '))
+                        .map(line => [line.trim().split(' ').filter(Boolean)[2],line]));
+                    const oldInstances = instances(saved);
+                    const shippedInstances = instances(shipped);
+                    const repairId = 'terrain-badlands-ground:1829520066912572';
+                    const repair = shippedInstances.get(repairId);
+                    const anchors = (['redstone-road-east',
+                        'town-1017155373:1829520066912572', 'town-1959252270:1194512102497620',
+                        'town-1055865170:1194512102497620', 'town-320569589:1194512102497620',
+                        'town-884915718:1194512102497620']);
+                    const samePose = id => {
+                        const before = (oldInstances.get(id) || "").trim().split(' ').filter(Boolean);
+                        const after = (shippedInstances.get(id) || "").trim().split(' ').filter(Boolean);
+                        return before.length === 19 && after.length === 19 &&
+                            before.slice(0,3).join(' ') === after.slice(0,3).join(' ') &&
+                            after.slice(3).every((value,n) => Math.abs(Number(value)-Number(before[n+3])) < .0001);
+                    };
+                    if (repair && !oldInstances.has(repairId) && anchors.every(samePose)) {
+                        FS.writeFile(path, FS.readFile(path,{encoding:'utf8'}).trimEnd() + '\n' + repair + '\n');
+                        // Use the existing geometry rebake on startup, preserving
+                        // this save's arrival/mission markers and custom scenery.
+                        const navPath = destination + '/town.nav';
+                        const navigation = FS.readFile(navPath);
+                        navigation[7] = 50; // DWTNAV02 requests a current-format rebuild.
+                        FS.writeFile(navPath,navigation);
+                    }
+                    FS.writeFile(repairMarker,'1');
+                }
                 const labelPath = destination + '/town.labels';
                 const labels = FS.readFile(labelPath, {encoding:'utf8'});
                 const known = new Set(labels.split('\n').map(line => line.split(' ')[0]));
