@@ -75,6 +75,8 @@ Black Creek also includes a **cowgirl walking a four-stop route** near the start
 
 All three hubs use imported sunlight and lamps, with warm ground bounce, cooler sky fill and sun-cast shadows from scenery, the animated bandit and town animals. Shadows follow the camera as you walk, orbit and zoom. The town editor previews the same lighting while objects move. Original textures and placements remain intact.
 
+Generated canyon and mine missions share sun-cast shadows from terrain, scenery, the animated player, enemies, gates and objective props. Ground and characters receive those shadows. Canyon walls keep casting when they fade to reveal the player; camera orbit and zoom do not change the sun direction. Static scenery depth is cached and moving actors update each frame, on native and WebGL builds.
+
 The world uses an autumn color treatment inspired by the supplied visual reference: amber highlights, plum shadows, richer colors, soft bloom and a subtle vignette. A gentle blur softens fine detail, and light lavender fog builds with scene depth while keeping the camera's focal area clear. Frontier's leafy trees vary between copper and gold; bark, grass and evergreen foliage keep their source palette. The same post processing covers all three hubs, missions and the editor. Menus, text and enemy health bars are drawn afterward to stay sharp and retain their original colors.
 
 In missions, aiming passes through both transparent and solid scenery. Click an enemy's body or outline to attack, or use right-click / Shift-click to aim at the ground behind a model. Movement clicks still approach solid scenery, and physical cover still stops bullets and movement.
@@ -234,6 +236,7 @@ ctest --test-dir build --output-on-failure
 ./build/deathward_town_assets_tests
 ./build/deathward_building_tests
 ./build/deathward_redstone_render_tests
+./build/deathward_mission_lighting_tests
 ./build/deathward_occlusion_tests
 ./build/deathward_post_process_tests
 ./build/deathward_audio_tests

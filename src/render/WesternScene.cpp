@@ -16,7 +16,9 @@ constexpr const char *VertexShader = R"GLSL(#version 330
 in vec3 vertexPosition;
 in vec2 vertexTexCoord;
 in vec3 vertexNormal;
-in mat4 instanceTransform;
+// Reserve the same four attributes in color/depth programs. raylib retains
+// instance attributes on the mesh VAO between passes.
+layout(location=8) in mat4 instanceTransform;
 uniform mat4 mvp;
 out vec2 uv;
 out vec3 normal;
@@ -42,8 +44,8 @@ void main() {
     if (surface.a < 0.02) discard;
     surface = playerOcclusionSurface(world,surface);
     vec3 litNormal = gl_FrontFacing ? normalize(normal) : -normalize(normal);
-    float sunlight = max(dot(litNormal, normalize(vec3(-0.45, 0.85, 0.3))), 0.0);
-    finalColor = vec4(surface.rgb * sceneryTint * (0.62 + 0.43 * sunlight), surface.a);
+    float sunlight = max(dot(litNormal, missionSun), 0.0);
+    finalColor = vec4(surface.rgb * sceneryTint * (0.50 + 0.55 * sunlight * missionVisibility(world,litNormal)), surface.a);
 }
 )GLSL";
 bool overlaps(Box a, Box b, float margin = 0) {
@@ -66,6 +68,7 @@ WesternScene::~WesternScene() {
 }
 void WesternScene::unload() {
     clearTerrain();
+    lighting_.unload();
     std::set<unsigned int> textures;
     for (int i = 0; i < model_.materialCount; ++i)
         for (int map = MATERIAL_MAP_ALBEDO; map <= MATERIAL_MAP_BRDF; ++map) {
@@ -152,8 +155,9 @@ bool WesternScene::load(const std::filesystem::path &directory) {
                 distance(actual.max, asset.bounds.max) < 0.01f;
     }
     if (valid) {
-        const auto fragment = withPlayerOcclusion(FragmentShader);
+        const auto fragment = withPlayerOcclusion(MissionLighting::withShadows(FragmentShader).c_str());
         shader_ = loadWorldShader(VertexShader, fragment.c_str());
+        shader_.locs[SHADER_LOC_MAP_METALNESS] = GetShaderLocation(shader_, "shadowMap");
         valid = shader_.id && shader_.id != rlGetShaderIdDefault();
     }
     if (!valid) {
@@ -205,6 +209,7 @@ void WesternScene::prepare(const Arena &arena) {
 void WesternScene::generate(const Arena &arena) {
     placements_.clear();
     clearTerrain();
+    lighting_.invalidate();
     if (arena.theme == MissionTheme::Canyon && arena.canyon) {
         generateCanyon(arena);
         return;
@@ -420,7 +425,45 @@ void WesternScene::drawGlass() {
     drawBatches(true);
     rlEnableDepthMask();
 }
+void WesternScene::prepareLighting(const Camera3D &camera,
+                                   const std::function<void(Shader, Shader)> &actors) {
+    lighting_.prepare(
+        camera,
+        [&](Shader instanceDepth, Shader meshDepth) {
+            // Use physical geometry, independently of the camera's occlusion fade and
+            // distance culling. Off-screen cliffs still block the sun.
+            if (terrainMaterial_.maps) {
+                auto material = terrainMaterial_;
+                material.shader = meshDepth;
+                for (const auto &chunk : terrain_)
+                    if (lighting_.contains(chunk.bounds))
+                        DrawMesh(chunk.mesh, material, MatrixIdentity());
+            }
+            std::array<std::vector<Matrix>, size_t(WesternAsset::Count)> batches;
+            for (const auto &placement : placements_)
+                if (lighting_.contains(placement.bounds))
+                    batches[size_t(placement.asset)].push_back(
+                        placementTransform(assets_[size_t(placement.asset)].bounds, placement));
+            for (size_t i = 0; i < assets_.size(); ++i) {
+                const auto &asset = assets_[i];
+                const auto &batch = batches[i];
+                if (batch.empty())
+                    continue;
+                for (int j = asset.firstMesh; j < asset.firstMesh + asset.meshCount; ++j) {
+                    auto material = model_.materials[model_.meshMaterial[j]];
+                    if (material.maps[MATERIAL_MAP_ALBEDO].color.a < 255)
+                        continue;
+                    material.shader = instanceDepth;
+                    DrawMeshInstanced(model_.meshes[j], material, batch.data(), int(batch.size()));
+                }
+            }
+        },
+        actors);
+    lighting_.bind(shader_);
+    lighting_.bind(terrainShader_);
+}
 void WesternScene::drawBatches(bool transparent) {
+    lighting_.bind(shader_);
     occlusion_.bind(shader_, false);
     for (size_t i = 0; i < assets_.size(); ++i) {
         const auto &batch = batches_[i];
@@ -442,7 +485,7 @@ void WesternScene::drawBatches(bool transparent) {
             const auto &material = model_.materials[model_.meshMaterial[mesh]];
             if ((material.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != transparent)
                 continue;
-            DrawMeshInstanced(model_.meshes[mesh], material, batch.data(), int(batch.size()));
+            lighting_.drawInstanced(model_.meshes[mesh], material, batch.data(), int(batch.size()));
         }
         if (cliff)
             rlEnableBackfaceCulling();
@@ -477,7 +520,7 @@ void WesternScene::drawOccluders() {
         occlusion_.bind(shader_, true);
     for (const auto &surface : surfaces) {
         if (surface.terrain) {
-            DrawMesh(surface.terrain->mesh, terrainMaterial_, MatrixIdentity());
+            lighting_.draw(surface.terrain->mesh, terrainMaterial_, MatrixIdentity());
         } else {
             const auto *placement = surface.placement;
             const auto &asset = assets_[size_t(placement->asset)];
@@ -492,7 +535,7 @@ void WesternScene::drawOccluders() {
                 rlDisableBackfaceCulling();
             for (int j = asset.firstMesh; j < asset.firstMesh + asset.meshCount; ++j) {
                 const auto &material = model_.materials[model_.meshMaterial[j]];
-                DrawMeshInstanced(model_.meshes[j], material, &transform, 1);
+                lighting_.drawInstanced(model_.meshes[j], material, &transform, 1);
             }
             if (cliff)
                 rlEnableBackfaceCulling();

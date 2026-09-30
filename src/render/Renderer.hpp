@@ -12,6 +12,9 @@ class Renderer {
   public:
     Action draw(const Game &game);
     bool artPoc = false;
+    bool missionShadowsReady() const {
+        return westernScene_.lighting().ready();
+    }
     const ParticleEffects &missionEffects() const { return missionEffects_; }
     bool insideBuilding() const { return townScene_.interior().has_value(); }
     const ParticleEffects &townEffects() const { return townScene_.effects(); }

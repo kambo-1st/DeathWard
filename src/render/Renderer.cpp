@@ -59,8 +59,10 @@ void effectRings(Vector3 center, float radius, Color color) {
     }
     rlEnd();
 }
-void lantern(Vector3 p, Color color, bool imported = false) {
+void lanternPost(Vector3 p) {
     DrawCylinder({p.x, 0, p.z}, 0.10f, 0.15f, 2.4f, 6, Color{65, 54, 43, 255});
+}
+void lantern(Vector3 p, Color color, bool imported = false) {
     if (imported) {
         DrawSphereEx({p.x, 2.18f, p.z}, 0.14f, 4, 6, color);
         return;
@@ -203,10 +205,11 @@ void enemyModel(const Enemy &enemy, bool drawShadow = true) {
     }
     rlPopMatrix();
 }
-void shopkeeper(Vector3 p, float time) {
+void shopkeeper(Vector3 p, float time, bool drawShadow = true) {
     const Color timber{100, 63, 39, 255}, apron{66, 120, 110, 255}, skin{203, 166, 123, 255};
     const float bob = .025f * std::sin(time * 2);
-    shadow(p, .75f);
+    if (drawShadow)
+        shadow(p, .75f);
     DrawCylinder({p.x, .03f, p.z}, 1.6f, 1.6f, .025f, 12, Color{135, 85, 48, 255});
     for (float side : {-.2f, .2f}) {
         DrawCube({p.x + side, .38f, p.z}, .26f, .76f, .34f, Ink);
@@ -424,16 +427,116 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     westernScene_.setPlayerOcclusion(camera, run.player.position);
     const auto &theme = missionTheme(run.arena.theme);
     const bool canyon = run.arena.theme == MissionTheme::Canyon;
-    postProcess_.begin(theme.sky, distance(camera.position, camera.target));
-    BeginMode3D(camera);
-    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
-    if (westernScene_.loaded() || westernScene_.terrainReady())
-        westernScene_.draw(run.player.position);
+    const auto &lighting = westernScene_.lighting();
     auto visible = [&](Box box) {
         Vector3 nearest{std::clamp(run.player.position.x, box.min.x, box.max.x), run.player.position.y,
                         std::clamp(run.player.position.z, box.min.z, box.max.z)};
         return distance(nearest, run.player.position) < 65;
     };
+    auto enemies = [&](bool depthOnly) {
+        for (int room = 0; room < RoomCount; ++room) {
+            if (room != run.room && !visible(run.arena.rooms[size_t(room)].bounds))
+                continue;
+            for (const auto &enemy : run.roomEnemies(room)) {
+                if (!enemy.alive)
+                    continue;
+                if (depthOnly &&
+                    (enemy.state == EnemyState::Buried || enemy.state == EnemyState::Teleporting))
+                    continue;
+                enemyModel(enemy, !depthOnly && !lighting.ready());
+            }
+        }
+    };
+    auto solids = [&](bool depthOnly) {
+        for (const auto &passage : run.arena.passages) {
+            if (!visible(passage.floor))
+                continue;
+            const auto direction = unit(sub(passage.to, passage.from));
+            const Vector3 side{-direction.z, 0, direction.x};
+            const bool eastWest = std::abs(direction.x) > .5f;
+            for (int end = 0; end < 2; ++end) {
+                const auto at = end == 0 ? passage.from : passage.to;
+                const Color color = passage.locked ? Gold : passage.closed(end) ? Rust : Teal;
+                lanternPost(add(at, mul(side, -3.5f)));
+                lanternPost(add(at, mul(side, 3.5f)));
+                if (!canyon)
+                    DrawCube({at.x, 3.1f, at.z}, eastWest ? .5f : 8, .4f, eastWest ? 8 : .5f, theme.gate);
+                if (!passage.closed(end))
+                    continue;
+                if (!canyon)
+                    for (float offset = -3.5f; offset <= 3.5f; offset += .7f) {
+                        auto bar = add(at, mul(side, offset));
+                        bar.y = 1.5f;
+                        DrawCube(bar, .13f, 3, .13f, color);
+                    }
+                if (passage.locked) {
+                    DrawCube({at.x, 1.6f, at.z}, .6f, .7f, .6f, Gold);
+                    DrawSphere({at.x, 1.6f, at.z}, .17f, Ink);
+                }
+            }
+        }
+        lanternPost(run.arena.entrance);
+        lanternPost(run.arena.exit);
+        if (run.arena.shopRoom >= 0) {
+            const auto merchant = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
+            if (distance(run.player.position, merchant) < 60)
+                shopkeeper(merchant, float(run.stats.duration), !depthOnly && !lighting.ready());
+        }
+        for (int i = 0; i < RoomCount; ++i) {
+            const auto &room = run.arena.rooms[size_t(i)];
+            if (room.kind != RoomKind::Power || distance(run.player.position, room.objective) > 60)
+                continue;
+            const auto p = room.objective;
+            DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
+        }
+        if (distance(run.player.position, run.arena.miners) < 60) {
+            Vector3 p = run.arena.miners;
+            for (int i = 0; i < 6; ++i) {
+                Vector3 person = add(p, {float(i % 3) * 0.75f - 0.75f, 0, float(i / 3) * 0.7f});
+                if (!run.rescued) {
+                    DrawCylinder({person.x, 0, person.z}, 0.22f, 0.3f, 0.9f, 6, Color{128, 120, 87, 255});
+                    DrawSphere({person.x, 1.1f, person.z}, 0.22f, Gold);
+                }
+            }
+            if (!run.rescued)
+                for (int i = 0; i < 5; ++i)
+                    DrawCube({p.x - 1.6f + float(i) * 0.8f, 1.0f, p.z + 1.2f}, 0.07f, 2, 0.07f, Muted);
+        }
+        if (distance(run.player.position, run.arena.altar) < 60) {
+            Vector3 p = run.arena.altar;
+            DrawCube({p.x, 0.5f, p.z}, 1.8f, 1, 1.4f, Color{63, 51, 51, 255});
+            if (!run.altarDestroyed) {
+                DrawCube({p.x, 1.7f, p.z}, 0.25f, 2.3f, 0.25f, Rust);
+                DrawCube({p.x, 2.1f, p.z}, 1.5f, 0.25f, 0.25f, Rust);
+            }
+        }
+    };
+    westernScene_.prepareLighting(camera, [&](Shader meshDepth, Shader primitiveDepth) {
+        BeginShaderMode(primitiveDepth);
+        solids(true);
+        enemies(true);
+        if (!westernScene_.loaded() && !westernScene_.terrainReady())
+            for (size_t i = 0; i < run.arena.boundaryWalls.size() + run.arena.obstacles.size(); ++i) {
+                const auto &wall = run.arena.walls[i];
+                if (visible(wall))
+                    DrawCubeV(mul(add(wall.min, wall.max), .5f), sub(wall.max, wall.min), WHITE);
+            }
+        // Flush the primitive batch before DrawMesh changes GPU state.
+        rlDrawRenderBatchActive();
+        if (playerModel_.loaded())
+            playerModel_.draw(run.player, run.dead, meshDepth);
+        else
+            cowboy(run.player.position, run.player.facing, WHITE, 1, false, false);
+        EndShaderMode();
+    });
+    postProcess_.begin(theme.sky, distance(camera.position, camera.target));
+    BeginMode3D(camera);
+    lighting.beginPrimitives();
+    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
+    lighting.endPrimitives();
+    if (westernScene_.loaded() || westernScene_.terrainReady())
+        westernScene_.draw(run.player.position);
+    lighting.beginPrimitives();
     auto floor = [&](Box box, Color color) {
         if (!visible(box))
             return;
@@ -447,7 +550,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         const auto &wall = run.arena.walls[i];
         if (i >= run.arena.boundaryWalls.size() + run.arena.obstacles.size() || !visible(wall))
             continue;
-        if (westernScene_.loaded()) {
+        if (westernScene_.loaded() || westernScene_.terrainReady()) {
             if (collisions)
                 DrawBoundingBox({wall.min, wall.max}, Teal);
             continue;
@@ -463,6 +566,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if (collisions)
             DrawBoundingBox({wall.min, wall.max}, Teal);
     }
+    solids(false);
+    enemies(false);
+    lighting.endPrimitives();
     for (const auto &passage : run.arena.passages) {
         if (!visible(passage.floor))
             continue;
@@ -501,8 +607,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                     DrawLine3D(sub(base, mul(side, 0.7f)), tip, Teal);
                 }
             }
-            if (!canyon)
-                DrawCube({at.x, 3.1f, at.z}, eastWest ? 0.5f : 8, 0.4f, eastWest ? 8 : 0.5f, theme.gate);
             if (passage.closed(end)) {
                 if (canyon) {
                     auto veil = color;
@@ -513,24 +617,13 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 for (float offset = -3.5f; offset <= 3.5f; offset += 0.7f) {
                     Vector3 bar = add(at, mul(side, offset));
                     bar.y = 1.5f;
-                    if (!canyon)
-                        DrawCube(bar, 0.13f, 3, 0.13f, color);
-                    else
+                    if (canyon)
                         DrawSphere({bar.x, .12f, bar.z}, .09f, color);
-                }
-                if (passage.locked) {
-                    DrawCube({at.x, 1.6f, at.z}, 0.6f, 0.7f, 0.6f, Gold);
-                    DrawSphere({at.x, 1.6f, at.z}, 0.17f, Ink);
                 }
                 if (collisions)
                     DrawBoundingBox({passage.gates[size_t(end)].min, passage.gates[size_t(end)].max}, color);
             }
         }
-    }
-    if (run.arena.shopRoom >= 0) {
-        const auto merchant = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
-        if (distance(run.player.position, merchant) < 60)
-            shopkeeper(merchant, float(run.stats.duration));
     }
     for (const auto &coin : run.moneyPickups) {
         if (distance(run.player.position, coin.position) > 60)
@@ -562,43 +655,26 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     }
     for (int i = 0; i < RoomCount; ++i) {
         const auto &room = run.arena.rooms[size_t(i)];
-        if (room.kind != RoomKind::Power || distance(run.player.position, room.objective) > 60)
-            continue;
-        const auto p = room.objective;
-        DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
-        if (!run.rooms[size_t(i)].rewardTaken) {
-            DrawSphere({p.x, 1.3f, p.z}, 0.45f, Teal);
-            DrawSphereWires({p.x, 1.3f, p.z}, 0.7f, 6, 8, Gold);
+        if (room.kind == RoomKind::Power && !run.rooms[size_t(i)].rewardTaken &&
+            distance(run.player.position, room.objective) < 60) {
+            const auto p = room.objective;
+            DrawSphere({p.x, 1.3f, p.z}, .45f, Teal);
+            DrawSphereWires({p.x, 1.3f, p.z}, .7f, 6, 8, Gold);
         }
+    }
+    if (distance(run.player.position, run.arena.miners) < 60) {
+        const auto p = run.arena.miners;
+        DrawCircle3D({p.x, .1f, p.z}, 2.3f, {1, 0, 0}, 90, run.rescued ? Muted : Teal);
+    }
+    if (!run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
+        const auto p = run.arena.altar;
+        DrawSphere({p.x, 1.1f, p.z}, .35f, Teal);
     }
     lantern(run.arena.entrance, Gold, westernScene_.loaded());
     lantern(run.arena.exit, run.room == Simulation::FinalRoom && run.roomClear ? Teal : Gold,
             westernScene_.loaded());
     if (run.room == Simulation::FinalRoom && run.roomClear)
         DrawCircle3D({run.arena.exit.x, 0.1f, run.arena.exit.z}, 1.8f, {1, 0, 0}, 90, Teal);
-    if (distance(run.player.position, run.arena.miners) < 60) {
-        Vector3 p = run.arena.miners;
-        for (int i = 0; i < 6; ++i) {
-            Vector3 person = add(p, {float(i % 3) * 0.75f - 0.75f, 0, float(i / 3) * 0.7f});
-            if (!run.rescued) {
-                DrawCylinder({person.x, 0, person.z}, 0.22f, 0.3f, 0.9f, 6, Color{128, 120, 87, 255});
-                DrawSphere({person.x, 1.1f, person.z}, 0.22f, Gold);
-            }
-        }
-        if (!run.rescued)
-            for (int i = 0; i < 5; ++i)
-                DrawCube({p.x - 1.6f + float(i) * 0.8f, 1.0f, p.z + 1.2f}, 0.07f, 2, 0.07f, Muted);
-        DrawCircle3D({p.x, 0.1f, p.z}, 2.3f, {1, 0, 0}, 90, run.rescued ? Muted : Teal);
-    }
-    if (distance(run.player.position, run.arena.altar) < 60) {
-        Vector3 p = run.arena.altar;
-        DrawCube({p.x, 0.5f, p.z}, 1.8f, 1, 1.4f, Color{63, 51, 51, 255});
-        if (!run.altarDestroyed) {
-            DrawCube({p.x, 1.7f, p.z}, 0.25f, 2.3f, 0.25f, Rust);
-            DrawCube({p.x, 2.1f, p.z}, 1.5f, 0.25f, 0.25f, Rust);
-            DrawSphere({p.x, 1.1f, p.z}, 0.35f, Teal);
-        }
-    }
     std::vector<const Enemy *> drawnEnemies;
     for (int room = 0; room < RoomCount; ++room) {
         if (room != run.room && !visible(run.arena.rooms[size_t(room)].bounds))
@@ -616,7 +692,6 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             drawnEnemies.push_back(&e);
             if (e.id == hoveredEnemy)
                 DrawCircle3D({e.position.x, 0.08f, e.position.z}, e.radius + 0.25f, {1, 0, 0}, 90, Rust);
-            enemyModel(e);
             if (room == run.room)
                 enemyWarning(e, run);
             const auto *partner = partnerOf(e);
@@ -649,13 +724,17 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawCircle3D(landing, DynamiteRadius, {1, 0, 0}, 90, Gold);
     }
     if (playerModel_.loaded()) {
-        shadow(run.player.position, 0.65f);
+        if (!lighting.ready())
+            shadow(run.player.position, 0.65f);
         if (!run.dead)
             DrawCircle3D({run.player.position.x, 0.06f, run.player.position.z}, 0.65f, {1, 0, 0}, 90, Teal);
-        playerModel_.draw(run);
-    } else
+        playerModel_.draw(run.player, run.dead, lighting.actorShader(), lighting.texture());
+    } else {
+        lighting.beginPrimitives();
         cowboy(run.player.position, run.player.facing, run.player.hurt > 0 ? Rust : Color{90, 145, 137, 255},
-               1);
+               1, false, !lighting.ready());
+        lighting.endPrimitives();
+    }
     if (run.player.dodge > 0)
         DrawSphereWires(run.player.position, 0.9f, 5, 8, Teal);
     for (const auto &p : run.projectiles) {

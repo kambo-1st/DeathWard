@@ -31,29 +31,19 @@ in vec3 normal;
 in vec2 uv;
 in vec3 tint;
 uniform sampler2D texture0;
-uniform sampler2D heightMap;
-uniform vec4 terrainGrid;
 uniform vec3 focus;
 uniform int terrainUnderlay;
 out vec4 finalColor;
-float ground(vec2 p) {
-    return texture(heightMap,(p-terrainGrid.xy)/terrainGrid.zw).r;
-}
 void main() {
     vec3 n = normalize(normal);
-    vec3 sun = normalize(vec3(-.55,.85,.38));
-    float shade = 1.;
-    for (int i=1;i<=14 && terrainUnderlay==0;++i) {
-        float travel = float(i)*1.7;
-        vec3 ray = world+sun*travel;
-        shade = min(shade, mix(1.,.22,smoothstep(-.5,.5,ground(ray.xz)-ray.y-.28)));
-    }
+    vec3 sun = missionSun;
+    float shade = terrainUnderlay == 0 ? missionVisibility(world,n) : 1.;
     float direct = max(dot(n,sun),0.);
     // A broad sky fill keeps facets readable on faces turned away from the sun.
     float sky = max(dot(n,normalize(vec3(.7,.55,-.45))),0.);
     float up = max(n.y,0.);
     float fill = .19*sky*(1.-.6*up);
-    vec3 color = texture(texture0,uv).rgb*tint*(.64+.06*up+fill+.38*direct*shade);
+    vec3 color = texture(texture0,uv).rgb*tint*(.48+.06*up+fill+.58*direct*shade);
     float fog = smoothstep(60.,110.,length(world.xz-focus.xz))*.6;
     color = mix(color,vec3(.69,.54,.39),fog);
     finalColor=playerOcclusionSurface(world,vec4(color,1.));
@@ -71,13 +61,10 @@ void WesternScene::clearTerrain() {
     terrainBase_ = {};
     if (terrainShader_.id)
         UnloadShader(terrainShader_);
-    if (heightTexture_.id)
-        UnloadTexture(heightTexture_);
     // The atlas belongs to model_; this material only owns its map array.
     if (terrainMaterial_.maps)
         MemFree(terrainMaterial_.maps);
     terrainShader_ = {};
-    heightTexture_ = {};
     terrainMaterial_ = {};
 }
 void WesternScene::generateCanyon(const Arena &arena) {
@@ -85,7 +72,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
         return;
     const auto &field = *arena.canyon;
     terrainField_ = arena.canyon;
-    const auto fragment = withPlayerOcclusion(TerrainFragment);
+    const auto fragment = withPlayerOcclusion(MissionLighting::withShadows(TerrainFragment).c_str());
     terrainShader_ = loadWorldShader(TerrainVertex, fragment.c_str());
     terrainMaterial_ = LoadMaterialDefault();
     terrainMaterial_.shader = terrainShader_;
@@ -112,17 +99,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
             }
         }
     }
-    Image heightImage{const_cast<float *>(field.heights.data()), field.width, field.depth, 1,
-                      PIXELFORMAT_UNCOMPRESSED_R32};
-    heightTexture_ = LoadTextureFromImage(heightImage);
-    terrainMaterial_.maps[MATERIAL_MAP_METALNESS].texture = heightTexture_;
-    terrainShader_.locs[SHADER_LOC_MAP_METALNESS] = GetShaderLocation(terrainShader_, "heightMap");
-    SetTextureFilter(heightTexture_, TEXTURE_FILTER_BILINEAR);
-    SetTextureWrap(heightTexture_, TEXTURE_WRAP_CLAMP);
-    const Vector4 grid{field.x - field.step * .5f, field.z - field.step * .5f, field.width * field.step,
-                       field.depth * field.step};
-    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "terrainGrid"), &grid,
-                   SHADER_UNIFORM_VEC4);
+    terrainShader_.locs[SHADER_LOC_MAP_METALNESS] = GetShaderLocation(terrainShader_, "shadowMap");
     using Triangle = std::array<Vector3, 3>;
     std::vector<Box> outcrops;
     for (const auto &room : arena.rooms)
@@ -307,13 +284,14 @@ void WesternScene::updateTerrainOcclusion() {
 void WesternScene::drawTerrain(Vector3 focus) {
     if (terrain_.empty())
         return;
+    lighting_.bind(terrainShader_);
     SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "focus"), &focus, SHADER_UNIFORM_VEC3);
     occlusion_.bind(terrainShader_, false);
     // The buried base must not self-shadow against the translucent rock above it.
     int underlay = 1;
     SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "terrainUnderlay"), &underlay,
                    SHADER_UNIFORM_INT);
-    DrawMesh(terrainBase_, terrainMaterial_, MatrixIdentity());
+    lighting_.draw(terrainBase_, terrainMaterial_, MatrixIdentity());
     underlay = 0;
     SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "terrainUnderlay"), &underlay,
                    SHADER_UNIFORM_INT);
@@ -321,7 +299,7 @@ void WesternScene::drawTerrain(Vector3 focus) {
         const Vector3 closest{std::clamp(focus.x, chunk.bounds.min.x, chunk.bounds.max.x), focus.y,
                               std::clamp(focus.z, chunk.bounds.min.z, chunk.bounds.max.z)};
         if (!chunk.faded && distance(closest, focus) < 110)
-            DrawMesh(chunk.mesh, terrainMaterial_, MatrixIdentity());
+            lighting_.draw(chunk.mesh, terrainMaterial_, MatrixIdentity());
     }
 }
 void WesternScene::drawTerrainOutlines() {

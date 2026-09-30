@@ -1,5 +1,40 @@
 # Milestone 1 verification
 
+## Generated mission shadows
+
+Canyon and mine rendering now share a 2048-pixel directional depth map. Actual
+terrain and imported props populate a cached static pass; the bandit's animated
+mesh, enemies, gates, lantern posts and mission props update the dynamic pass.
+Terrain, imported meshes and procedural characters receive the same filtered
+shadow field. Camera transparency affects presentation only: faded cliffs retain
+their physical shadows. The old canyon height-texture ray march and actor blob
+shadows are replaced while normal shadow resources are available. Hubs and the
+default-off Redstone art POC retain their existing lighting.
+
+`deathward_mission_lighting_tests` compares rendered ground against geometric sun
+rays through generated canyons and mine props. It also checks mesh/primitive
+agreement, automatic batch flushes, moving and removed casters, static cache
+invalidation, theme switching, transparent cliffs and resource reload. The existing
+`deathward_occlusion_tests` exercises fading, enemy outlines, zoom and firing
+through transparent scenery. Run these GPU checks sequentially.
+
+`node web/mission-lighting-test.cjs` checks canyon and mine depth rendering, room
+travel, orbit, zoom and movement in WebGL, then repeats canyon with HDR unavailable.
+The sun-ray fixture matched 274/274 mine samples and 273/275 canyon samples
+across seeds 1866 and 69175541. Both browser themes and the 8-bit fallback passed
+without WebGL errors. Existing Western asset and occlusion checks also passed.
+The 19 core suites passed after rebuilding a stale Redstone test executable.
+
+Normal native canyon/mine combat captures reported 60 FPS. The deliberately
+extreme 100-enemy benchmark reached 4,096 projectiles and remains expensive:
+180 frames averaged 91.8 ms with shadows versus 84.4 ms with shadows temporarily
+bypassed (identical kills/projectile peaks). These short runs include startup and
+are not representative of normal combat. The temporary profiling bypass was
+removed; the regular native and browser builds enable mission shadows.
+
+Logs and captures use `artifacts/mission-shadow-*`; game comparison captures use
+`artifacts/dungeon-shadow-before-*` and `dungeon-shadow-after-*`.
+
 ## Reversible Redstone art POC
 
 `deathward_art_direction_tests` renders fixed before/after views, requires identical

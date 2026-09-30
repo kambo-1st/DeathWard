@@ -1,4 +1,5 @@
 #pragma once
+#include "render/MissionLighting.hpp"
 #include "render/PlayerOcclusion.hpp"
 #include "world/Dungeon.hpp"
 #include <filesystem>
@@ -50,6 +51,10 @@ class WesternScene {
     void unload();
     void prepare(const Arena &arena);
     void draw(Vector3 focus);
+    void prepareLighting(const Camera3D &camera, const std::function<void(Shader, Shader)> &actors = {});
+    const MissionLighting &lighting() const {
+        return lighting_;
+    }
     RayCollision pick(Ray ray, Vector3 focus);
     void drawGlass();
     void setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled = true) {
@@ -106,7 +111,7 @@ class WesternScene {
     std::vector<int> terrainSections_;
     Shader terrainShader_{};
     Material terrainMaterial_{};
-    Texture2D heightTexture_{};
+    MissionLighting lighting_;
     void clearTerrain();
     void generateCanyon(const Arena &arena);
     void drawTerrain(Vector3 focus);
