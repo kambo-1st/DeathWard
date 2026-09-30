@@ -163,6 +163,11 @@ int main(int argc, char **argv) {
         if (!audioPreferences.empty())
             game.audioSettings = dw::loadAudioSettings(audioPreferences);
         auto savedAudioSettings = game.audioSettings;
+        const auto visualPreferences =
+            smoke || benchmark || startEditor ? std::filesystem::path{} : save.parent_path() / "visual.cfg";
+        if (!visualPreferences.empty())
+            game.visualSettings = dw::loadVisualSettings(visualPreferences);
+        auto savedVisualSettings = game.visualSettings;
         game.audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
         for (const auto hub : dw::Hubs)
             if (upgradeTownNavigation(hub) && hub == game.activeHub) {
@@ -370,6 +375,11 @@ int main(int argc, char **argv) {
                     TraceLog(LOG_WARNING, "AUDIO: Could not save volume preferences");
                 savedAudioSettings = game.audioSettings;
             }
+            if (!(savedVisualSettings == game.visualSettings)) {
+                if (!dw::saveVisualSettings(visualPreferences, game.visualSettings))
+                    TraceLog(LOG_WARNING, "SCENERY: Could not save vegetation preference");
+                savedVisualSettings = game.visualSettings;
+            }
 #ifdef __EMSCRIPTEN__
             // Read-only state for browser integration checks; absent during ordinary play.
             const auto *probeProp = game.townObjects.firstPropPose();
@@ -533,6 +543,8 @@ int main(int argc, char **argv) {
                         Module.state.missionShadows = !!$10;
                         Module.state.decorations = $11;
                         Module.state.roomDecorations = $12;
+                        Module.state.vegetationDensity = $13;
+                        Module.state.vegetationCount = $14;
                     }
                 },
                 editing, int(game.musicScene()), editor.saved, editor.status.c_str(),
@@ -540,7 +552,8 @@ int main(int argc, char **argv) {
                 game.run ? int(game.run->moneyCollected) : 0, coinPixel.x, coinPixel.y,
                 probeCoin ? probeCoin->value : 0, artPoc && canCompareArt,
                 game.run && renderer.missionShadowsReady(), game.run ? renderer.missionDecorationCount() : 0,
-                game.run ? renderer.missionDecorationCount(game.run->room) : 0);
+                game.run ? renderer.missionDecorationCount(game.run->room) : 0,
+                game.visualSettings.vegetation, game.run ? renderer.missionVegetationCount() : 0);
             EM_ASM(
                 {
                     if (Module.state) {

@@ -82,6 +82,7 @@ void WesternScene::unload() {
     shader_ = {};
     assets_ = {};
     placements_.clear();
+    allPlacements_.clear();
     occluders_.clear();
     for (auto &batch : batches_)
         batch.clear();
@@ -201,10 +202,37 @@ void WesternScene::prepare(const Arena &arena) {
         return;
     if (lastArena_ != &arena || lastSeed_ != arena.visualSeed || lastTheme_ != arena.theme) {
         generate(arena);
+        Random densityRandom(arena.visualSeed ^ 0x7665676574617465ULL);
+        for (auto &p : placements_)
+            if (isVegetation(p.asset))
+                p.vegetationLevel = (p.vegetationLevel ? 101 : 1) + int(densityRandom.bounded(100));
+        allPlacements_ = std::move(placements_);
+        applyVegetationDensity();
         lastArena_ = &arena;
         lastSeed_ = arena.visualSeed;
         lastTheme_ = arena.theme;
     }
+}
+void WesternScene::setVegetationDensity(int percent) {
+    percent = std::clamp(percent, 0, VisualSettings::MaxVegetation);
+    if (vegetationDensity_ == percent)
+        return;
+    vegetationDensity_ = percent;
+    applyVegetationDensity();
+}
+void WesternScene::applyVegetationDensity() {
+    placements_.clear();
+    for (const auto &p : allPlacements_)
+        if (p.vegetationLevel <= vegetationDensity_)
+            placements_.push_back(p);
+    occluders_.clear();
+    for (auto &batch : batches_)
+        batch.clear();
+    lighting_.invalidate();
+}
+int WesternScene::vegetationCount() const {
+    return int(std::count_if(placements_.begin(), placements_.end(),
+                             [](const auto &p) { return isVegetation(p.asset); }));
 }
 void WesternScene::generate(const Arena &arena) {
     placements_.clear();
@@ -340,6 +368,24 @@ void WesternScene::generate(const Arena &arena) {
             exteriorPiece(asset, center, random.real(0.8f, 1.3f), float(random.bounded(4)) * Pi / 2);
         }
     }
+    // Extra cacti use their own stream after all baseline scenery is fixed.
+    Random extraCacti(arena.visualSeed ^ 0x6578747261636163ULL);
+    const size_t baseline = placements_.size();
+    for (size_t i = 0; i < baseline; ++i) {
+        const auto original = placements_[i];
+        if (original.asset != WesternAsset::CactusA && original.asset != WesternAsset::CactusB)
+            continue;
+        for (int attempt = 0; attempt < 12; ++attempt) {
+            auto center = mul(add(original.bounds.min, original.bounds.max), .5f);
+            center.x += extraCacti.real(-4, 4);
+            center.z += extraCacti.real(-4, 4);
+            if (exteriorPiece(original.asset, center, extraCacti.real(.8f, 1.3f),
+                              float(extraCacti.bounded(4)) * Pi / 2)) {
+                placements_.back().vegetationLevel = 101;
+                break;
+            }
+        }
+    }
     generateRoomDecorations(arena);
 }
 int WesternScene::decorationCount(int room) const {
@@ -443,6 +489,44 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
         std::vector<Vector3> clusters;
         std::vector<Box> footprints;
         bool skull = false, bones = false;
+        std::vector<WesternPlacement> grasses;
+        auto placeMember = [&](WesternAsset asset, Vector3 anchor, bool extra) {
+            const auto source = sub(assetBounds(asset).max, assetBounds(asset).min);
+            float span = random.real(.45f, .85f), maxHeight = .3f;
+            if (asset == WesternAsset::GrassA || asset == WesternAsset::GrassB) {
+                span = random.real(.75f, 1.3f);
+                maxHeight = .65f;
+            } else if (asset == WesternAsset::StickA || asset == WesternAsset::StickB) {
+                span = random.real(.65f, 1.05f);
+                maxHeight = .26f;
+            }
+            const float scale = std::min(span / std::max(source.x, source.z), maxHeight / source.y);
+            const float yaw = random.real(0, 2 * Pi);
+            const float c = std::abs(std::cos(yaw)), s = std::abs(std::sin(yaw));
+            const float halfX = scale * (source.x * c + source.z * s) / 2;
+            const float halfZ = scale * (source.x * s + source.z * c) / 2;
+            for (int attempt = 0; attempt < (extra ? 32 : 10); ++attempt) {
+                const float angle = random.real(0, 2 * Pi);
+                const float radius = extra ? random.real(1, 3) : random.real(0, 1.25f);
+                const auto p = add(anchor, {std::cos(angle) * radius, 0, std::sin(angle) * radius});
+                float h = 0;
+                if (reserved(p, std::hypot(halfX, halfZ)) || !ground(p, halfX, halfZ, h))
+                    continue;
+                const Box box{{p.x - halfX, h, p.z - halfZ},
+                              {p.x + halfX, h + source.y * scale, p.z + halfZ}};
+                if (std::any_of(footprints.begin(), footprints.end(),
+                                [&](auto other) { return overlaps(box, other, .1f); }))
+                    continue;
+                placements_.push_back({asset, box, yaw, false, index, scale, extra ? 101 : 0});
+                if (!extra && isVegetation(asset))
+                    grasses.push_back(placements_.back());
+                footprints.push_back(box);
+                skull = skull || asset == WesternAsset::Skull;
+                bones = bones || asset == WesternAsset::Bones;
+                return true;
+            }
+            return false;
+        };
         for (auto anchor : edges) {
             if (int(clusters.size()) >= patches)
                 break;
@@ -464,40 +548,16 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
                     asset = choice < 96 ? WesternAsset::Skull : WesternAsset::Bones;
                 if ((asset == WesternAsset::Skull && skull) || (asset == WesternAsset::Bones && bones))
                     asset = WesternAsset::RockA;
-                const auto source = sub(assetBounds(asset).max, assetBounds(asset).min);
-                float span = random.real(.45f, .85f), maxHeight = .3f;
-                if (asset == WesternAsset::GrassA || asset == WesternAsset::GrassB) {
-                    span = random.real(.75f, 1.3f);
-                    maxHeight = .65f;
-                } else if (asset == WesternAsset::StickA || asset == WesternAsset::StickB) {
-                    span = random.real(.65f, 1.05f);
-                    maxHeight = .26f;
-                }
-                const float scale = std::min(span / std::max(source.x, source.z), maxHeight / source.y);
-                const float yaw = random.real(0, 2 * Pi);
-                const float c = std::abs(std::cos(yaw)), s = std::abs(std::sin(yaw));
-                const float halfX = scale * (source.x * c + source.z * s) / 2;
-                const float halfZ = scale * (source.x * s + source.z * c) / 2;
-                for (int attempt = 0; attempt < 10; ++attempt) {
-                    const float angle = random.real(0, 2 * Pi), radius = random.real(0, 1.25f);
-                    const auto p = add(anchor, {std::cos(angle) * radius, 0, std::sin(angle) * radius});
-                    float h = 0;
-                    if (reserved(p, std::hypot(halfX, halfZ)) || !ground(p, halfX, halfZ, h))
-                        continue;
-                    const Box box{{p.x - halfX, h, p.z - halfZ},
-                                  {p.x + halfX, h + source.y * scale, p.z + halfZ}};
-                    if (std::any_of(footprints.begin(), footprints.end(),
-                                    [&](auto other) { return overlaps(box, other, .1f); }))
-                        continue;
-                    placements_.push_back({asset, box, yaw, false, index, scale});
-                    footprints.push_back(box);
-                    skull = skull || asset == WesternAsset::Skull;
-                    bones = bones || asset == WesternAsset::Bones;
-                    break;
-                }
+                placeMember(asset, anchor, false);
             }
             if (footprints.size() > before)
                 clusters.push_back(anchor);
+        }
+        // Add candidates for 100–200% only after baseline debris and vegetation
+        // are fixed. Lower settings are stable subsets of this same candidate pool.
+        for (const auto &grass : grasses) {
+            const auto anchor = mul(add(grass.bounds.min, grass.bounds.max), .5f);
+            placeMember(grass.asset, anchor, true);
         }
     }
 }

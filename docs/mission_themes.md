@@ -31,6 +31,21 @@ use the existing instancing, culling and shadow passes without becoming collisio
 or mouse-picking surfaces. Change `WesternScene::generateRoomDecorations` to tune
 density, asset mix, size limits and clearance.
 
+The pause menu's **Vegetation** control scales grass and cacti from 0–200%, in
+25% steps. The current baseline is 100%. Density selects stable subsets of a
+seeded candidate pool: increasing it adds plants, while returning to a previous
+value restores the same placements. Extra vegetation candidates use the same
+ground/route checks. Actual counts can be lower than the requested multiplier
+where there is no safe space. Non-vegetation scenery and gameplay generation are
+unchanged. Changing density refreshes instance lists and shadow depth without
+rebuilding terrain meshes. The preference is stored in `visual.cfg` beside the
+campaign save (browser: `/persist/visual.cfg`). Authored hubs are unaffected.
+
+Canyon cacti require nearly level support over their whole footprint plus a
+half-metre margin. A 5×5 ground sample rejects height spreads above 10 cm, so
+steep banks and cliff edges cannot host them. The test suite probes the resulting
+placements at a finer spacing as well.
+
 ## Extension points
 
 - `src/world/MissionTheme.hpp`: theme identifiers, seeded resolution, titles and base colors.

@@ -307,6 +307,68 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
         << "PASS " << name
         << " dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill\n";
 }
+void vegetationInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    Game game(directory / "vegetation.save");
+    game.seedText = "1866";
+    game.launch();
+    game.paused = true;
+    game.debug = false;
+    Renderer renderer;
+    auto frame = [&](int x = 10, int y = 10, bool down = false) {
+        mouseEvent(MousePosition, x, y);
+        mouseEvent(down ? MouseDown : MouseUp, MOUSE_BUTTON_LEFT);
+        game.update(Tick);
+        BeginDrawing();
+        const auto action = renderer.draw(game);
+        EndDrawing();
+        game.perform(action);
+    };
+    auto click = [&](int x) {
+        frame(x, 719, true);
+        frame(x, 719);
+        frame();
+    };
+    frame();
+    const auto duration = game.run->stats.duration;
+    const auto plants = renderer.missionVegetationCount();
+    click(178);
+    check(game.visualSettings.vegetation == 75 && renderer.missionVegetationCount() < plants,
+          "pause LESS reduces vegetation immediately without cheats");
+    click(265);
+    check(game.visualSettings.vegetation == 100 && renderer.missionVegetationCount() == plants,
+          "pause MORE restores the seeded vegetation");
+    for (int i = 0; i < 10; ++i)
+        click(178);
+    check(game.visualSettings.vegetation == 0 && renderer.missionVegetationCount() == 0,
+          "pause vegetation stops at zero");
+    for (int i = 0; i < 10; ++i)
+        click(265);
+    check(game.visualSettings.vegetation == 200 && renderer.missionVegetationCount() > plants,
+          "pause vegetation stops at 200 percent and adds plants");
+    check(game.paused && game.run->stats.duration == duration && game.run->stats.shots == 0,
+          "vegetation controls never advance combat or fire the weapon");
+    const auto preferences = directory / "visual.cfg";
+    check(saveVisualSettings(preferences, game.visualSettings) &&
+              loadVisualSettings(preferences) == game.visualSettings,
+          "vegetation preference survives a settings reload");
+    {
+        std::ofstream bad(preferences);
+        bad << "DEATHWARD_VISUAL 1\n-25\n";
+    }
+    check(loadVisualSettings(preferences) == VisualSettings{}, "invalid density restores the default");
+    game.finish(EndReason::Retreat);
+    game.perform(Action::Hub);
+    game.paused = true;
+    click(178);
+    check(game.screen == Screen::Hub && game.visualSettings.vegetation == 175,
+          "the same vegetation control is available while paused in town");
+    auto capture = LoadImageFromScreen();
+    std::filesystem::create_directories("artifacts");
+    ExportImage(capture, "artifacts/vegetation-pause-controls.png");
+    UnloadImage(capture);
+    std::cout << "PASS vegetation pause controls, bounds, live changes, no gameplay input and persistence\n";
+}
 } // namespace
 int main(int argc, char **argv) {
     const auto directory =
@@ -320,6 +382,12 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if (mode == "--vegetation-only") {
+            vegetationInputCheck(directory);
+            CloseWindow();
+            std::filesystem::remove_all(directory);
+            return 0;
+        }
         for (auto theme : {dw::MissionTheme::Mine, dw::MissionTheme::Canyon}) {
             if (mode != "--dynamite-only")
                 shopInputCheck(directory, theme);

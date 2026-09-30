@@ -1340,6 +1340,7 @@ Action Renderer::audioPanel(const Game &game) {
     return Action::None;
 }
 Action Renderer::draw(const Game &game) {
+    westernScene_.setVegetationDensity(game.visualSettings.vegetation);
     sx_ = float(GetScreenWidth()) / 1280;
     sy_ = float(GetScreenHeight()) / 800;
     ClearBackground(Ink);
@@ -1371,6 +1372,14 @@ Action Renderer::draw(const Game &game) {
         const auto audioAction = audioPanel(game);
         if (audioAction != Action::None)
             action = audioAction;
+        panel(24, 624, 296, 137, Panel);
+        text("VEGETATION", 43, 644, 22, Gold);
+        text("Generated missions", 43, 674, 12, Muted);
+        text(std::to_string(game.visualSettings.vegetation) + "%", 43, 707, 22, Paper);
+        if (button("LESS", 143, 700, 75, 39))
+            action = Action::VegetationLess;
+        if (button("MORE", 229, 700, 75, 39))
+            action = Action::VegetationMore;
     }
     if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen &&
         !game.run->shopOpen)

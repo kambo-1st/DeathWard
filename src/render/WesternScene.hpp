@@ -1,4 +1,5 @@
 #pragma once
+#include "core/VisualSettings.hpp"
 #include "render/MissionLighting.hpp"
 #include "render/PlayerOcclusion.hpp"
 #include "world/Dungeon.hpp"
@@ -39,6 +40,10 @@ enum class WesternAsset {
     Bones,
     Count
 };
+inline bool isVegetation(WesternAsset asset) {
+    return asset == WesternAsset::GrassA || asset == WesternAsset::GrassB || asset == WesternAsset::CactusA ||
+           asset == WesternAsset::CactusB;
+}
 struct WesternPlacement {
     WesternAsset asset;
     Box bounds;
@@ -46,6 +51,7 @@ struct WesternPlacement {
     bool exterior = false;
     int decorationRoom = -1; // Small cosmetic props: no collision or mouse-aim surface.
     float naturalScale = 0;  // Positive: preserve native proportions at any yaw.
+    int vegetationLevel = 0; // Visible at this density percentage; 0 is non-vegetation.
 };
 
 // Static, instanced scenery; generated gameplay geometry remains authoritative.
@@ -58,6 +64,7 @@ class WesternScene {
     bool load(const std::filesystem::path &directory = assetDirectory());
     void unload();
     void prepare(const Arena &arena);
+    void setVegetationDensity(int percent);
     void draw(Vector3 focus);
     void prepareLighting(const Camera3D &camera, const std::function<void(Shader, Shader)> &actors = {});
     const MissionLighting &lighting() const {
@@ -83,6 +90,7 @@ class WesternScene {
         return placements_;
     }
     int decorationCount(int room = -1) const;
+    int vegetationCount() const;
     const Model &model() const {
         return model_;
     }
@@ -102,6 +110,8 @@ class WesternScene {
     std::array<Asset, size_t(WesternAsset::Count)> assets_{};
     std::array<std::vector<Matrix>, size_t(WesternAsset::Count)> batches_;
     std::vector<WesternPlacement> placements_;
+    std::vector<WesternPlacement> allPlacements_;
+    int vegetationDensity_ = 100;
     std::vector<const WesternPlacement *> occluders_;
     const Arena *lastArena_ = nullptr;
     uint64_t lastSeed_ = 0;
@@ -129,6 +139,7 @@ class WesternScene {
     void drawTerrainOutlines();
     void generate(const Arena &arena);
     void generateRoomDecorations(const Arena &arena);
+    void applyVegetationDensity();
     void drawBatches(bool transparent);
 };
 } // namespace dw

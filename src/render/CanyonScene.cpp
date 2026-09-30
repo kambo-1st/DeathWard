@@ -207,6 +207,26 @@ void WesternScene::generateCanyon(const Arena &arena) {
     if (!loaded())
         return;
     Random rng(arena.visualSeed ^ 0x43414e594f4e4152ULL);
+    auto cactusBase = [&](Vector3 p, Vector3 size) -> std::optional<float> {
+        const float halfX = std::max(.8f, size.x / 2 + .5f);
+        const float halfZ = std::max(.8f, size.z / 2 + .5f);
+        if (p.x - halfX < field.x || p.z - halfZ < field.z ||
+            p.x + halfX > field.x + (field.width - 1) * field.step ||
+            p.z + halfZ > field.z + (field.depth - 1) * field.step)
+            return std::nullopt;
+        float low = 100, high = -100;
+        // Check the whole footprint plus a margin, not just the stem. This
+        // rejects sloping shoulders and plants perched over a cliff edge.
+        for (int x = 0; x <= 4; ++x)
+            for (int z = 0; z <= 4; ++z) {
+                const float h = field.height(p.x - halfX + halfX * x / 2, p.z - halfZ + halfZ * z / 2);
+                low = std::min(low, h);
+                high = std::max(high, h);
+            }
+        if (high - low > .1f)
+            return std::nullopt;
+        return low - .04f;
+    };
     // Native proportions: small debris along the banks, sparse cacti on terraces.
     for (const auto &room : arena.rooms)
         for (int n = 0; n < 90; ++n) {
@@ -223,12 +243,48 @@ void WesternScene::generateCanyon(const Arena &arena) {
             const float yaw = float(rng.bounded(4)) * Pi / 2;
             if (std::abs(std::sin(yaw)) > .5f)
                 std::swap(size.x, size.z);
+            float base = h - .07f;
+            if (cactus) {
+                const auto supported = cactusBase(p, size);
+                if (!supported)
+                    continue;
+                base = *supported;
+            }
             placements_.push_back({asset,
-                                   {{p.x - size.x / 2, h - .07f, p.z - size.z / 2},
-                                    {p.x + size.x / 2, h + size.y - .07f, p.z + size.z / 2}},
+                                   {{p.x - size.x / 2, base, p.z - size.z / 2},
+                                    {p.x + size.x / 2, base + size.y, p.z + size.z / 2}},
                                    yaw,
                                    true});
         }
+    // More vegetation adds cacti around the same flat terraces. It never changes
+    // bank rocks, the terrain or the baseline random stream.
+    Random extra(arena.visualSeed ^ 0x6578747261636163ULL);
+    const size_t baseline = placements_.size();
+    for (size_t i = 0; i < baseline; ++i) {
+        const auto original = placements_[i];
+        if (!isVegetation(original.asset))
+            continue;
+        for (int attempt = 0; attempt < 20; ++attempt) {
+            auto p = mul(add(original.bounds.min, original.bounds.max), .5f);
+            p.x += extra.real(-4, 4);
+            p.z += extra.real(-4, 4);
+            const auto size = sub(original.bounds.max, original.bounds.min);
+            const Box box{{p.x - size.x / 2, 0, p.z - size.z / 2}, {p.x + size.x / 2, 0, p.z + size.z / 2}};
+            if (field.height(p.x, p.z) < 5)
+                continue;
+            const auto base = cactusBase(p, size);
+            if (!base || std::any_of(placements_.begin(), placements_.end(), [&](const auto &other) {
+                    return box.min.x < other.bounds.max.x + .5f && box.max.x > other.bounds.min.x - .5f &&
+                           box.min.z < other.bounds.max.z + .5f && box.max.z > other.bounds.min.z - .5f;
+                }))
+                continue;
+            auto placed = original;
+            placed.bounds = {{box.min.x, *base, box.min.z}, {box.max.x, *base + size.y, box.max.z}};
+            placed.vegetationLevel = 101;
+            placements_.push_back(placed);
+            break;
+        }
+    }
 }
 void WesternScene::updateTerrainOcclusion() {
     if (terrain_.empty())

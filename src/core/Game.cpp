@@ -241,6 +241,12 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::VegetationLess:
+        case Action::VegetationMore:
+            visualSettings.vegetation =
+                std::clamp(visualSettings.vegetation + (action == Action::VegetationMore ? 25 : -25), 0,
+                           VisualSettings::MaxVegetation);
+            break;
         case Action::MasterDown:
         case Action::MasterUp:
             audioSettings.master =

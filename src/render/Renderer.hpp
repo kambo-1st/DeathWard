@@ -18,6 +18,9 @@ class Renderer {
     int missionDecorationCount(int room = -1) const {
         return westernScene_.decorationCount(room);
     }
+    int missionVegetationCount() const {
+        return westernScene_.vegetationCount();
+    }
     const ParticleEffects &missionEffects() const { return missionEffects_; }
     bool insideBuilding() const { return townScene_.interior().has_value(); }
     const ParticleEffects &townEffects() const { return townScene_.effects(); }

@@ -1,5 +1,28 @@
 # Milestone 1 verification
 
+## Vegetation density and flat cactus placement
+
+The pause menu in hubs and expeditions has one vegetation control, with Less/More
+buttons in 25% steps from 0–200%. Preferences use `visual.cfg` beside the campaign
+save and the browser's existing IndexedDB persistence. Density filters a stable
+seeded pool; it changes no non-vegetation placement or terrain mesh. Added grass
+uses the normal flat-ground, overlap and route checks. Canyon cacti additionally
+require flat support under the whole plant and a surrounding margin.
+
+`deathward_western_assets_tests` sweeps every density step across five seeds in
+each theme. It checks stable subsets, exact restoration at 100%, unchanged rocks,
+debris and terrain buffers, extra grass grounding/clearance, and dense independent
+ground samples below every cactus at maximum density. Native checks pass; canyon
+seed 1866 has 130 plants at 100% and 253 at 200% (safe space limits extra plants).
+
+`deathward_input_tests --vegetation-only` verifies actual pause-menu clicks in a
+mission and hub, bounds, live changes without cheats, paused gameplay and settings
+round-trip/corruption handling. `node web/vegetation-test.cjs` exercises the same
+controls in canyon and mine and reloads the browser to verify persistence. Build
+logs, captures and check output use `artifacts/vegetation-*`.
+Both browser themes and the native controls pass. The shared mission-shadow
+checks also pass after the cactus restrictions and density filtering.
+
 ## Small generated-room decorations
 
 Canyon and mine rooms receive seeded clusters of original textured grass, rocks,

@@ -1,10 +1,11 @@
 #pragma once
-#include "world/TownCharacters.hpp"
 #include "combat/Simulation.hpp"
+#include "core/VisualSettings.hpp"
 #include "world/Animals.hpp"
 #include "world/HubDefinition.hpp"
 #include "world/HubWorld.hpp"
 #include "world/ObjectAnimation.hpp"
+#include "world/TownCharacters.hpp"
 #include <memory>
 
 namespace dw {
@@ -56,7 +57,9 @@ enum class Action {
     BuyShop3,
     CloseShop,
     Dynamite,
-    DynamiteMode
+    DynamiteMode,
+    VegetationLess,
+    VegetationMore
 };
 class Game {
   public:
@@ -81,6 +84,7 @@ class Game {
     bool dynamiteArmed = false;
     bool dynamiteThrowMode = false;
     AudioSettings audioSettings;
+    VisualSettings visualSettings;
     MusicScene musicScene() const;
     AudioStatus audioStatus = AudioStatus::Disabled;
     AudioCueQueue audioCues;

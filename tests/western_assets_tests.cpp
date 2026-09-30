@@ -17,9 +17,10 @@ bool overlap(Box a, Box b) {
 bool same(const WesternPlacement &a, const WesternPlacement &b) {
     return a.asset == b.asset && a.yaw == b.yaw && a.exterior == b.exterior &&
            a.decorationRoom == b.decorationRoom && a.naturalScale == b.naturalScale &&
-           distance(a.bounds.min, b.bounds.min) < 0.0001f && distance(a.bounds.max, b.bounds.max) < 0.0001f;
+           a.vegetationLevel == b.vegetationLevel && distance(a.bounds.min, b.bounds.min) < 0.0001f &&
+           distance(a.bounds.max, b.bounds.max) < 0.0001f;
 }
-void verifyDecorations(WesternScene &scene, const Arena &arena) {
+void verifyDecorations(WesternScene &scene, const Arena &arena, int limit = 80) {
     std::array<int, RoomCount> counts{}, skulls{}, bones{};
     std::set<WesternAsset> kinds;
     for (const auto &p : scene.placements()) {
@@ -69,7 +70,7 @@ void verifyDecorations(WesternScene &scene, const Arena &arena) {
         if (counts[size_t(i)] < 6)
             std::cerr << "Sparse room: seed " << arena.visualSeed << " theme " << int(arena.theme) << " room "
                       << i << " count " << counts[size_t(i)] << '\n';
-        check(counts[size_t(i)] >= 6 && counts[size_t(i)] <= 80,
+        check(counts[size_t(i)] >= 6 && counts[size_t(i)] <= limit,
               "every room receives a bounded amount of small decoration, including empty/shop rooms");
         check(skulls[size_t(i)] <= 1 && bones[size_t(i)] <= 1,
               "bone and skull accents stay occasional rather than covering a room");
@@ -81,6 +82,68 @@ void verifyDecorations(WesternScene &scene, const Arena &arena) {
               << *std::min_element(counts.begin(), counts.end()) << ".."
               << *std::max_element(counts.begin(), counts.end()) << '\n';
 }
+void verifyVegetation(WesternScene &scene, const Arena &arena) {
+    const auto baseline = scene.placements();
+    const int baselinePlants = scene.vegetationCount();
+    std::vector<unsigned> terrainMeshes;
+    for (const auto &chunk : scene.terrainChunks())
+        terrainMeshes.push_back(chunk.mesh.vaoId);
+    auto nonVegetation = [&] {
+        std::vector<WesternPlacement> result;
+        for (const auto &p : scene.placements())
+            if (!isVegetation(p.asset))
+                result.push_back(p);
+        return result;
+    };
+    const auto fixed = nonVegetation();
+    std::vector<WesternPlacement> previous;
+    for (int density : {0, 25, 50, 75, 100, 125, 150, 175, 200}) {
+        scene.setVegetationDensity(density);
+        scene.prepare(arena);
+        const auto currentFixed = nonVegetation();
+        check(currentFixed.size() == fixed.size() &&
+                  std::equal(fixed.begin(), fixed.end(), currentFixed.begin(), same),
+              "vegetation density never moves or removes rocks, debris, buildings or cover");
+        if (!density)
+            check(scene.vegetationCount() == 0, "zero vegetation removes every grass patch and cactus");
+        if (density == 200)
+            check(scene.vegetationCount() > baselinePlants,
+                  "more vegetation adds plants beyond the original amount");
+        for (const auto &p : previous)
+            check(std::any_of(scene.placements().begin(), scene.placements().end(),
+                              [&](const auto &other) { return same(p, other); }),
+                  "increasing density adds plants without moving existing ones");
+        previous = scene.placements();
+        for (size_t i = 0; i < terrainMeshes.size(); ++i)
+            check(scene.terrainChunks()[i].mesh.vaoId == terrainMeshes[i],
+                  "density changes keep uploaded terrain instead of rebuilding the canyon");
+    }
+    verifyDecorations(scene, arena, 160);
+    int cacti = 0;
+    if (arena.canyon)
+        for (const auto &p : scene.placements()) {
+            if (p.asset != WesternAsset::CactusA && p.asset != WesternAsset::CactusB)
+                continue;
+            ++cacti;
+            const auto center = mul(add(p.bounds.min, p.bounds.max), .5f);
+            float low = 100, high = -100;
+            // Denser, independently spaced samples include the supporting pad.
+            for (float x = p.bounds.min.x - .35f; x <= p.bounds.max.x + .35f; x += .12f)
+                for (float z = p.bounds.min.z - .35f; z <= p.bounds.max.z + .35f; z += .12f) {
+                    const float h = arena.canyon->height(x, z);
+                    low = std::min(low, h);
+                    high = std::max(high, h);
+                }
+            check(high - low < .11f && low - p.bounds.min.y >= -.005f && high - p.bounds.min.y < .15f,
+                  "all canyon cacti have flat support across their footprint, away from slopes and edges");
+        }
+    std::cout << "Vegetation: " << baselinePlants << " at 100%, " << scene.vegetationCount() << " at 200%, "
+              << cacti << " flat-terrace cacti\n";
+    scene.setVegetationDensity(100);
+    check(scene.placements().size() == baseline.size() &&
+              std::equal(baseline.begin(), baseline.end(), scene.placements().begin(), same),
+          "returning to 100 percent restores the exact original placement list");
+}
 size_t verifyCanyon(WesternScene &scene) {
     size_t total = 0;
     for (uint64_t seed : {0ULL, 1ULL, 42ULL, 1866ULL, 69175541ULL}) {
@@ -89,6 +152,7 @@ size_t verifyCanyon(WesternScene &scene) {
         check(scene.terrainReady(), "canyon builds one continuous triangulated terrain");
         const auto first = scene.placements();
         verifyDecorations(scene, arena);
+        verifyVegetation(scene, arena);
         const auto &field = *arena.canyon;
         for (const auto &p : first)
             check(p.asset == WesternAsset::RockA || p.asset == WesternAsset::CactusA ||
@@ -174,6 +238,7 @@ void verify() {
         scene.prepare(arena);
         const auto first = scene.placements();
         verifyDecorations(scene, arena);
+        verifyVegetation(scene, arena);
         check(!first.empty(), "generated scenery is populated");
         std::vector<float> covered(arena.obstacles.size());
         size_t floors = 0;
