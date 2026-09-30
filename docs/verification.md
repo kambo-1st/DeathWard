@@ -1,5 +1,43 @@
 # Milestone 1 verification
 
+## Small generated-room decorations
+
+Canyon and mine rooms receive seeded clusters of original textured grass, rocks,
+fallen sticks and occasional skulls/bones. Props stay below 0.65 metres, follow
+room size and leave room entrances, keys, objectives and central routes clear.
+They use instanced scenery lighting/shadows without adding collision or intercepting
+mouse picking. Existing geometry and encounter random streams are untouched.
+
+`deathward_western_assets_tests` checks all 15 rooms across five seeds per theme,
+including ground contact, full-footprint clearance, native proportions at arbitrary
+yaw, repeatability after theme/gate/key changes, and ground picking through props.
+The tested rooms contained 13–56 pieces each; seed 1866 produced 349 canyon and 540
+mine props. Original source hashes, material recipes and decoded atlas pixels match
+the previous pack; the six additional source props add about 134 KB to the GLB.
+
+Native asset, mission-shadow and occlusion/aiming checks and all 19 core suites pass. The WebGL
+mission lighting check also verifies decoration counts through room transitions;
+canyon, mine and the 8-bit fallback pass without GL errors. Native captures and
+build/test logs use `artifacts/room-decorations-*`.
+
+## Mission and hub color consistency
+
+Generated canyon and mine materials use the standard Black Creek/Redstone sun
+and secondary fill colors, together with the hubs’ shared warm ground bounce and
+cool sky fill. The existing mission sun direction and shadow geometry remain.
+`WorldPalette.hpp` shares the ambient formula and directional light attenuation
+with the hub renderer. The common post-process still handles grading, blur and
+lavender distance haze. Canyon material multipliers, yellow cap tint and the
+additional brown terrain fog have been removed. Source textures and scene files
+are unchanged, and the optional art POC remains disabled by default.
+
+Verification uses the existing mission lighting, occlusion and post-process
+checks, native canyon/mine captures and the WebGL mission lighting suite. Color
+comparison captures and logs use `artifacts/mission-palette-*`. The Redstone
+before/after world pixels match exactly; the only changed pixels are in the FPS
+counter. Native sun-ray checks still match 274/274 mine and 273/275 canyon shadow
+samples. Canyon, mine and 8-bit fallback browser checks pass without WebGL errors.
+
 ## Generated mission shadows
 
 Canyon and mine rendering now share a 2048-pixel directional depth map. Actual

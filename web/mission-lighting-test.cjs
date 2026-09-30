@@ -44,10 +44,14 @@ const root = path.resolve(__dirname, '..');
       await key('Enter');
       await wait(() => Module.state.screen === 1 && Module.state.missionShadows);
       assert.equal(await page.evaluate(() => Module.state.theme), theme === 'canyon' ? 1 : 0);
+      const decorations = await page.evaluate(() => Module.state.decorations);
+      assert.ok(decorations >= 15 * 6 && decorations <= 15 * 80);
+      assert.ok(await page.evaluate(() => Module.state.roomDecorations >= 6));
       await key('F2');
       await key('F12');
       await key('F12');
       await wait(() => Module.state.room === 2 && Module.state.missionShadows);
+      assert.ok(await page.evaluate(() => Module.state.roomDecorations >= 6));
       await page.screenshot({path: path.join(root, `artifacts/mission-shadow-web-${theme}${fallback ? '-fallback' : ''}.png`)});
       await page.mouse.move(600, 400);
       await page.mouse.down({button: 'middle'});
@@ -57,12 +61,14 @@ const root = path.resolve(__dirname, '..');
       await key('KeyW');
       await key('F12');
       await wait(() => Module.state.room === 3 && Module.state.missionShadows);
+      assert.ok(await page.evaluate(() => Module.state.roomDecorations >= 6));
+      assert.equal(await page.evaluate(() => Module.state.decorations), decorations);
       const state = await page.evaluate(() => ({error: Module.state.error, gl: Module.ctx.getError(),
         shadows: Module.state.missionShadows, art: Module.state.artPoc}));
       if (errors.length || state.gl) console.error({theme, fallback, errors});
       assert.deepEqual(state, {error: '', gl: 0, shadows: true, art: false});
       assert.deepEqual(errors, []);
-      console.log(`PASS ${theme}${fallback ? ' / 8-bit fallback' : ''}: WebGL depth, room changes, orbit, zoom and movement`);
+      console.log(`PASS ${theme}${fallback ? ' / 8-bit fallback' : ''}: ${decorations} decorations, WebGL depth, room changes, orbit, zoom and movement`);
       await context.close();
     }
   } finally {await browser.close();}

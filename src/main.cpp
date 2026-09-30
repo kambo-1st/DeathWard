@@ -531,13 +531,16 @@ int main(int argc, char **argv) {
                         Module.state.coinValue = $8;
                         Module.state.artPoc = !!$9;
                         Module.state.missionShadows = !!$10;
+                        Module.state.decorations = $11;
+                        Module.state.roomDecorations = $12;
                     }
                 },
                 editing, int(game.musicScene()), editor.saved, editor.status.c_str(),
                 int(game.run ? game.run->money() : game.campaign.data().world.money),
                 game.run ? int(game.run->moneyCollected) : 0, coinPixel.x, coinPixel.y,
                 probeCoin ? probeCoin->value : 0, artPoc && canCompareArt,
-                game.run && renderer.missionShadowsReady());
+                game.run && renderer.missionShadowsReady(), game.run ? renderer.missionDecorationCount() : 0,
+                game.run ? renderer.missionDecorationCount(game.run->room) : 0);
             EM_ASM(
                 {
                     if (Module.state) {

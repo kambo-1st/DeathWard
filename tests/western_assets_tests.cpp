@@ -16,7 +16,70 @@ bool overlap(Box a, Box b) {
 }
 bool same(const WesternPlacement &a, const WesternPlacement &b) {
     return a.asset == b.asset && a.yaw == b.yaw && a.exterior == b.exterior &&
+           a.decorationRoom == b.decorationRoom && a.naturalScale == b.naturalScale &&
            distance(a.bounds.min, b.bounds.min) < 0.0001f && distance(a.bounds.max, b.bounds.max) < 0.0001f;
+}
+void verifyDecorations(WesternScene &scene, const Arena &arena) {
+    std::array<int, RoomCount> counts{}, skulls{}, bones{};
+    std::set<WesternAsset> kinds;
+    for (const auto &p : scene.placements()) {
+        if (p.decorationRoom < 0)
+            continue;
+        check(p.decorationRoom < RoomCount && !p.exterior && p.naturalScale > 0,
+              "cosmetic props belong to a room and keep native proportions");
+        const auto room = size_t(p.decorationRoom);
+        ++counts[room];
+        skulls[room] += p.asset == WesternAsset::Skull;
+        bones[room] += p.asset == WesternAsset::Bones;
+        kinds.insert(p.asset);
+        const auto size = sub(p.bounds.max, p.bounds.min);
+        check(size.y <= .651f && size.x < 1.9f && size.z < 1.9f,
+              "room decorations remain small enough for combat readability");
+        auto center = mul(add(p.bounds.min, p.bounds.max), .5f);
+        center.y = .85f;
+        check(arena.roomAt(center) == p.decorationRoom && !arena.blocked(center, .18f),
+              "decoration anchors are on navigable ground in their assigned room");
+        for (float x : {p.bounds.min.x, center.x, p.bounds.max.x})
+            for (float z : {p.bounds.min.z, center.z, p.bounds.max.z}) {
+                const Vector3 point{x, .85f, z};
+                check(arena.contains(point), "the whole decoration footprint stays on playable ground");
+                const float h = arena.canyon ? arena.canyon->height(x, z) : -.015f;
+                check(h - p.bounds.min.y >= -.001f && h - p.bounds.min.y < .06f,
+                      "decorations rest on terrain without floating or being buried in cliffs");
+            }
+        for (auto obstacle : arena.rooms[room].obstacles)
+            check(!overlap(p.bounds, obstacle), "small props never intersect combat cover");
+        for (const auto &passage : arena.passages)
+            check(!overlap(p.bounds, passage.floor), "connecting passages stay clear of room decorations");
+        for (const auto &key : arena.keys)
+            if (key.room == p.decorationRoom)
+                check(std::hypot(center.x - key.position.x, center.z - key.position.z) > 2,
+                      "decorations leave keys clearly visible");
+        const auto objective = arena.rooms[room].objective;
+        check(std::hypot(center.x - objective.x, center.z - objective.z) > 3.5f,
+              "shops and objective gathering spaces stay clear");
+        const Camera3D camera{add(center, {0, 20, 10}), center, {0, 1, 0}, 45, CAMERA_PERSPECTIVE};
+        scene.setPlayerOcclusion(camera, center, false);
+        const auto hit = scene.pick({{center.x, 10, center.z}, {0, -1, 0}}, center);
+        const float ground = arena.canyon ? arena.canyon->height(center.x, center.z) : -.015f;
+        check(hit.hit && std::abs(hit.point.y - ground) < .005f,
+              "movement/aim picking reaches the ground through cosmetic grass and debris");
+    }
+    for (int i = 0; i < RoomCount; ++i) {
+        if (counts[size_t(i)] < 6)
+            std::cerr << "Sparse room: seed " << arena.visualSeed << " theme " << int(arena.theme) << " room "
+                      << i << " count " << counts[size_t(i)] << '\n';
+        check(counts[size_t(i)] >= 6 && counts[size_t(i)] <= 80,
+              "every room receives a bounded amount of small decoration, including empty/shop rooms");
+        check(skulls[size_t(i)] <= 1 && bones[size_t(i)] <= 1,
+              "bone and skull accents stay occasional rather than covering a room");
+        check(scene.decorationCount(i) == counts[size_t(i)], "room decoration diagnostics match instances");
+    }
+    check(kinds.size() >= 6, "each generated mission uses a varied small-prop palette");
+    std::cout << "Decorations seed " << arena.visualSeed << " theme " << int(arena.theme) << ": "
+              << scene.decorationCount() << " props, room range "
+              << *std::min_element(counts.begin(), counts.end()) << ".."
+              << *std::max_element(counts.begin(), counts.end()) << '\n';
 }
 size_t verifyCanyon(WesternScene &scene) {
     size_t total = 0;
@@ -25,10 +88,11 @@ size_t verifyCanyon(WesternScene &scene) {
         scene.prepare(arena);
         check(scene.terrainReady(), "canyon builds one continuous triangulated terrain");
         const auto first = scene.placements();
+        verifyDecorations(scene, arena);
         const auto &field = *arena.canyon;
         for (const auto &p : first)
             check(p.asset == WesternAsset::RockA || p.asset == WesternAsset::CactusA ||
-                      p.asset == WesternAsset::CactusB,
+                      p.asset == WesternAsset::CactusB || p.decorationRoom >= 0,
                   "canyon decorations contain no cube cover, straight walls or repeated cliff cards");
         for (const auto &chunk : scene.terrainChunks()) {
             check(chunk.mesh.vertexCount > 0, "terrain chunks upload visible triangles");
@@ -109,6 +173,7 @@ void verify() {
         Arena arena(seed);
         scene.prepare(arena);
         const auto first = scene.placements();
+        verifyDecorations(scene, arena);
         check(!first.empty(), "generated scenery is populated");
         std::vector<float> covered(arena.obstacles.size());
         size_t floors = 0;
@@ -156,6 +221,9 @@ void verify() {
                   "every collision obstacle has a complete visible stack with matching dimensions");
         }
         Arena repeat(seed);
+        for (auto &key : repeat.keys)
+            key.collected = true;
+        repeat.sealRoom(2);
         scene.prepare(repeat);
         check(first.size() == scene.placements().size(), "same seed repeats scenery count");
         for (size_t i = 0; i < first.size(); ++i)

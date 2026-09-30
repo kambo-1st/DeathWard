@@ -8,10 +8,10 @@
 namespace dw {
 namespace {
 constexpr std::array<const char *, size_t(WesternAsset::Count)> Names{
-    "crate",      "barrel",       "sacks",     "woodpile", "lantern",  "coffin",      "cart",
-    "fence",      "saloon",       "jail",      "church",   "station",  "water_tower", "well",
-    "rail",       "ground",       "rock_a",    "rock_b",   "cactus_a", "cactus_b",    "floor",
-    "cliff_wall", "cliff_pillar", "cliff_cap", "sandstone"};
+    "crate",     "barrel",  "sacks",    "woodpile", "lantern",     "coffin",     "cart",         "fence",
+    "saloon",    "jail",    "church",   "station",  "water_tower", "well",       "rail",         "ground",
+    "rock_a",    "rock_b",  "cactus_a", "cactus_b", "floor",       "cliff_wall", "cliff_pillar", "cliff_cap",
+    "sandstone", "grass_a", "grass_b",  "stick_a",  "stick_b",     "skull",      "bones"};
 constexpr const char *VertexShader = R"GLSL(#version 330
 in vec3 vertexPosition;
 in vec2 vertexTexCoord;
@@ -37,15 +37,13 @@ in vec3 normal;
 in vec3 world;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
-uniform vec3 sceneryTint;
 out vec4 finalColor;
 void main() {
     vec4 surface = texture(texture0, uv) * colDiffuse;
     if (surface.a < 0.02) discard;
     surface = playerOcclusionSurface(world,surface);
     vec3 litNormal = gl_FrontFacing ? normalize(normal) : -normalize(normal);
-    float sunlight = max(dot(litNormal, missionSun), 0.0);
-    finalColor = vec4(surface.rgb * sceneryTint * (0.50 + 0.55 * sunlight * missionVisibility(world,litNormal)), surface.a);
+    finalColor = vec4(surface.rgb * westernDaylight(litNormal,missionSun,missionVisibility(world,litNormal)), surface.a);
 }
 )GLSL";
 bool overlaps(Box a, Box b, float margin = 0) {
@@ -183,9 +181,11 @@ Matrix WesternScene::placementTransform(Box source, const WesternPlacement &plac
     const Vector3 sourceSize = sub(source.max, source.min),
                   size = sub(placement.bounds.max, placement.bounds.min);
     const bool quarterTurn = std::abs(std::sin(placement.yaw)) > 0.5f;
-    const Vector3 scale{(quarterTurn ? size.z : size.x) / sourceSize.x,
-                        sourceSize.y > 0.001f ? size.y / sourceSize.y : 1,
-                        (quarterTurn ? size.x : size.z) / sourceSize.z};
+    Vector3 scale{(quarterTurn ? size.z : size.x) / sourceSize.x,
+                  sourceSize.y > 0.001f ? size.y / sourceSize.y : 1,
+                  (quarterTurn ? size.x : size.z) / sourceSize.z};
+    if (placement.naturalScale > 0)
+        scale = {placement.naturalScale, placement.naturalScale, placement.naturalScale};
     const Vector3 origin{(source.min.x + source.max.x) / 2, source.min.y, (source.min.z + source.max.z) / 2};
     const Vector3 position{(placement.bounds.min.x + placement.bounds.max.x) / 2, placement.bounds.min.y,
                            (placement.bounds.min.z + placement.bounds.max.z) / 2};
@@ -212,6 +212,7 @@ void WesternScene::generate(const Arena &arena) {
     lighting_.invalidate();
     if (arena.theme == MissionTheme::Canyon && arena.canyon) {
         generateCanyon(arena);
+        generateRoomDecorations(arena);
         return;
     }
     Random random(arena.visualSeed ^ 0x7765737465726e31ULL);
@@ -339,6 +340,166 @@ void WesternScene::generate(const Arena &arena) {
             exteriorPiece(asset, center, random.real(0.8f, 1.3f), float(random.bounded(4)) * Pi / 2);
         }
     }
+    generateRoomDecorations(arena);
+}
+int WesternScene::decorationCount(int room) const {
+    return int(std::count_if(placements_.begin(), placements_.end(), [&](const auto &p) {
+        return p.decorationRoom >= 0 && (room < 0 || p.decorationRoom == room);
+    }));
+}
+void WesternScene::generateRoomDecorations(const Arena &arena) {
+    if (!loaded())
+        return;
+    const bool canyon = bool(arena.canyon);
+    auto distanceXZ = [](Vector3 a, Vector3 b) { return std::hypot(a.x - b.x, a.z - b.z); };
+    auto routeDistance = [&](Vector3 p, Vector3 a, Vector3 b) {
+        a.y = b.y = p.y = 0;
+        const auto delta = sub(b, a);
+        const float t = std::clamp(dot(sub(p, a), delta) / std::max(.001f, dot(delta, delta)), 0.f, 1.f);
+        return distanceXZ(p, add(a, mul(delta, t)));
+    };
+    for (int index = 0; index < RoomCount; ++index) {
+        const auto &room = arena.rooms[size_t(index)];
+        // A separate stream per room never consumes encounter, loot, terrain or
+        // exterior-scenery randomness. Collected keys and open gates don't affect it.
+        Random random(arena.visualSeed ^ 0x6465636f72617465ULL ^
+                      (uint64_t(index + 1) * 0x9e3779b97f4a7c15ULL) ^ uint64_t(arena.theme));
+        std::vector<Vector3> routes{room.entry, room.exit, room.objective};
+        for (int link : room.passages) {
+            const auto &passage = arena.passages[size_t(link)];
+            routes.push_back(arena.doorPosition(link, passage.rooms[0] == index ? 0 : 1));
+        }
+        auto reserved = [&](Vector3 p, float radius) {
+            if (distanceXZ(p, room.center) < 3.5f + radius || distanceXZ(p, room.objective) < 3.5f + radius ||
+                distanceXZ(p, arena.entrance) < 3 + radius || distanceXZ(p, arena.exit) < 3 + radius)
+                return true;
+            for (auto end : routes)
+                if (distanceXZ(p, end) < 2.6f + radius || routeDistance(p, room.center, end) < 1.2f + radius)
+                    return true;
+            for (const auto &key : arena.keys)
+                if (key.room == index && distanceXZ(p, key.position) < 2 + radius)
+                    return true;
+            const Box footprint{{p.x - radius, 0, p.z - radius}, {p.x + radius, 1, p.z + radius}};
+            for (int link : room.passages)
+                if (overlaps(footprint, arena.passages[size_t(link)].floor, 1.2f))
+                    return true;
+            return false;
+        };
+        auto ground = [&](Vector3 p, float halfX, float halfZ, float &height) {
+            const Box footprint{{p.x - halfX - .15f, 0, p.z - halfZ - .15f},
+                                {p.x + halfX + .15f, 1, p.z + halfZ + .15f}};
+            if (footprint.min.x < room.bounds.min.x || footprint.max.x > room.bounds.max.x ||
+                footprint.min.z < room.bounds.min.z || footprint.max.z > room.bounds.max.z)
+                return false;
+            for (const auto &cover : room.obstacles)
+                if (overlaps(footprint, cover))
+                    return false;
+            for (const auto &wall : arena.boundaryWalls)
+                if (overlaps(footprint, wall))
+                    return false;
+            float low = 100, high = -100;
+            for (float x : {footprint.min.x, p.x, footprint.max.x})
+                for (float z : {footprint.min.z, p.z, footprint.max.z}) {
+                    if (!arena.contains({x, .85f, z}))
+                        return false;
+                    const float h = canyon ? arena.canyon->height(x, z) : -.015f;
+                    low = std::min(low, h);
+                    high = std::max(high, h);
+                }
+            height = low - .012f;
+            return high - low < .045f;
+        };
+        // Jittered candidates favour sheltered edges and cover. This avoids a
+        // uniform carpet, and finite candidates bound generation time in any layout.
+        std::vector<Vector3> edges, open;
+        for (float x = room.bounds.min.x + 1; x < room.bounds.max.x - 1; x += 1.7f)
+            for (float z = room.bounds.min.z + 1; z < room.bounds.max.z - 1; z += 1.7f) {
+                const Vector3 p{x + random.real(-.6f, .6f), 0, z + random.real(-.6f, .6f)};
+                float h = 0;
+                if (reserved(p, .65f) || !ground(p, .6f, .6f, h))
+                    continue;
+                bool edge = false;
+                for (auto offset : {Vector3{3, 0, 0}, {-3, 0, 0}, {0, 0, 3}, {0, 0, -3}}) {
+                    const auto near = add(p, offset);
+                    edge = edge || !arena.contains(near) || near.x < room.bounds.min.x ||
+                           near.x > room.bounds.max.x || near.z < room.bounds.min.z ||
+                           near.z > room.bounds.max.z;
+                }
+                for (const auto &cover : room.obstacles) {
+                    const Vector3 nearest{std::clamp(p.x, cover.min.x, cover.max.x), 0,
+                                          std::clamp(p.z, cover.min.z, cover.max.z)};
+                    edge = edge || distanceXZ(p, nearest) < 3;
+                }
+                (edge ? edges : open).push_back(p);
+            }
+        auto shuffle = [&](auto &points) {
+            for (size_t i = points.size(); i > 1; --i)
+                std::swap(points[i - 1], points[random.bounded(uint32_t(i))]);
+        };
+        shuffle(edges);
+        shuffle(open);
+        edges.insert(edges.end(), open.begin(), open.end());
+        const int patches = std::clamp(int(std::round(room.usableArea() / 80)), 5, 16);
+        std::vector<Vector3> clusters;
+        std::vector<Box> footprints;
+        bool skull = false, bones = false;
+        for (auto anchor : edges) {
+            if (int(clusters.size()) >= patches)
+                break;
+            if (std::any_of(clusters.begin(), clusters.end(),
+                            [&](auto other) { return distanceXZ(anchor, other) < 2.6f; }))
+                continue;
+            const auto before = footprints.size();
+            const int pieces = 3 + int(random.bounded(3));
+            for (int member = 0; member < pieces; ++member) {
+                const int choice = int(random.bounded(100));
+                WesternAsset asset;
+                if (choice < (canyon ? 46 : 25))
+                    asset = random.bounded(2) ? WesternAsset::GrassA : WesternAsset::GrassB;
+                else if (choice < (canyon ? 74 : 50))
+                    asset = random.bounded(3) ? WesternAsset::RockA : WesternAsset::RockB;
+                else if (choice < 93)
+                    asset = random.bounded(2) ? WesternAsset::StickA : WesternAsset::StickB;
+                else
+                    asset = choice < 96 ? WesternAsset::Skull : WesternAsset::Bones;
+                if ((asset == WesternAsset::Skull && skull) || (asset == WesternAsset::Bones && bones))
+                    asset = WesternAsset::RockA;
+                const auto source = sub(assetBounds(asset).max, assetBounds(asset).min);
+                float span = random.real(.45f, .85f), maxHeight = .3f;
+                if (asset == WesternAsset::GrassA || asset == WesternAsset::GrassB) {
+                    span = random.real(.75f, 1.3f);
+                    maxHeight = .65f;
+                } else if (asset == WesternAsset::StickA || asset == WesternAsset::StickB) {
+                    span = random.real(.65f, 1.05f);
+                    maxHeight = .26f;
+                }
+                const float scale = std::min(span / std::max(source.x, source.z), maxHeight / source.y);
+                const float yaw = random.real(0, 2 * Pi);
+                const float c = std::abs(std::cos(yaw)), s = std::abs(std::sin(yaw));
+                const float halfX = scale * (source.x * c + source.z * s) / 2;
+                const float halfZ = scale * (source.x * s + source.z * c) / 2;
+                for (int attempt = 0; attempt < 10; ++attempt) {
+                    const float angle = random.real(0, 2 * Pi), radius = random.real(0, 1.25f);
+                    const auto p = add(anchor, {std::cos(angle) * radius, 0, std::sin(angle) * radius});
+                    float h = 0;
+                    if (reserved(p, std::hypot(halfX, halfZ)) || !ground(p, halfX, halfZ, h))
+                        continue;
+                    const Box box{{p.x - halfX, h, p.z - halfZ},
+                                  {p.x + halfX, h + source.y * scale, p.z + halfZ}};
+                    if (std::any_of(footprints.begin(), footprints.end(),
+                                    [&](auto other) { return overlaps(box, other, .1f); }))
+                        continue;
+                    placements_.push_back({asset, box, yaw, false, index, scale});
+                    footprints.push_back(box);
+                    skull = skull || asset == WesternAsset::Skull;
+                    bones = bones || asset == WesternAsset::Bones;
+                    break;
+                }
+            }
+            if (footprints.size() > before)
+                clusters.push_back(anchor);
+        }
+    }
 }
 void WesternScene::updateDrawState(Vector3 focus) {
     updateTerrainOcclusion();
@@ -401,6 +562,8 @@ RayCollision WesternScene::pick(Ray ray, Vector3 focus) {
             meshHit(chunk.mesh, MatrixIdentity());
     if (loaded())
         for (const auto &placement : placements_) {
+            if (placement.decorationRoom >= 0)
+                continue; // Cosmetic ground litter must never steal a movement/aim ray.
             const auto &box = placement.bounds;
             const Vector3 closest{std::clamp(focus.x, box.min.x, box.max.x), focus.y,
                                   std::clamp(focus.z, box.min.z, box.max.z)};
@@ -470,15 +633,12 @@ void WesternScene::drawBatches(bool transparent) {
         if (batch.empty())
             continue;
         const auto &asset = assets_[i];
-        const Vector3 tint = lastTheme_ == MissionTheme::Canyon
-                                 ? (i == size_t(WesternAsset::Floor) ? Vector3{1.22f, 1.04f, .85f}
-                                                                     : Vector3{1.18f, .94f, .78f})
-                                 : Vector3{1, 1, 1};
-        SetShaderValue(shader_, GetShaderLocation(shader_, "sceneryTint"), &tint, SHADER_UNIFORM_VEC3);
         const bool cliff = i == size_t(WesternAsset::CliffWall) || i == size_t(WesternAsset::CliffCap) ||
-                           i == size_t(WesternAsset::CliffPillar);
+                           i == size_t(WesternAsset::CliffPillar) || i == size_t(WesternAsset::GrassA) ||
+                           i == size_t(WesternAsset::GrassB);
         // Unity cliff faces are open at the back. Orbiting can see them from
         // either side; draw both sides instead of exposing holes and slivers.
+        // Grass blades also need their reverse faces visible when orbiting.
         if (cliff)
             rlDisableBackfaceCulling();
         for (int mesh = asset.firstMesh; mesh < asset.firstMesh + asset.meshCount; ++mesh) {
@@ -525,12 +685,10 @@ void WesternScene::drawOccluders() {
             const auto *placement = surface.placement;
             const auto &asset = assets_[size_t(placement->asset)];
             const auto transform = placementTransform(asset.bounds, *placement);
-            const Vector3 tint =
-                lastTheme_ == MissionTheme::Canyon ? Vector3{1.18f, .94f, .78f} : Vector3{1, 1, 1};
-            SetShaderValue(shader_, GetShaderLocation(shader_, "sceneryTint"), &tint, SHADER_UNIFORM_VEC3);
-            const bool cliff = placement->asset == WesternAsset::CliffWall ||
-                               placement->asset == WesternAsset::CliffCap ||
-                               placement->asset == WesternAsset::CliffPillar;
+            const bool cliff =
+                placement->asset == WesternAsset::CliffWall || placement->asset == WesternAsset::CliffCap ||
+                placement->asset == WesternAsset::CliffPillar || placement->asset == WesternAsset::GrassA ||
+                placement->asset == WesternAsset::GrassB;
             if (cliff)
                 rlDisableBackfaceCulling();
             for (int j = asset.firstMesh; j < asset.firstMesh + asset.meshCount; ++j) {

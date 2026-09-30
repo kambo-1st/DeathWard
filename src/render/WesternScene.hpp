@@ -31,6 +31,12 @@ enum class WesternAsset {
     CliffPillar,
     CliffCap,
     Sandstone,
+    GrassA,
+    GrassB,
+    StickA,
+    StickB,
+    Skull,
+    Bones,
     Count
 };
 struct WesternPlacement {
@@ -38,6 +44,8 @@ struct WesternPlacement {
     Box bounds;
     float yaw = 0;
     bool exterior = false;
+    int decorationRoom = -1; // Small cosmetic props: no collision or mouse-aim surface.
+    float naturalScale = 0;  // Positive: preserve native proportions at any yaw.
 };
 
 // Static, instanced scenery; generated gameplay geometry remains authoritative.
@@ -74,6 +82,7 @@ class WesternScene {
     const std::vector<WesternPlacement> &placements() const {
         return placements_;
     }
+    int decorationCount(int room = -1) const;
     const Model &model() const {
         return model_;
     }
@@ -119,6 +128,7 @@ class WesternScene {
     void updateDrawState(Vector3 focus);
     void drawTerrainOutlines();
     void generate(const Arena &arena);
+    void generateRoomDecorations(const Arena &arena);
     void drawBatches(bool transparent);
 };
 } // namespace dw

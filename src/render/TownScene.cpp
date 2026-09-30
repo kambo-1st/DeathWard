@@ -1,8 +1,9 @@
 #include "render/TownScene.hpp"
-#include "world/TownBuildings.hpp"
 #include "raymath.h"
 #include "render/ShaderPlatform.hpp"
+#include "render/WorldPalette.hpp"
 #include "rlgl.h"
+#include "world/TownBuildings.hpp"
 #include <set>
 #include <stdexcept>
 
@@ -150,11 +151,11 @@ void main() {
     vec3 n = normalize(normal);
     surface.rgb = artFinish(surface.rgb,world,n);
     // Warm ground bounce and a cool sky fill keep shaded porches readable.
-    vec3 light = mix(vec3(.27,.245,.215),vec3(.43,.48,.55),n.y*.5+.5);
+    vec3 light = worldAmbient(n);
     if (artEnabled != 0) light=mix(vec3(.23,.225,.20),vec3(.45,.50,.54),n.y*.5+.5);
     for(int i=0;i<lightCount;i++) {
         vec3 d = lightDirections[i];
-        float attenuation = .90;
+        float attenuation = worldSunAttenuation;
         if(lightRanges[i]>0.0) {
             vec3 delta = lightPositions[i]-world;
             d = delta/max(length(delta),.001);
@@ -263,7 +264,7 @@ bool TownScene::load(const std::filesystem::path &directory) {
         model_ = LoadModel(modelFile.string().c_str());
         if (model_.meshCount != meshCount)
             throw std::runtime_error("Town model/catalog mismatch");
-        auto source = std::string(Fragment);
+        auto source = withWorldPalette(Fragment);
         source.insert(source.find("float visibility"), RedstoneArt::shaderFunctions());
         const auto fragment = withPlayerOcclusion(source.c_str());
         shader_ = loadWorldShader(Vertex, fragment.c_str());

@@ -1,6 +1,7 @@
 """Blender half of import_western.py; exports a texture-embedded static mesh library."""
 import hashlib
 import json
+import math
 from pathlib import Path
 import struct
 import sys
@@ -72,6 +73,10 @@ def main():
             bpy.ops.object.join()
         combined = bpy.context.object
         combined.name = combined.data.name = asset["name"]
+        # These source sticks stand upright. Lay them down before normalizing
+        # the pivot so room debris rests on the ground, with its UVs intact.
+        if asset.get("ground_debris"):
+            combined.data.transform(Matrix.Rotation(math.pi / 2, 4, "X"))
         # Center X/Z and rest on Y=0 in the exported glTF; retain original meters.
         points = [v.co for v in combined.data.vertices]
         lo = Vector([min(p[i] for p in points) for i in range(3)])

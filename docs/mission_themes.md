@@ -14,9 +14,22 @@ Canyon exclusively uses Isaac catalog entries, including the final Infested Mesa
 
 Movement tests the player's footprint against the terrain, and route smoothing sweeps that footprint continuously along the mesh. Bullets and sight rays traverse grid cells and intersect the same triangles used for rendering. Enemy placement checks the terrain before spawning. The mine retains its original wall/cover collision path. Gates remain explicit barriers at canyon necks: colored veils and ground marks replace the mine's overhead beams and bars.
 
-Rendering divides the shared surface into culled mesh chunks. Steep irregular shoulders form tall rock faces; a coarser seeded surface supplies broad, planar cap facets. Cliff faces and caps sample separate brown and sandy swatches from the original PolygonWestern atlas. Flat face normals, directional terrain shadows and distance haze provide shading without horizontal stripes or color noise on mesa tops. Small imported rocks and sparse cacti decorate banks and terraces. There are no repeated stretched cliff cards or rectangular border walls.
+Rendering divides the shared surface into culled mesh chunks. Steep irregular shoulders form tall rock faces; a coarser seeded surface supplies broad, planar cap facets. Cliff faces and caps sample separate brown and sandy swatches from the original PolygonWestern atlas. Flat face normals and shared directional shadows provide shading without horizontal stripes or color noise on mesa tops. Terrain, props and actors use the static hubs’ warm daylight and cool sky fill (`WorldPalette.hpp`); the common post-process supplies grading and distance haze. There is no additional canyon color multiplier or terrain-only brown fog. Small imported rocks and sparse cacti decorate banks and terraces. There are no repeated stretched cliff cards or rectangular border walls.
 
 Cliffs and outcrops stay at their full generated height as the player moves or rotates the camera. Mouse target picking and physics use the same visible terrain surface.
+
+## Small room decorations
+
+Both themes also populate each room with small, cosmetic grass/stone/debris clusters.
+The per-room decoration stream depends only on seed, theme and room index, so room
+clears, collected keys and gate state do not move the props or change encounters.
+There are 5–16 requested patches based on usable floor area, each trying 3–5 small
+pieces; unsuitable or crowded positions are skipped. Canyon favours dry vegetation
+and stones; mine has more fallen sticks. Skulls and bone piles are limited to one
+each per room. Door/objective approaches and keys have reserved space. These props
+use the existing instancing, culling and shadow passes without becoming collision
+or mouse-picking surfaces. Change `WesternScene::generateRoomDecorations` to tune
+density, asset mix, size limits and clearance.
 
 ## Extension points
 
@@ -24,7 +37,7 @@ Cliffs and outcrops stay at their full generated height as the player moves or r
 - `src/world/CanyonTerrain.cpp`: canyon terrain, navigation footprint and surface rays.
 - `src/world/Dungeon.cpp`: theme dispatch and shared collision/navigation entry points.
 - `src/render/CanyonScene.cpp`: terrain meshes, atlas sampling, lighting, shadows and dressing.
-- `src/render/WesternScene.cpp`: scenery loading, cache and mine placement. Changing arenas/themes releases old terrain resources.
+- `src/render/WesternScene.cpp`: scenery loading, cache, mine placement and small room decorations for both themes. Changing arenas/themes releases old terrain resources.
 - `src/core/Game.cpp`, `src/render/Renderer.cpp`, `src/main.cpp`: station selection, launch, mouse picking, HUD and CLI.
 - `src/combat/Simulation.cpp`: themed room names and summaries; `CampaignStore::begin` records the title before the first checkpoint.
 - `scripts/import_western.py` and `scripts/bake_western.py`: retained-source conversion; see [asset notes](../assets/western/README.md).

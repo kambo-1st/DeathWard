@@ -39,6 +39,12 @@ ASSETS = {
     "cliff_wall": "Environments/SM_Env_Cliff_Straight_02",
     "cliff_pillar": "Environments/SM_Env_Cliff_Pillar_01",
     "cliff_cap": "Environments/SM_Env_Cliff_Cap_01",
+    "grass_a": "Environments/SM_Env_Grass_01",
+    "grass_b": "Environments/SM_Env_Grass_03",
+    "stick_a": "Props/SM_Prop_Stick_01",
+    "stick_b": "Props/SM_Prop_Stick_02",
+    "skull": "Props/SM_Prop_Cow_Skull_01",
+    "bones": "Environments/SM_Env_BonePile_Small_01",
 }
 
 
@@ -144,6 +150,8 @@ def main():
             raise RuntimeError(f"No renderable parts in {path}")
         assets.append({"name": name, "prefab": str(path.relative_to(source)),
                        "models": sorted(models), "parts": parts, "unity_colliders": colliders})
+        if name in ("stick_a", "stick_b"):
+            assets[-1]["ground_debris"] = True
         print(f"COLLECTED {name}: {len(parts)} parts", flush=True)
     recipe = {"format": 1, "assets": assets, "materials": materials, "source_sha256": hashes}
     recipe_path = output / "western.source.json"

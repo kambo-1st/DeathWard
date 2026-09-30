@@ -1,6 +1,7 @@
 #include "render/MissionLighting.hpp"
 #include "raymath.h"
 #include "render/ShaderPlatform.hpp"
+#include "render/WorldPalette.hpp"
 #include <array>
 
 namespace dw {
@@ -73,8 +74,7 @@ void main() {
 #else
     vec3 n=gl_FrontFacing ? normalize(normal) : -normalize(normal);
 #endif
-    float direct=max(dot(n,missionSun),0.);
-    finalColor=vec4(surface.rgb*(.52+.56*direct*missionVisibility(world,n)),surface.a);
+    finalColor=vec4(surface.rgb*westernDaylight(n,missionSun,missionVisibility(world,n)),surface.a);
 }
 )GLSL";
 constexpr const char *ShadowFunctions = R"GLSL(
@@ -133,7 +133,7 @@ Vector3 MissionLighting::sun() {
 std::string MissionLighting::withShadows(const char *fragment) {
     auto result = std::string(fragment);
     result.insert(result.find("void main()"), ShadowFunctions);
-    return result;
+    return withWorldPalette(result.c_str());
 }
 MissionLighting::~MissionLighting() {
     unload();

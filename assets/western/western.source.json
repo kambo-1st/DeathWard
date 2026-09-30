@@ -1607,6 +1607,229 @@
           }
         }
       ]
+    },
+    {
+      "name": "grass_a",
+      "prefab": "Prefabs/Environments/SM_Env_Grass_01.prefab",
+      "models": [
+        "Models/SM_Env_Grass_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Grass_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": []
+    },
+    {
+      "name": "grass_b",
+      "prefab": "Prefabs/Environments/SM_Env_Grass_03.prefab",
+      "models": [
+        "Models/SM_Env_Grass_03.fbx"
+      ],
+      "parts": {
+        "SM_Env_Grass_03": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": []
+    },
+    {
+      "name": "stick_a",
+      "prefab": "Prefabs/Props/SM_Prop_Stick_01.prefab",
+      "models": [
+        "Models/SM_Prop_Stick_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Stick_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1850352298099036
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43921115620163470,
+            "guid": "3814386d8a9f76947a424082e517489b",
+            "type": 2
+          }
+        }
+      ],
+      "ground_debris": true
+    },
+    {
+      "name": "stick_b",
+      "prefab": "Prefabs/Props/SM_Prop_Stick_02.prefab",
+      "models": [
+        "Models/SM_Prop_Stick_02.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Stick_02": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1148320188191384
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43834807419018392,
+            "guid": "8388ec2944d72a84ca0a245a14102a12",
+            "type": 2
+          }
+        }
+      ],
+      "ground_debris": true
+    },
+    {
+      "name": "skull",
+      "prefab": "Prefabs/Props/SM_Prop_Cow_Skull_01.prefab",
+      "models": [
+        "Models/SM_Prop_Cow_Skull_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Cow_Skull_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1219180939491230
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 4,
+          "m_Convex": 1,
+          "m_CookingOptions": 30,
+          "m_Mesh": {
+            "fileID": 43863124191269316,
+            "guid": "122eea3a0fb70fb4395ef9b34885231f",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 0,
+          "m_CorrespondingSourceObject": {
+            "fileID": 0
+          },
+          "m_PrefabInstance": {
+            "fileID": 0
+          },
+          "m_PrefabAsset": {
+            "fileID": 0
+          },
+          "m_GameObject": {
+            "fileID": 1219180939491230
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 4,
+          "m_Convex": 1,
+          "m_CookingOptions": 30,
+          "m_Mesh": {
+            "fileID": 43385452671986820,
+            "guid": "122eea3a0fb70fb4395ef9b34885231f",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "bones",
+      "prefab": "Prefabs/Environments/SM_Env_BonePile_Small_01.prefab",
+      "models": [
+        "Models/SM_Env_BonePile_Small_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_BonePile_Small_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1031225388075684
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43185238458645196,
+            "guid": "2df7986d53550ec4fa26b8fa3a2042e1",
+            "type": 2
+          }
+        }
+      ]
     }
   ],
   "materials": {
@@ -1702,6 +1925,18 @@
     "Prefabs/Environments/SM_Env_Cliff_Pillar_01.prefab": "ae29b951abdf3849b761a3fa4f269c086b42a2ea5e1695d08af74e42eaa44a24",
     "Models/SM_Env_Cliff_Pillar_01.fbx": "1fb290892304567d671a7349baccffd92a2a04ede0efae25f128b2f6b13adf86",
     "Prefabs/Environments/SM_Env_Cliff_Cap_01.prefab": "a0f12405b31cce26702cf828a51b77fe0c311ae85206f899c5f24cf55176ada3",
-    "Models/SM_Env_Cliff_Cap_01.fbx": "1d44709c37c7baaf2a0acbcc0c231e7e5d86556d96753f05aafdf3881afc7f41"
+    "Models/SM_Env_Cliff_Cap_01.fbx": "1d44709c37c7baaf2a0acbcc0c231e7e5d86556d96753f05aafdf3881afc7f41",
+    "Prefabs/Environments/SM_Env_Grass_01.prefab": "9f37126f2268e5f775c7cf4229b986f509ce04d4bb0c680e4a13d509dbf86a6d",
+    "Models/SM_Env_Grass_01.fbx": "7dad311e224e989ebdcc9a105663924ef2169951bfb9a68fb0d5c6fc9cfd9741",
+    "Prefabs/Environments/SM_Env_Grass_03.prefab": "0755ef5341bdd9eacb1174ab52ee0db0496dd6b2870f7d8950c10fd83f0186b3",
+    "Models/SM_Env_Grass_03.fbx": "73867396efcdb71515f38b499303965706e8cbba287d610c93e6062f9ae7c3cf",
+    "Prefabs/Props/SM_Prop_Stick_01.prefab": "ef90f00979d29868572e0ffe8ae193c00c7c6de33a9e657ee2ecf575e4311007",
+    "Models/SM_Prop_Stick_01.fbx": "73965a357eb8fbd27a2dde3a26843a04f9bdc3345521afa803807b484f968a1d",
+    "Prefabs/Props/SM_Prop_Stick_02.prefab": "9ad38b26e5e907dace4e208cfe46d23e49436ed4780686d3001a853ce0bd952f",
+    "Models/SM_Prop_Stick_02.fbx": "903f06b945103a8a2203a1e2727a6822b5d9bffa8e0331dfa11738252cab4945",
+    "Prefabs/Props/SM_Prop_Cow_Skull_01.prefab": "89bf27c2e6700cb173bf33c1d78abcac9f919aaa4aa360468a68792c89c927b5",
+    "Models/SM_Prop_Cow_Skull_01.fbx": "ac67febec06436c42be145a851e8254f2ccbfc74091bd4120c0b714da37e7dd7",
+    "Prefabs/Environments/SM_Env_BonePile_Small_01.prefab": "8addcb8026144c59291c637fc1d04f0267449af9c3ff783a162294f653166852",
+    "Models/SM_Env_BonePile_Small_01.fbx": "454e17c9c92f45f551d1c9d1fabdb52dafce614ac22d63b7305655ad9cc7cc48"
   }
 }

@@ -1,6 +1,7 @@
 #include "render/Renderer.hpp"
 #include "items/Items.hpp"
 #include "render/MonsterVisuals.hpp"
+#include "render/WorldPalette.hpp"
 #include "rlgl.h"
 #include <iomanip>
 #include <sstream>
@@ -529,7 +530,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             cowboy(run.player.position, run.player.facing, WHITE, 1, false, false);
         EndShaderMode();
     });
-    postProcess_.begin(theme.sky, distance(camera.position, camera.target));
+    postProcess_.begin(WorldSky, distance(camera.position, camera.target));
     BeginMode3D(camera);
     lighting.beginPrimitives();
     DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
@@ -844,8 +845,7 @@ Action Renderer::hub(const Game &game) {
         animalModels_.draw(game.animals, depth);
         characterModels_.draw(game.characters, depth);
     });
-    postProcess_.begin(Color{154, 186, 199, 255}, distance(game.camera.position, game.camera.target),
-                       townScene_.artPoc());
+    postProcess_.begin(WorldSky, distance(game.camera.position, game.camera.target), townScene_.artPoc());
     BeginMode3D(game.camera);
     townScene_.draw(town.player.position);
     animalModels_.draw(game.animals, townScene_.actorShader(), townScene_.shadowTexture());

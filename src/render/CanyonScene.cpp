@@ -31,21 +31,13 @@ in vec3 normal;
 in vec2 uv;
 in vec3 tint;
 uniform sampler2D texture0;
-uniform vec3 focus;
 uniform int terrainUnderlay;
 out vec4 finalColor;
 void main() {
     vec3 n = normalize(normal);
     vec3 sun = missionSun;
     float shade = terrainUnderlay == 0 ? missionVisibility(world,n) : 1.;
-    float direct = max(dot(n,sun),0.);
-    // A broad sky fill keeps facets readable on faces turned away from the sun.
-    float sky = max(dot(n,normalize(vec3(.7,.55,-.45))),0.);
-    float up = max(n.y,0.);
-    float fill = .19*sky*(1.-.6*up);
-    vec3 color = texture(texture0,uv).rgb*tint*(.48+.06*up+fill+.58*direct*shade);
-    float fog = smoothstep(60.,110.,length(world.xz-focus.xz))*.6;
-    color = mix(color,vec3(.69,.54,.39),fog);
+    vec3 color = texture(texture0,uv).rgb*tint*westernDaylight(n,sun,shade);
     finalColor=playerOcclusionSurface(world,vec4(color,1.));
 }
 )GLSL";
@@ -158,7 +150,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
             const bool rock = std::max({a.y, b.y, c.y}) > .15f;
             const bool cap = normal.y > .72f;
             const auto uv = rock ? (cap ? capUv : wallUv) : sandUv;
-            const Color tint = cap ? Color{255, 252, 235, 255} : WHITE;
+            const Color tint = WHITE;
             const float variation =
                 rock && !cap ? .96f + .04f * std::sin(dot(add(add(a, b), c), {1.17f, .73f, 2.31f})) : 1.f;
             for (auto p : triangle) {
@@ -285,7 +277,6 @@ void WesternScene::drawTerrain(Vector3 focus) {
     if (terrain_.empty())
         return;
     lighting_.bind(terrainShader_);
-    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "focus"), &focus, SHADER_UNIFORM_VEC3);
     occlusion_.bind(terrainShader_, false);
     // The buried base must not self-shadow against the translucent rock above it.
     int underlay = 1;
