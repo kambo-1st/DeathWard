@@ -41,31 +41,29 @@ void navigationChecks() {
     nav.spawn = {-6, 0, -6};
     nav.mission = {6, 0, 6};
     nav.bake(doc, model);
-    const size_t middle = 25 * 50 + 25;
-    check(!std::isfinite(nav.heights[middle]), "navigation blocks disconnected object roofs");
+    check(!std::isfinite(nav.height({0,0,0})), "navigation blocks disconnected object roofs");
     doc.instances[1].motion.kind = ObjectMotionKind::Spin;
     nav.bake(doc, model);
-    check(std::isfinite(nav.heights[middle]), "animated decoration is excluded from static navigation");
+    check(std::isfinite(nav.height({0,0,0})), "animated decoration is excluded from static navigation");
     doc.instances[1].motion.kind = ObjectMotionKind::None;
     doc.instances[1].transform.m12 = 5;
     nav.bake(doc, model);
-    check(std::isfinite(nav.heights[middle]), "moving an object frees its previous footprint");
-    const size_t moved = 25 * 50 + 37;
-    check(!std::isfinite(nav.heights[moved]), "navigation blocks the moved object's new footprint");
+    check(std::isfinite(nav.height({0,0,0})), "moving an object frees its previous footprint");
+    check(!std::isfinite(nav.height({5,0,0})), "navigation blocks the moved object's new footprint");
     doc.instances.pop_back();
     nav.bake(doc, model);
-    check(std::isfinite(nav.heights[moved]), "deleting an object reopens its terrain");
+    check(std::isfinite(nav.height({5,0,0})), "deleting an object reopens its terrain");
     // An overhead object must not cast a navigation barrier down to the floor.
     doc.instances.push_back({1, MatrixTranslate(0, 5, 0)});
     nav.bake(doc, model);
-    check(std::isfinite(nav.heights[middle]) && std::abs(nav.heights[middle]) < .001f,
+    check(std::isfinite(nav.height({0,0,0})) && std::abs(nav.height({0,0,0})) < .001f,
           "high crossbeam preserves the actual street below it");
     HubWorld passage;
     passage.setNavigation(nav);
     check(passage.canTraverse({-6, 0, 0}, {6, 0, 0}), "direct movement passes beneath an overhead crossbeam");
     doc.instances[1].transform = MatrixTranslate(0, 3.5f, 0);
     nav.bake(doc, model);
-    check(!std::isfinite(nav.heights[middle]), "a low ceiling still blocks a standing character");
+    check(!std::isfinite(nav.height({0,0,0})), "a low ceiling still blocks a standing character");
     doc.instances[1].transform = MatrixTranslate(0, 5, 0);
     doc.instances.push_back({1, MatrixMultiply(MatrixScale(.03f, 1, .03f), MatrixTranslate(.02f, 2, .02f))});
     nav.bake(doc, model);
@@ -73,7 +71,7 @@ void navigationChecks() {
           "thin gate posts between ray sample centers still block the whole player footprint");
     doc.instances.pop_back();
     nav.bake(doc, model);
-    check(std::isfinite(nav.heights[middle]), "removing a post reopens the passage beneath the crossbeam");
+    check(std::isfinite(nav.height({0,0,0})), "removing a post reopens the passage beneath the crossbeam");
     UnloadMesh(floor);
     UnloadMesh(cube);
 }

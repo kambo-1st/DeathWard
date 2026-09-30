@@ -45581,33 +45581,33 @@
   ],
   "navigation": {
     "dimensions": [
-      600,
-      600
+      1200,
+      1200
     ],
-    "cell": 0.4000000059604645,
-    "walkable_cells": 198082,
+    "cell": 0.20000000298023224,
+    "walkable_cells": 823434,
     "spawn": [
-      -0.1999969482421875,
-      -0.041373856365680695,
-      -5.0
+      -0.09999847412109375,
+      -0.04036431387066841,
+      -5.099998474121094
     ],
     "mission": [
-      1.8000030517578125,
-      -0.3380568027496338,
-      5.400001525878906
+      1.7000045776367188,
+      -0.36306267976760864,
+      5.3000030517578125
     ],
     "station": [
       2.2100000381469727,
       10.640000343322754
     ],
-    "algorithm": "geometry_headroom_v1",
+    "algorithm": "geometry_interiors_v2",
     "standing_clearance": 1.9
   },
   "output_sha256": {
     "town.glb": "b931bd09b0873de30ff2aefd674aec1a609c83bfa30b4a16b31c6df423c8b8a8",
-    "town.scene": "ca10b691c4a9dafe1c6ba735e95c3dfdbef1cfd1650c10ae6682b981e111e802",
-    "town.nav": "7cd50805d3a9742897f33cc6ca16eea884b4fa7d13cbc7a5ca07cb004e70b6c6",
-    "town.labels": "d6e91e5dbb58c102776047cafb84a4b9dd1f2ffd3fea429b26a441b81d9c1c99"
+    "town.scene": "f35f606800b456d5cf199e0689c6e90251dcab784a4ebc6817e5405f9257c899",
+    "town.nav": "b1e79499810813bd15f7fe2939aaf985c6d229ce6e1168c59ad1d89473055d55",
+    "town.labels": "9423ed446e825484b388beca956d36f070440bd7c4b6d72921cc05df1b225c8b"
   },
   "object_motion": {
     "488115655:1367905150670218": [
@@ -48416,6 +48416,28 @@
         0,
         1,
         0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "object": "station-entrance-steps",
+      "asset": "part_0249",
+      "transform": [
+        1,
+        0,
+        0,
+        4.4,
+        0,
+        0.35,
+        0,
+        -0.4,
+        0,
+        0,
+        0.5,
+        4.55,
         0,
         0,
         0,

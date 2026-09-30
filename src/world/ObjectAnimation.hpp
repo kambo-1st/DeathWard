@@ -22,6 +22,9 @@ class ObjectAnimationSystem {
     const std::vector<ObjectPose> &poses() const {
         return poses_;
     }
+    size_t doorCount() const { return doors_.size(); }
+    size_t openDoorCount() const;
+    // Authored prop/train motion; automatic entrance doors are counted separately.
     size_t activeCount() const {
         return moving_.size() + members_.size();
     }
@@ -51,6 +54,15 @@ class ObjectAnimationSystem {
         Quaternion roll{0, 0, 0, 1};
         float radius = 1, phase = 0, distance = 0;
     };
+    struct DoorPart { size_t index; Matrix rest; Box local; };
+    struct Door {
+        std::vector<DoorPart> parts;
+        Vector3 hinge{}, center{};
+        float bottom = 0, angle = Pi*.5f, openness = 0;
+        bool opening = false;
+    };
+    std::vector<Door> doors_;
+    void stepDoors(std::optional<Vector3> player);
     std::vector<ObjectPose> poses_;
     std::vector<Moving> moving_;
     struct Path {

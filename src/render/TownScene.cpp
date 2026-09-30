@@ -1,4 +1,5 @@
 #include "render/TownScene.hpp"
+#include "world/TownBuildings.hpp"
 #include "raymath.h"
 #include "render/ShaderPlatform.hpp"
 #include "rlgl.h"
@@ -75,6 +76,12 @@ uniform mat4 lightVP;
 uniform vec4 colDiffuse;
 uniform int unlit;
 uniform int autumnFoliage;
+uniform int interiorEnabled;
+uniform int interiorArchitecture;
+uniform mat4 interiorInverse;
+uniform vec3 interiorMin;
+uniform vec3 interiorMax;
+uniform float interiorFloor;
 uniform int lightCount;
 uniform int sunIndex;
 uniform int shadowEnabled;
@@ -107,6 +114,12 @@ float visibility(vec3 n, vec3 sun) {
     return mix(lit/9.,1.,smoothstep(.86,1.,edge));
 }
 void main() {
+    if (interiorEnabled != 0) {
+        vec3 local = (interiorInverse * vec4(world,1.)).xyz;
+        float height = interiorFloor + (interiorArchitecture != 0 ? 1.25 : 2.65);
+        if (local.x >= interiorMin.x && local.x <= interiorMax.x &&
+            local.z >= interiorMin.z && local.z <= interiorMax.z && world.y > height) discard;
+    }
     vec4 surface = texture(texture0,uv) * colDiffuse * color;
     if(surface.a < .02) discard;
     if(unlit == 0) surface = playerOcclusionSurface(world,surface);
@@ -204,6 +217,7 @@ void TownScene::unload() {
     shadowBatches_.clear();
     attempted_ = false;
     occlusion_ = {};
+    interior_.reset();
 }
 bool TownScene::load(const std::filesystem::path &directory) {
     unload();
@@ -215,9 +229,12 @@ bool TownScene::load(const std::filesystem::path &directory) {
         const int meshCount = document_.meshCount();
         for (const auto &a : document_.assets)
             assets_.push_back({a.first, a.count, a.unlit, a.bounds});
-        for (const auto &i : document_.instances)
-            instances_.push_back(
-                {i.asset, i.transform, transformBounds(assets_[i.asset].bounds, i.transform), i.animated()});
+        for (const auto &i : document_.instances) {
+            const auto &asset = document_.assets[i.asset];
+            instances_.push_back({i.asset, i.transform,
+                transformBounds(assets_[i.asset].bounds, i.transform),
+                i.animated() || buildingDoor(asset) || doorGlass(asset)});
+        }
 #ifdef __EMSCRIPTEN__
         const auto modelFile = std::filesystem::path("/assets") / directory.filename() / "town.glb";
 #else
@@ -297,9 +314,12 @@ void TownScene::applyDocument(const TownDocument &document) {
     updateLights();
     instances_.clear();
     occluders_.clear();
+    interior_.reset();
     for (size_t n = 0; n < document.instances.size(); ++n) {
         const auto &i = document.instances[n];
-        instances_.push_back({i.asset, i.transform, document.bounds(n), i.animated()});
+        const auto &asset = document.assets[i.asset];
+        instances_.push_back({i.asset, i.transform, document.bounds(n),
+            i.animated() || buildingDoor(asset) || doorGlass(asset)});
     }
 }
 void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
@@ -309,6 +329,7 @@ void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
     effects_.animate(animation);
     occluders_.clear();
     for (size_t n = 0; n < poses.size(); ++n) {
+        instances_[n].animated = poses[n].animated;
         if (!instances_[n].animated)
             continue;
         instances_[n].transform = poses[n].transform;
@@ -483,6 +504,45 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
                        SHADER_UNIFORM_FLOAT);
     }
 }
+void TownScene::setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled) {
+    occlusion_.set(camera,player);
+    occlusion_.enabled=enabled;
+    interior_.reset();
+    if(!enabled)return;
+    float best=std::numeric_limits<float>::infinity();
+    for(size_t n=0;n<instances_.size();++n) {
+        const auto &i=instances_[n];
+        const auto &a=document_.assets[i.asset];
+        if(!buildingShell(a))continue;
+        const auto inverse=MatrixInvert(i.transform);
+        const auto p=Vector3Transform(player,inverse);
+        if(p.x<=a.bounds.min.x+.35f || p.x>=a.bounds.max.x-.35f ||
+           p.z<=a.bounds.min.z+.35f || p.z>=a.bounds.max.z-.35f ||
+           p.y<a.bounds.min.y || p.y>a.bounds.max.y-1.2f)continue;
+        const float area=(a.bounds.max.x-a.bounds.min.x)*(a.bounds.max.z-a.bounds.min.z);
+        if(area>=best)continue;
+        best=area;interior_=n;interiorInverse_=inverse;
+        interiorBounds_={sub(a.bounds.min,{.3f,0,.3f}),add(a.bounds.max,{.3f,0,.3f})};
+        interiorWorldBounds_=objectBounds(interiorBounds_,i.transform);
+        interiorFloor_=player.y-.85f;
+    }
+}
+bool TownScene::belongsToInterior(const Instance &i) const {
+    if(!interior_)return false;
+    return i.bounds.min.x<=interiorWorldBounds_.max.x && i.bounds.max.x>=interiorWorldBounds_.min.x &&
+           i.bounds.min.z<=interiorWorldBounds_.max.z && i.bounds.max.z>=interiorWorldBounds_.min.z &&
+           buildingGeometry(document_.assets[i.asset]);
+}
+void TownScene::bindInterior(bool architecture) {
+    const int enabled=interior_.has_value(), structure=architecture;
+    SetShaderValue(shader_,GetShaderLocation(shader_,"interiorEnabled"),&enabled,SHADER_UNIFORM_INT);
+    if(!enabled)return;
+    SetShaderValue(shader_,GetShaderLocation(shader_,"interiorArchitecture"),&structure,SHADER_UNIFORM_INT);
+    SetShaderValueMatrix(shader_,GetShaderLocation(shader_,"interiorInverse"),interiorInverse_);
+    SetShaderValue(shader_,GetShaderLocation(shader_,"interiorMin"),&interiorBounds_.min,SHADER_UNIFORM_VEC3);
+    SetShaderValue(shader_,GetShaderLocation(shader_,"interiorMax"),&interiorBounds_.max,SHADER_UNIFORM_VEC3);
+    SetShaderValue(shader_,GetShaderLocation(shader_,"interiorFloor"),&interiorFloor_,SHADER_UNIFORM_FLOAT);
+}
 std::optional<size_t> TownScene::pick(Ray ray) const {
     std::optional<size_t> selected;
     float nearest = std::numeric_limits<float>::infinity();
@@ -519,7 +579,7 @@ void TownScene::draw(Vector3 focus, bool glass) {
                 continue;
             const auto &asset = assets_[i.asset];
             bool blocked = false;
-            if (!asset.unlit && occlusion_.intersects(b))
+            if (!asset.unlit && !belongsToInterior(i) && occlusion_.intersects(b))
                 for (int mesh = asset.first; mesh < asset.first + asset.count && !blocked; ++mesh)
                     blocked = occlusion_.blocks(model_.meshes[mesh], i.transform);
             if (blocked)
@@ -539,6 +599,7 @@ void TownScene::draw(Vector3 focus, bool glass) {
         if (batch.empty())
             continue;
         SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &a.unlit, SHADER_UNIFORM_INT);
+        bindInterior(buildingGeometry(document_.assets[i]));
         const auto &label = document_.assets[i].label;
         const int foliage =
             label.find("Tree_Clump") != std::string::npos || label.find("Birch") != std::string::npos;
@@ -572,6 +633,7 @@ void TownScene::drawOccluders() {
     SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &unlit, SHADER_UNIFORM_INT);
     for (const auto *instance : occluders_) {
         const auto &asset = assets_[instance->asset];
+        bindInterior(buildingGeometry(document_.assets[instance->asset]));
         const auto &label = document_.assets[instance->asset].label;
         const int foliage =
             label.find("Tree_Clump") != std::string::npos || label.find("Birch") != std::string::npos;

@@ -19,7 +19,7 @@ bool upgradeTownNavigation(dw::HubKind hub) {
     const auto directory = dw::TownScene::assetDirectory(hub);
     dw::TownNavigation navigation;
     navigation.load(directory / "town.nav");
-    if (navigation.bakeVersion >= 2) return false;
+    if (navigation.bakeVersion >= 3) return false;
     dw::TownDocument document;
     std::string error;
     if (!document.load(directory / "town.scene", error)) throw std::runtime_error(error);
@@ -362,6 +362,17 @@ int main(int argc, char **argv) {
                 animalDefinition ? int(animalDefinition->kind) : -1, animalDefinition ? animalDefinition->roam : 0.f,
                 animalDefinition ? double(animalDefinition->seed) : 0., animalDefinition ? animalDefinition->home.x : 0.f,
                 animalDefinition ? animalDefinition->home.z : 0.f);
+            auto buildingPoint = [&](Vector3 p) {
+                const float h=game.town.height(p);p.y=std::isfinite(h)?h:0;
+                return GetWorldToScreen(p,game.camera);
+            };
+            const auto interiorProbe=buildingPoint({-13.5f,0,-11.5f});
+            const auto exitProbe=buildingPoint({-3,0,-4});
+            EM_ASM({
+                if (Module.verify) Module.buildings = ({inside:!!$0, doors:$1, open:$2,
+                    targetX:$3, targetY:$4, exitX:$5, exitY:$6});
+            }, renderer.insideBuilding(),int(game.townObjects.doorCount()),int(game.townObjects.openDoorCount()),
+                interiorProbe.x,interiorProbe.y,exitProbe.x,exitProbe.y);
             const auto &previewCharacters = editor.characterPreview().residents();
             const auto &particleEffects = editor.active ? editor.effects() : renderer.townEffects();
             EM_ASM({

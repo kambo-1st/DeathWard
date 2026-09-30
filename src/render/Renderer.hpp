@@ -12,6 +12,7 @@ class Renderer {
   public:
     Action draw(const Game &game);
     const ParticleEffects &missionEffects() const { return missionEffects_; }
+    bool insideBuilding() const { return townScene_.interior().has_value(); }
     const ParticleEffects &townEffects() const { return townScene_.effects(); }
     std::optional<RayCollision> pickScenery(const Simulation &run, const Camera3D &camera, Ray ray);
     void reloadTown() {

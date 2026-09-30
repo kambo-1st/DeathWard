@@ -18,10 +18,8 @@ class TownScene {
     bool load(const std::filesystem::path &directory = assetDirectory(HubKind::BlackCreek));
     void unload();
     void draw(Vector3 focus, bool glass = false);
-    void setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled = true) {
-        occlusion_.set(camera, player);
-        occlusion_.enabled = enabled;
-    }
+    void setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled = true);
+    std::optional<size_t> interior() const { return interior_; }
     void drawOccluders();
     void drawEffects(const Camera3D &camera) { effects_.draw(camera); }
     const ParticleEffects &effects() const { return effects_; }
@@ -85,6 +83,12 @@ class TownScene {
     bool attempted_ = false;
     PlayerOcclusion occlusion_;
     ParticleEffects effects_;
+    std::optional<size_t> interior_;
+    Matrix interiorInverse_{};
+    Box interiorBounds_{}, interiorWorldBounds_{};
+    float interiorFloor_ = 0;
+    void bindInterior(bool architecture);
+    bool belongsToInterior(const Instance &instance) const;
     void updateLights();
     void updateEffectLights(const Camera3D &camera);
 };

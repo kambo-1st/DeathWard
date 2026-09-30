@@ -92,7 +92,9 @@ Animals remain ambient residents. Flying and aquatic models can be placed and an
 
 ## Saving and playing
 
-Navigation checks standing headroom below overhead structures. Open entrances remain walkable beneath their beams; upright supports, thin walls and low ceilings remain blockers. Saving uses these same rules. The navigation format remains a single traversable height per cell, so this does not add multi-floor building interiors. Older navigation files are rebuilt once at game startup without replacing the saved scene.
+Navigation includes reachable building interiors and checks standing headroom beneath roofs and beams. Door leaves open automatically as the player approaches; walls, posts, furniture and low ceilings retain collision. Imported building labels identify the hollow architecture and hinged door/window pieces, including copies placed in the editor. Keep those asset labels when preparing a custom pack. An explicitly assigned animation takes precedence over automatic door movement. Saving records the original door poses, not temporary open positions.
+
+In gameplay, entering a building cuts away its roof and upper walls so the original interior stays visible. Leaving restores the exterior. The editor keeps complete meshes visible for placement; test entry and cutaways with **Back to town**. Older navigation is rebuilt once at startup without replacing the saved scene.
 
 **Save** or **Ctrl+S** validates and saves `town.scene` and rebuilds `town.nav`. It retains the preceding versions as `town.scene.bak` and `town.nav.bak`. Both replacements are staged and validated first; reported replacement failures roll back to the backups. The model library, embedded textures and retained Unity sources are unchanged. **Reload** restores the last saved files. Leaving, reloading or closing the window with unsaved edits offers save/discard/cancel as appropriate.
 
@@ -104,7 +106,9 @@ In a source checkout, the game and editor use `assets/town/` for Black Creek or 
 
 That option edits the supplied pack; returning to gameplay uses the game's normal town pack. The direct editor launch uses a temporary campaign and does not resolve an existing player's expedition.
 
-The native navigation rebuild samples the edited **visible geometry**, rather than Unity's original collider components. It keeps the selected hub's original outdoor grid: 0.4-unit cells, surface heights between -5 and 12, obstacle clearance and a 0.6-unit step limit. Black Creek spans X -120 to 120 and Z -90 to 150; Frontier spans X -160 to 170 and Z -120 to 140. Only ground connected to Arrival is playable. This supports rearranging the outdoor town; it does not add building interiors or multiple walkable floors. Check Paths and play the edited streets after substantial changes.
+The navigation rebuild samples the edited **visible geometry** with 0.2-unit cells, surface heights between -5 and 12, 1.9 units of standing headroom and a 0.6-unit step limit. Black Creek spans X -120 to 120 and Z -90 to 150; Frontier spans X -160 to 170 and Z -120 to 140. Only surfaces connected to Arrival are playable. Building floors and roofs are separate slabs rather than a solid column. Navigation still stores one traversable height per X/Z cell, so overlapping upstairs/downstairs routes are not fully supported. Check Paths and play the edited entrances after substantial changes.
+
+Black Creek includes an added `station-entrance-steps` placement made from the original textured stair asset, connecting the raised platform to the street. It can be edited like any other static prop. After a fresh Unity import, `python3 scripts/add_station_steps.py` restores this placement and rebuilds navigation.
 
 The original import manifest remains an audit of the Unity demo. `scripts/verify_town.py` checks that original conversion and will report scene/navigation hash differences after intentional edits. Reimporting the Unity scene replaces editor changes, so keep the edited files in version control or a separate pack.
 

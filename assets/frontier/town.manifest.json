@@ -61806,32 +61806,32 @@
   "missing_collider_fallbacks": [],
   "navigation": {
     "dimensions": [
-      825,
-      650
+      1650,
+      1300
     ],
-    "cell": 0.4000000059604645,
-    "walkable_cells": 319205,
+    "cell": 0.20000000298023224,
+    "walkable_cells": 1342284,
     "spawn": [
-      61.0,
-      1.452796459197998,
-      -25.0
+      60.90000915527344,
+      1.4570348262786865,
+      -25.099998474121094
     ],
     "mission": [
-      49.40000915527344,
-      1.8177064657211304,
-      -23.79999542236328
+      49.30000305175781,
+      2.2530746459960938,
+      -23.900001525878906
     ],
     "station": [
       0,
       0
     ],
-    "algorithm": "geometry_headroom_v1",
+    "algorithm": "geometry_interiors_v2",
     "standing_clearance": 1.9
   },
   "output_sha256": {
     "town.glb": "3d55bed81ff81654d82bb8126d13d3b734a477a12e7527f3b12c8a5bbb411c19",
     "town.scene": "edde240992c7a6d00afe37ca27f9a9f450104c3dc1040a487edcd83cce70f437",
-    "town.nav": "1f91c1b900bd577ee0eb02e546d6c91c3a4b93944466764d783c05d9bab31ab1",
-    "town.labels": "7c4d7dc7d29a8487243deb2b90c87935896821b4f72a20bfb2df945f96fa30d8"
+    "town.nav": "1206544dc5edc1b4b4a2f9ffde568f51f6292687d77f11ff7d079cfb1e02ae0e",
+    "town.labels": "1bb784782d45094a68031e3a87284875c829cd73251a05ad1c40aaeee06fd6a4"
   }
 }

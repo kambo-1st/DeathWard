@@ -4,7 +4,7 @@
 namespace dw {
 struct TownNavigation {
     uint32_t width = 0, depth = 0;
-    int bakeVersion = 2;
+    int bakeVersion = 3;
     float minX = 0, minZ = 0, cell = .4f;
     Vector3 spawn{}, mission{};
     std::vector<float> heights;

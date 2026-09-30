@@ -1,4 +1,5 @@
 #include "world/ObjectAnimation.hpp"
+#include "world/TownBuildings.hpp"
 #include "raymath.h"
 #include <unordered_map>
 
@@ -29,6 +30,7 @@ void ObjectAnimationSystem::reset(const TownDocument &document) {
     document.validate();
     poses_.clear();
     moving_.clear();
+    doors_.clear();
     paths_.clear();
     groups_.clear();
     members_.clear();
@@ -54,7 +56,36 @@ void ObjectAnimationSystem::reset(const TownDocument &document) {
         const auto &i = document.instances[n];
         const auto local = document.assets[i.asset].bounds;
         const auto bounds = document.bounds(n);
-        poses_.push_back({i.transform, bounds, i.animated()});
+        const auto &asset = document.assets[i.asset];
+        poses_.push_back({i.transform, bounds, i.animated() || buildingDoor(asset) || doorGlass(asset)});
+        if (buildingDoor(asset) && !i.animated()) {
+            Door door;
+            door.parts.push_back({n,i.transform,local});
+            door.hinge = Vector3Transform({},i.transform);
+            door.center = mul(add(bounds.min,bounds.max),.5f);
+            door.bottom = bounds.min.y;
+            // Align an opened leaf with the nearest exterior wall's outward
+            // normal. This retains doors already open in the imported demo.
+            float best = 2.f;
+            auto leaf = sub(door.center,door.hinge); leaf.y=0;
+            for (const auto &body : document.instances) {
+                const auto &a = document.assets[body.asset];
+                if (!buildingShell(a)) continue;
+                const auto at = Vector3Transform(door.hinge,MatrixInvert(body.transform));
+                if (at.x<a.bounds.min.x-.8f || at.x>a.bounds.max.x+.8f ||
+                    at.z<a.bounds.min.z-.8f || at.z>a.bounds.max.z+.8f) continue;
+                const std::array<float,4> edges{std::abs(at.x-a.bounds.min.x),std::abs(at.x-a.bounds.max.x),
+                    std::abs(at.z-a.bounds.min.z),std::abs(at.z-a.bounds.max.z)};
+                const std::array<Vector3,4> normals{{{-1,0,0},{1,0,0},{0,0,-1},{0,0,1}}};
+                for (size_t side=0;side<edges.size();++side) if(edges[side]<best) {
+                    best=edges[side];
+                    auto normal=Vector3Transform(normals[side],body.transform);
+                    normal=sub(normal,Vector3Transform({},body.transform));normal.y=0;
+                    door.angle=std::remainder(std::atan2(normal.x,normal.z)-std::atan2(leaf.x,leaf.z),2*Pi);
+                }
+            }
+            doors_.push_back(std::move(door));
+        }
         if (!i.group.empty()) {
             const auto group = groupIds.at(i.group);
             const auto bind = MatrixMultiply(i.transform, MatrixInvert(groupFrame(groups_[group])));
@@ -78,7 +109,42 @@ void ObjectAnimationSystem::reset(const TownDocument &document) {
         state.heading = {std::cos(state.phase), 0, std::sin(state.phase)};
         moving_.push_back(state);
     }
+    // Door window meshes often have their own pivot. Rotate them about the
+    // leaf's hinge using their original transform, preserving the UV/material.
+    for (size_t n=0;n<document.instances.size();++n) {
+        const auto &i=document.instances[n];
+        const auto &a=document.assets[i.asset];
+        if(!doorGlass(a) || i.animated())continue;
+        const auto center=mul(add(poses_[n].bounds.min,poses_[n].bounds.max),.5f);
+        Door *nearest=nullptr;float best=1.3f;
+        for(auto &door:doors_) {
+            const auto &leaf=document.instances[door.parts.front().index];
+            const bool related=i.id.substr(0,i.id.find(':'))==leaf.id.substr(0,leaf.id.find(':'));
+            const float d=distance(center,door.center)+(related?0.f:.2f);
+            if(d<best){best=d;nearest=&door;}
+        }
+        if(nearest)nearest->parts.push_back({n,i.transform,a.bounds});
+    }
     evaluateGroups();
+}
+size_t ObjectAnimationSystem::openDoorCount() const {
+    return size_t(std::count_if(doors_.begin(),doors_.end(),[](const auto &d){return d.openness>.5f;}));
+}
+void ObjectAnimationSystem::stepDoors(std::optional<Vector3> player) {
+    for(auto &door:doors_) {
+        float d=1000;
+        if(player && std::abs(player->y-.85f-door.bottom)<1.1f)
+            d=std::hypot(player->x-door.center.x,player->z-door.center.z);
+        if(d<2.4f)door.opening=true;
+        if(d>3.1f)door.opening=false;
+        const float target=door.opening?1.f:0.f;
+        door.openness += (target-door.openness)*.18f;
+        if(std::abs(door.openness-target)<.0001f)door.openness=target;
+        for(const auto &part:door.parts) {
+            const auto pose=about(part.rest,door.hinge,MatrixRotateY(door.angle*door.openness),door.hinge);
+            poses_[part.index]={pose,objectBounds(part.local,pose),true};
+        }
+    }
 }
 void ObjectAnimationSystem::update(float dt, const Ground &ground, std::optional<Vector3> player) {
     // The scene clock also drives attached effects, including hubs with no rigid motion.
@@ -89,6 +155,7 @@ void ObjectAnimationSystem::update(float dt, const Ground &ground, std::optional
         accumulator_ -= MotionTick;
         time_ += MotionTick;
         stepPaths(player);
+        stepDoors(player);
         step([&](Vector3 point) {
             const float y = ground ? ground(point) : std::numeric_limits<float>::quiet_NaN();
             for (const auto &solid : solids_)

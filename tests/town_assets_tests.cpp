@@ -210,7 +210,7 @@ int main() {
             check(scene.load(pack), "packaged original scene loads outside repository");
             check(town.load(pack / "town.nav"), "packaged town navigation loads");
             std::filesystem::current_path(original);
-            check(scene.instanceCount() == (frontier ? 2216 : 1517),
+            check(scene.instanceCount() == (frontier ? 2216 : 1518),
                   "all original placements plus the Black Creek fireplace demo are present");
             check(scene.model().meshCount == (frontier ? 346 : 398),
                   "original scene library contains every material variant and submesh");

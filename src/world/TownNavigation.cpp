@@ -1,4 +1,5 @@
 #include "world/TownNavigation.hpp"
+#include "world/TownBuildings.hpp"
 #include "platform/Browser.hpp"
 #include "raymath.h"
 #include "world/HubWorld.hpp"
@@ -61,7 +62,7 @@ void TownNavigation::load(const std::filesystem::path &path) {
     std::ifstream in(path, std::ios::binary);
     char magic[8]{};
     in.read(magic, 8);
-    n.bakeVersion = magic[7] == '2' ? 2 : 1;
+    n.bakeVersion = magic[7] == '3' ? 3 : magic[7] == '2' ? 2 : 1;
     auto read = [&](auto &value) { in.read(reinterpret_cast<char *>(&value), sizeof(value)); };
     read(n.width);
     read(n.depth);
@@ -84,7 +85,7 @@ void TownNavigation::write(const std::filesystem::path &path) const {
     if (heights.size() != size_t(width) * depth || !width || !depth)
         throw std::runtime_error("No navigation to save.");
     std::ofstream out(path, std::ios::binary | std::ios::trunc);
-    out.write(bakeVersion >= 2 ? "DWTNAV02" : "DWTNAV01", 8);
+    out.write(bakeVersion >= 3 ? "DWTNAV03" : bakeVersion >= 2 ? "DWTNAV02" : "DWTNAV01", 8);
     auto write = [&](const auto &v) { out.write(reinterpret_cast<const char *>(&v), sizeof(v)); };
     write(width);
     write(depth);
@@ -120,6 +121,14 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
     if (!width || !depth || width > 4096 || depth > 4096 || cell < .1f ||
         document.meshCount() != model.meshCount)
         throw std::runtime_error("Invalid navigation bounds or mesh library.");
+    // Door leaves are about 1.2 m wide. The outdoor .4 m grid plus erosion
+    // sealed those openings; .2 m resolves a standing player's clearance.
+    if (cell > .20001f) {
+        width = uint32_t(std::ceil(float(width) * cell / .2f));
+        depth = uint32_t(std::ceil(float(depth) * cell / .2f));
+        cell = .2f;
+        if (width > 4096 || depth > 4096) throw std::runtime_error("Refined navigation exceeds grid limits.");
+    }
     const float nan = std::numeric_limits<float>::quiet_NaN();
     const size_t count = size_t(width) * depth;
     std::vector<std::vector<SolidSpan>> columns(count);
@@ -127,6 +136,8 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
         const auto &instance = document.instances[i];
         if (instance.animated()) continue;
         const auto &asset = document.assets[instance.asset];
+        if (buildingDoor(asset) || doorGlass(asset)) continue;
+        const bool hollow = buildingGeometry(asset);
         const auto bounds = document.bounds(i);
         if (asset.unlit || asset.label.find("Cloud") != std::string::npos || bounds.min.y > 14 ||
             bounds.max.x < minX || bounds.min.x > minX + width * cell || bounds.max.z < minZ ||
@@ -164,26 +175,44 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
                         polygon = clip(polygon, 2, zMin, true);
                         polygon = clip(polygon, 2, zMin + cell, false);
                         if (!polygon.count) continue;
-                        auto &span = spans[size_t(z - frontRow) * size_t(row) + size_t(x - left)];
+                        SolidSpan triangle;
+                        auto &span = hollow ? triangle : spans[size_t(z - frontRow) * size_t(row) + size_t(x - left)];
                         for (int n = 0; n < polygon.count; ++n) {
                             span.low = std::min(span.low, polygon.points[size_t(n)].y);
                             span.high = std::max(span.high, polygon.points[size_t(n)].y);
                         }
-                        if (std::abs(denom) < .000001f) continue;
-                        const float px = xMin + .5f * cell, pz = zMin + .5f * cell;
-                        const float a = ((p[1].z - p[2].z) * (px - p[2].x) + (p[2].x - p[1].x) * (pz - p[2].z)) / denom;
-                        const float b = ((p[2].z - p[0].z) * (px - p[2].x) + (p[0].x - p[2].x) * (pz - p[2].z)) / denom;
-                        if (a < -.00001f || b < -.00001f || a + b > 1.00001f) continue;
-                        const float height = a * p[0].y + b * p[1].y + (1 - a - b) * p[2].y;
-                        if (height > span.surface) { span.surface = height; span.flat = flat; }
+                        if (std::abs(denom) >= .000001f) {
+                            const float px = xMin + .5f * cell, pz = zMin + .5f * cell;
+                            const float a = ((p[1].z - p[2].z) * (px - p[2].x) + (p[2].x - p[1].x) * (pz - p[2].z)) / denom;
+                            const float b = ((p[2].z - p[0].z) * (px - p[2].x) + (p[0].x - p[2].x) * (pz - p[2].z)) / denom;
+                            if (a >= -.00001f && b >= -.00001f && a + b <= 1.00001f) {
+                                const float height = a * p[0].y + b * p[1].y + (1 - a - b) * p[2].y;
+                                if (height > span.surface) { span.surface = height; span.flat = flat; }
+                            }
+                        }
+                        if (hollow) columns[size_t(z) * width + size_t(x)].push_back(triangle);
                     }
             }
         }
-        for (int z = frontRow; z <= backRow; ++z)
+        if (!hollow) for (int z = frontRow; z <= backRow; ++z)
             for (int x = left; x <= right; ++x) {
                 const auto &span = spans[size_t(z - frontRow) * size_t(row) + size_t(x - left)];
                 if (std::isfinite(span.high)) columns[size_t(z) * width + size_t(x)].push_back(span);
             }
+    }
+    // Merge touching slabs, preserving empty space between a floor and roof
+    // even when both belong to the same mesh. Ordinary rocks/crates remain solid.
+    for (auto &column : columns) {
+        std::sort(column.begin(),column.end(),[](const auto &a,const auto &b){return a.low < b.low;});
+        size_t kept = 0;
+        for (const auto span : column) {
+            if (kept && span.low <= column[kept-1].high + .015f) {
+                auto &previous = column[kept-1];
+                previous.high = std::max(previous.high,span.high);
+                if (span.surface > previous.surface) { previous.surface=span.surface; previous.flat=span.flat; }
+            } else column[kept++] = span;
+        }
+        column.resize(kept);
     }
     // Keep street surfaces below bridges/signs as well as roof candidates. A
     // solid object crossing the standing body rejects a surface; overhead
@@ -195,21 +224,29 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
             if (!candidate.flat || h <= -5 || h >= 12) continue;
             bool clear = true;
             for (const auto &solid : columns[at])
-                if (solid.high > h + StepHeight && solid.low < h + StandingClearance) { clear = false; break; }
+                if ((solid.high > h + StepHeight && solid.low < h + StandingClearance) ||
+                    (solid.flat && solid.surface > h + .03f && solid.surface <= h + StepHeight)) {
+                    clear = false; break;
+                }
             if (clear && std::none_of(surfaces[at].begin(), surfaces[at].end(),
                 [&](const auto &s) { return std::abs(s.height - h) < .001f; })) surfaces[at].push_back({h});
         }
     }
     columns.clear();
     columns.shrink_to_fit();
-    for (uint32_t z = 1; z + 1 < depth; ++z)
-        for (uint32_t x = 1; x + 1 < width; ++x) {
-            const size_t at = size_t(z) * width + x;
+    const int margin = int(std::ceil(.4f/cell));
+    for (int z = margin; z + margin < int(depth); ++z)
+        for (int x = margin; x + margin < int(width); ++x) {
+            const size_t at = size_t(z) * width + size_t(x);
             for (auto &surface : surfaces[at]) {
                 bool clear = true;
-                for (int dz = -1; dz <= 1; ++dz)
-                    for (int dx = -1; dx <= 1; ++dx) {
-                        const auto &neighbors = surfaces[size_t(int(z) + dz) * width + size_t(int(x) + dx)];
+                for (int dz = -margin; dz <= margin && clear; ++dz)
+                    for (int dx = -margin; dx <= margin && clear; ++dx) {
+                        // Triangle clipping already covers each cell's full area.
+                        // Erode around a circular footprint; a square expansion
+                        // closes valid routes through narrow, angled doorways.
+                        if (float(dx * dx + dz * dz) * cell * cell > .4f * .4f + .00001f) continue;
+                        const auto &neighbors = surfaces[size_t(z + dz) * width + size_t(x + dx)];
                         clear &= std::any_of(neighbors.begin(), neighbors.end(), [&](const auto &n) {
                             return std::abs(surface.height - n.height) < StepHeight;
                         });
@@ -250,7 +287,7 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
         if (std::isfinite(result[at]) && dx * dx + dz * dz < best) { best = dx * dx + dz * dz; board = at; }
     }
     if (board == count) throw std::runtime_error("No connected ground near Missions. Move it onto an open street.");
-    bakeVersion = 2;
+    bakeVersion = 3;
     heights = std::move(result);
     spawn = point(start);
     mission = point(board);

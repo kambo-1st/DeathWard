@@ -1,5 +1,57 @@
 # Milestone 1 verification
 
+## Enterable town buildings
+
+Content version `deathward-m1-36` enables seamless mouse/WASD entry into the
+existing textured building interiors in Black Creek and Western Frontier.
+Proximity opens the original hinged door leaves and their attached glass; retreat
+restores their authored poses. Entering cuts away roofs and upper walls, retaining
+ground-floor furniture and lighting. Leaving restores the exterior and the normal
+player-occlusion fade. Door movement follows the fixed simulation clock and pause.
+
+The shared navigation baker resolves hollow building geometry into separate
+vertical slabs, refines old grids to 0.2-unit cells, checks standing headroom and
+player clearance, and keeps walls, posts and furnishings solid. `DWTNAV03` marks
+the bake; older versions remain readable and upgrade at startup. Browser migration
+corrects only known original building labels and preserves authored scene files.
+Editor copies of the imported building/door assets use the same rules. Original
+meshes, material mappings, textures and imported placements are retained.
+
+One additional original textured stair asset connects Black Creek's raised
+station platform to the street. `scripts/add_station_steps.py` reproduces it; its
+placement is recorded separately in the import manifest. No original placement
+is moved. Navigation still stores one traversable height per X/Z cell; full
+navigation of overlapping upstairs/downstairs floors is not implemented.
+
+Verification commands:
+
+```sh
+ctest --test-dir build --output-on-failure
+./build/deathward_building_tests
+./build/deathward_editor_tests
+./build/deathward_input_tests
+./build/deathward_occlusion_tests
+./build/deathward_town_assets_tests
+node web/building-test.cjs
+node web/test.cjs
+node web/package-test.cjs
+```
+
+The CPU fixture covers combined floor/roof meshes, rotated and narrow entrances,
+low ceilings, solid walls, keyboard entry and mouse exit. The building graphics
+suite exercises round trips through 13 Black Creek buildings and five Frontier
+buildings, automatic door/glass transforms, pause/reset and cutaway restoration.
+Native and WASM builds pass, as do all 18 CPU suites and the native building,
+editor, input, occlusion and town-rendering checks. Both source audits verify
+original placement transforms, material mappings and pixel-identical textures.
+Browser checks use real mouse clicks to enter and leave the saloon, with door
+motion, pause and camera orbit. The full browser gameplay/editor/persistence suite
+passes without JavaScript exceptions, shader failures or WebGL errors. The refreshed
+77.3 MiB upload ZIP passes integrity/hash checks and clean startup at both the
+domain root and `/deathward/`. Logs use `artifacts/building-*`; captures include
+`building-saloon.png`, `building-station.png`, `building-frontier-cabin.png` and
+`web-building-interior.png`.
+
 ## PolygonParticleFX combat and atmosphere
 
 Content version `deathward-m1-35` adds 16 imported/adapted particle layers:

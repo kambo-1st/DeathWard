@@ -345,6 +345,9 @@ def main():
         # Keep it distinct in the editor and avoid attaching a second fire to it.
         if placement["name"] in ("SM_Prop_Campfire_Pot_01", "SM_Veh_Train_01_Alt_Smokestack"):
             label = placement["name"]
+        child = placement["name"].split(" (")[0]
+        if child.startswith(("SM_Bld_", "SM_Building_")):
+            label = child
         labels.setdefault(placement["asset"], label)
     (out / "town.labels").write_text(
         "".join(f"{asset} {labels.get(asset, asset)}\n" for asset in order)

@@ -23,7 +23,7 @@ def rebake_navigation(pack, baker):
         heights = np.frombuffer(raw, dtype="<f4", offset=52)
         assert heights.size == width * depth
         manifest["navigation"].update(
-            algorithm="geometry_headroom_v1", standing_clearance=1.9,
+            algorithm="geometry_interiors_v2", standing_clearance=1.9,
             dimensions=[width, depth], cell=cell, walkable_cells=int(np.isfinite(heights).sum()),
             spawn=markers[:3], mission=markers[3:],
         )

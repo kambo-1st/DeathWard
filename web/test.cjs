@@ -70,7 +70,8 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
         FS.mkdirTree('/persist/frontier');
         FS.writeFile('/persist/town/town.labels',
           FS.readFile('/assets/town/town.labels', {encoding: 'utf8'})
-            .replace('part_0033 SM_Veh_Train_01_Alt_Smokestack', 'part_0033 SM_Veh_Train_01'));
+            .replace('part_0033 SM_Veh_Train_01_Alt_Smokestack', 'part_0033 SM_Veh_Train_01')
+            .replace('part_0047 SM_Building_Single_FrontDoor_01','part_0047 SM_Bld_Single_Front_01'));
         FS.writeFile('/persist/frontier/town.labels',
           FS.readFile('/assets/frontier/town.labels', {encoding: 'utf8'})
             .replace('part_0106 SM_Prop_Campfire_Pot_01', 'part_0106 SM_Prop_Campfire_Small_01'));
@@ -91,7 +92,9 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
       fs.readFileSync(path.join(root, 'assets/town/town.scene'), 'utf8'));
     assert.ok(await page.evaluate(() => FS.readFile('/persist/frontier/town.labels', {encoding: 'utf8'})
       .includes('part_0106 SM_Prop_Campfire_Pot_01')));
-    assert.equal(await page.evaluate(() => FS.readFile('/persist/town/town.nav')[7]), '2'.charCodeAt(0));
+    assert.equal(await page.evaluate(() => FS.readFile('/persist/town/town.nav')[7]), '3'.charCodeAt(0));
+    assert.ok(await page.evaluate(() => FS.readFile('/persist/town/town.labels', {encoding: 'utf8'})
+      .includes('part_0047 SM_Building_Single_FrontDoor_01')));
     console.log('PASS old browser navigation upgrades without replacing the saved town scene');
     const animalFiles = await page.evaluate(() => FS.readdir('/assets/animals'));
     const expectedAnimals = JSON.parse(fs.readFileSync(path.join(root, 'assets/animals/animals.source.json')))
