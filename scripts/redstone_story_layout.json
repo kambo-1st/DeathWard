@@ -1,5 +1,5 @@
 {
-  "revision": 3,
+  "revision": 4,
   "title": "Stranded at Redstone",
   "spawn": [
     0,
@@ -1963,61 +1963,86 @@
       "town-1734266930:1044123881021568",
       "town-2035176873:1044123881021568"
     ],
-    "patches": [
-      {
-        "object": "town-323793347:1206075455707250",
-        "position": [
-          -8,
-          -0.17,
-          -3.4
-        ],
-        "yaw": -8,
-        "scale": [
-          0.23,
-          0.08,
-          0.72
-        ],
-        "pitch": 7
-      },
-      {
-        "object": "town-1260754000:1206075455707250",
-        "position": [
-          -0.8,
-          -0.17,
-          -3.4
-        ],
-        "yaw": 8,
-        "scale": [
-          0.35,
-          0.08,
-          0.8
-        ],
-        "pitch": 7
-      },
-      {
-        "object": "town-1689980837:1206075455707250",
-        "position": [
-          11.7,
-          -0.17,
-          -3.8
-        ],
-        "yaw": 12,
-        "scale": [
-          0.28,
-          0.08,
-          0.8
-        ],
-        "pitch": 7
-      }
-    ],
     "wagon_height": 0.2,
     "wagon_base_y": -0.38,
     "fort_height": 0.14,
-    "fort_base_y": -0.08,
-    "gate_segment": {
-      "object": "town-806957096:1044123881021568",
-      "length": 13,
-      "center_z": -11.4
-    }
+    "fort_base_y": -0.08
+  },
+  "ground_fit": {
+    "fort_floor_bounds": [
+      -13.1,
+      -40.6,
+      21.1,
+      -11.1
+    ],
+    "gate_ramp": {
+      "center_x": -1,
+      "start_z": -7.8,
+      "end_z": -12.2,
+      "half_width": 2.5
+    },
+    "paths": [
+      {
+        "id": "hitching",
+        "object": "town-323793347:1206075455707250",
+        "width": 1.2,
+        "points": [
+          [
+            -8,
+            0.5
+          ],
+          [
+            -8,
+            -4.4
+          ]
+        ],
+        "taper_end": true
+      },
+      {
+        "id": "gate",
+        "object": "town-1260754000:1206075455707250",
+        "width": 1.8,
+        "points": [
+          [
+            -0.8,
+            0.5
+          ],
+          [
+            -1,
+            -5
+          ],
+          [
+            -1,
+            -12
+          ],
+          [
+            -0.8,
+            -18
+          ]
+        ],
+        "taper_end": false
+      },
+      {
+        "id": "repair",
+        "object": "town-1689980837:1206075455707250",
+        "width": 1.2,
+        "points": [
+          [
+            11.7,
+            0.5
+          ],
+          [
+            11.7,
+            -6.8
+          ]
+        ],
+        "taper_end": true
+      }
+    ],
+    "wall_bank": {
+      "width": 2.5,
+      "plateau": 0.8
+    },
+    "replaced_gate_road": "town-806957096:1044123881021568"
   }
 }

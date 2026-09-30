@@ -1,7 +1,8 @@
 """Assemble the fixed Redstone Canyon hub from the two retained Western packs.
 
-No Unity or Blender dependency: mesh attributes, materials and embedded textures
-are copied byte for byte. Run deliberately to regenerate the authored layout;
+No Unity or Blender dependency: source meshes, materials and embedded textures
+are copied byte for byte; fitted ground meshes append to that catalog.
+Run deliberately to regenerate the authored layout;
 normal game/editor builds use its checked-in runtime files.
 """
 import argparse
@@ -17,6 +18,7 @@ import numpy as np
 from bake_navigation import rebake_navigation
 from town_train_motion import train_lines
 from redstone_story import dress_story, character_lines
+from redstone_ground import fit_frontage
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -190,6 +192,7 @@ def assemble(output):
             place(frontier, p, offset, 'fort' if in_fort else 'settler-camp')
 
     story = dress_story(town, frontier, library, placements, motion)
+    fit_frontage(library, placements, story)
     retained = {p['source_object'] for p in placements if p['source_pack'] == 'town'}
     output.mkdir(parents=True, exist_ok=True)
     library.write(output / 'town.glb')

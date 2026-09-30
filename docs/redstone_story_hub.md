@@ -19,6 +19,9 @@ approach. Hitching rails, water and feed occupy the western frontage; cart
 repairs and timber occupy the eastern side. A bench and notice board serve
 people waiting at the gate. Small worn paths and irregular dry scrub connect
 these spaces while leaving the wagon route and court entrances clear.
+The fort floor ends inside the walls, with a narrow graded bank joining the
+canyon. The footpaths follow that ground continuously, rather than cutting
+through the former raised apron.
 
 ## Story commitments
 

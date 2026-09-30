@@ -16,7 +16,6 @@ def footprint(placement, assets):
 
 def shape_roads(placements, assets, roads):
     """Reshape road instances without changing their source geometry or UVs."""
-    patches = {p['object']: p for p in roads['patches']}
     for placement in placements:
         asset = assets[placement['asset']]
         original = np.array(placement['transform']).reshape(4, 4)
@@ -34,21 +33,6 @@ def shape_roads(placements, assets, roads):
             target[1, 3] = roads['fort_base_y'] if branch else roads['wagon_base_y']
             if branch:
                 target[0, 3] = roads['fort_center_x']
-            if placement['object'] == roads['gate_segment']['object']:
-                gate = roads['gate_segment']
-                span = asset['bounds'][1][0] - asset['bounds'][0][0]
-                target[:3, 0] *= gate['length'] / (span * np.linalg.norm(target[:3, 0]))
-                target[2, 3] = gate['center_z']
-        elif placement['object'] in patches:
-            patch = patches[placement['object']]
-            angle = math.radians(patch['yaw'])
-            target = np.array([[math.cos(angle),0,math.sin(angle),0], [0,1,0,0],
-                               [-math.sin(angle),0,math.cos(angle),0], [0,0,0,1.]])
-            pitch = math.radians(patch.get('pitch', 0))
-            target = target @ np.array([[1,0,0,0], [0,math.cos(pitch),-math.sin(pitch),0],
-                                        [0,math.sin(pitch),math.cos(pitch),0], [0,0,0,1.]])
-            target = target @ np.diag([*patch['scale'], 1])
-            target[:3, 3] = patch['position']
         else:
             continue
         transform = target @ np.linalg.inv(original)
