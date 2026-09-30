@@ -2,7 +2,7 @@
 
 A third, fixed hub combining Black Creek's canyon landscape and railway with
 Western Frontier's fortified compound and neighboring covered-wagon settler camp.
-It contains **1047 authored placements, 231 mesh assets and eight original embedded
+It contains **1047 authored placements, 232 mesh assets and eight original embedded
 textures**. It is an authored composition of the two packs, rather than another
 Unity demo import or a seed-generated mission.
 
@@ -64,15 +64,24 @@ Black Creek remains the default starting hub.
 - The paths use the main road's dirt palette with baked vertex colors for subtle
   soil patches, long streaks and faint wear. The tint fades into the main-road
   junction and courtyard connection. The `ground_fit.dirt` settings control
-  its deterministic seed, variation strength and wear; all colors stay opaque,
-  and the geometry and navigation are unchanged by this surface treatment.
+  its deterministic seed, variation strength and wear.
+- The gate track has an asymmetric Y-shaped junction: broad curved turns from
+  both directions merge into the narrow approach. Several faint wheel ruts
+  diverge through the wider worn soil. Irregular feathered edges blend the
+  original road palette into the sand; smoothed normals soften the old road
+  shoulder's lighting seam. `ground_fit.junction` controls the curves, width of
+  the soft margin and sampling. This twelfth derived mesh appends after the
+  earlier catalog, retaining the previous narrow path for existing editor saves.
+  Its vertex alpha uses the existing transparent-material pass; it receives
+  shadows without casting a shadow over the ground beneath it.
 - Fifteen provisional residents use the existing textured cowgirl and bandit
   models. The commander, outlaw, wife, spiritualist and scout have authored
   positions; ambient residents follow checked walking routes. Nearby role labels
   identify witnesses. This milestone has no testimony conversations or ending event.
 - Original source meshes, UVs, material properties and encoded image bytes
   are preserved. The derived floor, bank and path meshes reuse the source
-  materials and textures, with their construction recorded in the manifest. The other
+  textures, with their construction recorded in the manifest. The junction uses
+  a copy of the road material with blending enabled. The other
   two source packs remain unchanged.
 
 F4 opens this map's independent editor pack. Placement, duplicate/delete,
@@ -83,9 +92,9 @@ bundled GLB. Normal builds require no Unity, Blender or source-project access.
 
 The character inspector's **Model** button switches between cowgirl and bandit;
 placement, route editing, undo/redo and saving apply to both. New mesh assets
-append after the previous catalog entries (192, then 212, then 220).
+append after the previous catalog entries (192, then 212, then 220, then 231).
 Browser startup upgrades known untouched shipped scene/navigation pairs through
-`deathward-m1-41`. Other saved layouts retain their
+`deathward-m1-43`. Other saved layouts retain their
 instances and settings while receiving the extra unused catalog entries and
 labels needed to load the expanded GLB.
 

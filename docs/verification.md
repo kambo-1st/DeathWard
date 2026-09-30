@@ -1,5 +1,31 @@
 # Milestone 1 verification
 
+## Redstone organic gate junction
+
+Content version `deathward-m1-44` replaces the narrow rectangular gate-path
+connection with unequal curved wagon approaches, a broad worn turning apron,
+several diverging wheel ruts and feathered soil margins. The surface follows the
+terrain with an 18 mm rendering offset. Averaged normals soften the original
+road shoulder's lighting seam; vertex alpha blends its original atlas colors
+into the road and sand using the existing transparent-material pass.
+
+The pack has 1,047 placements, 232 mesh assets and eight original embedded
+images. Only the gate-path instance changes. All 231 earlier catalog entries,
+mesh streams, material properties and image bytes remain intact for editor
+saves. The navigation bake retains 824,467 connected cells. Startup migration
+upgrades the untouched `m1-42`/`m1-43` scene/nav pair; edited layouts and navigation
+remain intact, with the new unused asset appended to their catalog.
+
+The native build, source/material audit, terrain-contact checks, hub routes and
+resident circulation pass. Native captures include close and overhead junction
+views. The WASM build and focused browser suite pass, covering hub travel,
+mission return, editor save/nav rebuild/reload and older edited catalogs without
+WebGL errors. Migration checks cover fresh, untouched, edited-scene, edited-nav
+and current saves, including repeated startup. Logs and captures use
+`artifacts/redstone-junction-*`.
+The refreshed 85.2 MiB upload ZIP passes file hashes and browser startup at both
+the domain root and `/deathward/`.
+
 ## Redstone placement corrections
 
 Content version `deathward-m1-40` clears the road by moving the kitchen into a

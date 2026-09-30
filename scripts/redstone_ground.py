@@ -134,6 +134,17 @@ def surface_grid(rows, uv):
     return faces
 
 
+def noise(x,y,seed):
+    ix,iy = np.floor(x).astype(np.int64),np.floor(y).astype(np.int64)
+    u,v = x-ix,y-iy
+    u,v = u*u*(3-2*u),v*v*(3-2*v)
+    def value(dx,dy):
+        h = ((ix+dx)*374761393+(iy+dy)*668265263+seed*1442695041) & 0xffffffff
+        h = ((h ^ (h >> 13))*1274126177) & 0xffffffff
+        return ((h ^ (h >> 16)) & 0xffffff) / 0xffffff * 2-1
+    return ((1-u)*value(0,0)+u*value(1,0))*(1-v) + ((1-u)*value(0,1)+u*value(1,1))*v
+
+
 def dirt_colors(faces, path, style):
     """Bake soft, lengthwise soil variation without changing the walkable mesh."""
     points = np.asarray(path['points'], dtype=float)
@@ -151,16 +162,6 @@ def dirt_colors(faces, path, style):
         along[use] = traveled+t[use]*length
         across[use] = (relative @ np.array([-delta[1],delta[0]]) / length)[use]
         traveled += length
-
-    def noise(x,y,seed):
-        ix,iy = np.floor(x).astype(np.int64),np.floor(y).astype(np.int64)
-        u,v = x-ix,y-iy
-        u,v = u*u*(3-2*u),v*v*(3-2*v)
-        def value(dx,dy):
-            h = ((ix+dx)*374761393+(iy+dy)*668265263+seed*1442695041) & 0xffffffff
-            h = ((h ^ (h >> 13))*1274126177) & 0xffffffff
-            return ((h ^ (h >> 16)) & 0xffffff) / 0xffffff * 2-1
-        return ((1-u)*value(0,0)+u*value(1,0))*(1-v) + ((1-u)*value(0,1)+u*value(1,1))*v
 
     seed = style['seed']
     broad = .65*noise(across*2.8,along*.22,seed) + .35*noise(across*1.3,along*.65,seed+1)
@@ -183,6 +184,105 @@ def dirt_colors(faces, path, style):
         blend *= end*end*(3-2*end)
     colors[:,:3] = 1+(colors[:,:3]-1)*blend[:,None]
     return colors
+
+
+def junction_surface(ground, uv, path, settings, style):
+    """One feathered dirt surface, with wagon turns merging into the gate track."""
+    step = settings['sample_step']
+    x0, z0, x1, z1 = settings['bounds']
+    rows = [[[x, ground.height(x,z)+.018, z]
+             for x in np.linspace(x0,x1,math.ceil((x1-x0)/step)+1)]
+            for z in np.linspace(z0,z1,math.ceil((z1-z0)/step)+1)]
+    faces = np.asarray(surface_grid(rows,uv))
+    # Average the ground normals across the old road shoulder. Copying each
+    # source triangle's flat normal would leave a straight lighting seam even
+    # where the new dirt is fully opaque. Geometry still hugs the real terrain.
+    grid = np.asarray(rows)
+    heights = grid[:,:,1]
+    kernel = np.array([1,4,6,4,1])/16
+    for axis in (0,1):
+        heights = np.apply_along_axis(lambda row: np.convolve(np.pad(row,2,mode='edge'),kernel,'valid'),
+                                     axis,heights)
+    dz,dx = np.gradient(heights,grid[1,0,2]-grid[0,0,2],grid[0,1,0]-grid[0,0,0])
+    normals = np.stack([-dx,np.ones_like(dx),-dz],axis=2)
+    normals /= np.linalg.norm(normals,axis=2)[:,:,None]
+    ix = np.rint((faces[:,0]-x0)/(x1-x0)*(len(grid[0])-1)).astype(int)
+    iz = np.rint((faces[:,2]-z0)/(z1-z0)*(len(grid)-1)).astype(int)
+    faces[:,3:6] = normals[iz,ix]
+    points = faces[:,[0,2]]
+    x, z = points.T
+    seed = style['seed']
+
+    def smooth(value):
+        value = np.clip(value,0,1)
+        return value*value*(3-2*value)
+
+    def project(route):
+        nearest = np.full(len(points),np.inf)
+        across, along = np.zeros(len(points)), np.zeros(len(points))
+        traveled = 0
+        for a,b in zip(route,route[1:]):
+            delta = b-a
+            length = np.linalg.norm(delta)
+            relative = points-a
+            t = np.clip(relative @ delta / length**2,0,1)
+            d2 = np.sum((relative-t[:,None]*delta)**2,axis=1)
+            use = d2 < nearest
+            nearest[use] = d2[use]
+            across[use] = (relative @ np.array([-delta[1],delta[0]]) / length)[use]
+            along[use] = traveled+t[use]*length
+            traveled += length
+        return np.sqrt(nearest), across, along, traveled
+
+    def curve(controls):
+        a,b,c,d = np.asarray(controls)
+        t = np.linspace(0,1,81)[:,None]
+        return (1-t)**3*a+3*(1-t)**2*t*b+3*(1-t)*t*t*c+t**3*d
+
+    # Unequal left/right turns give a broad Y-shaped mouth. The same surface
+    # continues to the courtyard, so there is no join between two road pieces.
+    turns = [curve(c) for c in settings['turns']]
+    spine = np.asarray(settings['spine'])
+    rough = .10*noise(x*1.7,z*1.4,seed+10)+.04*noise(x*4,z*4,seed+11)
+    feather = settings['feather']
+    distance, across, along, length = project(spine)
+    half = path['width']/2
+    opacity = smooth((half+feather+rough-distance)/feather)
+    opacity *= smooth(along/.7)*smooth((length-along)/.9)
+    ruts = np.exp(-((np.abs(across)-half*.54)/.13)**2)*opacity
+    for number,route in enumerate(turns):
+        distance, across, along, length = project(route)
+        progress = along/length
+        width = 1.55-(1.55-half)*smooth(progress)
+        end_fade = smooth(along/2.0)
+        opacity = np.maximum(opacity,smooth((width+feather+rough-distance)/feather)*end_fade)
+        # Different wagon lines share the road, then sweep and converge at
+        # slightly different places. Keep ruts soft and broken, not drawn rails.
+        for offset, weight in [(-.25,.5),(.06,1),(.33,.4)]:
+            bend = offset*np.sin(progress*np.pi)
+            wander = .045*noise(along*.7,np.full(len(x),number),seed+12)
+            wheel = np.exp(-((np.abs(across-bend-wander)-half*.54)/.12)**2)
+            broken = .65+.35*noise(along*1.2,across*.7,seed+13)
+            ruts = np.maximum(ruts,wheel*weight*broken*end_fade)
+
+    # Hooves and repeated turns also wear the space between the two wheel
+    # approaches. Fill that rounded apron instead of leaving a pointed island
+    # of the main road's original shoulder between the diverging tracks.
+    center_x, center_z, radius_x, radius_z = settings['turning_apron']
+    apron = np.sqrt(((x-center_x)/radius_x)**2+((z-center_z)/radius_z)**2)
+    opacity = np.maximum(opacity,smooth((1+rough*.3-apron)/.35))
+
+    # The source road atlas is retained. Alpha softly reveals the existing road
+    # and surrounding sand; both remain visible through the worn outer margin.
+    colors = dirt_colors(faces,path,style)
+    junction = smooth((z+7)/3)
+    mottling = .032*noise(x*.65,z*.8,seed+14)+.012*noise(x*3,z*3,seed+15)
+    tone = np.clip(.99+mottling-.075*ruts,0,1)
+    colors[:,:3] = colors[:,:3]*(1-junction[:,None])+tone[:,None]*junction[:,None]
+    colors[:,3] = opacity
+    # Fully invisible triangles are unnecessary for rendering, picking or nav.
+    keep = colors[:,3].reshape(-1,3).max(axis=1) > .015
+    return faces.reshape(-1,3,8)[keep].reshape(-1,8), colors.reshape(-1,3,4)[keep].reshape(-1,4)
 
 
 def fit_frontage(library, placements, story):
@@ -311,3 +411,24 @@ def fit_frontage(library, placements, story):
                                 dict(kind='ground_path', original=old, settings=path,
                                      dirt=settings['dirt']), dirt_colors(faces,path,settings['dirt']))
         place_surface(library, p, asset_name)
+
+    # Preserve all earlier catalog entries (including the narrow gate path) for
+    # edited saves, and append the new fork as a separately placeable asset.
+    path = next(path for path in settings['paths'] if path['id'] == 'gate')
+    p = next(p for p in placements if p['object'] == path['object'])
+    old = deepcopy(p)
+    _, material = triangles(library,p)
+    blended = deepcopy(library.gltf['materials'][material])
+    blended['name'] = 'Redstone feathered dirt'
+    blended['alphaMode'] = 'BLEND'
+    # Raylib routes translucent materials through the existing depth-tested,
+    # no-depth-write pass and excludes them from the sun's shadow casters.
+    blended['pbrMetallicRoughness']['baseColorFactor'][3] = 254/255
+    blend_material = len(library.gltf['materials'])
+    library.gltf['materials'].append(blended)
+    faces, colors = junction_surface(ground,road_uv,path,settings['junction'],settings['dirt'])
+    asset_name = add_surface(library,'redstone_gate_junction',p['asset'],faces,blend_material,
+                            dict(kind='ground_junction',original=old,settings=settings['junction'],
+                                 dirt=settings['dirt']),colors)
+    library.assets[asset_name]['label'] = 'SM_Env_Road_Gate_Junction_Redstone'
+    place_surface(library,p,asset_name)

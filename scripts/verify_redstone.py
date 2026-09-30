@@ -71,7 +71,11 @@ def verify(directory):
         for n in range(asset['mesh_count']):
             before = source[0]['meshes'][old['first_mesh'] + n]['primitives'][0]
             after = composed[0]['meshes'][asset['first_mesh'] + n]['primitives'][0]
-            assert material(source, before['material']) == material(composed, after['material'])
+            expected_material = material(source, before['material'])
+            if asset.get('derived', {}).get('kind') == 'ground_junction':
+                expected_material['alphaMode'] = 'BLEND'
+                expected_material['pbrMetallicRoughness']['baseColorFactor'][3] = 254/255
+            assert expected_material == material(composed, after['material'])
             if 'derived' in asset:
                 data = np.concatenate([accessor(library, after['attributes'][key]) for key in
                                        ('POSITION', 'NORMAL', 'TEXCOORD_0')], axis=1)
@@ -85,12 +89,22 @@ def verify(directory):
                     expected[:,:3] -= derivation['origin']
                     assert np.array_equal(data, expected.astype('<f4'))
                 else:
-                    assert derivation['kind'] in ('wall_bank', 'gate_grade', 'ground_path')
-                    if derivation['kind'] == 'ground_path':
+                    assert derivation['kind'] in ('wall_bank', 'gate_grade', 'ground_path', 'ground_junction')
+                    if derivation['kind'] in ('ground_path', 'ground_junction'):
                         colors = accessor(library, after['attributes']['COLOR_0'])
                         assert colors.shape == (len(data),4) and np.isfinite(colors).all()
-                        assert np.all((colors >= 0) & (colors <= 1)) and np.all(colors[:,3] == 1)
+                        assert np.all((colors >= 0) & (colors <= 1))
                         assert np.ptp(colors[:,0]) > .04, 'Dirt paths retain visible tonal variation'
+                        if derivation['kind'] == 'ground_path':
+                            assert np.all(colors[:,3] == 1)
+                        else:
+                            assert colors[:,3].min() == 0 and colors[:,3].max() == 1
+                            assert np.count_nonzero((colors[:,3] > .1) & (colors[:,3] < .9)) > 100
+                            world = data[:,:3]+derivation['origin']
+                            def width(z):
+                                row = world[(abs(world[:,2]-z) < .1) & (colors[:,3] > .5)]
+                                return np.ptp(row[:,0])
+                            assert width(-2) > 6 and width(-7) < 3, 'Flared mouth narrows toward the gate'
                 continue
             assert before['attributes'].keys() == after['attributes'].keys()
             indices = [(before['attributes'][key], after['attributes'][key]) for key in before['attributes']]
@@ -137,7 +151,7 @@ def verify(directory):
                      if any(s in manifest['assets'][p['asset']]['label'] for s in ('Ground', 'Cliff', 'Road_Straight'))
                      for face in triangles(library, p)[0]])
     for p in manifest['placements']:
-        if manifest['assets'][p['asset']].get('derived', {}).get('kind') != 'ground_path':
+        if manifest['assets'][p['asset']].get('derived', {}).get('kind') not in ('ground_path', 'ground_junction'):
             continue
         faces, _ = triangles(library, p)
         for x,y,z in np.unique(faces[:,:,:3].reshape(-1,3), axis=0):
@@ -170,7 +184,8 @@ def verify(directory):
     assert manifest['train_motion']['paths'][0]['speed'] == 0
     assert manifest['train_motion']['paths'][0]['points'] == original['town']['train_motion']['paths'][0]['points']
     print(f'PASS {len(instances)} authored placements, {len(assets)} source/derived mesh assets, '
-          f'{len(composed[0]["images"])} byte-identical textures/materials, source hashes and stationless railway')
+          f'{len(composed[0]["images"])} byte-identical textures, source/derived materials, '
+          'source hashes and stationless railway')
 
 
 if __name__ == '__main__':

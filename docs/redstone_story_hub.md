@@ -24,6 +24,9 @@ canyon. The footpaths follow that ground continuously, rather than cutting
 through the former raised apron.
 Their dirt palette matches the main road, with muted tonal variation and faint
 worn tracks instead of a single flat color.
+At the gate junction, unequal sweeping wagon turns form a broad Y-shaped worn
+area. Soft margins blend into the main road and sand, with several curved wheel
+ruts converging toward the fort.
 
 ## Story commitments
 

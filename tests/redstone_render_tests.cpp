@@ -72,6 +72,8 @@ int main() {
         capture("artifacts/redstone-layout-prospectors.png", {30,1,-16}, {52,23,-1});
         capture("artifacts/redstone-frontage.png", {2,0,-5}, {27,29,22});
         capture("artifacts/redstone-seams-close.png", {-2,0,-5}, {10,15,7});
+        capture("artifacts/redstone-junction.png", {-2,0,-3}, {8,14,8});
+        capture("artifacts/redstone-junction-above.png", {-1,0,-3}, {-1,22,1});
         if (!scene.effects().loaded() || scene.effects().particleCount() == 0)
             throw std::runtime_error("Imported campfires and locomotive steam must render");
         scene.unload();
