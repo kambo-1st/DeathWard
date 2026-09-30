@@ -786,14 +786,38 @@ Action Renderer::hub(const Game &game) {
     townScene_.draw(town.player.position, true);
     EndMode3D();
     postProcess_.end();
+    if (game.activeHub == HubKind::Redstone) {
+        const TownCharacterState *nearest = nullptr;
+        const char *caption = nullptr;
+        float closest = 8;
+        for (const auto &resident : game.characters.residents()) {
+            const auto &id = resident.definition.id;
+            const char *name = id == "story-commander" ? "COMMANDER" :
+                id == "story-outlaw" ? "OUTLAW" : id == "story-wife" ? "SURVEYOR'S WIFE" :
+                id == "story-spiritualist" ? "SPIRITUALIST" : id == "story-scout" ? "SCOUT" :
+                id == "story-merchant" ? "MERCHANT" : nullptr;
+            const float d = distance(resident.position, town.player.position);
+            if (name && d < closest) { nearest = &resident; caption = name; closest = d; }
+        }
+        if (nearest) {
+            const auto point = GetWorldToScreen(add(nearest->position, {0,2.6f,0}), game.camera);
+            if (point.x > 0 && point.y > 0 && point.x < GetScreenWidth() && point.y < GetScreenHeight()) {
+                const float width = MeasureText(caption, int(12 * sy_)) / sx_ + 20;
+                panel(point.x / sx_ - width / 2, point.y / sy_ - 8, width, 25, Panel);
+                text(caption, point.x / sx_ - width / 2 + 10, point.y / sy_ - 2, 12, Paper);
+            }
+        }
+    }
     const auto at = GetWorldToScreen(add(board, {0, 2.7f, 0}), game.camera);
     if (at.x > 0 && at.x < GetScreenWidth() && at.y > 0 && at.y < GetScreenHeight()) {
         panel(at.x / sx_ - 48, at.y / sy_ - 10, 96, 24, Panel);
-        text("MISSIONS", at.x / sx_ - 36, at.y / sy_ - 4, 13, Gold);
+        text(game.activeHub == HubKind::Redstone ? "BADLANDS" : "MISSIONS",
+             at.x / sx_ - 36, at.y / sy_ - 4, 13, Gold);
     }
     panel(24, 24, 386, 98, Panel);
     text(hubName(game.activeHub), 42, 38, 28, Paper);
-    text("HOME / MONEY " + number(world.money), 43, 73, 12, Gold);
+    text((game.activeHub == HubKind::Redstone ? "RAIL LINE CLOSED / MONEY " : "HOME / MONEY ") +
+             number(world.money), 43, 73, 12, Gold);
     text("PEOPLE " + std::to_string(world.population) + "   PROSPERITY " + std::to_string(world.prosperity) +
              "   LAW " + std::to_string(world.law),
          43, 98, 11, Muted);

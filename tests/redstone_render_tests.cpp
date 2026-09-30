@@ -1,6 +1,7 @@
 #include "render/TownScene.hpp"
 #include "render/PostProcess.hpp"
 #include "render/PlayerModel.hpp"
+#include "render/TownActorModels.hpp"
 #include "world/HubWorld.hpp"
 #include <iostream>
 #include <set>
@@ -30,16 +31,24 @@ int main() {
         scene.applyAnimation(motion);
         PostProcess post;
         PlayerModel player;
+        TownCharacters residents;
+        residents.reset(scene.document(), hub);
+        TownActorModels actors;
+        actors.prepare(residents);
         player.update(hub.player, 0, &hub);
         const auto capture = [&](const char *name, Vector3 focus, Vector3 eye) {
             Camera3D camera{eye, focus, {0,1,0}, 45, CAMERA_PERSPECTIVE};
             scene.setPlayerOcclusion(camera, hub.player.position, false);
-            scene.prepareLighting(camera, [&](Shader depth) { player.draw(hub.player, false, depth); });
+            scene.prepareLighting(camera, [&](Shader depth) {
+                player.draw(hub.player, false, depth);
+                actors.draw(residents, depth);
+            });
             BeginDrawing();
             post.begin({154,186,199,255}, distance(eye,focus));
             BeginMode3D(camera);
             scene.draw(focus);
             player.draw(hub.player, false, scene.actorShader(), scene.shadowTexture());
+            actors.draw(residents, scene.actorShader(), scene.shadowTexture());
             scene.drawEffects(camera);
             scene.drawOccluders();
             scene.draw(focus, true);
@@ -54,10 +63,14 @@ int main() {
         capture("artifacts/redstone-fort.png", {3,1,-26}, {44,48,-80});
         capture("artifacts/redstone-camp.png", {-23,1,-51}, {-3,28,-79});
         capture("artifacts/redstone-train.png", {-3,1,18}, {27,28,-12});
+        capture("artifacts/redstone-story-market.png", {-10,1,1}, {25,43,-41});
+        capture("artifacts/redstone-story-railworks.png", {-41,1,19}, {-12,28,-12});
+        capture("artifacts/redstone-story-wagon.png", {-31,1,-57}, {-7,25,-81});
         if (!scene.effects().loaded() || scene.effects().particleCount() == 0)
             throw std::runtime_error("Imported campfires and locomotive steam must render");
         scene.unload();
         player.unload();
+        actors.unload();
         post.unload();
         CloseWindow();
         std::cout << "PASS Redstone original textures, shadows, campfires, steam and rendered settlement views\n";

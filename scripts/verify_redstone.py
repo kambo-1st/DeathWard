@@ -81,8 +81,11 @@ def verify(directory):
     for p in manifest['placements']:
         old = lookup[p['source_pack']][p['source_object']]
         transform = np.array(old['transform']).reshape(4, 4)
-        if p['source_pack'] == 'frontier':
+        if 'composition_transform' in p:
+            transform = np.array(p['composition_transform']).reshape(4,4) @ transform
+        elif p['source_pack'] == 'frontier':
             transform = offset @ transform
+        transform[1,3] += p.get('editor_offset_y', 0)
         assert np.array_equal(transform.flatten(), p['transform'])
         assert 'TrainStation' not in old['name'] and 'TrainStation' not in old['prefab']
     # Check the actual runtime catalog, including full prefab children and IDs.
@@ -100,6 +103,7 @@ def verify(directory):
     assert len({p['object'] for p in manifest['placements']}) == len(instances)
     assert len(manifest['train_motion']['groups']) == 4
     assert manifest['train_motion']['paths'][0]['dwell'] == 0
+    assert manifest['train_motion']['paths'][0]['speed'] == 0
     assert manifest['train_motion']['paths'][0]['points'] == original['town']['train_motion']['paths'][0]['points']
     print(f'PASS {len(instances)} authored placements, {len(assets)} original mesh assets, '
           f'{len(composed[0]["images"])} byte-identical textures/materials, source hashes and stationless railway')

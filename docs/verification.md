@@ -1,5 +1,44 @@
 # Milestone 1 verification
 
+## Redstone physical story hub
+
+Content version `deathward-m1-39` adds the stranded-train arrival, buried outgoing
+line, railroad worksite, market and cookfires, witness shelters, holding yard,
+evidence table and abandoned covered wagon. Sixty-four authored prefab groups
+expand the settlement to fifteen tents; fifteen provisional residents use the
+existing cowgirl and bandit models. The pack has 994 placements, 212 mesh assets
+and eight original embedded images.
+
+The canyon remains 240 × 240 units, with 825,178 reachable navigation cells.
+Original fort, cliff and rail geometry retain their scale. The approved editor
+revision's three removed dust piles and lowered camp ground are preserved.
+Train speed zero holds the four vehicles with collision and steam active; their
+route and wheel bindings remain available in the editor. Arrival moves beside
+the passenger coaches and the mission board moves to the badlands trail.
+
+The first 192 asset entries remain stable; twenty original source assets append
+to the library. Browser migration recognizes untouched pre-story scene/nav
+pairs. Other editor layouts retain authored content and custom labels while
+their catalog receives the additional unused entries. Character model selection
+supports editor undo, save and reload.
+
+Checks include all 19 core suites; every resident, both fort gates, the railway
+crossing, departure marker and final wagon approach are reachable with the parked
+train's colliders enabled. Ambient residents complete their routes. The native
+editor suite verifies model switching/undo and Redstone saves; model checks cover
+both textured character rigs. Native captures review the normal 160% arrival
+view, fort, camp, market, worksite and abandoned wagon.
+
+The source audit checks mesh/UV/index bytes, textures, material properties and
+authored transforms. An isolated rebuild reproduces all four runtime files and
+the manifest byte for byte. Browser tests cover travel, mission return, parked
+train/steam, residents, editor reload and older edited catalogs. Logs and captures
+use `artifacts/redstone-story-*`; the universal upload package is refreshed.
+
+This is the physical hub milestone. Testimony dialogue, evidence interpretation,
+story expeditions, storm progression and the ending remain in the
+[story brief](redstone_story_hub.md).
+
 ## Redstone Canyon authored hub
 
 Content version `deathward-m1-37` adds a third fixed map combining Black Creek's

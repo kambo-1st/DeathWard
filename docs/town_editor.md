@@ -42,7 +42,7 @@ Settings live in scene format 2 with stable per-object IDs. Format-1 scenes and 
 
 ## Trains
 
-Select any part of a train and open **Animation**. Selection outlines the complete vehicle, and **Focus selection** frames that vehicle. The rail centerline appears in teal. **Travel speed**, **Acceleration** and **Station wait / sec** affect both trains on the shared loop. Black Creek defaults are 3, 0.8 and 6 respectively. Redstone Canyon has one four-vehicle convoy and a station wait of zero. A zero wait makes the train continue through the loop boundary without braking; player obstruction still stops it. **Play/Pause/Reset preview** works as it does for props; saving during preview preserves original placements and route settings.
+Select any part of a train and open **Animation**. Selection outlines the complete vehicle, and **Focus selection** frames that vehicle. The rail centerline appears in teal. **Travel speed**, **Acceleration** and **Station wait / sec** affect all vehicles on the shared loop. Black Creek defaults are 3, 0.8 and 6 respectively. Redstone Canyon has one four-vehicle convoy parked at speed zero beside the sand blockage. Raising its speed reuses the original route; it does not remove the authored sand drifts. A zero station wait lets a moving train continue through the loop boundary without braking; player obstruction still stops it. **Play/Pause/Reset preview** works as it does for props; saving during preview preserves original placements and route settings.
 
 Locomotives, tenders, coaches and freight wagons follow the original rail curves as separate linked vehicles. The sixteen separate locomotive wheels turn with distance traveled. Wheels and linkage geometry already combined into coach/tender/freight body meshes remain rigid. Trains are solid: game movement and mouse paths avoid their current hulls, and trains stop for the player. Pause and missions freeze the hub simulation.
 
@@ -50,7 +50,7 @@ Bound parts cannot be moved, rotated, scaled or duplicated independently. **Dele
 
 ## Characters and walking routes
 
-The **People** tab places the textured, animated cowgirl in any hub. Black Creek includes a four-stop demo near the starting street; select `cowgirl-street-walk` to inspect it.
+The **People** tab places textured, animated residents in any hub. **Add cowgirl** creates the default model; the inspector's **Model: Cowgirl / Model: Bandit** button switches between the two supplied characters. Position, route and other settings are retained, and model changes support undo/redo. Black Creek includes a four-stop cowgirl demo near the starting street. Redstone has fifteen provisional story residents, including stationary witnesses and walking passengers, settlers and railroad workers.
 
 1. Choose **Add cowgirl**, then click walkable ground for her starting point.
 2. Choose **Add route stops** and click each destination in order. Press **Escape** when finished.

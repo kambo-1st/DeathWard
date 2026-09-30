@@ -46,6 +46,16 @@ int main() {
                       "Drawing does not advance character animation");
         }
         model.unload();
+        check(model.load(TownActorModels::modelPath("bandit"), true), "Bandit resident model loads");
+        const auto banditBounds = GetModelBoundingBox(model.model());
+        const float banditScale = 2.05f / (banditBounds.max.y - banditBounds.min.y);
+        for (int n = 0; n < 60; ++n) {
+            check(model.pose(double(n) / 30, float(n % 2)), "Bandit idle/walk blends load");
+            const auto b = model.bounds({}, {0,0,1}, banditScale);
+            check(std::isfinite(b.min.y) && b.max.y > 1.5f && b.max.y < 2.5f && b.min.y > -.2f,
+                  "Bandit residents remain grounded at human scale while animated");
+        }
+        model.unload();
         CloseWindow();
         std::cout << "PASS cowgirl texture, all three blended clips, scale and independent rendered poses\n";
     } catch (const std::exception &e) { std::cerr << e.what() << '\n'; return 1; }

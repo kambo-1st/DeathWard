@@ -79,7 +79,8 @@ void TownDocument::validate() const {
         throw std::runtime_error("A town supports at most 64 characters.");
     std::unordered_set<std::string> characterIds;
     for (const auto &c : characters) {
-        if (!validId(c.id) || !characterIds.insert(c.id).second || c.model != "cowgirl" ||
+        if (!validId(c.id) || !characterIds.insert(c.id).second ||
+            (c.model != "cowgirl" && c.model != "bandit") ||
             !finite(c.position) || length(c.position) > 10000 || !std::isfinite(c.yaw) ||
             !std::isfinite(c.scale) || c.scale < .25f || c.scale > 3 ||
             !std::isfinite(c.speed) || c.speed < 0 || c.speed > 4 ||

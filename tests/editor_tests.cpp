@@ -527,8 +527,9 @@ int main() {
         for (const auto *name : {"town.scene", "town.nav", "town.glb", "town.labels"})
             std::filesystem::copy_file(TownScene::assetDirectory(HubKind::Redstone) / name, redstoneDirectory / name);
         check(editor.open(redstoneDirectory, {add(nav.spawn, {23,30,23}), nav.spawn, {0,1,0}, 45, CAMERA_PERSPECTIVE}), editor.status);
-        check(editor.document().groups.size() == 4 && editor.document().paths.front().dwell == 0,
-              "The canyon editor loads the continuously moving convoy");
+        check(editor.document().groups.size() == 4 && editor.document().paths.front().speed == 0 &&
+                  editor.document().characters.size() == 15,
+              "The canyon editor loads the parked convoy and story residents");
         size_t campfire = 0;
         while (editor.document().assets[editor.document().instances[campfire].asset].label != "SM_Prop_Campfire_Small_01")
             ++campfire;
@@ -537,8 +538,17 @@ int main() {
         editor.translate({.2f,0,0});
         check(editor.save() && editor.reload() &&
                   std::abs(editor.document().instances[campfire].transform.m12 - oldCampfire.m12 - .2f) < .0001f &&
-                  editor.document().groups.size() == 4 && editor.document().paths.front().dwell == 0,
+                  editor.document().groups.size() == 4 && editor.document().paths.front().speed == 0 &&
+                  editor.document().characters.size() == 15 &&
+                  editor.document().characters.front().model == "bandit",
               "Canyon placement edits, navigation and stationless train settings survive save/reload");
+        click({70,155}); // People tab selects the first resident.
+        click({1350,808});
+        check(editor.document().characters.front().model == "cowgirl",
+              "The character inspector switches an existing resident's model");
+        editor.undo();
+        check(editor.document().characters.front().model == "bandit",
+              "Undo restores the resident model without changing its route");
         editor.requestClose();
         check(!editor.active && !editor.quitRequested, "clean editor closes back to town");
         editor.unload();

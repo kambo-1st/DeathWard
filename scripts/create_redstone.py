@@ -16,6 +16,7 @@ import numpy as np
 
 from bake_navigation import rebake_navigation
 from town_train_motion import train_lines
+from redstone_story import dress_story, character_lines
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -188,6 +189,8 @@ def assemble(output):
         for p in group:
             place(frontier, p, offset, 'fort' if in_fort else 'settler-camp')
 
+    story = dress_story(town, frontier, library, placements, motion)
+    retained = {p['source_object'] for p in placements if p['source_pack'] == 'town'}
     output.mkdir(parents=True, exist_ok=True)
     library.write(output / 'town.glb')
     asset_indices = {key: i for i, key in enumerate(library.assets)}
@@ -204,6 +207,7 @@ def assemble(output):
             object_motion['town-' + key] = values
             lines.append('motion town-' + key + ' ' + ' '.join(map(str, values)))
     lines.extend(train_lines(motion['paths'], motion['groups'], motion['members']))
+    lines.extend(character_lines(story['characters']))
     # Retain the canyon sunlight, without orphaned lamps from removed buildings.
     lines.extend(line for line in (town.directory / 'town.scene').read_text().splitlines()
                  if line.startswith('light 1 '))
@@ -212,12 +216,13 @@ def assemble(output):
 
     # A valid initial map supplies bounds/markers to the shared geometry baker.
     width = depth = 1200
-    spawn, mission = [-21, 0, -46], [4, 0, -50]
+    spawn, mission = story['spawn'], story['mission']
     heights = np.zeros(width * depth, dtype='<f4')
     (output / 'town.nav').write_bytes(b'DWTNAV03' + struct.pack('<II9f', width, depth,
         -120, -90, .2, *spawn, *mission) + heights.tobytes())
     manifest = dict(format=1, kind='authored-composition', title='Redstone Canyon',
-                    description='Fixed canyon hub with a running train, Frontier fort and covered-wagon settler camp; no station.',
+                    description='Stranded train, buried railway, fort and expanding settler camp for the Redstone story; no station.',
+                    story=story,
                     source_packs={p.name: {name: sha(p.directory / name)
                         for name in ('town.glb', 'town.manifest.json', 'town.labels')}
                         for p in (town, frontier)},

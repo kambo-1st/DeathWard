@@ -2,7 +2,7 @@
 
 A third, fixed hub combining Black Creek's canyon landscape and railway with
 Western Frontier's fortified compound and neighboring covered-wagon settler camp.
-It contains **923 authored placements, 192 mesh assets and eight original embedded
+It contains **994 authored placements, 212 mesh assets and eight original embedded
 textures**. It is an authored composition of the two packs, rather than another
 Unity demo import or a seed-generated mission.
 
@@ -14,8 +14,8 @@ both Black Creek and Frontier have direct travel buttons. Start here with:
 ./build/deathward --editor --hub redstone
 ```
 
-The browser accepts `?hub=redstone` (also `?hub=canyon`). Arrival is at the caravan;
-the mission board stands near the fort entrance. Mission outcomes return to this
+The browser accepts `?hub=redstone` (also `?hub=canyon`). Arrival is beside the
+stranded passenger train; the mission board stands at the badlands trail. Mission outcomes return to this
 hub. Redstone uses canyon ambience and music, the shared lighting/post processing,
 campfire effects, automatic doors, object transparency and terrain navigation.
 Black Creek remains the default starting hub.
@@ -29,9 +29,20 @@ Black Creek remains the default starting hub.
   gates, cabin, watchtowers, tents, five wagons, their wheels, supplies and fires.
   A shared translation `(31.5, 0, -115)` places them together in the canyon.
 - One original locomotive, coal tender and two passenger carriages run around
-  the original rails. Eight independent wheels and attached steam animate.
-  The route's station wait is zero: it continues through the loop boundary.
-  It still stops for a player in its path, and pauses with gameplay.
+  the original rails when enabled in the editor. The story layout parks the
+  train at speed zero, with steam and all four vehicle colliders active. Eight
+  wheel bindings and the full route remain available for a later departure.
+- The canyon keeps its 240 × 240 navigation footprint, terrain scale, original
+  fort and rail geometry. Three removed dust piles and the lowered camp ground
+  from the approved editor revision are preserved.
+- Sixty-four additional prop groups establish luggage and boarding steps,
+  railroad supplies and sand drifts, a merchant wagon, water and cookfires,
+  witness shelters, settler tents, a holding yard, an evidence table and the
+  covered wagon for the ending. Fifteen tents now spread around the fort.
+- Fifteen provisional residents use the existing textured cowgirl and bandit
+  models. The commander, outlaw, wife, spiritualist and scout have authored
+  positions; ambient residents follow checked walking routes. Nearby role labels
+  identify witnesses. This milestone has no testimony conversations or ending event.
 - The original source meshes, UVs, material properties and encoded image bytes
   are preserved. Only required assets are included in the new GLB. The other
   two source packs remain unchanged.
@@ -42,12 +53,22 @@ the existing editor controls. Scene saves stay in `assets/redstone` on desktop
 and `/persist/redstone` in browser storage. Models and textures load from the
 bundled GLB. Normal builds require no Unity, Blender or source-project access.
 
+The character inspector's **Model** button switches between cowgirl and bandit;
+placement, route editing, undo/redo and saving apply to both. New mesh assets
+append after the original 192 catalog entries. Browser startup upgrades the known
+untouched pre-story scene/navigation pair. Other saved layouts retain their
+instances and settings while receiving the extra unused catalog entries and
+labels needed to load the expanded GLB.
+
 ## Rebuild and verify
 
 `scripts/create_redstone.py` reproduces the authored composition from the retained
 town and Frontier packs. It deliberately replaces generated Redstone files; use
 a separate output directory when preserving editor changes. It requires Python,
 NumPy and the native navigation baker with an OpenGL display.
+`scripts/redstone_story_layout.json` stores the additional prop groups, resident
+positions/routes and arrival/departure markers. `redstone_story.py` assembles
+complete prefab children, preserves the approved edits and parks the train.
 
 ```sh
 cmake --build build --target deathward_bake_navigation --parallel 1

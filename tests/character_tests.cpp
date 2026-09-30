@@ -60,6 +60,16 @@ int main() {
         check(restored.load(path,error) && restored.characters.size()==1 && restored.characters[0].stops.size()==1 &&
               !restored.characters[0].loop, "Character route and settings survive scene round trip");
         std::filesystem::remove(path);
+        document.characters[0].model = "bandit";
+        document.write(path);
+        check(restored.load(path,error) && restored.characters[0].model == "bandit",
+              "Bandit residents retain their model and routes through editor scene saves");
+        std::filesystem::remove(path);
+        document.characters[0].model = "unknown";
+        bool badModel = false;
+        try { document.validate(); } catch (...) { badModel = true; }
+        check(badModel, "Unknown resident models are rejected");
+        document.characters[0].model = "cowgirl";
         document.characters[0].speed=NAN; bool rejected=false;
         try {document.validate();} catch (...) {rejected=true;}
         check(rejected,"Invalid character settings rejected");

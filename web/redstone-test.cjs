@@ -38,7 +38,8 @@ const root = path.resolve(__dirname, '..');
   try {
     await start();
     assert.equal(await page.evaluate(() => Module.motion.vehicles), 4);
-    await wait(() => Module.motion.trainDistance > 1 && Module.particles.steam > 0);
+    await wait(() => Module.particles.steam > 0 && Module.characters.count === 15);
+    assert.equal(await page.evaluate(() => Module.motion.trainDistance), 0);
     const otherScenes = await page.evaluate(() => ['town', 'frontier'].map(hub =>
       FS.readFile('/persist/' + hub + '/town.scene', {encoding: 'utf8'})));
     await key('Escape');
@@ -63,7 +64,7 @@ const root = path.resolve(__dirname, '..');
     await wait(() => Module.state.editorSaved && !Module.saving);
     const saved = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'}));
     const rail = saved.split('\n').find(line => line.startsWith('path redstone-rail ')).split(' ');
-    assert.equal(Number(rail[2]), 3);
+    assert.equal(Number(rail[2]), 0);
     assert(Math.abs(Number(rail[3]) - .8) < .0001);
     assert.equal(Number(rail[4]), 0);
     assert.equal(await page.evaluate(() => FS.readFile('/persist/redstone/town.nav')[7]), '3'.charCodeAt(0));
@@ -73,6 +74,32 @@ const root = path.resolve(__dirname, '..');
     await start();
     assert.equal(await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'})), saved);
     assert.equal(await page.evaluate(() => Module.motion.vehicles), 4);
+    // Simulate an edited save from the smaller, original mesh library. Loading
+    // the new GLB must append catalog entries without replacing authored data.
+    const legacy = await page.evaluate(() => {
+      const file = '/persist/redstone/town.scene';
+      let assets = 0;
+      const text = FS.readFile(file, {encoding:'utf8'}).split('\n').filter(line => {
+        if (line.startsWith('asset ')) return assets++ < 192;
+        if (line.startsWith('instance ')) return Number(line.split(' ')[1]) < 192;
+        return true;
+      }).join('\n');
+      FS.writeFile(file, text);
+      const labelPath = '/persist/redstone/town.labels';
+      const labels = FS.readFile(labelPath, {encoding:'utf8'}).split('\n').slice(0,192);
+      labels[0] = labels[0].split(' ')[0] + ' My_custom_ground';
+      FS.writeFile(labelPath, labels.join('\n') + '\n');
+      Module.flushSaves();
+      return text;
+    });
+    await wait(() => !Module.saving);
+    await start();
+    const upgraded = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding:'utf8'}));
+    assert.equal(upgraded.split('\n').filter(line => line.startsWith('asset ')).length, 212);
+    const authored = text => text.split('\n').filter(line => line && !line.startsWith('asset ')).join('\n');
+    assert.equal(authored(upgraded), authored(legacy));
+    assert((await page.evaluate(() => FS.readFile('/persist/redstone/town.labels', {encoding:'utf8'}))).includes('My_custom_ground'));
+    console.log('PASS old edited maps keep placements, routes and custom labels with the expanded mesh library');
     assert.deepEqual(errors, []);
     console.log('PASS independent canyon editor save, navigation rebuild, reload and clean WebGL rendering');
   } finally {

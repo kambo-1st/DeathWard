@@ -1092,9 +1092,9 @@ void TownEditor::refreshCharacterRoute() {
 void TownEditor::drawCharacterUI() {
     label("CHARACTER", 1132, 108, 13, Accent);
     if (!selectedCharacter_) {
-        label("Choose or add a cowgirl", 1132, 140, 19, Text, 282);
+        label("Choose or add a character", 1132, 140, 19, Text, 282);
         label("Use Add cowgirl in the left panel.", 1132, 192, 14, Muted, 282);
-        label("Then place her and add route stops.", 1132, 224, 14, Muted, 282);
+        label("Then choose a model and route stops.", 1132, 224, 14, Muted, 282);
         return;
     }
     const auto c = document_.characters[*selectedCharacter_];
@@ -1144,7 +1144,12 @@ void TownEditor::drawCharacterUI() {
     if (button("Reset preview", {1281, 714, 137, 31})) resetPreview();
     if (button("Focus", {1132, 753, 137, 31})) focusSelection();
     if (button("Duplicate", {1281, 753, 137, 31})) { duplicate(); return; }
-    if (button("Delete character", {1132, 792, 286, 31})) remove();
+    if (button("Delete", {1132, 792, 137, 31})) { remove(); return; }
+    if (button(c.model == "bandit" ? "Model: Bandit" : "Model: Cowgirl", {1281, 792, 137, 31})) {
+        remember();
+        document_.characters[*selectedCharacter_].model = c.model == "bandit" ? "cowgirl" : "bandit";
+        sync();
+    }
 }
 void TownEditor::drawAnimationUI() {
     const auto motion = selected_ ? document_.instances[*selected_].motion : ObjectMotion{};
@@ -1303,7 +1308,7 @@ void TownEditor::drawUI() {
         const size_t count = characterTab_ ? document_.characters.size() : palette_ ? document_.assets.size() : document_.instances.size();
         for (size_t i = 0; i < count; ++i) {
             if (characterTab_) {
-                if (lower(document_.characters[i].id + " cowgirl").find(query) != std::string::npos) filtered.push_back(i);
+                if (lower(document_.characters[i].id + " " + document_.characters[i].model).find(query) != std::string::npos) filtered.push_back(i);
                 continue;
             }
             const auto asset = palette_ ? i : document_.instances[i].asset;

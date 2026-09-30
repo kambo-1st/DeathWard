@@ -20,9 +20,50 @@ inline void prepareBrowserFiles() {
         for (const hub of['town', 'frontier', 'redstone']) {
             const destination = '/persist/' + hub;
             FS.mkdirTree(destination);
+            if (hub === 'redstone') {
+                const matches = (name, length, expected) => {
+                    const path = destination + '/' + name;
+                    if (!FS.analyzePath(path).exists) return false;
+                    const bytes = FS.readFile(path);
+                    if (bytes.length !== length) return false;
+                    let hash = 2166136261;
+                    for (const byte of bytes) hash = Math.imul(hash ^ byte, 16777619) >>> 0;
+                    return hash === expected;
+                };
+                // Upgrade only the untouched, approved pre-story scene/nav pair.
+                // Edited maps retain their layout and train/character settings.
+                if ((matches('town.scene', 164220, 1179254129) &&
+                     matches('town.nav', 5760052, 342212985)) ||
+                    (matches('town.scene', 239972, 21795443) &&
+                     matches('town.nav', 5760052, 576788661))) {
+                    for (const name of ['town.scene', 'town.nav'])
+                        FS.writeFile(destination + '/' + name, FS.readFile('/assets/redstone/' + name));
+                }
+            }
             for (const name of['town.scene', 'town.nav', 'town.labels']) {
                 if (!FS.analyzePath(destination + '/' + name).exists)
                     FS.writeFile(destination + '/' + name, FS.readFile('/assets/' + hub + '/' + name));
+            }
+            if (hub === 'redstone') {
+                // New props append to the original mesh catalog. Extend old
+                // editor saves without touching any authored instances or paths.
+                const path = destination + '/town.scene';
+                const saved = FS.readFile(path, {encoding:'utf8'});
+                const shipped = FS.readFile('/assets/redstone/town.scene', {encoding:'utf8'});
+                const catalog = text => text.split('\n').filter(line => line.startsWith('asset '));
+                const oldAssets = catalog(saved);
+                const newAssets = catalog(shipped);
+                if (oldAssets.length < newAssets.length && oldAssets.every((line, n) => {
+                    const before = line.trim().split(' ').filter(Boolean);
+                    const after = newAssets[n].trim().split(' ').filter(Boolean);
+                    return before.slice(0,5).join(' ') === after.slice(0,5).join(' ');
+                })) FS.writeFile(path, saved.trimEnd() + '\n' + newAssets.slice(oldAssets.length).join('\n') + '\n');
+                const labelPath = destination + '/town.labels';
+                const labels = FS.readFile(labelPath, {encoding:'utf8'});
+                const known = new Set(labels.split('\n').map(line => line.split(' ')[0]));
+                const added = FS.readFile('/assets/redstone/town.labels', {encoding:'utf8'})
+                    .split('\n').filter(line => line && !known.has(line.split(' ')[0]));
+                if (added.length) FS.writeFile(labelPath, labels.trimEnd() + '\n' + added.join('\n') + '\n');
             }
             // The original Frontier labels gave the cooking pot its parent fire's
             // name. Migrate only that known label; keep authored scenes and names.
