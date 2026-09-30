@@ -47,13 +47,20 @@ void writeAnimalPlacement(std::ostream &out, const AnimalPlacement &a) {
 void validateAnimalPlacements(const std::vector<AnimalPlacement> &animals) {
     if (animals.size() > 64) throw std::runtime_error("A town supports at most 64 animals.");
     std::unordered_set<std::string> ids;
-    for (const auto &a : animals)
+    for (const auto &a : animals) {
         if (size_t(a.kind) >= size_t(AnimalKind::Count) || a.id.empty() || a.id.size() > 128 ||
             a.id.find_first_of(" \t\r\n") != std::string::npos || !ids.insert(a.id).second ||
             !std::isfinite(a.home.x) || !std::isfinite(a.home.z) || std::abs(a.home.x) > 10000 ||
             std::abs(a.home.z) > 10000 || !std::isfinite(a.yaw) || !std::isfinite(a.scale) ||
             a.scale < .25f || a.scale > 3 || !std::isfinite(a.roam) || a.roam < 0 || a.roam > 20)
             throw std::runtime_error("Invalid animal species or settings.");
+        if (!std::isfinite(a.activity.speed) || a.activity.speed < .1f || a.activity.speed > 3 ||
+            a.activity.clips.size() > AnimalActivity::MaxClips)
+            throw std::runtime_error("Animation speed must be 0.1–3, with at most four clips.");
+        for (const auto &clip : a.activity.clips)
+            if (clip.empty() || clip.size() > 63 || clip.find_first_of(" \t\r\n") != std::string::npos)
+                throw std::runtime_error("Invalid animal animation name.");
+    }
 }
 std::vector<AnimalPlacement> loadAnimalPlacements(const std::filesystem::path &file) {
     if (file.empty()) return {};
@@ -118,6 +125,7 @@ bool Animals::reset(const std::vector<AnimalPlacement> &placements, const HubWor
             Animal a;
             a.id = definition.id; a.kind = definition.kind; a.home = definition.home;
             a.scale = definition.scale; a.roam = definition.roam;
+            a.activity = definition.activity;
             a.random = Random(definition.seed);
             a.facing = {std::sin(definition.yaw * DEG2RAD), 0, std::cos(definition.yaw * DEG2RAD)};
             bool found = false;
@@ -134,6 +142,7 @@ bool Animals::reset(const std::vector<AnimalPlacement> &placements, const HubWor
                 }
             if (!found) continue;
             a.phase = a.random.real(0, 8);
+            if (a.activity.stationary) a.phase = 0;
             a.wait = a.random.real(1, 4);
             animals_.push_back(std::move(a));
         }
@@ -158,6 +167,12 @@ void Animals::update(float dt, const HubWorld &ground) {
 void Animals::step(const HubWorld &ground) {
     constexpr float dt = 1.f / 60;
     for (auto &a : animals_) {
+        if (a.activity.stationary) {
+            a.moving = false;
+            a.walking = a.eating = 0;
+            a.phase += dt;
+            continue;
+        }
         bool walked = false;
         if (a.moving) {
             auto delta = sub(a.target, a.position);

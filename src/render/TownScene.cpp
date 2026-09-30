@@ -242,7 +242,7 @@ bool TownScene::load(const std::filesystem::path &directory) {
             const auto &asset = document_.assets[i.asset];
             instances_.push_back({i.asset, i.transform,
                 transformBounds(assets_[i.asset].bounds, i.transform),
-                i.animated() || buildingDoor(asset) || doorGlass(asset)});
+                i.animated() || buildingDoor(asset) || doorGlass(asset), i.castsShadow});
         }
 #ifdef __EMSCRIPTEN__
         const auto modelFile = std::filesystem::path("/assets") / directory.filename() / "town.glb";
@@ -328,7 +328,7 @@ void TownScene::applyDocument(const TownDocument &document) {
         const auto &i = document.instances[n];
         const auto &asset = document.assets[i.asset];
         instances_.push_back({i.asset, i.transform, document.bounds(n),
-            i.animated() || buildingDoor(asset) || doorGlass(asset)});
+            i.animated() || buildingDoor(asset) || doorGlass(asset), i.castsShadow});
     }
 }
 void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
@@ -441,7 +441,7 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
             batch.clear();
         for (const auto &i : instances_) {
             const auto &asset = document_.assets[i.asset];
-            if (i.animated || asset.unlit || asset.label.find("BackgroundCard") != std::string::npos)
+            if (!i.castsShadow || i.animated || asset.unlit || asset.label.find("BackgroundCard") != std::string::npos)
                 continue;
             const auto b = transformBounds(i.bounds, view);
             const float edge = span * .5f + 2;
@@ -483,7 +483,7 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
     rlDisableBackfaceCulling();
     for (const auto &i : instances_) {
         const auto &asset = assets_[i.asset];
-        if (!i.animated || asset.unlit)
+        if (!i.castsShadow || !i.animated || asset.unlit)
             continue;
         const auto b = transformBounds(i.bounds, rlGetMatrixModelview());
         const float edge = span * .5f + 2;

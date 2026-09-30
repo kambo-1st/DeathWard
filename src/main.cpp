@@ -357,15 +357,24 @@ int main(int argc, char **argv) {
             const auto animalIndex = selectedAnimal.value_or(0);
             const auto *previewAnimal = animalIndex < previewAnimals.size() ? &previewAnimals[animalIndex] : nullptr;
             const auto *animalDefinition = selectedAnimal ? &editor.document().animals[*selectedAnimal] : nullptr;
+            std::string animalClips;
+            if (animalDefinition)
+                for (const auto &clip : animalDefinition->activity.clips) {
+                    if (!animalClips.empty()) animalClips += ',';
+                    animalClips += clip;
+                }
             EM_ASM({
                 if (Module.verify) Module.animalEditor = ({count: $0, selected: $1, time: $2,
-                    phase: $3, x: $4, z: $5, species: $6, radius: $7, seed: $8, homeX: $9, homeZ: $10});
+                    phase: $3, x: $4, z: $5, species: $6, radius: $7, seed: $8, homeX: $9, homeZ: $10,
+                    stationary: !!$11, speed: $12, clips: UTF8ToString($13)});
                 }, int(editor.document().animals.size()), selectedAnimal ? int(*selectedAnimal) : -1,
                 editor.animalPreview().time(), previewAnimal ? previewAnimal->phase : 0.,
                 previewAnimal ? previewAnimal->position.x : 0.f, previewAnimal ? previewAnimal->position.z : 0.f,
                 animalDefinition ? int(animalDefinition->kind) : -1, animalDefinition ? animalDefinition->roam : 0.f,
                 animalDefinition ? double(animalDefinition->seed) : 0., animalDefinition ? animalDefinition->home.x : 0.f,
-                animalDefinition ? animalDefinition->home.z : 0.f);
+                animalDefinition ? animalDefinition->home.z : 0.f,
+                animalDefinition && animalDefinition->activity.stationary,
+                animalDefinition ? animalDefinition->activity.speed : 1.f, animalClips.c_str());
             auto buildingPoint = [&](Vector3 p) {
                 const float h=game.town.height(p);p.y=std::isfinite(h)?h:0;
                 return GetWorldToScreen(p,game.camera);

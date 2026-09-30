@@ -221,6 +221,22 @@ int main() {
         check(same(initial,editor.document().instances[chosen].transform) && !editor.dirty(),
               "gizmo checks restore the original placement and clean state");
         editor.focusSelection();
+        click({1260, 499});
+        check(!editor.document().instances[chosen].castsShadow && editor.dirty(),
+              "the inspector switches off the selected object's shadow");
+        editor.duplicate();
+        check(!editor.document().instances.back().castsShadow,
+              "a duplicate inherits its source object's shadow setting");
+        editor.undo();
+        editor.undo();
+        check(editor.document().instances[chosen].castsShadow && !editor.dirty(),
+              "undo restores shadows and the clean state");
+        editor.redo();
+        check(!editor.document().instances[chosen].castsShadow, "redo restores the shadow override");
+        editor.setCastsShadow(false); // A redundant setter must not add an undo step.
+        editor.undo();
+        check(editor.document().instances[chosen].castsShadow && !editor.dirty(),
+              "unchanged shadow settings do not add undo history");
         editor.translate({.375f, 1, -.75f});
         auto moved = editor.document().instances[chosen].transform;
         editor.rotate({0, 1, 0}, 35);
@@ -251,6 +267,7 @@ int main() {
         editor.undo();
         editor.select(chosen);
         editor.translate({2, 0, 0});
+        editor.setCastsShadow(false);
         const auto started = std::chrono::steady_clock::now();
         check(editor.save(), editor.status);
         const auto saveMs =
@@ -262,6 +279,7 @@ int main() {
         check(saved.load(directory / "town.scene", error), error);
         check(same(saved.instances[chosen].transform, editor.document().instances[chosen].transform),
               "saved layout reloads precisely");
+        check(!saved.instances[chosen].castsShadow, "saving and reloading preserve the shadow override");
         HubWorld town;
         check(town.load(directory / "town.nav") && town.moveTo(town.mission),
               "saved navigation still connects arrival and missions");
@@ -485,6 +503,29 @@ int main() {
         check(editor.animalSelection() == 0 && editor.document().animals.size() == 5 &&
               editor.animalPreview().residents().size() == 5, "Animals tab exposes all original residents");
         const auto originalHorse = editor.document().animals[0];
+        click({1340, 215}); // Animation tab.
+        click({1220, 257}); // Explicit stationary mode, independently of roaming radius.
+        check(editor.document().animals[0].activity.stationary, "animals can explicitly stay in place");
+        click({1180, 374}); // Add the first imported clip (Walk), then remove it.
+        check(editor.document().animals[0].activity.clips.size() == 1, "the clip picker adds a real imported animation");
+        click({1400, 437});
+        check(editor.document().animals[0].activity.clips.empty(), "animation sequence entries can be removed");
+        editor.setAnimalActivity({true, .75f, {"Idle", "Eat"}});
+        editor.undo();
+        check(editor.document().animals[0].activity.clips.empty(), "activity edits support undo");
+        editor.redo();
+        check(editor.document().animals[0].activity.clips == std::vector<std::string>{"Idle", "Eat"},
+              "redo restores ordered animation clips");
+        editor.setAnimalActivity({true, 1, {"DoesNotExist"}});
+        check(editor.document().animals[0].activity.speed == .75f, "unknown clips cannot replace valid activity settings");
+        editor.setAnimalSpecies(AnimalKind::Cat);
+        check(editor.document().animals[0].activity.clips == std::vector<std::string>{"Idle"},
+              "changing species retains supported clips and removes unavailable ones");
+        editor.undo();
+        check(editor.document().animals[0].kind == AnimalKind::Horse &&
+                  editor.document().animals[0].activity.clips == std::vector<std::string>{"Idle", "Eat"},
+              "undo restores the species and its complete activity");
+        click({1180, 215}); // Transform tab.
         editor.setAnimalSettings(1, 0, 45, UINT32_MAX);
         editor.setPreviewPlaying(true);
         for (int n = 0; n < 400; ++n) editor.update(Tick);
@@ -515,6 +556,43 @@ int main() {
         click(homePixel);
         check(std::abs(editor.document().animals[5].home.z - 1) < .1f,
               "ground click places the animal on navigation terrain: " + editor.status + " z=" + std::to_string(editor.document().animals[5].home.z));
+        click({1170, 293}); // Move gizmo; X and Z follow the ground.
+        for (Vector3 axis : {Vector3{1, 0, 0}, Vector3{0, 0, 1}}) {
+            const auto home = editor.document().animals[5].home;
+            auto pivot = home; pivot.y = editor.navigation().height(home);
+            const float size = distance(editor.camera.position, editor.camera.target) * .12f;
+            const auto start = GetWorldToScreen(add(pivot, mul(axis, size * 1.12f)), editor.camera);
+            const auto end = GetWorldToScreen(add(pivot, mul(axis, size * 1.12f + .5f)), editor.camera);
+            frame(start); frame(start, true); frame(end, true); frame(end);
+            check(distance(editor.document().animals[5].home, add(home, mul(axis, .5f))) < .001f,
+                  "dragging an animal arrow moves its home along the selected ground axis: " + editor.status);
+            editor.undo();
+            check(distance(editor.document().animals[5].home, home) == 0, "one undo restores the whole animal drag");
+            editor.redo(); editor.undo();
+        }
+        click({1265, 293}); // Rotate around the vertical axis.
+        {
+            const auto before = editor.document().animals[5];
+            auto pivot = before.home; pivot.y = editor.navigation().height(pivot);
+            const float size = distance(editor.camera.position, editor.camera.target) * .12f;
+            auto start = GetWorldToScreen(add(pivot, {0, size, 0}), editor.camera);
+            auto end = start; end.y -= 25;
+            frame(start); frame(start, true); frame(end, true); frame(end);
+            check(editor.document().animals[5].yaw != before.yaw, "animal rotation gizmo changes facing");
+            editor.undo();
+        }
+        click({1360, 293}); // Uniform scale handle.
+        {
+            const auto before = editor.document().animals[5];
+            auto pivot = before.home; pivot.y = editor.navigation().height(pivot);
+            const float size = distance(editor.camera.position, editor.camera.target) * .12f;
+            const auto start = GetWorldToScreen(add(pivot, {0, size, 0}), editor.camera);
+            auto end = start; end.y -= 15;
+            frame(start); frame(start, true); frame(end, true); frame(end);
+            check(editor.document().animals[5].scale > before.scale, "animal scale handle resizes uniformly");
+            editor.undo();
+            check(editor.document().animals[5].scale == before.scale, "scaling an animal undoes in one step");
+        }
         editor.setAnimalSettings(.8f, 2, 110, 8765);
         editor.setAnimalSpecies(AnimalKind::CatBlack);
         check(editor.document().animals[5].kind == AnimalKind::CatBlack, "placed animal species can be changed");
@@ -555,6 +633,8 @@ int main() {
               editor.document().animals[5].kind == AnimalKind::CatBlack &&
               distance(editor.document().animals[5].home, animalHome) < .001f,
               "animal species, authored home, settings and seed survive save/reload");
+        check(editor.document().animals[0].activity == AnimalActivity{true, .75f, {"Idle", "Eat"}},
+              "stationary animation mode, sequence and speed survive editor save/reload");
         while (!editor.document().animals.empty()) { editor.selectAnimal(0); editor.remove(); }
         check(editor.save() && editor.reload() && editor.document().ownsAnimals && editor.document().animals.empty(),
               "deleting all animals survives save/reload without repopulating the town");

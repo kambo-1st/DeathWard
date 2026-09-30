@@ -61,6 +61,95 @@ void lightingCheck(TownScene &scene, Vector3 focus) {
     scene.applyDocument(original);
     check(scene.shadowsReady(), "restoring the scene restores its original sun");
 }
+void objectShadowCheck(TownScene &scene) {
+    const auto original = scene.document();
+    auto doc = original;
+    doc.instances.clear();
+    doc.paths.clear();
+    doc.groups.clear();
+    doc.characters.clear();
+    doc.animals.clear();
+    doc.lights = {{1, {}, {.6f, 1, .5f}, {1, 1, 1}, 1, 0}};
+    size_t barrel = 0;
+    while (barrel < doc.assets.size() && doc.assets[barrel].label.find("Barrel") == std::string::npos)
+        ++barrel;
+    check(barrel < doc.assets.size(), "shadow fixture has a textured barrel");
+    const auto bounds = doc.assets[barrel].bounds;
+    const auto center = mul(add(bounds.min, bounds.max), .5f);
+    const float scale = 3 / (bounds.max.y - bounds.min.y);
+    for (float x : {-4.f, 4.f}) {
+        auto transform = MatrixMultiply(MatrixTranslate(-center.x, -bounds.min.y, -center.z), MatrixScale(scale, scale, scale));
+        transform = MatrixMultiply(transform, MatrixTranslate(x, 0, 0));
+        doc.instances.push_back({barrel, transform, x < 0 ? "left" : "right"});
+    }
+    const Vector3 focus{};
+    const Camera3D camera{{16, 20, 24}, focus, {0, 1, 0}, 45, CAMERA_PERSPECTIVE};
+    auto floor = GenMeshPlane(35, 35, 1, 1);
+    auto receiver = LoadMaterialDefault();
+    const auto defaultShader = receiver.shader;
+    receiver.shader = scene.model().materials[0].shader;
+    receiver.maps[MATERIAL_MAP_METALNESS].texture = scene.shadowTexture();
+    const auto identity = MatrixIdentity();
+    const auto render = [&](bool left, bool right, bool lighting = true) {
+        doc.instances[0].castsShadow = left;
+        doc.instances[1].castsShadow = right;
+        scene.applyDocument(doc); // Must invalidate cached depth without moving the camera.
+        ObjectAnimationSystem animation;
+        animation.reset(doc);
+        scene.applyAnimation(animation);
+        BeginDrawing();
+        ClearBackground(SKYBLUE);
+        scene.prepareLighting(camera);
+        const int enabled = lighting ? 1 : 0;
+        SetShaderValue(receiver.shader, GetShaderLocation(receiver.shader, "shadowEnabled"), &enabled, SHADER_UNIFORM_INT);
+        BeginMode3D(camera);
+        scene.draw(focus);
+        const int zero = 0;
+        for (const auto *name : {"unlit", "autumnFoliage"})
+            SetShaderValue(receiver.shader, GetShaderLocation(receiver.shader, name), &zero, SHADER_UNIFORM_INT);
+        DrawMeshInstanced(floor, receiver, &identity, 1);
+        scene.draw(focus, true);
+        EndMode3D();
+        auto image = LoadImageFromScreen();
+        EndDrawing();
+        return image;
+    };
+    for (bool animated : {false, true}) {
+        for (auto &instance : doc.instances)
+            instance.motion.kind = animated ? ObjectMotionKind::Spin : ObjectMotionKind::None;
+        auto both = render(true, true), single = render(false, true), neither = render(false, false);
+        auto a = LoadImageColors(both), b = LoadImageColors(single), c = LoadImageColors(neither);
+        int removed = 0, retained = 0;
+        const auto brightness = [](Color color) { return int(color.r) + color.g + color.b; };
+        for (int n = 0; n < both.width * both.height; ++n) {
+            removed += brightness(b[n]) - brightness(a[n]) > 30 && std::abs(brightness(b[n]) - brightness(c[n])) < 4;
+            retained += brightness(c[n]) - brightness(b[n]) > 30 && std::abs(brightness(b[n]) - brightness(a[n])) < 4;
+        }
+        std::cout << "Object shadows " << (animated ? "animated" : "static")
+                  << ": removed=" << removed << " retained=" << retained << '\n';
+        std::filesystem::create_directories("artifacts");
+        ExportImage(both, animated ? "artifacts/object-shadows-animated-on.png" : "artifacts/object-shadows-static-on.png");
+        ExportImage(single, animated ? "artifacts/object-shadows-animated-off.png" : "artifacts/object-shadows-static-off.png");
+        check(removed > 100 && retained > 100,
+              "one instance's shadow disappears while another copy of the same mesh keeps its shadow");
+        UnloadImageColors(a); UnloadImageColors(b); UnloadImageColors(c);
+        UnloadImage(both); UnloadImage(single); UnloadImage(neither);
+        both = render(true, true, false);
+        neither = render(false, false, false);
+        a = LoadImageColors(both); b = LoadImageColors(neither);
+        int changed = 0;
+        for (int n = 0; n < both.width * both.height; ++n)
+            changed += a[n].r != b[n].r || a[n].g != b[n].g || a[n].b != b[n].b;
+        check(changed < 20, "shadow settings never hide or change visible object geometry");
+        UnloadImageColors(a); UnloadImageColors(b);
+        UnloadImage(both); UnloadImage(neither);
+    }
+    receiver.shader = defaultShader;
+    receiver.maps[MATERIAL_MAP_METALNESS].texture = {};
+    UnloadMaterial(receiver);
+    UnloadMesh(floor);
+    scene.applyDocument(original);
+}
 void motionCheck(TownScene &scene, HubWorld &ground) {
     ObjectAnimationSystem motion;
     const auto document = scene.document();
@@ -225,6 +314,7 @@ int main() {
             check(textures.size() >= (frontier ? 5 : 12) && glass,
                   "original atlases, signs, sky and transparent materials are loaded");
             lightingCheck(scene, town.spawn);
+            if (!frontier) objectShadowCheck(scene);
             motionCheck(scene, town);
             trainCheck(scene);
             for (Vector3 p : std::array<Vector3, 3>{{town.spawn, town.mission, {-1, 2, -65}}}) {

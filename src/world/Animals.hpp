@@ -11,6 +11,7 @@ struct Animal {
     double phase = 0;
     bool moving = false;
     Random random{1};
+    AnimalActivity activity;
 };
 // Ambient hub residents; their motion uses a private random stream and simulation clock.
 class Animals {

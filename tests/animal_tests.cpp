@@ -141,6 +141,29 @@ int main() {
         check(roundtrip.load(file.path, error) && roundtrip.ownsAnimals &&
               roundtrip.animals.back().kind == document.animals.back().kind &&
               roundtrip.animals.back().seed == UINT32_MAX, "last catalog species and full seed round trip");
+        document.animals[0].activity = {true, .75f, {"Idle", "Eat"}};
+        document.instances[0].castsShadow = false;
+        document.write(file.path);
+        check(roundtrip.load(file.path, error) && roundtrip.animals[0].activity == document.animals[0].activity &&
+                  !roundtrip.instances[0].castsShadow && roundtrip.ownsAnimals,
+              "activity sequences preserve speed, order, animal ownership and shadow overrides");
+        check(a.reset(roundtrip.animals, hub), "stationary activity loads");
+        const auto stationary = a.residents()[0];
+        for (int n = 0; n < 3600; ++n) a.update(Tick, hub);
+        const auto &standing = a.residents()[0];
+        check(distance(standing.position, stationary.position) == 0 && distance(standing.facing, stationary.facing) == 0 &&
+                  !standing.moving && standing.walking == 0 && standing.phase > 59,
+              "stationary animals keep position and facing even with a nonzero roam radius, while their clock advances");
+        for (const auto *entry : {"animal_activity missing 1 1 0", "animal_activity horse 2 1 0",
+                                  "animal_activity missing 1 1 5 Idle Idle Idle Idle Idle"}) {
+            document.write(file.path);
+            { std::ofstream out(file.path, std::ios::app); out << entry << '\n'; }
+            check(!roundtrip.load(file.path, error) && roundtrip.animals[0].activity.stationary,
+                  "invalid activity records cannot replace a valid scene");
+        }
+        document.write(file.path);
+        { std::ofstream out(file.path, std::ios::app); out << "animal_activity " << document.animals[0].id << " 1 1 0\n"; }
+        check(!roundtrip.load(file.path, error), "duplicate activity bindings are rejected");
         document.animals.clear();
         document.write(file.path);
         check(roundtrip.load(file.path, error) && roundtrip.ownsAnimals && roundtrip.animals.empty(),

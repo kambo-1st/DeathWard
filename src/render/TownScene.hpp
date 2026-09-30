@@ -65,6 +65,7 @@ class TownScene {
         Matrix transform;
         Box bounds;
         bool animated = false;
+        bool castsShadow = true;
     };
     Model model_{};
     TownDocument document_;

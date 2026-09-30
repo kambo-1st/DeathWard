@@ -13,12 +13,20 @@ enum class AnimalKind {
 const char *animalName(AnimalKind kind);
 float animalRadius(AnimalKind kind);
 float animalWalkSpeed(AnimalKind kind);
+struct AnimalActivity {
+    static constexpr size_t MaxClips = 4;
+    bool stationary = false;
+    float speed = 1;
+    std::vector<std::string> clips; // Empty uses idle; otherwise repeat this sequence in order.
+    bool operator==(const AnimalActivity &) const = default;
+};
 struct AnimalPlacement {
     std::string id;
     AnimalKind kind = AnimalKind::Horse;
     Vector3 home{};
     float yaw = 0, scale = 1, roam = 3;
     uint32_t seed = 1;
+    AnimalActivity activity;
 };
 AnimalPlacement readAnimalPlacement(std::istream &in);
 void writeAnimalPlacement(std::ostream &out, const AnimalPlacement &animal);

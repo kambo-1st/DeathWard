@@ -49,6 +49,7 @@ class TownEditor {
     bool reload();
     void focusSelection();
     void setMotion(ObjectMotion motion);
+    void setCastsShadow(bool enabled);
     void setPreviewPlaying(bool playing);
     void resetPreview();
     void detachVehicle();
@@ -57,6 +58,7 @@ class TownEditor {
     void selectAnimal(std::optional<size_t> index);
     void placeAnimal(Vector3 position);
     void setAnimalSettings(float scale, float roam, float yaw, uint32_t seed);
+    void setAnimalActivity(AnimalActivity activity);
     void setAnimalSpecies(AnimalKind kind);
     std::optional<size_t> animalSelection() const { return selectedAnimal_; }
     const Animals &animalPreview() const { return animals_; }
@@ -100,6 +102,10 @@ class TownEditor {
     std::optional<size_t> selectedAnimal_;
     AnimalKind animalKind_ = AnimalKind::Horse;
     bool animalTab_ = false, animalPalette_ = false, animalPlacement_ = false, replacingAnimal_ = false;
+    bool animalAnimationTab_ = false;
+    size_t animalClipChoice_ = 0;
+    AnimalPlacement dragAnimal_;
+    Vector3 dragAnimalPivot_{};
     HubWorld characterGround_;
     std::optional<size_t> selectedCharacter_, selectedStop_;
     bool characterTab_ = false;
@@ -131,6 +137,9 @@ class TownEditor {
     bool overUI(Vector2 pixel) const;
     Vector2 uiMouse() const;
     Vector3 pivot() const;
+    int pickGizmo(Vector2 pixel) const;
+    bool gizmoAxisEnabled(int axis) const;
+    void dragAnimal(Vector2 mouse, bool shift);
     Vector3 values(int group) const;
     void commitField();
     void closeNow();

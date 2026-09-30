@@ -115,13 +115,32 @@ void serialization(const std::filesystem::path &directory) {
     read.write(directory / "test.scene");
     check(read.load(directory / "test.scene", error) && read.instances[0].id == "second",
           "reordering does not move animation to another object");
+    check(read.instances[0].castsShadow && read.instances[1].castsShadow,
+          "older scenes keep shadows enabled by default");
+    read.instances[1].castsShadow = false;
+    for (bool ownsAnimals : {false, true}) {
+        read.ownsAnimals = ownsAnimals;
+        read.write(directory / "shadows.scene");
+        check(read.load(directory / "shadows.scene", error) && read.ownsAnimals == ownsAnimals &&
+                  read.instances[0].castsShadow && !read.instances[1].castsShadow &&
+                  read.instances[1].id == "first",
+              "shadow overrides preserve per-instance identity and legacy animal ownership");
+    }
+    for (const auto *invalid : {"shadow missing 0", "shadow first 0", "shadow second 2"}) {
+        std::filesystem::copy_file(directory / "shadows.scene", directory / "invalid-shadow.scene",
+                                   std::filesystem::copy_options::overwrite_existing);
+        { std::ofstream out(directory / "invalid-shadow.scene", std::ios::app); out << invalid << '\n'; }
+        check(!read.load(directory / "invalid-shadow.scene", error) && !read.instances[1].castsShadow,
+              "missing, duplicate and invalid shadow settings cannot replace a valid document");
+    }
     {
         std::ofstream legacy(directory / "legacy.scene");
         legacy << "DEATHWARD_TOWN 1\nasset ball 0 1 0 -.3 -.3 -.3 .3 .3 .3\ninstance 0 1 0 0 0 0 1 0 .3 0 0 "
                   "1 0 0 0 0 1\n";
     }
     check(read.load(directory / "legacy.scene", error) &&
-              read.instances[0].motion.kind == ObjectMotionKind::None && !read.instances[0].id.empty(),
+              read.instances[0].motion.kind == ObjectMotionKind::None && !read.instances[0].id.empty() &&
+              read.instances[0].castsShadow,
           "legacy scenes stay static and acquire stable IDs");
     {
         std::ofstream bad(directory / "bad.scene");

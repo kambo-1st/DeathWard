@@ -60,6 +60,7 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view,
         selectedStop_.reset();
         characterTab_ = false;
         animalTab_ = animalPalette_ = animalPlacement_ = replacingAnimal_ = false;
+        animalAnimationTab_ = false;
         selectedAnimal_.reset();
         characterPlacement_ = 0;
         paletteSelection_.reset();
@@ -134,7 +135,12 @@ void TownEditor::select(std::optional<size_t> index) {
     field_ = dragAxis_ = -1;
 }
 Vector3 TownEditor::pivot() const {
-    if (selectedAnimal_) return document_.animals[*selectedAnimal_].home;
+    if (selectedAnimal_) {
+        auto home = document_.animals[*selectedAnimal_].home;
+        const float height = characterGround_.height(home);
+        home.y = std::isfinite(height) ? height : 0;
+        return home;
+    }
     if (selectedCharacter_) return document_.characters[*selectedCharacter_].position;
     if (!selected_)
         return camera.target;
@@ -158,6 +164,11 @@ void TownEditor::translate(Vector3 delta) {
     sync();
 }
 void TownEditor::rotate(Vector3 axis, float degrees) {
+    if (selectedAnimal_) {
+        const auto a = document_.animals[*selectedAnimal_];
+        if (std::abs(axis.y) > .001f) setAnimalSettings(a.scale, a.roam, a.yaw + degrees * axis.y, a.seed);
+        return;
+    }
     if (selectedGroup())
         return;
     if (!selected_ || std::abs(degrees) < .000001f)
@@ -172,6 +183,11 @@ void TownEditor::rotate(Vector3 axis, float degrees) {
     sync();
 }
 void TownEditor::scale(Vector3 factors) {
+    if (selectedAnimal_) {
+        const auto a = document_.animals[*selectedAnimal_];
+        setAnimalSettings(a.scale * factors.x, a.roam, a.yaw, a.seed);
+        return;
+    }
     if (selectedGroup())
         return;
     if (!selected_ || std::min({factors.x, factors.y, factors.z}) < .01f ||
@@ -304,9 +320,14 @@ bool TownEditor::save() {
                 previous = stop;
             }
         }
-        for (const auto &a : document_.animals)
+        for (const auto &a : document_.animals) {
             if (!validAnimalHome(a, ground))
                 throw std::runtime_error(a.id + ": home overlaps scenery, the mission board or another animal.");
+            const auto &clips = animalModels_.clipNames(a.kind);
+            for (const auto &clip : a.activity.clips)
+                if (std::find(clips.begin(), clips.end(), clip) == clips.end())
+                    throw std::runtime_error(a.id + ": animation is unavailable: " + clip);
+        }
         saveTownProject(directory_, document_, nav);
         navigation_ = std::move(nav);
         navigationRevision_ = revision_;
@@ -414,6 +435,13 @@ void TownEditor::setPathSettings(float speed, float acceleration, float dwell) {
         }
     sync();
 }
+void TownEditor::setCastsShadow(bool enabled) {
+    if (!selected_ || document_.instances[*selected_].castsShadow == enabled)
+        return;
+    remember();
+    document_.instances[*selected_].castsShadow = enabled;
+    sync();
+}
 void TownEditor::setMotion(ObjectMotion motion) {
     if (selectedGroup())
         return;
@@ -477,6 +505,27 @@ Vector3 TownEditor::values(int group) const {
     Quaternion q;
     MatrixDecompose(m, &p, &q, &s);
     return group == 1 ? mul(QuaternionToEuler(q), RAD2DEG) : s;
+}
+bool TownEditor::gizmoAxisEnabled(int axis) const {
+    return !selectedAnimal_ || (tool_ == Tool::Move ? axis != 1 : tool_ == Tool::Rotate ? axis == 1 : true);
+}
+int TownEditor::pickGizmo(Vector2 pixel) const {
+    if ((!selected_ && !selectedAnimal_) || selectedGroup() || preview_.time() != 0) return -1;
+    const auto p = pivot();
+    const auto a = GetWorldToScreen(p, camera);
+    const float size = radius_ * .12f;
+    float best = 10;
+    int result = -1;
+    for (int axis = 0; axis < 3; ++axis) {
+        if (!gizmoAxisEnabled(axis)) continue;
+        const auto b = GetWorldToScreen(add(p, mul(Axes[size_t(axis)], size)), camera);
+        if (Vector2Distance(a, b) < 16) continue;
+        const float tip = tool_ == Tool::Move ? 1.15f : 1.05f;
+        const auto end = GetWorldToScreen(add(p, mul(Axes[size_t(axis)], size * tip)), camera);
+        const float d = segmentDistance(pixel, Vector2Lerp(a, b, .2f), end);
+        if (d < best) { best = d; result = axis; }
+    }
+    return result;
 }
 void TownEditor::commitField() {
     if (field_ >= 40 && selectedAnimal_) { commitAnimalField(); return; }
@@ -682,6 +731,10 @@ void TownEditor::update(float dt) {
             tool_ = Tool::Rotate;
         if (IsKeyPressed(KEY_THREE))
             tool_ = Tool::Scale;
+        if (selectedAnimal_ && (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_TWO) || IsKeyPressed(KEY_THREE))) {
+            resetPreview();
+            animalPlacement_ = false;
+        }
         if (IsKeyPressed(KEY_F4))
             requestClose();
         if (IsKeyPressed(KEY_ESCAPE)) {
@@ -744,6 +797,11 @@ void TownEditor::update(float dt) {
             if (animalPlacement_ && selectedAnimal_) {
                 if (const auto point = characterGroundPoint(mouse)) placeAnimal(*point);
                 else status = "Choose clear walkable ground for the animal.";
+            } else if ((dragAxis_ = pickGizmo(mouse)) >= 0 && selectedAnimal_) {
+                dragAnimal_ = document_.animals[*selectedAnimal_];
+                dragAnimalPivot_ = pivot();
+                dragMouse_ = mouse;
+                dragChanged_ = false;
             } else {
                 const auto ray = GetScreenToWorldRay(mouse, camera);
                 float nearest = 1e9f;
@@ -801,25 +859,7 @@ void TownEditor::update(float dt) {
                 }
             }
         } else {
-            dragAxis_ = -1;
-            if (selected_ && !selectedGroup() && preview_.time() == 0) {
-                const auto a = GetWorldToScreen(pivot(), camera);
-                const float size = radius_ * .12f;
-                float best = 10;
-                for (int i = 0; i < 3; ++i) {
-                    const auto b = GetWorldToScreen(add(pivot(), mul(Axes[size_t(i)], size)), camera);
-                    if (Vector2Distance(a, b) < 16)
-                        continue;
-                    // Include the visible arrowhead/cap, not just its shaft.
-                    const float tip = tool_ == Tool::Move ? 1.15f : 1.05f;
-                    const auto end = GetWorldToScreen(add(pivot(), mul(Axes[size_t(i)], size * tip)), camera);
-                    const float d = segmentDistance(mouse, Vector2Lerp(a, b, .2f), end);
-                    if (d < best) {
-                        best = d;
-                        dragAxis_ = i;
-                    }
-                }
-            }
+            dragAxis_ = pickGizmo(mouse);
             if (dragAxis_ >= 0) {
                 dragTransform_ = document_.instances[*selected_].transform;
                 dragMouse_ = mouse;
@@ -828,6 +868,8 @@ void TownEditor::update(float dt) {
                 select(scene_.pick(GetScreenToWorldRay(mouse, camera)));
         }
     }
+    if (dragAxis_ >= 0 && selectedAnimal_ && IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        dragAnimal(mouse, shift);
     if (dragAxis_ >= 0 && selected_ && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
         const auto p = Vector3{dragTransform_.m12, dragTransform_.m13, dragTransform_.m14};
         const float size = radius_ * .12f;
@@ -928,7 +970,7 @@ void TownEditor::draw() {
     if (selected_ || selectedCharacter_ || selectedAnimal_) {
         const auto b = selectionBounds();
         DrawBoundingBox({b.min, b.max}, Teal);
-        if (selected_ && !selectedGroup() && preview_.time() == 0) {
+        if ((selected_ || selectedAnimal_) && !selectedGroup() && preview_.time() == 0 && !animalPlacement_) {
             const auto p = pivot();
             const float size = radius_ * .12f;
             // Raylib queues primitive draws. Flush on both sides of the depth
@@ -936,6 +978,7 @@ void TownEditor::draw() {
             rlDrawRenderBatchActive();
             rlDisableDepthTest();
             for (size_t i = 0; i < 3; ++i) {
+                if (!gizmoAxisEnabled(int(i))) continue;
                 const auto end = add(p, mul(Axes[i], size));
                 DrawCylinderEx(p, end, size * .012f, size * .012f, 8, AxisColors[i]);
                 if (tool_ == Tool::Move)
@@ -970,7 +1013,7 @@ void TownEditor::draw() {
         home.y = characterGround_.height(home) + .12f;
         const auto color = validAnimalHome(a, characterGround_) ? Teal : RED;
         DrawSphere(home, .15f, Accent);
-        const float radius = std::max(.05f, a.roam);
+        const float radius = std::max(.05f, a.activity.stationary ? 0.f : a.roam);
         for (int n = 0; n < 64; ++n) {
             const float t = float(n) * 2 * Pi / 64, next = float(n + 1) * 2 * Pi / 64;
             auto p = add(home, {radius * std::cos(t), 0, radius * std::sin(t)});
@@ -1405,6 +1448,12 @@ void TownEditor::drawUI() {
                     selectText_ = true;
                 }
             }
+        }
+        const bool castsShadow = selected_ && document_.instances[*selected_].castsShadow;
+        if (button(castsShadow ? "Cast shadows: ON" : "Cast shadows: OFF",
+                   {1132, 484, 286, 31}, castsShadow, selected_.has_value())) {
+            commitField();
+            setCastsShadow(!castsShadow);
         }
         if (button(snap_ ? "Snap: ON" : "Snap: OFF", {1132, 523, 137, 31}, snap_))
             snap_ = !snap_;

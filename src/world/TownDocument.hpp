@@ -26,6 +26,7 @@ struct TownInstance {
     ObjectMotion motion{};
     std::string group{};
     float wheelRadius = 0; // Local X axle; rotation is driven by path distance.
+    bool castsShadow = true;
     bool animated() const {
         return motion.kind != ObjectMotionKind::None || !group.empty();
     }

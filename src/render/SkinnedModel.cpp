@@ -118,6 +118,7 @@ bool SkinnedModel::load(const std::filesystem::path &path, bool alternateIdle) {
         valid = a.model.bones[n].parent >= -1 && a.model.bones[n].parent < n;
     std::vector<std::string> names;
     for (int n = 0; n < count; ++n) {
+        a.names.emplace_back(clips[n].name);
         std::string name = clips[n].name;
         for (auto &c : name)
             c = char(std::tolower(static_cast<unsigned char>(c)));
@@ -138,17 +139,16 @@ bool SkinnedModel::load(const std::filesystem::path &path, bool alternateIdle) {
         move = idle;
     int third = choose({"eat", "eating", "eatingloop"});
     if (third < 0 && alternateIdle) third = choose({"idle2"});
-    const std::array<int, 3> selected{idle, move, third};
+    a.slots = {idle, move, third};
+    a.clips.resize(size_t(count));
     for (int n = 0; valid && n < count; ++n) {
         const auto &clip = clips[n];
         valid = clip.frameCount >= 2 && IsModelAnimationValid(a.model, clip);
         if (!valid)
             continue;
         correctAnimationScale(clips[n]);
-        for (size_t slot = 0; slot < selected.size(); ++slot) {
-            if (selected[slot] != n)
-                continue;
-            auto &output = a.clips[slot];
+        {
+            auto &output = a.clips[size_t(n)];
             output.duration = (clip.frameCount - 1) * SampleSeconds;
             for (int frame = 0; frame < clip.frameCount; ++frame) {
                 auto &pose = output.frames.emplace_back();
@@ -164,7 +164,8 @@ bool SkinnedModel::load(const std::filesystem::path &path, bool alternateIdle) {
     }
     if (clips)
         UnloadModelAnimations(clips, count);
-    valid = valid && !a.clips[0].frames.empty() && !a.clips[1].frames.empty();
+    valid = valid && idle >= 0 && move >= 0 && size_t(idle) < a.clips.size() && size_t(move) < a.clips.size() &&
+            !a.clips[size_t(idle)].frames.empty() && !a.clips[size_t(move)].frames.empty();
     for (int n = 0; valid && n < a.model.meshCount; ++n) {
         const auto &mesh = a.model.meshes[n];
         valid = mesh.boneIds && mesh.boneWeights && mesh.animVertices;
@@ -194,10 +195,49 @@ bool SkinnedModel::pose(double phase, float walking, float alternate) {
     auto &a = asset_;
     if (!loaded()) return false;
     for (size_t bone = 0; bone < a.world.size(); ++bone) {
-        auto rest = sample(a.clips[0], phase, bone);
-        if (!a.clips[2].frames.empty())
-            rest = mix(rest, sample(a.clips[2], phase, bone), alternate);
-        const auto value = mix(rest, sample(a.clips[1], phase, bone), walking);
+        auto rest = sample(a.clips[size_t(a.slots[0])], phase, bone);
+        if (a.slots[2] >= 0)
+            rest = mix(rest, sample(a.clips[size_t(a.slots[2])], phase, bone), alternate);
+        const auto value = mix(rest, sample(a.clips[size_t(a.slots[1])], phase, bone), walking);
+        const int parent = a.model.bones[bone].parent;
+        a.world[bone] = parent < 0 ? value : combine(a.world[size_t(parent)], value);
+    }
+    applyPose(a.model, a.world.data());
+    return true;
+}
+float SkinnedModel::clipDuration(const std::string &name) const {
+    const auto at = std::find(asset_.names.begin(), asset_.names.end(), name);
+    return at == asset_.names.end() ? 0 : asset_.clips[size_t(at - asset_.names.begin())].duration;
+}
+bool SkinnedModel::poseSequence(double seconds, const std::vector<std::string> &names, float speed) {
+    auto &a = asset_;
+    if (!loaded()) return false;
+    if (names.empty()) return pose(seconds * speed, 0);
+    std::vector<size_t> sequence;
+    double total = 0;
+    for (const auto &name : names) {
+        const auto at = std::find(a.names.begin(), a.names.end(), name);
+        if (at == a.names.end()) return pose(seconds * speed, 0);
+        const auto index = size_t(at - a.names.begin());
+        sequence.push_back(index);
+        total += a.clips[index].duration;
+    }
+    double time = std::fmod(std::max(0., seconds * speed), total);
+    size_t current = 0;
+    while (current + 1 < sequence.size() && time >= a.clips[sequence[current]].duration) {
+        time -= a.clips[sequence[current]].duration;
+        ++current;
+    }
+    const auto &clip = a.clips[sequence[current]];
+    const auto &previous = a.clips[sequence[(current + sequence.size() - 1) % sequence.size()]];
+    const float transition = std::min(.15f, clip.duration * .2f);
+    const float blend = std::clamp(float(time) / transition, 0.f, 1.f);
+    for (size_t bone = 0; bone < a.world.size(); ++bone) {
+        auto value = sample(clip, time, bone);
+        // Once the transition ends, sample this clip exactly. Slerping by 1
+        // can still retain the preceding quaternion when their dot rounds to 1.
+        if (blend < 1 && seconds * speed >= transition)
+            value = mix(previous.frames.back()[bone], value, blend * blend * (3 - 2 * blend));
         const int parent = a.model.bones[bone].parent;
         a.world[bone] = parent < 0 ? value : combine(a.world[size_t(parent)], value);
     }

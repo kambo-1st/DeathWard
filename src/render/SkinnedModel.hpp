@@ -2,7 +2,7 @@
 #include "core/Types.hpp"
 #include <filesystem>
 namespace dw {
-// One shared mesh and three locomotion/idle slots, sampled independently by each resident.
+// Shared mesh and source clips, sampled independently by each resident.
 class SkinnedModel {
   public:
     ~SkinnedModel();
@@ -14,6 +14,9 @@ class SkinnedModel {
     bool loaded() const { return asset_.model.meshCount > 0; }
     bool attempted() const { return asset_.attempted; }
     bool pose(double phase, float walking, float alternate = 0);
+    bool poseSequence(double seconds, const std::vector<std::string> &clips, float speed = 1);
+    const std::vector<std::string> &clipNames() const { return asset_.names; }
+    float clipDuration(const std::string &name) const;
     void draw(Vector3 position, Vector3 facing, float scale, Shader shader = {}, Texture2D shadowMap = {});
     Box bounds(Vector3 position, Vector3 facing, float scale) const;
     const Model &model() const { return asset_.model; }
@@ -24,7 +27,9 @@ class SkinnedModel {
     struct Clip { std::vector<std::vector<Transform>> frames; float duration = 0; };
     struct Asset {
         Model model{};
-        std::array<Clip, 3> clips;
+        std::vector<Clip> clips;
+        std::vector<std::string> names;
+        std::array<int, 3> slots{-1, -1, -1};
         std::vector<Transform> world;
         float floor = 0;
         bool attempted = false;

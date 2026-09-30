@@ -163,11 +163,19 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
         std::ifstream in(path);
         std::string token;
         int version = 0;
-        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 5))
+        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 7))
             throw std::runtime_error("Missing or unsupported town scene.");
         TownDocument candidate;
         candidate.ownsAnimals = version >= 5;
+        if (version >= 6) {
+            int ownsAnimals = 0;
+            if (!(in >> ownsAnimals) || (ownsAnimals != 0 && ownsAnimals != 1))
+                throw std::runtime_error("Invalid animal population ownership.");
+            candidate.ownsAnimals = ownsAnimals != 0;
+        }
         std::vector<std::pair<std::string, ObjectMotion>> motions;
+        std::vector<std::pair<std::string, bool>> shadows;
+        std::vector<std::pair<std::string, AnimalActivity>> activities;
         struct Binding {
             std::string id, group;
             float radius;
@@ -189,6 +197,12 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                     i.id = "legacy-" + std::to_string(candidate.instances.size() + 1);
                 readMatrix(in, i.transform);
                 candidate.instances.push_back(i);
+            } else if (token == "shadow" && version >= 6) {
+                std::string id;
+                int enabled = 0;
+                if (!(in >> id >> enabled) || (enabled != 0 && enabled != 1))
+                    throw std::runtime_error("Invalid object shadow setting.");
+                shadows.emplace_back(id, enabled != 0);
             } else if (token == "motion" && version >= 2) {
                 std::string id;
                 ObjectMotion m;
@@ -227,6 +241,18 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                 c.stops.resize(count);
                 for (auto &p : c.stops) in >> p.x >> p.y >> p.z;
                 candidate.characters.push_back(std::move(c));
+            } else if (token == "animal_activity" && version >= 7) {
+                std::string id;
+                AnimalActivity activity;
+                int stationary = 0;
+                size_t count = 0;
+                if (!(in >> id >> stationary >> activity.speed >> count) ||
+                    (stationary != 0 && stationary != 1) || count > AnimalActivity::MaxClips)
+                    throw std::runtime_error("Invalid animal activity.");
+                activity.stationary = stationary != 0;
+                activity.clips.resize(count);
+                for (auto &clip : activity.clips) in >> clip;
+                activities.emplace_back(id, std::move(activity));
             } else if (token == "animal" && version >= 5) {
                 candidate.animals.push_back(readAnimalPlacement(in));
             } else if (token == "light") {
@@ -238,11 +264,28 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
             } else
                 throw std::runtime_error("Unknown town scene entry: " + token);
             if (!in || candidate.assets.size() > 100000 || candidate.instances.size() > 100000 ||
-                motions.size() > 100000 || bindings.size() > 100000 || candidate.paths.size() > 256 ||
-                candidate.groups.size() > 4096 || candidate.characters.size() > 64 || candidate.animals.size() > 64)
+                motions.size() > 100000 || shadows.size() > 100000 || bindings.size() > 100000 || candidate.paths.size() > 256 ||
+                candidate.groups.size() > 4096 || candidate.characters.size() > 64 || candidate.animals.size() > 64 ||
+                activities.size() > 64)
                 throw std::runtime_error("Truncated or oversized town scene.");
         }
         std::unordered_set<std::string> bound;
+        for (const auto &[id, activity] : activities) {
+            auto at = std::find_if(candidate.animals.begin(), candidate.animals.end(),
+                                  [&](const auto &a) { return a.id == id; });
+            if (at == candidate.animals.end() || !bound.insert(id).second)
+                throw std::runtime_error("Activity references a missing or duplicate animal.");
+            at->activity = activity;
+        }
+        bound.clear();
+        for (const auto &[id, enabled] : shadows) {
+            auto at = std::find_if(candidate.instances.begin(), candidate.instances.end(),
+                                  [&](const auto &i) { return i.id == id; });
+            if (at == candidate.instances.end() || !bound.insert(id).second)
+                throw std::runtime_error("Shadow setting references a missing or duplicate object.");
+            at->castsShadow = enabled;
+        }
+        bound.clear();
         for (const auto &[id, motion] : motions) {
             auto at = std::find_if(candidate.instances.begin(), candidate.instances.end(),
                                    [&](const auto &i) { return i.id == id; });
@@ -287,8 +330,16 @@ void TownDocument::write(const std::filesystem::path &path) const {
     for (auto &i : identified.instances)
         if (i.id.empty())
             i.id = identified.nextInstanceId();
-    out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN "
-        << (ownsAnimals || !animals.empty() ? 5 : !characters.empty() ? 4 : paths.empty() ? 2 : 3) << '\n';
+    const bool customShadows = std::any_of(instances.begin(), instances.end(),
+                                         [](const auto &i) { return !i.castsShadow; });
+    const bool animalActivities = std::any_of(animals.begin(), animals.end(),
+                                            [](const auto &a) { return a.activity != AnimalActivity{}; });
+    out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN ";
+    if (customShadows || animalActivities)
+        out << (animalActivities ? "7 " : "6 ") << int(ownsAnimals || !animals.empty());
+    else
+        out << (ownsAnimals || !animals.empty() ? 5 : !characters.empty() ? 4 : paths.empty() ? 2 : 3);
+    out << '\n';
     for (const auto &a : assets)
         out << "asset " << a.name << ' ' << a.first << ' ' << a.count << ' ' << a.unlit << ' '
             << a.bounds.min.x << ' ' << a.bounds.min.y << ' ' << a.bounds.min.z << ' ' << a.bounds.max.x
@@ -297,6 +348,8 @@ void TownDocument::write(const std::filesystem::path &path) const {
         out << "instance " << i.asset << ' ' << i.id << ' ';
         writeMatrix(out, i.transform);
         out << '\n';
+        if (!i.castsShadow)
+            out << "shadow " << i.id << " 0\n";
         if (!i.group.empty())
             out << "member " << i.id << ' ' << i.group << ' ' << i.wheelRadius << '\n';
         const auto &m = i.motion;
@@ -321,7 +374,15 @@ void TownDocument::write(const std::filesystem::path &path) const {
         for (const auto &p : c.stops) out << ' ' << p.x << ' ' << p.y << ' ' << p.z;
         out << '\n';
     }
-    for (const auto &a : animals) writeAnimalPlacement(out, a);
+    for (const auto &a : animals) {
+        writeAnimalPlacement(out, a);
+        if (a.activity != AnimalActivity{}) {
+            out << "animal_activity " << a.id << ' ' << int(a.activity.stationary) << ' '
+                << a.activity.speed << ' ' << a.activity.clips.size();
+            for (const auto &clip : a.activity.clips) out << ' ' << clip;
+            out << '\n';
+        }
+    }
     for (const auto &l : lights)
         out << "light " << l.type << ' ' << l.position.x << ' ' << l.position.y << ' ' << l.position.z << ' '
             << l.direction.x << ' ' << l.direction.y << ' ' << l.direction.z << ' ' << l.color.x << ' '

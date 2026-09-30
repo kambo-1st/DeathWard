@@ -60,9 +60,16 @@ const root = path.resolve(__dirname, '..');
     await key('Enter'); await wait(() => Module.state.screen === 0 && Module.state.hub === 2);
     console.log('PASS canyon mission-board approach, launch, retreat and return to Redstone');
     await key('F4'); await wait(() => Module.state.editor);
+    const editorClick = (x, y) => click(x * 1280 / 1440, y * 800 / 900);
+    await editorClick(110, 270); // First placed object, in the original catalog.
+    await editorClick(1260, 499); // Cast shadows: OFF.
+    await page.screenshot({path: path.join(root, 'artifacts/web-object-shadows-off.png')});
     await page.keyboard.down('Control'); await key('s'); await page.keyboard.up('Control');
     await wait(() => Module.state.editorSaved && !Module.saving);
-    const saved = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'}));
+    let saved = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'}));
+    const shadowId = saved.split('\n').find(line => line.startsWith('instance ')).split(' ')[2];
+    assert(saved.startsWith('DEATHWARD_TOWN 6 1\n'));
+    assert.deepEqual(saved.split('\n').filter(line => line.startsWith('shadow ')), [`shadow ${shadowId} 0`]);
     const rail = saved.split('\n').find(line => line.startsWith('path redstone-rail ')).split(' ');
     assert.equal(Number(rail[2]), 0);
     assert(Math.abs(Number(rail[3]) - .8) < .0001);
@@ -74,6 +81,15 @@ const root = path.resolve(__dirname, '..');
     await start();
     assert.equal(await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'})), saved);
     assert.equal(await page.evaluate(() => Module.motion.vehicles), 4);
+    await key('F4'); await wait(() => Module.state.editor);
+    await editorClick(110, 270);
+    await editorClick(1260, 499); // Reloaded OFF setting switches back ON.
+    await page.keyboard.down('Control'); await key('s'); await page.keyboard.up('Control');
+    await wait(() => Module.state.editorSaved && !Module.saving);
+    saved = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'}));
+    assert(!saved.split('\n').some(line => line.startsWith('shadow ')));
+    await key('Escape'); await wait(() => !Module.state.editor);
+    console.log('PASS per-object shadow toggle, browser save/reload and restoring shadows');
     // Simulate an edited save from the smaller, original mesh library. Loading
     // the new GLB must append catalog entries without replacing authored data.
     const legacy = await page.evaluate(() => {

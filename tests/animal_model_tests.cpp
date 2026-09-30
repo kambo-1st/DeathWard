@@ -159,6 +159,34 @@ int main(int argc, char **argv) {
                 difference += std::abs(rest[n] - model.meshes[0].animVertices[n]);
             check(difference > span * .001f, "Locomotion clip visibly deforms the skinned mesh");
             render("walk");
+            check(models.clipNames(species).size() == size_t(clipCount), "the picker exposes every imported animation");
+            if (species == AnimalKind::Horse) {
+                animal.activity = {true, 1, {"Eat"}};
+                animal.phase = .65;
+                check(models.pose(animal), "a selected stationary eating clip plays");
+                const auto eat = models.bonePose(species);
+                render("stationary-eat");
+                animal.phase = .65 + models.clipDuration(species, "Eat");
+                models.pose(animal);
+                for (size_t n = 0; n < eat.size(); ++n)
+                    check(distance(eat[n].translation, models.bonePose(species)[n].translation) < .0001f,
+                          "a selected clip loops at its original duration");
+                animal.activity.clips = {"Idle", "Eat"};
+                animal.phase = models.clipDuration(species, "Idle") + .65;
+                models.pose(animal);
+                for (size_t n = 0; n < eat.size(); ++n)
+                    check(distance(eat[n].translation, models.bonePose(species)[n].translation) < .0001f,
+                          "an ordered sequence reaches the chosen eating clip");
+                animal.activity.speed = .5f;
+                animal.phase *= 2;
+                models.pose(animal);
+                for (size_t n = 0; n < eat.size(); ++n)
+                    check(distance(eat[n].translation, models.bonePose(species)[n].translation) < .0001f,
+                          "playback speed scales the entire sequence");
+                animal.activity = {};
+                animal.phase = .43;
+                models.pose(animal);
+            }
             check(invalidClip.empty(), invalidClip.c_str());
             const auto walking = models.bonePose(species);
             models.pose(animal);

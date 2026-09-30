@@ -1,5 +1,41 @@
 # Milestone 1 verification
 
+## Animal movement and stationary activities
+
+Content version `deathward-m1-49` adds ground movement, yaw and uniform scale
+gizmos to the animal inspector, with exact X/Z fields and one undo per drag.
+The Animation tab exposes the imported clip library, a four-entry repeating
+sequence, speed and a stationary mode that keeps position and facing fixed.
+Scene format 7 persists activity records alongside the existing shadow overrides.
+The horse offers Eat but no dedicated Drink animation; its placement beside a
+trough is authored manually.
+
+`deathward_animal_tests` covers stationary simulation, persistence, shadow
+compatibility and invalid activity records. Editor tests exercise the actual
+gizmos, clip controls, undo and save/reload. Model tests compare the selected Eat
+pose, its loop period, sequence order and playback speed against identical poses,
+and retain the normal roaming and character animation checks. The focused browser
+check is `node web/animal-editor-test.cjs`. Logs and screenshots use
+`artifacts/animal-activity-*`.
+
+## Per-object shadow casting
+
+Content version `deathward-m1-48` adds **Cast shadows: ON / OFF** below Scale in
+the editor's Transform inspector. Each scenery instance has its own setting,
+including animated props and bound train parts. Both static and animated shadow
+passes honor it; ordinary rendering, shadow receiving and collision are unchanged.
+Scene format 6 stores overrides by stable object ID and explicitly retains animal
+population ownership. Older scenes default to casting shadows.
+
+`deathward_object_animation_tests` checks serialization, legacy defaults and
+rejected invalid references. `deathward_editor_tests` exercises the actual button,
+duplicate inheritance, undo/redo and saving. `deathward_town_assets_tests` compares
+two copies of a textured barrel: switching one off removes only its shadow in
+both static and animated passes, with unchanged visible geometry. The browser
+Redstone suite switches the setting off, saves, reloads and switches it on again.
+Logs use `artifacts/object-shadows-*`; comparison images include
+`artifacts/object-shadows-static-on.png` and `object-shadows-static-off.png`.
+
 ## Badlands terrain gap
 
 Content version `deathward-m1-47` adds one original textured sand-ground tile

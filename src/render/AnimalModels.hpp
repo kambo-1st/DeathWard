@@ -20,6 +20,8 @@ class AnimalModels {
     Box bounds(const Animal &animal);
     const Model &model(AnimalKind kind) const;
     const std::vector<Transform> &bonePose(AnimalKind kind) const;
+    const std::vector<std::string> &clipNames(AnimalKind kind);
+    float clipDuration(AnimalKind kind, const std::string &name);
     static std::filesystem::path assetDirectory();
     // Apply a world-space skeletal pose, including nonuniform bone scales.
     static void applyPose(Model model, const Transform *pose) { SkinnedModel::applyPose(model, pose); }
