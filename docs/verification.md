@@ -1,5 +1,60 @@
 # Milestone 1 verification
 
+## Redstone road/rock edge correction
+
+Content version `deathward-m1-46` projects road wear onto soil independently of
+cliffs and derives its lighting normals from the soil faces. Dirt fades before
+steep ground, rock contact and height steps between terrain tiles; it no longer
+exposes the serrated edge of grid triangles omitted at those discontinuities.
+Ground overlays draw after opaque soil and before actors and faded scenery.
+Shadow depth comparisons are interpolated across texels to soften stepped
+shadow edges, retaining the same coverage, bias and 3x3 filter footprint.
+
+The pack retains 1,029 instances, 236 assets, eight original textures and
+824,662 connected navigation cells. Road pivots remain fixed for editor saves;
+browser migration refreshes derived road bounds without moving authored objects
+and upgrades the untouched `m1-45` scene/nav pair. The source audit checks soil
+contact, shared road boundaries, upward normals beside the reported eastern
+rocks, and fading before terrain steps. Logs and the close-up capture use
+`artifacts/redstone-rocks-*`.
+
+The source audit, native hub-route/render/lighting/occlusion suites and WASM
+build pass. The browser suite passes hub travel, mission return, editor save/nav
+rebuild/reload and legacy edited layouts without WebGL errors. Migration checks
+cover fresh, untouched, edited-scene, edited-nav and current saves, including
+idempotent startup. An isolated composition reproduces all five pack files byte
+for byte. The road-bounds migration preserves editor float formatting when the
+bounds already match, keeping save/reload stable. The refreshed 86.3 MiB upload
+ZIP passes integrity checks and browser startup at `/` and `/deathward/`,
+including the packaged Redstone scene.
+
+## Redstone continuous dirt roads
+
+Content version `deathward-m1-45` extends the gate junction's feathered soil,
+rounded turns and broken wheel ruts to the main wagon road, fort lane and
+hitching/repair paths. The main road follows the imported road centers with
+rounded bends and retains its 3.8 m width. Twenty-two overlapping road placements
+become four adjoining terrain-following regions. The approved fork's wear field
+is composited into the same surface, avoiding stacked transparent layers.
+
+The pack has 1,029 placements, 236 mesh assets, eight unchanged texture images
+and 824,662 connected navigation cells. All 232 previous catalog entries and
+their mesh/material/image bytes remain intact; non-road scenery and resident
+placements are unchanged. Fine local subdivision fits terrain creases, and
+buried road ends fade before reaching canyon rock tops.
+
+The source audit checks that old road strips are absent from the active layout,
+region boundaries share colors/normals/heights, and vertices and triangle
+interiors stay close to the terrain. Native hub routes, resident circulation,
+train behavior, textures, lighting and captures pass. An isolated rebuild
+reproduces the GLB, scene, navigation and labels byte for byte. Migration checks
+upgrade the untouched `m1-44` scene/nav pair, preserve edited maps/nav and remain
+stable on repeated startup. Logs and captures use `artifacts/redstone-roads-*`.
+The WASM build and focused browser suite pass hub travel, mission return,
+editor save/navigation rebuild/reload and legacy edited catalogs without WebGL
+errors. The refreshed 86.9 MiB upload ZIP passes integrity checks and browser
+startup at the domain root and `/deathward/`.
+
 ## Redstone organic gate junction
 
 Content version `deathward-m1-44` replaces the narrow rectangular gate-path

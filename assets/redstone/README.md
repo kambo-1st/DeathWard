@@ -2,7 +2,7 @@
 
 A third, fixed hub combining Black Creek's canyon landscape and railway with
 Western Frontier's fortified compound and neighboring covered-wagon settler camp.
-It contains **1047 authored placements, 232 mesh assets and eight original embedded
+It contains **1029 authored placements, 236 mesh assets and eight original embedded
 textures**. It is an authored composition of the two packs, rather than another
 Unity demo import or a seed-generated mission.
 
@@ -46,9 +46,9 @@ Black Creek remains the default starting hub.
   clutter out of circulation routes. The sand obstruction is retained.
   The existing cot and porch seating are reused; two old stockpiles crossed by
   the holding fence are removed explicitly in the layout's source-group list.
-- The main road is a 3.8 m wagon track, reduced from approximately 10.9 m. Its
-  crown is lowered with its width so the shoulders remain walkable. A narrower
-  fort approach and three continuous worn paths replace the broad junction.
+- The main road is a 3.8 m wagon track, reduced from approximately 10.9 m.
+  Continuous terrain-following dirt replaces the overlapping raised road strips.
+  A narrower fort lane and worn side paths serve the gate, hitching and repair courts.
   The fort frontage has hitching rails, a trough and feed, waiting bench and
   notices, a repair cart, work table, spare wheel and timber. Broken clusters of
   dry grass, stones and bushes mark the shoulders without enclosing the courts.
@@ -72,8 +72,23 @@ Black Creek remains the default starting hub.
   shoulder's lighting seam. `ground_fit.junction` controls the curves, width of
   the soft margin and sampling. This twelfth derived mesh appends after the
   earlier catalog, retaining the previous narrow path for existing editor saves.
-  Its vertex alpha uses the existing transparent-material pass; it receives
-  shadows without casting a shadow over the ground beneath it.
+  Its vertex alpha blends after opaque soil and before actors and faded
+  foreground scenery; it receives shadows without casting a shadow over the
+  ground beneath it.
+- The same treatment continues along the full main road, through the fort and
+  onto both side paths. Main-road bends follow the imported road centers with
+  rounded joins. Broken, wandering wheel ruts and muted soil patches sit between
+  irregular feathered margins; the footpaths have narrower central wear and
+  small curved forks. The approved gate junction blends into this single dirt
+  surface without overlapping transparent layers. Four adjoining regions keep
+  the network editable, with matching colors, heights and normals at their seams.
+  Their meshes append after the earlier 232 assets; 22 old road placements become
+  four terrain-conforming regions. All scenery, props and resident routes retain
+  their placement. Local mesh refinement follows ground creases; height fading
+  prevents the old buried road ends from painting the tops of canyon rocks.
+  Roads sample soil independently of cliffs, use soil face normals, and fade
+  before rocks, steep banks and height steps between terrain tiles. This keeps
+  grid-cut triangles and dark cliff normals out of the visible dirt edge.
 - Fifteen provisional residents use the existing textured cowgirl and bandit
   models. The commander, outlaw, wife, spiritualist and scout have authored
   positions; ambient residents follow checked walking routes. Nearby role labels
@@ -92,11 +107,12 @@ bundled GLB. Normal builds require no Unity, Blender or source-project access.
 
 The character inspector's **Model** button switches between cowgirl and bandit;
 placement, route editing, undo/redo and saving apply to both. New mesh assets
-append after the previous catalog entries (192, then 212, then 220, then 231).
+append after the previous catalog entries (192, then 212, then 220, then 231, then 232).
 Browser startup upgrades known untouched shipped scene/navigation pairs through
-`deathward-m1-43`. Other saved layouts retain their
+`deathward-m1-45`. Other saved layouts retain their
 instances and settings while receiving the extra unused catalog entries and
-labels needed to load the expanded GLB.
+labels needed to load the expanded GLB. Road mesh pivots stay fixed; startup
+refreshes only their derived catalog bounds when loading an edited layout.
 
 ## Rebuild and verify
 
@@ -109,6 +125,9 @@ positions/routes, road dimensions/patch transforms and arrival/departure markers
 complete prefab children, preserves the approved edits and parks the train.
 `redstone_ground.py` clips the fort floors, grades their perimeter and entrance,
 grounds the frontage props, and builds the terrain-following paths.
+`redstone_roads.py` composes the continuous road surface from the imported road
+centers and the layout's `road_surface` routes, margin and sampling settings.
+The earlier mesh catalog remains available for existing editor saves.
 
 ```sh
 cmake --build build --target deathward_bake_navigation --parallel 1

@@ -105,11 +105,19 @@ float visibility(vec3 n, vec3 sun) {
     float cosine = max(dot(n,sun),.15);
     float slope = sqrt(max(0.,1.-cosine*cosine))/cosine;
     float bias = shadowTexelDepth*(1.25+2.*slope);
-    vec2 texel = 1. / vec2(textureSize(shadowMap,0));
+    vec2 size = vec2(textureSize(shadowMap,0));
+    vec2 at = p.xy*size-.5;
+    vec2 fraction = fract(at);
+    vec2 center = floor(at)+.5;
     float lit = 0.;
-    for (int x=-1; x<=1; ++x)
-        for (int y=-1; y<=1; ++y)
-            lit += p.z-bias <= texture(shadowMap,p.xy+vec2(x,y)*texel).r ? 1. : 0.;
+    // Interpolate comparisons across texels; interpolating depth itself would
+    // invent occluders. Keep the 3x3 PCF footprint without its stepped edges.
+    for (int x=-1; x<=2; ++x)
+        for (int y=-1; y<=2; ++y) {
+            float wx = x == -1 ? 1.-fraction.x : (x == 2 ? fraction.x : 1.);
+            float wy = y == -1 ? 1.-fraction.y : (y == 2 ? fraction.y : 1.);
+            lit += wx*wy*(p.z-bias <= texture(shadowMap,(center+vec2(x,y))/size).r ? 1. : 0.);
+        }
     float edge = max(abs(p.x*2.-1.),abs(p.y*2.-1.));
     return mix(lit/9.,1.,smoothstep(.86,1.,edge));
 }
@@ -228,7 +236,8 @@ bool TownScene::load(const std::filesystem::path &directory) {
             throw std::runtime_error(error);
         const int meshCount = document_.meshCount();
         for (const auto &a : document_.assets)
-            assets_.push_back({a.first, a.count, a.unlit, a.bounds});
+            assets_.push_back({a.first, a.count, a.unlit, a.bounds,
+                a.name.starts_with("redstone_road_") || a.name == "redstone_gate_junction"});
         for (const auto &i : document_.instances) {
             const auto &asset = document_.assets[i.asset];
             instances_.push_back({i.asset, i.transform,
@@ -579,7 +588,7 @@ void TownScene::draw(Vector3 focus, bool glass) {
                 continue;
             const auto &asset = assets_[i.asset];
             bool blocked = false;
-            if (!asset.unlit && !belongsToInterior(i) && occlusion_.intersects(b))
+            if (!asset.unlit && !asset.groundOverlay && !belongsToInterior(i) && occlusion_.intersects(b))
                 for (int mesh = asset.first; mesh < asset.first + asset.count && !blocked; ++mesh)
                     blocked = occlusion_.blocks(model_.meshes[mesh], i.transform);
             if (blocked)
@@ -591,31 +600,36 @@ void TownScene::draw(Vector3 focus, bool glass) {
     rlDrawRenderBatchActive();
     rlDisableBackfaceCulling(); // Original scene includes negative scales and two-sided materials.
     occlusion_.bind(shader_, false);
-    if (glass)
-        rlDisableDepthMask();
-    for (size_t i = 0; i < assets_.size(); ++i) {
-        const auto &a = assets_[i];
-        const auto &batch = batches_[i];
-        if (batch.empty())
-            continue;
-        SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &a.unlit, SHADER_UNIFORM_INT);
-        bindInterior(buildingGeometry(document_.assets[i]));
-        const auto &label = document_.assets[i].label;
-        const int foliage =
-            label.find("Tree_Clump") != std::string::npos || label.find("Birch") != std::string::npos;
-        SetShaderValue(shader_, GetShaderLocation(shader_, "autumnFoliage"), &foliage, SHADER_UNIFORM_INT);
-        for (int j = a.first; j < a.first + a.count; ++j) {
-            auto &m = model_.materials[model_.meshMaterial[j]];
-            if ((m.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != glass)
+    // Feathered dirt blends over opaque soil before actors and fading rocks.
+    // Drawing it with glass afterward would paint over transparent foreground rocks.
+    for (int pass = 0; pass < (glass ? 1 : 2); ++pass) {
+        const bool overlay = !glass && pass == 1;
+        if (glass)
+            rlDisableDepthMask();
+        for (size_t i = 0; i < assets_.size(); ++i) {
+            const auto &a = assets_[i];
+            const auto &batch = batches_[i];
+            if (batch.empty() || a.groundOverlay != overlay)
                 continue;
-            const auto previous = m.maps[MATERIAL_MAP_METALNESS].texture;
-            m.maps[MATERIAL_MAP_METALNESS].texture = shadowMap_.depth;
-            DrawMeshInstanced(model_.meshes[j], m, batch.data(), int(batch.size()));
-            m.maps[MATERIAL_MAP_METALNESS].texture = previous;
+            SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &a.unlit, SHADER_UNIFORM_INT);
+            bindInterior(buildingGeometry(document_.assets[i]));
+            const auto &label = document_.assets[i].label;
+            const int foliage =
+                label.find("Tree_Clump") != std::string::npos || label.find("Birch") != std::string::npos;
+            SetShaderValue(shader_, GetShaderLocation(shader_, "autumnFoliage"), &foliage, SHADER_UNIFORM_INT);
+            for (int j = a.first; j < a.first + a.count; ++j) {
+                auto &m = model_.materials[model_.meshMaterial[j]];
+                if (!overlay && (m.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != glass)
+                    continue;
+                const auto previous = m.maps[MATERIAL_MAP_METALNESS].texture;
+                m.maps[MATERIAL_MAP_METALNESS].texture = shadowMap_.depth;
+                DrawMeshInstanced(model_.meshes[j], m, batch.data(), int(batch.size()));
+                m.maps[MATERIAL_MAP_METALNESS].texture = previous;
+            }
         }
+        if (glass)
+            rlEnableDepthMask();
     }
-    if (glass)
-        rlEnableDepthMask();
     rlEnableBackfaceCulling();
 }
 void TownScene::drawOccluders() {

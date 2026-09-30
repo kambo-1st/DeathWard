@@ -72,7 +72,7 @@ def verify(directory):
             before = source[0]['meshes'][old['first_mesh'] + n]['primitives'][0]
             after = composed[0]['meshes'][asset['first_mesh'] + n]['primitives'][0]
             expected_material = material(source, before['material'])
-            if asset.get('derived', {}).get('kind') == 'ground_junction':
+            if asset.get('derived', {}).get('kind') in ('ground_junction','road_network'):
                 expected_material['alphaMode'] = 'BLEND'
                 expected_material['pbrMetallicRoughness']['baseColorFactor'][3] = 254/255
             assert expected_material == material(composed, after['material'])
@@ -89,8 +89,8 @@ def verify(directory):
                     expected[:,:3] -= derivation['origin']
                     assert np.array_equal(data, expected.astype('<f4'))
                 else:
-                    assert derivation['kind'] in ('wall_bank', 'gate_grade', 'ground_path', 'ground_junction')
-                    if derivation['kind'] in ('ground_path', 'ground_junction'):
+                    assert derivation['kind'] in ('wall_bank', 'gate_grade', 'ground_path', 'ground_junction', 'road_network')
+                    if derivation['kind'] in ('ground_path', 'ground_junction', 'road_network'):
                         colors = accessor(library, after['attributes']['COLOR_0'])
                         assert colors.shape == (len(data),4) and np.isfinite(colors).all()
                         assert np.all((colors >= 0) & (colors <= 1))
@@ -100,11 +100,12 @@ def verify(directory):
                         else:
                             assert colors[:,3].min() == 0 and colors[:,3].max() == 1
                             assert np.count_nonzero((colors[:,3] > .1) & (colors[:,3] < .9)) > 100
-                            world = data[:,:3]+derivation['origin']
-                            def width(z):
-                                row = world[(abs(world[:,2]-z) < .1) & (colors[:,3] > .5)]
-                                return np.ptp(row[:,0])
-                            assert width(-2) > 6 and width(-7) < 3, 'Flared mouth narrows toward the gate'
+                            if derivation['kind'] == 'ground_junction':
+                                world = data[:,:3]+derivation['origin']
+                                def width(z):
+                                    row = world[(abs(world[:,2]-z) < .1) & (colors[:,3] > .5)]
+                                    return np.ptp(row[:,0])
+                                assert width(-2) > 6 and width(-7) < 3, 'Flared mouth narrows toward the gate'
                 continue
             assert before['attributes'].keys() == after['attributes'].keys()
             indices = [(before['attributes'][key], after['attributes'][key]) for key in before['attributes']]
@@ -117,7 +118,7 @@ def verify(directory):
     lookup = {pack: {p['object']: p for p in data['placements']} for pack, data in original.items()}
     offset = np.eye(4)
     offset[:3, 3] = [31.5, 0, -115]
-    for p in manifest['placements']:
+    for p in manifest['placements'] + manifest['story'].get('road_surface', {}).get('source_roads', []):
         old = lookup[p['source_pack']][p['source_object']]
         if p.get('derived'):
             assert 'derived' in manifest['assets'][p['asset']]
@@ -147,19 +148,70 @@ def verify(directory):
             instances.append((assets[int(parts[1])], parts[2], list(map(float, parts[3:]))))
     assert instances == [(p['asset'], p['object'], p['transform']) for p in manifest['placements']]
     assert len({p['object'] for p in manifest['placements']}) == len(instances)
+    if 'road_surface' in manifest['story']:
+        borders = {}
+        for p in manifest['placements']:
+            asset = manifest['assets'][p['asset']]
+            if 'Road' not in asset['label']:
+                continue
+            assert asset.get('derived', {}).get('kind') == 'road_network', 'No hard road strips remain visible'
+            region = asset['derived']['region']
+            faces, _ = triangles(library,p)
+            primitive = composed[0]['meshes'][asset['first_mesh']]['primitives'][0]
+            colors = accessor(library,primitive['attributes']['COLOR_0'])
+            data = np.c_[faces.reshape(-1,8),colors]
+            # Regression: this flat eastern road used to inherit near-horizontal
+            # normals from the neighboring cliff, producing a dark sawtooth band.
+            beside_rock = ((data[:,0] > 33) & (data[:,0] < 40) &
+                           (data[:,2] > -2) & (data[:,2] < 4) & (data[:,11] > .25))
+            assert np.all(data[beside_rock,4] > .85), 'Road lighting follows soil beside the east rocks'
+            x0,z0,x1,z1 = region['bounds']
+            on_edge = ((abs(data[:,0]-x0) < 1e-5) | (abs(data[:,0]-x1) < 1e-5) |
+                       (abs(data[:,2]-z0) < 1e-5) | (abs(data[:,2]-z1) < 1e-5))
+            borders[region['id']] = {(round(row[0],4),round(row[2],4)):row for row in data[on_edge]}
+        assert set(borders) == {r['id'] for r in manifest['story']['road_surface']['regions']}
+        for a,b in [('west','frontage'),('frontage','east'),('frontage','fort')]:
+            shared = borders[a].keys() & borders[b].keys()
+            assert shared, (a,b,'Road regions meet')
+            for point in shared:
+                assert np.allclose(borders[a][point],borders[b][point],atol=1e-5), (a,b,point,'Seamless surface')
     ground = Ground([face for p in manifest['placements']
                      if any(s in manifest['assets'][p['asset']]['label'] for s in ('Ground', 'Cliff', 'Road_Straight'))
                      for face in triangles(library, p)[0]])
+    soil = Ground([face for p in manifest['placements']
+                   if 'Ground' in manifest['assets'][p['asset']]['label']
+                   for face in triangles(library,p)[0]])
     for p in manifest['placements']:
-        if manifest['assets'][p['asset']].get('derived', {}).get('kind') not in ('ground_path', 'ground_junction'):
+        kind = manifest['assets'][p['asset']].get('derived', {}).get('kind')
+        if kind not in ('ground_path', 'ground_junction', 'road_network'):
             continue
         faces, _ = triangles(library, p)
+        low,high = faces[:,:,:3].min(axis=(0,1)),faces[:,:,:3].max(axis=(0,1))
+        substrate = soil if kind == 'road_network' else ground
+        nearby = Ground(substrate.faces[(substrate.high[:,0] >= low[0]-1e-5) &
+                                        (substrate.low[:,0] <= high[0]+1e-5) &
+                                        (substrate.high[:,2] >= low[2]-1e-5) &
+                                        (substrate.low[:,2] <= high[2]+1e-5)])
         for x,y,z in np.unique(faces[:,:,:3].reshape(-1,3), axis=0):
-            assert abs(y-ground.height(x,z)-.018) < 1e-5, (p['object'], x,y,z)
+            gap = y-nearby.height(x,z)
+            # Float32 boundary vertices can land on either side of a small
+            # bank seam. Both must remain close to the actual visible terrain.
+            assert (0 < gap < .035 if kind == 'road_network' else abs(gap-.018) < 1e-5), (p['object'], x,y,z)
+        if p['object'] == 'redstone-road-east':
+            primitive = composed[0]['meshes'][manifest['assets'][p['asset']]['first_mesh']]['primitives'][0]
+            alpha = accessor(library,primitive['attributes']['COLOR_0'])[:,3]
+            vertices = faces[:,:,:3].reshape(-1,3)
+            at_rock = ((vertices[:,0] > 33) & (vertices[:,0] < 40) &
+                       (vertices[:,2] > -2) & (vertices[:,2] < 4) & (alpha > .1))
+            for x,y,z in np.unique(vertices[at_rock],axis=0):
+                height = nearby.height(x,z)
+                assert all(abs(height-nearby.height(x+dx,z+dz)) < .18
+                           for dx,dz in [(-.2,0),(.2,0),(0,-.2),(0,.2)]), \
+                    'Visible dirt fades before terrain steps instead of exposing grid-cut triangles'
         # Probe between vertices too: a terrain crease must not cut a hole
         # through a path or leave a visibly raised plate between samples.
         for x,y,z in faces[:,:,:3].mean(axis=1):
-            assert 0 < y-ground.height(x,z) < .035, (p['object'], x,y,z)
+            assert 0 < y-nearby.height(x,z) < .035, (p['object'], x,y,z)
     # Measure the visible mesh width, not just the clear navigation corridor.
     roads = manifest['story']['roads']
     for p in manifest['placements']:

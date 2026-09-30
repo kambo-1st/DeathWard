@@ -58,6 +58,7 @@ class TownScene {
     struct Asset {
         int first = 0, count = 0, unlit = 0;
         Box bounds;
+        bool groundOverlay = false;
     };
     struct Instance {
         size_t asset;

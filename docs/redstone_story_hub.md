@@ -27,6 +27,10 @@ worn tracks instead of a single flat color.
 At the gate junction, unequal sweeping wagon turns form a broad Y-shaped worn
 area. Soft margins blend into the main road and sand, with several curved wheel
 ruts converging toward the fort.
+The same feathered soil, varied wear and rounded bends now extend along the
+main road, through the fort and into the hitching and repair paths. These roads
+follow the ground; the raised rectangular road pieces are retained only as
+editor catalog assets for older saved layouts.
 
 ## Story commitments
 

@@ -19,6 +19,7 @@ from bake_navigation import rebake_navigation
 from town_train_motion import train_lines
 from redstone_story import dress_story, character_lines
 from redstone_ground import fit_frontage
+from redstone_roads import fit_roads
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -193,6 +194,7 @@ def assemble(output):
 
     story = dress_story(town, frontier, library, placements, motion)
     fit_frontage(library, placements, story)
+    fit_roads(library, placements, story)
     retained = {p['source_object'] for p in placements if p['source_pack'] == 'town'}
     output.mkdir(parents=True, exist_ok=True)
     library.write(output / 'town.glb')

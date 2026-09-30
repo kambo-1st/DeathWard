@@ -30,12 +30,15 @@ def triangles(library, placement):
     return vertices[indices].reshape(-1, 3, 8), primitive['material']
 
 
-def add_surface(library, name, source, vertices, material, operation, colors=None):
+def add_surface(library, name, source, vertices, material, operation, colors=None, origin=None):
     """Append derived meshes; never change the source catalog used by editor saves."""
     vertices = np.asarray(vertices, dtype=float).reshape(-1, 8).copy()
     assert len(vertices) and np.isfinite(vertices).all()
-    origin = (vertices[:, :3].min(axis=0) + vertices[:, :3].max(axis=0)) / 2
-    origin[1] = vertices[:, 1].min()
+    if origin is None:
+        origin = (vertices[:, :3].min(axis=0) + vertices[:, :3].max(axis=0)) / 2
+        origin[1] = vertices[:, 1].min()
+    else:
+        origin = np.asarray(origin,dtype=float)
     vertices[:, :3] -= origin
     vertices = vertices.astype('<f4')
     operation['origin'] = origin.tolist()
@@ -209,6 +212,13 @@ def junction_surface(ground, uv, path, settings, style):
     ix = np.rint((faces[:,0]-x0)/(x1-x0)*(len(grid[0])-1)).astype(int)
     iz = np.rint((faces[:,2]-z0)/(z1-z0)*(len(grid)-1)).astype(int)
     faces[:,3:6] = normals[iz,ix]
+    colors = junction_colors(faces,path,settings,style)
+    # Fully invisible triangles are unnecessary for rendering, picking or nav.
+    keep = colors[:,3].reshape(-1,3).max(axis=1) > .015
+    return faces.reshape(-1,3,8)[keep].reshape(-1,8), colors.reshape(-1,3,4)[keep].reshape(-1,4)
+
+
+def junction_colors(faces, path, settings, style):
     points = faces[:,[0,2]]
     x, z = points.T
     seed = style['seed']
@@ -280,9 +290,7 @@ def junction_surface(ground, uv, path, settings, style):
     tone = np.clip(.99+mottling-.075*ruts,0,1)
     colors[:,:3] = colors[:,:3]*(1-junction[:,None])+tone[:,None]*junction[:,None]
     colors[:,3] = opacity
-    # Fully invisible triangles are unnecessary for rendering, picking or nav.
-    keep = colors[:,3].reshape(-1,3).max(axis=1) > .015
-    return faces.reshape(-1,3,8)[keep].reshape(-1,8), colors.reshape(-1,3,4)[keep].reshape(-1,4)
+    return colors
 
 
 def fit_frontage(library, placements, story):

@@ -43,7 +43,11 @@ inline void prepareBrowserFiles() {
                     (matches('town.scene', 273555, 1956042650) &&
                      matches('town.nav', 5760052, 631388059)) ||
                     (matches('town.scene', 274526, 3143384547) &&
-                     matches('town.nav', 5760052, 3536157510))) {
+                     matches('town.nav', 5760052, 3536157510)) ||
+                    (matches('town.scene', 274646, 2447431695) &&
+                     matches('town.nav', 5760052, 3827705978)) ||
+                    (matches('town.scene', 271017, 1725496596) &&
+                     matches('town.nav', 5760052, 24843763))) {
                     for (const name of ['town.scene', 'town.nav'])
                         FS.writeFile(destination + '/' + name, FS.readFile('/assets/redstone/' + name));
                 }
@@ -56,11 +60,30 @@ inline void prepareBrowserFiles() {
                 // New props append to the original mesh catalog. Extend old
                 // editor saves without touching any authored instances or paths.
                 const path = destination + '/town.scene';
-                const saved = FS.readFile(path, {encoding:'utf8'});
+                let saved = FS.readFile(path, {encoding:'utf8'});
                 const shipped = FS.readFile('/assets/redstone/town.scene', {encoding:'utf8'});
                 const catalog = text => text.split('\n').filter(line => line.startsWith('asset '));
-                const oldAssets = catalog(saved);
                 const newAssets = catalog(shipped);
+                // Corrected road geometry keeps its pivots and mesh indices.
+                // Refresh only its derived bounds; authored instances, labels,
+                // routes and navigation remain exactly as the user saved them.
+                const roadAssets = new Map(newAssets.filter(line => line.startsWith('asset redstone_road_'))
+                    .map(line => [line.trim().split(' ').filter(Boolean).slice(0,5).join(' '), line]));
+                const correctedRoads = saved.split('\n').map(line => {
+                    const fields = line.trim().split(' ').filter(Boolean);
+                    const replacement = roadAssets.get(fields.slice(0,5).join(' '));
+                    if (!replacement) return line;
+                    const bounds = replacement.split(' ').slice(5).map(Number);
+                    // Editor saves round float bounds; preserve that spelling
+                    // when they already describe the corrected mesh.
+                    return bounds.some((value,n) => Math.abs(value-Number(fields[n+5])) > .0001)
+                        ? replacement : line;
+                }).join('\n');
+                if (correctedRoads !== saved) {
+                    FS.writeFile(path, correctedRoads);
+                    saved = correctedRoads;
+                }
+                const oldAssets = catalog(saved);
                 if (oldAssets.length < newAssets.length && oldAssets.every((line, n) => {
                     const before = line.trim().split(' ').filter(Boolean);
                     const after = newAssets[n].trim().split(' ').filter(Boolean);
