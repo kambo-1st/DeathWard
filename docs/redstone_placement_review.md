@@ -3,6 +3,10 @@
 Original review against commit `ff1d656` on 2026-09-30. The inventory and plan
 below record that earlier layout. The accepted correction pass is now implemented
 in content version `deathward-m1-40`; see the applied changes immediately below.
+The subsequent `deathward-m1-41` frontage pass narrows the road to 3.8 m and adds
+hitching, waiting and cart-repair spaces. Its current dimensions and counts are
+recorded in the [pack notes](../assets/redstone/README.md). The review below
+retains the earlier placement audit and its counts as a record of that revision.
 
 ## Applied corrections
 
@@ -30,7 +34,7 @@ The sand piles and parked train were retained. Wider suggestions below, such as
 changing flags, redesigning the sand drifts, storm phases and new work animations,
 remain separate from these accepted placement corrections.
 
-The current layout has 69 authored prop groups, 15 residents and 15 tents. The
+The `m1-40` layout has 69 authored prop groups, 15 residents and 15 tents. The
 212-entry mesh catalog, GLB and embedded textures are unchanged. Browser startup
 updates the known untouched first-story scene/navigation pair; edited saves keep
 their authored layout. Fresh installs receive the corrected layout directly.

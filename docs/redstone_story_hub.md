@@ -14,6 +14,12 @@ the holding fence has continuous runs and one guarded entrance, the prospectors
 use a level pull-off, and the command desk and personal belongings have shelter.
 The sand blockage remains as requested.
 
+The road is now a 3.8-metre wagon track with a low crown and a narrower fort
+approach. Hitching rails, water and feed occupy the western frontage; cart
+repairs and timber occupy the eastern side. A bench and notice board serve
+people waiting at the gate. Small worn paths and irregular dry scrub connect
+these spaces while leaving the wagon route and court entrances clear.
+
 ## Story commitments
 
 The player is traveling west by train to meet their wealthy family. A violent

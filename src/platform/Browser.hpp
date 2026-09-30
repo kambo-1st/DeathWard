@@ -37,7 +37,9 @@ inline void prepareBrowserFiles() {
                     (matches('town.scene', 239972, 21795443) &&
                      matches('town.nav', 5760052, 576788661)) ||
                     (matches('town.scene', 260594, 418788540) &&
-                     matches('town.nav', 5760052, 1738682236))) {
+                     matches('town.nav', 5760052, 1738682236)) ||
+                    (matches('town.scene', 260906, 1259833876) &&
+                     matches('town.nav', 5760052, 1036499475))) {
                     for (const name of ['town.scene', 'town.nav'])
                         FS.writeFile(destination + '/' + name, FS.readFile('/assets/redstone/' + name));
                 }

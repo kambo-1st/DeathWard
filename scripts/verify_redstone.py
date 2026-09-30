@@ -102,6 +102,16 @@ def verify(directory):
             instances.append((assets[int(parts[1])], parts[2], list(map(float, parts[3:]))))
     assert instances == [(p['asset'], p['object'], p['transform']) for p in manifest['placements']]
     assert len({p['object'] for p in manifest['placements']}) == len(instances)
+    # Measure the visible mesh width, not just the clear navigation corridor.
+    roads = manifest['story']['roads']
+    for p in manifest['placements']:
+        asset = manifest['assets'][p['asset']]
+        if asset['label'] != 'SM_Env_Road_Straight_01':
+            continue
+        matrix = np.array(p['transform']).reshape(4,4)
+        width = (asset['bounds'][1][2] - asset['bounds'][0][2]) * np.linalg.norm(matrix[:3,2])
+        expected = roads['fort_width'] if p['object'] in roads['fort_branch'] else roads['wagon_width']
+        assert abs(width - expected) < 1e-6, (p['object'], width)
     # Ropes, shafts and furniture must stay outside the authored circulation
     # spaces. A walkable detour does not make a tent in the road acceptable.
     for space in manifest.get('story', {}).get('clear_spaces', []):

@@ -2,7 +2,7 @@
 
 A third, fixed hub combining Black Creek's canyon landscape and railway with
 Western Frontier's fortified compound and neighboring covered-wagon settler camp.
-It contains **1000 authored placements, 212 mesh assets and eight original embedded
+It contains **1046 authored placements, 220 mesh assets and eight original embedded
 textures**. It is an authored composition of the two packs, rather than another
 Unity demo import or a seed-generated mission.
 
@@ -35,7 +35,7 @@ Black Creek remains the default starting hub.
 - The canyon keeps its 240 × 240 navigation footprint, terrain scale, original
   fort and rail geometry. Three removed dust piles and the lowered camp ground
   from the approved editor revision are preserved.
-- Sixty-nine additional prop groups establish luggage and boarding steps,
+- Additional prop groups establish luggage and boarding steps,
   railroad supplies and sand drifts, a merchant wagon, water and cookfires,
   witness shelters, settler tents, a holding yard, an evidence table and the
   covered wagon for the ending. Fifteen tents now spread around the fort.
@@ -46,6 +46,14 @@ Black Creek remains the default starting hub.
   clutter out of circulation routes. The sand obstruction is retained.
   The existing cot and porch seating are reused; two old stockpiles crossed by
   the holding fence are removed explicitly in the layout's source-group list.
+- The main road is a 3.8 m wagon track, reduced from approximately 10.9 m. Its
+  crown is lowered with its width so the shoulders remain walkable. A narrower
+  fort approach and three small, sloped dirt patches replace the broad junction.
+  The fort frontage has hitching rails, a trough and feed, waiting bench and
+  notices, a repair cart, work table, spare wheel and timber. Broken clusters of
+  dry grass, stones and bushes mark the shoulders without enclosing the courts.
+  There are 118 added prop groups in total; the road, gate, court entrances and
+  bench approach remain clear. One passenger now visits the waiting space.
 - Fifteen provisional residents use the existing textured cowgirl and bandit
   models. The commander, outlaw, wife, spiritualist and scout have authored
   positions; ambient residents follow checked walking routes. Nearby role labels
@@ -62,8 +70,9 @@ bundled GLB. Normal builds require no Unity, Blender or source-project access.
 
 The character inspector's **Model** button switches between cowgirl and bandit;
 placement, route editing, undo/redo and saving apply to both. New mesh assets
-append after the original 192 catalog entries. Browser startup upgrades the known
-untouched pre-story and first-story scene/navigation pairs. Other saved layouts retain their
+append after the previous catalog entries (the original 192 and story update's 212).
+Browser startup upgrades known untouched shipped scene/navigation pairs through
+`deathward-m1-40`. Other saved layouts retain their
 instances and settings while receiving the extra unused catalog entries and
 labels needed to load the expanded GLB.
 
@@ -74,7 +83,7 @@ town and Frontier packs. It deliberately replaces generated Redstone files; use
 a separate output directory when preserving editor changes. It requires Python,
 NumPy and the native navigation baker with an OpenGL display.
 `scripts/redstone_story_layout.json` stores the additional prop groups, resident
-positions/routes and arrival/departure markers. `redstone_story.py` assembles
+positions/routes, road dimensions/patch transforms and arrival/departure markers. `redstone_story.py` assembles
 complete prefab children, preserves the approved edits and parks the train.
 
 ```sh

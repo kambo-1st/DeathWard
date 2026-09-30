@@ -1,5 +1,5 @@
 {
-  "revision": 2,
+  "revision": 3,
   "title": "Stranded at Redstone",
   "spawn": [
     0,
@@ -929,6 +929,647 @@
       "yaw": 0,
       "scale": 1,
       "section": "holding-yard"
+    },
+    {
+      "id": "hitch-west",
+      "pack": "town",
+      "prefab": "SM_Prop_HitchingPost_01",
+      "position": [
+        -10,
+        0.054,
+        -5.7
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "hitch-east",
+      "pack": "town",
+      "prefab": "SM_Prop_HitchingPost_01",
+      "position": [
+        -6.6,
+        0.089,
+        -5.7
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "hitch-trough",
+      "pack": "town",
+      "prefab": "SM_Prop_WaterTrough_01",
+      "position": [
+        -9.5,
+        0.197,
+        -8
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "hitch-feed-a",
+      "pack": "town",
+      "prefab": "SM_Prop_Hay_Bale_01",
+      "position": [
+        -12,
+        0.218,
+        -7.7
+      ],
+      "yaw": 8,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "hitch-feed-b",
+      "pack": "town",
+      "prefab": "SM_Prop_Hay_Bale_01",
+      "position": [
+        -11.8,
+        0.229,
+        -8.8
+      ],
+      "yaw": -10,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "hitch-barrel",
+      "pack": "frontier",
+      "prefab": "SM_Prop_Barrel_Dirt_01",
+      "position": [
+        -7.7,
+        0.21,
+        -8.4
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "gate-waiting-bench",
+      "pack": "town",
+      "prefab": "SM_Prop_Bench_01",
+      "position": [
+        -4.3,
+        0.025,
+        -4.8
+      ],
+      "yaw": 180,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "gate-notices",
+      "pack": "town",
+      "prefab": "SM_Prop_MessageBoard",
+      "position": [
+        -4.2,
+        0.047,
+        -6.7
+      ],
+      "yaw": 0,
+      "scale": 0.85,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "repair-cart",
+      "pack": "town",
+      "prefab": "SM_Veh_Cart_01",
+      "position": [
+        8.4,
+        0.022,
+        -6.2
+      ],
+      "yaw": 22,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "repair-table",
+      "pack": "frontier",
+      "prefab": "SM_Prop_Table_01",
+      "position": [
+        13.9,
+        0.028,
+        -7.9
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "repair-wheel",
+      "pack": "frontier",
+      "prefab": "SM_Prop_WagonWheel_01",
+      "position": [
+        13.2,
+        0.022,
+        -6.9
+      ],
+      "yaw": 15,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "repair-wood",
+      "pack": "frontier",
+      "prefab": "SM_Prop_LogPile_01",
+      "position": [
+        17,
+        0.196,
+        -8.3
+      ],
+      "yaw": 4,
+      "scale": [
+        0.65,
+        0.6,
+        0.7
+      ],
+      "section": "fort-frontage"
+    },
+    {
+      "id": "repair-crate",
+      "pack": "frontier",
+      "prefab": "SM_Prop_Crate_01",
+      "position": [
+        15.8,
+        0.056,
+        -6.8
+      ],
+      "yaw": -9,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "repair-barrel",
+      "pack": "frontier",
+      "prefab": "SM_Prop_Barrel_Dirt_01",
+      "position": [
+        16.8,
+        0.063,
+        -6.5
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "repair-seat",
+      "pack": "frontier",
+      "prefab": "SM_Prop_LogSeat_01",
+      "position": [
+        7.5,
+        0.056,
+        -8.5
+      ],
+      "yaw": 7,
+      "scale": 0.8,
+      "section": "fort-frontage"
+    },
+    {
+      "id": "frontage-scrub-0",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -17,
+        0.009,
+        -4.6
+      ],
+      "yaw": 0,
+      "scale": 0.55,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-0",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        -16.52,
+        0.008,
+        -4.38
+      ],
+      "yaw": 0,
+      "scale": 0.5,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-1",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -14.4,
+        0.006,
+        -3.7
+      ],
+      "yaw": 73,
+      "scale": 0.67,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-2",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -18.2,
+        0.01,
+        -7.4
+      ],
+      "yaw": 146,
+      "scale": 0.79,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-2",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        -17.72,
+        0.016,
+        -7.180000000000001
+      ],
+      "yaw": 86,
+      "scale": 0.7,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-3",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -16.6,
+        0.065,
+        -8.3
+      ],
+      "yaw": 219,
+      "scale": 0.55,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-4",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -12.4,
+        0.007,
+        -3.5
+      ],
+      "yaw": 292,
+      "scale": 0.67,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-4",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        -11.92,
+        -0.377,
+        -3.28
+      ],
+      "yaw": 172,
+      "scale": 0.6,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-5",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -6.3,
+        0.011,
+        -3.2
+      ],
+      "yaw": 5,
+      "scale": 0.79,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-6",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        3,
+        0.004,
+        -3.4
+      ],
+      "yaw": 78,
+      "scale": 0.55,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-6",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        3.48,
+        -0.31,
+        -3.1799999999999997
+      ],
+      "yaw": 258,
+      "scale": 0.5,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-7",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        4.8,
+        0.018,
+        -5.4
+      ],
+      "yaw": 151,
+      "scale": 0.67,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-8",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        5.2,
+        0.051,
+        -8.2
+      ],
+      "yaw": 224,
+      "scale": 0.79,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-8",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        5.68,
+        0.049,
+        -7.9799999999999995
+      ],
+      "yaw": 344,
+      "scale": 0.7,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-9",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        14.9,
+        0.001,
+        -3.5
+      ],
+      "yaw": 297,
+      "scale": 0.55,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-10",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        18.8,
+        0.004,
+        -4.1
+      ],
+      "yaw": 10,
+      "scale": 0.67,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-10",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        19.28,
+        0.003,
+        -3.8799999999999994
+      ],
+      "yaw": 70,
+      "scale": 0.6,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-11",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        19.6,
+        0.187,
+        -7.7
+      ],
+      "yaw": 83,
+      "scale": 0.79,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-12",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        21.5,
+        0.061,
+        -5.7
+      ],
+      "yaw": 156,
+      "scale": 0.55,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-12",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        21.98,
+        0.01,
+        -5.48
+      ],
+      "yaw": 156,
+      "scale": 0.5,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-13",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        23.5,
+        -0.349,
+        -3.6
+      ],
+      "yaw": 229,
+      "scale": 0.67,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-14",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -21.5,
+        -0.292,
+        3.4
+      ],
+      "yaw": 302,
+      "scale": 0.79,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-14",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        -21.02,
+        -0.314,
+        3.62
+      ],
+      "yaw": 242,
+      "scale": 0.7,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-15",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -15.6,
+        -0.343,
+        3.8
+      ],
+      "yaw": 15,
+      "scale": 0.55,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-16",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        -5.2,
+        -0.343,
+        4.0
+      ],
+      "yaw": 88,
+      "scale": 0.67,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-16",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        -4.720000000000001,
+        -0.347,
+        4.22
+      ],
+      "yaw": 328,
+      "scale": 0.6,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-17",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        4.7,
+        -0.371,
+        3.7
+      ],
+      "yaw": 161,
+      "scale": 0.79,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-scrub-18",
+      "pack": "town",
+      "prefab": "SM_Env_Grass_03",
+      "position": [
+        24.0,
+        -0.412,
+        4.2
+      ],
+      "yaw": 234,
+      "scale": 0.55,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-stones-18",
+      "pack": "town",
+      "prefab": "SM_Env_Rocks_04",
+      "position": [
+        24.48,
+        -0.416,
+        4.42
+      ],
+      "yaw": 54,
+      "scale": 0.5,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-bush-0",
+      "pack": "town",
+      "prefab": "SM_Prop_Bush_01",
+      "position": [
+        -17.6,
+        0.011,
+        -5.5
+      ],
+      "yaw": 0,
+      "scale": 0.6,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-bush-1",
+      "pack": "town",
+      "prefab": "SM_Prop_Bush_01",
+      "position": [
+        4.4,
+        0.006,
+        -4.1
+      ],
+      "yaw": 51,
+      "scale": 0.6,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-bush-2",
+      "pack": "town",
+      "prefab": "SM_Prop_Bush_01",
+      "position": [
+        20.3,
+        0.008,
+        -5.2
+      ],
+      "yaw": 102,
+      "scale": 0.6,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-bush-3",
+      "pack": "town",
+      "prefab": "SM_Prop_Bush_01",
+      "position": [
+        -15,
+        -0.347,
+        4.3
+      ],
+      "yaw": 153,
+      "scale": 0.6,
+      "section": "road-shoulders"
+    },
+    {
+      "id": "frontage-bush-4",
+      "pack": "town",
+      "prefab": "SM_Prop_Bush_01",
+      "position": [
+        5.4,
+        -0.401,
+        4.6
+      ],
+      "yaw": 204,
+      "scale": 0.6,
+      "section": "road-shoulders"
     }
   ],
   "characters": [
@@ -1076,6 +1717,11 @@
           -8,
           0,
           7.7
+        ],
+        [
+          -4.3,
+          0,
+          -3.7
         ]
       ]
     },
@@ -1211,11 +1857,11 @@
       "id": "through-road",
       "min": [
         -39,
-        -4.5
+        -1.43
       ],
       "max": [
         25,
-        5.9
+        2.37
       ]
     },
     {
@@ -1226,7 +1872,7 @@
       ],
       "max": [
         0.5,
-        -4.5
+        -1.43
       ]
     },
     {
@@ -1261,6 +1907,39 @@
         -35.5,
         -50
       ]
+    },
+    {
+      "id": "hitching-approach",
+      "min": [
+        -8.8,
+        -4.7
+      ],
+      "max": [
+        -7.2,
+        -1.43
+      ]
+    },
+    {
+      "id": "repair-approach",
+      "min": [
+        10.8,
+        -6.8
+      ],
+      "max": [
+        12.4,
+        -1.43
+      ]
+    },
+    {
+      "id": "gate-waiting-space",
+      "min": [
+        -5.5,
+        -4.05
+      ],
+      "max": [
+        -3.1,
+        -2
+      ]
     }
   ],
   "removed_source_groups": [
@@ -1274,5 +1953,71 @@
       "group": "544948540",
       "reason": "Crate intersects the holding fence at the existing fort tower."
     }
-  ]
+  ],
+  "roads": {
+    "wagon_width": 3.8,
+    "fort_width": 2.8,
+    "fort_center_x": -0.8,
+    "fort_branch": [
+      "town-806957096:1044123881021568",
+      "town-1734266930:1044123881021568",
+      "town-2035176873:1044123881021568"
+    ],
+    "patches": [
+      {
+        "object": "town-323793347:1206075455707250",
+        "position": [
+          -8,
+          -0.17,
+          -3.4
+        ],
+        "yaw": -8,
+        "scale": [
+          0.23,
+          0.08,
+          0.72
+        ],
+        "pitch": 7
+      },
+      {
+        "object": "town-1260754000:1206075455707250",
+        "position": [
+          -0.8,
+          -0.17,
+          -3.4
+        ],
+        "yaw": 8,
+        "scale": [
+          0.35,
+          0.08,
+          0.8
+        ],
+        "pitch": 7
+      },
+      {
+        "object": "town-1689980837:1206075455707250",
+        "position": [
+          11.7,
+          -0.17,
+          -3.8
+        ],
+        "yaw": 12,
+        "scale": [
+          0.28,
+          0.08,
+          0.8
+        ],
+        "pitch": 7
+      }
+    ],
+    "wagon_height": 0.2,
+    "wagon_base_y": -0.38,
+    "fort_height": 0.14,
+    "fort_base_y": -0.08,
+    "gate_segment": {
+      "object": "town-806957096:1044123881021568",
+      "length": 13,
+      "center_z": -11.4
+    }
+  }
 }

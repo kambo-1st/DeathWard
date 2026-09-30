@@ -95,7 +95,17 @@ const root = path.resolve(__dirname, '..');
     await wait(() => !Module.saving);
     await start();
     const upgraded = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding:'utf8'}));
-    assert.equal(upgraded.split('\n').filter(line => line.startsWith('asset ')).length, 212);
+    const shippedAssets = fs.readFileSync(path.join(root, 'assets/redstone/town.scene'), 'utf8')
+      .split('\n').filter(line => line.startsWith('asset '));
+    const upgradedAssets = upgraded.split('\n').filter(line => line.startsWith('asset '));
+    assert.equal(upgradedAssets.length, shippedAssets.length);
+    for (let n = 0; n < shippedAssets.length; ++n) {
+      const before = shippedAssets[n].split(' '), after = upgradedAssets[n].split(' ');
+      assert.deepEqual(after.slice(0,5), before.slice(0,5));
+      // Editor saves serialize float bounds, while the composer writes doubles.
+      for (let axis = 5; axis < before.length; ++axis)
+        assert(Math.abs(Number(after[axis]) - Number(before[axis])) < .0001);
+    }
     const authored = text => text.split('\n').filter(line => line && !line.startsWith('asset ')).join('\n');
     assert.equal(authored(upgraded), authored(legacy));
     assert((await page.evaluate(() => FS.readFile('/persist/redstone/town.labels', {encoding:'utf8'}))).includes('My_custom_ground'));

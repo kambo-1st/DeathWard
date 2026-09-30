@@ -10,7 +10,9 @@ void check(bool ok, const char *message) {
 }
 Vector3 position(Matrix m) { return {m.m12, m.m13, m.m14}; }
 void walk(HubWorld &hub, Vector3 target) {
-    check(hub.walkable(target), "Authored destination is clear ground");
+    if (!hub.walkable(target))
+        throw std::runtime_error("Authored destination is blocked: " +
+                                 std::to_string(target.x) + ", " + std::to_string(target.z));
     target.y = hub.height(target);
     check(hub.moveTo(target), "A route connects the camp, fort and railway");
     for (int n = 0; n < 5000 && hub.destination(); ++n) {
@@ -78,11 +80,11 @@ int main() {
         walk(hub, {0,0,23});
         walk(hub, arrival);
         walk(hub, {-38,0,-54});
-        // Reserve the actual road width, not merely a path around misplaced
-        // tents. Wagon shafts and guy ropes count as obstructions too.
+        // The 3.8 m track leaves at least 3 m clear for wagons after the
+        // navigation agent's edge clearance. Shafts and ropes count too.
         for (float x = -36; x <= 24; x += .5f)
-            for (float z = -3; z <= 3; z += .5f)
-                check(hub.walkable({x,0,z}), "The main road retains six clear metres through camp");
+            for (float z = -1; z <= 2; z += .5f)
+                check(hub.walkable({x,0,z}), "The frontier track leaves a continuous wagon route through camp");
         for (float z = -8; z <= -4.5f; z += .25f)
             for (float x = 26.6f; x <= 29.4f; x += .2f)
                 check(hub.walkable({x,0,z}) && hub.height({x,0,z}) < .5f,
@@ -90,6 +92,9 @@ int main() {
         walk(hub, {-22,0,-17});  // kitchen courtyard
         walk(hub, {14,0,6.6f}); // market customers
         walk(hub, {-8,0,7.7f}); // water supply
+        walk(hub, {-8,0,-4.2f}); // hitching court
+        walk(hub, {11.6f,0,-6}); // cart repair court
+        walk(hub, {-4.3f,0,-3.7f}); // waiting bench
         walk(hub, {2,0,-23});   // sheltered command desk
         walk(hub, {16.5f,0,-18}); // guarded custody entrance
         check(hub.canTraverse({13.3f,0,-18.1f}, {16.3f,0,-18.1f}),

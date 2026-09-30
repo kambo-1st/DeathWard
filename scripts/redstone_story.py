@@ -14,6 +14,48 @@ def footprint(placement, assets):
     return points.min(axis=0), points.max(axis=0)
 
 
+def shape_roads(placements, assets, roads):
+    """Reshape road instances without changing their source geometry or UVs."""
+    patches = {p['object']: p for p in roads['patches']}
+    for placement in placements:
+        asset = assets[placement['asset']]
+        original = np.array(placement['transform']).reshape(4, 4)
+        target = original.copy()
+        if asset['label'] == 'SM_Env_Road_Straight_01':
+            branch = placement['object'] in roads['fort_branch']
+            width = roads['fort_width'] if branch else roads['wagon_width']
+            span = asset['bounds'][1][2] - asset['bounds'][0][2]
+            target[:3, 2] *= width / (span * np.linalg.norm(target[:3, 2]))
+            # A narrower road also needs a lower crown. Keeping the old height
+            # would turn its shoulders into steep, impassable little banks.
+            height = roads['fort_height'] if branch else roads['wagon_height']
+            span = asset['bounds'][1][1] - asset['bounds'][0][1]
+            target[:3, 1] *= height / (span * np.linalg.norm(target[:3, 1]))
+            target[1, 3] = roads['fort_base_y'] if branch else roads['wagon_base_y']
+            if branch:
+                target[0, 3] = roads['fort_center_x']
+            if placement['object'] == roads['gate_segment']['object']:
+                gate = roads['gate_segment']
+                span = asset['bounds'][1][0] - asset['bounds'][0][0]
+                target[:3, 0] *= gate['length'] / (span * np.linalg.norm(target[:3, 0]))
+                target[2, 3] = gate['center_z']
+        elif placement['object'] in patches:
+            patch = patches[placement['object']]
+            angle = math.radians(patch['yaw'])
+            target = np.array([[math.cos(angle),0,math.sin(angle),0], [0,1,0,0],
+                               [-math.sin(angle),0,math.cos(angle),0], [0,0,0,1.]])
+            pitch = math.radians(patch.get('pitch', 0))
+            target = target @ np.array([[1,0,0,0], [0,math.cos(pitch),-math.sin(pitch),0],
+                                        [0,math.sin(pitch),math.cos(pitch),0], [0,0,0,1.]])
+            target = target @ np.diag([*patch['scale'], 1])
+            target[:3, 3] = patch['position']
+        else:
+            continue
+        transform = target @ np.linalg.inv(original)
+        placement['composition_transform'] = transform.flatten().tolist()
+        placement['transform'] = (transform @ original).flatten().tolist()
+
+
 def dress_story(town, frontier, library, placements, motion):
     layout = json.loads(Path(__file__).with_name('redstone_story_layout.json').read_text())
     packs = {p.name: p for p in (town, frontier)}
@@ -30,6 +72,7 @@ def dress_story(town, frontier, library, placements, motion):
     # compatible with earlier maps.
     removed_groups = {f"{g['pack']}-{g['group']}" for g in layout.get('removed_source_groups', [])}
     placements[:] = [p for p in placements if p['object'].split(':')[0] not in removed_groups]
+    shape_roads(placements, library.assets, layout['roads'])
 
     additions = []
     for prop in layout['props']:
