@@ -40,6 +40,7 @@ uniform vec4 colDiffuse;
 out vec4 finalColor;
 void main() {
     vec4 surface = texture(texture0, uv) * colDiffuse;
+    surface.rgb = groundSurface(surface.rgb,world);
     if (surface.a < 0.02) discard;
     surface = playerOcclusionSurface(world,surface);
     vec3 litNormal = gl_FrontFacing ? normalize(normal) : -normalize(normal);
@@ -66,6 +67,7 @@ WesternScene::~WesternScene() {
 }
 void WesternScene::unload() {
     clearTerrain();
+    ground_.unload();
     lighting_.unload();
     std::set<unsigned int> textures;
     for (int i = 0; i < model_.materialCount; ++i)
@@ -154,9 +156,11 @@ bool WesternScene::load(const std::filesystem::path &directory) {
                 distance(actual.max, asset.bounds.max) < 0.01f;
     }
     if (valid) {
-        const auto fragment = withPlayerOcclusion(MissionLighting::withShadows(FragmentShader).c_str());
+        const auto fragment = withPlayerOcclusion(
+            MissionLighting::withShadows(GroundSurface::withDetail(FragmentShader).c_str()).c_str());
         shader_ = loadWorldShader(VertexShader, fragment.c_str());
         shader_.locs[SHADER_LOC_MAP_METALNESS] = GetShaderLocation(shader_, "shadowMap");
+        shader_.locs[SHADER_LOC_MAP_OCCLUSION] = GetShaderLocation(shader_, "groundSoil");
         valid = shader_.id && shader_.id != rlGetShaderIdDefault();
     }
     if (!valid) {
@@ -202,6 +206,13 @@ void WesternScene::prepare(const Arena &arena) {
         return;
     if (lastArena_ != &arena || lastSeed_ != arena.visualSeed || lastTheme_ != arena.theme) {
         generate(arena);
+        std::vector<Box> groundRocks;
+        for (const auto &p : placements_)
+            if ((p.asset == WesternAsset::RockA || p.asset == WesternAsset::RockB) && p.bounds.min.y < .2f)
+                groundRocks.push_back(p.bounds);
+        ground_.prepare(arena, groundRocks);
+        if (terrainMaterial_.maps)
+            terrainMaterial_.maps[MATERIAL_MAP_OCCLUSION].texture = ground_.texture();
         Random densityRandom(arena.visualSeed ^ 0x7665676574617465ULL);
         for (auto &p : placements_)
             if (isVegetation(p.asset))
@@ -693,6 +704,8 @@ void WesternScene::drawBatches(bool transparent) {
         if (batch.empty())
             continue;
         const auto &asset = assets_[i];
+        const bool floor = i == size_t(WesternAsset::Floor);
+        ground_.bind(shader_, floor);
         const bool cliff = i == size_t(WesternAsset::CliffWall) || i == size_t(WesternAsset::CliffCap) ||
                            i == size_t(WesternAsset::CliffPillar) || i == size_t(WesternAsset::GrassA) ||
                            i == size_t(WesternAsset::GrassB);
@@ -705,7 +718,13 @@ void WesternScene::drawBatches(bool transparent) {
             const auto &material = model_.materials[model_.meshMaterial[mesh]];
             if ((material.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != transparent)
                 continue;
-            lighting_.drawInstanced(model_.meshes[mesh], material, batch.data(), int(batch.size()));
+            std::array<MaterialMap, 12> maps;
+            std::copy_n(material.maps, maps.size(), maps.begin());
+            auto surface = material;
+            if (floor)
+                maps[MATERIAL_MAP_OCCLUSION].texture = ground_.texture();
+            surface.maps = maps.data();
+            lighting_.drawInstanced(model_.meshes[mesh], surface, batch.data(), int(batch.size()));
         }
         if (cliff)
             rlEnableBackfaceCulling();
@@ -736,6 +755,8 @@ void WesternScene::drawOccluders() {
     rlDisableDepthMask();
     if (terrainShader_.id)
         occlusion_.bind(terrainShader_, true);
+    ground_.bind(terrainShader_);
+    ground_.bind(shader_, false);
     if (loaded())
         occlusion_.bind(shader_, true);
     for (const auto &surface : surfaces) {

@@ -37,7 +37,10 @@ void main() {
     vec3 n = normalize(normal);
     vec3 sun = missionSun;
     float shade = terrainUnderlay == 0 ? missionVisibility(world,n) : 1.;
-    vec3 color = texture(texture0,uv).rgb*tint*westernDaylight(n,sun,shade);
+    vec3 surface = texture(texture0,uv).rgb*tint;
+    float floorBlend = (1.-smoothstep(.03,.45,world.y))*smoothstep(.6,.95,n.y);
+    if (floorBlend > 0.) surface = mix(surface,groundSurface(surface,world),floorBlend);
+    vec3 color = surface*westernDaylight(n,sun,shade);
     finalColor=playerOcclusionSurface(world,vec4(color,1.));
 }
 )GLSL";
@@ -64,7 +67,8 @@ void WesternScene::generateCanyon(const Arena &arena) {
         return;
     const auto &field = *arena.canyon;
     terrainField_ = arena.canyon;
-    const auto fragment = withPlayerOcclusion(MissionLighting::withShadows(TerrainFragment).c_str());
+    const auto fragment = withPlayerOcclusion(
+        MissionLighting::withShadows(GroundSurface::withDetail(TerrainFragment).c_str()).c_str());
     terrainShader_ = loadWorldShader(TerrainVertex, fragment.c_str());
     terrainMaterial_ = LoadMaterialDefault();
     terrainMaterial_.shader = terrainShader_;
@@ -92,6 +96,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
         }
     }
     terrainShader_.locs[SHADER_LOC_MAP_METALNESS] = GetShaderLocation(terrainShader_, "shadowMap");
+    terrainShader_.locs[SHADER_LOC_MAP_OCCLUSION] = GetShaderLocation(terrainShader_, "groundSoil");
     using Triangle = std::array<Vector3, 3>;
     std::vector<Box> outcrops;
     for (const auto &room : arena.rooms)
@@ -333,6 +338,7 @@ void WesternScene::drawTerrain(Vector3 focus) {
     if (terrain_.empty())
         return;
     lighting_.bind(terrainShader_);
+    ground_.bind(terrainShader_);
     occlusion_.bind(terrainShader_, false);
     // The buried base must not self-shadow against the translucent rock above it.
     int underlay = 1;

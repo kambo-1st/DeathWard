@@ -545,6 +545,7 @@ int main(int argc, char **argv) {
                         Module.state.roomDecorations = $12;
                         Module.state.vegetationDensity = $13;
                         Module.state.vegetationCount = $14;
+                        Module.state.groundDetail = !!$15;
                     }
                 },
                 editing, int(game.musicScene()), editor.saved, editor.status.c_str(),
@@ -553,7 +554,8 @@ int main(int argc, char **argv) {
                 probeCoin ? probeCoin->value : 0, artPoc && canCompareArt,
                 game.run && renderer.missionShadowsReady(), game.run ? renderer.missionDecorationCount() : 0,
                 game.run ? renderer.missionDecorationCount(game.run->room) : 0,
-                game.visualSettings.vegetation, game.run ? renderer.missionVegetationCount() : 0);
+                game.visualSettings.vegetation, game.run ? renderer.missionVegetationCount() : 0,
+                game.visualSettings.groundDetail);
             EM_ASM(
                 {
                     if (Module.state) {

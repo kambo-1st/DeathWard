@@ -9,6 +9,7 @@ namespace dw {
 struct VisualSettings {
     static constexpr int MaxVegetation = 200;
     int vegetation = 100;
+    bool groundDetail = true;
     bool operator==(const VisualSettings &) const = default;
 };
 inline VisualSettings loadVisualSettings(const std::filesystem::path &path) {
@@ -16,9 +17,16 @@ inline VisualSettings loadVisualSettings(const std::filesystem::path &path) {
     std::string magic;
     int version = 0;
     VisualSettings settings;
-    if (!(file >> magic >> version >> settings.vegetation) || magic != "DEATHWARD_VISUAL" || version != 1 ||
-        settings.vegetation < 0 || settings.vegetation > VisualSettings::MaxVegetation)
+    if (!(file >> magic >> version >> settings.vegetation) || magic != "DEATHWARD_VISUAL" ||
+        (version != 1 && version != 2) || settings.vegetation < 0 ||
+        settings.vegetation > VisualSettings::MaxVegetation)
         return {};
+    if (version == 2) {
+        int detail = 0;
+        if (!(file >> detail) || (detail != 0 && detail != 1))
+            return {};
+        settings.groundDetail = detail != 0;
+    }
     return settings;
 }
 inline bool saveVisualSettings(const std::filesystem::path &path, VisualSettings settings) {
@@ -30,8 +38,9 @@ inline bool saveVisualSettings(const std::filesystem::path &path, VisualSettings
     if (error)
         return false;
     std::ofstream file(path);
-    file << "DEATHWARD_VISUAL 1\n"
-         << std::clamp(settings.vegetation, 0, VisualSettings::MaxVegetation) << '\n';
+    file << "DEATHWARD_VISUAL 2\n"
+         << std::clamp(settings.vegetation, 0, VisualSettings::MaxVegetation) << '\n'
+         << int(settings.groundDetail) << '\n';
     file.close();
     if (!file)
         return false;

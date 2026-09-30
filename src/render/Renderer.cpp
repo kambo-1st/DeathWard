@@ -1341,6 +1341,7 @@ Action Renderer::audioPanel(const Game &game) {
 }
 Action Renderer::draw(const Game &game) {
     westernScene_.setVegetationDensity(game.visualSettings.vegetation);
+    setGroundDetail(game.visualSettings.groundDetail);
     sx_ = float(GetScreenWidth()) / 1280;
     sy_ = float(GetScreenHeight()) / 800;
     ClearBackground(Ink);
@@ -1380,6 +1381,12 @@ Action Renderer::draw(const Game &game) {
             action = Action::VegetationLess;
         if (button("MORE", 229, 700, 75, 39))
             action = Action::VegetationMore;
+        if (game.screen == Screen::Expedition) {
+            panel(895, 580, 361, 105, Panel);
+            text("GROUND SURFACE", 915, 599, 22, Gold);
+            if (button(game.visualSettings.groundDetail ? "DETAIL ON" : "DETAIL OFF", 915, 634, 321, 34))
+                action = Action::ToggleGroundDetail;
+        }
     }
     if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen &&
         !game.run->shopOpen)

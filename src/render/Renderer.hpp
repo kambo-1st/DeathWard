@@ -21,6 +21,9 @@ class Renderer {
     int missionVegetationCount() const {
         return westernScene_.vegetationCount();
     }
+    void setGroundDetail(bool enabled) {
+        westernScene_.setGroundDetail(enabled);
+    }
     const ParticleEffects &missionEffects() const { return missionEffects_; }
     bool insideBuilding() const { return townScene_.interior().has_value(); }
     const ParticleEffects &townEffects() const { return townScene_.effects(); }

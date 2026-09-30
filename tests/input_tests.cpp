@@ -332,6 +332,15 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     frame();
     const auto duration = game.run->stats.duration;
     const auto plants = renderer.missionVegetationCount();
+    check(game.visualSettings.groundDetail, "ground surface detail starts enabled");
+    frame(1075, 650, true);
+    frame(1075, 650);
+    frame();
+    check(!game.visualSettings.groundDetail, "pause ground detail toggles off without cheats");
+    frame(1075, 650, true);
+    frame(1075, 650);
+    frame();
+    check(game.visualSettings.groundDetail, "pause ground detail toggles on again");
     click(178);
     check(game.visualSettings.vegetation == 75 && renderer.missionVegetationCount() < plants,
           "pause LESS reduces vegetation immediately without cheats");
@@ -349,9 +358,16 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     check(game.paused && game.run->stats.duration == duration && game.run->stats.shots == 0,
           "vegetation controls never advance combat or fire the weapon");
     const auto preferences = directory / "visual.cfg";
+    game.visualSettings.groundDetail = false;
     check(saveVisualSettings(preferences, game.visualSettings) &&
               loadVisualSettings(preferences) == game.visualSettings,
           "vegetation preference survives a settings reload");
+    {
+        std::ofstream legacy(preferences);
+        legacy << "DEATHWARD_VISUAL 1\n175\n";
+    }
+    check(loadVisualSettings(preferences).vegetation == 175 && loadVisualSettings(preferences).groundDetail,
+          "old vegetation preferences migrate while enabling the new floor detail");
     {
         std::ofstream bad(preferences);
         bad << "DEATHWARD_VISUAL 1\n-25\n";

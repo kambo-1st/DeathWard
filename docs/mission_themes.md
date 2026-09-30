@@ -46,6 +46,29 @@ half-metre margin. A 5×5 ground sample rejects height spreads above 10 cm, so
 steep banks and cliff edges cannot host them. The test suite probes the resulting
 placements at a finer spacing as well.
 
+## Ground surface trial
+
+Both generated themes use the same optional `GroundSurface` treatment, enabled by
+default. World coordinates drive seeded, softly warped sand/dirt patches and finer
+grain/gravel. Fine frequencies fade with pixel footprint to avoid camera shimmer.
+No texture is stretched to room bounds, and adjacent floor strips share the same
+pattern. Canyon detail fades out above the low wall foot, leaving the upper cliffs
+and caps in their original palette. Imported props keep their original materials.
+
+A half-metre soil mask is generated once per arena (capped at 1024 pixels per axis).
+An eight-neighbour distance transform finds ground near actual canyon relief,
+mine obstacles and small ground rocks. It supplies subtle material darkening at
+their bases. The mask is independent of vegetation density and camera fading.
+It is sampled from a borrowed material map alongside the existing atlas and shadow
+depth; `GroundSurface` owns and releases the texture. No geometry, collision or
+gameplay random streams change.
+
+**Pause → Ground Surface → Detail On/Off** switches immediately without regenerating
+the map. `visual.cfg` version 2 saves this flag alongside vegetation density;
+version 1 files retain their density and enable the new surface. Toggle off to
+restore the original floor. Static hubs and the abandoned art experiment are
+unaffected.
+
 ## Extension points
 
 - `src/world/MissionTheme.hpp`: theme identifiers, seeded resolution, titles and base colors.

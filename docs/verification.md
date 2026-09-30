@@ -1,5 +1,27 @@
 # Milestone 1 verification
 
+## Generated floor surface trial
+
+`GroundSurface` adds seeded world-space dirt/sand patches, fine grain and small
+gravel flecks to canyon and mine floors. A bounded soil texture follows nearby
+terrain/cover instead of adding new geometry or decals. The existing atlas,
+lighting and post-process remain. The default-on detail can be switched off in
+the mission pause menu; the preference persists in version 2 of `visual.cfg`.
+Version 1 vegetation settings migrate without losing their density.
+
+The mission lighting suite now renders both themes with detail off/on/off and
+requires exact pixel restoration. It passes, along with geometric shadow checks
+(mine 274/274; canyon 273/275 shadowed samples). Native pause input checks cover
+the toggle without cheats, persistence and old preference migration. Browser
+vegetation checks also exercise the surface switch and reload the saved flag.
+Both browser themes pass, as do WebGL room travel, orbit/zoom and the 8-bit
+rendering fallback. The Western asset suite also passes its five seeds per theme,
+including unchanged placement, ground picking and resource reload checks.
+
+In-game comparisons with the common post-process are captured at
+`artifacts/ground-surface-{canyon,mine}-{before,after}.png`. Logs and native material
+comparisons use the same `ground-surface-*` prefix.
+
 ## Vegetation density and flat cactus placement
 
 The pause menu in hubs and expeditions has one vegetation control, with Less/More

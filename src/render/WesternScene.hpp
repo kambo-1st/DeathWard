@@ -1,5 +1,6 @@
 #pragma once
 #include "core/VisualSettings.hpp"
+#include "render/GroundSurface.hpp"
 #include "render/MissionLighting.hpp"
 #include "render/PlayerOcclusion.hpp"
 #include "world/Dungeon.hpp"
@@ -65,6 +66,9 @@ class WesternScene {
     void unload();
     void prepare(const Arena &arena);
     void setVegetationDensity(int percent);
+    void setGroundDetail(bool enabled) {
+        ground_.enabled = enabled;
+    }
     void draw(Vector3 focus);
     void prepareLighting(const Camera3D &camera, const std::function<void(Shader, Shader)> &actors = {});
     const MissionLighting &lighting() const {
@@ -131,6 +135,7 @@ class WesternScene {
     Shader terrainShader_{};
     Material terrainMaterial_{};
     MissionLighting lighting_;
+    GroundSurface ground_;
     void clearTerrain();
     void generateCanyon(const Arena &arena);
     void drawTerrain(Vector3 focus);

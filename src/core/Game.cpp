@@ -241,6 +241,9 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::ToggleGroundDetail:
+            visualSettings.groundDetail = !visualSettings.groundDetail;
+            break;
         case Action::VegetationLess:
         case Action::VegetationMore:
             visualSettings.vegetation =

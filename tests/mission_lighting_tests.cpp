@@ -211,6 +211,50 @@ void verifyCanyon() {
     check(scene.load(), "scene reload succeeds after releasing borrowed depth textures");
     std::cout << "PASS generated terrain sun rays, camera fading, theme switching and resource reload\n";
 }
+void verifyGroundDetail() {
+    for (auto theme : {MissionTheme::Mine, MissionTheme::Canyon}) {
+        WesternScene scene;
+        Arena arena(1866, theme);
+        scene.prepare(arena);
+        const auto focus = arena.rooms[2].center;
+        Camera3D camera{add(focus, {0, 70, .01f}), focus, {0, 0, -1}, 45, CAMERA_ORTHOGRAPHIC};
+        scene.setPlayerOcclusion(camera, focus, false);
+        scene.prepareLighting(camera);
+        auto render = [&] {
+            return capture(camera, [&] {
+                scene.draw(focus);
+                scene.drawGlass();
+            });
+        };
+        scene.setGroundDetail(false);
+        auto flat = render();
+        scene.setGroundDetail(true);
+        auto detailed = render();
+        scene.setGroundDetail(false);
+        auto restored = render();
+        int changed = 0;
+        for (int y = 0; y < flat.height; ++y)
+            for (int x = 0; x < flat.width; ++x) {
+                const auto before = GetImageColor(flat, x, y), after = GetImageColor(detailed, x, y);
+                const auto original = GetImageColor(restored, x, y);
+                check(before.r == original.r && before.g == original.g && before.b == original.b &&
+                          before.a == original.a,
+                      "disabling floor detail exactly restores the original render");
+                changed += std::abs(int(before.r) - after.r) + std::abs(int(before.g) - after.g) +
+                               std::abs(int(before.b) - after.b) >
+                           6;
+            }
+        check(changed > flat.width * flat.height / 15,
+              "ground detail visibly breaks up the flat floor in both mission themes");
+        const std::string name = theme == MissionTheme::Canyon ? "canyon" : "mine";
+        ExportImage(flat, ("artifacts/ground-surface-flat-" + name + ".png").c_str());
+        ExportImage(detailed, ("artifacts/ground-surface-detail-" + name + ".png").c_str());
+        for (auto image : {flat, detailed, restored})
+            UnloadImage(image);
+        std::cout << "PASS " << name << " floor variation and exact toggle restoration (" << changed
+                  << " pixels)\n";
+    }
+}
 } // namespace
 int main() {
     SetConfigFlags(FLAG_WINDOW_HIDDEN);
@@ -222,6 +266,7 @@ int main() {
         verifyDepth();
         verifyMine();
         verifyCanyon();
+        verifyGroundDetail();
     } catch (const std::exception &e) {
         std::cerr << "FAIL: " << e.what() << '\n';
         result = 1;
