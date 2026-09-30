@@ -1,9 +1,17 @@
 """Compose the first physical story hub without resizing its restored terrain."""
 import json
 import math
+from itertools import product
 from pathlib import Path
 
 import numpy as np
+
+
+def footprint(placement, assets):
+    bounds = assets[placement['asset']]['bounds']
+    corners = np.array([[*p, 1] for p in product(*zip(*bounds))])
+    points = (np.array(placement['transform']).reshape(4, 4) @ corners.T).T[:, [0, 2]]
+    return points.min(axis=0), points.max(axis=0)
 
 
 def dress_story(town, frontier, library, placements, motion):
@@ -17,6 +25,11 @@ def dress_story(town, frontier, library, placements, motion):
         if p['object'] == 'frontier-1795388179:1019634710757188':
             p['transform'][7] -= .5
             p['editor_offset_y'] = -.5
+    # The guarded yard reuses its existing cot. Remove the two old stockpiles
+    # crossed by its new fence; retain the catalog so editor asset indices stay
+    # compatible with earlier maps.
+    removed_groups = {f"{g['pack']}-{g['group']}" for g in layout.get('removed_source_groups', [])}
+    placements[:] = [p for p in placements if p['object'].split(':')[0] not in removed_groups]
 
     additions = []
     for prop in layout['props']:
@@ -47,8 +60,13 @@ def dress_story(town, frontier, library, placements, motion):
                 source_pack=pack.name, source_object=original['object'], section=prop['section'],
                 composition_transform=transform.flatten().tolist()))
 
-    # Clear only loose canyon clutter close to new camp furniture; preserve every
-    # cliff, terrain patch, original settlement building and railway transform.
+    # Reserve full prefab extents (including ropes/shafts) and circulation spaces,
+    # rather than just a radius around each object's origin. Only loose canyon
+    # clutter is removed; cliffs, ground, fort and railway remain intact.
+    reserved = [(low - .7, high + .7) for p in additions
+                for low, high in [footprint(p, library.assets)]]
+    reserved += [(np.array(space['min']), np.array(space['max']))
+                 for space in layout.get('clear_spaces', [])]
     source = {p['object']: p for p in town.manifest['placements']}
     clear = []
     for p in placements:
@@ -56,10 +74,10 @@ def dress_story(town, frontier, library, placements, motion):
             continue
         original = source[p['source_object']]
         stem = Path(original['prefab']).stem
-        if any(s in stem for s in ('Rock', 'Grass', 'Cactus', 'Bush', 'Dead_Tree', 'DustPile')):
-            x,z = p['transform'][3],p['transform'][11]
-            if any(abs(x-a['position'][0]) < 4 and abs(z-a['position'][2]) < 4
-                   for a in layout['props']):
+        if (any(s in stem for s in ('Rock', 'Grass', 'Cactus', 'Bush', 'DustPile')) or
+                ('Tree' in stem and 'Dead' in stem)):
+            low, high = footprint(p, library.assets)
+            if any(np.all(high > start) and np.all(low < end) for start, end in reserved):
                 clear.append(p['object'])
     placements[:] = [p for p in placements if p['object'] not in clear] + additions
     motion['paths'][0]['speed'] = 0

@@ -30,12 +30,14 @@ inline void prepareBrowserFiles() {
                     for (const byte of bytes) hash = Math.imul(hash ^ byte, 16777619) >>> 0;
                     return hash === expected;
                 };
-                // Upgrade only the untouched, approved pre-story scene/nav pair.
+                // Upgrade only known untouched shipped scene/nav pairs.
                 // Edited maps retain their layout and train/character settings.
                 if ((matches('town.scene', 164220, 1179254129) &&
                      matches('town.nav', 5760052, 342212985)) ||
                     (matches('town.scene', 239972, 21795443) &&
-                     matches('town.nav', 5760052, 576788661))) {
+                     matches('town.nav', 5760052, 576788661)) ||
+                    (matches('town.scene', 260594, 418788540) &&
+                     matches('town.nav', 5760052, 1738682236))) {
                     for (const name of ['town.scene', 'town.nav'])
                         FS.writeFile(destination + '/' + name, FS.readFile('/assets/redstone/' + name));
                 }

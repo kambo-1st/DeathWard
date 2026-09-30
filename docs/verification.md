@@ -1,5 +1,41 @@
 # Milestone 1 verification
 
+## Redstone placement corrections
+
+Content version `deathward-m1-40` clears the road by moving the kitchen into a
+side court and the market/water services into roadside spaces. The prospectors
+use level ground with a direct wagon approach. Twelve joined picket sections
+provide one guarded entrance. The command desk and evidence chest use the cabin
+porch; personal belongings sit under canvas. Witness neighborhoods and the final
+wagon remain, with refined gathering spaces. Resident positions and routes follow
+the moved services. The existing cot and seating replace redundant additions;
+two inherited stockpiles intersecting the fence are removed.
+
+The final pack has 1,000 placements, 69 added prop groups, 15 tents, 15 residents
+and 826,838 connected navigation cells. Its 212-entry catalog, GLB, labels and
+eight embedded texture images are unchanged. Sand piles, train route, canyon
+scale and fort architecture retain their transforms. Five authored clear spaces
+reserve the road, gate approach, passenger unloading, wagon approach and final
+gathering area. Loose-clutter removal checks full extents, including dead trees.
+
+The source audit rejects added props crossing reserved spaces. Native checks
+cover a six-metre clear road, a level wagon approach, solid fence runs, passage
+through the guarded opening, separation from inherited furniture, all resident
+routes and the ordinary hub round trips. Captures include the market, kitchen,
+witness courts, custody, command porch and prospectors. Browser migration checks
+upgrade the known untouched `m1-39` scene/navigation pair and preserve edited
+scene or navigation files; applying migration twice is stable. The focused
+browser suite covers hub travel, mission return, residents, editor save/reload,
+legacy edited catalogs and WebGL errors.
+
+All 19 core suites pass, as do the native rendering/source audits and focused
+browser suite. An isolated rebuild reproduces the scene, navigation, GLB, labels
+and manifest byte for byte. The refreshed 84.8 MiB upload package passes archive
+hashes and browser startup at both the domain root and `/deathward/`.
+
+Logs and captures use `artifacts/redstone-layout-*`. The original review and its
+applied corrections are in [the placement audit](redstone_placement_review.md).
+
 ## Redstone physical story hub
 
 Content version `deathward-m1-39` adds the stranded-train arrival, buried outgoing

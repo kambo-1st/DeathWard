@@ -7,6 +7,7 @@ from pathlib import Path
 import struct
 
 import numpy as np
+from redstone_story import footprint
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -101,6 +102,15 @@ def verify(directory):
             instances.append((assets[int(parts[1])], parts[2], list(map(float, parts[3:]))))
     assert instances == [(p['asset'], p['object'], p['transform']) for p in manifest['placements']]
     assert len({p['object'] for p in manifest['placements']}) == len(instances)
+    # Ropes, shafts and furniture must stay outside the authored circulation
+    # spaces. A walkable detour does not make a tent in the road acceptable.
+    for space in manifest.get('story', {}).get('clear_spaces', []):
+        for p in manifest['placements']:
+            if not p['object'].startswith('story-'):
+                continue
+            low, high = footprint(p, manifest['assets'])
+            assert not (np.all(high > np.array(space['min'])) and
+                        np.all(low < np.array(space['max']))), (space['id'], p['object'])
     assert len(manifest['train_motion']['groups']) == 4
     assert manifest['train_motion']['paths'][0]['dwell'] == 0
     assert manifest['train_motion']['paths'][0]['speed'] == 0

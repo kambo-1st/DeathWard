@@ -165,4 +165,4 @@ Use `?hub=redstone` to start beside the stranded train in the authored canyon fo
 
 `node web/redstone-test.cjs` checks travel, mission return, train pause, editor saving and reload. The package check also starts Redstone from a nested deployment path.
 
-The story-hub upgrade replaces only the known untouched pre-story scene/navigation pair. Other saved layouts keep their authored objects, routes and markers; new unused asset entries and labels append to make the expanded model catalog compatible.
+Story-hub upgrades replace only known untouched shipped scene/navigation pairs, including the first story layout before the road and camp corrections. Other saved layouts keep their authored objects, routes and markers; new unused asset entries and labels append to make the expanded model catalog compatible.

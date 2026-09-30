@@ -47,6 +47,22 @@ int main() {
         check(doc.paths.front().dwell == 0, "The stationless train has no scheduled stop");
         check(doc.paths.front().speed == 0, "The storm has stranded the train");
         check(doc.characters.size() == 15, "The hub has a provisional cast and ambient residents");
+        for (size_t n = 0; n < doc.instances.size(); ++n) {
+            const auto &placed = doc.instances[n];
+            if (!placed.id.starts_with("story-") ||
+                !doc.assets[placed.asset].label.starts_with("SM_Prop_")) continue;
+            const auto a = doc.bounds(n);
+            for (size_t other = 0; other < doc.instances.size(); ++other) {
+                const auto &inherited = doc.instances[other];
+                if (inherited.id.starts_with("story-") ||
+                    !doc.assets[inherited.asset].label.starts_with("SM_Prop_")) continue;
+                const auto b = doc.bounds(other);
+                check(!(a.min.x < b.max.x && a.max.x > b.min.x &&
+                        a.min.y < b.max.y && a.max.y > b.min.y &&
+                        a.min.z < b.max.z && a.max.z > b.min.z),
+                      "Added furniture and fences leave inherited furniture clear");
+            }
+        }
         HubWorld hub;
         check(hub.load(directory / "town.nav"), "Redstone navigation loads");
         check(hub.walkableCells() > 800000, "The full restored canyon retains its explorable scale");
@@ -62,6 +78,30 @@ int main() {
         walk(hub, {0,0,23});
         walk(hub, arrival);
         walk(hub, {-38,0,-54});
+        // Reserve the actual road width, not merely a path around misplaced
+        // tents. Wagon shafts and guy ropes count as obstructions too.
+        for (float x = -36; x <= 24; x += .5f)
+            for (float z = -3; z <= 3; z += .5f)
+                check(hub.walkable({x,0,z}), "The main road retains six clear metres through camp");
+        for (float z = -8; z <= -4.5f; z += .25f)
+            for (float x = 26.6f; x <= 29.4f; x += .2f)
+                check(hub.walkable({x,0,z}) && hub.height({x,0,z}) < .5f,
+                      "The prospector wagon has a ground-level approach wide enough for its wheels");
+        walk(hub, {-22,0,-17});  // kitchen courtyard
+        walk(hub, {14,0,6.6f}); // market customers
+        walk(hub, {-8,0,7.7f}); // water supply
+        walk(hub, {2,0,-23});   // sheltered command desk
+        walk(hub, {16.5f,0,-18}); // guarded custody entrance
+        check(hub.canTraverse({13.3f,0,-18.1f}, {16.3f,0,-18.1f}),
+              "One deliberate guarded entrance leads into the holding yard");
+        for (float z = -25; z <= -11.2f; z += .1f) {
+            if (z > -18.8f && z < -17) continue;
+            check(!hub.canTraverse({13.3f,0,z}, {16.3f,0,z}),
+                  "The holding fence has no accidental gaps beside the guarded entrance");
+        }
+        for (float x = 15; x < 21; x += .1f)
+            check(!hub.canTraverse({x,0,-27}, {x,0,-24}),
+                  "The holding fence closes against the fort along its southern edge");
         for (const auto &resident : doc.characters) {
             if (!hub.walkable(resident.position))
                 throw std::runtime_error("Resident starts on blocked ground: " + resident.id);

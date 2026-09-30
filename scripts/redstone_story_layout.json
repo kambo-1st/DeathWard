@@ -1,5 +1,5 @@
 {
-  "revision": 1,
+  "revision": 2,
   "title": "Stranded at Redstone",
   "spawn": [
     0,
@@ -43,9 +43,9 @@
       "pack": "town",
       "prefab": "SM_Prop_Suitcase_01",
       "position": [
-        19,
-        -0.307,
-        12
+        23,
+        -0.226,
+        14
       ],
       "yaw": 65,
       "scale": 1,
@@ -91,8 +91,8 @@
       "prefab": "SM_Veh_Wagon_Shop_01",
       "position": [
         15,
-        -0.069,
-        3
+        -0.356,
+        11
       ],
       "yaw": 90,
       "scale": 1,
@@ -103,9 +103,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_01",
       "position": [
-        19,
-        -0.448,
-        7
+        19.5,
+        -0.375,
+        10.4
       ],
       "yaw": 0,
       "scale": 1,
@@ -116,11 +116,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_01",
       "position": [
-        20,
-        -0.348,
-        5
+        19.5,
+        -0.319,
+        11.3
       ],
-      "yaw": 23,
+      "yaw": 0,
       "scale": 1,
       "section": "market"
     },
@@ -129,11 +129,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_01",
       "position": [
-        13,
-        -0.456,
-        8
+        20.6,
+        -0.376,
+        10.4
       ],
-      "yaw": 46,
+      "yaw": 0,
       "scale": 1,
       "section": "market"
     },
@@ -142,9 +142,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Table_01",
       "position": [
-        10,
-        -0.033,
-        2
+        14,
+        -0.457,
+        7.8
       ],
       "yaw": 90,
       "scale": 1,
@@ -155,11 +155,11 @@
       "pack": "town",
       "prefab": "SM_Prop_Sack_01",
       "position": [
-        18,
-        -0.458,
-        8
+        20.6,
+        -0.314,
+        11.3
       ],
-      "yaw": 10,
+      "yaw": 0,
       "scale": 1,
       "section": "market"
     },
@@ -169,8 +169,8 @@
       "prefab": "SM_Prop_WaterTrough_01",
       "position": [
         -8,
-        -0.352,
-        5
+        -0.273,
+        9.5
       ],
       "yaw": 0,
       "scale": 1,
@@ -182,8 +182,8 @@
       "prefab": "SM_Prop_Barrel_Dirt_01",
       "position": [
         -11,
-        -0.37,
-        6
+        -0.183,
+        11
       ],
       "yaw": 0,
       "scale": 1,
@@ -195,10 +195,10 @@
       "prefab": "SM_Prop_Barrel_Dirt_01",
       "position": [
         -10,
-        -0.37,
-        6
+        -0.212,
+        11
       ],
-      "yaw": 40,
+      "yaw": 0,
       "scale": 1,
       "section": "market"
     },
@@ -207,11 +207,11 @@
       "pack": "frontier",
       "prefab": "SM_Bld_Tent_01",
       "position": [
-        -18,
-        -0.047,
-        0
+        -23,
+        -0.102,
+        -13
       ],
-      "yaw": 90,
+      "yaw": 180,
       "scale": 1,
       "section": "cookfires"
     },
@@ -220,9 +220,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Campfire_Small_01",
       "position": [
-        -12,
-        -0.049,
-        -1
+        -22,
+        0.065,
+        -19.5
       ],
       "yaw": 0,
       "scale": 1,
@@ -233,12 +233,12 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Table_01",
       "position": [
-        -12,
-        0.02,
-        -5
+        -23.45,
+        -0.22,
+        -13.7
       ],
-      "yaw": 20,
-      "scale": 1,
+      "yaw": 90,
+      "scale": 0.8,
       "section": "cookfires"
     },
     {
@@ -246,9 +246,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Chair_01",
       "position": [
-        -10,
-        0.023,
-        -5
+        -25,
+        -0.127,
+        -19
       ],
       "yaw": 90,
       "scale": 1,
@@ -260,8 +260,8 @@
       "prefab": "SM_Bld_Tent_01",
       "position": [
         -26,
-        -0.292,
-        7
+        -0.265,
+        10.8
       ],
       "yaw": 0,
       "scale": 1,
@@ -427,11 +427,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_RockingChair_01",
       "position": [
-        -25,
-        -0.2,
-        -22
+        -25.8,
+        -0.062,
+        -21.3
       ],
-      "yaw": 210,
+      "yaw": 290,
       "scale": 1,
       "section": "wife"
     },
@@ -440,11 +440,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Chest_01",
       "position": [
-        -31,
-        -0.275,
-        -24
+        -28.65,
+        -0.21,
+        -24.5
       ],
-      "yaw": 25,
+      "yaw": 0,
       "scale": 1,
       "section": "wife"
     },
@@ -453,9 +453,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Lantern_01",
       "position": [
-        -25,
-        -0.325,
-        -24
+        -28.65,
+        0.485,
+        -24.5
       ],
       "yaw": 0,
       "scale": 1,
@@ -467,10 +467,10 @@
       "prefab": "SM_Bld_Tent_01",
       "position": [
         -31,
-        -0.433,
+        -0.431,
         -8
       ],
-      "yaw": 0,
+      "yaw": 180,
       "scale": 1,
       "section": "spiritualist"
     },
@@ -479,12 +479,12 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Table_01",
       "position": [
-        -31,
-        -0.397,
-        -12
+        -31.45,
+        -0.435,
+        -8.8
       ],
       "yaw": 90,
-      "scale": 1,
+      "scale": 0.8,
       "section": "spiritualist"
     },
     {
@@ -492,11 +492,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Chair_01",
       "position": [
-        -34,
-        -0.349,
-        -13
+        -33.5,
+        -0.362,
+        -12.8
       ],
-      "yaw": 70,
+      "yaw": 55,
       "scale": 1,
       "section": "spiritualist"
     },
@@ -506,8 +506,8 @@
       "prefab": "SM_Prop_Chair_01",
       "position": [
         -31,
-        -0.283,
-        -15
+        -0.32,
+        -14
       ],
       "yaw": 0,
       "scale": 1,
@@ -518,11 +518,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Chair_01",
       "position": [
-        -28,
-        -0.332,
-        -13
+        -28.5,
+        -0.353,
+        -12.8
       ],
-      "yaw": -70,
+      "yaw": 305,
       "scale": 1,
       "section": "spiritualist"
     },
@@ -544,9 +544,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_01",
       "position": [
-        -29,
-        -0.097,
-        -32
+        -31.6,
+        -0.29,
+        -35.3
       ],
       "yaw": 0,
       "scale": 0.8,
@@ -570,9 +570,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_01",
       "position": [
-        -36,
-        -0.331,
-        -38
+        -38.3,
+        -0.29,
+        -41.5
       ],
       "yaw": 40,
       "scale": 0.8,
@@ -596,9 +596,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_01",
       "position": [
-        15,
-        -0.387,
-        -47
+        13.5,
+        -0.053,
+        -50.3
       ],
       "yaw": 15,
       "scale": 0.8,
@@ -609,11 +609,11 @@
       "pack": "frontier",
       "prefab": "SM_Bld_Tent_02",
       "position": [
-        23,
-        1.577,
-        -53
+        6,
+        -0.08,
+        -49
       ],
-      "yaw": -20,
+      "yaw": 0,
       "scale": 1,
       "section": "settlers"
     },
@@ -622,11 +622,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_01",
       "position": [
-        25,
-        1.67,
-        -50
+        6.6,
+        -0.065,
+        -49.3
       ],
-      "yaw": -20,
+      "yaw": 0,
       "scale": 0.8,
       "section": "settlers"
     },
@@ -675,8 +675,8 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Campfire_Small_01",
       "position": [
-        29,
-        -0.215,
+        30,
+        -0.378,
         -19
       ],
       "yaw": 0,
@@ -688,12 +688,12 @@
       "pack": "frontier",
       "prefab": "SM_Prop_LogPile_01",
       "position": [
-        31,
-        -0.264,
-        -22
+        33.5,
+        -0.334,
+        -21
       ],
-      "yaw": 60,
-      "scale": 1,
+      "yaw": 90,
+      "scale": 0.55,
       "section": "scout"
     },
     {
@@ -701,11 +701,11 @@
       "pack": "frontier",
       "prefab": "SM_Bld_Tent_02",
       "position": [
-        35,
-        -0.001,
-        -34
+        34,
+        -0.43,
+        -15.5
       ],
-      "yaw": 30,
+      "yaw": 0,
       "scale": 1,
       "section": "prospectors"
     },
@@ -714,11 +714,11 @@
       "pack": "frontier",
       "prefab": "SM_Veh_Wagon_Travel_01",
       "position": [
-        29,
-        1.607,
-        -45
+        28,
+        -0.24,
+        -12.5
       ],
-      "yaw": 15,
+      "yaw": 0,
       "scale": 1,
       "section": "prospectors"
     },
@@ -727,12 +727,12 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Crate_02",
       "position": [
-        33,
-        1.398,
-        -39
+        34.4,
+        -0.43,
+        -16.1
       ],
-      "yaw": 15,
-      "scale": 1,
+      "yaw": 0,
+      "scale": 0.55,
       "section": "prospectors"
     },
     {
@@ -740,9 +740,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_PikeFence_02",
       "position": [
-        15,
+        14.7,
         0.045,
-        -18
+        -24.7
       ],
       "yaw": 90,
       "scale": 1,
@@ -753,9 +753,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_PikeFence_02",
       "position": [
-        15,
+        14.7,
         0.045,
-        -21
+        -23
       ],
       "yaw": 90,
       "scale": 1,
@@ -766,9 +766,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_PikeFence_02",
       "position": [
-        15,
+        14.7,
         0.045,
-        -24
+        -21.3
       ],
       "yaw": 90,
       "scale": 1,
@@ -779,11 +779,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_PikeFence_02",
       "position": [
-        17,
+        14.7,
         0.045,
-        -25
+        -19.6
       ],
-      "yaw": 0,
+      "yaw": 90,
       "scale": 1,
       "section": "holding-yard"
     },
@@ -792,24 +792,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_PikeFence_02",
       "position": [
-        20,
+        14.7,
         0.045,
-        -25
+        -16.2
       ],
-      "yaw": 0,
-      "scale": 1,
-      "section": "holding-yard"
-    },
-    {
-      "id": "holding-bed",
-      "pack": "frontier",
-      "prefab": "SM_Prop_CampBed_01",
-      "position": [
-        18,
-        0.045,
-        -21
-      ],
-      "yaw": 0,
+      "yaw": 90,
       "scale": 1,
       "section": "holding-yard"
     },
@@ -818,11 +805,11 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Table_01",
       "position": [
-        7,
-        0.05,
-        -29
+        -1.5,
+        0.42,
+        -23
       ],
-      "yaw": 90,
+      "yaw": 0,
       "scale": 1,
       "section": "command"
     },
@@ -831,22 +818,9 @@
       "pack": "frontier",
       "prefab": "SM_Prop_Chest_01",
       "position": [
-        9,
-        0.05,
-        -30
-      ],
-      "yaw": 20,
-      "scale": 1,
-      "section": "command"
-    },
-    {
-      "id": "evidence-chair",
-      "pack": "frontier",
-      "prefab": "SM_Prop_Chair_01",
-      "position": [
-        7,
-        0.05,
-        -31
+        -1.6,
+        0.42,
+        -27.45
       ],
       "yaw": 0,
       "scale": 1,
@@ -864,6 +838,97 @@
       "yaw": 0,
       "scale": 1,
       "section": "badlands"
+    },
+    {
+      "id": "holding-fence-5",
+      "pack": "frontier",
+      "prefab": "SM_Prop_PikeFence_02",
+      "position": [
+        14.7,
+        0.045,
+        -14.5
+      ],
+      "yaw": 90,
+      "scale": 1,
+      "section": "holding-yard"
+    },
+    {
+      "id": "holding-fence-6",
+      "pack": "frontier",
+      "prefab": "SM_Prop_PikeFence_02",
+      "position": [
+        14.7,
+        0.045,
+        -12.8
+      ],
+      "yaw": 90,
+      "scale": 1,
+      "section": "holding-yard"
+    },
+    {
+      "id": "holding-fence-7",
+      "pack": "frontier",
+      "prefab": "SM_Prop_PikeFence_02",
+      "position": [
+        14.7,
+        0.045,
+        -11.1
+      ],
+      "yaw": 90,
+      "scale": 1,
+      "section": "holding-yard"
+    },
+    {
+      "id": "holding-fence-8",
+      "pack": "frontier",
+      "prefab": "SM_Prop_PikeFence_02",
+      "position": [
+        15.55,
+        0.045,
+        -25.65
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "holding-yard"
+    },
+    {
+      "id": "holding-fence-9",
+      "pack": "frontier",
+      "prefab": "SM_Prop_PikeFence_02",
+      "position": [
+        17.25,
+        0.045,
+        -25.65
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "holding-yard"
+    },
+    {
+      "id": "holding-fence-10",
+      "pack": "frontier",
+      "prefab": "SM_Prop_PikeFence_02",
+      "position": [
+        18.95,
+        0.045,
+        -25.65
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "holding-yard"
+    },
+    {
+      "id": "holding-fence-11",
+      "pack": "frontier",
+      "prefab": "SM_Prop_PikeFence_02",
+      "position": [
+        20.65,
+        0.045,
+        -25.65
+      ],
+      "yaw": 0,
+      "scale": 1,
+      "section": "holding-yard"
     }
   ],
   "characters": [
@@ -871,11 +936,11 @@
       "id": "story-commander",
       "model": "bandit",
       "position": [
-        6,
+        0.7,
         0,
-        -27
+        -23.3
       ],
-      "yaw": 180,
+      "yaw": 270,
       "scale": 1,
       "speed": 0,
       "dwell": 4,
@@ -901,9 +966,9 @@
       "id": "story-guard",
       "model": "bandit",
       "position": [
-        13,
+        13.2,
         0,
-        -17
+        -18
       ],
       "yaw": 90,
       "scale": 1,
@@ -912,9 +977,9 @@
       "loop": true,
       "stops": [
         [
-          12,
+          13.1,
           0,
-          -22
+          -19.5
         ]
       ]
     },
@@ -922,11 +987,11 @@
       "id": "story-wife",
       "model": "cowgirl",
       "position": [
-        -27,
+        -28,
         0,
-        -21
+        -21.3
       ],
-      "yaw": 40,
+      "yaw": 0,
       "scale": 1,
       "speed": 0,
       "dwell": 4,
@@ -937,9 +1002,9 @@
       "id": "story-spiritualist",
       "model": "bandit",
       "position": [
-        -33,
+        -31,
         0,
-        -12
+        -11.5
       ],
       "yaw": 180,
       "scale": 1,
@@ -952,11 +1017,11 @@
       "id": "story-scout",
       "model": "bandit",
       "position": [
-        27,
+        33,
         0,
-        -21
+        -25
       ],
-      "yaw": 310,
+      "yaw": 90,
       "scale": 1,
       "speed": 0,
       "dwell": 4,
@@ -967,11 +1032,11 @@
       "id": "story-merchant",
       "model": "cowgirl",
       "position": [
-        11,
+        14,
         0,
-        4
+        9
       ],
-      "yaw": 270,
+      "yaw": 180,
       "scale": 1,
       "speed": 0,
       "dwell": 4,
@@ -982,11 +1047,11 @@
       "id": "story-cook",
       "model": "cowgirl",
       "position": [
-        -11,
+        -22,
         0,
-        -3
+        -16.5
       ],
-      "yaw": 260,
+      "yaw": 240,
       "scale": 1,
       "speed": 0,
       "dwell": 4,
@@ -999,7 +1064,7 @@
       "position": [
         2,
         0,
-        10
+        11
       ],
       "yaw": 180,
       "scale": 1,
@@ -1008,9 +1073,9 @@
       "loop": true,
       "stops": [
         [
-          -4,
+          -8,
           0,
-          7
+          7.7
         ]
       ]
     },
@@ -1018,20 +1083,20 @@
       "id": "story-passenger-two",
       "model": "bandit",
       "position": [
-        17,
+        21,
         0,
-        10
+        14
       ],
-      "yaw": 270,
+      "yaw": 180,
       "scale": 1,
       "speed": 1.1,
       "dwell": 4,
       "loop": true,
       "stops": [
         [
-          7,
+          14,
           0,
-          8
+          6.6
         ]
       ]
     },
@@ -1062,7 +1127,7 @@
       "position": [
         -26,
         0,
-        12
+        14.3
       ],
       "yaw": 270,
       "scale": 1,
@@ -1071,9 +1136,9 @@
       "loop": true,
       "stops": [
         [
-          -29,
+          -29.5,
           0,
-          14
+          14.5
         ]
       ]
     },
@@ -1102,11 +1167,11 @@
       "id": "story-prospector",
       "model": "bandit",
       "position": [
-        30,
+        33.2,
         0,
-        -39
+        -12.2
       ],
-      "yaw": 35,
+      "yaw": 180,
       "scale": 1,
       "speed": 1.1,
       "dwell": 4,
@@ -1115,7 +1180,7 @@
         [
           30,
           0,
-          -34
+          -9
         ]
       ]
     },
@@ -1139,6 +1204,75 @@
           -44
         ]
       ]
+    }
+  ],
+  "clear_spaces": [
+    {
+      "id": "through-road",
+      "min": [
+        -39,
+        -4.5
+      ],
+      "max": [
+        25,
+        5.9
+      ]
+    },
+    {
+      "id": "fort-gate-approach",
+      "min": [
+        -2.5,
+        -9
+      ],
+      "max": [
+        0.5,
+        -4.5
+      ]
+    },
+    {
+      "id": "passenger-unloading",
+      "min": [
+        -4,
+        13.2
+      ],
+      "max": [
+        22,
+        14.1
+      ]
+    },
+    {
+      "id": "prospector-wagon-approach",
+      "min": [
+        26.3,
+        -8
+      ],
+      "max": [
+        29.7,
+        -4.5
+      ]
+    },
+    {
+      "id": "ending-wagon-gathering",
+      "min": [
+        -39.5,
+        -53
+      ],
+      "max": [
+        -35.5,
+        -50
+      ]
+    }
+  ],
+  "removed_source_groups": [
+    {
+      "pack": "frontier",
+      "group": "393633817",
+      "reason": "Stockpile intersects the continuous holding fence and guarded entrance."
+    },
+    {
+      "pack": "frontier",
+      "group": "544948540",
+      "reason": "Crate intersects the holding fence at the existing fort tower."
     }
   ]
 }

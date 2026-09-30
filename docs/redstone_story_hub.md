@@ -8,6 +8,12 @@ Fifteen provisional residents use the existing cowgirl and bandit models, with
 editable positions and routes. Dialogue, testimony expeditions, evidence systems,
 storm phases and the final event remain planned.
 
+The [placement review](redstone_placement_review.md) records the original audit
+and the accepted corrections. The kitchen and market now sit beside the road,
+the holding fence has continuous runs and one guarded entrance, the prospectors
+use a level pull-off, and the command desk and personal belongings have shelter.
+The sand blockage remains as requested.
+
 ## Story commitments
 
 The player is traveling west by train to meet their wealthy family. A violent

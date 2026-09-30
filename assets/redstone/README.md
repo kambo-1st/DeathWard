@@ -2,7 +2,7 @@
 
 A third, fixed hub combining Black Creek's canyon landscape and railway with
 Western Frontier's fortified compound and neighboring covered-wagon settler camp.
-It contains **994 authored placements, 212 mesh assets and eight original embedded
+It contains **1000 authored placements, 212 mesh assets and eight original embedded
 textures**. It is an authored composition of the two packs, rather than another
 Unity demo import or a seed-generated mission.
 
@@ -35,10 +35,17 @@ Black Creek remains the default starting hub.
 - The canyon keeps its 240 × 240 navigation footprint, terrain scale, original
   fort and rail geometry. Three removed dust piles and the lowered camp ground
   from the approved editor revision are preserved.
-- Sixty-four additional prop groups establish luggage and boarding steps,
+- Sixty-nine additional prop groups establish luggage and boarding steps,
   railroad supplies and sand drifts, a merchant wagon, water and cookfires,
   witness shelters, settler tents, a holding yard, an evidence table and the
   covered wagon for the ending. Fifteen tents now spread around the fort.
+- The kitchen and trading court sit beside a clear road; the prospectors' wagon
+  has a level approach. Continuous holding-yard fences leave one guarded entrance.
+  The command desk uses the cabin porch, and belongings sit under canvas. Reserved
+  road, gate, passenger, wagon and gathering spaces keep new props and loose
+  clutter out of circulation routes. The sand obstruction is retained.
+  The existing cot and porch seating are reused; two old stockpiles crossed by
+  the holding fence are removed explicitly in the layout's source-group list.
 - Fifteen provisional residents use the existing textured cowgirl and bandit
   models. The commander, outlaw, wife, spiritualist and scout have authored
   positions; ambient residents follow checked walking routes. Nearby role labels
@@ -56,7 +63,7 @@ bundled GLB. Normal builds require no Unity, Blender or source-project access.
 The character inspector's **Model** button switches between cowgirl and bandit;
 placement, route editing, undo/redo and saving apply to both. New mesh assets
 append after the original 192 catalog entries. Browser startup upgrades the known
-untouched pre-story scene/navigation pair. Other saved layouts retain their
+untouched pre-story and first-story scene/navigation pairs. Other saved layouts retain their
 instances and settings while receiving the extra unused catalog entries and
 labels needed to load the expanded GLB.
 

@@ -66,6 +66,10 @@ int main() {
         capture("artifacts/redstone-story-market.png", {-10,1,1}, {25,43,-41});
         capture("artifacts/redstone-story-railworks.png", {-41,1,19}, {-12,28,-12});
         capture("artifacts/redstone-story-wagon.png", {-31,1,-57}, {-7,25,-81});
+        capture("artifacts/redstone-layout-courts.png", {-26,1,-17}, {-49,27,-1});
+        capture("artifacts/redstone-layout-holding.png", {17,1,-18}, {3,16,-7});
+        capture("artifacts/redstone-layout-command.png", {-1,1,-25}, {13,15,-27});
+        capture("artifacts/redstone-layout-prospectors.png", {30,1,-16}, {52,23,-1});
         if (!scene.effects().loaded() || scene.effects().particleCount() == 0)
             throw std::runtime_error("Imported campfires and locomotive steam must render");
         scene.unload();
