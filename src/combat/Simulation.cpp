@@ -4,9 +4,11 @@
 #include <numeric>
 
 namespace dw {
-Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme)
-    : arena(seed, theme), encounterRng(seed ^ 0x454e434f554e5445ULL), rewardRng(seed ^ 0x5245574152445354ULL),
-      combatRng(seed ^ 0x434f4d424154524eULL), seed_(seed), runId_(runId), startingWorld_(world) {
+Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
+                       bool canyonRiver)
+    : arena(seed, theme, canyonRiver), encounterRng(seed ^ 0x454e434f554e5445ULL),
+      rewardRng(seed ^ 0x5245574152445354ULL), combatRng(seed ^ 0x434f4d424154524eULL), seed_(seed),
+      runId_(runId), startingWorld_(world) {
     rescued = world.minersRescued;
     altarDestroyed = world.altarDestroyed;
     bossKilled = theme == MissionTheme::Canyon ? world.flags.contains("canyon_cleared") : world.bossDefeated;

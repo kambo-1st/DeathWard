@@ -1,5 +1,6 @@
 #pragma once
 #include "core/VisualSettings.hpp"
+#include "render/CanyonWater.hpp"
 #include "render/GroundSurface.hpp"
 #include "render/MissionLighting.hpp"
 #include "render/PlayerOcclusion.hpp"
@@ -136,6 +137,7 @@ class WesternScene {
     Material terrainMaterial_{};
     MissionLighting lighting_;
     GroundSurface ground_;
+    CanyonWater water_;
     void clearTerrain();
     void generateCanyon(const Arena &arena);
     void drawTerrain(Vector3 focus);

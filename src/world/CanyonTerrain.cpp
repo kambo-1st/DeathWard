@@ -44,11 +44,12 @@ float CanyonTerrain::height(float px, float pz) const {
     return u >= v ? a + u * (b - a) + v * (d - b) : a + v * (c - a) + u * (d - c);
 }
 bool CanyonTerrain::blocked(Vector3 p, float radius) const {
-    if (height(p.x, p.z) > WalkableHeight)
+    if (height(p.x, p.z) > WalkableHeight || waterBlocked(p))
         return true;
     for (int n = 0; n < 8; ++n) {
         const float angle = float(n) * Pi / 4;
-        if (height(p.x + radius * std::cos(angle), p.z + radius * std::sin(angle)) > WalkableHeight)
+        const Vector3 edge{p.x + radius * std::cos(angle), p.y, p.z + radius * std::sin(angle)};
+        if (height(edge.x, edge.z) > WalkableHeight || waterBlocked(edge))
             return true;
     }
     return false;
@@ -118,7 +119,7 @@ SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius) const {
     return {};
 }
 
-void buildCanyon(Arena &arena) {
+void buildCanyon(Arena &arena, bool river) {
     auto field = std::make_shared<CanyonTerrain>();
     Random rng(arena.visualSeed ^ 0x43414e594f4e5632ULL);
     std::vector<Basin> basins;
@@ -207,6 +208,19 @@ void buildCanyon(Arena &arena) {
                                       {r.center.x + radius, r.height, r.center.z + radius}});
         }
     }
+    if (river) {
+        planCanyonRiver(arena, *field);
+        // Keep the original cover stream intact outside the river region.
+        auto touchesRiver = [&](Vector3 p, float radius) {
+            const auto sample = field->riverSample(p);
+            return sample.distance < sample.width + radius + 1.5f;
+        };
+        std::erase_if(rocks, [&](const auto &r) { return touchesRiver(r.center, std::max(r.rx, r.rz)); });
+        for (auto &room : arena.rooms)
+            std::erase_if(room.obstacles, [&](Box box) {
+                return touchesRiver(mul(add(box.min, box.max), .5f), (box.max.x - box.min.x) * .5f);
+            });
+    }
     field->x = std::floor((arena.bounds.min.x - 40) / field->step) * field->step;
     field->z = std::floor((arena.bounds.min.z - 40) / field->step) * field->step;
     field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;
@@ -227,6 +241,7 @@ void buildCanyon(Arena &arena) {
             mesa.heights.push_back(7.6f + 1.7f * std::sin(px * .047f + pz * .039f) +
                                    .8f * std::sin(pz * .11f) + capRng.real(-.65f, .65f));
         }
+    std::vector<float> dryHeights(field->river.empty() ? 0 : field->heights.size());
     for (int z = 0; z < field->depth; ++z)
         for (int x = 0; x < field->width; ++x) {
             Vector3 p{field->x + x * field->step, 0, field->z + z * field->step};
@@ -244,9 +259,37 @@ void buildCanyon(Arena &arena) {
                     std::sqrt(u * u + v * v) / (1 + .11f * std::sin(3 * std::atan2(v, u) + r.phase));
                 height = std::max(height, r.height * (1 - smooth(.48f, 1.f, q)));
             }
+            if (!field->river.empty()) {
+                dryHeights[size_t(z * field->width + x)] = height;
+                const auto water = field->riverSample(p);
+                const float bank = water.distance - water.width;
+                // A low, eroded shoulder softens the canyon beside the channel.
+                // It remains raised wherever the original terrain was a wall.
+                if (bank < 7) {
+                    const float shoulder = std::max(.35f, .8f + std::max(0.f, bank) * .45f);
+                    height = std::lerp(std::min(height, shoulder), height, smooth(1.5f, 7.f, bank));
+                }
+                if (bank < 1.15f) {
+                    float crossing = 0;
+                    // Fords only occupy existing floor: carving the river through
+                    // a mesa must never create a route around gates or room locks.
+                    if (height <= CanyonTerrain::WalkableHeight) {
+                        for (const auto &route : reserved)
+                            crossing = std::max(crossing, 1 - smooth(route.radius + 1.5f, route.radius + 3.5f,
+                                                                     lineDistance(p, route.a, route.b)));
+                    }
+                    const float depth = std::lerp(1.7f, .065f, crossing);
+                    const float channel = 1 - smooth(-water.width * .65f, 1.15f, bank);
+                    // Eroded banks meet the riverbed continuously, including where
+                    // the river disappears into the canyon beyond its end rooms.
+                    height = std::lerp(height, -depth, channel);
+                }
+            }
             field->heights[size_t(z * field->width + x)] = height;
         }
     arena.canyon = field;
+    if (!field->river.empty())
+        connectCanyonRiver(arena, dryHeights);
     arena.floorCells.clear();
     arena.floors.clear();
     arena.obstacles.clear();

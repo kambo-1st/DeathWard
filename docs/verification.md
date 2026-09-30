@@ -1010,6 +1010,41 @@ The first baseline averaged 20.83 ms. Grouping projectile drawing by primitive t
 
 The suppressions are explicitly counted and logged: deeply branching interactions reach the depth-16 limit. They do not represent hidden reductions to the starting stress load. Other default ceilings are 8,192 accepted events per chain, 2,048 processed events per tick, 16,384 queued events, 4,096 active projectiles and 256 living enemies.
 
+## Canyon river trial
+
+`deathward_river_tests` / CTest `canyon_rivers` exercises seeds 0–7, 42, 1866 and
+69175541. It verifies reproduction and the dry comparison, meaningful deep and
+shallow sections, bank-to-bank routes, movement sweeps versus projectile rays,
+and that the river does not isolate previously reachable banks. The existing
+theme suite verifies every objective route, encounter placement/counts and combat
+seals. Terrain ray probes now extend below the riverbed. Dynamite tests cover the
+terrain collision path after removing the old ground-plane fallback in canyons.
+
+```sh
+./build/deathward_river_tests
+./build/deathward_theme_tests
+./build/deathward_dynamite_tests
+./build/deathward_input_tests --river-only
+./build/deathward_input_tests --vegetation-only
+./build/deathward_mission_lighting_tests
+./build/deathward_western_assets_tests
+node web/river-test.cjs
+node web/mission-lighting-test.cjs
+```
+
+The river input check uses real mouse events to navigate between banks through a
+ford and aim/fire across deep water. Settings checks exercise the mission-board
+toggle, prevent layout changes during missions, preserve versions 1/2 preferences
+and reload a saved river-off choice. The browser check covers the same launch
+comparison and persistence, WebGL errors, firing, orbit and room changes. The
+shared lighting browser suite also covers the 8-bit post-process fallback.
+
+Environment comparison captures for seed 1866 are
+`artifacts/river-preview-canyon-before.png` and
+`artifacts/river-preview-canyon-after.png`; they use the same camera with resident
+enemies removed for the scenery review. Gameplay capture:
+`artifacts/river-web-canyon.png`.
+
 ## Remaining playtest work
 
 - Human validation of combat feel, readability under extreme combinations, and the 5–10 minute expedition target. Automated shortcuts prove the loop, not whether its pacing is enjoyable.

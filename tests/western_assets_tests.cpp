@@ -163,10 +163,10 @@ size_t verifyCanyon(WesternScene &scene) {
             // Rock sections and floor chunks have irregular footprints; sample an actual triangle.
             const auto *v = chunk.mesh.vertices;
             const Vector3 p{(v[0] + v[3] + v[6]) / 3, 0, (v[2] + v[5] + v[8]) / 3};
-            const Vector3 from{p.x, 30, p.z}, to{p.x, -1, p.z};
+            const Vector3 from{p.x, 30, p.z}, to{p.x, -4, p.z};
             const auto hit = field.trace(from, to);
             const auto meshHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
-            check(hit.hit && meshHit.hit && std::abs(hit.t * 31 - meshHit.distance) < .003f,
+            check(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f,
                   "rendered terrain triangles and collision rays agree across every chunk");
         }
         // Exercise oblique rays through cliff faces and cover, not only vertical ground probes.

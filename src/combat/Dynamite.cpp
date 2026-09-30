@@ -43,7 +43,7 @@ void advanceDynamite(Hazard &charge, const Arena &arena, float dt) {
             previous = high;
         }
     }
-    if (end.y < ChargeRadius && delta.y < 0) {
+    if (!arena.canyon && end.y < ChargeRadius && delta.y < 0) {
         const float floorTime = std::clamp((ChargeRadius - charge.position.y) / delta.y, 0.f, 1.f);
         if (!hit.hit || floorTime < hit.t)
             hit = {true, floorTime, {0, 1, 0}};

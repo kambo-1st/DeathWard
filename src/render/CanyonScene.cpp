@@ -17,11 +17,14 @@ out vec3 world;
 out vec3 normal;
 out vec2 uv;
 out vec3 tint;
+out float shore;
 void main() {
     world = vertexPosition;
     normal = vertexNormal;
     uv = vertexTexCoord;
     tint = vertexColor.rgb;
+    // Keep vertex alpha above the shared shadow caster's cutout threshold.
+    shore = (vertexColor.a*255.-128.)/127.;
     gl_Position = mvp*vec4(world,1.);
 }
 )GLSL";
@@ -30,6 +33,7 @@ in vec3 world;
 in vec3 normal;
 in vec2 uv;
 in vec3 tint;
+in float shore;
 uniform sampler2D texture0;
 uniform int terrainUnderlay;
 out vec4 finalColor;
@@ -40,12 +44,18 @@ void main() {
     vec3 surface = texture(texture0,uv).rgb*tint;
     float floorBlend = (1.-smoothstep(.03,.45,world.y))*smoothstep(.6,.95,n.y);
     if (floorBlend > 0.) surface = mix(surface,groundSurface(surface,world),floorBlend);
+    float gravel = groundNoise(world.xz*8.3);
+    float bank = shore * (1.-smoothstep(.4,2.5,world.y));
+    vec3 sediment = surface*vec3(.88,.91,.89);
+    sediment *= .96 + .08*gravel;
+    surface = mix(surface,sediment,bank);
     vec3 color = surface*westernDaylight(n,sun,shade);
     finalColor=playerOcclusionSurface(world,vec4(color,1.));
 }
 )GLSL";
 } // namespace
 void WesternScene::clearTerrain() {
+    water_.unload();
     for (auto &chunk : terrain_)
         UnloadMesh(chunk.mesh);
     terrain_.clear();
@@ -67,6 +77,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
         return;
     const auto &field = *arena.canyon;
     terrainField_ = arena.canyon;
+    water_.prepare(field);
     const auto fragment = withPlayerOcclusion(
         MissionLighting::withShadows(GroundSurface::withDetail(TerrainFragment).c_str()).c_str());
     terrainShader_ = loadWorldShader(TerrainVertex, fragment.c_str());
@@ -140,6 +151,14 @@ void WesternScene::generateCanyon(const Arena &arena) {
                 terrainSections_.push_back(key);
             }
         }
+    std::vector<unsigned char> shores(size_t(field.width * field.depth), 0);
+    if (!field.river.empty())
+        for (int z = 0; z < field.depth; ++z)
+            for (int x = 0; x < field.width; ++x) {
+                const auto sample = field.riverSample(field.vertex(x, z));
+                const float weight = std::clamp(1.f - (sample.distance - sample.width) / 4.f, 0.f, 1.f);
+                shores[size_t(z * field.width + x)] = static_cast<unsigned char>(weight * 255);
+            }
     auto makeMesh = [&](const std::vector<Triangle> &triangles) {
         Mesh mesh{};
         mesh.triangleCount = int(triangles.size());
@@ -170,7 +189,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
                 mesh.colors[4 * vertex] = static_cast<unsigned char>(tint.r * variation);
                 mesh.colors[4 * vertex + 1] = static_cast<unsigned char>(tint.g * variation);
                 mesh.colors[4 * vertex + 2] = static_cast<unsigned char>(tint.b * variation);
-                mesh.colors[4 * vertex + 3] = 255;
+                const int ix = std::clamp(int(std::lround((p.x - field.x) / field.step)), 0, field.width - 1);
+                const int iz = std::clamp(int(std::lround((p.z - field.z) / field.step)), 0, field.depth - 1);
+                mesh.colors[4 * vertex + 3] = 128 + shores[size_t(iz * field.width + ix)] / 2;
                 ++vertex;
             }
         }
@@ -208,7 +229,39 @@ void WesternScene::generateCanyon(const Arena &arena) {
     // Sand remains visible through faded mesas; the original floor and physics stay intact.
     const Vector3 a{field.x, -.05f, field.z}, b{field.x + (field.width - 1) * field.step, -.05f, field.z},
         c{field.x, -.05f, field.z + (field.depth - 1) * field.step}, d{b.x, -.05f, c.z};
-    terrainBase_ = makeMesh({Triangle{a, d, b}, Triangle{a, c, d}});
+    if (field.river.empty()) {
+        terrainBase_ = makeMesh({Triangle{a, d, b}, Triangle{a, c, d}});
+    } else {
+        // The old flat underlay would cap the riverbed. Keep it flat beneath
+        // mesas, but let it follow the channel below the visible terrain.
+        std::vector<Triangle> base;
+        for (int z = 0; z + 1 < field.depth; ++z) {
+            int start = 0;
+            auto flat = [&](int end) {
+                if (end <= start)
+                    return;
+                const Vector3 v{field.x + start * field.step, -.2f, field.z + z * field.step},
+                    w{field.x + end * field.step, -.2f, v.z}, u{v.x, -.2f, v.z + field.step},
+                    t{w.x, -.2f, u.z};
+                base.push_back({v, t, w});
+                base.push_back({v, u, t});
+            };
+            for (int x = 0; x + 1 < field.width; ++x) {
+                auto v = field.vertex(x, z), w = field.vertex(x + 1, z), u = field.vertex(x, z + 1),
+                     t = field.vertex(x + 1, z + 1);
+                if (std::min({v.y, w.y, u.y, t.y}) >= -.15f)
+                    continue;
+                flat(x);
+                for (auto p : {&v, &w, &u, &t})
+                    p->y = std::min(-.2f, p->y - .05f);
+                base.push_back({v, t, w});
+                base.push_back({v, u, t});
+                start = x + 1;
+            }
+            flat(field.width - 1);
+        }
+        terrainBase_ = makeMesh(base);
+    }
     if (!loaded())
         return;
     Random rng(arena.visualSeed ^ 0x43414e594f4e4152ULL);

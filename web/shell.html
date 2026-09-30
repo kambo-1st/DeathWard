@@ -127,6 +127,7 @@
       if (query.get('hub') === 'frontier') args.push('--hub', 'frontier');
       if (['redstone', 'canyon'].includes(query.get('hub'))) args.push('--hub', 'redstone');
       if (['mine', 'canyon', 'seeded'].includes(query.get('theme'))) args.push('--theme', query.get('theme'));
+      if (['on', 'off'].includes(query.get('river'))) args.push('--canyon-river', query.get('river'));
       if (query.has('mute')) args.push('--mute');
       // Optional scripted capture paths use temporary saves, exactly like native checks.
       if (query.has('smoke')) {

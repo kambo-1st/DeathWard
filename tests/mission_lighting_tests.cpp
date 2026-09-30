@@ -214,7 +214,8 @@ void verifyCanyon() {
 void verifyGroundDetail() {
     for (auto theme : {MissionTheme::Mine, MissionTheme::Canyon}) {
         WesternScene scene;
-        Arena arena(1866, theme);
+        // Keep this exact restoration check independent of animated water.
+        Arena arena(1866, theme, false);
         scene.prepare(arena);
         const auto focus = arena.rooms[2].center;
         Camera3D camera{add(focus, {0, 70, .01f}), focus, {0, 0, -1}, 45, CAMERA_ORTHOGRAPHIC};

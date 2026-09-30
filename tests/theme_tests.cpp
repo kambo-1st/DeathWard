@@ -134,15 +134,15 @@ int main() {
             const auto &field = *a.arena.canyon;
             const float seamX = field.x + float(field.width / 2) * field.step;
             const float seamZ = field.z + float(field.depth / 2) * field.step;
-            const auto seam = field.trace({seamX, 30, seamZ}, {seamX, -1, seamZ});
-            check(seam.hit && std::abs(30 - 31 * seam.t - field.height(seamX, seamZ)) < .002f,
+            const auto seam = field.trace({seamX, 30, seamZ}, {seamX, -4, seamZ});
+            check(seam.hit && std::abs(30 - 34 * seam.t - field.height(seamX, seamZ)) < .002f,
                   "terrain rays have no cracks at shared triangle vertices");
             for (int z = 2; z < field.depth - 2; z += 7)
                 for (int x = 2; x < field.width - 2; x += 7) {
                     const float px = field.x + (x + .37f) * field.step,
                                 pz = field.z + (z + .61f) * field.step;
-                    const auto hit = field.trace({px, 30, pz}, {px, -1, pz});
-                    check(hit.hit && std::abs(30 - 31 * hit.t - field.height(px, pz)) < .002f,
+                    const auto hit = field.trace({px, 30, pz}, {px, -4, pz});
+                    check(hit.hit && std::abs(30 - 34 * hit.t - field.height(px, pz)) < .002f,
                           "vertical terrain ray hits agree with the triangulated surface");
                     check(hit.normal.y > 0, "terrain normals point out of the solid ground");
                 }

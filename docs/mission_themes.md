@@ -18,6 +18,40 @@ Rendering divides the shared surface into culled mesh chunks. Steep irregular sh
 
 Cliffs and outcrops stay at their full generated height as the player moves or rotates the camera. Mouse target picking and physics use the same visible terrain surface.
 
+## Canyon river trial
+
+Canyon missions default to one seeded river region through the entrance basin and
+two connected neighbours. On the mission board, **River On / River Off** compares
+the new terrain with the original dry canyon using the same seed. The setting
+applies when launching a mission; it cannot alter terrain beneath a running
+encounter. Native: `--canyon-river on|off`. Browser: `?theme=canyon&river=on|off`.
+`visual.cfg` version 3 saves the choice and reads older vegetation/floor settings.
+
+The channel follows a smooth curve through existing passages, narrows at their
+necks and widens in the basins. Lower eroded banks, damp/gravel material, small
+stones and driftwood integrate its edges. Dry room litter stays out of the water.
+The far ends continue into the surrounding canyon beyond the playable basins.
+
+The riverbed is part of the same triangulated height field as the cliffs. Deep
+water blocks movement, while shallow fords preserve routes to gates and objectives.
+Before spawning, a connectivity pass adds fords to banks isolated by a bend. It
+can only raise the bed over the original floor, never carve a shortcut through a
+mesa. Navigation, floor-area encounter budgets and pickup placement use the new
+surface. A bounded repair fallback makes original-floor sections fordable on
+unusual layouts instead of leaving isolated banks. Movement sweeps test every
+terrain grid/triangle crossing, so long dodges
+and smoothed mouse paths cannot skip a narrow deep section. Bullet and sight rays
+remain physical terrain tests and can cross water. Kicked/thrown dynamite follows
+the actual bed rather than an invisible plane at the old floor height.
+
+Water triangles are clipped to the terrain shoreline and use depth-colored,
+opaque shading with subtle ripples following the curved channel. They receive
+the shared directional shadows and post-process without casting opaque shadows
+of their own. This is a lightweight native/WebGL 2 treatment, without fluid
+simulation or screen-space reflections. Gameplay still uses one walking height;
+the fords are only a few centimetres below it. Swimming, bridges, river audio
+and a full drainage network are outside this first trial.
+
 ## Small room decorations
 
 Both themes also populate each room with small, cosmetic grass/stone/debris clusters.
@@ -64,7 +98,7 @@ depth; `GroundSurface` owns and releases the texture. No geometry, collision or
 gameplay random streams change.
 
 **Pause → Ground Surface → Detail On/Off** switches immediately without regenerating
-the map. `visual.cfg` version 2 saves this flag alongside vegetation density;
+the map. `visual.cfg` saves this flag alongside vegetation density and river preference;
 version 1 files retain their density and enable the new surface. Toggle off to
 restore the original floor. Static hubs and the abandoned art experiment are
 unaffected.
@@ -73,6 +107,8 @@ unaffected.
 
 - `src/world/MissionTheme.hpp`: theme identifiers, seeded resolution, titles and base colors.
 - `src/world/CanyonTerrain.cpp`: canyon terrain, navigation footprint and surface rays.
+- `src/world/CanyonRiver.cpp`: river course, water movement sweeps and bank connectivity repairs.
+- `src/render/CanyonWater.cpp`: clipped water meshes, flow shading and shared shadow reception.
 - `src/world/Dungeon.cpp`: theme dispatch and shared collision/navigation entry points.
 - `src/render/CanyonScene.cpp`: terrain meshes, atlas sampling, lighting, shadows and dressing.
 - `src/render/WesternScene.cpp`: scenery loading, cache, mine placement and small room decorations for both themes. Changing arenas/themes releases old terrain resources.

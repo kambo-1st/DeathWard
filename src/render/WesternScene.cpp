@@ -204,7 +204,8 @@ void WesternScene::prepare(const Arena &arena) {
         load();
     if (!loaded() && !arena.canyon)
         return;
-    if (lastArena_ != &arena || lastSeed_ != arena.visualSeed || lastTheme_ != arena.theme) {
+    if (lastArena_ != &arena || lastSeed_ != arena.visualSeed || lastTheme_ != arena.theme ||
+        terrainField_ != arena.canyon) {
         generate(arena);
         std::vector<Box> groundRocks;
         for (const auto &p : placements_)
@@ -460,6 +461,8 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
                     if (!arena.contains({x, .85f, z}))
                         return false;
                     const float h = canyon ? arena.canyon->height(x, z) : -.015f;
+                    if (canyon && h < -.015f)
+                        return false; // Dry vegetation and litter stay out of water, including fords.
                     low = std::min(low, h);
                     high = std::max(high, h);
                 }
@@ -545,13 +548,15 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
                             [&](auto other) { return distanceXZ(anchor, other) < 2.6f; }))
                 continue;
             const auto before = footprints.size();
+            const auto river = canyon ? arena.canyon->riverSample(anchor) : RiverSample{};
+            const bool bank = river.distance < river.width + 4.f;
             const int pieces = 3 + int(random.bounded(3));
             for (int member = 0; member < pieces; ++member) {
                 const int choice = int(random.bounded(100));
                 WesternAsset asset;
-                if (choice < (canyon ? 46 : 25))
+                if (choice < (bank ? 18 : canyon ? 46 : 25))
                     asset = random.bounded(2) ? WesternAsset::GrassA : WesternAsset::GrassB;
-                else if (choice < (canyon ? 74 : 50))
+                else if (choice < (bank ? 80 : canyon ? 74 : 50))
                     asset = random.bounded(3) ? WesternAsset::RockA : WesternAsset::RockB;
                 else if (choice < 93)
                     asset = random.bounded(2) ? WesternAsset::StickA : WesternAsset::StickB;
@@ -610,6 +615,7 @@ void WesternScene::updateDrawState(Vector3 focus) {
 void WesternScene::draw(Vector3 focus) {
     updateDrawState(focus);
     drawTerrain(focus);
+    water_.draw(focus, lighting_);
     if (loaded())
         drawBatches(false);
 }

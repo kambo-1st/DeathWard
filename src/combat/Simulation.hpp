@@ -196,7 +196,7 @@ struct ShopOffer {
 class Simulation {
   public:
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
-               MissionTheme theme = MissionTheme::Mine);
+               MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true);
     Player player;
     Arena arena;
     Stats stats;

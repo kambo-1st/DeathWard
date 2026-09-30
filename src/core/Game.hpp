@@ -60,7 +60,8 @@ enum class Action {
     DynamiteMode,
     VegetationLess,
     VegetationMore,
-    ToggleGroundDetail
+    ToggleGroundDetail,
+    ToggleCanyonRiver
 };
 class Game {
   public:

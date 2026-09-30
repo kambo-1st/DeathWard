@@ -45,6 +45,7 @@ int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
     bool mute = false, explicitAudio = false;
+    std::optional<bool> canyonRiver;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
@@ -68,7 +69,14 @@ int main(int argc, char **argv) {
             mute = true;
         else if (arg == "--audio")
             explicitAudio = true;
-        else if (arg == "--theme" && i + 1 < argc) {
+        else if (arg == "--canyon-river" && i + 1 < argc) {
+            const std::string setting = argv[++i];
+            if (setting != "on" && setting != "off") {
+                std::cerr << "--canyon-river must be on or off\n";
+                return 2;
+            }
+            canyonRiver = setting == "on";
+        } else if (arg == "--theme" && i + 1 < argc) {
             const std::string theme = argv[++i];
             if (theme == "seeded")
                 themeChoice = dw::ThemeChoice::Seeded;
@@ -115,6 +123,7 @@ int main(int argc, char **argv) {
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
+                         "  --canyon-river MODE  on (default) or off; applies to new canyon missions\n"
                          "  --mute              Skip audio initialization\n"
                          "  --audio             Enable audio in scripted checks (silent by default)\n";
             return 0;
@@ -167,6 +176,8 @@ int main(int argc, char **argv) {
             smoke || benchmark || startEditor ? std::filesystem::path{} : save.parent_path() / "visual.cfg";
         if (!visualPreferences.empty())
             game.visualSettings = dw::loadVisualSettings(visualPreferences);
+        if (canyonRiver)
+            game.visualSettings.canyonRiver = *canyonRiver;
         auto savedVisualSettings = game.visualSettings;
         game.audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
         for (const auto hub : dw::Hubs)
@@ -570,6 +581,8 @@ int main(int argc, char **argv) {
                         Module.state.explosions = $8;
                         Module.state.dynamiteThrowMode = !!$9;
                         Module.state.placedDynamite = $10;
+                        Module.state.canyonRiver = !!$11;
+                        Module.state.riverActive = !!$12;
                     }
                 },
                 game.run ? game.run->arena.shopRoom : -1, game.run && game.run->shopOpen, shopPixel.x,
@@ -586,7 +599,9 @@ int main(int argc, char **argv) {
                                                  return hazard.kind == dw::HazardKind::PlayerDynamite &&
                                                         hazard.settled;
                                              }))
-                         : 0);
+                         : 0,
+                game.visualSettings.canyonRiver,
+                game.run && game.run->arena.canyon && !game.run->arena.canyon->river.empty());
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

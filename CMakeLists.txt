@@ -36,6 +36,7 @@ add_library(deathward_core
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
     src/world/CanyonTerrain.cpp
+    src/world/CanyonRiver.cpp
     src/world/RoomGraph.cpp
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
@@ -70,7 +71,7 @@ if(EMSCRIPTEN)
 else()
     target_compile_definitions(deathward_particles PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
 endif()
-add_library(deathward_mission_lighting src/render/MissionLighting.cpp src/render/GroundSurface.cpp)
+add_library(deathward_mission_lighting src/render/MissionLighting.cpp src/render/GroundSurface.cpp src/render/CanyonWater.cpp)
 target_link_libraries(deathward_mission_lighting PUBLIC deathward_core raylib)
 function(deathward_assets target)
     target_link_libraries(${target} PRIVATE deathward_skinning deathward_particles deathward_mission_lighting)
@@ -185,6 +186,9 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_river_tests tests/river_tests.cpp)
+    target_link_libraries(deathward_river_tests PRIVATE deathward_core)
+    add_test(NAME canyon_rivers COMMAND deathward_river_tests)
     add_executable(deathward_redstone_tests tests/redstone_tests.cpp)
     target_link_libraries(deathward_redstone_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_redstone_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")

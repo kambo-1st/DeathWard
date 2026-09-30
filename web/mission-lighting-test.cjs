@@ -47,6 +47,10 @@ const root = path.resolve(__dirname, '..');
       const decorations = await page.evaluate(() => Module.state.decorations);
       assert.ok(decorations >= 15 * 6 && decorations <= 15 * 80);
       assert.ok(await page.evaluate(() => Module.state.roomDecorations >= 6));
+      if (theme === 'canyon' && !fallback) {
+        assert.equal(await page.evaluate(() => Module.state.riverActive), true);
+        await page.screenshot({path: path.join(root, 'artifacts/river-web-canyon.png')});
+      }
       await key('F2');
       await key('F12');
       await key('F12');

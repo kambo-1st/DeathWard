@@ -80,7 +80,8 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 }
 } // namespace
 
-Arena::Arena(uint64_t seed, MissionTheme missionTheme) : visualSeed(seed), theme(missionTheme) {
+Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver)
+    : visualSeed(seed), theme(missionTheme) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
     const auto graph = generateRoomGraph(seed);
@@ -335,7 +336,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme) : visualSeed(seed), theme
     rooms[size_t(shopRoom)].kind = RoomKind::Shop;
     rebuildWalls();
     if (theme == MissionTheme::Canyon)
-        buildCanyon(*this);
+        buildCanyon(*this, canyonRiver);
 }
 void Arena::rebuildWalls() {
     walls = boundaryWalls;
@@ -382,7 +383,7 @@ int Arena::roomAt(Vector3 p) const {
 }
 bool Arena::contains(Vector3 p) const {
     if (canyon)
-        return canyon->height(p.x, p.z) <= CanyonTerrain::WalkableHeight;
+        return !canyon->blocked(p, 0);
     if (floorCells.empty())
         return inside(p, bounds);
     return floorCells.contains({int(std::floor(p.x / FloorTile)), int(std::floor(p.z / FloorTile))});
@@ -400,6 +401,8 @@ bool Arena::blocked(Vector3 p, float radius) const {
 bool Arena::clear(Vector3 from, Vector3 to, float radius) const {
     if (canyon) {
         if (radius > .25f) {
+            if (!canyon->waterClear(from, to, radius))
+                return false;
             auto a = from, b = to;
             a.y = b.y = .12f;
             if (canyon->trace(a, b).hit)

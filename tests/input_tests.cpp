@@ -307,6 +307,78 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
         << "PASS " << name
         << " dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill\n";
 }
+void riverInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    Game game(directory / "river.save");
+    game.seedText = "1866";
+    game.launch();
+    auto &run = *game.run;
+    const auto &field = *run.arena.canyon;
+    Vector3 from{}, to{}, water{};
+    int room = -1;
+    for (size_t i = 1; i + 1 < field.river.size(); ++i) {
+        const auto &p = field.river[i];
+        if (field.height(p.position.x, p.position.z) > -.4f)
+            continue;
+        const auto direction = unit(sub(field.river[i + 1].position, field.river[i - 1].position));
+        const Vector3 side{-direction.z, 0, direction.x};
+        auto a = add(p.position, mul(side, p.width + 2.5f)), b = sub(p.position, mul(side, p.width + 2.5f));
+        a.y = b.y = .85f;
+        const int index = run.arena.roomAt(a);
+        if (index < 0 || index != run.arena.roomAt(b) || run.arena.blocked(a, .6f) ||
+            run.arena.blocked(b, .6f) || !run.arena.sight(a, b) || run.arena.clear(a, b, .48f) ||
+            run.arena.path(a, b, .48f).empty())
+            continue;
+        from = a;
+        to = b;
+        water = p.position;
+        room = index;
+        break;
+    }
+    check(room >= 0, "river mouse fixture has two connected banks separated by deep water");
+    run.jumpDebug(room);
+    run.clearRoomDebug();
+    run.player.position = from;
+    run.godMode = true;
+    game.updateCamera(1);
+    Renderer renderer;
+    const Game::SceneryPicker picker = [&](const auto &simulation, const auto &camera, Ray ray) {
+        return renderer.pickScenery(simulation, camera, ray);
+    };
+    auto frame = [&]() {
+        game.update(Tick, picker);
+        BeginDrawing();
+        renderer.draw(game);
+        EndDrawing();
+    };
+    frame();
+    auto pixel = GetWorldToScreen({to.x, 0, to.z}, game.camera);
+    check(pixel.x > 10 && pixel.x < 1270 && pixel.y > 130 && pixel.y < 670,
+          "opposite bank is inside the play viewport");
+    mouseEvent(MousePosition, int(pixel.x), int(pixel.y));
+    mouseEvent(MouseDown, MOUSE_BUTTON_LEFT);
+    frame();
+    mouseEvent(MouseUp, MOUSE_BUTTON_LEFT);
+    frame();
+    check(run.moveDestination().has_value(), "clicking the opposite bank queues a ford route");
+    for (int n = 0; n < 900 && run.moveDestination(); ++n) {
+        frame();
+        check(!field.waterBlocked(run.player.position), "mouse movement never steps into deep water");
+    }
+    check(distance(run.player.position, to) < .9f, "mouse movement reaches the opposite bank through a ford");
+    check(run.stats.shots == 0, "a bank movement click never fires");
+    pixel = GetWorldToScreen({water.x, 0, water.z}, game.camera);
+    mouseEvent(MousePosition, int(pixel.x), int(pixel.y));
+    mouseEvent(MouseDown, MOUSE_BUTTON_RIGHT);
+    for (int n = 0; n < 20; ++n)
+        frame();
+    mouseEvent(MouseUp, MOUSE_BUTTON_RIGHT);
+    frame();
+    check(run.stats.shots > 0 && distance(run.player.position, to) < .9f,
+          "aiming and firing across water does not become a movement command");
+    game.close();
+    std::cout << "PASS river mouse routing through fords and aiming/firing across deep water\n";
+}
 void vegetationInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     Game game(directory / "vegetation.save");
@@ -358,6 +430,8 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     check(game.paused && game.run->stats.duration == duration && game.run->stats.shots == 0,
           "vegetation controls never advance combat or fire the weapon");
     const auto preferences = directory / "visual.cfg";
+    game.perform(Action::ToggleCanyonRiver);
+    check(game.visualSettings.canyonRiver, "river layout cannot be changed inside an active mission");
     game.visualSettings.groundDetail = false;
     check(saveVisualSettings(preferences, game.visualSettings) &&
               loadVisualSettings(preferences) == game.visualSettings,
@@ -368,6 +442,13 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     }
     check(loadVisualSettings(preferences).vegetation == 175 && loadVisualSettings(preferences).groundDetail,
           "old vegetation preferences migrate while enabling the new floor detail");
+    {
+        std::ofstream legacy(preferences);
+        legacy << "DEATHWARD_VISUAL 2\n175\n0\n";
+    }
+    check(loadVisualSettings(preferences).vegetation == 175 &&
+              !loadVisualSettings(preferences).groundDetail && loadVisualSettings(preferences).canyonRiver,
+          "version two preserves floor settings and enables the river trial");
     {
         std::ofstream bad(preferences);
         bad << "DEATHWARD_VISUAL 1\n-25\n";
@@ -383,6 +464,20 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     std::filesystem::create_directories("artifacts");
     ExportImage(capture, "artifacts/vegetation-pause-controls.png");
     UnloadImage(capture);
+    game.paused = false;
+    game.town.player.position = game.town.mission;
+    game.perform(Action::Missions);
+    frame(870, 497, true);
+    frame(870, 497);
+    frame();
+    check(!game.visualSettings.canyonRiver, "the mission board offers a working river comparison toggle");
+    check(saveVisualSettings(preferences, game.visualSettings) &&
+              !loadVisualSettings(preferences).canyonRiver,
+          "river-off preference survives reload");
+    game.launch();
+    check(game.run->arena.canyon && game.run->arena.canyon->river.empty(),
+          "river-off launches the original canyon geometry");
+    game.close();
     std::cout << "PASS vegetation pause controls, bounds, live changes, no gameplay input and persistence\n";
 }
 } // namespace
@@ -398,6 +493,12 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if (mode == "--river-only") {
+            riverInputCheck(directory);
+            CloseWindow();
+            std::filesystem::remove_all(directory);
+            return 0;
+        }
         if (mode == "--vegetation-only") {
             vegetationInputCheck(directory);
             CloseWindow();

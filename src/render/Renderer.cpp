@@ -533,7 +533,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     postProcess_.begin(WorldSky, distance(camera.position, camera.target));
     BeginMode3D(camera);
     lighting.beginPrimitives();
-    DrawPlane({camera.target.x, -0.5f, camera.target.z}, {220, 220}, theme.backdrop);
+    DrawPlane({camera.target.x, canyon ? -3.f : -.5f, camera.target.z}, {220, 220}, theme.backdrop);
     lighting.endPrimitives();
     if (westernScene_.loaded() || westernScene_.terrainReady())
         westernScene_.draw(run.player.position);
@@ -952,7 +952,14 @@ Action Renderer::hub(const Game &game) {
         text(game.seedText.empty() ? "Type a seed..." : game.seedText, 287, 437, 20, Gold);
         if (button("NEW MISSION", 748, 408, 260, 51))
             return Action::NewSeed;
-        text("Replay with the same seed and theme. New Mission chooses a fresh seed.", 270, 482, 13, Muted);
+        if (game.offeredTheme() == MissionTheme::Canyon) {
+            if (button(game.visualSettings.canyonRiver ? "RIVER ON" : "RIVER OFF", 748, 480, 260, 34))
+                return Action::ToggleCanyonRiver;
+            text("Same seed and river setting repeat the terrain.", 270, 490, 13, Muted);
+        } else {
+            text("Replay with the same seed and theme. New Mission chooses a fresh seed.", 270, 482, 13,
+                 Muted);
+        }
         if (button(game.offeredTheme() == MissionTheme::Canyon ? "LEAVE FOR THE CANYON"
                                                                : "LEAVE FOR THE MINE",
                    270, 529, 738, 59, true))

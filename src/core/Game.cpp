@@ -181,8 +181,8 @@ void Game::launch() {
         return;
     }
     const auto theme = resolveTheme(themeChoice, seed);
-    auto candidate =
-        std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world, theme);
+    auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world,
+                                                  theme, visualSettings.canyonRiver);
     candidate->tunePlayer(playerHealth, playerDamage);
     campaign.begin(seed, missionTheme(theme).title);
     run = std::move(candidate);
@@ -241,6 +241,10 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::ToggleCanyonRiver:
+            if (screen == Screen::Hub && missionMenu)
+                visualSettings.canyonRiver = !visualSettings.canyonRiver;
+            break;
         case Action::ToggleGroundDetail:
             visualSettings.groundDetail = !visualSettings.groundDetail;
             break;
