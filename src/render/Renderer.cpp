@@ -805,8 +805,11 @@ Action Renderer::hub(const Game &game) {
             return Action::History;
         if (button("PAUSE", 496, 712, 188, 44))
             return Action::Pause;
-        panel(856, 700, 400, 76, Panel);
-        if (button(game.activeHub == HubKind::BlackCreek ? "TRAVEL TO FRONTIER" : "TRAVEL TO BLACK CREEK",
+        panel(856, 646, 400, 130, Panel);
+        const auto other = secondaryTravelHub(game.activeHub);
+        if (button(std::string("TRAVEL TO ") + hubShortName(other), 870, 658, 372, 44))
+            return other == HubKind::Redstone ? Action::TravelRedstone : Action::TravelFrontier;
+        if (button(std::string("TRAVEL TO ") + hubShortName(primaryTravelHub(game.activeHub)),
                    870, 712, 372, 44))
             return Action::TravelHub;
     }
@@ -851,7 +854,7 @@ Action Renderer::hub(const Game &game) {
             return Action::CloseMissions;
     } else if (game.paused) {
         panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
-        panel(344, 134, 592, 522, Panel);
+        panel(344, 134, 592, 578, Panel);
         text(hubName(game.activeHub), 377, 167, 30, Paper);
         wrap("Walk with WASD or click the ground. Scroll to zoom; hold the middle button and drag to "
              "rotate. Visit the mission board to depart.",
@@ -864,9 +867,12 @@ Action Renderer::hub(const Game &game) {
             return Action::EditTown;
         if (button("QUIT", 642, 547, 250, 43))
             return Action::Quit;
-        if (button(game.activeHub == HubKind::BlackCreek ? "TRAVEL TO FRONTIER" : "TRAVEL TO BLACK CREEK",
+        if (button(std::string("TRAVEL TO ") + hubShortName(primaryTravelHub(game.activeHub)),
                    378, 603, 514, 43))
             return Action::TravelHub;
+        const auto other = secondaryTravelHub(game.activeHub);
+        if (button(std::string("TRAVEL TO ") + hubShortName(other), 378, 655, 514, 43))
+            return other == HubKind::Redstone ? Action::TravelRedstone : Action::TravelFrontier;
     }
     return Action::None;
 }
@@ -1069,8 +1075,7 @@ Action Renderer::expedition(const Game &game) {
         text("Hold middle + drag to rotate. Scroll to zoom. Space dodges.", 436, 407, 11, Muted);
         if (button("KEEP GOING   [ESC]", 436, 423, 408, 45, true))
             return Action::Resume;
-        if (button(game.activeHub == HubKind::BlackCreek ? "RETREAT TO BLACK CREEK   [T]"
-                                                         : "RETREAT TO FRONTIER   [T]",
+        if (button(std::string("RETREAT TO ") + hubShortName(game.activeHub) + "   [T]",
                    436, 486, 408, 45))
             return Action::Retreat;
         if (game.debug && !run.dead) {
@@ -1141,7 +1146,7 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
         y += line.size() > 68 ? 49 : 32;
     }
     text("THE BUILD IS GONE. THE CONSEQUENCES REMAIN.", 60, 693, 23, Gold);
-    if (button(game.activeHub == HubKind::BlackCreek ? "RETURN TO BLACK CREEK" : "RETURN TO FRONTIER", 60,
+    if (button(std::string("RETURN TO ") + hubShortName(game.activeHub), 60,
                740, 341, 42, true))
         return Action::Hub;
     if (history) {
@@ -1249,7 +1254,7 @@ Action Renderer::draw(const Game &game) {
         else {
             text("NO EXPEDITIONS YET", 80, 140, 40, Paper);
             text("Bring back a story worth remembering.", 82, 211, 20, Muted);
-            if (button(game.activeHub == HubKind::BlackCreek ? "BACK TO BLACK CREEK" : "BACK TO FRONTIER", 82,
+            if (button(std::string("BACK TO ") + hubShortName(game.activeHub), 82,
                        290, 365, 51, true))
                 action = Action::Hub;
         }

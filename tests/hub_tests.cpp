@@ -154,7 +154,7 @@ void mouseRegressions() {
 int main() {
     try {
         mouseRegressions();
-        for (const auto *pack : {"town", "frontier"}) {
+        for (const auto *pack : {"town", "frontier", "redstone"}) {
             HubWorld hub;
             check(hub.load(std::filesystem::path(DEATHWARD_ASSET_DIR) / pack / "town.nav"),
                   "original town navigation loads");
@@ -213,7 +213,7 @@ int main() {
             check(!hub.load(std::filesystem::path(DEATHWARD_ASSET_DIR) / pack / "missing.nav"),
                   "missing navigation fails safely");
         }
-        std::cout << "PASS both hub navigation packs, mission round trips, height following, barriers and "
+        std::cout << "PASS all three hub navigation packs, mission round trips, height following, barriers and "
                      "missing assets; precise mouse picking, direct/smoothed routes and held steering\n";
     } catch (const std::exception &e) {
         std::cerr << "FAIL " << e.what() << '\n';

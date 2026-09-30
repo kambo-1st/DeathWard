@@ -39,7 +39,9 @@ Deploy updates by uploading the new versioned assets first and index.html last.
 Keep old versioned assets until users have refreshed any cached old index.html.
 manifest.json records each runtime file's SHA-256 and uncompressed byte size.
 
-This package contains the game, both hubs, missions, textures, effects and music.
+This package contains the game, all three hubs, missions, textures, effects and music.
+A direct link with ?hub=redstone starts in Redstone Canyon; ?hub=frontier selects
+Western Frontier. Travel buttons in the game connect all three destinations.
 A desktop browser with WebGL 2, keyboard and mouse is required. No cross-origin
 isolation headers are needed. Browser saves belong to the site's origin;
 kambo.us and deathward.kambo.us have separate saves. Saves are not uploaded.

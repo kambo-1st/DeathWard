@@ -61,7 +61,7 @@ server.serve_forever()
     assert.equal(redirect.headers.get('location'), '/deathward/?verify&mute');
     browser = await chromium.launch(options);
     fs.mkdirSync(artifacts, {recursive: true});
-    for (const [mount, hub] of [['/', 0], ['/deathward/', 1]]) {
+    for (const [mount, hub] of [['/', 0], ['/deathward/', 1], ['/deathward/', 2]]) {
       const context = await browser.newContext({viewport: {width: 1280, height: 848}});
       const page = await context.newPage();
       const requests = [], runtimeResponses = new Map();
@@ -78,7 +78,7 @@ server.serve_forever()
         if (response.status() >= 400) errors.push(`${response.status()}: ${response.url()}`);
       });
       // The nested request deliberately omits the slash; the server supplies it.
-      const url = hub ? `${base}/deathward?verify&mute&hub=frontier` : `${base}/?verify&mute`;
+      const url = hub ? `${base}/deathward?verify&mute&hub=${hub === 2 ? 'redstone' : 'frontier'}` : `${base}/?verify&mute`;
       await page.goto(url);
       await page.waitForFunction(() => window.Module?.ready, null, {timeout: 60000});
       await page.locator('#start').click({noWaitAfter: true});
@@ -102,10 +102,10 @@ server.serve_forever()
         if (hub) assert(url.pathname === '/deathward' || url.pathname.startsWith(mount),
                         `Request escaped the deployment directory: ${url.pathname}`);
       }
-      await page.screenshot({path: path.join(artifacts, hub ? 'web-upload-subdirectory.png' : 'web-upload-root.png')});
+      await page.screenshot({path: path.join(artifacts, hub === 2 ? 'web-upload-redstone.png' : hub ? 'web-upload-subdirectory.png' : 'web-upload-root.png')});
       network.push(...requests);
       assert.deepEqual(errors, []);
-      console.log(`PASS packaged ${hub ? 'Frontier' : 'Black Creek'} at ${mount}, relative assets and clean WebGL startup`);
+      console.log(`PASS packaged ${['Black Creek', 'Frontier', 'Redstone Canyon'][hub]} at ${mount}, relative assets and clean WebGL startup`);
       await context.close();
     }
     const explicitIndex = await fetch(`${base}/deathward/index.html`);

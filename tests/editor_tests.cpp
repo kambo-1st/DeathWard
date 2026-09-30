@@ -522,6 +522,23 @@ int main() {
         check(editor.document().animals.size() == 1, "Frontier supports new animal residents");
         check(editor.save() && editor.reload() && editor.document().animals.size() == 1,
               "Frontier animals survive save and reload");
+        const auto redstoneDirectory = directory / "redstone";
+        std::filesystem::create_directories(redstoneDirectory);
+        for (const auto *name : {"town.scene", "town.nav", "town.glb", "town.labels"})
+            std::filesystem::copy_file(TownScene::assetDirectory(HubKind::Redstone) / name, redstoneDirectory / name);
+        check(editor.open(redstoneDirectory, {add(nav.spawn, {23,30,23}), nav.spawn, {0,1,0}, 45, CAMERA_PERSPECTIVE}), editor.status);
+        check(editor.document().groups.size() == 4 && editor.document().paths.front().dwell == 0,
+              "The canyon editor loads the continuously moving convoy");
+        size_t campfire = 0;
+        while (editor.document().assets[editor.document().instances[campfire].asset].label != "SM_Prop_Campfire_Small_01")
+            ++campfire;
+        editor.select(campfire);
+        const auto oldCampfire = editor.document().instances[campfire].transform;
+        editor.translate({.2f,0,0});
+        check(editor.save() && editor.reload() &&
+                  std::abs(editor.document().instances[campfire].transform.m12 - oldCampfire.m12 - .2f) < .0001f &&
+                  editor.document().groups.size() == 4 && editor.document().paths.front().dwell == 0,
+              "Canyon placement edits, navigation and stationless train settings survive save/reload");
         editor.requestClose();
         check(!editor.active && !editor.quitRequested, "clean editor closes back to town");
         editor.unload();

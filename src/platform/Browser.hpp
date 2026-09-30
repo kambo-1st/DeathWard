@@ -17,7 +17,7 @@ inline void prepareBrowserFiles() {
     EM_ASM({
         // Only editable scene/navigation files belong in IndexedDB. Models are
         // loaded directly from /assets; IDBFS does not preserve symlinks.
-        for (const hub of['town', 'frontier']) {
+        for (const hub of['town', 'frontier', 'redstone']) {
             const destination = '/persist/' + hub;
             FS.mkdirTree(destination);
             for (const name of['town.scene', 'town.nav', 'town.labels']) {

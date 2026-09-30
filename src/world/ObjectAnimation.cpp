@@ -288,19 +288,24 @@ void ObjectAnimationSystem::stepPaths(std::optional<Vector3> player) {
             continue;
         }
         const float remaining = p.length - p.position;
-        const float limit =
-            std::min(p.definition.speed, std::sqrt(2 * p.definition.acceleration * remaining));
+        const bool station = p.definition.dwell > 0;
+        const float limit = station
+            ? std::min(p.definition.speed, std::sqrt(2 * p.definition.acceleration * remaining))
+            : p.definition.speed;
         const float speed =
             p.speed + std::clamp(limit - p.speed, -p.definition.acceleration * float(MotionTick),
                                  p.definition.acceleration * float(MotionTick));
-        const float travel = std::min(remaining, (p.speed + speed) * .5f * float(MotionTick));
+        const float advance = (p.speed + speed) * .5f * float(MotionTick);
+        const float travel = station ? std::min(remaining, advance) : advance;
         p.speed = speed;
         p.position += travel;
         p.travel += travel;
         if (remaining - travel < .00001f) {
-            p.position = 0;
-            p.speed = 0;
-            p.wait = p.definition.dwell;
+            p.position = station ? 0 : std::fmod(p.position, p.length);
+            if (station) {
+                p.speed = 0;
+                p.wait = p.definition.dwell;
+            }
         }
     }
     evaluateGroups();

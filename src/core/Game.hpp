@@ -33,6 +33,8 @@ enum class Action {
     ThemeMine,
     ThemeCanyon,
     TravelHub,
+    TravelFrontier,
+    TravelRedstone,
     HealthDown,
     HealthUp,
     DamageDown,

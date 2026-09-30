@@ -104,6 +104,7 @@
         status.textContent = 'The frontier is ready.';
         start.disabled = false;
         if (query.get('hub') === 'frontier') start.textContent = 'Enter Frontier';
+        if (['redstone', 'canyon'].includes(query.get('hub'))) start.textContent = 'Enter Redstone Canyon';
       },
       gameReady() { Module.playing = true; cover.hidden = true; canvas.focus(); },
       showEnd() {
@@ -123,6 +124,7 @@
       canvas.focus();
       const args = [];
       if (query.get('hub') === 'frontier') args.push('--hub', 'frontier');
+      if (['redstone', 'canyon'].includes(query.get('hub'))) args.push('--hub', 'redstone');
       if (['mine', 'canyon', 'seeded'].includes(query.get('theme'))) args.push('--theme', query.get('theme'));
       if (query.has('mute')) args.push('--mute');
       // Optional scripted capture paths use temporary saves, exactly like native checks.

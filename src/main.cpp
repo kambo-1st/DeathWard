@@ -84,8 +84,10 @@ int main(int argc, char **argv) {
                 initialHub = dw::HubKind::BlackCreek;
             else if (hub == "frontier")
                 initialHub = dw::HubKind::Frontier;
+            else if (hub == "redstone" || hub == "canyon")
+                initialHub = dw::HubKind::Redstone;
             else {
-                std::cerr << "--hub must be black-creek or frontier\n";
+                std::cerr << "--hub must be black-creek, frontier or redstone\n";
                 return 2;
             }
         } else if (arg == "--screenshot" && i + 1 < argc)
@@ -103,8 +105,8 @@ int main(int argc, char **argv) {
             std::cout << "DeathWard\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
                          " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
-                         "black-creek "
-                         "or frontier\n  --smoke              "
+                         "black-creek"
+                         ", frontier or redstone\n  --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
                          "power, reward, empty, cheats, "
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
@@ -159,7 +161,7 @@ int main(int argc, char **argv) {
             game.audioSettings = dw::loadAudioSettings(audioPreferences);
         auto savedAudioSettings = game.audioSettings;
         game.audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
-        for (const auto hub : {dw::HubKind::BlackCreek, dw::HubKind::Frontier})
+        for (const auto hub : dw::Hubs)
             if (upgradeTownNavigation(hub) && hub == game.activeHub) {
                 if (!game.town.load(game.hubDirectory() / "town.nav") || !game.reloadTownObjects())
                     throw std::runtime_error("Could not reload the upgraded town navigation.");
@@ -318,7 +320,9 @@ int main(int argc, char **argv) {
             audioFrame.music = editing ? dw::MusicScene::Silent : game.musicScene();
             audioFrame.paused = editing || game.paused ||
                                 (game.screen != dw::Screen::Hub && game.screen != dw::Screen::Expedition);
-            audioFrame.environment = game.activeHub == dw::HubKind::BlackCreek
+            audioFrame.environment = game.activeHub == dw::HubKind::Redstone
+                                         ? dw::AudioEnvironment::Canyon
+                                     : game.activeHub == dw::HubKind::BlackCreek
                                          ? dw::AudioEnvironment::Town
                                          : dw::AudioEnvironment::Frontier;
             audioFrame.player = game.town.player.position;

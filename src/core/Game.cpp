@@ -129,7 +129,8 @@ MusicScene Game::musicScene() const {
         if (lastSummary.reason == EndReason::Death)
             return MusicScene::Defeat;
     }
-    return activeHub == HubKind::BlackCreek ? MusicScene::Town : MusicScene::Frontier;
+    return activeHub == HubKind::Redstone ? MusicScene::Canyon :
+           activeHub == HubKind::BlackCreek ? MusicScene::Town : MusicScene::Frontier;
 }
 bool Game::reloadTownObjects() {
     TownDocument document;
@@ -293,7 +294,13 @@ void Game::perform(Action action) {
             }
             break;
         case Action::TravelHub:
-            selectHub(activeHub == HubKind::BlackCreek ? HubKind::Frontier : HubKind::BlackCreek);
+            selectHub(primaryTravelHub(activeHub));
+            break;
+        case Action::TravelFrontier:
+            selectHub(HubKind::Frontier);
+            break;
+        case Action::TravelRedstone:
+            selectHub(HubKind::Redstone);
             break;
         case Action::ThemeSeeded:
         case Action::ThemeMine:
@@ -602,7 +609,7 @@ bool Game::pointerOverControls() const {
         return true;
     if (screen == Screen::Hub)
         return missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
-               (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 700) ||
+               (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 646) ||
                (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
     return (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||

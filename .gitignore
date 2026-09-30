@@ -11,4 +11,6 @@ audio.cfg
 *:Zone.Identifier
 
 /assets/frontier/town.nav.bak
+/assets/redstone/town.scene.bak
+/assets/redstone/town.nav.bak
 __pycache__/

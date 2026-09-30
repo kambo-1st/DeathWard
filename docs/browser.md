@@ -158,3 +158,9 @@ window. `DEATHWARD_BROWSER=/path/to/chrome` selects an existing Chromium binary;
 The tests use a fresh browser profile and do not touch the player's native saves.
 See [verification results](verification.md#browser-version) for tested coverage
 and current limits.
+
+## Redstone Canyon
+
+Use `?hub=redstone` to start in the authored canyon fort and settler camp. Both other hubs have a direct travel button; missions return to the departure hub. Redstone has independent editor files under `/persist/redstone`. Its continuously moving train, original textures, campfires and canyon audio also ship in the universal upload package.
+
+`node web/redstone-test.cjs` checks travel, mission return, train pause, editor saving and reload. The package check also starts Redstone from a nested deployment path.

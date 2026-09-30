@@ -1,5 +1,56 @@
 # Milestone 1 verification
 
+## Redstone Canyon authored hub
+
+Content version `deathward-m1-37` adds a third fixed map combining Black Creek's
+canyon landscape and exact rail loop with the Frontier fort and neighboring
+covered-wagon settler camp. The composed pack contains 923 placements, 192 mesh
+assets and eight embedded images. The station, platforms and former town
+buildings are omitted. The other two hub packs remain unchanged.
+
+One locomotive, coal tender and two passenger carriages retain their original
+transforms, wheel bindings, steam and moving collision. A route with station wait
+zero now keeps its speed through the loop seam; positive waits retain Black
+Creek's station behavior. Player obstruction and pause still stop the convoy.
+
+Both other hubs offer direct travel to Redstone. CLI `--hub redstone` (or
+`--hub canyon`) and browser `?hub=redstone` select it directly. Mission departure,
+results, history and editor actions use the active hub. Redstone uses the canyon
+score and ambience. The editor and browser persistence use independent Redstone
+files; the universal package includes all three hubs.
+
+`create_redstone.py` composes only referenced glTF resources and preserves
+original geometry, UVs, index buffers, material properties and encoded image
+bytes. The source audit validates all of them and each translated prefab part.
+An isolated rebuild reproduces the runtime files and manifest byte for byte.
+This is a new authored arrangement, not a third original Unity scene import.
+
+```sh
+python3 scripts/verify_redstone.py
+ctest --test-dir build --output-on-failure
+./build/deathward_redstone_render_tests
+./build/deathward_editor_tests
+./build/deathward_input_tests
+node web/redstone-test.cjs
+node web/test.cjs
+node web/package-test.cjs
+```
+
+All 19 CPU suites pass. The new map checks camp/mission/fort/railway round trips,
+solid walls, complete caravan and train composition, and continuous motion across
+multiple circuits. Graphics checks load all textures, shadows, fires and steam.
+The focused browser suite passes travel between all three hubs, mission return,
+train pause, independent editor saving and reloading. The existing full browser
+suite passes without JavaScript exceptions, shader failures or WebGL errors.
+Native editor/input checks also pass, including Redstone placement saves, train
+settings, direct travel controls and active-pack selection. The refreshed 84.7 MiB
+upload ZIP passes archive hashes and clean browser startup for Black Creek at the
+domain root and both Frontier and Redstone at `/deathward/`.
+
+Logs use `artifacts/redstone-*`. Reviewed captures include
+`redstone-overview.png`, `redstone-fort.png`, `redstone-camp.png`,
+`redstone-train.png`, `redstone-arrival.png` and `web-redstone.png`.
+
 ## Enterable town buildings
 
 Content version `deathward-m1-36` enables seamless mouse/WASD entry into the

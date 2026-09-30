@@ -6,7 +6,7 @@ Press **F4 in the hub**, or choose **Town Editor** from its pause screen. You ca
 ./build/deathward --editor
 ```
 
-The editor opens the active hub: Black Creek or Western Frontier. Use `./build/deathward --editor --hub frontier` to edit the second hub directly. Each has its own scene, mesh library and navigation.
+The editor opens the active hub: Black Creek, Western Frontier or Redstone Canyon. Use `./build/deathward --editor --hub frontier` or `./build/deathward --editor --hub redstone` to edit those packs directly. Each has its own scene, mesh library and navigation.
 
 The editor uses the town's original textured meshes. It edits their placements: select, move, rotate, scale, add, duplicate or delete an object. Gameplay is suspended while editing. **Back to town** returns to the game; after a save, the game reloads the edited scene and navigation.
 
@@ -42,7 +42,7 @@ Settings live in scene format 2 with stable per-object IDs. Format-1 scenes and 
 
 ## Trains
 
-Select any part of a train and open **Animation**. Selection outlines the complete vehicle, and **Focus selection** frames that vehicle. The rail centerline appears in teal. **Travel speed**, **Acceleration** and **Station wait / sec** affect both trains on the shared loop. Defaults are 3, 0.8 and 6 respectively. **Play/Pause/Reset preview** works as it does for props; saving during preview preserves original placements and route settings.
+Select any part of a train and open **Animation**. Selection outlines the complete vehicle, and **Focus selection** frames that vehicle. The rail centerline appears in teal. **Travel speed**, **Acceleration** and **Station wait / sec** affect both trains on the shared loop. Black Creek defaults are 3, 0.8 and 6 respectively. Redstone Canyon has one four-vehicle convoy and a station wait of zero. A zero wait makes the train continue through the loop boundary without braking; player obstruction still stops it. **Play/Pause/Reset preview** works as it does for props; saving during preview preserves original placements and route settings.
 
 Locomotives, tenders, coaches and freight wagons follow the original rail curves as separate linked vehicles. The sixteen separate locomotive wheels turn with distance traveled. Wheels and linkage geometry already combined into coach/tender/freight body meshes remain rigid. Trains are solid: game movement and mouse paths avoid their current hulls, and trains stop for the player. Pause and missions freeze the hub simulation.
 
@@ -50,7 +50,7 @@ Bound parts cannot be moved, rotated, scaled or duplicated independently. **Dele
 
 ## Characters and walking routes
 
-The **People** tab places the textured, animated cowgirl in either hub. Black Creek includes a four-stop demo near the starting street; select `cowgirl-street-walk` to inspect it.
+The **People** tab places the textured, animated cowgirl in any hub. Black Creek includes a four-stop demo near the starting street; select `cowgirl-street-walk` to inspect it.
 
 1. Choose **Add cowgirl**, then click walkable ground for her starting point.
 2. Choose **Add route stops** and click each destination in order. Press **Escape** when finished.
@@ -66,11 +66,11 @@ Character records were introduced in `town.scene` format 4 and remain in format 
 
 ## Animals
 
-The **Animals** tab supports all 98 textured, animated variants in either hub. **In town** lists the existing residents, including Black Creek's horse, cow, cat and two hens. Click one in the list or viewport to edit it. **Species** provides a searchable, scrollable catalog; choose a variant, click **Add animal**, then click clear ground for its home. Escape ends placement.
+The **Animals** tab supports all 98 textured, animated variants in any hub. **In town** lists the existing residents, including Black Creek's horse, cow, cat and two hens. Click one in the list or viewport to edit it. **Species** provides a searchable, scrollable catalog; choose a variant, click **Add animal**, then click clear ground for its home. Escape ends placement.
 
 **Place home** moves the selected animal with another ground click. **Change species** opens the catalog and **Apply species** replaces its model while retaining its home and settings. The inspector edits **Size** (0.25–3), **Roaming radius** (0–20 metres), **Facing** and **Roaming seed**. Radius zero keeps the animal stationary while its idle/eating animation plays. The home marker and ring show the authored center and roaming area. The whole animal footprint needs clear ground, with space from other homes and the mission board; large species may need a more open area or smaller scale.
 
-**Play preview**, **Pause preview** and **Reset preview** use the same textured models, animations, lighting and ground-following roaming as gameplay. The preview has its own clock and respects scenery, other residents and the moving trains. Changing settings resets preview. **Focus**, **Duplicate**, **Delete**, **Undo** and **Redo** include animals; duplicates receive separate IDs and seeds and must be placed on clear ground before saving. Up to 64 animals can be placed in each town.
+**Play preview**, **Pause preview** and **Reset preview** use the same textured models, animations, lighting and ground-following roaming as gameplay. The preview has its own clock and respects scenery, other residents and the moving trains. Changing settings resets preview. **Focus**, **Duplicate**, **Delete**, **Undo** and **Redo** include animals; duplicates receive separate IDs and seeds and must be placed on clear ground before saving. Up to 64 animals can be placed in each hub.
 
 Save includes animal definitions in `town.scene` format 5 and checks their homes against freshly rebuilt navigation. Saving during preview retains the authored homes, not temporary roaming positions. Deleting every animal remains an empty population on reload. The five original Black Creek placements are preserved; Frontier starts empty. Older game scenes use the legacy `town.animals` definitions until their first editor save. Browser persistence includes the same records.
 
@@ -98,7 +98,7 @@ In gameplay, entering a building cuts away its roof and upper walls so the origi
 
 **Save** or **Ctrl+S** validates and saves `town.scene` and rebuilds `town.nav`. It retains the preceding versions as `town.scene.bak` and `town.nav.bak`. Both replacements are staged and validated first; reported replacement failures roll back to the backups. The model library, embedded textures and retained Unity sources are unchanged. **Reload** restores the last saved files. Leaving, reloading or closing the window with unsaved edits offers save/discard/cancel as appropriate.
 
-In a source checkout, the game and editor use `assets/town/` for Black Creek or `assets/frontier/` for Frontier, so edits survive a rebuild. A packaged game without the checkout uses the matching folder beside its executable. To work on a separate copy of a town pack:
+In a source checkout, the game and editor use `assets/town/` for Black Creek, `assets/frontier/` for Frontier or `assets/redstone/` for Redstone Canyon, so edits survive a rebuild. A packaged game without the checkout uses the matching folder beside its executable. To work on a separate copy of a town pack:
 
 ```sh
 ./build/deathward --editor --town /path/to/copied/town

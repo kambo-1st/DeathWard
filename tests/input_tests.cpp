@@ -469,6 +469,24 @@ int main(int argc, char **argv) {
         check(game.activeHub == dw::HubKind::BlackCreek && !game.paused,
               "pause-screen return travel remains available");
         check(game.animals.residents().size() == 5, "return travel reloads town animals");
+        click(1050, 680);
+        check(game.activeHub == dw::HubKind::Redstone && game.hubDirectory().filename() == "redstone" &&
+                  game.town.loaded() && game.townObjects.solids().size() == 4 &&
+                  game.musicScene() == dw::MusicScene::Canyon,
+              "the second travel button opens the canyon hub with its convoy and canyon score");
+        pressKey(KEY_F4);
+        check(game.editorRequested && game.hubDirectory().filename() == "redstone",
+              "the canyon editor targets its independent authored pack");
+        game.editorRequested = false;
+        click(1050, 680);
+        check(game.activeHub == dw::HubKind::Frontier, "Redstone offers direct travel to Frontier");
+        click(590, 734);
+        click(620, 676);
+        check(game.activeHub == dw::HubKind::Redstone && !game.paused,
+              "the pause menu offers direct travel to the canyon");
+        click(1050, 734);
+        check(game.activeHub == dw::HubKind::BlackCreek && game.campaign.data().history.empty(),
+              "travel from the canyon returns to Black Creek without a mission outcome");
         pressKey(KEY_F4);
         check(game.editorRequested && game.screen == dw::Screen::Hub && !game.run &&
                   !game.campaign.data().pending,
