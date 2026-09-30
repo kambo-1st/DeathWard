@@ -86,6 +86,11 @@ def verify(directory):
                     assert np.array_equal(data, expected.astype('<f4'))
                 else:
                     assert derivation['kind'] in ('wall_bank', 'gate_grade', 'ground_path')
+                    if derivation['kind'] == 'ground_path':
+                        colors = accessor(library, after['attributes']['COLOR_0'])
+                        assert colors.shape == (len(data),4) and np.isfinite(colors).all()
+                        assert np.all((colors >= 0) & (colors <= 1)) and np.all(colors[:,3] == 1)
+                        assert np.ptp(colors[:,0]) > .04, 'Dirt paths retain visible tonal variation'
                 continue
             assert before['attributes'].keys() == after['attributes'].keys()
             indices = [(before['attributes'][key], after['attributes'][key]) for key in before['attributes']]

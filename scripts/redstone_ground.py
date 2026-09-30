@@ -9,7 +9,7 @@ def accessor(library, index):
     item = library.gltf['accessors'][index]
     view = library.gltf['bufferViews'][item['bufferView']]
     dtype = np.dtype({5126: '<f4', 5123: '<u2', 5125: '<u4'}[item['componentType']])
-    size = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3}[item['type']]
+    size = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3, 'VEC4': 4}[item['type']]
     return np.ndarray((item['count'], size), dtype=dtype, buffer=library.binary,
                       offset=view.get('byteOffset', 0) + item.get('byteOffset', 0),
                       strides=(view.get('byteStride', size * dtype.itemsize), dtype.itemsize)).copy()
@@ -30,7 +30,7 @@ def triangles(library, placement):
     return vertices[indices].reshape(-1, 3, 8), primitive['material']
 
 
-def add_surface(library, name, source, vertices, material, operation):
+def add_surface(library, name, source, vertices, material, operation, colors=None):
     """Append derived meshes; never change the source catalog used by editor saves."""
     vertices = np.asarray(vertices, dtype=float).reshape(-1, 8).copy()
     assert len(vertices) and np.isfinite(vertices).all()
@@ -40,9 +40,13 @@ def add_surface(library, name, source, vertices, material, operation):
     vertices = vertices.astype('<f4')
     operation['origin'] = origin.tolist()
     attrs = {}
-    for key, values, kind in [('POSITION', vertices[:, :3], 'VEC3'),
-                              ('NORMAL', vertices[:, 3:6], 'VEC3'),
-                              ('TEXCOORD_0', vertices[:, 6:], 'VEC2')]:
+    streams = [('POSITION', vertices[:, :3], 'VEC3'), ('NORMAL', vertices[:, 3:6], 'VEC3'),
+               ('TEXCOORD_0', vertices[:, 6:], 'VEC2')]
+    if colors is not None:
+        colors = np.asarray(colors, dtype='<f4')
+        assert colors.shape == (len(vertices),4) and np.all((colors >= 0) & (colors <= 1))
+        streams.append(('COLOR_0', colors, 'VEC4'))
+    for key, values, kind in streams:
         values = np.ascontiguousarray(values)
         library.binary.extend(b'\0' * (-len(library.binary) % 4))
         view = len(library.gltf['bufferViews'])
@@ -128,6 +132,57 @@ def surface_grid(rows, uv):
                 normal /= np.linalg.norm(normal)
                 faces.extend(np.c_[tri, np.tile(normal, (3,1)), np.tile(uv, (3,1))])
     return faces
+
+
+def dirt_colors(faces, path, style):
+    """Bake soft, lengthwise soil variation without changing the walkable mesh."""
+    points = np.asarray(path['points'], dtype=float)
+    vertices = np.asarray(faces)[:,:3]
+    along, across, nearest = np.zeros(len(vertices)), np.zeros(len(vertices)), np.full(len(vertices), np.inf)
+    traveled = 0
+    for a,b in zip(points,points[1:]):
+        delta = b-a
+        length = np.linalg.norm(delta)
+        relative = vertices[:,[0,2]]-a
+        t = np.clip(relative @ delta / length**2,0,1)
+        distance = np.sum((relative-t[:,None]*delta)**2,axis=1)
+        use = distance < nearest
+        nearest[use] = distance[use]
+        along[use] = traveled+t[use]*length
+        across[use] = (relative @ np.array([-delta[1],delta[0]]) / length)[use]
+        traveled += length
+
+    def noise(x,y,seed):
+        ix,iy = np.floor(x).astype(np.int64),np.floor(y).astype(np.int64)
+        u,v = x-ix,y-iy
+        u,v = u*u*(3-2*u),v*v*(3-2*v)
+        def value(dx,dy):
+            h = ((ix+dx)*374761393+(iy+dy)*668265263+seed*1442695041) & 0xffffffff
+            h = ((h ^ (h >> 13))*1274126177) & 0xffffffff
+            return ((h ^ (h >> 16)) & 0xffffff) / 0xffffff * 2-1
+        return ((1-u)*value(0,0)+u*value(1,0))*(1-v) + ((1-u)*value(0,1)+u*value(1,1))*v
+
+    seed = style['seed']
+    broad = .65*noise(across*2.8,along*.22,seed) + .35*noise(across*1.3,along*.65,seed+1)
+    grain = noise(across*8,along*2.3,seed+2)
+    wander = .06*noise(np.zeros_like(along),along*.4,seed+3)
+    if path['id'] == 'gate':
+        wear = np.exp(-((np.abs(across-wander)-path['width']*.27)/.13)**2)
+    else:
+        wear = np.exp(-((across-wander)/.2)**2)
+    tone = .94 + style['strength']*broad + .015*grain-style['wear']*wear
+    warmth = .5+.5*noise(across*1.4,along*.32,seed+4)
+    colors = np.c_[tone,tone*(1-.012*warmth),tone*(1-.025*warmth),np.ones(len(vertices))]
+    colors = np.clip(colors,0,1)
+    # Keep the shared palette at the junction so the path does not paint a
+    # dark rectangular cap across the main road. Fade back at the courtyard join.
+    blend = np.clip((along-1.9)/1.0,0,1)
+    blend = blend*blend*(3-2*blend)
+    if not path.get('taper_end'):
+        end = np.clip((traveled-along)/.9,0,1)
+        blend *= end*end*(3-2*end)
+    colors[:,:3] = 1+(colors[:,:3]-1)*blend[:,None]
+    return colors
 
 
 def fit_frontage(library, placements, story):
@@ -227,10 +282,12 @@ def fit_frontage(library, placements, story):
         if library.assets[p['asset']]['label'] == 'SM_Env_Road_Straight_01':
             ground_faces.extend(triangles(library, p)[0])
     ground = Ground(ground_faces)
+    road = next(p for p in placements if library.assets[p['asset']]['label'] == 'SM_Env_Road_Straight_01')
+    road_uv = triangles(library, road)[0][0,0,6:]
     for path in settings['paths']:
         p = next(p for p in placements if p['object'] == path['object'])
         old = deepcopy(p)
-        original, material = triangles(library, p)
+        _, material = triangles(library, p)
         rows = []
         points = np.array(path['points'], dtype=float)
         for segment, (a,b) in enumerate(zip(points, points[1:])):
@@ -249,7 +306,8 @@ def fit_frontage(library, placements, story):
                     x,z = center+side*cross*width
                     row.append([x, ground.height(x,z)+.018, z])
                 rows.append(row)
-        faces = surface_grid(rows, original[0,0,6:])
+        faces = surface_grid(rows, road_uv)
         asset_name = add_surface(library, 'redstone_path_' + path['id'], p['asset'], faces, material,
-                                dict(kind='ground_path', original=old, settings=path))
+                                dict(kind='ground_path', original=old, settings=path,
+                                     dirt=settings['dirt']), dirt_colors(faces,path,settings['dirt']))
         place_surface(library, p, asset_name)

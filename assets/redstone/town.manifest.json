@@ -4,7 +4,7 @@
   "title": "Redstone Canyon",
   "description": "Stranded train, buried railway, fort and expanding settler camp for the Redstone story; no station.",
   "story": {
-    "revision": 4,
+    "revision": 5,
     "title": "Stranded at Redstone",
     "spawn": [
       0,
@@ -2048,7 +2048,12 @@
         "width": 2.5,
         "plateau": 0.8
       },
-      "replaced_gate_road": "town-806957096:1044123881021568"
+      "replaced_gate_road": "town-806957096:1044123881021568",
+      "dirt": {
+        "seed": 92,
+        "strength": 0.1,
+        "wear": 0.025
+      }
     },
     "preserved_editor_removals": [
       "town-1720565495:1445815111663670",
@@ -6993,6 +6998,11 @@
           ],
           "taper_end": true
         },
+        "dirt": {
+          "seed": 92,
+          "strength": 0.1,
+          "wear": 0.025
+        },
         "origin": [
           -8.0,
           -0.3459107813585653,
@@ -7070,6 +7080,11 @@
           ],
           "taper_end": false
         },
+        "dirt": {
+          "seed": 92,
+          "strength": 0.1,
+          "wear": 0.025
+        },
         "origin": [
           -0.9007210131105274,
           -0.32116884962439496,
@@ -7138,6 +7153,11 @@
             ]
           ],
           "taper_end": true
+        },
+        "dirt": {
+          "seed": 92,
+          "strength": 0.1,
+          "wear": 0.025
         },
         "origin": [
           11.7,
@@ -39296,7 +39316,7 @@
     ]
   },
   "output_sha256": {
-    "town.glb": "cbc671b050107d6e7a0b025bbead6627e063b14dec52f399da8313f8aee57ad5",
+    "town.glb": "168f0ec2d105d7a7b15949992c06924826354f0e2b5e38d2c0430e493571a4d5",
     "town.scene": "e9d009146c6100b4b5587efd6571a850516b8aa3ff077d23ef1ff1c2ec71b54a",
     "town.labels": "be1278b14dd0acdc00b768a5eedceb24cfdb637e6c8a331e1aa1143fcda8dc03",
     "town.nav": "535f02b93f9f90859509e6a2d63ba3f36b9867cf669119b6586742f90f60ea2b"

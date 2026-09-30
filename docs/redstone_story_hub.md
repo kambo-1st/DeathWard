@@ -22,6 +22,8 @@ these spaces while leaving the wagon route and court entrances clear.
 The fort floor ends inside the walls, with a narrow graded bank joining the
 canyon. The footpaths follow that ground continuously, rather than cutting
 through the former raised apron.
+Their dirt palette matches the main road, with muted tonal variation and faint
+worn tracks instead of a single flat color.
 
 ## Story commitments
 

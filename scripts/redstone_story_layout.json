@@ -1,5 +1,5 @@
 {
-  "revision": 4,
+  "revision": 5,
   "title": "Stranded at Redstone",
   "spawn": [
     0,
@@ -2043,6 +2043,11 @@
       "width": 2.5,
       "plateau": 0.8
     },
-    "replaced_gate_road": "town-806957096:1044123881021568"
+    "replaced_gate_road": "town-806957096:1044123881021568",
+    "dirt": {
+      "seed": 92,
+      "strength": 0.1,
+      "wear": 0.025
+    }
   }
 }

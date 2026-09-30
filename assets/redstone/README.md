@@ -61,6 +61,11 @@ Black Creek remains the default starting hub.
   the old raised apron edge and partly buried road patches. These eleven derived
   meshes append after the 220 original assets; their pivots sit at their own
   centres for normal editor placement and rotation.
+- The paths use the main road's dirt palette with baked vertex colors for subtle
+  soil patches, long streaks and faint wear. The tint fades into the main-road
+  junction and courtyard connection. The `ground_fit.dirt` settings control
+  its deterministic seed, variation strength and wear; all colors stay opaque,
+  and the geometry and navigation are unchanged by this surface treatment.
 - Fifteen provisional residents use the existing textured cowgirl and bandit
   models. The commander, outlaw, wife, spiritualist and scout have authored
   positions; ambient residents follow checked walking routes. Nearby role labels
