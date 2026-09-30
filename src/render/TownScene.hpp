@@ -1,7 +1,8 @@
 #pragma once
 #include "core/Types.hpp"
-#include "render/PlayerOcclusion.hpp"
 #include "render/ParticleEffects.hpp"
+#include "render/PlayerOcclusion.hpp"
+#include "render/RedstoneArt.hpp"
 #include "world/HubDefinition.hpp"
 #include "world/ObjectAnimation.hpp"
 #include "world/TownDocument.hpp"
@@ -18,6 +19,10 @@ class TownScene {
     bool load(const std::filesystem::path &directory = assetDirectory(HubKind::BlackCreek));
     void unload();
     void draw(Vector3 focus, bool glass = false);
+    void setArtPoc(bool enabled);
+    bool artPoc() const {
+        return artEnabled_;
+    }
     void setPlayerOcclusion(const Camera3D &camera, Vector3 player, bool enabled = true);
     std::optional<size_t> interior() const { return interior_; }
     void drawOccluders();
@@ -85,6 +90,8 @@ class TownScene {
     bool attempted_ = false;
     PlayerOcclusion occlusion_;
     ParticleEffects effects_;
+    RedstoneArt art_;
+    bool artEnabled_ = false;
     std::optional<size_t> interior_;
     Matrix interiorInverse_{};
     Box interiorBounds_{}, interiorWorldBounds_{};

@@ -416,6 +416,7 @@ std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const C
 }
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
                          EntityId hoveredEnemy, float deathTime, bool dynamiteArmed) {
+    playerModel_.artPoc = false;
     playerModel_.update(run, deathTime);
     if (!particlesAttempted_) { particlesAttempted_ = true; missionEffects_.load(); }
     missionEffects_.prepareMission(run,camera,playerModel_.muzzlePosition(run.player));
@@ -750,6 +751,8 @@ Action Renderer::hub(const Game &game) {
         townScene_.load(game.hubDirectory());
         loadedHub_ = game.activeHub;
     }
+    townScene_.setArtPoc(artPoc);
+    playerModel_.artPoc = characterModels_.artPoc = townScene_.artPoc();
     const auto &town = game.town;
     townScene_.applyAnimation(game.townObjects);
     const auto &world = game.campaign.data().world;
@@ -762,7 +765,8 @@ Action Renderer::hub(const Game &game) {
         animalModels_.draw(game.animals, depth);
         characterModels_.draw(game.characters, depth);
     });
-    postProcess_.begin(Color{154, 186, 199, 255}, distance(game.camera.position, game.camera.target));
+    postProcess_.begin(Color{154, 186, 199, 255}, distance(game.camera.position, game.camera.target),
+                       townScene_.artPoc());
     BeginMode3D(game.camera);
     townScene_.draw(town.player.position);
     animalModels_.draw(game.animals, townScene_.actorShader(), townScene_.shadowTexture());

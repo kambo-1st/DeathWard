@@ -98,14 +98,20 @@ void ParticleEffects::unload() {
     shader_ = {};
     resources_.clear(); bound_.clear(); particles_.clear(); lights_.clear();
     library_ = {};
-    dustAnchors_.clear(); dustReady_ = false;
+    dustAnchors_.clear();
+    townDustAnchors_.clear();
+    dustReady_ = false;
+    artDust = false;
     time_ = 0;
 }
 void ParticleEffects::bind(const TownDocument &document) {
+    townDustAnchors_.clear();
     bound_.clear(); particles_.clear(); lights_.clear();
     time_ = 0;
     for (size_t n = 0; n < document.instances.size(); ++n) {
         const auto &i = document.instances[n];
+        if (i.id.starts_with("story-frontage-scrub-") || i.id.starts_with("story-rail-barricade-"))
+            townDustAnchors_.push_back(Vector3Transform({0, .22f, 0}, i.transform));
         for (size_t a = 0; a < library_.attachments.size(); ++a)
             if (document.assets[i.asset].label == library_.attachments[a].label)
                 bound_.push_back({n, a, i.transform, seedFor(i.id.empty() ? std::to_string(n) : i.id, a),
@@ -179,6 +185,23 @@ void ParticleEffects::prepare(const Camera3D &camera) {
                 {byte(p.color.x),byte(p.color.y),byte(p.color.z),byte(p.alpha)},
                 size * worldScale, p.rotation * RAD2DEG, -Vector3Transform(position, view).z});
         }
+    }
+    if (artDust) {
+        const auto e = std::find_if(library_.emitters.begin(), library_.emitters.end(),
+                                    [](const auto &emitter) { return emitter.name == "canyondust"; });
+        if (e != library_.emitters.end())
+            for (size_t n = 0; n < townDustAnchors_.size(); n += 3) {
+                const auto anchor = townDustAnchors_[n];
+                if (distance(anchor, camera.target) > 65)
+                    continue;
+                for (auto p : ParticleLibrary::sample(*e, time_, 0x1866u + uint32_t(n * 101))) {
+                    const auto position = add(anchor, p.position);
+                    p.color = {.69f, .65f, .55f};
+                    p.alpha *= .65f * std::clamp((distance(position, camera.target) - 2) / 5, 0.f, 1.f);
+                    if (p.alpha > .001f)
+                        append(size_t(e - library_.emitters.begin()), p, position, 1, view);
+                }
+            }
     }
     sort();
 }

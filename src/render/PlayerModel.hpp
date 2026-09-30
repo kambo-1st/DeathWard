@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/Simulation.hpp"
+#include "render/ArtWardrobe.hpp"
 #include <filesystem>
 
 namespace dw {
@@ -22,6 +23,7 @@ inline constexpr float PlayerDeathSeconds = 2.0f;
 class PlayerModel {
   public:
     PlayerModel() = default;
+    bool artPoc = false;
     ~PlayerModel();
     PlayerModel(const PlayerModel &) = delete;
     PlayerModel &operator=(const PlayerModel &) = delete;
@@ -61,6 +63,7 @@ class PlayerModel {
         float duration = 0;
     };
     Model model_{};
+    mutable ArtWardrobe wardrobe_;
     std::array<Clip, size_t(PlayerAnimation::Count)> clips_;
     std::vector<Transform> pose_, worldPose_, blendFrom_;
     std::vector<bool> upperBody_;

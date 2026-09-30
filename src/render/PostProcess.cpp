@@ -80,6 +80,7 @@ uniform vec2 texel;
 uniform vec2 nearFar;
 uniform float fogStart;
 uniform int fogEnabled;
+uniform int artEnabled;
 out vec4 finalColor;
 float luminance(vec3 c) { return dot(c,vec3(.299,.587,.114)); }
 vec3 antialias(vec2 uv) {
@@ -102,6 +103,23 @@ vec3 antialias(vec2 uv) {
 }
 void main() {
     vec2 uv = fragTexCoord;
+    if (artEnabled != 0) {
+        vec3 c=antialias(uv)+texture(bloomMap,uv).rgb*.07;
+        c*=1.04;
+        c=max(c,vec3(0.));
+        c/=1.+max(c-.80,vec3(0.))*.45;
+        if (fogEnabled != 0) {
+            float depth=texture(depthMap,uv).r;
+            float eye=nearFar.x*nearFar.y/(nearFar.y-depth*(nearFar.y-nearFar.x));
+            float haze=.28*(1.-exp(-max(eye-fogStart,0.)/65.));
+            c=mix(c,vec3(.64,.66,.65),haze);
+        }
+        float grain=fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))))-.5;
+        c+=grain*.0025;
+        c*=1.-smoothstep(.35,.75,length(uv-.5))*.06;
+        finalColor=vec4(clamp(c,0.,1.),1.);
+        return;
+    }
     // A small cross filter softens fine detail without defocusing the character or cover edges.
     vec2 blurStep = texel*1.25;
     vec3 soft = texture(texture0,uv).rgb*.4;
@@ -202,9 +220,10 @@ void PostProcess::resize(int width, int height) {
         TraceLog(LOG_WARNING, "POST: Framebuffer unavailable; using direct world rendering");
     }
 }
-void PostProcess::begin(Color background, float focusDistance) {
+void PostProcess::begin(Color background, float focusDistance, bool artPoc) {
     resize(std::max(1, GetRenderWidth()), std::max(1, GetRenderHeight()));
     focusDistance_ = focusDistance;
+    artPoc_ = artPoc;
     active_ = ready();
     if (active_)
         BeginTextureMode(scene_);
@@ -232,7 +251,8 @@ void PostProcess::end() {
     SetShaderValue(composite_, GetShaderLocation(composite_, "texel"), &texel, SHADER_UNIFORM_VEC2);
     const Vector2 nearFar{float(rlGetCullDistanceNear()), float(rlGetCullDistanceFar())};
     const float fogStart = std::max(12.0f, focusDistance_ * .85f);
-    const int fogEnabled = focusDistance_ > 0;
+    const int fogEnabled = focusDistance_ > 0, artEnabled = artPoc_;
+    SetShaderValue(composite_, GetShaderLocation(composite_, "artEnabled"), &artEnabled, SHADER_UNIFORM_INT);
     SetShaderValue(composite_, GetShaderLocation(composite_, "nearFar"), &nearFar, SHADER_UNIFORM_VEC2);
     SetShaderValue(composite_, GetShaderLocation(composite_, "fogStart"), &fogStart, SHADER_UNIFORM_FLOAT);
     SetShaderValue(composite_, GetShaderLocation(composite_, "fogEnabled"), &fogEnabled, SHADER_UNIFORM_INT);

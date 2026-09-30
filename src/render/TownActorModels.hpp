@@ -4,6 +4,7 @@
 namespace dw {
 class TownActorModels {
   public:
+    bool artPoc = false;
     static std::filesystem::path cowgirlPath() {
         return modelPath("cowgirl");
     }
@@ -33,8 +34,14 @@ class TownActorModels {
         for (const auto &c : characters.residents()) {
             auto &model = c.definition.model == "bandit" ? bandit_ : cowgirl_;
             const float scale = c.definition.scale * (c.definition.model == "bandit" ? banditScale_ : 1);
+            const auto &id = c.definition.id;
+            const int costume = !artPoc                   ? 0
+                                : id == "story-scout"     ? 2
+                                : id == "story-commander" ? 3
+                                : id == "story-wife"      ? 4
+                                                          : 0;
             if (model.pose(c.phase, c.walking, c.alternate))
-                model.draw(c.position, c.facing, scale, shader, shadow);
+                model.draw(c.position, c.facing, scale, shader, shadow, costume);
         }
     }
   private:

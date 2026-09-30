@@ -938,13 +938,15 @@ bool TownEditor::button(const std::string &text, Rectangle r, bool selected, boo
 void TownEditor::draw() {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
+    scene_.setArtPoc(artPoc);
+    characterModels_.artPoc = scene_.artPoc();
     characterModels_.prepare(characters_);
     animalModels_.prepare(animals_);
     scene_.prepareLighting(camera, [&](Shader depth) {
         characterModels_.draw(characters_, depth);
         animalModels_.draw(animals_, depth);
     });
-    postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target));
+    postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target), scene_.artPoc());
     BeginMode3D(camera);
     scene_.draw(camera.target);
     characterModels_.draw(characters_, scene_.actorShader(), scene_.shadowTexture());

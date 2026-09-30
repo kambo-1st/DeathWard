@@ -102,10 +102,14 @@ void SkinnedModel::unload(Asset &a) {
         UnloadModel(a.model);
     a = {};
 }
-void SkinnedModel::unload() { unload(asset_); }
+void SkinnedModel::unload() {
+    for (auto &accessory : wardrobe_)
+        accessory.unload();
+    unload(asset_);
+}
 bool SkinnedModel::load(const std::filesystem::path &path, bool alternateIdle) {
+    unload();
     auto &a = asset_;
-    unload(a);
     a.attempted = true;
     if (!std::filesystem::is_regular_file(path))
         return false;
@@ -261,7 +265,8 @@ Box SkinnedModel::bounds(Vector3 position, Vector3 facing, float scale) const {
     }
     return result;
 }
-void SkinnedModel::draw(Vector3 position, Vector3 facing, float scale, Shader shader, Texture2D shadowMap) {
+void SkinnedModel::draw(Vector3 position, Vector3 facing, float scale, Shader shader, Texture2D shadowMap,
+                        int costume) {
     if (!loaded()) return;
     const auto &a = asset_;
     const auto p = add(position, {0, a.floor * scale, 0});
@@ -281,5 +286,7 @@ void SkinnedModel::draw(Vector3 position, Vector3 facing, float scale, Shader sh
         }
         DrawMesh(a.model.meshes[n], material, transform);
     }
+    if (costume > 0 && costume <= int(wardrobe_.size()))
+        wardrobe_[size_t(costume - 1)].draw(a.model, a.world, transform, shader, shadowMap, costume);
 }
 } // namespace dw

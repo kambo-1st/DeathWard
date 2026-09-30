@@ -43,6 +43,7 @@ PlayerModel::~PlayerModel() {
     unload();
 }
 void PlayerModel::unload() {
+    wardrobe_.unload();
     // raylib's UnloadModel deliberately leaves textures owned by the caller.
     std::set<unsigned int> textures;
     for (int i = 0; i < model_.materialCount; ++i)
@@ -257,6 +258,8 @@ void PlayerModel::draw(const Player &player, bool dead, Shader shader, Texture2D
         }
         DrawMesh(model_.meshes[i], material, transform);
     }
+    if (artPoc)
+        wardrobe_.draw(model_, worldPose_, transform, shader, shadowMap, 1);
     if (hand_ < 0 || dead)
         return;
     const Vector3 hand = worldPoint(worldPose_[size_t(hand_)].translation, player);

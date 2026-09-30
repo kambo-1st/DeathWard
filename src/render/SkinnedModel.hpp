@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Types.hpp"
+#include "render/ArtWardrobe.hpp"
 #include <filesystem>
 namespace dw {
 // Shared mesh and source clips, sampled independently by each resident.
@@ -17,13 +18,15 @@ class SkinnedModel {
     bool poseSequence(double seconds, const std::vector<std::string> &clips, float speed = 1);
     const std::vector<std::string> &clipNames() const { return asset_.names; }
     float clipDuration(const std::string &name) const;
-    void draw(Vector3 position, Vector3 facing, float scale, Shader shader = {}, Texture2D shadowMap = {});
+    void draw(Vector3 position, Vector3 facing, float scale, Shader shader = {}, Texture2D shadowMap = {},
+              int costume = 0);
     Box bounds(Vector3 position, Vector3 facing, float scale) const;
     const Model &model() const { return asset_.model; }
     const std::vector<Transform> &bonePose() const { return asset_.world; }
     static void applyPose(Model model, const Transform *pose);
     static void correctAnimationScale(ModelAnimation &animation);
   private:
+    std::array<ArtWardrobe, 4> wardrobe_;
     struct Clip { std::vector<std::vector<Transform>> frames; float duration = 0; };
     struct Asset {
         Model model{};

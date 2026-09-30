@@ -1,5 +1,14 @@
 # Milestone 1 verification
 
+## Reversible Redstone art POC
+
+`deathward_art_direction_tests` renders fixed before/after views, requires identical
+baseline pixels after toggling off, verifies unchanged scene serialization, and
+checks that other hubs cannot activate the profile. The browser check is
+`node web/art-direction-test.cjs`; it exercises the URL flag, F6 in both hub and
+editor, scene preservation and default-off reload. Screenshots and logs use
+`artifacts/art-poc-*`. See the [POC notes](redstone_art_poc.md) for scope and reversal.
+
 ## Animal movement and stationary activities
 
 Content version `deathward-m1-49` adds ground movement, yaw and uniform scale

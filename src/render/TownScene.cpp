@@ -39,6 +39,8 @@ in vec4 vertexColor;
 uniform mat4 mvp;
 uniform mat4 matModel;
 uniform mat4 matNormal;
+uniform int artCloth;
+uniform float artTime;
 out vec2 uv;
 out vec3 normal;
 out vec3 world;
@@ -48,9 +50,14 @@ void main() {
     uv = vertexTexCoord;
     color = vertexColor;
     paletteVariation = 0.;
-    world = (matModel * vec4(vertexPosition,1.)).xyz;
+    vec3 position=vertexPosition;
+    if (artCloth != 0) {
+        float pinned=sin(vertexTexCoord.x*3.14159265)*sin(vertexTexCoord.y*3.14159265);
+        position.y+=pinned*.075*sin(artTime*2.1+position.x*1.8+position.z);
+    }
+    world = (matModel * vec4(position,1.)).xyz;
     normal = normalize((matNormal * vec4(vertexNormal,0.)).xyz);
-    gl_Position = mvp * vec4(vertexPosition,1.);
+    gl_Position = mvp * vec4(position,1.);
 }
 )GLSL";
 constexpr const char *DepthFragment = R"GLSL(#version 330
@@ -141,8 +148,10 @@ void main() {
     }
     if(unlit != 0) { finalColor = surface; return; }
     vec3 n = normalize(normal);
+    surface.rgb = artFinish(surface.rgb,world,n);
     // Warm ground bounce and a cool sky fill keep shaded porches readable.
     vec3 light = mix(vec3(.27,.245,.215),vec3(.43,.48,.55),n.y*.5+.5);
+    if (artEnabled != 0) light=mix(vec3(.23,.225,.20),vec3(.45,.50,.54),n.y*.5+.5);
     for(int i=0;i<lightCount;i++) {
         vec3 d = lightDirections[i];
         float attenuation = .90;
@@ -193,6 +202,8 @@ TownScene::~TownScene() {
 }
 void TownScene::unload() {
     effects_.unload();
+    art_.unload();
+    artEnabled_ = false;
     std::set<unsigned> textures;
     for (int i = 0; i < model_.materialCount; ++i)
         for (int j = MATERIAL_MAP_ALBEDO; j <= MATERIAL_MAP_BRDF; ++j) {
@@ -252,7 +263,9 @@ bool TownScene::load(const std::filesystem::path &directory) {
         model_ = LoadModel(modelFile.string().c_str());
         if (model_.meshCount != meshCount)
             throw std::runtime_error("Town model/catalog mismatch");
-        const auto fragment = withPlayerOcclusion(Fragment);
+        auto source = std::string(Fragment);
+        source.insert(source.find("float visibility"), RedstoneArt::shaderFunctions());
+        const auto fragment = withPlayerOcclusion(source.c_str());
         shader_ = loadWorldShader(Vertex, fragment.c_str());
         actorShader_ = loadWorldShader(ActorVertex, fragment.c_str());
         shadowShader_ = loadWorldShader(Vertex, DepthFragment);
@@ -290,6 +303,7 @@ bool TownScene::load(const std::filesystem::path &directory) {
             shadowMap_ = staticShadowMap_ = {};
             TraceLog(LOG_WARNING, "TOWN: Shadow buffer unavailable; using unshadowed lighting");
         }
+        shader_.locs[SHADER_LOC_MAP_EMISSION] = GetShaderLocation(shader_, "artContact");
         updateLights();
         std::set<unsigned> filtered;
         for (int i = 0; i < model_.materialCount; ++i) {
@@ -319,6 +333,9 @@ void TownScene::applyDocument(const TownDocument &document) {
     if (document.meshCount() != model_.meshCount || document.assets.size() != assets_.size())
         throw std::runtime_error("The edited scene must use the loaded mesh library.");
     document_ = document;
+    art_.unload();
+    if (artEnabled_)
+        art_.build(document_, model_);
     effects_.bind(document_);
     updateLights();
     instances_.clear();
@@ -345,6 +362,16 @@ void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
         instances_[n].bounds = poses[n].bounds;
     }
 }
+void TownScene::setArtPoc(bool enabled) {
+    enabled = enabled && loaded() && RedstoneArt::supports(document_);
+    if (enabled == artEnabled_)
+        return;
+    artEnabled_ = enabled;
+    effects_.artDust = enabled;
+    if (enabled && !art_.ready())
+        art_.build(document_, model_);
+    updateLights();
+}
 void TownScene::updateLights() {
     shadowsDirty_ = true;
     auto lights = document_.lights;
@@ -360,6 +387,11 @@ void TownScene::updateLights() {
     sunIndex_ = sun == lights.end() ? -1 : 0;
     if (sunIndex_ == 0) {
         std::iter_swap(lights.begin(), sun); // Reserve a slot for the sun even in scenes with many lamps.
+        if (artEnabled_) {
+            lights.front().direction = Vector3Normalize({-.58f, .48f, .66f});
+            lights.front().color = {1.f, .94f, .81f};
+            lights.front().intensity = 1.22f;
+        }
         sunDirection_ = Vector3Normalize(lights.front().direction);
     }
     std::vector<Vector3> positions, directions, colors;
@@ -371,8 +403,9 @@ void TownScene::updateLights() {
         colors.push_back(mul(l.color, l.intensity));
         ranges.push_back(l.type == 1 ? 0 : std::max(.001f, l.range));
     }
-    const int count = int(positions.size()), disabled = 0;
+    const int count = int(positions.size()), disabled = 0, art = artEnabled_;
     for (auto shader : {shader_, actorShader_}) {
+        SetShaderValue(shader, GetShaderLocation(shader, "artEnabled"), &art, SHADER_UNIFORM_INT);
         SetShaderValue(shader, GetShaderLocation(shader, "lightCount"), &count, SHADER_UNIFORM_INT);
         SetShaderValue(shader, GetShaderLocation(shader, "sunIndex"), &sunIndex_, SHADER_UNIFORM_INT);
         SetShaderValue(shader, GetShaderLocation(shader, "shadowEnabled"), &disabled, SHADER_UNIFORM_INT);
@@ -500,6 +533,8 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
     }
     if (actors)
         actors(actorShadowShader_);
+    if (artEnabled_)
+        art_.draw(actorShadowShader_, {}, effects_.time(), true);
     rlDrawRenderBatchActive();
     rlEnableBackfaceCulling();
     EndMode3D();
@@ -611,6 +646,8 @@ void TownScene::draw(Vector3 focus, bool glass) {
             const auto &batch = batches_[i];
             if (batch.empty() || a.groundOverlay != overlay)
                 continue;
+            const int surface = RedstoneArt::surface(document_.assets[i]);
+            SetShaderValue(shader_, GetShaderLocation(shader_, "artSurface"), &surface, SHADER_UNIFORM_INT);
             SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &a.unlit, SHADER_UNIFORM_INT);
             bindInterior(buildingGeometry(document_.assets[i]));
             const auto &label = document_.assets[i].label;
@@ -622,15 +659,20 @@ void TownScene::draw(Vector3 focus, bool glass) {
                 if (!overlay && (m.maps[MATERIAL_MAP_ALBEDO].color.a < 255) != glass)
                     continue;
                 const auto previous = m.maps[MATERIAL_MAP_METALNESS].texture;
+                const auto contact = m.maps[MATERIAL_MAP_EMISSION].texture;
+                m.maps[MATERIAL_MAP_EMISSION].texture = art_.contact();
                 m.maps[MATERIAL_MAP_METALNESS].texture = shadowMap_.depth;
                 DrawMeshInstanced(model_.meshes[j], m, batch.data(), int(batch.size()));
                 m.maps[MATERIAL_MAP_METALNESS].texture = previous;
+                m.maps[MATERIAL_MAP_EMISSION].texture = contact;
             }
         }
         if (glass)
             rlEnableDepthMask();
     }
     rlEnableBackfaceCulling();
+    if (artEnabled_ && !glass)
+        art_.draw(actorShader_, shadowMap_.depth, effects_.time());
 }
 void TownScene::drawOccluders() {
     if (!loaded() || !occlusion_.enabled)
@@ -647,6 +689,8 @@ void TownScene::drawOccluders() {
     SetShaderValue(shader_, GetShaderLocation(shader_, "unlit"), &unlit, SHADER_UNIFORM_INT);
     for (const auto *instance : occluders_) {
         const auto &asset = assets_[instance->asset];
+        const int surface = RedstoneArt::surface(document_.assets[instance->asset]);
+        SetShaderValue(shader_, GetShaderLocation(shader_, "artSurface"), &surface, SHADER_UNIFORM_INT);
         bindInterior(buildingGeometry(document_.assets[instance->asset]));
         const auto &label = document_.assets[instance->asset].label;
         const int foliage =
@@ -655,8 +699,11 @@ void TownScene::drawOccluders() {
         for (int j = asset.first; j < asset.first + asset.count; ++j) {
             auto &material = model_.materials[model_.meshMaterial[j]];
             const auto previous = material.maps[MATERIAL_MAP_METALNESS].texture;
+            const auto contact = material.maps[MATERIAL_MAP_EMISSION].texture;
+            material.maps[MATERIAL_MAP_EMISSION].texture = art_.contact();
             material.maps[MATERIAL_MAP_METALNESS].texture = shadowMap_.depth;
             DrawMeshInstanced(model_.meshes[j], material, &instance->transform, 1);
+            material.maps[MATERIAL_MAP_EMISSION].texture = contact;
             material.maps[MATERIAL_MAP_METALNESS].texture = previous;
         }
     }

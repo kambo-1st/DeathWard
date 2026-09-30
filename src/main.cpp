@@ -43,7 +43,7 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
-    bool smoke = false, benchmark = false, startEditor = false;
+    bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
     bool mute = false, explicitAudio = false;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
@@ -54,6 +54,8 @@ int main(int argc, char **argv) {
         std::string arg = argv[i];
         if (arg == "--save" && i + 1 < argc)
             save = argv[++i];
+        else if (arg == "--art-poc")
+            artPoc = true;
         else if (arg == "--editor")
             startEditor = true;
         else if (arg == "--town" && i + 1 < argc)
@@ -112,6 +114,7 @@ int main(int argc, char **argv) {
                          "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
+                         "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
                          "  --mute              Skip audio initialization\n"
                          "  --audio             Enable audio in scripted checks (silent by default)\n";
             return 0;
@@ -227,6 +230,7 @@ int main(int argc, char **argv) {
                 game.finish(dw::EndReason::Victory);
             }
         }
+        bool artCompare = artPoc;
         std::vector<double> timings;
         double simulationMs = 0, drawMs = 0, presentMs = 0;
         size_t minEnemies = 1000, minProjectiles = 100000;
@@ -272,6 +276,16 @@ int main(int argc, char **argv) {
                 else
                     SetWindowTitle("DeathWard | Town editor");
             }
+            // F6 is otherwise a mission cheat; comparisons are confined to hubs/editor.
+            const bool canCompareArt =
+                editor.active ? dw::RedstoneArt::supports(editor.document())
+                              : game.screen == dw::Screen::Hub && game.activeHub == dw::HubKind::Redstone;
+            if (canCompareArt && IsKeyPressed(KEY_F6)) {
+                artCompare = true;
+                artPoc = !artPoc;
+                TraceLog(LOG_INFO, "ART: %s (Redstone only)", artPoc ? "weathered POC" : "original look");
+            }
+            renderer.artPoc = editor.artPoc = artPoc;
             const bool editing = editor.active;
             const auto start = std::chrono::steady_clock::now();
             if (editing) {
@@ -301,6 +315,15 @@ int main(int argc, char **argv) {
                 editor.draw();
             else
                 action = renderer.draw(game);
+            if (artCompare && canCompareArt) {
+                const char *label = artPoc ? "ART POC   /   F6: original" : "ORIGINAL   /   F6: art POC";
+                const int width = MeasureText(label, 14) + 24;
+                const int x = editing ? int(GetScreenWidth() * (1110.f / 1440)) - width - 10
+                                      : (GetScreenWidth() - width) / 2;
+                const int y = editing ? int(GetScreenHeight() * (94.f / 900)) : 4;
+                DrawRectangle(x, y, width, 25, {25, 30, 30, 230});
+                DrawText(label, x + 12, y + 5, 14, {221, 214, 192, 255});
+            }
             const auto drawn = std::chrono::steady_clock::now();
             EndDrawing();
             game.perform(action);
@@ -506,12 +529,13 @@ int main(int argc, char **argv) {
                         Module.state.coinX = $6;
                         Module.state.coinY = $7;
                         Module.state.coinValue = $8;
+                        Module.state.artPoc = !!$9;
                     }
                 },
                 editing, int(game.musicScene()), editor.saved, editor.status.c_str(),
                 int(game.run ? game.run->money() : game.campaign.data().world.money),
                 game.run ? int(game.run->moneyCollected) : 0, coinPixel.x, coinPixel.y,
-                probeCoin ? probeCoin->value : 0);
+                probeCoin ? probeCoin->value : 0, artPoc && canCompareArt);
             EM_ASM(
                 {
                     if (Module.state) {

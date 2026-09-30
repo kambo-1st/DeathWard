@@ -10,6 +10,7 @@ namespace dw {
 class TownEditor {
   public:
     bool active = false, quitRequested = false, saved = false;
+    bool artPoc = false;
     std::string status;
     Camera3D camera{};
     bool open(const std::filesystem::path &directory, Camera3D view,

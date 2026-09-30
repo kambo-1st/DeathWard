@@ -22,6 +22,7 @@ class ParticleEffects {
     void bind(const TownDocument &document);
     void animate(const ObjectAnimationSystem &animation);
     void prepare(const Camera3D &camera);
+    bool artDust = false;
     void prepareMission(const Simulation &run, const Camera3D &camera, Vector3 muzzle);
     void draw(const Camera3D &camera);
     size_t attachmentCount() const { return bound_.size(); }
@@ -57,7 +58,7 @@ class ParticleEffects {
     double time_ = 0;
     uint64_t dustSeed_ = 0;
     bool dustReady_ = false;
-    std::vector<Vector3> dustAnchors_;
+    std::vector<Vector3> dustAnchors_, townDustAnchors_;
     void append(size_t emitter, const ParticleSample &sample, Vector3 position, float scale,
                 Matrix view, Vector3 direction = {0,1,0});
     void sort();

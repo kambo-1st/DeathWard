@@ -123,6 +123,7 @@
       status.textContent = 'Entering the frontier…';
       canvas.focus();
       const args = [];
+      if (query.get('art') === 'poc') args.push('--art-poc');
       if (query.get('hub') === 'frontier') args.push('--hub', 'frontier');
       if (['redstone', 'canyon'].includes(query.get('hub'))) args.push('--hub', 'redstone');
       if (['mine', 'canyon', 'seeded'].includes(query.get('theme'))) args.push('--theme', query.get('theme'));

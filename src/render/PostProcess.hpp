@@ -11,7 +11,7 @@ class PostProcess {
     PostProcess(const PostProcess &) = delete;
     PostProcess &operator=(const PostProcess &) = delete;
     // A positive focus distance enables depth fog around the 3D camera's focal plane.
-    void begin(Color background, float focusDistance = 0);
+    void begin(Color background, float focusDistance = 0, bool artPoc = false);
     void end();
     // After end(): outline only silhouette edges hidden behind the rendered world depth.
     void outlineOccluded(const Camera3D &camera, const std::function<void()> &drawModels);
@@ -27,7 +27,7 @@ class PostProcess {
     Shader silhouetteShader_{}, outlineShader_{};
     int width_ = 0, height_ = 0;
     float focusDistance_ = 0;
-    bool active_ = false;
+    bool active_ = false, artPoc_ = false;
     bool outlineAttempted_ = false;
     void resize(int width, int height);
     void filter(Texture2D source, RenderTexture2D target, int extract, Vector2 direction);
