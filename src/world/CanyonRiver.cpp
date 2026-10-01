@@ -61,7 +61,65 @@ bool CanyonTerrain::waterClear(Vector3 from, Vector3 to, float radius) const {
     return true;
 }
 
-void planCanyonRiver(const Arena &arena, CanyonTerrain &field) {
+namespace {
+void planBoundaryRiver(const Arena &arena, CanyonTerrain &field) {
+    Random rng(arena.visualSeed ^ 0x7269766572626564ULL);
+    auto smooth = [](float lo, float hi, float v) {
+        const float t = std::clamp((v - lo) / (hi - lo), 0.f, 1.f);
+        return t * t * (3 - 2 * t);
+    };
+    // Open an exterior side, never a wall separating two rooms. Prefer an early
+    // reachable perimeter room; the seed resolves equally suitable directions.
+    float best = 10000;
+    for (Vector3 outward : {Vector3{1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1}}) {
+        float outer = -10000;
+        for (const auto &room : arena.rooms)
+            outer = std::max(outer, dot(room.center, outward));
+        std::vector<int> rooms;
+        for (int i = 0; i < int(arena.rooms.size()); ++i)
+            if (dot(arena.rooms[size_t(i)].center, outward) >= outer - .1f)
+                rooms.push_back(i);
+        std::stable_sort(rooms.begin(), rooms.end(), [&](int a, int b) {
+            return arena.rooms[size_t(a)].depth < arena.rooms[size_t(b)].depth;
+        });
+        const float score = float(arena.rooms[size_t(rooms.front())].depth) + rng.real(0, .9f);
+        if (score < best) {
+            best = score;
+            field.riverOutward = outward;
+            rooms.resize(std::min(size_t(3), rooms.size()));
+            field.riverRooms = rooms;
+        }
+    }
+    const auto outward = field.riverOutward;
+    const Vector3 tangent{-outward.z, 0, outward.x};
+    const Vector3 minimum{field.x, 0, field.z},
+        maximum{field.x + (field.width - 1) * field.step, 0, field.z + (field.depth - 1) * field.step};
+    const float start = std::min(dot(minimum, tangent), dot(maximum, tangent));
+    const float end = std::max(dot(minimum, tangent), dot(maximum, tangent));
+    const float outer = std::max(dot(arena.bounds.min, outward), dot(arena.bounds.max, outward));
+    const float phase = rng.real(0, 2 * Pi);
+    float along = 0;
+    const int count = int(std::ceil((end - start) / field.step));
+    for (int n = 0; n <= count; ++n) {
+        const float s = std::lerp(start, end, float(n) / count);
+        float bank = outer + 2 + .65f * std::sin(s * .045f + phase);
+        for (int index : field.riverRooms) {
+            const auto &room = arena.rooms[size_t(index)];
+            const auto size = sub(room.bounds.max, room.bounds.min);
+            const float span = std::abs(dot(size, tangent));
+            const float offset = std::abs(s - dot(room.center, tangent));
+            const float weight = 1 - smooth(span * .25f, span * .5f + 10, offset);
+            const float edge = std::max(dot(room.bounds.min, outward), dot(room.bounds.max, outward));
+            bank = std::lerp(bank, edge + .4f + .25f * std::sin(s * .11f + phase), weight);
+        }
+        const float width = 6.2f + .65f * std::sin(s * .035f - phase);
+        const auto p = add(mul(tangent, s), mul(outward, bank + width));
+        if (!field.river.empty())
+            along += distance(field.river.back().position, p);
+        field.river.push_back({p, width, along});
+    }
+}
+void planInteriorRiver(const Arena &arena, CanyonTerrain &field) {
     Random rng(arena.visualSeed ^ 0x7269766572626564ULL);
     // The entrance has at least two ordinary exits. Following two existing links
     // gives the trial a continuous three-basin region, visible on arrival.
@@ -143,7 +201,24 @@ void planCanyonRiver(const Arena &arena, CanyonTerrain &field) {
     field.river.push_back({knots.back().p, knots.back().width, along});
 }
 
-void connectCanyonRiver(Arena &arena, const std::vector<float> &dryHeights) {
+} // namespace
+
+void planCanyonRiver(const Arena &arena, CanyonTerrain &field) {
+    // A separate stream chooses exactly one treatment without changing either
+    // river's course RNG. Replaying a seed also replays its river type.
+    Random choice(arena.visualSeed ^ 0x5249564552545950ULL);
+    field.riverKind = choice.bounded(2) ? CanyonRiverKind::Boundary : CanyonRiverKind::Interior;
+    if (field.riverKind == CanyonRiverKind::Interior)
+        planInteriorRiver(arena, field);
+    // The current graph guarantees two entrance links. Keep a safe exterior
+    // fallback if a future room layout cannot accommodate an interior course.
+    if (field.river.empty()) {
+        field.riverKind = CanyonRiverKind::Boundary;
+        planBoundaryRiver(arena, field);
+    }
+}
+
+void connectInteriorRiver(Arena &arena, const std::vector<float> &dryHeights) {
     auto &field = *arena.canyon;
     // Validate before encounters are populated. A bend can isolate a small bank
     // even though every objective's reserved route remains open. Add a shallow

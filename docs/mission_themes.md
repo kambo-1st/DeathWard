@@ -20,37 +20,53 @@ Cliffs and outcrops stay at their full generated height as the player moves or r
 
 ## Canyon river trial
 
-Canyon missions default to one seeded river region through the entrance basin and
-two connected neighbours. On the mission board, **River On / River Off** compares
-the new terrain with the original dry canyon using the same seed. The setting
-applies when launching a mission; it cannot alter terrain beneath a running
-encounter. Native: `--canyon-river on|off`. Browser: `?theme=canyon&river=on|off`.
-`visual.cfg` version 3 saves the choice and reads older vegetation/floor settings.
+With rivers enabled, each canyon seed chooses **one** of two river types, with
+an equal chance from an independent random stream:
 
-The channel follows a smooth curve through existing passages, narrows at their
-necks and widens in the basins. Lower eroded banks, damp/gravel material, small
-stones and driftwood integrate its edges. Dry room litter stays out of the water.
-The far ends continue into the surrounding canyon beyond the playable basins.
+- **Boundary:** replaces outward cliffs in one to three exterior rooms with a
+  reachable bank, deep channel and low landscape across the water.
+- **Interior:** crosses the entrance basin and two connected neighbours, with
+  shallow fords connecting both banks and preserving routes to gates/objectives.
 
-The riverbed is part of the same triangulated height field as the cliffs. Deep
-water blocks movement, while shallow fords preserve routes to gates and objectives.
-Before spawning, a connectivity pass adds fords to banks isolated by a bend. It
-can only raise the bed over the original floor, never carve a shortcut through a
-mesa. Navigation, floor-area encounter budgets and pickup placement use the new
-surface. A bounded repair fallback makes original-floor sections fordable on
-unusual layouts instead of leaving isolated banks. Movement sweeps test every
-terrain grid/triangle crossing, so long dodges
-and smoothed mouse paths cannot skip a narrow deep section. Bullet and sight rays
-remain physical terrain tests and can cross water. Kicked/thrown dynamite follows
-the actual bed rather than an invisible plane at the old floor height.
+A mission uses a single type; the two treatments are not combined in one layout.
+Replaying the same seed reproduces both its type and course. **1866** demonstrates
+a boundary river in the first room; **42** demonstrates an interior river.
+
+On the mission board, **River On / River Off** compares this with the original
+dry canyon using the same seed. The setting applies to the next mission; it
+cannot alter terrain beneath a running encounter. Native: `--canyon-river on|off`.
+Browser: `?theme=canyon&river=on|off`. `visual.cfg` version 3 saves the choice and
+reads older vegetation/floor settings.
+
+For boundary rivers, the generator chooses an exposed side of the room graph,
+preferring an early reachable room and resolving ties with the seed. The channel meanders outside
+the rooms and continues to the terrain edges. Open banks taper into cliff
+headlands between rooms; those headlands keep locked passages and combat seals
+meaningful. The opposite plateau is lowered all the way to the landscape edge,
+so the river genuinely replaces the enclosing rock face. Damp/gravel material,
+small stones and driftwood dress the shores; dry room litter stays out of water.
+
+Interior rivers follow curved passages, narrow at their necks and widen inside
+the basins. The generator reserves shallow crossings and checks connectivity
+before encounters are populated. Additional fords can be raised over originally
+walkable floor to reconnect an isolated bank; this never carves a shortcut
+through a mesa. A bounded fallback keeps the original floor fordable if needed.
+
+Both river types share the cliffs' triangulated height field. Deep water blocks
+movement. Boundary channels have no fords; their gate/objective routes remain
+inland. Interior channels provide shallow crossings. Navigation, encounter
+budgets and pickup placement use the resulting surface. Movement sweeps test every
+terrain grid/triangle crossing, so long dodges and smoothed mouse paths cannot skip
+the water. Bullet and sight
+rays remain physical terrain tests and can cross the channel. Kicked/thrown
+dynamite follows the actual bed rather than an invisible plane at floor height.
 
 Water triangles are clipped to the terrain shoreline and use depth-colored,
 opaque shading with subtle ripples following the curved channel. They receive
 the shared directional shadows and post-process without casting opaque shadows
 of their own. This is a lightweight native/WebGL 2 treatment, without fluid
-simulation or screen-space reflections. Gameplay still uses one walking height;
-the fords are only a few centimetres below it. Swimming, bridges, river audio
-and a full drainage network are outside this first trial.
+simulation or screen-space reflections. Swimming, bridges, river audio and a
+full drainage network are outside this trial.
 
 ## Small room decorations
 
@@ -107,7 +123,7 @@ unaffected.
 
 - `src/world/MissionTheme.hpp`: theme identifiers, seeded resolution, titles and base colors.
 - `src/world/CanyonTerrain.cpp`: canyon terrain, navigation footprint and surface rays.
-- `src/world/CanyonRiver.cpp`: river course, water movement sweeps and bank connectivity repairs.
+- `src/world/CanyonRiver.cpp`: seeded boundary/interior selection, river courses, ford connectivity and water movement sweeps.
 - `src/render/CanyonWater.cpp`: clipped water meshes, flow shading and shared shadow reception.
 - `src/world/Dungeon.cpp`: theme dispatch and shared collision/navigation entry points.
 - `src/render/CanyonScene.cpp`: terrain meshes, atlas sampling, lighting, shadows and dressing.

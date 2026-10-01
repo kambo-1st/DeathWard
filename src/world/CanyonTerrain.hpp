@@ -3,6 +3,7 @@
 
 namespace dw {
 struct Arena;
+enum class CanyonRiverKind { None, Boundary, Interior };
 struct RiverPoint {
     Vector3 position{};
     float width = 0, along = 0;
@@ -20,8 +21,10 @@ struct CanyonTerrain {
     int width = 0, depth = 0;
     std::vector<float> heights;
     std::vector<std::vector<Vector3>> trails;
+    CanyonRiverKind riverKind = CanyonRiverKind::None;
     std::vector<RiverPoint> river;
     std::vector<int> riverRooms;
+    Vector3 riverOutward{}; // From playable basins toward the low, distant bank.
     RiverSample riverSample(Vector3 p) const;
     float height(float px, float pz) const;
     Vector3 vertex(int ix, int iz) const;
@@ -31,6 +34,6 @@ struct CanyonTerrain {
     SegmentHit trace(Vector3 from, Vector3 to, float radius = 0) const;
 };
 void planCanyonRiver(const Arena &arena, CanyonTerrain &field);
-void connectCanyonRiver(Arena &arena, const std::vector<float> &dryHeights);
+void connectInteriorRiver(Arena &arena, const std::vector<float> &dryHeights);
 void buildCanyon(Arena &arena, bool river = true);
 } // namespace dw

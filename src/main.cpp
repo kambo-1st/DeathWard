@@ -583,6 +583,8 @@ int main(int argc, char **argv) {
                         Module.state.placedDynamite = $10;
                         Module.state.canyonRiver = !!$11;
                         Module.state.riverActive = !!$12;
+                        Module.state.riverRoom = $13;
+                        Module.state.riverKind = $14;
                     }
                 },
                 game.run ? game.run->arena.shopRoom : -1, game.run && game.run->shopOpen, shopPixel.x,
@@ -601,7 +603,11 @@ int main(int argc, char **argv) {
                                              }))
                          : 0,
                 game.visualSettings.canyonRiver,
-                game.run && game.run->arena.canyon && !game.run->arena.canyon->river.empty());
+                game.run && game.run->arena.canyon && !game.run->arena.canyon->river.empty(),
+                game.run && game.run->arena.canyon && !game.run->arena.canyon->riverRooms.empty()
+                    ? game.run->arena.canyon->riverRooms.front()
+                    : -1,
+                game.run && game.run->arena.canyon ? int(game.run->arena.canyon->riverKind) : 0);
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

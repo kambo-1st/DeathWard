@@ -307,13 +307,92 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
         << "PASS " << name
         << " dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill\n";
 }
-void riverInputCheck(const std::filesystem::path &directory) {
+void boundaryRiverInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     Game game(directory / "river.save");
     game.seedText = "1866";
     game.launch();
     auto &run = *game.run;
     const auto &field = *run.arena.canyon;
+    const int room = field.riverRooms.front();
+    const auto &layout = run.arena.rooms[size_t(room)];
+    const auto outward = field.riverOutward;
+    const float reach = std::abs(dot(sub(layout.bounds.max, layout.bounds.min), outward)) * .5f;
+    Vector3 from{};
+    bool found = false;
+    const auto bank = add(layout.center, mul(outward, reach - 2.5f));
+    const auto water = add(bank, mul(outward, field.riverSample(bank).width + 3));
+    const Vector3 tangent{-outward.z, 0, outward.x};
+    for (float offset : {0.f, -2.f, 2.f, -4.f, 4.f}) {
+        const auto candidate = add(add(layout.center, mul(outward, reach - 6)), mul(tangent, offset));
+        if (!run.arena.blocked(candidate, .6f) && run.arena.sight(candidate, water)) {
+            from = candidate;
+            found = true;
+            break;
+        }
+    }
+    check(found && field.waterBlocked(water),
+          "river mouse fixture has a clear approach to a deep-water boundary");
+    run.jumpDebug(room);
+    run.clearRoomDebug();
+    run.player.position = from;
+    run.godMode = true;
+    game.updateCamera(1);
+    Renderer renderer;
+    const Game::SceneryPicker picker = [&](const auto &simulation, const auto &camera, Ray ray) {
+        return renderer.pickScenery(simulation, camera, ray);
+    };
+    auto frame = [&]() {
+        game.update(Tick, picker);
+        BeginDrawing();
+        renderer.draw(game);
+        EndDrawing();
+    };
+    mouseEvent(MousePosition, 640, 400);
+    mouseEvent(MouseWheel, 0, -5);
+    frame();
+    for (int n = 0; n < 40; ++n)
+        frame();
+    auto pixel = GetWorldToScreen({water.x, 0, water.z}, game.camera);
+    check(pixel.x > 10 && pixel.x < 1270 && pixel.y > 130 && pixel.y < 670,
+          "deep-water target is inside the play viewport");
+    mouseEvent(MousePosition, int(pixel.x), int(pixel.y));
+    mouseEvent(MouseDown, MOUSE_BUTTON_LEFT);
+    frame();
+    mouseEvent(MouseUp, MOUSE_BUTTON_LEFT);
+    frame();
+    check(run.moveDestination().has_value(), "clicking water queues an approach to the bank");
+    for (int n = 0; n < 900 && run.moveDestination(); ++n) {
+        frame();
+        check(!field.waterBlocked(run.player.position), "mouse movement never steps into deep water");
+    }
+    check(distance(run.player.position, from) > 1 && !run.moveDestination() &&
+              run.arena.roomAt(run.player.position) == room,
+          "mouse movement approaches the boundary and stops on the playable near bank");
+    check(run.stats.shots == 0, "a bank movement click never fires");
+    const auto stopped = run.player.position;
+    pixel = GetWorldToScreen({water.x, 0, water.z}, game.camera);
+    mouseEvent(MousePosition, int(pixel.x), int(pixel.y));
+    mouseEvent(MouseDown, MOUSE_BUTTON_RIGHT);
+    for (int n = 0; n < 20; ++n)
+        frame();
+    mouseEvent(MouseUp, MOUSE_BUTTON_RIGHT);
+    frame();
+    check(run.stats.shots > 0 && distance(run.player.position, stopped) < .1f,
+          "aiming and firing across water does not become a movement command");
+    game.close();
+    std::cout << "PASS river mouse approach, stopping at the natural boundary and "
+                 "aiming/firing across water\n";
+}
+
+void interiorRiverInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    Game game(directory / "interior-river.save");
+    game.seedText = "42";
+    game.launch();
+    auto &run = *game.run;
+    const auto &field = *run.arena.canyon;
+    check(field.riverKind == CanyonRiverKind::Interior, "interior mouse test uses an interior river seed");
     Vector3 from{}, to{}, water{};
     int room = -1;
     for (size_t i = 1; i + 1 < field.river.size(); ++i) {
@@ -351,7 +430,11 @@ void riverInputCheck(const std::filesystem::path &directory) {
         renderer.draw(game);
         EndDrawing();
     };
+    mouseEvent(MousePosition, 640, 400);
+    mouseEvent(MouseWheel, 0, -5);
     frame();
+    for (int n = 0; n < 40; ++n)
+        frame();
     auto pixel = GetWorldToScreen({to.x, 0, to.z}, game.camera);
     check(pixel.x > 10 && pixel.x < 1270 && pixel.y > 130 && pixel.y < 670,
           "opposite bank is inside the play viewport");
@@ -494,7 +577,8 @@ int main(int argc, char **argv) {
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
         if (mode == "--river-only") {
-            riverInputCheck(directory);
+            boundaryRiverInputCheck(directory);
+            interiorRiverInputCheck(directory);
             CloseWindow();
             std::filesystem::remove_all(directory);
             return 0;

@@ -208,8 +208,34 @@ void buildCanyon(Arena &arena, bool river) {
                                       {r.center.x + radius, r.height, r.center.z + radius}});
         }
     }
-    if (river) {
+    field->x = std::floor((arena.bounds.min.x - 40) / field->step) * field->step;
+    field->z = std::floor((arena.bounds.min.z - 40) / field->step) * field->step;
+    field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;
+    field->depth = int(std::ceil((arena.bounds.max.z + 40 - field->z) / field->step)) + 1;
+    // Keep the original cap RNG grid unchanged when extending the river backdrop.
+    CanyonTerrain mesa;
+    mesa.x = field->x;
+    mesa.z = field->z;
+    mesa.step = field->step * 3;
+    mesa.width = (field->width + 2) / 3 + 1;
+    mesa.depth = (field->depth + 2) / 3 + 1;
+    if (river)
         planCanyonRiver(arena, *field);
+    if (field->riverKind == CanyonRiverKind::Boundary) {
+        // A low far bank reveals much more of the landscape than a tall cliff.
+        // Extend that backdrop so the terrain mesh edge stays beyond the camera.
+        const int extra = int(std::ceil(80.f / field->step));
+        if (field->riverOutward.x != 0) {
+            field->width += extra;
+            if (field->riverOutward.x < 0)
+                field->x -= extra * field->step;
+        } else {
+            field->depth += extra;
+            if (field->riverOutward.z < 0)
+                field->z -= extra * field->step;
+        }
+    }
+    if (field->riverKind == CanyonRiverKind::Interior) {
         // Keep the original cover stream intact outside the river region.
         auto touchesRiver = [&](Vector3 p, float radius) {
             const auto sample = field->riverSample(p);
@@ -221,19 +247,9 @@ void buildCanyon(Arena &arena, bool river) {
                 return touchesRiver(mul(add(box.min, box.max), .5f), (box.max.x - box.min.x) * .5f);
             });
     }
-    field->x = std::floor((arena.bounds.min.x - 40) / field->step) * field->step;
-    field->z = std::floor((arena.bounds.min.z - 40) / field->step) * field->step;
-    field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;
-    field->depth = int(std::ceil((arena.bounds.max.z + 40 - field->z) / field->step)) + 1;
     field->heights.resize(size_t(field->width * field->depth));
     // Broad, planar cap facets subdivide exactly onto the collision lattice.
     // A separate stream keeps this surface detail independent of trails/cover.
-    CanyonTerrain mesa;
-    mesa.x = field->x;
-    mesa.z = field->z;
-    mesa.step = field->step * 3;
-    mesa.width = (field->width + 2) / 3 + 1;
-    mesa.depth = (field->depth + 2) / 3 + 1;
     Random capRng(arena.visualSeed ^ 0x4d45534143415053ULL);
     for (int z = 0; z < mesa.depth; ++z)
         for (int x = 0; x < mesa.width; ++x) {
@@ -241,7 +257,7 @@ void buildCanyon(Arena &arena, bool river) {
             mesa.heights.push_back(7.6f + 1.7f * std::sin(px * .047f + pz * .039f) +
                                    .8f * std::sin(pz * .11f) + capRng.real(-.65f, .65f));
         }
-    std::vector<float> dryHeights(field->river.empty() ? 0 : field->heights.size());
+    std::vector<float> dryHeights(field->riverKind == CanyonRiverKind::Interior ? field->heights.size() : 0);
     for (int z = 0; z < field->depth; ++z)
         for (int x = 0; x < field->width; ++x) {
             Vector3 p{field->x + x * field->step, 0, field->z + z * field->step};
@@ -252,14 +268,45 @@ void buildCanyon(Arena &arena, bool river) {
             // A short, irregular shoulder produces tall angular faces, rather
             // than a broad ramp. The foot still starts outside the reserved floor.
             float height = plateau * smooth(.35f, 2.8f + crag, d);
+            if (field->riverKind == CanyonRiverKind::Boundary) {
+                const auto water = field->riverSample(p);
+                const float outward = -water.side;
+                if (outward >= 0) {
+                    // The opposite landscape stays low all the way to the field
+                    // edge. There is no remaining cliff hidden behind the river.
+                    const float lowland = .85f + .3f * std::sin(p.x * .073f + p.z * .031f) +
+                                          .2f * std::sin(p.z * .091f - p.x * .023f);
+                    height = std::lerp(-1.65f, lowland, smooth(water.width * .4f, water.width + 5, outward));
+                } else {
+                    const Vector3 tangent{-field->riverOutward.z, 0, field->riverOutward.x};
+                    float opening = 0;
+                    for (int index : field->riverRooms) {
+                        const auto &room = arena.rooms[size_t(index)];
+                        const auto size = sub(room.bounds.max, room.bounds.min);
+                        const auto local = sub(p, room.center);
+                        const float span = std::abs(dot(size, tangent));
+                        const float reach = std::abs(dot(size, field->riverOutward));
+                        const float across =
+                            1 - smooth(span * .20f, span * .43f, std::abs(dot(local, tangent)));
+                        opening = std::max(opening, across * smooth(reach * .14f, reach * .32f,
+                                                                  dot(local, field->riverOutward)));
+                    }
+                    // Cliff headlands between openings protect passage seals;
+                    // only the exposed room front becomes a level, reachable bank.
+                    height *= 1 - opening;
+                    const float channel = 1 - smooth(water.width * .45f, water.width + 1.2f, -outward);
+                    height = std::lerp(height, -1.65f, channel);
+                }
+            }
             for (const auto &r : rocks) {
                 const auto local = rotateY(sub(p, r.center), r.angle);
                 const float u = local.x / r.rx, v = local.z / r.rz;
                 const float q =
                     std::sqrt(u * u + v * v) / (1 + .11f * std::sin(3 * std::atan2(v, u) + r.phase));
-                height = std::max(height, r.height * (1 - smooth(.48f, 1.f, q)));
+                if (q < 1)
+                    height = std::max(height, r.height * (1 - smooth(.48f, 1.f, q)));
             }
-            if (!field->river.empty()) {
+            if (field->riverKind == CanyonRiverKind::Interior) {
                 dryHeights[size_t(z * field->width + x)] = height;
                 const auto water = field->riverSample(p);
                 const float bank = water.distance - water.width;
@@ -288,8 +335,8 @@ void buildCanyon(Arena &arena, bool river) {
             field->heights[size_t(z * field->width + x)] = height;
         }
     arena.canyon = field;
-    if (!field->river.empty())
-        connectCanyonRiver(arena, dryHeights);
+    if (field->riverKind == CanyonRiverKind::Interior)
+        connectInteriorRiver(arena, dryHeights);
     arena.floorCells.clear();
     arena.floors.clear();
     arena.obstacles.clear();

@@ -1013,9 +1013,11 @@ The suppressions are explicitly counted and logged: deeply branching interaction
 ## Canyon river trial
 
 `deathward_river_tests` / CTest `canyon_rivers` exercises seeds 0–7, 42, 1866 and
-69175541. It verifies reproduction and the dry comparison, meaningful deep and
-shallow sections, bank-to-bank routes, movement sweeps versus projectile rays,
-and that the river does not isolate previously reachable banks. The existing
+69175541. It exercises both seed-selected river types, reproduction and the dry
+comparison, shallow fords connecting interior banks, and replacement of
+enclosing cliffs with reachable banks, low terrain across the channel, an unbroken
+deep-water boundary, movement sweeps versus projectile rays, connected near banks
+and protection against bypassing sealed exits via either river type. The existing
 theme suite verifies every objective route, encounter placement/counts and combat
 seals. Terrain ray probes now extend below the riverbed. Dynamite tests cover the
 terrain collision path after removing the old ground-plane fallback in canyons.
@@ -1032,18 +1034,22 @@ node web/river-test.cjs
 node web/mission-lighting-test.cjs
 ```
 
-The river input check uses real mouse events to navigate between banks through a
-ford and aim/fire across deep water. Settings checks exercise the mission-board
-toggle, prevent layout changes during missions, preserve versions 1/2 preferences
-and reload a saved river-off choice. The browser check covers the same launch
-comparison and persistence, WebGL errors, firing, orbit and room changes. The
-shared lighting browser suite also covers the 8-bit post-process fallback.
+The river input checks use real mouse events to approach and stop at a boundary
+river (seed 1866), navigate between interior banks via a ford (seed 42), and
+aim/fire across water. Settings checks exercise the mission-board toggle, prevent
+layout changes during missions, preserve versions 1/2 preferences and reload a
+saved river-off choice. The browser check covers the same launch
+comparison and persistence, both seed-selected types, WebGL errors, firing, orbit
+and room changes. The shared lighting browser suite also covers the 8-bit
+post-process fallback.
 
 Environment comparison captures for seed 1866 are
-`artifacts/river-preview-canyon-before.png` and
-`artifacts/river-preview-canyon-after.png`; they use the same camera with resident
-enemies removed for the scenery review. Gameplay capture:
-`artifacts/river-web-canyon.png`.
+`artifacts/river-border-before.png` and
+`artifacts/river-border-after.png`; they use the same camera with resident
+enemies removed for the scenery review. Interior comparisons for seed 42 are
+`artifacts/river-interior-before.png` and `artifacts/river-interior-after.png`.
+Gameplay captures:
+`artifacts/river-web-canyon.png` and `artifacts/river-web-interior.png`.
 
 ## Remaining playtest work
 
