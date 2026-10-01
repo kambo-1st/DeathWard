@@ -419,11 +419,11 @@ std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const C
     return westernScene_.pick(ray, run.player.position);
 }
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
-                         EntityId hoveredEnemy, float deathTime, bool dynamiteArmed) {
+                         EntityId hoveredEnemy, float deathTime, bool dynamiteArmed, float sandstorm) {
     playerModel_.artPoc = false;
     playerModel_.update(run, deathTime);
     if (!particlesAttempted_) { particlesAttempted_ = true; missionEffects_.load(); }
-    missionEffects_.prepareMission(run,camera,playerModel_.muzzlePosition(run.player));
+    missionEffects_.prepareMission(run,camera,playerModel_.muzzlePosition(run.player),sandstorm);
     westernScene_.prepare(run.arena);
     westernScene_.setPlayerOcclusion(camera, run.player.position);
     const auto &theme = missionTheme(run.arena.theme);
@@ -532,6 +532,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     });
     postProcess_.begin(WorldSky, distance(camera.position, camera.target));
     BeginMode3D(camera);
+    postProcess_.sandstorm(sandstorm, float(run.stats.duration));
     lighting.beginPrimitives();
     DrawPlane({camera.target.x, canyon ? -3.f : -.5f, camera.target.z}, {220, 220}, theme.backdrop);
     lighting.endPrimitives();
@@ -845,8 +846,10 @@ Action Renderer::hub(const Game &game) {
         animalModels_.draw(game.animals, depth);
         characterModels_.draw(game.characters, depth);
     });
+    townScene_.prepareSandstorm(game.camera, sandstormStrength_, [&](Vector3 p) { return town.height(p); });
     postProcess_.begin(WorldSky, distance(game.camera.position, game.camera.target), townScene_.artPoc());
     BeginMode3D(game.camera);
+    postProcess_.sandstorm(sandstormStrength_, float(town.time));
     townScene_.draw(town.player.position);
     animalModels_.draw(game.animals, townScene_.actorShader(), townScene_.shadowTexture());
     characterModels_.draw(game.characters, townScene_.actorShader(), townScene_.shadowTexture());
@@ -1035,7 +1038,8 @@ void Renderer::dungeonMap(const Game &game) {
 }
 Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
-    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime, game.dynamiteArmed);
+    drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime, game.dynamiteArmed,
+              sandstormStrength_);
     panel(24, 22, 358, 90, Panel);
     text(std::string(missionTheme(run.arena.theme).region) + " / " + std::to_string(run.room + 1) + " OF " +
              std::to_string(RoomCount),
@@ -1347,6 +1351,11 @@ Action Renderer::audioPanel(const Game &game) {
     return Action::None;
 }
 Action Renderer::draw(const Game &game) {
+    if (game.screen == Screen::Hub || game.screen == Screen::Expedition) {
+        const float step = std::clamp(GetFrameTime(), 0.f, .1f) * .65f;
+        sandstormStrength_ += std::clamp((game.sandstorm ? 1.f : 0.f) - sandstormStrength_, -step, step);
+    } else
+        sandstormStrength_ = 0;
     westernScene_.setVegetationDensity(game.visualSettings.vegetation);
     setGroundDetail(game.visualSettings.groundDetail);
     sx_ = float(GetScreenWidth()) / 1280;
@@ -1394,6 +1403,9 @@ Action Renderer::draw(const Game &game) {
             if (button(game.visualSettings.groundDetail ? "DETAIL ON" : "DETAIL OFF", 915, 634, 321, 34))
                 action = Action::ToggleGroundDetail;
         }
+        panel(895, 697, 361, 64, Panel);
+        if (button(game.sandstorm ? "SANDSTORM ON [K]" : "SANDSTORM OFF [K]", 915, 711, 321, 36))
+            action = Action::ToggleSandstorm;
     }
     if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen &&
         !game.run->shopOpen)

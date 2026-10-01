@@ -11,6 +11,7 @@ class TownEditor {
   public:
     bool active = false, quitRequested = false, saved = false;
     bool artPoc = false;
+    bool sandstorm = false;
     std::string status;
     Camera3D camera{};
     bool open(const std::filesystem::path &directory, Camera3D view,
@@ -90,6 +91,7 @@ class TownEditor {
     enum class Tool { Move, Rotate, Scale };
     TownScene scene_;
     PostProcess postProcess_;
+    float sandstormStrength_ = 0;
     TownDocument document_;
     TownNavigation navigation_;
     TownNavigation previewNavigation_;

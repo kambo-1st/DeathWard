@@ -33,7 +33,7 @@ class Renderer {
         loadedHub_.reset();
     }
     void drawWorld(const Simulation &run, const Camera3D &camera, bool collisions, EntityId hoveredEnemy = 0,
-                   float deathTime = 0, bool dynamiteArmed = false);
+                   float deathTime = 0, bool dynamiteArmed = false, float sandstorm = 0);
     void unload() {
         playerModel_.unload();
         animalModels_.unload();
@@ -48,6 +48,7 @@ class Renderer {
 
   private:
     float sx_ = 1, sy_ = 1;
+    float sandstormStrength_ = 0;
     PlayerModel playerModel_;
     AnimalModels animalModels_;
     TownActorModels characterModels_;

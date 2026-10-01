@@ -241,6 +241,9 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::ToggleSandstorm:
+            sandstorm = !sandstorm;
+            break;
         case Action::ToggleCanyonRiver:
             if (screen == Screen::Hub && missionMenu)
                 visualSettings.canyonRiver = !visualSettings.canyonRiver;
@@ -726,6 +729,8 @@ void Game::updateHub(float dt) {
 void Game::update(float dt, const SceneryPicker &pickScenery) {
     try {
         debugInput();
+        if (IsKeyPressed(KEY_K) && (screen == Screen::Hub || screen == Screen::Expedition))
+            perform(Action::ToggleSandstorm);
         if (screen == Screen::Hub) {
             updateHub(dt);
             return;

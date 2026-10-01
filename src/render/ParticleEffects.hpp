@@ -2,6 +2,7 @@
 #include "world/ObjectAnimation.hpp"
 #include "world/Particles.hpp"
 #include <deque>
+#include <functional>
 #include <optional>
 
 namespace dw {
@@ -23,7 +24,9 @@ class ParticleEffects {
     void animate(const ObjectAnimationSystem &animation);
     void prepare(const Camera3D &camera);
     bool artDust = false;
-    void prepareMission(const Simulation &run, const Camera3D &camera, Vector3 muzzle);
+    void prepareMission(const Simulation &run, const Camera3D &camera, Vector3 muzzle, float sandstorm = 0);
+    void addSandstorm(const Camera3D &camera, float strength, uint64_t seed,
+                      const std::function<float(Vector3)> &ground);
     void draw(const Camera3D &camera);
     size_t attachmentCount() const { return bound_.size(); }
     size_t particleCount() const { return particles_.size(); }

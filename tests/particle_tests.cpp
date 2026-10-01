@@ -8,7 +8,7 @@ int main() {
     try {
         ParticleLibrary library;
         library.load(std::filesystem::path(DEATHWARD_ASSET_DIR) / "particles");
-        check(library.emitters.size() == 19, "Fire, combat and environment emitters load");
+        check(library.emitters.size() == 20, "Fire, combat and environment emitters load");
         const auto &flame = library.emitters.front();
         check(flame.kind == ParticleKind::Mesh && flame.rate == 8, "Original Small_03 mesh emission rate");
         check(std::abs(ParticleLibrary::curve(flame.sizes,.5f) - 3.75f) < .0001f,

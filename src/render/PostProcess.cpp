@@ -1,5 +1,6 @@
 #include "render/PostProcess.hpp"
 #include "render/ShaderPlatform.hpp"
+#include "raymath.h"
 #include "rlgl.h"
 #include <algorithm>
 
@@ -81,8 +82,39 @@ uniform vec2 nearFar;
 uniform float fogStart;
 uniform int fogEnabled;
 uniform int artEnabled;
+uniform float sandstorm;
+uniform float weatherTime;
+uniform mat4 inverseViewProjection;
 out vec4 finalColor;
 float luminance(vec3 c) { return dot(c,vec3(.299,.587,.114)); }
+float dustHash(vec2 p) {
+    vec3 q=fract(vec3(p.xyx)*.1031);
+    q+=dot(q,q.yzx+33.33);
+    return fract((q.x+q.y)*q.z);
+}
+float dustNoise(vec2 p) {
+    vec2 cell=floor(p), f=fract(p);
+    f=f*f*(3.-2.*f);
+    return mix(mix(dustHash(cell),dustHash(cell+vec2(1.,0.)),f.x),
+               mix(dustHash(cell+vec2(0.,1.)),dustHash(cell+vec2(1.,1.)),f.x),f.y);
+}
+vec3 stormColor(vec3 c,vec2 uv) {
+    if (sandstorm <= 0.) return c;
+    float depth=texture(depthMap,uv).r;
+    float eye=nearFar.x*nearFar.y/(nearFar.y-depth*(nearFar.y-nearFar.x));
+    vec4 world=inverseViewProjection*vec4(uv*2.-1.,depth*2.-1.,1.);
+    vec2 p=world.xz/world.w-vec2(7.5,2.4)*weatherTime;
+    // Two scales of advected dust give broad gusts and broken, softer edges.
+    float billow=dustNoise(p*.045)*.7+dustNoise(p*.12+17.)*.3;
+    float gust=.88+.12*sin(weatherTime*.65);
+    float opticalDepth=max(eye-fogStart*.45,0.)*.025*(.65+billow)*gust;
+    float haze=min(.82,1.-exp(-opticalDepth))*sandstorm;
+    vec3 dust=mix(vec3(.58,.47,.34),vec3(.76,.65,.48),billow);
+    c=mix(c,dust,haze);
+    // Fine suspended grit stays restrained and never touches UI rendered afterward.
+    float grit=dustHash(gl_FragCoord.xy+floor(weatherTime*24.)*vec2(37.,11.))-.5;
+    return c+grit*.014*sandstorm;
+}
 vec3 antialias(vec2 uv) {
     vec3 center = texture(texture0,uv).rgb;
     float nw = luminance(texture(texture0,uv+texel*vec2(-1.,-1.)).rgb);
@@ -117,7 +149,7 @@ void main() {
         float grain=fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))))-.5;
         c+=grain*.0025;
         c*=1.-smoothstep(.35,.75,length(uv-.5))*.06;
-        finalColor=vec4(clamp(c,0.,1.),1.);
+        finalColor=vec4(clamp(stormColor(c,uv),0.,1.),1.);
         return;
     }
     // A small cross filter softens fine detail without defocusing the character or cover edges.
@@ -146,7 +178,7 @@ void main() {
     }
     float vignette = smoothstep(.24,.72,length(uv-.5))*.16;
     c = mix(c,c*vec3(.82,.76,.92)+vec3(.025,.008,.04),vignette);
-    finalColor = vec4(clamp(c,0.,1.),1.);
+    finalColor = vec4(clamp(stormColor(c,uv),0.,1.),1.);
 }
 )GLSL";
 RenderTexture2D target(int width, int height, bool depth) {
@@ -224,10 +256,18 @@ void PostProcess::begin(Color background, float focusDistance, bool artPoc) {
     resize(std::max(1, GetRenderWidth()), std::max(1, GetRenderHeight()));
     focusDistance_ = focusDistance;
     artPoc_ = artPoc;
+    sandstorm_ = 0;
     active_ = ready();
     if (active_)
         BeginTextureMode(scene_);
     ClearBackground(background);
+}
+void PostProcess::sandstorm(float strength, float time) {
+    sandstorm_ = std::clamp(strength, 0.f, 1.f);
+    if (sandstorm_ <= 0)
+        return;
+    weatherTime_ = time;
+    inverseViewProjection_ = MatrixInvert(MatrixMultiply(rlGetMatrixModelview(), rlGetMatrixProjection()));
 }
 void PostProcess::filter(Texture2D source, RenderTexture2D destination, int extract, Vector2 direction) {
     const Vector2 texel{1.0f / source.width, 1.0f / source.height};
@@ -256,6 +296,11 @@ void PostProcess::end() {
     SetShaderValue(composite_, GetShaderLocation(composite_, "nearFar"), &nearFar, SHADER_UNIFORM_VEC2);
     SetShaderValue(composite_, GetShaderLocation(composite_, "fogStart"), &fogStart, SHADER_UNIFORM_FLOAT);
     SetShaderValue(composite_, GetShaderLocation(composite_, "fogEnabled"), &fogEnabled, SHADER_UNIFORM_INT);
+    SetShaderValue(composite_, GetShaderLocation(composite_, "sandstorm"), &sandstorm_, SHADER_UNIFORM_FLOAT);
+    if (sandstorm_ > 0) {
+        SetShaderValue(composite_, GetShaderLocation(composite_, "weatherTime"), &weatherTime_, SHADER_UNIFORM_FLOAT);
+        SetShaderValueMatrix(composite_, GetShaderLocation(composite_, "inverseViewProjection"), inverseViewProjection_);
+    }
     BeginShaderMode(composite_);
     SetShaderValueTexture(composite_, GetShaderLocation(composite_, "bloomMap"), bloom_[0].texture);
     SetShaderValueTexture(composite_, GetShaderLocation(composite_, "depthMap"), scene_.depth);

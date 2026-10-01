@@ -27,6 +27,10 @@ class TownScene {
     std::optional<size_t> interior() const { return interior_; }
     void drawOccluders();
     void drawEffects(const Camera3D &camera) { effects_.draw(camera); }
+    void prepareSandstorm(const Camera3D &camera, float strength,
+                          const std::function<float(Vector3)> &ground) {
+        effects_.addSandstorm(camera, strength, 0x57a0d057u, ground);
+    }
     const ParticleEffects &effects() const { return effects_; }
     // Call before BeginMode3D. Actors use the supplied depth shader in this pass.
     void prepareLighting(const Camera3D &camera, const std::function<void(Shader)> &actors = {});

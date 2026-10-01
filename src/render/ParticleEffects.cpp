@@ -239,7 +239,8 @@ std::optional<Box> ParticleEffects::bounds(const std::string &emitter) const {
     }
     return result;
 }
-void ParticleEffects::prepareMission(const Simulation &run, const Camera3D &camera, Vector3 muzzle) {
+void ParticleEffects::prepareMission(const Simulation &run, const Camera3D &camera, Vector3 muzzle,
+                                     float sandstorm) {
     particles_.clear(); lights_.clear();
     time_ = run.stats.duration;
     const auto view = GetCameraMatrix(camera);
@@ -300,6 +301,53 @@ void ParticleEffects::prepareMission(const Simulation &run, const Camera3D &came
                 }
             }
     } else { dustReady_ = false; dustAnchors_.clear(); }
+    if (sandstorm > 0)
+        addSandstorm(camera, sandstorm, run.arena.visualSeed, [&](Vector3 p) {
+            if (!run.arena.contains(p))
+                return std::numeric_limits<float>::quiet_NaN();
+            return run.arena.canyon ? run.arena.canyon->height(p.x, p.z) : 0.f;
+        });
+    else
+        sort();
+}
+void ParticleEffects::addSandstorm(const Camera3D &camera, float strength, uint64_t worldSeed,
+                                  const std::function<float(Vector3)> &ground) {
+    if (strength <= 0)
+        return;
+    const auto storm = std::find_if(library_.emitters.begin(), library_.emitters.end(),
+                                    [](const auto &e) { return e.name == "sandstorm"; });
+    if (storm == library_.emitters.end()) {
+        sort();
+        return;
+    }
+    // Fixed world cells and a common wind keep clouds on course when walking or
+    // orbiting. The upwind margin covers travel during the longest particle life.
+    constexpr float cell = 12.f;
+    const int cx = int(std::floor(camera.target.x / cell));
+    const int cz = int(std::floor(camera.target.z / cell));
+    const auto view = GetCameraMatrix(camera);
+    const float gust = .78f + .22f * std::sin(float(time_) * .65f);
+    for (int z = cz - 6; z <= cz + 5; ++z)
+        for (int x = cx - 8; x <= cx + 5; ++x) {
+            const uint32_t seed = uint32_t(worldSeed) ^ (uint32_t(x) * 73856093u) ^
+                                  (uint32_t(z) * 19349663u) ^ 0x57a0d057u;
+            const Vector3 anchor{(float(x) + .5f) * cell, 0, (float(z) + .5f) * cell};
+            for (auto p : ParticleLibrary::sample(*storm, time_, seed)) {
+                auto position = add(anchor, p.position);
+                const float radius = std::hypot(position.x - camera.target.x, position.z - camera.target.z);
+                if (radius > 54)
+                    continue;
+                const float height = ground(position);
+                if (!std::isfinite(height))
+                    continue;
+                position.y = height + .7f + float(seed % 11) * .16f;
+                const float edge = std::clamp((54 - radius) / 12, 0.f, 1.f);
+                const float focusClear = .35f + .65f * std::clamp((radius - 1) / 5, 0.f, 1.f);
+                p.alpha *= strength * gust * edge * focusClear;
+                if (p.alpha > .003f)
+                    append(size_t(storm - library_.emitters.begin()), p, position, 1, view);
+            }
+        }
     sort();
 }
 void ParticleEffects::draw(const Camera3D &camera) {

@@ -44,7 +44,7 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
-    bool mute = false, explicitAudio = false;
+    bool mute = false, explicitAudio = false, sandstorm = false;
     std::optional<bool> canyonRiver;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
@@ -57,6 +57,8 @@ int main(int argc, char **argv) {
             save = argv[++i];
         else if (arg == "--art-poc")
             artPoc = true;
+        else if (arg == "--sandstorm")
+            sandstorm = true;
         else if (arg == "--editor")
             startEditor = true;
         else if (arg == "--town" && i + 1 < argc)
@@ -123,6 +125,7 @@ int main(int argc, char **argv) {
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
+                         "  --sandstorm         Start with the sandstorm on; K toggles in any map\n"
                          "  --canyon-river MODE  on (default) or off; applies to new canyon missions\n"
                          "  --mute              Skip audio initialization\n"
                          "  --audio             Enable audio in scripted checks (silent by default)\n";
@@ -151,6 +154,7 @@ int main(int argc, char **argv) {
     try {
         dw::prepareBrowserFiles();
         dw::Game game(save, initialHub);
+        game.sandstorm = sandstorm;
         game.themeChoice = themeChoice;
         if (smoke || benchmark)
             game.seedText = "1866";
@@ -305,7 +309,9 @@ int main(int argc, char **argv) {
             const bool editing = editor.active;
             const auto start = std::chrono::steady_clock::now();
             if (editing) {
+                editor.sandstorm = game.sandstorm;
                 editor.update(GetFrameTime());
+                game.sandstorm = editor.sandstorm;
             } else if ((smoke || benchmark) && game.run) {
                 dw::Input input;
                 input.aim = game.run->arena.rooms[size_t(game.run->room)].center;
@@ -611,6 +617,7 @@ int main(int argc, char **argv) {
                 game.run && game.run->arena.canyon ? int(game.run->arena.canyon->riverKind) : 0,
                 game.run && game.run->arena.canyon && !game.run->arena.canyon->roadRooms.empty()
                     ? game.run->arena.canyon->roadRooms[1] : -1);
+            EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

@@ -61,7 +61,8 @@ enum class Action {
     VegetationLess,
     VegetationMore,
     ToggleGroundDetail,
-    ToggleCanyonRiver
+    ToggleCanyonRiver,
+    ToggleSandstorm
 };
 class Game {
   public:
@@ -87,6 +88,7 @@ class Game {
     bool dynamiteThrowMode = false;
     AudioSettings audioSettings;
     VisualSettings visualSettings;
+    bool sandstorm = false; // Optional weather trial; lasts only for this session.
     MusicScene musicScene() const;
     AudioStatus audioStatus = AudioStatus::Disabled;
     AudioCueQueue audioCues;

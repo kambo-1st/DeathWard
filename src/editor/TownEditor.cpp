@@ -711,6 +711,10 @@ void TownEditor::update(float dt) {
     } else {
         if (ctrl && IsKeyPressed(KEY_S))
             save();
+        if (!ctrl && IsKeyPressed(KEY_K)) {
+            sandstorm = !sandstorm;
+            status = sandstorm ? "Sandstorm preview on" : "Sandstorm preview off";
+        }
         if (ctrl && IsKeyPressed(KEY_Z)) {
             if (shift)
                 redo();
@@ -936,6 +940,8 @@ bool TownEditor::button(const std::string &text, Rectangle r, bool selected, boo
     return enabled && hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 }
 void TownEditor::draw() {
+    const float step = std::clamp(GetFrameTime(), 0.f, .1f) * .65f;
+    sandstormStrength_ += std::clamp((sandstorm ? 1.f : 0.f) - sandstormStrength_, -step, step);
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
     scene_.setArtPoc(artPoc);
@@ -946,8 +952,10 @@ void TownEditor::draw() {
         characterModels_.draw(characters_, depth);
         animalModels_.draw(animals_, depth);
     });
+    scene_.prepareSandstorm(camera, sandstormStrength_, [&](Vector3 p) { return navigation_.height(p); });
     postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target), scene_.artPoc());
     BeginMode3D(camera);
+    postProcess_.sandstorm(sandstormStrength_, float(scene_.effects().time()));
     scene_.draw(camera.target);
     characterModels_.draw(characters_, scene_.actorShader(), scene_.shadowTexture());
     animalModels_.draw(animals_, scene_.actorShader(), scene_.shadowTexture());
