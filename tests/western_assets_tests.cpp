@@ -38,6 +38,12 @@ void verifyDecorations(WesternScene &scene, const Arena &arena, int limit = 80) 
               "room decorations remain small enough for combat readability");
         auto center = mul(add(p.bounds.min, p.bounds.max), .5f);
         center.y = .85f;
+        if (arena.canyon) {
+            const auto road = arena.canyon->roadSample(center);
+            const float radius = std::hypot(p.bounds.max.x - p.bounds.min.x, p.bounds.max.z - p.bounds.min.z) * .5f;
+            check(road.distance >= road.width + radius + .54f,
+                  "decorative vegetation and debris keep the road and its shoulders clear");
+        }
         check(arena.roomAt(center) == p.decorationRoom && !arena.blocked(center, .18f),
               "decoration anchors are on navigable ground in their assigned room");
         for (float x : {p.bounds.min.x, center.x, p.bounds.max.x})

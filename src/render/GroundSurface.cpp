@@ -5,6 +5,7 @@ namespace dw {
 std::string GroundSurface::withDetail(const char *fragment) {
     constexpr const char *functions = R"GLSL(
 uniform int groundEnabled;
+uniform int roadEnabled;
 uniform sampler2D groundSoil;
 uniform vec4 groundRectangle;
 uniform vec2 groundSeed;
@@ -19,7 +20,7 @@ float groundNoise(vec2 p) {
     return mix(mix(groundHash(i),groundHash(i+vec2(1,0)),f.x),
                mix(groundHash(i+vec2(0,1)),groundHash(i+vec2(1,1)),f.x),f.y);
 }
-vec3 groundSurface(vec3 base, vec3 position) {
+vec3 groundNatural(vec3 base, vec3 position) {
     if (groundEnabled == 0) return base;
     vec2 p = position.xz + groundSeed;
     vec2 warp = vec2(groundNoise(p*.071),groundNoise(p*.071+37.))*3.2;
@@ -47,6 +48,20 @@ vec3 groundSurface(vec3 base, vec3 position) {
     color *= 1.-speck*.13;
     return color;
 }
+vec3 groundSurface(vec3 base, vec3 position) {
+    vec3 color = groundNatural(base,position);
+    if (roadEnabled == 0) return color;
+    vec2 p = position.xz + groundSeed;
+    vec4 marks = texture(groundSoil,(position.xz-groundRectangle.xy)/groundRectangle.zw);
+    float patches = groundNoise(p*.38+17.);
+    vec3 dirt = base*mix(vec3(.91,.85,.77),vec3(.81,.75,.68),patches);
+    dirt *= .98+.04*groundNoise(p*3.3);
+    color = mix(color,dirt,marks.g*.92);
+    // Broad, imperfect wagon wear is baked along the actual curved route.
+    // Texture filtering and world-space noise keep it soft at all zoom levels.
+    color *= 1.-marks.b*(.09+.09*groundNoise(p*.7+51.));
+    return color;
+}
 )GLSL";
     std::string result(fragment);
     result.insert(result.find("void main()"), functions);
@@ -56,13 +71,16 @@ void GroundSurface::unload() {
     if (soil_.id)
         UnloadTexture(soil_);
     soil_ = {};
+    roads_ = false;
 }
 void GroundSurface::prepare(const Arena &arena, std::span<const Box> rocks) {
     unload();
     const float x = arena.bounds.min.x - 8, z = arena.bounds.min.z - 8;
     const float spanX = std::max(1.f, arena.bounds.max.x - x + 8);
     const float spanZ = std::max(1.f, arena.bounds.max.z - z + 8);
-    const float step = std::max(.5f, std::max(spanX, spanZ) / 1023);
+    roads_ = arena.canyon && !arena.canyon->road.empty();
+    const float step =
+        roads_ ? std::max(.25f, std::max(spanX, spanZ) / 2047) : std::max(.5f, std::max(spanX, spanZ) / 1023);
     const int width = int(std::ceil(spanX / step)) + 1, depth = int(std::ceil(spanZ / step)) + 1;
     // Texel centres correspond to field samples, avoiding a half-texel offset at contacts.
     rectangle_ = {x - step / 2, z - step / 2, width * step, depth * step};
@@ -109,10 +127,59 @@ void GroundSurface::prepare(const Arena &arena, std::span<const Box> rocks) {
             relax(col, row, 1, 1, 1.414214f);
             relax(col, row, -1, 1, 1.414214f);
         }
-    std::vector<unsigned char> pixels(distances.size());
-    for (size_t i = 0; i < pixels.size(); ++i)
-        pixels[i] = static_cast<unsigned char>(255 * std::exp(-distances[i] / .8f));
-    Image image{pixels.data(), width, depth, 1, PIXELFORMAT_UNCOMPRESSED_GRAYSCALE};
+    // One shared atlas: soil accumulation (R), worn road (G), wagon ruts (B).
+    std::vector<unsigned char> pixels(distances.size() * 4, 0);
+    for (size_t i = 0; i < distances.size(); ++i) {
+        pixels[i * 4] = static_cast<unsigned char>(255 * std::exp(-distances[i] / .8f));
+        pixels[i * 4 + 3] = 255;
+    }
+    if (roads_) {
+        std::fill(distances.begin(), distances.end(), 1000.f);
+        const auto &road = arena.canyon->road;
+        auto smooth = [](float lo, float hi, float v) {
+            const float t = std::clamp((v - lo) / (hi - lo), 0.f, 1.f);
+            return t * t * (3 - 2 * t);
+        };
+        // Rasterize only the small boxes touched by each segment, rather than
+        // searching the whole polyline at every texel of a large dungeon.
+        for (size_t i = 1; i < road.size(); ++i) {
+            const auto &a = road[i - 1], &b = road[i];
+            const auto edge = sub(b.position, a.position);
+            const float span = std::max(.001f, dot(edge, edge));
+            const float radius = std::max(a.width, b.width) + .4f;
+            const int left =
+                std::max(0, int(std::floor((std::min(a.position.x, b.position.x) - radius - x) / step)));
+            const int right = std::min(
+                width - 1, int(std::ceil((std::max(a.position.x, b.position.x) + radius - x) / step)));
+            const int top =
+                std::max(0, int(std::floor((std::min(a.position.z, b.position.z) - radius - z) / step)));
+            const int bottom = std::min(
+                depth - 1, int(std::ceil((std::max(a.position.z, b.position.z) + radius - z) / step)));
+            for (int row = top; row <= bottom; ++row)
+                for (int col = left; col <= right; ++col) {
+                    const Vector3 p{x + col * step, 0, z + row * step};
+                    const float t = std::clamp(dot(sub(p, a.position), edge) / span, 0.f, 1.f);
+                    const auto offset = sub(p, add(a.position, mul(edge, t)));
+                    const float side = length(offset), halfWidth = std::lerp(a.width, b.width, t);
+                    const float along = std::lerp(a.along, b.along, t);
+                    const float fade = smooth(0, 5, along) * smooth(0, 5, road.back().along - along);
+                    const float ragged =
+                        .12f * std::sin(p.x * .91f + p.z * .72f) + .06f * std::sin(p.z * 2.1f - p.x * 1.3f);
+                    const float wear = (1 - smooth(halfWidth * .55f, halfWidth + .2f, side + ragged)) * fade;
+                    const float wheel = .68f + .055f * std::sin(along * .31f);
+                    const float ruts = (1 - smooth(.09f, .31f, std::abs(side - wheel))) * wear;
+                    const auto index = size_t(row * width + col) * 4;
+                    pixels[index + 1] = std::max(pixels[index + 1], static_cast<unsigned char>(wear * 255));
+                    // The closest segment supplies rut coordinates. Taking the
+                    // maximum over rounded end caps would fill the road centre.
+                    if (side < distances[index / 4]) {
+                        distances[index / 4] = side;
+                        pixels[index + 2] = static_cast<unsigned char>(ruts * 255);
+                    }
+                }
+        }
+    }
+    Image image{pixels.data(), width, depth, 1, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
     soil_ = LoadTextureFromImage(image);
     SetTextureFilter(soil_, TEXTURE_FILTER_BILINEAR);
     SetTextureWrap(soil_, TEXTURE_WRAP_CLAMP);
@@ -123,8 +190,10 @@ void GroundSurface::bind(Shader shader, bool floor) const {
     if (!shader.id)
         return;
     const int active = enabled && floor && soil_.id;
+    const int roads = floor && roads_ && soil_.id;
     SetShaderValue(shader, GetShaderLocation(shader, "groundEnabled"), &active, SHADER_UNIFORM_INT);
-    if (!active)
+    SetShaderValue(shader, GetShaderLocation(shader, "roadEnabled"), &roads, SHADER_UNIFORM_INT);
+    if (!active && !roads)
         return;
     SetShaderValue(shader, GetShaderLocation(shader, "groundRectangle"), &rectangle_, SHADER_UNIFORM_VEC4);
     SetShaderValue(shader, GetShaderLocation(shader, "groundSeed"), &seed_, SHADER_UNIFORM_VEC2);

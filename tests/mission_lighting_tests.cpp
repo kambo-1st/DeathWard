@@ -256,6 +256,38 @@ void verifyGroundDetail() {
                   << " pixels)\n";
     }
 }
+void verifyRoadSurface() {
+    Arena arena(1866, MissionTheme::Canyon, false);
+    check(!arena.canyon->road.empty(), "road surface fixture exists");
+    Arena plain = arena;
+    plain.canyon = std::make_shared<CanyonTerrain>(*arena.canyon);
+    plain.canyon->road.clear();
+    WesternScene scene;
+    const auto focus = arena.rooms[size_t(arena.canyon->roadRooms[1])].center;
+    Camera3D camera{add(focus, {0, 70, .01f}), focus, {0, 0, -1}, 45, CAMERA_ORTHOGRAPHIC};
+    auto render = [&](const Arena &world) {
+        scene.prepare(world);
+        scene.setGroundDetail(false);
+        scene.setPlayerOcclusion(camera, focus, false);
+        scene.prepareLighting(camera);
+        return capture(camera, [&] { scene.draw(focus); scene.drawGlass(); });
+    };
+    auto before = render(plain), after = render(arena);
+    int count = 0, visible = 0;
+    for (const auto &point : arena.canyon->road) {
+        if (distance(point.position, focus) > 11 || point.along < 5 ||
+            arena.canyon->road.back().along - point.along < 5)
+            continue;
+        ++count;
+        visible += sample(before, camera, point.position) - sample(after, camera, point.position) > 15;
+    }
+    std::cout << "Road surface: " << visible << '/' << count << " visibly worn samples\n";
+    check(count > 30 && visible > count * .75f,
+          "roads are visibly shaded on terrain even when optional ground detail is disabled");
+    ExportImage(before, "artifacts/road-surface-before.png");
+    ExportImage(after, "artifacts/road-surface-after.png");
+    UnloadImage(before); UnloadImage(after);
+}
 } // namespace
 int main() {
     SetConfigFlags(FLAG_WINDOW_HIDDEN);
@@ -268,6 +300,7 @@ int main() {
         verifyMine();
         verifyCanyon();
         verifyGroundDetail();
+        verifyRoadSurface();
     } catch (const std::exception &e) {
         std::cerr << "FAIL: " << e.what() << '\n';
         result = 1;

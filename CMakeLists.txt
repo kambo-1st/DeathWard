@@ -37,6 +37,7 @@ add_library(deathward_core
     src/world/Dungeon.cpp
     src/world/CanyonTerrain.cpp
     src/world/CanyonRiver.cpp
+    src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
@@ -186,6 +187,9 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_road_tests tests/road_tests.cpp)
+    target_link_libraries(deathward_road_tests PRIVATE deathward_core)
+    add_test(NAME canyon_roads COMMAND deathward_road_tests)
     add_executable(deathward_river_tests tests/river_tests.cpp)
     target_link_libraries(deathward_river_tests PRIVATE deathward_core)
     add_test(NAME canyon_rivers COMMAND deathward_river_tests)

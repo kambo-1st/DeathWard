@@ -68,6 +68,27 @@ of their own. This is a lightweight native/WebGL 2 treatment, without fluid
 simulation or screen-space reflections. Swimming, bridges, river audio and a
 full drainage network are outside this trial.
 
+## Interior dirt roads
+
+Canyons also plan one seeded dirt track through three connected rooms and their
+existing passages. It can coexist with either river type. Interior-river rooms
+are excluded from road selection; boundary rivers retain a dry inland route.
+The planner checks the full road width and soft shoulders against water, slopes
+and cover. It keeps a gap from riverbanks, including shallow fords. If no safe
+three-room route fits, that layout omits the road instead of forcing a crossing.
+
+Roads use the existing terrain and passage graph. Rounded bends, varying widths,
+softly worn ends, patchy earth colors and two irregular wheel ruts are material
+detail on the actual ground. There is no raised overlay mesh, terrain cutting or
+additional collision plane. Road selection and appearance use a separate seed
+stream and cannot move rivers, rooms, gates, enemies or objectives. Decorations
+and vegetation keep their footprints clear of the track and its shoulders.
+
+Roads remain visible with optional floor detail disabled. **River Off** only
+removes water; roads still generate. Seed **1866** has a road through the entrance
+room alongside its boundary river. With **42**, the interior river occupies a
+different region from the road through rooms **8, 13 and 14**.
+
 ## Small room decorations
 
 Both themes also populate each room with small, cosmetic grass/stone/debris clusters.
@@ -123,6 +144,7 @@ unaffected.
 
 - `src/world/MissionTheme.hpp`: theme identifiers, seeded resolution, titles and base colors.
 - `src/world/CanyonTerrain.cpp`: canyon terrain, navigation footprint and surface rays.
+- `src/world/CanyonRoad.cpp`: dry route selection, clearance checks and smooth road paths.
 - `src/world/CanyonRiver.cpp`: seeded boundary/interior selection, river courses, ford connectivity and water movement sweeps.
 - `src/render/CanyonWater.cpp`: clipped water meshes, flow shading and shared shadow reception.
 - `src/world/Dungeon.cpp`: theme dispatch and shared collision/navigation entry points.

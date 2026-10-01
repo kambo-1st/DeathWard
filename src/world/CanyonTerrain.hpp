@@ -11,6 +11,13 @@ struct RiverPoint {
 struct RiverSample {
     float distance = 10000, width = 0, along = 0, side = 0;
 };
+struct RoadPoint {
+    Vector3 position{};
+    float width = 0, along = 0; // Half-width of the worn track, excluding the soft shoulder.
+};
+struct RoadSample {
+    float distance = 10000, width = 0, along = 0, side = 0;
+};
 // One triangulated height field supplies both the visible rock and its collision.
 // Heights are world-space meters; cells split along their NW-to-SE diagonal.
 struct CanyonTerrain {
@@ -25,6 +32,9 @@ struct CanyonTerrain {
     std::vector<RiverPoint> river;
     std::vector<int> riverRooms;
     Vector3 riverOutward{}; // From playable basins toward the low, distant bank.
+    std::vector<RoadPoint> road;
+    std::vector<int> roadRooms, roadPassages;
+    RoadSample roadSample(Vector3 p) const;
     RiverSample riverSample(Vector3 p) const;
     float height(float px, float pz) const;
     Vector3 vertex(int ix, int iz) const;
@@ -35,5 +45,6 @@ struct CanyonTerrain {
 };
 void planCanyonRiver(const Arena &arena, CanyonTerrain &field);
 void connectInteriorRiver(Arena &arena, const std::vector<float> &dryHeights);
+void planCanyonRoad(Arena &arena);
 void buildCanyon(Arena &arena, bool river = true);
 } // namespace dw

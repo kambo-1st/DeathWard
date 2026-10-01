@@ -585,6 +585,7 @@ int main(int argc, char **argv) {
                         Module.state.riverActive = !!$12;
                         Module.state.riverRoom = $13;
                         Module.state.riverKind = $14;
+                        Module.state.roadRoom = $15;
                     }
                 },
                 game.run ? game.run->arena.shopRoom : -1, game.run && game.run->shopOpen, shopPixel.x,
@@ -607,7 +608,9 @@ int main(int argc, char **argv) {
                 game.run && game.run->arena.canyon && !game.run->arena.canyon->riverRooms.empty()
                     ? game.run->arena.canyon->riverRooms.front()
                     : -1,
-                game.run && game.run->arena.canyon ? int(game.run->arena.canyon->riverKind) : 0);
+                game.run && game.run->arena.canyon ? int(game.run->arena.canyon->riverKind) : 0,
+                game.run && game.run->arena.canyon && !game.run->arena.canyon->roadRooms.empty()
+                    ? game.run->arena.canyon->roadRooms[1] : -1);
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

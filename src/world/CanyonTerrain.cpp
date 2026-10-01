@@ -364,5 +364,6 @@ void buildCanyon(Arena &arena, bool river) {
                 }
         }
     arena.rebuildWalls();
+    planCanyonRoad(arena);
 }
 } // namespace dw

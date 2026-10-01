@@ -428,6 +428,11 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
             routes.push_back(arena.doorPosition(link, passage.rooms[0] == index ? 0 : 1));
         }
         auto reserved = [&](Vector3 p, float radius) {
+            if (canyon) {
+                const auto road = arena.canyon->roadSample(p);
+                if (road.distance < road.width + radius + .55f)
+                    return true;
+            }
             if (distanceXZ(p, room.center) < 3.5f + radius || distanceXZ(p, room.objective) < 3.5f + radius ||
                 distanceXZ(p, arena.entrance) < 3 + radius || distanceXZ(p, arena.exit) < 3 + radius)
                 return true;

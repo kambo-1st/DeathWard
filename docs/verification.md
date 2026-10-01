@@ -1051,6 +1051,31 @@ enemies removed for the scenery review. Interior comparisons for seed 42 are
 Gameplay captures:
 `artifacts/river-web-canyon.png` and `artifacts/river-web-interior.png`.
 
+## Canyon interior roads
+
+`deathward_road_tests` / CTest `canyon_roads` covers seeds 0–7, 42, 1866 and
+69175541, plus dry versions of 42 and 1866. It checks seed reproduction, complete
+track/shoulder clearance, passage alignment, separation from both river types,
+unchanged terrain/navigation and room seals. Road surface pixel probes live in
+`deathward_mission_lighting_tests`; they render the track with floor detail off.
+The Western asset suite verifies that vegetation and debris avoid its footprint.
+
+```sh
+./build/deathward_road_tests
+./build/deathward_river_tests
+./build/deathward_theme_tests
+./build/deathward_mission_lighting_tests
+./build/deathward_western_assets_tests
+node web/river-test.cjs
+node web/mission-lighting-test.cjs
+```
+
+The WebGL river test visits both road examples, checks seed-selected placement,
+room traversal and shader errors, and captures `artifacts/road-web-interior.png`.
+Native comparisons are `artifacts/road-preview-before.png` and
+`artifacts/road-preview-after.png`, plus the overhead road material probes in
+`artifacts/road-surface-before.png` and `artifacts/road-surface-after.png`.
+
 ## Remaining playtest work
 
 - Human validation of combat feel, readability under extreme combinations, and the 5–10 minute expedition target. Automated shortcuts prove the loop, not whether its pacing is enjoyable.

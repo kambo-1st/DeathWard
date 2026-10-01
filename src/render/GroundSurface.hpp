@@ -24,6 +24,7 @@ class GroundSurface {
 
   private:
     Texture2D soil_{};
+    bool roads_ = false;
     Vector4 rectangle_{};
     Vector2 seed_{};
 };
