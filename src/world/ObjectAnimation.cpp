@@ -273,6 +273,20 @@ void ObjectAnimationSystem::evaluateGroups() {
         poses_[m.index] = {pose, objectBounds(m.local, pose), true};
     }
 }
+bool ObjectAnimationSystem::setPathMotion(const std::string &id, float speed, float acceleration) {
+    if (!std::isfinite(speed) || !std::isfinite(acceleration) || speed < 0 || acceleration <= 0)
+        return false;
+    bool found = false;
+    for (auto &path : paths_)
+        if (id == "*" || path.definition.id == id) {
+            path.definition.speed = speed;
+            path.definition.acceleration = acceleration;
+            path.definition.dwell = 0;
+            path.wait = 0;
+            found = true;
+        }
+    return found;
+}
 void ObjectAnimationSystem::stepPaths(std::optional<Vector3> player) {
     if (paths_.empty())
         return;

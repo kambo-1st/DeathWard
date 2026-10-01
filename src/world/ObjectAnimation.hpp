@@ -43,6 +43,9 @@ class ObjectAnimationSystem {
     double time() const {
         return time_;
     }
+    // Preview/runtime overrides; the authored TownDocument remains untouched.
+    bool setPathMotion(const std::string &id, float speed, float acceleration);
+    Matrix groupTransform(size_t group) const { return groupFrame(groups_.at(group)); }
 
   private:
     struct Moving {

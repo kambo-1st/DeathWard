@@ -1336,8 +1336,11 @@ void TownEditor::drawUI() {
     if (button("Back to town", {1215, 16, 200, 34}))
         requestClose();
     label(std::to_string(GetFPS()) + " FPS", 1112, 28, 12, Muted, 96);
-    label("Middle drag: orbit   Right drag: pan   Wheel: zoom   WASD / Q E: fly   F: focus", 278, 59, 13,
-          Muted, 825);
+    label("Middle: orbit  Right: pan  Wheel: zoom  WASD / Q E: fly  F: focus", 278, 59, 13,
+          Muted, 795);
+    if (button("Cinematic Editor", {1215, 54, 200, 27})) {
+        commitField(); cinematicRequested = true;
+    }
     auto tab = [&](const char *name, Rectangle box, bool active, int kind) {
         if (!button(name, box, active)) return;
         commitField(); select({}); search_.clear(); searchFocus_ = false; scroll_ = 0; marker_ = 0;

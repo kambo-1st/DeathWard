@@ -55,6 +55,8 @@ and rebuilt navigation locally; it cannot overwrite the original files on the
 host computer. The original large models and textures stay in the read-only
 asset bundle and are not copied to IndexedDB.
 
+The town editor's **Cinematic Editor** button opens the separate sequence editor. Camera, weather, train and sound timelines save as `.cinematic` files in the same browser storage without changing the map. `?hub=redstone&cinematic` opens its train demo directly. See the [cinematic guide](cinematic_editor.md) for controls.
+
 Optional URL parameters:
 
 | Parameter | Purpose |

@@ -1,6 +1,7 @@
 #include "audio/AudioSystem.hpp"
 #include "core/Game.hpp"
 #include "editor/TownEditor.hpp"
+#include "editor/CinematicEditor.hpp"
 #include "platform/Browser.hpp"
 #include "render/Renderer.hpp"
 #include <algorithm>
@@ -44,11 +45,14 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
+    bool startCinematic = false;
     bool mute = false, explicitAudio = false, sandstorm = false;
     std::optional<bool> canyonRiver;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
+    std::filesystem::path sequenceFile;
+    std::optional<float> cinematicTime;
     std::string screenshot, scene = "combat";
     int frames = 180;
     for (int i = 1; i < argc; ++i) {
@@ -61,6 +65,18 @@ int main(int argc, char **argv) {
             sandstorm = true;
         else if (arg == "--editor")
             startEditor = true;
+        else if (arg == "--cinematic")
+            startCinematic = true;
+        else if (arg == "--sequence" && i + 1 < argc)
+            sequenceFile = argv[++i];
+        else if (arg == "--cinematic-at" && i + 1 < argc) {
+            const std::string value=argv[++i]; float time=0;
+            auto parsed=std::from_chars(value.data(),value.data()+value.size(),time);
+            if(parsed.ec!=std::errc{}||parsed.ptr!=value.data()+value.size()||!std::isfinite(time)||time<0) {
+                std::cerr<<"--cinematic-at needs a nonnegative time in seconds\n";return 2;
+            }
+            cinematicTime=time;
+        }
         else if (arg == "--town" && i + 1 < argc)
             editorDirectory = argv[++i];
         else if (arg == "--smoke")
@@ -126,6 +142,9 @@ int main(int argc, char **argv) {
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
                          "  --sandstorm         Start with the sandstorm on; K toggles in any map\n"
+                         "  --cinematic         Open the separate Cinematic Editor\n"
+                         "  --sequence PATH     Cinematic file to edit (default: arrival.cinematic in hub)\n"
+                         "  --cinematic-at SEC  Preview a specific timeline time\n"
                          "  --canyon-river MODE  on (default) or off; applies to new canyon missions\n"
                          "  --mute              Skip audio initialization\n"
                          "  --audio             Enable audio in scripted checks (silent by default)\n";
@@ -141,7 +160,7 @@ int main(int argc, char **argv) {
         return 2;
     }
     // Scripted verification never modifies the player's campaign by default.
-    if (smoke || benchmark || startEditor) {
+    if (smoke || benchmark || startEditor || startCinematic) {
         bool explicitSave = false;
         for (int i = 1; i < argc; ++i)
             if (std::string(argv[i]) == "--save")
@@ -162,7 +181,11 @@ int main(int argc, char **argv) {
         InitWindow(1440, 900, "DeathWard | The consequences remain");
         if (!IsWindowReady())
             throw std::runtime_error("Cannot create a graphics window");
+#ifndef __EMSCRIPTEN__
+        // Web sizing comes from the canvas below. raylib's minimum-size call
+        // resizes it to the entire browser window, including the HTML toolbar.
         SetWindowMinSize(1024, 640);
+#endif
         SetExitKey(KEY_NULL);
 #ifdef __EMSCRIPTEN__
         // The browser schedules frames. Never busy-wait or nanosleep on its UI thread.
@@ -172,12 +195,12 @@ int main(int argc, char **argv) {
 #endif
         dw::AudioSystem audio;
         const auto audioPreferences =
-            smoke || benchmark || startEditor ? std::filesystem::path{} : save.parent_path() / "audio.cfg";
+            smoke || benchmark || startEditor || startCinematic ? std::filesystem::path{} : save.parent_path() / "audio.cfg";
         if (!audioPreferences.empty())
             game.audioSettings = dw::loadAudioSettings(audioPreferences);
         auto savedAudioSettings = game.audioSettings;
         const auto visualPreferences =
-            smoke || benchmark || startEditor ? std::filesystem::path{} : save.parent_path() / "visual.cfg";
+            smoke || benchmark || startEditor || startCinematic ? std::filesystem::path{} : save.parent_path() / "visual.cfg";
         if (!visualPreferences.empty())
             game.visualSettings = dw::loadVisualSettings(visualPreferences);
         if (canyonRiver)
@@ -195,13 +218,22 @@ int main(int argc, char **argv) {
             return renderer.pickScenery(run, camera, ray);
         };
         dw::TownEditor editor;
+        dw::CinematicEditor cinematic;
         if (startEditor) {
             const auto directory = editorDirectory.empty() ? game.hubDirectory() : editorDirectory;
             if (!editor.open(directory, game.camera, editorDirectory.empty() ? game.animals.placements() : std::vector<dw::AnimalPlacement>{}))
                 throw std::runtime_error(editor.status);
             SetWindowTitle("DeathWard | Town editor");
         }
-        if ((smoke && scene != "hub") || benchmark) {
+        if (startCinematic) {
+            if (!cinematic.open(editorDirectory.empty()?game.hubDirectory():editorDirectory,game.camera,
+                                 startEditor?&editor.document():nullptr,sequenceFile))
+                throw std::runtime_error(cinematic.status);
+            if(cinematicTime) cinematic.seek(*cinematicTime);
+            else if(smoke) cinematic.play();
+            SetWindowTitle("DeathWard | Cinematic Editor");
+        }
+        if (!startCinematic && ((smoke && scene != "hub") || benchmark)) {
             game.launch();
             if (!game.run)
                 throw std::runtime_error(game.error);
@@ -268,17 +300,24 @@ int main(int argc, char **argv) {
             const int browserWidth = EM_ASM_INT({ return Math.round(Module.canvas.clientWidth); });
             const int browserHeight = EM_ASM_INT({ return Math.round(Module.canvas.clientHeight); });
             if (browserWidth > 0 && browserHeight > 0 &&
-                (browserWidth != GetScreenWidth() || browserHeight != GetScreenHeight()))
+                (browserWidth != GetScreenWidth() || browserHeight != GetScreenHeight())) {
+                // raylib's DOM callback measures the entire browser, while
+                // GLFW caches its own dimensions. Force a callback even when
+                // the canvas happens to match GLFW's original 1440x900 size.
+                SetWindowSize(browserWidth, browserHeight + 1);
                 SetWindowSize(browserWidth, browserHeight);
+            }
 #else
             if (WindowShouldClose()) {
-                if (editor.active)
+                if (cinematic.active)
+                    cinematic.requestClose(true);
+                else if (editor.active)
                     editor.requestClose(true);
                 else
                     break;
             }
 #endif
-            if (editor.quitRequested)
+            if (editor.quitRequested || cinematic.quitRequested)
                 break;
 #ifdef __EMSCRIPTEN__
             if (EM_ASM_INT({
@@ -287,6 +326,7 @@ int main(int argc, char **argv) {
                     return pause;
                 })) {
                 game.paused = true;
+                if(cinematic.active && cinematic.preview().playing()) cinematic.play();
             }
 #endif
             if (game.editorRequested) {
@@ -296,9 +336,15 @@ int main(int argc, char **argv) {
                 else
                     SetWindowTitle("DeathWard | Town editor");
             }
+            if (editor.cinematicRequested) {
+                editor.cinematicRequested=false;
+                if(!cinematic.open(editor.directory(),editor.camera,&editor.document()))
+                    editor.status=cinematic.status;
+                else {++game.audioContext;SetWindowTitle("DeathWard | Cinematic Editor");}
+            }
             // F6 is otherwise a mission cheat; comparisons are confined to hubs/editor.
             const bool canCompareArt =
-                editor.active ? dw::RedstoneArt::supports(editor.document())
+                cinematic.active ? false : editor.active ? dw::RedstoneArt::supports(editor.document())
                               : game.screen == dw::Screen::Hub && game.activeHub == dw::HubKind::Redstone;
             if (canCompareArt && IsKeyPressed(KEY_F6)) {
                 artCompare = true;
@@ -306,9 +352,12 @@ int main(int argc, char **argv) {
                 TraceLog(LOG_INFO, "ART: %s (Redstone only)", artPoc ? "weathered POC" : "original look");
             }
             renderer.artPoc = editor.artPoc = artPoc;
-            const bool editing = editor.active;
+            const bool filming = cinematic.active;
+            const bool editing = editor.active && !filming;
             const auto start = std::chrono::steady_clock::now();
-            if (editing) {
+            if (filming) {
+                cinematic.update(smoke ? dw::Tick : GetFrameTime(),game.audioSettings);
+            } else if (editing) {
                 editor.sandstorm = game.sandstorm;
                 editor.update(GetFrameTime());
                 game.sandstorm = editor.sandstorm;
@@ -333,7 +382,9 @@ int main(int argc, char **argv) {
             const auto simulated = std::chrono::steady_clock::now();
             BeginDrawing();
             dw::Action action = dw::Action::None;
-            if (editing)
+            if (filming)
+                cinematic.draw();
+            else if (editing)
                 editor.draw();
             else
                 action = renderer.draw(game);
@@ -349,6 +400,11 @@ int main(int argc, char **argv) {
             const auto drawn = std::chrono::steady_clock::now();
             EndDrawing();
             game.perform(action);
+            if (filming && !cinematic.active && !cinematic.quitRequested) {
+                cinematic.unload();
+                ++game.audioContext;
+                SetWindowTitle(editor.active?"DeathWard | Town editor":"DeathWard | The consequences remain");
+            }
             if (editing && !editor.active && !editor.quitRequested) {
                 if (editor.saved) {
                     game.town.load(game.hubDirectory() / "town.nav");
@@ -362,8 +418,8 @@ int main(int argc, char **argv) {
             audioFrame.camera = game.camera;
             audioFrame.dt = GetFrameTime();
             audioFrame.context = game.audioContext;
-            audioFrame.music = editing ? dw::MusicScene::Silent : game.musicScene();
-            audioFrame.paused = editing || game.paused ||
+            audioFrame.music = editing || filming ? dw::MusicScene::Silent : game.musicScene();
+            audioFrame.paused = editing || filming || game.paused ||
                                 (game.screen != dw::Screen::Hub && game.screen != dw::Screen::Expedition);
             audioFrame.environment = game.activeHub == dw::HubKind::Redstone
                                          ? dw::AudioEnvironment::Canyon
@@ -381,7 +437,9 @@ int main(int argc, char **argv) {
                     audioFrame.paused || game.run->rewardOpen || game.run->shopOpen || game.run->dead;
                 audioFrame.footsteps = game.run->player.dodge <= 0 && game.run->player.pullTime <= 0;
             }
-            audio.update(audioFrame, game.audioSettings,
+            auto gameAudioSettings=game.audioSettings;
+            if(filming) gameAudioSettings.effects=gameAudioSettings.ambience=gameAudioSettings.music=0;
+            audio.update(audioFrame, gameAudioSettings,
                          game.run ? game.run->audioCues.cues() : std::span<const dw::AudioCue>{},
                          game.audioCues.cues());
             game.audioCues.clear();
@@ -618,6 +676,10 @@ int main(int argc, char **argv) {
                 game.run && game.run->arena.canyon && !game.run->arena.canyon->roadRooms.empty()
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
+            EM_ASM({
+                if(Module.verify) Module.cinematic=({active:!!$0,time:$1,playing:!!$2,dirty:!!$3,storm:$4,voices:$5});
+            },cinematic.active,cinematic.preview().time(),cinematic.preview().playing(),cinematic.dirty(),
+              cinematic.active?cinematic.preview().storm():0.f,int(cinematic.audioVoices()));
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {
@@ -653,6 +715,7 @@ int main(int argc, char **argv) {
                       << " suppressed=" << totalSuppressed << " simulation_ms=" << simulationMs / frame
                       << " draw_ms=" << drawMs / frame << " present_ms=" << presentMs / frame << '\n';
         }
+        cinematic.unload();
         editor.unload();
         game.close();
         renderer.unload();

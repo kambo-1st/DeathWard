@@ -12,6 +12,8 @@ class TownEditor {
     bool active = false, quitRequested = false, saved = false;
     bool artPoc = false;
     bool sandstorm = false;
+    bool cinematicRequested = false;
+    const std::filesystem::path &directory() const { return directory_; }
     std::string status;
     Camera3D camera{};
     bool open(const std::filesystem::path &directory, Camera3D view,

@@ -26,6 +26,7 @@ FetchContent_MakeAvailable(raylib)
 target_compile_definitions(raylib PRIVATE MA_NO_NULL)
 
 add_library(deathward_core
+    src/cinematic/Cinematic.cpp
     src/world/TownDocument.cpp
     src/world/Particles.cpp
     src/world/ObjectAnimation.cpp
@@ -139,7 +140,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(EMSCRIPTEN)
@@ -187,6 +188,15 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_cinematic_tests tests/cinematic_tests.cpp)
+    target_link_libraries(deathward_cinematic_tests PRIVATE deathward_core)
+    add_test(NAME cinematic_timeline COMMAND deathward_cinematic_tests)
+    # Explicit display/audio test; keep ordinary CTest independent of WSLg devices.
+    add_executable(deathward_cinematic_editor_tests tests/cinematic_editor_tests.cpp
+        src/editor/CinematicEditor.cpp src/cinematic/CinematicAudio.cpp
+        src/render/TownScene.cpp src/render/PostProcess.cpp src/render/AnimalModels.cpp)
+    target_link_libraries(deathward_cinematic_editor_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_cinematic_editor_tests)
     add_executable(deathward_road_tests tests/road_tests.cpp)
     target_link_libraries(deathward_road_tests PRIVATE deathward_core)
     add_test(NAME canyon_roads COMMAND deathward_road_tests)

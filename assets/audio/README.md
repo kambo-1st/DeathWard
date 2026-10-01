@@ -28,3 +28,9 @@ uses its own fixed seed and never touches gameplay randomness.
 WAV transients stay below full scale; ambience is intentionally quiet. The game
 applies master/category gain, rate limits and a soft limiter to the final stereo
 mix. raylib converts source audio to the output device's sample rate.
+
+The separate `cinematic/` folder contains three original synthesized preview
+effects: train rolling, storm wind and emergency braking. Regenerate its mono
+22.05 kHz PCM16 WAV files with `python3 scripts/generate_cinematic_audio.py`
+(NumPy required). The cinematic editor streams them on its sound timeline;
+they do not replace gameplay effects or the Western Music score.
