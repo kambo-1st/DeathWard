@@ -17,9 +17,11 @@ inline void prepareBrowserFiles() {
     EM_ASM({
         // Only editable scene/navigation files belong in IndexedDB. Models are
         // loaded directly from /assets; IDBFS does not preserve symlinks.
-        for (const hub of['town', 'frontier', 'redstone']) {
+        for (const hub of['town', 'frontier', 'redstone', 'train_opening']) {
             const destination = '/persist/' + hub;
             FS.mkdirTree(destination);
+            if(hub === 'train_opening' && !FS.analyzePath(destination+'/arrival.cinematic').exists)
+                FS.writeFile(destination+'/arrival.cinematic',FS.readFile('/assets/train_opening/arrival.cinematic'));
             if (hub === 'redstone') {
                 const matches = (name, length, expected) => {
                     const path = destination + '/' + name;

@@ -48,6 +48,7 @@ int main() {
         const float unsavedX = snapshot.instances.back().transform.m12;
         Camera3D camera{{20,20,20},{0,0,0},{0,1,0},45,CAMERA_PERSPECTIVE};
         CinematicEditor editor;
+        check(editor.previewTrainSpeed()==0,"an unopened cinematic has no train telemetry");
         check(editor.open(directory, camera, &snapshot), editor.status.c_str());
         check(editor.dirty() && editor.document().cameras.size() == 7, "first open creates the train demonstration");
         check(editor.save() && !editor.dirty(), "new sequence saves independently from the town");
@@ -105,6 +106,34 @@ int main() {
         check(snapshot.instances.back().transform.m12==unsavedX &&
               bytes(directory/"town.scene")==sceneBytes && bytes(directory/"town.nav")==navBytes,
               "preview, saving and closing preserve the unsaved map snapshot and original scene/navigation files");
+        const auto opening=std::filesystem::path(DEATHWARD_ASSET_DIR)/"train_opening";
+        std::filesystem::copy_file(opening/"arrival.cinematic",directory/"opening.cinematic");
+        check(editor.open(opening,camera,nullptr,directory/"opening.cinematic"),editor.status.c_str());
+        click(155,831);check(editor.selectedTrack()==4&&editor.selectedKey()==0,"cast keys are selectable");
+        click(155,831);check(editor.selectedKey()==1,"clicking coincident cast keys cycles to the second passenger");
+        click(155,831);check(editor.selectedKey()==2,"all three seated passengers remain independently editable");
+        click(1395,386);check(editor.dirty(),"actor local position edits are recorded");undo();check(!editor.dirty(),"actor transform undo preserves the saved document");
+        click(155,831);
+        const auto retimedActor=editor.document().actors[size_t(editor.selectedKey())].actor;
+        click(1395,310);
+        check(editor.document().actors[size_t(editor.selectedKey())].actor==retimedActor&&
+              editor.document().actors[size_t(editor.selectedKey())].time==.25f,
+              "actor keys retime independently of other passengers and retain selection after sorting");
+        undo();
+        click(155+5.f/82*1230,852);check(editor.selectedTrack()==5,"dialogue has its own timeline track");
+        const float length=editor.document().dialogue.front().duration;
+        click(1395,354);check(editor.document().dialogue.front().duration==length+.5f,"dialogue timing is editable");undo();
+        editor.seek(81.9f);editor.playStory(false);
+        for(int n=0;n<10;++n)frame();
+        check(editor.storyFinished,"story preview reaches its authored ending");
+        editor.previewDestination();check(editor.showingDestination(),"editor cuts to the Redstone destination preview");frame();
+        event(2,KEY_ESCAPE);frame();event(1,KEY_ESCAPE);frame();
+        check(!editor.showingDestination()&&editor.active&&!editor.dirty(),"Escape returns from the destination without altering cinematic edits");
+        click(155+5.f/82*1230,852);click(1395,354);
+        editor.previewDestination();editor.requestClose(true);frame();
+        check(editor.active&&!editor.showingDestination(),"closing a modified destination preview exposes the save prompt");
+        click(890,464);check(editor.active&&!editor.quitRequested,"Keep editing cancels quitting from the arrival preview");
+        undo();check(!editor.dirty(),"arrival preview preserves existing undo history");
         editor.unload();
         DetachAudioMixedProcessor(meter);CloseAudioDevice();CloseWindow();
         std::filesystem::remove_all(directory);

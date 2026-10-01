@@ -12,6 +12,28 @@ In the browser, use `?hub=redstone&cinematic`. Black Creek works too; Frontier s
 
 The first opening creates a 20-second starter sequence: a moving-train establishing shot, a cut inside its passenger carriage, a growing sandstorm, then braking at 11 seconds. The interior uses the existing carriage geometry and textures. Save to keep this sequence or your changes.
 
+## Westbound opening
+
+Choose **Train opening** in the Cinematic Editor's upper-right toolbar, or launch:
+
+```sh
+./build/deathward --cinematic --intro
+```
+
+This opens the separate `assets/train_opening` desert set and its authored **82-second Westbound** sequence. The elderly couple and protagonist sit in a passenger carriage and discuss why he is travelling west. The storm builds during their conversation, the train slows and brakes, and the conductor walks down the aisle to reassure them about the nearby fort.
+
+**Play story** shows the sequence and then cuts to a storm-covered Redstone preview. Escape returns to the cinematic editor. Ordinary **Preview** only plays the current map's sequence. The map being edited in the town editor is preserved, including unsaved placements. Save changes to the current cinematic before switching to the opening set.
+
+To play it as the game's opening and hand control to the player at Redstone, use:
+
+```sh
+./build/deathward --intro
+```
+
+Escape skips the runtime opening and arrives at the same storm-covered destination. The ordinary default start remains Black Creek. Browser equivalents are `?intro&cinematic` to edit and `?intro` to play. `--cinematic-at 69` (browser: `&cinematic-at=69`) starts at a chosen time for iteration; combine it with `--cinematic` for a paused preview.
+
+Dialogue is subtitled, with train, wind and braking audio. Spoken voice recordings and lip-sync are not included. Characters reuse the retained rigs and source Western textures, with procedural sitting and speaking gestures.
+
 ## Cameras and editing
 
 Click the time ruler or empty track space to scrub. Click a key to select it, drag it to change its time, or use the inspector's **Time** controls. Closely spaced cut keys select by distance to the pointer. Shift makes numeric `− / +` adjustments ten times smaller.
@@ -31,7 +53,7 @@ Move the camera with the pointer over the viewport:
 
 An **Anchor** of **world** keeps coordinates fixed in the scene. A vehicle anchor keeps the camera and its target relative to the moving train. Switching an existing shot's anchor preserves its position at the current preview time. Camera keys offer **Smooth**, **Linear** or **Cut** transitions to the next key. A cut holds the earlier shot until the next key's time. Lower FOV values zoom in.
 
-## Four timeline tracks
+## Timeline tracks
 
 | Track | Controls |
 | --- | --- |
@@ -39,6 +61,10 @@ An **Anchor** of **world** keeps coordinates fixed in the scene. A vehicle ancho
 | Sandstorm | Strength from 0 to 1, smoothly blended between keys |
 | Train | Target speed, acceleration/braking and an existing route; `*` selects every route |
 | Sound | Clip, volume, duration and audition |
+| Actors | Cast member, carriage/world coordinates, facing and seated/standing/walking pose |
+| Dialogue | Speaker, text, start time and duration |
+
+**+ Actor** captures the selected actor at the playhead; the inspector edits its local X/Y/Z and facing. Keys interpolate positions, so two walking keys make a route down the aisle. Vehicle anchors keep passengers attached to the train. Before an actor's first key it is hidden. If several actors have keys at the same time, click that marker repeatedly to cycle through them. **+ Dialogue** creates a subtitle cue. **Edit dialogue text** opens its text field: Ctrl+A replaces the text, Enter keeps it and Escape cancels. Undo/redo and sequence saves cover both tracks. Cast membership, model names and destination are stored as `cast` and `destination` records in the version-2 sequence file; their roster/destination creation is currently done in that file. Version-1 sequences still load.
 
 Use **+ Weather**, **+ Train cue** and **+ Sound** at the playhead. The train inspector's **Emergency stop** sets speed to zero and braking to 12 m/s². Train cues control the existing rail simulation, including vehicle and wheel motion. Route geometry and scenery are edited in the town editor.
 
@@ -64,17 +90,18 @@ The demo includes original synthesized train rolling, wind and brake sounds in `
 
 Native files default to `arrival.cinematic` beside the selected map's `town.scene`. `--sequence PATH` opens or creates a different document. `--town DIRECTORY` previews a custom map. Browser saves live in IndexedDB under `/persist/<hub>/`, separately from desktop files; wait for **Saved in this browser** before closing the page.
 
-The preview runs a private copy of the map and animations. Seeking rebuilds train motion from the beginning in fixed steps, so playing and seeking produce the same train placement. Saving a cinematic writes no scene, navigation, train defaults or campaign changes. Existing residents and animals animate in the preview; this version has no character choreography track. Weather particles retain the renderer's normal visual animation rather than a frame-exact particle replay.
+The preview runs a private copy of the map and animations. Seeking rebuilds train motion from the beginning in fixed steps, so playing and seeking produce the same train placement. Saving a cinematic writes no scene, navigation, train defaults or campaign changes. Existing residents and animals animate alongside its authored cast. Weather particles retain the renderer's normal visual animation rather than a frame-exact particle replay.
 
-This tool authors and previews sequences. Automatic story triggers and encoded movie export are not connected yet.
+The `--intro` entry point connects the opening to playable Redstone. Additional automatic story triggers and encoded movie export are not connected yet.
 
 ## Verification and still captures
 
 ```sh
-cmake --build build --target deathward deathward_cinematic_tests deathward_cinematic_editor_tests -j4
+cmake --build build --target deathward deathward_cinematic_tests deathward_cinematic_editor_tests deathward_cinematic_cast_tests -j4
 ctest --test-dir build -R 'cinematic_timeline|train_motion|object_animation' --output-on-failure
 ./build/deathward_cinematic_editor_tests
+./build/deathward_cinematic_cast_tests
 ./build/deathward --cinematic --hub redstone --cinematic-at 6 --smoke --frames 2 --screenshot artifacts/cinematic-interior.png
 ```
 
-The explicit editor test requires graphics and audio devices; it verifies actual input, persistence, map isolation and audio reaching the mixer while suppressing test output. After building and serving the browser version on port 8091, run `node web/cinematic-test.cjs`; `DEATHWARD_URL` changes the server address and `DEATHWARD_BROWSER` selects a local Chromium executable.
+The explicit editor test requires graphics and audio devices; it verifies actual input, persistence, map isolation and audio reaching the mixer while suppressing test output. The cast test checks textured models and seated poses. After building and serving the browser version on port 8091, run `node web/cinematic-test.cjs` and `node web/opening-test.cjs`; the opening test also verifies dialogue editing and the playable Redstone handoff. `DEATHWARD_URL` changes the server address and `DEATHWARD_BROWSER` selects a local Chromium executable.

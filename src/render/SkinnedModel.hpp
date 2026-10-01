@@ -16,6 +16,7 @@ class SkinnedModel {
     bool attempted() const { return asset_.attempted; }
     bool pose(double phase, float walking, float alternate = 0);
     bool poseSequence(double seconds, const std::vector<std::string> &clips, float speed = 1);
+    bool poseCinematic(double seconds, bool seated, bool walking, bool talking);
     const std::vector<std::string> &clipNames() const { return asset_.names; }
     float clipDuration(const std::string &name) const;
     void draw(Vector3 position, Vector3 facing, float scale, Shader shader = {}, Texture2D shadowMap = {},

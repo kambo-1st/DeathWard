@@ -1,5 +1,6 @@
 #pragma once
 #include "cinematic/CinematicAudio.hpp"
+#include "cinematic/CinematicCast.hpp"
 #include "render/AnimalModels.hpp"
 #include "render/PostProcess.hpp"
 #include "render/TownActorModels.hpp"
@@ -26,6 +27,15 @@ class CinematicEditor {
     const Cinematic &document() const { return document_; }
     const CinematicPlayer &preview() const { return player_; }
     size_t audioVoices() const { return audio_.voices(); }
+    static std::filesystem::path openingDirectory();
+    bool openingRequested = false, storyFinished = false, storyCancelled = false;
+    void playStory(bool rewind = true);
+    void previewDestination();
+    bool screening() const { return screening_; }
+    bool showingDestination() const { return ending_; }
+    int selectedTrack() const { return track_; }
+    int selectedKey() const { return selected_; }
+    float previewTrainSpeed() const { return active&&!world_.paths.empty()?player_.animation().pathSpeed():0.f; }
 
   private:
     TownDocument world_;
@@ -35,6 +45,7 @@ class CinematicEditor {
     Cinematic document_;
     CinematicPlayer player_;
     CinematicAudio audio_;
+    CinematicCast castModels_;
     HubWorld ground_;
     TownCharacters characters_;
     Animals animals_;
@@ -54,6 +65,12 @@ class CinematicEditor {
     float auditionTime_ = 0;
     bool filenameFocus_ = false;
     std::string filenameText_;
+    bool screening_ = false, dialogueFocus_ = false;
+    std::string dialogueText_;
+    TownScene endingScene_;
+    Camera3D endingCamera_{};
+    bool ending_ = false;
+    float endingTime_ = 0;
     AudioSettings audioSettings_;
     void remember();
     void rebuild();
@@ -74,5 +91,7 @@ class CinematicEditor {
     Vector2 mouse() const;
     void inspector();
     void timeline();
+    void subtitles();
+    void wrapped(const std::string &text, float x, float y, float width, int size, Color color) const;
 };
 } // namespace dw

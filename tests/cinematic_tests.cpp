@@ -56,6 +56,23 @@ int main() {
         Cinematic intact;check(intact.load(file,error)&&intact.title==loaded.title,"rejected save leaves previous file intact");
         {std::ofstream bad(file);bad<<"DEATHWARD_CINEMATIC 1\ncamera invalid\n";}
         check(!intact.load(file,error)&&intact.cameras.size()==loaded.cameras.size(),"malformed load preserves the current document");
+        const auto openingPath=std::filesystem::path(__FILE__).parent_path().parent_path()/"assets/train_opening";
+        TownDocument openingScene;Cinematic opening;
+        check(openingScene.load(openingPath/"town.scene",error),"dedicated desert map loads");
+        check(opening.load(openingPath/"arrival.cinematic",error),"opening sequence loads");opening.validate(&openingScene);
+        check(opening.cast.size()==4&&opening.dialogue.size()==12,"opening has the hero, elderly couple, conductor and complete conversation");
+        a.reset(openingScene,opening);a.seek(20);
+        check(a.actors().size()==3&&a.actors()[0].talking,"three seated passengers travel together and the speaking hero animates");
+        auto localPosition=Vector3Transform(a.actors()[0].position,MatrixInvert(*a.anchor(opening.actors[0].anchor)));
+        check(distance(localPosition,opening.actors[0].position)<.0001f,"passenger remains attached to the moving carriage");
+        check(opening.line(20)&&opening.line(20)->text.find("My family")!=std::string::npos,"dialogue follows the story clock");
+        check(opening.storm(55)>opening.storm(47)&&opening.storm(47)>opening.storm(40),"storm progressively reduces visibility");
+        a.seek(60);check(a.actors().size()==4&&a.animation().pathSpeed()==0,"conductor appears after the train has stopped");
+        const auto conductor=a.actors().back().position;a.seek(62);
+        check(distance(conductor,a.actors().back().position)>1,"conductor walks down the aisle");
+        check(opening.destination=="redstone"&&opening.destinationStorm==1,"opening arrives in storm-covered Redstone");
+        check(opening.save(file,error),"extended cinematic saves");Cinematic roundtrip;check(roundtrip.load(file,error),"extended cinematic reloads");
+        check(roundtrip.dialogue[3].text==opening.dialogue[3].text&&roundtrip.actors.size()==opening.actors.size()&&roundtrip.destination==opening.destination,"cast, dialogue and destination round-trip");
         std::filesystem::remove(file);
         std::cout<<"PASS cinematic persistence, validation, camera anchors, deterministic seeking, emergency stop and timed sound delivery\n";
     }catch(const std::exception&e){std::cerr<<"FAIL "<<e.what()<<'\n';std::filesystem::remove(file);return 1;}

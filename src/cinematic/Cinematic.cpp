@@ -22,7 +22,7 @@ template<class T> void order(std::vector<T> &items) {
     std::stable_sort(items.begin(), items.end(), [](const auto &a, const auto &b) { return a.time < b.time; });
 }
 } // namespace
-void Cinematic::sort() { order(cameras); order(weather); order(trains); order(sounds); }
+void Cinematic::sort() { order(cameras); order(weather); order(trains); order(sounds); order(actors); order(dialogue); }
 void Cinematic::validate(const TownDocument *scene) const {
     require(std::isfinite(duration) && duration >= 1 && duration <= 600, "Duration must be 1 to 600 seconds.");
     require(!title.empty() && title.size() <= 120, "Sequence title must be 1 to 120 characters.");
@@ -38,6 +38,31 @@ void Cinematic::validate(const TownDocument *scene) const {
         }
     };
     track(cameras, true); track(weather, true); track(trains, false); track(sounds, false);
+    track(actors, false); track(dialogue, false);
+    require(cast.size()<=32,"A cinematic supports up to 32 actors.");
+    for(size_t n=0;n<cast.size();++n) {
+        const auto &c=cast[n];
+        require(!c.id.empty() && c.id.size()<=64 && c.id.find_first_of(" \t\r\n")==std::string::npos,
+                "Actor IDs must be short names without spaces.");
+        require(!c.name.empty() && c.name.size()<=64,"Give each actor a display name.");
+        require(c.model=="bandit" || c.model=="cowgirl" || c.model=="elder_man" || c.model=="elder_woman" || c.model=="conductor",
+                "Unknown cinematic actor model.");
+        require(std::isfinite(c.scale)&&c.scale>=.25f&&c.scale<=3,"Actor scale must be .25 to 3.");
+        for(size_t k=0;k<n;++k)require(cast[k].id!=c.id,"Actor IDs must be unique.");
+    }
+    for(size_t n=0;n<actors.size();++n) {
+        const auto &k=actors[n];
+        require(std::any_of(cast.begin(),cast.end(),[&](const auto &c){return c.id==k.actor;}),"Actor key references a missing cast member.");
+        require(finite(k.position)&&std::isfinite(k.yaw)&&int(k.pose)>=0&&int(k.pose)<=2,"Invalid actor pose.");
+        for(size_t i=0;i<n;++i)require(actors[i].actor!=k.actor||actors[i].time!=k.time,"An actor cannot have two keys at the same time.");
+        if(scene&&!k.anchor.empty())require(std::any_of(scene->groups.begin(),scene->groups.end(),[&](const auto &g){return g.id==k.anchor;}),"An actor's vehicle anchor is missing.");
+    }
+    for(const auto &d:dialogue)
+        require(std::isfinite(d.duration)&&d.duration>0&&d.time+d.duration<=duration+.001f&&
+                !d.text.empty()&&d.text.size()<=480&&d.text.find_first_of("\r\n")==std::string::npos&&
+                d.speaker.size()<=64,"Dialogue must contain one paragraph and end within the sequence.");
+    require(destination.empty()||destination=="town"||destination=="frontier"||destination=="redstone","Unknown destination hub.");
+    require(std::isfinite(destinationStorm)&&destinationStorm>=0&&destinationStorm<=1,"Destination storm strength must be 0 to 1.");
     for (const auto &key : cameras) {
         require(finite(key.position) && finite(key.target) && distance(key.position, key.target) > .01f,
                 "Camera position and target must be finite and different.");
@@ -66,7 +91,7 @@ bool Cinematic::load(const std::filesystem::path &file, std::string &error) {
     try {
         std::ifstream in(file);
         std::string magic, line; int version = 0;
-        require(bool(in >> magic >> version) && magic == "DEATHWARD_CINEMATIC" && version == 1,
+        require(bool(in >> magic >> version) && magic == "DEATHWARD_CINEMATIC" && (version == 1 || version == 2),
                 "Cannot read this cinematic file.");
         Cinematic next;
         while (std::getline(in, line)) {
@@ -86,7 +111,16 @@ bool Cinematic::load(const std::filesystem::path &file, std::string &error) {
                 TrainCue k; row >> k.time >> k.speed >> k.acceleration >> std::quoted(k.path); next.trains.push_back(k);
             } else if (kind == "sound") {
                 SoundCue k; row >> k.time >> k.volume >> k.duration >> std::quoted(k.file); next.sounds.push_back(k);
-            } else throw std::runtime_error("Unknown cinematic record: " + kind);
+            } else if(kind=="cast") {
+                CastMember c;row>>std::quoted(c.id)>>std::quoted(c.name)>>std::quoted(c.model)>>c.scale;next.cast.push_back(c);
+            } else if(kind=="actor") {
+                ActorKey k;int pose=0;
+                row>>k.time>>std::quoted(k.actor)>>k.position.x>>k.position.y>>k.position.z>>k.yaw>>pose>>std::quoted(k.anchor);
+                k.pose=ActorPose(pose);next.actors.push_back(k);
+            } else if(kind=="dialogue") {
+                DialogueCue d;row>>d.time>>d.duration>>std::quoted(d.speaker)>>std::quoted(d.text);next.dialogue.push_back(d);
+            } else if(kind=="destination") row>>std::quoted(next.destination)>>next.destinationStorm;
+            else throw std::runtime_error("Unknown cinematic record: " + kind);
             require(bool(row) && !(row >> extra), "Malformed cinematic record.");
         }
         next.sort(); next.validate(); *this = std::move(next); error.clear(); return true;
@@ -98,7 +132,7 @@ bool Cinematic::save(const std::filesystem::path &file, std::string &error) cons
         if (!file.parent_path().empty()) std::filesystem::create_directories(file.parent_path());
         auto temporary = file; temporary += ".tmp";
         std::ofstream out(temporary);
-        out << std::setprecision(9) << "DEATHWARD_CINEMATIC 1\ntitle " << std::quoted(title) << "\nduration " << duration << '\n';
+        out << std::setprecision(9) << "DEATHWARD_CINEMATIC " << (cast.empty()&&actors.empty()&&dialogue.empty()&&destination.empty()?1:2) << "\ntitle " << std::quoted(title) << "\nduration " << duration << '\n';
         for (const auto &k : cameras)
             out << "camera " << k.time << ' ' << k.position.x << ' ' << k.position.y << ' ' << k.position.z << ' '
                 << k.target.x << ' ' << k.target.y << ' ' << k.target.z << ' ' << k.fov << ' ' << int(k.blend) << ' '
@@ -106,9 +140,46 @@ bool Cinematic::save(const std::filesystem::path &file, std::string &error) cons
         for (const auto &k : weather) out << "weather " << k.time << ' ' << k.amount << '\n';
         for (const auto &k : trains) out << "train " << k.time << ' ' << k.speed << ' ' << k.acceleration << ' ' << std::quoted(k.path) << '\n';
         for (const auto &k : sounds) out << "sound " << k.time << ' ' << k.volume << ' ' << k.duration << ' ' << std::quoted(k.file) << '\n';
+        for(const auto &c:cast)out<<"cast "<<std::quoted(c.id)<<' '<<std::quoted(c.name)<<' '<<std::quoted(c.model)<<' '<<c.scale<<'\n';
+        for(const auto &k:actors)out<<"actor "<<k.time<<' '<<std::quoted(k.actor)<<' '<<k.position.x<<' '<<k.position.y<<' '<<k.position.z<<' '<<k.yaw<<' '<<int(k.pose)<<' '<<std::quoted(k.anchor)<<'\n';
+        for(const auto &d:dialogue)out<<"dialogue "<<d.time<<' '<<d.duration<<' '<<std::quoted(d.speaker)<<' '<<std::quoted(d.text)<<'\n';
+        if(!destination.empty())out<<"destination "<<std::quoted(destination)<<' '<<destinationStorm<<'\n';
         out.close(); require(bool(out), "Could not write cinematic file.");
         std::filesystem::rename(temporary, file); persistBrowserFiles(); error.clear(); return true;
     } catch (const std::exception &e) { error = e.what(); return false; }
+}
+const DialogueCue *Cinematic::line(float time) const {
+    const DialogueCue *result=nullptr;
+    for(const auto &d:dialogue)if(time>=d.time&&time<d.time+d.duration)result=&d;
+    return result;
+}
+std::string Cinematic::speakerName(const std::string &id) const {
+    for(const auto &c:cast)if(c.id==id)return c.name;
+    return id;
+}
+std::vector<CinematicActorState> CinematicPlayer::actors() const {
+    std::vector<CinematicActorState> result;
+    const auto *line=sequence_.line(time());
+    for(const auto &c:sequence_.cast) {
+        const ActorKey *a=nullptr,*b=nullptr;
+        for(const auto &k:sequence_.actors)if(k.actor==c.id) {
+            if(k.time<=time_)a=&k;else {b=&k;break;}
+        }
+        if(!a)continue;
+        float t=b?std::clamp(float((time_-a->time)/(b->time-a->time)),0.f,1.f):0;
+        auto position=a->position;float yaw=a->yaw;
+        if(b&&b->anchor==a->anchor) {
+            position=Vector3Lerp(position,b->position,t);
+            yaw+=std::remainder(b->yaw-a->yaw,360.f)*t;
+        }
+        Vector3 facing{std::sin(yaw*DEG2RAD),0,std::cos(yaw*DEG2RAD)};
+        if(auto frame=anchor(a->anchor)) {
+            position=Vector3Transform(position,*frame);
+            facing=sub(Vector3Transform(facing,*frame),Vector3Transform({},*frame));
+        }
+        result.push_back({c,position,unit(facing),a->pose,line&&line->speaker==c.id});
+    }
+    return result;
 }
 float Cinematic::storm(float time) const {
     if (weather.empty()) return 0;

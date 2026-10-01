@@ -8,12 +8,35 @@ namespace dw {
 namespace {
 constexpr Color Background{17,23,26,255}, Panel{26,34,36,248}, Line{59,73,73,255},
     Paper{236,226,201,255}, Muted{147,161,153,255}, Gold{224,168,86,255}, Teal{112,204,180,255};
-constexpr const char *Tracks[] = {"CAMERA", "SANDSTORM", "TRAIN", "SOUND"};
-constexpr Color TrackColors[] = {{112,204,180,255},{224,168,86,255},{147,170,223,255},{218,142,176,255}};
+constexpr const char *Tracks[] = {"CAMERA", "SANDSTORM", "TRAIN", "SOUND", "ACTORS", "DIALOGUE"};
+constexpr Color TrackColors[] = {{112,204,180,255},{224,168,86,255},{147,170,223,255},{218,142,176,255},{152,186,117,255},{232,203,145,255}};
 std::string decimal(float value, int places = 1) {
     std::ostringstream out; out << std::fixed << std::setprecision(places) << value; return out.str();
 }
 } // namespace
+std::filesystem::path CinematicEditor::openingDirectory() {
+#ifdef __EMSCRIPTEN__
+    return "/persist/train_opening";
+#else
+    auto source=std::filesystem::path(DEATHWARD_ASSET_DIR)/"train_opening";
+    return std::filesystem::exists(source/"town.scene")?source:std::filesystem::path(GetApplicationDirectory())/"assets/train_opening";
+#endif
+}
+void CinematicEditor::playStory(bool rewind) {
+    if(rewind)seek(0);
+    screening_=cleanPreview_=true;storyFinished=storyCancelled=false;player_.play();
+}
+void CinematicEditor::previewDestination() {
+    storyFinished=false;
+    if(document_.destination.empty())return;
+    const auto hub=document_.destination=="redstone"?HubKind::Redstone:document_.destination=="frontier"?HubKind::Frontier:HubKind::BlackCreek;
+    const auto directory=TownScene::assetDirectory(hub);
+    if(!endingScene_.load(directory)) {status="Cannot preview the destination map.";return;}
+    TownNavigation navigation;navigation.load(directory/"town.nav");
+    endingCamera_={add(navigation.spawn,{20,26,20}),navigation.spawn,{0,1,0},45,CAMERA_PERSPECTIVE};
+    ending_=true;endingTime_=0;
+    audio_.update(0,true,audioSettings_,{{0,"cinematic/storm_wind.wav",.55f,600}},audioDirectory_);
+}
 bool CinematicEditor::open(const std::filesystem::path &directory, Camera3D view,
                            const TownDocument *snapshot, const std::filesystem::path &file) {
     unload();
@@ -44,6 +67,7 @@ bool CinematicEditor::open(const std::filesystem::path &directory, Camera3D view
         for (size_t i = 0; i < world_.groups.size(); ++i)
             if (world_.groups[i].id == document_.cameras.front().anchor) anchorChoice_ = int(i);
         closePrompt_ = closingWindow_ = quitRequested = editCamera_ = cleanPreview_ = filenameFocus_ = false;
+        openingRequested=storyFinished=storyCancelled=screening_=dialogueFocus_=false;
         active = true;
         player_.reset(world_,document_,[&](Vector3 p) { return navigation_.height(p); });
         actorsTime_=-1;syncActors();
@@ -52,7 +76,8 @@ bool CinematicEditor::open(const std::filesystem::path &directory, Camera3D view
     } catch (const std::exception &e) { status = e.what(); active = false; return false; }
 }
 void CinematicEditor::unload() {
-    audio_.stop(); scene_.unload(); post_.unload(); characterModels_.unload(); animalModels_.unload();
+    endingScene_.unload();ending_=false;
+    audio_.stop(); castModels_.unload(); scene_.unload(); post_.unload(); characterModels_.unload(); animalModels_.unload();
     active = false;
     draggingKey_=keyDragChanged_=scrubbing_=auditioning_=false;
 }
@@ -73,11 +98,25 @@ void CinematicEditor::syncActors() {
 }
 void CinematicEditor::rebuild() {
     const float time = std::min(player_.time(),document_.duration);
+    const auto selectedActor=track_==4&&selected_>=0&&size_t(selected_)<document_.actors.size()
+        ?std::optional<ActorKey>(document_.actors[size_t(selected_)]):std::nullopt;
     audio_.stop(); auditioning_=false; document_.sort();
+    if(selectedActor) {
+        const auto found=std::find_if(document_.actors.begin(),document_.actors.end(),[&](const auto &key){
+            return key.actor==selectedActor->actor&&key.time==selectedActor->time;
+        });
+        selected_=found==document_.actors.end()?-1:int(found-document_.actors.begin());
+    }
     try {
         player_.reset(world_,document_,[&](Vector3 p) { return navigation_.height(p); });
         player_.seek(time); actorsTime_ = -1; syncActors();
-    } catch (const std::exception &e) { status = e.what(); }
+    } catch (const std::exception &e) {
+        status=std::string("Change rejected: ")+e.what();
+        if(!undo_.empty()) {
+            document_=undo_.back().first;revision_=undo_.back().second;undo_.pop_back();selected_=-1;
+            player_.reset(world_,document_,[&](Vector3 p){return navigation_.height(p);});player_.seek(time);actorsTime_=-1;syncActors();
+        }
+    }
 }
 void CinematicEditor::seek(float seconds) {
     audio_.stop(); auditioning_=false; player_.seek(seconds); editCamera_ = false; syncActors();
@@ -99,30 +138,46 @@ void CinematicEditor::undo(bool redo) {
 }
 void CinematicEditor::requestClose(bool quit) {
     player_.pause(); audio_.stop(); closingWindow_ |= quit;
+    ending_=false;endingScene_.unload();screening_=cleanPreview_=false;
     if (dirty()) closePrompt_ = true;
     else { active = false; quitRequested = closingWindow_; }
 }
 size_t CinematicEditor::keyCount(int track) const {
     switch (track) { case 0:return document_.cameras.size(); case 1:return document_.weather.size();
-                    case 2:return document_.trains.size(); default:return document_.sounds.size(); }
+                    case 2:return document_.trains.size(); case 3:return document_.sounds.size(); case 4:return document_.actors.size(); default:return document_.dialogue.size(); }
 }
 float CinematicEditor::keyTime(int track, size_t n) const {
     switch (track) { case 0:return document_.cameras[n].time; case 1:return document_.weather[n].time;
-                    case 2:return document_.trains[n].time; default:return document_.sounds[n].time; }
+                    case 2:return document_.trains[n].time; case 3:return document_.sounds[n].time; case 4:return document_.actors[n].time; default:return document_.dialogue[n].time; }
 }
 void CinematicEditor::setKeyTime(int track, size_t n, float time) {
     switch (track) { case 0:document_.cameras[n].time=time;break; case 1:document_.weather[n].time=time;break;
-                    case 2:document_.trains[n].time=time;break; default:document_.sounds[n].time=time;break; }
+                    case 2:document_.trains[n].time=time;break; case 3:document_.sounds[n].time=time;break; case 4:document_.actors[n].time=time;break; default:document_.dialogue[n].time=time;break; }
 }
 void CinematicEditor::changeTime(float time) {
     if (selected_ < 0 || size_t(selected_) >= keyCount(track_)) return;
     float low = 0, high = document_.duration;
-    if (selected_ > 0) low = keyTime(track_,size_t(selected_-1)) + (track_ < 2 ? .05f : 0);
-    if (size_t(selected_+1) < keyCount(track_)) high = keyTime(track_,size_t(selected_+1)) - (track_ < 2 ? .05f : 0);
+    if(track_==5)high-=document_.dialogue[size_t(selected_)].duration;
+    if(track_==4) {
+        const auto &selected=document_.actors[size_t(selected_)];
+        for(size_t i=0;i<document_.actors.size();++i) {
+            const auto &key=document_.actors[i];
+            if(i==size_t(selected_)||key.actor!=selected.actor)continue;
+            if(key.time<selected.time)low=std::max(low,key.time+.05f);
+            else high=std::min(high,key.time-.05f);
+        }
+    } else {
+        if (selected_ > 0) low = keyTime(track_,size_t(selected_-1)) + (track_ < 2 ? .05f : 0);
+        if (size_t(selected_+1) < keyCount(track_)) high = std::min(high,keyTime(track_,size_t(selected_+1)) - (track_ < 2 ? .05f : 0));
+    }
     setKeyTime(track_,size_t(selected_),std::clamp(time,low,high));
 }
 void CinematicEditor::addKey(int track) {
     const float time = player_.time();
+    if(track==5&&time>=document_.duration)return;
+    const std::string selectedActor=track_==4&&selected_>=0&&size_t(selected_)<document_.actors.size()
+        ?document_.actors[size_t(selected_)].actor:std::string{};
+    std::string capturedActor;
     remember(); track_ = track;
     if (track == 0) {
         CameraKey key{time,view_.position,view_.target,view_.fovy,{}};
@@ -139,11 +194,29 @@ void CinematicEditor::addKey(int track) {
         if (found != document_.weather.end()) found->amount=player_.storm();
         else document_.weather.push_back({time,player_.storm()});
     } else if (track == 2) document_.trains.push_back({time,0,12,"*"});
-    else document_.sounds.push_back({time,"cinematic/train_brake.wav",.8f});
+    else if(track==3) document_.sounds.push_back({time,"cinematic/train_brake.wav",.8f});
+    else if(track==4) {
+        if(document_.cast.empty()) document_.cast.push_back({"hero","YOU","bandit",1});
+        std::string actor=document_.cast.front().id;
+        if(!selectedActor.empty())actor=selectedActor;
+        capturedActor=actor;
+        auto states=player_.actors();
+        ActorKey key{time,actor,view_.target,0,ActorPose::Standing,{}};
+        for(const auto &state:states)if(state.member.id==actor) {
+            key.position=state.position;key.yaw=std::atan2(state.facing.x,state.facing.z)*RAD2DEG;key.pose=state.pose;
+        }
+        if(anchorChoice_>=0) {
+            key.anchor=world_.groups[size_t(anchorChoice_)].id;
+            auto frame=*player_.anchor(key.anchor);key.position=Vector3Transform(key.position,MatrixInvert(frame));
+            key.yaw-=std::atan2(frame.m8,frame.m10)*RAD2DEG;
+        }
+        auto found=std::find_if(document_.actors.begin(),document_.actors.end(),[&](const auto &k){return k.actor==actor&&std::abs(k.time-time)<.05f;});
+        if(found==document_.actors.end())document_.actors.push_back(key);else {*found=key;}
+    } else if(time<document_.duration)document_.dialogue.push_back({time,std::min(4.f,document_.duration-time),document_.cast.empty()?"Narrator":document_.cast.front().id,"Enter dialogue here."});
     document_.sort();
     selected_ = 0;
     for (size_t n = 0; n < keyCount(track); ++n)
-        if (std::abs(keyTime(track,n)-time)<.05f) selected_=int(n);
+        if (std::abs(keyTime(track,n)-time)<.05f&&(track!=4||document_.actors[n].actor==capturedActor)) selected_=int(n);
     editCamera_ = false; rebuild();
 }
 void CinematicEditor::deleteKey() {
@@ -152,7 +225,9 @@ void CinematicEditor::deleteKey() {
     switch (track_) { case 0:document_.cameras.erase(document_.cameras.begin()+selected_);break;
         case 1:document_.weather.erase(document_.weather.begin()+selected_);break;
         case 2:document_.trains.erase(document_.trains.begin()+selected_);break;
-        default:document_.sounds.erase(document_.sounds.begin()+selected_);break; }
+        case 3:document_.sounds.erase(document_.sounds.begin()+selected_);break;
+        case 4:document_.actors.erase(document_.actors.begin()+selected_);break;
+        default:document_.dialogue.erase(document_.dialogue.begin()+selected_);break; }
     selected_ = -1; rebuild();
 }
 void CinematicEditor::cameraPreset(bool interior) {
@@ -173,6 +248,17 @@ void CinematicEditor::cameraPreset(bool interior) {
 void CinematicEditor::attachCamera(int direction) {
     const int count=int(world_.groups.size())+1;
     anchorChoice_ = (anchorChoice_+1+direction+count)%count-1;
+    if(track_==4&&selected_>=0&&size_t(selected_)<document_.actors.size()) {
+        remember();auto &key=document_.actors[size_t(selected_)];
+        if(auto frame=player_.anchor(key.anchor)) {
+            key.position=Vector3Transform(key.position,*frame);key.yaw+=std::atan2(frame->m8,frame->m10)*RAD2DEG;
+        }
+        key.anchor=anchorChoice_<0?"":world_.groups[size_t(anchorChoice_)].id;
+        if(auto frame=player_.anchor(key.anchor)) {
+            key.position=Vector3Transform(key.position,MatrixInvert(*frame));key.yaw-=std::atan2(frame->m8,frame->m10)*RAD2DEG;
+        }
+        rebuild();return;
+    }
     if (track_ != 0 || selected_ < 0 || size_t(selected_) >= document_.cameras.size()) return;
     remember(); auto &key=document_.cameras[size_t(selected_)];
     if (auto old=player_.anchor(key.anchor)) {
@@ -193,7 +279,7 @@ void CinematicEditor::panel(Rectangle r,Color color) const {
     DrawRectangleRec({r.x*sx_,r.y*sy_,r.width*sx_,r.height*sy_},color);
 }
 bool CinematicEditor::button(const std::string &text,Rectangle r,bool selected,bool enabled) const {
-    const bool hover=CheckCollisionPointRec(mouse(),r)&&!closePrompt_;
+    const bool hover=CheckCollisionPointRec(mouse(),r)&&!closePrompt_&&!dialogueFocus_;
     panel(r,selected?Color{83,65,40,255}:hover&&enabled?Color{52,67,69,255}:Line);
     label(text,r.x+9,r.y+(r.height-15)*.5f,15,enabled?Paper:Muted);
     return enabled&&hover&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
@@ -212,7 +298,24 @@ void CinematicEditor::update(float dt,const AudioSettings &audio) {
     sx_=float(GetScreenWidth())/1440;sy_=float(GetScreenHeight())/900;
     audioSettings_=audio;
     if (!active||closePrompt_) return;
+    if(ending_) {
+        if(IsKeyPressed(KEY_ESCAPE)) {ending_=false;endingScene_.unload();audio_.stop();rebuild();return;}
+        endingTime_+=dt;audio_.update(endingTime_,true,audio,{},audioDirectory_);return;
+    }
     const bool ctrl=IsKeyDown(KEY_LEFT_CONTROL)||IsKeyDown(KEY_RIGHT_CONTROL);
+    if(dialogueFocus_) {
+        if(ctrl&&IsKeyPressed(KEY_A))dialogueText_.clear();
+        for(int c=GetCharPressed();c;c=GetCharPressed())if(c>=32&&c<127&&dialogueText_.size()<480)dialogueText_+=char(c);
+        if(IsKeyPressed(KEY_BACKSPACE)&&!dialogueText_.empty())dialogueText_.pop_back();
+        if(IsKeyPressed(KEY_ENTER)&&!dialogueText_.empty()) {
+            remember();document_.dialogue[size_t(selected_)].text=dialogueText_;dialogueFocus_=false;rebuild();
+        }
+        if(IsKeyPressed(KEY_ESCAPE))dialogueFocus_=false;
+        return;
+    }
+    if(screening_) {
+        if(IsKeyPressed(KEY_ESCAPE)) {screening_=cleanPreview_=false;player_.pause();audio_.stop();storyCancelled=true;return;}
+    }
     if (filenameFocus_) {
         for (int c=GetCharPressed();c;c=GetCharPressed())
             if ((c<128&&(std::isalnum(static_cast<unsigned char>(c))||c=='-'||c=='_'||c=='.'))&&filenameText_.size()<64) filenameText_+=char(c);
@@ -225,7 +328,7 @@ void CinematicEditor::update(float dt,const AudioSettings &audio) {
         if (IsKeyPressed(KEY_ESCAPE)) { filenameFocus_=false;filenameText_=file_.filename().string(); }
         return;
     }
-    if (IsKeyPressed(KEY_ESCAPE)) {
+    if (!screening_&&IsKeyPressed(KEY_ESCAPE)) {
         if (cleanPreview_) cleanPreview_=false; else requestClose();
         return;
     }
@@ -235,7 +338,7 @@ void CinematicEditor::update(float dt,const AudioSettings &audio) {
     if (IsKeyPressed(KEY_SPACE)) play();
     if (IsKeyPressed(KEY_HOME)) seek(0);
     if (IsKeyPressed(KEY_F11)) cleanPreview_=!cleanPreview_;
-    if (IsKeyPressed(KEY_DELETE)) deleteKey();
+    if (!screening_&&IsKeyPressed(KEY_DELETE)) deleteKey();
     if (IsKeyPressed(KEY_LEFT)) seek(std::max(0.f,player_.time()-.1f));
     if (IsKeyPressed(KEY_RIGHT)) seek(std::min(document_.duration,player_.time()+.1f));
     const auto p=mouse();
@@ -277,7 +380,10 @@ void CinematicEditor::update(float dt,const AudioSettings &audio) {
     }
     const bool wasPlaying=player_.playing();
     player_.advance(std::min(dt,.1f));syncActors();
-    if(wasPlaying&&!player_.playing()) audio_.stop();
+    if(wasPlaying&&!player_.playing()) {
+        audio_.stop();
+        if(screening_) {storyFinished=true;screening_=false;cleanPreview_=false;}
+    }
     if(auditioning_) auditionTime_+=std::min(dt,.1f);
     audio_.update(auditioning_?auditionTime_:player_.time(),player_.playing()||auditioning_,audio,player_.takeSounds(),audioDirectory_);
     if(auditioning_&&!audio_.voices())auditioning_=false;
@@ -323,7 +429,7 @@ void CinematicEditor::inspector() {
                      std::next(found)==world_.paths.end()?"*":std::next(found)->id;changed=true;
         }
         label("* controls every train route.",1130,535,13,Muted);
-    } else {
+    } else if(track_==3) {
         auto &key=document_.sounds[size_t(selected_)];
         label(std::filesystem::path(key.file).filename().string(),1130,342,14,Paper);
         int change=0;
@@ -342,6 +448,29 @@ void CinematicEditor::inspector() {
             auto cue=key;cue.time=0;audio_.update(0,true,audioSettings_,{cue},audioDirectory_);
         }
     }
+    if(track_==4) {
+        auto &key=document_.actors[size_t(selected_)];
+        if(button("Actor: "+document_.speakerName(key.actor),{1130,336,286,30})) {
+            auto c=std::find_if(document_.cast.begin(),document_.cast.end(),[&](const auto &v){return v.id==key.actor;});
+            if(!document_.cast.empty()) {remember();key.actor=(c==document_.cast.end()||std::next(c)==document_.cast.end()?document_.cast.front():*std::next(c)).id;changed=true;}
+        }
+        changed|=number("Position X",key.position.x,373,.1f,-10000,10000);
+        changed|=number("Position Y",key.position.y,408,.1f,-10000,10000);
+        changed|=number("Position Z",key.position.z,443,.1f,-10000,10000);
+        changed|=number("Facing",key.yaw,478,5,-360,360);
+        const char *pose=key.pose==ActorPose::Seated?"Seated":key.pose==ActorPose::Walking?"Walking":"Standing";
+        if(button(std::string("Pose: ")+pose,{1130,517,286,30})) {remember();key.pose=ActorPose((int(key.pose)+1)%3);changed=true;}
+        label(key.anchor.empty()?"World coordinates":"Attached to "+key.anchor,1130,566,12,Muted);
+    } else if(track_==5) {
+        auto &line=document_.dialogue[size_t(selected_)];
+        changed|=number("Duration",line.duration,340,.5f,.1f,document_.duration-line.time);
+        if(button("Speaker: "+document_.speakerName(line.speaker),{1130,380,286,32},false,!document_.cast.empty())) {
+            auto c=std::find_if(document_.cast.begin(),document_.cast.end(),[&](const auto &v){return v.id==line.speaker;});
+            remember();line.speaker=(c==document_.cast.end()||std::next(c)==document_.cast.end()?document_.cast.front():*std::next(c)).id;changed=true;
+        }
+        if(button("Edit dialogue text",{1130,423,286,32})) {player_.pause();audio_.stop();dialogueText_=line.text;dialogueFocus_=true;}
+        wrapped(line.text,1130,473,280,14,Paper);
+    }
     if (changed) rebuild();
     if (button("Delete selected key",{1130,596,286,30},false,track_!=0||document_.cameras.size()>1)) deleteKey();
 }
@@ -355,7 +484,7 @@ void CinematicEditor::timeline() {
     if (button("+ Train cue",{719,651,132,34},false,!world_.paths.empty())) addKey(2);
     if (button("+ Sound",{861,651,116,34})) addKey(3);
     if (button("Length -5",{1034,651,110,34},false,document_.duration>5)) {
-        float last=1;for(int t=0;t<4;++t)for(size_t n=0;n<keyCount(t);++n)last=std::max(last,keyTime(t,n));
+        float last=1;for(int t=0;t<6;++t)for(size_t n=0;n<keyCount(t);++n)last=std::max(last,keyTime(t,n));
         if(last<=document_.duration-5) {remember();document_.duration-=5;rebuild();} else status="Move or delete keys beyond the new end first.";
     }
     if (button("Length +5",{1154,651,110,34},false,document_.duration<=595)) {remember();document_.duration+=5;rebuild();}
@@ -369,41 +498,74 @@ void CinematicEditor::timeline() {
     if(CheckCollisionPointRec(p,{155,694,1230,23})&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         scrubbing_=true;seek(std::clamp((p.x-155)/1230,0.f,1.f)*document_.duration);
     }
-    for(int t=0;t<4;++t) {
-        const float y=724+float(t)*35;
-        label(Tracks[t],18,y+4,14,TrackColors[t]);panel({155,y,1230,27},Panel);
+    const bool expanded=!document_.actors.empty()||!document_.dialogue.empty();
+    const float row=expanded?24.f:35.f,height=expanded?22.f:27.f;
+    for(int t=0;t<(expanded?6:4);++t) {
+        const float y=724+float(t)*row;
+        label(Tracks[t],18,y+4,14,TrackColors[t]);panel({155,y,1230,height},Panel);
         int nearest=-1;float closest=10;
         for(size_t n=0;n<keyCount(t);++n) {
             const float x=155+keyTime(t,n)/document_.duration*1230;
             const bool selected=t==track_&&int(n)==selected_;
-            panel({x-5,y+4,10,19},selected?Paper:TrackColors[t]);
+            panel({x-5,y+3,10,height-6},selected?Paper:TrackColors[t]);
             const float delta=std::abs(p.x-x);
-            if(p.y>=y&&p.y<=y+27&&delta<closest) {nearest=int(n);closest=delta;}
+            if(p.y>=y&&p.y<=y+height&&delta<closest) {nearest=int(n);closest=delta;}
         }
         const bool hit=nearest>=0&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+        if(hit&&t==4&&track_==4&&selected_>=0&&std::abs(keyTime(t,size_t(selected_))-keyTime(t,size_t(nearest)))<.01f) {
+            for(size_t n=size_t(selected_+1);n<keyCount(t);++n)
+                if(std::abs(keyTime(t,n)-keyTime(t,size_t(nearest)))<.01f) {nearest=int(n);break;}
+        }
         if(hit) {
             track_=t;selected_=nearest;keyDragChanged_=false;draggingKey_=true;seek(keyTime(t,size_t(nearest)));
-            if(t==0) {anchorChoice_=-1;for(size_t g=0;g<world_.groups.size();++g)
-                if(world_.groups[g].id==document_.cameras[size_t(nearest)].anchor)anchorChoice_=int(g);}
+            if(t==0||t==4) {anchorChoice_=-1;for(size_t g=0;g<world_.groups.size();++g)
+                if(world_.groups[g].id==(t==0?document_.cameras[size_t(nearest)].anchor:document_.actors[size_t(nearest)].anchor))anchorChoice_=int(g);}
         }
-        if(!hit&&CheckCollisionPointRec(p,{155,y,1230,27})&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        if(!hit&&CheckCollisionPointRec(p,{155,y,1230,height})&&IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
             scrubbing_=true;seek(std::clamp((p.x-155)/1230,0.f,1.f)*document_.duration);
         }
     }
     panel({155+player_.time()/document_.duration*1230,718,2,143},Gold);
     label("Scrub to preview. Drag keys to retime. Space: play/pause. Home: rewind. F11: clean preview.",18,878,13,Muted);
 }
+void CinematicEditor::wrapped(const std::string &text,float x,float y,float width,int size,Color color) const {
+    std::istringstream words(text);std::string word,line;
+    while(words>>word) {
+        auto next=line.empty()?word:line+" "+word;
+        if(!line.empty()&&MeasureText(next.c_str(),int(size*sy_))>width*sx_) {label(line,x,y,size,color);y+=size+5;line=word;}
+        else line=next;
+    }
+    if(!line.empty())label(line,x,y,size,color);
+}
+void CinematicEditor::subtitles() {
+    const auto *line=document_.line(player_.time());if(!line)return;
+    const float y=cleanPreview_?722.f:462.f;
+    panel({180,y,860,109},{12,18,22,225});
+    label(document_.speakerName(line->speaker),202,y+13,16,Gold);
+    wrapped(line->text,202,y+39,816,21,Paper);
+}
 void CinematicEditor::draw() {
     sx_=float(GetScreenWidth())/1440;sy_=float(GetScreenHeight())/900;
+    if(ending_) {
+        endingScene_.prepareLighting(endingCamera_);
+        endingScene_.prepareSandstorm(endingCamera_,document_.destinationStorm,[](Vector3){return 0.f;});
+        post_.begin({142,174,188,255},distance(endingCamera_.position,endingCamera_.target));BeginMode3D(endingCamera_);
+        post_.sandstorm(document_.destinationStorm,endingTime_);endingScene_.draw(endingCamera_.target);
+        endingScene_.drawEffects(endingCamera_);endingScene_.draw(endingCamera_.target,true);EndMode3D();post_.end();
+        panel({0,0,1440,48},BLACK);panel({0,852,1440,48},BLACK);
+        label(document_.destination=="redstone"?"REDSTONE CANYON":"ARRIVAL",50,765,32,Paper);
+        label("Escape: return to the cinematic editor",50,817,16,Paper);return;
+    }
     characterModels_.prepare(characters_);animalModels_.prepare(animals_);
-    scene_.prepareLighting(view_,[&](Shader shader) {characterModels_.draw(characters_,shader);animalModels_.draw(animals_,shader);});
+    scene_.prepareLighting(view_,[&](Shader shader) {characterModels_.draw(characters_,shader);animalModels_.draw(animals_,shader);castModels_.draw(player_,shader);});
     scene_.prepareSandstorm(view_,player_.storm(),[&](Vector3 p){return navigation_.height(p);});
     post_.begin({142,174,188,255},distance(view_.position,view_.target));BeginMode3D(view_);
     post_.sandstorm(player_.storm(),player_.time());scene_.draw(view_.target);
     characterModels_.draw(characters_,scene_.actorShader(),scene_.shadowTexture());
     animalModels_.draw(animals_,scene_.actorShader(),scene_.shadowTexture());
+    castModels_.draw(player_,scene_.actorShader(),scene_.shadowTexture());
     scene_.drawEffects(view_);scene_.draw(view_.target,true);EndMode3D();post_.end();
-    if(cleanPreview_&&!closePrompt_) { panel({0,0,1440,48},BLACK);panel({0,852,1440,48},BLACK);return; }
+    if(cleanPreview_&&!closePrompt_) { panel({0,0,1440,48},BLACK);panel({0,852,1440,48},BLACK);subtitles();return; }
     panel({0,0,1440,88},Background);
     label("DEATHWARD / CINEMATIC EDITOR",18,15,23,Gold);
     label(editCamera_?"FREE CAMERA / Capture shot to keep changes":"TIMELINE CAMERA",18,52,14,editCamera_?Gold:Teal);
@@ -419,8 +581,22 @@ void CinematicEditor::draw() {
     if(button("Redo",{1058,12,72,31},false,!redo_.empty()))undo(true);
     if(button("Close cinematic",{1225,12,192,31}))requestClose();
     label("RMB: look  MMB: orbit  WASD / Q E: fly  Shift: faster  Wheel: lens zoom",462,58,13,Muted);
+    if(button("Train opening",{1215,50,200,28})) {
+        if(dirty()&&!undo_.empty())status="Save this sequence before opening the train scene.";
+        else openingRequested=true;
+    }
+    if(button("Play story",{1060,50,145,28},false,!document_.destination.empty()))playStory();
+    if(button("+ Actor",{18,580,95,28}))addKey(4);
+    if(button("+ Dialogue",{123,580,117,28}))addKey(5);
     label(status.substr(0,130),18,614,13,Paper);
     inspector();timeline();
+    subtitles();
+    if(dialogueFocus_) {
+        panel({0,0,1440,900},{0,0,0,200});panel({340,250,760,340},Panel);
+        label("EDIT DIALOGUE",365,273,23,Gold);
+        wrapped(dialogueText_+"|",365,328,710,21,Paper);
+        label("Enter: keep text   Escape: cancel   Ctrl+A: replace all",365,544,16,Muted);
+    }
     if(closePrompt_) {
         panel({0,0,1440,900},{0,0,0,190});panel({405,300,630,240},Panel);
         label("Save cinematic changes?",432,328,27,Paper);

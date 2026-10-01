@@ -126,6 +126,8 @@
       if (query.get('art') === 'poc') args.push('--art-poc');
       if (query.get('sandstorm') === 'on') args.push('--sandstorm');
       if (query.has('cinematic')) args.push('--cinematic');
+      if (query.has('intro')) args.push('--intro');
+      if (query.has('cinematic-at')) args.push('--cinematic-at', query.get('cinematic-at'));
       if (query.get('hub') === 'frontier') args.push('--hub', 'frontier');
       if (['redstone', 'canyon'].includes(query.get('hub'))) args.push('--hub', 'redstone');
       if (['mine', 'canyon', 'seeded'].includes(query.get('theme'))) args.push('--theme', query.get('theme'));

@@ -45,7 +45,7 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
-    bool startCinematic = false;
+    bool startCinematic = false, intro = false;
     bool mute = false, explicitAudio = false, sandstorm = false;
     std::optional<bool> canyonRiver;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
@@ -65,6 +65,8 @@ int main(int argc, char **argv) {
             sandstorm = true;
         else if (arg == "--editor")
             startEditor = true;
+        else if (arg == "--intro")
+            intro = true;
         else if (arg == "--cinematic")
             startCinematic = true;
         else if (arg == "--sequence" && i + 1 < argc)
@@ -142,6 +144,7 @@ int main(int argc, char **argv) {
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
                          "  --sandstorm         Start with the sandstorm on; K toggles in any map\n"
+                         "  --intro             Play the Westbound opening (combine with --cinematic to edit)\n"
                          "  --cinematic         Open the separate Cinematic Editor\n"
                          "  --sequence PATH     Cinematic file to edit (default: arrival.cinematic in hub)\n"
                          "  --cinematic-at SEC  Preview a specific timeline time\n"
@@ -225,15 +228,16 @@ int main(int argc, char **argv) {
                 throw std::runtime_error(editor.status);
             SetWindowTitle("DeathWard | Town editor");
         }
-        if (startCinematic) {
-            if (!cinematic.open(editorDirectory.empty()?game.hubDirectory():editorDirectory,game.camera,
-                                 startEditor?&editor.document():nullptr,sequenceFile))
+        if (startCinematic || intro) {
+            if (!cinematic.open(intro?dw::CinematicEditor::openingDirectory():editorDirectory.empty()?game.hubDirectory():editorDirectory,game.camera,
+                                 startEditor&&!intro?&editor.document():nullptr,sequenceFile))
                 throw std::runtime_error(cinematic.status);
             if(cinematicTime) cinematic.seek(*cinematicTime);
-            else if(smoke) cinematic.play();
+            if(intro&&!startCinematic)cinematic.playStory(!cinematicTime.has_value());
+            else if(smoke&&!cinematicTime) cinematic.play();
             SetWindowTitle("DeathWard | Cinematic Editor");
         }
-        if (!startCinematic && ((smoke && scene != "hub") || benchmark)) {
+        if (!startCinematic && !intro && ((smoke && scene != "hub") || benchmark)) {
             game.launch();
             if (!game.run)
                 throw std::runtime_error(game.error);
@@ -342,6 +346,10 @@ int main(int argc, char **argv) {
                     editor.status=cinematic.status;
                 else {++game.audioContext;SetWindowTitle("DeathWard | Cinematic Editor");}
             }
+            if(cinematic.openingRequested) {
+                cinematic.openingRequested=false;
+                if(!cinematic.open(dw::CinematicEditor::openingDirectory(),game.camera))game.error=cinematic.status;
+            }
             // F6 is otherwise a mission cheat; comparisons are confined to hubs/editor.
             const bool canCompareArt =
                 cinematic.active ? false : editor.active ? dw::RedstoneArt::supports(editor.document())
@@ -400,6 +408,18 @@ int main(int argc, char **argv) {
             const auto drawn = std::chrono::steady_clock::now();
             EndDrawing();
             game.perform(action);
+            if(filming&&(cinematic.storyFinished||cinematic.storyCancelled)) {
+                if(intro&&!startCinematic) {
+                    const auto destination=cinematic.document().destination;
+                    const auto storm=cinematic.document().destinationStorm;
+                    cinematic.unload();
+                    game.perform(dw::Action::Hub);
+                    const auto hub=destination=="frontier"?dw::HubKind::Frontier:destination=="town"?dw::HubKind::BlackCreek:dw::HubKind::Redstone;
+                    game.selectHub(hub);game.sandstorm=storm>0;renderer.reloadTown();renderer.setSandstormStrength(storm);
+                    intro=false;
+                } else if(cinematic.storyFinished)cinematic.previewDestination();
+                cinematic.storyFinished=cinematic.storyCancelled=false;
+            }
             if (filming && !cinematic.active && !cinematic.quitRequested) {
                 cinematic.unload();
                 ++game.audioContext;
@@ -678,8 +698,12 @@ int main(int argc, char **argv) {
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
             EM_ASM({
                 if(Module.verify) Module.cinematic=({active:!!$0,time:$1,playing:!!$2,dirty:!!$3,storm:$4,voices:$5});
+                if(Module.verify) Object.assign(Module.cinematic,({cast:$6,speaker:UTF8ToString($7),story:!!$8,ending:!!$9,track:$10,key:$11,trainSpeed:$12}));
             },cinematic.active,cinematic.preview().time(),cinematic.preview().playing(),cinematic.dirty(),
-              cinematic.active?cinematic.preview().storm():0.f,int(cinematic.audioVoices()));
+              cinematic.active?cinematic.preview().storm():0.f,int(cinematic.audioVoices()),
+              int(cinematic.document().cast.size()),cinematic.document().line(cinematic.preview().time())?cinematic.document().line(cinematic.preview().time())->speaker.c_str():"",
+              cinematic.screening(),cinematic.showingDestination(),cinematic.selectedTrack(),cinematic.selectedKey(),
+              cinematic.previewTrainSpeed());
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

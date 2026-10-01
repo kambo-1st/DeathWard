@@ -12,6 +12,7 @@ class Renderer {
   public:
     Action draw(const Game &game);
     bool artPoc = false;
+    void setSandstormStrength(float strength) { sandstormStrength_=std::clamp(strength,0.f,1.f); }
     bool missionShadowsReady() const {
         return westernScene_.lighting().ready();
     }

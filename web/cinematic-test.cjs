@@ -81,7 +81,8 @@ const path = require('node:path');
     assert.deepEqual(errors, []);
     console.log('PASS browser cinematic editor: separate screen, carriage camera, playback/audio, scrub, weather editing, IndexedDB reload and unchanged map.');
   } catch (error) {
-    console.error(await page.evaluate(() => ({canvas: [Module.canvas.width,Module.canvas.height,Module.canvas.clientWidth,Module.canvas.clientHeight],box:Module.canvas.getBoundingClientRect().toJSON(),viewport:Array.from(Module.ctx.getParameter(Module.ctx.VIEWPORT)),state:Module.cinematic})));
+    console.error(error);
+    console.error(await page.evaluate(() => ({canvas: [Module.canvas.width,Module.canvas.height,Module.canvas.clientWidth,Module.canvas.clientHeight],box:Module.canvas.getBoundingClientRect().toJSON(),viewport:Module.ctx?Array.from(Module.ctx.getParameter(Module.ctx.VIEWPORT)):[],state:Module.cinematic})));
     await page.screenshot({path: path.join(__dirname, '../artifacts/cinematic-web-failure.png')}); console.error(errors);throw error;
   } finally { await browser.close(); }
 })().catch(error => {console.error(error); process.exitCode = 1;});

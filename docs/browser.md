@@ -57,6 +57,8 @@ asset bundle and are not copied to IndexedDB.
 
 The town editor's **Cinematic Editor** button opens the separate sequence editor. Camera, weather, train and sound timelines save as `.cinematic` files in the same browser storage without changing the map. `?hub=redstone&cinematic` opens its train demo directly. See the [cinematic guide](cinematic_editor.md) for controls.
 
+`?intro&cinematic` edits **Westbound** on its dedicated desert train map, including actor and subtitle tracks. `?intro` plays it and hands control to the player in storm-covered Redstone; Escape skips to that destination. Add `&cinematic-at=69` to start at a chosen time. The opening set and sequence have their own browser save directory; existing hub layouts are unchanged.
+
 Optional URL parameters:
 
 | Parameter | Purpose |

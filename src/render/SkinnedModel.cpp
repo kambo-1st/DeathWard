@@ -213,6 +213,37 @@ float SkinnedModel::clipDuration(const std::string &name) const {
     const auto at = std::find(asset_.names.begin(), asset_.names.end(), name);
     return at == asset_.names.end() ? 0 : asset_.clips[size_t(at - asset_.names.begin())].duration;
 }
+bool SkinnedModel::poseCinematic(double seconds, bool seated, bool walking, bool talking) {
+    if(!pose(seconds,walking?1.f:0.f)) return false;
+    auto &a=asset_;
+    auto rotate=[&](const char *name,Vector3 axis,float angle) {
+        int root=-1;
+        for(int i=0;i<a.model.boneCount;++i)if(std::string(a.model.bones[i].name)==name)root=i;
+        if(root<0)return;
+        const auto pivot=a.world[size_t(root)].translation;
+        const auto rotation=QuaternionFromAxisAngle(axis,angle);
+        for(int i=root;i<a.model.boneCount;++i) {
+            int parent=i;while(parent>=0&&parent!=root)parent=a.model.bones[parent].parent;
+            if(parent!=root)continue;
+            auto &bone=a.world[size_t(i)];
+            bone.translation=add(pivot,Vector3RotateByQuaternion(sub(bone.translation,pivot),rotation));
+            bone.rotation=QuaternionMultiply(rotation,bone.rotation);
+        }
+    };
+    if(seated) {
+        rotate("UpperLeg_L",{1,0,0},-82*DEG2RAD);rotate("UpperLeg_R",{1,0,0},-82*DEG2RAD);
+        rotate("LowerLeg_L",{1,0,0},82*DEG2RAD);rotate("LowerLeg_R",{1,0,0},82*DEG2RAD);
+        rotate("Shoulder_L",{1,0,0},-25*DEG2RAD);rotate("Shoulder_R",{1,0,0},-25*DEG2RAD);
+        rotate("Elbow_L",{1,0,0},-45*DEG2RAD);rotate("Elbow_R",{1,0,0},-45*DEG2RAD);
+        for(auto &bone:a.world)bone.translation.y-=.46f;
+    }
+    if(talking) {
+        rotate("Head",{0,1,0},.075f*std::sin(float(seconds)*1.8f));
+        rotate("Head",{1,0,0},.045f*std::sin(float(seconds)*3.2f));
+        rotate("Elbow_R",{1,0,0},-.08f-.06f*std::sin(float(seconds)*2.4f));
+    }
+    applyPose(a.model,a.world.data());return true;
+}
 bool SkinnedModel::poseSequence(double seconds, const std::vector<std::string> &names, float speed) {
     auto &a = asset_;
     if (!loaded()) return false;

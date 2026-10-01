@@ -21,6 +21,29 @@ struct SoundCue {
     float volume = 1;
     float duration = 0; // Zero plays the whole file; positive durations loop/trim the clip.
 };
+enum class ActorPose { Seated, Standing, Walking };
+struct CastMember {
+    std::string id, name, model = "bandit";
+    float scale = 1;
+};
+struct ActorKey {
+    float time = 0;
+    std::string actor;
+    Vector3 position{};
+    float yaw = 0;
+    ActorPose pose = ActorPose::Standing;
+    std::string anchor;
+};
+struct DialogueCue {
+    float time = 0, duration = 4;
+    std::string speaker, text;
+};
+struct CinematicActorState {
+    CastMember member;
+    Vector3 position{}, facing{0,0,1};
+    ActorPose pose = ActorPose::Standing;
+    bool talking = false;
+};
 struct Cinematic {
     std::string title = "Untitled sequence";
     float duration = 20;
@@ -28,11 +51,18 @@ struct Cinematic {
     std::vector<WeatherKey> weather;
     std::vector<TrainCue> trains;
     std::vector<SoundCue> sounds;
+    std::vector<CastMember> cast;
+    std::vector<ActorKey> actors;
+    std::vector<DialogueCue> dialogue;
+    std::string destination; // Empty = editor-only sequence; otherwise a hub folder.
+    float destinationStorm = 0;
     void sort();
     void validate(const TownDocument *scene = nullptr) const;
     bool load(const std::filesystem::path &file, std::string &error);
     bool save(const std::filesystem::path &file, std::string &error) const;
     float storm(float time) const;
+    const DialogueCue *line(float time) const;
+    std::string speakerName(const std::string &id) const;
     static Cinematic demo(const TownDocument &scene, Camera3D view);
 };
 
@@ -53,6 +83,7 @@ class CinematicPlayer {
     const ObjectAnimationSystem &animation() const { return animation_; }
     std::optional<Matrix> anchor(const std::string &id) const;
     std::vector<SoundCue> takeSounds();
+    std::vector<CinematicActorState> actors() const;
 
   private:
     TownDocument scene_;

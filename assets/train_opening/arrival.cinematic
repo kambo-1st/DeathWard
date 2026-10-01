@@ -1,0 +1,58 @@
+DEATHWARD_CINEMATIC 2
+title "Westbound — the storm"
+duration 82
+camera 0 19 8 17 0 2 0 48 0 "vehicle-635664027"
+camera 4 13 6 12 0 2 0 44 2 "vehicle-635664027"
+camera 4.1 0.25 3.67 -0.25 1.95 3.02 0.90 65 2 "vehicle-635664027"
+camera 5 1.72 3.40 0.08 2.28 3.09 0.98 67 2 "vehicle-635664027"
+camera 9 2.07 3.40 0.05 1.4 3.09 0.70 65 2 "vehicle-635664027"
+camera 13 1.72 3.40 0.08 2.28 3.09 0.98 67 2 "vehicle-635664027"
+camera 19 2.07 3.40 0.05 1.4 3.09 0.70 65 2 "vehicle-635664027"
+camera 26 1.72 3.40 0.08 2.28 3.09 0.98 67 2 "vehicle-635664027"
+camera 38 2.07 3.40 0.05 1.4 3.09 0.70 65 2 "vehicle-635664027"
+camera 42 0.25 3.67 -0.25 1.95 3.02 0.90 65 2 "vehicle-635664027"
+camera 46 0.3 3.12 0.1 0.3 3.12 4 62 0 "vehicle-635664027"
+camera 51 0.3 3.12 0.1 0.3 3.12 4 52 2 "vehicle-635664027"
+camera 53 0.25 3.67 -0.25 1.95 3.02 0.90 65 0 "vehicle-635664027"
+camera 56 0.25 3.67 -0.25 1.95 3.02 0.90 65 1 "vehicle-635664027"
+camera 56.15 0.42 3.62 -0.25 1.95 3.02 0.90 65 1 "vehicle-635664027"
+camera 56.5 0.25 3.67 -0.25 1.95 3.02 0.90 65 2 "vehicle-635664027"
+camera 58 2.8 3.1 0.1 -3 2.95 0 58 0 "vehicle-635664027"
+camera 63 2.8 3.1 0.1 -1 2.95 0 49 0 "vehicle-635664027"
+camera 76 3.3 3.25 -0.2 -0.15 2.95 0.6 59 0 "vehicle-635664027"
+camera 82 3.3 3.25 -0.2 -0.15 2.95 0.6 59 0 "vehicle-635664027"
+weather 0 0
+weather 29 0.02
+weather 40 0.25
+weather 47 0.55
+weather 55 1
+weather 82 1
+train 0 7 4 "*"
+train 49 3 1.2 "*"
+train 56 0 10 "*"
+sound 0 0.42 56 "cinematic/train_roll.wav"
+sound 30 0.55 52 "cinematic/storm_wind.wav"
+sound 56 0.75 0 "cinematic/train_brake.wav"
+cast "hero" "YOU" "bandit" 1
+cast "older_man" "OLDER MAN" "elder_man" 0.98
+cast "older_woman" "OLDER WOMAN" "elder_woman" 0.94
+cast "conductor" "CONDUCTOR" "conductor" 1
+actor 0 "hero" 1.4 1.88 0.62 90 0 "vehicle-635664027"
+actor 0 "older_man" 2.28 1.90 0.66 -90 0 "vehicle-635664027"
+actor 0 "older_woman" 2.28 1.91 1.18 -90 0 "vehicle-635664027"
+actor 57 "conductor" -5.8 1.83 0 90 2 "vehicle-635664027"
+actor 62 "conductor" -1.0 1.83 0 70 1 "vehicle-635664027"
+actor 82 "conductor" -1.0 1.83 0 70 1 "vehicle-635664027"
+dialogue 5 3 "older_woman" "First time this far west?"
+dialogue 9 3 "hero" "First time past the river."
+dialogue 13 5 "older_man" "What takes you out there? Work, or someone waiting?"
+dialogue 19 6 "hero" "My family. They've done well out west. They sent for me."
+dialogue 26 5 "older_woman" "Then at least you'll have a roof when you get there."
+dialogue 32 5 "older_man" "And someone to tell you how much the place has changed."
+dialogue 38 4 "hero" "I think they'll have more to say about how little I have."
+dialogue 42 3 "older_woman" "Oh, families always do."
+dialogue 46 4 "older_man" "That ridge was there a moment ago."
+dialogue 51 4 "older_woman" "Can the driver still see the track?"
+dialogue 63 5 "conductor" "Easy now, folks. Nobody's hurt. Stay in your seats."
+dialogue 69 8 "conductor" "Don't be afraid. There's an army fort just around the bend. We'll shelter there until this blows over."
+destination "redstone" 1
