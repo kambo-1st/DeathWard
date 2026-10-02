@@ -12,11 +12,11 @@ inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
 enum class RoomKind { Combat, Power, Boss, Empty, Shop };
 struct RoomGraph {
-    std::array<FloorCell, RoomCount> cells{};
+    std::vector<FloorCell> cells = std::vector<FloorCell>(RoomCount);
     std::vector<std::array<int, 2>> links;
     int powerRooms = 1;
 };
-RoomGraph generateRoomGraph(uint64_t seed);
+RoomGraph generateRoomGraph(uint64_t seed, bool tutorial = false);
 struct RoomLayout {
     Box bounds;
     Vector3 center{}, entry{}, exit{}, objective{}, bossSpawn{};
@@ -52,7 +52,8 @@ struct Arena {
     std::shared_ptr<CanyonTerrain> canyon;
     // Default construction provides an empty test arena; expeditions always supply a seed.
     Box bounds{{-15, -1, -15}, {15, 4, 15}};
-    std::array<RoomLayout, RoomCount> rooms{};
+    std::vector<RoomLayout> rooms = std::vector<RoomLayout>(RoomCount);
+    int roomCount() const { return int(rooms.size()); }
     std::vector<Passage> passages;
     std::vector<KeyPickup> keys;
     int shopRoom = -1;
@@ -60,7 +61,8 @@ struct Arena {
     std::set<FloorCell> floorCells;
     Vector3 entrance{0, 0.85f, 10}, exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};
     Arena() = default;
-    explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true);
+    explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
+                   bool tutorial = false);
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;

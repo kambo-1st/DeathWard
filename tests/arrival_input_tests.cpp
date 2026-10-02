@@ -51,14 +51,28 @@ int main() {
         walk();capture("commander-dialogue");while(game.questDialogueOpen())click(790,708);
         check(game.arrivalStage()==ArrivalStage::Trail&&!game.run,"the commander unlocks the trail without launching remotely");
         walk();capture("trail-confirmation");click(790,708);
-        check(game.run&&game.run->missingDaughterSearch&&game.run->arena.theme==MissionTheme::Canyon,
+        check(game.run&&game.run->surveyTutorial&&game.run->arena.theme==MissionTheme::Canyon,
               "the trail confirmation enters a seeded canyon search");
-        check(game.campaign.data().pending->expedition==DaughterExpeditionTitle&&game.arrivalStage()==ArrivalStage::Searching,
+        check(game.campaign.data().pending->expedition==SurveyExpeditionTitle&&game.arrivalStage()==ArrivalStage::Searching,
               "the search purpose and quest progress are checkpointed");capture("first-expedition");
         game.finish(EndReason::Retreat);game.perform(Action::Hub);frame();
-        check(game.activeHub==HubKind::Redstone&&game.questMarker()->action=="Continue the search",
-              "returning leaves the daughter missing and permits another attempt");
+        check(game.activeHub==HubKind::Redstone&&game.questMarker()->action=="Retry the recovery",
+              "returning leaves the records unrecovered and permits another attempt");
         Game restored(save,HubKind::Redstone);check(restored.arrivalStage()==ArrivalStage::Searching,"reload retains completed conversations and morning");
+        walk();while(game.questDialogueOpen())click(790,708);
+        game.run->jumpDebug(game.run->finalRoom());game.run->player.position=game.run->surveyPosition();
+        game.run->interact();frame();check(game.letterVisible(),"cache opens the letter reader");capture("eleanor-letter");
+        const auto still=game.run->player.position;
+        event(2,KEY_W);event(2,KEY_F7);frame();event(1,KEY_W);event(1,KEY_F7);frame();
+        check(distance(still,game.run->player.position)==0&&game.letterVisible(),"letter captures movement and debug shortcuts");
+        click(850,584);check(!game.letterVisible(),"letter close button returns to the expedition");
+        game.run->player.position=game.run->arena.exit;game.run->interact();frame();
+        check(game.screen==Screen::Summary,"the one-floor tutorial ends at its return lantern");
+        game.perform(Action::Hub);frame();check(game.arrivalStage()==ArrivalStage::Report,"return unlocks the commander report");
+        walk();while(game.questDialogueOpen())click(790,708);
+        check(game.arrivalStage()==ArrivalStage::Complete,"commander report completes the tutorial");capture("documents-delivered");
+        click(1000,240);check(game.letterVisible(),"the recovered letter can be reread in the fort");key(KEY_ESCAPE);
+        Game finished(save,HubKind::Redstone);check(finished.arrivalStage()==ArrivalStage::Complete,"completed tutorial reloads");
         renderer.unload();CloseWindow();std::filesystem::remove(save);
         std::cout<<"PASS arrival input: marker walking, dialogue/cancel, modal input, sleep, morning, commander, generated search and return\n";
     } catch(const std::exception &e) {

@@ -202,6 +202,7 @@ TownScene::~TownScene() {
     unload();
 }
 void TownScene::unload() {
+    flags_.clear();visibleFlags_.clear();
     effects_.unload();
     art_.unload();
     artEnabled_ = false;
@@ -264,6 +265,7 @@ bool TownScene::load(const std::filesystem::path &directory) {
         model_ = LoadModel(modelFile.string().c_str());
         if (model_.meshCount != meshCount)
             throw std::runtime_error("Town model/catalog mismatch");
+        bindFlags();
         auto source = withWorldPalette(Fragment);
         source.insert(source.find("float visibility"), RedstoneArt::shaderFunctions());
         const auto fragment = withPlayerOcclusion(source.c_str());
@@ -348,6 +350,28 @@ void TownScene::applyDocument(const TownDocument &document) {
         instances_.push_back({i.asset, i.transform, document.bounds(n),
             i.animated() || buildingDoor(asset) || doorGlass(asset), i.castsShadow});
     }
+    bindFlags();
+}
+void TownScene::bindFlags() {
+    flags_.clear();visibleFlags_.clear();
+    for(size_t n=0;n<instances_.size();++n) {
+        auto &instance=instances_[n];instance.flag=-1;
+        const auto &asset=document_.assets[instance.asset];
+        if(!flagFabric(asset))continue;
+        instance.flag=int(flags_.size());instance.animated=true;
+        const auto &id=document_.instances[n].id;
+        flags_.push_back(std::make_unique<FlagCloth>(model_.meshes[asset.first],flagSeed(id.empty()?std::to_string(n):id)));
+    }
+    prepareFlags(0);
+}
+void TownScene::prepareFlags(double time,float storm) {
+    for(auto &instance:instances_)if(instance.flag>=0) {
+        auto &flag=*flags_[size_t(instance.flag)];flag.update(instance.transform,time,storm);
+        instance.bounds=objectBounds(flag.bounds(),instance.transform);
+    }
+}
+const Mesh &TownScene::instanceMesh(const Instance &instance,int mesh) const {
+    return instance.flag>=0?flags_[size_t(instance.flag)]->mesh():model_.meshes[mesh];
 }
 void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
     const auto &poses = animation.poses();
@@ -356,11 +380,13 @@ void TownScene::applyAnimation(const ObjectAnimationSystem &animation) {
     effects_.animate(animation);
     occluders_.clear();
     for (size_t n = 0; n < poses.size(); ++n) {
-        instances_[n].animated = poses[n].animated;
+        instances_[n].animated = poses[n].animated || instances_[n].flag>=0;
         if (!instances_[n].animated)
             continue;
         instances_[n].transform = poses[n].transform;
-        instances_[n].bounds = poses[n].bounds;
+        instances_[n].bounds = instances_[n].flag>=0
+            ?objectBounds(flags_[size_t(instances_[n].flag)]->bounds(),instances_[n].transform)
+            :poses[n].bounds;
     }
 }
 void TownScene::setArtPoc(bool enabled) {
@@ -542,7 +568,7 @@ void TownScene::prepareLighting(const Camera3D &camera, const std::function<void
             if (material.maps[MATERIAL_MAP_ALBEDO].color.a < 255)
                 continue;
             material.shader = shadowShader_;
-            DrawMeshInstanced(model_.meshes[mesh], material, &i.transform, 1);
+            DrawMeshInstanced(instanceMesh(i,mesh), material, &i.transform, 1);
         }
     }
     if (actors)
@@ -610,7 +636,7 @@ std::optional<size_t> TownScene::pick(Ray ray) const {
         if (a.unlit || !GetRayCollisionBox(ray, {i.bounds.min, i.bounds.max}).hit)
             continue;
         for (int mesh = a.first; mesh < a.first + a.count; ++mesh) {
-            const auto hit = GetRayCollisionMesh(ray, model_.meshes[mesh], i.transform);
+            const auto hit = GetRayCollisionMesh(ray, instanceMesh(i,mesh), i.transform);
             if (hit.hit && hit.distance < nearest) {
                 selected = n;
                 nearest = hit.distance;
@@ -626,6 +652,7 @@ void TownScene::draw(Vector3 focus, bool glass) {
         return;
     if (!glass) {
         occluders_.clear();
+        visibleFlags_.clear();
         for (auto &b : batches_)
             b.clear();
         for (const auto &i : instances_) {
@@ -639,9 +666,11 @@ void TownScene::draw(Vector3 focus, bool glass) {
             bool blocked = false;
             if (!asset.unlit && !asset.groundOverlay && !belongsToInterior(i) && occlusion_.intersects(b))
                 for (int mesh = asset.first; mesh < asset.first + asset.count && !blocked; ++mesh)
-                    blocked = occlusion_.blocks(model_.meshes[mesh], i.transform);
+                    blocked = occlusion_.blocks(instanceMesh(i,mesh), i.transform);
             if (blocked)
                 occluders_.push_back(&i);
+            else if(i.flag>=0)
+                visibleFlags_.push_back(&i);
             else
                 batches_[i.asset].push_back(i.transform);
         }
@@ -681,6 +710,23 @@ void TownScene::draw(Vector3 focus, bool glass) {
                 m.maps[MATERIAL_MAP_EMISSION].texture = contact;
             }
         }
+        if(!overlay)for(const auto *instance:visibleFlags_) {
+            const auto &asset=assets_[instance->asset];
+            auto &material=model_.materials[model_.meshMaterial[asset.first]];
+            if((material.maps[MATERIAL_MAP_ALBEDO].color.a<255)!=glass)continue;
+            const int zero=0,surface=RedstoneArt::surface(document_.assets[instance->asset]);
+            SetShaderValue(shader_,GetShaderLocation(shader_,"unlit"),&zero,SHADER_UNIFORM_INT);
+            SetShaderValue(shader_,GetShaderLocation(shader_,"autumnFoliage"),&zero,SHADER_UNIFORM_INT);
+            SetShaderValue(shader_,GetShaderLocation(shader_,"artSurface"),&surface,SHADER_UNIFORM_INT);
+            bindInterior(false);
+            const auto previous=material.maps[MATERIAL_MAP_METALNESS].texture;
+            const auto contact=material.maps[MATERIAL_MAP_EMISSION].texture;
+            material.maps[MATERIAL_MAP_METALNESS].texture=shadowMap_.depth;
+            material.maps[MATERIAL_MAP_EMISSION].texture=art_.contact();
+            DrawMeshInstanced(instanceMesh(*instance,asset.first),material,&instance->transform,1);
+            material.maps[MATERIAL_MAP_METALNESS].texture=previous;
+            material.maps[MATERIAL_MAP_EMISSION].texture=contact;
+        }
         if (glass)
             rlEnableDepthMask();
     }
@@ -716,7 +762,7 @@ void TownScene::drawOccluders() {
             const auto contact = material.maps[MATERIAL_MAP_EMISSION].texture;
             material.maps[MATERIAL_MAP_EMISSION].texture = art_.contact();
             material.maps[MATERIAL_MAP_METALNESS].texture = shadowMap_.depth;
-            DrawMeshInstanced(model_.meshes[j], material, &instance->transform, 1);
+            DrawMeshInstanced(instanceMesh(*instance,j), material, &instance->transform, 1);
             material.maps[MATERIAL_MAP_EMISSION].texture = contact;
             material.maps[MATERIAL_MAP_METALNESS].texture = previous;
         }

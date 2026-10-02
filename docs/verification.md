@@ -1,5 +1,59 @@
 # Milestone 1 verification
 
+## Fort Mercy survey tutorial
+
+The arrival flow now commissions recovery of Bell's survey records. The Lost
+Survey uses one five-room seeded canyon floor with two small fights and a quiet
+document cache. Pickup opens Eleanor's letter and checkpoints both documents;
+the return lantern requires recovery. A physical commander conversation completes
+the tutorial, and the letter remains readable. Full-experience save slots describe
+the recovery/report/completed stages. Older quest flags remain accepted, and
+campaign format 4 reads formats 1–3.
+
+All 25 headless CTest suites pass, including normal room generation, canyon roads
+and rivers, combat, money/shop persistence, save slots and arrival progression.
+The expanded arrival suite walks the actual generated passages, approaches the
+cache through normal movement, checks reading pause, return gating, interrupted
+pickup recovery, completed report persistence, real format-3 pending-run migration
+and absence of unrelated mine consequences. Additional seeds check reproducible
+geometry and reachable, separated document/return interactions.
+
+Native and WASM builds include the tutorial. The extended native input test
+compiles, but live graphics validation is blocked: GLFW cannot open X11 display
+`:0` in this session. Consequently the new case, letter panel and UI input flow
+have not been visually verified here. Their explicit test is
+`deathward_arrival_input_tests`; captures go under `artifacts/quest/` when a working
+display is available. The existing browser arrival test remains an arrival/retry
+smoke check; it has not been run here.
+
+The revised story contract lives in `docs/redstone_story_hub.md`. It explicitly
+attributes Cole's future reconstruction to Cole and leaves the killer unresolved.
+Those testimony expeditions and the ending are not part of this implementation.
+
+## Fort flag cloth
+
+Native Release and WebAssembly builds pass with the shared cloth path. The four
+focused CTest suites `flag_cloth`, `cinematic_timeline`, `redstone_hub` and
+`object_animation` pass. The cloth suite reads the actual Redstone and Frontier
+GLB geometry and checks both flags in each map, exclusion of their poles,
+unchanged source arrays, UV retention, pinned attachment vertices, ribbon length,
+finite bounds, normals against surface derivatives, deterministic pause/seek and
+independent instance phases. It also checks stronger storm flutter and smooth
+weather changes late in a session. Black Creek correctly has no matching flags.
+
+The explicit `deathward_flag_render_tests` target compiles and is available for
+a session with graphics access. It renders original materials, moving shadows,
+shadow overrides and an editor copy in both forts, writing captures under
+`artifacts/flags/`. Live native/browser visual verification is blocked in this
+session by display/socket access restrictions, so no in-game visual result or
+frame-rate claim is recorded for this change. A CPU geometry plot was inspected
+to review the cloth shape; it does not verify the rendering path.
+
+Manual preview: `./build/deathward --hub redstone`, then inspect the fort flags
+and press K for stronger storm gusts. In F4, select flag fabric and use
+Animation → Play/Pause/Reset preview. The pole stays rigid; the cloth, its
+lighting, pick bounds and sun shadow should move together.
+
 ## Generated floor surface trial
 
 `GroundSurface` adds seeded world-space dirt/sand patches, fine grain and small

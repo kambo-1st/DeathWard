@@ -5,7 +5,8 @@
 #include <set>
 
 namespace dw {
-inline constexpr const char *DaughterExpeditionTitle = "Before First Light";
+inline constexpr const char *LegacyDaughterExpeditionTitle = "Before First Light";
+inline constexpr const char *SurveyExpeditionTitle = "The Lost Survey";
 enum class EndReason : int { Victory, Death, Retreat, Interrupted };
 struct Npc {
     std::string name;
@@ -27,6 +28,7 @@ struct RunSummary {
     std::string version = ContentVersion, expedition = "Red Hollow Mine", startingContext;
     EndReason reason = EndReason::Retreat;
     bool rescued = false, bossKilled = false, altarDestroyed = false, interrupted = false;
+    bool surveyRecovered = false;
     Stats stats;
     uint64_t moneyCollected = 0;
     uint64_t moneySpent = 0;

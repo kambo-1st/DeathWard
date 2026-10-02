@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Types.hpp"
 #include "render/ParticleEffects.hpp"
+#include "render/FlagCloth.hpp"
 #include "render/PlayerOcclusion.hpp"
 #include "render/RedstoneArt.hpp"
 #include "world/HubDefinition.hpp"
@@ -8,6 +9,7 @@
 #include "world/TownDocument.hpp"
 #include <filesystem>
 #include <functional>
+#include <memory>
 
 namespace dw {
 class TownScene {
@@ -60,6 +62,10 @@ class TownScene {
     }
     void applyDocument(const TownDocument &document);
     void applyAnimation(const ObjectAnimationSystem &animation);
+    // Uses the same clock as props/editor preview; storm controls stronger gusts.
+    // Call before shadows so both depth and color use the identical cloth pose.
+    void prepareFlags(double time,float storm = 0);
+    size_t flagCount() const {return flags_.size();}
     Box instanceBounds(size_t index) const {
         return instances_.at(index).bounds;
     }
@@ -77,6 +83,7 @@ class TownScene {
         Box bounds;
         bool animated = false;
         bool castsShadow = true;
+        int flag = -1;
     };
     Model model_{};
     TownDocument document_;
@@ -92,6 +99,8 @@ class TownScene {
     std::vector<Asset> assets_;
     std::vector<Instance> instances_;
     std::vector<const Instance *> occluders_;
+    std::vector<const Instance *> visibleFlags_;
+    std::vector<std::unique_ptr<FlagCloth>> flags_;
     std::vector<std::vector<Matrix>> batches_;
     std::vector<std::vector<Matrix>> shadowBatches_;
     bool attempted_ = false;
@@ -107,5 +116,7 @@ class TownScene {
     bool belongsToInterior(const Instance &instance) const;
     void updateLights();
     void updateEffectLights(const Camera3D &camera);
+    void bindFlags();
+    const Mesh &instanceMesh(const Instance &instance,int mesh) const;
 };
 } // namespace dw

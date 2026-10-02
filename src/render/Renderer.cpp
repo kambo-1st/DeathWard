@@ -435,7 +435,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         return distance(nearest, run.player.position) < 65;
     };
     auto enemies = [&](bool depthOnly) {
-        for (int room = 0; room < RoomCount; ++room) {
+        for (int room = 0; room < run.arena.roomCount(); ++room) {
             if (room != run.room && !visible(run.arena.rooms[size_t(room)].bounds))
                 continue;
             for (const auto &enemy : run.roomEnemies(room)) {
@@ -478,19 +478,27 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
         lanternPost(run.arena.entrance);
         lanternPost(run.arena.exit);
+        if(run.surveyTutorial&&distance(run.player.position,run.surveyPosition())<60) {
+            const auto p=run.surveyPosition();
+            // A low leather case with folded survey sheets, in both light and depth passes.
+            DrawCube({p.x,.22f,p.z},1.4f,.44f,.9f,{91,55,32,255});
+            DrawCube({p.x,.48f,p.z},.95f,.06f,.64f,Paper);
+            DrawCube({p.x-.3f,.52f,p.z+.05f},.4f,.025f,.3f,Gold);
+            DrawCube({p.x,.53f,p.z-.18f},.74f,.02f,.025f,Muted);
+        }
         if (run.arena.shopRoom >= 0) {
             const auto merchant = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
             if (distance(run.player.position, merchant) < 60)
                 shopkeeper(merchant, float(run.stats.duration), !depthOnly && !lighting.ready());
         }
-        for (int i = 0; i < RoomCount; ++i) {
+        for (int i = 0; i < run.arena.roomCount(); ++i) {
             const auto &room = run.arena.rooms[size_t(i)];
             if (room.kind != RoomKind::Power || distance(run.player.position, room.objective) > 60)
                 continue;
             const auto p = room.objective;
             DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
         }
-        if (!run.missingDaughterSearch && distance(run.player.position, run.arena.miners) < 60) {
+        if (!run.surveyTutorial && distance(run.player.position, run.arena.miners) < 60) {
             Vector3 p = run.arena.miners;
             for (int i = 0; i < 6; ++i) {
                 Vector3 person = add(p, {float(i % 3) * 0.75f - 0.75f, 0, float(i / 3) * 0.7f});
@@ -503,7 +511,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 for (int i = 0; i < 5; ++i)
                     DrawCube({p.x - 1.6f + float(i) * 0.8f, 1.0f, p.z + 1.2f}, 0.07f, 2, 0.07f, Muted);
         }
-        if (!run.missingDaughterSearch && distance(run.player.position, run.arena.altar) < 60) {
+        if (!run.surveyTutorial && distance(run.player.position, run.arena.altar) < 60) {
             Vector3 p = run.arena.altar;
             DrawCube({p.x, 0.5f, p.z}, 1.8f, 1, 1.4f, Color{63, 51, 51, 255});
             if (!run.altarDestroyed) {
@@ -655,7 +663,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawCube({p.x + 0.65f, p.y - 0.14f, p.z}, 0.12f, 0.3f, 0.12f, Gold);
         DrawCircle3D({p.x, 0.06f, p.z}, 0.85f, {1, 0, 0}, 90, Gold);
     }
-    for (int i = 0; i < RoomCount; ++i) {
+    for (int i = 0; i < run.arena.roomCount(); ++i) {
         const auto &room = run.arena.rooms[size_t(i)];
         if (room.kind == RoomKind::Power && !run.rooms[size_t(i)].rewardTaken &&
             distance(run.player.position, room.objective) < 60) {
@@ -664,21 +672,25 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawSphereWires({p.x, 1.3f, p.z}, .7f, 6, 8, Gold);
         }
     }
-    if (!run.missingDaughterSearch && distance(run.player.position, run.arena.miners) < 60) {
+    if (!run.surveyTutorial && distance(run.player.position, run.arena.miners) < 60) {
         const auto p = run.arena.miners;
         DrawCircle3D({p.x, .1f, p.z}, 2.3f, {1, 0, 0}, 90, run.rescued ? Muted : Teal);
     }
-    if (!run.missingDaughterSearch && !run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
+    if (!run.surveyTutorial && !run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
         const auto p = run.arena.altar;
         DrawSphere({p.x, 1.1f, p.z}, .35f, Teal);
     }
     lantern(run.arena.entrance, Gold, westernScene_.loaded());
-    lantern(run.arena.exit, run.room == Simulation::FinalRoom && run.roomClear ? Teal : Gold,
+    if(run.surveyTutorial&&distance(run.player.position,run.surveyPosition())<60) {
+        const auto p=run.surveyPosition();
+        DrawCircle3D({p.x,.07f,p.z},1.5f,{1,0,0},90,run.surveyRecovered?Teal:Gold);
+    }
+    lantern(run.arena.exit, run.canReturn() ? Teal : Gold,
             westernScene_.loaded());
-    if (run.room == Simulation::FinalRoom && run.roomClear)
+    if (run.canReturn())
         DrawCircle3D({run.arena.exit.x, 0.1f, run.arena.exit.z}, 1.8f, {1, 0, 0}, 90, Teal);
     std::vector<const Enemy *> drawnEnemies;
-    for (int room = 0; room < RoomCount; ++room) {
+    for (int room = 0; room < run.arena.roomCount(); ++room) {
         if (room != run.room && !visible(run.arena.rooms[size_t(room)].bounds))
             continue;
         const auto &group = run.roomEnemies(room);
@@ -837,6 +849,7 @@ Action Renderer::hub(const Game &game) {
     playerModel_.artPoc = characterModels_.artPoc = townScene_.artPoc();
     const auto &town = game.town;
     townScene_.applyAnimation(game.townObjects);
+    townScene_.prepareFlags(game.townObjects.time(),sandstormStrength_);
     const auto &world = game.campaign.data().world;
     playerModel_.update(town.player, town.time, &town);
     animalModels_.prepare(game.animals);
@@ -886,8 +899,8 @@ Action Renderer::hub(const Game &game) {
         for (const auto &resident : game.characters.residents()) {
             const auto &id = resident.definition.id;
             const char *name = id == "story-commander" ? "COMMANDER" :
-                id == "story-outlaw" ? "OUTLAW" : id == "story-wife" ? "SURVEYOR'S WIFE" :
-                id == "story-spiritualist" ? "SPIRITUALIST" : id == "story-scout" ? "SCOUT" :
+                id == "story-outlaw" ? "CALEB ROURKE" : id == "story-wife" ? "ELEANOR BELL" :
+                id == "story-spiritualist" ? "LT. MERCER" : id == "story-scout" ? "ELIAS COLE" :
                 id == "story-merchant" ? "MERCHANT" : nullptr;
             const float d = distance(resident.position, town.player.position);
             if (name && d < closest) { nearest = &resident; caption = name; closest = d; }
@@ -1011,7 +1024,7 @@ Action Renderer::questUI(const Game &game) {
         const auto alpha=static_cast<unsigned char>(255*game.sleepFade());
         panel(0,0,1280,800,{8,12,16,alpha});
         text("NEXT MORNING",475,348,34,{236,226,201,alpha});
-        text("The storm has not finished with Redstone.",425,404,17,{224,168,86,alpha});
+        text("The storm has not finished with Fort Mercy.",415,404,17,{224,168,86,alpha});
         return Action::None;
     }
     if(const auto *line=game.questLine()) {
@@ -1022,11 +1035,13 @@ Action Renderer::questUI(const Game &game) {
         const bool final=game.questLastLine();
         const auto stage=game.arrivalStage();
         const std::string label=!final?"CONTINUE":stage==ArrivalStage::Tent?"SLEEP UNTIL MORNING":
-            stage>=ArrivalStage::Trail?"LEAVE TO SEARCH":"CONTINUE";
+            (stage==ArrivalStage::Trail||stage==ArrivalStage::Searching)?"RECOVER THE RECORDS":"CONTINUE";
         if(button(label,566,686,488,46,true))return Action::QuestNext;
         if(button("NOT YET",226,686,320,46))return Action::QuestCancel;
         return Action::None;
     }
+    if(game.campaign.data().world.flags.contains("redstone.survey_recovered"))
+        if(button("READ ELEANOR'S LETTER",898,225,340,32))return Action::ReadLetter;
     if(const auto marker=game.questMarker()) {
         panel(880,30,376,188,Panel);
         text(marker->title,898,46,17,Gold);
@@ -1047,6 +1062,10 @@ Action Renderer::questUI(const Game &game) {
         const int meters=int(std::round(distance(game.town.player.position,marker->approach)));
         panel(p.x-110,p.y+27,220,29,Panel);
         text(marker->action+" / "+std::to_string(meters)+"m",p.x-101,p.y+36,12,Paper);
+    } else if(game.arrivalStage()==ArrivalStage::Complete) {
+        panel(880,30,376,160,Panel);
+        text("DOCUMENTS DELIVERED",898,47,19,Teal);
+        wrap("Bell's records are with the commander. Eleanor's letter raises questions about the route.",898,84,338,17,Paper);
     } else {
         panel(880,30,376,138,Panel);
         wrap("The current quest landmark is missing from this map. Restore the passenger tent or commander in the town editor.",898,48,338,16,Gold);
@@ -1060,8 +1079,8 @@ void Renderer::dungeonMap(const Game &game) {
     const auto totalPowers =
         std::count_if(run.arena.rooms.begin(), run.arena.rooms.end(),
                       [](const RoomLayout &room) { return room.kind == RoomKind::Power; });
-    text("KEYS " + std::to_string(run.keys) + "   POWERS " + std::to_string(run.powerUpsTaken) + " / " +
-             std::to_string(totalPowers),
+    text(run.surveyTutorial?"ONE FLOOR / SURVEY TRAIL":
+             "KEYS " + std::to_string(run.keys) + "   POWERS " + std::to_string(run.powerUpsTaken) + " / " + std::to_string(totalPowers),
          1053, 201, 11, Paper);
     text("MONEY " + number(run.money()), 1053, 216, 11, Gold);
     const auto &bounds = run.arena.bounds;
@@ -1078,7 +1097,7 @@ void Renderer::dungeonMap(const Game &game) {
     };
     for (const auto &passage : run.arena.passages)
         rectangle(passage.floor, passage.locked ? Gold : passage.open() ? Teal : Rust);
-    for (int i = 0; i < RoomCount; ++i) {
+    for (int i = 0; i < run.arena.roomCount(); ++i) {
         for (const auto &box : run.arena.rooms[size_t(i)].floors)
             rectangle(box, i == run.room ? Gold : run.rooms[size_t(i)].cleared ? Teal : Border);
         auto at = point(run.arena.rooms[size_t(i)].center);
@@ -1102,19 +1121,21 @@ Action Renderer::expedition(const Game &game) {
               sandstormStrength_);
     panel(24, 22, 358, 90, Panel);
     text(std::string(missionTheme(run.arena.theme).region) + " / " + std::to_string(run.room + 1) + " OF " +
-             std::to_string(RoomCount),
+             std::to_string(run.arena.roomCount()),
          42, 35, 12, Gold);
     const int physicalRoom = run.arena.roomAt(run.player.position);
     text(physicalRoom < 0                     ? missionTheme(run.arena.theme).passage
          : physicalRoom == run.arena.shopRoom ? "Trader's Rest"
-                                              : Simulation::roomName(physicalRoom, run.arena.theme),
+                                              : run.surveyTutorial?run.roomName():Simulation::roomName(physicalRoom, run.arena.theme),
          41, 58, 25, Paper);
     text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
     panel(964, 22, 292, 131, Panel);
-    if(run.missingDaughterSearch) {
-        text("BEFORE FIRST LIGHT",982,37,15,Gold);
-        wrap("Search the badlands for the commander's daughter.",982,67,256,16,Paper);
-        text("Her whereabouts are unknown.",982,123,12,Muted);
+    if(run.surveyTutorial) {
+        text("THE LOST SURVEY / FLOOR 1",982,37,13,Gold);
+        wrap(run.surveyRecovered?"Records and letter recovered. Return to Fort Mercy.":"Recover Bell's records from the survey camp.",982,65,256,16,Paper);
+        if(run.surveyRecovered&&button("READ LETTER",982,120,256,26))return Action::ReadLetter;
+        panel(330,568,620,88,Panel);
+        wrap(run.tutorialHint(),348,584,584,17,Paper);
     } else {
     text("BRING SOMETHING BACK", 982, 37, 13, Gold);
     text(run.rescued ? "[+] Six miners safe" : "[ ] Miners / chamber 3", 982, 65, 15,
@@ -1193,8 +1214,9 @@ Action Renderer::expedition(const Game &game) {
         }
     }
     if (run.messageTime > 0) {
-        panel(333, 605, 611, 51, Panel);
-        wrap(run.message, 351, 620, 575, 14, Paper);
+        const float y=run.surveyTutorial?505.f:605.f;
+        panel(333, y, 611, 51, Panel);
+        wrap(run.message, 351, y+15, 575, 14, Paper);
     }
     if (run.rewardOpen && !game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
@@ -1486,6 +1508,14 @@ Action Renderer::draw(const Game &game) {
     }
     panel(1160, 2, 96, 18, Panel);
     text(std::to_string(GetFPS()) + " FPS", 1170, 5, 12, Teal);
+    if(game.letterVisible()) {
+        panel(0,0,1280,800,{8,12,16,220});panel(240,160,800,470,Panel);
+        text("ELEANOR'S LETTER",272,189,29,Gold);
+        text("Found with Silas Bell's survey records",272,239,16,Muted);
+        wrap(ArrivalQuest::Letter,272,292,736,22,Paper);
+        wrap("An undated letter. It records Eleanor's words, not an explanation of Bell's death.",272,497,736,16,Muted);
+        return button("KEEP THE LETTER",728,564,280,42,true)?Action::CloseLetter:Action::None;
+    }
     return action;
 }
 } // namespace dw

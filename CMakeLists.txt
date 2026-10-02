@@ -36,6 +36,7 @@ add_library(deathward_core
     src/world/TownCharacters.cpp
     src/world/ArrivalQuest.cpp
     src/world/SaveSlots.cpp
+    src/world/FlagCloth.cpp
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
     src/world/CanyonTerrain.cpp
@@ -68,6 +69,8 @@ file(GLOB animal_models CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/
     "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals/*.glb")
 add_library(deathward_skinning src/render/SkinnedModel.cpp src/render/ArtWardrobe.cpp)
 target_link_libraries(deathward_skinning PUBLIC deathward_core raylib)
+add_library(deathward_cloth src/render/FlagCloth.cpp)
+target_link_libraries(deathward_cloth PUBLIC deathward_core raylib)
 add_library(deathward_particles src/render/ParticleEffects.cpp src/render/RedstoneArt.cpp)
 target_link_libraries(deathward_particles PUBLIC deathward_core raylib)
 if(EMSCRIPTEN)
@@ -78,7 +81,7 @@ endif()
 add_library(deathward_mission_lighting src/render/MissionLighting.cpp src/render/GroundSurface.cpp src/render/CanyonWater.cpp)
 target_link_libraries(deathward_mission_lighting PUBLIC deathward_core raylib)
 function(deathward_assets target)
-    target_link_libraries(${target} PRIVATE deathward_skinning deathward_particles deathward_mission_lighting)
+    target_link_libraries(${target} PRIVATE deathward_skinning deathward_particles deathward_mission_lighting deathward_cloth)
     if(EMSCRIPTEN)
         target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="/assets")
         return()
@@ -207,6 +210,15 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_flag_cloth_tests tests/flag_cloth_tests.cpp)
+    target_link_libraries(deathward_flag_cloth_tests PRIVATE deathward_core)
+    target_include_directories(deathward_flag_cloth_tests SYSTEM PRIVATE ${raylib_SOURCE_DIR}/src/external)
+    target_compile_definitions(deathward_flag_cloth_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_test(NAME flag_cloth COMMAND deathward_flag_cloth_tests)
+    # Explicit visual check; ordinary CTest remains independent of a display.
+    add_executable(deathward_flag_render_tests tests/flag_render_tests.cpp src/render/TownScene.cpp src/render/PostProcess.cpp)
+    target_link_libraries(deathward_flag_render_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_flag_render_tests)
     add_executable(deathward_save_slot_tests tests/save_slot_tests.cpp)
     target_link_libraries(deathward_save_slot_tests PRIVATE deathward_core)
     add_test(NAME save_slots COMMAND deathward_save_slot_tests)

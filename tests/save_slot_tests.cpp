@@ -25,7 +25,7 @@ int main() {
         check(bytes(first.file)==progress,"resuming does not reset the selected campaign");
         slots.start(1);CampaignStore second(slots.path(1));
         check(!second.data().world.flags.contains("redstone.arrived"),"slot two has independent story progress");
-        firstCampaign.begin(1866,DaughterExpeditionTitle);progress=bytes(first.file);
+        firstCampaign.begin(1866,SurveyExpeditionTitle);progress=bytes(first.file);
         check(slots.inspect(0).interrupted,"menu describes a pending expedition");
         check(bytes(first.file)==progress,"inspecting a pending run does not recover it");
         check(bytes(old.path())==original,"legacy single campaign is untouched");

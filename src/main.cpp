@@ -761,7 +761,7 @@ int main(int argc, char **argv) {
                     x:$5,y:$6,last:!!$7,speaker:UTF8ToString($8),search:!!$9});
             },game.arrivalActive(),int(game.arrivalStage()),game.questDialogueOpen(),game.sleeping(),game.walkingToQuest(),
               questPixel.x,questPixel.y,game.questLastLine(),game.questLine()?game.questLine()->speaker.c_str():"",
-              game.run&&game.run->missingDaughterSearch);
+              game.run&&game.run->surveyTutorial);
             EM_ASM({
                 if(Module.verify) Module.cinematic=({active:!!$0,time:$1,playing:!!$2,dirty:!!$3,storm:$4,voices:$5});
                 if(Module.verify) Object.assign(Module.cinematic,({cast:$6,speaker:UTF8ToString($7),story:!!$8,ending:!!$9,track:$10,key:$11,trainSpeed:$12}));

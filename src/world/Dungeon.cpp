@@ -80,13 +80,14 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 }
 } // namespace
 
-Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver)
+Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial)
     : visualSeed(seed), theme(missionTheme) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
-    const auto graph = generateRoomGraph(seed);
+    const auto graph = generateRoomGraph(seed,tutorial);
+    rooms.resize(graph.cells.size());
     const int powerRooms = graph.powerRooms;
-    rooms.back().kind = RoomKind::Boss;
+    if(!tutorial)rooms.back().kind = RoomKind::Boss;
     for (int i = 0; i < powerRooms; ++i)
         rooms[size_t(RoomCount - 2 - i)].kind = RoomKind::Power;
     auto shuffle = [&](auto &values) {
@@ -120,7 +121,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver)
         return positions;
     };
     const auto xs = axis(true), zs = axis(false);
-    for (int i = 0; i < RoomCount; ++i) {
+    for (int i = 0; i < roomCount(); ++i) {
         auto &room = rooms[size_t(i)];
         const auto cell = graph.cells[size_t(i)];
         const int cx = xs.at(cell.first), cz = zs.at(cell.second);
@@ -206,7 +207,11 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver)
                 floorCells.insert({x, z});
     }
     entrance = rooms[0].entry = {0, 0.85f, rooms[0].bounds.max.z - 3};
-    exit = rooms.back().exit = add(rooms.back().center, {0, 0, -4});
+    // Keep the tutorial return interaction clear of the document case on every
+    // seed. The center cross is reserved from obstacles during cover placement.
+    exit = rooms.back().exit = tutorial
+        ? add(rooms.back().center,mul(unit(sub(rooms.back().center,rooms.back().objective)),2.f))
+        : add(rooms.back().center, {0, 0, -4});
     miners = rooms[2].objective;
     altar = rooms[3].objective;
     floors = strips(floorCells);
@@ -289,11 +294,11 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver)
     }
     // Every key starts in the unlocked combat network, never behind the lock it opens.
     std::vector<int> keyRooms;
-    for (int i = 0; i < RoomCount; ++i)
+    for (int i = 0; i < roomCount(); ++i)
         if (rooms[size_t(i)].kind == RoomKind::Combat && i != 2 && i != 3)
             keyRooms.push_back(i);
     shuffle(keyRooms);
-    for (int i = 0; i < powerRooms + 1; ++i)
+    for (int i = 0; !tutorial && i < powerRooms + 1; ++i)
         keys.push_back({keyRooms[size_t(i)], rooms[size_t(keyRooms[size_t(i)])].objective, false});
     std::queue<int> breadth;
     std::array<bool, RoomCount> seen{};
@@ -315,25 +320,29 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver)
     // Keep objective rooms combat-ready. Quiet rooms belong to
     // the unlocked network and can still contain a key, but never a power pedestal.
     std::vector<int> quietRooms;
-    for (int i = 1; i < RoomCount; ++i)
+    for (int i = 1; i < roomCount(); ++i)
         if (rooms[size_t(i)].kind == RoomKind::Combat && rooms[size_t(i)].depth > 1 && i != 2 && i != 3)
             quietRooms.push_back(i);
     shuffle(quietRooms);
     const int quietCount = 1 + int(layout.bounded(2));
     // The entrance is always quiet and counts toward the one-to-two-room limit.
     rooms.front().kind = RoomKind::Empty;
-    for (int i = 1; i < quietCount; ++i)
+    for (int i = 1; !tutorial && i < quietCount; ++i)
         rooms[size_t(quietRooms[size_t(i - 1)])].kind = RoomKind::Empty;
     // Convert one ordinary room in the unlocked network into a peaceful shop.
     // Preserve the entrance, objective rooms, key sites and separate power caches.
     std::vector<int> shopSites;
-    for (int i = 4; i < RoomCount; ++i)
+    for (int i = 4; i < roomCount(); ++i)
         if (rooms[size_t(i)].kind == RoomKind::Combat &&
             std::none_of(keys.begin(), keys.end(), [i](const auto &key) { return key.room == i; }))
             shopSites.push_back(i);
     Random shop(seed ^ 0x53484f50524f4f4dULL);
-    shopRoom = shopSites.at(shop.bounded(uint32_t(shopSites.size())));
-    rooms[size_t(shopRoom)].kind = RoomKind::Shop;
+    if(tutorial) {
+        rooms[2].kind=rooms.back().kind=RoomKind::Empty;
+    } else {
+        shopRoom = shopSites.at(shop.bounded(uint32_t(shopSites.size())));
+        rooms[size_t(shopRoom)].kind = RoomKind::Shop;
+    }
     rebuildWalls();
     if (theme == MissionTheme::Canyon)
         buildCanyon(*this, canyonRiver);
@@ -376,7 +385,7 @@ float RoomLayout::usableArea() const {
     return std::max(0.0f, area);
 }
 int Arena::roomAt(Vector3 p) const {
-    for (int i = 0; i < RoomCount; ++i)
+    for (int i = 0; i < roomCount(); ++i)
         if (inside(p, rooms[size_t(i)].bounds) && contains(p))
             return i;
     return -1;

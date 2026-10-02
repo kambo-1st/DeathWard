@@ -5,12 +5,17 @@
 namespace dw {
 namespace {
 constexpr const char *Flags[]={"redstone.arrived", "redstone.evening_conductor", "redstone.slept",
-    "redstone.morning_conductor", "redstone.daughter_missing", "redstone.search_started"};
+    "redstone.morning_conductor", "redstone.survey_requested", "redstone.search_started",
+    "redstone.survey_recovered", "redstone.survey_reported"};
 }
 ArrivalStage ArrivalQuest::stage(const WorldState &world) {
     // Require the complete prefix; unrelated/debug flags cannot skip a conversation.
     int completed=0;
-    for(const auto *flag:Flags) {if(!world.flags.contains(flag))break;++completed;}
+    for(const auto *flag:Flags) {
+        const bool legacy=completed==4&&world.flags.contains("redstone.daughter_missing");
+        if(!world.flags.contains(flag)&&!legacy)break;
+        ++completed;
+    }
     return ArrivalStage(completed);
 }
 void ArrivalQuest::begin(CampaignStore &campaign) {
@@ -33,13 +38,19 @@ std::vector<QuestLine> ArrivalQuest::dialogue(ArrivalStage at) {
         {"CONDUCTOR","I wish I could tell you. The line is still buried, and nobody will give me a time."},
         {"CONDUCTOR","Something else is wrong. The fort commander has been questioning everyone at the gate since dawn. You should speak to him."}};
     case ArrivalStage::Commander:return {
-        {"YOU","The conductor said you were looking for someone."},
-        {"COMMANDER","My daughter. She left alone before first light. Nobody can tell me whether she slipped out in the night or just before dawn."},
-        {"COMMANDER","The gate watch saw someone taking the badlands trail. My soldiers are scattered keeping this camp together."},
-        {"YOU","I'll follow the trail and look for her."},
-        {"COMMANDER","Start beyond the barricade. Keep your bearings in the storm, and come back if the way closes. Please find her."}};
+        {"YOU","The conductor said you needed help."},
+        {"COMMANDER","Silas Bell, the railroad surveyor, was found dead in the badlands. His daughter Eleanor is back at Fort Mercy. So are his guide and Lieutenant Mercer. Their accounts disagree."},
+        {"COMMANDER","Some of Bell's survey records are still missing. The railroad needs them to inspect the route ahead, and I cannot spare soldiers while the storm threatens the camp."},
+        {"COMMANDER","Start at the near survey camp beyond the barricade. Look for a leather document case. This is a short recovery trip; bring the papers back before you go farther."},
+        {"YOU","I'll recover the records."}};
     case ArrivalStage::Trail:
-    case ArrivalStage::Searching:return {{"THE BADLANDS","The commander's daughter went this way alone. Leave the camp and follow her trail into the storm?"}};
+    case ArrivalStage::Searching:return {{"THE LOST SURVEY","Bell's near survey camp lies beyond the barricade. Follow the trail, recover his records and return to Fort Mercy?"}};
+    case ArrivalStage::Report:return {
+        {"YOU","I recovered the survey sheets. There was a letter with them, signed Eleanor."},
+        {"COMMANDER","These will help the railroad crew. Eleanor Bell is the surveyor's daughter. Keep her letter; we should ask her about it when she is ready."},
+        {"YOU","She says the route was different from the one her father showed Mercer."},
+        {"COMMANDER","That tells us what she wrote. It does not tell us why Bell changed course, or how he died."},
+        {"COMMANDER","Caleb Rourke, their guide, is being held here. He is very willing to tell his version. We will need to listen carefully."}};
     default:return {};
     }
 }
@@ -59,7 +70,7 @@ std::optional<QuestMarker> ArrivalQuest::marker(const WorldState &world, const T
     const auto at=stage(world);
     QuestMarker result;
     if(at==ArrivalStage::Conductor||at==ArrivalStage::MorningConductor) {
-        result={at==ArrivalStage::Conductor?"STRANDED AT REDSTONE":"STILL NO DEPARTURE",
+        result={at==ArrivalStage::Conductor?"STRANDED AT FORT MERCY":"STILL NO DEPARTURE",
                 at==ArrivalStage::Conductor?"Ask the conductor when the train will leave.":"Ask the conductor about today's departure.",
                 "Talk to conductor","!",conductor.position,conductor.position};
         for(const auto &resident:residents.residents())if(resident.definition.id=="quest-conductor")
@@ -67,14 +78,16 @@ std::optional<QuestMarker> ArrivalQuest::marker(const WorldState &world, const T
     } else if(at==ArrivalStage::Tent) {
         if(!tent_||!bedApproach_)return {};
         result={"A BED FOR THE NIGHT","Sleep in the passenger tent before morning.","Rest in tent","Z",*tent_,*bedApproach_};
-    } else if(at==ArrivalStage::Commander) {
+    } else if(at==ArrivalStage::Commander||at==ArrivalStage::Report) {
         const auto &people=residents.residents();
         const auto it=std::find_if(people.begin(),people.end(),[](const auto &c){return c.definition.id=="story-commander";});
         if(it==people.end())return {};
-        result={"TROUBLE AT THE FORT","Find out what is troubling the commander.","Talk to commander","!",it->position,it->position};
-    } else if(at>=ArrivalStage::Trail) {
-        result={"BEFORE FIRST LIGHT","Follow the missing daughter's trail into the badlands.",
-                at==ArrivalStage::Trail?"Follow the trail":"Continue the search",">",ground.mission,ground.mission};
+        result={at==ArrivalStage::Report?"THE RECOVERED PAPERS":"TROUBLE AT THE FORT",
+                at==ArrivalStage::Report?"Bring Bell's records and Eleanor's letter to the commander.":"Find out what is troubling the commander.",
+                "Talk to commander","!",it->position,it->position};
+    } else if(at==ArrivalStage::Trail||at==ArrivalStage::Searching) {
+        result={"THE LOST SURVEY","Recover Bell's survey records from the near camp.",
+                at==ArrivalStage::Trail?"Recover the records":"Retry the recovery",">",ground.mission,ground.mission};
     } else return {};
     const float y=ground.height(result.position), approachY=ground.height(result.approach);
     if(std::isfinite(y))result.position.y=y;

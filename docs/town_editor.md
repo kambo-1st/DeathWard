@@ -46,6 +46,12 @@ Spin, Sway and Tumbleweed props are **decorative and do not block the player**. 
 
 Settings live in scene format 2 with stable per-object IDs. Format-1 scenes and existing browser editor overrides still load as static scenes; assign presets in the editor to animate those custom layouts. Saving preserves their original matrices and upgrades to the current scene format. No mesh or texture conversion is required when changing presets.
 
+### Fort flags
+
+The existing fort flags in Redstone Canyon and Western Frontier animate automatically. The imported prefab has separate pole and fabric objects; only the fabric bends. Select the fabric and use **Animation → Play preview** to see it wave. **Pause preview** freezes its pose and **Reset preview** returns to the initial wind pose. The rigid **Static** preset still allows cloth motion; no Sway preset is needed.
+
+Press **K** to compare stronger sandstorm gusts. Copies of the fabric receive their own wind phase, keep the original texture, and respect **Cast shadows**. Saving stores the original placement. Moving a complete flag still requires moving its separate pole and fabric together.
+
 ## Trains
 
 Select any part of a train and open **Animation**. Selection outlines the complete vehicle, and **Focus selection** frames that vehicle. The rail centerline appears in teal. **Travel speed**, **Acceleration** and **Station wait / sec** affect all vehicles on the shared loop. Black Creek defaults are 3, 0.8 and 6 respectively. Redstone Canyon has one four-vehicle convoy parked at speed zero beside the sand blockage. Raising its speed reuses the original route; it does not remove the authored sand drifts. A zero station wait lets a moving train continue through the loop boundary without braking; player obstruction still stops it. **Play/Pause/Reset preview** works as it does for props; saving during preview preserves original placements and route settings.

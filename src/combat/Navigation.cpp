@@ -186,16 +186,18 @@ void Simulation::cancelMove() {
 void Simulation::requestMove(Vector3 target) {
     target.y = player.position.y;
     cancelMove();
-    if (room == arena.shopRoom && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
+    if(surveyTutorial && room==finalRoom() && roomClear && distance(target,surveyPosition())<2.4f) {
+        target=surveyPosition();interactOnArrival_=true;
+    } else if (room == arena.shopRoom && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
         target = arena.rooms[size_t(room)].objective;
         interactOnArrival_ = true;
-    } else if (!rescued && distance(target, arena.miners) < 2.4f) {
+    } else if (!surveyTutorial && !rescued && distance(target, arena.miners) < 2.4f) {
         target = arena.miners;
         interactOnArrival_ = true;
-    } else if (!altarDestroyed && distance(target, arena.altar) < 2.4f) {
+    } else if (!surveyTutorial && !altarDestroyed && distance(target, arena.altar) < 2.4f) {
         target = arena.altar;
         interactOnArrival_ = true;
-    } else if (room == FinalRoom && roomClear && distance(target, arena.exit) < 2.4f) {
+    } else if (canReturn() && distance(target, arena.exit) < 2.4f) {
         target = arena.exit;
         interactOnArrival_ = true;
     } else if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
@@ -210,18 +212,20 @@ void Simulation::requestMove(Vector3 target) {
     }
 }
 std::string Simulation::nearbyInteraction() const {
+    if(surveyTutorial && room==finalRoom() && roomClear && distance(player.position,surveyPosition())<2.6f &&
+       arena.sight(player.position,surveyPosition()))return surveyRecovered?"READ LETTER":"RECOVER RECORDS";
     if (room == arena.shopRoom && distance(player.position, arena.rooms[size_t(room)].objective) <= 2.6f &&
         arena.sight(player.position, arena.rooms[size_t(room)].objective))
         return "TRADE";
     if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
         distance(player.position, arena.rooms[size_t(room)].objective) < 2.6f)
         return "CLAIM POWER";
-    if (!rescued && distance(player.position, arena.miners) < 2.6f)
+    if (!surveyTutorial && !rescued && distance(player.position, arena.miners) < 2.6f)
         return "FREE MINERS";
-    if (!altarDestroyed && distance(player.position, arena.altar) < 2.6f)
+    if (!surveyTutorial && !altarDestroyed && distance(player.position, arena.altar) < 2.6f)
         return "BREAK ALTAR";
-    if (room == FinalRoom && roomClear && distance(player.position, arena.exit) < 2.8f)
-        return "RETURN HOME";
+    if (canReturn() && distance(player.position, arena.exit) < 2.8f)
+        return surveyTutorial?"RETURN TO FORT":"RETURN HOME";
     if (roomClear)
         for (size_t i = 0; i < arena.passages.size(); ++i)
             for (int side = 0; side < 2; ++side)

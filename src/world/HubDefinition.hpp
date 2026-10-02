@@ -5,7 +5,7 @@ namespace dw {
 enum class HubKind { BlackCreek, Frontier, Redstone };
 inline constexpr std::array Hubs{HubKind::BlackCreek, HubKind::Frontier, HubKind::Redstone};
 inline constexpr const char *hubName(HubKind hub) {
-    return hub == HubKind::Redstone ? "REDSTONE CANYON" :
+    return hub == HubKind::Redstone ? "FORT MERCY" :
            hub == HubKind::Frontier ? "WESTERN FRONTIER" : "BLACK CREEK";
 }
 inline constexpr const char *hubShortName(HubKind hub) {

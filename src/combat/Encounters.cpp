@@ -113,6 +113,7 @@ int Simulation::roomEnemyCount(int index) const {
     const auto &layout = arena.rooms.at(size_t(index));
     if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop)
         return 0;
+    if(surveyTutorial)return index==1?2:3;
     if (layout.kind == RoomKind::Boss && arena.theme == MissionTheme::Mine && !followup)
         return 1;
     return std::clamp(int(std::ceil(layout.usableArea() / 70.0f)), 4, 24);
@@ -159,7 +160,17 @@ void Simulation::spawnRoomEnemies() {
     const auto &layout = arena.rooms[size_t(room)];
     if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop)
         return;
-    if (room == FinalRoom && arena.theme == MissionTheme::Mine && !followup) {
+    if(surveyTutorial) {
+        Random placement(seed_ ^ 0x5455544f5249414cULL ^ uint64_t(room));
+        // Existing canyon creatures, limited to readable basic behaviors.
+        for(int n=0;n<roomEnemyCount(room);++n) {
+            if(!placeEnemy(EnemyKind::Monster,placement,true,monsterId(room==1?10:14,room==1?1:0)))break;
+            enemies.back().hp=enemies.back().maxHp=24;
+            enemies.back().cooldown=1.8f;
+        }
+        return;
+    }
+    if (room == finalRoom() && arena.theme == MissionTheme::Mine && !followup) {
         spawn(EnemyKind::Boss, layout.bossSpawn);
         return;
     }

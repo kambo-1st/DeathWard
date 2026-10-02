@@ -5,20 +5,23 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver)
-    : arena(seed, theme, canyonRiver), encounterRng(seed ^ 0x454e434f554e5445ULL),
+                       bool canyonRiver, bool tutorial)
+    : arena(seed, theme, canyonRiver, tutorial), encounterRng(seed ^ 0x454e434f554e5445ULL),
       rewardRng(seed ^ 0x5245574152445354ULL), combatRng(seed ^ 0x434f4d424154524eULL), seed_(seed),
       runId_(runId), startingWorld_(world) {
+    surveyTutorial=tutorial;
+    rooms.resize(arena.rooms.size());
     rescued = world.minersRescued;
     altarDestroyed = world.altarDestroyed;
     bossKilled = theme == MissionTheme::Canyon ? world.flags.contains("canyon_cleared") : world.bossDefeated;
     followup = bossKilled;
+    if(surveyTutorial)rescued=altarDestroyed=bossKilled=followup=false;
     player.position = arena.entrance;
     player.aim = arena.rooms[0].center;
     player.facing = unit(sub(player.aim, player.position));
     enemies.reserve(256);
     projectiles.reserve(4096);
-    for (int index = 0; index < RoomCount; ++index) {
+    for (int index = 0; index < arena.roomCount(); ++index) {
         if (arena.rooms[size_t(index)].kind != RoomKind::Power)
             continue;
         std::array<ItemId, ItemCount> pool{ItemId::Ricochet, ItemId::Split, ItemId::Judas, ItemId::Powder,
@@ -29,13 +32,14 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
             rooms[size_t(index)].offers[size_t(i)] = pool[size_t(i)];
         }
     }
-    for (int index = 0; index < RoomCount; ++index)
+    for (int index = 0; index < arena.roomCount(); ++index)
         prepareRoomEnemies(index);
     enemies = std::move(rooms[0].residents);
     prepareMoney();
     prepareShop();
     enterRoom(0);
-    announce(std::string(missionTheme(theme).region) +
+    if(surveyTutorial)announce("THE LOST SURVEY / One floor. Recover Bell's records and return to Fort Mercy.",6);
+    else announce(std::string(missionTheme(theme).region) +
                  (followup ? " / return to unfinished business" : " / find the six missing miners"),
              5);
 }
@@ -60,9 +64,23 @@ const Enemy *Simulation::boss() const {
     return nullptr;
 }
 std::string Simulation::roomName() const {
+    if(surveyTutorial) {
+        static constexpr const char *names[]={"Beyond the Gate","Dust Hollow","The Sheltered Bend","Last Approach","Survey Camp"};
+        return names[size_t(room)];
+    }
     if (arena.rooms[size_t(room)].kind == RoomKind::Shop)
         return "Trader's Rest";
     return roomName(room, arena.theme);
+}
+std::string Simulation::tutorialHint() const {
+    if(surveyRecovered)return "The letter and records are safe. Follow the return lantern to Fort Mercy.";
+    switch(room) {
+    case 0:return "Click clear ground to walk, or use WASD. Follow the open passage into the badlands.";
+    case 1:return roomClear?"The passage is open. Keep following the trail.":"Click an enemy to fire. Keep moving; hold Shift to shoot from one spot.";
+    case 2:return "A quiet stretch. Recover your bearings and follow the trail toward the survey camp.";
+    case 3:return roomClear?"The survey camp is just ahead.":"Use Dodge or Space to evade an attack. Cover stops bullets.";
+    default:return "Look for the leather document case. Click it, or approach and choose Recover records.";
+    }
 }
 std::string Simulation::roomName(int index, MissionTheme theme) {
     static constexpr std::array<const char *, RoomCount> names{
@@ -132,7 +150,7 @@ void Simulation::enterRoom(int index) {
     if (rooms[size_t(room)].cleared)
         enemies.clear();
     rooms[size_t(room)].residents = std::move(enemies);
-    room = std::clamp(index, 0, FinalRoom);
+    room = std::clamp(index, 0, finalRoom());
     enemies = std::move(rooms[size_t(room)].residents);
     auto &progress = rooms[size_t(room)];
     progress.visited = true;
@@ -165,7 +183,7 @@ void Simulation::enterRoom(int index) {
         cancelMove();
         arena.sealRoom(room);
         announce(roomName() + " / doors sealed until the fight is over", 4);
-        if (room == FinalRoom)
+        if (room == finalRoom() && !surveyTutorial)
             beginBossEncounter();
     } else {
         arena.sealRoom(-1);
@@ -179,7 +197,7 @@ void Simulation::clearRoom() {
         return;
     progress.cleared = roomClear = true;
     audioCues.push(AudioCueKind::RoomClear, player.position);
-    if (room == FinalRoom && arena.theme == MissionTheme::Canyon)
+    if (room == finalRoom() && !surveyTutorial && arena.theme == MissionTheme::Canyon)
         bossKilled = true;
     for (auto &enemy : enemies)
         if (const auto *d = monsterDefinition(enemy.monster); d && d->roomHazard)
@@ -191,7 +209,7 @@ void Simulation::clearRoom() {
     Event event;
     event.type = EventType::RoomCleared;
     queueRoot(event);
-    announce(room == FinalRoom
+    announce(surveyTutorial?"The trail is clear. Continue toward Bell's survey camp.":room == finalRoom()
                  ? "The final chamber is clear. Use the return lantern to reach town."
                  : "Room cleared. Doors reopened. Choose a passage; look for keys and power caches.",
              5);
@@ -246,7 +264,7 @@ void Simulation::requestDoor(int passage, int side) {
     doorOnArrival_ = std::pair{passage, side};
 }
 void Simulation::startBoss() {
-    jumpDebug(FinalRoom, true);
+    jumpDebug(finalRoom(), true);
 }
 void Simulation::beginBossEncounter() {
     announce(arena.theme == MissionTheme::Canyon ? "THE INFESTED MESA / clear the final monster group"
@@ -294,7 +312,7 @@ void Simulation::clearRoomDebug() {
     visuals.clear();
     particleBursts.clear();
     rewardOpen = shopOpen = debugScenario = false;
-    if (room == FinalRoom)
+    if (room == finalRoom() && !surveyTutorial)
         bossKilled = true;
     clearRoom();
     // A stress scenario may have started in an already-cleared room.
@@ -306,7 +324,7 @@ void Simulation::clearRoomDebug() {
     announce("CHEAT / room cleared. All combat seals open.");
 }
 void Simulation::jumpDebug(int index, bool restart) {
-    index = std::clamp(index, 0, FinalRoom);
+    index = std::clamp(index, 0, finalRoom());
     cancelMove();
     debugScenario = finished = dead = false;
     auto &progress = rooms[size_t(index)];
@@ -314,7 +332,7 @@ void Simulation::jumpDebug(int index, bool restart) {
         progress.cleared = false;
         --stats.rooms;
     }
-    if (restart && index == FinalRoom)
+    if (restart && index == finalRoom())
         bossKilled = false;
     if (restart) {
         prepareRoomEnemies(index);
@@ -324,7 +342,7 @@ void Simulation::jumpDebug(int index, bool restart) {
     healDebug();
     // Debug travel must not land inside a group that already occupies the room.
     player.position =
-        index == FinalRoom ? arena.rooms[size_t(index)].entry : arena.rooms[size_t(index)].center;
+        index == finalRoom() ? arena.rooms[size_t(index)].entry : arena.rooms[size_t(index)].center;
     for (const auto &enemy : roomEnemies(index))
         if (enemy.alive && distance(player.position, enemy.position) < 6) {
             player.position = arena.rooms[size_t(index)].entry;
@@ -367,6 +385,13 @@ void Simulation::startStress() {
 }
 void Simulation::interact() {
     cancelMove();
+    if(surveyTutorial && room==finalRoom() && roomClear &&
+       distance(player.position,surveyPosition())<2.6f && arena.sight(player.position,surveyPosition())) {
+        if(!surveyRecovered)audioCues.push(AudioCueKind::Pickup,surveyPosition());
+        surveyRecovered=true;letterOpen=true;checkpointNeeded=true;
+        announce("Bell's survey records and Eleanor's letter recovered. Return to the commander.",6);
+        return;
+    }
     if (room == arena.shopRoom) {
         openShop();
         if (shopOpen)
@@ -378,14 +403,14 @@ void Simulation::interact() {
         offerReward();
         return;
     }
-    if (!missingDaughterSearch && !rescued && distance(player.position, arena.miners) < 2.6f) {
+    if (!surveyTutorial && !rescued && distance(player.position, arena.miners) < 2.6f) {
         audioCues.push(AudioCueKind::Pickup, arena.miners);
         rescued = true;
         checkpointNeeded = true;
         announce("Six miners escape through the old shaft. Mary will remember.", 5);
         return;
     }
-    if (!missingDaughterSearch && !altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
+    if (!surveyTutorial && !altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
         audioCues.push(AudioCueKind::Explosion, arena.altar);
         altarDestroyed = true;
         checkpointNeeded = true;
@@ -393,7 +418,7 @@ void Simulation::interact() {
         announce("The altar breaks. Something loses your scent.", 5);
         return;
     }
-    if (room == FinalRoom && roomClear && distance(player.position, arena.exit) < 2.8f) {
+    if (canReturn() && distance(player.position, arena.exit) < 2.8f) {
         finished = true;
         return;
     }
@@ -419,11 +444,12 @@ RunSummary Simulation::summary() const {
     RunSummary s;
     s.id = runId_;
     s.seed = seed_;
-    s.expedition = missingDaughterSearch?DaughterExpeditionTitle:missionTheme(arena.theme).title;
+    s.expedition = surveyTutorial?SurveyExpeditionTitle:missionTheme(arena.theme).title;
     s.startingContext = CampaignStore::worldContext(startingWorld_);
-    s.rescued = !missingDaughterSearch&&rescued;
-    s.altarDestroyed = !missingDaughterSearch&&altarDestroyed;
-    s.bossKilled = bossKilled;
+    s.rescued = !surveyTutorial&&rescued;
+    s.altarDestroyed = !surveyTutorial&&altarDestroyed;
+    s.bossKilled = !surveyTutorial&&bossKilled;
+    s.surveyRecovered = surveyTutorial&&surveyRecovered;
     s.stats = stats;
     s.items = items;
     s.moneyCollected = moneyCollected;
@@ -919,16 +945,16 @@ void Simulation::updateProjectiles(float dt) {
     std::erase_if(projectiles, [](const Projectile &p) { return !p.alive; });
 }
 void Simulation::step(const Input &input, float dt) {
-    if (rewardOpen || shopOpen || finished || dead)
+    if (rewardOpen || shopOpen || letterOpen || finished || dead)
         return;
     stats.duration += dt;
     for (auto &burst : particleBursts) burst.age += dt;
     std::erase_if(particleBursts, [](const auto &burst) { return burst.age >= 3; });
-    if (boss() || (arena.theme == MissionTheme::Canyon && room == FinalRoom && !roomClear))
+    if (boss() || (arena.theme == MissionTheme::Canyon && room == finalRoom() && !roomClear))
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);
     updatePlayer(input, dt);
-    if (shopOpen)
+    if (shopOpen || letterOpen)
         return;
     const int location = arena.roomAt(player.position);
     if (roomClear && location >= 0 && location != room) {

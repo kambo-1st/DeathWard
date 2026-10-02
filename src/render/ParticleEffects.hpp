@@ -60,6 +60,7 @@ class ParticleEffects {
     int emissionLocation_ = -1;
     double time_ = 0;
     uint64_t dustSeed_ = 0;
+    int dustRoomCount_ = 0;
     bool dustReady_ = false;
     std::vector<Vector3> dustAnchors_, townDustAnchors_;
     void append(size_t emitter, const ParticleSample &sample, Vector3 position, float scale,

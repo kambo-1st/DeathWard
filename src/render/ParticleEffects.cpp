@@ -274,7 +274,8 @@ void ParticleEffects::prepareMission(const Simulation &run, const Camera3D &came
         }
     }
     if (run.arena.theme == MissionTheme::Canyon && run.arena.canyon) {
-        if (!dustReady_ || dustSeed_ != run.arena.visualSeed) {
+        if (!dustReady_ || dustSeed_ != run.arena.visualSeed || dustRoomCount_ != run.arena.roomCount()) {
+            dustRoomCount_ = run.arena.roomCount();
             dustSeed_ = run.arena.visualSeed; dustReady_ = true; dustAnchors_.clear();
             Random rng(dustSeed_ ^ 0xd057cafeULL);
             for (const auto &room : run.arena.rooms)

@@ -1,12 +1,20 @@
 # Animation for objects without skeletons
 
-The shared prop runtime and train milestone are implemented. Object transforms animate without skeletons; meshes and textures remain shared and unchanged. Current controls are in the [editor guide](town_editor.md#animating-props).
+The shared prop runtime, trains and fort flag cloth are implemented. Rigid object transforms animate without skeletons; their meshes and textures remain shared and unchanged. Flags use deformable runtime copies of the original fabric geometry. Current controls are in the [editor guide](town_editor.md#animating-props).
 
 ## Runtime
 
 `ObjectAnimationSystem` advances on a fixed simulation step and outputs current transforms and bounds. Authored matrices remain separate from runtime poses, including imported reflection and shear. Rendering, culling, picking, transparency and shadows consume the same poses. Animated parts are excluded from the cached static shadow pass and drawn into the dynamic pass. Pause freezes motion, missions retain hub motion state, and switching hubs resets that hub's motion. Editor preview has its own clock.
 
 Spin and Sway rotate around a local axis and pivot. The Tumbleweed preset combines seeded wind, ground following, clearance checks, rolling proportional to actual travel and a small bounce. Black Creek's two original tumbleweeds use independent phases and do not block walking.
+
+## Fort flag cloth
+
+`FlagSurface` subdivides the imported fabric triangles at runtime, interpolating the existing UVs and colors. Each cloth instance owns its moving mesh; the original mesh library, atlas, poles and saved scene remain unchanged. Fabric recognition uses the imported flag label and thin, wide bounds to exclude the pole. Both current forts have two fabric instances.
+
+`FlagPose` integrates unit tangents across horizontal ribbons, preserving their length while adding gravity sag, gusts and traveling folds. The attachment strip stays fixed. Local wind derives from the same world direction as the blowing sand; storm intensity strengthens flutter without jumping wave phase. Normals and bounds follow the deformation. This is a procedural cloth approximation, without self-collision, tearing or collision against nearby scenery.
+
+Time and stable instance IDs determine each pose. Gameplay pause, editor Play/Pause/Reset and cinematic seeking use their respective clocks. Only cloth enters the moving shadow pass; poles remain eligible for cached shadows. Color, shadow, picking and player-occlusion passes all use the same deformed mesh. Native and WebGL share this path; there is no scene-format change.
 
 ## Trains
 

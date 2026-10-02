@@ -945,6 +945,7 @@ void TownEditor::draw() {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
     scene_.setArtPoc(artPoc);
+    scene_.prepareFlags(preview_.time(),sandstormStrength_);
     characterModels_.artPoc = scene_.artPoc();
     characterModels_.prepare(characters_);
     animalModels_.prepare(animals_);
@@ -1297,6 +1298,13 @@ void TownEditor::drawAnimationUI() {
             field(14, "Local pivot Y", number(motion.pivot.y), 574);
             field(15, "Local pivot Z", number(motion.pivot.z), 611);
         }
+    }
+    if(selected_&&!group&&motion.kind==ObjectMotionKind::None&&
+       flagFabric(document_.assets[document_.instances[*selected_].asset])) {
+        label("WIND-DRIVEN CLOTH",1132,330,14,Accent,284);
+        label("Play preview to see the flag wave.",1132,368,13,Muted,284);
+        label("The attached edge stays fixed.",1132,400,13,Muted,284);
+        label("Sandstorms strengthen the gusts.",1132,432,13,Muted,284);
     }
     if (button(previewPlaying_ ? "Pause preview" : "Play preview", {1132, 683, 137, 32}, previewPlaying_)) {
         const bool play = !previewPlaying_;

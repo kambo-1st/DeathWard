@@ -66,7 +66,9 @@ enum class Action {
     ToggleSandstorm,
     QuestAction,
     QuestNext,
-    QuestCancel
+    QuestCancel,
+    ReadLetter,
+    CloseLetter
 };
 class Game {
   public:
@@ -89,6 +91,8 @@ class Game {
     bool questLastLine() const { return questLine_+1>=questDialogue_.size(); }
     bool walkingToQuest() const { return walkingToQuest_; }
     bool sleeping() const { return sleepTime_>=0; }
+    bool readingLetter = false;
+    bool letterVisible() const { return readingLetter||(run&&run->letterOpen); }
     float sleepFade() const;
     bool reloadTownObjects();
     HubKind activeHub = HubKind::BlackCreek;

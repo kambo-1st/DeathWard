@@ -196,7 +196,7 @@ struct ShopOffer {
 class Simulation {
   public:
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
-               MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true);
+               MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false);
     Player player;
     Arena arena;
     Stats stats;
@@ -216,7 +216,7 @@ class Simulation {
     uint64_t audioEpoch = 0;
     std::vector<ItemId> items;
     std::array<ItemId, 2> offers{};
-    std::array<RoomProgress, RoomCount> rooms{};
+    std::vector<RoomProgress> rooms;
     int keys = 0, powerUpsTaken = 0;
     int dynamite = StartingDynamite;
     float dynamiteCooldown = 0;
@@ -225,7 +225,11 @@ class Simulation {
     bool godMode = false, rewardOpen = false, roomClear = false, finished = false, dead = false;
     bool rescued = false, altarDestroyed = false, bossKilled = false, checkpointNeeded = false;
     bool followup = false, debugScenario = false;
-    bool missingDaughterSearch = false;
+    bool surveyTutorial = false, surveyRecovered = false, letterOpen = false;
+    int finalRoom() const { return arena.roomCount()-1; }
+    Vector3 surveyPosition() const { return arena.rooms.back().objective; }
+    bool canReturn() const { return room == finalRoom() && roomClear && (!surveyTutorial || surveyRecovered); }
+    std::string tutorialHint() const;
     int room = 0;
     float messageTime = 0;
     std::string message;

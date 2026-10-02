@@ -49,7 +49,7 @@ void Game::nextQuestLine() {
     if(!questLastLine()) {++questLine_;return;}
     if(conversationStage_==ArrivalStage::Tent) {
         sleepTime_=0;town.stop();
-    } else if(conversationStage_>=ArrivalStage::Trail) {
+    } else if(conversationStage_==ArrivalStage::Trail||conversationStage_==ArrivalStage::Searching) {
         launch();
         if(!run)return;
     } else ArrivalQuest::advance(campaign,conversationStage_);

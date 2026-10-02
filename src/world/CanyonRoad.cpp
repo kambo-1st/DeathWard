@@ -63,7 +63,7 @@ void planCanyonRoad(Arena &arena) {
         return field.riverKind != CanyonRiverKind::Interior ||
                std::find(field.riverRooms.begin(), field.riverRooms.end(), room) == field.riverRooms.end();
     };
-    for (int middle = 0; middle < RoomCount; ++middle) {
+    for (int middle = 0; middle < arena.roomCount(); ++middle) {
         const auto &room = arena.rooms[size_t(middle)];
         if (!eligible(middle))
             continue;

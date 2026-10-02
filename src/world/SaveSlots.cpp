@@ -24,8 +24,10 @@ SaveSlot SaveSlots::inspect(size_t slot) const {
         case ArrivalStage::Tent: result.chapter = "Shelter for the night"; result.detail = "Find your tent in the camp"; break;
         case ArrivalStage::MorningConductor: result.chapter = "Still stranded"; result.detail = "Ask about the morning departure"; break;
         case ArrivalStage::Commander: result.chapter = "Something is wrong"; result.detail = "Speak to the fort commander"; break;
-        case ArrivalStage::Trail: result.chapter = "Before first light"; result.detail = "Follow her trail into the badlands"; break;
-        case ArrivalStage::Searching: result.chapter = "Before first light"; result.detail = "Continue the search"; break;
+        case ArrivalStage::Trail: result.chapter = "The lost survey"; result.detail = "Recover Bell's records"; break;
+        case ArrivalStage::Searching: result.chapter = "The lost survey"; result.detail = "Retry the recovery trail"; break;
+        case ArrivalStage::Report: result.chapter = "The recovered papers"; result.detail = "Report to the commander"; break;
+        case ArrivalStage::Complete: result.chapter = "Questions at Fort Mercy"; result.detail = "Survey tutorial completed"; break;
         }
         if (result.interrupted) result.detail = "Interrupted expedition: return to the fort";
     } catch (const std::exception &e) {

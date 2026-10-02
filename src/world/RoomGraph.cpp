@@ -2,9 +2,23 @@
 #include <queue>
 
 namespace dw {
-RoomGraph generateRoomGraph(uint64_t seed) {
+RoomGraph generateRoomGraph(uint64_t seed, bool tutorial) {
     Random rng(seed ^ 0x544f504f4c4f4759ULL);
     RoomGraph graph;
+    if (tutorial) {
+        // One short floor: a seeded, non-crossing trail with no locks or branches.
+        graph.cells.resize(5);graph.powerRooms=0;
+        std::set<FloorCell> occupied{{0,0}};
+        const std::array<FloorCell,3> steps{{{0,-1},{1,0},{-1,0}}};
+        for (int i=1;i<5;++i) {
+            std::vector<FloorCell> options;
+            const auto [x,z]=graph.cells[size_t(i-1)];
+            for (auto [dx,dz]:steps)if(!occupied.contains({x+dx,z+dz}))options.push_back({x+dx,z+dz});
+            const auto cell=options[rng.bounded(uint32_t(options.size()))];
+            graph.cells[size_t(i)]=cell;occupied.insert(cell);graph.links.push_back({i-1,i});
+        }
+        return graph;
+    }
     graph.powerRooms = 1 + int(rng.bounded(2));
     const int ordinary = RoomCount - graph.powerRooms - 1;
     const std::array<FloorCell, 4> directions{{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}};

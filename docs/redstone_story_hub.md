@@ -1,61 +1,82 @@
-# Redstone: the stranded-train story hub
+# Fort Mercy: the stranded-train story hub
 
-Status: the first physical hub milestone is implemented. The restored canyon's
-scale, fort and original rail route are preserved. Added spaces include the
-stranded-train arrival, buried outgoing line, railroad supplies, merchant wagon,
-cookfires, witness shelters, holding yard, evidence table and abandoned wagon.
-Fifteen provisional residents use the existing cowgirl and bandit models, with
-editable positions and routes. The arrival quest prototype below adds the first
-conversations, an overnight rest and a missing-daughter search departure.
-Testimony expeditions, evidence systems and the final event remain planned.
+The current story replaces the earlier wife/spiritualist/abandoned-baby outline.
+The physical hub keeps its existing Redstone asset directory, map, scene IDs and
+`--hub redstone` / `?hub=redstone` launch options. Its displayed story name is
+**Fort Mercy**. No map placements or user-authored scenes are rewritten.
+
+Implemented: train opening, arrival conversations, overnight rest, the single-floor
+survey tutorial, Eleanor's readable letter, persistent recovery and the commander's
+return conversation. The four testimony expeditions and final departure are planned;
+the tutorial does not pretend to implement them.
 
 ## Arrival quest prototype
 
-The playable train opening hands off to this flow automatically. Direct travel
-to Redstone or `--hub redstone` starts/resumes the same saved quest.
+1. **Sunset:** ask the conductor about departure. He expects the next morning if
+   the wind drops and directs the player to the passenger tent.
+2. **Rest:** sleep in the tent; morning sunlight replaces the sunset.
+3. **Morning:** the line is still closed. The conductor points to the commander.
+4. **Commission:** recover Silas Bell's missing survey records to help the railroad
+   inspect the route ahead. Eleanor is Bell's daughter and is already back at the
+   fort. This is not a search for the commander's daughter.
+5. **The Lost Survey:** one generated canyon floor with five connected rooms: a
+   quiet entrance, two basic enemies, a quiet bend, three basic enemies, and the
+   peaceful survey camp. Room sizes, bends, obstacles and terrain follow the seed.
+   The normal canyon creatures are retained for this tutorial; their story role
+   remains a separate design question. There are no locks, shops or boss encounters.
+6. **Documents:** click the leather case, or approach and choose Recover records.
+   It contains the survey sheets and an undated letter signed Eleanor. Reading
+   pauses gameplay. Close the letter and use the return lantern; there is no next
+   floor. Clearing enemies or using a victory cheat does not recover documents.
+7. **Report:** return to the commander, who accepts the records and distinguishes
+   Eleanor's written claim from an established explanation of Bell's death. He
+   mentions the detained guide Caleb Rourke. Completing this conversation closes
+   the tutorial; testimony selection is not yet implemented. The letter remains
+   readable from the quest panel.
 
-1. **Sunset — conductor:** ask when the train will leave. He expects the next
-   morning if the wind drops, and directs the player to a spare passenger tent.
-2. **Passenger tent:** approach the existing settler tent, confirm sleeping,
-   fade through the night and wake with morning sunlight and changed shadows.
-3. **Morning — conductor:** he still has no departure time. The commander's
-   unusual behavior leads the player to the fort.
-4. **Commander:** his daughter left alone sometime in the night or before dawn.
-   The gate watch points to the badlands. The player agrees to look for her.
-5. **Badlands trail:** approach the trail marker and confirm departure into
-   **Before First Light**, a canyon generated from the current seed.
+The letter asks why the northern cutting differs from the route Bell showed
+Mercer and objects to Bell calling Eleanor's questions weakness. This is a new
+introductory clue, not proof of corruption, guilt or the sequence at the creek.
 
-Gold action markers remain visible through scenery; an arrow points toward a
-target outside the view. Click the marker, its caption, the objective card's
-action, or **Current objective** to walk to the target. Dialogue opens only on
-arrival at a clear approach. WASD or another ground click cancels the approach.
-Enter/Space advances dialogue; Escape or **Not yet** closes it without completing
-that conversation. The screen captures movement and editor shortcuts while a
-conversation or sleep transition is active.
+Click gold markers or Current objective to walk to conversations. WASD or a new
+movement click cancels the approach. Enter/Space advances dialogue; Escape or
+Not yet leaves the conversation unfinished. During letter reading these keys
+close the letter and cannot move/fire or open the editor. Tutorial hints introduce
+walking, shooting, cover, dodging and document interaction without requiring a
+particular input method or forcing players to perform artificial checklist tasks.
 
-Progress uses `redstone.*` campaign flags and the existing atomic save/browser
-storage, with no save-format migration. Reopening preserves completed dialogue
-and the morning state. Returning from a search keeps **Continue the search**
-available. The first expedition uses the current canyon generator, enemies,
-shops, rivers, roads and combat, with a search objective replacing the unrelated
-miners/altar HUD and interactions. Neither clearing the map nor the victory
-cheat claims the daughter was found. Discovery, clues and quest resolution are
-the next slice; this prototype ends at entering the first generated expedition.
-Free missions in the other hubs retain their existing behavior.
+Quest flags remain under `redstone.*`. Old `redstone.daughter_missing` progress
+is accepted as the new survey commission, retaining completed arrival dialogue.
+Campaign format 4 adds the recovered-document bit to run summaries; formats 1–3
+remain readable. Document pickup requests an immediate checkpoint. The copied
+information survives death, retreat or interrupted-session recovery and points
+back to the commander. Without the documents, the trail remains retryable.
+Legacy pending Before First Light runs recover without mine-related consequences.
+Story returns never rescue miners, destroy the altar, change mine prosperity or
+award the unrelated boss outcome. Ordinary missions retain their own rules and
+15-room layouts.
 
-The runtime conductor reuses the textured, animated cinematic model beside the
-train. His fallback position is relative to the hub spawn. The sleeping marker
-uses `story-settler-tent-0:*`, the commander uses resident `story-commander`, and
-the departure uses the map's mission point. Moving the tent or commander in the
-town editor moves their quest targets; their approaches must remain accessible.
-The conductor and dialogue are currently authored in `src/world/ArrivalQuest.cpp`,
-not in a quest editor. Scene files and authored lighting are not rewritten;
-sunset/morning lighting is a runtime override confined to the Redstone story.
+The conductor follows `quest-conductor` if authored in the editor; otherwise he
+appears beside the train. Sleep uses `story-settler-tent-0:*`, the commander uses
+`story-commander`, and departure uses the map's mission point. Moving these in the
+editor moves their quest targets. The story cast still uses provisional models;
+legacy witness IDs and placements are retained. Their displayed names now identify
+Eleanor, Rourke, Mercer and Cole; final costumes and individual conversations remain
+future work.
 
-Use a separate `--save /tmp/deathward-quest-demo.save` for a fresh playtest without
-resetting a normal campaign. Native input and persistence tests are
-`deathward_arrival_input_tests` and `deathward_arrival_quest_tests`;
-`node web/arrival-test.cjs` covers the browser opening-to-search loop.
+Fresh playtest:
+
+```sh
+./build/deathward --hub redstone --save /tmp/deathward-survey-demo.save
+```
+
+Use `--full-experience` for the logo/save-slot/opening flow. A completed existing
+arrival save continues at its current objective. The browser uses the same logic
+and its existing persistent save slots. Native CPU verification is
+`deathward_arrival_quest_tests`; explicit graphics/input verification is
+`deathward_arrival_input_tests`, with `web/arrival-test.cjs` for the browser.
+
+## Physical hub
 
 The [placement review](redstone_placement_review.md) records the original audit
 and the accepted corrections. The kitchen and market now sit beside the road,
@@ -82,191 +103,94 @@ follow the ground; the raised rectangular road pieces are retained only as
 editor catalog assets for older saved layouts. Solid sand ground bridges the
 gap beside the Badlands sign and joins the barricade's bank to the wagon road.
 
-## Story commitments
+## Current story
 
-The player is traveling west by train to meet their wealthy family. A violent
-sandstorm buries the line ahead and strands the passengers at an old military
-fort surrounded by a sprawling temporary settlement. Soldiers, settlers,
-prospectors, railroad workers, merchants and drifters are waiting out the storm.
-There is no known reopening time.
+The protagonist travels west to meet a wealthy family known mostly through letters,
+photographs and stories from the East. Fort Mercy was supposed to be a brief water
+and coal stop. A wall of sand cuts visibility, stops western telegraph reports and
+fills railway cuttings. A maintenance crew confirms the danger; the engineer
+refuses to continue. Nobody knows whether the delay will last one night or four.
 
-Three days before the player's arrival, a party went into the badlands to survey
-a route. A wealthy railroad surveyor died. His wife was recovered alive, a notorious
-outlaw was captured nearby, and a local scout claims to have discovered the body.
-The commander is occupied with protecting the settlement and sends the player to
-investigate beyond the walls.
+The old military fort has outlived much of its original purpose. Railroad work has
+brought a temporary settlement of tents, shacks and wagons: soldiers, settlers,
+prospectors, merchants, workers and drifters. The camp must remain a functioning
+place whose ordinary pressures continue around the investigation.
 
-The murder takes place in the badlands. The hub is where people tell, defend and
-revise their accounts, interpret recovered objects, and live with the consequences.
+Three days earlier, surveyor **Silas Bell**, his daughter **Eleanor Bell**, guide
+and outlaw **Caleb Rourke**, and **Lieutenant Nathaniel Mercer** entered the badlands.
+Bell died in a dry creek. Rourke returned first and was arrested; Mercer returned
+hours later; Eleanor was found the following morning walking toward the railroad.
+**Elias Cole**, a local scout, claims to have discovered Bell's body.
 
-| Account | What its speaker claims | What the game must leave open |
+The tutorial recovers records and Eleanor's letter. It precedes the four accounts;
+it is not a fifth reconstruction or a murder-solving mission.
+
+| Account | Claimed events and presentation | Evidence and unresolved questions |
 | --- | --- | --- |
-| Outlaw | He pursued the surveyor's payroll-cache map and attacked the couple, but killed the husband in a fair gunfight. | Whether there was a fair duel, and what he omits to preserve his reputation. |
-| Wife | The outlaw fled after assaulting her. Her freed husband looked at her with disgust; she raised his revolver, lost awareness, and awoke to find him dead. | What happened during the gap, and whether she fired the fatal shot. |
-| Spiritualist, speaking for the dead man | The wife urged the outlaw to murder her husband. Abandoned by both, the husband killed himself. | The source and reliability of the account, including whether it is supernatural at all. |
-| Scout | He witnessed a frightened, clumsy fight in which the outlaw killed the surveyor almost accidentally. | Whether he witnessed all of it and whether the missing valuable object implicates him. |
-
-The scout's late account remains testimony. Neither an authoritative flashback
-nor a hidden narrator declares it the solution. Some facts can become well
-supported without establishing a complete murder sequence.
-
-As the storm weakens, crying draws people to an abandoned wagon at the camp edge.
-Someone searches for valuables. The scout objects and is accused of stealing
-from the murder scene. He eventually takes the abandoned child, saying that he
-already has children and can care for one more. That act does not settle his
-account or erase possible wrongdoing.
-
-By morning, workers uncover the tracks and the train leaves westward. The player
-departs with less certainty about the murder and a fuller understanding of the
-people. Departure must not require selecting a correct killer or completing every
-possible procedural expedition.
-
-## Shape of the hub
-
-Keep the restored canyon's overall scale. Build density and useful routes around
-the existing fort and camp instead of shrinking terrain or buildings. A sprawling
-camp should have recognizable neighborhoods and short routes between frequently
-visited people, with quieter peripheral spaces around them.
-
-The diagram shows proposed relationships, not surveyed positions or a replacement
-for the restored scene's coordinates.
-
-```mermaid
-flowchart LR
-    T[Stranded train and passenger baggage] --- W[Railroad work area and buried line]
-    T --- M[Shared camp lane: water, food, trade and gossip]
-    M --- F[Fort: commander, guarded outlaw and evidence table]
-    M --- S[Settler tents: wife and spiritualist]
-    M --- C[Scout's camp and prospectors]
-    S --- E[Quiet camp edge and abandoned wagon]
-    C --- E
-    F --- B[Guarded trail into the badlands]
-    C --- B
-```
-
-| Place | Physical treatment | Story and play function |
-| --- | --- | --- |
-| Train arrival | Parked locomotive and carriages, improvised disembarkation, baggage and passengers; no station building. | Establish the player's journey and social background. The same place becomes the departure scene. |
-| Railroad works | Workers, tools, a supply wagon and visible drifts across the outgoing line. | Explain the delay through visible work and changing reports. Rails remain buried even when a sheltered foot trail is usable. |
-| Fort courtyard | Command post, a guarded holding space and a table for recovered objects. | Commander briefings, outlaw testimony and conflicting military interpretations. |
-| Wife's shelter | A private tent or sheltered wagon with space for an unhurried conversation. | Give her a place and agency beyond being discussed publicly as evidence. |
-| Spiritualist's tent | A recognizable canvas gathering place among settlers, with ordinary belongings and nearby skeptics. | Host the claimed testimony of the dead man without certifying its source. |
-| Scout's camp | An ordinary working camp near the trail, with supplies and useful local knowledge. | Make the scout helpful and fallible before the late account and accusation. |
-| Shared camp lane | Cooking fires, water, merchant wagon, repairs and overlapping daily routes. | Let gossip cross social groups; support resupply and overheard disagreement. |
-| Abandoned wagon | A recognizable wagon at the quieter camp edge, present from the beginning. | Let the final scene occur in an already familiar place. Crying, rather than a new glowing marker, changes its significance. |
-| Badlands departure | A guarded, readable trail separate from the blocked railway. | Select a testimony and expedition, then return to familiar people and geography. |
-
-The far railway return can eventually be concealed by canyon terrain so a parked
-through-train reads naturally. Its existing animation can remain available for
-the editor and the eventual departure; the story phase should control whether it
-travels. Repeated circuits during the blockade would contradict the premise.
-
-## A settlement that changes between returns
-
-Use a stable hub layout with authored changes at story milestones:
-
-1. **Arrival:** passengers disembark; workers establish that the line is blocked;
-   shelters fill and the commander introduces the investigation.
-2. **Waiting:** everyday work continues. The player meets the witnesses and chooses
-   which account to follow. Wind is stronger in exposed lanes than near shelter.
-3. **Revisions:** evidence and conversations unlock revised accounts. Reactions
-   vary by person: belief, embarrassment, self-interest, skepticism or silence.
-4. **Storm weakening:** activity shifts toward track clearing. The crying wagon
-   draws a small crowd and leads to the accusation and the scout's decision.
-5. **Departure:** the same train prepares to leave. People and objects remain;
-   changed behavior and quieter weather carry the ending.
-
-These are narrative phases, not a real-time deadline that can expire while the
-player explores. Keep sheltered hub navigation readable even when the exposed
-badlands are dangerous. Weather, sound and activity should explain the conditions
-without covering the whole screen with opaque dust.
-
-The commander's decision needs a short practical motivation. A possible line is
-that the fort needs its soldiers guarding supplies and shelter while an outsider
-can question people without the same local loyalties. The exact exchange remains
-to be written; the player's willingness should also have a personal reason.
+| Caleb Rourke | Bell's survey conceals a search for a lost army payroll cache. Rourke demands a share, but Bell draws first. They fight a magnificent duel; Mercer flees and Eleanor vanishes. The creek is a broad arena. | Firing positions are omitted. Bell's recovered revolver has only one discharged chamber despite Rourke describing repeated fire. Reloading or later handling must remain possible explanations; this discrepancy challenges his account without proving the killer. |
+| Eleanor Bell | Bell discovers Rourke's work guiding prospectors and claim jumpers through railroad land. Rourke attacks; Mercer intervenes. Eleanor runs, returns to her wounded father, and faces his contempt. She raises his revolver and remembers nothing more. The route emphasizes flight and a cramped creek behind a homestead. | A bullet from Bell's revolver struck rock high above the body site. Tracks suggest somebody returned. These observations cannot by themselves establish who fired the fatal shot or exactly when the tracks were made. |
+| Nathaniel Mercer | He fights an unstable Rourke, orders Eleanor back, pursues the outlaw and searches until dark. The landscape is orderly and his decisions initially seem reasonable. | Earlier evidence places him near the creek later than claimed. At the railway cutting, evidence reveals Bell buying route-adjacent land through intermediaries and offering Mercer money. Mercer says he refused. Their omitted argument does not settle the murder. |
+| Elias Cole | He followed the party and watched fragments from a distance. The conflict was frightened, clumsy and intermittent: missed shots, falls, hesitation, departures and returns. He eventually found Bell dead and says he never saw the killing. Familiar places lose their heroic scale. | Bell's silver compass and its cut strap expose Cole's theft and false arrival time. His admission compromises this account too; it does not authenticate everything else he says. |
 
 ## Contract for testimony expeditions
 
-Every expedition is presented as following an account. Describe the current
-speaker and revision clearly when departing and returning. A generated scene
-must never silently become an omniscient replay of the past.
+- Every reconstruction names its source on entry and in the HUD, including
+  **Elias Cole's account**. Evidence and journals keep source and revision attached.
+- Cole's smaller, unheroic landscape is his presentation. No camera, final label,
+  achievement, narrator or hidden truth meter identifies it as the correct version.
+- The split rock, abandoned homestead, old railway cutting and dry creek remain
+  recognizable anchors. Seeds vary the playable routes between them; each account
+  changes scale, emphasis, encounters and approaches under authored constraints.
+- An expedition is a playable interpretation, not literal proof that terrain has
+  changed. The presentation must not silently introduce an objective flashback.
+- Clues are placed on reachable routes. Each important clue supports or questions
+  specific claims. Separate an observation, its provenance and its interpretation.
+- Save the seed, account, revision and evidence history needed to reproduce a trip.
+  Avoid one interchangeable encounter set with different dialogue pasted over it.
+- Combat and the current creature roster need deliberate art/story treatment before
+  the testimony journeys are authored. Existing gameplay alone does not decide it.
 
-- A testimony can change encounters, routes, evidence placement and parts of the
-  landscape. The current hub, its inhabitants and established present-day events
-  remain consistent between versions.
-- Give each account recognizable patterns: the outlaw's self-dramatized duel,
-  gaps and threats in the wife's recollection, the spiritualist's account of
-  betrayal and suicide, and the scout's frightened, disorderly struggle. These
-  are framing rules, not proof that any account is accurate.
-- Each designed evidence set should support at least one claim and challenge
-  another. Random selection may vary the journey; it should not randomly decide
-  whether a critical contradiction exists or whether the story can progress.
-- Record where an object was recovered, which expedition and testimony led to
-  it, the player's observation, and the interpretations offered by different
-  people. Finding an object and accepting someone's explanation are separate.
-- Distinguish physical objects from impressions experienced within a
-  reconstruction. A changed landscape is not automatically a present-day fact.
-- Prevent reruns from producing duplicate unique story objects or treating one
-  witness's repeated claim as several independent confirmations.
-- Persist an expedition's seed, testimony revision, starting evidence state and
-  generation version. Loading or retrying that expedition should reproduce it;
-  a newly unlocked account can deliberately produce a different version.
-- Unlock the ending through sufficient encounters with the people and their
-  contradictions, rather than a hidden certainty percentage or a correct-killer
-  flag. The final wagon scene remains authored, never dependent on a rare seed.
+Some facts become defensible: Bell's corruption, the confrontation, Mercer's
+knowledge, Eleanor's fear and anger, multiple shots, departures and returns, and
+Bell's death. They never combine into a certified complete sequence or a compulsory
+culprit selection. Cole's account receives the same scrutiny as the others.
 
-The precise boundary between physical exploration and subjective reconstruction
-needs to be established in the first playable expedition. The player's notebook
-and return conversations should make that distinction understandable.
+## Compass continuity — still to author
 
-## Fit with the current game
+The supplied outline has the player discover the compass, later shows it on
+Cole's belt, and finally leaves its disappearance unexplained. Preserve that
+intent, but make custody explicit when implementing the scenes. Options are to
+find the cut strap and confront Cole while he still has the compass, or to author
+an explicit transfer after recovery. Neither option is implemented or treated as
+an accepted story revision yet.
 
-Existing pieces include the independent Redstone scene and navigation, textured
-fort and wagon assets, train animation, campfire/steam effects, ambient character
-routes, seeded canyon/mine missions, and campaign save/history infrastructure.
+## Ending
 
-The Redstone train now stays parked. The expanded camp contains fifteen tents
-and fifteen provisional residents. The mission board stands at the badlands
-trail; existing mission objectives still concern miners, an altar and combat.
-These are foundations for development, not an implemented version of the murder
-investigation.
+The wind weakens. Crews report the drifts manageable and expect morning departure.
+Rourke maintains his duel story; Eleanor cannot resolve her memory gap; Mercer
+insists he fulfilled his duty; Cole admits theft but stands by the rest. The murder
+remains unresolved.
 
-There are also concrete extension needs:
+A settler family has lost possessions, a horse and its overturned wagon. Army,
+railroad and neighbors find reasons somebody else should help. Cole brings his own
+worn but usable wagon and begins moving the family's belongings despite a taunt
+about his conscience. The compass is no longer on his belt. The game never explains
+whether he sold it for supplies, returned it, discarded it or hid it.
 
-- `TownMotionPath` uses zero speed for the parked train, retaining its original
-  route and wheel bindings. Story-controlled departure still needs wiring.
-- The scene and editor now support cowgirl and bandit residents, with provisional
-  witness IDs and nearby role labels. Distinct final witness models and
-  conversations still need work; existing generic NPC dialogue does not provide
-  this cast.
-- Dust, lighting and audio systems are reusable. A phased sandstorm with safe
-  shelter and readable interactions needs its own authoring and performance pass.
-- Campaign flags and history exist. Structured claims, evidence provenance,
-  testimony revisions and the ending require additions, with save migration.
-- The current canyon enemy roster is Isaac-inspired. How combat belongs in this
-  story remains a design decision; reusing that roster unaltered would need an
-  intentional explanation of the game's tone.
+Morning: the line clears and the train leaves. From the carriage the protagonist
+sees Rourke under guard, Mercer outside the command building, Eleanor waiting for
+transport east and Cole helping the family harness his horse. None resembles the
+person presented in their own account. The fort returns to ordinary concerns;
+Bell's death will remain an argument after the passenger is gone. The protagonist
+leaves with many facts that no longer form a single story.
 
-Keep the other hubs and existing missions available during development. The
-story should be a distinct Redstone flow with its own progression.
+## Next implementation slices
 
-## Implementation sequence
-
-**First: the physical story hub (implemented).** Park the train, establish the buried outgoing
-line, expand the camp into the neighborhoods above, add provisional witness
-positions, reserve the final wagon, and identify the badlands exit. Preserve
-building scale and the restored canyon's footprint. Review from the normal play
-camera and by walking the important routes before adding a narrative system.
-
-**Second: one complete return loop.** Meet one witness, follow a clearly labeled
-account into one generated expedition, recover an object, return, and hear two
-different interpretations. Save/reload must retain the account and object history.
-
-**Third: conflicting accounts.** Add the other speakers, revisions, testimony
-generation rules and interleaved hub reactions. Check that each version is
-internally playable while none is silently privileged as objective truth.
-
-**Fourth: the ending.** Author the weakening storm, crying wagon, accusation,
-scout's care for the child, track clearance and departure. Test the sequence with
-different evidence histories so ambiguity survives through the final scene.
+1. First testimony: Rourke conversation, labeled expedition, one contradiction,
+   return and competing interpretations. Keep the tutorial distinct and complete.
+2. Eleanor and Mercer: authored variations around shared anchors, evidence
+   provenance, revised conversations and save migration.
+3. Cole: his explicitly attributed reconstruction, theft confrontation and the
+   unresolved compass custody detail.
+4. Ending: camp assistance, weakening storm, track clearance, train departure and
+   final views of the four witnesses. Test multiple evidence histories.

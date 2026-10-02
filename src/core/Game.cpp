@@ -47,11 +47,13 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
         if (hits(p, radius, height))
             result.objective = p;
     };
-    if (!run.rescued)
+    if (run.surveyTutorial && run.room==run.finalRoom() && run.roomClear)
+        objective(run.surveyPosition(),1.1f,1.4f);
+    if (!run.surveyTutorial && !run.rescued)
         objective(run.arena.miners, 1.7f, 2.0f);
-    if (!run.altarDestroyed)
+    if (!run.surveyTutorial && !run.altarDestroyed)
         objective(run.arena.altar, 1.0f, 2.9f);
-    if (run.room == Simulation::FinalRoom && run.roomClear)
+    if (run.canReturn())
         objective(run.arena.exit, 2.0f, 3.2f);
     if (run.arena.rooms[size_t(run.room)].kind == RoomKind::Power && !run.rooms[size_t(run.room)].rewardTaken)
         objective(run.arena.rooms[size_t(run.room)].objective, 1.2f, 2.4f);
@@ -120,7 +122,7 @@ MusicScene Game::musicScene() const {
         if (run->dead)
             return MusicScene::Defeat;
         if (!run->roomClear && run->roomThreats() > 0)
-            return run->room == Simulation::FinalRoom || run->boss() ? MusicScene::Boss : MusicScene::Combat;
+            return run->arena.rooms[size_t(run->room)].kind == RoomKind::Boss || run->boss() ? MusicScene::Boss : MusicScene::Combat;
         return run->arena.theme == MissionTheme::Canyon ? MusicScene::Canyon : MusicScene::Mine;
     }
     if (screen == Screen::Summary) {
@@ -188,13 +190,12 @@ void Game::launch(bool freeMission) {
     const bool search=!freeMission&&arrivalActive()&&ArrivalQuest::ready(campaign.data().world);
     const auto theme = search?MissionTheme::Canyon:resolveTheme(themeChoice, seed);
     auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world,
-                                                  theme, visualSettings.canyonRiver);
+                                                  theme, visualSettings.canyonRiver,search);
     candidate->tunePlayer(playerHealth, playerDamage);
-    candidate->missingDaughterSearch=search;
     campaign.begin(seed, candidate->summary().expedition);
     run = std::move(candidate);
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
-    if(search)run->announce("BEFORE FIRST LIGHT / Follow her trail beyond the fort.",6);
+    if(search)run->announce("THE LOST SURVEY / Recover Bell's records from the near camp.",6);
     walkingToQuest_=false;
     ++audioContext;
     audioCues.clear();
@@ -250,7 +251,16 @@ void Game::close() {
 }
 void Game::perform(Action action) {
     try {
+        if(letterVisible()&&action!=Action::CloseLetter&&action!=Action::Quit)return;
         switch (action) {
+        case Action::ReadLetter:
+            if((run&&run->surveyRecovered)||campaign.data().world.flags.contains("redstone.survey_recovered")) {
+                readingLetter=true;resetPointerInput();town.stop();
+            }
+            break;
+        case Action::CloseLetter:
+            readingLetter=false;if(run)run->letterOpen=false;
+            accumulator=0;resetPointerInput();break;
         case Action::QuestAction: requestQuestAction(); break;
         case Action::QuestNext: nextQuestLine(); break;
         case Action::QuestCancel:
@@ -556,7 +566,7 @@ void Game::debugInput() {
         if (IsKeyPressed(KEY_F7))
             run->startBoss();
         else
-            run->jumpDebug(shift ? run->room : (run->room + 1) % RoomCount, shift);
+            run->jumpDebug(shift ? run->room : (run->room + 1) % run->arena.roomCount(), shift);
         resetPointerInput();
         accumulator = 0;
         paused = false;
@@ -643,11 +653,12 @@ bool Game::pointerOverControls() const {
     if (x >= 1040 && x <= 1256 && y >= 2 && y <= 20)
         return true;
     if (screen == Screen::Hub)
-        return questDialogueOpen()||sleeping()||(arrivalActive()&&x>=880&&x<=1256&&y>=30&&y<=218)||
+        return questDialogueOpen()||sleeping()||(arrivalActive()&&x>=880&&x<=1256&&y>=30&&y<=257)||
                missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
                (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 646) ||
                (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
-    return (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
+    return (run&&run->surveyTutorial&&x>=964&&x<=1256&&y>=22&&y<=153)||
+           (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
 }
@@ -767,6 +778,11 @@ void Game::updateHub(float dt) {
 }
 void Game::update(float dt, const SceneryPicker &pickScenery) {
     try {
+        if(letterVisible()) {
+            resetPointerInput();checkpoint();
+            if(IsKeyPressed(KEY_ESCAPE)||IsKeyPressed(KEY_ENTER)||IsKeyPressed(KEY_SPACE))perform(Action::CloseLetter);
+            return;
+        }
         if(screen==Screen::Hub&&(questDialogueOpen()||sleeping())) {updateHub(dt);return;}
         debugInput();
         if (IsKeyPressed(KEY_K) && (screen == Screen::Hub || screen == Screen::Expedition))
@@ -967,7 +983,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             fireQueued_.reset();
             standStillQueued_ = false;
             dodgeQueued_ = interactQueued_ = false;
-            if (run->finished || run->dead || run->rewardOpen || run->shopOpen)
+            if (run->finished || run->dead || run->rewardOpen || run->shopOpen || run->letterOpen)
                 break;
         }
         checkpoint();

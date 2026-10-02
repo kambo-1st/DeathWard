@@ -416,7 +416,7 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
         const float t = std::clamp(dot(sub(p, a), delta) / std::max(.001f, dot(delta, delta)), 0.f, 1.f);
         return distanceXZ(p, add(a, mul(delta, t)));
     };
-    for (int index = 0; index < RoomCount; ++index) {
+    for (int index = 0; index < arena.roomCount(); ++index) {
         const auto &room = arena.rooms[size_t(index)];
         // A separate stream per room never consumes encounter, loot, terrain or
         // exterior-scenery randomness. Collected keys and open gates don't affect it.

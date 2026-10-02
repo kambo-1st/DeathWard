@@ -4,7 +4,7 @@ namespace dw {
 void Simulation::prepareMoney() {
     // A separate stream keeps loot from changing room layouts, groups or attacks.
     Random rng(seed_ ^ 0x4d4f4e4559475244ULL);
-    for (int index = 0; index < RoomCount; ++index) {
+    for (int index = 0; index < arena.roomCount(); ++index) {
         const auto &layout = arena.rooms[size_t(index)];
         const int maximum = std::clamp(int(layout.usableArea() / 260), 1, 4);
         const int count = index == 0 ? 1 + int(rng.bounded(2)) : int(rng.bounded(maximum + 1));

@@ -50,7 +50,7 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
     out << s.id << ' ' << s.seed << ' ' << std::quoted(s.version) << ' ' << std::quoted(s.expedition) << ' '
         << std::quoted(s.startingContext) << ' ' << int(s.reason) << ' ' << s.rescued << ' ' << s.bossKilled
         << ' ' << s.altarDestroyed << ' ' << s.interrupted << ' ' << s.moneyCollected << ' ' << s.moneySpent
-        << '\n';
+        << ' ' << s.surveyRecovered << '\n';
     writeStats(out, s.stats);
     out << s.items.size();
     for (auto id : s.items)
@@ -69,6 +69,8 @@ RunSummary readSummary(std::istream &in, int version) {
         in >> s.moneyCollected;
     if (version >= 3)
         in >> s.moneySpent;
+    if (version >= 4)
+        in >> s.surveyRecovered;
     if (s.moneyCollected > MaxMoney || s.moneySpent > MaxMoney)
         throw std::runtime_error("Invalid money totals in save");
     if (reason < 0 || reason > 3)
@@ -157,7 +159,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 3 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 4 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -199,7 +201,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 3 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 4 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);
@@ -249,6 +251,17 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
     if (s.moneyCollected > MaxMoney || s.moneySpent > MaxMoney || s.moneySpent > w.money + s.moneyCollected)
         throw std::runtime_error("Invalid expedition spending");
     w.money = std::min(MaxMoney, w.money + s.moneyCollected - s.moneySpent);
+    // Story expeditions must not mutate the unrelated mine campaign. Documents
+    // copied at a checkpoint remain known after a retreat or interrupted session.
+    if(s.expedition==SurveyExpeditionTitle||s.expedition==LegacyDaughterExpeditionTitle) {
+        if(s.expedition==SurveyExpeditionTitle&&s.surveyRecovered) {
+            w.flags.insert("redstone.survey_recovered");
+            note("Bell's survey records and Eleanor's letter are preserved. Report to the commander at Fort Mercy.");
+        } else note("The records are still missing. The recovery trail remains available.");
+        if(reason==EndReason::Victory&&s.surveyRecovered)++w.completed;
+        if(s.interrupted)note("Interrupted expedition: recovered documents use the last saved checkpoint.");
+        next.history.push_back(s);next.pending.reset();commit(std::move(next));return s;
+    }
     if (s.rescued && !w.minersRescued) {
         w.minersRescued = true;
         w.population += 6;
@@ -261,7 +274,7 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         w.law = std::min(100, w.law + 5);
         note("The Infested Mesa is cleared. Law +5; the canyon route is safer.");
     }
-    if (s.bossKilled && s.expedition != "Redstone Canyon" && s.expedition!=DaughterExpeditionTitle && !w.bossDefeated) {
+    if (s.bossKilled && s.expedition != "Redstone Canyon" && !w.bossDefeated) {
         w.bossDefeated = true;
         w.law = std::min(100, w.law + 5);
         w.npcs[0].relationship++;
@@ -275,8 +288,6 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         w.npcs[2].relationship++;
         note("The altar is broken. Black Creek sleeps more easily.");
     }
-    if(s.expedition==DaughterExpeditionTitle)
-        note("The search beyond Redstone is recorded. The daughter's whereabouts remain unknown.");
     if (reason == EndReason::Victory) {
         ++w.completed;
         if (w.bossDefeated && w.minersRescued) {
@@ -360,6 +371,7 @@ std::filesystem::path CampaignStore::defaultPath() {
     return "deathward-campaign.save";
 }
 std::string outcomeTitle(const RunSummary &s) {
+    if(s.expedition==SurveyExpeditionTitle&&s.surveyRecovered)return "THE PAPERS CAME BACK";
     if (s.reason == EndReason::Death)
         return "THE FRONTIER TOOK ITS DUE";
     if (s.reason == EndReason::Interrupted)
