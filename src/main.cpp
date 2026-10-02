@@ -289,7 +289,7 @@ int main(int argc, char **argv) {
                                  startEditor&&!intro?&editor.document():nullptr,sequenceFile))
                 throw std::runtime_error(cinematic.status);
             if(cinematicTime) cinematic.seek(*cinematicTime);
-            if(intro&&!startCinematic)cinematic.playStory(!cinematicTime.has_value());
+            if(intro&&!startCinematic)cinematic.playIntro(!cinematicTime.has_value());
             else if(smoke&&!cinematicTime) cinematic.play();
             SetWindowTitle(intro&&!startCinematic?"DeathWard | Westbound":"DeathWard | Cinematic Editor");
         }
@@ -444,6 +444,9 @@ int main(int argc, char **argv) {
             } else if (!smoke && !benchmark)
                 game.update(GetFrameTime(), pickScenery);
             const auto simulated = std::chrono::steady_clock::now();
+#ifdef __EMSCRIPTEN__
+            const bool renderedCinematicEditor = filming && cinematic.editorVisible();
+#endif
             BeginDrawing();
             dw::Action action = dw::Action::None;
             if (filming)
@@ -465,7 +468,7 @@ int main(int argc, char **argv) {
             EndDrawing();
             game.perform(action);
             if(filming&&(cinematic.storyFinished||cinematic.storyCancelled)) {
-                if(intro&&!startCinematic) {
+                if(cinematic.runtimeIntro()) {
                     const auto destination=cinematic.document().destination;
                     const auto storm=cinematic.document().destinationStorm;
                     cinematic.unload();
@@ -767,6 +770,13 @@ int main(int argc, char **argv) {
               int(cinematic.document().cast.size()),cinematic.document().line(cinematic.preview().time())?cinematic.document().line(cinematic.preview().time())->speaker.c_str():"",
               cinematic.screening(),cinematic.showingDestination(),cinematic.selectedTrack(),cinematic.selectedKey(),
               cinematic.previewTrainSpeed());
+            EM_ASM({
+                if(Module.verify) {
+                    Module.cinematic.intro=!!$0;
+                    Module.cinematic.editorVisible=!!$1;
+                    if($1)Module.cinematicEditorFrames=(Module.cinematicEditorFrames||0)+1;
+                }
+            },cinematic.runtimeIntro(),renderedCinematicEditor);
 #endif
             const auto end = std::chrono::steady_clock::now();
             if (benchmark) {

@@ -59,8 +59,13 @@ const path=require('node:path');
   assert.match(await read('/persist/slots/slot-2.save'),/journey.started/);
   assert.equal(await exists('/persist/slots/slot-3.save'),false);
   assert.equal(await exists('/persist/campaign.save'),false);
-  await capture('train');await key('Escape');
+  await capture('train');
+  const canvas=await page.locator('#canvas').boundingBox();
+  await page.mouse.move(canvas.x+1325*canvas.width/1440,canvas.y+875*canvas.height/900);
+  await page.mouse.down();await tick();await page.mouse.up();await tick();
   await wait(()=>Module.quest?.stage===1&&!Module.cinematic.active);await flush();
+  assert.equal(await page.evaluate(()=>Module.cinematicEditorFrames||0),0);
+  assert.equal(await page.evaluate(()=>Module.state.editor||Module.state.paused),false);
   assert.match(await read('/persist/slots/slot-2.save'),/redstone.arrived/);
   // Commit the first conversation through the real quest card.
   const objective=await page.evaluate(()=>({x:Module.quest.x,y:Module.quest.y}));

@@ -10,6 +10,7 @@ constexpr Color Background{17,23,26,255}, Panel{26,34,36,248}, Line{59,73,73,255
     Paper{236,226,201,255}, Muted{147,161,153,255}, Gold{224,168,86,255}, Teal{112,204,180,255};
 constexpr const char *Tracks[] = {"CAMERA", "SANDSTORM", "TRAIN", "SOUND", "ACTORS", "DIALOGUE"};
 constexpr Color TrackColors[] = {{112,204,180,255},{224,168,86,255},{147,170,223,255},{218,142,176,255},{152,186,117,255},{232,203,145,255}};
+constexpr Rectangle IntroPause{1070,858,140,34}, IntroSkip{1230,858,190,34};
 std::string decimal(float value, int places = 1) {
     std::ostringstream out; out << std::fixed << std::setprecision(places) << value; return out.str();
 }
@@ -24,9 +25,15 @@ std::filesystem::path CinematicEditor::openingDirectory() {
 }
 void CinematicEditor::playStory(bool rewind) {
     if(rewind)seek(0);
+    runtimeIntro_=false;
     screening_=cleanPreview_=true;storyFinished=storyCancelled=false;player_.play();
 }
+void CinematicEditor::playIntro(bool rewind) {
+    playStory(rewind);
+    runtimeIntro_=true;
+}
 void CinematicEditor::previewDestination() {
+    if(runtimeIntro_)return; // Runtime arrival belongs to Game, never to an editor preview.
     storyFinished=false;
     if(document_.destination.empty())return;
     const auto hub=document_.destination=="redstone"?HubKind::Redstone:document_.destination=="frontier"?HubKind::Frontier:HubKind::BlackCreek;
@@ -79,6 +86,8 @@ void CinematicEditor::unload() {
     endingScene_.unload();ending_=false;
     audio_.stop(); castModels_.unload(); scene_.unload(); post_.unload(); characterModels_.unload(); animalModels_.unload();
     active = false;
+    runtimeIntro_=screening_=cleanPreview_=false;
+    storyFinished=storyCancelled=false;
     draggingKey_=keyDragChanged_=scrubbing_=auditioning_=false;
 }
 void CinematicEditor::remember() {
@@ -298,6 +307,18 @@ void CinematicEditor::update(float dt,const AudioSettings &audio) {
     sx_=float(GetScreenWidth())/1440;sy_=float(GetScreenHeight())/900;
     audioSettings_=audio;
     if (!active||closePrompt_) return;
+    if(runtimeIntro_) {
+        // Hold the cinematic image until main completes the gameplay handoff.
+        // Editor hotkeys and timeline input must never run in the game opening.
+        if(storyFinished||storyCancelled)return;
+        const bool click=IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+        if(IsKeyPressed(KEY_ESCAPE)||(click&&CheckCollisionPointRec(mouse(),IntroSkip))) {
+            player_.pause();audio_.stop();storyCancelled=true;return;
+        }
+        if(IsKeyPressed(KEY_SPACE)||(click&&CheckCollisionPointRec(mouse(),IntroPause)))play();
+        advancePlayback(dt,audio);
+        return;
+    }
     if(ending_) {
         if(IsKeyPressed(KEY_ESCAPE)) {ending_=false;endingScene_.unload();audio_.stop();rebuild();return;}
         endingTime_+=dt;audio_.update(endingTime_,true,audio,{},audioDirectory_);return;
@@ -378,11 +399,19 @@ void CinematicEditor::update(float dt,const AudioSettings &audio) {
         seek(std::clamp((p.x-155)/1230,0.f,1.f)*document_.duration);
         if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) scrubbing_=false;
     }
+    advancePlayback(dt,audio);
+}
+void CinematicEditor::advancePlayback(float dt,const AudioSettings &audio) {
     const bool wasPlaying=player_.playing();
     player_.advance(std::min(dt,.1f));syncActors();
     if(wasPlaying&&!player_.playing()) {
         audio_.stop();
-        if(screening_) {storyFinished=true;screening_=false;cleanPreview_=false;}
+        if(screening_) {
+            storyFinished=true;screening_=false;
+            // main unloads the runtime intro after this frame has been presented.
+            // Clearing cleanPreview here exposed the editor during the hub load.
+            cleanPreview_=runtimeIntro_;
+        }
     }
     if(auditioning_) auditionTime_+=std::min(dt,.1f);
     audio_.update(auditioning_?auditionTime_:player_.time(),player_.playing()||auditioning_,audio,player_.takeSounds(),audioDirectory_);
@@ -565,7 +594,18 @@ void CinematicEditor::draw() {
     animalModels_.draw(animals_,scene_.actorShader(),scene_.shadowTexture());
     castModels_.draw(player_,scene_.actorShader(),scene_.shadowTexture());
     scene_.drawEffects(view_);scene_.draw(view_.target,true);EndMode3D();post_.end();
-    if(cleanPreview_&&!closePrompt_) { panel({0,0,1440,48},BLACK);panel({0,852,1440,48},BLACK);subtitles();return; }
+    if((cleanPreview_||runtimeIntro_)&&!closePrompt_) {
+        panel({0,0,1440,48},BLACK);panel({0,852,1440,48},BLACK);subtitles();
+        if(runtimeIntro_&&(storyFinished||storyCancelled)) {
+            label("Arriving...",24,868,15,Paper);
+        } else if(runtimeIntro_) {
+            label(player_.playing()?"Space: pause":"Paused / Space: resume",24,868,15,Muted);
+            // Hit testing runs in update, so a skip cannot also activate a game HUD button.
+            button(player_.playing()?"Pause":"Resume",IntroPause);
+            button("Skip intro",IntroSkip);
+        }
+        return;
+    }
     panel({0,0,1440,88},Background);
     label("DEATHWARD / CINEMATIC EDITOR",18,15,23,Gold);
     label(editCamera_?"FREE CAMERA / Capture shot to keep changes":"TIMELINE CAMERA",18,52,14,editCamera_?Gold:Teal);

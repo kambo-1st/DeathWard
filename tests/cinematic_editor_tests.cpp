@@ -134,6 +134,26 @@ int main() {
         check(editor.active&&!editor.showingDestination(),"closing a modified destination preview exposes the save prompt");
         click(890,464);check(editor.active&&!editor.quitRequested,"Keep editing cancels quitting from the arrival preview");
         undo();check(!editor.dirty(),"arrival preview preserves existing undo history");
+        const auto openingBytes=bytes(directory/"opening.cinematic");
+        editor.seek(7);editor.playIntro(false);
+        event(2,KEY_F11);event(2,KEY_HOME);event(2,KEY_DELETE);frame();
+        event(1,KEY_F11);event(1,KEY_HOME);event(1,KEY_DELETE);frame();
+        check(editor.runtimeIntro()&&!editor.editorVisible()&&!editor.dirty()&&editor.preview().time()>7,
+              "the game intro blocks editor display, rewind and delete shortcuts");
+        click(1140,875);const auto pausedIntro=editor.preview().time();frame();
+        check(!editor.preview().playing()&&editor.preview().time()==pausedIntro,"the intro pause button works without entering the editor");
+        SetWindowSize(1024,640);frame();
+        click(1325.f*GetScreenWidth()/1440,875.f*GetScreenHeight()/900);
+        check(editor.storyCancelled&&!editor.editorVisible()&&editor.audioVoices()==0,
+              "the resized skip button works while paused and holds a clean frame for the handoff");
+        editor.previewDestination();check(!editor.showingDestination(),"runtime intros never enter an editor destination preview");
+        SetWindowSize(1440,900);frame();
+        editor.playIntro();event(2,KEY_ESCAPE);frame();event(1,KEY_ESCAPE);frame();
+        check(editor.storyCancelled&&!editor.editorVisible(),"Escape skips the runtime opening without an editor frame");
+        editor.seek(81.9f);editor.playIntro(false);
+        for(int n=0;n<10;++n) {frame();check(!editor.editorVisible(),"natural completion never draws the editor");}
+        check(editor.storyFinished&&editor.audioVoices()==0,"natural completion queues the same clean gameplay handoff");
+        check(bytes(directory/"opening.cinematic")==openingBytes&&!editor.dirty(),"runtime controls preserve the authored sequence");
         editor.unload();
         DetachAudioMixedProcessor(meter);CloseAudioDevice();CloseWindow();
         std::filesystem::remove_all(directory);

@@ -30,8 +30,11 @@ class CinematicEditor {
     static std::filesystem::path openingDirectory();
     bool openingRequested = false, storyFinished = false, storyCancelled = false;
     void playStory(bool rewind = true);
+    void playIntro(bool rewind = true);
     void previewDestination();
     bool screening() const { return screening_; }
+    bool runtimeIntro() const { return runtimeIntro_; }
+    bool editorVisible() const { return active && !ending_ && !cleanPreview_ && !runtimeIntro_; }
     bool showingDestination() const { return ending_; }
     int selectedTrack() const { return track_; }
     int selectedKey() const { return selected_; }
@@ -66,6 +69,7 @@ class CinematicEditor {
     bool filenameFocus_ = false;
     std::string filenameText_;
     bool screening_ = false, dialogueFocus_ = false;
+    bool runtimeIntro_ = false;
     std::string dialogueText_;
     TownScene endingScene_;
     Camera3D endingCamera_{};
@@ -92,6 +96,7 @@ class CinematicEditor {
     void inspector();
     void timeline();
     void subtitles();
+    void advancePlayback(float dt, const AudioSettings &audio);
     void wrapped(const std::string &text, float x, float y, float width, int size, Color color) const;
 };
 } // namespace dw

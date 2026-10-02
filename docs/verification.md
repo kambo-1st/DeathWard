@@ -1123,3 +1123,19 @@ X11 display :0, local HTTP socket creation returned Operation not permitted, and
 Chromium was denied a socket operation by the sandbox. No rendered validation
 is claimed for this front end yet. Run the browser check with a working display
 and local server before treating visual/input behavior as verified.
+
+## Intro skip and gameplay handoff (2026-10-02)
+
+Runtime intros now have Skip intro and Pause/Resume buttons, retain Escape to
+skip, and ignore cinematic editing shortcuts. Completion holds the cinematic
+image until the playable destination loads, avoiding the editor frame previously
+presented during that load. Editor-launched story previews retain their own
+destination preview and return-to-editor behavior.
+
+Native and WASM builds pass, as do save-slot, arrival-quest and cinematic-timeline
+tests. The explicit native cinematic test now checks blocked editor shortcuts,
+resized skip hit testing, skipping while paused, Escape, unchanged sequence files
+and clean natural completion. Browser opening/full-experience checks cover the
+skip button and track whether any editor frame was displayed during runtime.
+These graphical regressions are compiled/syntax-checked but could not run here:
+GLFW cannot open X11 display :0 under the current session restrictions.

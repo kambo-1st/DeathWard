@@ -30,7 +30,7 @@ To play it as the game's opening and hand control to the player at Redstone, use
 ./build/deathward --intro
 ```
 
-Escape skips the runtime opening and arrives at the same storm-covered destination. The ordinary default start remains Black Creek. Browser equivalents are `?intro&cinematic` to edit and `?intro` to play. `--cinematic-at 69` (browser: `&cinematic-at=69`) starts at a chosen time for iteration; combine it with `--cinematic` for a paused preview.
+Click **Skip intro** at the bottom right, or press Escape, to skip the runtime opening and arrive at the same playable storm-covered destination. **Pause / Resume** and Space control playback; skipping also works while paused. Runtime playback blocks editor shortcuts, and both completion paths keep the cinematic view visible until gameplay is ready. The ordinary default start remains Black Creek. Browser equivalents are `?intro&cinematic` to edit and `?intro` to play; `?full-experience` starts with the logos and save slots. `--cinematic-at 69` (browser: `&cinematic-at=69`) starts at a chosen time for iteration; combine it with `--cinematic` for a paused preview.
 
 Dialogue is subtitled, with train, wind and braking audio. Spoken voice recordings and lip-sync are not included. Characters reuse the retained rigs and source Western textures, with procedural sitting and speaking gestures.
 

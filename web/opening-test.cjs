@@ -1,7 +1,9 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
+const fs=require('node:fs');
 const path=require('node:path');
 (async()=>{
+ fs.mkdirSync(path.join(__dirname,'../artifacts/opening'),{recursive:true});
  const browser=await chromium.launch({headless:true,executablePath:process.env.DEATHWARD_BROWSER,args:['--no-sandbox','--enable-gpu','--use-gl=angle','--use-angle=gl','--ignore-gpu-blocklist']});
  const page=await browser.newPage({viewport:{width:1440,height:950}});
  const errors=[];page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(/ERROR:|INVALID_OPERATION|INVALID_ENUM|Invalid model|shader failed/i.test(m.text()))errors.push(m.text());});
@@ -41,6 +43,8 @@ const path=require('node:path');
   // Runtime handoff uses the same sequence; start near its end to test the actual cut.
   await launch('?intro&cinematic-at=81&verify');
   await wait(()=>!Module.cinematic.active&&Module.state.hub===2);
+  assert.equal(await page.evaluate(()=>Module.cinematicEditorFrames||0),0,'natural completion never renders the editor');
+  assert.equal(await page.evaluate(()=>Module.state.editor),false);
   assert.equal(await page.evaluate(()=>Module.state.sandstorm),true);
   assert.equal(await page.evaluate(()=>Module.state.paused),false);
   await frames();await page.screenshot({path:path.join(__dirname,'../artifacts/opening/browser-arrival.png')});
@@ -48,8 +52,26 @@ const path=require('node:path');
   await page.keyboard.down('KeyW');await frames(12);await page.keyboard.up('KeyW');await frames();
   const after=await page.evaluate(()=>({x:Module.state.x,z:Module.state.z}));
   assert.notDeepEqual(after,before,'control returns to the player after arrival');
+  await launch('?intro&verify');
+  assert.equal(await page.evaluate(()=>Module.cinematic.intro),true);
+  await key('F11');await key('Home');await key('Delete');
+  assert.equal(await page.evaluate(()=>Module.cinematic.editorVisible),false);
+  assert.equal(await page.evaluate(()=>Module.cinematic.dirty),false);
+  await click(1140,875); // Pause, then skip at a smaller canvas size.
+  assert.equal(await page.evaluate(()=>Module.cinematic.playing),false);
+  await page.setViewportSize({width:1100,height:820});await frames();
+  await page.screenshot({path:path.join(__dirname,'../artifacts/opening/browser-skip-intro.png')});
+  await click(1325,875);
+  await wait(()=>!Module.cinematic.active&&Module.state.hub===2);
+  assert.equal(await page.evaluate(()=>Module.cinematicEditorFrames||0),0,'clicking skip never renders the editor');
+  assert.equal(await page.evaluate(()=>Module.state.paused||Module.state.editor),false);
+  assert.equal(await page.evaluate(()=>Module.cinematic.voices),0);
+  await launch('?intro&verify');await key('Escape');
+  await wait(()=>!Module.cinematic.active&&Module.state.hub===2);
+  assert.equal(await page.evaluate(()=>Module.cinematicEditorFrames||0),0,'Escape never renders the editor');
+  assert.equal(await page.evaluate(()=>Module.state.paused||Module.state.editor),false);
   assert.equal(await page.evaluate(()=>Module.ctx.getError()),0);assert.deepEqual(errors,[]);
-  console.log('PASS opening browser: cast selection, dialogue editing/undo/save/reload, conductor timing, storm, Redstone cut and restored player control.');
+  console.log('PASS opening browser: editor authoring, natural arrival, resized skip button, pause, Escape skip, no editor frames and restored player control.');
  }catch(e){console.error(errors);await page.screenshot({path:path.join(__dirname,'../artifacts/opening/browser-failure.png')});throw e;}
  finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
