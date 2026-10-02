@@ -5,8 +5,57 @@ scale, fort and original rail route are preserved. Added spaces include the
 stranded-train arrival, buried outgoing line, railroad supplies, merchant wagon,
 cookfires, witness shelters, holding yard, evidence table and abandoned wagon.
 Fifteen provisional residents use the existing cowgirl and bandit models, with
-editable positions and routes. Dialogue, testimony expeditions, evidence systems,
-storm phases and the final event remain planned.
+editable positions and routes. The arrival quest prototype below adds the first
+conversations, an overnight rest and a missing-daughter search departure.
+Testimony expeditions, evidence systems and the final event remain planned.
+
+## Arrival quest prototype
+
+The playable train opening hands off to this flow automatically. Direct travel
+to Redstone or `--hub redstone` starts/resumes the same saved quest.
+
+1. **Sunset — conductor:** ask when the train will leave. He expects the next
+   morning if the wind drops, and directs the player to a spare passenger tent.
+2. **Passenger tent:** approach the existing settler tent, confirm sleeping,
+   fade through the night and wake with morning sunlight and changed shadows.
+3. **Morning — conductor:** he still has no departure time. The commander's
+   unusual behavior leads the player to the fort.
+4. **Commander:** his daughter left alone sometime in the night or before dawn.
+   The gate watch points to the badlands. The player agrees to look for her.
+5. **Badlands trail:** approach the trail marker and confirm departure into
+   **Before First Light**, a canyon generated from the current seed.
+
+Gold action markers remain visible through scenery; an arrow points toward a
+target outside the view. Click the marker, its caption, the objective card's
+action, or **Current objective** to walk to the target. Dialogue opens only on
+arrival at a clear approach. WASD or another ground click cancels the approach.
+Enter/Space advances dialogue; Escape or **Not yet** closes it without completing
+that conversation. The screen captures movement and editor shortcuts while a
+conversation or sleep transition is active.
+
+Progress uses `redstone.*` campaign flags and the existing atomic save/browser
+storage, with no save-format migration. Reopening preserves completed dialogue
+and the morning state. Returning from a search keeps **Continue the search**
+available. The first expedition uses the current canyon generator, enemies,
+shops, rivers, roads and combat, with a search objective replacing the unrelated
+miners/altar HUD and interactions. Neither clearing the map nor the victory
+cheat claims the daughter was found. Discovery, clues and quest resolution are
+the next slice; this prototype ends at entering the first generated expedition.
+Free missions in the other hubs retain their existing behavior.
+
+The runtime conductor reuses the textured, animated cinematic model beside the
+train. His fallback position is relative to the hub spawn. The sleeping marker
+uses `story-settler-tent-0:*`, the commander uses resident `story-commander`, and
+the departure uses the map's mission point. Moving the tent or commander in the
+town editor moves their quest targets; their approaches must remain accessible.
+The conductor and dialogue are currently authored in `src/world/ArrivalQuest.cpp`,
+not in a quest editor. Scene files and authored lighting are not rewritten;
+sunset/morning lighting is a runtime override confined to the Redstone story.
+
+Use a separate `--save /tmp/deathward-quest-demo.save` for a fresh playtest without
+resetting a normal campaign. Native input and persistence tests are
+`deathward_arrival_input_tests` and `deathward_arrival_quest_tests`;
+`node web/arrival-test.cjs` covers the browser opening-to-search loop.
 
 The [placement review](redstone_placement_review.md) records the original audit
 and the accepted corrections. The kitchen and market now sit beside the road,

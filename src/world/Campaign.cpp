@@ -261,7 +261,7 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         w.law = std::min(100, w.law + 5);
         note("The Infested Mesa is cleared. Law +5; the canyon route is safer.");
     }
-    if (s.bossKilled && s.expedition != "Redstone Canyon" && !w.bossDefeated) {
+    if (s.bossKilled && s.expedition != "Redstone Canyon" && s.expedition!=DaughterExpeditionTitle && !w.bossDefeated) {
         w.bossDefeated = true;
         w.law = std::min(100, w.law + 5);
         w.npcs[0].relationship++;
@@ -275,6 +275,8 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
         w.npcs[2].relationship++;
         note("The altar is broken. Black Creek sleeps more easily.");
     }
+    if(s.expedition==DaughterExpeditionTitle)
+        note("The search beyond Redstone is recorded. The daughter's whereabouts remain unknown.");
     if (reason == EndReason::Victory) {
         ++w.completed;
         if (w.bossDefeated && w.minersRescued) {

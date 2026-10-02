@@ -1076,6 +1076,25 @@ Native comparisons are `artifacts/road-preview-before.png` and
 `artifacts/road-preview-after.png`, plus the overhead road material probes in
 `artifacts/road-surface-before.png` and `artifacts/road-surface-after.png`.
 
+## Redstone arrival quest
+
+```sh
+cmake --build build --target deathward_arrival_quest_tests deathward_arrival_input_tests -j4
+./build/deathward_arrival_quest_tests
+./build/deathward_arrival_input_tests
+node web/arrival-test.cjs
+```
+
+The core check covers ordered progression, saved flags, actual navigation from
+train to tent to commander to trail, scene-relative anchors, and isolation from
+unrelated expedition rewards. The native input check walks those routes by
+clicking marker captions, cancels/reopens conversations, checks modal input,
+sleeps, enters a generated search and returns. The browser check begins at the
+cinematic handoff and also verifies IndexedDB reload and untouched scene files.
+The browser server defaults to port 8091; use `DEATHWARD_URL` and
+`DEATHWARD_BROWSER` to select another URL or Chromium executable. Captures and
+logs are in `artifacts/quest/`.
+
 ## Remaining playtest work
 
 - Human validation of combat feel, readability under extreme combinations, and the 5–10 minute expedition target. Automated shortcuts prove the loop, not whether its pacing is enjoyable.
@@ -1084,3 +1103,23 @@ Native comparisons are `artifacts/road-preview-before.png` and
 - Saves currently assume one game process per save path. Use separate `--save` paths for simultaneous sessions.
 
 Screenshots and raw rendering logs are local artifacts under `artifacts/` and are excluded from version control. Gameplay tests use temporary directories and do not modify the player's normal campaign.
+
+
+## Full-experience front end (2026-10-02)
+
+`--full-experience` / `?full-experience` adds the studio and title sequence,
+three independent save slots, audio/visual settings and exit before constructing
+Game. Native Release and Emscripten builds pass. `save_slots`, `arrival_quest`,
+`cinematic_timeline` and `core_contracts` pass. Slot tests cover read-only browsing,
+new-slot persistence before the opening, story checkpoint resume, independent
+progress, untouched legacy saves, pending expeditions, corrupt saves and an
+unusable destination. CLI rejects editor/scripted/single-save conflicts.
+
+`web/full-experience-test.cjs` exercises the real UI, settings cancellation and
+persistence, resizing, train-to-quest handoff, browser reload, independent slots,
+corruption and exit. Its JavaScript syntax check passes, but live execution and
+visual review were blocked in this session: the native launch could not open
+X11 display :0, local HTTP socket creation returned Operation not permitted, and
+Chromium was denied a socket operation by the sandbox. No rendered validation
+is claimed for this front end yet. Run the browser check with a working display
+and local server before treating visual/input behavior as verified.

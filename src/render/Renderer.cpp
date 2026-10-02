@@ -490,7 +490,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             const auto p = room.objective;
             DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
         }
-        if (distance(run.player.position, run.arena.miners) < 60) {
+        if (!run.missingDaughterSearch && distance(run.player.position, run.arena.miners) < 60) {
             Vector3 p = run.arena.miners;
             for (int i = 0; i < 6; ++i) {
                 Vector3 person = add(p, {float(i % 3) * 0.75f - 0.75f, 0, float(i / 3) * 0.7f});
@@ -503,7 +503,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 for (int i = 0; i < 5; ++i)
                     DrawCube({p.x - 1.6f + float(i) * 0.8f, 1.0f, p.z + 1.2f}, 0.07f, 2, 0.07f, Muted);
         }
-        if (distance(run.player.position, run.arena.altar) < 60) {
+        if (!run.missingDaughterSearch && distance(run.player.position, run.arena.altar) < 60) {
             Vector3 p = run.arena.altar;
             DrawCube({p.x, 0.5f, p.z}, 1.8f, 1, 1.4f, Color{63, 51, 51, 255});
             if (!run.altarDestroyed) {
@@ -664,11 +664,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawSphereWires({p.x, 1.3f, p.z}, .7f, 6, 8, Gold);
         }
     }
-    if (distance(run.player.position, run.arena.miners) < 60) {
+    if (!run.missingDaughterSearch && distance(run.player.position, run.arena.miners) < 60) {
         const auto p = run.arena.miners;
         DrawCircle3D({p.x, .1f, p.z}, 2.3f, {1, 0, 0}, 90, run.rescued ? Muted : Teal);
     }
-    if (!run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
+    if (!run.missingDaughterSearch && !run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
         const auto p = run.arena.altar;
         DrawSphere({p.x, 1.1f, p.z}, .35f, Teal);
     }
@@ -833,6 +833,7 @@ Action Renderer::hub(const Game &game) {
         loadedHub_ = game.activeHub;
     }
     townScene_.setArtPoc(artPoc);
+    townScene_.setDaylight(game.arrivalActive()?(ArrivalQuest::morning(game.campaign.data().world)?2:1):0);
     playerModel_.artPoc = characterModels_.artPoc = townScene_.artPoc();
     const auto &town = game.town;
     townScene_.applyAnimation(game.townObjects);
@@ -840,19 +841,25 @@ Action Renderer::hub(const Game &game) {
     playerModel_.update(town.player, town.time, &town);
     animalModels_.prepare(game.animals);
     characterModels_.prepare(game.characters);
+    characterModels_.prepare(game.questCharacters);
     townScene_.setPlayerOcclusion(game.camera, town.player.position);
     townScene_.prepareLighting(game.camera, [&](Shader depth) {
         playerModel_.draw(town.player, false, depth);
         animalModels_.draw(game.animals, depth);
         characterModels_.draw(game.characters, depth);
+        characterModels_.draw(game.questCharacters, depth);
     });
     townScene_.prepareSandstorm(game.camera, sandstormStrength_, [&](Vector3 p) { return town.height(p); });
-    postProcess_.begin(WorldSky, distance(game.camera.position, game.camera.target), townScene_.artPoc());
+    postProcess_.begin(game.arrivalActive()&&!ArrivalQuest::morning(world)?Color{158,127,115,255}:WorldSky,
+                       distance(game.camera.position, game.camera.target), townScene_.artPoc());
     BeginMode3D(game.camera);
     postProcess_.sandstorm(sandstormStrength_, float(town.time));
     townScene_.draw(town.player.position);
     animalModels_.draw(game.animals, townScene_.actorShader(), townScene_.shadowTexture());
     characterModels_.draw(game.characters, townScene_.actorShader(), townScene_.shadowTexture());
+    characterModels_.draw(game.questCharacters, townScene_.actorShader(), townScene_.shadowTexture());
+    if(const auto marker=game.questMarker();marker&&!game.questDialogueOpen())
+        DrawCircle3D(add(marker->approach,{0,.08f,0}),.85f,{1,0,0},90,Gold);
     const auto board = town.mission;
     DrawCylinder({board.x, board.y, board.z}, .09f, .12f, 1.8f, 6, Color{62, 42, 30, 255});
     DrawCube({board.x, board.y + 1.6f, board.z}, 1.5f, .95f, .12f, Color{91, 62, 39, 255});
@@ -904,13 +911,19 @@ Action Renderer::hub(const Game &game) {
     text(hubName(game.activeHub), 42, 38, 28, Paper);
     text((game.activeHub == HubKind::Redstone ? "RAIL LINE CLOSED / MONEY " : "HOME / MONEY ") +
              number(world.money), 43, 73, 12, Gold);
-    text("PEOPLE " + std::to_string(world.population) + "   PROSPERITY " + std::to_string(world.prosperity) +
+    text(game.arrivalActive()?(ArrivalQuest::morning(world)?"NEXT MORNING / THE LINE IS STILL CLOSED":"DAY ONE / THE SUN IS SETTING"):
+         "PEOPLE " + std::to_string(world.population) + "   PROSPERITY " + std::to_string(world.prosperity) +
              "   LAW " + std::to_string(world.law),
          43, 98, 11, Muted);
+    if(game.arrivalActive()&&!game.paused&&!game.missionMenu) {
+        const auto action=questUI(game);
+        if(action!=Action::None||game.questDialogueOpen()||game.sleeping())return action;
+    }
     if (!game.missionMenu && !game.paused) {
         panel(24, 700, 676, 76, Panel);
-        if (button(game.walkingToMission ? "WALKING TO MISSIONS" : "MISSIONS", 38, 712, 255, 44, true))
-            return Action::Missions;
+        if (button(game.arrivalActive()?(game.walkingToQuest()?"WALKING TO OBJECTIVE":"CURRENT OBJECTIVE"):
+                   game.walkingToMission ? "WALKING TO MISSIONS" : "MISSIONS", 38, 712, 255, 44, true))
+            return game.arrivalActive()?Action::QuestAction:Action::Missions;
         if (button("RUN HISTORY", 305, 712, 179, 44))
             return Action::History;
         if (button("PAUSE", 496, 712, 188, 44))
@@ -993,6 +1006,53 @@ Action Renderer::hub(const Game &game) {
     }
     return Action::None;
 }
+Action Renderer::questUI(const Game &game) {
+    if(game.sleeping()) {
+        const auto alpha=static_cast<unsigned char>(255*game.sleepFade());
+        panel(0,0,1280,800,{8,12,16,alpha});
+        text("NEXT MORNING",475,348,34,{236,226,201,alpha});
+        text("The storm has not finished with Redstone.",425,404,17,{224,168,86,alpha});
+        return Action::None;
+    }
+    if(const auto *line=game.questLine()) {
+        panel(0,0,1280,800,{8,12,16,110});
+        panel(200,440,880,318,Panel);
+        text(line->speaker,226,462,22,Gold);
+        wrap(line->text,226,506,824,22,Paper);
+        const bool final=game.questLastLine();
+        const auto stage=game.arrivalStage();
+        const std::string label=!final?"CONTINUE":stage==ArrivalStage::Tent?"SLEEP UNTIL MORNING":
+            stage>=ArrivalStage::Trail?"LEAVE TO SEARCH":"CONTINUE";
+        if(button(label,566,686,488,46,true))return Action::QuestNext;
+        if(button("NOT YET",226,686,320,46))return Action::QuestCancel;
+        return Action::None;
+    }
+    if(const auto marker=game.questMarker()) {
+        panel(880,30,376,188,Panel);
+        text(marker->title,898,46,17,Gold);
+        wrap(marker->instruction,898,79,340,18,Paper);
+        if(button(game.walkingToQuest()?"WALKING...":marker->action,898,166,340,36,true))return Action::QuestAction;
+        const auto p=game.questMarkerScreen();
+        const Vector2 top{p.x*sx_,(p.y-25)*sy_}, left{(p.x-18)*sx_,p.y*sy_},
+                      right{(p.x+18)*sx_,p.y*sy_}, bottom{p.x*sx_,(p.y+25)*sy_};
+        DrawTriangle(top,left,bottom,Gold);DrawTriangle(top,bottom,right,Gold);
+        const auto projected=GetWorldToScreen(add(marker->position,{0,3.4f,0}),game.camera);
+        if(std::abs(projected.x/sx_-p.x)>.5f||std::abs(projected.y/sy_-p.y)>.5f) {
+            const float dx=projected.x/sx_-p.x,dy=projected.y/sy_-p.y,length=std::max(.001f,std::hypot(dx,dy));
+            const Vector2 direction{dx/length,dy/length};
+            const Vector2 side{-direction.y,direction.x};
+            const auto vertex=[&](float along,float across){return Vector2{(p.x+direction.x*along+side.x*across)*sx_,(p.y+direction.y*along+side.y*across)*sy_};};
+            DrawTriangle(vertex(13,0),vertex(-8,-8),vertex(-8,8),Ink);
+        } else text(marker->symbol,p.x-6,p.y-12,24,Ink);
+        const int meters=int(std::round(distance(game.town.player.position,marker->approach)));
+        panel(p.x-110,p.y+27,220,29,Panel);
+        text(marker->action+" / "+std::to_string(meters)+"m",p.x-101,p.y+36,12,Paper);
+    } else {
+        panel(880,30,376,138,Panel);
+        wrap("The current quest landmark is missing from this map. Restore the passenger tent or commander in the town editor.",898,48,338,16,Gold);
+    }
+    return Action::None;
+}
 void Renderer::dungeonMap(const Game &game) {
     const auto &run = *game.run;
     panel(1040, 170, 216, 192, Panel);
@@ -1051,6 +1111,11 @@ Action Renderer::expedition(const Game &game) {
          41, 58, 25, Paper);
     text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
     panel(964, 22, 292, 131, Panel);
+    if(run.missingDaughterSearch) {
+        text("BEFORE FIRST LIGHT",982,37,15,Gold);
+        wrap("Search the badlands for the commander's daughter.",982,67,256,16,Paper);
+        text("Her whereabouts are unknown.",982,123,12,Muted);
+    } else {
     text("BRING SOMETHING BACK", 982, 37, 13, Gold);
     text(run.rescued ? "[+] Six miners safe" : "[ ] Miners / chamber 3", 982, 65, 15,
          run.rescued ? Teal : Paper);
@@ -1060,6 +1125,7 @@ Action Renderer::expedition(const Game &game) {
              ? (run.bossKilled ? "[+] Infested Mesa cleared" : "[ ] Clear the Infested Mesa")
              : (run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / locked court"),
          982, 117, 15, run.bossKilled ? Teal : Muted);
+    }
     dungeonMap(game);
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);

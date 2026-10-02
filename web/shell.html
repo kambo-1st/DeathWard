@@ -103,8 +103,9 @@
         Module.ready = true;
         status.textContent = 'The frontier is ready.';
         start.disabled = false;
-        if (query.get('hub') === 'frontier') start.textContent = 'Enter Frontier';
-        if (['redstone', 'canyon'].includes(query.get('hub'))) start.textContent = 'Enter Redstone Canyon';
+        if (query.has('full-experience')) start.textContent = 'Start DeathWard';
+        else if (query.get('hub') === 'frontier') start.textContent = 'Enter Frontier';
+        else if (['redstone', 'canyon'].includes(query.get('hub'))) start.textContent = 'Enter Redstone Canyon';
       },
       gameReady() { Module.playing = true; cover.hidden = true; canvas.focus(); },
       showEnd() {
@@ -123,6 +124,7 @@
       status.textContent = 'Entering the frontier…';
       canvas.focus();
       const args = [];
+      if (query.has('full-experience')) args.push('--full-experience');
       if (query.get('art') === 'poc') args.push('--art-poc');
       if (query.get('sandstorm') === 'on') args.push('--sandstorm');
       if (query.has('cinematic')) args.push('--cinematic');

@@ -378,14 +378,14 @@ void Simulation::interact() {
         offerReward();
         return;
     }
-    if (!rescued && distance(player.position, arena.miners) < 2.6f) {
+    if (!missingDaughterSearch && !rescued && distance(player.position, arena.miners) < 2.6f) {
         audioCues.push(AudioCueKind::Pickup, arena.miners);
         rescued = true;
         checkpointNeeded = true;
         announce("Six miners escape through the old shaft. Mary will remember.", 5);
         return;
     }
-    if (!altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
+    if (!missingDaughterSearch && !altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
         audioCues.push(AudioCueKind::Explosion, arena.altar);
         altarDestroyed = true;
         checkpointNeeded = true;
@@ -419,10 +419,10 @@ RunSummary Simulation::summary() const {
     RunSummary s;
     s.id = runId_;
     s.seed = seed_;
-    s.expedition = missionTheme(arena.theme).title;
+    s.expedition = missingDaughterSearch?DaughterExpeditionTitle:missionTheme(arena.theme).title;
     s.startingContext = CampaignStore::worldContext(startingWorld_);
-    s.rescued = rescued;
-    s.altarDestroyed = altarDestroyed;
+    s.rescued = !missingDaughterSearch&&rescued;
+    s.altarDestroyed = !missingDaughterSearch&&altarDestroyed;
     s.bossKilled = bossKilled;
     s.stats = stats;
     s.items = items;

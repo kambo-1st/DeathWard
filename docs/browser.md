@@ -167,6 +167,14 @@ and current limits.
 
 Use `?hub=redstone` to start beside the stranded train in the authored canyon fort and settler camp. Both other hubs have a direct travel button; missions return to the departure hub. Redstone has independent editor files under `/persist/redstone`. Its parked train, fifteen provisional residents, original textures, campfires and canyon audio also ship in the universal upload package.
 
-`node web/redstone-test.cjs` checks travel, mission return, train pause, editor saving and reload. The package check also starts Redstone from a nested deployment path.
+Redstone also starts/resumes the arrival quest: conductor, passenger tent, morning conductor, commander, then the first generated search. Click the gold markers or **Current objective**. The overnight transition changes the sunlight, and campaign flags persist the completed steps in this browser. The daughter's discovery is outside this prototype.
+
+`node web/arrival-test.cjs` checks the cinematic handoff, quest conversations, sleeping, saved progress, first search and return. `node web/redstone-test.cjs` checks travel, train pause, editor saving and reload. The package check also starts Redstone from a nested deployment path.
 
 Story-hub upgrades replace only known untouched shipped scene/navigation pairs, including the first story layout before the road and camp corrections. Other saved layouts keep their authored objects, routes and markers; new unused asset entries and labels append to make the expanded model catalog compatible.
+
+## Full-experience entry
+
+Use `?full-experience` at either the domain root or a subdirectory. After the browser's **Start DeathWard** gesture, the game shows Bubak Games, DeathWard and a three-slot menu with settings and exit. New slots play the train opening; saved slots continue from their story checkpoint in Redstone. The three files are `/persist/slots/slot-1.save` through `slot-3.save` in IndexedDB, separate from `/persist/campaign.save`. Audio and visual settings are shared across the slots. Exit returns to the browser's Play again screen.
+
+The focused check is `node web/full-experience-test.cjs` with `DEATHWARD_URL` pointing to the served build and `DEATHWARD_BROWSER` to a Chromium executable. It covers logos, settings apply/cancel, resizing, a new journey, quest checkpoint persistence, independent slots, an unreadable save and exit. It requires a browser/graphics-capable environment.

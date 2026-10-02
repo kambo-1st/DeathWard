@@ -6,6 +6,7 @@
 #include "world/HubWorld.hpp"
 #include "world/ObjectAnimation.hpp"
 #include "world/TownCharacters.hpp"
+#include "world/ArrivalQuest.hpp"
 #include <memory>
 
 namespace dw {
@@ -62,7 +63,10 @@ enum class Action {
     VegetationMore,
     ToggleGroundDetail,
     ToggleCanyonRiver,
-    ToggleSandstorm
+    ToggleSandstorm,
+    QuestAction,
+    QuestNext,
+    QuestCancel
 };
 class Game {
   public:
@@ -75,6 +79,17 @@ class Game {
     ObjectAnimationSystem townObjects;
     Animals animals;
     TownCharacters characters;
+    TownCharacters questCharacters;
+    ArrivalStage arrivalStage() const { return ArrivalQuest::stage(campaign.data().world); }
+    bool arrivalActive() const { return activeHub==HubKind::Redstone&&arrivalStage()!=ArrivalStage::None; }
+    std::optional<QuestMarker> questMarker() const;
+    Vector2 questMarkerScreen() const;
+    const QuestLine *questLine() const;
+    bool questDialogueOpen() const { return !questDialogue_.empty(); }
+    bool questLastLine() const { return questLine_+1>=questDialogue_.size(); }
+    bool walkingToQuest() const { return walkingToQuest_; }
+    bool sleeping() const { return sleepTime_>=0; }
+    float sleepFade() const;
     bool reloadTownObjects();
     HubKind activeHub = HubKind::BlackCreek;
     std::filesystem::path hubDirectory() const;
@@ -106,7 +121,7 @@ class Game {
     EntityId hoveredEnemy = 0;
     void update(float dt, const SceneryPicker &pickScenery = {});
     void perform(Action action);
-    void launch();
+    void launch(bool freeMission = false);
     void finish(EndReason reason);
     void close();
     const RunSummary *inspectedHistory() const;
@@ -141,5 +156,16 @@ class Game {
     void checkpoint();
     void updateHub(float dt);
     void newSeed();
+    ArrivalQuest arrival_;
+    std::vector<QuestLine> questDialogue_;
+    size_t questLine_ = 0;
+    ArrivalStage conversationStage_ = ArrivalStage::None;
+    bool walkingToQuest_ = false;
+    float sleepTime_ = -1;
+    void configureArrival(const TownDocument &document);
+    void requestQuestAction();
+    void nextQuestLine();
+    bool updateQuest(float dt);
+    bool nearQuest(const QuestMarker &marker) const;
 };
 } // namespace dw

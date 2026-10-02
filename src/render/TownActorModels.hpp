@@ -9,6 +9,10 @@ class TownActorModels {
         return modelPath("cowgirl");
     }
     static std::filesystem::path modelPath(const std::string &name) {
+        if(name=="conductor") {
+            auto source=std::filesystem::path(DEATHWARD_ASSET_DIR)/"cinematic_cast/conductor.glb";
+            return std::filesystem::exists(source)?source:std::filesystem::path(GetApplicationDirectory())/"assets/cinematic_cast/conductor.glb";
+        }
 #ifdef __EMSCRIPTEN__
         return "/assets/" + name + "/" + name + ".glb";
 #else
@@ -18,22 +22,22 @@ class TownActorModels {
             std::filesystem::path(GetApplicationDirectory()) / "assets" / relative;
 #endif
     }
-    void unload() { cowgirl_.unload(); bandit_.unload(); }
+    void unload() { cowgirl_.unload(); bandit_.unload(); conductor_.unload(); }
     void prepare(const TownCharacters &characters) {
         for (const auto &c : characters.residents()) {
-            auto &model = c.definition.model == "bandit" ? bandit_ : cowgirl_;
+            auto &model = modelFor(c.definition.model);
             if (!model.attempted() && model.load(modelPath(c.definition.model), true) &&
-                c.definition.model == "bandit") {
+                c.definition.model != "cowgirl") {
                 const auto bounds = GetModelBoundingBox(model.model());
-                banditScale_ = 2.05f / std::max(.1f, bounds.max.y - bounds.min.y);
+                (c.definition.model=="conductor"?conductorScale_:banditScale_) = 2.05f / std::max(.1f, bounds.max.y - bounds.min.y);
             }
         }
     }
     void draw(const TownCharacters &characters, Shader shader = {}, Texture2D shadow = {}) {
         prepare(characters);
         for (const auto &c : characters.residents()) {
-            auto &model = c.definition.model == "bandit" ? bandit_ : cowgirl_;
-            const float scale = c.definition.scale * (c.definition.model == "bandit" ? banditScale_ : 1);
+            auto &model = modelFor(c.definition.model);
+            const float scale = c.definition.scale * (c.definition.model == "bandit" ? banditScale_ : c.definition.model=="conductor"?conductorScale_:1);
             const auto &id = c.definition.id;
             const int costume = !artPoc                   ? 0
                                 : id == "story-scout"     ? 2
@@ -45,7 +49,8 @@ class TownActorModels {
         }
     }
   private:
-    SkinnedModel cowgirl_, bandit_;
-    float banditScale_ = 1;
+    SkinnedModel cowgirl_, bandit_, conductor_;
+    float banditScale_ = 1, conductorScale_ = 1;
+    SkinnedModel &modelFor(const std::string &name) { return name=="bandit"?bandit_:name=="conductor"?conductor_:cowgirl_; }
 };
 }

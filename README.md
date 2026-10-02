@@ -28,6 +28,20 @@ cmake --build build --parallel 4
 
 Windows is kept in scope through CMake and portable C++, but this milestone is tested on Linux. On Windows, use a C++20-capable Visual Studio toolchain with `cmake --build build --config Release`, then run `build/Release/deathward.exe`.
 
+## Full experience
+
+```sh
+./build/deathward --full-experience
+```
+
+Shows the **Bubak Games** ghost logo, the **DeathWard** title, then three save-slot cards with **Settings** and **Exit**. Click a card and **Begin Journey** or **Continue Journey**. Keyboard navigation uses Tab or arrow keys and Enter; click or press Enter to skip each logo. Settings expose master/music/effects/ambience volume, mute, vegetation density, ground detail and canyon rivers. **Apply & Back** saves; **Cancel** or Escape discards the previewed changes.
+
+A new slot starts the Westbound train opening, then arrives at Redstone in the storm and begins the conductor/tent/commander quest. Continuing returns to the last story checkpoint; an unfinished opening restarts aboard the train. Expeditions retain the existing checkpoint/result system: an interrupted expedition is resolved as interrupted on loading, rather than restoring mid-combat. The menu describes that state before continuing.
+
+Slots are independent `slots/slot-1.save` through `slot-3.save` beside the normal campaign. The existing `campaign.save` stays separate. Browsing slots performs no campaign writes, and unreadable slots are shown as unavailable without overwriting them. For an isolated playthrough, use `--full-experience --slots /path/to/folder`; this also places that playthrough's shared settings in the specified folder. The flag is separate from direct editor, cinematic, smoke-test and `--save` launches. Without it, the existing Black Creek startup remains available.
+
+In a browser use **`?full-experience`**, then click **Start DeathWard** to enable sound and enter the logo sequence. All three slots persist in that browser. The new front end uses a vector ghost emblem, a serif wordmark and an animated desert/railway backdrop; the bundled fonts and license are in [assets/ui](assets/ui).
+
 ## Run in a browser
 
 With Emscripten activated (tested with 4.0.15):
@@ -92,6 +106,8 @@ Press **F4 in town** or choose **Town Editor** in the pause screen to edit the c
 The town editor's **Cinematic Editor** button opens a separate timeline tool for camera shots and zoom, carriage interiors, timed sound, sandstorm intensity and train movement/braking. Start its train-and-storm demo with `./build/deathward --cinematic --hub redstone` (browser: `?hub=redstone&cinematic`). Sequences save separately from maps, and previewing preserves the current map-editing session. See the [cinematic editor guide](docs/cinematic_editor.md).
 
 **Westbound**, the authored opening, uses a separate sparse desert map. The seated protagonist talks with an elderly couple before a growing sandstorm stops the train; a conductor reassures them, then the scene cuts to Redstone with the storm active. Choose **Train opening → Play story** in the Cinematic Editor, or edit it directly with `./build/deathward --cinematic --intro`. `./build/deathward --intro` plays the opening and hands control to the player at Redstone. Browser: `?intro&cinematic` to edit, `?intro` to play. Actor movement and subtitles have their own editable timeline tracks.
+
+The **arrival quest prototype** continues at Redstone: ask the conductor when the train leaves, rest in the marked passenger tent, ask again the next morning, and speak to the commander about his missing daughter. Click a gold marker or **Current objective** to walk there and interact. Sleeping fades through the night and changes the sunlight. Progress saves with the campaign. The badlands marker then starts **Before First Light**, a seeded canyon search; the daughter's discovery and quest resolution are not implemented yet. Start directly with `--hub redstone` (browser: `?hub=redstone`). See [the quest flow and prototype limits](docs/redstone_story_hub.md#arrival-quest-prototype).
 
 Each mission has **15 rooms**, with junctions and loops that let you choose between routes. Combat rooms seal every doorway, including the entrance behind you. Each combat room starts with one enemy group; defeat it to reopen the doors. There are no later reinforcements; the boss has one encounter with three attack phases. Cleared rooms stay cleared when revisited, without extra rewards or healing.
 
@@ -183,7 +199,7 @@ The player uses the textured **bandit model supplied in `assets/bandit`**. Its F
 
 The generated rooms use **textured PolygonWestern scenery**: stacked crates for cover, boundary fences, railway passages and lanterns. Seeded saloons, jails, churches, stations, water towers, carts, barrels, rocks and cacti surround the playable routes. The original texture atlas and material tints are embedded in the models, with directional lighting adapted for raylib. Cover fits the existing collision boxes; buildings are exterior scenery. Keeping the same seed and theme reproduces the scenery as well as the map.
 
-**Redstone Canyon** uses irregular basins and winding trails cut into a continuous rock terrain. Outcrops replace cube cover; the visible triangles also define movement, bullet and sight collisions. The original atlas supplies brown cliff faces and pale faceted caps, with directional terrain shadows and sparse rocks/cacti. Cliffs and cover keep their full generated height. The mine keeps its existing generator. A seed and theme reproduce their own geometry and encounters; canyon enemy counts use the basin's navigable floor area. Both settings share the miners and altar objectives. Canyon completion is tracked separately from defeating the mine’s Sheriff. See [mission theming](docs/mission_themes.md) for extension points.
+**Redstone Canyon** uses irregular basins and winding trails cut into a continuous rock terrain. Outcrops replace cube cover; the visible triangles also define movement, bullet and sight collisions. The original atlas supplies brown cliff faces and pale faceted caps, with directional terrain shadows and sparse rocks/cacti. Cliffs and cover keep their full generated height. The mine keeps its existing generator. A seed and theme reproduce their own geometry and encounters; canyon enemy counts use the basin's navigable floor area. Free missions in both settings share the miners and altar objectives; the Redstone story search has its own objective. Canyon completion is tracked separately from defeating the mine’s Sheriff. See [mission theming](docs/mission_themes.md) for extension points.
 
 **Isaac Canyon is the default mission choice** and uses only the Isaac monster catalog, including its final encounter. **Western Mine** retains all fifteen original enemy types and the Hollow Sheriff. Random spawn cheats follow the selected theme; the specific-ID cheat remains available in either setting. See [the enemy review and Isaac character comparison](docs/isaac_review.md).
 

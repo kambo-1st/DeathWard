@@ -393,6 +393,13 @@ void TownScene::updateLights() {
             lights.front().color = {1.f, .94f, .81f};
             lights.front().intensity = 1.22f;
         }
+        if(daylight_==1) {
+            lights.front().direction=Vector3Normalize({-.85f,.24f,.47f});
+            lights.front().color={1.f,.66f,.40f};lights.front().intensity=1.05f;
+        } else if(daylight_==2) {
+            lights.front().direction=Vector3Normalize({.72f,.52f,-.35f});
+            lights.front().color={1.f,.92f,.79f};lights.front().intensity=1.16f;
+        }
         sunDirection_ = Vector3Normalize(lights.front().direction);
     }
     std::vector<Vector3> positions, directions, colors;
@@ -421,6 +428,12 @@ void TownScene::updateLights() {
                             SHADER_UNIFORM_FLOAT, count);
         }
     }
+}
+void TownScene::setDaylight(int phase) {
+    phase=std::clamp(phase,0,2);
+    if(phase==daylight_)return;
+    daylight_=phase;
+    if(loaded())updateLights();
 }
 void TownScene::updateEffectLights(const Camera3D &camera) {
     effects_.prepare(camera);

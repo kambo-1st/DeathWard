@@ -5,6 +5,7 @@
 #include <set>
 
 namespace dw {
+inline constexpr const char *DaughterExpeditionTitle = "Before First Light";
 enum class EndReason : int { Victory, Death, Retreat, Interrupted };
 struct Npc {
     std::string name;

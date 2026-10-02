@@ -64,6 +64,7 @@ class Renderer {
     void panel(float x, float y, float w, float h, Color color) const;
     bool button(const std::string &title, float x, float y, float w, float h, bool primary = false) const;
     Action hub(const Game &game);
+    Action questUI(const Game &game);
     Action expedition(const Game &game);
     Action summary(const Game &game, const RunSummary &summary, bool history);
     void debugPanel(const Game &game);

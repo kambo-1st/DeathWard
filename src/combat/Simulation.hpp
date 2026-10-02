@@ -225,6 +225,7 @@ class Simulation {
     bool godMode = false, rewardOpen = false, roomClear = false, finished = false, dead = false;
     bool rescued = false, altarDestroyed = false, bossKilled = false, checkpointNeeded = false;
     bool followup = false, debugScenario = false;
+    bool missingDaughterSearch = false;
     int room = 0;
     float messageTime = 0;
     std::string message;

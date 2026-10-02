@@ -20,6 +20,8 @@ hub. Redstone uses canyon ambience and music, the shared lighting/post processin
 campfire effects, automatic doors, object transparency and terrain navigation.
 Black Creek remains the default starting hub.
 
+Playable arrival now starts/resumes the [arrival quest prototype](../../docs/redstone_story_hub.md#arrival-quest-prototype): conductor, a night's rest in an existing tent, the morning delay, the commander and a first generated search for his daughter. A runtime conductor uses the cinematic model; quest markers and sunset/morning light overrides leave this authored scene unchanged.
+
 ## Composition
 
 - The original Black Creek canyon terrain, cliffs, vegetation and exact railway

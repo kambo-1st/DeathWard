@@ -1,5 +1,6 @@
 #include "audio/AudioSystem.hpp"
 #include "core/Game.hpp"
+#include "core/FrontEnd.hpp"
 #include "editor/TownEditor.hpp"
 #include "editor/CinematicEditor.hpp"
 #include "platform/Browser.hpp"
@@ -45,20 +46,26 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
-    bool startCinematic = false, intro = false;
+    bool startCinematic = false, intro = false, fullExperience = false, explicitSave = false;
     bool mute = false, explicitAudio = false, sandstorm = false;
     std::optional<bool> canyonRiver;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
     std::filesystem::path sequenceFile;
+    std::filesystem::path slotsDirectory;
     std::optional<float> cinematicTime;
     std::string screenshot, scene = "combat";
     int frames = 180;
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
-        if (arg == "--save" && i + 1 < argc)
-            save = argv[++i];
+        if (arg == "--save" && i + 1 < argc) {
+            save = argv[++i]; explicitSave = true;
+        }
+        else if (arg == "--full-experience")
+            fullExperience = true;
+        else if (arg == "--slots" && i + 1 < argc)
+            slotsDirectory = argv[++i];
         else if (arg == "--art-poc")
             artPoc = true;
         else if (arg == "--sandstorm")
@@ -145,6 +152,8 @@ int main(int argc, char **argv) {
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
                          "  --sandstorm         Start with the sandstorm on; K toggles in any map\n"
                          "  --intro             Play the Westbound opening (combine with --cinematic to edit)\n"
+                         "  --full-experience   Logos, three save slots, settings and the story opening\n"
+                         "  --slots DIRECTORY   Store full-experience slots in a separate folder\n"
                          "  --cinematic         Open the separate Cinematic Editor\n"
                          "  --sequence PATH     Cinematic file to edit (default: arrival.cinematic in hub)\n"
                          "  --cinematic-at SEC  Preview a specific timeline time\n"
@@ -157,6 +166,16 @@ int main(int argc, char **argv) {
             return 2;
         }
     }
+    if (fullExperience && (explicitSave || startEditor || startCinematic || intro || smoke || benchmark ||
+                           !editorDirectory.empty() || !sequenceFile.empty())) {
+        std::cerr << "--full-experience starts the story menu; use --slots DIRECTORY for separate saves. "
+                     "Run editor, cinematic and scripted checks separately.\n";
+        return 2;
+    }
+    if (!fullExperience && !slotsDirectory.empty()) {
+        std::cerr << "--slots requires --full-experience\n";
+        return 2;
+    }
     if (scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
         scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats") {
         std::cerr << "Unknown smoke scene: " << scene << '\n';
@@ -164,10 +183,6 @@ int main(int argc, char **argv) {
     }
     // Scripted verification never modifies the player's campaign by default.
     if (smoke || benchmark || startEditor || startCinematic) {
-        bool explicitSave = false;
-        for (int i = 1; i < argc; ++i)
-            if (std::string(argv[i]) == "--save")
-                explicitSave = true;
         if (!explicitSave)
             save = std::filesystem::temp_directory_path() /
                    ("deathward-check-" +
@@ -175,11 +190,6 @@ int main(int argc, char **argv) {
     }
     try {
         dw::prepareBrowserFiles();
-        dw::Game game(save, initialHub);
-        game.sandstorm = sandstorm;
-        game.themeChoice = themeChoice;
-        if (smoke || benchmark)
-            game.seedText = "1866";
         SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_MSAA_4X_HINT);
         InitWindow(1440, 900, "DeathWard | The consequences remain");
         if (!IsWindowReady())
@@ -197,19 +207,65 @@ int main(int argc, char **argv) {
         SetTargetFPS(benchmark ? 0 : 60);
 #endif
         dw::AudioSystem audio;
+        const auto preferencesDirectory = slotsDirectory.empty() ? save.parent_path() : slotsDirectory;
         const auto audioPreferences =
-            smoke || benchmark || startEditor || startCinematic ? std::filesystem::path{} : save.parent_path() / "audio.cfg";
-        if (!audioPreferences.empty())
-            game.audioSettings = dw::loadAudioSettings(audioPreferences);
-        auto savedAudioSettings = game.audioSettings;
+            smoke || benchmark || startEditor || startCinematic ? std::filesystem::path{} : preferencesDirectory / "audio.cfg";
         const auto visualPreferences =
-            smoke || benchmark || startEditor || startCinematic ? std::filesystem::path{} : save.parent_path() / "visual.cfg";
-        if (!visualPreferences.empty())
-            game.visualSettings = dw::loadVisualSettings(visualPreferences);
+            smoke || benchmark || startEditor || startCinematic ? std::filesystem::path{} : preferencesDirectory / "visual.cfg";
+        auto audioSettings = dw::loadAudioSettings(audioPreferences);
+        auto visualSettings = dw::loadVisualSettings(visualPreferences);
         if (canyonRiver)
-            game.visualSettings.canyonRiver = *canyonRiver;
-        auto savedVisualSettings = game.visualSettings;
-        game.audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
+            visualSettings.canyonRiver = *canyonRiver;
+        const auto audioStatus = audio.initialize(!mute && (!(smoke || benchmark) || explicitAudio));
+        bool menuExit = false;
+        if (fullExperience) {
+            dw::FrontEnd frontEnd(slotsDirectory.empty() ? save.parent_path() / "slots" : slotsDirectory,
+                                  audioPreferences, visualPreferences, audioSettings, visualSettings, audioStatus);
+#ifdef __EMSCRIPTEN__
+            EM_ASM({ if (Module.gameReady) Module.gameReady(); });
+#endif
+            while (!frontEnd.launch && !frontEnd.quit) {
+#ifdef __EMSCRIPTEN__
+                nextBrowserFrame();
+                const int width = EM_ASM_INT({ return Math.round(Module.canvas.clientWidth); });
+                const int height = EM_ASM_INT({ return Math.round(Module.canvas.clientHeight); });
+                if (width > 0 && height > 0 && (width != GetScreenWidth() || height != GetScreenHeight())) {
+                    SetWindowSize(width, height + 1); SetWindowSize(width, height);
+                }
+#else
+                if (WindowShouldClose()) { frontEnd.quit = true; break; }
+#endif
+                frontEnd.update(GetFrameTime());
+                BeginDrawing(); frontEnd.draw(); EndDrawing();
+                frontEnd.publish();
+                dw::AudioFrame frame;
+                frame.dt = GetFrameTime(); frame.context = 0x46524f4e54;
+                frame.environment = dw::AudioEnvironment::Canyon; frame.footsteps = false;
+                frame.music = frontEnd.page == dw::FrontPage::Studio ? dw::MusicScene::Silent : dw::MusicScene::Canyon;
+                audio.update(frame, frontEnd.audioSettings, {});
+            }
+            menuExit = frontEnd.quit;
+            if (frontEnd.launch) {
+                save = frontEnd.launch->file;
+                intro = frontEnd.launch->opening;
+                initialHub = intro ? dw::HubKind::BlackCreek : dw::HubKind::Redstone;
+                audioSettings = frontEnd.audioSettings; visualSettings = frontEnd.visualSettings;
+            }
+        }
+        if (menuExit) {
+            audio.unload(); CloseWindow();
+#ifdef __EMSCRIPTEN__
+            EM_ASM({ Module.gameFinished = true; if (Module.showEnd) Module.showEnd(); });
+#endif
+            return 0;
+        }
+        dw::Game game(save, initialHub);
+        game.sandstorm = sandstorm || game.arrivalActive();
+        game.themeChoice = themeChoice;
+        if (smoke || benchmark) game.seedText = "1866";
+        game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
+        auto savedAudioSettings = audioSettings;
+        auto savedVisualSettings = visualSettings;
         for (const auto hub : dw::Hubs)
             if (upgradeTownNavigation(hub) && hub == game.activeHub) {
                 if (!game.town.load(game.hubDirectory() / "town.nav") || !game.reloadTownObjects())
@@ -235,10 +291,10 @@ int main(int argc, char **argv) {
             if(cinematicTime) cinematic.seek(*cinematicTime);
             if(intro&&!startCinematic)cinematic.playStory(!cinematicTime.has_value());
             else if(smoke&&!cinematicTime) cinematic.play();
-            SetWindowTitle("DeathWard | Cinematic Editor");
+            SetWindowTitle(intro&&!startCinematic?"DeathWard | Westbound":"DeathWard | Cinematic Editor");
         }
         if (!startCinematic && !intro && ((smoke && scene != "hub") || benchmark)) {
-            game.launch();
+            game.launch(true);
             if (!game.run)
                 throw std::runtime_error(game.error);
             game.run->godMode = true;
@@ -696,6 +752,13 @@ int main(int argc, char **argv) {
                 game.run && game.run->arena.canyon && !game.run->arena.canyon->roadRooms.empty()
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
+            const auto questPixel=game.questMarkerScreen();
+            EM_ASM({
+                if(Module.verify)Module.quest=({active:!!$0,stage:$1,dialogue:!!$2,sleeping:!!$3,walking:!!$4,
+                    x:$5,y:$6,last:!!$7,speaker:UTF8ToString($8),search:!!$9});
+            },game.arrivalActive(),int(game.arrivalStage()),game.questDialogueOpen(),game.sleeping(),game.walkingToQuest(),
+              questPixel.x,questPixel.y,game.questLastLine(),game.questLine()?game.questLine()->speaker.c_str():"",
+              game.run&&game.run->missingDaughterSearch);
             EM_ASM({
                 if(Module.verify) Module.cinematic=({active:!!$0,time:$1,playing:!!$2,dirty:!!$3,storm:$4,voices:$5});
                 if(Module.verify) Object.assign(Module.cinematic,({cast:$6,speaker:UTF8ToString($7),story:!!$8,ending:!!$9,track:$10,key:$11,trainSpeed:$12}));

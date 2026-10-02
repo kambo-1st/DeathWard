@@ -20,6 +20,8 @@ class TownScene {
     void unload();
     void draw(Vector3 focus, bool glass = false);
     void setArtPoc(bool enabled);
+    // Runtime story lighting: 0 authored, 1 sunset, 2 morning. Does not edit the map.
+    void setDaylight(int phase);
     bool artPoc() const {
         return artEnabled_;
     }
@@ -86,6 +88,7 @@ class TownScene {
     bool shadowsDirty_ = true;
     Vector3 sunDirection_{0, 1, 0};
     int sunIndex_ = -1;
+    int daylight_ = 0;
     std::vector<Asset> assets_;
     std::vector<Instance> instances_;
     std::vector<const Instance *> occluders_;

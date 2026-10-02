@@ -142,6 +142,7 @@ bool Game::reloadTownObjects() {
     const bool loaded = document.ownsAnimals ? animals.reset(document.animals, town) :
         animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
                                                       : std::filesystem::path{}, town);
+    configureArrival(document);
     if (!loaded)
         error = animals.error();
     return loaded;
@@ -164,6 +165,7 @@ bool Game::selectHub(HubKind hub) {
     ++audioContext;
     audioCues.clear();
     activeHub = hub;
+    configureArrival(document);
     if (document.ownsAnimals) animals.reset(document.animals, town);
     else animals.load(activeHub == HubKind::BlackCreek ? AnimalModels::assetDirectory() / "town.animals"
                                                       : std::filesystem::path{}, town);
@@ -173,19 +175,27 @@ bool Game::selectHub(HubKind hub) {
     snapCamera();
     return true;
 }
-void Game::launch() {
+void Game::launch(bool freeMission) {
+    if(!freeMission&&arrivalActive()&&!ArrivalQuest::ready(campaign.data().world)) {
+        requestQuestAction();return;
+    }
     uint64_t seed = 0;
     auto result = std::from_chars(seedText.data(), seedText.data() + seedText.size(), seed);
     if (result.ec != std::errc{} || result.ptr != seedText.data() + seedText.size()) {
         error = "Enter a whole-number seed (up to 20 digits).";
         return;
     }
-    const auto theme = resolveTheme(themeChoice, seed);
+    const bool search=!freeMission&&arrivalActive()&&ArrivalQuest::ready(campaign.data().world);
+    const auto theme = search?MissionTheme::Canyon:resolveTheme(themeChoice, seed);
     auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world,
                                                   theme, visualSettings.canyonRiver);
     candidate->tunePlayer(playerHealth, playerDamage);
-    campaign.begin(seed, missionTheme(theme).title);
+    candidate->missingDaughterSearch=search;
+    campaign.begin(seed, candidate->summary().expedition);
     run = std::move(candidate);
+    if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
+    if(search)run->announce("BEFORE FIRST LIGHT / Follow her trail beyond the fort.",6);
+    walkingToQuest_=false;
     ++audioContext;
     audioCues.clear();
     missionMenu = walkingToMission = false;
@@ -241,6 +251,10 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         switch (action) {
+        case Action::QuestAction: requestQuestAction(); break;
+        case Action::QuestNext: nextQuestLine(); break;
+        case Action::QuestCancel:
+            questDialogue_.clear();walkingToQuest_=false;town.stop();resetPointerInput();break;
         case Action::ToggleSandstorm:
             sandstorm = !sandstorm;
             break;
@@ -332,6 +346,7 @@ void Game::perform(Action action) {
                 missionMenu = paused = walkingToMission = false;
                 town.stop();
                 resetPointerInput();
+                questDialogue_.clear();walkingToQuest_=false;
             }
             break;
         case Action::Launch:
@@ -342,6 +357,7 @@ void Game::perform(Action action) {
             historyIndex = std::max(0, int(campaign.data().history.size()) - 1);
             break;
         case Action::Missions:
+            if(arrivalActive()) {requestQuestAction();break;}
             if (screen == Screen::Hub && town.loaded()) {
                 if (town.nearMission()) {
                     missionMenu = true;
@@ -360,6 +376,7 @@ void Game::perform(Action action) {
             error.clear();
             break;
         case Action::Hub:
+            questDialogue_.clear();walkingToQuest_=false;
             resetPointerInput();
             missionMenu = walkingToMission = false;
             paused = false;
@@ -370,6 +387,7 @@ void Game::perform(Action action) {
             snapCamera();
             break;
         case Action::Pause:
+            walkingToQuest_=false;
             paused = true;
             if (screen == Screen::Hub) {
                 town.stop();
@@ -444,6 +462,7 @@ void Game::perform(Action action) {
         case Action::Reset:
             if (resetArmed) {
                 campaign.reset();
+                if(activeHub==HubKind::Redstone)ArrivalQuest::begin(campaign);
                 resetArmed = false;
             } else
                 resetArmed = true;
@@ -624,7 +643,8 @@ bool Game::pointerOverControls() const {
     if (x >= 1040 && x <= 1256 && y >= 2 && y <= 20)
         return true;
     if (screen == Screen::Hub)
-        return missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
+        return questDialogueOpen()||sleeping()||(arrivalActive()&&x>=880&&x<=1256&&y>=30&&y<=218)||
+               missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
                (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 646) ||
                (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
     return (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
@@ -645,6 +665,7 @@ void Game::newSeed() {
     seedText = std::to_string(seeds.next() % 1000000000);
 }
 void Game::updateHub(float dt) {
+    if(updateQuest(dt))return;
     if (IsKeyPressed(KEY_F4)) {
         perform(Action::EditTown);
         return;
@@ -664,6 +685,7 @@ void Game::updateHub(float dt) {
             paused = !paused;
             town.stop();
             walkingToMission = false;
+            walkingToQuest_=false;
         }
     }
     if (missionMenu) {
@@ -692,14 +714,24 @@ void Game::updateHub(float dt) {
     Vector3 movement = add(mul(forward, float(IsKeyDown(KEY_W)) - float(IsKeyDown(KEY_S))),
                            mul(right, float(IsKeyDown(KEY_D)) - float(IsKeyDown(KEY_A))));
     if (length(movement) > .01f)
-        walkingToMission = false;
+        walkingToMission = walkingToQuest_ = false;
     mouseMoveCooldown_ = std::max(0.0f, mouseMoveCooldown_ - dt);
     const bool leftDown = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
     const bool leftPressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
     const Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
     if (!leftDown)
         leftCommand_ = LeftCommand::None;
-    if (!over && leftPressed) {
+    if(!over&&leftPressed&&arrivalActive()) {
+        const auto marker=questMarker();
+        const auto icon=questMarkerScreen();
+        const auto mouse=GetMousePosition();
+        const Vector2 normalized{mouse.x*1280.f/GetScreenWidth(),mouse.y*800.f/GetScreenHeight()};
+        if(marker&&(CheckCollisionPointRec(normalized,{icon.x-110,icon.y-27,220,83})||
+            GetRayCollisionBox(ray,{add(marker->position,{-.65f,0,-.65f}),add(marker->position,{.65f,2.6f,.65f})}).hit)) {
+            requestQuestAction();leftCommand_=LeftCommand::Interact;
+        }
+    }
+    if (!over && leftPressed && leftCommand_!=LeftCommand::Interact) {
         const auto p = town.mission;
         const bool board =
             GetRayCollisionBox(ray, {{p.x - 1, p.y, p.z - 1}, {p.x + 1, p.y + 3, p.z + 1}}).hit;
@@ -711,14 +743,21 @@ void Game::updateHub(float dt) {
         if (auto point = town.pickGround(ray)) {
             town.moveTo(*point);
             walkingToMission = false;
+            walkingToQuest_=false;
         }
         mouseMoveCooldown_ = .1f;
     }
     if (IsKeyPressed(KEY_E) || IsKeyPressed(KEY_ENTER))
-        perform(Action::Missions);
+        perform(arrivalActive()?Action::QuestAction:Action::Missions);
     town.step(movement, std::min(dt, .1f));
     animals.update(std::min(dt, .1f), town);
     characters.update(std::min(dt, .1f), town);
+    questCharacters.update(std::min(dt,.1f),town);
+    if(walkingToQuest_) {
+        const auto marker=questMarker();
+        if(marker&&nearQuest(*marker))requestQuestAction();
+        else if(!town.destination()) {walkingToQuest_=false;error="The objective's approach is blocked. Try a clear route closer to it.";}
+    }
     if (walkingToMission && town.nearMission()) {
         walkingToMission = false;
         missionMenu = true;
@@ -728,6 +767,7 @@ void Game::updateHub(float dt) {
 }
 void Game::update(float dt, const SceneryPicker &pickScenery) {
     try {
+        if(screen==Screen::Hub&&(questDialogueOpen()||sleeping())) {updateHub(dt);return;}
         debugInput();
         if (IsKeyPressed(KEY_K) && (screen == Screen::Hub || screen == Screen::Expedition))
             perform(Action::ToggleSandstorm);

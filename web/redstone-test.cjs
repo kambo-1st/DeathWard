@@ -1,4 +1,4 @@
-// Real browser travel, mission return and independent editing for the third hub.
+// Real browser travel and independent editing for the third hub. arrival-test.cjs covers the quest/search loop.
 const {chromium} = require('playwright');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -53,12 +53,11 @@ const root = path.resolve(__dirname, '..');
     await click(1050, 680); await wait(() => Module.state.hub === 2);
     await page.screenshot({path: path.join(root, 'artifacts/web-redstone.png')});
     console.log('PASS canyon URL, steam, train pause and direct travel between all three hubs');
-    await key('Enter'); await wait(() => Module.state.menu);
-    await key('Enter'); await wait(() => Module.state.screen === 1);
-    await key('Escape'); await wait(() => Module.state.paused);
-    await key('t'); await wait(() => Module.state.screen === 2);
-    await key('Enter'); await wait(() => Module.state.screen === 0 && Module.state.hub === 2);
-    console.log('PASS canyon mission-board approach, launch, retreat and return to Redstone');
+    assert.equal(await page.evaluate(() => Module.quest.stage), 1);
+    assert.equal(await page.evaluate(() => Module.quest.active), true);
+    console.log('PASS travel preserves the arrival objective; arrival-test covers the first expedition');
+    const originalShadows = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding:'utf8'})
+      .split('\n').filter(line => line.startsWith('shadow ')).sort());
     await key('F4'); await wait(() => Module.state.editor);
     const editorClick = (x, y) => click(x * 1280 / 1440, y * 800 / 900);
     await editorClick(110, 270); // First placed object, in the original catalog.
@@ -69,7 +68,7 @@ const root = path.resolve(__dirname, '..');
     let saved = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'}));
     const shadowId = saved.split('\n').find(line => line.startsWith('instance ')).split(' ')[2];
     assert(saved.startsWith('DEATHWARD_TOWN 6 1\n'));
-    assert.deepEqual(saved.split('\n').filter(line => line.startsWith('shadow ')), [`shadow ${shadowId} 0`]);
+    assert.deepEqual(saved.split('\n').filter(line => line.startsWith('shadow ')).sort(), [...originalShadows, `shadow ${shadowId} 0`].sort());
     const rail = saved.split('\n').find(line => line.startsWith('path redstone-rail ')).split(' ');
     assert.equal(Number(rail[2]), 0);
     assert(Math.abs(Number(rail[3]) - .8) < .0001);
@@ -87,7 +86,7 @@ const root = path.resolve(__dirname, '..');
     await page.keyboard.down('Control'); await key('s'); await page.keyboard.up('Control');
     await wait(() => Module.state.editorSaved && !Module.saving);
     saved = await page.evaluate(() => FS.readFile('/persist/redstone/town.scene', {encoding: 'utf8'}));
-    assert(!saved.split('\n').some(line => line.startsWith('shadow ')));
+    assert.deepEqual(saved.split('\n').filter(line => line.startsWith('shadow ')).sort(), originalShadows);
     await key('Escape'); await wait(() => !Module.state.editor);
     console.log('PASS per-object shadow toggle, browser save/reload and restoring shadows');
     // Simulate an edited save from the smaller, original mesh library. Loading
@@ -95,11 +94,14 @@ const root = path.resolve(__dirname, '..');
     const legacy = await page.evaluate(() => {
       const file = '/persist/redstone/town.scene';
       let assets = 0;
-      const text = FS.readFile(file, {encoding:'utf8'}).split('\n').filter(line => {
+      const rows = FS.readFile(file, {encoding:'utf8'}).split('\n').filter(line => {
         if (line.startsWith('asset ')) return assets++ < 192;
         if (line.startsWith('instance ')) return Number(line.split(' ')[1]) < 192;
         return true;
-      }).join('\n');
+      });
+      const retained = new Set(rows.filter(line => line.startsWith('instance ')).map(line => line.split(' ')[2]));
+      // Removing newer road placements also removes their shadow overrides.
+      const text = rows.filter(line => !line.startsWith('shadow ') || retained.has(line.split(' ')[1])).join('\n');
       FS.writeFile(file, text);
       const labelPath = '/persist/redstone/town.labels';
       const labels = FS.readFile(labelPath, {encoding:'utf8'}).split('\n').slice(0,192);

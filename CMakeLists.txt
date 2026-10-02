@@ -34,6 +34,8 @@ add_library(deathward_core
     src/world/HubWorld.cpp
     src/world/Animals.cpp
     src/world/TownCharacters.cpp
+    src/world/ArrivalQuest.cpp
+    src/world/SaveSlots.cpp
     src/world/Campaign.cpp
     src/world/Dungeon.cpp
     src/world/CanyonTerrain.cpp
@@ -81,6 +83,14 @@ function(deathward_assets target)
         target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="/assets")
         return()
     endif()
+    foreach(ui_file title.ttf body.ttf LICENSE.txt)
+        set(ui_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/ui/${ui_file}")
+        set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${ui_asset}")
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/ui"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${ui_asset}" "$<TARGET_FILE_DIR:${target}>/assets/ui/${ui_file}"
+            VERBATIM)
+    endforeach()
     file(GLOB particle_assets CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.glb"
         "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.png"
@@ -146,7 +156,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp)
+add_executable(deathward src/main.cpp src/core/FrontEnd.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp src/core/GameQuest.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(EMSCRIPTEN)
@@ -159,6 +169,7 @@ if(EMSCRIPTEN)
         "-sEXPORTED_RUNTIME_METHODS=['callMain','FS','HEAPF32']"
         -lidbfs.js "SHELL:--shell-file '${CMAKE_CURRENT_SOURCE_DIR}/web/shell.html'")
     set(web_assets
+        assets/ui/title.ttf assets/ui/body.ttf assets/ui/LICENSE.txt
         assets/bandit/bandit.glb assets/cowgirl/cowgirl.glb assets/western/western.glb assets/western/western.catalog)
     file(GLOB web_particles CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
         "assets/particles/*.glb" "assets/particles/*.png"
@@ -196,6 +207,16 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_save_slot_tests tests/save_slot_tests.cpp)
+    target_link_libraries(deathward_save_slot_tests PRIVATE deathward_core)
+    add_test(NAME save_slots COMMAND deathward_save_slot_tests)
+    add_executable(deathward_arrival_input_tests tests/arrival_input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
+    target_link_libraries(deathward_arrival_input_tests PRIVATE deathward_core raylib)
+    deathward_assets(deathward_arrival_input_tests)
+    add_executable(deathward_arrival_quest_tests tests/arrival_quest_tests.cpp)
+    target_link_libraries(deathward_arrival_quest_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_arrival_quest_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_test(NAME arrival_quest COMMAND deathward_arrival_quest_tests)
     add_executable(deathward_cinematic_cast_tests tests/cinematic_cast_tests.cpp)
     target_link_libraries(deathward_cinematic_cast_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_cinematic_cast_tests)
@@ -298,7 +319,7 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
     add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
-    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/Renderer.cpp src/core/Game.cpp)
+    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/Renderer.cpp src/core/Game.cpp src/core/GameQuest.cpp)
     target_link_libraries(deathward_occlusion_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_occlusion_tests)
     add_executable(deathward_post_process_tests tests/post_process_tests.cpp src/render/PostProcess.cpp)
@@ -307,7 +328,7 @@ if(BUILD_TESTING)
     add_executable(deathward_editor_tests tests/editor_tests.cpp src/render/AnimalModels.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_editor_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_editor_tests)
-    add_executable(deathward_input_tests tests/input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
+    add_executable(deathward_input_tests tests/input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_input_tests)
     add_executable(deathward_player_model_tests tests/player_model_tests.cpp src/render/PlayerModel.cpp)
