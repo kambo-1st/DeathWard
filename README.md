@@ -26,6 +26,11 @@ cmake --build build --parallel 4
 ./build/deathward
 ```
 
+The [Linux build reproducibility report](docs/reports/linux-reproducibility-2026-10-03.html)
+([PDF](docs/reports/linux-reproducibility-2026-10-03.pdf)) records ten clean Release
+builds, artifact hashes, timing measurements and the explanation of metadata
+differences. It includes commands for repeating the audit.
+
 ## Build for Windows from WSL
 
 Install **Visual Studio 2022** with **Desktop development with C++** and Windows
