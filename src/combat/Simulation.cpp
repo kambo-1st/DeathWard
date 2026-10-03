@@ -117,7 +117,7 @@ std::string Simulation::tutorialHint() const {
     if(surveyRecovered)return "The letter and records are safe. Follow the return lantern to Fort Mercy.";
     switch(room) {
     case 0:return "Click clear ground to walk, or use WASD. Follow the open passage into the badlands.";
-    case 1:return roomClear?"The passage is open. Keep following the trail.":"Click an enemy to fire. Keep moving; hold Shift to shoot from one spot.";
+    case 1:return roomClear?"The passage is open. Keep following the trail.":"Click an enemy or hold arrow keys to fire. Move with WASD; hold Shift to stand still.";
     case 2:return "A quiet stretch. Recover your bearings and follow the trail toward the survey camp.";
     case 3:return roomClear?"The survey camp is just ahead.":"Use Dodge or Space to evade an attack. Cover stops bullets.";
     default:return "Look for the leather document case. Click it, or approach and choose Recover records.";
@@ -739,7 +739,7 @@ void Simulation::collectChains() {
 }
 void Simulation::updatePlayer(const Input &input, float dt) {
     const Vector3 previousPosition = player.position;
-    player.aim = input.aim;
+    player.aim = input.aimDirection ? add(player.position, mul(*input.aimDirection, 10)) : input.aim;
     player.aim.y = player.position.y;
     player.fireCooldown = std::max(0.0f, player.fireCooldown - dt);
     dynamiteCooldown = std::max(0.0f, dynamiteCooldown - dt);
@@ -804,6 +804,9 @@ void Simulation::updatePlayer(const Input &input, float dt) {
             player.pullTime = std::max(0.0f, player.pullTime - dt);
         }
     }
+    // Keep directional aim attached to the player through movement, dodges and pulls.
+    if (input.aimDirection)
+        player.aim = add(player.aim, sub(player.position, previousPosition));
     kickDynamiteOnContact(previousPosition);
     if (input.placeDynamite)
         placeDynamite();

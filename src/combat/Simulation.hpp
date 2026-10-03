@@ -167,6 +167,8 @@ struct ChainLog {
 };
 struct Input {
     Vector3 movement{}, aim{0, 0.85f, 0};
+    // Directional controls keep their world-space heading while the player moves.
+    std::optional<Vector3> aimDirection;
     std::optional<Vector3> moveTarget;
     std::optional<std::pair<int, int>> doorTarget;
     std::optional<Vector3> dynamiteTarget;

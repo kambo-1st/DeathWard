@@ -983,12 +983,24 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
                 mouseMoveCooldown_ = 0.1f;
             }
         }
-        if (input.fire && (leftPressed || IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))) {
-            fireQueued_ = input.aim; // Preserve short clicks between fixed simulation ticks.
+        const Vector3 arrowDirection =
+            add(mul(forward, float(IsKeyDown(KEY_UP)) - float(IsKeyDown(KEY_DOWN))),
+                mul(right, float(IsKeyDown(KEY_RIGHT)) - float(IsKeyDown(KEY_LEFT))));
+        if (!dynamiteGesture && length(arrowDirection) > .01f) {
+            // Arrows take aim priority while held, even with the cursor over the HUD.
+            input.aimDirection = unit(arrowDirection);
+            input.fire = true;
+        }
+        const bool arrowPressed = input.aimDirection &&
+            (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_RIGHT));
+        if (input.fire && (arrowPressed || leftPressed || IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))) {
+            fireQueued_ = FireCommand{input.aim, input.aimDirection}; // Preserve short taps between ticks.
             standStillQueued_ = input.standStill;
         }
-        if (!input.fire && fireQueued_)
-            input.aim = *fireQueued_;
+        if (!input.fire && fireQueued_) {
+            input.aim = fireQueued_->aim;
+            input.aimDirection = fireQueued_->direction;
+        }
         input.fire = input.fire || fireQueued_.has_value();
         input.standStill = input.standStill || standStillQueued_;
         if (input.fire || input.standStill) {

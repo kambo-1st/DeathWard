@@ -150,7 +150,12 @@ class Game {
     bool dodgeQueued_ = false, interactQueued_ = false;
     bool standStillQueued_ = false;
     bool cancelFireHeld_ = false;
-    std::optional<Vector3> moveQueued_, fireQueued_;
+    struct FireCommand {
+        Vector3 aim;
+        std::optional<Vector3> direction;
+    };
+    std::optional<Vector3> moveQueued_;
+    std::optional<FireCommand> fireQueued_;
     std::optional<Vector3> dynamiteQueued_;
     bool placeDynamiteQueued_ = false;
     std::optional<std::pair<int, int>> doorQueued_;

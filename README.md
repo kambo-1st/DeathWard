@@ -203,6 +203,7 @@ The camera follows you through corridors. The mission map shows branches, your p
 | Control | Action |
 | --- | --- |
 | WASD | Move relative to the camera |
+| Hold arrow keys | Fire relative to the camera; combine adjacent arrows for diagonal shots |
 | Left-click ground / hold left button | Move to a point / keep steering around cover |
 | Left-click an enemy / hold left button | Shoot / keep firing at that enemy as it moves |
 | Left-click an objective | Approach and interact automatically |
@@ -223,13 +224,15 @@ The camera follows you through corridors. The mission map shows branches, your p
 | H in the hub | Inspect previous runs |
 | J / Journal button | Read recovered claims, observations and open questions |
 
-Start each expedition with **100 HP** and **24 revolver damage**. Enemy kills, room clears and room entry provide no automatic healing. The revolver fires continuously while holding an enemy, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
+Start each expedition with **100 HP** and **24 revolver damage**. Enemy kills, room clears and room entry provide no automatic healing. The revolver fires continuously while holding an enemy, an arrow key, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
 
 Both enemy rosters now deal **25% more damage**, move **10% faster during ordinary movement**, and have **15% shorter attack cooldowns**. A former 10-damage hit now deals 12.5. The mine's Sheriff shares this tuning. Attack warnings, projectile speeds, committed charges/jumps, enemy health and the player's dodge/hurt protection retain their existing values; mirror movement, orbit positioning and friendly monsters retain their original movement behavior.
 
 With cheats enabled, pause a mission to use **Player Settings**: adjust base health in steps of 25 and shot damage in steps of 4. During play, **minus / equals** (or keypad minus / plus) adjust damage; hold **Shift** with those keys to adjust health. **Home** restores the 100 HP / 24 damage defaults. Base health is bounded to 25–2,000 and damage to 1–500. Health changes preserve your current health percentage and still apply Judas Bullet's health cost; Shift+F2 fully heals. Settings apply immediately to new shots and carry into subsequent missions and hub travel for this session. Restarting the game restores the defaults. Split and ghost bullets use the adjusted shot damage; Powder of Jericho keeps its own explosion damage.
 
 Left-click follows the contextual move/attack/interact pattern in [Blizzard's Diablo manual](https://ftp.blizzard.com/pub/misc/Diablo.PDF). Click ground to walk there, or hold to steer. Click an enemy's body to attack; holding keeps that target until release, and its death never turns the attack into a movement order. Attacking cancels the current mouse route. WASD overrides mouse navigation and remains available while firing; Shift holds position. RMB uses the prototype's only weapon, the revolver.
+
+Arrow keys also fire during missions, independently of the cursor. Hold an arrow while moving with WASD to strafe, or hold two adjacent arrows for diagonal fire. Opposite arrows cancel each other. Arrow aiming takes priority over mouse aiming while held, follows camera rotation, and works with the cursor over the HUD. Release the arrows to return to mouse aiming. Menus and dynamite placement/targeting keep their existing input guards.
 
 Left-click the miners, altar, a key, a power pedestal, the shopkeeper, a doorway, or the return lantern to approach and use it. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse.
 

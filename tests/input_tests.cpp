@@ -16,6 +16,166 @@ constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
 }
+void arrowInputCheck(const std::filesystem::path &directory, dw::MissionTheme theme) {
+    const std::string name = theme == dw::MissionTheme::Canyon ? "canyon" : "mine";
+    dw::Game game(directory / ("arrows-" + name + ".save"));
+    game.seedText = "1866";
+    game.themeChoice = theme == dw::MissionTheme::Canyon ? dw::ThemeChoice::Canyon : dw::ThemeChoice::Mine;
+    game.launch();
+    auto &run = *game.run;
+    run.godMode = true;
+    game.updateCamera(10);
+    auto frame = [&](float dt = dw::Tick) {
+        game.update(dt);
+        BeginDrawing();
+        EndDrawing(); // Poll raylib input, including pressed/released edges.
+        check(game.error.empty(), "arrow input causes no game errors");
+    };
+    auto release = [&] {
+        for (int key : {KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_W, KEY_D, KEY_LEFT_SHIFT})
+            mouseEvent(KeyUp, key);
+        mouseEvent(MouseUp, MOUSE_BUTTON_RIGHT);
+        frame();
+    };
+    auto forward = [&] {
+        const auto offset = dw::sub(game.camera.target, game.camera.position);
+        return dw::unit(Vector3{offset.x, 0, offset.z});
+    };
+    auto heading = [&] { return dw::unit(dw::sub(run.player.aim, run.player.position)); };
+    auto shotHeading = [&] {
+        check(!run.projectiles.empty(), "arrow firing creates a projectile");
+        return dw::unit(run.projectiles.back().velocity);
+    };
+    mouseEvent(MousePosition, 1100, 200);
+    release();
+    check(game.pointerOverControls(), "arrow fixture keeps the cursor over the map HUD");
+    auto directions = [&] {
+        const auto f = forward();
+        const Vector3 r{-f.z, 0, f.x};
+        for (const auto &[key, direction] : std::array<std::pair<int, Vector3>, 4>{
+                 {{KEY_UP, f}, {KEY_DOWN, dw::mul(f, -1)}, {KEY_RIGHT, r}, {KEY_LEFT, dw::mul(r, -1)}}}) {
+            const auto shots = run.stats.shots;
+            run.player.fireCooldown = 0;
+            mouseEvent(KeyDown, key);
+            frame();
+            check(run.stats.shots == shots + 1 && dw::distance(shotHeading(), direction) < .001f,
+                  "all four arrow keys fire relative to the camera even over the HUD");
+            release();
+        }
+    };
+    directions();
+    mouseEvent(KeyDown, KEY_UP);
+    mouseEvent(KeyDown, KEY_RIGHT);
+    run.player.fireCooldown = 0;
+    frame();
+    const auto f = forward();
+    check(dw::distance(shotHeading(), dw::unit(dw::add(f, {-f.z, 0, f.x}))) < .001f,
+          "adjacent arrows produce a diagonal projectile");
+    release();
+    const auto beforeOpposite = run.stats.shots;
+    mouseEvent(KeyDown, KEY_UP);
+    mouseEvent(KeyDown, KEY_DOWN);
+    mouseEvent(KeyDown, KEY_LEFT);
+    mouseEvent(KeyDown, KEY_RIGHT);
+    frame(.1f);
+    check(run.stats.shots == beforeOpposite, "opposite arrows cancel instead of firing a zero direction");
+    release();
+    run.player.fireCooldown = 0;
+    const auto beforeHeld = run.stats.shots;
+    mouseEvent(KeyDown, KEY_UP);
+    for (int i = 0; i < 60; ++i)
+        frame();
+    check(run.stats.shots >= beforeHeld + 3, "holding an arrow repeats at the revolver fire rate");
+    release();
+    const auto afterRelease = run.stats.shots;
+    frame(.1f);
+    check(run.stats.shots == afterRelease, "releasing arrows stops keyboard fire");
+    game.accumulator = 0;
+    run.player.fireCooldown = 0;
+    mouseEvent(KeyDown, KEY_LEFT);
+    frame(dw::Tick / 4);
+    mouseEvent(KeyUp, KEY_LEFT);
+    frame(dw::Tick / 4);
+    check(run.stats.shots == afterRelease, "a short arrow tap waits for the simulation tick");
+    frame();
+    check(run.stats.shots == afterRelease + 1 &&
+              dw::distance(shotHeading(), {f.z, 0, -f.x}) < .001f,
+          "a short arrow tap preserves both the shot and its direction");
+    const auto start = run.player.position;
+    dw::Input navigation;
+    navigation.moveTarget = dw::add(start, dw::mul(f, 2));
+    run.step(navigation);
+    check(run.moveDestination().has_value(), "arrow fixture begins with an active walking route");
+    mouseEvent(KeyDown, KEY_UP);
+    mouseEvent(KeyDown, KEY_D);
+    run.player.fireCooldown = 0;
+    frame(.1f); // Multiple simulation ticks must retain a directional aim while strafing.
+    check(dw::distance(start, run.player.position) > .1f && !run.moveDestination() &&
+              dw::distance(heading(), f) < .001f && dw::distance(shotHeading(), f) < .001f,
+          "WASD strafes while arrow shots retain their heading and cancel click navigation");
+    const auto standing = run.player.position;
+    mouseEvent(KeyDown, KEY_LEFT_SHIFT);
+    frame(.1f);
+    check(dw::distance(standing, run.player.position) < .001f, "Shift holds position during arrow fire");
+    release();
+    mouseEvent(MousePosition, 600, 350);
+    mouseEvent(MouseDown, MOUSE_BUTTON_MIDDLE);
+    frame();
+    mouseEvent(MousePosition, 790, 370);
+    frame();
+    mouseEvent(MouseUp, MOUSE_BUTTON_MIDDLE);
+    frame();
+    check(dw::distance(f, forward()) > .1f, "arrow fixture rotates the camera with a middle drag");
+    mouseEvent(MousePosition, 1100, 200);
+    directions();
+    mouseEvent(MousePosition, 680, 315);
+    mouseEvent(MouseDown, MOUSE_BUTTON_RIGHT);
+    mouseEvent(KeyDown, KEY_DOWN);
+    frame();
+    check(dw::distance(heading(), dw::mul(forward(), -1)) < .001f,
+          "held arrows take aim priority over simultaneous mouse fire");
+    mouseEvent(KeyUp, KEY_DOWN);
+    run.player.fireCooldown = 0;
+    const auto beforeMouse = run.stats.shots;
+    frame();
+    check(run.stats.shots == beforeMouse + 1 &&
+              dw::distance(heading(), dw::mul(forward(), -1)) > .1f,
+          "releasing arrows immediately restores existing mouse aiming and firing");
+    release();
+    // Neither held arrows nor sub-tick taps may leak through modal screens.
+    auto modalGuard = [&](bool &open) {
+        const auto shots = run.stats.shots;
+        game.accumulator = 0;
+        run.player.fireCooldown = 0;
+        mouseEvent(KeyDown, KEY_UP);
+        frame(dw::Tick / 4);
+        open = true;
+        frame();
+        release();
+        open = false;
+        frame();
+        check(run.stats.shots == shots, "modals block arrows and discard pending arrow taps");
+    };
+    modalGuard(game.paused);
+    modalGuard(run.shopOpen);
+    modalGuard(run.rewardOpen);
+    modalGuard(run.letterOpen);
+    modalGuard(game.journalOpen);
+    const auto beforeDynamite = run.stats.shots;
+    game.dynamiteArmed = true;
+    mouseEvent(KeyDown, KEY_UP);
+    frame();
+    check(run.stats.shots == beforeDynamite, "dynamite targeting blocks keyboard gunfire");
+    game.dynamiteArmed = false;
+    mouseEvent(KeyDown, KEY_B);
+    frame();
+    mouseEvent(KeyUp, KEY_B);
+    release();
+    check(run.stats.shots == beforeDynamite && run.dynamite == 2,
+          "placing dynamite while holding an arrow does not also fire the revolver");
+    std::cout << "PASS " << name
+              << " arrow fire, diagonals, rotated camera, strafing, short taps, mouse fallback and modal guards\n";
+}
 void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme theme) {
     const std::string name = theme == dw::MissionTheme::Canyon ? "canyon" : "mine";
     dw::Game game(directory / ("shop-" + name + ".save"));
@@ -576,6 +736,15 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if (mode.empty() || mode == "--arrows-only") {
+            arrowInputCheck(directory, dw::MissionTheme::Mine);
+            arrowInputCheck(directory, dw::MissionTheme::Canyon);
+            if (mode == "--arrows-only") {
+                CloseWindow();
+                std::filesystem::remove_all(directory);
+                return 0;
+            }
+        }
         if (mode == "--river-only") {
             boundaryRiverInputCheck(directory);
             interiorRiverInputCheck(directory);
