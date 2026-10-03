@@ -28,7 +28,9 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
     }
     // Scenery and gates limit interaction targets. Without a renderer, use the
     // collision geometry for those targets instead.
-    const size_t firstWall = scenery ? run.arena.boundaryWalls.size() + run.arena.obstacles.size() : 0;
+    const auto storyWalls=std::count_if(run.arena.storyProps.begin(),run.arena.storyProps.end(),
+        [](const auto &prop){return prop.bounds.max.y>.45f;});
+    const size_t firstWall = scenery ? run.arena.boundaryWalls.size() + run.arena.obstacles.size() + storyWalls : 0;
     for (size_t i = firstWall; i < run.arena.walls.size(); ++i) {
         const auto &wall = run.arena.walls[i];
         const auto hit = GetRayCollisionBox(ray, {wall.min, wall.max});
@@ -49,11 +51,13 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
     };
     if (run.surveyTutorial && run.room==run.finalRoom() && run.roomClear)
         objective(run.surveyPosition(),1.1f,1.4f);
-    if (!run.surveyTutorial && !run.rescued)
+    if(run.arena.rooms[size_t(run.room)].story!=StoryRoom::None&&run.roomClear)
+        objective(run.arena.rooms[size_t(run.room)].objective,1.2f,1.6f);
+    if (run.legacyObjectives() && !run.rescued)
         objective(run.arena.miners, 1.7f, 2.0f);
-    if (!run.surveyTutorial && !run.altarDestroyed)
+    if (run.legacyObjectives() && !run.altarDestroyed)
         objective(run.arena.altar, 1.0f, 2.9f);
-    if (run.canReturn())
+    if (run.canUseFloorExit())
         objective(run.arena.exit, 2.0f, 3.2f);
     if (run.arena.rooms[size_t(run.room)].kind == RoomKind::Power && !run.rooms[size_t(run.room)].rewardTaken)
         objective(run.arena.rooms[size_t(run.room)].objective, 1.2f, 2.4f);
@@ -61,7 +65,9 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
         if (!key.collected && run.rooms[size_t(key.room)].cleared)
             objective(key.position, 1.0f, 2.0f);
     const float objectiveDistance = nearest;
-    if (run.roomClear)
+    // Passage hit areas are intentionally generous. They must not steal a
+    // visible evidence case, key, pedestal or exit lantern at their edge.
+    if (run.roomClear && !result.objective)
         for (size_t i = 0; i < run.arena.passages.size(); ++i)
             for (int side = 0; side < 2; ++side)
                 if (hits(run.arena.doorApproach(int(i), side), 2.5f, 3.2f)) {
@@ -187,14 +193,18 @@ void Game::launch(bool freeMission) {
         error = "Enter a whole-number seed (up to 20 digits).";
         return;
     }
-    const bool search=!freeMission&&arrivalActive()&&ArrivalQuest::ready(campaign.data().world);
-    const auto theme = search?MissionTheme::Canyon:resolveTheme(themeChoice, seed);
+    const bool search=!freeMission&&arrivalActive()&&ArrivalQuest::tutorialReady(campaign.data().world);
+    const bool account=!freeMission&&arrivalActive()&&ArrivalQuest::testimonyReady(campaign.data().world);
+    const auto theme = search||account?MissionTheme::Canyon:resolveTheme(themeChoice, seed);
     auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world,
-                                                  theme, visualSettings.canyonRiver,search);
+                                                  theme, visualSettings.canyonRiver,search,
+                                                  account?WitnessAccount::Rourke:WitnessAccount::None);
     candidate->tunePlayer(playerHealth, playerDamage);
     campaign.begin(seed, candidate->summary().expedition);
     run = std::move(candidate);
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
+    if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
+    checkpoint();
     if(search)run->announce("THE LOST SURVEY / Recover Bell's records from the near camp.",6);
     walkingToQuest_=false;
     ++audioContext;
@@ -252,7 +262,22 @@ void Game::close() {
 void Game::perform(Action action) {
     try {
         if(letterVisible()&&action!=Action::CloseLetter&&action!=Action::Quit)return;
+        if(journalVisible()&&action!=Action::CloseJournal&&action!=Action::JournalPrevious&&action!=Action::JournalNext&&action!=Action::Quit)return;
         switch (action) {
+        case Action::ReadJournal: journalOpen=true;journalIndex=0;resetPointerInput();town.stop();break;
+        case Action::CloseJournal:
+            journalOpen=false;if(run)run->storyOpen=StoryRoom::None;
+            accumulator=0;resetPointerInput();break;
+        case Action::JournalPrevious:
+        case Action::JournalNext: {
+            const auto entries=journalEntries();
+            if(run&&run->storyOpen!=StoryRoom::None) {
+                for(size_t i=0;i<entries.size();++i)if(entries[i].room==run->storyOpen)journalIndex=int(i);
+                run->storyOpen=StoryRoom::None;journalOpen=true;
+            }
+            journalIndex=std::clamp(journalIndex+(action==Action::JournalNext?1:-1),0,std::max(0,int(entries.size())-1));
+            break;
+        }
         case Action::ReadLetter:
             if((run&&run->surveyRecovered)||campaign.data().world.flags.contains("redstone.survey_recovered")) {
                 readingLetter=true;resetPointerInput();town.stop();
@@ -645,6 +670,7 @@ void Game::updateCamera(float dt) {
     camera.position = add(camera.target, cameraOffset());
 }
 bool Game::pointerOverControls() const {
+    if(journalVisible()||letterVisible())return true;
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
@@ -652,12 +678,13 @@ bool Game::pointerOverControls() const {
         return true;
     if (x >= 1040 && x <= 1256 && y >= 2 && y <= 20)
         return true;
+    if(screen==Screen::Hub&&x>=24&&x<=202&&y>=636&&y<=668)return true;
     if (screen == Screen::Hub)
         return questDialogueOpen()||sleeping()||(arrivalActive()&&x>=880&&x<=1256&&y>=30&&y<=257)||
                missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
                (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 646) ||
                (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
-    return (run&&run->surveyTutorial&&x>=964&&x<=1256&&y>=22&&y<=153)||
+    return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
            (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
@@ -778,12 +805,20 @@ void Game::updateHub(float dt) {
 }
 void Game::update(float dt, const SceneryPicker &pickScenery) {
     try {
+        if(journalVisible()) {
+            resetPointerInput();checkpoint();
+            if(IsKeyPressed(KEY_ESCAPE)||IsKeyPressed(KEY_ENTER))perform(Action::CloseJournal);
+            else if(IsKeyPressed(KEY_LEFT))perform(Action::JournalPrevious);
+            else if(IsKeyPressed(KEY_RIGHT))perform(Action::JournalNext);
+            return;
+        }
         if(letterVisible()) {
             resetPointerInput();checkpoint();
             if(IsKeyPressed(KEY_ESCAPE)||IsKeyPressed(KEY_ENTER)||IsKeyPressed(KEY_SPACE))perform(Action::CloseLetter);
             return;
         }
         if(screen==Screen::Hub&&(questDialogueOpen()||sleeping())) {updateHub(dt);return;}
+        if((screen==Screen::Hub||screen==Screen::Expedition)&&IsKeyPressed(KEY_J)) {perform(Action::ReadJournal);return;}
         debugInput();
         if (IsKeyPressed(KEY_K) && (screen == Screen::Hub || screen == Screen::Expedition))
             perform(Action::ToggleSandstorm);
@@ -983,10 +1018,14 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             fireQueued_.reset();
             standStillQueued_ = false;
             dodgeQueued_ = interactQueued_ = false;
-            if (run->finished || run->dead || run->rewardOpen || run->shopOpen || run->letterOpen)
+            if (run->finished || run->dead || run->rewardOpen || run->shopOpen || run->letterOpen ||
+                run->storyOpen!=StoryRoom::None || run->floorExitRequested)
                 break;
         }
         checkpoint();
+        if(run->floorExitRequested&&run->advanceFloor()) {
+            ++audioContext;audioCues.clear();resetPointerInput();accumulator=0;snapCamera();checkpoint();
+        }
         if (run->finished && !run->dead)
             finish(EndReason::Victory);
         updateCamera(dt);

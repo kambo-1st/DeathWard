@@ -38,6 +38,7 @@ add_library(deathward_core
     src/world/SaveSlots.cpp
     src/world/FlagCloth.cpp
     src/world/Campaign.cpp
+    src/world/Expedition.cpp
     src/world/Dungeon.cpp
     src/world/CanyonTerrain.cpp
     src/world/CanyonRiver.cpp
@@ -210,6 +211,10 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_expedition_tests tests/expedition_tests.cpp)
+    target_link_libraries(deathward_expedition_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_expedition_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_test(NAME expedition COMMAND deathward_expedition_tests)
     add_executable(deathward_flag_cloth_tests tests/flag_cloth_tests.cpp)
     target_link_libraries(deathward_flag_cloth_tests PRIVATE deathward_core)
     target_include_directories(deathward_flag_cloth_tests SYSTEM PRIVATE ${raylib_SOURCE_DIR}/src/external)

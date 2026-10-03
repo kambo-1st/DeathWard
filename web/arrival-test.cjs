@@ -37,8 +37,33 @@ const path=require('node:path');
   assert.equal(await page.evaluate(()=>Module.quest.stage),6);await wait(()=>!Module.saving);
   await launch('?hub=redstone&verify');assert.equal(await page.evaluate(()=>Module.quest.stage),6);
   assert.equal(await page.evaluate(()=>Module.FS.readFile('/persist/redstone/town.scene',{encoding:'utf8'})),map);
+  await walk();await talk();await wait(()=>Module.quest.search);
+  await key('F7');await wait(()=>Module.state.room===4);
+  await page.mouse.move(640,450);await page.mouse.wheel(0,800);
+  await wait(()=>Module.state.zoom<120);await frames(20);
+  let target=await page.evaluate(()=>Module.expedition);await click(target.evidenceX,target.evidenceY);
+  await wait(()=>Module.expedition.letter);await capture('letter');await key('Escape');
+  target=await page.evaluate(()=>Module.expedition);await click(target.exitX,target.exitY);
+  await wait(()=>Module.state.screen===2);await key('Enter');await wait(()=>Module.quest.stage===7);
+  await walk();await talk();assert.equal(await page.evaluate(()=>Module.quest.stage),8);
+  await walk();await capture('rourke');await talk();assert.equal(await page.evaluate(()=>Module.quest.stage),9);
+  await walk();await talk();await wait(()=>Module.expedition.account===1);
+  const floors=await page.evaluate(()=>Module.expedition.floors);assert.ok(floors>=4&&floors<=8);
+  assert.equal(await page.evaluate(()=>Module.expedition.floor),0);
+  assert.equal(await page.evaluate(()=>Module.expedition.rooms),15);
+  assert.ok(await page.evaluate(()=>Module.expedition.site)>0);
+  await capture('rourke-expedition');
+  await key('KeyJ');await wait(()=>Module.expedition.journal);
+  await key('F7');assert.equal(await page.evaluate(()=>Module.state.room),0,'journal blocks debug travel');
+  await click(850,691);await wait(()=>!Module.expedition.journal);
+  await key('Escape');await key('KeyT');await wait(()=>Module.state.screen===2);
+  await key('Enter');await wait(()=>Module.quest.stage===10&&Module.state.screen===0);
+  await wait(()=>!Module.saving);assert.match(await saved(),/^DEATHWARD 5 /);
+  assert.match(await saved(),/redstone.rourke_departed/);assert.doesNotMatch(await saved(),/redstone.rourke_returned/);
+  await launch('?hub=redstone&verify');assert.equal(await page.evaluate(()=>Module.quest.stage),10);
+  await key('KeyJ');await wait(()=>Module.expedition.journal);await key('Escape');
   assert.equal(await page.evaluate(()=>Module.ctx.getError()),0);assert.deepEqual(errors,[]);
-  console.log('PASS browser arrival: cinematic handoff, clickable quest markers, dialogue, save/reload, sleep, morning conductor, commander, generated search and return.');
- } catch(e) {console.error(e,errors);console.error(await page.evaluate(()=>({state:Module.state,quest:Module.quest})));await capture('failure');throw e;}
+  console.log('PASS browser arrival and testimony launch: tutorial/letter/report, Rourke dialogue, '+floors+'-floor plan with 15 rooms, journal input, retreat and format-5 reload. Full floor/evidence traversal is covered by the native input suite.');
+ } catch(e) {console.error(e,errors);console.error(await page.evaluate(()=>({state:Module.state,quest:Module.quest,expedition:Module.expedition})));await capture('failure');throw e;}
  finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

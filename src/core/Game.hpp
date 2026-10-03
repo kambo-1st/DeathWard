@@ -68,7 +68,11 @@ enum class Action {
     QuestNext,
     QuestCancel,
     ReadLetter,
-    CloseLetter
+    CloseLetter,
+    ReadJournal,
+    CloseJournal,
+    JournalPrevious,
+    JournalNext
 };
 class Game {
   public:
@@ -93,6 +97,10 @@ class Game {
     bool sleeping() const { return sleepTime_>=0; }
     bool readingLetter = false;
     bool letterVisible() const { return readingLetter||(run&&run->letterOpen); }
+    bool journalOpen = false;
+    int journalIndex = 0;
+    bool journalVisible() const { return journalOpen||(run&&run->storyOpen!=StoryRoom::None); }
+    std::vector<StoryEvidence> journalEntries() const;
     float sleepFade() const;
     bool reloadTownObjects();
     HubKind activeHub = HubKind::BlackCreek;

@@ -2,7 +2,7 @@
 
 The station offers **Seeded Theme**, **Western Mine** and **Isaac Canyon** (the default). Seeded Theme resolves deterministically from the mission seed. An explicit setting persists for the session, including new offers. Replay with the same seed and theme. The CLI accepts `--theme seeded|mine|canyon` for normal play, smoke scenes and benchmarks.
 
-The settings share the 15-room graph, locks, keys, objective structure and Black Creek campaign consequences. Canyon uses its own geometry: irregular basins, winding connecting trails and rock outcrops. Its encounter count follows its navigable floor area. Each theme reproduces its own geometry and encounters for a given seed and content version. Mission names persist in results, history and interrupted checkpoints.
+Ordinary expeditions in both settings have 4–8 seeded floors, each using the existing 15-room graph, locks and keys. Health, powers, currency and consumables carry between floors; layouts, encounters and rewards regenerate. Their original objectives and Black Creek campaign consequences remain separate from story expeditions. Canyon uses its own geometry: irregular basins, winding connecting trails and rock outcrops. Its encounter count follows its navigable floor area. Each theme reproduces its own geometry and encounters for a given run seed and content version. Mission names and the floor reached persist in results, history and interrupted checkpoints. The Fort Mercy tutorial remains one five-room floor; [Rourke's account](redstone_story_hub.md#full-expeditions-and-the-first-account) embeds its story sites into full canyon floors.
 
 ## Enemy rosters
 

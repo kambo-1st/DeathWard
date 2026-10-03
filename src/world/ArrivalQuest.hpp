@@ -3,7 +3,8 @@
 #include "world/TownCharacters.hpp"
 
 namespace dw {
-enum class ArrivalStage { None, Conductor, Tent, MorningConductor, Commander, Trail, Searching, Report, Complete };
+enum class ArrivalStage { None, Conductor, Tent, MorningConductor, Commander, Trail, Searching, Report, Complete,
+                          RourkeTrail, RourkeSearching, EleanorResponse, AccountComplete };
 struct QuestLine { std::string speaker, text; };
 struct QuestMarker {
     std::string title, instruction, action, symbol;
@@ -16,7 +17,9 @@ class ArrivalQuest {
   public:
     static ArrivalStage stage(const WorldState &world);
     static bool morning(const WorldState &world) { return stage(world)>=ArrivalStage::MorningConductor; }
-    static bool ready(const WorldState &world) { const auto s=stage(world);return s==ArrivalStage::Trail||s==ArrivalStage::Searching; }
+    static bool tutorialReady(const WorldState &world) { const auto s=stage(world);return s==ArrivalStage::Trail||s==ArrivalStage::Searching; }
+    static bool testimonyReady(const WorldState &world) { const auto s=stage(world);return s==ArrivalStage::RourkeTrail||s==ArrivalStage::RourkeSearching; }
+    static bool ready(const WorldState &world) { return tutorialReady(world)||testimonyReady(world); }
     static void begin(CampaignStore &campaign);
     static void advance(CampaignStore &campaign, ArrivalStage expected);
     static std::vector<QuestLine> dialogue(ArrivalStage stage);

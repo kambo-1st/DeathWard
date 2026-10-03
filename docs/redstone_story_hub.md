@@ -7,8 +7,9 @@ The physical hub keeps its existing Redstone asset directory, map, scene IDs and
 
 Implemented: train opening, arrival conversations, overnight rest, the single-floor
 survey tutorial, Eleanor's readable letter, persistent recovery and the commander's
-return conversation. The four testimony expeditions and final departure are planned;
-the tutorial does not pretend to implement them.
+return conversation, and Rourke's first testimony run with a persistent field
+journal and Eleanor's response. Eleanor's, Mercer's and Cole's expeditions and
+the final departure remain planned.
 
 ## Arrival quest prototype
 
@@ -31,7 +32,7 @@ the tutorial does not pretend to implement them.
 7. **Report:** return to the commander, who accepts the records and distinguishes
    Eleanor's written claim from an established explanation of Bell's death. He
    mentions the detained guide Caleb Rourke. Completing this conversation closes
-   the tutorial; testimony selection is not yet implemented. The letter remains
+   the tutorial and points to Rourke in the holding yard. The letter remains
    readable from the quest panel.
 
 The letter asks why the northern cutting differs from the route Bell showed
@@ -47,8 +48,8 @@ particular input method or forcing players to perform artificial checklist tasks
 
 Quest flags remain under `redstone.*`. Old `redstone.daughter_missing` progress
 is accepted as the new survey commission, retaining completed arrival dialogue.
-Campaign format 4 adds the recovered-document bit to run summaries; formats 1–3
-remain readable. Document pickup requests an immediate checkpoint. The copied
+Campaign format 5 stores floor progress and evidence provenance alongside the
+recovered-document bit; formats 1–4 remain readable. Document pickup requests an immediate checkpoint. The copied
 information survives death, retreat or interrupted-session recovery and points
 back to the commander. Without the documents, the trail remains retryable.
 Legacy pending Before First Light runs recover without mine-related consequences.
@@ -61,8 +62,9 @@ appears beside the train. Sleep uses `story-settler-tent-0:*`, the commander use
 `story-commander`, and departure uses the map's mission point. Moving these in the
 editor moves their quest targets. The story cast still uses provisional models;
 legacy witness IDs and placements are retained. Their displayed names now identify
-Eleanor, Rourke, Mercer and Cole; final costumes and individual conversations remain
-future work.
+Eleanor, Rourke, Mercer and Cole. Rourke's and Eleanor's current conversations use
+`story-outlaw` and `story-wife`; moving those residents moves their quest targets.
+Final costumes and later conversations remain future work.
 
 Fresh playtest:
 
@@ -75,6 +77,63 @@ arrival save continues at its current objective. The browser uses the same logic
 and its existing persistent save slots. Native CPU verification is
 `deathward_arrival_quest_tests`; explicit graphics/input verification is
 `deathward_arrival_input_tests`, with `web/arrival-test.cjs` for the browser.
+
+## Full expeditions and the first account
+
+Every non-tutorial expedition now has **4–8 floors selected by the run seed**.
+Each floor retains the existing **15-room** generator: branching paths, combat
+seals, Isaac monsters in canyons, quiet rooms, one shop, keys and 1–2 power rooms.
+Ordinary mine missions use the same floor progression with their Western roster.
+The tutorial remains the sole one-floor/five-room exception.
+
+Clear the final room and use its lantern to continue to the next floor. The last
+floor's lantern returns to the hub. Health, damage, loaded revolver round, powers,
+keys, money, dynamite and run statistics carry forward. There is no free heal.
+Layouts, enemy groups, shops, ground loot and power choices are generated afresh
+from each floor's derived seed; old projectiles and hazards are discarded.
+
+After the tutorial report, speak to **Caleb Rourke**, then use the badlands trail
+to follow his account. The HUD names him throughout the expedition. Four authored
+sites are inserted within the ordinary networks:
+
+| Site | Floor placement | Role |
+| --- | --- | --- |
+| Survey Camp | First | Route sketch and survey equipment; establishes a stop, not a motive. |
+| Split Rock | About one third through | A matching landmark; no recovered payroll money. |
+| Old Railway Cutting | About two thirds through | A firing position his duel account omits; timing remains uncertain. |
+| Dry Creek | Final floor, final room | Bell's revolver has one discharged chamber despite Rourke's repeated-fire claim. |
+
+The first three occupy seeded ordinary rooms and preserve their encounters.
+The last occupies the final combat room. Floors between these beats remain full
+combat floors. Story dressing checks flat terrain, roads, rivers and approach
+clearance; carts and rocks have collision. Rooms keep their generated shape.
+These are inspectable sites with written accounts, **not animated duel scenes**.
+
+`?` marks the required site on the current floor map. Clear its encounter, then
+click the evidence or choose **Examine site** nearby. The field journal separates
+**Witness claim**, **Recovered observation** and **Open question**, with the account,
+floor and floor seed attached. Reading freezes gameplay. **Journal** or **J**
+reopens it; arrows and Previous/Next change entries. A story floor's exit waits
+until its site is examined, so no required clue is lost by advancing.
+
+The completed run unlocks Eleanor's response at her shelter. She disputes the
+treasure story and says her father was alive when she returned. This is another
+claim, not a verdict. Her expedition is the next development slice. Cole's future
+unheroic version must retain the same explicit attribution.
+
+Evidence inspection and floor transitions checkpoint immediately. Saved records
+validate their witness, site, floor and derived seed. Retreat, death and interruption
+preserve inspected observations in history and the journal, but do not complete
+Rourke's run. Retrying starts a new complete expedition; old journal entries do
+not bypass its required inspections. As before, closing/reopening a pending run
+returns to the fort using the checkpoint; exact mid-floor simulation resume is
+not implemented. Historical runs retain all their records; the journal displays
+the latest observation for each site/account pair.
+
+Verification: `deathward_expedition_tests` checks plans, full room networks,
+story-site access, carry-over, completion, interrupted evidence, witness routes
+and save migration. `deathward_arrival_input_tests` exercises the full tutorial,
+Rourke launch, floor transitions, mouse inspection/journal and Eleanor return.
 
 ## Physical hub
 
@@ -186,8 +245,8 @@ leaves with many facts that no longer form a single story.
 
 ## Next implementation slices
 
-1. First testimony: Rourke conversation, labeled expedition, one contradiction,
-   return and competing interpretations. Keep the tutorial distinct and complete.
+1. Playtest Rourke's 4–8-floor run for combat pacing and reward balance; refine
+   site dressing and add authored reconstruction scenes within its story rooms.
 2. Eleanor and Mercer: authored variations around shared anchors, evidence
    provenance, revised conversations and save migration.
 3. Cole: his explicitly attributed reconstruction, theft confrontation and the

@@ -486,6 +486,27 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawCube({p.x-.3f,.52f,p.z+.05f},.4f,.025f,.3f,Gold);
             DrawCube({p.x,.53f,p.z-.18f},.74f,.02f,.025f,Muted);
         }
+        for(const auto &site:run.arena.rooms) {
+            if(site.story==StoryRoom::None||distance(run.player.position,site.objective)>60)continue;
+            const auto p=site.objective;
+            // Low evidence displays stay walkable; substantial dressing uses the
+            // same generated collision boxes as the imported scenery models.
+            DrawCube({p.x,.13f,p.z},1.25f,.26f,.85f,{91,55,32,255});
+            DrawCube({p.x,.27f,p.z},1.08f,.025f,.72f,Paper);
+            if(site.story==StoryRoom::DryCreek) {
+                DrawCube({p.x-.06f,.34f,p.z-.08f},.63f,.09f,.12f,Border);
+                DrawCylinderEx({p.x+.04f,.34f,p.z-.08f},{p.x+.26f,.34f,p.z-.08f},.105f,.105f,8,Muted);
+                DrawCube({p.x+.25f,.33f,p.z+.08f},.14f,.08f,.33f,{69,43,29,255});
+            } else if(site.story==StoryRoom::RailwayCutting) {
+                for(int i=0;i<4;++i)
+                    DrawCylinderEx({p.x-.32f+i*.2f,.31f,p.z-.13f},{p.x-.3f+i*.2f,.31f,p.z+.03f},.035f,.035f,6,Gold);
+            } else {
+                DrawCube({p.x,.3f,p.z-.12f},.8f,.02f,.018f,Muted);
+                DrawCube({p.x+.14f,.3f,p.z+.04f},.018f,.02f,.39f,Muted);
+            }
+        }
+        if(!westernScene_.loaded())for(const auto &prop:run.arena.storyProps)
+            if(visible(prop.bounds))DrawCubeV(mul(add(prop.bounds.min,prop.bounds.max),.5f),sub(prop.bounds.max,prop.bounds.min),theme.stone);
         if (run.arena.shopRoom >= 0) {
             const auto merchant = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
             if (distance(run.player.position, merchant) < 60)
@@ -498,7 +519,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             const auto p = room.objective;
             DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
         }
-        if (!run.surveyTutorial && distance(run.player.position, run.arena.miners) < 60) {
+        if (run.legacyObjectives() && distance(run.player.position, run.arena.miners) < 60) {
             Vector3 p = run.arena.miners;
             for (int i = 0; i < 6; ++i) {
                 Vector3 person = add(p, {float(i % 3) * 0.75f - 0.75f, 0, float(i / 3) * 0.7f});
@@ -511,7 +532,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 for (int i = 0; i < 5; ++i)
                     DrawCube({p.x - 1.6f + float(i) * 0.8f, 1.0f, p.z + 1.2f}, 0.07f, 2, 0.07f, Muted);
         }
-        if (!run.surveyTutorial && distance(run.player.position, run.arena.altar) < 60) {
+        if (run.legacyObjectives() && distance(run.player.position, run.arena.altar) < 60) {
             Vector3 p = run.arena.altar;
             DrawCube({p.x, 0.5f, p.z}, 1.8f, 1, 1.4f, Color{63, 51, 51, 255});
             if (!run.altarDestroyed) {
@@ -672,11 +693,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             DrawSphereWires({p.x, 1.3f, p.z}, .7f, 6, 8, Gold);
         }
     }
-    if (!run.surveyTutorial && distance(run.player.position, run.arena.miners) < 60) {
+    if (run.legacyObjectives() && distance(run.player.position, run.arena.miners) < 60) {
         const auto p = run.arena.miners;
         DrawCircle3D({p.x, .1f, p.z}, 2.3f, {1, 0, 0}, 90, run.rescued ? Muted : Teal);
     }
-    if (!run.surveyTutorial && !run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
+    if (run.legacyObjectives() && !run.altarDestroyed && distance(run.player.position, run.arena.altar) < 60) {
         const auto p = run.arena.altar;
         DrawSphere({p.x, 1.1f, p.z}, .35f, Teal);
     }
@@ -685,9 +706,16 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         const auto p=run.surveyPosition();
         DrawCircle3D({p.x,.07f,p.z},1.5f,{1,0,0},90,run.surveyRecovered?Teal:Gold);
     }
-    lantern(run.arena.exit, run.canReturn() ? Teal : Gold,
+    for(size_t i=0;i<run.arena.rooms.size();++i) {
+        const auto &site=run.arena.rooms[i];
+        if(site.story!=StoryRoom::None&&run.rooms[i].cleared&&distance(run.player.position,site.objective)<60) {
+            const auto p=site.objective;
+            DrawCircle3D({p.x,.07f,p.z},1.4f,{1,0,0},90,run.storySeen()?Teal:Gold);
+        }
+    }
+    lantern(run.arena.exit, run.canUseFloorExit() ? Teal : Gold,
             westernScene_.loaded());
-    if (run.canReturn())
+    if (run.canUseFloorExit())
         DrawCircle3D({run.arena.exit.x, 0.1f, run.arena.exit.z}, 1.8f, {1, 0, 0}, 90, Teal);
     std::vector<const Enemy *> drawnEnemies;
     for (int room = 0; room < run.arena.roomCount(); ++room) {
@@ -968,7 +996,7 @@ Action Renderer::hub(const Game &game) {
                  : "Face Western outlaws. Bring the miners home, break the altar and defeat the Hollow "
                    "Sheriff.",
              270, 238, 727, 21, Paper);
-        text("Fifteen changing rooms. Choose the setting; your seed repeats its layout.", 270, 323, 15,
+        text("4-8 seeded floors, fifteen rooms each. Your build carries between floors.", 270, 323, 15,
              Muted);
         if (button("SEEDED THEME", 270, 354, 230, 34, game.themeChoice == ThemeChoice::Seeded))
             return Action::ThemeSeeded;
@@ -1035,6 +1063,7 @@ Action Renderer::questUI(const Game &game) {
         const bool final=game.questLastLine();
         const auto stage=game.arrivalStage();
         const std::string label=!final?"CONTINUE":stage==ArrivalStage::Tent?"SLEEP UNTIL MORNING":
+            (stage==ArrivalStage::RourkeTrail||stage==ArrivalStage::RourkeSearching)?"FOLLOW HIS ACCOUNT":
             (stage==ArrivalStage::Trail||stage==ArrivalStage::Searching)?"RECOVER THE RECORDS":"CONTINUE";
         if(button(label,566,686,488,46,true))return Action::QuestNext;
         if(button("NOT YET",226,686,320,46))return Action::QuestCancel;
@@ -1062,10 +1091,10 @@ Action Renderer::questUI(const Game &game) {
         const int meters=int(std::round(distance(game.town.player.position,marker->approach)));
         panel(p.x-110,p.y+27,220,29,Panel);
         text(marker->action+" / "+std::to_string(meters)+"m",p.x-101,p.y+36,12,Paper);
-    } else if(game.arrivalStage()==ArrivalStage::Complete) {
+    } else if(game.arrivalStage()==ArrivalStage::AccountComplete) {
         panel(880,30,376,160,Panel);
-        text("DOCUMENTS DELIVERED",898,47,19,Teal);
-        wrap("Bell's records are with the commander. Eleanor's letter raises questions about the route.",898,84,338,17,Paper);
+        text("ACCOUNTS DISAGREE",898,47,19,Teal);
+        wrap("Eleanor disputes Rourke's story. Review your field journal. Her expedition is still to come.",898,84,338,17,Paper);
     } else {
         panel(880,30,376,138,Panel);
         wrap("The current quest landmark is missing from this map. Restore the passenger tent or commander in the town editor.",898,48,338,16,Gold);
@@ -1107,6 +1136,7 @@ void Renderer::dungeonMap(const Game &game) {
                             : kind == RoomKind::Boss  ? "B"
                             : kind == RoomKind::Empty ? "E"
                                                       : std::to_string(i + 1);
+        if(run.arena.rooms[size_t(i)].story!=StoryRoom::None)label="?";
         for (const auto &key : run.arena.keys)
             if (key.room == i && !key.collected && run.rooms[size_t(i)].visited)
                 label = "K";
@@ -1120,13 +1150,14 @@ Action Renderer::expedition(const Game &game) {
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime, game.dynamiteArmed,
               sandstormStrength_);
     panel(24, 22, 358, 90, Panel);
-    text(std::string(missionTheme(run.arena.theme).region) + " / " + std::to_string(run.room + 1) + " OF " +
+    text("FLOOR " + std::to_string(run.floor+1)+" / "+std::to_string(run.expedition.floorCount)+
+             "   ROOM " + std::to_string(run.room + 1) + " / " +
              std::to_string(run.arena.roomCount()),
          42, 35, 12, Gold);
     const int physicalRoom = run.arena.roomAt(run.player.position);
     text(physicalRoom < 0                     ? missionTheme(run.arena.theme).passage
          : physicalRoom == run.arena.shopRoom ? "Trader's Rest"
-                                              : run.surveyTutorial?run.roomName():Simulation::roomName(physicalRoom, run.arena.theme),
+                                              : run.roomName(),
          41, 58, 25, Paper);
     text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
     panel(964, 22, 292, 131, Panel);
@@ -1136,6 +1167,12 @@ Action Renderer::expedition(const Game &game) {
         if(run.surveyRecovered&&button("READ LETTER",982,120,256,26))return Action::ReadLetter;
         panel(330,568,620,88,Panel);
         wrap(run.tutorialHint(),348,584,584,17,Paper);
+    } else if(run.testimony()) {
+        text(accountName(run.expedition.account),982,37,12,Gold);
+        const auto site=run.expedition.storyAt(run.floor);
+        wrap(site==StoryRoom::None?"Follow the trails to the next floor.":
+            std::string(run.storySeen()?"[+] Examined: ":"[?] Examine: ")+storyRoomName(site),982,65,256,16,Paper);
+        if(button("FIELD JOURNAL",982,120,256,26))return Action::ReadJournal;
     } else {
     text("BRING SOMETHING BACK", 982, 37, 13, Gold);
     text(run.rescued ? "[+] Six miners safe" : "[ ] Miners / chamber 3", 982, 65, 15,
@@ -1315,6 +1352,7 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
              "  /  " + s.expedition + (s.interrupted ? "  /  PARTIAL CHECKPOINT" : ""),
          60, 150, 15, Muted);
     text("WALLET " + number(game.campaign.data().world.money), 60, 178, 13, Gold);
+    text("FLOOR "+std::to_string(s.floor+1)+" / "+std::to_string(s.floorCount),410,178,13,Muted);
     text("SPENT THIS RUN " + number(s.moneySpent), 730, 178, 13, Muted);
     const std::array<std::pair<std::string, std::string>, 5> values{
         {{"ENEMIES KILLED", number(s.stats.kills)},
@@ -1508,6 +1546,37 @@ Action Renderer::draw(const Game &game) {
     }
     panel(1160, 2, 96, 18, Panel);
     text(std::to_string(GetFPS()) + " FPS", 1170, 5, 12, Teal);
+    if(game.screen==Screen::Hub&&!game.paused&&!game.questDialogueOpen()&&!game.sleeping()&&!game.missionMenu)
+        if(button("JOURNAL",24,636,178,32))action=Action::ReadJournal;
+    if(game.journalVisible()) {
+        panel(0,0,1280,800,{8,12,16,225});panel(208,78,864,660,Panel);
+        const auto entries=game.journalEntries();
+        int index=std::clamp(game.journalIndex,0,std::max(0,int(entries.size())-1));
+        if(game.run&&game.run->storyOpen!=StoryRoom::None)
+            for(size_t i=0;i<entries.size();++i)if(entries[i].room==game.run->storyOpen)index=int(i);
+        text("FIELD JOURNAL",240,102,16,Gold);
+        if(entries.empty()) {
+            text("No sites examined yet",240,151,28,Paper);
+            wrap("Listen to the witnesses at Fort Mercy, then inspect the marked sites on their routes. Their claims, your observations and unanswered questions will be kept here.",240,244,794,22,Paper);
+        } else {
+            const auto &entry=entries[size_t(index)];
+            text(storyRoomName(entry.room),238,139,32,Paper);
+            text(accountName(entry.account),240,190,16,Gold);
+            text("FLOOR "+std::to_string(entry.floor+1)+"   /   FLOOR SEED "+number(entry.floorSeed),240,219,12,Muted);
+            text("WITNESS CLAIM",240,263,14,Gold);
+            wrap(storyClaim(entry.room),240,291,794,20,Paper);
+            text("RECOVERED OBSERVATION",240,380,14,Teal);
+            wrap(storyObservation(entry.room),240,408,794,20,Paper);
+            text("OPEN QUESTION",240,513,14,Gold);
+            wrap(storyQuestion(entry.room),240,541,794,18,Paper);
+            text(std::to_string(index+1)+" / "+std::to_string(entries.size()),240,630,14,Muted);
+        }
+        if(entries.size()>1) {
+            if(button("PREVIOUS",240,671,210,38))return Action::JournalPrevious;
+            if(button("NEXT",466,671,210,38))return Action::JournalNext;
+        }
+        return button("CLOSE JOURNAL",728,671,312,38,true)?Action::CloseJournal:Action::None;
+    }
     if(game.letterVisible()) {
         panel(0,0,1280,800,{8,12,16,220});panel(240,160,800,470,Panel);
         text("ELEANOR'S LETTER",272,189,29,Gold);

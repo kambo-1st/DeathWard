@@ -2,6 +2,7 @@
 #include "core/Types.hpp"
 #include "world/CanyonTerrain.hpp"
 #include "world/MissionTheme.hpp"
+#include "world/Expedition.hpp"
 #include <memory>
 #include <optional>
 #include <set>
@@ -23,6 +24,7 @@ struct RoomLayout {
     int shape = 0, depth = 0;
     float floorArea = -1;
     RoomKind kind = RoomKind::Combat;
+    StoryRoom story = StoryRoom::None;
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;
     float usableArea() const;
@@ -46,6 +48,8 @@ struct KeyPickup {
     Vector3 position{};
     bool collected = false;
 };
+enum class StoryPropKind { Cart, Crate, SplitRock, Rail, Timber };
+struct StoryProp { StoryPropKind kind; Box bounds; };
 struct Arena {
     uint64_t visualSeed = 0;
     MissionTheme theme = MissionTheme::Mine;
@@ -58,15 +62,17 @@ struct Arena {
     std::vector<KeyPickup> keys;
     int shopRoom = -1;
     std::vector<Box> floors, boundaryWalls, obstacles, walls;
+    std::vector<StoryProp> storyProps;
     std::set<FloorCell> floorCells;
     Vector3 entrance{0, 0.85f, 10}, exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
-                   bool tutorial = false);
+                   bool tutorial = false, StoryRoom story = StoryRoom::None);
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;
     void rebuildWalls();
+    void dressStoryRoom();
     int roomAt(Vector3 p) const;
     bool contains(Vector3 p) const;
     bool blocked(Vector3 p, float radius) const;

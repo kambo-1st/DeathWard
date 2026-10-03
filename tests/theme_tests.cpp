@@ -162,12 +162,13 @@ int main() {
                   "interruption history preserves the canyon mission");
             auto id = store.begin(1866, "Redstone Canyon");
             Simulation run(1866, id, store.data().world, MissionTheme::Canyon);
-            run.startBoss();
-            run.killAll();
-            run.step({});
-            run.player.position = run.arena.exit;
-            run.interact();
-            check(run.finished, "the canyon exit works after defeating its monster group");
+            do {
+                run.startBoss();run.killAll();run.step({});
+                run.player.position=run.arena.exit;run.interact();
+                if(!run.lastFloor())check(!run.finished&&!run.summary().bossKilled,
+                    "an intermediate canyon boss cannot complete the campaign outcome");
+            } while(run.advanceFloor());
+            check(run.finished, "the final canyon exit works after all floors' monster groups");
             store.resolve(run.summary(), EndReason::Victory);
             check(store.data().world.flags.contains("canyon_cleared") && !store.data().world.bossDefeated &&
                       !store.data().world.flags.contains("hollow_sheriff_dead"),

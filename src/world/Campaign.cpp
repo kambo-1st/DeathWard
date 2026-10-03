@@ -50,7 +50,7 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
     out << s.id << ' ' << s.seed << ' ' << std::quoted(s.version) << ' ' << std::quoted(s.expedition) << ' '
         << std::quoted(s.startingContext) << ' ' << int(s.reason) << ' ' << s.rescued << ' ' << s.bossKilled
         << ' ' << s.altarDestroyed << ' ' << s.interrupted << ' ' << s.moneyCollected << ' ' << s.moneySpent
-        << ' ' << s.surveyRecovered << '\n';
+        << ' ' << s.surveyRecovered << ' ' << s.floor << ' ' << s.floorCount << ' ' << int(s.account) << '\n';
     writeStats(out, s.stats);
     out << s.items.size();
     for (auto id : s.items)
@@ -58,6 +58,8 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
     out << '\n' << s.consequences.size() << '\n';
     for (const auto &line : s.consequences)
         out << std::quoted(line) << '\n';
+    out << s.evidence.size() << '\n';
+    for(const auto &e:s.evidence)out<<int(e.room)<<' '<<int(e.account)<<' '<<e.floor<<' '<<e.floorSeed<<'\n';
 }
 RunSummary readSummary(std::istream &in, int version) {
     RunSummary s;
@@ -71,6 +73,12 @@ RunSummary readSummary(std::istream &in, int version) {
         in >> s.moneySpent;
     if (version >= 4)
         in >> s.surveyRecovered;
+    if(version>=5) {
+        int account=0;in>>s.floor>>s.floorCount>>account;
+        if(account<0||account>int(WitnessAccount::Cole)||s.floorCount<1||s.floorCount>8||s.floor<0||s.floor>=s.floorCount)
+            throw std::runtime_error("Invalid expedition progress in save");
+        s.account=WitnessAccount(account);
+    }
     if (s.moneyCollected > MaxMoney || s.moneySpent > MaxMoney)
         throw std::runtime_error("Invalid money totals in save");
     if (reason < 0 || reason > 3)
@@ -90,6 +98,20 @@ RunSummary readSummary(std::istream &in, int version) {
         std::string line;
         in >> std::quoted(line);
         s.consequences.push_back(line);
+    }
+    if(version>=5) {
+        const auto entries=count(in,4);std::set<int> seen;
+        for(size_t i=0;i<entries;++i) {
+            int room=0,account=0;StoryEvidence e;in>>room>>account>>e.floor>>e.floorSeed;
+            if(room<1||room>4||account!=int(s.account)||s.account!=WitnessAccount::Rourke||
+               e.floor<0||e.floor>s.floor||!seen.insert(room).second)
+                throw std::runtime_error("Invalid evidence provenance in save");
+            e.room=StoryRoom(room);e.account=WitnessAccount(account);
+            const ExpeditionPlan plan(s.seed,false,s.account);
+            if(s.floorCount!=plan.floorCount||plan.storyAt(e.floor)!=e.room||plan.floorSeed(e.floor)!=e.floorSeed)
+                throw std::runtime_error("Evidence does not match its expedition");
+            s.evidence.push_back(e);
+        }
     }
     return s;
 }
@@ -159,7 +181,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 4 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 5 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -201,7 +223,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 4 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 5 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);
@@ -223,6 +245,8 @@ uint64_t CampaignStore::begin(uint64_t seed, const std::string &expedition) {
     s.id = next.nextRunId++;
     s.seed = seed;
     s.expedition = expedition;
+    s.account = expedition==RourkeExpeditionTitle?WitnessAccount::Rourke:WitnessAccount::None;
+    s.floorCount = ExpeditionPlan(seed,expedition==SurveyExpeditionTitle||expedition==LegacyDaughterExpeditionTitle,s.account).floorCount;
     s.startingContext = worldContext(next.world);
     next.pending = s;
     commit(std::move(next));
@@ -251,6 +275,15 @@ RunSummary CampaignStore::resolve(const RunSummary &input, EndReason reason) {
     if (s.moneyCollected > MaxMoney || s.moneySpent > MaxMoney || s.moneySpent > w.money + s.moneyCollected)
         throw std::runtime_error("Invalid expedition spending");
     w.money = std::min(MaxMoney, w.money + s.moneyCollected - s.moneySpent);
+    if(s.account!=WitnessAccount::None) {
+        note(std::string(accountName(s.account))+": the route has left questions that his story does not answer.");
+        if(reason==EndReason::Victory&&s.account==WitnessAccount::Rourke&&s.floor+1==s.floorCount&&s.evidence.size()==4) {
+            w.flags.insert("redstone.rourke_returned");++w.completed;
+            note("Bell's revolver and the omitted firing position raise questions. Speak to Eleanor at Fort Mercy.");
+        } else note("The account is unfinished. Recovered observations remain in the journal; the expedition can be retried.");
+        if(s.interrupted)note("Interrupted expedition: the journal and floor reached use the last saved checkpoint.");
+        next.history.push_back(s);next.pending.reset();commit(std::move(next));return s;
+    }
     // Story expeditions must not mutate the unrelated mine campaign. Documents
     // copied at a checkpoint remain known after a retreat or interrupted session.
     if(s.expedition==SurveyExpeditionTitle||s.expedition==LegacyDaughterExpeditionTitle) {
@@ -378,6 +411,7 @@ std::string outcomeTitle(const RunSummary &s) {
         return "AN UNFINISHED EXPEDITION";
     if (s.reason == EndReason::Retreat)
         return "YOU LIVED TO RETURN";
+    if(s.account!=WitnessAccount::None)return "MORE EVIDENCE. MORE QUESTIONS.";
     return s.rescued ? "SIX SOULS BROUGHT HOME" : "VICTORY HAS A HOLLOW SOUND";
 }
 std::string npcDialogue(const WorldState &w, size_t npc) {

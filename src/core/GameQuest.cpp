@@ -2,6 +2,18 @@
 #include "raymath.h"
 
 namespace dw {
+std::vector<StoryEvidence> Game::journalEntries() const {
+    std::vector<StoryEvidence> entries;
+    auto include=[&](const auto &records) {
+        for(const auto &record:records) {
+            const auto it=std::find_if(entries.begin(),entries.end(),[&](const auto &e){return e.room==record.room&&e.account==record.account;});
+            if(it==entries.end())entries.push_back(record);else *it=record;
+        }
+    };
+    for(const auto &history:campaign.data().history)include(history.evidence);
+    if(run)include(run->evidence);
+    return entries;
+}
 void Game::configureArrival(const TownDocument &document) {
     questDialogue_.clear();walkingToQuest_=false;sleepTime_=-1;
     TownDocument cast;
@@ -22,7 +34,8 @@ Vector2 Game::questMarkerScreen() const {
     auto p=GetWorldToScreen(add(marker->position,{0,3.4f,0}),camera);
     p.x*=1280.f/GetScreenWidth();p.y*=800.f/GetScreenHeight();
     // Keep distant objectives usable at the edge of the view, clear of HUD panels.
-    return {std::clamp(p.x,125.f,1155.f),std::clamp(p.y,240.f,590.f)};
+    const float minimumY=campaign.data().world.flags.contains("redstone.survey_recovered")?300.f:260.f;
+    return {std::clamp(p.x,125.f,1155.f),std::clamp(p.y,minimumY,590.f)};
 }
 const QuestLine *Game::questLine() const {
     return questLine_<questDialogue_.size()?&questDialogue_[questLine_]:nullptr;
@@ -49,7 +62,7 @@ void Game::nextQuestLine() {
     if(!questLastLine()) {++questLine_;return;}
     if(conversationStage_==ArrivalStage::Tent) {
         sleepTime_=0;town.stop();
-    } else if(conversationStage_==ArrivalStage::Trail||conversationStage_==ArrivalStage::Searching) {
+    } else if(ArrivalQuest::ready(campaign.data().world)) {
         launch();
         if(!run)return;
     } else ArrivalQuest::advance(campaign,conversationStage_);

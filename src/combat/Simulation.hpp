@@ -196,7 +196,10 @@ struct ShopOffer {
 class Simulation {
   public:
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
-               MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false);
+               MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
+               WitnessAccount account = WitnessAccount::None, int floor = 0);
+    ExpeditionPlan expedition;
+    int floor = 0;
     Player player;
     Arena arena;
     Stats stats;
@@ -226,9 +229,19 @@ class Simulation {
     bool rescued = false, altarDestroyed = false, bossKilled = false, checkpointNeeded = false;
     bool followup = false, debugScenario = false;
     bool surveyTutorial = false, surveyRecovered = false, letterOpen = false;
+    bool floorExitRequested = false;
+    StoryRoom storyOpen = StoryRoom::None;
+    std::vector<StoryEvidence> evidence;
+    bool testimony() const { return expedition.account!=WitnessAccount::None; }
+    bool legacyObjectives() const { return !surveyTutorial&&!testimony(); }
+    bool lastFloor() const { return floor+1==expedition.floorCount; }
+    int storyRoomIndex() const;
+    bool storySeen() const;
+    bool canUseFloorExit() const;
+    bool advanceFloor();
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
-    bool canReturn() const { return room == finalRoom() && roomClear && (!surveyTutorial || surveyRecovered); }
+    bool canReturn() const { return lastFloor()&&canUseFloorExit(); }
     std::string tutorialHint() const;
     int room = 0;
     float messageTime = 0;
@@ -297,6 +310,7 @@ class Simulation {
   private:
     uint64_t seed_, runId_, nextEntity_ = 1, nextChain_ = 1;
     uint32_t nextParticle_ = 1; // Cosmetic stream: never consumes gameplay RNG.
+    bool canyonRiver_ = true, debugVictory_ = false;
     WorldState startingWorld_;
     std::deque<Event> queue_;
     // 4-unit XZ cells are a broad phase only; narrow phase uses swept 3D volumes.

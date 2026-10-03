@@ -27,9 +27,14 @@ SaveSlot SaveSlots::inspect(size_t slot) const {
         case ArrivalStage::Trail: result.chapter = "The lost survey"; result.detail = "Recover Bell's records"; break;
         case ArrivalStage::Searching: result.chapter = "The lost survey"; result.detail = "Retry the recovery trail"; break;
         case ArrivalStage::Report: result.chapter = "The recovered papers"; result.detail = "Report to the commander"; break;
-        case ArrivalStage::Complete: result.chapter = "Questions at Fort Mercy"; result.detail = "Survey tutorial completed"; break;
+        case ArrivalStage::Complete: result.chapter = "He died fighting"; result.detail = "Hear Caleb Rourke's account"; break;
+        case ArrivalStage::RourkeTrail: result.chapter = "Rourke's account"; result.detail = "Follow his route into the badlands"; break;
+        case ArrivalStage::RourkeSearching: result.chapter = "Rourke's account"; result.detail = "Continue the investigation"; break;
+        case ArrivalStage::EleanorResponse: result.chapter = "Another account"; result.detail = "Speak to Eleanor Bell"; break;
+        case ArrivalStage::AccountComplete: result.chapter = "Questions remain"; result.detail = "Rourke's account examined"; break;
         }
-        if (result.interrupted) result.detail = "Interrupted expedition: return to the fort";
+        if (result.interrupted) result.detail = "Interrupted at floor "+std::to_string(data.pending->floor+1)+
+            " / "+std::to_string(data.pending->floorCount)+": return to the fort";
     } catch (const std::exception &e) {
         result.state = SlotState::Unavailable;
         result.chapter = "Save unavailable";

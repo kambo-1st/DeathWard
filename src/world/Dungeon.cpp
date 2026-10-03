@@ -80,7 +80,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 }
 } // namespace
 
-Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial)
+Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story)
     : visualSeed(seed), theme(missionTheme) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
@@ -343,17 +343,96 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         shopRoom = shopSites.at(shop.bounded(uint32_t(shopSites.size())));
         rooms[size_t(shopRoom)].kind = RoomKind::Shop;
     }
+    if(!tutorial&&story!=StoryRoom::None) {
+        int chosen=roomCount()-1;
+        if(story!=StoryRoom::DryCreek) {
+            std::vector<int> candidates;
+            for(int i=1;i<roomCount()-1;++i)
+                if((rooms[size_t(i)].kind==RoomKind::Combat||rooms[size_t(i)].kind==RoomKind::Empty)&&
+                   rooms[size_t(i)].depth>=2&&i!=2&&i!=3&&
+                   std::none_of(keys.begin(),keys.end(),[&](const auto &k){return k.room==i;}))candidates.push_back(i);
+            // The unlocked ordinary network always has an eligible room. Keep a
+            // defensive fallback that still preserves shops, keys and power caches.
+            if(candidates.empty())for(int i=1;i<roomCount()-1;++i)
+                if(rooms[size_t(i)].kind==RoomKind::Combat)candidates.push_back(i);
+            Random placement(seed^0x53544f5259524f4fULL);
+            chosen=candidates.at(placement.bounded(uint32_t(candidates.size())));
+        }
+        rooms[size_t(chosen)].story=story;
+        if(story==StoryRoom::DryCreek)
+            exit=rooms.back().exit=add(rooms.back().center,mul(unit(sub(rooms.back().center,rooms.back().objective)),2.f));
+    }
     rebuildWalls();
     if (theme == MissionTheme::Canyon)
         buildCanyon(*this, canyonRiver);
+    dressStoryRoom();
 }
 void Arena::rebuildWalls() {
     walls = boundaryWalls;
     walls.insert(walls.end(), obstacles.begin(), obstacles.end());
+    for(const auto &prop:storyProps)if(prop.bounds.max.y>.45f)walls.push_back(prop.bounds);
     for (const auto &passage : passages)
         for (int side = 0; side < 2; ++side)
             if (passage.closed(side))
                 walls.push_back(passage.gates[size_t(side)]);
+}
+void Arena::dressStoryRoom() {
+    // Authored small clusters use the generated basin, never replace its room
+    // shape or passages. Keep the central walking routes and terrain features clear.
+    for(const auto &room:rooms) {
+        if(room.story==StoryRoom::None)continue;
+        std::vector<Vector3> routes{room.entry,room.exit,room.objective};
+        for(int link:room.passages) {
+            const auto &p=passages[size_t(link)];
+            const int side=p.rooms[0]==int(&room-rooms.data())?0:1;
+            routes.push_back(doorApproach(link,side));
+        }
+        auto safe=[&](Box box) {
+            for(const auto &prop:storyProps)
+                if(box.min.x<prop.bounds.max.x+.5f&&box.max.x>prop.bounds.min.x-.5f&&
+                   box.min.z<prop.bounds.max.z+.5f&&box.max.z>prop.bounds.min.z-.5f)return false;
+            for(float x=box.min.x-.7f;x<=box.max.x+.71f;x+=.5f)
+                for(float z=box.min.z-.7f;z<=box.max.z+.71f;z+=.5f) {
+                    const Vector3 p{x,.85f,z};
+                    if(roomAt(p)!=roomAt(room.center)||blocked(p,.2f))return false;
+                    for(const auto &end:routes) {
+                        const auto delta=sub(end,room.center);
+                        const float t=std::clamp(dot(sub(p,room.center),delta)/std::max(.001f,dot(delta,delta)),0.f,1.f);
+                        if(distance(p,add(room.center,mul(delta,t)))<2.f)return false;
+                    }
+                    if(canyon) {
+                        const float height=canyon->height(x,z);
+                        const auto river=canyon->riverSample(p);const auto road=canyon->roadSample(p);
+                        if(height<-.01f||height>.06f||river.distance<river.width+1||road.distance<road.width+1)return false;
+                    }
+                }
+            return true;
+        };
+        std::vector<std::pair<StoryPropKind,Vector3>> props;
+        switch(room.story) {
+        case StoryRoom::SurveyCamp:props={{StoryPropKind::Cart,{2.8f,1.8f,4.f}},{StoryPropKind::Crate,{1.1f,.8f,1.1f}}};break;
+        case StoryRoom::SplitRock:props={{StoryPropKind::SplitRock,{4.f,2.8f,2.4f}}};break;
+        case StoryRoom::RailwayCutting:props={{StoryPropKind::Rail,{3.4f,.16f,6.f}},{StoryPropKind::Timber,{1.4f,.65f,2.4f}}};break;
+        case StoryRoom::DryCreek:props={{StoryPropKind::Crate,{1.2f,.65f,1.2f}}};break;
+        default:break;
+        }
+        for(const auto &[kind,size]:props) {
+            bool placed=false;
+            for(float radius=5;radius<22&&!placed;radius+=2)
+                for(int step=0;step<24&&!placed;++step) {
+                    const float angle=float(step)*2*Pi/24+float(visualSeed%31)*.1f;
+                    const auto p=add(room.objective,{std::cos(angle)*radius,0,std::sin(angle)*radius});
+                    Box box{{p.x-size.x*.5f,0,p.z-size.z*.5f},{p.x+size.x*.5f,size.y,p.z+size.z*.5f}};
+                    if(!safe(box))continue;
+                    if(kind==StoryPropKind::SplitRock) {
+                        auto left=box,right=box;
+                        left.max.x=p.x-.3f;right.min.x=p.x+.3f;right.max.y*=.85f;
+                        storyProps.push_back({kind,left});storyProps.push_back({kind,right});
+                    } else storyProps.push_back({kind,box});
+                    rebuildWalls();placed=true;
+                }
+        }
+    }
 }
 void Arena::sealRoom(int index) {
     for (auto &passage : passages)

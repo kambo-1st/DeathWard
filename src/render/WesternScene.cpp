@@ -252,6 +252,13 @@ void WesternScene::generate(const Arena &arena) {
     lighting_.invalidate();
     if (arena.theme == MissionTheme::Canyon && arena.canyon) {
         generateCanyon(arena);
+        for(const auto &prop:arena.storyProps) {
+            const auto asset=prop.kind==StoryPropKind::Cart?WesternAsset::Cart:
+                prop.kind==StoryPropKind::SplitRock?WesternAsset::RockA:
+                prop.kind==StoryPropKind::Rail?WesternAsset::Rail:
+                prop.kind==StoryPropKind::Timber?WesternAsset::Woodpile:WesternAsset::Crate;
+            placements_.push_back({asset,prop.bounds});
+        }
         generateRoomDecorations(arena);
         return;
     }

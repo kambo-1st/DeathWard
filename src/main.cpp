@@ -498,7 +498,7 @@ int main(int argc, char **argv) {
             audioFrame.dt = GetFrameTime();
             audioFrame.context = game.audioContext;
             audioFrame.music = editing || filming ? dw::MusicScene::Silent : game.musicScene();
-            audioFrame.paused = editing || filming || game.paused ||
+            audioFrame.paused = editing || filming || game.paused || game.letterVisible() || game.journalVisible() ||
                                 (game.screen != dw::Screen::Hub && game.screen != dw::Screen::Expedition);
             audioFrame.environment = game.activeHub == dw::HubKind::Redstone
                                          ? dw::AudioEnvironment::Canyon
@@ -762,6 +762,23 @@ int main(int argc, char **argv) {
             },game.arrivalActive(),int(game.arrivalStage()),game.questDialogueOpen(),game.sleeping(),game.walkingToQuest(),
               questPixel.x,questPixel.y,game.questLastLine(),game.questLine()?game.questLine()->speaker.c_str():"",
               game.run&&game.run->surveyTutorial);
+            Vector2 evidencePixel{},exitPixel{};
+            if(game.run) {
+                const int site=game.run->storyRoomIndex();
+                const auto p=game.run->surveyTutorial?game.run->surveyPosition():
+                    site>=0?game.run->arena.rooms[size_t(site)].objective:game.run->player.position;
+                evidencePixel=GetWorldToScreen({p.x,.33f,p.z},game.camera);
+                exitPixel=GetWorldToScreen(game.run->arena.exit,game.camera);
+                evidencePixel.x*=1280.f/GetScreenWidth();evidencePixel.y*=800.f/GetScreenHeight();
+                exitPixel.x*=1280.f/GetScreenWidth();exitPixel.y*=800.f/GetScreenHeight();
+            }
+            EM_ASM({
+                if(Module.verify)Module.expedition=({floor:$0,floors:$1,rooms:$2,account:$3,site:$4,
+                    evidence:$5,journal:!!$6,letter:!!$7,evidenceX:$8,evidenceY:$9,exitX:$10,exitY:$11});
+            },game.run?game.run->floor:-1,game.run?game.run->expedition.floorCount:0,
+              game.run?game.run->arena.roomCount():0,game.run?int(game.run->expedition.account):0,
+              game.run?game.run->storyRoomIndex():-1,game.run?int(game.run->evidence.size()):0,
+              game.journalVisible(),game.letterVisible(),evidencePixel.x,evidencePixel.y,exitPixel.x,exitPixel.y);
             EM_ASM({
                 if(Module.verify) Module.cinematic=({active:!!$0,time:$1,playing:!!$2,dirty:!!$3,storm:$4,voices:$5});
                 if(Module.verify) Object.assign(Module.cinematic,({cast:$6,speaker:UTF8ToString($7),story:!!$8,ending:!!$9,track:$10,key:$11,trainSpeed:$12}));

@@ -6,7 +6,8 @@ namespace dw {
 namespace {
 constexpr const char *Flags[]={"redstone.arrived", "redstone.evening_conductor", "redstone.slept",
     "redstone.morning_conductor", "redstone.survey_requested", "redstone.search_started",
-    "redstone.survey_recovered", "redstone.survey_reported"};
+    "redstone.survey_recovered", "redstone.survey_reported", "redstone.rourke_heard",
+    "redstone.rourke_departed", "redstone.rourke_returned", "redstone.eleanor_response"};
 }
 ArrivalStage ArrivalQuest::stage(const WorldState &world) {
     // Require the complete prefix; unrelated/debug flags cannot skip a conversation.
@@ -51,6 +52,21 @@ std::vector<QuestLine> ArrivalQuest::dialogue(ArrivalStage at) {
         {"YOU","She says the route was different from the one her father showed Mercer."},
         {"COMMANDER","That tells us what she wrote. It does not tell us why Bell changed course, or how he died."},
         {"COMMANDER","Caleb Rourke, their guide, is being held here. He is very willing to tell his version. We will need to listen carefully."}};
+    case ArrivalStage::Complete:return {
+        {"CALEB ROURKE","Bell hired me because I knew the northern badlands. Mercer didn't like taking directions from an outlaw. Bell cared more about reaching his survey line."},
+        {"CALEB ROURKE","Then I saw the old army map. A payroll wagon, lost years ago. Your respectable surveyor was hunting money. I asked for my share."},
+        {"YOU","And Bell died?"},
+        {"CALEB ROURKE","He drew first. Shot after shot, across the dry creek. I gave him every chance to surrender. He died better than most men live."},
+        {"CALEB ROURKE","Mercer had already run. Eleanor vanished. Follow the camp past the split rock and the old cutting. You'll see where it happened."},
+        {"YOU","I'll follow the route you described. Your account will have to stand beside whatever I find."}};
+    case ArrivalStage::RourkeTrail:
+    case ArrivalStage::RourkeSearching:return {{"ROURKE'S ACCOUNT","Follow Rourke's account into the badlands? This journey crosses several floors of connected rooms. His camp, split rock, railway cutting and dry creek lie along the way."}};
+    case ArrivalStage::EleanorResponse:return {
+        {"ELEANOR BELL","What did Rourke say happened?"},
+        {"YOU","A magnificent duel. Your father fired repeatedly. But his revolver had only one discharged chamber, and there were shots from a position Rourke never mentioned."},
+        {"ELEANOR BELL","Of course that is how he tells it. That is exactly the man he wants to be."},
+        {"YOU","The revolver could have been reloaded or handled afterward. It leaves questions, not a verdict."},
+        {"ELEANOR BELL","There was no treasure. My father learned how Rourke guided claim jumpers through railroad land. That is why they argued. And my father was still alive when I came back."}};
     default:return {};
     }
 }
@@ -85,6 +101,17 @@ std::optional<QuestMarker> ArrivalQuest::marker(const WorldState &world, const T
         result={at==ArrivalStage::Report?"THE RECOVERED PAPERS":"TROUBLE AT THE FORT",
                 at==ArrivalStage::Report?"Bring Bell's records and Eleanor's letter to the commander.":"Find out what is troubling the commander.",
                 "Talk to commander","!",it->position,it->position};
+    } else if(at==ArrivalStage::Complete||at==ArrivalStage::EleanorResponse) {
+        const char *id=at==ArrivalStage::Complete?"story-outlaw":"story-wife";
+        const auto &people=residents.residents();
+        const auto it=std::find_if(people.begin(),people.end(),[&](const auto &c){return c.definition.id==id;});
+        if(it==people.end())return {};
+        result={at==ArrivalStage::Complete?"HE DIED FIGHTING":"ANOTHER ACCOUNT",
+            at==ArrivalStage::Complete?"Hear Caleb Rourke's account in the holding yard.":"Ask Eleanor about Rourke's account and the recovered evidence.",
+            at==ArrivalStage::Complete?"Talk to Rourke":"Talk to Eleanor","!",it->position,it->position};
+    } else if(at==ArrivalStage::RourkeTrail||at==ArrivalStage::RourkeSearching) {
+        result={"ROURKE'S ACCOUNT","Follow his route through the badlands. Examine the story sites along the way.",
+            at==ArrivalStage::RourkeTrail?"Follow his account":"Retry his account",">",ground.mission,ground.mission};
     } else if(at==ArrivalStage::Trail||at==ArrivalStage::Searching) {
         result={"THE LOST SURVEY","Recover Bell's survey records from the near camp.",
                 at==ArrivalStage::Trail?"Recover the records":"Retry the recovery",">",ground.mission,ground.mission};

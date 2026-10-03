@@ -341,7 +341,7 @@ void testCampaign(const std::filesystem::path &path) {
     id = restart.begin(456);
     dw::Simulation next(456, id, restart.data().world);
     check(next.items.empty() && next.player.maxHp == 100, "temporary items and health costs reset");
-    next.bossKilled = true;
+    next.finishDebug(true);
     next.altarDestroyed = true;
     auto won = restart.resolve(next.summary(), dw::EndReason::Victory);
     check(restart.data().world.mineOpen && restart.data().world.prosperity == 62,
@@ -350,6 +350,7 @@ void testCampaign(const std::filesystem::path &path) {
     id = restart.begin(456);
     dw::Simulation revisit(456, id, restart.data().world);
     check(revisit.rescued && revisit.followup, "revisit remembers rescue and boss");
+    revisit.finishDebug(true);
     restart.resolve(revisit.summary(), dw::EndReason::Victory);
     check(restart.data().world.population == 48 && restart.data().world.prosperity == 62,
           "revisit cannot duplicate rescue or prosperity rewards");
@@ -361,7 +362,7 @@ void testCampaign(const std::filesystem::path &path) {
           "debug reset keeps backup");
     id = reloaded.begin(789);
     dw::Simulation hollow(789, id, reloaded.data().world);
-    hollow.bossKilled = true;
+    hollow.finishDebug(true);
     reloaded.resolve(hollow.summary(), dw::EndReason::Victory);
     check(!reloaded.data().world.mineOpen && reloaded.data().world.flags.contains("miners_stranded"),
           "victory without rescue is a distinct outcome");
@@ -494,11 +495,12 @@ void testLoop() {
             check(!door.sealed[0] && !door.sealed[1], "combat seals reopen after clearing the room");
         }
     }
-    check(powers >= 1 && powers <= 2 && run.powerUpsTaken == powers, "at most two powers per expedition");
+    check(powers >= 1 && powers <= 2 && run.powerUpsTaken == powers, "at most two powers per floor");
     run.player.position = run.arena.exit;
     run.interact();
-    check(run.finished && run.bossKilled && run.stats.rooms == dw::RoomCount,
-          "debug shortcut completes all fifteen rooms and the boss");
+    check(!run.finished && run.floorExitRequested && run.bossKilled && run.stats.rooms == dw::RoomCount,
+          "clearing fifteen rooms opens the next floor without ending the expedition");
+    check(run.advanceFloor()&&run.floor==1&&!run.finished,"the ordinary mission continues on a fresh floor");
 }
 } // namespace
 int main() {

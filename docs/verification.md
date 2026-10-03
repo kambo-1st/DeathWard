@@ -1193,3 +1193,60 @@ and clean natural completion. Browser opening/full-experience checks cover the
 skip button and track whether any editor frame was displayed during runtime.
 These graphical regressions are compiled/syntax-checked but could not run here:
 GLFW cannot open X11 display :0 under the current session restrictions.
+
+## Multi-floor expeditions and Rourke's account (2026-10-02)
+
+Content version `deathward-m1-54` adds seeded 4–8-floor runs with 15 rooms per
+floor, preserves the one-floor/five-room tutorial, and embeds Rourke's four
+inspectable sites into ordinary generated networks. Format 5 saves floor progress
+and evidence provenance while accepting formats 1–4. Completed accounts lead to
+Eleanor's response; observations survive incomplete runs without completing them.
+
+Native and Emscripten builds pass. All **26 headless CTest suites pass** (29.46
+seconds in the final run). The new `expedition` suite checks:
+
+- All five run lengths across 256 seeds, unique deterministic floor seeds and
+  the ordered four-site schedule.
+- Story placements across five run seeds: 15 rooms, shops/powers retained,
+  reachable objectives and doors, dry/flat dressing, road/river clearance,
+  non-overlapping prop footprints and solid-prop collision.
+- A complete seven-floor run with normal click-to-walk inspection, required-site
+  exit gates, journal pause behavior, provenance and duplicate-read handling.
+- Health, damage, revolver round, powers, wallet, keys, dynamite and statistics
+  carried across floors; fresh encounters/rewards and no stale hazards or shot
+  reactions on new floors.
+- Initial pending-save classification, interruption before the first checkpoint,
+  partial evidence recovery, idempotent outcomes, no mine consequences for
+  testimony runs, and victory shortcuts that cannot invent evidence.
+- Format-4 migration and format-5 rejection of invalid witness, floor, site and
+  derived-seed records, even with a valid checksum.
+- Real walking routes to Rourke's holding yard and Eleanor's shelter.
+
+The explicit native `deathward_arrival_input_tests` passes the complete arrival
+tutorial, Rourke dialogue, seed-42 seven-floor run, four mouse inspections,
+journal controls/input capture, floor transitions, final return, Eleanor's
+response and saved journal reload. The general `deathward_input_tests` also
+passes its existing movement, aim, doors, keys, powers, shops, dynamite, camera,
+cheat, death, hub and editor-selection regressions. Graphics access was available
+in this session. Screenshots under `artifacts/quest/` were inspected, including
+the journal, scene dressing and return conversation.
+
+The story input regression caught an evidence case overlapped by a passage's
+generous click volume; visible interaction objects now take priority. Quest
+markers are also kept below the HUD/letter button. Story prop picking uses the
+renderer's mesh and transparency handling while retaining physical collision.
+
+Reproduce with `ctest --test-dir build --output-on-failure -j4`,
+`./build/deathward_arrival_input_tests` and `./build/deathward_input_tests`.
+`EMSDK=/path/to/emsdk scripts/build-web.sh` builds the browser version;
+`web/arrival-test.cjs` checks the browser tutorial/letter/report, Rourke launch,
+4–8-floor plan/15-room entrance, journal input capture, retreat and saved retry.
+The browser check passes, including an eight-floor plan and format-5 reload,
+with no JavaScript or WebGL errors. The full floor/evidence traversal is exercised
+by the native input suite.
+
+These checks use combat shortcuts for navigation/input verification; they are
+not a claim that the longer runs are difficulty-balanced. Exact mid-floor save
+resume, animated testimony reconstructions and the remaining three accounts
+are not implemented. Closing an expedition retains its checkpointed findings
+and returns to the hub, as before.

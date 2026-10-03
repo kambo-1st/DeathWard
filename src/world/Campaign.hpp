@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Types.hpp"
+#include "world/Expedition.hpp"
 #include <filesystem>
 #include <optional>
 #include <set>
@@ -7,6 +8,7 @@
 namespace dw {
 inline constexpr const char *LegacyDaughterExpeditionTitle = "Before First Light";
 inline constexpr const char *SurveyExpeditionTitle = "The Lost Survey";
+inline constexpr const char *RourkeExpeditionTitle = "Rourke's Account";
 enum class EndReason : int { Victory, Death, Retreat, Interrupted };
 struct Npc {
     std::string name;
@@ -29,6 +31,9 @@ struct RunSummary {
     EndReason reason = EndReason::Retreat;
     bool rescued = false, bossKilled = false, altarDestroyed = false, interrupted = false;
     bool surveyRecovered = false;
+    int floor = 0, floorCount = 1;
+    WitnessAccount account = WitnessAccount::None;
+    std::vector<StoryEvidence> evidence;
     Stats stats;
     uint64_t moneyCollected = 0;
     uint64_t moneySpent = 0;

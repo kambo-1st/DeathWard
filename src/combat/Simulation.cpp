@@ -2,20 +2,26 @@
 #include "items/Items.hpp"
 #include <iostream>
 #include <numeric>
+#include <stdexcept>
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial)
-    : arena(seed, theme, canyonRiver, tutorial), encounterRng(seed ^ 0x454e434f554e5445ULL),
-      rewardRng(seed ^ 0x5245574152445354ULL), combatRng(seed ^ 0x434f4d424154524eULL), seed_(seed),
-      runId_(runId), startingWorld_(world) {
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level)
+    : expedition(seed,tutorial,account),floor(level),
+      arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level)),
+      encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
+      rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
+      combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
+      runId_(runId), canyonRiver_(canyonRiver), startingWorld_(world) {
+    if(account!=WitnessAccount::None&&account!=WitnessAccount::Rourke)
+        throw std::invalid_argument("This testimony has not been authored yet.");
     surveyTutorial=tutorial;
     rooms.resize(arena.rooms.size());
     rescued = world.minersRescued;
     altarDestroyed = world.altarDestroyed;
     bossKilled = theme == MissionTheme::Canyon ? world.flags.contains("canyon_cleared") : world.bossDefeated;
     followup = bossKilled;
-    if(surveyTutorial)rescued=altarDestroyed=bossKilled=followup=false;
+    if(surveyTutorial||testimony())rescued=altarDestroyed=bossKilled=followup=false;
     player.position = arena.entrance;
     player.aim = arena.rooms[0].center;
     player.facing = unit(sub(player.aim, player.position));
@@ -39,9 +45,43 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     prepareShop();
     enterRoom(0);
     if(surveyTutorial)announce("THE LOST SURVEY / One floor. Recover Bell's records and return to Fort Mercy.",6);
+    else if(testimony())announce(std::string(accountName(expedition.account))+" / Follow his route; examine what remains.",6);
     else announce(std::string(missionTheme(theme).region) +
                  (followup ? " / return to unfinished business" : " / find the six missing miners"),
              5);
+}
+int Simulation::storyRoomIndex() const {
+    for(size_t i=0;i<arena.rooms.size();++i)if(arena.rooms[i].story!=StoryRoom::None)return int(i);
+    return -1;
+}
+bool Simulation::storySeen() const {
+    const auto expected=expedition.storyAt(floor);
+    return expected==StoryRoom::None||std::any_of(evidence.begin(),evidence.end(),[&](const auto &e) {
+        return e.floor==floor&&e.floorSeed==seed_&&e.account==expedition.account&&e.room==expected;
+    });
+}
+bool Simulation::canUseFloorExit() const {
+    return room==finalRoom()&&roomClear&&(!surveyTutorial||surveyRecovered)&&storySeen();
+}
+bool Simulation::advanceFloor() {
+    if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
+    // Construct first: a load failure leaves the previous floor and player intact.
+    Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1);
+    const auto spawn=next.player;
+    next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
+    next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
+    next.player.dodgeMoving=false;
+    const auto entranceRooms=next.stats.rooms;next.stats=stats;next.stats.rooms+=entranceRooms;
+    for(auto &progress:next.rooms)for(auto &enemy:progress.residents)enemy.observedShots=next.stats.shots;
+    next.items=items;next.keys=keys;next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
+    next.moneyCollected=moneyCollected;next.moneySpent=moneySpent;
+    next.rescued=rescued;next.altarDestroyed=altarDestroyed;next.evidence=evidence;
+    next.godMode=godMode;next.limits=limits;next.audioEpoch=audioEpoch+1;
+    next.checkpointNeeded=true;
+    next.announce("FLOOR "+std::to_string(next.floor+1)+" OF "+std::to_string(expedition.floorCount)+
+        (testimony()?" / "+std::string(accountName(expedition.account)):" / The expedition continues."),5);
+    *this=std::move(next);
+    return true;
 }
 void Simulation::announce(std::string text, float seconds) {
     message = std::move(text);
@@ -64,6 +104,7 @@ const Enemy *Simulation::boss() const {
     return nullptr;
 }
 std::string Simulation::roomName() const {
+    if(arena.rooms[size_t(room)].story!=StoryRoom::None)return storyRoomName(arena.rooms[size_t(room)].story);
     if(surveyTutorial) {
         static constexpr const char *names[]={"Beyond the Gate","Dust Hollow","The Sheltered Bend","Last Approach","Survey Camp"};
         return names[size_t(room)];
@@ -210,7 +251,8 @@ void Simulation::clearRoom() {
     event.type = EventType::RoomCleared;
     queueRoot(event);
     announce(surveyTutorial?"The trail is clear. Continue toward Bell's survey camp.":room == finalRoom()
-                 ? "The final chamber is clear. Use the return lantern to reach town."
+                 ? (!storySeen()?"The floor is clear. Examine the marked story site before leaving.":
+                    lastFloor()?"The expedition is clear. Use the lantern to return home.":"The floor is clear. Use the lantern to continue deeper.")
                  : "Room cleared. Doors reopened. Choose a passage; look for keys and power caches.",
              5);
 }
@@ -267,6 +309,8 @@ void Simulation::startBoss() {
     jumpDebug(finalRoom(), true);
 }
 void Simulation::beginBossEncounter() {
+    if(testimony()) {announce(std::string(accountName(expedition.account))+
+        (lastFloor()?" / THE DRY CREEK. Clear the room, then examine the evidence.":" / Clear the final room to continue deeper."),6);return;}
     announce(arena.theme == MissionTheme::Canyon ? "THE INFESTED MESA / clear the final monster group"
              : followup                          ? "Finish what remains"
                                                  : "THE HOLLOW SHERIFF",
@@ -385,6 +429,14 @@ void Simulation::startStress() {
 }
 void Simulation::interact() {
     cancelMove();
+    const auto &site=arena.rooms[size_t(room)];
+    if(site.story!=StoryRoom::None&&roomClear&&distance(player.position,site.objective)<2.6f&&arena.sight(player.position,site.objective)) {
+        if(!storySeen()) {
+            evidence.push_back({site.story,expedition.account,floor,seed_});
+            audioCues.push(AudioCueKind::Pickup,site.objective);checkpointNeeded=true;
+        }
+        storyOpen=site.story;return;
+    }
     if(surveyTutorial && room==finalRoom() && roomClear &&
        distance(player.position,surveyPosition())<2.6f && arena.sight(player.position,surveyPosition())) {
         if(!surveyRecovered)audioCues.push(AudioCueKind::Pickup,surveyPosition());
@@ -403,14 +455,14 @@ void Simulation::interact() {
         offerReward();
         return;
     }
-    if (!surveyTutorial && !rescued && distance(player.position, arena.miners) < 2.6f) {
+    if (legacyObjectives() && !rescued && distance(player.position, arena.miners) < 2.6f) {
         audioCues.push(AudioCueKind::Pickup, arena.miners);
         rescued = true;
         checkpointNeeded = true;
         announce("Six miners escape through the old shaft. Mary will remember.", 5);
         return;
     }
-    if (!surveyTutorial && !altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
+    if (legacyObjectives() && !altarDestroyed && distance(player.position, arena.altar) < 2.6f) {
         audioCues.push(AudioCueKind::Explosion, arena.altar);
         altarDestroyed = true;
         checkpointNeeded = true;
@@ -418,9 +470,13 @@ void Simulation::interact() {
         announce("The altar breaks. Something loses your scent.", 5);
         return;
     }
-    if (canReturn() && distance(player.position, arena.exit) < 2.8f) {
-        finished = true;
+    if (canUseFloorExit() && distance(player.position, arena.exit) < 2.8f) {
+        if(lastFloor())finished=true;
+        else floorExitRequested=true;
         return;
+    }
+    if(room==finalRoom()&&roomClear&&!storySeen()&&distance(player.position,arena.exit)<2.8f) {
+        announce("Examine the marked story site before leaving this floor.",4);return;
     }
     for (size_t i = 0; i < arena.passages.size(); ++i)
         for (int side = 0; side < 2; ++side)
@@ -431,6 +487,7 @@ void Simulation::interact() {
 }
 void Simulation::finishDebug(bool victory) {
     if (victory) {
+        debugVictory_=true;
         bossKilled = true;
         finished = true;
     } else {
@@ -443,12 +500,13 @@ void Simulation::finishDebug(bool victory) {
 RunSummary Simulation::summary() const {
     RunSummary s;
     s.id = runId_;
-    s.seed = seed_;
-    s.expedition = surveyTutorial?SurveyExpeditionTitle:missionTheme(arena.theme).title;
+    s.seed = expedition.seed;
+    s.floor=floor;s.floorCount=expedition.floorCount;s.account=expedition.account;s.evidence=evidence;
+    s.expedition = surveyTutorial?SurveyExpeditionTitle:testimony()?RourkeExpeditionTitle:missionTheme(arena.theme).title;
     s.startingContext = CampaignStore::worldContext(startingWorld_);
-    s.rescued = !surveyTutorial&&rescued;
-    s.altarDestroyed = !surveyTutorial&&altarDestroyed;
-    s.bossKilled = !surveyTutorial&&bossKilled;
+    s.rescued = legacyObjectives()&&rescued;
+    s.altarDestroyed = legacyObjectives()&&altarDestroyed;
+    s.bossKilled = legacyObjectives()&&bossKilled&&(lastFloor()||debugVictory_);
     s.surveyRecovered = surveyTutorial&&surveyRecovered;
     s.stats = stats;
     s.items = items;
@@ -945,7 +1003,7 @@ void Simulation::updateProjectiles(float dt) {
     std::erase_if(projectiles, [](const Projectile &p) { return !p.alive; });
 }
 void Simulation::step(const Input &input, float dt) {
-    if (rewardOpen || shopOpen || letterOpen || finished || dead)
+    if (rewardOpen || shopOpen || letterOpen || storyOpen!=StoryRoom::None || floorExitRequested || finished || dead)
         return;
     stats.duration += dt;
     for (auto &burst : particleBursts) burst.age += dt;
@@ -954,7 +1012,7 @@ void Simulation::step(const Input &input, float dt) {
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);
     updatePlayer(input, dt);
-    if (shopOpen || letterOpen)
+    if (shopOpen || letterOpen || storyOpen!=StoryRoom::None || floorExitRequested || finished)
         return;
     const int location = arena.roomAt(player.position);
     if (roomClear && location >= 0 && location != room) {
