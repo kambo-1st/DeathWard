@@ -1,4 +1,5 @@
 #include "render/ParticleEffects.hpp"
+#include "platform/Assets.hpp"
 #include "combat/Simulation.hpp"
 #include <set>
 #include "render/ShaderPlatform.hpp"
@@ -47,7 +48,7 @@ uint32_t seedFor(const std::string &id, size_t n) {
 unsigned char byte(float f) { return static_cast<unsigned char>(std::clamp(f, 0.f, 1.f) * 255); }
 } // namespace
 std::filesystem::path ParticleEffects::assetDirectory() {
-    const auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / "particles";
+    const auto source = sourceAssetDirectory() / "particles";
     if (std::filesystem::is_regular_file(source / "fire.particles")) return source;
     return std::filesystem::path(GetApplicationDirectory()) / "assets/particles";
 }

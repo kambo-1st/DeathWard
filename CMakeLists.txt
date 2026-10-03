@@ -5,6 +5,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 option(DEATHWARD_SANITIZERS "Enable address and undefined behavior sanitizers" OFF)
+option(DEATHWARD_PACKAGED_ASSETS "Load native assets beside the executable, never from the checkout" OFF)
+if(DEATHWARD_PACKAGED_ASSETS)
+    add_compile_definitions(DEATHWARD_PACKAGED_ASSETS)
+endif()
+if(MSVC)
+    # Preserve the game's UTF-8 text regardless of the Windows system code page.
+    add_compile_options(/utf-8)
+endif()
 if(EMSCRIPTEN)
     set(PLATFORM Web CACHE STRING "raylib platform" FORCE)
     set(GRAPHICS GRAPHICS_API_OPENGL_ES3 CACHE STRING "WebGL 2" FORCE)
@@ -87,12 +95,20 @@ function(deathward_assets target)
         target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="/assets")
         return()
     endif()
+    target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    if(TARGET deathward_runtime_assets)
+        add_dependencies(${target} deathward_runtime_assets)
+        return()
+    endif()
+    # Game and graphics checks share a runtime directory. Stage it once: parallel
+    # per-executable copies race on Windows file locks (especially streamed audio).
+    add_custom_target(deathward_runtime_assets)
+    add_dependencies(${target} deathward_runtime_assets)
     foreach(ui_file title.ttf body.ttf LICENSE.txt)
         set(ui_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/ui/${ui_file}")
-        set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${ui_asset}")
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/ui"
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${ui_asset}" "$<TARGET_FILE_DIR:${target}>/assets/ui/${ui_file}"
+        add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/ui"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${ui_asset}" "$<TARGET_FILE_DIR:deathward>/assets/ui/${ui_file}"
             VERBATIM)
     endforeach()
     file(GLOB particle_assets CONFIGURE_DEPENDS
@@ -100,61 +116,52 @@ function(deathward_assets target)
         "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.png"
         "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.particles"
         "${CMAKE_CURRENT_SOURCE_DIR}/assets/particles/*.attachments")
-    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS ${particle_assets})
     foreach(particle_asset ${particle_assets})
         get_filename_component(particle_file "${particle_asset}" NAME)
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/particles"
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${particle_asset}" "$<TARGET_FILE_DIR:${target}>/assets/particles/${particle_file}"
+        add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/particles"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${particle_asset}" "$<TARGET_FILE_DIR:deathward>/assets/particles/${particle_file}"
             VERBATIM)
     endforeach()
     file(GLOB_RECURSE audio_assets CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.wav" "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio/*.ogg")
-    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS ${audio_assets})
-    add_custom_command(TARGET ${target} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio" "$<TARGET_FILE_DIR:${target}>/assets/audio"
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/audio" "$<TARGET_FILE_DIR:deathward>/assets/audio"
         VERBATIM)
     foreach(animal_file ${animal_models} town.animals)
         set(animal_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/animals/${animal_file}")
-        set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${animal_asset}")
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/animals"
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${animal_asset}" "$<TARGET_FILE_DIR:${target}>/assets/animals/${animal_file}"
+        add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/animals"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${animal_asset}" "$<TARGET_FILE_DIR:deathward>/assets/animals/${animal_file}"
             VERBATIM)
     endforeach()
     set(bandit_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/bandit/bandit.glb")
     set(cowgirl_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/cowgirl/cowgirl.glb")
-    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${cowgirl_asset}")
-    add_custom_command(TARGET ${target} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/cowgirl"
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${cowgirl_asset}" "$<TARGET_FILE_DIR:${target}>/assets/cowgirl/cowgirl.glb"
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/cowgirl"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${cowgirl_asset}" "$<TARGET_FILE_DIR:deathward>/assets/cowgirl/cowgirl.glb"
         VERBATIM)
-    target_compile_definitions(${target} PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
-    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${bandit_asset}")
-    add_custom_command(TARGET ${target} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/bandit"
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${bandit_asset}" "$<TARGET_FILE_DIR:${target}>/assets/bandit/bandit.glb"
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/bandit"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${bandit_asset}" "$<TARGET_FILE_DIR:deathward>/assets/bandit/bandit.glb"
         VERBATIM)
     foreach(western_file western.glb western.catalog)
         set(western_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/western/${western_file}")
-        set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${western_asset}")
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/western"
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${western_asset}" "$<TARGET_FILE_DIR:${target}>/assets/western/${western_file}"
+        add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/western"
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different "${western_asset}" "$<TARGET_FILE_DIR:deathward>/assets/western/${western_file}"
             VERBATIM)
     endforeach()
     file(GLOB cast_assets CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/assets/cinematic_cast/*.glb")
-    set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS ${cast_assets} "${CMAKE_CURRENT_SOURCE_DIR}/assets/train_opening/arrival.cinematic")
-    add_custom_command(TARGET ${target} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/cinematic_cast" "$<TARGET_FILE_DIR:${target}>/assets/cinematic_cast"
-        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/train_opening"
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/assets/train_opening/arrival.cinematic" "$<TARGET_FILE_DIR:${target}>/assets/train_opening/arrival.cinematic" VERBATIM)
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/cinematic_cast" "$<TARGET_FILE_DIR:deathward>/assets/cinematic_cast"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/train_opening"
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_CURRENT_SOURCE_DIR}/assets/train_opening/arrival.cinematic" "$<TARGET_FILE_DIR:deathward>/assets/train_opening/arrival.cinematic" VERBATIM)
     foreach(hub_pack town frontier redstone train_opening)
         foreach(town_file town.glb town.scene town.nav town.labels)
             set(town_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/${hub_pack}/${town_file}")
-            set_property(TARGET ${target} APPEND PROPERTY LINK_DEPENDS "${town_asset}")
-            add_custom_command(TARGET ${target} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/assets/${hub_pack}"
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different "${town_asset}" "$<TARGET_FILE_DIR:${target}>/assets/${hub_pack}/${town_file}"
+            add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:deathward>/assets/${hub_pack}"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different "${town_asset}" "$<TARGET_FILE_DIR:deathward>/assets/${hub_pack}/${town_file}"
                 VERBATIM)
         endforeach()
     endforeach()

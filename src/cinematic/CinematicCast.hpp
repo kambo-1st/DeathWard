@@ -1,4 +1,5 @@
 #pragma once
+#include "platform/Assets.hpp"
 #include "cinematic/Cinematic.hpp"
 #include "render/TownActorModels.hpp"
 #include "rlgl.h"
@@ -17,7 +18,7 @@ class CinematicCast {
                 model=std::make_unique<SkinnedModel>();
                 auto path=TownActorModels::modelPath(name);
                 if(name!="bandit"&&name!="cowgirl") {
-                    path=std::filesystem::path(DEATHWARD_ASSET_DIR)/"cinematic_cast"/(name+".glb");
+                    path=sourceAssetDirectory()/"cinematic_cast"/(name+".glb");
                     if(!std::filesystem::exists(path))path=std::filesystem::path(GetApplicationDirectory())/"assets/cinematic_cast"/(name+".glb");
                 }
                 model->load(path,true);

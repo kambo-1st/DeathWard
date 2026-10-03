@@ -203,7 +203,7 @@ void persistence(const std::filesystem::path &directory) {
     }
     const auto legacy = directory / "legacy.save";
     {
-        std::ofstream out(legacy);
+        std::ofstream out(legacy, std::ios::binary);
         out << "DEATHWARD 1 " << checksum << '\n' << payload;
     }
     CampaignStore migrated(legacy);

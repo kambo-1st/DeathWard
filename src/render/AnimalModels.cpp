@@ -1,10 +1,11 @@
 #include "render/AnimalModels.hpp"
+#include "platform/Assets.hpp"
 namespace dw {
 std::filesystem::path AnimalModels::assetDirectory() {
 #ifdef __EMSCRIPTEN__
     return "/assets/animals";
 #else
-    const auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / "animals";
+    const auto source = sourceAssetDirectory() / "animals";
     if (std::filesystem::is_directory(source))
         return source;
     return std::filesystem::path(GetApplicationDirectory()) / "assets/animals";

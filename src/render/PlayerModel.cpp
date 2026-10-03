@@ -1,4 +1,5 @@
 #include "render/PlayerModel.hpp"
+#include "platform/Assets.hpp"
 #include "raymath.h"
 #include "rlgl.h"
 #include <cstring>
@@ -37,7 +38,7 @@ std::filesystem::path PlayerModel::assetPath() {
     const auto packaged = std::filesystem::path(GetApplicationDirectory()) / "assets" / relative;
     if (std::filesystem::is_regular_file(packaged))
         return packaged;
-    return std::filesystem::path(DEATHWARD_ASSET_DIR) / relative;
+    return sourceAssetDirectory() / relative;
 }
 PlayerModel::~PlayerModel() {
     unload();

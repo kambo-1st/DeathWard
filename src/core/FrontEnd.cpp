@@ -1,4 +1,5 @@
 #include "core/FrontEnd.hpp"
+#include "platform/Assets.hpp"
 #include <cmath>
 
 namespace dw {
@@ -19,7 +20,7 @@ Font loadFont(const char *name, int size) {
     const auto path=std::filesystem::path("/assets/ui")/name;
 #else
     auto path=std::filesystem::path(GetApplicationDirectory())/"assets/ui"/name;
-    if(!std::filesystem::exists(path))path=std::filesystem::path(DEATHWARD_ASSET_DIR)/"ui"/name;
+    if(!std::filesystem::exists(path))path=sourceAssetDirectory()/"ui"/name;
 #endif
     auto font=LoadFontEx(path.string().c_str(),size,nullptr,0);
     if(!font.texture.id)font=GetFontDefault();

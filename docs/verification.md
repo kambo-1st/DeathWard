@@ -1194,6 +1194,57 @@ skip button and track whether any editor frame was displayed during runtime.
 These graphical regressions are compiled/syntax-checked but could not run here:
 GLFW cannot open X11 display :0 under the current session restrictions.
 
+## Native Windows x64 build from WSL (2026-10-03)
+
+`scripts/build-windows.sh` invokes the Windows PowerShell build script through
+WSL interop. The verified toolchain is Visual Studio 2022 / MSVC 19.41.34123,
+Windows SDK 10.0.22000.0 and Windows CMake 4.0.3. Release uses the static MSVC
+runtime and raylib 5.5. `dumpbin /dependents` reports only WINMM, KERNEL32,
+USER32, GDI32 and SHELL32; no additional compiler DLLs are needed.
+
+The script mirrors WSL build inputs into a disposable Windows cache before
+building. MSBuild lowercased dependency paths on the case-sensitive WSL UNC
+share and unnecessarily rebuilt unchanged sources. Native runtime assets now
+stage through one shared CMake target, preventing simultaneous test executables
+from racing to copy the same audio files on Windows. Packaged builds resolve
+assets beside the executable, even when the original checkout remains available.
+Development and browser asset locations retain their previous behavior.
+
+Verified on the host's **NVIDIA GeForce RTX 4070 Ti SUPER**, native OpenGL 3.3,
+with **WASAPI stereo audio at 48 kHz**:
+
+- All **26 Windows headless suites pass** (41.70 seconds), including save-slot
+  persistence, old-save migration, expeditions, rooms, roads and rivers.
+- The native arrival input suite completes the tutorial and seven-floor Rourke
+  account, evidence inspections, journal controls, Eleanor's response and reload.
+- The native audio suite passes music/stinger playback, PCM metering, panning,
+  mixing, mute/pause and device lifecycle checks.
+- The native editor suite passes picking, buried gizmo visibility and dragging,
+  transforms, undo/redo, navigation rebaking, saving, backups and reloading.
+- Fort Mercy with storm/audio, canyon combat and the train intro render and
+  close cleanly. Captures were visually inspected. The canyon capture displays
+  the 60 FPS cap; this is a smoke check, not a general performance guarantee.
+- Linux builds and all 26 headless suites pass (32.24 seconds); WASM builds too.
+
+Legacy-save test fixtures now use binary I/O, matching the production writer;
+Windows text-mode CRLF translation previously invalidated their checksums. The
+editor's pixel check now reads the current frame before swapping buffers rather
+than relying on driver-dependent back-buffer retention. Neither change weakens
+the assertions or changes game save formats/rendering.
+
+The portable ZIP contains the executable and runtime assets, original embedded
+textures, music/effects, fonts and launch instructions, without Unity source
+files or developer saves. It is approximately **92 MiB**. The full-experience
+launcher and direct town executable are both included. Windows saves live in
+`%LOCALAPPDATA%\DeathWard`; packaged editor changes stay in that package's assets.
+
+Reproduce with `scripts/build-windows.sh -RunTests`. Explicit device/input checks
+are `deathward_audio_tests.exe`, `deathward_arrival_input_tests.exe` and
+`deathward_editor_tests.exe` in the Windows cache's `cmake/Release` directory.
+Logs and captures from this run are under ignored `artifacts/windows-*` and the
+Windows build cache. MSVC reports existing conversion/shadowing warnings; they
+are not build failures. Other Windows GPU vendors have not been exercised.
+
 ## Multi-floor expeditions and Rourke's account (2026-10-02)
 
 Content version `deathward-m1-54` adds seeded 4–8-floor runs with 15 rooms per

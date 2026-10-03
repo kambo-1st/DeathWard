@@ -1,4 +1,5 @@
 #pragma once
+#include "platform/Assets.hpp"
 #include "render/SkinnedModel.hpp"
 #include "world/TownCharacters.hpp"
 namespace dw {
@@ -10,14 +11,14 @@ class TownActorModels {
     }
     static std::filesystem::path modelPath(const std::string &name) {
         if(name=="conductor") {
-            auto source=std::filesystem::path(DEATHWARD_ASSET_DIR)/"cinematic_cast/conductor.glb";
+            auto source=sourceAssetDirectory()/"cinematic_cast/conductor.glb";
             return std::filesystem::exists(source)?source:std::filesystem::path(GetApplicationDirectory())/"assets/cinematic_cast/conductor.glb";
         }
 #ifdef __EMSCRIPTEN__
         return "/assets/" + name + "/" + name + ".glb";
 #else
         auto relative = std::filesystem::path(name) / (name + ".glb");
-        auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / relative;
+        auto source = sourceAssetDirectory() / relative;
         return std::filesystem::is_regular_file(source) ? source :
             std::filesystem::path(GetApplicationDirectory()) / "assets" / relative;
 #endif

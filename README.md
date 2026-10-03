@@ -26,7 +26,47 @@ cmake --build build --parallel 4
 ./build/deathward
 ```
 
-Windows is kept in scope through CMake and portable C++, but this milestone is tested on Linux. On Windows, use a C++20-capable Visual Studio toolchain with `cmake --build build --config Release`, then run `build/Release/deathward.exe`.
+## Build for Windows from WSL
+
+Install **Visual Studio 2022** with **Desktop development with C++** and Windows
+**CMake 3.20+**, then run in WSL:
+
+```sh
+./scripts/build-windows.sh
+```
+
+This invokes the installed Windows compiler through WSL interop and produces a
+native **Windows x64 Release** build. It does not replace the Linux or browser
+builds. WSL sources are mirrored into the disposable Windows build cache at
+`%LOCALAPPDATA%\DeathWard\build-windows`, avoiding MSBuild's case-sensitive UNC
+path problems. CMake output is in its `cmake` subdirectory; the portable
+game and ZIP are in `dist/deathward-windows-x64` and
+`dist/deathward-windows-x64.zip` in this checkout.
+
+Extract the ZIP into a writable Windows folder and double-click **Play DeathWard.cmd**
+for the full experience, or **deathward.exe** to start directly in town. Keep the
+included `assets` folder beside the executable. All runtime models, textures,
+maps, animations, fonts, music and effects are bundled; the game needs no WSL
+installation or separate Visual C++ runtime installation. It requires 64-bit
+Windows 10/11 with an OpenGL 3.3-capable graphics driver.
+
+Windows saves and preferences live in `%LOCALAPPDATA%\DeathWard`, separately from
+Linux and browser saves. Editors modify the packaged maps, without reaching into
+the original WSL checkout. The build script enables `DEATHWARD_PACKAGED_ASSETS`
+for this; ordinary development builds retain their editable source scenes.
+
+The same build script can run directly in Windows PowerShell:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-windows.ps1
+```
+
+Pass `-RunTests` to also compile the test executables and run the headless CTest
+suites on Windows. `-BuildDirectory`, `-OutputDirectory` and `-Jobs` customize
+the output and compilation parallelism; `-SkipPackage` builds only. Directory
+arguments forwarded from WSL must use Windows paths. `-RaylibSourceDirectory`
+can reuse an existing raylib 5.5 checkout; otherwise CMake fetches the pinned,
+hash-checked archive on the first build.
 
 ## Full experience
 

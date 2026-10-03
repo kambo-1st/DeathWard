@@ -1,4 +1,5 @@
 #include "render/TownScene.hpp"
+#include "platform/Assets.hpp"
 #include "raymath.h"
 #include "render/ShaderPlatform.hpp"
 #include "render/WorldPalette.hpp"
@@ -192,7 +193,7 @@ std::filesystem::path TownScene::assetDirectory(HubKind hub) {
 #ifdef __EMSCRIPTEN__
     return std::filesystem::path("/persist") / hubFolder(hub);
 #endif
-    const auto source = std::filesystem::path(DEATHWARD_ASSET_DIR) / hubFolder(hub);
+    const auto source = sourceAssetDirectory() / hubFolder(hub);
     if (std::filesystem::is_regular_file(source / "town.scene"))
         return source; // Editor saves in the checkout survive rebuilds; shipped builds use their own pack.
     auto packaged = std::filesystem::path(GetApplicationDirectory()) / "assets" / hubFolder(hub);

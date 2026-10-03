@@ -1,4 +1,5 @@
 #include "render/WesternScene.hpp"
+#include "platform/Assets.hpp"
 #include "raymath.h"
 #include "render/ShaderPlatform.hpp"
 #include "rlgl.h"
@@ -60,7 +61,7 @@ std::filesystem::path WesternScene::assetDirectory() {
     const auto packaged = std::filesystem::path(GetApplicationDirectory()) / "assets/western";
     return std::filesystem::is_regular_file(packaged / "western.glb")
                ? packaged
-               : std::filesystem::path(DEATHWARD_ASSET_DIR) / "western";
+               : sourceAssetDirectory() / "western";
 }
 WesternScene::~WesternScene() {
     unload();

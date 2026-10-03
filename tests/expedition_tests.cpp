@@ -158,7 +158,8 @@ void witnesses() {
 void saveCompatibility(const std::filesystem::path &path) {
     auto write=[&](int version,const std::string &payload) {
         uint64_t hash=14695981039346656037ULL;for(unsigned char c:payload)hash=(hash^c)*1099511628211ULL;
-        std::ofstream out(path);out<<"DEATHWARD "<<version<<' '<<hash<<'\n'<<payload;
+        // Match the real writer: Windows text mode changes checksummed LF bytes.
+        std::ofstream out(path,std::ios::binary);out<<"DEATHWARD "<<version<<' '<<hash<<'\n'<<payload;
     };
     const std::string old="2 42 50 50 0 0 0 0 0 0 100\n6\n"
         "\"redstone.arrived\"\n\"redstone.evening_conductor\"\n\"redstone.slept\"\n"
@@ -178,7 +179,7 @@ void saveCompatibility(const std::filesystem::path &path) {
     migrated=CampaignStore(path);
     Simulation run(42,migrated.data().nextRunId,migrated.data().world,MissionTheme::Canyon,true,false,WitnessAccount::Rourke);
     migrated.begin(42,run.summary().expedition);inspect(run);migrated.checkpoint(run.summary());
-    std::ifstream in(path);std::string header;std::getline(in,header);
+    std::ifstream in(path,std::ios::binary);std::string header;std::getline(in,header);
     const std::string payload((std::istreambuf_iterator<char>(in)),{});
     const auto &e=run.evidence.front();
     const std::string valid=std::to_string(int(e.room))+" 1 "+std::to_string(e.floor)+" "+std::to_string(e.floorSeed)+"\n";

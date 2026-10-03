@@ -1,5 +1,6 @@
 #include "editor/TownEditor.hpp"
 #include "raymath.h"
+#include "rlgl.h"
 #include "world/HubWorld.hpp"
 #include <chrono>
 #include <fstream>
@@ -182,7 +183,13 @@ int main() {
         const auto buried = editor.document().instances[chosen].transform;
         const Vector3 buriedPivot{buried.m12, buried.m13, buried.m14};
         const float buriedHandle = distance(editor.camera.position, editor.camera.target) * .12f;
+        // Read this frame before swapping buffers; the old back buffer is not
+        // guaranteed to retain its contents on native Windows drivers.
+        BeginDrawing();
+        editor.draw();
+        rlDrawRenderBatchActive();
         auto gizmoImage = LoadImageFromScreen();
+        EndDrawing();
         std::filesystem::create_directories("artifacts");
         ExportImage(gizmoImage, "artifacts/editor-gizmo-handles.png");
         const std::array<Vector3,3> axes{{{1,0,0},{0,1,0},{0,0,1}}};

@@ -169,7 +169,7 @@ void saving(const std::filesystem::path &directory) {
     }
     const auto legacy = directory / "v2.save";
     {
-        std::ofstream out(legacy);
+        std::ofstream out(legacy, std::ios::binary);
         out << "DEATHWARD 2 " << checksum << '\n' << payload;
     }
     CampaignStore old(legacy);

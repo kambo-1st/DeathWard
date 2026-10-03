@@ -1,4 +1,5 @@
 #include "audio/AudioSystem.hpp"
+#include "platform/Assets.hpp"
 #include "platform/Browser.hpp"
 #include <fstream>
 
@@ -89,7 +90,7 @@ std::filesystem::path AudioSystem::assetDirectory() {
     if (std::filesystem::exists(packaged / "shot_0.wav"))
         return packaged;
 #ifdef DEATHWARD_ASSET_DIR
-    return std::filesystem::path(DEATHWARD_ASSET_DIR) / "audio";
+    return sourceAssetDirectory() / "audio";
 #else
     return "assets/audio";
 #endif

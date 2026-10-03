@@ -103,7 +103,7 @@ int main() {
             "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n0\n0\n0\n";
         uint64_t hash=14695981039346656037ULL;
         for(unsigned char c:payload)hash=(hash^c)*1099511628211ULL;
-        {std::ofstream out(save);out<<"DEATHWARD 3 "<<hash<<'\n'<<payload;}
+        {std::ofstream out(save,std::ios::binary);out<<"DEATHWARD 3 "<<hash<<'\n'<<payload;}
         CampaignStore old(save);check(old.recover(),"version-3 pending search recovers");
         CampaignStore migrated(save);
         check(ArrivalQuest::stage(migrated.data().world)==ArrivalStage::Searching&&

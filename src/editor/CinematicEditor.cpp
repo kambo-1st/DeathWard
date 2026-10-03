@@ -1,4 +1,5 @@
 #include "editor/CinematicEditor.hpp"
+#include "platform/Assets.hpp"
 #include "raymath.h"
 #include <cctype>
 #include <iomanip>
@@ -19,7 +20,7 @@ std::filesystem::path CinematicEditor::openingDirectory() {
 #ifdef __EMSCRIPTEN__
     return "/persist/train_opening";
 #else
-    auto source=std::filesystem::path(DEATHWARD_ASSET_DIR)/"train_opening";
+    auto source=sourceAssetDirectory()/"train_opening";
     return std::filesystem::exists(source/"town.scene")?source:std::filesystem::path(GetApplicationDirectory())/"assets/train_opening";
 #endif
 }
@@ -56,7 +57,7 @@ bool CinematicEditor::open(const std::filesystem::path &directory, Camera3D view
         scene_.applyDocument(world_);
         navigation_.load(directory / "town.nav");
         ground_.load(directory / "town.nav");
-        audioDirectory_ = std::filesystem::path(DEATHWARD_ASSET_DIR) / "audio";
+        audioDirectory_ = sourceAssetDirectory() / "audio";
         if (!std::filesystem::is_directory(audioDirectory_)) audioDirectory_ = std::filesystem::path(GetApplicationDirectory()) / "assets/audio";
         soundFiles_.clear();
         if (std::filesystem::exists(audioDirectory_))
