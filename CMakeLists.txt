@@ -36,6 +36,7 @@ target_compile_definitions(raylib PRIVATE MA_NO_NULL)
 add_library(deathward_core
     src/cinematic/Cinematic.cpp
     src/world/TownDocument.cpp
+    src/world/TownWalkArea.cpp
     src/world/Particles.cpp
     src/world/ObjectAnimation.cpp
     src/world/TownNavigation.cpp
@@ -167,7 +168,7 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/core/FrontEnd.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp src/core/GameQuest.cpp)
+add_executable(deathward src/main.cpp src/core/FrontEnd.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/editor/TownEditorNavigation.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp src/core/GameQuest.cpp)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 if(EMSCRIPTEN)
@@ -218,6 +219,9 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_walk_area_tests tests/walk_area_tests.cpp)
+    target_link_libraries(deathward_walk_area_tests PRIVATE deathward_core raylib)
+    add_test(NAME walkable_areas COMMAND deathward_walk_area_tests)
     add_executable(deathward_expedition_tests tests/expedition_tests.cpp)
     target_link_libraries(deathward_expedition_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_expedition_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
@@ -349,7 +353,7 @@ if(BUILD_TESTING)
     add_executable(deathward_post_process_tests tests/post_process_tests.cpp src/render/PostProcess.cpp)
     target_include_directories(deathward_post_process_tests PRIVATE src)
     target_link_libraries(deathward_post_process_tests PRIVATE raylib)
-    add_executable(deathward_editor_tests tests/editor_tests.cpp src/render/AnimalModels.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/render/TownScene.cpp)
+    add_executable(deathward_editor_tests tests/editor_tests.cpp src/render/AnimalModels.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/editor/TownEditorNavigation.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_editor_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_editor_tests)
     add_executable(deathward_input_tests tests/input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)

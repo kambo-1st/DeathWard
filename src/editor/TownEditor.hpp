@@ -51,6 +51,10 @@ class TownEditor {
     void redo();
     bool save();
     bool reload();
+    void beginWalkArea(bool blocked);
+    bool addWalkArea(bool blocked, std::vector<Vector3> points);
+    bool moveWalkAreaPoint(size_t area, size_t point, Vector3 position);
+    bool rebuildWalkPreview();
     void focusSelection();
     void setMotion(ObjectMotion motion);
     void setCastsShadow(bool enabled);
@@ -88,6 +92,7 @@ class TownEditor {
         Vector3 spawn, mission;
         std::optional<size_t> selected;
         std::optional<size_t> character, stop, animal;
+        std::optional<size_t> walkArea, walkPoint;
         uint64_t revision;
     };
     enum class Tool { Move, Rotate, Scale };
@@ -119,6 +124,11 @@ class TownEditor {
     struct RouteLine { Vector3 from, to; bool valid; };
     std::vector<RouteLine> characterRoute_;
     bool animationTab_ = false, previewPlaying_ = false;
+    bool navigationTab_ = false, drawingWalkArea_ = false, drawingBlocked_ = false;
+    bool movingWalkPoint_ = false, walkPreviewValid_ = false;
+    std::vector<Vector3> walkDraft_;
+    std::optional<size_t> selectedWalkArea_, selectedWalkPoint_;
+    int walkAreaScroll_ = 0, walkPointScroll_ = 0;
     uint64_t navigationRevision_ = 0;
     std::filesystem::path directory_;
     std::optional<size_t> selected_, paletteSelection_;
@@ -152,6 +162,13 @@ class TownEditor {
     bool button(const std::string &text, Rectangle r, bool selected = false, bool enabled = true) const;
     void panel(Rectangle r, Color color) const;
     void drawUI();
+    void drawWalkAreaUI();
+    void drawWalkAreas();
+    void walkAreaClick(Vector2 pixel);
+    std::optional<Vector3> walkAreaGroundPoint(Vector2 pixel) const;
+    void finishWalkArea();
+    void removeWalkArea();
+    void cancelWalkDrawing();
     void toggleSandstormPreview();
     void drawAnimationUI();
     void drawCharacterUI();

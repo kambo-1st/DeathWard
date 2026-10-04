@@ -58,6 +58,10 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view,
         selected_.reset();
         selectedCharacter_.reset();
         selectedStop_.reset();
+        selectedWalkArea_.reset();
+        selectedWalkPoint_.reset();
+        navigationTab_ = walkPreviewValid_ = false;
+        cancelWalkDrawing();
         characterTab_ = false;
         animalTab_ = animalPalette_ = animalPlacement_ = replacingAnimal_ = false;
         animalAnimationTab_ = false;
@@ -86,7 +90,7 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view,
     }
 }
 TownEditor::Snapshot TownEditor::snapshot() const {
-    return {document_, navigation_.spawn, navigation_.mission, selected_, selectedCharacter_, selectedStop_, selectedAnimal_, revision_};
+    return {document_, navigation_.spawn, navigation_.mission, selected_, selectedCharacter_, selectedStop_, selectedAnimal_, selectedWalkArea_, selectedWalkPoint_, revision_};
 }
 void TownEditor::restore(Snapshot state) {
     document_ = std::move(state.document);
@@ -96,6 +100,10 @@ void TownEditor::restore(Snapshot state) {
     selectedCharacter_ = state.character;
     selectedStop_ = state.stop;
     selectedAnimal_ = state.animal;
+    selectedWalkArea_ = state.walkArea;
+    selectedWalkPoint_ = state.walkPoint;
+    cancelWalkDrawing();
+    walkPreviewValid_ = false;
     animalPlacement_ = replacingAnimal_ = false;
     characterPlacement_ = 0;
     revision_ = state.revision;
@@ -103,6 +111,7 @@ void TownEditor::restore(Snapshot state) {
     sync();
 }
 void TownEditor::remember() {
+    walkPreviewValid_ = false;
     undo_.push_back(snapshot());
     if (undo_.size() > 80)
         undo_.pop_front();
@@ -305,6 +314,7 @@ void TownEditor::redo() {
 }
 bool TownEditor::save() {
     try {
+        if (drawingWalkArea_) throw std::runtime_error("Finish or cancel the walk-area outline before saving.");
         commitField();
         auto nav = navigation_;
         nav.bake(document_, scene_.model());
@@ -333,6 +343,10 @@ bool TownEditor::save() {
         navigation_ = std::move(nav);
         navigationRevision_ = revision_;
         savedRevision_ = revision_;
+        walkPreviewValid_ = false;
+        characterGround_.setNavigation(navigation_);
+        characterGround_.setMovingSolids(preview_.solids());
+        refreshCharacterRoute();
         saved = true;
         status = "Saved scene and rebuilt navigation. Previous files are in town.scene.bak / town.nav.bak.";
         return true;
@@ -364,6 +378,10 @@ bool TownEditor::reload() {
         field_ = -1;
         revision_ = savedRevision_ = ++nextRevision_;
         navigationRevision_ = revision_;
+        selectedWalkArea_.reset();
+        selectedWalkPoint_.reset();
+        cancelWalkDrawing();
+        walkPreviewValid_ = false;
         resetPreview();
         status = "Reloaded the saved town.";
         return true;
@@ -373,6 +391,15 @@ bool TownEditor::reload() {
     }
 }
 void TownEditor::focusSelection() {
+    if (navigationTab_ && selectedWalkArea_) {
+        const auto &points = document_.walkAreas[*selectedWalkArea_].points;
+        Box box{points.front(), points.front()};
+        for (auto p : points) { box.min = Vector3Min(box.min, p); box.max = Vector3Max(box.max, p); }
+        camera.target = center(box);
+        radius_ = std::clamp(length(sub(box.max, box.min)) * 1.5f, 5.f, 300.f);
+        updateView();
+        return;
+    }
     if (!selected_ && !selectedCharacter_ && !selectedAnimal_)
         return;
     const auto b = selectionBounds();
@@ -729,8 +756,14 @@ void TownEditor::update(float dt) {
             redo();
         if (ctrl && IsKeyPressed(KEY_D))
             duplicate();
-        if (IsKeyPressed(KEY_DELETE))
-            remove();
+        if (IsKeyPressed(KEY_DELETE)) {
+            if (navigationTab_) removeWalkArea();
+            else remove();
+        }
+        if (navigationTab_ && drawingWalkArea_) {
+            if (IsKeyPressed(KEY_BACKSPACE) && !walkDraft_.empty()) walkDraft_.pop_back();
+            if (IsKeyPressed(KEY_ENTER)) finishWalkArea();
+        }
         if (IsKeyPressed(KEY_F))
             focusSelection();
         if (IsKeyPressed(KEY_ONE))
@@ -746,7 +779,9 @@ void TownEditor::update(float dt) {
         if (IsKeyPressed(KEY_F4))
             requestClose();
         if (IsKeyPressed(KEY_ESCAPE)) {
-            if (dragAxis_ >= 0) {
+            if (drawingWalkArea_ || movingWalkPoint_) {
+                cancelWalkDrawing();
+            } else if (dragAxis_ >= 0) {
                 if (dragChanged_)
                     undo();
                 dragAxis_ = -1;
@@ -801,6 +836,10 @@ void TownEditor::update(float dt) {
     if (!over && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         commitField();
         searchFocus_ = false;
+        if (navigationTab_) {
+            walkAreaClick(mouse);
+            return;
+        }
         if (animalTab_) {
             if (animalPlacement_ && selectedAnimal_) {
                 if (const auto point = characterGroundPoint(mouse)) placeAnimal(*point);
@@ -966,16 +1005,30 @@ void TownEditor::draw() {
     animalModels_.draw(animals_, scene_.actorShader(), scene_.shadowTexture());
     scene_.drawEffects(camera);
     scene_.draw(camera.target, true);
-    if (showGrid_)
+    if (showGrid_ && !navigationTab_)
         DrawGrid(80, 2);
     if (showNavigation_) {
-        for (size_t i = 0; i < navigation_.heights.size(); ++i) {
-            if (!std::isfinite(navigation_.heights[i]))
+        const auto &nav = walkPreviewValid_ ? previewNavigation_ : navigation_;
+        // Flat, batched cells keep the editing overlay light and inexpensive.
+        // Cubes overlap on the refined .2 m grid and obscure the actual ground.
+        rlSetTexture(rlGetTextureIdDefault());
+        rlBegin(RL_QUADS);
+        rlColor4ub(66, 209, 166, 65);
+        rlNormal3f(0, 1, 0);
+        for (size_t i = 0; i < nav.heights.size(); ++i) {
+            if (!std::isfinite(nav.heights[i]))
                 continue;
-            auto p = navigation_.point(i);
-            if (distance(p, camera.target) < 28)
-                DrawCube(add(p, {0, .08f, 0}), .26f, .025f, .26f, {66, 209, 166, 130});
+            auto p = nav.point(i);
+            if (distance(p, camera.target) >= 28) continue;
+            if (!document_.walkAllowed(p, nav.cell * .7072f)) continue;
+            const float h = nav.cell * .5f, y = p.y + .035f;
+            rlVertex3f(p.x - h, y, p.z - h);
+            rlVertex3f(p.x - h, y, p.z + h);
+            rlVertex3f(p.x + h, y, p.z + h);
+            rlVertex3f(p.x + h, y, p.z - h);
         }
+        rlEnd();
+        rlSetTexture(0);
     }
     for (int i = 0; i < 2; ++i) {
         auto p = i == 0 ? navigation_.spawn : navigation_.mission;
@@ -1041,6 +1094,7 @@ void TownEditor::draw() {
     }
     EndMode3D();
     postProcess_.end();
+    if (navigationTab_) drawWalkAreas();
     drawUI();
 }
 void TownEditor::selectCharacter(std::optional<size_t> index) {
@@ -1348,8 +1402,16 @@ void TownEditor::drawUI() {
     if (button("Back to town", {1215, 16, 200, 34}))
         requestClose();
     label(std::to_string(GetFPS()) + " FPS", 1112, 28, 12, Muted, 96);
-    label("Middle: orbit  Right: pan  Wheel: zoom  WASD / Q E: fly  F: focus", 278, 59, 13,
-          Muted, 640);
+    if (button("Draw allowed area", {278, 54, 212, 27}, drawingWalkArea_ && !drawingBlocked_))
+        beginWalkArea(false);
+    if (button("Draw blocked area", {502, 54, 212, 27}, drawingWalkArea_ && drawingBlocked_))
+        beginWalkArea(true);
+    if (button("Walkable areas", {730, 54, 194, 27}, navigationTab_)) {
+        commitField(); searchFocus_ = false;
+        navigationTab_ = !navigationTab_;
+        cancelWalkDrawing(); select({}); marker_ = 0;
+        if (navigationTab_) { animalTab_ = characterTab_ = palette_ = false; showNavigation_ = true; }
+    }
     if (button(sandstorm ? "Sandstorm preview: ON" : "Sandstorm preview: OFF", {934, 54, 271, 27}, sandstorm))
         toggleSandstormPreview();
     if (button("Cinematic Editor", {1215, 54, 200, 27})) {
@@ -1358,6 +1420,7 @@ void TownEditor::drawUI() {
     auto tab = [&](const char *name, Rectangle box, bool active, int kind) {
         if (!button(name, box, active)) return;
         commitField(); select({}); search_.clear(); searchFocus_ = false; scroll_ = 0; marker_ = 0;
+        navigationTab_ = false; cancelWalkDrawing();
         animalTab_ = kind == 3; characterTab_ = kind == 2; palette_ = kind == 1;
         if (characterTab_) selectCharacter(document_.characters.empty() ? std::nullopt : std::optional<size_t>(0));
         if (animalTab_) {
@@ -1415,6 +1478,7 @@ void TownEditor::drawUI() {
             if (button(name, {14, 258 + float(row) * 29, 240, 26}, chosen)) {
                 commitField();
                 searchFocus_ = false;
+                navigationTab_ = false; cancelWalkDrawing();
                 if (palette_)
                     paletteSelection_ = id;
                 else
@@ -1429,7 +1493,8 @@ void TownEditor::drawUI() {
         } else if (button("Focus selection", {14, 799, 240, 33}, false, selected_.has_value()))
             focusSelection();
     }
-    if (animalTab_) drawAnimalUI();
+    if (navigationTab_) drawWalkAreaUI();
+    else if (animalTab_) drawAnimalUI();
     else if (characterTab_) drawCharacterUI();
     else {
     label("INSPECTOR", 1132, 108, 13, Accent);
@@ -1505,7 +1570,7 @@ void TownEditor::drawUI() {
     }
     label(animalPlacement_ ? "Click clear ground to place the animal. Escape finishes placement." : characterPlacement_ ? "Click walkable ground. Escape finishes placing route stops." : marker_ ? "Click the street to place the marker. Escape cancels." : status, 18, 862, 14,
           marker_ ? Accent : Text, 1375);
-    label("Ctrl+S save   Ctrl+Z / Ctrl+Y undo / redo   Ctrl+D duplicate   Delete remove   K sandstorm preview   F4 exit", 18, 884,
+    label("Ctrl+S save   Ctrl+Z / Ctrl+Y undo / redo   Ctrl+D duplicate   Delete remove   K sandstorm   F4 exit   |   Middle: orbit   Right: pan   Wheel: zoom   WASD / Q E: fly   F: focus", 18, 884,
           11, Muted, 1350);
     if (closePrompt_ || reloadPrompt_) {
         panel({0, 0, 1440, 900}, {7, 12, 16, 205});

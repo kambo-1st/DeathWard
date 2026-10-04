@@ -61,6 +61,12 @@ int TownDocument::meshCount() const {
 }
 void TownDocument::validate() const {
     validateAnimalPlacements(animals);
+    if (walkAreas.size() > 64) throw std::runtime_error("A town supports at most 64 walk areas.");
+    std::unordered_set<std::string> walkIds;
+    for (const auto &area : walkAreas) {
+        area.validate();
+        if (!walkIds.insert(area.id).second) throw std::runtime_error("Duplicate walk-area name.");
+    }
     if (assets.empty() || instances.empty() || assets.size() > 100000 || instances.size() > 100000)
         throw std::runtime_error("The town must contain assets and at least one object.");
     int next = 0;
@@ -163,7 +169,7 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
         std::ifstream in(path);
         std::string token;
         int version = 0;
-        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 7))
+        if (!(in >> token >> version) || token != "DEATHWARD_TOWN" || (version < 1 || version > 8))
             throw std::runtime_error("Missing or unsupported town scene.");
         TownDocument candidate;
         candidate.ownsAnimals = version >= 5;
@@ -255,6 +261,16 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
                 activities.emplace_back(id, std::move(activity));
             } else if (token == "animal" && version >= 5) {
                 candidate.animals.push_back(readAnimalPlacement(in));
+            } else if (token == "walk_area" && version >= 8) {
+                TownWalkArea area;
+                int blocked = 0;
+                size_t count = 0;
+                if (!(in >> area.id >> blocked >> count) || (blocked != 0 && blocked != 1) || count < 3 || count > 128)
+                    throw std::runtime_error("Invalid walk-area outline.");
+                area.blocked = blocked != 0;
+                area.points.resize(count);
+                for (auto &p : area.points) in >> p.x >> p.y >> p.z;
+                candidate.walkAreas.push_back(std::move(area));
             } else if (token == "light") {
                 TownLight l;
                 in >> l.type >> l.position.x >> l.position.y >> l.position.z >> l.direction.x >>
@@ -266,7 +282,7 @@ bool TownDocument::load(const std::filesystem::path &path, std::string &error) {
             if (!in || candidate.assets.size() > 100000 || candidate.instances.size() > 100000 ||
                 motions.size() > 100000 || shadows.size() > 100000 || bindings.size() > 100000 || candidate.paths.size() > 256 ||
                 candidate.groups.size() > 4096 || candidate.characters.size() > 64 || candidate.animals.size() > 64 ||
-                activities.size() > 64)
+                activities.size() > 64 || candidate.walkAreas.size() > 64)
                 throw std::runtime_error("Truncated or oversized town scene.");
         }
         std::unordered_set<std::string> bound;
@@ -335,7 +351,9 @@ void TownDocument::write(const std::filesystem::path &path) const {
     const bool animalActivities = std::any_of(animals.begin(), animals.end(),
                                             [](const auto &a) { return a.activity != AnimalActivity{}; });
     out << std::setprecision(std::numeric_limits<float>::max_digits10) << "DEATHWARD_TOWN ";
-    if (customShadows || animalActivities)
+    if (!walkAreas.empty())
+        out << "8 " << int(ownsAnimals || !animals.empty());
+    else if (customShadows || animalActivities)
         out << (animalActivities ? "7 " : "6 ") << int(ownsAnimals || !animals.empty());
     else
         out << (ownsAnimals || !animals.empty() ? 5 : !characters.empty() ? 4 : paths.empty() ? 2 : 3);
@@ -382,6 +400,11 @@ void TownDocument::write(const std::filesystem::path &path) const {
             for (const auto &clip : a.activity.clips) out << ' ' << clip;
             out << '\n';
         }
+    }
+    for (const auto &area : walkAreas) {
+        out << "walk_area " << area.id << ' ' << int(area.blocked) << ' ' << area.points.size();
+        for (const auto &p : area.points) out << ' ' << p.x << ' ' << p.y << ' ' << p.z;
+        out << '\n';
     }
     for (const auto &l : lights)
         out << "light " << l.type << ' ' << l.position.x << ' ' << l.position.y << ' ' << l.position.z << ' '

@@ -135,6 +135,38 @@ int main() {
             frame(pixel, true);
             frame(pixel);
         };
+        // The tool edits map data, while an unfinished outline remains a sketch.
+        click({820, 67});
+        click({1250, 191});
+        check(!editor.save() && !editor.dirty(), "an unfinished boundary cannot be silently saved");
+        const auto anchor = nav.spawn;
+        for (const auto offset : {Vector3{2,0,2}, Vector3{4,0,2}, Vector3{4,0,4}, Vector3{2,0,4}})
+            click(GetWorldToScreen(add(anchor, offset), editor.camera));
+        click({1200, 288});
+        check(editor.document().walkAreas.size() == 1 && editor.document().walkAreas[0].blocked && editor.dirty(),
+              "viewport clicks and Finish create a blocked polygon in one edit");
+        const auto boundary = editor.document().walkAreas[0];
+        check(editor.moveWalkAreaPoint(0, 0, add(boundary.points[0], {-.2f,0,0})), editor.status);
+        editor.undo();
+        check(distance(editor.document().walkAreas[0].points[0], boundary.points[0]) == 0,
+              "moving a boundary point supports exact undo");
+        editor.undo();
+        check(editor.document().walkAreas.empty() && !editor.dirty(), "one undo removes the completed outline");
+        editor.redo();
+        check(editor.document().walkAreas.size() == 1, "redo restores the boundary");
+        editor.undo();
+        // Keep all existing residents/markers inside a broad allowed outline.
+        const float x0 = nav.minX - 1, z0 = nav.minZ - 1;
+        const float x1 = nav.minX + nav.width * nav.cell + 1, z1 = nav.minZ + nav.depth * nav.cell + 1;
+        check(editor.addWalkArea(false, {{x0,0,z0},{x1,0,z0},{x1,0,z1},{x0,0,z1}}), editor.status);
+        check(editor.rebuildWalkPreview() && editor.save() && editor.reload(), editor.status);
+        check(editor.document().walkAreas.size() == 1 && !editor.document().walkAreas[0].blocked,
+              "editor save/reload keeps authored navigation boundaries");
+        click({1325, 397}); // Select the persisted area.
+        click({1345, 745}); // Delete area.
+        check(editor.document().walkAreas.empty() && editor.dirty(), "the area list can delete a saved boundary");
+        check(editor.save(), editor.status);
+        click({70, 117}); // Return to normal scene selection.
         size_t chosen = 0;
         float best = 1e9f;
         for (size_t i = 0; i < original.instances.size(); ++i) {

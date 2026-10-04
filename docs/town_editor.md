@@ -30,6 +30,22 @@ The colored handles remain visible over objects and terrain, including when an i
 
 Snapping uses 0.5-unit movement, 15-degree rotation and 0.1 scale increments. Hold Shift to bypass it or turn **Snap** off. **Ctrl+D** duplicates, **Delete** removes, and **Ctrl+Z / Ctrl+Y** undo and redo. A complete handle drag is one undo step. History retains up to 80 steps in the current session.
 
+## Walkable areas
+
+The top toolbar always shows **Draw allowed area** and **Draw blocked area**. Either button immediately starts an outline and opens the right-hand **Walkable areas** panel. Use **Walkable areas** in the toolbar to manage existing outlines without starting a new one.
+
+1. Choose **Draw allowed area** and click points around the ground the character may use. Choose **Draw blocked area** to fence off a smaller region instead.
+2. Click **Finish area**, press **Enter**, or click the first point to close the outline. Use **Undo point** / **Backspace** while drawing; **Escape** cancels an unfinished outline.
+3. Select a numbered handle or a point in the right panel, choose **Move point**, then click its new location. **Remove point**, **Delete area**, **Focus area**, and ordinary undo/redo are available.
+4. Choose **Rebuild path preview** to check the resulting reachable ground. Teal shading shows walkable paths near the camera; green outlines enclose allowed ground, red outlines exclude it. **Paths: ON / OFF** hides or shows the shading while you edit.
+5. **Save**, then **Back to town** to use the limits in gameplay.
+
+With no allowed outline, the existing ground remains accessible except for blocked areas. Multiple allowed outlines join together; blocked areas always take priority. These outlines only restrict existing navigation: they cannot open solid buildings, rocks, cliffs or gaps. They apply horizontally at all terrain heights, and the navigation grid leaves room for the character's body at the edge. Both WASD and mouse movement, along with resident navigation, respect the saved limits.
+
+Keep Arrival, Missions, resident homes and character routes inside reachable ground. Rebuild reports invalid arrival/mission access, and Save also checks resident placement and routes before replacing any files. If an outline excludes a marker or resident, adjust the outline or move that placement. The point picker works outside existing navigation too, so you can expand a boundary after saving it. Rebuild again after changing or deleting an area to restore newly accessible ground in the preview.
+
+Completed areas are map edits and support undo/redo. They save as `walk_area` records in scene format 8, with their restrictions baked into `town.nav`; older scenes remain supported and retain their previous format when they have no areas. Unfinished outlines must be finished or cancelled before saving. This is separate from the view-only sandstorm toggle.
+
 ## Animating props
 
 Select an object and open **Animation** in its inspector. Available presets are **Static**, **Spin**, **Sway** and **Tumbleweed**. Black Creek's two original tumbleweeds already use the rolling preset; other props start static. The two original trains use linked route groups, described below.

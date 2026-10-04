@@ -47,7 +47,7 @@ assets = []
 placements = []
 lines = (root / "town.scene").read_text().splitlines()
 version = int(lines[0].split()[1])
-assert version in (1, 2, 3, 4, 5, 6, 7)
+assert version in (1, 2, 3, 4, 5, 6, 7, 8)
 motion = {}
 train_entries = []
 for line in lines[1:]:

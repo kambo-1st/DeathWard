@@ -118,6 +118,10 @@ float TownNavigation::height(Vector3 p) const {
 }
 void TownNavigation::bake(const TownDocument &document, const Model &model) {
     document.validate();
+    if (!document.walkAllowed(spawn))
+        throw std::runtime_error("Arrival is outside the allowed walk area. Move Arrival or edit the outline.");
+    if (!document.walkAllowed(mission))
+        throw std::runtime_error("Missions is outside the allowed walk area. Move Missions or edit the outline.");
     if (!width || !depth || width > 4096 || depth > 4096 || cell < .1f ||
         document.meshCount() != model.meshCount)
         throw std::runtime_error("Invalid navigation bounds or mesh library.");
@@ -219,6 +223,11 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
     // geometry with sufficient headroom does not become a wall on the street.
     std::vector<std::vector<WalkSurface>> surfaces(count);
     for (size_t at = 0; at < count; ++at) {
+        const Vector3 center{minX + (float(at % width) + .5f) * cell, 0,
+                             minZ + (float(at / width) + .5f) * cell};
+        // Apply before footprint clearance and connectivity. Thin blocked strips
+        // cover intersecting cells too, so they cannot disappear between samples.
+        if (!document.walkAllowed(center, cell * .7072f)) continue;
         for (const auto &candidate : columns[at]) {
             const float h = candidate.surface;
             if (!candidate.flat || h <= -5 || h >= 12) continue;
@@ -255,7 +264,7 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
             }
         }
     size_t start = count;
-    float startHeight = 0, best = 64;
+    float startHeight = 0, best = document.walkAreas.empty() ? 64.f : .64f;
     for (size_t at = 0; at < count; ++at)
         for (const auto &surface : surfaces[at]) {
             const Vector3 point{minX + (float(at % width) + .5f) * cell, surface.height,
@@ -280,7 +289,7 @@ void TownNavigation::bake(const TownDocument &document, const Model &model) {
         }
     }
     size_t board = count;
-    best = 64;
+    best = document.walkAreas.empty() ? 64.f : .64f;
     for (size_t at = 0; at < count; ++at) {
         const float dx = minX + (float(at % width) + .5f) * cell - mission.x;
         const float dz = minZ + (float(at / width) + .5f) * cell - mission.z;

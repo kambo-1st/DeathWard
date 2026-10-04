@@ -52,6 +52,14 @@ struct TownCharacter {
     bool loop = true;
     std::vector<Vector3> stops; // The placement is the first stop; these are subsequent destinations.
 };
+struct TownWalkArea {
+    std::string id;
+    bool blocked = false;
+    std::vector<Vector3> points; // Closed outline on XZ; Y is for editor display only.
+    void validate() const;
+    bool contains(Vector3 point) const;
+    float edgeDistance(Vector3 point) const;
+};
 struct TownDocument {
     std::vector<TownAsset> assets;
     std::vector<TownInstance> instances;
@@ -60,6 +68,7 @@ struct TownDocument {
     std::vector<TownMotionGroup> groups;
     std::vector<TownCharacter> characters;
     std::vector<AnimalPlacement> animals;
+    std::vector<TownWalkArea> walkAreas;
     bool ownsAnimals = false; // Format 5 also preserves an intentionally empty population.
     bool load(const std::filesystem::path &path, std::string &error);
     void write(const std::filesystem::path &path) const;
@@ -69,5 +78,7 @@ struct TownDocument {
     std::string nextInstanceId() const;
     std::string nextCharacterId() const;
     std::string nextAnimalId() const;
+    std::string nextWalkAreaId() const;
+    bool walkAllowed(Vector3 point, float blockedMargin = 0) const;
 };
 } // namespace dw
