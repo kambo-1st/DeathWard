@@ -279,6 +279,7 @@ int main(int argc, char **argv) {
         dw::TownEditor editor;
         dw::CinematicEditor cinematic;
         if (startEditor) {
+            editor.sandstorm = game.sandstorm;
             const auto directory = editorDirectory.empty() ? game.hubDirectory() : editorDirectory;
             if (!editor.open(directory, game.camera, editorDirectory.empty() ? game.animals.placements() : std::vector<dw::AnimalPlacement>{}))
                 throw std::runtime_error(editor.status);
@@ -391,6 +392,7 @@ int main(int argc, char **argv) {
 #endif
             if (game.editorRequested) {
                 game.editorRequested = false;
+                editor.sandstorm = game.sandstorm;
                 if (!editor.open(game.hubDirectory(), game.camera, game.animals.placements()))
                     game.error = editor.status;
                 else
@@ -422,9 +424,7 @@ int main(int argc, char **argv) {
             if (filming) {
                 cinematic.update(smoke ? dw::Tick : GetFrameTime(),game.audioSettings);
             } else if (editing) {
-                editor.sandstorm = game.sandstorm;
                 editor.update(GetFrameTime());
-                game.sandstorm = editor.sandstorm;
             } else if ((smoke || benchmark) && game.run) {
                 dw::Input input;
                 input.aim = game.run->arena.rooms[size_t(game.run->room)].center;

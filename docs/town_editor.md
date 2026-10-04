@@ -14,6 +14,8 @@ The viewport shares the hub's sunlight, ambient fill and filtered sun shadows. M
 
 The viewport also previews the game's autumn palette, bloom and color grade. Editor panels and text stay outside the post-processing pass. These effects are runtime rendering choices and do not rewrite textures or the scene catalog when saving.
 
+Use **Sandstorm preview: ON / OFF** in the top toolbar, or press **K**, to show or hide the sandstorm in the editor. The preview starts with the hub's current weather, then changes only this view. It does not mark the map as changed, enter undo history, save to `town.scene`, or change gameplay weather when you return to town. **Play/Pause preview** controls the dust animation along with the other scene effects. Reopening the editor starts from the hub's weather again.
+
 ## Working with objects
 
 Click a visible mesh, or select it in the **Scene** list. Search by asset name or object number, and scroll the list to browse. The **Assets** tab lists reusable models; select one and choose **Add at view center**. Imported placements remain separate mesh instances, as stored in `town.scene`.

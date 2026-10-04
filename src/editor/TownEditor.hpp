@@ -11,7 +11,7 @@ class TownEditor {
   public:
     bool active = false, quitRequested = false, saved = false;
     bool artPoc = false;
-    bool sandstorm = false;
+    bool sandstorm = false; // View-only preview; never part of the map or undo history.
     bool cinematicRequested = false;
     const std::filesystem::path &directory() const { return directory_; }
     std::string status;
@@ -152,6 +152,7 @@ class TownEditor {
     bool button(const std::string &text, Rectangle r, bool selected = false, bool enabled = true) const;
     void panel(Rectangle r, Color color) const;
     void drawUI();
+    void toggleSandstormPreview();
     void drawAnimationUI();
     void drawCharacterUI();
     void drawAnimalUI();

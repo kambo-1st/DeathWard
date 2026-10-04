@@ -68,6 +68,7 @@ bool TownEditor::open(const std::filesystem::path &directory, Camera3D view,
         navigationRevision_ = 0;
         animationTab_ = false;
         resetPreview();
+        sandstormStrength_ = sandstorm ? 1.f : 0.f;
         active = true;
         quitRequested = saved = false;
         closePrompt_ = reloadPrompt_ = closingWindow_ = false;
@@ -663,6 +664,11 @@ void TownEditor::closeNow() {
     quitRequested = closingWindow_;
     orbiting_ = panning_ = false;
 }
+void TownEditor::toggleSandstormPreview() {
+    sandstorm = !sandstorm;
+    status = sandstorm ? "Sandstorm preview on. View only; not saved with the map."
+                       : "Sandstorm preview off. View only; not saved with the map.";
+}
 void TownEditor::update(float dt) {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
@@ -711,10 +717,8 @@ void TownEditor::update(float dt) {
     } else {
         if (ctrl && IsKeyPressed(KEY_S))
             save();
-        if (!ctrl && IsKeyPressed(KEY_K)) {
-            sandstorm = !sandstorm;
-            status = sandstorm ? "Sandstorm preview on" : "Sandstorm preview off";
-        }
+        if (!ctrl && IsKeyPressed(KEY_K))
+            toggleSandstormPreview();
         if (ctrl && IsKeyPressed(KEY_Z)) {
             if (shift)
                 redo();
@@ -1345,7 +1349,9 @@ void TownEditor::drawUI() {
         requestClose();
     label(std::to_string(GetFPS()) + " FPS", 1112, 28, 12, Muted, 96);
     label("Middle: orbit  Right: pan  Wheel: zoom  WASD / Q E: fly  F: focus", 278, 59, 13,
-          Muted, 795);
+          Muted, 640);
+    if (button(sandstorm ? "Sandstorm preview: ON" : "Sandstorm preview: OFF", {934, 54, 271, 27}, sandstorm))
+        toggleSandstormPreview();
     if (button("Cinematic Editor", {1215, 54, 200, 27})) {
         commitField(); cinematicRequested = true;
     }
@@ -1499,7 +1505,7 @@ void TownEditor::drawUI() {
     }
     label(animalPlacement_ ? "Click clear ground to place the animal. Escape finishes placement." : characterPlacement_ ? "Click walkable ground. Escape finishes placing route stops." : marker_ ? "Click the street to place the marker. Escape cancels." : status, 18, 862, 14,
           marker_ ? Accent : Text, 1375);
-    label("Ctrl+S save   Ctrl+Z / Ctrl+Y undo / redo   Ctrl+D duplicate   Delete remove   F4 exit", 18, 884,
+    label("Ctrl+S save   Ctrl+Z / Ctrl+Y undo / redo   Ctrl+D duplicate   Delete remove   K sandstorm preview   F4 exit", 18, 884,
           11, Muted, 1350);
     if (closePrompt_ || reloadPrompt_) {
         panel({0, 0, 1440, 900}, {7, 12, 16, 205});
