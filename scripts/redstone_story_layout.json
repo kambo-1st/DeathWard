@@ -1,6 +1,24 @@
 {
-  "revision": 9,
+  "revision": 10,
   "title": "Stranded at Redstone",
+  "source_group_moves": [
+    {
+      "pack": "frontier",
+      "group": "868411082",
+      "pivot": [4, 0, -41],
+      "position": [-1, 0, -11],
+      "yaw": 180,
+      "reason": "Move the main gate, both door leaves and walkway to face the train and curved entrance road."
+    },
+    {
+      "pack": "frontier",
+      "group": "1575136660",
+      "pivot": [-1, 0, -11],
+      "position": [4, 0, -41],
+      "yaw": 180,
+      "reason": "Reuse the smaller tower gate at the rear, retaining the camp-side passage and a continuous palisade."
+    }
+  ],
   "spawn": [
     0,
     0,

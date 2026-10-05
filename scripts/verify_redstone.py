@@ -132,6 +132,8 @@ def verify(directory):
         elif p['source_pack'] == 'frontier':
             transform = offset @ transform
         transform[1,3] += p.get('editor_offset_y', 0)
+        if 'relocation_transform' in p:
+            transform = np.array(p['relocation_transform']).reshape(4,4) @ transform
         transform[1,3] += p.get('ground_offset_y', 0)
         assert np.array_equal(transform.flatten(), p['transform'])
         assert 'TrainStation' not in old['name'] and 'TrainStation' not in old['prefab']

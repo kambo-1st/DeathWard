@@ -40,6 +40,25 @@ def shape_roads(placements, assets, roads):
         placement['transform'] = (transform @ original).flatten().tolist()
 
 
+def move_source_groups(placements, moves):
+    """Relocate complete imported groups, keeping doors and walkways together."""
+    for move in moves:
+        prefix = f"{move['pack']}-{move['group']}:"
+        group = [p for p in placements if p['object'].startswith(prefix)]
+        if not group:
+            raise ValueError(f"Missing source group: {prefix}")
+        angle = math.radians(move['yaw'])
+        rotation = np.array([[math.cos(angle), 0, math.sin(angle)], [0, 1, 0],
+                             [-math.sin(angle), 0, math.cos(angle)]])
+        rotation[np.abs(rotation) < 1e-12] = 0
+        transform = np.eye(4)
+        transform[:3, :3] = rotation
+        transform[:3, 3] = np.array(move['position']) - rotation @ np.array(move['pivot'])
+        for p in group:
+            p['transform'] = (transform @ np.array(p['transform']).reshape(4, 4)).flatten().tolist()
+            p['relocation_transform'] = transform.flatten().tolist()
+
+
 def dress_story(town, frontier, library, placements, motion):
     layout = json.loads(Path(__file__).with_name('redstone_story_layout.json').read_text())
     packs = {p.name: p for p in (town, frontier)}
@@ -56,6 +75,7 @@ def dress_story(town, frontier, library, placements, motion):
     # compatible with earlier maps.
     removed_groups = {f"{g['pack']}-{g['group']}" for g in layout.get('removed_source_groups', [])}
     placements[:] = [p for p in placements if p['object'].split(':')[0] not in removed_groups]
+    move_source_groups(placements, layout.get('source_group_moves', []))
     shape_roads(placements, library.assets, layout['roads'])
 
     additions = []

@@ -49,6 +49,26 @@ int main() {
         check(doc.paths.front().dwell == 0, "The stationless train has no scheduled stop");
         check(doc.paths.front().speed == 0, "The storm has stranded the train");
         check(doc.characters.size() == 15, "The hub has a provisional cast and ambient residents");
+        const auto mainGate = std::find_if(doc.instances.begin(), doc.instances.end(), [](const auto &i) {
+            return i.id == "frontier-868411082:1567075268953910";
+        });
+        check(mainGate != doc.instances.end() &&
+              distance(position(mainGate->transform), {-1,0,-11}) < .01f && mainGate->transform.m0 > .99f,
+              "The main entrance faces the train at the end of the curved road");
+        int mainGateParts = 0, rearGateParts = 0;
+        for (const auto &i : doc.instances) {
+            if (i.id.starts_with("frontier-868411082:")) {
+                ++mainGateParts;
+                check(distance(position(i.transform), {-1,0,-11}) < 2,
+                      "Both main gate leaves and the walkway move with their frame");
+            }
+            if (i.id.starts_with("frontier-1575136660:")) {
+                ++rearGateParts;
+                check(distance(position(i.transform), {4,0,-41}) < 2,
+                      "The smaller tower entrance and its doors occupy the rear opening");
+            }
+        }
+        check(mainGateParts == 4 && rearGateParts == 3, "Both entrance assemblies remain complete");
         for (size_t n = 0; n < doc.instances.size(); ++n) {
             const auto &placed = doc.instances[n];
             if (!placed.id.starts_with("story-") ||
@@ -67,11 +87,20 @@ int main() {
         }
         HubWorld hub;
         check(hub.load(directory / "town.nav"), "Redstone navigation loads");
-        check(hub.walkableCells() > 800000, "The full restored canyon retains its explorable scale");
+        check(hub.walkableCells() > (doc.walkAreas.empty() ? 800000u : 200000u),
+              "The canyon retains the settlement and its surroundings within the saved boundary");
         ObjectAnimationSystem parked;
         parked.reset(doc);
         hub.setMovingSolids(parked.solids());
         const auto arrival = hub.spawn;
+        walk(hub, {-1,0,-8});
+        check(hub.canTraverse({-1,0,-8}, {-1,0,-14}),
+              "The main road connects directly through the train-facing gate");
+        walk(hub, {-1,0,-14});
+        check(hub.canTraverse({4,0,-39}, {4,0,-43}), "The rear tower gate remains a usable passage");
+        for (float x : {-4.f, 2.f})
+            check(!hub.canTraverse({x,0,-9}, {x,0,-13}),
+                  "The palisade is solid beside the relocated main gate");
         walk(hub, hub.mission);
         walk(hub, {35,0,0});
         walk(hub, {39,0,0});

@@ -30,6 +30,11 @@ Playable arrival now starts/resumes the [arrival quest prototype](../../docs/red
 - The Frontier fort and settler caravan retain complete prefab groups, including
   gates, cabin, watchtowers, tents, five wagons, their wheels, supplies and fires.
   A shared translation `(31.5, 0, -115)` places them together in the canyon.
+- The main gate now faces the train at `(-1, 0, -11)`, aligned with the curved
+  dirt approach. Its frame, walkway and both door leaves swap places with the
+  smaller tower gate at `(4, 0, -41)`. The rear passage remains usable. These
+  complete-group moves are recorded in the layout's `source_group_moves` so
+  rebuilding the composition preserves the entrance arrangement.
 - One original locomotive, coal tender and two passenger carriages run around
   the original rails when enabled in the editor. The story layout parks the
   train at speed zero, with steam and all four vehicle colliders active. Eight
