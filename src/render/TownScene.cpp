@@ -164,6 +164,7 @@ void main() {
         }
         float direct = max(dot(n,d),0.0);
         float shade = i == sunIndex && direct > 0. ? visibility(n,d) : 1.;
+        if (visualStyle != 0) { direct = worldDiffuse(direct,shade); shade = 1.; }
         light += direct*lightColors[i]*attenuation*shade;
     }
     for(int i=0;i<fireCount;i++) {
@@ -482,6 +483,10 @@ void TownScene::updateEffectLights(const Camera3D &camera) {
     }
 }
 void TownScene::prepareLighting(const Camera3D &camera, const std::function<void(Shader)> &actors) {
+    const int style = int(visualStyle_);
+    for (auto shader : {shader_, actorShader_})
+        if (shader.id)
+            SetShaderValue(shader, GetShaderLocation(shader, "visualStyle"), &style, SHADER_UNIFORM_INT);
     updateEffectLights(camera);
     if (!shadowsReady())
         return;

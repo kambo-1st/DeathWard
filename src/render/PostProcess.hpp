@@ -1,4 +1,5 @@
 #pragma once
+#include "core/VisualStyle.hpp"
 #include "raylib.h"
 #include <functional>
 
@@ -11,7 +12,7 @@ class PostProcess {
     PostProcess(const PostProcess &) = delete;
     PostProcess &operator=(const PostProcess &) = delete;
     // A positive focus distance enables depth fog around the 3D camera's focal plane.
-    void begin(Color background, float focusDistance = 0, bool artPoc = false);
+    void begin(Color background, float focusDistance = 0, bool artPoc = false, VisualStyle visualStyle = VisualStyle::Original);
     // Call inside BeginMode3D, before drawing models, to capture the world camera.
     // begin() resets the effect so menus and other views cannot inherit old weather.
     void sandstorm(float strength, float time);
@@ -33,6 +34,7 @@ class PostProcess {
     float sandstorm_ = 0, weatherTime_ = 0;
     Matrix inverseViewProjection_{};
     bool active_ = false, artPoc_ = false;
+    VisualStyle visualStyle_ = VisualStyle::Original;
     bool outlineAttempted_ = false;
     void resize(int width, int height);
     void filter(Texture2D source, RenderTexture2D target, int extract, Vector2 direction);

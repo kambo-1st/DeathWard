@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DeathWard · Visual style gallery</title>
+<style>
+:root{color-scheme:dark;--bg:#11191c;--paper:#eee5d3;--muted:#a8b4af;--line:#36433f;--gold:#e0b16c;--mint:#94cbbd}
+*{box-sizing:border-box}html{scroll-padding-top:140px}body{margin:0;background:var(--bg);color:var(--paper);font:16px/1.5 system-ui,sans-serif}
+header,main,footer,.controls{max-width:1920px;margin:auto;padding-inline:36px}
+header{padding-block:40px 30px}.eyebrow{font:11px/1.6 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+header .eyebrow{border-top:2px solid var(--gold);padding-top:22px}
+h1{font:clamp(38px,4.5vw,76px)/1.08 Georgia,serif;font-weight:400;margin:20px 0 14px}
+.intro{max-width:790px;color:var(--muted);font-size:18px;margin:0}.summary{display:flex;flex-wrap:wrap;gap:26px;margin-top:20px;color:var(--mint);font:12px ui-monospace,monospace}
+.toolbar{position:sticky;top:0;z-index:5;background:#11191cf5;border-block:1px solid var(--line);backdrop-filter:blur(10px)}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:14px;flex-wrap:wrap}
+nav,.options,.layout{display:flex;align-items:center;gap:10px}nav{gap:22px}nav a{color:var(--paper);text-decoration:none;font-size:14px;border-bottom:1px solid transparent;padding:8px 0}nav a:hover{border-color:var(--gold)}
+button,select,a.download{font:inherit;color:var(--paper);background:#1b282b;border:1px solid var(--line);padding:9px 14px;cursor:pointer;border-radius:0;min-height:42px}
+button:hover,select:hover,a.download:hover{border-color:var(--gold)}button[aria-pressed=true]{color:#162022;background:var(--gold);border-color:var(--gold)}
+:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+label{font:11px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+select{min-width:0;max-width:210px}.options{gap:14px}.layout button{font-size:12px;padding-inline:12px}
+#visibleCount{color:var(--muted);font:11px ui-monospace,monospace;min-width:62px}
+.scene{padding-top:42px;scroll-margin-top:130px}.sceneHeading{display:flex;align-items:baseline;gap:24px;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:24px}
+.scene h2{font:clamp(27px,3vw,40px)/1.15 Georgia,serif;font-weight:400;margin:8px 0 0}.sceneHeading p{max-width:460px;font-size:14px;color:var(--muted);margin:0;text-align:right}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 28px}
+body.single .grid{grid-template-columns:minmax(0,1fr);max-width:1440px;margin-inline:auto}
+figure{margin:0;min-width:0}.openImage{display:block;position:relative;padding:0;width:100%;background:#091012;border:1px solid var(--line);overflow:hidden}
+.openImage img{display:block;width:100%;height:auto;aspect-ratio:1.44;object-fit:contain}
+.openImage span{position:absolute;right:14px;bottom:14px;background:#102023e8;border:1px solid #778075;padding:6px 10px;font:11px ui-monospace,monospace;opacity:0;transition:opacity .15s}
+.openImage:hover span,.openImage:focus-visible span{opacity:1}
+figcaption{padding-top:15px}.captionTitle{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.captionTitle h3{font:27px/1.15 Georgia,serif;font-weight:400;margin:0}.captionTitle .eyebrow{font-size:10px;text-align:right}
+figcaption p{color:var(--muted);font-size:14px;max-width:760px;margin:8px 0 0}
+footer{padding-block:45px 36px;color:var(--muted);font-size:13px}footer p{border-top:1px solid var(--line);padding-top:22px;max-width:1440px}#generated{font:11px/1.6 ui-monospace,monospace}
+noscript{display:block;margin:30px;color:var(--gold)}
+dialog{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#0c1316;color:var(--paper)}
+dialog[open]{display:flex;flex-direction:column}dialog::backdrop{background:#080d10ed}
+.viewerHeader{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:16px 24px;border-bottom:1px solid var(--line)}
+.viewerHeader h2{font:26px Georgia,serif;font-weight:400;margin:4px 0 0}.viewerButtons{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.viewerButtons button,.viewerButtons .download{font-size:13px;text-decoration:none}
+#imageSpace{flex:1;min-height:0;min-width:0;overflow:auto;padding:16px;display:flex;align-items:center;justify-content:center}
+#viewerImage{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+#imageSpace.actual{display:block}#imageSpace.actual #viewerImage{width:1440px;height:1000px;max-width:none;max-height:none}
+.viewerFooter{display:flex;justify-content:space-between;gap:16px;padding:12px 24px;border-top:1px solid var(--line);color:var(--muted);font:12px ui-monospace,monospace}
+#viewerStatus{color:var(--gold)}[hidden]{display:none!important}
+@media(min-width:1800px){.grid{gap:44px 36px}}
+@media(max-width:1000px){.controls{gap:10px}.options{flex:1;justify-content:flex-end}.viewerHeader{align-items:flex-start}.viewerButtons{justify-content:flex-end}}
+@media(max-width:700px){header,main,footer,.controls{padding-inline:16px}header{padding-top:20px}.intro{font-size:16px}.summary{gap:14px;font-size:11px}
+.controls{display:block;padding-block:10px}nav{justify-content:space-between;gap:10px}nav a{font-size:12px;padding-block:4px}.options{justify-content:space-between;gap:8px;margin-top:10px}
+.options>label{display:none}select{width:45%;padding:9px 6px;font-size:12px}.layout{gap:5px}.layout button{font-size:11px;padding-inline:8px}#visibleCount{display:none}
+.grid{grid-template-columns:minmax(0,1fr);gap:28px}.sceneHeading{display:block}.sceneHeading p{text-align:left;margin-top:10px}.scene{padding-top:30px}
+.captionTitle h3{font-size:25px}.captionTitle .eyebrow{font-size:9px}.viewerHeader{padding:12px;display:block}.viewerHeader h2{font-size:22px}.viewerButtons{margin-top:10px;justify-content:flex-start;gap:5px}
+.viewerButtons button,.viewerButtons .download{font-size:11px;padding:8px;min-height:38px}#imageSpace{padding:8px}.viewerFooter{padding:10px 12px;font-size:10px;flex-wrap:wrap;gap:8px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:white;color:#222}.toolbar,dialog,.openImage span,footer{display:none}header,main{padding:0}header{padding-block:0 20px}h1{font-size:32px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:20px}
+figure{break-inside:avoid}.sceneHeading{break-after:avoid}.sceneHeading p,figcaption p,.intro{color:#444}.eyebrow,.summary{color:#745227}.captionTitle h3{font-size:18px}.captionTitle .eyebrow{display:none}figcaption p{font-size:10px}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">DeathWard / Visual style gallery</div>
+<h1>The whole frontier, in every style.</h1>
+<p class="intro"><span id="captureTotal"></span> large renders, grouped by scene. Browse the full set below, or open any image to inspect it at its original size.</p>
+<div class="summary"><span id="styleTotal"></span><span id="viewTotal"></span><span>1440 × 1000 captures</span><span>All images embedded · Offline</span></div>
+</header>
+<div class="toolbar">
+<div class="controls">
+<nav aria-label="Jump to scene"><a href="#fort">Fort Mercy</a><a href="#player">Character &amp; train</a><a href="#canyon">Generated canyon</a></nav>
+<div class="options"><label for="styleFilter">Style</label><select id="styleFilter" aria-label="Filter by visual style"><option value="all">All styles</option></select>
+<div class="layout" role="group" aria-label="Gallery layout"><button id="twoAcross" type="button" aria-pressed="true">Two across</button><button id="oneAcross" type="button" aria-pressed="false">One across</button></div>
+<span id="visibleCount" aria-live="polite"></span></div>
+</div>
+</div>
+<noscript>Enable JavaScript to display this embedded gallery. No internet connection is needed.</noscript>
+<main id="scenes"></main>
+<footer><p>Matching native game captures: the same cameras, geometry and poses across every style. The canyon uses seed 1866, dry variant. In the game, use F6 in hubs/editors or Pause → Visual Style in missions.</p><span id="generated"></span></footer>
+<dialog id="viewer" aria-labelledby="viewerTitle">
+<div class="viewerHeader"><div><div class="eyebrow" id="viewerScene"></div><h2 id="viewerTitle"></h2></div>
+<div class="viewerButtons"><button id="previous" type="button" aria-label="Previous image">← Previous</button><button id="next" type="button" aria-label="Next image">Next →</button><button id="actualSize" type="button" aria-pressed="false">Actual size</button><a id="download" class="download" href="#" download>Save PNG</a><button id="close" type="button" autofocus>Close ×</button></div></div>
+<div id="imageSpace"><img id="viewerImage" alt=""></div>
+<div class="viewerFooter"><span id="viewerStatus" aria-live="polite"></span><span>← → browse · Esc closes · Actual size enables scrolling</span></div>
+</dialog>
+<script>
+const data = __DATA__;
+const get = id => document.getElementById(id);
+get('captureTotal').textContent = data.styles.length * data.views.length;
+get('styleTotal').textContent = data.styles.length + ' styles';
+get('viewTotal').textContent = data.views.length + ' viewpoints';
+get('styleFilter').options[0].textContent = 'All ' + data.styles.length + ' styles';
+get('visibleCount').textContent = data.styles.length * data.views.length + ' images';
+const entries = [];
+let activeIndex = 0;
+let previousOverflow = '';
+for (const style of data.styles) get('styleFilter').add(new Option(style.name, style.id));
+for (const [viewIndex, view] of data.views.entries()) {
+  const section = document.createElement('section'); section.className = 'scene'; section.id = view.id;
+  section.setAttribute('aria-labelledby', view.id + '-title');
+  const heading = document.createElement('div'); heading.className = 'sceneHeading';
+  const titleBlock = document.createElement('div');
+  const number = document.createElement('div'); number.className = 'eyebrow'; number.textContent = String(viewIndex + 1).padStart(2, '0') + ' / ' + data.styles.length + ' treatments';
+  const title = document.createElement('h2'); title.id = view.id + '-title'; title.textContent = view.name;
+  const note = document.createElement('p'); note.textContent = view.note;
+  titleBlock.append(number, title); heading.append(titleBlock, note); section.append(heading);
+  const grid = document.createElement('div'); grid.className = 'grid';
+  for (const style of data.styles) {
+    const figure = document.createElement('figure'); figure.dataset.style = style.id;
+    const button = document.createElement('button'); button.className = 'openImage'; button.type = 'button';
+    button.setAttribute('aria-label', 'Open ' + style.name + ' — ' + view.name + ' at full size');
+    const image = new Image(1440, 1000); image.alt = style.name + ' — ' + view.name; image.loading = 'lazy'; image.decoding = 'async'; image.src = data.images[style.id][view.id];
+    const hint = document.createElement('span'); hint.textContent = 'View full size ↗'; hint.setAttribute('aria-hidden', 'true'); button.append(image, hint);
+    const caption = document.createElement('figcaption'); const line = document.createElement('div'); line.className = 'captionTitle';
+    const name = document.createElement('h3'); name.textContent = style.name;
+    const tag = document.createElement('span'); tag.className = 'eyebrow'; tag.textContent = style.tag;
+    const description = document.createElement('p'); description.textContent = style.description;
+    line.append(name, tag); caption.append(line, description); figure.append(button, caption); grid.append(figure);
+    const entry = {style, view, figure, button}; entries.push(entry);
+    button.addEventListener('click', () => openViewer(entry));
+  }
+  section.append(grid); get('scenes').append(section);
+}
+function visibleEntries() { return entries.filter(entry => !entry.figure.hidden); }
+function updateViewer() {
+  const current = visibleEntries(); const entry = current[activeIndex];
+  get('viewerImage').src = data.images[entry.style.id][entry.view.id];
+  get('viewerImage').alt = entry.style.name + ' — ' + entry.view.name;
+  get('viewerTitle').textContent = entry.style.name; get('viewerScene').textContent = entry.view.name;
+  get('viewerStatus').textContent = String(activeIndex + 1).padStart(2, '0') + ' / ' + current.length + ' · 1440 × 1000';
+  get('download').href = get('viewerImage').src;
+  get('download').download = 'deathward-' + entry.style.id + '-' + entry.view.id + '.png';
+  get('imageSpace').scrollTo(0, 0);
+}
+function openViewer(entry) {
+  activeIndex = visibleEntries().indexOf(entry); updateViewer();
+  previousOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden';
+  get('viewer').showModal();
+}
+function step(direction) {
+  activeIndex = (activeIndex + direction + visibleEntries().length) % visibleEntries().length; updateViewer();
+}
+get('styleFilter').addEventListener('change', () => {
+  const style = get('styleFilter').value;
+  for (const entry of entries) entry.figure.hidden = style !== 'all' && entry.style.id !== style;
+  get('visibleCount').textContent = visibleEntries().length + ' images';
+});
+function layout(single) {
+  document.body.classList.toggle('single', single);
+  get('oneAcross').setAttribute('aria-pressed', String(single));
+  get('twoAcross').setAttribute('aria-pressed', String(!single));
+}
+get('oneAcross').addEventListener('click', () => layout(true));
+get('twoAcross').addEventListener('click', () => layout(false));
+get('previous').addEventListener('click', () => step(-1));
+get('next').addEventListener('click', () => step(1));
+get('close').addEventListener('click', () => get('viewer').close());
+get('viewer').addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+    event.preventDefault(); step(event.key === 'ArrowLeft' ? -1 : 1);
+  }
+});
+get('actualSize').addEventListener('click', () => {
+  const actual = get('imageSpace').classList.toggle('actual');
+  get('actualSize').setAttribute('aria-pressed', String(actual));
+  get('actualSize').textContent = actual ? 'Fit to window' : 'Actual size';
+  get('imageSpace').scrollTo(0, 0);
+});
+get('viewer').addEventListener('close', () => {
+  document.body.style.overflow = previousOverflow;
+  get('imageSpace').classList.remove('actual');
+  get('actualSize').setAttribute('aria-pressed', 'false'); get('actualSize').textContent = 'Actual size';
+});
+get('generated').textContent = 'DeathWard · Native visual style gallery · Generated ' + data.generated;
+window.addEventListener('beforeprint', () => {
+  for (const image of document.querySelectorAll('figure img')) image.loading = 'eager';
+});
+</script>
+</body>
+</html>

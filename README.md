@@ -4,13 +4,35 @@ A playable C++20 / raylib 3D Weird West prototype. Borrow a broken build from Re
 
 **The build is gone. The consequences remain.**
 
-## Run on Linux
+## Build and run on Linux
+
+To build without launching the game (also works in WSL2):
+
+```sh
+./scripts/build-linux.sh
+```
+
+Launch the result with `./build/deathward`. The build script configures a Release
+build and compiles the game, with its runtime
+assets staged in `build/assets`. It works from any working directory. Use
+`--jobs 8` (or `DEATHWARD_BUILD_JOBS=8`) to change the default four parallel jobs.
+For a separate debug build, run:
+
+```sh
+./scripts/build-linux.sh --config Debug --build-dir build-debug
+```
+
+Use `--help` for all options. To build and launch in one step:
 
 ```sh
 ./scripts/run.sh
 ```
 
-The script configures a Release build, downloads pinned raylib 5.5 on the first build, compiles, and launches. No game assets or other third-party packages are downloaded. CMake 3.20+, a C++20 compiler, OpenGL and X11 development libraries are required. On Ubuntu/Debian:
+`run.sh` uses the same Linux build script and forwards its arguments to the game,
+for example `./scripts/run.sh --hub redstone`. The first build downloads pinned
+raylib 5.5; subsequent builds reuse it. No game assets or other third-party packages
+are downloaded. CMake 3.20+, a C++20 compiler, OpenGL and X11 development libraries
+are required. On Ubuntu/Debian:
 
 ```sh
 sudo apt install build-essential cmake libasound2-dev libpulse0 libx11-dev libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev
@@ -131,6 +153,73 @@ A second hub imports the original **PolygonWesternFrontier Demo** with its villa
 A third authored hub, **Fort Mercy** (the Redstone Canyon map), combines Black Creek's full-sized canyon and rail route with Frontier's fort and an expanded settler camp. The train is stranded beside a buried line. Fifteen provisional residents populate the arrival, market, witness shelters and guarded fort; a covered wagon waits at the camp edge. Use **Travel to Fort Mercy**, `./build/deathward --hub redstone`, or `?hub=redstone` in the browser. F4 edits the map, residents and their routes. The tutorial and Rourke's first account are playable; later accounts and the ending are described in the [story brief](docs/redstone_story_hub.md). See the [map and rebuild notes](assets/redstone/README.md).
 
 An optional [Redstone art-direction POC](docs/redstone_art_poc.md) adds weathered terrain/materials, lower sunlight, drifting dust and removable cloth details. Start with `--hub redstone --art-poc` (browser: `?hub=redstone&art=poc`); F6 compares with the original in the hub/editor. It leaves source assets and saved scenes unchanged and is off by default.
+
+Sixteen **visual styles** can be compared live: **Original**, **Cel-shaded**,
+**Western comic**, **Painted frontier**, **Wanted poster**, **Western noir**,
+**Retro 3D**, **Woodcut / linocut**, **Watercolor**, **Colored pencil**, **Ink wash**,
+**Miniature diorama**, **Spaghetti Western**, **CRT arcade**, **Spectral frontier**, and **Sumi-e frontier**. In a hub or either editor, **F6**
+cycles through them. In hubs and missions, **Pause → Visual Style** offers the
+same selector; mission F6 keeps its cheat behavior. The choice lasts only for
+that session and does not edit maps, saves or visual preferences. Ordinary
+launches retain the original graphics.
+
+Start directly with `./scripts/run.sh --hub redstone --style comic` or
+`--style painted` (browser: `?hub=redstone&style=comic` or `&style=painted`).
+`--style original` and `--style cel` select the other presets; the earlier
+`--cel-shading` flag remains an alias for `--style cel`.
+The remaining style names are `poster`, `noir`, `retro`, `woodcut`, `watercolor`,
+`pencil`, `ink`, `diorama`, `cinema`, `crt`, `spectral`, and `sumi`, also accepted by the
+browser's `style` parameter. `--style okami` (or `?style=okami`) is an alias for
+Sumi-e frontier, the Okami-inspired brush-and-ink preset.
+
+Cel-shaded retains its three lighting bands, thin depth outlines and crisp finish.
+Western comic adds stronger ink, shadow hatching and subtle static paper grain.
+Painted frontier uses continuous lighting, cooler shadows, warmer highlights,
+gentle color patches and muted distant scenery without ink outlines. Its small
+edge-aware filter preserves geometry boundaries. These styles omit the normal
+bloom, keep UI sharp, and apply to hubs, generated missions, characters, animals
+and cinematic views. They also retain sandstorms and occluded-enemy outlines.
+Selecting a stylized preset disables the separate, older art-direction POC.
+
+Wanted poster uses six base ink tones, dark contours and paper fibres. Western
+noir uses high-contrast monochrome with selective saturated warm and turquoise
+accents. Retro 3D uses integer-sized world pixels, a reduced color palette and
+ordered dithering; HUD text remains at full resolution.
+
+Woodcut uses three base inks with irregular cream gouges through shadow blocks.
+Watercolor layers translucent washes over pale paper with darker pigment at edges;
+Colored pencil builds directional color strokes over paper tooth. Ink wash uses
+soft monochrome stains and broad grays rather than Noir's photographic contrast.
+These print/paper patterns are screen-anchored and stable while paused.
+
+Miniature diorama softens the light, adds a screen-space depth contact approximation,
+and gently defocuses depth away from the camera target. It is a rendering treatment
+of the existing geometry, not a replacement miniature asset set or baked AO.
+Spaghetti Western adds muted sun-bleached color, deep cool shadows and fine stable
+grain. CRT arcade adds fixed scanlines, phosphor color, horizontal light bleed and
+coarser world pixels, without flicker or screen warp. Spectral frontier uses cool,
+desaturated scenery, luminous depth contours and color-selected warm accents.
+
+Sumi-e frontier combines painted light bands, thick irregular ink contours, soft
+ink bleed, warm paper and vivid vermilion/jade accents. It takes inspiration from
+Okami's brush-and-ink presentation using DeathWard's existing assets, with no
+uniform crosshatching or imported artwork.
+
+`deathward_cel_shading_tests` captures matching fort, character and canyon views
+in `artifacts/cel-<style>-<view>.png` (Original uses `before`, Cel uses `after`),
+and checks distinct presets, UI colors, sandstorms, static-frame stability and exact restoration
+of the original and cel-shaded renders after switching presets. The contours
+come from visible depth edges. `web/cel-shading-test.cjs` checks all 16 WebGL
+styles, F6, the Pause selector, unchanged scene data and default-off reloads.
+
+After running the capture test, `python3 scripts/visual-style-report.py` creates
+`artifacts/visual-style-comparison.html`: an offline HTML comparison with 48
+embedded screenshots, a draggable split view, style selectors, and fort,
+character and canyon viewpoints. The generated HTML can be shared on its own.
+For a large gallery of all 48 captures, run the same command with `--layout gallery`.
+It writes `artifacts/visual-style-gallery.html`, with one/two-column layouts,
+style filtering and a full-screen image viewer supporting keyboard navigation,
+actual-size inspection and PNG downloads. Images are embedded for offline use.
 
 **Walk into town buildings** with the same mouse or WASD controls. Doors swing open as you approach. Once inside, roofs and upper walls cut away to reveal the original textured interiors; leaving restores them. This works in Black Creek and Frontier, with added steps connecting Black Creek's station platform. Walls and furnishings remain solid. Ground-floor interiors are supported; overlapping upstairs/downstairs navigation remains limited.
 

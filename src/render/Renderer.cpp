@@ -426,6 +426,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     missionEffects_.prepareMission(run,camera,playerModel_.muzzlePosition(run.player),sandstorm);
     westernScene_.prepare(run.arena);
     westernScene_.setPlayerOcclusion(camera, run.player.position);
+    westernScene_.setVisualStyle(visualStyle);
     const auto &theme = missionTheme(run.arena.theme);
     const bool canyon = run.arena.theme == MissionTheme::Canyon;
     const auto &lighting = westernScene_.lighting();
@@ -559,7 +560,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             cowboy(run.player.position, run.player.facing, WHITE, 1, false, false);
         EndShaderMode();
     });
-    postProcess_.begin(WorldSky, distance(camera.position, camera.target));
+    postProcess_.begin(WorldSky, distance(camera.position, camera.target), false, visualStyle);
     BeginMode3D(camera);
     postProcess_.sandstorm(sandstorm, float(run.stats.duration));
     lighting.beginPrimitives();
@@ -873,6 +874,7 @@ Action Renderer::hub(const Game &game) {
         loadedHub_ = game.activeHub;
     }
     townScene_.setArtPoc(artPoc);
+    townScene_.setVisualStyle(visualStyle);
     townScene_.setDaylight(game.arrivalActive()?(ArrivalQuest::morning(game.campaign.data().world)?2:1):0);
     playerModel_.artPoc = characterModels_.artPoc = townScene_.artPoc();
     const auto &town = game.town;
@@ -892,7 +894,7 @@ Action Renderer::hub(const Game &game) {
     });
     townScene_.prepareSandstorm(game.camera, sandstormStrength_, [&](Vector3 p) { return town.height(p); });
     postProcess_.begin(game.arrivalActive()&&!ArrivalQuest::morning(world)?Color{158,127,115,255}:WorldSky,
-                       distance(game.camera.position, game.camera.target), townScene_.artPoc());
+                       distance(game.camera.position, game.camera.target), townScene_.artPoc(), visualStyle);
     BeginMode3D(game.camera);
     postProcess_.sandstorm(sandstormStrength_, float(town.time));
     townScene_.draw(town.player.position);
@@ -1477,6 +1479,7 @@ Action Renderer::audioPanel(const Game &game) {
     return Action::None;
 }
 Action Renderer::draw(const Game &game) {
+    visualStyle = game.visualStyle;
     if (game.screen == Screen::Hub || game.screen == Screen::Expedition) {
         const float step = std::clamp(GetFrameTime(), 0.f, .1f) * .65f;
         sandstormStrength_ += std::clamp((game.sandstorm ? 1.f : 0.f) - sandstormStrength_, -step, step);
@@ -1523,6 +1526,11 @@ Action Renderer::draw(const Game &game) {
             action = Action::VegetationLess;
         if (button("MORE", 229, 700, 75, 39))
             action = Action::VegetationMore;
+        panel(344, 24, 592, 94, Panel);
+        text("VISUAL STYLE", 365, 46, 20, Gold);
+        text("Click to cycle / this session", 365, 90, 12, Muted);
+        if (button(visualStyleName(game.visualStyle), 554, 38, 358, 38))
+            action = Action::CycleVisualStyle;
         if (game.screen == Screen::Expedition) {
             panel(895, 580, 361, 105, Panel);
             text("GROUND SURFACE", 915, 599, 22, Gold);

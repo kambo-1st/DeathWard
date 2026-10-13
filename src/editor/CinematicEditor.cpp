@@ -577,10 +577,11 @@ void CinematicEditor::subtitles() {
 void CinematicEditor::draw() {
     sx_=float(GetScreenWidth())/1440;sy_=float(GetScreenHeight())/900;
     if(ending_) {
+        endingScene_.setVisualStyle(visualStyle);
         endingScene_.prepareFlags(endingTime_,document_.destinationStorm);
         endingScene_.prepareLighting(endingCamera_);
         endingScene_.prepareSandstorm(endingCamera_,document_.destinationStorm,[](Vector3){return 0.f;});
-        post_.begin({142,174,188,255},distance(endingCamera_.position,endingCamera_.target));BeginMode3D(endingCamera_);
+        post_.begin({142,174,188,255},distance(endingCamera_.position,endingCamera_.target),false,visualStyle);BeginMode3D(endingCamera_);
         post_.sandstorm(document_.destinationStorm,endingTime_);endingScene_.draw(endingCamera_.target);
         endingScene_.drawEffects(endingCamera_);endingScene_.draw(endingCamera_.target,true);EndMode3D();post_.end();
         panel({0,0,1440,48},BLACK);panel({0,852,1440,48},BLACK);
@@ -588,10 +589,11 @@ void CinematicEditor::draw() {
         label("Escape: return to the cinematic editor",50,817,16,Paper);return;
     }
     characterModels_.prepare(characters_);animalModels_.prepare(animals_);
+    scene_.setVisualStyle(visualStyle);
     scene_.prepareFlags(player_.time(),player_.storm());
     scene_.prepareLighting(view_,[&](Shader shader) {characterModels_.draw(characters_,shader);animalModels_.draw(animals_,shader);castModels_.draw(player_,shader);});
     scene_.prepareSandstorm(view_,player_.storm(),[&](Vector3 p){return navigation_.height(p);});
-    post_.begin({142,174,188,255},distance(view_.position,view_.target));BeginMode3D(view_);
+    post_.begin({142,174,188,255},distance(view_.position,view_.target),false,visualStyle);BeginMode3D(view_);
     post_.sandstorm(player_.storm(),player_.time());scene_.draw(view_.target);
     characterModels_.draw(characters_,scene_.actorShader(),scene_.shadowTexture());
     animalModels_.draw(animals_,scene_.actorShader(),scene_.shadowTexture());

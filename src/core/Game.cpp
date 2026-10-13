@@ -293,6 +293,9 @@ void Game::perform(Action action) {
         case Action::ToggleSandstorm:
             sandstorm = !sandstorm;
             break;
+        case Action::CycleVisualStyle:
+            visualStyle = nextVisualStyle(visualStyle);
+            break;
         case Action::ToggleCanyonRiver:
             if (screen == Screen::Hub && missionMenu)
                 visualSettings.canyonRiver = !visualSettings.canyonRiver;

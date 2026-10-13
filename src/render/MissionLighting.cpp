@@ -253,6 +253,8 @@ void MissionLighting::bind(Shader shader) const {
     if (!shader.id)
         return;
     const int enabled = prepared_ ? 1 : 0;
+    const int style = int(visualStyle_);
+    SetShaderValue(shader, GetShaderLocation(shader, "visualStyle"), &style, SHADER_UNIFORM_INT);
     const float depth = span_ / Size / 359;
     SetShaderValue(shader, GetShaderLocation(shader, "shadowEnabled"), &enabled, SHADER_UNIFORM_INT);
     SetShaderValue(shader, GetShaderLocation(shader, "shadowTexelDepth"), &depth, SHADER_UNIFORM_FLOAT);

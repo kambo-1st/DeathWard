@@ -988,6 +988,7 @@ void TownEditor::draw() {
     scaleX_ = float(GetScreenWidth()) / 1440;
     scaleY_ = float(GetScreenHeight()) / 900;
     scene_.setArtPoc(artPoc);
+    scene_.setVisualStyle(visualStyle);
     scene_.prepareFlags(preview_.time(),sandstormStrength_);
     characterModels_.artPoc = scene_.artPoc();
     characterModels_.prepare(characters_);
@@ -997,7 +998,7 @@ void TownEditor::draw() {
         animalModels_.draw(animals_, depth);
     });
     scene_.prepareSandstorm(camera, sandstormStrength_, [&](Vector3 p) { return navigation_.height(p); });
-    postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target), scene_.artPoc());
+    postProcess_.begin({142, 174, 188, 255}, distance(camera.position, camera.target), scene_.artPoc(), visualStyle);
     BeginMode3D(camera);
     postProcess_.sandstorm(sandstormStrength_, float(scene_.effects().time()));
     scene_.draw(camera.target);

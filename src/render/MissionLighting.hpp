@@ -1,4 +1,5 @@
 #pragma once
+#include "core/VisualStyle.hpp"
 #include "core/Types.hpp"
 #include <functional>
 #include <string>
@@ -13,6 +14,7 @@ class MissionLighting {
     MissionLighting(const MissionLighting &) = delete;
     MissionLighting &operator=(const MissionLighting &) = delete;
     void unload();
+    void setVisualStyle(VisualStyle style) { visualStyle_ = style; }
     void invalidate() {
         dirty_ = true;
         prepared_ = false;
@@ -45,6 +47,7 @@ class MissionLighting {
     Vector3 focus_{};
     float span_ = 0;
     bool attempted_ = false, dirty_ = true, prepared_ = false;
+    VisualStyle visualStyle_ = VisualStyle::Original;
     bool load();
 };
 } // namespace dw

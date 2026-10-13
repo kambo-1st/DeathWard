@@ -11,6 +11,7 @@ class TownEditor {
   public:
     bool active = false, quitRequested = false, saved = false;
     bool artPoc = false;
+    VisualStyle visualStyle = VisualStyle::Original;
     bool sandstorm = false; // View-only preview; never part of the map or undo history.
     bool cinematicRequested = false;
     const std::filesystem::path &directory() const { return directory_; }

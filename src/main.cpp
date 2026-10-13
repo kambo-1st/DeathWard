@@ -46,6 +46,7 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
+    std::optional<dw::VisualStyle> styleChoice;
     bool startCinematic = false, intro = false, fullExperience = false, explicitSave = false;
     bool mute = false, explicitAudio = false, sandstorm = false;
     std::optional<bool> canyonRiver;
@@ -68,6 +69,15 @@ int main(int argc, char **argv) {
             slotsDirectory = argv[++i];
         else if (arg == "--art-poc")
             artPoc = true;
+        else if (arg == "--cel-shading")
+            styleChoice = dw::VisualStyle::Cel;
+        else if (arg == "--style" && i + 1 < argc) {
+            styleChoice = dw::parseVisualStyle(argv[++i]);
+            if (!styleChoice) {
+                std::cerr << "--style must be original, cel, comic, painted, poster, noir, retro, woodcut, watercolor, pencil, ink, diorama, cinema, crt, spectral, sumi or okami\n";
+                return 2;
+            }
+        }
         else if (arg == "--sandstorm")
             sandstorm = true;
         else if (arg == "--editor")
@@ -150,6 +160,10 @@ int main(int argc, char **argv) {
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
+                         "  --style NAME        original, cel, comic, painted, poster, noir, retro,\n"
+                         "                      woodcut, watercolor, pencil, ink, diorama, cinema, crt, spectral, sumi (alias: okami)\n"
+                         "                      F6 cycles in hubs/editors; Pause selects in missions\n"
+                         "  --cel-shading       Alias for --style cel\n"
                          "  --sandstorm         Start with the sandstorm on; K toggles in any map\n"
                          "  --intro             Play the Westbound opening (combine with --cinematic to edit)\n"
                          "  --full-experience   Logos, three save slots, settings and the story opening\n"
@@ -264,6 +278,7 @@ int main(int argc, char **argv) {
         game.themeChoice = themeChoice;
         if (smoke || benchmark) game.seedText = "1866";
         game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
+        game.visualStyle = styleChoice.value_or(dw::VisualStyle::Original);
         auto savedAudioSettings = audioSettings;
         auto savedVisualSettings = visualSettings;
         for (const auto hub : dw::Hubs)
@@ -344,6 +359,7 @@ int main(int argc, char **argv) {
             }
         }
         bool artCompare = artPoc;
+        bool styleCompare = styleChoice.has_value();
         std::vector<double> timings;
         double simulationMs = 0, drawMs = 0, presentMs = 0;
         size_t minEnemies = 1000, minProjectiles = 100000;
@@ -409,15 +425,24 @@ int main(int argc, char **argv) {
                 if(!cinematic.open(dw::CinematicEditor::openingDirectory(),game.camera))game.error=cinematic.status;
             }
             // F6 is otherwise a mission cheat; comparisons are confined to hubs/editor.
+            if (game.visualStyle != dw::VisualStyle::Original) artPoc = artCompare = false;
             const bool canCompareArt =
-                cinematic.active ? false : editor.active ? dw::RedstoneArt::supports(editor.document())
+                cinematic.active || !artCompare ? false : editor.active ? dw::RedstoneArt::supports(editor.document())
                               : game.screen == dw::Screen::Hub && game.activeHub == dw::HubKind::Redstone;
+            const bool canCompareStyle = !artCompare && (cinematic.active ? !cinematic.runtimeIntro() :
+                                         editor.active || game.screen == dw::Screen::Hub);
+            if (canCompareStyle && IsKeyPressed(KEY_F6)) {
+                game.visualStyle = dw::nextVisualStyle(game.visualStyle);
+                styleCompare = true;
+                TraceLog(LOG_INFO, "VISUAL STYLE: %s", dw::visualStyleName(game.visualStyle));
+            }
             if (canCompareArt && IsKeyPressed(KEY_F6)) {
                 artCompare = true;
                 artPoc = !artPoc;
                 TraceLog(LOG_INFO, "ART: %s (Redstone only)", artPoc ? "weathered POC" : "original look");
             }
             renderer.artPoc = editor.artPoc = artPoc;
+            renderer.visualStyle = editor.visualStyle = cinematic.visualStyle = game.visualStyle;
             const bool filming = cinematic.active;
             const bool editing = editor.active && !filming;
             const auto start = std::chrono::steady_clock::now();
@@ -455,14 +480,16 @@ int main(int argc, char **argv) {
                 editor.draw();
             else
                 action = renderer.draw(game);
-            if (artCompare && canCompareArt) {
-                const char *label = artPoc ? "ART POC   /   F6: original" : "ORIGINAL   /   F6: art POC";
-                const int width = MeasureText(label, 14) + 24;
+            if ((canCompareStyle && (styleCompare || game.visualStyle != dw::VisualStyle::Original)) || canCompareArt) {
+                const std::string label = canCompareStyle
+                    ? std::string(dw::visualStyleName(game.visualStyle)) + "   /   F6: next style"
+                    : (artPoc ? "ART POC   /   F6: original" : "ORIGINAL   /   F6: art POC");
+                const int width = MeasureText(label.c_str(), 14) + 24;
                 const int x = editing ? int(GetScreenWidth() * (1110.f / 1440)) - width - 10
                                       : (GetScreenWidth() - width) / 2;
-                const int y = editing ? int(GetScreenHeight() * (94.f / 900)) : 4;
+                const int y = editing ? int(GetScreenHeight() * (94.f / 900)) : filming ? 52 : 4;
                 DrawRectangle(x, y, width, 25, {25, 30, 30, 230});
-                DrawText(label, x + 12, y + 5, 14, {221, 214, 192, 255});
+                DrawText(label.c_str(), x + 12, y + 5, 14, {221, 214, 192, 255});
             }
             const auto drawn = std::chrono::steady_clock::now();
             EndDrawing();
@@ -710,6 +737,11 @@ int main(int argc, char **argv) {
                 game.run ? renderer.missionDecorationCount(game.run->room) : 0,
                 game.visualSettings.vegetation, game.run ? renderer.missionVegetationCount() : 0,
                 game.visualSettings.groundDetail);
+            EM_ASM({ if (Module.state) {
+                Module.state.celShading = $0 == 1;
+                Module.state.visualStyle = $0;
+                Module.state.visualStyleName = UTF8ToString($1);
+            } }, int(game.visualStyle), dw::visualStyleName(game.visualStyle));
             EM_ASM(
                 {
                     if (Module.state) {

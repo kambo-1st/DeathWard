@@ -18,6 +18,7 @@ class CinematicEditor {
               const TownDocument *snapshot = nullptr, const std::filesystem::path &file = {});
     void update(float dt, const AudioSettings &audio);
     void draw();
+    VisualStyle visualStyle = VisualStyle::Original;
     void requestClose(bool quit = false);
     void unload();
     bool save();

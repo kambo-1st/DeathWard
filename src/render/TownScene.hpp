@@ -1,4 +1,5 @@
 #pragma once
+#include "core/VisualStyle.hpp"
 #include "core/Types.hpp"
 #include "render/ParticleEffects.hpp"
 #include "render/FlagCloth.hpp"
@@ -22,6 +23,7 @@ class TownScene {
     void unload();
     void draw(Vector3 focus, bool glass = false);
     void setArtPoc(bool enabled);
+    void setVisualStyle(VisualStyle style) { visualStyle_ = style; }
     // Runtime story lighting: 0 authored, 1 sunset, 2 morning. Does not edit the map.
     void setDaylight(int phase);
     bool artPoc() const {
@@ -108,6 +110,7 @@ class TownScene {
     ParticleEffects effects_;
     RedstoneArt art_;
     bool artEnabled_ = false;
+    VisualStyle visualStyle_ = VisualStyle::Original;
     std::optional<size_t> interior_;
     Matrix interiorInverse_{};
     Box interiorBounds_{}, interiorWorldBounds_{};

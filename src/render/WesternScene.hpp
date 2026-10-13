@@ -67,6 +67,7 @@ class WesternScene {
     void unload();
     void prepare(const Arena &arena);
     void setVegetationDensity(int percent);
+    void setVisualStyle(VisualStyle style) { lighting_.setVisualStyle(style); }
     void setGroundDetail(bool enabled) {
         ground_.enabled = enabled;
     }

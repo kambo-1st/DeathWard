@@ -126,6 +126,8 @@
       const args = [];
       if (query.has('full-experience')) args.push('--full-experience');
       if (query.get('art') === 'poc') args.push('--art-poc');
+      if (query.has('cel-shading')) args.push('--cel-shading');
+      if (query.has('style')) args.push('--style', query.get('style'));
       if (query.get('sandstorm') === 'on') args.push('--sandstorm');
       if (query.has('cinematic')) args.push('--cinematic');
       if (query.has('intro')) args.push('--intro');

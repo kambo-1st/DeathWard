@@ -1,6 +1,7 @@
 #pragma once
 #include "combat/Simulation.hpp"
 #include "core/VisualSettings.hpp"
+#include "core/VisualStyle.hpp"
 #include "world/Animals.hpp"
 #include "world/HubDefinition.hpp"
 #include "world/HubWorld.hpp"
@@ -64,6 +65,7 @@ enum class Action {
     ToggleGroundDetail,
     ToggleCanyonRiver,
     ToggleSandstorm,
+    CycleVisualStyle,
     QuestAction,
     QuestNext,
     QuestCancel,
@@ -115,6 +117,7 @@ class Game {
     bool dynamiteThrowMode = false;
     AudioSettings audioSettings;
     VisualSettings visualSettings;
+    VisualStyle visualStyle = VisualStyle::Original;
     bool sandstorm = false; // Optional weather trial; lasts only for this session.
     MusicScene musicScene() const;
     AudioStatus audioStatus = AudioStatus::Disabled;
