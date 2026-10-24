@@ -8,7 +8,7 @@ Starting revision: `a413435`. The complete goal is all six milestones below.
 | 1. Configurable room counts | Complete | Growing/Classic presets, safe room allocation, native/WASM and save validation passed (details below) |
 | 2. Early room and corridor dimensions | Complete | Five reversible presets, 50 timed trials, Compact default, navigation/spawn fixes; native/WASM checks passed |
 | 3. Destructible scenery and cache | Complete | 256-floor placement/navigation sweep; transactional blasts, persistent loot and cache; native/WASM/input checks passed |
-| 4. Six interacting items | Pending | Both acquisition orders, duplicate effects, bounded chains, mouse/arrow firing |
+| 4. Six interacting items | Complete | 66 pair combinations in both orders; bounded chains, provenance, native/WASM/input/browser checks passed |
 | 5. Floor identities and first canyon boss | Pending | Progression by expedition floor, complete attack/phase/death behavior, resource-independent victory |
 | 6. Boss expansion and optional rooms | Pending | Two further bosses, three optional room functions, separate pools, resource reachability and economy checks |
 
@@ -97,3 +97,24 @@ Milestone-3 validation:
 Reproduce the focused suite with `./build/deathward_destruction_tests`. Visual smoke scenes: `--smoke --theme canyon --scene demolition` (closed), `demolition-open` (opened), or `demolition-run` (two real placements followed by entry/collection). Use `--frames 430` for the complete scripted traversal. The browser script uses the same displayed-Chromium environment variables as milestones 1 and 2.
 
 Remaining after milestone 3: six interacting items; floor identities/first canyon boss; two more bosses/optional rooms/reward pools. The overall goal remains active.
+
+
+### Milestone 4
+
+Milestone 3 committed as `424f246`. Added Scatter Cylinder, Rail Spike, Lodestone Sight, Return Spring, Blasting Cap and Fuse Braid, bringing the item pool to eleven. The mechanics, exact initial values, duplicate caps and deliberate combinations are documented in [expedition item rules](expedition_items.md). Normal armory and shop selections include all eleven; Classic retains the original five-item selection. The appended IDs preserve campaign format 6. Content version: `deathward-m1-57`.
+
+Primary attacks now resolve a captured specification before creating projectiles. Scatter fans advance the cylinder once and share a chain budget. Body penetration, wall bouncing, guidance, return travel and the one-use impact blast remain separate. Scatter/Rail uses an explicit three-spike hybrid. Split inherits remaining life and travel allowances. Hangman's Coin retains the originating shot specification through explosive kills, rather than converting a large explosion into a larger bullet. Shotless kills repeat one current weapon projectile at normal modified bullet damage.
+
+Fuse Braid replaces one paid dynamite stick with a smaller main blast and two delayed, weaker charges. The children cannot reproduce and obey hazard/depth limits. They deliberately retain hard-demolition permission; free Cap, Powder and barrel blasts do not. An ordinary room clear now preserves player ordnance so a killing main blast cannot erase its pending children. Room travel and debug clears still clean up active ordnance. No reload or kill-healing mechanic was introduced.
+
+Milestone-4 validation:
+
+- All **30 native CTest groups passed**. The new item suite compares all **66 unordered pairs including duplicates** in both acquisition orders and with equivalent mouse/arrow fire. It also verifies exact trade-offs, homing visibility and turn limits, return hit/catch rules, wall collision, one Cap blast across piercing/return, self-damage, projectile provenance, child-charge timing, pause/room-exit cleanup, resource-gate behavior, seeded availability and campaign recovery.
+- A full eleven-item build with extra Split copies hits deliberately small queue/projectile/event limits, reports suppression and retires every active chain. Each new item damages a boss target; acquiring items or changing tuning cannot rewrite shots already in flight.
+- Native Release and WebAssembly Release builds pass. All four focused `web/item-build-test.cjs` cases pass: bank-shot, shrapnel, return and braided dynamite builds produce their live effects without JS/GL errors. The braid case spends one stick and produces exactly three explosions.
+- Original-style visuals inspected in `artifacts/items-shrapnel-m4-native.png`, `artifacts/item-build-braid.png` and `artifacts/items-summary-m4.png`. Small impact rings avoid full dynamite smoke, rail spikes have a distinct elongated shape, and guided/return trails use separate colors. The result panel uses two columns for all eleven item names; the in-run inventory lists owned items compactly. Captures are ignored local artifacts.
+- The broad browser suite passed hub audio/travel, pickups, dynamite, shops, combat/victory, campaign persistence and interrupted-run recovery, and editor placement/navigation/animation flows without JavaScript, shader or WebGL errors. The full native input suite also passed: mouse/arrow fire in both themes, shops, placed/kicked/thrown dynamite, doors, keys, rewards, cheats, camera controls and modal guards.
+
+Reproduce with `./build/deathward_item_build_tests`. Native smoke scenes: `build-bank`, `build-shrapnel`, `build-return`, `build-braid`; use `--smoke --theme canyon --style original --scene NAME`. The focused browser suite uses the displayed-Chromium variables recorded above. Final balance still requires human playtesting.
+
+Remaining after milestone 4: floor identities/first canyon boss; two more bosses/optional rooms/reward pools. The overall goal remains active.

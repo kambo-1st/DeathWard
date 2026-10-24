@@ -4,11 +4,12 @@
 namespace dw {
 void Simulation::prepareShop() {
     Random rng(seed_ ^ 0x53484f5053544f43ULL);
-    std::array<ItemId, ItemCount> pool{ItemId::Ricochet, ItemId::Split, ItemId::Judas, ItemId::Powder,
-                                       ItemId::Ghost};
+    std::array<ItemId, ItemCount> pool{};
+    const int available=surveyTutorial||expedition.pacing==ExpeditionPacing::Classic?LegacyItemCount:ItemCount;
+    for(int i=0;i<available;++i)pool[size_t(i)]=ItemId(i);
     shopOffers[0] = {ItemId::Ricochet, 10, ShopOfferKind::Medicine, false};
     for (int i = 0; i < 2; ++i) {
-        const int other = i + int(rng.bounded(ItemCount - i));
+        const int other = i + int(rng.bounded(available - i));
         std::swap(pool[size_t(i)], pool[size_t(other)]);
         shopOffers[size_t(i + 1)] = {pool[size_t(i)], 25, ShopOfferKind::Power, false};
     }

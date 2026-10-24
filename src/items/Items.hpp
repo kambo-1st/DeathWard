@@ -7,11 +7,12 @@ struct ItemDefinition {
     const char *name;
     const char *rarity;
     const char *description;
-    void (*modifyProjectile)(Projectile &);
     void (*onEvent)(Simulation &, const Event &);
 };
 const std::array<ItemDefinition, ItemCount> &itemDefinitions();
 const ItemDefinition &itemDefinition(ItemId item);
-void applyProjectileItems(const Simulation &run, Projectile &projectile);
+AttackSpec playerAttack(const Simulation &run,float damage,bool sixth,float speed=26);
+int primaryPellets(const Simulation &run);
+float primaryCadence(const Simulation &run);
 void dispatchItemEffects(Simulation &run, const Event &event);
 } // namespace dw

@@ -33,10 +33,11 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     for (int index = 0; index < arena.roomCount(); ++index) {
         if (arena.rooms[size_t(index)].kind != RoomKind::Power)
             continue;
-        std::array<ItemId, ItemCount> pool{ItemId::Ricochet, ItemId::Split, ItemId::Judas, ItemId::Powder,
-                                           ItemId::Ghost};
+        std::array<ItemId, ItemCount> pool{};
+        const int available=tutorial||pacing==ExpeditionPacing::Classic?LegacyItemCount:ItemCount;
+        for(int i=0;i<available;++i)pool[size_t(i)]=ItemId(i);
         for (int i = 0; i < 2; ++i) {
-            const int other = i + int(rewardRng.bounded(uint32_t(ItemCount - i)));
+            const int other = i + int(rewardRng.bounded(uint32_t(available - i)));
             std::swap(pool[size_t(i)], pool[size_t(other)]);
             rooms[size_t(index)].offers[size_t(i)] = pool[size_t(i)];
         }
@@ -251,7 +252,7 @@ void Simulation::clearRoom() {
     for (auto &enemy : enemies)
         if (const auto *d = monsterDefinition(enemy.monster); d && d->roomHazard)
             enemy.alive = false;
-    clearHazards();
+    clearHazards(true);
     arena.sealRoom(-1);
     ++stats.rooms;
     checkpointNeeded = true;
@@ -605,8 +606,16 @@ void Simulation::createProjectile(const Event &event) {
             if ((type == 11 || type == 30 || type == 88) && p.kind == ProjectileKind::Bullet)
                 p.life = .8f;
         }
-    } else
-        applyProjectileItems(*this, p);
+    } else {
+        p.attack=event.attack?*event.attack:playerAttack(*this,event.damage,event.lastRound,event.speed);
+        p.attack.heading=unit(event.direction);
+        if(!event.attack)p.attack.bounces+=event.bounces;
+        p.damage=p.attack.damage;p.radius=p.attack.radius;p.life=p.attack.life;
+        p.velocity=mul(unit(event.direction),p.attack.speed);
+        p.bounces=p.attack.bounces;p.pierce=p.attack.pierce;
+        p.returning=event.returning&&p.attack.returnRange>0;
+        if(p.returning)p.bounces=0;
+    }
     ++chains[p.context.chainId].active;
     projectiles.push_back(std::move(p));
     ++stats.projectiles;
@@ -707,8 +716,8 @@ void Simulation::process(const Event &e) {
     case EventType::Explosion: {
         audioCues.push(AudioCueKind::Explosion, e.position);
         ++stats.explosions;
-        particleEffect(ParticleEffect::Explosion, e.position, {0,1,0}, e.radius / 3.3f);
-        effectVisual(e.position, e.radius, 0, 0.5f);
+        if(!e.compactBlast)particleEffect(ParticleEffect::Explosion,e.position,{0,1,0},e.radius/3.3f);
+        effectVisual(e.position,e.radius,0,e.compactBlast?.18f:.5f);
         resolveExplosion(e);
         break;
     }
@@ -813,17 +822,28 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         throwDynamite(*input.dynamiteTarget);
     if (input.fire && player.fireCooldown <= 0 && !input.dynamiteTarget && !input.placeDynamite) {
         player.shootPose = 0.32f;
-        player.fireCooldown = 0.29f;
+        player.fireCooldown = primaryCadence(*this);
         ++stats.shots;
         audioCues.push(AudioCueKind::Shot, player.position);
         Event e;
         e.direction = unit(sub(player.aim, player.position));
         e.damage = player.shotDamage;
-        e.position = add(player.position, mul(e.direction, 0.7f));
-        e.origin = e.position;
         e.lastRound = player.nextRound == 6;
+        e.attack=playerAttack(*this,e.damage,e.lastRound);
         player.nextRound = player.nextRound % 6 + 1;
-        queueRoot(e);
+        // One root per trigger pull: pellet count must not multiply chain budgets
+        // or advance the cylinder. Descendants carry the resolved specification.
+        e.context={nextChain_++,0,0,-1};
+        const int pellets=primaryPellets(*this);
+        const auto aim=e.direction;
+        for(int i=0;i<pellets;++i) {
+            e.direction=rotateY(aim,(float(i)-float(pellets-1)*.5f)*(e.attack->rail?.16f:.14f));
+            e.position=add(player.position,mul(e.direction,.7f));
+            if(!arena.clear(player.position,e.position,e.attack->radius))e.position=player.position;
+            e.origin=e.position;
+            accept(e);
+        }
+        e.direction=aim;e.position=add(player.position,mul(aim,.7f));
         particleEffect(ParticleEffect::PlayerMuzzle, e.position, e.direction);
         effectVisual(e.position, 0.35f, 6, 0.09f);
     }
@@ -871,6 +891,7 @@ void Simulation::updateProjectiles(float dt) {
             continue;
         p.previous = p.position;
         p.life -= dt;
+        if(!p.hostile)updateGuidance(p,dt);
         if (p.kind == ProjectileKind::Homing) {
             auto wanted = sub(player.position, p.position);
             wanted.y = 0;
@@ -889,11 +910,16 @@ void Simulation::updateProjectiles(float dt) {
         }
         float remaining = dt;
         for (int step = 0; step < 8 && remaining > 0.00001f && p.alive; ++step) {
-            Vector3 end = add(p.position, mul(p.velocity, remaining));
+            if(!p.hostile&&!p.returning&&p.attack.returnRange>0&&p.traveled>=p.attack.returnRange-.001f)
+                beginReturn(p);
+            float slice=remaining;
+            if(!p.hostile&&!p.returning&&p.attack.returnRange>0)
+                slice=std::min(slice,(p.attack.returnRange-p.traveled)/std::max(.01f,length(p.velocity)));
+            Vector3 end = add(p.position, mul(p.velocity, slice));
             float best = 2;
             Vector3 normal{};
             EntityId target = 0;
-            bool wall = false, playerHit = false;
+            bool wall = false, playerHit = false, caught = false;
             const auto terrainHit = arena.trace(p.position, end, p.radius);
             if (terrainHit.hit) {
                 best = terrainHit.t;
@@ -907,7 +933,7 @@ void Simulation::updateProjectiles(float dt) {
                     wall = false;
                     playerHit = true;
                 }
-            } else
+            } else if(!p.phaseSpent)
                 for (size_t index : candidates(p.position, end, 1.5f)) {
                     const Enemy &enemy = enemies[index];
                     if (!enemy.alive || enemy.friendly || enemy.state == EnemyState::Buried ||
@@ -921,12 +947,20 @@ void Simulation::updateProjectiles(float dt) {
                         wall = false;
                     }
                 }
-            if (best > 1) {
-                p.position = end;
-                break;
+            if(p.returning) {
+                const auto hit=segmentSphere(p.position,end,player.position,.5f);
+                if(hit<best){best=hit;wall=false;caught=true;}
             }
+            if (best > 1) {
+                p.traveled+=distance(p.position,end);
+                p.position = end;
+                remaining-=slice;
+                continue;
+            }
+            p.traveled+=distance(p.position,end)*best;
             p.position = add(p.position, mul(sub(end, p.position), best));
-            remaining *= 1 - best;
+            remaining-=slice*best;
+            if(caught){p.alive=false;break;}
             Event event;
             event.position = p.position;
             event.origin = p.origin;
@@ -937,6 +971,11 @@ void Simulation::updateProjectiles(float dt) {
             event.ghost = p.ghost;
             event.hostile = p.hostile;
             event.armorPiercing = p.pierce > 0;
+            if(!p.hostile) {
+                event.attack=p.attack;event.projectile=p.id;event.remainingLife=p.life;
+                event.remainingBounces=p.bounces;event.remainingPierce=std::max(0,p.pierce-1);
+                event.returning=p.returning;
+            }
             if (wall) {
                 for (auto &prop : arena.breakables) {
                     if (!prop.solid() || prop.kind != BreakableKind::PowderBarrel) continue;
@@ -950,11 +989,13 @@ void Simulation::updateProjectiles(float dt) {
                     ++stats.bounces;
                     p.velocity = sub(p.velocity, mul(normal, 2 * dot(p.velocity, normal)));
                     p.position = add(p.position, mul(normal, 0.02f));
+                    p.guidedTarget=0;p.guidanceTime=0;
                     event.type = EventType::ProjectileBounce;
                     emit(event, p.context);
                     effectVisual(p.position, 0.25f, 3, 0.12f);
-                } else
-                    p.alive = false;
+                } else if(!p.hostile&&!p.returning&&p.attack.returnRange>0) {
+                    p.position=add(p.position,mul(normal,.025f));beginReturn(p);
+                } else p.alive=false;
             } else if (playerHit) {
                 const bool hurt = hurtPlayer(p.damage, p.context);
                 if (hurt) particleEffect(ParticleEffect::Flesh, p.position, mul(event.direction,-1));
@@ -968,14 +1009,21 @@ void Simulation::updateProjectiles(float dt) {
                 }
                 p.alive = false;
             } else {
+                event.explosiveHit=p.attack.capDamage>0&&!p.capSpent;
+                p.capSpent=p.capSpent||event.explosiveHit;
                 event.type = EventType::ProjectileHit;
                 emit(event, p.context);
                 p.hitEntities.push_back(target);
+                p.guidedTarget=0;p.guidanceTime=0;
                 if (p.pierce > 0) {
                     --p.pierce;
                     p.position = add(p.position, mul(unit(p.velocity), 0.02f));
-                } else
-                    p.alive = false;
+                } else if(p.attack.returnRange>0) {
+                    // A plain returning shot damages one body per leg. It keeps
+                    // traveling until its turn; Rail/Judas add bodies to each leg.
+                    p.phaseSpent=true;
+                    p.position=add(p.position,mul(unit(p.velocity),.02f));
+                } else p.alive=false;
             }
         }
     }

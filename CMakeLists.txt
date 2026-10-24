@@ -59,6 +59,7 @@ add_library(deathward_core
     src/combat/Shop.cpp
     src/combat/Dynamite.cpp
     src/combat/Destruction.cpp
+    src/combat/ProjectileMotion.cpp
     src/combat/Enemies.cpp
     src/combat/Encounters.cpp
     src/combat/Monsters.cpp
@@ -227,6 +228,9 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_item_build_tests tests/item_build_tests.cpp)
+    target_link_libraries(deathward_item_build_tests PRIVATE deathward_core)
+    add_test(NAME item_builds COMMAND deathward_item_build_tests)
     add_executable(deathward_destruction_tests tests/destruction_tests.cpp)
     target_link_libraries(deathward_destruction_tests PRIVATE deathward_core)
     add_test(NAME expedition_destruction COMMAND deathward_destruction_tests)

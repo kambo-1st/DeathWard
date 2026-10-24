@@ -202,7 +202,8 @@ int main(int argc, char **argv) {
     }
     if (scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
         scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats" &&
-        scene != "demolition" && scene != "demolition-open" && scene != "demolition-run") {
+        scene != "demolition" && scene != "demolition-open" && scene != "demolition-run" &&
+        scene != "build-bank" && scene != "build-shrapnel" && scene != "build-return" && scene != "build-braid") {
         std::cerr << "Unknown smoke scene: " << scene << '\n';
         return 2;
     }
@@ -338,7 +339,15 @@ int main(int argc, char **argv) {
             }
             if (smoke && scene == "boss")
                 game.run->startBoss();
-            if (smoke && scene.starts_with("demolition")) {
+            if(smoke&&scene.starts_with("build-")) {
+                game.run->jumpDebug(2);
+                const auto build=scene=="build-bank"?std::vector<dw::ItemId>{dw::ItemId::Ricochet,dw::ItemId::Rail,dw::ItemId::Lodestone}:
+                    scene=="build-shrapnel"?std::vector<dw::ItemId>{dw::ItemId::Scatter,dw::ItemId::Split,dw::ItemId::Cap}:
+                    scene=="build-return"?std::vector<dw::ItemId>{dw::ItemId::Return,dw::ItemId::Ricochet,dw::ItemId::Lodestone}:
+                    std::vector<dw::ItemId>{dw::ItemId::Braid};
+                for(auto item:build)game.run->grant(item);
+            }
+            if (smoke && (scene.starts_with("demolition")||scene=="build-braid")) {
                 const auto cache=game.run->arena.supplyCache;
                 if(cache.room<0)throw std::runtime_error("No supply cache on this floor");
                 game.run->jumpDebug(cache.room);game.run->clearRoomDebug();
@@ -481,13 +490,14 @@ int main(int argc, char **argv) {
                     game.run->startStress();
                 if (!benchmark)
                     input.movement = {std::sin(float(frame) * 0.03f) * 0.3f, 0, 0};
-                if (scene.starts_with("demolition")) {
+                if (scene.starts_with("demolition")||scene=="build-braid") {
                     input={};
                     input.aim=game.run->arena.supplyCache.reward;
                     if(scene=="demolition-run") {
                         input.placeDynamite=frame==30||frame==190;
                         if(frame==350)input.moveTarget=game.run->arena.supplyCache.reward;
                     }
+                    if(scene=="build-braid")input.placeDynamite=frame==30;
                 }
                 game.run->step(input);
                 game.updateCamera(dw::Tick);
@@ -819,6 +829,14 @@ int main(int argc, char **argv) {
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
             if(game.run) {
+                int friendly=0,spikes=0,homing=0,returning=0,caps=0,children=0;
+                for(const auto &p:game.run->projectiles)if(!p.hostile) {
+                    ++friendly;spikes+=p.attack.rail;homing+=p.attack.homingTurn>0;
+                    returning+=p.returning;caps+=p.attack.capDamage>0&&!p.capSpent;
+                }
+                for(const auto &h:game.run->hazards)children+=h.secondary;
+                EM_ASM({if(Module.verify)Module.build=({items:$0,friendly:$1,spikes:$2,homing:$3,returning:$4,caps:$5,children:$6,splits:$7});},
+                    int(game.run->items.size()),friendly,spikes,homing,returning,caps,children,int(game.run->stats.splits));
                 int health=-1,destroyed=0;
                 for(const auto &prop:game.run->arena.breakables) {
                     if(prop.kind==dw::BreakableKind::CacheGate)health=std::max(0,prop.health);

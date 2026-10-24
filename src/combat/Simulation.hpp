@@ -86,6 +86,15 @@ struct Player {
     float slowTime = 0;
 };
 enum class ProjectileKind { Bullet, Hook, Homing, SplitShot, BurstShot, Tar, Flame, ReturningHead, Rock };
+// A projectile's birth specification survives hits and explosions. Secondary
+// effects never reinterpret blast damage as weapon damage or reapply stat taxes.
+struct AttackSpec {
+    Vector3 heading{0,0,-1};
+    float damage = RevolverDamage, speed = 26, life = 3.2f, radius = .14f;
+    float homingTurn = 0, returnRange = 0, capDamage = 0, capRadius = 0, capSelfDamage = 0;
+    int bounces = 0, pierce = 0;
+    bool scatter = false, rail = false;
+};
 struct Projectile {
     EntityId id = 0;
     Vector3 position{}, previous{}, origin{}, velocity{};
@@ -95,6 +104,10 @@ struct Projectile {
     ProjectileKind kind = ProjectileKind::Bullet;
     Context context;
     std::vector<EntityId> hitEntities;
+    AttackSpec attack;
+    bool returning = false, phaseSpent = false, capSpent = false;
+    float traveled = 0, guidanceTime = 0;
+    EntityId guidedTarget = 0;
 };
 enum class EventType {
     Shot,
@@ -123,6 +136,11 @@ struct Event {
     Demolition demolition = Demolition::Soft;
     float playerDamage = 0;
     bool playerDamageHostile = false;
+    std::optional<AttackSpec> attack;
+    float remainingLife = 3.2f;
+    int remainingBounces = 0, remainingPierce = 0;
+    bool returning = false, explosiveHit = false, compactBlast = false;
+    EntityId projectile = 0;
 };
 enum class HazardKind {
     Dynamite,
@@ -146,6 +164,10 @@ struct Hazard {
     Vector3 velocity{};
     bool settled = false;
     bool playerContact = false;
+    float blastDamage = DynamiteDamage;
+    int braidCopies = 0;
+    bool secondary = false;
+    Vector3 braidDirection{1,0,0};
 };
 // Shared by live charges and the mouse aiming preview.
 void advanceDynamite(Hazard &charge, const Arena &arena, float dt);
@@ -283,6 +305,7 @@ class Simulation {
     bool buyShop(int index);
     bool throwDynamite(Vector3 target);
     bool placeDynamite();
+    float dynamiteBlastRadius() const { return itemStacks(ItemId::Braid)?3.3f:DynamiteRadius; }
     std::vector<Vector3> dynamiteTrajectory(Vector3 target) const;
     std::string shopUnavailable(int index) const;
     std::string nearbyInteraction() const;
@@ -354,6 +377,8 @@ class Simulation {
     bool accept(Event event);
     void process(const Event &event);
     void createProjectile(const Event &event);
+    void updateGuidance(Projectile &projectile,float dt);
+    void beginReturn(Projectile &projectile);
     void updatePlayer(const Input &input, float dt);
     void kickDynamiteOnContact(Vector3 previousPosition);
     void beginBossEncounter();
@@ -367,7 +392,7 @@ class Simulation {
     void updateBreakables(float dt);
     void payBreakables();
     void addHazard(Hazard hazard);
-    void clearHazards();
+    void clearHazards(bool preservePlayer = false);
     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);
     float enemyDamage(const Enemy &enemy, const Event &event) const;
     void shootEnemy(const Enemy &enemy, Vector3 direction, float damage, float speed, int bounces = 0,

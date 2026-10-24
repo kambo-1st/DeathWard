@@ -85,6 +85,14 @@ Hazard Simulation::makeDynamite(Vector3 target) const {
     charge.delay = DynamiteFuse;
     charge.radius = DynamiteRadius;
     charge.damage = DynamiteSelfDamage;
+    charge.braidCopies=std::min(4,int(itemStacks(ItemId::Braid)));
+    charge.braidDirection=length(offset)>.01f?unit(offset):player.facing;
+    charge.braidDirection.y=0;
+    if(charge.braidCopies) {
+        const float copies=float(charge.braidCopies-1);
+        charge.blastDamage=70*(1+.1f*copies);charge.radius=3.3f;
+        charge.damage=18*(1+.1f*copies);charge.delay+=.15f*copies;
+    }
     return charge;
 }
 bool Simulation::throwDynamite(Vector3 target) {
@@ -152,8 +160,8 @@ bool Simulation::deployDynamite(Hazard charge) {
 std::vector<Vector3> Simulation::dynamiteTrajectory(Vector3 target) const {
     auto charge = makeDynamite(target);
     std::vector<Vector3> points{charge.position};
-    for (float elapsed = 0; elapsed < DynamiteFuse && !charge.settled; elapsed += Tick) {
-        advanceDynamite(charge, arena, std::min(Tick, DynamiteFuse - elapsed));
+    for (float elapsed = 0; elapsed < charge.delay && !charge.settled; elapsed += Tick) {
+        advanceDynamite(charge, arena, std::min(Tick, charge.delay - elapsed));
         points.push_back(charge.position);
     }
     return points;

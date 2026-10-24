@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace dw {
-inline constexpr const char *ContentVersion = "deathward-m1-56";
+inline constexpr const char *ContentVersion = "deathward-m1-57";
 inline constexpr int StartingDynamite = 3, MaxDynamite = 9;
 inline constexpr float DynamiteFuse = 2, DynamiteRange = 12, DynamiteRadius = 4.5f;
 inline constexpr float DynamiteDamage = 100, DynamiteSelfDamage = 25;
@@ -74,7 +74,8 @@ struct Random {
 };
 
 using EntityId = uint64_t; // Monotonic per run; IDs are never reused.
-enum class ItemId : int { Ricochet, Split, Judas, Powder, Ghost, Count };
+enum class ItemId : int { Ricochet, Split, Judas, Powder, Ghost, Scatter, Rail, Lodestone, Return, Cap, Braid, Count };
+inline constexpr int LegacyItemCount = 5;
 inline constexpr int ItemCount = int(ItemId::Count);
 struct Context {
     uint64_t chainId = 0;

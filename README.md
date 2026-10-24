@@ -368,7 +368,7 @@ The generated rooms use **textured PolygonWestern scenery**: stacked crates for 
 
 The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat, or death if the character is already dying. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated boss becomes a follow-up encounter on subsequent visits.
 
-## Five starting items
+## Eleven expedition items
 
 | Item | Rule change |
 | --- | --- |
@@ -376,9 +376,15 @@ The miners are in chamber 3. The altar is in chamber 4. Both are optional; the t
 | Split Lead | Hits create two angled bullets that can split again |
 | Judas Bullet | Every sixth shot pierces six bodies; each copy costs 20% maximum health |
 | Powder of Jericho | Kills explode; explosion kills can explode again |
-| Hangman's Coin | Ghosts repeat killing shots with the current projectile effects |
+| Hangman's Coin | Ghosts repeat the original projectile specification, including after an explosive kill |
+| Scatter Cylinder | Short fan of weaker pellets; combines with Rail into a smaller fan of spikes |
+| Rail Spike | Heavy, slower piercing shots with a slower firing cadence |
+| Lodestone Sight | Slower projectiles curve toward nearby visible enemies |
+| Return Spring | Short outward flight followed by a return; separate body-hit allowance on each leg |
+| Blasting Cap | Lower direct damage; one small, potentially self-damaging blast per projectile |
+| Fuse Braid | Smaller main dynamite blast leaves two weaker delayed charges that can strike cover again |
 
-Copies stack. Items do not check for specific item pairs. Stable registry hooks modify projectile creation and react to queued hit, kill, explosion and other events. Generated work preserves chain provenance; depth, event and entity budgets bound pathological branching without banning secondary effects.
+Combinations follow explicit rules independent of acquisition order. Split inherits remaining lifetime; ghosts retain the originating projectile's damage rather than explosion damage; sixth-shot effects count primary trigger pulls. Copies stack with documented caps for the new items. Depth, event, projectile and hazard budgets bound branching effects. Classic and the tutorial retain the original five-item reward selection. See [complete item and interaction rules](docs/expedition_items.md), including balance values and reproducible build scenes.
 
 ## Cheat mode / quick testing
 
@@ -397,7 +403,7 @@ Copies stack. Items do not check for specific item pairs. Stable registry hooks 
 | F4 / F5 | Spawn 20 / 100 enemy roots from the current mission's roster, plus attached companions |
 | Comma / period | Select the previous / next monster ID |
 | Shift + F4 | Spawn the selected monster on safe floor for testing |
-| F6 / Shift + F6 | Grant all five items / add three keys |
+| F6 / Shift + F6 | Grant all eleven items / add three keys |
 | F7 | Start or replay the final encounter: Isaac group in Canyon, Sheriff/follow-up in Mine |
 | F8 / F9 | Finish successfully / die |
 | F10 | Toggle 3D collision volumes and projectile paths |

@@ -100,16 +100,18 @@ void Simulation::addHazard(Hazard hazard) {
     hazards.push_back(hazard);
 }
 
-void Simulation::clearHazards() {
+void Simulation::clearHazards(bool preservePlayer) {
     for (const auto &hazard : hazards) {
+        if(preservePlayer&&hazard.kind==HazardKind::PlayerDynamite)continue;
         auto it = chains.find(hazard.context.chainId);
         if (it != chains.end() && it->second.active)
             --it->second.active;
     }
-    hazards.clear();
+    std::erase_if(hazards,[&](const Hazard &h){return !preservePlayer||h.kind!=HazardKind::PlayerDynamite;});
 }
 
 void Simulation::updateHazards(float dt) {
+    std::vector<Hazard> children;
     for (auto &hazard : hazards) {
         const float previousAge = hazard.age;
         if (hazard.kind == HazardKind::PlayerDynamite)
@@ -125,12 +127,26 @@ void Simulation::updateHazards(float dt) {
             blast.position = hazard.position;
             blast.origin = hazard.origin;
             blast.direction = unit(sub(hazard.position, hazard.origin));
-            blast.damage = DynamiteDamage;
+            blast.damage = hazard.blastDamage;
             blast.radius = hazard.radius;
             blast.areaDamage = true;
             blast.demolition = Demolition::SpentDynamite;
-            blast.playerDamage = DynamiteSelfDamage;
+            blast.playerDamage = hazard.damage;
             emit(blast, hazard.context);
+            if(hazard.braidCopies>0&&!hazard.secondary) {
+                const Vector3 side{-hazard.braidDirection.z,0,hazard.braidDirection.x};
+                for(int n=0;n<2;++n) {
+                    Hazard child=hazard;
+                    child.secondary=true;child.braidCopies=0;child.age=0;
+                    child.delay=n?.95f:.65f;child.radius=hazard.radius*.7f;
+                    child.blastDamage=hazard.blastDamage*.5f;child.damage=hazard.damage*(2.f/3);
+                    child.velocity=add(mul(side,n?3.8f:-3.8f),{0,2,0});
+                    child.settled=false;child.playerContact=false;
+                    ++child.context.generation;
+                    if(child.context.generation<=limits.maxDepth)children.push_back(child);
+                    else suppress(child.context,"secondary charge generation limit");
+                }
+            }
             effectVisual(hazard.position, hazard.radius, 5, .75f);
             hazard.alive = false;
         } else if (hazard.kind == HazardKind::Beam) {
@@ -182,6 +198,8 @@ void Simulation::updateHazards(float dt) {
         }
     }
     std::erase_if(hazards, [](const Hazard &hazard) { return !hazard.alive; });
+    // Append only after iteration; capacity checks cannot invalidate a live reference.
+    for(auto child:children)addHazard(child);
 }
 
 void Simulation::performEnemyAttack(Enemy &enemy) {

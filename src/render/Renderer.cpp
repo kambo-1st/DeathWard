@@ -129,11 +129,13 @@ void breakableModel(const Breakable &p,float time,Color stone,unsigned char alph
         DrawCylinderEx({center.x,size.y*.8f+.02f,center.z+side*size.z*.5f},crown,.04f,.03f,5,
                       p.kind==BreakableKind::OreSeam?tint(Gold):seam);
 }
-void projectileMesh(Vector3 p, float radius, Color color) {
+void projectileMesh(Vector3 p, float radius, Color color,Vector3 axis={0,1,0},float stretch=1) {
     // Eight triangle faces remain a real 3D volume, with no per-vertex trigonometry.
-    const std::array<Vector3, 6> points{{add(p, {radius, 0, 0}), add(p, {0, 0, radius}),
-                                         add(p, {-radius, 0, 0}), add(p, {0, 0, -radius}),
-                                         add(p, {0, radius, 0}), add(p, {0, -radius, 0})}};
+    const auto right=std::abs(axis.y)>.9f?Vector3{1,0,0}:unit(Vector3{axis.z,0,-axis.x});
+    const auto up=unit(Vector3CrossProduct(right,axis));
+    const std::array<Vector3,6> points{{add(p,mul(right,radius)),add(p,mul(up,radius)),
+                                      sub(p,mul(right,radius)),sub(p,mul(up,radius)),
+                                      add(p,mul(axis,radius*stretch)),sub(p,mul(axis,radius*stretch))}};
     rlBegin(RL_TRIANGLES);
     rlColor4ub(color.r, color.g, color.b, color.a);
     for (int i = 0; i < 4; ++i) {
@@ -423,6 +425,7 @@ void drawHazard(const Hazard &hazard) {
         shadow(p, .45f);
         rlPushMatrix();
         rlTranslatef(p.x, p.y, p.z);
+        if(hazard.secondary)rlScalef(.7f,.7f,.7f);
         rlRotatef(hazard.settled ? 25 : hazard.age * 210, 0, 1, 0);
         for (float z : {-.12f, .12f})
             DrawCylinderEx({-.4f, 0, z}, {.4f, 0, z}, .12f, .12f, 8, Rust);
@@ -879,7 +882,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         auto landing = trajectory.back();
         DrawSphereWires(landing, .25f, 4, 8, Paper);
         landing.y = .09f;
-        DrawCircle3D(landing, DynamiteRadius, {1, 0, 0}, 90, Gold);
+        DrawCircle3D(landing, run.dynamiteBlastRadius(), {1, 0, 0}, 90, Gold);
     }
     if (playerModel_.loaded()) {
         if (!lighting.ready())
@@ -902,7 +905,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                                     : Gold;
         if (p.kind == ProjectileKind::Rock || p.kind == ProjectileKind::ReturningHead)
             color = Color{182, 171, 141, 255};
-        projectileMesh(p.position, p.radius, color);
+        if(!p.hostile&&p.attack.capDamage>0&&!p.capSpent)color={248,166,75,255};
+        if(!p.hostile&&p.attack.rail)projectileMesh(p.position,p.radius,color,unit(p.velocity),3.5f);
+        else projectileMesh(p.position, p.radius, color);
     }
     // Keep triangles and lines in separate batches. Alternating for each projectile
     // creates thousands of tiny draw calls during a chain explosion.
@@ -911,7 +916,8 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                       : p.ghost     ? Teal
                       : p.lastRound ? Paper
                                     : Gold;
-        Vector3 tail = sub(p.position, mul(unit(p.velocity), p.hostile ? 0.35f : 0.6f));
+        if(!p.hostile&&(p.returning||p.attack.homingTurn>0))color=p.returning?Teal:Color{121,183,199,255};
+        Vector3 tail = sub(p.position, mul(unit(p.velocity), p.hostile ? 0.35f : p.attack.rail?1.f:0.6f));
         DrawLine3D(tail, p.position, color);
         if (p.kind == ProjectileKind::Hook) {
             DrawLine3D(p.origin, p.position, Gold);
@@ -1368,11 +1374,14 @@ Action Renderer::expedition(const Game &game) {
     if (!run.items.empty()) {
         panel(964, 571, 292, 204, Panel);
         text("BORROWED POWER", 980, 586, 12, Gold);
+        const int owned=int(std::count_if(itemDefinitions().begin(),itemDefinitions().end(),[&](const auto &d){return run.itemStacks(d.id)>0;}));
+        int row=0;
         for (int i = 0; i < ItemCount; ++i) {
             size_t stacks = run.itemStacks(ItemId(i));
-            text(std::string(stacks ? "+ " : "  ") + itemDefinition(ItemId(i)).name +
+            if(!stacks)continue;
+            text(std::string("+ ") + itemDefinition(ItemId(i)).name +
                      (stacks > 1 ? " x" + number(stacks) : ""),
-                 981, 612 + float(i) * 29, 14, stacks ? Paper : Color{79, 89, 82, 255});
+                 981, 607 + float(row++) * (owned>6?15:25), owned>6?12:14, Paper);
         }
     }
     if (run.messageTime > 0) {
@@ -1500,8 +1509,9 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
     for (int i = 0; i < ItemCount; ++i) {
         auto n = std::count(s.items.begin(), s.items.end(), ItemId(i));
         if (n) {
-            text(itemDefinition(ItemId(i)).name + (n > 1 ? " x" + std::to_string(n) : ""), 81,
-                 399 + float(row++) * 36, 20, Paper);
+            text(itemDefinition(ItemId(i)).name + (n > 1 ? " x" + std::to_string(n) : ""),
+                 81+float(row/6)*245,399+float(row%6)*31,16,Paper);
+            ++row;
         }
     }
     if (row == 0)
