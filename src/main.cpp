@@ -167,8 +167,9 @@ int main(int argc, char **argv) {
                          "power, reward, empty, cheats, "
                          "boss, summary, demolition, demolition-open, demolition-run,\n"
                          "                      build-bank, build-shrapnel, build-return, build-braid,\n"
-                         "                      ridgeback, ridgeback-late, ridgeback-fight,\n"
-                         "                      profile-quarry, profile-works or profile-storm (with --smoke)\n  --benchmark          Render the 100-enemy / "
+                         "                      ridgeback, foreman, marshal (also -late or -fight),\n"
+                         "                      profile-quarry, profile-works, profile-storm,\n"
+                         "                      service-exchange, service-surgeon, service-bargain, boss-reward (with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
@@ -208,11 +209,15 @@ int main(int argc, char **argv) {
         scene != "demolition" && scene != "demolition-open" && scene != "demolition-run" &&
         scene != "build-bank" && scene != "build-shrapnel" && scene != "build-return" && scene != "build-braid" &&
         scene != "ridgeback" && scene != "ridgeback-late" && scene != "ridgeback-fight" &&
+        scene != "service-exchange" && scene != "service-surgeon" && scene != "service-bargain" && scene != "boss-reward" &&
+        scene != "foreman" && scene != "foreman-late" && scene != "foreman-fight" &&
+        scene != "marshal" && scene != "marshal-late" && scene != "marshal-fight" &&
         scene != "profile-quarry" && scene != "profile-works" && scene != "profile-storm") {
         std::cerr << "Unknown smoke scene: " << scene << '\n';
         return 2;
     }
-    if (smoke && (scene.starts_with("ridgeback") || scene.starts_with("profile-")) &&
+    const bool guardianScene=scene.starts_with("ridgeback")||scene.starts_with("foreman")||scene.starts_with("marshal");
+    if (smoke && (guardianScene || scene.starts_with("profile-") || scene.starts_with("service-") || scene=="boss-reward") &&
         (themeChoice != dw::ThemeChoice::Canyon || expeditionPacing == dw::ExpeditionPacing::Classic)) {
         std::cerr << "Canyon progression scenes require --theme canyon and a non-Classic pacing preset.\n";
         return 2;
@@ -336,7 +341,7 @@ int main(int argc, char **argv) {
             game.launch(true);
             if (!game.run)
                 throw std::runtime_error(game.error);
-            if(smoke&&(scene=="ridgeback-late"||scene.starts_with("profile-"))) {
+            if(smoke&&((guardianScene&&scene.ends_with("-late"))||scene.starts_with("profile-"))) {
                 int floor=game.run->expedition.floorCount-1;
                 if(scene.starts_with("profile-")) {
                     const int band=scene=="profile-quarry"?1:scene=="profile-works"?2:3;
@@ -358,15 +363,30 @@ int main(int argc, char **argv) {
             }
             if (smoke && scene == "boss")
                 game.run->startBoss();
-            if(smoke&&scene.starts_with("ridgeback")) {
-                game.run->startBoss();
+            if(smoke&&guardianScene) {
+                game.run->startBoss(scene.starts_with("foreman")?dw::BossKind::PowderForeman:
+                    scene.starts_with("marshal")?dw::BossKind::StormMarshal:dw::BossKind::Ridgeback);
                 game.run->player.position=dw::add(game.run->arena.rooms.back().center,{0,0,9.7f});
-                if(scene=="ridgeback-late"&&game.run->boss()) {
+                if(scene.ends_with("-late")&&game.run->boss()) {
                     auto *boss=game.run->findEnemy(game.run->boss()->id);boss->hp=boss->maxHp*.49f;
                 }
-                if(scene=="ridgeback-fight") {game.run->godMode=false;game.run->dynamite=0;}
+                if(scene.ends_with("-fight")) {game.run->godMode=false;game.run->dynamite=0;}
             }
             if(smoke&&scene.starts_with("profile-"))game.run->jumpDebug(2);
+            if(smoke&&scene.starts_with("service-")) {
+                int at=-1;for(int i=0;i<game.run->arena.roomCount();++i)
+                    if(game.run->arena.rooms[size_t(i)].kind==dw::RoomKind::Service){at=i;break;}
+                if(at<0)throw std::runtime_error("No service room in smoke floor");
+                game.run->arena.rooms[size_t(at)].service=scene=="service-exchange"?dw::RoomService::Exchange:
+                    scene=="service-surgeon"?dw::RoomService::Surgeon:dw::RoomService::Smuggler;
+                game.run->rooms[size_t(at)].offers={dw::ItemId::Judas,dw::ItemId::Cap};
+                game.run->jumpDebug(at);game.run->player.position=game.run->arena.rooms[size_t(at)].objective;
+                game.run->keys=2;game.run->moneyCollected=100;game.run->player.hp=50;game.run->openShop();
+            }
+            if(smoke&&scene=="boss-reward") {
+                game.run->startBoss();game.run->killAll();game.run->clearRoom();
+                game.run->player.position=game.run->rewardPosition(game.run->room);game.run->interact();
+            }
             if(smoke&&scene.starts_with("build-")) {
                 game.run->jumpDebug(2);
                 const auto build=scene=="build-bank"?std::vector<dw::ItemId>{dw::ItemId::Ricochet,dw::ItemId::Rail,dw::ItemId::Lodestone}:
@@ -527,9 +547,9 @@ int main(int argc, char **argv) {
                     }
                     if(scene=="build-braid")input.placeDynamite=frame==30;
                 }
-                if(scene.starts_with("ridgeback")) {
+                if(guardianScene) {
                     input={};
-                    if(const auto *boss=game.run->boss();boss&&scene=="ridgeback-fight") {
+                    if(const auto *boss=game.run->boss();boss&&scene.ends_with("-fight")) {
                         const auto center=game.run->arena.rooms.back().center;
                         auto delta=dw::sub(game.run->player.position,center);delta.y=0;
                         const auto radial=dw::unit(delta);const Vector3 tangent{-radial.z,0,radial.x};
@@ -868,6 +888,11 @@ int main(int argc, char **argv) {
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
             if(game.run) {
+                const auto &trade=game.run->rooms[size_t(game.run->room)];
+                EM_ASM({if(Module.verify)Module.economy=({service:$0,open:!!$1,coins:$2,keys:$3,dynamite:$4,maxHP:$5,hp:$6,sold0:!!$7,sold1:!!$8,reward:!!$9,itemCount:$10});},
+                    int(game.run->arena.rooms[size_t(game.run->room)].service),game.run->shopOpen,double(game.run->money()),
+                    game.run->keys,game.run->dynamite,game.run->player.maxHp,game.run->player.hp,
+                    trade.serviceSold[0],trade.serviceSold[1],game.run->rewardOpen,int(game.run->items.size()));
                 const auto *guardian=game.run->boss();
                 EM_ASM({if(Module.verify)Module.guardian=({band:$0,kind:$1,state:$2,phase:$3,hp:$4,playerHp:$5,clear:!!$6,time:$7});},
                     game.run->arena.profile.band,guardian?int(guardian->bossKind):0,guardian?int(guardian->state):-1,

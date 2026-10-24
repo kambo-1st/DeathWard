@@ -13,7 +13,9 @@ inline constexpr int RoomCount = 15;
 inline constexpr int MinFloorRooms = 9;
 inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
-enum class RoomKind { Combat, Power, Boss, Empty, Shop };
+enum class RoomKind { Combat, Power, Boss, Empty, Shop, Service };
+enum class RoomService { None, Exchange, Surgeon, Smuggler };
+const char *roomServiceName(RoomService service);
 struct RoomGraph {
     std::vector<FloorCell> cells = std::vector<FloorCell>(RoomCount);
     std::vector<std::array<int, 2>> links;
@@ -27,6 +29,8 @@ struct RoomLayout {
     float floorArea = -1;
     RoomKind kind = RoomKind::Combat;
     StoryRoom story = StoryRoom::None;
+    RoomService service = RoomService::None;
+    Vector3 reward{};
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;
     float usableArea() const;
@@ -97,6 +101,7 @@ struct Arena {
     void rebuildWalls();
     void dressStoryRoom();
     void dressFloor();
+    void allocateServices();
     void prepareBossArena();
     void prepareBreakables(uint64_t seed);
     bool reservedSupplyCache(Vector3 point, float radius) const {

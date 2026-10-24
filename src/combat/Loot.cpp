@@ -34,6 +34,7 @@ void Simulation::prepareMoney() {
     }
 }
 void Simulation::dropMoney(const Enemy &enemy) {
+    if(canyonBoss(enemy.bossKind))return; // Dedicated, once-only boss payout.
     const auto *definition = monsterDefinition(enemy.monster);
     // Summoned offspring and permanent hazards must not become an infinite farm.
     if (enemy.friendly || enemy.generation > 0 || (definition && definition->roomHazard))

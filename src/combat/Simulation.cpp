@@ -1,5 +1,6 @@
 #include "combat/Simulation.hpp"
 #include "items/Items.hpp"
+#include "items/ItemPools.hpp"
 #include <iostream>
 #include <numeric>
 #include <stdexcept>
@@ -33,6 +34,11 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     if (!tutorial && pacing != ExpeditionPacing::Classic)
         arena.prepareBreakables(seed_);
     for (int index = 0; index < arena.roomCount(); ++index) {
+        if(arena.profile.active()) {
+            rooms[size_t(index)].offers=drawItemOffers(arena.rooms[size_t(index)].kind==RoomKind::Boss?
+                ItemPool::Boss:arena.rooms[size_t(index)].service==RoomService::Smuggler?ItemPool::Bargain:ItemPool::Armory,seed_^uint64_t(index+1)*0x9e3779b97f4a7c15ULL);
+            continue;
+        }
         if (arena.rooms[size_t(index)].kind != RoomKind::Power)
             continue;
         std::array<ItemId, ItemCount> pool{};
@@ -112,6 +118,7 @@ const Enemy *Simulation::boss() const {
     return nullptr;
 }
 std::string Simulation::roomName() const {
+    if(arena.rooms[size_t(room)].service!=RoomService::None)return roomServiceName(arena.rooms[size_t(room)].service);
     if(arena.rooms[size_t(room)].story!=StoryRoom::None)return storyRoomName(arena.rooms[size_t(room)].story);
     if(surveyTutorial) {
         static constexpr const char *names[]={"Beyond the Gate","Dust Hollow","The Sheltered Bend","Last Approach","Survey Camp"};
@@ -120,7 +127,8 @@ std::string Simulation::roomName() const {
     if (arena.rooms[size_t(room)].kind == RoomKind::Shop)
         return "Trader's Rest";
     if (arena.rooms[size_t(room)].kind == RoomKind::Boss)
-        return arena.profile.active()?"Ridgeback Hollow":roomName(FinalRoom, arena.theme);
+        return arena.profile.active()?(arena.profile.boss==BossKind::PowderForeman?"Foreman's Yard":
+            arena.profile.boss==BossKind::StormMarshal?"Stormwatch Ring":"Ridgeback Hollow"):roomName(FinalRoom, arena.theme);
     if (arena.rooms[size_t(room)].kind == RoomKind::Power)
         return roomName(RoomCount - 2 - (finalRoom() - 1 - room), arena.theme);
     return roomName(room, arena.theme);
@@ -178,9 +186,18 @@ void Simulation::tunePlayer(float baseHealth, float shotDamage) {
     }
     player.shotDamage = shotDamage;
 }
+bool Simulation::rewardAvailable(int index) const {
+    const auto &site=arena.rooms.at(size_t(index));const auto &progress=rooms.at(size_t(index));
+    return !progress.rewardTaken&&(site.kind==RoomKind::Power||
+        (arena.profile.active()&&site.kind==RoomKind::Boss&&progress.bossPaid&&progress.cleared));
+}
+Vector3 Simulation::rewardPosition(int index) const {
+    const auto &site=arena.rooms.at(size_t(index));
+    return site.kind==RoomKind::Boss?site.reward:site.objective;
+}
 void Simulation::offerReward() {
     const auto &progress = rooms[size_t(room)];
-    if (arena.rooms[size_t(room)].kind != RoomKind::Power || progress.rewardTaken)
+    if (!rewardAvailable(room))
         return;
     offers = progress.offers;
     rewardOpen = true;
@@ -188,10 +205,11 @@ void Simulation::offerReward() {
 void Simulation::chooseReward(int index) {
     auto &progress = rooms[size_t(room)];
     if (!rewardOpen || index < 0 || index >= int(offers.size()) || progress.rewardTaken ||
-        arena.rooms[size_t(room)].kind != RoomKind::Power)
+        !rewardAvailable(room)||items.size()>=256||!roomClear||
+        distance(player.position,rewardPosition(room))>=2.6f||!arena.sight(player.position,rewardPosition(room)))
         return;
     progress.rewardTaken = true;
-    ++powerUpsTaken;
+    if(arena.rooms[size_t(room)].kind==RoomKind::Power)++powerUpsTaken;
     grant(offers[size_t(index)]);
     rewardOpen = shopOpen = false;
     announce("Power claimed. This cache is empty; explore another passage.", 4);
@@ -220,14 +238,14 @@ void Simulation::enterRoom(int index) {
     visuals.clear();
     particleBursts.clear();
     const auto kind = arena.rooms[size_t(room)].kind;
-    if (kind == RoomKind::Power || kind == RoomKind::Empty || kind == RoomKind::Shop) {
+    if (kind == RoomKind::Power || kind == RoomKind::Empty || kind == RoomKind::Shop || kind==RoomKind::Service) {
         if (!progress.cleared) {
             progress.cleared = true;
             ++stats.rooms;
         }
         roomClear = true;
         arena.sealRoom(-1);
-        announce(kind == RoomKind::Shop    ? "TRADER'S REST / approach the shopkeeper to trade."
+        announce(kind==RoomKind::Service?std::string(roomServiceName(arena.rooms[size_t(room)].service))+" / approach to see the offer.":kind == RoomKind::Shop    ? "TRADER'S REST / approach the shopkeeper to trade."
                  : kind == RoomKind::Empty ? "QUIET ROOM / no enemies. Explore the open passages."
                  : progress.rewardTaken    ? "An empty power cache."
                                            : "POWER CACHE / approach the pedestal and choose one item.",
@@ -317,13 +335,18 @@ void Simulation::requestDoor(int passage, int side) {
     requestMove(arena.doorApproach(passage, side),false);
     doorOnArrival_ = std::pair{passage, side};
 }
-void Simulation::startBoss() {
+void Simulation::startBoss(BossKind kind) {
+    if(arena.profile.active()&&canyonBoss(kind)) {
+        arena.profile.boss=kind;
+        std::erase_if(arena.breakables,[&](const auto &prop){return prop.room==finalRoom();});
+        arena.rebuildWalls();arena.prepareBossArena();
+    }
     jumpDebug(finalRoom(), true);
 }
 void Simulation::beginBossEncounter() {
-    if(const auto *e=boss();e&&e->bossKind==BossKind::Ridgeback) {
+    if(const auto *e=boss();e&&canyonBoss(e->bossKind)) {
         announce(std::string(testimony()?accountName(expedition.account):arena.profile.name)+
-                 " / RIDGEBACK. Dodge the marked charge; punish its recovery.",6);return;
+                 " / "+bossName(e->bossKind)+". "+bossHint(*e),6);return;
     }
     if(testimony()) {announce(std::string(accountName(expedition.account))+
         (lastFloor()?" / THE DRY CREEK. Clear the room, then examine the evidence.":" / Clear the final room to continue deeper."),6);return;}
@@ -460,14 +483,14 @@ void Simulation::interact() {
         announce("Bell's survey records and Eleanor's letter recovered. Return to the commander.",6);
         return;
     }
-    if (room == arena.shopRoom) {
+    if (room == arena.shopRoom || arena.rooms[size_t(room)].kind==RoomKind::Service) {
         openShop();
         if (shopOpen)
             return;
     }
     collectKeys();
-    if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
-        distance(player.position, arena.rooms[size_t(room)].objective) < 2.6f) {
+    if (rewardAvailable(room) && distance(player.position,rewardPosition(room))<2.6f &&
+        arena.sight(player.position,rewardPosition(room))) {
         offerReward();
         return;
     }
@@ -713,7 +736,7 @@ void Simulation::process(const Event &e) {
             effectVisual(target->position, 0.8f, 1);
             if (target->kind == EnemyKind::Boss) {
                 bossKilled = true;
-                if(target->bossKind==BossKind::Ridgeback)rewardCanyonBoss(*target);
+                if(canyonBoss(target->bossKind))rewardCanyonBoss(*target);
                 checkpointNeeded = true;
             }
             hit.type = EventType::EnemyKilled;
@@ -1037,7 +1060,7 @@ void Simulation::updateProjectiles(float dt) {
     }
     for (const auto &p : projectiles)
         if (!p.alive) {
-            if (p.hostile && (p.kind == ProjectileKind::SplitShot || p.kind == ProjectileKind::BurstShot)) {
+            if (!p.cancelled && p.hostile && (p.kind == ProjectileKind::SplitShot || p.kind == ProjectileKind::BurstShot)) {
                 const int count = p.kind == ProjectileKind::SplitShot ? 2 : 6;
                 for (int n = 0; n < count; ++n) {
                     Event child;
@@ -1052,7 +1075,7 @@ void Simulation::updateProjectiles(float dt) {
                     emit(child, p.context);
                 }
             }
-            if (p.hostile && (p.kind == ProjectileKind::Tar || p.kind == ProjectileKind::Flame)) {
+            if (!p.cancelled && p.hostile && (p.kind == ProjectileKind::Tar || p.kind == ProjectileKind::Flame)) {
                 Enemy source;
                 source.id = p.context.sourceEntity;
                 source.position = p.position;
@@ -1075,7 +1098,7 @@ void Simulation::step(const Input &input, float dt) {
         stats.bossDuration += dt;
     messageTime = std::max(0.0f, messageTime - dt);
     updatePlayer(input, dt);
-    if (shopOpen || letterOpen || storyOpen!=StoryRoom::None || floorExitRequested || finished)
+    if (shopOpen || rewardOpen || letterOpen || storyOpen!=StoryRoom::None || floorExitRequested || finished)
         return;
     const int location = arena.roomAt(player.position);
     if (roomClear && location >= 0 && location != room) {

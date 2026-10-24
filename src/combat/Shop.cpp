@@ -1,5 +1,6 @@
 #include "combat/Simulation.hpp"
 #include "items/Items.hpp"
+#include "items/ItemPools.hpp"
 
 namespace dw {
 void Simulation::prepareShop() {
@@ -14,9 +15,13 @@ void Simulation::prepareShop() {
         shopOffers[size_t(i + 1)] = {pool[size_t(i)], 25, ShopOfferKind::Power, false};
     }
     shopOffers[3] = {ItemId::Ricochet, 15, ShopOfferKind::Dynamite, false};
+    if(arena.profile.active()) {
+        const auto offers=drawItemOffers(ItemPool::Shop,seed_);
+        for(int i=0;i<2;++i)shopOffers[size_t(i+1)].item=offers[size_t(i)];
+    }
 }
 void Simulation::openShop() {
-    if (arena.shopRoom < 0 || room != arena.shopRoom || dead || finished || rewardOpen || !roomClear ||
+    if ((room != arena.shopRoom && arena.rooms[size_t(room)].kind!=RoomKind::Service) || dead || finished || rewardOpen || !roomClear ||
         roomThreats() != 0 || distance(player.position, arena.rooms[size_t(room)].objective) > 2.6f ||
         !arena.sight(player.position, arena.rooms[size_t(room)].objective))
         return;
@@ -27,10 +32,11 @@ void Simulation::openShop() {
     audioCues.push(AudioCueKind::UI, player.position);
 }
 void Simulation::closeShop() {
-    shopOpen = false;
+    shopOpen = rewardOpen = false;
     cancelMove();
 }
 std::string Simulation::shopUnavailable(int index) const {
+    if(arena.rooms[size_t(room)].kind==RoomKind::Service)return serviceUnavailable(index);
     if (index < 0 || index >= int(shopOffers.size()) || !shopOpen || room != arena.shopRoom || !roomClear ||
         roomThreats() || dead || finished ||
         distance(player.position, arena.rooms[size_t(room)].objective) > 2.6f ||
@@ -50,6 +56,7 @@ std::string Simulation::shopUnavailable(int index) const {
     return {};
 }
 bool Simulation::buyShop(int index) {
+    if(arena.rooms[size_t(room)].kind==RoomKind::Service)return buyService(index);
     if (!shopUnavailable(index).empty())
         return false;
     auto &offer = shopOffers[size_t(index)];

@@ -2,7 +2,7 @@
 
 Milestone 4 implements the first six proposed additions from [the expedition study](isaac_expedition_study.md). These are DeathWard weapon designs, informed by the preserved Isaac data's distinction between item metadata, attack forms and modifiers. No Isaac item code or artwork is bundled. The Original visual style remains the default.
 
-The eleven items are available in seeded armory rewards and shops. Classic and the tutorial retain their original five-item reward selection. Dedicated weighted room pools are milestone 6. Existing item IDs 0–4 stay stable; IDs 5–10 append the six new items, with no change to the campaign format. Builds carry across expedition floors and remain in resolved/interrupted run history.
+All eleven items are available across the distinct armory, shop, boss and bargain pools in modern canyon expeditions; each destination has different membership and weights. See [optional rooms and reward pools](expedition_economy.md). Mine retains its eleven-item collection, while Classic and the tutorial retain their original five-item reward selection. Existing item IDs 0–4 stay stable; IDs 5–10 append the six new items, with no change to the campaign format. Builds carry across expedition floors and remain in resolved/interrupted run history.
 
 ## New mechanics
 

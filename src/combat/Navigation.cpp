@@ -197,7 +197,7 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
         target=site.objective;interactOnArrival_=true;
     } else if(surveyTutorial && room==finalRoom() && roomClear && distance(target,surveyPosition())<2.4f) {
         target=surveyPosition();interactOnArrival_=true;
-    } else if (room == arena.shopRoom && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
+    } else if ((room == arena.shopRoom || site.kind==RoomKind::Service) && distance(target, arena.rooms[size_t(room)].objective) < 2.4f) {
         target = arena.rooms[size_t(room)].objective;
         interactOnArrival_ = true;
     } else if (legacyObjectives() && !rescued && distance(target, arena.miners) < 2.4f) {
@@ -226,11 +226,10 @@ std::string Simulation::nearbyInteraction() const {
         return "EXAMINE SITE";
     if(surveyTutorial && room==finalRoom() && roomClear && distance(player.position,surveyPosition())<2.6f &&
        arena.sight(player.position,surveyPosition()))return surveyRecovered?"READ LETTER":"RECOVER RECORDS";
-    if (room == arena.shopRoom && distance(player.position, arena.rooms[size_t(room)].objective) <= 2.6f &&
+    if ((room == arena.shopRoom || site.kind==RoomKind::Service) && distance(player.position, arena.rooms[size_t(room)].objective) <= 2.6f &&
         arena.sight(player.position, arena.rooms[size_t(room)].objective))
         return "TRADE";
-    if (arena.rooms[size_t(room)].kind == RoomKind::Power && !rooms[size_t(room)].rewardTaken &&
-        distance(player.position, arena.rooms[size_t(room)].objective) < 2.6f)
+    if (rewardAvailable(room)&&distance(player.position,rewardPosition(room))<2.6f&&arena.sight(player.position,rewardPosition(room)))
         return "CLAIM POWER";
     if (legacyObjectives() && !rescued && distance(player.position, arena.miners) < 2.6f)
         return "FREE MINERS";

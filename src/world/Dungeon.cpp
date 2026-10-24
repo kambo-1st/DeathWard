@@ -103,6 +103,8 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         passage.rooms = edge;
         passage.locked = rooms[size_t(edge[0])].kind != RoomKind::Combat ||
                          rooms[size_t(edge[1])].kind != RoomKind::Combat;
+        if(profile.active())passage.locked=rooms[size_t(edge[0])].kind==RoomKind::Power||
+            rooms[size_t(edge[1])].kind==RoomKind::Power;
         const int index = int(passages.size());
         passages.push_back(passage);
         rooms[size_t(edge[0])].passages.push_back(index);
@@ -426,6 +428,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         if(story==StoryRoom::DryCreek)
             exit=rooms.back().exit=add(rooms.back().center,mul(unit(sub(rooms.back().center,rooms.back().objective)),2.f));
     }
+    if(profile.active())allocateServices();
     rebuildWalls();
     if (theme == MissionTheme::Canyon)
         buildCanyon(*this, canyonRiver);

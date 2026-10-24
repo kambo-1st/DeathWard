@@ -1,6 +1,35 @@
 #include "world/Dungeon.hpp"
 
 namespace dw {
+const char *roomServiceName(RoomService service) {
+    switch(service) {
+    case RoomService::Exchange:return "Prospector Exchange";
+    case RoomService::Surgeon:return "Field Surgeon";
+    case RoomService::Smuggler:return "Smuggler's Bargain";
+    default:return "Rest Stop";
+    }
+}
+void Arena::allocateServices() {
+    Random rng(visualSeed^0x5345525649434553ULL);
+    std::vector<int> sites;
+    int combat=0;
+    for(int i=1;i<roomCount()-1;++i) {
+        const auto &r=rooms[size_t(i)];combat+=r.kind==RoomKind::Combat;
+        if(i!=2&&i!=3&&r.story==StoryRoom::None&&(r.kind==RoomKind::Combat||r.kind==RoomKind::Empty))sites.push_back(i);
+    }
+    for(size_t i=0;i<sites.size();++i)std::swap(sites[i],sites[i+rng.bounded(uint32_t(sites.size()-i))]);
+    // Prefer side branches, without moving any story site or adding graph nodes.
+    std::stable_sort(sites.begin(),sites.end(),[&](int a,int b){return rooms[size_t(a)].passages.size()<rooms[size_t(b)].passages.size();});
+    std::array<RoomService,3> kinds{RoomService::Exchange,RoomService::Surgeon,RoomService::Smuggler};
+    for(size_t i=0;i<kinds.size();++i)std::swap(kinds[i],kinds[i+rng.bounded(uint32_t(kinds.size()-i))]);
+    int count=0;
+    for(int index:sites) {
+        auto &r=rooms[size_t(index)];
+        if(r.kind==RoomKind::Combat&&combat<=3)continue;
+        combat-=r.kind==RoomKind::Combat;r.kind=RoomKind::Service;r.service=kinds[size_t(count++)];
+        if(count>=(roomCount()>=12?2:1))break;
+    }
+}
 void Arena::dressFloor() {
     if(!profile.active()||profile.band<2)return;
     Random rng(visualSeed^0x464c4f4f52445253ULL);
@@ -48,11 +77,21 @@ void Arena::prepareBossArena() {
         auto p=add(room.center,offset);
         if(blocked(p,1.8f)||distance(p,room.objective)<3||distance(p,room.entry)<6)continue;
         Breakable prop;prop.id=0x424f53530000ULL+uint64_t(n);prop.room=index;
-        prop.kind=BreakableKind::CrackedRock;prop.health=1;prop.paid=true;
+        prop.kind=profile.boss==BossKind::PowderForeman?BreakableKind::PowderBarrel:BreakableKind::CrackedRock;
+        prop.health=prop.kind==BreakableKind::PowderBarrel?30:1;prop.paid=true;
         prop.bounds={{p.x-.8f,0,p.z-.8f},{p.x+.8f,1.1f,p.z+.8f}};
         prop.rewardPosition=p;
         breakables.push_back(prop);
     }
     rebuildWalls();
+    // The optional boss reward has its own approach, separate from evidence and
+    // the floor exit. Its position remains stable after cover is destroyed.
+    auto &bossRoom=rooms.back();bossRoom.reward=bossRoom.center;
+    for(int n=0;n<16;++n) {
+        const auto p=add(bossRoom.center,rotateY({4.5f,0,0},float(n)*Pi/8));
+        if(blocked(p,1.1f)||distance(p,bossRoom.objective)<4||distance(p,exit)<4||
+           !clear(bossRoom.center,p,.48f))continue;
+        bossRoom.reward=p;break;
+    }
 }
 } // namespace dw

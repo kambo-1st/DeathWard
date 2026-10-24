@@ -4,18 +4,27 @@ namespace dw {
 const char *bossName(BossKind kind) {
     switch(kind) {
     case BossKind::Ridgeback:return "RIDGEBACK";
+    case BossKind::PowderForeman:return "POWDER FOREMAN";
+    case BossKind::StormMarshal:return "STORM MARSHAL";
     case BossKind::Sheriff:return "THE HOLLOW SHERIFF";
     default:return "CANYON GUARDIAN";
     }
 }
+const char *bossHint(const Enemy &e) {
+    if(e.bossKind==BossKind::Ridgeback)return e.phase?"TWO CHARGES / BREAK COVER TO STUN":"DODGE THE LANE / PUNISH RECOVERY";
+    if(e.bossKind==BossKind::PowderForeman)return "STEP INTO CHARGES TO KICK / WATCH THE FUSE";
+    return e.phase?"SWEEP THEN VOLLEY / EACH ATTACK IS WARNED":"MOVE THROUGH THE OPEN GAP / PUNISH RECOVERY";
+}
 void Simulation::spawnCanyonBoss() {
     const auto id=spawn(EnemyKind::Boss,arena.rooms[size_t(room)].bossSpawn);
     auto *e=findEnemy(id);if(!e)return;
-    e->bossKind=BossKind::Ridgeback;e->radius=1.2f;
-    e->hp=e->maxHp=620+100.f*arena.profile.band;
+    e->bossKind=arena.profile.boss;e->radius=e->bossKind==BossKind::Ridgeback?1.2f:1.f;
+    const float health=e->bossKind==BossKind::Ridgeback?620:e->bossKind==BossKind::PowderForeman?500:540;
+    e->hp=e->maxHp=health+float(e->bossKind==BossKind::Ridgeback?100:80)*arena.profile.band;
     e->cooldown=1.2f;e->state=EnemyState::Ready;e->home=e->position;
 }
 void Simulation::updateCanyonBoss(Enemy &e,float dt) {
+    if(e.bossKind!=BossKind::Ridgeback){updateFrontierBoss(e,dt);return;}
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.velocity={};
     e.phase=e.hp<=e.maxHp*.5f?1:0;
     e.stateTime-=dt;e.cooldown-=dt;
@@ -101,14 +110,22 @@ void Simulation::updateCanyonBoss(Enemy &e,float dt) {
 }
 void Simulation::rewardCanyonBoss(const Enemy &enemy) {
     auto &progress=rooms[size_t(room)];
+    for(auto &p:projectiles)if(p.hostile&&p.context.sourceEntity==enemy.id){p.alive=false;p.cancelled=true;}
+    // Cancel queued attacks too. The death transition can occur before another
+    // attack emitted in the same tick reaches the front of the event queue.
+    std::erase_if(queue_,[&](const Event &e) {
+        if(e.context.sourceEntity!=enemy.id||(!e.hostile&&!e.playerDamageHostile))return false;
+        auto it=chains.find(e.context.chainId);if(it!=chains.end()&&it->second.queued)--it->second.queued;
+        return true;
+    });
+    clearHazards(true);
+    for(auto &prop:arena.breakables)if(prop.room==room&&prop.kind==BreakableKind::PowderBarrel)prop.fuse=-1;
     if(progress.bossPaid)return;
     progress.bossPaid=true;
     const auto at=arena.rooms[size_t(room)].center;
     moneyPickups.push_back({at,6+2*std::max(0,arena.profile.band),0,true});
     // Supply, never a required key or a healing-on-kill loop.
     dynamite=std::min(MaxDynamite,dynamite+1);
-    for(auto &p:projectiles)if(p.hostile&&p.context.sourceEntity==enemy.id)p.alive=false;
-    clearHazards(true);
     checkpointNeeded=true;
 }
 } // namespace dw

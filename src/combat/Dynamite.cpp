@@ -117,7 +117,7 @@ void Simulation::kickDynamiteOnContact(Vector3 previousPosition) {
     const Vector3 movement{player.position.x - previousPosition.x, 0, player.position.z - previousPosition.z};
     const float travelSquared = dot(movement, movement);
     for (auto &charge : hazards) {
-        if (charge.kind != HazardKind::PlayerDynamite || !charge.alive || charge.age >= charge.delay)
+        if ((charge.kind != HazardKind::PlayerDynamite && charge.kind != HazardKind::BossCharge) || !charge.alive || charge.age >= charge.delay)
             continue;
         const Vector3 toward{charge.position.x - previousPosition.x, 0,
                              charge.position.z - previousPosition.z};
@@ -133,6 +133,7 @@ void Simulation::kickDynamiteOnContact(Vector3 previousPosition) {
             arena.sight(add(contact, {0, -.55f, 0}), charge.position)) {
             charge.velocity = add(mul(unit(toward), KickSpeed), {0, KickLift, 0});
             charge.settled = false;
+            charge.kicked = true;
             audioCues.push(arena.theme == MissionTheme::Canyon ? AudioCueKind::StepGravel
                                                                : AudioCueKind::StepMine,
                            charge.position);

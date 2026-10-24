@@ -60,7 +60,7 @@ void floors() {
                     }
             }
             const auto &r=run.arena.rooms.back();
-            check(run.roomEnemies(run.finalRoom()).size()==1&&run.roomEnemies(run.finalRoom())[0].bossKind==BossKind::Ridgeback,"dedicated single canyon boss");
+            check(run.roomEnemies(run.finalRoom()).size()==1&&run.roomEnemies(run.finalRoom())[0].bossKind==plan.bossOnFloor(floor),"dedicated single canyon boss");
             check(r.obstacles.empty(),"no baked outcrops in charge arena");
             for(int n=0;n<32;++n) {
                 const auto a=add(r.center,{std::cos(n*2*Pi/32)*9.7f,0,std::sin(n*2*Pi/32)*9.7f});
@@ -101,7 +101,7 @@ void determinism() {
     check(!repeat.bossKilled&&repeat.boss(),"a previous expedition's victory does not defeat the new floor's guardian");
 }
 void bossRules() {
-    Simulation run(1866,1,{},MissionTheme::Canyon);run.startBoss();run.godMode=true;
+    Simulation run(1866,1,{},MissionTheme::Canyon);run.startBoss(BossKind::Ridgeback);run.godMode=true;
     auto *boss=run.findEnemy(run.boss()->id);const auto id=boss->id;
     const auto center=run.arena.rooms.back().center;
     run.player.position=add(center,{0,0,8});
@@ -151,7 +151,7 @@ void weakBuildWins() {
     for(uint64_t seed:{7ULL,1866ULL,42ULL})for(int late:{0,1}) {
         ExpeditionPlan plan(seed);const int floor=late?plan.floorCount-1:0;
         Simulation run(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,floor);
-        run.startBoss();run.godMode=false;run.dynamite=0;run.items.clear();
+        run.startBoss(BossKind::Ridgeback);run.godMode=false;run.dynamite=0;run.items.clear();
         const auto center=run.arena.rooms.back().center;
         for(int i=0;i<7200&&!run.roomClear&&!run.dead;++i) {
             const auto *boss=run.boss();check(boss,"living encounter retains boss");

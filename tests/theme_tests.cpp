@@ -98,7 +98,7 @@ int main() {
                       "canyon groups including the finale and companions respect the area budget");
                 for (size_t i = 0; i < a.enemies.size(); ++i) {
                     check(room==a.finalRoom()
-                              ? a.enemies[i].kind==EnemyKind::Boss&&a.enemies[i].bossKind==BossKind::Ridgeback
+                              ? a.enemies[i].kind==EnemyKind::Boss&&a.enemies[i].bossKind==a.expedition.bossOnFloor(a.floor)
                               : a.enemies[i].kind==EnemyKind::Monster&&a.enemies[i].monster!=0,
                           "canyon keeps Isaac ordinary enemies and its dedicated canyon boss");
                     check(a.enemies[i].kind == b.enemies[i].kind &&
@@ -124,7 +124,7 @@ int main() {
             check(a.roomClear && a.bossKilled && !a.boss(),
                   "clearing the canyon finale satisfies its objective without a Sheriff");
             a.startBoss();
-            check(!a.roomClear && !a.bossKilled && a.boss() && a.boss()->bossKind==BossKind::Ridgeback && a.roomThreats() == 1,
+            check(!a.roomClear && !a.bossKilled && a.boss() && a.boss()->bossKind==a.expedition.bossOnFloor(a.floor) && a.roomThreats() == 1,
                   "replaying the canyon finale restores its dedicated guardian");
             a.clearRoomDebug();
             a.spawnEnemies(30);
@@ -186,7 +186,7 @@ int main() {
             for (const auto &enemy : mineRun.enemies)
                 check(enemy.kind != EnemyKind::Monster, "random mine cheat spawns retain Western enemies");
             Simulation canyonReturn(1866, 4, store.data().world, MissionTheme::Canyon);
-            check(!canyonReturn.bossKilled&&canyonReturn.roomEnemies(canyonReturn.finalRoom()).front().bossKind==BossKind::Ridgeback,
+            check(!canyonReturn.bossKilled&&canyonBoss(canyonReturn.roomEnemies(canyonReturn.finalRoom()).front().bossKind),
                   "a completed campaign still has a living guardian on a fresh expedition");
         }
         std::filesystem::remove(path);

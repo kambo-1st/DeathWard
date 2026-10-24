@@ -60,8 +60,8 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
         objective(run.arena.altar, 1.0f, 2.9f);
     if (run.canUseFloorExit())
         objective(run.arena.exit, 2.0f, 3.2f);
-    if (run.arena.rooms[size_t(run.room)].kind == RoomKind::Power && !run.rooms[size_t(run.room)].rewardTaken)
-        objective(run.arena.rooms[size_t(run.room)].objective, 1.2f, 2.4f);
+    if (run.rewardAvailable(run.room))
+        objective(run.rewardPosition(run.room), 1.2f, 2.4f);
     for (const auto &key : run.arena.keys)
         if (!key.collected && run.rooms[size_t(key.room)].cleared)
             objective(key.position, 1.0f, 2.0f);
@@ -81,6 +81,9 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
     if (run.arena.shopRoom >= 0 && hits(run.arena.rooms[size_t(run.arena.shopRoom)].objective, .9f, 2.8f)) {
         result.objective = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
         result.door.reset();
+    }
+    for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Service&&hits(site.objective,.9f,2.8f)) {
+        result.objective=site.objective;result.door.reset();
     }
     for (const auto &coin : run.moneyPickups)
         if (hits(coin.position, .65f, 1.1f)) {
@@ -873,6 +876,9 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             else if (IsKeyPressed(KEY_FOUR))
                 perform(Action::BuyShop3);
             return;
+        }
+        if(run->rewardOpen&&IsKeyPressed(KEY_ESCAPE)&&!paused) {
+            perform(Action::CloseShop);resetPointerInput();return;
         }
         if (dynamiteArmed && IsKeyPressed(KEY_ESCAPE)) {
             resetPointerInput();

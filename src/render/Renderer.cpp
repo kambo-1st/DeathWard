@@ -216,8 +216,31 @@ void ridgebackModel(const Enemy &e,bool drawShadow) {
     for(float x:{-.28f,.28f})DrawSphereEx({x,.95f,1.5f},.09f,4,5,e.phase?Rust:Gold);
     rlPopMatrix();
 }
+void frontierBossModel(const Enemy &e,bool drawShadow) {
+    const bool foreman=e.bossKind==BossKind::PowderForeman;
+    const auto p=e.position;const Color coat=e.flash>0?Paper:foreman?Color{117,74,43,255}:Color{56,79,88,255};
+    if(drawShadow)shadow(p,1.2f);
+    cowboy(p,e.facing,coat,1.35f,true);
+    rlPushMatrix();rlTranslatef(p.x,0,p.z);rlRotatef(std::atan2(e.facing.x,e.facing.z)*180/Pi,0,1,0);
+    if(foreman) {
+        DrawCylinder({0,1.15f,-.48f},.48f,.48f,1.2f,8,Color{74,51,34,255});
+        DrawCube({0,1.1f,.42f},.83f,1.15f,.12f,coat);
+        DrawCylinder({0,2.45f,0},.51f,.51f,.12f,8,Gold);
+        DrawSphereEx({0,2.53f,.46f},.15f,5,6,Paper);
+        for(float x:{-.29f,.29f})DrawCube({x,1.72f,.47f},.1f,.7f,.08f,Gold);
+        const float y=e.state==EnemyState::Windup&&e.bossAttack==0?2.2f:1.25f;
+        DrawCylinderEx({.7f,y,.25f},{.7f,y,.85f},.16f,.16f,6,Rust);
+    } else {
+        DrawCylinder({0,1.15f,0},.6f,.85f,1.05f,5,coat);
+        DrawCylinder({0,2.46f,0},.82f,.82f,.09f,8,Ink);
+        DrawCube({0,1.74f,.64f},.22f,.22f,.06f,Gold);
+        for(float x:{-.57f,.57f})DrawCylinderEx({x,1.38f,.4f},{x,1.38f,1.05f},.09f,.09f,6,Paper);
+    }
+    rlPopMatrix();
+}
 void enemyModel(const Enemy &enemy, bool drawShadow = true) {
     if(enemy.bossKind==BossKind::Ridgeback){ridgebackModel(enemy,drawShadow);return;}
+    if(enemy.bossKind==BossKind::PowderForeman||enemy.bossKind==BossKind::StormMarshal){frontierBossModel(enemy,drawShadow);return;}
     if (enemy.kind == EnemyKind::Monster) {
         drawMonsterModel(enemy, drawShadow);
         return;
@@ -361,7 +384,48 @@ void shopkeeper(Vector3 p, float time, bool drawShadow = true) {
     DrawSphereEx({p.x + .6f, 1.12f, p.z + 1.1f}, .22f, 6, 8, Teal);
     DrawCylinder({p.x + .1f, .93f, p.z + 1.1f}, .18f, .18f, .09f, 10, Gold);
 }
+void servicePerson(Vector3 p,RoomService service,float time,bool drawShadow) {
+    shopkeeper(p,time,drawShadow);
+    const auto at=add(p,{1.15f,.9f,.9f});
+    if(service==RoomService::Surgeon) {
+        DrawCube(at,.7f,.35f,.45f,Paper);
+        DrawCube(add(at,{0,0,-.24f}),.12f,.28f,.025f,Teal);
+        DrawCube(add(at,{0,0,-.24f}),.38f,.09f,.025f,Teal);
+    } else if(service==RoomService::Exchange) {
+        for(float z:{-.12f,.12f})DrawCylinderEx(add(at,{-.35f,0,z}),add(at,{.35f,0,z}),.1f,.1f,6,Rust);
+        DrawSphereEx(add(at,{0,.25f,0}),.16f,4,6,Gold);
+    } else {
+        DrawCube(at,.7f,.3f,.4f,Color{66,43,75,255});
+        DrawSphereEx(add(at,{0,.32f,0}),.22f,5,6,Teal);
+    }
+}
 void enemyWarning(const Enemy &enemy, const Simulation &run) {
+    if(enemy.bossKind==BossKind::PowderForeman||enemy.bossKind==BossKind::StormMarshal) {
+        auto p=enemy.position;p.y=.09f;
+        auto lane=[&](float angle,Color color,float width) {
+            const auto direction=rotateY(enemy.facing,angle);auto end=enemy.position;
+            for(float d=.4f;d<=18;d+=.4f) {
+                const auto next=add(enemy.position,mul(direction,d));
+                if(!run.arena.clear(end,next,.1f))break;
+                end=next;
+            }
+            end.y=.09f;DrawCylinderEx(p,end,width,width,4,color);
+        };
+        if(enemy.state==EnemyState::Windup||enemy.state==EnemyState::Charging) {
+            if(enemy.bossKind==BossKind::PowderForeman&&enemy.bossAttack==0) {
+                for(int i=0;i<enemy.bossTargetCount;++i) {
+                    auto at=enemy.bossTargets[size_t(i)];at.y=.1f;
+                    DrawCircle3D(at,2.6f,{1,0,0},90,Rust);
+                    DrawCircle3D(at,.35f,{1,0,0},90,Paper);
+                }
+            } else if(enemy.bossKind==BossKind::StormMarshal&&enemy.bossAttack==1) {
+                for(float angle:{-1.08f,-.72f,-.36f,.36f,.72f,1.08f})lane(angle,Gold,.035f);
+                lane(-.32f,Teal,.065f);lane(.32f,Teal,.065f);
+                lane(0,Teal,.03f);
+            } else for(float angle:{-.2f,0.f,.2f})lane(angle,Gold,.045f);
+        } else if(enemy.state==EnemyState::Stunned)DrawCircle3D(p,enemy.radius+.3f,{1,0,0},90,Teal);
+        return;
+    }
     if(enemy.bossKind==BossKind::Ridgeback) {
         auto p=enemy.position;p.y=.1f;
         if(enemy.state==EnemyState::Buried) {
@@ -461,11 +525,15 @@ void enemyWarning(const Enemy &enemy, const Simulation &run) {
                  warning);
 }
 void drawHazard(const Hazard &hazard) {
-    if (hazard.kind == HazardKind::PlayerDynamite) {
+    if (hazard.kind == HazardKind::PlayerDynamite || hazard.kind == HazardKind::BossCharge) {
         const auto p = hazard.position;
         const float fuse = std::clamp(hazard.age / hazard.delay, 0.f, 1.f);
         DrawCircle3D({p.x, .07f, p.z}, hazard.radius, {1, 0, 0}, 90, Rust);
-        DrawCircle3D({p.x, .08f, p.z}, hazard.radius * fuse, {1, 0, 0}, 90, Gold);
+        DrawCircle3D({p.x, .08f, p.z}, hazard.radius * fuse, {1, 0, 0}, 90, hazard.kicked?Teal:Gold);
+        if(hazard.kind==HazardKind::BossCharge) {
+            DrawCircle3D({p.x,.09f,p.z},hazard.radius+.12f,{1,0,0},90,Paper);
+            if(hazard.age<.7f)DrawCircle3D({hazard.origin.x,.1f,hazard.origin.z},hazard.radius,{1,0,0},90,Gold);
+        }
         shadow(p, .45f);
         rlPushMatrix();
         rlTranslatef(p.x, p.y, p.z);
@@ -677,11 +745,13 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             if (distance(run.player.position, merchant) < 60)
                 shopkeeper(merchant, float(run.stats.duration), !depthOnly && !lighting.ready());
         }
+        for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Service&&distance(run.player.position,site.objective)<60)
+            servicePerson(site.objective,site.service,float(run.stats.duration),!depthOnly&&!lighting.ready());
         for (int i = 0; i < run.arena.roomCount(); ++i) {
             const auto &room = run.arena.rooms[size_t(i)];
-            if (room.kind != RoomKind::Power || distance(run.player.position, room.objective) > 60)
+            if ((room.kind!=RoomKind::Power&&!run.rewardAvailable(i))||distance(run.player.position,run.rewardPosition(i))>60)
                 continue;
-            const auto p = room.objective;
+            const auto p=run.rewardPosition(i);
             DrawCylinder({p.x, 0, p.z}, 0.8f, 1, 0.7f, 8, Border);
         }
         if (run.legacyObjectives() && distance(run.player.position, run.arena.miners) < 60) {
@@ -850,10 +920,8 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawCircle3D({p.x, 0.06f, p.z}, 0.85f, {1, 0, 0}, 90, Gold);
     }
     for (int i = 0; i < run.arena.roomCount(); ++i) {
-        const auto &room = run.arena.rooms[size_t(i)];
-        if (room.kind == RoomKind::Power && !run.rooms[size_t(i)].rewardTaken &&
-            distance(run.player.position, room.objective) < 60) {
-            const auto p = room.objective;
+        if (run.rewardAvailable(i)&&distance(run.player.position,run.rewardPosition(i))<60) {
+            const auto p=run.rewardPosition(i);
             DrawSphere({p.x, 1.3f, p.z}, .45f, Teal);
             DrawSphereWires({p.x, 1.3f, p.z}, .7f, 6, 8, Gold);
         }
@@ -1308,7 +1376,8 @@ void Renderer::dungeonMap(const Game &game) {
             rectangle(box, i == run.room ? Gold : run.rooms[size_t(i)].cleared ? Teal : Border);
         auto at = point(run.arena.rooms[size_t(i)].center);
         const auto kind = run.arena.rooms[size_t(i)].kind;
-        std::string label = kind == RoomKind::Shop    ? "S"
+        std::string label = kind==RoomKind::Service?(run.arena.rooms[size_t(i)].service==RoomService::Exchange?"X":
+            run.arena.rooms[size_t(i)].service==RoomService::Surgeon?"H":"D"):kind == RoomKind::Shop    ? "S"
                             : kind == RoomKind::Power ? "P"
                             : kind == RoomKind::Boss  ? "B"
                             : kind == RoomKind::Empty ? "E"
@@ -1365,13 +1434,13 @@ Action Renderer::expedition(const Game &game) {
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
         text(std::string(bossName(boss->bossKind))+" / PHASE " + std::to_string(boss->phase + 1), 429, 37, 14, Paper);
-        if(boss->bossKind==BossKind::Ridgeback)text(boss->phase?"TWO CHARGES / BREAK COVER TO STUN":"DODGE THE LANE / PUNISH RECOVERY",429,53,10,Gold);
+        if(canyonBoss(boss->bossKind))text(bossHint(*boss),429,53,10,Gold);
         panel(429, 66, 442, 9, Ink);
         DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * std::max(0.0f, boss->hp / boss->maxHp)),
                       int(9 * sy_), Rust);
     } else {
         const auto kind = run.arena.rooms[size_t(run.room)].kind;
-        text(run.roomClear ? (kind == RoomKind::Shop    ? "SHOP / NO ENEMIES"
+        text(run.roomClear ? (kind == RoomKind::Service ? "REST STOP / NO ENEMIES" : kind == RoomKind::Shop    ? "SHOP / NO ENEMIES"
                               : kind == RoomKind::Empty ? "QUIET ROOM / NO ENEMIES"
                               : kind == RoomKind::Power ? "POWER CACHE"
                                                         : "CHAMBER CLEARED")
@@ -1441,7 +1510,7 @@ Action Renderer::expedition(const Game &game) {
     }
     if (run.rewardOpen && !game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
-        text("THE MINE OFFERS A BARGAIN", 204, 213, 37, Paper);
+        text(run.arena.rooms[size_t(run.room)].kind==RoomKind::Boss?"SPOILS OF THE CANYON":"CHOOSE YOUR POWER", 204, 213, 37, Paper);
         text("Take ONE power. The other is lost. This cache can only be used once.", 204, 265, 16, Muted);
         for (int i = 0; i < int(run.offers.size()); ++i) {
             float x = 339 + float(i) * 301;
@@ -1454,7 +1523,23 @@ Action Renderer::expedition(const Game &game) {
                 return Action(int(Action::Reward0) + i);
         }
     }
-    if (run.shopOpen && !game.paused) {
+    if(run.rewardOpen&&!game.paused&&button("LEAVE IT FOR NOW",430,628,420,40))return Action::CloseShop;
+    if(run.shopOpen&&!game.paused&&run.arena.rooms[size_t(run.room)].kind==RoomKind::Service) {
+        panel(0,0,1280,800,Color{9,15,18,210});panel(200,120,880,580,Panel);
+        text(roomServiceName(run.arena.rooms[size_t(run.room)].service),230,145,32,Paper);
+        text("COINS "+number(run.money())+" / KEYS "+std::to_string(run.keys)+" / DYNAMITE "+std::to_string(run.dynamite),230,198,16,Gold);
+        text("Optional. Trades last for this expedition. Each offer is limited.",230,226,15,Muted);
+        for(int i=0;i<2;++i) {
+            const float x=230+float(i)*420;const auto offer=run.serviceOffer(i);const auto unavailable=run.shopUnavailable(i);
+            panel(x,268,390,338,Ink);wrap(offer.name,x+18,288,354,24,Paper);
+            wrap(offer.description,x+18,350,354,15,Muted);wrap(offer.cost,x+18,502,354,15,Gold);
+            if(unavailable.empty()) {
+                if(button("ACCEPT",x+18,554,354,36,true))return Action(int(Action::BuyShop0)+i);
+            } else {panel(x+18,554,354,36,Border);text(unavailable,x+28,566,12,Muted);}
+        }
+        if(button("LEAVE",430,635,420,40))return Action::CloseShop;
+    }
+    if (run.shopOpen && !game.paused && run.arena.rooms[size_t(run.room)].kind!=RoomKind::Service) {
         panel(0, 0, 1280, 800, Color{9, 15, 18, 210});
         panel(170, 155, 940, 495, Panel);
         text("TRADER'S REST", 199, 181, 34, Paper);

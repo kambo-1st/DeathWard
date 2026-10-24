@@ -138,7 +138,7 @@ void layouts() {
         check(ordinary==expected,"all profile destructibles and three cache sides fit"+tag);
         if(std::all_of(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room==a.supplyCache.room||p.room==run.finalRoom();}))++clustered;
         for(const auto &p:a.breakables) {
-            if(p.room==run.finalRoom())check(a.profile.active()&&p.kind==BreakableKind::CrackedRock&&p.paid,"boss counterplay cover has no farmable payout");
+            if(p.room==run.finalRoom())check(a.profile.active()&&p.kind==(a.profile.boss==BossKind::PowderForeman?BreakableKind::PowderBarrel:BreakableKind::CrackedRock)&&p.paid,"boss counterplay cover has no farmable payout");
             else check(p.room>0&&p.room<run.finalRoom()&&a.rooms[size_t(p.room)].story==StoryRoom::None,"ordinary demolition protects story and entrance");
         }
         for(auto &p:a.passages){p.locked=false;p.sealed={false,false};}a.rebuildWalls();

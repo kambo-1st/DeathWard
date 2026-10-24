@@ -10,7 +10,7 @@ Starting revision: `a413435`. The complete goal is all six milestones below.
 | 3. Destructible scenery and cache | Complete | 256-floor placement/navigation sweep; transactional blasts, persistent loot and cache; native/WASM/input checks passed |
 | 4. Six interacting items | Complete | 66 pair combinations in both orders; bounded chains, provenance, native/WASM/input/browser checks passed |
 | 5. Floor identities and first canyon boss | Complete | Four bands, 64-floor geometry sweep, live no-resource boss victories, 31 native groups and native/WASM/browser/story checks passed |
-| 6. Boss expansion and optional rooms | Pending | Two further bosses, three optional room functions, separate pools, resource reachability and economy checks |
+| 6. Boss expansion and optional rooms | Complete | Three-boss pool, three optional functions, four reward pools; 98-floor economy sweep, 33 native groups and native/WASM/browser/input checks passed |
 
 ## Invariants
 
@@ -141,3 +141,22 @@ Milestone-5 validation:
 The old theme test's assumption that every canyon finale is an ordinary catalog group was updated to verify the dedicated guardian while retaining ordinary-roster, terrain, sealing, save and independent Mine outcome checks. The corridor-only trial now compares equal profiles on both sides; Classic geometry checks remain unchanged.
 
 Remaining after milestone 5: two more bosses, three optional-room functions, separate reward pools, their resource/economy/reachability checks, and the final six-milestone audit. The overall goal remains active.
+
+
+### Milestone 6
+
+Milestone 5 committed as `874eeeb`. Implemented seeded boss selection with band weights and no immediate repeats, Powder Foreman's marked/kickable charges and bursts, and Storm Marshal's committed volleys/sweeps with a visible gap and phase-two follow-up. Both have distinct low-poly silhouettes, complete warning/attack/recovery cycles, finite rewards and cleanup of live/queued attacks. The existing Ridgeback remains available. Debug boss replay cannot duplicate payouts. Content version: `deathward-m1-59`.
+
+Added Prospector Exchange, Field Surgeon and Smuggler's Bargain as a small seeded subset inside the existing room budget, with peaceful interaction, finite per-room offers, exact maximum-HP previews and carry-over. Modern canyon boss locks are now free combat gates; ordinary keys buy optional access or explosives. Added weighted armory/shop/boss/bargain pools and an optional boss item pedestal separate from evidence/exit. Rules are in [the economy document](expedition_economy.md) and [boss progression](expedition_progression.md).
+
+Milestone-6 validation:
+
+- Boss, progression and economy suites passed together. Boss selection covers 512 seeds and every 4–8-floor schedule; both new attack patterns/phases, actual contact kicks, cleanup and no-resource starting-revolver victories pass. Eighteen weak-build fights across three bosses, three seeds and opening/final floors succeeded. These are scripted feasibility checks, not human balance results.
+- The economy suite covers all eleven items across distinct weighted contexts, exact Judas-plus-bargain health costs, transaction limits, revisits, carry-over and boss choices. Its **98 actual seeded floors** span all five expedition lengths and all three services; mandatory boss/evidence routes remain reachable with zero keys and zero dynamite.
+- Native Foreman/Marshal model and telegraph captures were inspected. A long arena title was shortened after inspection. Native/browser bargain menus were inspected, including the total 36-HP Judas bargain cost and 100 -> 64 maximum-HP preview. Final representative captures are `artifacts/m6-foreman-late-web.png`, `artifacts/m6-marshal-late-web.png`, `artifacts/m6-bargain-native.png` and `artifacts/m6-service-bargain-before-web.png`; these are local ignored artifacts.
+- **33/33 native CTest groups passed**, including the existing item interactions, destruction, generated terrain, story, campaign, audio and navigation checks. The full native control suite passed, now including walking to service NPCs, mouse/keyboard purchases, modal firing guards, exact health costs and optional reward dismissal. The complete native arrival/tutorial/Rourke/evidence/journal/Eleanor-return traversal passed.
+- Native Release and WebAssembly Release builds passed without compiler warnings. The complete final focused browser suite passed both new bosses in both phases, starting-revolver victories, all three rendered service menus, purchases, repeated-purchase rejection, leaving, and the mutually exclusive boss item choice. Browser scripted victory times were 6.95 seconds for Foreman and 7.53 for Marshal, both with 100 HP; human balance remains initial tuning. The broad browser suite also passed hub audio/animation/travel, pickups, dynamite, shop, combat/finale, persistence/reload and editor flows.
+- The first browser trade attempt exposed a zero-duration synthetic click landing between rendered frames. The harness now holds mouse transitions across actual frames; native input and the full corrected browser suite passed. No gameplay input workaround was needed.
+- The freshly rebuilt Classic layout sampler remains byte-identical to the recorded ten-seed CSV. All 193 preserved research payload hashes match their inventory; re-running the Isaac analyzer produces a byte-identical aggregate report.
+
+All six milestones meet their implementation and acceptance requirements. The [completion audit](expedition_completion_audit.md) maps the complete goal to current code, tests, measurements and rendered checks. The six commits preserve milestone boundaries; the Classic preset remains available. Remaining product work is human balance/pacing playtesting and future content expansion, rather than an unfinished milestone in this goal.

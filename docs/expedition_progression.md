@@ -1,6 +1,6 @@
 # Canyon floor progression and bosses
 
-Milestone 5 of the [expedition study](isaac_expedition_study.md) adds four canyon bands and Ridgeback. Standard expeditions still have 4–8 floors, growing from 9 to 15 rooms. The Lost Survey remains its original five-room tutorial. The Classic preset retains its original geometry and final monster groups. Mine expeditions retain the Western roster and Hollow Sheriff. The changes below apply to modern canyon expeditions, including Rourke's account.
+Milestones 5–6 of the [expedition study](isaac_expedition_study.md) add four canyon bands and three dedicated bosses. Standard expeditions still have 4–8 floors, growing from 9 to 15 rooms. The Lost Survey remains its original five-room tutorial. The Classic preset retains its original geometry and final monster groups. Mine expeditions retain the Western roster and Hollow Sheriff. The changes below apply to modern canyon expeditions, including Rourke's account.
 
 The separation between a floor profile, its encounters and its boss follows the preserved Isaac stage/boss-pool metadata described in the study. The four bands, threat values and Ridgeback behavior are original DeathWard designs, not decompiled Isaac boss logic.
 
@@ -37,7 +37,15 @@ The cycle is:
 
 Health is 620/720/820/920 by band. Dynamite helps but is not required. Defeat removes the boss's attacks, opens normal combat seals, grants one dynamite stick up to inventory capacity, and places 6/8/10/12 coins on accessible arena ground. This payout happens once per floor, including debug replays. There is no healing on kill. An unseen scheduled story site still blocks departure; the boss does not resolve any testimony's truth.
 
-Ridgeback is the only new canyon boss in milestone 5 and therefore repeats across floors. Milestone 6 adds two identities and a seeded selection policy; this is not presented as a finished large boss roster.
+## Powder Foreman and Storm Marshal
+
+Powder Foreman alternates charges with committed three-burst gunfire. Charges have visible landing marks, a 2.6-metre blast radius and a 2.6-second fuse (2.2 seconds in phase two). Walk into a low charge to kick it using the existing dynamite contact physics. A kicked charge can damage Foreman; every charge remains dangerous to the player. These free enemy charges cannot demolish rocks, ore or cache gates. Two optional powder barrels sit clear of the entrance and outer loop. Below half health, Foreman throws three charges instead of two, speeds up the gun bursts and shortens recovery. Health is 500 + 80 per band.
+
+Storm Marshal alternates locked three-burst volleys with a sweep across two marked sectors. The sweep leaves a 0.64-radian gap shown between teal boundaries; its yellow lanes do not track the player after the windup. Below half health, a sweep is followed by recovery and a newly warned aimed volley. Health is 540 + 80 per band. Both bosses have separate low-poly silhouettes and use the existing Original materials/lighting. Bullets, charges, queued attacks and pending boss-barrel fuses are cleared on death; cancelled burst projectiles cannot create descendants afterward.
+
+Boss choice is seeded per expedition floor. Relative Ridgeback/Foreman/Marshal weights are 6/3/1, 3/6/2, 2/6/4 and 2/3/7 across the four bands. The previous floor's boss is excluded before drawing. All three remain possible in every band; three bosses necessarily repeat over 4–8 floors. This is an explicitly limited roster, not a claim of eight unique encounters. No boss requires dynamite or a purchased item.
+
+Defeat now also reveals one optional choice from the separate boss item pool. See [optional rooms and reward pools](expedition_economy.md) for prices, limits and the policy that keeps mandatory routes free of resource locks.
 
 ## Checking it
 
@@ -48,6 +56,7 @@ Native scripted views use `--smoke --theme canyon --style original --scene NAME`
 - `ridgeback`: opening-floor arena, without firing, to watch tells and attacks.
 - `ridgeback-late`: final-floor arena at phase two, without firing.
 - `ridgeback-fight`: a moving automated player with the starting revolver and no dynamite or invulnerability.
+- `foreman` and `marshal`: their opening-floor fights; append `-late` for final-floor phase two or `-fight` for the starting-revolver controller.
 - `profile-quarry`, `profile-works`, `profile-storm`: ordinary encounters in the later bands.
 
 In the browser, use `?verify&mute&smoke&frames=100000&theme=canyon&scene=NAME`. The smoke save is isolated from normal campaign play. Automated victories establish feasibility and regression coverage; they do not replace human difficulty and readability playtests.

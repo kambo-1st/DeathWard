@@ -8,6 +8,10 @@ enum class ExpeditionPacing { Growing, Classic, ShortCorridors, SmallRooms, Comp
 const char *expeditionPacingName(ExpeditionPacing pacing);
 ExpeditionPacing nextExpeditionPacing(ExpeditionPacing pacing);
 enum class EncounterPattern { Pursuit, Crossfire, ChargeLane, SupplyGuard };
+enum class BossKind { None, Sheriff, Ridgeback, PowderForeman, StormMarshal };
+constexpr bool canyonBoss(BossKind kind) {
+    return kind==BossKind::Ridgeback||kind==BossKind::PowderForeman||kind==BossKind::StormMarshal;
+}
 struct FloorProfile {
     int band = -1; // Disabled for the tutorial and Classic comparison.
     const char *name = "Classic";
@@ -16,6 +20,7 @@ struct FloorProfile {
     float areaPerThreat = 95, cooldownScale = 1;
     int rocks = 2, seams = 1, barrels = 1, outcrops = 3;
     float dust = 1;
+    BossKind boss = BossKind::Ridgeback;
     bool active() const { return band >= 0; }
 };
 const char *encounterPatternName(EncounterPattern pattern);
@@ -43,6 +48,7 @@ struct ExpeditionPlan {
     int roomsOnFloor(int floor) const;
     FloorDimensions dimensionsOnFloor(int floor) const;
     FloorProfile profileOnFloor(int floor) const;
+    BossKind bossOnFloor(int floor) const;
     StoryRoom storyAt(int floor) const;
 };
 struct StoryEvidence {

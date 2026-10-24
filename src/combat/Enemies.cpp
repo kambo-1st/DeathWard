@@ -118,7 +118,7 @@ void Simulation::updateHazards(float dt) {
     std::vector<Hazard> children;
     for (auto &hazard : hazards) {
         const float previousAge = hazard.age;
-        if (hazard.kind == HazardKind::PlayerDynamite)
+        if (hazard.kind == HazardKind::PlayerDynamite || hazard.kind == HazardKind::BossCharge)
             advanceDynamite(hazard, arena, std::min(dt, std::max(0.f, hazard.delay - hazard.age)));
         hazard.age += dt;
         if (hazard.age < hazard.delay)
@@ -153,6 +153,14 @@ void Simulation::updateHazards(float dt) {
             }
             effectVisual(hazard.position, hazard.radius, 5, .75f);
             hazard.alive = false;
+        } else if (hazard.kind == HazardKind::BossCharge) {
+            Event blast;blast.type=EventType::Explosion;
+            blast.position=hazard.position;blast.origin=hazard.origin;
+            blast.damage=100;blast.radius=hazard.radius;blast.areaDamage=true;
+            blast.hostile=!hazard.kicked; // A kicked charge can hurt its owner.
+            blast.playerDamage=hazard.damage;blast.playerDamageHostile=true;
+            blast.demolition=Demolition::Soft; // Never supplies free keys/cache access.
+            emit(blast,hazard.context);hazard.alive=false;
         } else if (hazard.kind == HazardKind::Beam) {
             if (segmentSphere(hazard.origin, hazard.position, player.position, hazard.radius + .48f) <= 1 &&
                 arena.sight(hazard.origin, player.position))
@@ -284,7 +292,7 @@ void Simulation::updateEnemies(float dt) {
     for (auto &enemy : enemies) {
         if (!enemy.alive)
             continue;
-        if(enemy.bossKind==BossKind::Ridgeback){updateCanyonBoss(enemy,dt);continue;}
+        if(canyonBoss(enemy.bossKind)){updateCanyonBoss(enemy,dt);continue;}
         if (enemy.kind == EnemyKind::Monster) {
             updateMonster(enemy, dt);
             continue;

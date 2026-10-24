@@ -53,6 +53,7 @@ add_library(deathward_core
     src/world/FloorDressing.cpp
     src/combat/FloorEncounters.cpp
     src/combat/CanyonBoss.cpp
+    src/combat/FrontierBoss.cpp
     src/world/CanyonTerrain.cpp
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
@@ -60,6 +61,7 @@ add_library(deathward_core
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
     src/combat/Shop.cpp
+    src/combat/Services.cpp
     src/combat/Dynamite.cpp
     src/combat/Destruction.cpp
     src/combat/ProjectileMotion.cpp
@@ -68,6 +70,7 @@ add_library(deathward_core
     src/combat/Monsters.cpp
     src/combat/Navigation.cpp
     src/items/Items.cpp
+    src/items/ItemPools.cpp
 )
 target_include_directories(deathward_core PUBLIC src)
 target_include_directories(deathward_core SYSTEM PUBLIC ${raylib_SOURCE_DIR}/src)
@@ -231,6 +234,12 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_expedition_economy_tests tests/expedition_economy_tests.cpp)
+    target_link_libraries(deathward_expedition_economy_tests PRIVATE deathward_core)
+    add_test(NAME expedition_economy COMMAND deathward_expedition_economy_tests)
+    add_executable(deathward_canyon_boss_tests tests/canyon_boss_tests.cpp)
+    target_link_libraries(deathward_canyon_boss_tests PRIVATE deathward_core)
+    add_test(NAME canyon_bosses COMMAND deathward_canyon_boss_tests)
     add_executable(deathward_floor_progression_tests tests/floor_progression_tests.cpp)
     target_link_libraries(deathward_floor_progression_tests PRIVATE deathward_core)
     add_test(NAME floor_progression COMMAND deathward_floor_progression_tests)

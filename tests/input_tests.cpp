@@ -723,6 +723,51 @@ void vegetationInputCheck(const std::filesystem::path &directory) {
     game.close();
     std::cout << "PASS vegetation pause controls, bounds, live changes, no gameplay input and persistence\n";
 }
+void economyInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    Game game(directory/"economy.save");game.seedText="1866";game.themeChoice=ThemeChoice::Canyon;game.launch();
+    Renderer renderer;auto &run=*game.run;
+    const auto frame=[&] {
+        game.update(.1f,[&](const Simulation &simulation,const Camera3D &camera,Ray ray){return renderer.pickScenery(simulation,camera,ray);});
+        BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);
+        check(game.error.empty(),"economy input causes no game errors");
+    };
+    const auto click=[&](float x,float y) {
+        mouseEvent(MousePosition,int(x),int(y));mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+        mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+    };
+    const auto key=[&](int value){mouseEvent(KeyDown,value);frame();mouseEvent(KeyUp,value);frame();};
+    int site=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].kind==RoomKind::Service){site=i;break;}
+    check(site>=0,"native fixture contains a generated service room");
+    for(auto service:{RoomService::Exchange,RoomService::Surgeon,RoomService::Smuggler}) {
+        run.arena.rooms[size_t(site)].service=service;run.rooms[size_t(site)].serviceSold={false,false};
+        run.rooms[size_t(site)].offers={ItemId::Judas,ItemId::Cap};
+        run.jumpDebug(site);run.keys=2;run.dynamite=3;run.moneyCollected=100;run.moneySpent=0;run.player.hp=50;
+        const auto target=run.arena.rooms[size_t(site)].objective;
+        bool placed=false;for(int n=0;n<16;++n) {
+            const auto p=add(target,rotateY({0,0,4},float(n)*Pi/8));
+            if(run.arena.blocked(p,.48f)||!run.arena.clear(p,target,.48f))continue;
+            run.player.position=p;placed=true;break;
+        }
+        check(placed,"a safe approach to the service person exists");game.updateCamera(10);frame();
+        const auto point=GetWorldToScreen(add(target,{0,.6f,0}),game.camera);click(point.x,point.y);
+        for(int i=0;i<200&&!run.shopOpen;++i)frame();
+        check(run.shopOpen,"clicking service person walks over and opens the rendered offer");
+        const auto frozen=run.stats.duration;key(KEY_UP);check(run.stats.duration==frozen,"trade modal pauses simulation and arrows");
+        if(service==RoomService::Exchange)key(KEY_ONE);else click(425,572);
+        check(run.rooms[size_t(site)].serviceSold[0],"keyboard or mouse accepts displayed trade");
+        if(service==RoomService::Exchange)check(run.keys==0&&run.dynamite==6,"native exchange spends exact resources");
+        if(service==RoomService::Surgeon)check(run.player.hp==100&&run.money()==80,"native surgeon charges exact healing price");
+        if(service==RoomService::Smuggler)check(run.player.maxHp==64&&run.items.size()==1,"native bargain includes Judas health loss");
+        key(KEY_ESCAPE);check(!run.shopOpen&&!game.paused,"Escape leaves service without opening pause");
+    }
+    run.startBoss();run.killAll();run.step({});run.player.position=run.rewardPosition(run.room);game.updateCamera(10);
+    run.interact();check(run.rewardOpen,"native boss reward opens");
+    key(KEY_ESCAPE);check(!run.rewardOpen&&!game.paused,"optional reward can be dismissed");
+    run.interact();click(470,556);check(!run.rewardOpen&&run.items.size()==2,"mouse chooses one boss reward");
+    check(run.stats.shots==0,"NPC, trade and reward clicks never fire");
+    game.close();std::cout<<"PASS native service walking, mouse/keyboard trades, modal guards, health preview and boss reward dismissal\n";
+}
 } // namespace
 int main(int argc, char **argv) {
     const auto directory =
@@ -736,6 +781,10 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if(mode.empty()||mode=="--economy-only") {
+            economyInputCheck(directory);
+            if(mode=="--economy-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
         if (mode.empty() || mode == "--arrows-only") {
             arrowInputCheck(directory, dw::MissionTheme::Mine);
             arrowInputCheck(directory, dw::MissionTheme::Canyon);

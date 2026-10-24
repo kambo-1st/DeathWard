@@ -113,7 +113,7 @@ void Simulation::spawnEnemies(int count) {
 
 int Simulation::roomEnemyCount(int index) const {
     const auto &layout = arena.rooms.at(size_t(index));
-    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop)
+    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop || layout.kind==RoomKind::Service)
         return 0;
     if(surveyTutorial)return index==1?2:3;
     if(arena.profile.active())return layout.kind==RoomKind::Boss?1:int(floorEncounter(index).monsters.size());
@@ -167,7 +167,7 @@ void Simulation::prepareRoomEnemies(int index) {
 
 void Simulation::spawnRoomEnemies() {
     const auto &layout = arena.rooms[size_t(room)];
-    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop)
+    if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop || layout.kind==RoomKind::Service)
         return;
     if(surveyTutorial) {
         Random placement(seed_ ^ 0x5455544f5249414cULL ^ uint64_t(room));

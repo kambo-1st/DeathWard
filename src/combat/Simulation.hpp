@@ -49,13 +49,16 @@ enum class EnemyState {
     Exposed,
     Returning
 };
-enum class BossKind { None, Sheriff, Ridgeback };
 const char *bossName(BossKind kind);
+struct Enemy;
+const char *bossHint(const Enemy &enemy);
 struct Enemy {
     EntityId id = 0;
     EnemyKind kind = EnemyKind::Rusher;
     BossKind bossKind = BossKind::None;
     int bossCombo = 0, bossCycles = 0;
+    int bossAttack = 0, bossStep = 0, bossTargetCount = 0;
+    std::array<Vector3,3> bossTargets{};
     Vector3 position{}, velocity{};
     float hp = 40, maxHp = 40, radius = 0.65f, cooldown = 1, flash = 0, age = 0;
     int phase = 0;
@@ -103,7 +106,7 @@ struct Projectile {
     EntityId id = 0;
     Vector3 position{}, previous{}, origin{}, velocity{};
     float damage = RevolverDamage, life = 3.2f, radius = 0.14f;
-    bool hostile = false, lastRound = false, ghost = false, alive = true;
+    bool hostile = false, lastRound = false, ghost = false, alive = true, cancelled = false;
     int bounces = 0, pierce = 0;
     ProjectileKind kind = ProjectileKind::Bullet;
     Context context;
@@ -157,7 +160,8 @@ enum class HazardKind {
     HolyLight,
     Gas,
     MonsterBomb,
-    PlayerDynamite
+    PlayerDynamite,
+    BossCharge
 };
 struct Hazard {
     HazardKind kind = HazardKind::Dynamite;
@@ -170,7 +174,7 @@ struct Hazard {
     bool playerContact = false;
     float blastDamage = DynamiteDamage;
     int braidCopies = 0;
-    bool secondary = false;
+    bool secondary = false, kicked = false;
     Vector3 braidDirection{1,0,0};
 };
 // Shared by live charges and the mouse aiming preview.
@@ -213,6 +217,7 @@ struct EncounterPlan {
 struct RoomProgress {
     bool visited = false, cleared = false, rewardTaken = false, bossPaid = false;
     std::array<ItemId, 2> offers{};
+    std::array<bool,2> serviceSold{};
     // The active room uses Simulation::enemies; other rooms keep their actual group here.
     std::vector<Enemy> residents;
 };
@@ -228,6 +233,9 @@ struct ShopOffer {
     int price = 25;
     ShopOfferKind kind = ShopOfferKind::Power;
     bool sold = false;
+};
+struct ServiceOffer {
+    std::string name, description, cost;
 };
 
 class Simulation {
@@ -289,6 +297,8 @@ class Simulation {
     void step(const Input &input, float dt = Tick);
     void grant(ItemId item);
     void chooseReward(int index);
+    bool rewardAvailable(int index) const;
+    Vector3 rewardPosition(int index) const;
     void enterRoom(int index);
     void clearRoom();
     void requestDoor(int passage, int side);
@@ -302,7 +312,7 @@ class Simulation {
     EncounterPlan floorEncounter(int index) const;
     const std::vector<Enemy> &roomEnemies(int index) const;
     void spawnRoomEnemies();
-    void startBoss();
+    void startBoss(BossKind kind = BossKind::None);
     void killAll();
     void clearRoomDebug();
     void jumpDebug(int index, bool restart = false);
@@ -318,6 +328,9 @@ class Simulation {
     float dynamiteBlastRadius() const { return itemStacks(ItemId::Braid)?3.3f:DynamiteRadius; }
     std::vector<Vector3> dynamiteTrajectory(Vector3 target) const;
     std::string shopUnavailable(int index) const;
+    ServiceOffer serviceOffer(int index) const;
+    std::string serviceUnavailable(int index) const;
+    float bargainMaxHealth(int index) const;
     std::string nearbyInteraction() const;
     std::string demolitionHint() const;
     std::optional<Vector3> moveDestination() const {
@@ -395,6 +408,8 @@ class Simulation {
     void spawnFloorEnemies();
     void spawnCanyonBoss();
     void updateCanyonBoss(Enemy &enemy,float dt);
+    void updateFrontierBoss(Enemy &enemy,float dt);
+    void throwBossCharge(const Enemy &enemy,Vector3 target);
     void rewardCanyonBoss(const Enemy &enemy);
     void prepareRoomEnemies(int index);
     bool roomSpawnClear(Vector3 position, float radius) const;
@@ -422,6 +437,7 @@ class Simulation {
     void dropMoney(const Enemy &enemy);
     void updateMoney(float dt);
     void prepareShop();
+    bool buyService(int index);
     Hazard makeDynamite(Vector3 target) const;
     bool deployDynamite(Hazard charge);
 };
