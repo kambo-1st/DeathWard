@@ -462,6 +462,20 @@ town editor; effects pause with the game and work in native and browser builds.
 
 The hub separately imports the complete original Demo scene into `assets/town`: 1,516 active mesh placements with 12 embedded textures, original material variants, hierarchy and transforms. Its scene catalog and terrain navigation are packaged beside the GLB. See [the town import notes](assets/town/README.md) for the source audit, rebuilding commands and differences from Unity's rendering. CTest includes town and building navigation; `deathward_town_assets_tests` checks the original scene's graphics assets and requires a display.
 
+## Research and design reports
+
+The [Isaac expedition study](docs/isaac_expedition_study.md)
+([offline HTML report](docs/reports/isaac-expedition-study-2026-10-24.html)) records
+the local Repentance data analysis and proposals for build-changing items,
+floor identities and canyon bosses, optional rooms and resource choices, and
+bomb-destructible objects. It includes evidence, limitations and implementation
+milestones. These are design proposals, not implemented gameplay.
+
+The [reference directory guide](reference/README.md) locates the preserved
+extracted files, disassembly and integrity manifests. The source-game files are
+stored locally outside the game's assets and build output; Git excludes that
+reference copy. Aggregate measurements and the analysis tools accompany the report.
+
 ## Code map
 
 - `src/combat`: fixed-step simulation, 3D collision, AI, spatial broad phase and event budgets.

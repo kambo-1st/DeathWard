@@ -1,0 +1,112 @@
+{
+  "analysis_date": "2026-10-24",
+  "deathward_commit": "955ef8f",
+  "installed_version_evidence": "changelog.txt begins v1.7.9b, December 7, 2022; executable PE timestamp December 8, 2022",
+  "installed_files": [
+    {
+      "path": "isaac-ng.exe",
+      "bytes": 8820440,
+      "sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6"
+    },
+    {
+      "path": "resources/packed/config.a",
+      "bytes": 130681,
+      "sha256": "618ff65ed855381f7e7184dcc0ce8f8b1473334cc7da94bd4f4db42b362e4479"
+    },
+    {
+      "path": "resources/packed/rooms.a",
+      "bytes": 655906,
+      "sha256": "c6e4495b77a4ceb6742d7efeaf60a205844c08d739bcea7a95cda0d10428634e"
+    },
+    {
+      "path": "resources/packed/afterbirth.a",
+      "bytes": 145319513,
+      "sha256": "ee400c960d9b6854f612f15baededbb8221920795961ba422253893557d64d8c"
+    },
+    {
+      "path": "resources/packed/afterbirthp.a",
+      "bytes": 134156485,
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9"
+    },
+    {
+      "path": "resources/packed/repentance.a",
+      "bytes": 385003320,
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea"
+    },
+    {
+      "path": "resources/scripts/enums.lua",
+      "bytes": 149353,
+      "sha256": "dce1892f51e4e645d66ac8ffb31d217e8c36a32457c1005dd128978141103dc5"
+    },
+    {
+      "path": "resources/scripts/main.lua",
+      "bytes": 45891,
+      "sha256": "ae0efa082e0ea8844a6e7a5ab55e4a96a8dc87a8fa046483e590c0677c40cfdf"
+    },
+    {
+      "path": "changelog.txt",
+      "bytes": 86975,
+      "sha256": "bb71ac3a54e140e988c9901f4720a3b5a14c91d4760df45b1a58ea3848ffbb35"
+    },
+    {
+      "path": "tools/ResourceExtractor/ResourceExtractor.exe",
+      "bytes": 272896,
+      "sha256": "cbdc7aafef347d1d9498bb40cb6cf0d865e8650ac327be421e6bf85bed8d1d27"
+    },
+    {
+      "path": "tools/ResourceExtractor/filelist.txt",
+      "bytes": 1059013,
+      "sha256": "e43741539c67963b3766c881715f925c43d3f157637d3f2866d7ff9b58778b42"
+    }
+  ],
+  "installed_hashes_unchanged_after_analysis": true,
+  "extracted_selected_files_by_archive": {
+    "afterbirth.a": 47,
+    "afterbirthp.a": 54,
+    "repentance.a": 80
+  },
+  "extracted_selected_extensions": {
+    ".xml": 80,
+    ".stb": 101
+  },
+  "selected_file_lengths_and_archive_checksums_verified": 181,
+  "unresolved_archive_names": {
+    "afterbirth.a": 242,
+    "afterbirthp.a": 5,
+    "repentance.a": 15
+  },
+  "extraction_scope": "80 XML and 101 STB files from the three DLC archives, not all archive contents; loose Lua support files inspected separately",
+  "native_analysis": {
+    "architecture": "PE32 x86",
+    "preferred_image_base": "0x00400000",
+    "addresses_are": "Preferred virtual addresses; runtime relocation may differ",
+    "Room_DestroyGrid": {
+      "address": "0x007cf710",
+      "end_exclusive": "0x007cf74f",
+      "status": "complete control flow manually reconstructed; third native boolean purpose not established"
+    },
+    "GridEntityDoor_TryBlowOpen": {
+      "address": "0x006e02b0",
+      "status": "binding located and targeted disassembly inspected; not fully reconstructed"
+    },
+    "Game_BombExplosionEffects": {
+      "address": "0x006d26e0",
+      "status": "binding located and targeted disassembly inspected; not fully reconstructed"
+    }
+  },
+  "not_established": [
+    "Full game source recovery",
+    "Complete boss or item AI and interaction parity",
+    "Runtime drop rates from pool weights alone",
+    "Runtime behavior tested in Isaac"
+  ],
+  "preserved_local_reference": {
+    "directory": "reference/isaac-repentance-1.7.9b",
+    "extracted_files": 181,
+    "supporting_files": 12,
+    "payload_bytes": 37812076,
+    "inventory_sha256": "70fd6f42326206ec7553d384a7838b450ab68d580c9674fadfb9600a9ddebefa",
+    "git_tracked": false,
+    "source_to_copy_sha256_verified": true
+  }
+}

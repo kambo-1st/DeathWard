@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="source-sha256" content="1f1211ee5f3ceacf4b267ebbc5570a45f510d4dd4676ea647366b4fb45c50aed"><title>Isaac mechanics and DeathWard expedition design</title>
+<style>
+:root { color-scheme: light; --ink:#202e37; --muted:#52646f; --line:#d8e1e5; --accent:#176375; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:#edf1f3; color:var(--ink); font:16px/1.65 system-ui,sans-serif; }
+.layout { display:grid; grid-template-columns:240px minmax(0,1080px); gap:30px; max-width:1420px; margin:32px auto; padding:0 24px; }
+nav { position:sticky; top:24px; align-self:start; max-height:calc(100vh - 48px); overflow:auto; font-size:13px; padding:16px 0; }
+nav strong { display:block; margin-bottom:14px; letter-spacing:.08em; text-transform:uppercase; }
+nav ol { padding-left:20px; }
+nav li { padding:5px 0; }
+main { min-width:0; padding:36px 48px; background:white; border:1px solid var(--line); border-radius:12px; }
+h1,h2,h3 { line-height:1.25; scroll-margin-top:24px; }
+h1 { font-size:36px; margin-top:0; letter-spacing:-.025em; }
+h2 { font-size:26px; margin:48px 0 20px; border-top:2px solid var(--line); padding-top:24px; }
+h3 { font-size:19px; margin:30px 0 12px; }
+a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px; overflow-wrap:anywhere; }
+p { margin:14px 0; }
+li { margin:7px 0; }
+code { font-size:.87em; background:#edf3f5; padding:2px 4px; border-radius:3px; overflow-wrap:anywhere; }
+pre { padding:18px; background:#152c37; color:#e8f2f5; border-radius:6px; overflow:auto; }
+pre code { background:transparent; padding:0; color:inherit; }
+.table-wrap { overflow-x:auto; margin:22px 0; }
+table { border-collapse:collapse; width:100%; font-size:13px; line-height:1.5; }
+th,td { padding:12px; border:1px solid var(--line); vertical-align:top; min-width:90px; }
+th { background:#e7f0f3; text-align:left; }
+tbody tr:nth-child(even) { background:#f7f9fa; }
+blockquote { margin:20px 0; border-left:4px solid var(--accent); padding:6px 18px; background:#eef6f7; }
+footer { margin-top:36px; padding-top:16px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
+@media(max-width:950px) { .layout { display:block; padding:0 12px; margin:12px auto; } nav { position:static; max-height:none; padding:12px; } main { padding:24px; } h1 { font-size:29px; } }
+@media print { @page { size:A4; margin:14mm; } body { background:white; font-size:10pt; } .layout { display:block; margin:0; padding:0; } nav { display:none; } main { border:0; padding:0; } h1 { font-size:24pt; } h2 { font-size:17pt; } h3 { font-size:12pt; } h1,h2,h3 { break-after:avoid; } table { font-size:8pt; } th,td { min-width:0; padding:6px; } tr { break-inside:avoid; } thead { display:table-header-group; } pre { white-space:pre-wrap; overflow-wrap:anywhere; } .table-wrap { overflow:visible; } a { color:inherit; } }
+</style></head><body><div class="layout">
+<nav aria-label="Report contents"><strong>DeathWard research</strong><ol><li><a href="#what-was-actually-recovered">What was actually recovered</a></li><li><a href="#build-changing-items-and-deliberate-interactions">Build changing items and deliberate interactions</a></li><li><a href="#floor-identities-and-progression">Floor identities and progression</a></li><li><a href="#opening-floor-size-follow-up">Opening floor size follow up</a></li><li><a href="#optional-rooms-and-resource-trade-offs">Optional rooms and resource trade offs</a></li><li><a href="#bomb-destructible-objects">Bomb destructible objects</a></li><li><a href="#suggested-implementation-order">Suggested implementation order</a></li><li><a href="#evidence-and-reproduction">Evidence and reproduction</a></li></ol>
+<p><a href="../isaac_expedition_study.md">Markdown source</a></p><p>Offline report · 24 October 2026<br>Use your browser's Print command to save a PDF.</p></nav>
+<main><h1 id="isaac-mechanics-and-deathward-expedition-design">Isaac mechanics and DeathWard expedition design</h1>
+<p>Analysis date: 2026-10-24. DeathWard baseline: <code>955ef8f</code> on <code>main</code>.</p>
+<p>Status: reference study and proposed work. <a href="isaac-expedition-study-2026-10-24.html">Offline HTML edition</a> · <a href="../../reference/README.md">Preserved source data guide</a>.</p>
+<p><strong>The strongest opportunity is to connect builds, room choices, resources and terrain.</strong> A stick of dynamite can kill an enemy, remove cover, expose supplies or open a secret passage. Spending it on one purpose changes the player's remaining options. Items can alter those decisions, and each floor can present different opportunities.</p>
+<p>DeathWard already has interacting items, shops, currency, keys, dynamite and multi-floor expeditions. The principal gaps are a small item pool, limited optional-room functions, no bomb destruction of scenery, and canyon encounters that lack explicit progression across floors and dedicated bosses.</p>
+<p>This study covers the locally installed Isaac data, targeted native-code reconstruction, and a proposed implementation sequence. <strong>It does not change gameplay.</strong> The current implementation has <strong>4–8 seeded floors with 15 rooms per floor</strong>; The Lost Survey has one floor with five rooms. The opening-floor follow-up below proposes a smaller initial floor for a future trial. Story rooms remain part of the expedition structure.</p>
+<h2 id="what-was-actually-recovered">What was actually recovered</h2>
+<p>The examined installation is <code>C:\Program Files (x86)\Steam\steamapps\common\The Binding of Isaac Rebirth</code>. It includes Repentance. Its changelog starts with <strong>v1.7.9b, December 7, 2022</strong>; the executable's PE timestamp is December 8, 2022. These identify the local evidence; current wiki pages can also describe later Repentance+ changes.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>Result</th>
+<th>What it establishes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Installed files</td>
+<td>22 packed <code>.a</code> archives, a native 32-bit <code>isaac-ng.exe</code>, Lua API support, shipped editors and extractor</td>
+<td>The game is not implemented entirely in readable Lua or XML</td>
+</tr>
+<tr>
+<td>Selected DLC archive contents</td>
+<td>181 XML and STB files extracted; every advertised length and archive checksum matched</td>
+<td>The analyzed data was decoded correctly</td>
+</tr>
+<tr>
+<td>Latest relevant data</td>
+<td><code>resources-dlc3</code> definitions from <code>repentance.a</code></td>
+<td>Item, pool, stage, entity and room configuration for this installation</td>
+</tr>
+<tr>
+<td>Room binary decoding</td>
+<td>All 53 extracted STB1 files parsed to their exact end</td>
+<td>Stored room metadata, doors and spawn records are readable</td>
+</tr>
+<tr>
+<td>Native analysis</td>
+<td>Three bomb/destruction interfaces located; one small function reconstructed completely</td>
+<td>Concrete evidence of object-specific destruction dispatch</td>
+</tr>
+<tr>
+<td>Gameplay behavior</td>
+<td>Selected mechanics cross-checked against API documentation and game references</td>
+<td>Explanations of effects that XML alone does not contain</td>
+</tr>
+</tbody>
+</table></div>
+<p>The shipped resource extractor exited with code 116 while opening the Repentance archive. Its cause was not established. A separate read-only decoder, informed by <a href="https://github.com/gibbed/Gibbed.Rebirth">Gibbed.Rebirth's archive implementation</a> and its <a href="https://raw.githubusercontent.com/gibbed/Gibbed.Rebirth/main/projects/Gibbed.Rebirth.Unpack/ArchiveCompression.cs">chunk decoding source</a>, recovered the selected data instead. The STB parser follows the documented field layout in <a href="https://github.com/Basement-Renovator/Basement-Renovator/blob/main/src/roomconvert.py">Basement Renovator's room converter</a>.</p>
+<p>The installed executable and the ten other fingerprinted source files retain their original SHA-256 hashes. The 181 extracted files and 12 supporting files are preserved in <code>reference/isaac-repentance-1.7.9b/</code> inside this checkout. Every preserved payload file was verified against its source SHA-256. This local reference directory is excluded from Git and game builds; the report, aggregate measurements, provenance and analysis tools remain versionable. Reading the report does not depend on the temporary extraction directory or a running Steam installation.</p>
+<p><strong>Scope of decompilation:</strong> targeted x86 disassembly and manual pseudocode reconstruction, not recovery of the complete C++ source. Complete item interaction logic, boss state machines, generation algorithms and loot probabilities were not reconstructed or validated by running Isaac.</p>
+<h3 id="verified-counts-and-their-meaning">Verified counts and their meaning</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Local data</th>
+<th style="text-align:right">Count</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Passive collectible definitions</td>
+<td style="text-align:right">425</td>
+<td>Metadata rows, including any hidden or special entries</td>
+</tr>
+<tr>
+<td>Active collectible definitions</td>
+<td style="text-align:right">170</td>
+<td>Charge and presentation metadata; behavior remains code-driven</td>
+</tr>
+<tr>
+<td>Familiar collectible definitions</td>
+<td style="text-align:right">126</td>
+<td>Collectible definitions, not all familiar entity variants</td>
+</tr>
+<tr>
+<td>Collectible definitions total</td>
+<td style="text-align:right"><strong>721</strong></td>
+<td>721 distinct IDs across those three categories</td>
+</tr>
+<tr>
+<td>Trinket definitions</td>
+<td style="text-align:right">188</td>
+<td>Separate category</td>
+</tr>
+<tr>
+<td>Null definitions</td>
+<td style="text-align:right">49</td>
+<td>Do not count these as obtainable collectibles</td>
+</tr>
+<tr>
+<td>Named item pools</td>
+<td style="text-align:right"><strong>31</strong></td>
+<td>Different selection contexts, with overlapping membership</td>
+</tr>
+<tr>
+<td>Stage definitions</td>
+<td style="text-align:right">30</td>
+<td>Includes special and mode-related entries; not floors in one run</td>
+</tr>
+<tr>
+<td>Named boss pools</td>
+<td style="text-align:right">25</td>
+<td>19 nonempty; six empty entries do not mean those stages have no bosses</td>
+</tr>
+<tr>
+<td>Entity definitions</td>
+<td style="text-align:right">1,337</td>
+<td>Includes enemies, variants, pickups and effects; not 1,337 enemy species</td>
+</tr>
+<tr>
+<td>Stored room entries</td>
+<td style="text-align:right"><strong>28,464</strong></td>
+<td>23,859 in 29 non-Greed files; 4,605 in 24 Greed files</td>
+</tr>
+</tbody>
+</table></div>
+<p>Room entries can repeat or vary across files and can include special, unused or conditional content. For example, <code>34.mortis.stb</code> contains one entry, but Mortis is absent from the parsed stage definitions. These counts describe stored data, not unlocked content or runtime encounter frequencies. Exact per-file results are in <a href="../research/isaac-local-data-summary.json">the aggregate JSON</a>.</p>
+<h2 id="build-changing-items-and-deliberate-interactions">Build changing items and deliberate interactions</h2>
+<h3 id="what-isaac-separates">What Isaac separates</h3>
+<p>The local <code>items.xml</code> holds names, graphics, pickup grants, charges, unlock references and stat-cache flags. <code>items_metadata.xml</code> adds quality and tags. <code>itempools.xml</code> controls selection contexts using <code>Weight</code>, <code>DecreaseBy</code> and <code>RemoveOn</code>. None of these is a complete script for firing a Brimstone beam or combining two weapons. The <a href="https://wofsauge.github.io/IsaacDocs/rep/xml/items.html">item configuration documentation</a> explains the metadata fields; the <a href="https://wofsauge.github.io/IsaacDocs/rep/ItemPool.html">item-pool API</a> exposes selection and removal operations.</p>
+<p>For example, the local entries for The Inner Eye and Mutant Spider invalidate damage and fire delay; Brimstone, Dr. Fetus and Tech X invalidate all caches; C Section explicitly includes the weapon cache. These flags identify affected systems, not the complete resulting behavior.</p>
+<p>The important distinction is between <strong>an attack modifier</strong> and <strong>an attack replacement</strong>. Homing, piercing, splitting and status effects can modify attacks. A beam, charged shot or bomb launcher changes how the player attacks. Combinations need explicit rules: Repentance's Dr. Fetus can produce homing bombs, its combination with The Parasite produces additional bombs, and it overrides some other attack forms. Therefore, “all effects always stack” is not an accurate description of Isaac. <a href="https://bindingofisaacrebirth.wiki.gg/wiki/Dr._Fetus">Dr. Fetus mechanics and interactions</a>.</p>
+<p>Distinct pools also give destinations meaning. In this installation, treasure has 407 entries, shop 95, boss 59, devil 94, angel 66 and secret 62. These are pool memberships, not guaranteed availability or drop percentages. A room can be worth seeking because of the <em>kind</em> of build change it offers.</p>
+<h3 id="deathward-already-has-a-useful-interaction-core">DeathWard already has a useful interaction core</h3>
+<p><a href="../../src/items/Items.cpp">Items.cpp</a> defines five stackable items:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Existing behavior</th>
+<th>Design value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ricochet Coin</td>
+<td>Adds three wall bounces per copy</td>
+<td>Positioning and bank shots</td>
+</tr>
+<tr>
+<td>Split Lead</td>
+<td>Hits emit two angled shots at 80% damage; fragments can split again</td>
+<td>Branching attacks and crowd clearing</td>
+</tr>
+<tr>
+<td>Judas Bullet</td>
+<td>Every sixth shot gains piercing; each copy costs maximum health</td>
+<td>Cadence and a permanent risk/reward decision</td>
+</tr>
+<tr>
+<td>Powder of Jericho</td>
+<td>Kills create explosions; those kills can trigger more explosions</td>
+<td>Chain reactions</td>
+</tr>
+<tr>
+<td>Hangman's Coin</td>
+<td>Repeats a killing shot as a ghost shot carrying projectile effects</td>
+<td>Builds that grow through kills</td>
+</tr>
+</tbody>
+</table></div>
+<p>The existing event queue already has chain identity, depth limits, event budgets and projectile limits. Preserve those protections as the system expands. The gap is largely in <strong>attack forms, trajectory choices, statuses, defensive decisions and resource manipulation</strong>, rather than a complete absence of synergies.</p>
+<h3 id="proposed-first-expansion">Proposed first expansion</h3>
+<p>These are DeathWard designs, not effects recovered from Isaac. Start with the first six new items, bringing the pool to eleven; add the remaining four after interaction testing. Exact damage multipliers and timings require playtesting.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>New item</th>
+<th>Changes the build</th>
+<th>Trade-off</th>
+<th>Deliberate interaction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scatter Cylinder</td>
+<td>Replaces each shot with a short fan of pellets</td>
+<td>Lower damage per pellet and shorter range</td>
+<td>Split Lead generates smaller fragments; total output stays within chain limits</td>
+</tr>
+<tr>
+<td>Rail Spike</td>
+<td>Slower, heavier projectile that pierces bodies</td>
+<td>Slower firing cadence and turn commitment</td>
+<td>Ricochet preserves body piercing after a bank shot; Judas adds pierce rather than another damage multiplier</td>
+</tr>
+<tr>
+<td>Lodestone Sight</td>
+<td>Shots curve toward nearby visible enemies</td>
+<td>Limited turn rate and lower projectile speed</td>
+<td>Split fragments acquire their own targets; a ricochet can redirect toward another target</td>
+</tr>
+<tr>
+<td>Return Spring</td>
+<td>Bullets travel out and return</td>
+<td>Short outward reach</td>
+<td>A target may be hit once outward and once returning; wall bounces only affect the outward phase</td>
+</tr>
+<tr>
+<td>Blasting Cap</td>
+<td>Adds a small blast to a direct bullet hit</td>
+<td>Lower direct damage; a visible self-damage risk</td>
+<td>One blast per projectile lifetime, including each Split fragment; area damage cannot recursively trigger the same hit effect</td>
+</tr>
+<tr>
+<td>Fuse Braid</td>
+<td>Placed dynamite leaves two weaker secondary charges</td>
+<td>Smaller main blast and a more dangerous area to escape</td>
+<td>Secondary charges inherit bomb modifiers but cannot produce further secondary charges</td>
+</tr>
+<tr>
+<td>Oilskin Rounds</td>
+<td>Applies a brief, capped slowing/oil effect</td>
+<td>Lower immediate damage</td>
+<td>A blast ignites oil once, consuming that application rather than repeatedly retriggering it</td>
+</tr>
+<tr>
+<td>Prospector's Lens</td>
+<td>Makes marked seams and breakable cache entrances easier to identify</td>
+<td>An exploration reward in place of direct combat power</td>
+<td>Explosive builds become more resource-efficient through better decisions, not free unlimited bomb refunds</td>
+</tr>
+<tr>
+<td>Blast Apron</td>
+<td>Reduces damage from the player's explosions</td>
+<td>Slightly slower dodge recovery</td>
+<td>Supports close-range Blasting Cap play without making all hazards harmless</td>
+</tr>
+<tr>
+<td>Surveyor's Chalk</td>
+<td>Marks an enemy on the sixth primary shot</td>
+<td>Benefit depends on maintaining the firing cadence</td>
+<td>The next qualifying hit on the mark splits once; ghost shots and fragments do not advance the primary-shot counter</td>
+</tr>
+</tbody>
+</table></div>
+<p>Three build examples worth supporting deliberately:</p>
+<ul>
+<li><strong>Bank-shot hunter:</strong> Ricochet + Rail Spike + Lodestone. Fight around cover and line up multiple targets.</li>
+<li><strong>Shrapnel gambler:</strong> Scatter Cylinder + Split Lead + Blasting Cap. Strong close-range coverage with self-damage and visual-density risks.</li>
+<li><strong>Demolition prospector:</strong> Fuse Braid + Blast Apron + Prospector's Lens. Spend explosives on terrain and resource access as well as damage.</li>
+</ul>
+<p>No reload system is needed. Mouse and arrow-key firing should produce the same attack definitions. Preserve the removal of automatic healing on enemy kills; no proposed item depends on reintroducing it.</p>
+<h3 id="define-compatibility-before-adding-more-effects">Define compatibility before adding more effects</h3>
+<p>Use an explicit sequence: <strong>choose attack form → apply stats and cadence → create projectiles → apply trajectory and collision modifiers → resolve hits → resolve kills and secondary effects</strong>.</p>
+<p>Keep independent properties for body piercing, wall bouncing, obstacle passing, homing and terrain damage. Passing through an enemy must not imply passing through a cliff. Visual occlusion transparency must not change these physical rules.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Combination</th>
+<th>Proposed rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scatter + Rail Spike</td>
+<td>A smaller fan of weaker spikes; explicit hybrid rather than acquisition-order dependence</td>
+</tr>
+<tr>
+<td>Ricochet + Return Spring</td>
+<td>Bounce during outbound travel; switch to return behavior once; no reset of lifetime</td>
+</tr>
+<tr>
+<td>Split + homing</td>
+<td>Fragments inherit homing, remaining lifetime and the originating chain budget</td>
+</tr>
+<tr>
+<td>Split + explosive hits</td>
+<td>Each fragment can explode once; blast damage does not count as another projectile impact</td>
+</tr>
+<tr>
+<td>Ghost + explosive kills</td>
+<td>Retain the original shot specification; an area-damage event must not silently become an arbitrarily stronger bullet</td>
+</tr>
+<tr>
+<td>Sixth-shot effects + fragments</td>
+<td>Count player-triggered primary shots only</td>
+</tr>
+<tr>
+<td>Bomb destruction + kill effects</td>
+<td>Destroying a crate is an object event, not an enemy kill</td>
+</tr>
+</tbody>
+</table></div>
+<p>Store attack provenance, generation and already-hit targets. Test pairs in both acquisition orders, duplicates, boss targets and room exits. In particular, define how Hangman's Coin uses explosion damage before adding many more explosive sources: its current implementation takes the larger of player shot damage and killing-event damage.</p>
+<p>Add separate reward pools for armory caches, shops, bosses and risky bargains. Start with broad overlap and different weights. Do not attempt thirty-one pools with eleven items. A later active-tool slot could recharge on first clears of hostile rooms; empty rooms, revisits and cheats must not farm charges. That is a separate feature, not a prerequisite for the first expansion.</p>
+<h2 id="floor-identities-and-progression">Floor identities and progression</h2>
+<h3 id="isaac-combines-room-libraries-with-selection-rules">Isaac combines room libraries with selection rules</h3>
+<p>Each decoded STB1 room carries a type, variant, subtype, difficulty, selection weight, dimensions, shape, doors and positioned spawn records. Random generation chooses and connects authored content; it does not simply scatter arbitrary monsters into arbitrary rectangles.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Local room file</th>
+<th style="text-align:right">Stored entries</th>
+<th style="text-align:right">Default-room entries</th>
+<th style="text-align:right">Rooms containing ordinary-rock spawn type 1000</th>
+<th style="text-align:right">Rooms containing pit spawn type 3000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basement</td>
+<td style="text-align:right">1,181</td>
+<td style="text-align:right">1,162</td>
+<td style="text-align:right">905</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>Caves</td>
+<td style="text-align:right">1,111</td>
+<td style="text-align:right">1,092</td>
+<td style="text-align:right">375</td>
+<td style="text-align:right">825</td>
+</tr>
+<tr>
+<td>Mines</td>
+<td style="text-align:right">930</td>
+<td style="text-align:right">838</td>
+<td style="text-align:right">620</td>
+<td style="text-align:right">421</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are <strong>unweighted counts across all entries in each file</strong>, not probabilities of seeing rocks or pits during play. They nevertheless show different authored terrain vocabularies. Basement's default rooms also have several difficulty values, including 0, 1, 2, 5, 10, 15 and 20; stored entries are not all eligible on every visit.</p>
+<p>The documented normal-mode selection distinguishes the first and second floors of a chapter: difficulty 1–5 versus 5–10. Hard mode uses different ranges. That selection rule is externally documented; this analysis decoded the values but did not reconstruct the native selector. <a href="https://bindingofisaacrebirth.wiki.gg/wiki/Level_Generation">Level generation</a>.</p>
+<p>Stage metadata connects room libraries with music, backdrop and presentation. Boss pools are separately weighted: Basement has eleven entries, Cellar eight, Mines four and Ashpit five. Local entity definitions also contain <code>baseHP</code>, <code>stageHP</code>, collision and boss flags. Those fields supply parameters; attack patterns and phase behavior require code.</p>
+<h3 id="the-specific-deathward-progression-gap">The specific DeathWard progression gap</h3>
+<p><a href="../../src/combat/Encounters.cpp">Encounters.cpp</a> selects natural canyon monsters using <code>monster.depth &lt;= max(1, room.depth)</code>. That is distance into the <strong>current floor's graph</strong>, not expedition floor number. The normal enemy-count rule is <code>ceil(usableArea / 70)</code>, clamped to 4–24. The seed changes each floor, but this does not create a designed escalation across the expedition.</p>
+<p>The canyon's final room uses that ordinary-group route. The mine has the Hollow Sheriff; the canyon needs its own boss selection and encounter behavior. <a href="../../src/world/Expedition.cpp">Expedition.cpp</a> already provides the floor count, seeds and story schedule, while <a href="../../src/combat/Simulation.cpp">Simulation.cpp</a> carries the build, health and resources between floors.</p>
+<h3 id="proposed-four-stages-of-an-expedition">Proposed four stages of an expedition</h3>
+<p>Use four progression bands across the existing 4–8 floors. A starting mapping is <code>band = min(3, floorIndex * 4 / floorCount)</code>: a four-floor run visits each band once; an eight-floor run spends two floors in each. Alternate terrain profiles within a band and vary encounters on repeated visits.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Band</th>
+<th>Identity</th>
+<th>Encounter grammar</th>
+<th>Terrain and resources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Outer Washes</td>
+<td>Slow pursuit plus one clearly readable ranged role</td>
+<td>Open dirt, scattered low cover, simple breakables, generous escape lanes</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Broken Quarry</td>
+<td>Charges and ranged pressure arrive from complementary directions</td>
+<td>Fragile stone, ore seams, occasional river/ford layouts where compatible</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Abandoned Works</td>
+<td>Delayed explosives and enemies that punish stationary play</td>
+<td>Timber barriers, powder stores, rail debris and winding routes</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Storm Cut</td>
+<td>Familiar roles combined under tighter timing and positioning demands</td>
+<td>Selective moving dust, eroded cover and a dedicated final arena; combat cues remain visible</td>
+</tr>
+</tbody>
+</table></div>
+<p>A floor profile should define room-pattern weights, eligible enemy roles, difficulty bands, breakable mix, optional-room weights, boss pool and art/audio dressing. Roads, interior rivers and boundary rivers remain seeded alternatives where the geometry permits them. Do not force every feature into every room.</p>
+<p>Use room area as a capacity limit, then spend a <strong>threat budget</strong> on role combinations. A large room should not automatically become twenty simultaneous specialists. Increase combinations and timing pressure before heavily increasing HP. Keep telegraph readability, a safe entrance and at least one viable dodge route as constraints.</p>
+<p>Start with reusable encounter patterns—pursuers around a central barrier, ranged crossfire with staggered attacks, a charge lane, a guarded supply pocket—adapted to the generated geometry. Validate them against actual walkable area and cover. Fall back to a simpler pattern if a river, slope or road prevents a fair placement. This adopts authored encounter intent without discarding DeathWard's generated terrain.</p>
+<h3 id="proper-canyon-bosses">Proper canyon bosses</h3>
+<p>The following are original proposed encounters, not decompiled Isaac bosses. Begin with one complete boss, then expand the pool.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Boss concept</th>
+<th>Recognizable fight</th>
+<th>Counterplay and phase change</th>
+<th>Arena requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ridgeback</td>
+<td>A heavy burrower surfaces, aims a charge, then commits</td>
+<td>Dodge the indicated lane; a collision with fragile cover creates a recovery window; later charges chain twice</td>
+<td>Broad continuous loop, low breakable cover, no unavoidable river choke</td>
+</tr>
+<tr>
+<td>Powder Foreman</td>
+<td>Throws clearly marked charges and fires in deliberate bursts</td>
+<td>Move charges by contact kicks; use powder barrels tactically; later phase shortens the interval between distinct attacks</td>
+<td>Space to retreat, visible fuses, barrels outside entrance landing</td>
+</tr>
+<tr>
+<td>Gallows Warden</td>
+<td>Sweeps chains across marked sectors and pulls toward an anchor</td>
+<td>Move into the open sector; optional dynamite destroys an anchor to cancel one pull</td>
+<td>Open sectors sized for dodge distance; every attack also avoidable without dynamite</td>
+</tr>
+<tr>
+<td>Storm Marshal</td>
+<td>Alternates aimed volleys with sweeping lanes</td>
+<td>Read the windup, move through the deliberate gap, punish recovery; later phase combines learned patterns</td>
+<td>Stable arena boundary, clear projectile contrast, dust kept below combat-obscuring density</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every boss needs a complete windup/attack/recovery state machine, phase transitions, death cleanup, resource reward and exit integration. Budget duration against a weak but viable build. Dynamite should offer an advantage, never be the only way to defeat the boss. Separate boss identity from the mine-specific Sheriff flag.</p>
+<p>Eventually give each band more than one boss option and avoid immediate repeats. Four bosses alone will repeat in an eight-floor run; arena variants and an explicitly limited remix can bridge development, but should not be presented as a large boss roster.</p>
+<h3 id="story-integration">Story integration</h3>
+<p>Preserve Survey Camp, Split Rock, Railway Cutting and Dry Creek at their scheduled floors. A story location can overlay an ordinary room and become examinable after its single encounter clears. Preserve the current evidence gate at the floor exit.</p>
+<p>Witness testimony can influence dressing, encounter patterns and optional evidence placement. The account label remains visible, and recovered observations remain separate from claims. <strong>Cole's modest reconstruction remains Cole's account</strong>, not a truth mode. Bosses and gameplay danger must not silently establish which witness committed the murder.</p>
+<h2 id="opening-floor-size-follow-up">Opening floor size follow up</h2>
+<p><strong>A smaller opening floor is worth testing, and corridor length is also a substantial contributor.</strong> DeathWard currently repeats the same room-count target from the first standard floor to the last. The data below measures the current implementation; the proposed smaller counts have not been implemented.</p>
+<h3 id="how-many-rooms-isaac-generates-per-floor">How many rooms Isaac generates per floor</h3>
+<p>Isaac has no single fixed count. The published ordinary-floor base budget is approximately <code>min(20, 3.33 × floorDepth + random(5, 6))</code>; Hard mode adds 2–3 rooms, and Curse of the Lost adds four. XL and The Void use different budgets. <a href="https://bindingofisaacrebirth.wiki.gg/wiki/Floor_generation">Level generation reference</a>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Normal main-path floor</th>
+<th style="text-align:right">Approximate base generation budget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basement I</td>
+<td style="text-align:right">8–9</td>
+</tr>
+<tr>
+<td>Basement II</td>
+<td style="text-align:right">Around 12</td>
+</tr>
+<tr>
+<td>Caves I</td>
+<td style="text-align:right">Around 15</td>
+</tr>
+<tr>
+<td>Caves II</td>
+<td style="text-align:right">Around 18–19</td>
+</tr>
+<tr>
+<td>Depths I and later ordinary floors</td>
+<td style="text-align:right">Around 20 before modifiers</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are reference-budget estimates, <strong>not measured final room totals from the installed executable</strong>. Special-room placement and multi-cell rooms complicate final counts: some special rooms replace generated endpoints, and the total can also include additional destinations. A room occupying four minimap cells is still one encounter room. The 28,464 stored room entries measured earlier are the available layout library, not rooms in one floor.</p>
+<p>An often-cited older formula, <code>5 + random(2) + level × 2.6</code>, comes from the original Flash game's algorithm. Its author explicitly separates that analysis from Rebirth's changes; it should not be substituted for a verified Repentance count. <a href="https://www.boristhebrave.com/2020/09/12/dungeon-generation-in-binding-of-isaac/">Original algorithm study and developer interviews</a>.</p>
+<p>An exact local count distribution would require running the installed version over fixed seeds and recording unique room descriptors per stage, difficulty, curse and special-room category. The extracted STB libraries do not provide that distribution. This follow-up therefore does not claim that DeathWard has exactly twice as many rooms as Isaac's first floor.</p>
+<h3 id="what-makes-deathward-large-now">What makes DeathWard large now</h3>
+<p>The generator sets room bounds to <strong>24–40 metres on each axis</strong>, with neighbouring graph-cell centres spaced <strong>48–64 metres</strong> apart. The start room uses the same size selection as other rooms. The tutorial changes the graph to five rooms, but still uses this physical sizing. See <a href="../../src/world/Dungeon.cpp">Dungeon.cpp</a> and <a href="../../src/world/Dungeon.hpp">Dungeon.hpp</a>.</p>
+<p>A headless sample generated ten ordinary canyon layouts, with rivers enabled and no story overlay: seeds 0–7, 42 and 1866. The core library was rebuilt before running the measurement. Raw results are in <a href="../research/deathward-floor-size-sample.csv">deathward-floor-size-sample.csv</a>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Current DeathWard measurement</th>
+<th>Ten-seed result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total rooms per standard floor</td>
+<td>15 in every sample</td>
+</tr>
+<tr>
+<td>Ordinary combat rooms</td>
+<td>9–11, plus one boss-designated room</td>
+</tr>
+<tr>
+<td>Mean room bounding dimensions</td>
+<td>Approximately 31.5 × 32.1 metres</td>
+</tr>
+<tr>
+<td>Mean usable room area</td>
+<td>Approximately 597 square metres, after the generator's area calculation</td>
+</tr>
+<tr>
+<td>Mean corridor length</td>
+<td>Approximately 23.4 metres, averaging each sampled floor's mean</td>
+</tr>
+<tr>
+<td>Individual corridor lengths</td>
+<td>10–40 metres</td>
+</tr>
+<tr>
+<td>Layout bounding extent</td>
+<td>Width 156–320 metres; depth 198–328 metres; this includes empty space between rooms</td>
+</tr>
+<tr>
+<td>Shortest graph route from entrance to boss</td>
+<td>3–8 passage transitions, ignoring locks and required evidence</td>
+</tr>
+<tr>
+<td>Configured whole-floor enemy budget</td>
+<td>87–116 from the current area rule; not a count of successful spawns or combat time</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ordinary unslowed movement is six world metres per second. A 23.4-metre corridor alone therefore costs roughly <strong>3.9 seconds of straight walking</strong>, before crossing the rooms at either end, detours, fights or backtracking. Dodging can shorten that; terrain and resource collection can lengthen it. This calculation is not a measured playthrough time. See <a href="../../src/combat/Simulation.cpp">Simulation.cpp</a>.</p>
+<p>The concern is consequently broader than “15 is too many.” The player begins with a weak, limited build, encounters roughly ten ordinary combat rooms, and repeatedly crosses substantial distances. Reducing only the map's bounding box would not guarantee a shorter required route; reducing only room dimensions would leave the corridors.</p>
+<h3 id="proposed-compact-opening-trial">Proposed compact opening trial</h3>
+<p>Start a standard expedition with <strong>8–10 total rooms, targeting nine</strong>, then grow toward <strong>13–15</strong> on later floors. These totals include entry, rewards, shop and boss. Example schedules are <code>9 → 11 → 13 → 15</code> for four floors and <code>9 → 10 → 11 → 12 → 13 → 14 → 15 → 15</code> for eight. Seeded variation can follow once the basic pacing is measured. Keep The Lost Survey at five rooms.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Role in a nine-room first floor</th>
+<th style="text-align:right">Rooms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quiet arrival</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>Ordinary combat</td>
+<td style="text-align:right">3</td>
+</tr>
+<tr>
+<td>Combat room containing the scheduled story location</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>Item reward</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>Shop</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>Optional resource or discovery room</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td>Boss</td>
+<td style="text-align:right">1</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align:right"><strong>9</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>If no story location is scheduled, its slot becomes an ordinary encounter or exploration room. The story location is counted once. Keep at least two initial choices, a meaningful optional branch and safe access to necessary keys/evidence. Aim to offer the first build-changing item after one or two fights, with a clearly navigable path to the boss after roughly three or four required encounters. These are playtest targets, not promises about the current generator.</p>
+<p>For a separate physical-size trial, use <strong>20–28-metre ordinary early rooms</strong> and <strong>8–16-metre corridors</strong>; let boss arenas remain larger where their attacks need room. Measure room count and corridor changes separately before combining them. The tutorial may benefit from shorter corridors without losing any of its five story steps.</p>
+<p>This is not a one-line change to <code>RoomCount</code>: <a href="../../src/world/RoomGraph.cpp">RoomGraph.cpp</a> and <a href="../../src/world/Dungeon.cpp">Dungeon.cpp</a> use fixed-size arrays and fixed end indices for special rooms. A proper implementation needs a per-floor room budget, dynamic indexing and revised room-role allocation. Preserve the minimum room count needed for the tutorial and mandatory story placements. Smaller room dimensions also require checking the current unique-size rule, since fewer available size pairs can exhaust its retry loop.</p>
+<p>Acceptance should record time to first item, first-boss arrival, total clear time, walking/backtracking time and number of required versus optional encounters across fixed seeds. The preferred opening is the one that gets a build and a boss into play sooner while retaining useful choices—not simply the smallest graph.</p>
+<h2 id="optional-rooms-and-resource-trade-offs">Optional rooms and resource trade offs</h2>
+<h3 id="the-isaac-lesson-is-opportunity-cost">The Isaac lesson is opportunity cost</h3>
+<p>Isaac's room types change what resources can buy. Shops trade coins for supplies or items and generally require a key after the first floor. Secret rooms generally consume a bomb to open a suitable wall and draw from their own item context. Curse rooms charge health through their entrances; sacrifice rooms trade health for outcomes; challenge rooms make taking a reward a combat commitment. <a href="https://bindingofisaacrebirth.wiki.gg/wiki/Shop">Shops</a>, <a href="https://bindingofisaacrebirth.wiki.gg/wiki/Secret_Room">secret rooms</a>, <a href="https://bindingofisaacrebirth.wiki.gg/wiki/Rooms">other room types</a>.</p>
+<p>The important transferable idea is that a key, health point or explosive has competing uses. Isaac's exact prices, drop odds and heart-based damage should not be copied directly into DeathWard's numeric-HP economy.</p>
+<h3 id="current-deathward-economy">Current DeathWard economy</h3>
+<p><a href="../../src/combat/Shop.cpp">Shop.cpp</a> already offers medicine restoring up to 40 HP for 10 coins, two powers at 25 coins each, and three dynamite sticks for 15 coins. Offers sell once per floor. Shop powers currently come from the same five-item collection.</p>
+<p><a href="../../src/world/Dungeon.cpp">Dungeon.cpp</a> puts <code>powerRooms + 1</code> keys in the unlocked network, supporting power rooms and the boss lock. This protects access, but leaves little deliberate uncertainty over what a key should buy. Existing room kinds are Combat, Power, Boss, Empty and Shop.</p>
+<p>Money is also <strong>campaign-persistent</strong>, not simply lost at the end of each expedition: <a href="../../src/world/Campaign.cpp">Campaign.cpp</a> applies collected money minus spending when resolving the run, including defeat. That is a major balance difference. An unlimited repeatable exchange could become permanent wealth farming, and a wealthy campaign can make a 25-coin purchase trivial. Keep current persistence unless changed explicitly; assess prices against actual wallets and cap conversions per floor.</p>
+<h3 id="proposed-room-functions">Proposed room functions</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Room</th>
+<th>Decision</th>
+<th>Possible payoff</th>
+<th>Constraints</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collapsed Supply Cache</td>
+<td>Spend dynamite on the entrance or save it for combat</td>
+<td>Supplies or an exploration-oriented item</td>
+<td>Telegraph the seam; never contain mandatory evidence</td>
+</tr>
+<tr>
+<td>Locked Armory</td>
+<td>Spend a key here or on another optional lock</td>
+<td>Choose one of two weapon modifiers</td>
+<td>Contents become mutually exclusive after choosing</td>
+</tr>
+<tr>
+<td>Prospector Exchange</td>
+<td>Trade two keys for dynamite, or dynamite for coins</td>
+<td>Convert a surplus into what the build needs</td>
+<td>One transaction per offer; no reversible profit loop</td>
+</tr>
+<tr>
+<td>Field Surgeon</td>
+<td>Buy healing now or retain money for a power</td>
+<td>Health or a clearly priced maximum-HP bargain</td>
+<td>No concealed cost; cannot kill the player through the menu</td>
+</tr>
+<tr>
+<td>Smuggler's Bargain</td>
+<td>Permanently sacrifice some expedition maximum HP</td>
+<td>A strong, unusual modifier</td>
+<td>Preview the exact cost and resulting maximum HP</td>
+</tr>
+<tr>
+<td>Guarded Pay Chest</td>
+<td>Accept a tougher fight for a visible reward</td>
+<td>Better-quality equipment or resources</td>
+<td>One pre-placed group, visibly present before activation; no return to repeated waves</td>
+</tr>
+<tr>
+<td>Survey Shelter</td>
+<td>Take supplies or acquire route information</td>
+<td>Resource recovery or a hint about optional rooms</td>
+<td>Critical story facts remain obtainable through the story route</td>
+</tr>
+<tr>
+<td>Abandoned Workshop</td>
+<td>Replace one owned modifier or keep the existing build</td>
+<td>A controlled build pivot</td>
+<td>Show the replacement first; one use, no infinite rerolls</td>
+</tr>
+</tbody>
+</table></div>
+<p>Use a small seeded subset per floor. An example <strong>15-room budget for a larger later floor</strong> is one quiet entry, one boss, two power rooms, one shop, three optional-function rooms and seven combat rooms. If there is one power room, allocate the spare slot to combat. The compact opening proposal above uses nine slots instead. Story content overlays a suitable slot rather than adding another room. Optional functions must not consume every quiet moment or force a fixed checklist onto every floor.</p>
+<p>Adding new key sinks requires an explicit reachability policy. A simple eventual design is to keep ordinary keys for optional rewards and make the boss approach accessible through combat progression. If retaining the current boss key lock, reserve its access through a separate guaranteed route key or validate resource reachability after every optional spend. Merely placing enough keys at generation time is insufficient once the player can exchange them away.</p>
+<p>Likewise, mandatory evidence and the floor exit cannot require the last dynamite stick. Generate optional secret connections into already valid geometry and exclude sealed boundaries, deep water and story-critical passages. Cache loot when the floor is created or on its first valid reveal, so revisiting or reloading cannot reroll it.</p>
+<h2 id="bomb-destructible-objects">Bomb destructible objects</h2>
+<h3 id="what-the-local-data-and-native-code-show">What the local data and native code show</h3>
+<p>Isaac's room editor uses distinct spawn types for rocks (<code>1000</code>), bomb rocks (<code>1001</code>), alternate rocks (<code>1002</code>), TNT (<code>1300</code>) and invincible rocks (<code>1900</code>). Runtime <code>GridEntityType</code> values are a different namespace: ordinary rock is <code>2</code>, bomb rock is <code>5</code>, and TNT is <code>12</code>. Confusing these namespaces would produce incorrect conversions.</p>
+<p>The API exposes destruction, damage, door blowing and unlocking as distinct operations. The installed binary's Lua registration references identify these native entry points at the executable's preferred image base:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Preferred virtual address</th>
+<th>Analysis extent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Room::DestroyGrid</code></td>
+<td><code>0x007cf710</code></td>
+<td>Complete short control flow reconstructed</td>
+</tr>
+<tr>
+<td><code>GridEntityDoor::TryBlowOpen</code></td>
+<td><code>0x006e02b0</code></td>
+<td>Entry located; conditional logic inspected, not fully reconstructed</td>
+</tr>
+<tr>
+<td><code>Game::BombExplosionEffects</code></td>
+<td><code>0x006d26e0</code></td>
+<td>Entry located; partial disassembly inspected</td>
+</tr>
+</tbody>
+</table></div>
+<p>The following is explanatory pseudocode, not recovered original source. Field names are inferred. The third boolean is a native argument whose public meaning was not established; the inspected API documentation exposes a two-argument <code>DestroyGrid</code> method.</p>
+<pre><code class="language-text">destroy_grid(room, index, immediate, native_flag):
+    if unsigned(index) &gt; 447:
+        return false
+    grid = room.grid_entries[index]
+    if grid is null:
+        return false
+    if native_flag and grid.type == 5:
+        grid.type = 2
+    return grid.virtual_slot_5(immediate)
+</code></pre>
+<p>The concrete observation is <strong>virtual dispatch to the grid object's implementation</strong>, with a specific type conversion on one path. It does not prove every rock's drop table or every blast's occlusion rules. The documented <a href="https://wofsauge.github.io/IsaacDocs/rep/Room.html">Room API</a> independently distinguishes grid destruction from other room operations.</p>
+<p>In documented gameplay, ordinary rocks can be destroyed by explosions; marked rocks offer resource rewards; bomb rocks explode when broken; some floor-specific obstacles can release hazards as well as loot. Destroying a correctly positioned rock can also fill a small gap. The last behavior is a useful later inspiration but would require actual traversable geometry in DeathWard. <a href="https://bindingofisaacrebirth.wiki.gg/wiki/Rocks">Rock and obstacle mechanics</a>.</p>
+<h3 id="deathward-has-explosives-but-no-object-destruction-pipeline">DeathWard has explosives but no object destruction pipeline</h3>
+<p>Dynamite starts at three sticks with a cap of nine, uses a two-second fuse and a 4.5-metre blast radius, deals 100 enemy damage and 25 self-damage, and can be kicked by contact. See <a href="../../src/core/Types.hpp">Types.hpp</a>, <a href="../../src/combat/Dynamite.cpp">Dynamite.cpp</a> and <a href="../../src/combat/Enemies.cpp">Enemies.cpp</a>.</p>
+<p>The explosion handler in <a href="../../src/combat/Simulation.cpp">Simulation.cpp</a> emits effects and enemy damage with line-of-sight checks. It does not destroy props, remove their collision or change room connections. Self-damage for player dynamite is handled separately in the hazard update, so a new blast resolver must preserve and unify these rules deliberately.</p>
+<h3 id="proposed-objects-and-their-purposes">Proposed objects and their purposes</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Object</th>
+<th>What breaks it</th>
+<th>Result</th>
+<th>Why the player cares</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small cracked boulder</td>
+<td>One dynamite blast</td>
+<td>Removes local cover and collision; mostly rubble</td>
+<td>Changes movement and firing lanes</td>
+</tr>
+<tr>
+<td>Marked ore seam</td>
+<td>One blast</td>
+<td>Small seeded supply reward</td>
+<td>A readable alternative use for dynamite</td>
+</tr>
+<tr>
+<td>Supply crate or pottery</td>
+<td>Gunfire or blast</td>
+<td>Small chance of ordinary supplies</td>
+<td>Immediate feedback and minor scavenging; not a mandatory bomb tax</td>
+</tr>
+<tr>
+<td>Powder barrel</td>
+<td>Enough bullet damage or a blast</td>
+<td>Telegraph, then secondary explosion</td>
+<td>A combat opportunity with risk</td>
+</tr>
+<tr>
+<td>Timber barricade</td>
+<td>Blast</td>
+<td>Opens an optional connection</td>
+<td>Converts explosives into access</td>
+</tr>
+<tr>
+<td>Reinforced cache wall</td>
+<td>Two blasts, with a visibly damaged intermediate state</td>
+<td>Higher-value optional cache</td>
+<td>A larger investment rather than a disguised ordinary wall</td>
+</tr>
+<tr>
+<td>Brittle mineral pocket</td>
+<td>Blast</td>
+<td>Supply chance plus a short, clearly marked hazardous release</td>
+<td>Environment-specific risk/reward</td>
+</tr>
+<tr>
+<td>Loose rubble above a narrow gap</td>
+<td>Later feature, explicitly authored placement</td>
+<td>Forms a walkable crossing</td>
+<td>Changes traversal; requires geometry and path validation</td>
+</tr>
+</tbody>
+</table></div>
+<p>Keep canyon boundary cliffs, large terrain mesas, deep river borders, mandatory gates and story objects outside this system initially. Give breakable rocks a consistent crack pattern and scale. Do not rely only on color, and ensure the distinction remains visible when an object becomes transparent to reveal the player.</p>
+<h3 id="implementation-boundaries-that-matter">Implementation boundaries that matter</h3>
+<p><strong>Separate breakable props from the canyon height field.</strong> <a href="../../src/world/CanyonTerrain.hpp">CanyonTerrain.hpp</a> uses one triangulated height field for both visible rock and collision. Hiding a rock mesh while retaining its height field creates an invisible wall; removing collision alone can let the player enter a visually solid cliff. Small independent props avoid either problem and are a much safer first implementation.</p>
+<p>A breakable needs a stable object ID, definition, position, collision shape, health/state, loot seed and an exactly-once destruction transition. Keep its state in the floor/room runtime data, not solely in a renderer's cached placement list. Visit persistence is needed immediately; save/reload persistence must follow the game's supported resume semantics rather than being assumed to exist already.</p>
+<p>Resolve one blast as a transaction:</p>
+<ol>
+<li>Collect potentially hit enemies, player and props using the pre-blast collision state.</li>
+<li>Test prop surfaces as valid targets; the target's own collider must not incorrectly block the ray to its centre.</li>
+<li>Compute hits against that snapshot. The same blast should not hit enemies through cover merely because that cover happened to be processed first.</li>
+<li>Apply damage, transition destroyed props once, remove or alter collision, and refresh affected navigation, shadows and cached render data.</li>
+<li>Spawn deterministic loot on reachable ground and queue secondary explosions through the existing bounded event system. A later secondary blast sees the changed geometry.</li>
+</ol>
+<p>Preserve existing cover protection unless a particular effect explicitly penetrates it. Smoke and debris should be brief and should not obscure hostile telegraphs. Mark decorative debris nonblocking unless it has a deliberate gameplay role.</p>
+<p>Derive loot from expedition seed, floor index and stable object ID, using an independent random stream. Destruction order, camera movement and cosmetic particle randomness must not change other loot. Destroying a barrel twice or receiving two blasts in one tick must never award twice.</p>
+<p>Assign terrain permissions per explosion source. Ordinary spent dynamite can break hard cover and cache entrances. Powder of Jericho or unlimited projectile blasts can damage ordinary combat props, but allowing them to open every resource gate would erase the dynamite decision. If an item intentionally grants free demolition, make that a rare, clearly advertised build change and balance the reward pools around it.</p>
+<h2 id="suggested-implementation-order">Suggested implementation order</h2>
+<p>This sequence incorporates the opening-floor follow-up. Implement and measure room-count changes before combining them with physical-size changes. Keep the current 15-room layout available as a comparison preset during the trial.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Deliverable</th>
+<th>Acceptance evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Configurable per-floor room counts, targeting a nine-room opening and growing toward 15</td>
+<td>Every 4–8-floor schedule generates valid branches and reachable objectives; the five-room tutorial remains valid; story slots and special-room indices use the actual room count</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Separate trials of shorter early corridors and smaller ordinary rooms</td>
+<td>Compare fixed-seed time to first item, boss arrival, walking and backtracking; validate terrain, entrances, spawn spacing and boss arena dimensions before choosing defaults</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Cracked boulders, marked seams and powder barrels; one optional supply cache</td>
+<td>Visual/collision agreement; deterministic single payout; revisits retain state; no blast damage through cover due to iteration order</td>
+</tr>
+<tr>
+<td>4</td>
+<td>First six proposed items plus explicit interaction rules</td>
+<td>Pairwise checks in both acquisition orders; bounded Split/Powder/Ghost chains; readable mouse and arrow firing</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Four progression bands and the first complete canyon boss</td>
+<td>Floor number affects encounter selection; boss is beatable without dynamite; exit/evidence gates remain correct</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Two more bosses, three optional-room functions and distinct reward pools</td>
+<td>All 4–8 floor plans remain reachable; keys and dynamite offer competing uses; no currency conversion loop</td>
+</tr>
+</tbody>
+</table></div>
+<p>A focused first destruction playtest could use <strong>two cracked boulders, one marked seam, one powder barrel and one cache entrance in a single room</strong>, with the existing three starting dynamite sticks. The question is whether the player makes a meaningful choice about explosives. This tests the connection between terrain and resources before creating dozens of decorative breakables.</p>
+<p>Keep the original visual style. Geometry readability, distinct object states and clear boss telegraphs matter more here than adding another rendering preset.</p>
+<h2 id="evidence-and-reproduction">Evidence and reproduction</h2>
+<p>The measurements are in <a href="../research/isaac-local-data-summary.json">isaac-local-data-summary.json</a>; installation fingerprints, extraction scope and native-analysis addresses are in <a href="../research/isaac-analysis-provenance.json">isaac-analysis-provenance.json</a>. The <a href="../../reference/README.md">reference guide</a> documents the preserved archive layers, supporting files and integrity check. The complete payload is 37,812,076 bytes across 193 files, plus its inventory.</p>
+<p>From the repository root, run the standard-library analyzer against the preserved <code>resources-dlc3</code> directory:</p>
+<pre><code class="language-sh">python3 scripts/analyze-isaac-data.py \
+  --resources reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3 \
+  --output /tmp/isaac-local-data-summary.json
+</code></pre>
+<p><a href="../../scripts/analyze-isaac-data.py">The analyzer</a> reads inputs without modifying them, parses every STB record, checks exact file consumption and records SHA-256 hashes. It emits aggregate counts rather than complete room layouts. It is not the archive extractor. The preserved input directory survives normal WSL restarts and <code>/tmp</code> cleanup; it must be copied separately when moving to another checkout because Git excludes it.</p>
+<p>The Markdown report is the editable source. Regenerate the standalone HTML edition with <code>python3 scripts/report-isaac-study.py</code>; generation requires the <code>markdown-it-py</code> Python package. The generated HTML has its styling and contents embedded and needs no server or network connection to read. Citations and links to supporting files remain links.</p>
+<p>To repeat the DeathWard layout measurements against the current Linux build:</p>
+<pre><code class="language-sh">cmake --build build --target deathward_core --parallel 4
+c++ -std=c++20 -O2 -Isrc -Ibuild/_deps/raylib-src/src \
+  scripts/measure-expedition-layout.cpp build/libdeathward_core.a \
+  -o /tmp/deathward-measure-expedition-layout
+/tmp/deathward-measure-expedition-layout &gt; /tmp/deathward-floor-size-sample.csv
+</code></pre>
+<p>These commands use the repository's default CMake build and fetched-raylib include paths. The <a href="../../scripts/measure-expedition-layout.cpp">measurement source</a> records its fixed seeds and measures topology without changing saves, maps or game configuration. The recorded CSV corresponds to baseline <code>955ef8f</code>; later gameplay changes can legitimately change the results.</p>
+<p>One input exception is explicit: the installed <code>bosspools.xml</code> has a mismatched final root closing tag. The analyzer repairs that closing tag <strong>in memory only</strong>, records the normalization, and hashes the original bytes. All 53 room binaries parse fully. Other extracted XML outside the study can also be nonstandard; this report does not claim all 181 files are strict XML documents.</p>
+<p>The older <a href="../isaac_review.md">enemy and character review</a> is historical: its statements that coins and player bombs are missing are superseded by the current implementation examined here. Neither catalog coverage nor this data study establishes exact Isaac enemy-behavior parity.</p>
+<footer>Generated from docs/isaac_expedition_study.md.<br>Source SHA-256: 1f1211ee5f3ceacf4b267ebbc5570a45f510d4dd4676ea647366b4fb45c50aed</footer></main>
+</div></body></html>

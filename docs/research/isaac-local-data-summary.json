@@ -1,0 +1,4343 @@
+{
+  "schema_version": 1,
+  "scope": "Unpacked resources-dlc3; definition entries, not obtainable content or gameplay frequencies",
+  "inputs": {
+    "items.xml": {
+      "bytes": 135777,
+      "sha256": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7"
+    },
+    "items_metadata.xml": {
+      "bytes": 54695,
+      "sha256": "42b3eb47a2f39d7120708ad32a790fc0c1129dd845f3cbdc969d702a5f17152e"
+    },
+    "itempools.xml": {
+      "bytes": 172669,
+      "sha256": "da5391ba59626b0fe349fa6d143df82cd7c19c648f04311d8e21a441d5aa502c"
+    },
+    "stages.xml": {
+      "bytes": 6048,
+      "sha256": "6fc966af2156977f86cbc4fe2d0ce901d6d7a71e3f10639c079bb2ed318296d0"
+    },
+    "bosspools.xml": {
+      "bytes": 8411,
+      "sha256": "8e3f794d8951344bd9f96f463cfbb2644b6fa10d27689d31ba80e27dcced4017"
+    },
+    "entities2.xml": {
+      "bytes": 547768,
+      "sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75"
+    }
+  },
+  "parsing_normalizations": [
+    "bosspools.xml: final </pool> parsed as </bosspools>; input unchanged"
+  ],
+  "items": {
+    "rows_by_tag": {
+      "active": 170,
+      "familiar": 126,
+      "null": 49,
+      "passive": 425,
+      "trinket": 188
+    },
+    "collectible_rows": 721,
+    "distinct_collectible_ids": 721,
+    "metadata_rows_by_tag": {
+      "item": 721,
+      "trinket": 188
+    },
+    "collectible_quality_histogram": {
+      "0": 51,
+      "1": 197,
+      "2": 249,
+      "3": 184,
+      "4": 40
+    },
+    "selected_cache_flags": {
+      "2": "firedelay damage",
+      "3": "speed tearcolor tearflag",
+      "52": "all",
+      "68": "all",
+      "69": "all",
+      "104": "tearcolor tearflag",
+      "114": "all",
+      "118": "all",
+      "149": "all",
+      "153": "firedelay damage",
+      "169": "damage firedelay tearflag",
+      "182": "damage firedelay range shotspeed tearcolor tearflag",
+      "224": "firedelay range tearflag",
+      "229": "all",
+      "233": "all",
+      "256": "",
+      "373": "damage",
+      "395": "all",
+      "453": "range tearflag",
+      "533": "tearflag",
+      "617": "tearcolor",
+      "646": "",
+      "678": "weapon firedelay damage tearcolor range",
+      "706": ""
+    }
+  },
+  "item_pools": {
+    "treasure": {
+      "rows": 407,
+      "distinct_ids": 407,
+      "weight_histogram": {
+        "0.1": 5,
+        "0.2": 9,
+        "0.5": 6,
+        "1.0": 387
+      },
+      "decrease_by_histogram": {
+        "0.1": 5,
+        "0.2": 9,
+        "0.5": 6,
+        "1.0": 387
+      },
+      "remove_on_histogram": {
+        "0.01": 5,
+        "0.02": 9,
+        "0.05": 6,
+        "0.1": 387
+      },
+      "ids_without_collectible_definition": []
+    },
+    "shop": {
+      "rows": 95,
+      "distinct_ids": 95,
+      "weight_histogram": {
+        "0.1": 1,
+        "0.2": 1,
+        "0.5": 7,
+        "1.0": 86
+      },
+      "decrease_by_histogram": {
+        "0.1": 1,
+        "0.2": 1,
+        "0.5": 7,
+        "1.0": 86
+      },
+      "remove_on_histogram": {
+        "0.01": 1,
+        "0.02": 1,
+        "0.05": 7,
+        "0.1": 86
+      },
+      "ids_without_collectible_definition": []
+    },
+    "boss": {
+      "rows": 59,
+      "distinct_ids": 59,
+      "weight_histogram": {
+        "0.5": 2,
+        "1.0": 57
+      },
+      "decrease_by_histogram": {
+        "0.5": 2,
+        "1.0": 57
+      },
+      "remove_on_histogram": {
+        "0.05": 2,
+        "0.1": 57
+      },
+      "ids_without_collectible_definition": []
+    },
+    "devil": {
+      "rows": 94,
+      "distinct_ids": 94,
+      "weight_histogram": {
+        "0.2": 3,
+        "0.5": 6,
+        "1.0": 85
+      },
+      "decrease_by_histogram": {
+        "0.2": 3,
+        "0.5": 6,
+        "1.0": 85
+      },
+      "remove_on_histogram": {
+        "0.02": 3,
+        "0.05": 6,
+        "0.1": 85
+      },
+      "ids_without_collectible_definition": []
+    },
+    "angel": {
+      "rows": 66,
+      "distinct_ids": 66,
+      "weight_histogram": {
+        "0.4": 1,
+        "0.5": 3,
+        "1.0": 62
+      },
+      "decrease_by_histogram": {
+        "0.4": 1,
+        "0.5": 3,
+        "1.0": 62
+      },
+      "remove_on_histogram": {
+        "0.04": 1,
+        "0.05": 3,
+        "0.1": 62
+      },
+      "ids_without_collectible_definition": []
+    },
+    "secret": {
+      "rows": 62,
+      "distinct_ids": 62,
+      "weight_histogram": {
+        "0.5": 2,
+        "1.0": 60
+      },
+      "decrease_by_histogram": {
+        "0.5": 2,
+        "1.0": 60
+      },
+      "remove_on_histogram": {
+        "0.05": 2,
+        "0.1": 60
+      },
+      "ids_without_collectible_definition": []
+    },
+    "library": {
+      "rows": 15,
+      "distinct_ids": 15,
+      "weight_histogram": {
+        "0.2": 2,
+        "1.0": 13
+      },
+      "decrease_by_histogram": {
+        "0.02": 2,
+        "0.1": 13
+      },
+      "remove_on_histogram": {
+        "0.02": 2,
+        "0.1": 13
+      },
+      "ids_without_collectible_definition": []
+    },
+    "shellGame": {
+      "rows": 6,
+      "distinct_ids": 6,
+      "weight_histogram": {
+        "1.0": 6
+      },
+      "decrease_by_histogram": {
+        "0.5": 6
+      },
+      "remove_on_histogram": {
+        "0.1": 6
+      },
+      "ids_without_collectible_definition": []
+    },
+    "goldenChest": {
+      "rows": 25,
+      "distinct_ids": 25,
+      "weight_histogram": {
+        "0.1": 2,
+        "0.5": 3,
+        "1.0": 20
+      },
+      "decrease_by_histogram": {
+        "0.04": 2,
+        "0.2": 3,
+        "0.4": 20
+      },
+      "remove_on_histogram": {
+        "0.01": 2,
+        "0.05": 3,
+        "0.1": 20
+      },
+      "ids_without_collectible_definition": []
+    },
+    "redChest": {
+      "rows": 15,
+      "distinct_ids": 15,
+      "weight_histogram": {
+        "0.1": 2,
+        "0.2": 1,
+        "0.5": 1,
+        "1.0": 11
+      },
+      "decrease_by_histogram": {
+        "0.04": 2,
+        "0.08": 1,
+        "0.2": 1,
+        "0.4": 11
+      },
+      "remove_on_histogram": {
+        "0.01": 2,
+        "0.02": 1,
+        "0.05": 1,
+        "0.1": 11
+      },
+      "ids_without_collectible_definition": []
+    },
+    "beggar": {
+      "rows": 27,
+      "distinct_ids": 27,
+      "weight_histogram": {
+        "1.0": 27
+      },
+      "decrease_by_histogram": {
+        "0.5": 27
+      },
+      "remove_on_histogram": {
+        "0.1": 27
+      },
+      "ids_without_collectible_definition": []
+    },
+    "demonBeggar": {
+      "rows": 35,
+      "distinct_ids": 35,
+      "weight_histogram": {
+        "0.2": 4,
+        "0.5": 2,
+        "1.0": 29
+      },
+      "decrease_by_histogram": {
+        "0.1": 4,
+        "0.25": 2,
+        "0.5": 29
+      },
+      "remove_on_histogram": {
+        "0.02": 4,
+        "0.05": 2,
+        "0.1": 29
+      },
+      "ids_without_collectible_definition": []
+    },
+    "curse": {
+      "rows": 34,
+      "distinct_ids": 34,
+      "weight_histogram": {
+        "0.2": 1,
+        "0.5": 3,
+        "1.0": 30
+      },
+      "decrease_by_histogram": {
+        "0.1": 1,
+        "0.25": 3,
+        "0.5": 30
+      },
+      "remove_on_histogram": {
+        "0.02": 1,
+        "0.05": 3,
+        "0.1": 30
+      },
+      "ids_without_collectible_definition": []
+    },
+    "keyMaster": {
+      "rows": 22,
+      "distinct_ids": 22,
+      "weight_histogram": {
+        "1.0": 22
+      },
+      "decrease_by_histogram": {
+        "0.5": 22
+      },
+      "remove_on_histogram": {
+        "0.1": 22
+      },
+      "ids_without_collectible_definition": []
+    },
+    "batteryBum": {
+      "rows": 10,
+      "distinct_ids": 10,
+      "weight_histogram": {
+        "0.1": 2,
+        "1.0": 8
+      },
+      "decrease_by_histogram": {
+        "0.05": 2,
+        "0.5": 8
+      },
+      "remove_on_histogram": {
+        "0.01": 2,
+        "0.1": 8
+      },
+      "ids_without_collectible_definition": []
+    },
+    "momsChest": {
+      "rows": 20,
+      "distinct_ids": 20,
+      "weight_histogram": {
+        "0.1": 1,
+        "0.5": 1,
+        "1.0": 18
+      },
+      "decrease_by_histogram": {
+        "0.05": 1,
+        "0.25": 1,
+        "0.5": 18
+      },
+      "remove_on_histogram": {
+        "0.01": 1,
+        "0.05": 1,
+        "0.1": 18
+      },
+      "ids_without_collectible_definition": []
+    },
+    "greedTreasure": {
+      "rows": 348,
+      "distinct_ids": 348,
+      "weight_histogram": {
+        "0.1": 7,
+        "0.2": 10,
+        "0.5": 8,
+        "1.0": 323
+      },
+      "decrease_by_histogram": {
+        "0.1": 7,
+        "0.2": 10,
+        "0.5": 8,
+        "1.0": 323
+      },
+      "remove_on_histogram": {
+        "0.01": 7,
+        "0.02": 10,
+        "0.05": 8,
+        "0.1": 323
+      },
+      "ids_without_collectible_definition": []
+    },
+    "greedBoss": {
+      "rows": 64,
+      "distinct_ids": 64,
+      "weight_histogram": {
+        "0.2": 1,
+        "0.5": 2,
+        "1.0": 61
+      },
+      "decrease_by_histogram": {
+        "0.2": 1,
+        "0.5": 2,
+        "1.0": 61
+      },
+      "remove_on_histogram": {
+        "0.02": 1,
+        "0.05": 2,
+        "0.1": 61
+      },
+      "ids_without_collectible_definition": []
+    },
+    "greedShop": {
+      "rows": 87,
+      "distinct_ids": 87,
+      "weight_histogram": {
+        "0.1": 15,
+        "0.2": 1,
+        "0.5": 3,
+        "1.0": 68
+      },
+      "decrease_by_histogram": {
+        "0.1": 15,
+        "0.2": 1,
+        "0.5": 3,
+        "1.0": 68
+      },
+      "remove_on_histogram": {
+        "0.01": 15,
+        "0.02": 1,
+        "0.05": 3,
+        "0.1": 68
+      },
+      "ids_without_collectible_definition": []
+    },
+    "greedCurse": {
+      "rows": 30,
+      "distinct_ids": 30,
+      "weight_histogram": {
+        "0.2": 1,
+        "0.5": 2,
+        "1.0": 27
+      },
+      "decrease_by_histogram": {
+        "0.1": 1,
+        "0.25": 2,
+        "0.5": 27
+      },
+      "remove_on_histogram": {
+        "0.02": 1,
+        "0.05": 2,
+        "0.1": 27
+      },
+      "ids_without_collectible_definition": []
+    },
+    "greedDevil": {
+      "rows": 81,
+      "distinct_ids": 81,
+      "weight_histogram": {
+        "0.2": 2,
+        "0.5": 5,
+        "1.0": 74
+      },
+      "decrease_by_histogram": {
+        "0.2": 2,
+        "0.5": 5,
+        "1.0": 74
+      },
+      "remove_on_histogram": {
+        "0.02": 2,
+        "0.05": 5,
+        "0.1": 74
+      },
+      "ids_without_collectible_definition": []
+    },
+    "greedAngel": {
+      "rows": 50,
+      "distinct_ids": 50,
+      "weight_histogram": {
+        "0.5": 2,
+        "1.0": 48
+      },
+      "decrease_by_histogram": {
+        "0.5": 2,
+        "1.0": 48
+      },
+      "remove_on_histogram": {
+        "0.05": 2,
+        "0.1": 48
+      },
+      "ids_without_collectible_definition": []
+    },
+    "greedSecret": {
+      "rows": 57,
+      "distinct_ids": 57,
+      "weight_histogram": {
+        "0.5": 1,
+        "1.0": 56
+      },
+      "decrease_by_histogram": {
+        "0.5": 1,
+        "1.0": 56
+      },
+      "remove_on_histogram": {
+        "0.05": 1,
+        "0.1": 56
+      },
+      "ids_without_collectible_definition": []
+    },
+    "craneGame": {
+      "rows": 96,
+      "distinct_ids": 96,
+      "weight_histogram": {
+        "1.0": 96
+      },
+      "decrease_by_histogram": {
+        "0.1": 96
+      },
+      "remove_on_histogram": {
+        "0.1": 96
+      },
+      "ids_without_collectible_definition": []
+    },
+    "ultraSecret": {
+      "rows": 93,
+      "distinct_ids": 93,
+      "weight_histogram": {
+        "1.0": 93
+      },
+      "decrease_by_histogram": {
+        "0.4": 93
+      },
+      "remove_on_histogram": {
+        "0.1": 93
+      },
+      "ids_without_collectible_definition": []
+    },
+    "bombBum": {
+      "rows": 20,
+      "distinct_ids": 20,
+      "weight_histogram": {
+        "0.2": 2,
+        "1.0": 18
+      },
+      "decrease_by_histogram": {
+        "0.1": 2,
+        "0.5": 18
+      },
+      "remove_on_histogram": {
+        "0.02": 2,
+        "0.1": 18
+      },
+      "ids_without_collectible_definition": []
+    },
+    "planetarium": {
+      "rows": 11,
+      "distinct_ids": 11,
+      "weight_histogram": {
+        "1.0": 11
+      },
+      "decrease_by_histogram": {
+        "1.0": 11
+      },
+      "remove_on_histogram": {
+        "0.1": 11
+      },
+      "ids_without_collectible_definition": []
+    },
+    "oldChest": {
+      "rows": 25,
+      "distinct_ids": 25,
+      "weight_histogram": {
+        "0.2": 2,
+        "1.0": 23
+      },
+      "decrease_by_histogram": {
+        "0.08": 2,
+        "0.4": 23
+      },
+      "remove_on_histogram": {
+        "0.02": 2,
+        "0.1": 23
+      },
+      "ids_without_collectible_definition": []
+    },
+    "babyShop": {
+      "rows": 84,
+      "distinct_ids": 84,
+      "weight_histogram": {
+        "1.0": 84
+      },
+      "decrease_by_histogram": {
+        "1.0": 84
+      },
+      "remove_on_histogram": {
+        "0.1": 84
+      },
+      "ids_without_collectible_definition": []
+    },
+    "woodenChest": {
+      "rows": 11,
+      "distinct_ids": 11,
+      "weight_histogram": {
+        "1.0": 11
+      },
+      "decrease_by_histogram": {
+        "1.0": 11
+      },
+      "remove_on_histogram": {
+        "0.1": 11
+      },
+      "ids_without_collectible_definition": []
+    },
+    "rottenBeggar": {
+      "rows": 9,
+      "distinct_ids": 9,
+      "weight_histogram": {
+        "0.5": 2,
+        "1.0": 7
+      },
+      "decrease_by_histogram": {
+        "0.5": 2,
+        "1.0": 7
+      },
+      "remove_on_histogram": {
+        "0.05": 2,
+        "0.1": 7
+      },
+      "ids_without_collectible_definition": []
+    }
+  },
+  "stages": [
+    {
+      "id": "0",
+      "name": "#SPECIAL_ROOMS_NAME",
+      "path": "00.Special Rooms.xml"
+    },
+    {
+      "id": "1",
+      "name": "#BASEMENT_NAME",
+      "path": "01.Basement.xml",
+      "playerspot": "playerspot_01_basement.png",
+      "bossspot": "bossspot_01_basement.png",
+      "music": "1",
+      "backdrop": "1"
+    },
+    {
+      "id": "2",
+      "name": "#CELLAR_NAME",
+      "path": "02.Cellar.xml",
+      "playerspot": "playerspot_02_cellar.png",
+      "bossspot": "bossspot_02_cellar.png",
+      "music": "4",
+      "backdrop": "2"
+    },
+    {
+      "id": "3",
+      "name": "#BURNING_BASEMENT_NAME",
+      "path": "03.Burning Basement.xml",
+      "playerspot": "playerspot_13_burning_basement.png",
+      "bossspot": "bossspot_13_burning_basement.png",
+      "music": "14",
+      "backdrop": "3"
+    },
+    {
+      "id": "4",
+      "name": "#CAVES_NAME",
+      "path": "04.Caves.xml",
+      "playerspot": "playerspot_03_caves.png",
+      "bossspot": "bossspot_03_caves.png",
+      "music": "2",
+      "backdrop": "4"
+    },
+    {
+      "id": "5",
+      "name": "#CATACOMBS_NAME",
+      "path": "05.Catacombs.xml",
+      "playerspot": "playerspot_04_catacombs.png",
+      "bossspot": "bossspot_04_catacombs.png",
+      "music": "5",
+      "backdrop": "5"
+    },
+    {
+      "id": "6",
+      "name": "#FLOODED_CAVES_NAME",
+      "path": "06.Flooded Caves.xml",
+      "playerspot": "playerspot_14_drowned_caves.png",
+      "bossspot": "bossspot_14_drowned_caves.png",
+      "music": "15",
+      "backdrop": "6",
+      "suffix": "_downpour"
+    },
+    {
+      "id": "7",
+      "name": "#DEPTHS_NAME",
+      "path": "07.Depths.xml",
+      "playerspot": "playerspot_05_depths.png",
+      "bossspot": "bossspot_05_depths.png",
+      "music": "3",
+      "backdrop": "7"
+    },
+    {
+      "id": "8",
+      "name": "#NECROPOLIS_NAME",
+      "path": "08.Necropolis.xml",
+      "playerspot": "playerspot_06_necropolis.png",
+      "bossspot": "bossspot_06_necropolis.png",
+      "music": "6",
+      "backdrop": "8"
+    },
+    {
+      "id": "9",
+      "name": "#DANK_DEPTHS_NAME",
+      "path": "09.Dank Depths.xml",
+      "playerspot": "playerspot_15_dank_depths.png",
+      "bossspot": "bossspot_15_dank_depths.png",
+      "music": "16",
+      "backdrop": "9"
+    },
+    {
+      "id": "10",
+      "name": "#WOMB_NAME",
+      "path": "10.Womb.xml",
+      "playerspot": "playerspot_07_womb.png",
+      "bossspot": "bossspot_07_womb.png",
+      "music": "7",
+      "backdrop": "10"
+    },
+    {
+      "id": "11",
+      "name": "#UTERO_NAME",
+      "path": "11.Utero.xml",
+      "playerspot": "playerspot_08_utero.png",
+      "bossspot": "bossspot_08_utero.png",
+      "music": "19",
+      "backdrop": "11"
+    },
+    {
+      "id": "12",
+      "name": "#SCARRED_WOMB_NAME",
+      "path": "12.Scarred Womb.xml",
+      "playerspot": "playerspot_16_scarred_womb.png",
+      "bossspot": "bossspot_16_scarred_womb.png",
+      "music": "17",
+      "backdrop": "12"
+    },
+    {
+      "id": "13",
+      "name": "#BLUE_WOMB_NAME",
+      "path": "13.Blue Womb.xml",
+      "playerspot": "playerspot_17_blue_womb.png",
+      "bossspot": "bossspot_17_blue_womb.png",
+      "music": "18",
+      "backdrop": "13"
+    },
+    {
+      "id": "14",
+      "name": "#SHEOL_NAME",
+      "path": "14.Sheol.xml",
+      "playerspot": "playerspot_09_sheol.png",
+      "bossspot": "bossspot_09_sheol.png",
+      "music": "11",
+      "backdrop": "14"
+    },
+    {
+      "id": "15",
+      "name": "#CATHEDRAL_NAME",
+      "path": "15.Cathedral.xml",
+      "playerspot": "playerspot_10_cathedral.png",
+      "bossspot": "bossspot_10_cathedral.png",
+      "music": "10",
+      "backdrop": "15"
+    },
+    {
+      "id": "16",
+      "name": "#DARK_ROOM_NAME",
+      "path": "16.Dark Room.xml",
+      "playerspot": "playerspot_11_darkroom.png",
+      "bossspot": "bossspot_11_darkroom.png",
+      "music": "12",
+      "backdrop": "16"
+    },
+    {
+      "id": "17",
+      "name": "#CHEST_NAME",
+      "path": "17.Chest.xml",
+      "playerspot": "playerspot_12_chest.png",
+      "bossspot": "bossspot_12_chest.png",
+      "music": "13",
+      "backdrop": "17"
+    },
+    {
+      "id": "24",
+      "name": "#THE_SHOP_NAME",
+      "path": "24.The Shop.xml",
+      "playerspot": "playerspot_18_shop.png",
+      "bossspot": "bossspot_18_shop.png",
+      "music": "35",
+      "backdrop": "20"
+    },
+    {
+      "id": "25",
+      "name": "#ULTRA_GREED_NAME",
+      "path": "25.Ultra Greed.xml",
+      "playerspot": "playerspot_18_shop.png",
+      "bossspot": "bossspot_18_shop.png",
+      "music": "35",
+      "backdrop": "20"
+    },
+    {
+      "id": "26",
+      "name": "#THE_VOID_NAME",
+      "path": "01.Basement.xml",
+      "playerspot": "playerspot_19_void.png",
+      "bossspot": "bossspot_19_void.png",
+      "music": "102"
+    },
+    {
+      "id": "27",
+      "name": "#DOWNPOUR_NAME",
+      "path": "27.Downpour.xml",
+      "playerspot": "playerspot_01x_downpour.png",
+      "bossspot": "bossspot_01x_downpour.png",
+      "music": "104",
+      "backdrop": "31",
+      "suffix": "_downpour"
+    },
+    {
+      "id": "28",
+      "name": "#DROSS_NAME",
+      "path": "28.Dross.xml",
+      "playerspot": "playerspot_02x_dross.png",
+      "bossspot": "bossspot_02x_dross.png",
+      "music": "108",
+      "backdrop": "45",
+      "suffix": "_dross"
+    },
+    {
+      "id": "29",
+      "name": "#MINES_NAME",
+      "path": "29.Mines.xml",
+      "playerspot": "playerspot_03x_mines.png",
+      "bossspot": "bossspot_03x_mines.png",
+      "music": "105",
+      "backdrop": "32"
+    },
+    {
+      "id": "30",
+      "name": "#ASHPIT_NAME",
+      "path": "30.Ashpit.xml",
+      "playerspot": "playerspot_04x_ashpit.png",
+      "bossspot": "bossspot_04x_ashpit.png",
+      "music": "109",
+      "backdrop": "46",
+      "suffix": "_ashpit"
+    },
+    {
+      "id": "31",
+      "name": "#MAUSOLEUM_NAME",
+      "path": "31.Mausoleum.xml",
+      "playerspot": "playerspot_05x_mausoleum.png",
+      "bossspot": "bossspot_05x_mausoleum.png",
+      "music": "106",
+      "backdrop": "33",
+      "suffix": "_mausoleum"
+    },
+    {
+      "id": "32",
+      "name": "#GEHENNA_NAME",
+      "path": "32.Gehenna.xml",
+      "playerspot": "playerspot_06x_gehenna.png",
+      "bossspot": "bossspot_06x_gehenna.png",
+      "music": "110",
+      "backdrop": "47",
+      "suffix": "_gehenna"
+    },
+    {
+      "id": "33",
+      "name": "#CORPSE_NAME",
+      "path": "33.Corpse.xml",
+      "playerspot": "playerspot_07x_corpse.png",
+      "bossspot": "bossspot_07x_corpse.png",
+      "music": "107",
+      "backdrop": "34"
+    },
+    {
+      "id": "35",
+      "name": "#HOME_NAME",
+      "path": "35.Home.xml",
+      "playerspot": "playerspot_02_cellar.png",
+      "bossspot": "bossspot_02_cellar.png",
+      "music": "112",
+      "backdrop": "50"
+    },
+    {
+      "id": "36",
+      "name": "#BACKWARDS_NAME",
+      "path": "36.Backwards.xml",
+      "playerspot": "playerspot_01_basement.png",
+      "bossspot": "bossspot_01_basement.png",
+      "music": "102",
+      "backdrop": "1"
+    }
+  ],
+  "boss_pools": {
+    "basement": {
+      "rows": 11,
+      "attributes": {
+        "name": "basement"
+      },
+      "boss_ids": [
+        1,
+        17,
+        2,
+        44,
+        64,
+        56,
+        65,
+        20,
+        13,
+        60,
+        84
+      ],
+      "weight_histogram": {
+        "0.25": 3,
+        "1.0": 8
+      }
+    },
+    "cellar": {
+      "rows": 8,
+      "attributes": {
+        "name": "cellar"
+      },
+      "boss_ids": [
+        37,
+        34,
+        32,
+        43,
+        13,
+        60,
+        61,
+        84
+      ],
+      "weight_histogram": {
+        "1.0": 8
+      }
+    },
+    "burning basement": {
+      "rows": 12,
+      "attributes": {
+        "name": "burning basement"
+      },
+      "boss_ids": [
+        1,
+        17,
+        2,
+        44,
+        64,
+        56,
+        65,
+        20,
+        13,
+        60,
+        61,
+        84
+      ],
+      "weight_histogram": {
+        "0.25": 3,
+        "1.0": 9
+      }
+    },
+    "caves": {
+      "rows": 12,
+      "attributes": {
+        "name": "caves",
+        "doubletrouble": "3700"
+      },
+      "boss_ids": [
+        3,
+        4,
+        18,
+        45,
+        47,
+        21,
+        14,
+        28,
+        57,
+        67,
+        69,
+        94
+      ],
+      "weight_histogram": {
+        "0.25": 1,
+        "1.0": 11
+      }
+    },
+    "catacombs": {
+      "rows": 13,
+      "attributes": {
+        "name": "catacombs",
+        "doubletrouble": "3700"
+      },
+      "boss_ids": [
+        26,
+        29,
+        50,
+        52,
+        27,
+        36,
+        14,
+        28,
+        59,
+        66,
+        67,
+        69,
+        94
+      ],
+      "weight_histogram": {
+        "1.0": 13
+      }
+    },
+    "flooded caves": {
+      "rows": 14,
+      "attributes": {
+        "name": "flooded caves",
+        "doubletrouble": "3700"
+      },
+      "boss_ids": [
+        3,
+        4,
+        18,
+        45,
+        47,
+        21,
+        14,
+        28,
+        57,
+        59,
+        66,
+        67,
+        69,
+        94
+      ],
+      "weight_histogram": {
+        "0.25": 1,
+        "1.0": 13
+      }
+    },
+    "depths": {
+      "rows": 8,
+      "attributes": {
+        "name": "depths",
+        "doubletrouble": "3750"
+      },
+      "boss_ids": [
+        48,
+        5,
+        46,
+        19,
+        15,
+        58,
+        68,
+        74
+      ],
+      "weight_histogram": {
+        "0.25": 1,
+        "1.0": 7
+      }
+    },
+    "necropolis": {
+      "rows": 7,
+      "attributes": {
+        "name": "necropolis",
+        "doubletrouble": "3750"
+      },
+      "boss_ids": [
+        51,
+        30,
+        35,
+        15,
+        58,
+        68,
+        73
+      ],
+      "weight_histogram": {
+        "1.0": 7
+      }
+    },
+    "dank depths": {
+      "rows": 8,
+      "attributes": {
+        "name": "dank depths",
+        "doubletrouble": "3750"
+      },
+      "boss_ids": [
+        48,
+        5,
+        46,
+        19,
+        15,
+        58,
+        68,
+        74
+      ],
+      "weight_histogram": {
+        "1.0": 8
+      }
+    },
+    "womb": {
+      "rows": 6,
+      "attributes": {
+        "name": "womb",
+        "doubletrouble": "3800"
+      },
+      "boss_ids": [
+        7,
+        49,
+        31,
+        53,
+        16,
+        72
+      ],
+      "weight_histogram": {
+        "0.25": 1,
+        "1.0": 5
+      }
+    },
+    "utero": {
+      "rows": 5,
+      "attributes": {
+        "name": "utero",
+        "doubletrouble": "3800"
+      },
+      "boss_ids": [
+        33,
+        31,
+        41,
+        42,
+        30
+      ],
+      "weight_histogram": {
+        "1.0": 5
+      }
+    },
+    "scarred womb": {
+      "rows": 7,
+      "attributes": {
+        "name": "scarred womb",
+        "doubletrouble": "3800"
+      },
+      "boss_ids": [
+        7,
+        49,
+        31,
+        53,
+        16,
+        42,
+        72
+      ],
+      "weight_histogram": {
+        "1.0": 6,
+        "2.0": 1
+      }
+    },
+    "sheol": {
+      "rows": 0,
+      "attributes": {
+        "name": "sheol"
+      },
+      "boss_ids": [],
+      "weight_histogram": {}
+    },
+    "cathedral": {
+      "rows": 0,
+      "attributes": {
+        "name": "cathedral"
+      },
+      "boss_ids": [],
+      "weight_histogram": {}
+    },
+    "dark room": {
+      "rows": 0,
+      "attributes": {
+        "name": "dark room"
+      },
+      "boss_ids": [],
+      "weight_histogram": {}
+    },
+    "chest": {
+      "rows": 0,
+      "attributes": {
+        "name": "chest"
+      },
+      "boss_ids": [],
+      "weight_histogram": {}
+    },
+    "blue womb": {
+      "rows": 0,
+      "attributes": {
+        "name": "blue womb"
+      },
+      "boss_ids": [],
+      "weight_histogram": {}
+    },
+    "void": {
+      "rows": 0,
+      "attributes": {
+        "name": "void"
+      },
+      "boss_ids": [],
+      "weight_histogram": {}
+    },
+    "downpour": {
+      "rows": 4,
+      "attributes": {
+        "name": "downpour"
+      },
+      "boss_ids": [
+        75,
+        76,
+        77,
+        91
+      ],
+      "weight_histogram": {
+        "1.0": 4
+      }
+    },
+    "dross": {
+      "rows": 5,
+      "attributes": {
+        "name": "dross"
+      },
+      "boss_ids": [
+        75,
+        76,
+        92,
+        95,
+        97
+      ],
+      "weight_histogram": {
+        "1.0": 5
+      }
+    },
+    "mines": {
+      "rows": 4,
+      "attributes": {
+        "name": "mines"
+      },
+      "boss_ids": [
+        74,
+        80,
+        82,
+        83
+      ],
+      "weight_histogram": {
+        "1.0": 4
+      }
+    },
+    "ashpit": {
+      "rows": 5,
+      "attributes": {
+        "name": "ashpit"
+      },
+      "boss_ids": [
+        73,
+        96,
+        93,
+        83,
+        102
+      ],
+      "weight_histogram": {
+        "1.0": 5
+      }
+    },
+    "mausoleum": {
+      "rows": 2,
+      "attributes": {
+        "name": "mausoleum"
+      },
+      "boss_ids": [
+        79,
+        81
+      ],
+      "weight_histogram": {
+        "1.0": 2
+      }
+    },
+    "gehenna": {
+      "rows": 2,
+      "attributes": {
+        "name": "gehenna"
+      },
+      "boss_ids": [
+        78,
+        101
+      ],
+      "weight_histogram": {
+        "1.0": 2
+      }
+    },
+    "corpse": {
+      "rows": 3,
+      "attributes": {
+        "name": "corpse"
+      },
+      "boss_ids": [
+        85,
+        86,
+        87
+      ],
+      "weight_histogram": {
+        "1.0": 3
+      }
+    }
+  },
+  "entities": {
+    "rows": 1337,
+    "boss_flagged_rows": 197,
+    "distinct_type_ids": 340,
+    "rows_with_nonzero_stage_hp": 104
+  },
+  "rooms": {
+    "files": 53,
+    "normal_files": 29,
+    "greed_files": 24,
+    "stored_entries": 28464,
+    "normal_stored_entries": 23859,
+    "greed_stored_entries": 4605,
+    "by_file": {
+      "rooms/00.special rooms.stb": {
+        "bytes": 366852,
+        "sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+        "entries": 1300,
+        "room_types": {
+          "1": 10,
+          "2": 18,
+          "3": 33,
+          "4": 56,
+          "5": 564,
+          "6": 87,
+          "7": 39,
+          "8": 33,
+          "9": 52,
+          "10": 41,
+          "11": 44,
+          "12": 18,
+          "13": 13,
+          "14": 38,
+          "15": 29,
+          "16": 16,
+          "17": 7,
+          "18": 31,
+          "19": 29,
+          "20": 49,
+          "21": 21,
+          "22": 12,
+          "24": 7,
+          "27": 19,
+          "28": 25,
+          "29": 9
+        },
+        "difficulties": {
+          "0": 98,
+          "1": 1184,
+          "5": 3,
+          "10": 11,
+          "15": 4
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "1": 1073,
+          "2": 20,
+          "3": 46,
+          "4": 88,
+          "5": 2,
+          "6": 61,
+          "7": 2,
+          "8": 8
+        },
+        "stored_sizes": {
+          "13x14": 90,
+          "13x7": 1139,
+          "26x14": 8,
+          "26x7": 63
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 19450,
+        "distinct_spawn_type_variant_subtype": 342,
+        "stack_count_range": [
+          0,
+          147
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 347,
+          "1001": 3,
+          "1002": 160,
+          "1010": 7,
+          "1300": 27,
+          "1400": 104,
+          "1410": 19,
+          "1490": 18,
+          "1494": 4,
+          "1495": 5,
+          "1496": 8,
+          "1497": 5,
+          "1500": 87,
+          "1900": 97,
+          "1901": 8,
+          "1930": 50,
+          "1931": 11,
+          "1940": 110,
+          "3000": 200,
+          "4000": 20,
+          "4500": 16,
+          "5000": 40,
+          "5001": 31,
+          "6000": 24,
+          "6001": 2,
+          "9000": 68
+        },
+        "fully_consumed": true
+      },
+      "rooms/01.basement.stb": {
+        "bytes": 553404,
+        "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+        "entries": 1181,
+        "room_types": {
+          "1": 1162,
+          "11": 19
+        },
+        "difficulties": {
+          "0": 66,
+          "1": 276,
+          "2": 3,
+          "5": 425,
+          "10": 355,
+          "15": 14,
+          "20": 42
+        },
+        "default_room_difficulties": {
+          "0": 66,
+          "1": 271,
+          "2": 3,
+          "5": 420,
+          "10": 350,
+          "15": 10,
+          "20": 42
+        },
+        "shapes": {
+          "1": 746,
+          "2": 43,
+          "3": 50,
+          "4": 94,
+          "5": 20,
+          "6": 81,
+          "7": 20,
+          "8": 48,
+          "9": 20,
+          "10": 20,
+          "11": 20,
+          "12": 19
+        },
+        "stored_sizes": {
+          "13x14": 114,
+          "13x7": 839,
+          "26x14": 127,
+          "26x7": 101
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 32523,
+        "distinct_spawn_type_variant_subtype": 145,
+        "stack_count_range": [
+          0,
+          168
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 905,
+          "1001": 6,
+          "1002": 223,
+          "1300": 34,
+          "1400": 118,
+          "1410": 16,
+          "1490": 8,
+          "1494": 1,
+          "1495": 11,
+          "1496": 6,
+          "1497": 2,
+          "1500": 265,
+          "1900": 95,
+          "1930": 19,
+          "1931": 3,
+          "1940": 50,
+          "3000": 1,
+          "4000": 4,
+          "4500": 23,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/02.cellar.stb": {
+        "bytes": 562630,
+        "sha256": "4be390e392182ab2fdc11417ae0a12565eba453a956dac671af08b7f5f4b022f",
+        "entries": 1148,
+        "room_types": {
+          "1": 1128,
+          "11": 20
+        },
+        "difficulties": {
+          "0": 98,
+          "1": 299,
+          "2": 1,
+          "5": 324,
+          "10": 373,
+          "15": 12,
+          "20": 41
+        },
+        "default_room_difficulties": {
+          "0": 98,
+          "1": 294,
+          "2": 1,
+          "5": 319,
+          "10": 367,
+          "15": 8,
+          "20": 41
+        },
+        "shapes": {
+          "1": 719,
+          "2": 41,
+          "3": 47,
+          "4": 92,
+          "5": 19,
+          "6": 77,
+          "7": 19,
+          "8": 51,
+          "9": 20,
+          "10": 22,
+          "11": 20,
+          "12": 21
+        },
+        "stored_sizes": {
+          "13x14": 111,
+          "13x7": 807,
+          "26x14": 134,
+          "26x7": 96
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 33080,
+        "distinct_spawn_type_variant_subtype": 153,
+        "stack_count_range": [
+          0,
+          174
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 855,
+          "1001": 18,
+          "1002": 380,
+          "1300": 55,
+          "1400": 103,
+          "1410": 34,
+          "1490": 4,
+          "1494": 1,
+          "1495": 12,
+          "1496": 3,
+          "1497": 3,
+          "1500": 199,
+          "1900": 88,
+          "1930": 32,
+          "1931": 6,
+          "1940": 448,
+          "4000": 4,
+          "4500": 24
+        },
+        "fully_consumed": true
+      },
+      "rooms/03.burning basement.stb": {
+        "bytes": 608117,
+        "sha256": "efb30d9908bc7bc249dbe212f7baa62931579acc1e7287e7a9125160a68f90a1",
+        "entries": 1311,
+        "room_types": {
+          "1": 1297,
+          "11": 14
+        },
+        "difficulties": {
+          "0": 12,
+          "1": 316,
+          "2": 5,
+          "5": 492,
+          "10": 433,
+          "15": 10,
+          "20": 43
+        },
+        "default_room_difficulties": {
+          "0": 12,
+          "1": 313,
+          "2": 5,
+          "5": 487,
+          "10": 429,
+          "15": 8,
+          "20": 43
+        },
+        "shapes": {
+          "1": 841,
+          "2": 43,
+          "3": 56,
+          "4": 108,
+          "5": 22,
+          "6": 90,
+          "7": 21,
+          "8": 51,
+          "9": 21,
+          "10": 19,
+          "11": 19,
+          "12": 20
+        },
+        "stored_sizes": {
+          "13x14": 130,
+          "13x7": 940,
+          "26x14": 130,
+          "26x7": 111
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 35992,
+        "distinct_spawn_type_variant_subtype": 166,
+        "stack_count_range": [
+          0,
+          168
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 1022,
+          "1001": 5,
+          "1002": 259,
+          "1010": 1,
+          "1300": 34,
+          "1400": 308,
+          "1410": 17,
+          "1490": 8,
+          "1494": 1,
+          "1495": 11,
+          "1496": 6,
+          "1497": 2,
+          "1500": 263,
+          "1900": 116,
+          "1930": 23,
+          "1931": 9,
+          "1940": 99,
+          "3000": 1,
+          "4000": 6,
+          "4500": 23,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/04.caves.stb": {
+        "bytes": 733230,
+        "sha256": "f7f02daf476910a56f07611d24dc905f5ac0ac88f505168658e0aec262f64e40",
+        "entries": 1111,
+        "room_types": {
+          "1": 1092,
+          "11": 19
+        },
+        "difficulties": {
+          "0": 195,
+          "1": 240,
+          "2": 1,
+          "5": 308,
+          "10": 311,
+          "15": 16,
+          "20": 40
+        },
+        "default_room_difficulties": {
+          "0": 195,
+          "1": 235,
+          "2": 1,
+          "5": 302,
+          "10": 306,
+          "15": 13,
+          "20": 40
+        },
+        "shapes": {
+          "1": 708,
+          "2": 32,
+          "3": 43,
+          "4": 91,
+          "5": 16,
+          "6": 80,
+          "7": 15,
+          "8": 44,
+          "9": 20,
+          "10": 20,
+          "11": 22,
+          "12": 20
+        },
+        "stored_sizes": {
+          "13x14": 107,
+          "13x7": 783,
+          "26x14": 126,
+          "26x7": 95
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 44758,
+        "distinct_spawn_type_variant_subtype": 195,
+        "stack_count_range": [
+          0,
+          317
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 375,
+          "1001": 4,
+          "1002": 235,
+          "1009": 1,
+          "1010": 19,
+          "1300": 24,
+          "1400": 76,
+          "1410": 9,
+          "1494": 3,
+          "1495": 1,
+          "1496": 4,
+          "1497": 6,
+          "1500": 74,
+          "1900": 62,
+          "1930": 49,
+          "1931": 15,
+          "1940": 33,
+          "3000": 825,
+          "3009": 1,
+          "4000": 11,
+          "4500": 18,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/05.catacombs.stb": {
+        "bytes": 759999,
+        "sha256": "fc0340aec165f1df718856b80298699b03cd7c053c3c2a6a698b850e0d91b277",
+        "entries": 1125,
+        "room_types": {
+          "1": 1106,
+          "11": 19
+        },
+        "difficulties": {
+          "0": 82,
+          "1": 246,
+          "5": 381,
+          "10": 363,
+          "15": 14,
+          "20": 39
+        },
+        "default_room_difficulties": {
+          "0": 82,
+          "1": 241,
+          "5": 375,
+          "10": 358,
+          "15": 11,
+          "20": 39
+        },
+        "shapes": {
+          "1": 728,
+          "2": 33,
+          "3": 41,
+          "4": 86,
+          "5": 16,
+          "6": 78,
+          "7": 16,
+          "8": 48,
+          "9": 20,
+          "10": 18,
+          "11": 20,
+          "12": 21
+        },
+        "stored_sizes": {
+          "13x14": 102,
+          "13x7": 802,
+          "26x14": 127,
+          "26x7": 94
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 46458,
+        "distinct_spawn_type_variant_subtype": 217,
+        "stack_count_range": [
+          1,
+          304
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 435,
+          "1001": 6,
+          "1002": 300,
+          "1010": 12,
+          "1300": 17,
+          "1400": 53,
+          "1410": 11,
+          "1494": 3,
+          "1495": 21,
+          "1496": 3,
+          "1497": 12,
+          "1500": 77,
+          "1900": 46,
+          "1930": 60,
+          "1931": 23,
+          "1940": 135,
+          "3000": 872,
+          "4000": 13,
+          "4500": 19,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/06.flooded caves.stb": {
+        "bytes": 824814,
+        "sha256": "fdf66f25f51647d42eb590450f80e0c246ccb1e97c087d7cd4e530c955e57ac3",
+        "entries": 1285,
+        "room_types": {
+          "1": 1268,
+          "11": 17
+        },
+        "difficulties": {
+          "0": 36,
+          "1": 290,
+          "2": 1,
+          "5": 422,
+          "10": 478,
+          "15": 14,
+          "20": 44
+        },
+        "default_room_difficulties": {
+          "0": 36,
+          "1": 286,
+          "2": 1,
+          "5": 417,
+          "10": 473,
+          "15": 11,
+          "20": 44
+        },
+        "shapes": {
+          "1": 824,
+          "2": 37,
+          "3": 48,
+          "4": 111,
+          "5": 17,
+          "6": 94,
+          "7": 17,
+          "8": 50,
+          "9": 21,
+          "10": 21,
+          "11": 24,
+          "12": 21
+        },
+        "stored_sizes": {
+          "13x14": 128,
+          "13x7": 909,
+          "26x14": 137,
+          "26x7": 111
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 50199,
+        "distinct_spawn_type_variant_subtype": 206,
+        "stack_count_range": [
+          0,
+          317
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 450,
+          "1001": 4,
+          "1002": 251,
+          "1009": 1,
+          "1010": 17,
+          "1300": 23,
+          "1400": 76,
+          "1410": 8,
+          "1494": 3,
+          "1495": 2,
+          "1496": 4,
+          "1497": 17,
+          "1500": 90,
+          "1900": 83,
+          "1930": 62,
+          "1931": 18,
+          "1940": 44,
+          "3000": 967,
+          "3009": 1,
+          "4000": 13,
+          "4500": 17,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/07.depths.stb": {
+        "bytes": 716330,
+        "sha256": "1745f85e6845971df5088c5f79173e7296fa6415a3ffb635fc71a970176e833a",
+        "entries": 1176,
+        "room_types": {
+          "1": 1157,
+          "11": 19
+        },
+        "difficulties": {
+          "0": 228,
+          "1": 209,
+          "5": 370,
+          "10": 318,
+          "15": 11,
+          "20": 40
+        },
+        "default_room_difficulties": {
+          "0": 228,
+          "1": 204,
+          "5": 365,
+          "10": 313,
+          "15": 7,
+          "20": 40
+        },
+        "shapes": {
+          "1": 755,
+          "2": 37,
+          "3": 43,
+          "4": 96,
+          "5": 14,
+          "6": 79,
+          "7": 18,
+          "8": 50,
+          "9": 21,
+          "10": 20,
+          "11": 20,
+          "12": 23
+        },
+        "stored_sizes": {
+          "13x14": 110,
+          "13x7": 835,
+          "26x14": 134,
+          "26x7": 97
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 43410,
+        "distinct_spawn_type_variant_subtype": 232,
+        "stack_count_range": [
+          0,
+          300
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 464,
+          "1001": 3,
+          "1002": 395,
+          "1008": 42,
+          "1010": 30,
+          "1300": 7,
+          "1400": 84,
+          "1410": 9,
+          "1490": 9,
+          "1494": 4,
+          "1495": 4,
+          "1496": 5,
+          "1497": 7,
+          "1500": 67,
+          "1900": 110,
+          "1930": 77,
+          "1931": 47,
+          "1940": 31,
+          "3000": 716,
+          "4000": 37,
+          "4500": 24,
+          "9000": 2,
+          "9100": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/08.necropolis.stb": {
+        "bytes": 691663,
+        "sha256": "fe8dbac7304d701a8507cca0028991592679e7b6837261d204a358b41ac3dbc3",
+        "entries": 1198,
+        "room_types": {
+          "1": 1179,
+          "11": 19
+        },
+        "difficulties": {
+          "0": 67,
+          "1": 246,
+          "5": 426,
+          "10": 411,
+          "15": 9,
+          "20": 39
+        },
+        "default_room_difficulties": {
+          "0": 67,
+          "1": 242,
+          "5": 421,
+          "10": 405,
+          "15": 5,
+          "20": 39
+        },
+        "shapes": {
+          "1": 786,
+          "2": 38,
+          "3": 43,
+          "4": 99,
+          "5": 17,
+          "6": 80,
+          "7": 16,
+          "8": 46,
+          "9": 19,
+          "10": 18,
+          "11": 16,
+          "12": 20
+        },
+        "stored_sizes": {
+          "13x14": 116,
+          "13x7": 867,
+          "26x14": 119,
+          "26x7": 96
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 41621,
+        "distinct_spawn_type_variant_subtype": 244,
+        "stack_count_range": [
+          1,
+          300
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 478,
+          "1001": 3,
+          "1002": 413,
+          "1008": 42,
+          "1010": 26,
+          "1300": 7,
+          "1400": 78,
+          "1410": 16,
+          "1490": 12,
+          "1494": 3,
+          "1495": 18,
+          "1496": 4,
+          "1497": 5,
+          "1500": 61,
+          "1900": 112,
+          "1930": 79,
+          "1931": 49,
+          "1940": 87,
+          "3000": 728,
+          "4000": 35,
+          "4500": 31,
+          "9000": 2
+        },
+        "fully_consumed": true
+      },
+      "rooms/09.dank depths.stb": {
+        "bytes": 817411,
+        "sha256": "fa5da6163cc71714e2b45d9ddbea6632991b764b85bd43a132286956150ba6df",
+        "entries": 1443,
+        "room_types": {
+          "1": 1422,
+          "11": 21
+        },
+        "difficulties": {
+          "0": 2,
+          "1": 286,
+          "5": 590,
+          "10": 520,
+          "15": 7,
+          "20": 38
+        },
+        "default_room_difficulties": {
+          "0": 2,
+          "1": 281,
+          "5": 584,
+          "10": 514,
+          "15": 3,
+          "20": 38
+        },
+        "shapes": {
+          "1": 955,
+          "2": 44,
+          "3": 54,
+          "4": 111,
+          "5": 18,
+          "6": 87,
+          "7": 19,
+          "8": 55,
+          "9": 25,
+          "10": 27,
+          "11": 23,
+          "12": 25
+        },
+        "stored_sizes": {
+          "13x14": 129,
+          "13x7": 1053,
+          "26x14": 155,
+          "26x7": 106
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 49193,
+        "distinct_spawn_type_variant_subtype": 244,
+        "stack_count_range": [
+          0,
+          300
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 630,
+          "1001": 2,
+          "1002": 470,
+          "1008": 42,
+          "1010": 54,
+          "1300": 9,
+          "1400": 87,
+          "1410": 9,
+          "1490": 9,
+          "1494": 4,
+          "1495": 7,
+          "1496": 5,
+          "1497": 17,
+          "1500": 82,
+          "1900": 139,
+          "1930": 100,
+          "1931": 55,
+          "1940": 45,
+          "3000": 795,
+          "4000": 37,
+          "4500": 24,
+          "9000": 2,
+          "9100": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/10.womb.stb": {
+        "bytes": 625015,
+        "sha256": "c1f40a5251f0461e59317dd6edb620e16ea662dfd5e97eb72e44d338488d33ae",
+        "entries": 1012,
+        "room_types": {
+          "1": 974,
+          "4": 20,
+          "11": 18
+        },
+        "difficulties": {
+          "0": 166,
+          "1": 222,
+          "5": 290,
+          "10": 291,
+          "15": 7,
+          "20": 36
+        },
+        "default_room_difficulties": {
+          "0": 166,
+          "1": 197,
+          "5": 285,
+          "10": 286,
+          "15": 4,
+          "20": 36
+        },
+        "shapes": {
+          "1": 589,
+          "2": 31,
+          "3": 41,
+          "4": 102,
+          "5": 13,
+          "6": 81,
+          "7": 15,
+          "8": 65,
+          "9": 18,
+          "10": 19,
+          "11": 19,
+          "12": 19
+        },
+        "stored_sizes": {
+          "13x14": 115,
+          "13x7": 661,
+          "26x14": 140,
+          "26x7": 96
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 37870,
+        "distinct_spawn_type_variant_subtype": 188,
+        "stack_count_range": [
+          1,
+          290
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 427,
+          "1001": 1,
+          "1002": 238,
+          "1010": 13,
+          "1400": 1,
+          "1410": 1,
+          "1490": 56,
+          "1495": 2,
+          "1500": 31,
+          "1900": 31,
+          "1930": 62,
+          "1931": 26,
+          "1940": 1,
+          "3000": 536,
+          "4000": 15,
+          "4500": 22
+        },
+        "fully_consumed": true
+      },
+      "rooms/11.utero.stb": {
+        "bytes": 690195,
+        "sha256": "cf82faa4db86ab7d6c4948a356b3ecb61d2b24b0f0d55ee250e83670cae8864e",
+        "entries": 1225,
+        "room_types": {
+          "1": 1183,
+          "4": 19,
+          "11": 23
+        },
+        "difficulties": {
+          "0": 33,
+          "1": 275,
+          "5": 391,
+          "10": 471,
+          "15": 16,
+          "20": 39
+        },
+        "default_room_difficulties": {
+          "0": 33,
+          "1": 251,
+          "5": 385,
+          "10": 464,
+          "15": 11,
+          "20": 39
+        },
+        "shapes": {
+          "1": 752,
+          "2": 32,
+          "3": 50,
+          "4": 119,
+          "5": 17,
+          "6": 98,
+          "7": 17,
+          "8": 69,
+          "9": 19,
+          "10": 18,
+          "11": 17,
+          "12": 17
+        },
+        "stored_sizes": {
+          "13x14": 136,
+          "13x7": 834,
+          "26x14": 140,
+          "26x7": 115
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 41431,
+        "distinct_spawn_type_variant_subtype": 217,
+        "stack_count_range": [
+          1,
+          290
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 500,
+          "1001": 1,
+          "1002": 257,
+          "1010": 34,
+          "1400": 1,
+          "1410": 1,
+          "1490": 69,
+          "1494": 1,
+          "1495": 2,
+          "1500": 28,
+          "1900": 45,
+          "1930": 97,
+          "1931": 38,
+          "1940": 9,
+          "3000": 651,
+          "4000": 20,
+          "4500": 22
+        },
+        "fully_consumed": true
+      },
+      "rooms/12.scarred womb.stb": {
+        "bytes": 693408,
+        "sha256": "dfc9c1052192480353fd2e14cc9eaf77f24b00eef96a46fd24b820767da7c0a6",
+        "entries": 1159,
+        "room_types": {
+          "1": 1122,
+          "4": 19,
+          "11": 18
+        },
+        "difficulties": {
+          "0": 8,
+          "1": 284,
+          "5": 385,
+          "10": 430,
+          "15": 11,
+          "20": 41
+        },
+        "default_room_difficulties": {
+          "0": 8,
+          "1": 259,
+          "5": 381,
+          "10": 425,
+          "15": 8,
+          "20": 41
+        },
+        "shapes": {
+          "1": 669,
+          "2": 34,
+          "3": 44,
+          "4": 119,
+          "5": 18,
+          "6": 99,
+          "7": 19,
+          "8": 72,
+          "9": 22,
+          "10": 22,
+          "11": 21,
+          "12": 20
+        },
+        "stored_sizes": {
+          "13x14": 137,
+          "13x7": 747,
+          "26x14": 157,
+          "26x7": 118
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 41925,
+        "distinct_spawn_type_variant_subtype": 199,
+        "stack_count_range": [
+          1,
+          290
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 501,
+          "1001": 3,
+          "1002": 256,
+          "1010": 24,
+          "1400": 1,
+          "1410": 1,
+          "1490": 70,
+          "1495": 2,
+          "1500": 34,
+          "1900": 38,
+          "1930": 63,
+          "1931": 26,
+          "1940": 2,
+          "3000": 601,
+          "4000": 19,
+          "4500": 18
+        },
+        "fully_consumed": true
+      },
+      "rooms/13.blue womb.stb": {
+        "bytes": 7923,
+        "sha256": "a1835568f691082ec26ff1db2e2a009c992ec2c9724813155a8cb37ebbf93e02",
+        "entries": 30,
+        "room_types": {
+          "1": 26,
+          "2": 2,
+          "4": 1,
+          "5": 1
+        },
+        "difficulties": {
+          "0": 2,
+          "1": 4,
+          "5": 17,
+          "10": 7
+        },
+        "default_room_difficulties": {
+          "0": 2,
+          "5": 17,
+          "10": 7
+        },
+        "shapes": {
+          "1": 22,
+          "2": 2,
+          "3": 2,
+          "4": 1,
+          "5": 1,
+          "7": 1,
+          "8": 1
+        },
+        "stored_sizes": {
+          "13x14": 2,
+          "13x7": 26,
+          "26x14": 1,
+          "26x7": 1
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 407,
+        "distinct_spawn_type_variant_subtype": 15,
+        "stack_count_range": [
+          1,
+          37
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 20,
+          "1002": 3,
+          "1400": 2,
+          "3000": 6,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/14.sheol.stb": {
+        "bytes": 257176,
+        "sha256": "c217482ebdea1b0f3fccb331d73f7143039598fdb2411b4634a6070566a721e2",
+        "entries": 644,
+        "room_types": {
+          "1": 605,
+          "4": 22,
+          "11": 17
+        },
+        "difficulties": {
+          "1": 31,
+          "5": 517,
+          "10": 52,
+          "15": 4,
+          "20": 40
+        },
+        "default_room_difficulties": {
+          "1": 5,
+          "5": 513,
+          "10": 47,
+          "20": 40
+        },
+        "shapes": {
+          "1": 413,
+          "2": 21,
+          "3": 40,
+          "4": 60,
+          "5": 6,
+          "6": 47,
+          "7": 6,
+          "8": 22,
+          "9": 9,
+          "10": 8,
+          "11": 6,
+          "12": 6
+        },
+        "stored_sizes": {
+          "13x14": 66,
+          "13x7": 474,
+          "26x14": 51,
+          "26x7": 53
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 14814,
+        "distinct_spawn_type_variant_subtype": 192,
+        "stack_count_range": [
+          0,
+          224
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 252,
+          "1001": 2,
+          "1002": 162,
+          "1010": 22,
+          "1300": 4,
+          "1400": 48,
+          "1410": 12,
+          "1490": 2,
+          "1497": 2,
+          "1900": 64,
+          "1901": 1,
+          "1930": 40,
+          "1931": 13,
+          "1940": 5,
+          "3000": 199,
+          "4000": 9,
+          "4500": 8,
+          "5000": 1,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/15.cathedral.stb": {
+        "bytes": 241794,
+        "sha256": "a30896896edbfa50a908c861f1728a9abbfe944ffefe6194d95acf71effe0f6b",
+        "entries": 623,
+        "room_types": {
+          "1": 584,
+          "4": 23,
+          "11": 16
+        },
+        "difficulties": {
+          "1": 33,
+          "5": 529,
+          "10": 19,
+          "15": 4,
+          "20": 38
+        },
+        "default_room_difficulties": {
+          "1": 7,
+          "5": 525,
+          "10": 14,
+          "20": 38
+        },
+        "shapes": {
+          "1": 409,
+          "2": 24,
+          "3": 33,
+          "4": 48,
+          "5": 8,
+          "6": 36,
+          "7": 5,
+          "8": 26,
+          "9": 9,
+          "10": 9,
+          "11": 8,
+          "12": 8
+        },
+        "stored_sizes": {
+          "13x14": 56,
+          "13x7": 466,
+          "26x14": 60,
+          "26x7": 41
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 13852,
+        "distinct_spawn_type_variant_subtype": 171,
+        "stack_count_range": [
+          0,
+          219
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 332,
+          "1001": 2,
+          "1002": 163,
+          "1010": 4,
+          "1400": 24,
+          "1410": 2,
+          "1494": 1,
+          "1497": 1,
+          "1500": 1,
+          "1900": 71,
+          "1901": 42,
+          "1930": 32,
+          "1931": 2,
+          "1940": 9,
+          "3000": 138,
+          "4000": 10,
+          "4500": 7,
+          "5001": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/16.dark room.stb": {
+        "bytes": 29004,
+        "sha256": "cbf67a5d66173808e14826371e43f7379143743c75017c3fdc425e614289c279",
+        "entries": 212,
+        "room_types": {
+          "1": 212
+        },
+        "difficulties": {
+          "1": 20,
+          "5": 147,
+          "10": 42,
+          "15": 3
+        },
+        "default_room_difficulties": {
+          "1": 20,
+          "5": 147,
+          "10": 42,
+          "15": 3
+        },
+        "shapes": {
+          "1": 74,
+          "2": 22,
+          "3": 23,
+          "4": 27,
+          "5": 4,
+          "6": 26,
+          "7": 5,
+          "8": 19,
+          "9": 3,
+          "10": 3,
+          "11": 3,
+          "12": 3
+        },
+        "stored_sizes": {
+          "13x14": 31,
+          "13x7": 119,
+          "26x14": 31,
+          "26x7": 31
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1113,
+        "distinct_spawn_type_variant_subtype": 103,
+        "stack_count_range": [
+          1,
+          146
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 7,
+          "1002": 7,
+          "1010": 1,
+          "1500": 1,
+          "1900": 2,
+          "1940": 1,
+          "3000": 4
+        },
+        "fully_consumed": true
+      },
+      "rooms/17.chest.stb": {
+        "bytes": 24905,
+        "sha256": "34b2ed6c545579553b2c33ceaa39e6c177beef6640ad10f884c47d045ab654a2",
+        "entries": 206,
+        "room_types": {
+          "1": 206
+        },
+        "difficulties": {
+          "1": 26,
+          "5": 149,
+          "10": 31
+        },
+        "default_room_difficulties": {
+          "1": 26,
+          "5": 149,
+          "10": 31
+        },
+        "shapes": {
+          "1": 83,
+          "2": 20,
+          "3": 22,
+          "4": 22,
+          "5": 4,
+          "6": 22,
+          "7": 5,
+          "8": 13,
+          "9": 3,
+          "10": 4,
+          "11": 4,
+          "12": 4
+        },
+        "stored_sizes": {
+          "13x14": 26,
+          "13x7": 125,
+          "26x14": 28,
+          "26x7": 27
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 892,
+        "distinct_spawn_type_variant_subtype": 123,
+        "stack_count_range": [
+          0,
+          36
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1400": 1,
+          "1410": 2,
+          "1490": 2,
+          "1494": 1,
+          "4500": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/26.the void.stb": {
+        "bytes": 52910,
+        "sha256": "5c077e0f349a0627addd1f6b236f9669051938a75b4a193730caf9c5a1280e87",
+        "entries": 134,
+        "room_types": {
+          "1": 134
+        },
+        "difficulties": {
+          "1": 20,
+          "5": 74,
+          "10": 37,
+          "15": 3
+        },
+        "default_room_difficulties": {
+          "1": 20,
+          "5": 74,
+          "10": 37,
+          "15": 3
+        },
+        "shapes": {
+          "1": 91,
+          "2": 5,
+          "3": 6,
+          "4": 10,
+          "6": 13,
+          "8": 8,
+          "10": 1
+        },
+        "stored_sizes": {
+          "13x14": 10,
+          "13x7": 102,
+          "26x14": 9,
+          "26x7": 13
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 3121,
+        "distinct_spawn_type_variant_subtype": 184,
+        "stack_count_range": [
+          1,
+          177
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 63,
+          "1001": 1,
+          "1002": 19,
+          "1300": 1,
+          "1400": 1,
+          "1410": 1,
+          "1490": 3,
+          "1500": 18,
+          "1900": 6,
+          "1901": 1,
+          "1930": 3,
+          "1940": 5,
+          "3000": 46,
+          "3009": 1,
+          "4000": 2,
+          "4500": 1,
+          "6000": 4,
+          "6001": 1,
+          "6100": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/27.downpour.stb": {
+        "bytes": 329565,
+        "sha256": "8b6b9b0e053dccd9078718206c6607735be0bc5f8f9998c962aa5fa76206c92c",
+        "entries": 762,
+        "room_types": {
+          "1": 703,
+          "4": 32,
+          "7": 12,
+          "11": 15
+        },
+        "difficulties": {
+          "0": 2,
+          "1": 89,
+          "5": 400,
+          "10": 242,
+          "15": 29
+        },
+        "default_room_difficulties": {
+          "0": 2,
+          "1": 41,
+          "5": 396,
+          "10": 237,
+          "15": 27
+        },
+        "shapes": {
+          "1": 529,
+          "2": 25,
+          "3": 45,
+          "4": 40,
+          "5": 10,
+          "6": 36,
+          "7": 7,
+          "8": 17,
+          "9": 13,
+          "10": 13,
+          "11": 14,
+          "12": 13
+        },
+        "stored_sizes": {
+          "13x14": 50,
+          "13x7": 599,
+          "26x14": 70,
+          "26x7": 43
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 19150,
+        "distinct_spawn_type_variant_subtype": 140,
+        "stack_count_range": [
+          1,
+          240
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 448,
+          "1001": 4,
+          "1002": 212,
+          "1010": 33,
+          "1300": 9,
+          "1494": 3,
+          "1495": 10,
+          "1496": 2,
+          "1500": 133,
+          "1900": 83,
+          "1930": 21,
+          "1931": 20,
+          "3000": 323,
+          "3001": 37,
+          "4000": 10,
+          "4500": 37
+        },
+        "fully_consumed": true
+      },
+      "rooms/28.dross.stb": {
+        "bytes": 415906,
+        "sha256": "0a00077e07342b299d12f885bd217c732c0a9d8a0518494e7df09a170bfe3b0d",
+        "entries": 917,
+        "room_types": {
+          "1": 856,
+          "4": 34,
+          "7": 11,
+          "11": 16
+        },
+        "difficulties": {
+          "0": 2,
+          "1": 86,
+          "5": 505,
+          "10": 304,
+          "15": 20
+        },
+        "default_room_difficulties": {
+          "0": 2,
+          "1": 37,
+          "5": 501,
+          "10": 299,
+          "15": 17
+        },
+        "shapes": {
+          "1": 650,
+          "2": 24,
+          "3": 42,
+          "4": 60,
+          "5": 10,
+          "6": 49,
+          "7": 8,
+          "8": 19,
+          "9": 16,
+          "10": 12,
+          "11": 14,
+          "12": 13
+        },
+        "stored_sizes": {
+          "13x14": 70,
+          "13x7": 716,
+          "26x14": 74,
+          "26x7": 57
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 24305,
+        "distinct_spawn_type_variant_subtype": 128,
+        "stack_count_range": [
+          1,
+          313
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 585,
+          "1001": 7,
+          "1002": 218,
+          "1009": 1,
+          "1010": 42,
+          "1300": 17,
+          "1400": 2,
+          "1494": 4,
+          "1495": 15,
+          "1496": 4,
+          "1497": 1,
+          "1499": 4,
+          "1500": 281,
+          "1900": 104,
+          "1901": 1,
+          "1930": 39,
+          "1931": 21,
+          "3000": 350,
+          "3009": 1,
+          "4000": 12,
+          "4500": 33
+        },
+        "fully_consumed": true
+      },
+      "rooms/29.mines.stb": {
+        "bytes": 680341,
+        "sha256": "1e1f7bf9dc4d59a5ef852524797dceb28adc859bfb9ba5629968f24af76e000c",
+        "entries": 930,
+        "room_types": {
+          "1": 838,
+          "4": 33,
+          "7": 11,
+          "11": 48
+        },
+        "difficulties": {
+          "0": 168,
+          "1": 115,
+          "5": 374,
+          "10": 220,
+          "15": 53
+        },
+        "default_room_difficulties": {
+          "0": 168,
+          "1": 59,
+          "5": 361,
+          "10": 208,
+          "15": 42
+        },
+        "shapes": {
+          "1": 573,
+          "2": 23,
+          "3": 32,
+          "4": 86,
+          "5": 38,
+          "6": 36,
+          "7": 32,
+          "8": 65,
+          "9": 12,
+          "10": 11,
+          "11": 11,
+          "12": 11
+        },
+        "stored_sizes": {
+          "13x14": 124,
+          "13x7": 628,
+          "26x14": 110,
+          "26x7": 68
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 41651,
+        "distinct_spawn_type_variant_subtype": 191,
+        "stack_count_range": [
+          1,
+          312
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 620,
+          "1001": 25,
+          "1002": 103,
+          "1009": 21,
+          "1010": 18,
+          "1011": 1,
+          "1300": 35,
+          "1400": 35,
+          "1495": 6,
+          "1500": 121,
+          "1900": 118,
+          "1930": 23,
+          "1931": 19,
+          "1940": 283,
+          "3000": 421,
+          "3002": 9,
+          "3009": 49,
+          "4000": 18,
+          "4500": 115,
+          "6000": 272,
+          "6001": 48
+        },
+        "fully_consumed": true
+      },
+      "rooms/30.ashpit.stb": {
+        "bytes": 447483,
+        "sha256": "d14b7053ef384d3cfc1cff04b18a6d491a522488d4e5f38b7a0ebca6cb0ce2d1",
+        "entries": 919,
+        "room_types": {
+          "1": 822,
+          "4": 34,
+          "7": 11,
+          "11": 52
+        },
+        "difficulties": {
+          "0": 9,
+          "1": 105,
+          "5": 432,
+          "10": 340,
+          "15": 33
+        },
+        "default_room_difficulties": {
+          "0": 9,
+          "1": 48,
+          "5": 418,
+          "10": 326,
+          "15": 21
+        },
+        "shapes": {
+          "1": 638,
+          "2": 24,
+          "3": 31,
+          "4": 90,
+          "5": 10,
+          "6": 47,
+          "7": 9,
+          "8": 27,
+          "9": 10,
+          "10": 12,
+          "11": 11,
+          "12": 10
+        },
+        "stored_sizes": {
+          "13x14": 100,
+          "13x7": 693,
+          "26x14": 70,
+          "26x7": 56
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 26361,
+        "distinct_spawn_type_variant_subtype": 170,
+        "stack_count_range": [
+          1,
+          194
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 580,
+          "1001": 17,
+          "1002": 124,
+          "1009": 12,
+          "1010": 34,
+          "1011": 1,
+          "1300": 12,
+          "1400": 57,
+          "1410": 2,
+          "1495": 1,
+          "1497": 1,
+          "1500": 68,
+          "1900": 146,
+          "1901": 1,
+          "1930": 27,
+          "1931": 14,
+          "1940": 163,
+          "3000": 327,
+          "3002": 9,
+          "3009": 23,
+          "4000": 12,
+          "4500": 87,
+          "6000": 112,
+          "6001": 25
+        },
+        "fully_consumed": true
+      },
+      "rooms/31.mausoleum.stb": {
+        "bytes": 337211,
+        "sha256": "6ee7c6e0cc42298337a51216aaa6617d21b8b0dd22dfe59d225686703a3818e5",
+        "entries": 739,
+        "room_types": {
+          "1": 667,
+          "4": 31,
+          "5": 1,
+          "7": 11,
+          "11": 17,
+          "25": 6,
+          "26": 6
+        },
+        "difficulties": {
+          "1": 86,
+          "5": 328,
+          "10": 303,
+          "15": 22
+        },
+        "default_room_difficulties": {
+          "1": 28,
+          "5": 322,
+          "10": 299,
+          "15": 18
+        },
+        "shapes": {
+          "1": 543,
+          "2": 17,
+          "3": 27,
+          "4": 43,
+          "5": 5,
+          "6": 32,
+          "7": 4,
+          "8": 18,
+          "9": 13,
+          "10": 13,
+          "11": 11,
+          "12": 13
+        },
+        "stored_sizes": {
+          "13x14": 48,
+          "13x7": 587,
+          "26x14": 68,
+          "26x7": 36
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 19722,
+        "distinct_spawn_type_variant_subtype": 149,
+        "stack_count_range": [
+          1,
+          143
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 472,
+          "1001": 7,
+          "1002": 117,
+          "1009": 10,
+          "1010": 39,
+          "1300": 4,
+          "1400": 43,
+          "1410": 4,
+          "1490": 3,
+          "1495": 3,
+          "1500": 18,
+          "1900": 166,
+          "1901": 129,
+          "1930": 50,
+          "1931": 31,
+          "1940": 50,
+          "3000": 278,
+          "3009": 29,
+          "4000": 14,
+          "4500": 65,
+          "6100": 104
+        },
+        "fully_consumed": true
+      },
+      "rooms/32.gehenna.stb": {
+        "bytes": 381045,
+        "sha256": "7f06d812d92fc5d9f04fd28e96e2ec22a8b7c671d852f789babdd7ebbd2c540f",
+        "entries": 892,
+        "room_types": {
+          "1": 820,
+          "4": 30,
+          "7": 11,
+          "11": 19,
+          "25": 6,
+          "26": 6
+        },
+        "difficulties": {
+          "1": 119,
+          "5": 375,
+          "10": 377,
+          "15": 21
+        },
+        "default_room_difficulties": {
+          "1": 61,
+          "5": 370,
+          "10": 372,
+          "15": 17
+        },
+        "shapes": {
+          "1": 657,
+          "2": 18,
+          "3": 28,
+          "4": 55,
+          "5": 8,
+          "6": 45,
+          "7": 7,
+          "8": 21,
+          "9": 14,
+          "10": 13,
+          "11": 13,
+          "12": 13
+        },
+        "stored_sizes": {
+          "13x14": 63,
+          "13x7": 703,
+          "26x14": 74,
+          "26x7": 52
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 22068,
+        "distinct_spawn_type_variant_subtype": 211,
+        "stack_count_range": [
+          1,
+          241
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 464,
+          "1001": 3,
+          "1002": 117,
+          "1009": 15,
+          "1010": 43,
+          "1300": 5,
+          "1400": 34,
+          "1410": 33,
+          "1490": 4,
+          "1495": 3,
+          "1500": 22,
+          "1900": 198,
+          "1901": 131,
+          "1930": 139,
+          "1931": 38,
+          "1940": 55,
+          "3000": 355,
+          "3009": 32,
+          "4000": 19,
+          "4500": 85,
+          "6100": 97
+        },
+        "fully_consumed": true
+      },
+      "rooms/33.corpse.stb": {
+        "bytes": 234378,
+        "sha256": "19404037436f8e647155152ad2c73da769b4e1368c072615af067ce12c791cb0",
+        "entries": 625,
+        "room_types": {
+          "1": 561,
+          "4": 31,
+          "5": 1,
+          "7": 11,
+          "11": 21
+        },
+        "difficulties": {
+          "1": 91,
+          "5": 248,
+          "10": 268,
+          "15": 18
+        },
+        "default_room_difficulties": {
+          "1": 42,
+          "5": 242,
+          "10": 263,
+          "15": 14
+        },
+        "shapes": {
+          "1": 440,
+          "2": 12,
+          "3": 20,
+          "4": 41,
+          "5": 8,
+          "6": 33,
+          "7": 9,
+          "8": 26,
+          "9": 8,
+          "10": 9,
+          "11": 9,
+          "12": 10
+        },
+        "stored_sizes": {
+          "13x14": 49,
+          "13x7": 472,
+          "26x14": 62,
+          "26x7": 42
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 13278,
+        "distinct_spawn_type_variant_subtype": 143,
+        "stack_count_range": [
+          1,
+          217
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 288,
+          "1001": 2,
+          "1002": 73,
+          "1009": 2,
+          "1010": 20,
+          "1500": 2,
+          "1900": 50,
+          "1930": 29,
+          "1931": 14,
+          "1940": 20,
+          "1999": 1,
+          "3000": 274,
+          "3009": 3,
+          "4000": 10,
+          "4500": 14
+        },
+        "fully_consumed": true
+      },
+      "rooms/34.mortis.stb": {
+        "bytes": 211,
+        "sha256": "dddacc9bf8f05f64e1c0002765badc88d8347c06a8ba03b285467617033d7abf",
+        "entries": 1,
+        "room_types": {
+          "1": 1
+        },
+        "difficulties": {
+          "5": 1
+        },
+        "default_room_difficulties": {
+          "5": 1
+        },
+        "shapes": {
+          "1": 1
+        },
+        "stored_sizes": {
+          "13x7": 1
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 10,
+        "distinct_spawn_type_variant_subtype": 3,
+        "stack_count_range": [
+          10,
+          10
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 1,
+          "3000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/35.home.stb": {
+        "bytes": 17946,
+        "sha256": "b85a412590bfaf3c42eac20d47297edd5c8fc39409942b14d52fa74805c77a44",
+        "entries": 39,
+        "room_types": {
+          "1": 33,
+          "16": 6
+        },
+        "difficulties": {
+          "0": 1,
+          "5": 38
+        },
+        "default_room_difficulties": {
+          "0": 1,
+          "5": 32
+        },
+        "shapes": {
+          "1": 23,
+          "2": 3,
+          "4": 7,
+          "5": 1,
+          "6": 3,
+          "8": 2
+        },
+        "stored_sizes": {
+          "13x14": 8,
+          "13x7": 26,
+          "26x14": 2,
+          "26x7": 3
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1035,
+        "distinct_spawn_type_variant_subtype": 32,
+        "stack_count_range": [
+          0,
+          92
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1940": 9,
+          "1999": 3
+        },
+        "fully_consumed": true
+      },
+      "rooms/36.backwards.stb": {
+        "bytes": 193582,
+        "sha256": "6b4b393a02a9bc12dc3ba8680418108be706b71fe210f2edf603b3908cefaf1b",
+        "entries": 512,
+        "room_types": {
+          "1": 512
+        },
+        "difficulties": {
+          "0": 6,
+          "1": 271,
+          "10": 235
+        },
+        "default_room_difficulties": {
+          "0": 6,
+          "1": 271,
+          "10": 235
+        },
+        "shapes": {
+          "1": 367,
+          "2": 6,
+          "3": 8,
+          "4": 48,
+          "6": 48,
+          "8": 35
+        },
+        "stored_sizes": {
+          "13x14": 48,
+          "13x7": 381,
+          "26x14": 35,
+          "26x7": 48
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 10945,
+        "distinct_spawn_type_variant_subtype": 276,
+        "stack_count_range": [
+          0,
+          222
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 222,
+          "1001": 2,
+          "1002": 66,
+          "1009": 1,
+          "1010": 6,
+          "1300": 7,
+          "1400": 12,
+          "1495": 1,
+          "1500": 24,
+          "1900": 76,
+          "1901": 10,
+          "1930": 20,
+          "1931": 6,
+          "1940": 39,
+          "3000": 178,
+          "3001": 1,
+          "3009": 2,
+          "4000": 4,
+          "4500": 5,
+          "6000": 5,
+          "6100": 5,
+          "9000": 1
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/00.special rooms.stb": {
+        "bytes": 46286,
+        "sha256": "892a3e87340464002ccd0b5f423296d300728be8b71200d1efec1e7b50d2628f",
+        "entries": 180,
+        "room_types": {
+          "2": 25,
+          "4": 17,
+          "8": 28,
+          "10": 24,
+          "14": 20,
+          "15": 14,
+          "18": 1,
+          "23": 26,
+          "28": 25
+        },
+        "difficulties": {
+          "0": 1,
+          "1": 179
+        },
+        "default_room_difficulties": {},
+        "shapes": {
+          "1": 130,
+          "4": 10,
+          "5": 2,
+          "6": 36,
+          "7": 2
+        },
+        "stored_sizes": {
+          "13x14": 12,
+          "13x7": 130,
+          "26x7": 38
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 2426,
+        "distinct_spawn_type_variant_subtype": 98,
+        "stack_count_range": [
+          1,
+          60
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 53,
+          "1001": 1,
+          "1002": 36,
+          "1010": 4,
+          "1400": 31,
+          "1410": 4,
+          "1496": 1,
+          "1500": 8,
+          "1900": 13,
+          "1930": 6,
+          "1931": 1,
+          "1940": 9,
+          "3000": 14,
+          "4000": 4,
+          "4500": 5,
+          "5000": 20,
+          "5001": 14,
+          "9000": 31
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/01.basement.stb": {
+        "bytes": 35964,
+        "sha256": "8c932c00aed9246f4bb0866dd752cfedda82cc3995a795c77e2aaedc424d9ea0",
+        "entries": 247,
+        "room_types": {
+          "1": 10,
+          "5": 61,
+          "11": 176
+        },
+        "difficulties": {
+          "0": 17,
+          "1": 91,
+          "5": 72,
+          "10": 67
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "4": 247
+        },
+        "stored_sizes": {
+          "13x14": 247
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1282,
+        "distinct_spawn_type_variant_subtype": 60,
+        "stack_count_range": [
+          1,
+          31
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 4,
+          "1300": 2,
+          "1500": 6,
+          "4500": 10
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/02.cellar.stb": {
+        "bytes": 29978,
+        "sha256": "ab63fc71d1bbc3d182d3146db13cb253f438f6b602254e2e4049b43651654f83",
+        "entries": 212,
+        "room_types": {
+          "1": 10,
+          "5": 51,
+          "11": 151
+        },
+        "difficulties": {
+          "0": 14,
+          "1": 75,
+          "5": 57,
+          "10": 66
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "4": 212
+        },
+        "stored_sizes": {
+          "13x14": 212
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1042,
+        "distinct_spawn_type_variant_subtype": 63,
+        "stack_count_range": [
+          1,
+          31
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 4,
+          "1300": 2,
+          "1500": 5,
+          "1940": 6,
+          "4500": 10
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "bytes": 43699,
+        "sha256": "1a869711682330ca894f9082ee9927cb58f4e677f3f46641a2c3d07921d1a428",
+        "entries": 315,
+        "room_types": {
+          "1": 10,
+          "5": 86,
+          "11": 219
+        },
+        "difficulties": {
+          "0": 17,
+          "1": 106,
+          "5": 94,
+          "10": 98
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "4": 315
+        },
+        "stored_sizes": {
+          "13x14": 315
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1494,
+        "distinct_spawn_type_variant_subtype": 85,
+        "stack_count_range": [
+          1,
+          33
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 4,
+          "1300": 2,
+          "1400": 6,
+          "1410": 2,
+          "1500": 5,
+          "4500": 10
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/04.caves.stb": {
+        "bytes": 28157,
+        "sha256": "2f7c01025fa8ee0d92a73e606e854ebd3de65b45ba24446eba8219e9878d42c9",
+        "entries": 208,
+        "room_types": {
+          "1": 10,
+          "5": 55,
+          "11": 143
+        },
+        "difficulties": {
+          "0": 14,
+          "1": 73,
+          "5": 59,
+          "10": 62
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "4": 208
+        },
+        "stored_sizes": {
+          "13x14": 208
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 930,
+        "distinct_spawn_type_variant_subtype": 67,
+        "stack_count_range": [
+          1,
+          29
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1002": 10,
+          "3000": 10,
+          "4500": 10
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/05.catacombs.stb": {
+        "bytes": 34468,
+        "sha256": "dc3198627ea88f43f2d94859e7c126a2c3079c250e3998c45383b1b833ddb19d",
+        "entries": 259,
+        "room_types": {
+          "1": 10,
+          "5": 63,
+          "11": 186
+        },
+        "difficulties": {
+          "0": 15,
+          "1": 88,
+          "5": 76,
+          "10": 80
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "4": 259
+        },
+        "stored_sizes": {
+          "13x14": 259
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1121,
+        "distinct_spawn_type_variant_subtype": 84,
+        "stack_count_range": [
+          1,
+          30
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1002": 10,
+          "1940": 6,
+          "3000": 10,
+          "4500": 10
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/06.flooded caves.stb": {
+        "bytes": 42041,
+        "sha256": "d7a56c40fc28fb39a6aeef4e8235e66bc9ffc89d84f195cc01a3ed931efd38c8",
+        "entries": 320,
+        "room_types": {
+          "1": 10,
+          "5": 99,
+          "11": 211
+        },
+        "difficulties": {
+          "0": 15,
+          "1": 108,
+          "5": 95,
+          "10": 102
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "4": 320
+        },
+        "stored_sizes": {
+          "13x14": 320
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1337,
+        "distinct_spawn_type_variant_subtype": 96,
+        "stack_count_range": [
+          1,
+          29
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 1,
+          "1002": 10,
+          "3000": 9,
+          "4500": 10
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/07.depths.stb": {
+        "bytes": 23190,
+        "sha256": "8eb849836037d037963fca84616616b33d04913f6a25ce9c236a0cf077e5314d",
+        "entries": 179,
+        "room_types": {
+          "1": 11,
+          "5": 42,
+          "11": 126
+        },
+        "difficulties": {
+          "0": 8,
+          "1": 55,
+          "5": 58,
+          "10": 58
+        },
+        "default_room_difficulties": {
+          "1": 11
+        },
+        "shapes": {
+          "4": 179
+        },
+        "stored_sizes": {
+          "13x14": 179
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 733,
+        "distinct_spawn_type_variant_subtype": 66,
+        "stack_count_range": [
+          1,
+          31
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 8,
+          "3000": 11,
+          "4500": 11
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/08.necropolis.stb": {
+        "bytes": 34468,
+        "sha256": "f49904f93b42dc1d57901f684fbe43bc433089e017f4d0589006428db7e02e7a",
+        "entries": 267,
+        "room_types": {
+          "1": 11,
+          "5": 70,
+          "11": 186
+        },
+        "difficulties": {
+          "0": 14,
+          "1": 91,
+          "5": 80,
+          "10": 82
+        },
+        "default_room_difficulties": {
+          "1": 11
+        },
+        "shapes": {
+          "4": 267
+        },
+        "stored_sizes": {
+          "13x14": 267
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1079,
+        "distinct_spawn_type_variant_subtype": 90,
+        "stack_count_range": [
+          1,
+          31
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 8,
+          "3000": 11,
+          "4500": 11
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/09.dank depths.stb": {
+        "bytes": 41981,
+        "sha256": "4cba3388ca9179872fa795149ee4a22ffa8aa05ab933bda4577c5cf55125ef1c",
+        "entries": 333,
+        "room_types": {
+          "1": 11,
+          "5": 96,
+          "11": 226
+        },
+        "difficulties": {
+          "0": 15,
+          "1": 111,
+          "5": 104,
+          "10": 103
+        },
+        "default_room_difficulties": {
+          "1": 11
+        },
+        "shapes": {
+          "4": 333
+        },
+        "stored_sizes": {
+          "13x14": 333
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1285,
+        "distinct_spawn_type_variant_subtype": 105,
+        "stack_count_range": [
+          1,
+          31
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 8,
+          "3000": 11,
+          "4500": 11
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/10.womb.stb": {
+        "bytes": 27454,
+        "sha256": "53f35ce83d873598de45393c10be34f81ab3b788433752c9874164c0cc13f46e",
+        "entries": 205,
+        "room_types": {
+          "1": 11,
+          "5": 73,
+          "11": 121
+        },
+        "difficulties": {
+          "0": 8,
+          "1": 82,
+          "5": 57,
+          "10": 58
+        },
+        "default_room_difficulties": {
+          "1": 11
+        },
+        "shapes": {
+          "4": 205
+        },
+        "stored_sizes": {
+          "13x14": 205
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 894,
+        "distinct_spawn_type_variant_subtype": 62,
+        "stack_count_range": [
+          1,
+          21
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 10,
+          "3000": 11,
+          "4500": 11
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/11.utero.stb": {
+        "bytes": 33487,
+        "sha256": "decc03be5798cf3eac9867b3a03fa2d3056df9ea13ec2b087d5d5a04c4c2da43",
+        "entries": 248,
+        "room_types": {
+          "1": 11,
+          "5": 61,
+          "11": 176
+        },
+        "difficulties": {
+          "0": 12,
+          "1": 85,
+          "5": 74,
+          "10": 77
+        },
+        "default_room_difficulties": {
+          "1": 11
+        },
+        "shapes": {
+          "4": 248
+        },
+        "stored_sizes": {
+          "13x14": 248
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1107,
+        "distinct_spawn_type_variant_subtype": 79,
+        "stack_count_range": [
+          1,
+          21
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 10,
+          "3000": 11,
+          "4500": 11
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/12.scarred womb.stb": {
+        "bytes": 43962,
+        "sha256": "5cd150c9171abb1b0c52b866064b2b74f8630d3af9464eb2741afaca3744321d",
+        "entries": 331,
+        "room_types": {
+          "1": 11,
+          "5": 99,
+          "11": 221
+        },
+        "difficulties": {
+          "0": 15,
+          "1": 111,
+          "5": 104,
+          "10": 101
+        },
+        "default_room_difficulties": {
+          "1": 11
+        },
+        "shapes": {
+          "4": 331
+        },
+        "stored_sizes": {
+          "13x14": 331
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1420,
+        "distinct_spawn_type_variant_subtype": 86,
+        "stack_count_range": [
+          1,
+          21
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 9,
+          "1002": 10,
+          "1490": 6,
+          "3000": 11,
+          "4500": 11
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/14.sheol.stb": {
+        "bytes": 41262,
+        "sha256": "719d3909513ca2de18ef66c091d9e86c179def4f656d0a0af53be6bfbf0c7763",
+        "entries": 325,
+        "room_types": {
+          "1": 11,
+          "5": 98,
+          "11": 216
+        },
+        "difficulties": {
+          "0": 1,
+          "1": 112,
+          "5": 107,
+          "10": 105
+        },
+        "default_room_difficulties": {
+          "1": 11
+        },
+        "shapes": {
+          "4": 325
+        },
+        "stored_sizes": {
+          "13x14": 325
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1266,
+        "distinct_spawn_type_variant_subtype": 91,
+        "stack_count_range": [
+          1,
+          16
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1002": 10,
+          "4500": 11
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/24.the shop.stb": {
+        "bytes": 36481,
+        "sha256": "08d54e73772f3bdeb4daad7f6017992f8a067779a6987a9f2670178d368cf239",
+        "entries": 262,
+        "room_types": {
+          "1": 10,
+          "5": 64,
+          "11": 188
+        },
+        "difficulties": {
+          "1": 101,
+          "5": 87,
+          "10": 74
+        },
+        "default_room_difficulties": {
+          "1": 10
+        },
+        "shapes": {
+          "4": 262
+        },
+        "stored_sizes": {
+          "13x14": 262
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1234,
+        "distinct_spawn_type_variant_subtype": 83,
+        "stack_count_range": [
+          1,
+          18
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1002": 1,
+          "1400": 7,
+          "1900": 7,
+          "4500": 10
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/25.ultra greed.stb": {
+        "bytes": 2034,
+        "sha256": "a39b072dedde7c51fd53a7e7d07bb16358389ea260a9040934f74ab8a6f3d402",
+        "entries": 13,
+        "room_types": {
+          "1": 1,
+          "5": 12
+        },
+        "difficulties": {
+          "1": 13
+        },
+        "default_room_difficulties": {
+          "1": 1
+        },
+        "shapes": {
+          "1": 12,
+          "4": 1
+        },
+        "stored_sizes": {
+          "13x14": 1,
+          "13x7": 12
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 83,
+        "distinct_spawn_type_variant_subtype": 9,
+        "stack_count_range": [
+          0,
+          12
+        ],
+        "rooms_with_spawn_type_ge_1000": {},
+        "fully_consumed": true
+      },
+      "rooms/greed/27.downpour.stb": {
+        "bytes": 21842,
+        "sha256": "9f02b8a0461f68b430b923c24589e2483fc38713e3e8a0b225bf99c1b02ac258",
+        "entries": 136,
+        "room_types": {
+          "1": 6,
+          "4": 5,
+          "5": 4,
+          "11": 121
+        },
+        "difficulties": {
+          "1": 55,
+          "5": 40,
+          "10": 41
+        },
+        "default_room_difficulties": {
+          "1": 6
+        },
+        "shapes": {
+          "1": 5,
+          "4": 131
+        },
+        "stored_sizes": {
+          "13x14": 131,
+          "13x7": 5
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 920,
+        "distinct_spawn_type_variant_subtype": 28,
+        "stack_count_range": [
+          1,
+          49
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 6,
+          "1002": 4,
+          "1010": 1,
+          "3000": 6,
+          "4500": 6
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/28.dross.stb": {
+        "bytes": 21140,
+        "sha256": "63a3b30a9eca62e11ef72b9f404786012bd153ac490267e4e4114baf03e9f88b",
+        "entries": 137,
+        "room_types": {
+          "1": 6,
+          "4": 5,
+          "5": 5,
+          "11": 121
+        },
+        "difficulties": {
+          "1": 56,
+          "5": 40,
+          "10": 41
+        },
+        "default_room_difficulties": {
+          "1": 6
+        },
+        "shapes": {
+          "1": 5,
+          "4": 132
+        },
+        "stored_sizes": {
+          "13x14": 132,
+          "13x7": 5
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 869,
+        "distinct_spawn_type_variant_subtype": 36,
+        "stack_count_range": [
+          1,
+          51
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 6,
+          "1002": 3,
+          "1010": 1,
+          "1500": 9,
+          "3000": 6,
+          "4500": 6
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/29.mines.stb": {
+        "bytes": 24341,
+        "sha256": "074cc25e7cfda7abfe68d053408c11914cc7b879e72017f0aa4564dfeaa4f36c",
+        "entries": 135,
+        "room_types": {
+          "1": 6,
+          "4": 5,
+          "5": 3,
+          "11": 121
+        },
+        "difficulties": {
+          "1": 46,
+          "5": 48,
+          "10": 41
+        },
+        "default_room_difficulties": {
+          "1": 6
+        },
+        "shapes": {
+          "1": 5,
+          "4": 130
+        },
+        "stored_sizes": {
+          "13x14": 130,
+          "13x7": 5
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 1092,
+        "distinct_spawn_type_variant_subtype": 46,
+        "stack_count_range": [
+          1,
+          104
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 5,
+          "1002": 2,
+          "1010": 1,
+          "1400": 2,
+          "1940": 3,
+          "3000": 7,
+          "4500": 6,
+          "6000": 6
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/30.ashpit.stb": {
+        "bytes": 21212,
+        "sha256": "c3d89833566ace218a6926a859882bd4bb9718903683627b1b3ff130d0769a38",
+        "entries": 135,
+        "room_types": {
+          "1": 6,
+          "4": 5,
+          "5": 3,
+          "11": 121
+        },
+        "difficulties": {
+          "1": 46,
+          "5": 48,
+          "10": 41
+        },
+        "default_room_difficulties": {
+          "1": 6
+        },
+        "shapes": {
+          "1": 5,
+          "4": 130
+        },
+        "stored_sizes": {
+          "13x14": 130,
+          "13x7": 5
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 883,
+        "distinct_spawn_type_variant_subtype": 43,
+        "stack_count_range": [
+          1,
+          75
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 6,
+          "1002": 2,
+          "1010": 1,
+          "1400": 2,
+          "1940": 3,
+          "3000": 3,
+          "4500": 6,
+          "6000": 6
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/31.mausoleum.stb": {
+        "bytes": 16502,
+        "sha256": "09b4b7ad50ae9f9ae600229ffb3b4b2f3a700ec89b05fa75559bd0992b88a0e1",
+        "entries": 134,
+        "room_types": {
+          "1": 6,
+          "4": 5,
+          "5": 2,
+          "11": 121
+        },
+        "difficulties": {
+          "1": 53,
+          "5": 40,
+          "10": 41
+        },
+        "default_room_difficulties": {
+          "1": 6
+        },
+        "shapes": {
+          "1": 5,
+          "4": 129
+        },
+        "stored_sizes": {
+          "13x14": 129,
+          "13x7": 5
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 572,
+        "distinct_spawn_type_variant_subtype": 39,
+        "stack_count_range": [
+          1,
+          37
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "1000": 7,
+          "1002": 2,
+          "1400": 2,
+          "1901": 3,
+          "3000": 3,
+          "4500": 6,
+          "6100": 2
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/32.gehenna.stb": {
+        "bytes": 592,
+        "sha256": "2a154570267cfcd3af09ff3d1820b17299a116036bb1b07fea8bea375c2bee82",
+        "entries": 8,
+        "room_types": {
+          "1": 7,
+          "5": 1
+        },
+        "difficulties": {
+          "1": 7,
+          "5": 1
+        },
+        "default_room_difficulties": {
+          "1": 7
+        },
+        "shapes": {
+          "4": 8
+        },
+        "stored_sizes": {
+          "13x14": 8
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 6,
+        "distinct_spawn_type_variant_subtype": 1,
+        "stack_count_range": [
+          0,
+          1
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "4500": 6
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/33.corpse.stb": {
+        "bytes": 586,
+        "sha256": "7176402e21bed3e28010d5ea398afcd2e239ad23d56a70c1ebbd7011568d97dd",
+        "entries": 8,
+        "room_types": {
+          "1": 7,
+          "5": 1
+        },
+        "difficulties": {
+          "1": 7,
+          "5": 1
+        },
+        "default_room_difficulties": {
+          "1": 7
+        },
+        "shapes": {
+          "4": 8
+        },
+        "stored_sizes": {
+          "13x14": 8
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 6,
+        "distinct_spawn_type_variant_subtype": 1,
+        "stack_count_range": [
+          0,
+          1
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "4500": 6
+        },
+        "fully_consumed": true
+      },
+      "rooms/greed/34.mortis.stb": {
+        "bytes": 586,
+        "sha256": "ff21a22217e7e0e62e9ff78628ce6075f3d3bddabc734f9dcdbb92327dbaf642",
+        "entries": 8,
+        "room_types": {
+          "1": 7,
+          "5": 1
+        },
+        "difficulties": {
+          "1": 7,
+          "5": 1
+        },
+        "default_room_difficulties": {
+          "1": 7
+        },
+        "shapes": {
+          "4": 8
+        },
+        "stored_sizes": {
+          "13x14": 8
+        },
+        "zero_weight_entries": 0,
+        "spawn_rows": 6,
+        "distinct_spawn_type_variant_subtype": 1,
+        "stack_count_range": [
+          0,
+          1
+        ],
+        "rooms_with_spawn_type_ge_1000": {
+          "4500": 6
+        },
+        "fully_consumed": true
+      }
+    }
+  }
+}

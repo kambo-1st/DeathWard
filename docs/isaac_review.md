@@ -2,6 +2,8 @@
 
 Reviewed on 2026-09-28. This records the implemented behavior and its limits; catalog coverage does not establish behavior parity with Isaac.
 
+For the later code baseline, preserved local Isaac data and expedition design proposals, see the [2026-10-24 expedition study](isaac_expedition_study.md). This historical review predates player dynamite and currency; its missing-feature descriptions below are not a current feature inventory.
+
 ## Mission rosters
 
 New sessions offer **Isaac Canyon** by default. All natural canyon groups, the final Infested Mesa encounter, random testing spawns and their offspring use the Isaac catalog. **Western Mine** retains the original fifteen enemies, their AI and the Hollow Sheriff. Seeded Theme still chooses either setting reproducibly. The specific-ID cheat intentionally remains available in either theme.

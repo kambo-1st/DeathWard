@@ -14,3 +14,6 @@ audio.cfg
 /assets/redstone/town.scene.bak
 /assets/redstone/town.nav.bak
 __pycache__/
+
+# Local Isaac research inputs; report, measurements and instructions remain versionable.
+/reference/isaac-repentance-1.7.9b/
