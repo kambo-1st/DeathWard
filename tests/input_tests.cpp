@@ -16,6 +16,71 @@ constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
 }
+void hudInputCheck(const std::filesystem::path &directory) {
+    dw::Game game(directory/"hud.save");
+    game.debug=false;game.seedText="1866";game.themeChoice=dw::ThemeChoice::Canyon;game.launch();
+    auto &run=*game.run;run.godMode=true;run.stats.duration=10;run.messageTime=0;
+    game.updateCamera(10);
+    dw::Renderer renderer;
+    auto frame=[&] {
+        game.update(dw::Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);
+        check(game.error.empty(),"compact HUD causes no game errors");
+    };
+    auto key=[&](int code) {mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    auto click=[&](int x,int y) {
+        mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();
+        mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+    };
+    auto capture=[&](const char *path) {
+        BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+        std::filesystem::create_directories("artifacts");check(ExportImage(image,path),"save compact HUD capture");
+        UnloadImage(image);EndDrawing();
+    };
+    // Former buttons must leave no invisible mouse blockers after they shrink.
+    for(const auto p:{Vector2{160,608},Vector2{850,711},Vector2{420,700}}) {
+        mouseEvent(MousePosition,int(p.x),int(p.y));frame();
+        check(!game.pointerOverControls(),"freed HUD space accepts world input");
+        run.player.fireCooldown=0;const auto shots=run.stats.shots;
+        mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();
+        check(run.stats.shots>shots,"right-click fires through freed HUD space");
+    }
+    const auto shots=run.stats.shots;
+    click(248,640);check(game.dynamiteThrowMode,"compact mode button switches to throwing");
+    click(160,640);check(game.dynamiteArmed,"compact dynamite button arms a throw");
+    check(game.expeditionNotice().find("landing point")!=std::string::npos,"armed throw shows aiming hint");
+    click(248,640);check(!game.dynamiteThrowMode&&!game.dynamiteArmed,"mode switch cancels aiming");
+    check(game.expeditionNotice().find("landing point")==std::string::npos,"cancelled throw leaves no stale aiming hint");
+    click(754,736);check(game.paused,"compact Pause button works");key(KEY_ESCAPE);
+    check(!game.paused&&run.stats.shots==shots,"HUD clicks never fire into the world");
+    for(int i=0;i<dw::ItemCount;++i)run.grant(dw::ItemId(i));
+    run.messageTime=0;check(game.ownedItemTypes()==dw::ItemCount,"all unique items fit in the strip");
+    mouseEvent(MousePosition,640,500);frame();capture("artifacts/expedition-hud-compact.png");
+    const auto beforeBuildShots=run.stats.shots;
+    click(834,754);check(game.buildOpen,"clicking an owned item opens build details");
+    capture("artifacts/expedition-build-details.png");
+    const auto duration=run.stats.duration;const auto position=run.player.position;const auto ammo=run.dynamite;
+    mouseEvent(KeyDown,KEY_W);mouseEvent(KeyDown,KEY_B);mouseEvent(KeyDown,KEY_UP);frame();
+    check(run.stats.duration==duration&&dw::distance(position,run.player.position)==0&&
+          run.dynamite==ammo&&run.stats.shots==beforeBuildShots,"build details freeze movement, bombs and combat");
+    mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_B);key(KEY_TAB);
+    check(!game.buildOpen&&run.stats.shots==beforeBuildShots,"closing build with a held arrow cannot fire");
+    mouseEvent(KeyUp,KEY_UP);frame();key(KEY_TAB);check(game.buildOpen,"Tab opens build during play");
+    key(KEY_ESCAPE);check(!game.buildOpen&&!game.paused,"Escape closes build directly to play");
+    // A warning must win over an ordinary prop earlier in the list and a fresh pickup notice.
+    run.arena.breakables.clear();
+    dw::Breakable rock;rock.room=run.room;
+    rock.bounds={dw::add(run.player.position,{2,-.85f,-.3f}),dw::add(run.player.position,{2.6f,0,.3f})};
+    run.arena.breakables.push_back(rock);
+    auto barrel=rock;barrel.kind=dw::BreakableKind::PowderBarrel;barrel.fuse=1;
+    run.arena.breakables.push_back(barrel);run.announce("Power found");
+    check(game.expeditionNotice()=="LIT POWDER / KEEP CLEAR","lit powder overrides ordinary hints and notices");
+    run.arena.breakables.clear();run.debugNotice("TEST ENEMY / 10.0");
+    check(game.expeditionNotice().empty(),"debug notices stay hidden with the cheat panel closed");
+    game.debug=game.debugPanelOpen=true;
+    check(game.expeditionNotice()==run.message,"open cheat panel shows debug feedback");
+    game.close();renderer.unload();
+    std::cout<<"PASS compact HUD hitboxes, mouse controls, build inspection, modal guards and warning priority\n";
+}
 void keyboardInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"keyboard.save");
     game.debug=false;game.seedText="1866";game.themeChoice=dw::ThemeChoice::Canyon;
@@ -284,6 +349,7 @@ void arrowInputCheck(const std::filesystem::path &directory, dw::MissionTheme th
     modalGuard(run.rewardOpen);
     modalGuard(run.letterOpen);
     modalGuard(game.journalOpen);
+    modalGuard(game.buildOpen);
     const auto beforeDynamite = run.stats.shots;
     game.dynamiteArmed = true;
     mouseEvent(KeyDown, KEY_UP);
@@ -500,7 +566,7 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     capture("blast");
     for (int i = 0; i < 40; ++i)
         frame(x, y);
-    click(160, 608);
+    click(248, 640);
     check(game.dynamiteThrowMode && run.dynamite == 2 && run.stats.shots == 0,
           "the mode switch enables throwing without spending ammo or firing");
     click(160, 640);
@@ -538,7 +604,7 @@ void dynamiteInputCheck(const std::filesystem::path &directory, dw::MissionTheme
     check(run.dynamite == dw::MaxDynamite, "Shift+B refills dynamite for testing without throwing");
     click(160, 640);
     check(game.dynamiteArmed, "refilled dynamite can target a throw");
-    click(160, 608);
+    click(248, 640);
     check(!game.dynamiteThrowMode && !game.dynamiteArmed && run.dynamite == dw::MaxDynamite,
           "switching to placement cancels an armed throw without spending ammo");
     click(160, 640);
@@ -904,6 +970,10 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if(mode.empty()||mode=="--hud-only") {
+            hudInputCheck(directory);
+            if(mode=="--hud-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
         if(mode.empty()||mode=="--keyboard-only") {
             keyboardInputCheck(directory);
             if(mode=="--keyboard-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
@@ -1352,10 +1422,10 @@ int main(int argc, char **argv) {
         check(game.run->player.dodge > 0, "Space still triggers dodge");
         for (int i = 0; i < 80; ++i)
             frame();
-        click(670, 711);
+        click(642, 736);
         frame(670, 711);
         check(game.run->player.dodge > 0, "onscreen dodge works with a two-button mouse");
-        click(850, 711);
+        click(754, 736);
         check(game.paused, "onscreen pause button pauses the expedition");
         const double duration = game.run->stats.duration;
         for (int i = 0; i < 60; ++i)
@@ -1523,7 +1593,7 @@ int main(int argc, char **argv) {
         click(470, 556);
         check(!game.run->rewardOpen && game.run->powerUpsTaken == 1 && game.run->items.size() == 1,
               "mouse chooses exactly one power from the separate room");
-        click(850, 711);
+        click(754, 736);
         click(620, 507);
         check(!game.run && game.screen == dw::Screen::Summary, "mouse retreat ends the run");
         check(game.lastSummary.stats.shots == shots, "retreat click does not produce an extra shot");
@@ -1659,7 +1729,7 @@ int main(int argc, char **argv) {
                   game.run->player.dodge == 0,
               "scrolling never moves, shoots or dodges");
         mouseEvent(MouseWheel, 0, -100);
-        frame(850, 711);
+        frame(754, 736);
         settleCamera();
         check(std::abs(cameraDistance() - closestDistance) < 0.01f, "HUD controls ignore scrolling");
         mouseEvent(MouseWheel, 0, -100);
@@ -1706,7 +1776,7 @@ int main(int argc, char **argv) {
               "downward camera tilt stays above the ground");
         orbit(90, 60);
         auto retainedAngle = cameraAngle();
-        frame(850, 711, false, false, true);
+        frame(754, 736, false, false, true);
         frame(600, 350, false, false, true);
         frame();
         check(dw::distance(retainedAngle, cameraAngle()) < .0001f,

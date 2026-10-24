@@ -77,7 +77,9 @@ enum class Action {
     JournalPrevious,
     JournalNext,
     Controls,
-    CloseControls
+    CloseControls,
+    InspectBuild,
+    CloseBuild
 };
 class Game {
   public:
@@ -104,6 +106,7 @@ class Game {
     bool letterVisible() const { return readingLetter||(run&&run->letterOpen); }
     bool journalOpen = false;
     bool controlsOpen = false;
+    bool buildOpen = false;
     int journalIndex = 0;
     bool journalVisible() const { return journalOpen||(run&&run->storyOpen!=StoryRoom::None); }
     std::vector<StoryEvidence> journalEntries() const;
@@ -153,6 +156,9 @@ class Game {
     Action keyboardFocus() const;
     // Logical 1280 x 800 coordinates, shared by rendering and mouse picking.
     std::optional<Vector2> floorExitMarker() const;
+    bool showExpeditionInteraction() const;
+    int ownedItemTypes() const;
+    std::string expeditionNotice() const;
 
   private:
     enum class LeftCommand { None, Move, Attack, Interact };
@@ -162,7 +168,7 @@ class Game {
     bool standStillQueued_ = false;
     bool cancelFireHeld_ = false;
     Action keyboardFocus_ = Action::None;
-    enum class Menu { None, Controls, Journal, Letter, Dialogue, HubPause, ExpeditionPause, Missions, Shop, Reward, History, Summary };
+    enum class Menu { None, Controls, Build, Journal, Letter, Dialogue, HubPause, ExpeditionPause, Missions, Shop, Reward, History, Summary };
     Menu keyboardMenu_ = Menu::None;
     bool menuArrowsHeld_ = false;
     Menu menuContext() const;

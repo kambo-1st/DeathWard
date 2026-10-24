@@ -11,6 +11,7 @@
 #include <unordered_map>
 
 namespace dw {
+enum class MessageKind { Notice, Debug, ThrowAim };
 enum class EnemyKind {
     Rusher,
     Gunman,
@@ -291,6 +292,8 @@ class Simulation {
     std::string tutorialHint() const;
     int room = 0;
     float messageTime = 0;
+    double roomEnteredAt = 0, roomClearedAt = -10;
+    MessageKind messageKind = MessageKind::Notice;
     std::string message;
     static constexpr int FinalRoom = RoomCount - 1;
 
@@ -333,6 +336,7 @@ class Simulation {
     float bargainMaxHealth(int index) const;
     std::string nearbyInteraction() const;
     std::string demolitionHint() const;
+    std::string demolitionWarning() const;
     std::optional<Vector3> moveDestination() const {
         return movePath_.empty() ? std::nullopt : std::optional<Vector3>(movePath_.back());
     }
@@ -352,7 +356,8 @@ class Simulation {
     bool chainActive(const Enemy &enemy) const;
     std::string roomName() const;
     static std::string roomName(int index, MissionTheme theme = MissionTheme::Mine);
-    void announce(std::string text, float seconds = 3);
+    void announce(std::string text, float seconds = 3, MessageKind kind = MessageKind::Notice);
+    void debugNotice(std::string text, float seconds = 3) { announce(std::move(text),seconds,MessageKind::Debug); }
     void queueRoot(Event event);
     void emit(Event event, const Context &parent, int effect = -1);
     void drainEvents();

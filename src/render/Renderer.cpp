@@ -1,4 +1,5 @@
 #include "render/Renderer.hpp"
+#include "core/ExpeditionHud.hpp"
 #include "items/Items.hpp"
 #include "render/MonsterVisuals.hpp"
 #include "render/WorldPalette.hpp"
@@ -631,7 +632,9 @@ bool Renderer::button(Action action, const std::string &title, float x, float y,
     bool hover = CheckCollisionPointRec(GetMousePosition(), rect);
     DrawRectangleRec(rect, primary ? (hover ? Paper : Gold) : (hover ? Color{49, 63, 63, 255} : Panel));
     DrawRectangleLinesEx(rect, 1, primary ? Gold : Border);
-    text(title, x + 18, y + (h - 18) / 2, 18, primary ? Ink : Paper);
+    int fontSize=18;
+    while(fontSize>10&&MeasureText(title.c_str(),int(fontSize*std::min(sx_,sy_)))>(w-36)*sx_)--fontSize;
+    text(title, x + 18, y + (h - fontSize) / 2, fontSize, primary ? Ink : Paper);
     if(action!=Action::None&&action==keyboardFocus_) {
         DrawRectangleLinesEx({rect.x-4*sx_,rect.y-4*sy_,rect.width+8*sx_,rect.height+8*sy_},
                              2*std::min(sx_,sy_),Teal);
@@ -1114,7 +1117,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             Vector2 at = GetWorldToScreen(add(e.position, {0, 1.6f, 0}), camera);
             if (e.id == hoveredEnemy && e.kind == EnemyKind::Monster) {
                 const auto &d = *monsterDefinition(e.monster);
-                const std::string label = monsterIdText(d.id) + " / " + d.name;
+                const std::string label = d.name;
                 text(label, at.x / sx_ - 60, at.y / sy_ - 25, 12, d.roomHazard ? Gold : Paper);
             }
             DrawRectangle(int(at.x) - 18, int(at.y) - 5, 36, 4, Ink);
@@ -1415,16 +1418,15 @@ void Renderer::floorExitMarker(const Game &game) {
     const float x=marker->x,y=marker->y;
     const std::string label=!ready?"EXIT LOCKED":!run.lastFloor()?"NEXT FLOOR":
         run.surveyTutorial||run.testimony()?"RETURN TO FORT":"RETURN TO HUB";
-    panel(x-120,y-30,240,76,Panel);
-    DrawRectangleLinesEx({(x-120)*sx_,(y-30)*sy_,240*sx_,76*sy_},2*std::min(sx_,sy_),color);
+    const auto rect=expeditionHud::exit(*marker);
+    panel(rect.x,rect.y,rect.width,rect.height,Panel);
+    DrawRectangleLinesEx({rect.x*sx_,rect.y*sy_,rect.width*sx_,rect.height*sy_},2*std::min(sx_,sy_),color);
     text(label,x-103,y-18,18,color);
     if(ready) {
         const int meters=int(std::round(distance(run.player.position,run.arena.exit)));
         text(distance(run.player.position,run.arena.exit)<2.8f?"E or Enter to continue":std::to_string(meters)+" m / click to approach",x-103,y+9,12,Paper);
-        text(run.lastFloor()?"Your expedition ends here":"Your build carries to the next floor",x-103,y+29,10,Muted);
     } else {
         text(run.surveyTutorial&&!run.surveyRecovered?"Recover the survey records":"Examine the ? story site first",x-103,y+10,12,Paper);
-        text("The exit opens after this objective",x-103,y+29,10,Muted);
     }
     // A screen-space arrow remains readable through rock and at the view edge.
     const auto target=GetWorldToScreen(add(run.arena.exit,{0,.2f,0}),game.camera);
@@ -1436,21 +1438,81 @@ void Renderer::floorExitMarker(const Game &game) {
     };
     DrawTriangle(vertex(14,0),vertex(-9,-10),vertex(-9,10),color);
 }
+void Renderer::itemIcon(ItemId item,Rectangle rect) const {
+    const float scale=std::min(rect.width,rect.height)/28;
+    const auto p=[&](float x,float y){return Vector2{(rect.x+rect.width*.5f+x*scale)*sx_,(rect.y+rect.height*.5f+y*scale)*sy_};};
+    const Color color=item==ItemId::Judas||item==ItemId::Cap||item==ItemId::Braid?Gold:Teal;
+    const auto line=[&](float x,float y,float a,float b){DrawLineEx(p(x,y),p(a,b),1.8f*scale*std::min(sx_,sy_),color);};
+    const auto circle=[&](float x,float y,float radius){auto at=p(x,y);DrawCircleLines(int(at.x),int(at.y),radius*scale*std::min(sx_,sy_),color);};
+    switch(item) {
+    case ItemId::Ricochet: circle(0,0,10);line(-6,5,0,-5);line(0,-5,6,5);break;
+    case ItemId::Split: line(0,10,0,0);line(0,0,-9,-9);line(0,0,9,-9);break;
+    case ItemId::Judas: circle(0,0,10);text("6",rect.x+rect.width*.32f,rect.y+rect.height*.22f,int(rect.height*.5f),color);break;
+    case ItemId::Powder:
+        for(float x:{-8.f,8.f})line(x,-9,x,9);
+        for(float y:{-9.f,-4.f,4.f,9.f})line(-8,y,8,y);
+        break;
+    case ItemId::Ghost: circle(0,-3,7);line(-7,-3,-7,9);line(7,-3,7,9);line(-7,9,0,5);line(0,5,7,9);break;
+    case ItemId::Scatter: for(float x:{-9.f,0.f,9.f})line(0,9,x,-9);break;
+    case ItemId::Rail: line(-6,9,6,-9);line(-3,10,9,-8);line(0,-10,11,-3);break;
+    case ItemId::Lodestone: line(-8,-10,-8,7);line(-8,7,0,10);line(0,10,8,7);line(8,7,8,-10);line(-8,-4,-3,-4);line(3,-4,8,-4);break;
+    case ItemId::Return: line(-9,7,8,7);line(8,7,8,-7);line(8,-7,-9,-7);line(-9,-7,-3,-12);line(-9,-7,-3,-2);break;
+    case ItemId::Cap: circle(0,0,5);for(int i=0;i<8;++i){float a=float(i)*Pi/4;line(std::cos(a)*7,std::sin(a)*7,std::cos(a)*11,std::sin(a)*11);}break;
+    case ItemId::Braid: for(float x:{-7.f,0.f,7.f})line(x,9,x,-5);line(-7,-5,0,-10);line(0,-10,7,-5);break;
+    case ItemId::Count: break;
+    }
+}
+Action Renderer::buildStrip(const Game &game) {
+    const int count=game.ownedItemTypes();
+    if(!count)return Action::None;
+    const auto strip=expeditionHud::items(count);
+    const Vector2 mouse{GetMouseX()/sx_,GetMouseY()/sy_};
+    const ItemDefinition *hovered=nullptr;
+    int index=0;
+    for(const auto &item:itemDefinitions()) {
+        const auto stacks=game.run->itemStacks(item.id);if(!stacks)continue;
+        const Rectangle rect{strip.x+float(index++)*expeditionHud::ItemStride,strip.y,expeditionHud::ItemSize,expeditionHud::ItemSize};
+        const bool hover=CheckCollisionPointRec(mouse,rect);
+        panel(rect.x,rect.y,rect.width,rect.height,hover?Border:Panel);
+        itemIcon(item.id,rect);
+        if(stacks>1)text(std::to_string(stacks),rect.x+24,rect.y+25,10,Paper);
+        if(hover)hovered=&item;
+    }
+    if(hovered) {
+        const float x=std::clamp(mouse.x-120,24.f,1012.f);
+        panel(x,680,244,42,Panel);text(hovered->name,x+12,689,14,Gold);
+        text("Click or Tab to inspect build",x+12,709,10,Muted);
+        if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT))return Action::InspectBuild;
+    }
+    return Action::None;
+}
+Action Renderer::buildDetails(const Game &game) {
+    panel(0,0,1280,800,{8,12,16,235});panel(128,35,1024,730,Panel);
+    text("YOUR BUILD",160,60,28,Gold);
+    text("Powers last for this expedition. Copies are shown beside each name.",160,100,14,Muted);
+    int index=0;
+    if(game.run)for(const auto &item:itemDefinitions()) {
+        const auto stacks=game.run->itemStacks(item.id);if(!stacks)continue;
+        const float x=152+float(index%2)*496,y=133+float(index/2)*92;++index;
+        panel(x,y,480,86,Ink);itemIcon(item.id,{x+8,y+10,38,38});
+        text(std::string(item.name)+(stacks>1?" x"+std::to_string(stacks):""),x+58,y+10,16,Gold);
+        wrap(item.description,x+58,y+35,408,12,Paper);
+    }
+    if(!index)wrap("No powers collected yet. Look for caches, shops and boss rewards.",160,168,800,20,Paper);
+    return button(Action::CloseBuild,"BACK",830,710,290,36,true)?Action::CloseBuild:Action::None;
+}
 Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime, game.dynamiteArmed,
               sandstormStrength_);
-    panel(24, 22, 358, 90, Panel);
-    text("FLOOR " + std::to_string(run.floor+1)+" / "+std::to_string(run.expedition.floorCount)+
-             "   ROOM " + std::to_string(run.room + 1) + " / " +
-             std::to_string(run.arena.roomCount()),
-         42, 35, 12, Gold);
-    const int physicalRoom = run.arena.roomAt(run.player.position);
-    text(physicalRoom < 0                     ? missionTheme(run.arena.theme).passage
-         : physicalRoom == run.arena.shopRoom ? "Trader's Rest"
-                                              : run.roomName(),
-         41, 58, 25, Paper);
-    text("SEED " + game.seedText + " / " + timeLabel(run.stats.duration)+(run.arena.profile.active()?" / "+std::string(run.arena.profile.name):""), 42, 91, 11, Muted);
+    const auto location=expeditionHud::Location;
+    panel(location.x,location.y,location.width,location.height,Panel);
+    text("FLOOR " + std::to_string(run.floor+1)+" / "+std::to_string(run.expedition.floorCount),42,33,14,Gold);
+    text(run.arena.profile.active()?run.arena.profile.name:missionTheme(run.arena.theme).region,42,54,11,Muted);
+    if(run.stats.duration-run.roomEnteredAt<3.0) {
+        panel(24,78,292,34,Panel);
+        text(run.roomName(),40,87,18,Paper);
+    }
     panel(964, 22, 292, 131, Panel);
     if(run.surveyTutorial) {
         text("THE LOST SURVEY / FLOOR 1",982,37,13,Gold);
@@ -1484,15 +1546,10 @@ Action Renderer::expedition(const Game &game) {
         panel(429, 66, 442, 9, Ink);
         DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * std::max(0.0f, boss->hp / boss->maxHp)),
                       int(9 * sy_), Rust);
-    } else {
-        const auto kind = run.arena.rooms[size_t(run.room)].kind;
-        text(run.room==run.finalRoom()&&run.roomClear?(run.canUseFloorExit()?"EXIT OPEN / FOLLOW THE BEACON":"FLOOR CLEAR / RECOVER THE EVIDENCE"):
-             run.roomClear ? (kind == RoomKind::Service ? "REST STOP / NO ENEMIES" : kind == RoomKind::Shop    ? "SHOP / NO ENEMIES"
-                              : kind == RoomKind::Empty ? "QUIET ROOM / NO ENEMIES"
-                              : kind == RoomKind::Power ? "POWER CACHE"
-                                                        : "CHAMBER CLEARED")
-                           : number(run.roomThreats()) + " HOSTILES",
-             440, 38, 14, run.roomClear ? Teal : Paper);
+    } else if(!run.roomClear) {
+        text(number(run.roomThreats())+" HOSTILES",440,38,14,Paper);
+    } else if(run.arena.rooms[size_t(run.room)].kind==RoomKind::Combat&&run.stats.duration-run.roomClearedAt<1.4) {
+        text("ROOM CLEAR",440,38,14,Teal);
     }
     panel(24, 674, 344, 101, Panel);
     text("HEALTH", 41, 686, 12, Muted);
@@ -1509,51 +1566,37 @@ Action Renderer::expedition(const Game &game) {
                                                            : Color{54, 58, 52, 255});
     }
     text("ROUND " + std::to_string(run.player.nextRound) + " / 6", 209, 741, 13, Muted);
-    text(run.player.dodgeCooldown <= 0 ? "DODGE READY" : "DODGE RECOVERING", 397, 752, 12, Muted);
-    text(game.debug ? "F1 / CHEATS ON" : "F1 / CHEATS", 806, 752, 12, game.debug ? Teal : Gold);
     Action controls = Action::None;
-    const std::string dynamiteLabel = std::string(game.dynamiteArmed       ? "CANCEL THROW / "
-                                                  : game.dynamiteThrowMode ? "THROW DYNAMITE / "
-                                                                           : "PLACE DYNAMITE / ") +
-                                      std::to_string(run.dynamite);
-    if (!game.paused && !run.rewardOpen && !run.shopOpen && !run.dead) {
-        if (button(Action::DynamiteMode, game.dynamiteThrowMode ? "MODE: THROW" : "MODE: PLACE", 24, 594, 276, 28))
-            controls = Action::DynamiteMode;
-        if (button(Action::Dynamite, dynamiteLabel, 24, 626, 276, 34, game.dynamiteArmed))
-            controls = Action::Dynamite;
-        const std::string interaction = run.nearbyInteraction();
-        if (!interaction.empty()) {
-            if (button(Action::Interact, interaction, 396, 690, 186, 44, true))
-                controls = Action::Interact;
-        } else {
-            panel(396, 690, 186, 44, Panel);
-            text("EXPLORE", 414, 704, 18, Muted);
-        }
-        if (button(Action::Dodge, "DODGE", 598, 690, 154, 44))
-            controls = Action::Dodge;
-        if (button(Action::Pause, "PAUSE", 768, 690, 168, 44))
-            controls = Action::Pause;
+    if (!game.paused && !game.buildOpen && !run.rewardOpen && !run.shopOpen && !run.dead) {
+        const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
+            return button(action,label,r.x,r.y,r.width,r.height,primary);
+        };
+        const auto bomb=expeditionHud::Dynamite,mode=expeditionHud::DynamiteMode;
+        if(control(Action::Dynamite,(game.dynamiteArmed?"CANCEL ":"DYNAMITE ")+std::to_string(run.dynamite),bomb,game.dynamiteArmed))
+            controls=Action::Dynamite;
+        if(control(Action::DynamiteMode,game.dynamiteThrowMode?"THROW":"PLACE",mode))controls=Action::DynamiteMode;
+        if(game.showExpeditionInteraction()&&control(Action::Interact,run.nearbyInteraction(),expeditionHud::Interact,true))
+            controls=Action::Interact;
+        const auto dodge=expeditionHud::Dodge;
+        if(control(Action::Dodge,"DODGE",dodge))controls=Action::Dodge;
+        if(run.player.dodgeCooldown>0)
+            DrawRectangleRec({dodge.x*sx_,(dodge.y+dodge.height-3)*sy_,dodge.width*sx_*(1-std::clamp(run.player.dodgeCooldown/1.1f,0.f,1.f)),3*sy_},Teal);
+        if(control(Action::Pause,"PAUSE",expeditionHud::Pause))controls=Action::Pause;
+        if(const auto action=buildStrip(game);action!=Action::None)controls=action;
     }
-    if (!run.items.empty()) {
-        panel(964, 571, 292, 204, Panel);
-        text("BORROWED POWER", 980, 586, 12, Gold);
-        const int owned=int(std::count_if(itemDefinitions().begin(),itemDefinitions().end(),[&](const auto &d){return run.itemStacks(d.id)>0;}));
-        int row=0;
-        for (int i = 0; i < ItemCount; ++i) {
-            size_t stacks = run.itemStacks(ItemId(i));
-            if(!stacks)continue;
-            text(std::string("+ ") + itemDefinition(ItemId(i)).name +
-                     (stacks > 1 ? " x" + number(stacks) : ""),
-                 981, 607 + float(row++) * (owned>6?15:25), owned>6?12:14, Paper);
+    const auto warning=run.demolitionWarning();
+    const std::string notice=game.expeditionNotice();
+    if(!notice.empty()&&!game.paused&&!game.buildOpen&&!run.rewardOpen&&!run.shopOpen) {
+        const int font=int(14*std::min(sx_,sy_));
+        const float width=std::clamp(float(MeasureText(notice.c_str(),font))/sx_+32,180.f,560.f);
+        int lines=1;std::string line,word;std::istringstream words(notice);
+        while(words>>word) {
+            const auto next=line.empty()?word:line+" "+word;
+            if(!line.empty()&&MeasureText(next.c_str(),font)>(width-32)*sx_) {++lines;line=word;} else line=next;
         }
-    }
-    if (run.messageTime > 0) {
-        const float y=run.surveyTutorial?505.f:605.f;
-        panel(333, y, 611, 51, Panel);
-        wrap(run.message, 351, y+15, 575, 14, Paper);
-    } else if (const auto hint=run.demolitionHint();!hint.empty()) {
-        panel(333,605,611,51,Panel);
-        wrap(hint,351,620,575,14,Paper);
+        const float height=18+21*float(lines),x=640-width*.5f,y=(run.surveyTutorial?550.f:660.f)-height;
+        panel(x,y,width,height,Panel);
+        wrap(notice,x+16,y+10,width-32,14,warning.empty()?Paper:Gold);
     }
     if (run.rewardOpen && !game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
@@ -1626,6 +1669,11 @@ Action Renderer::expedition(const Game &game) {
     }
     if (game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
+        panel(407,134,466,86,Panel);
+        text(run.roomName(),435,151,20,Paper);
+        text("FLOOR "+std::to_string(run.floor+1)+" / "+std::to_string(run.expedition.floorCount)+
+             "   ROOM "+std::to_string(run.room+1)+" / "+std::to_string(run.arena.roomCount()),435,181,12,Gold);
+        text("SEED "+game.seedText+"   /   "+timeLabel(run.stats.duration),435,201,11,Muted);
         panel(407, 240, 466, 318, Panel);
         text("TAKE A BREATH", 435, 269, 30, Paper);
         wrap("Retreat ends your build and changes the town. Closing the game also counts as retreat.", 436,
@@ -1832,6 +1880,7 @@ Action Renderer::draw(const Game &game) {
         break;
     }
     if (game.paused && (game.screen == Screen::Hub || game.screen == Screen::Expedition)) {
+        if(game.run&&button(Action::InspectBuild,"INSPECT BUILD",915,124,321,34))action=Action::InspectBuild;
         if(button(Action::Controls,"KEYBOARD CONTROLS [H]",915,170,321,42))action=Action::Controls;
         const auto audioAction = audioPanel(game);
         if (audioAction != Action::None)
@@ -1872,23 +1921,25 @@ Action Renderer::draw(const Game &game) {
     }
     panel(1160, 2, 96, 18, Panel);
     text(std::to_string(GetFPS()) + " FPS", 1170, 5, 12, Teal);
-    if(keyboardFocus_!=Action::None&&!game.controlsOpen) {
+    if(keyboardFocus_!=Action::None&&!game.controlsOpen&&!game.buildOpen) {
         panel(380,778,520,20,Panel);
         text("Tab / arrows select    Enter confirm    Esc back",394,783,12,Teal);
     }
+    if(game.buildOpen)return buildDetails(game);
     if(game.controlsOpen) {
         panel(0,0,1280,800,{8,12,16,235});panel(235,80,810,650,Panel);
         text("KEYBOARD CONTROLS",267,110,30,Gold);
-        const std::array<std::pair<const char *,const char *>,13> rows{{
+        const std::array<std::pair<const char *,const char *>,14> rows{{
             {"W A S D","Move relative to the camera"},{"Arrow keys","Fire; combine two for diagonal shots"},
             {"Space","Dodge in your movement / facing direction"},{"E / Enter","Use nearby doors, evidence, trades and exits"},
             {"B","Place dynamite; in Throw mode, throw ahead"},{"C","Switch Place / Throw (arrows aim throws)"},
             {"Q / R","Rotate the camera"},{"Page Up / Down","Zoom in / out"},{"Insert / Delete","Tilt the camera"},
             {"J / L","Field journal / reread Eleanor's letter"},{"1 / 2 / 3 / 4","Choose a reward or buy a shop offer"},
+            {"Tab during play","Inspect your build; Tab or Escape closes"},
             {"Tab / arrows","Select menu buttons; Enter / Space confirms"},{"Escape","Close a panel, cancel a throw, or pause"}
         }};
         for(size_t i=0;i<rows.size();++i) {
-            const float y=173+float(i)*34;
+            const float y=173+float(i)*32;
             text(rows[i].first,267,y,16,Teal);text(rows[i].second,492,y,15,Paper);
         }
         text("Walk into lit dynamite to nudge it. T while paused retreats.",267,636,14,Muted);

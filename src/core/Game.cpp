@@ -1,4 +1,5 @@
 #include "core/Game.hpp"
+#include "core/ExpeditionHud.hpp"
 #include "render/AnimalModels.hpp"
 #include "render/PlayerModel.hpp"
 #include "render/TownScene.hpp"
@@ -206,6 +207,7 @@ void Game::launch(bool freeMission) {
     candidate->tunePlayer(playerHealth, playerDamage);
     campaign.begin(seed, candidate->summary().expedition, expeditionPacing);
     run = std::move(candidate);
+    buildOpen=false;
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
     checkpoint();
@@ -236,6 +238,7 @@ void Game::finish(EndReason reason) {
         return;
     lastSummary = campaign.resolve(run->summary(), reason);
     run.reset();
+    buildOpen=false;
     ++audioContext;
     audioCues.clear();
     town.reset();
@@ -266,10 +269,15 @@ void Game::close() {
 }
 void Game::perform(Action action) {
     try {
+        if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
         if(letterVisible()&&action!=Action::CloseLetter&&action!=Action::Quit)return;
         if(journalVisible()&&action!=Action::CloseJournal&&action!=Action::JournalPrevious&&action!=Action::JournalNext&&action!=Action::Quit)return;
         switch (action) {
+        case Action::InspectBuild:
+            if(run&&!run->dead&&(paused||(!run->shopOpen&&!run->rewardOpen))) {buildOpen=true;resetPointerInput();}
+            break;
+        case Action::CloseBuild: buildOpen=false;accumulator=0;resetPointerInput();break;
         case Action::Controls: controlsOpen=true;resetPointerInput();break;
         case Action::CloseControls: controlsOpen=false;resetPointerInput();break;
         case Action::ReadJournal: journalOpen=true;journalIndex=0;resetPointerInput();town.stop();break;
@@ -369,7 +377,7 @@ void Game::perform(Action action) {
                 run->tunePlayer(health, damage);
                 playerHealth = run->player.baseHealth;
                 playerDamage = run->player.shotDamage;
-                run->announce("PLAYER / base health " + std::to_string(int(playerHealth)) +
+                run->debugNotice("PLAYER / base health " + std::to_string(int(playerHealth)) +
                               " / shot damage " + std::to_string(int(playerDamage)));
             }
             break;
@@ -462,7 +470,7 @@ void Game::perform(Action action) {
                 resetPointerInput();
                 dynamiteArmed = arm;
                 if (arm)
-                    run->announce("Choose where to throw. Cancel with Escape or the right button.");
+                    run->announce("Choose a landing point. Escape cancels.",3,MessageKind::ThrowAim);
                 else if (run->dynamite == 0)
                     run->announce("Out of dynamite. The shop sells a refill pack.");
             }
@@ -557,7 +565,7 @@ void Game::debugInput() {
     if (shift && IsKeyPressed(KEY_B)) {
         run->dynamite = MaxDynamite;
         run->dynamiteCooldown = 0;
-        run->announce("CHEAT / dynamite refilled");
+        run->debugNotice("CHEAT / dynamite refilled");
     }
     if (IsKeyPressed(KEY_MINUS) || IsKeyPressed(KEY_KP_SUBTRACT))
         perform(shift ? Action::HealthDown : Action::DamageDown);
@@ -569,7 +577,7 @@ void Game::debugInput() {
         const int count = int(monsterCatalog().size());
         selectedMonster = (selectedMonster + (IsKeyPressed(KEY_COMMA) ? count - 1 : 1)) % count;
         const auto &d = monsterCatalog()[size_t(selectedMonster)];
-        run->announce("TEST ENEMY / " + monsterIdText(d.id) + " / " + d.name);
+        run->debugNotice("TEST ENEMY / " + monsterIdText(d.id) + " / " + d.name);
     }
     if (IsKeyPressed(KEY_F4) && shift)
         run->spawnMonsterDebug(monsterCatalog()[size_t(selectedMonster)].id);
@@ -578,7 +586,7 @@ void Game::debugInput() {
             run->healDebug();
         else {
             run->godMode = !run->godMode;
-            run->announce(run->godMode ? "CHEAT / invincible ON" : "CHEAT / invincible OFF");
+            run->debugNotice(run->godMode ? "CHEAT / invincible ON" : "CHEAT / invincible OFF");
         }
     }
     if (IsKeyPressed(KEY_F3)) {
@@ -587,7 +595,7 @@ void Game::debugInput() {
             resetPointerInput();
         } else {
             run->killAll();
-            run->announce("CHEAT / enemies killed.");
+            run->debugNotice("CHEAT / enemies killed.");
         }
     }
     if (IsKeyPressed(KEY_F4) && !shift)
@@ -597,7 +605,7 @@ void Game::debugInput() {
     if (IsKeyPressed(KEY_F6)) {
         if (shift) {
             run->keys += 3;
-            run->announce("CHEAT / added 3 keys");
+            run->debugNotice("CHEAT / added 3 keys");
         } else
             for (int i = 0; i < ItemCount; ++i)
                 run->grant(ItemId(i));
@@ -693,7 +701,7 @@ void Game::updateCamera(float dt) {
     camera.position = add(camera.target, cameraOffset());
 }
 bool Game::pointerOverControls() const {
-    if(controlsOpen||journalVisible()||letterVisible())return true;
+    if(controlsOpen||buildOpen||journalVisible()||letterVisible())return true;
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
@@ -707,13 +715,40 @@ bool Game::pointerOverControls() const {
                missionMenu || paused || (x >= 24 && x <= 410 && y >= 24 && y <= 122) ||
                (x >= 24 && x <= 700 && y >= 700) || (x >= 856 && x <= 1256 && y >= 646) ||
                (debug && debugPanelOpen && x >= 24 && x <= 480 && y >= 140 && y <= 245);
+    const auto over=[&](Rectangle r){return CheckCollisionPointRec({x,y},r);};
+    const bool live=run&&!paused&&!run->dead&&!run->rewardOpen&&!run->shopOpen;
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
-           (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
+           (live&&(over(expeditionHud::Dynamite)||over(expeditionHud::DynamiteMode)||
+               over(expeditionHud::Dodge)||over(expeditionHud::Pause)||
+               (showExpeditionInteraction()&&over(expeditionHud::Interact))||
+               (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
 }
+bool Game::showExpeditionInteraction() const {
+    if(!run)return false;
+    const auto label=run->nearbyInteraction();
+    // The exit already has a clickable marker. Keep other nearby actions,
+    // including a boss reward which may happen to stand beside the exit.
+    return !label.empty()&&label!="NEXT FLOOR"&&label!="RETURN TO FORT"&&label!="RETURN HOME";
+}
+int Game::ownedItemTypes() const {
+    int count=0;
+    if(run)for(int i=0;i<ItemCount;++i)count+=run->itemStacks(ItemId(i))>0;
+    return count;
+}
+std::string Game::expeditionNotice() const {
+    if(!run)return {};
+    if(const auto warning=run->demolitionWarning();!warning.empty())return warning;
+    const bool visible=run->messageTime>0&&
+        (run->messageKind==MessageKind::Notice||
+         (run->messageKind==MessageKind::Debug&&debug&&debugPanelOpen)||
+         (run->messageKind==MessageKind::ThrowAim&&dynamiteArmed));
+    return visible?run->message:run->demolitionHint();
+}
 Game::Menu Game::menuContext() const {
     if(controlsOpen)return Menu::Controls;
+    if(buildOpen)return Menu::Build;
     if(journalVisible())return Menu::Journal;
     if(letterVisible())return Menu::Letter;
     if(screen==Screen::Hub&&questDialogueOpen())return Menu::Dialogue;
@@ -730,6 +765,7 @@ Game::Menu Game::menuContext() const {
 std::vector<Action> Game::menuActions() const {
     const auto context=menuContext();
     if(context==Menu::Controls)return {Action::CloseControls};
+    if(context==Menu::Build)return {Action::CloseBuild};
     if(context==Menu::Journal) {
         if(journalEntries().size()>1)return {Action::CloseJournal,Action::JournalPrevious,Action::JournalNext};
         return {Action::CloseJournal};
@@ -742,7 +778,7 @@ std::vector<Action> Game::menuActions() const {
         if(screen==Screen::Hub) {
             result.insert(result.end(),{Action::EditTown,Action::Quit,Action::TravelHub,
                 secondaryTravelHub(activeHub)==HubKind::Redstone?Action::TravelRedstone:Action::TravelFrontier});
-        } else result.insert(result.end(),{Action::Retreat,Action::Quit});
+        } else result.insert(result.end(),{Action::InspectBuild,Action::Retreat,Action::Quit});
         result.insert(result.end(),{Action::MasterDown,Action::MasterUp,Action::EffectsDown,Action::EffectsUp,
             Action::AmbienceDown,Action::AmbienceUp,Action::MusicDown,Action::MusicUp,Action::AudioMute,
             Action::AudioTest,Action::VegetationLess,Action::VegetationMore,Action::CycleVisualStyle});
@@ -789,6 +825,7 @@ bool Game::updateMenuInput() {
     if(actions.empty())return false;
     menuArrowsHeld_=true;
     resetPointerInput();
+    if(buildOpen&&(IsKeyPressed(KEY_ESCAPE)||IsKeyPressed(KEY_TAB))) {perform(Action::CloseBuild);return true;}
     if(controlsOpen&&IsKeyPressed(KEY_ESCAPE)) {perform(Action::CloseControls);return true;}
     if(paused&&!controlsOpen&&IsKeyPressed(KEY_H)) {perform(Action::Controls);return true;}
     // Preserve journal/history page shortcuts; Tab still visits their buttons.
@@ -813,11 +850,11 @@ bool Game::updateMenuInput() {
         perform(keyboardFocus_);
         return true;
     }
-    return controlsOpen;
+    return controlsOpen||buildOpen;
 }
 std::optional<Vector2> Game::floorExitMarker() const {
     if(screen!=Screen::Expedition||!run||run->dead||run->room!=run->finalRoom()||!run->roomClear||
-        paused||controlsOpen||journalVisible()||letterVisible()||run->shopOpen||run->rewardOpen)return std::nullopt;
+        paused||controlsOpen||buildOpen||journalVisible()||letterVisible()||run->shopOpen||run->rewardOpen)return std::nullopt;
     const auto projected=GetWorldToScreen(add(run->arena.exit,{0,4.2f,0}),camera);
     // Clear of the title, minimap and bottom controls, including at close zoom.
     return Vector2{std::clamp(projected.x*1280.f/GetScreenWidth(),150.f,850.f),
@@ -953,6 +990,9 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             return;
         }
         if(screen==Screen::Hub&&(questDialogueOpen()||sleeping())) {updateHub(dt);return;}
+        if(screen==Screen::Expedition&&run&&!run->dead&&!paused&&!run->shopOpen&&!run->rewardOpen&&IsKeyPressed(KEY_TAB)) {
+            perform(Action::InspectBuild);return;
+        }
         if((screen==Screen::Hub||screen==Screen::Expedition)&&IsKeyPressed(KEY_J)) {perform(Action::ReadJournal);return;}
         if((screen==Screen::Hub||screen==Screen::Expedition)&&IsKeyPressed(KEY_L)) {perform(Action::ReadLetter);return;}
         debugInput();
@@ -1067,7 +1107,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
         bool exitMarkerHovered=false;
         if(const auto marker=floorExitMarker()) {
             const Vector2 mouse{GetMouseX()*1280.f/GetScreenWidth(),GetMouseY()*800.f/GetScreenHeight()};
-            exitMarkerHovered=CheckCollisionPointRec(mouse,{marker->x-120,marker->y-30,240,76});
+            exitMarkerHovered=CheckCollisionPointRec(mouse,expeditionHud::exit(*marker));
             if(exitMarkerHovered) {
                 pointed={};
                 if(run->canUseFloorExit())pointed.objective=run->arena.exit;
@@ -1117,10 +1157,6 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
                            : (pointed.objective || pointed.door) ? LeftCommand::Interact
                                                                  : LeftCommand::Move;
             if (leftCommand_ == LeftCommand::Interact && !input.standStill && !rightDown) {
-                if(exitMarkerHovered&&!run->canUseFloorExit())
-                    run->announce(run->surveyTutorial&&!run->surveyRecovered?
-                        "Recover Bell's records and Eleanor's letter before leaving.":
-                        "Examine the marked story site before leaving this floor.",4);
                 if (pointed.door)
                     doorQueued_ = pointed.door;
                 else

@@ -631,7 +631,7 @@ int main(int argc, char **argv) {
             audioFrame.dt = GetFrameTime();
             audioFrame.context = game.audioContext;
             audioFrame.music = editing || filming ? dw::MusicScene::Silent : game.musicScene();
-            audioFrame.paused = editing || filming || game.paused || game.letterVisible() || game.journalVisible() ||
+            audioFrame.paused = editing || filming || game.paused || game.buildOpen || game.letterVisible() || game.journalVisible() ||
                                 (game.screen != dw::Screen::Hub && game.screen != dw::Screen::Expedition);
             audioFrame.environment = game.activeHub == dw::HubKind::Redstone
                                          ? dw::AudioEnvironment::Canyon
@@ -894,9 +894,9 @@ int main(int argc, char **argv) {
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
             const auto exitMarker=game.floorExitMarker();
-            EM_ASM({if(Module.verify)Module.navigation=({focus:$0,help:!!$1,floor:$2,exitReady:!!$3,exitX:$4,exitY:$5});},
+            EM_ASM({if(Module.verify)Module.navigation=({focus:$0,help:!!$1,floor:$2,exitReady:!!$3,exitX:$4,exitY:$5,build:!!$6});},
                 int(game.keyboardFocus()),game.controlsOpen,game.run?game.run->floor:-1,
-                game.run&&game.run->canUseFloorExit(),exitMarker?exitMarker->x:-1,exitMarker?exitMarker->y:-1);
+                game.run&&game.run->canUseFloorExit(),exitMarker?exitMarker->x:-1,exitMarker?exitMarker->y:-1,game.buildOpen);
             if(game.run) {
                 const auto &trade=game.run->rooms[size_t(game.run->room)];
                 EM_ASM({if(Module.verify)Module.economy=({service:$0,open:!!$1,coins:$2,keys:$3,dynamite:$4,maxHP:$5,hp:$6,sold0:!!$7,sold1:!!$8,reward:!!$9,itemCount:$10});},

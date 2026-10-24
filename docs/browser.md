@@ -44,7 +44,7 @@ pauses gameplay; resume from the game's pause menu.
 
 Keyboard play uses WASD to move, arrows to fire, Space to dodge, B for dynamite,
 C to switch placement/throwing, and E or Enter for nearby doors, objectives and
-floor exits. Q/R rotate, Page Up/Down zoom, and Insert/Delete tilt. Tab or arrows
+floor exits. During play, Tab or clicking an owned-item icon opens build details and pauses the expedition; Tab or Escape closes them. Q/R rotate, Page Up/Down zoom, and Insert/Delete tilt. Tab or arrows
 select menu buttons, Enter/Space activates, and Escape closes. Pause then press
 H for the full guide. The HTML start button can be focused with Tab and activated
 with Enter; it focuses the game canvas. Page keys do not scroll the page while

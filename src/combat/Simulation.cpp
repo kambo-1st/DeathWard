@@ -58,10 +58,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     enterRoom(0);
     if(surveyTutorial)announce("THE LOST SURVEY / One floor. Recover Bell's records and return to Fort Mercy.",6);
     else if(testimony())announce(std::string(accountName(expedition.account))+" / Follow his route; examine what remains.",6);
-    else if(arena.profile.active())announce(std::string(arena.profile.name)+" / Follow the trails and face the canyon guardian.",5);
-    else announce(std::string(missionTheme(theme).region) +
-                 (followup ? " / return to unfinished business" : " / find the six missing miners"),
-             5);
+
 }
 int Simulation::storyRoomIndex() const {
     for(size_t i=0;i<arena.rooms.size();++i)if(arena.rooms[i].story!=StoryRoom::None)return int(i);
@@ -86,18 +83,18 @@ bool Simulation::advanceFloor() {
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
     next.player.dodgeMoving=false;
     const auto entranceRooms=next.stats.rooms;next.stats=stats;next.stats.rooms+=entranceRooms;
+    next.roomEnteredAt=next.stats.duration;
     for(auto &progress:next.rooms)for(auto &enemy:progress.residents)enemy.observedShots=next.stats.shots;
     next.items=items;next.keys=keys;next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
     next.moneyCollected=moneyCollected;next.moneySpent=moneySpent;
     next.rescued=rescued;next.altarDestroyed=altarDestroyed;next.evidence=evidence;
     next.godMode=godMode;next.limits=limits;next.audioEpoch=audioEpoch+1;
     next.checkpointNeeded=true;
-    next.announce("FLOOR "+std::to_string(next.floor+1)+" OF "+std::to_string(expedition.floorCount)+
-        (testimony()?" / "+std::string(accountName(expedition.account)):" / The expedition continues."),5);
     *this=std::move(next);
     return true;
 }
-void Simulation::announce(std::string text, float seconds) {
+void Simulation::announce(std::string text, float seconds, MessageKind kind) {
+    messageKind=kind;
     message = std::move(text);
     messageTime = seconds;
 }
@@ -168,7 +165,7 @@ void Simulation::grant(ItemId item) {
     Event e;
     e.type = EventType::Pickup;
     queueRoot(e);
-    announce(std::string(itemDefinition(item).name) + " / the rules have changed");
+    announce(itemDefinition(item).name,2);
     checkpointNeeded = true;
 }
 void Simulation::tunePlayer(float baseHealth, float shotDamage) {
@@ -212,9 +209,9 @@ void Simulation::chooseReward(int index) {
     if(arena.rooms[size_t(room)].kind==RoomKind::Power)++powerUpsTaken;
     grant(offers[size_t(index)]);
     rewardOpen = shopOpen = false;
-    announce("Power claimed. This cache is empty; explore another passage.", 4);
 }
 void Simulation::enterRoom(int index) {
+    roomEnteredAt=stats.duration;roomClearedAt=-10;messageTime=0;
     audioCues.clear();
     ++audioEpoch;
     audioCues.push(AudioCueKind::Door, player.position);
@@ -245,20 +242,13 @@ void Simulation::enterRoom(int index) {
         }
         roomClear = true;
         arena.sealRoom(-1);
-        announce(kind==RoomKind::Service?std::string(roomServiceName(arena.rooms[size_t(room)].service))+" / approach to see the offer.":kind == RoomKind::Shop    ? "TRADER'S REST / approach the shopkeeper to trade."
-                 : kind == RoomKind::Empty ? "QUIET ROOM / no enemies. Explore the open passages."
-                 : progress.rewardTaken    ? "An empty power cache."
-                                           : "POWER CACHE / approach the pedestal and choose one item.",
-                 5);
     } else if (!roomClear) {
         cancelMove();
         arena.sealRoom(room);
-        announce(roomName() + " / doors sealed until the fight is over", 4);
         if (room == finalRoom() && !surveyTutorial)
             beginBossEncounter();
     } else {
         arena.sealRoom(-1);
-        announce(roomName() + " / already cleared", 3);
     }
     checkpointNeeded = true;
 }
@@ -267,6 +257,7 @@ void Simulation::clearRoom() {
     if (progress.cleared)
         return;
     progress.cleared = roomClear = true;
+    roomClearedAt=stats.duration;
     audioCues.push(AudioCueKind::RoomClear, player.position);
     if (room == finalRoom() && !surveyTutorial && arena.theme == MissionTheme::Canyon)
         bossKilled = true;
@@ -280,11 +271,7 @@ void Simulation::clearRoom() {
     Event event;
     event.type = EventType::RoomCleared;
     queueRoot(event);
-    announce(surveyTutorial?"The trail is clear. Continue toward Bell's survey camp.":room == finalRoom()
-                 ? (!storySeen()?"The floor is clear. Examine the marked story site before leaving.":
-                    lastFloor()?"The expedition is clear. Use the lantern to return home.":"The floor is clear. Use the lantern to continue deeper.")
-                 : "Room cleared. Doors reopened. Choose a passage; look for keys and power caches.",
-             5);
+
 }
 void Simulation::collectKeys() {
     for (auto &key : arena.keys) {
@@ -293,7 +280,7 @@ void Simulation::collectKeys() {
             key.collected = true;
             ++keys;
             audioCues.push(AudioCueKind::Pickup, key.position);
-            announce("KEY FOUND / unlock a golden door. Keys carried: " + std::to_string(keys), 4);
+            announce("Key found",1.8f);
         }
     }
 }
@@ -315,7 +302,6 @@ bool Simulation::useDoor(int passage, int side) {
         audioCues.push(AudioCueKind::Door, player.position);
         door.locked = false;
         arena.rebuildWalls();
-        announce("Door unlocked. Keys carried: " + std::to_string(keys), 3);
     }
     requestMove(arena.doorApproach(passage, 1 - side),false);
     return true;
@@ -378,7 +364,7 @@ void Simulation::healDebug() {
     player.velocity = {};
     player.shootPose = 0;
     dynamiteCooldown = 0;
-    announce("CHEAT / full health and cooldowns reset");
+    debugNotice("CHEAT / full health and cooldowns reset");
 }
 void Simulation::clearRoomDebug() {
     killAll();
@@ -404,7 +390,7 @@ void Simulation::clearRoomDebug() {
     drainEvents();
     collectChains();
     checkpointNeeded = true;
-    announce("CHEAT / room cleared. All combat seals open.");
+    debugNotice("CHEAT / room cleared. All combat seals open.");
 }
 void Simulation::jumpDebug(int index, bool restart) {
     index = std::clamp(index, 0, finalRoom());
@@ -434,7 +420,7 @@ void Simulation::jumpDebug(int index, bool restart) {
     enterRoom(index);
     player.aim = arena.rooms[size_t(index)].exit;
     // Keep the build, keys, unlocked doors and claimed rewards when replaying.
-    announce(std::string("CHEAT / ") + (restart ? "restarted " : "jumped to ") + roomName());
+    debugNotice(std::string("CHEAT / ") + (restart ? "restarted " : "jumped to ") + roomName());
 }
 void Simulation::startStress() {
     audioCues.clear();
@@ -464,7 +450,7 @@ void Simulation::startStress() {
         queueRoot(e);
     }
     drainEvents();
-    announce("STRESS / 100 enemies, 600 shots, all five effects", 6);
+    debugNotice("STRESS / 100 enemies, 600 shots, all five effects", 6);
 }
 void Simulation::interact() {
     cancelMove();
@@ -515,7 +501,7 @@ void Simulation::interact() {
         return;
     }
     if(room==finalRoom()&&roomClear&&!storySeen()&&distance(player.position,arena.exit)<2.8f) {
-        announce("Examine the marked story site before leaving this floor.",4);return;
+        return; // The persistent exit marker explains the missing evidence.
     }
     for (size_t i = 0; i < arena.passages.size(); ++i)
         for (int side = 0; side < 2; ++side)

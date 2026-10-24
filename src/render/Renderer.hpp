@@ -66,6 +66,9 @@ class Renderer {
     void panel(float x, float y, float w, float h, Color color) const;
     bool button(Action action, const std::string &title, float x, float y, float w, float h, bool primary = false) const;
     void floorExitMarker(const Game &game);
+    void itemIcon(ItemId item, Rectangle rect) const;
+    Action buildStrip(const Game &game);
+    Action buildDetails(const Game &game);
     Action hub(const Game &game);
     Action questUI(const Game &game);
     Action expedition(const Game &game);

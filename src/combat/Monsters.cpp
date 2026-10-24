@@ -293,11 +293,11 @@ void Simulation::spawnMonsterDebug(int id) {
         if (spawnMonster(id, p)) {
             debugScenario = true;
             flushMonsterSpawns();
-            announce(monsterIdText(id) + " / " + d->name);
+            debugNotice(monsterIdText(id) + " / " + d->name);
         }
         return;
     }
-    announce("No safe space for this enemy in the current room.");
+    debugNotice("No safe space for this enemy in the current room.");
 }
 void Simulation::monsterPattern(const Enemy &e, int count, float angle, float speed, ProjectileKind kind) {
     for (int n = 0; n < count; ++n)

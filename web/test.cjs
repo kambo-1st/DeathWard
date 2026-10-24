@@ -249,7 +249,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.equal((await state()).dynamite, 1);
     assert.equal((await state()).shots, 0);
     await wait(() => Module.state.explosions === 2 && Module.state.litDynamite === 0);
-    await click(160, 608);
+    await click(248, 640);
     await wait(() => Module.state.dynamiteThrowMode);
     await click(160, 640);
     await wait(() => Module.state.dynamiteArmed);

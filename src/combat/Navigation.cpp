@@ -244,7 +244,15 @@ std::string Simulation::nearbyInteraction() const {
                     return arena.passages[i].locked ? "UNLOCK (1 KEY)" : "ENTER";
     return {};
 }
+std::string Simulation::demolitionWarning() const {
+    for(const auto &prop:arena.breakables)
+        if(prop.solid()&&prop.room==room&&prop.kind==BreakableKind::PowderBarrel&&prop.fuse>=0&&
+           distance(player.position,mul(add(prop.bounds.min,prop.bounds.max),.5f))<=3.8f)
+            return "LIT POWDER / KEEP CLEAR";
+    return {};
+}
 std::string Simulation::demolitionHint() const {
+    if(const auto warning=demolitionWarning();!warning.empty())return warning;
     for (const auto &prop : arena.breakables) {
         if (!prop.solid() || prop.room != room || prop.kind == BreakableKind::CacheSide) continue;
         if (distance(player.position,mul(add(prop.bounds.min,prop.bounds.max),.5f)) > 3.8f) continue;
