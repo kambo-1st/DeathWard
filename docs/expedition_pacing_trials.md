@@ -32,6 +32,8 @@ The controller caught a passage/interaction regression: a doorway command could 
 
 ## Reproduction
 
+These measurements describe milestone 2 at revision `79a2994`. Later milestones add destructible scenery and other gameplay, so use that revision to reproduce the recorded timings exactly. Classic continues to preserve the original geometry; current-head trials measure the current game.
+
 Raw values, including per-seed outcomes and encounter counts, are in [deathward-pacing-trials.csv](research/deathward-pacing-trials.csv). Preset IDs are `0=Growing`, `1=Classic`, `2=Short Corridors`, `3=Small Rooms`, `4=Compact`.
 
 ```sh

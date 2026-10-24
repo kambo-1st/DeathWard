@@ -13,6 +13,7 @@ void Simulation::prepareMoney() {
                 const Vector3 point{rng.real(layout.bounds.min.x + 1, layout.bounds.max.x - 1), .85f,
                                     rng.real(layout.bounds.min.z + 1, layout.bounds.max.z - 1)};
                 if (arena.roomAt(point) != index || arena.blocked(point, .65f) ||
+                    (arena.supplyCache.room >= 0 && sphereBox(point,.65f,arena.supplyCache.bounds)) ||
                     distance(point, arena.entrance) < 2.5f || distance(point, layout.objective) < 2.5f ||
                     distance(point, layout.entry) < 2.5f || distance(point, layout.exit) < 2.5f)
                     continue;

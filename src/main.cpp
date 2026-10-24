@@ -165,7 +165,7 @@ int main(int argc, char **argv) {
                          ", frontier or redstone\n  --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
                          "power, reward, empty, cheats, "
-                         "boss or summary (with --smoke)\n  --benchmark          Render the 100-enemy / "
+                         "boss, summary, demolition or demolition-open (with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
@@ -201,7 +201,8 @@ int main(int argc, char **argv) {
         return 2;
     }
     if (scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
-        scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats") {
+        scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats" &&
+        scene != "demolition" && scene != "demolition-open" && scene != "demolition-run") {
         std::cerr << "Unknown smoke scene: " << scene << '\n';
         return 2;
     }
@@ -337,6 +338,17 @@ int main(int argc, char **argv) {
             }
             if (smoke && scene == "boss")
                 game.run->startBoss();
+            if (smoke && scene.starts_with("demolition")) {
+                const auto cache=game.run->arena.supplyCache;
+                if(cache.room<0)throw std::runtime_error("No supply cache on this floor");
+                game.run->jumpDebug(cache.room);game.run->clearRoomDebug();
+                game.run->player.position=cache.approach;
+                if(scene=="demolition-open")for(int i=0;i<2;++i) {
+                    dw::Event blast;blast.type=dw::EventType::Explosion;blast.position=cache.approach;
+                    blast.damage=100;blast.radius=4.5f;blast.demolition=dw::Demolition::SpentDynamite;
+                    game.run->queueRoot(blast);game.run->drainEvents();
+                }
+            }
             if (smoke && scene == "cheats")
                 game.debug = true;
             if (smoke && scene == "empty") {
@@ -469,6 +481,14 @@ int main(int argc, char **argv) {
                     game.run->startStress();
                 if (!benchmark)
                     input.movement = {std::sin(float(frame) * 0.03f) * 0.3f, 0, 0};
+                if (scene.starts_with("demolition")) {
+                    input={};
+                    input.aim=game.run->arena.supplyCache.reward;
+                    if(scene=="demolition-run") {
+                        input.placeDynamite=frame==30||frame==190;
+                        if(frame==350)input.moveTarget=game.run->arena.supplyCache.reward;
+                    }
+                }
                 game.run->step(input);
                 game.updateCamera(dw::Tick);
                 minEnemies = std::min(minEnemies, game.run->livingEnemies());
@@ -798,6 +818,18 @@ int main(int argc, char **argv) {
                 game.run && game.run->arena.canyon && !game.run->arena.canyon->roadRooms.empty()
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
+            if(game.run) {
+                int health=-1,destroyed=0;
+                for(const auto &prop:game.run->arena.breakables) {
+                    if(prop.kind==dw::BreakableKind::CacheGate)health=std::max(0,prop.health);
+                    if(prop.destroyed)++destroyed;
+                }
+                const auto cache=game.run->arena.supplyCache;
+                auto pixel=GetWorldToScreen(cache.reward,game.camera);
+                pixel.x*=1280.f/GetScreenWidth();pixel.y*=800.f/GetScreenHeight();
+                EM_ASM({if(Module.verify)Module.demolition=({props:$0,room:$1,health:$2,destroyed:$3,x:$4,y:$5,keys:$6});},
+                    int(game.run->arena.breakables.size()),cache.room,health,destroyed,pixel.x,pixel.y,game.run->keys);
+            }
             const auto questPixel=game.questMarkerScreen();
             EM_ASM({
                 if(Module.verify)Module.quest=({active:!!$0,stage:$1,dialogue:!!$2,sleeping:!!$3,walking:!!$4,

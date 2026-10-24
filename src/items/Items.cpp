@@ -34,6 +34,9 @@ void powder(Simulation &run, const Event &e) {
     explosion.type = EventType::Explosion;
     explosion.damage = 35;
     explosion.radius = 3.5f;
+    // A kill caused by spent dynamite must not give its free descendants demolition rights.
+    explosion.demolition = Demolition::Soft;
+    explosion.playerDamage = 0;
     run.emit(explosion, e.context, int(ItemId::Powder));
 }
 void ghost(Simulation &run, const Event &e) {

@@ -49,6 +49,7 @@ add_library(deathward_core
     src/world/Campaign.cpp
     src/world/Expedition.cpp
     src/world/Dungeon.cpp
+    src/world/Breakables.cpp
     src/world/CanyonTerrain.cpp
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
@@ -57,6 +58,7 @@ add_library(deathward_core
     src/combat/Loot.cpp
     src/combat/Shop.cpp
     src/combat/Dynamite.cpp
+    src/combat/Destruction.cpp
     src/combat/Enemies.cpp
     src/combat/Encounters.cpp
     src/combat/Monsters.cpp
@@ -225,6 +227,9 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_destruction_tests tests/destruction_tests.cpp)
+    target_link_libraries(deathward_destruction_tests PRIVATE deathward_core)
+    add_test(NAME expedition_destruction COMMAND deathward_destruction_tests)
     add_executable(deathward_walk_area_tests tests/walk_area_tests.cpp)
     target_link_libraries(deathward_walk_area_tests PRIVATE deathward_core raylib)
     add_test(NAME walkable_areas COMMAND deathward_walk_area_tests)

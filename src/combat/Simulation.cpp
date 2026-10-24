@@ -28,6 +28,8 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     player.facing = unit(sub(player.aim, player.position));
     enemies.reserve(256);
     projectiles.reserve(4096);
+    if (!tutorial && pacing != ExpeditionPacing::Classic)
+        arena.prepareBreakables(seed_);
     for (int index = 0; index < arena.roomCount(); ++index) {
         if (arena.rooms[size_t(index)].kind != RoomKind::Power)
             continue;
@@ -707,16 +709,7 @@ void Simulation::process(const Event &e) {
         ++stats.explosions;
         particleEffect(ParticleEffect::Explosion, e.position, {0,1,0}, e.radius / 3.3f);
         effectVisual(e.position, e.radius, 0, 0.5f);
-        for (const auto &enemy : enemies)
-            if (enemy.alive && !(e.hostile && enemy.id == e.context.sourceEntity) &&
-                distance(enemy.position, e.position) < e.radius + enemy.radius &&
-                arena.sight(e.position, enemy.position)) {
-                Event damage = e;
-                damage.type = EventType::Damage;
-                damage.target = enemy.id;
-                damage.areaDamage = true;
-                emit(damage, e.context);
-            }
+        resolveExplosion(e);
         break;
     }
     default:
@@ -945,6 +938,11 @@ void Simulation::updateProjectiles(float dt) {
             event.hostile = p.hostile;
             event.armorPiercing = p.pierce > 0;
             if (wall) {
+                for (auto &prop : arena.breakables) {
+                    if (!prop.solid() || prop.kind != BreakableKind::PowderBarrel) continue;
+                    if (sphereBox(p.position, p.radius + .025f, prop.bounds))
+                        hitBreakable(prop, p.damage, false);
+                }
                 audioCues.push(AudioCueKind::StoneHit, p.position);
                 particleEffect(impactMaterial(p.position, normal), p.position, normal);
                 if (p.bounces > 0 && length(normal) > 0.5f) {
@@ -1046,6 +1044,7 @@ void Simulation::step(const Input &input, float dt) {
     rebuildGrid();
     updateProjectiles(dt);
     updateHazards(dt);
+    updateBreakables(dt);
     drainEvents();
     flushMonsterSpawns();
     for (auto &v : visuals)

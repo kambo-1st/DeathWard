@@ -108,6 +108,7 @@ enum class EventType {
     RoomCleared,
     Pickup
 };
+enum class Demolition { Soft, SpentDynamite };
 struct Event {
     EventType type = EventType::Shot;
     Context context;
@@ -119,6 +120,9 @@ struct Event {
     bool execution = false;
     int bounces = 0;
     ProjectileKind projectileKind = ProjectileKind::Bullet;
+    Demolition demolition = Demolition::Soft;
+    float playerDamage = 0;
+    bool playerDamageHostile = false;
 };
 enum class HazardKind {
     Dynamite,
@@ -282,6 +286,7 @@ class Simulation {
     std::vector<Vector3> dynamiteTrajectory(Vector3 target) const;
     std::string shopUnavailable(int index) const;
     std::string nearbyInteraction() const;
+    std::string demolitionHint() const;
     std::optional<Vector3> moveDestination() const {
         return movePath_.empty() ? std::nullopt : std::optional<Vector3>(movePath_.back());
     }
@@ -357,6 +362,10 @@ class Simulation {
     void updateEnemies(float dt);
     void performEnemyAttack(Enemy &enemy);
     void updateHazards(float dt);
+    void resolveExplosion(const Event &event);
+    void hitBreakable(Breakable &prop, float damage, bool hard);
+    void updateBreakables(float dt);
+    void payBreakables();
     void addHazard(Hazard hazard);
     void clearHazards();
     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);

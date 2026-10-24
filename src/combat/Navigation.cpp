@@ -245,4 +245,17 @@ std::string Simulation::nearbyInteraction() const {
                     return arena.passages[i].locked ? "UNLOCK (1 KEY)" : "ENTER";
     return {};
 }
+std::string Simulation::demolitionHint() const {
+    for (const auto &prop : arena.breakables) {
+        if (!prop.solid() || prop.room != room || prop.kind == BreakableKind::CacheSide) continue;
+        if (distance(player.position,mul(add(prop.bounds.min,prop.bounds.max),.5f)) > 3.8f) continue;
+        if (prop.kind == BreakableKind::CacheGate)
+            return prop.health == 2 ? "SUPPLY CACHE / TWO DYNAMITE BLASTS" : "CRACKED CACHE SEAL / ONE MORE BLAST";
+        if (prop.kind == BreakableKind::PowderBarrel)
+            return prop.fuse >= 0 ? "LIT POWDER / KEEP CLEAR" : "POWDER BARREL / GUNFIRE IGNITES IT";
+        if (prop.kind == BreakableKind::OreSeam) return "MARKED SEAM / DYNAMITE REVEALS SUPPLIES";
+        return "CRACKED ROCK / DYNAMITE OPENS COVER";
+    }
+    return {};
+}
 } // namespace dw

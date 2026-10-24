@@ -52,6 +52,23 @@ struct KeyPickup {
 };
 enum class StoryPropKind { Cart, Crate, SplitRock, Rail, Timber };
 struct StoryProp { StoryPropKind kind; Box bounds; };
+enum class BreakableKind { CrackedRock, OreSeam, PowderBarrel, CacheGate, CacheSide };
+struct Breakable {
+    uint64_t id = 0, lootSeed = 0;
+    int room = 0;
+    BreakableKind kind = BreakableKind::CrackedRock;
+    Box bounds{};
+    Vector3 rewardPosition{};
+    int health = 1;
+    float fuse = -1;
+    bool destroyed = false, paid = false;
+    bool solid() const { return !destroyed; }
+};
+struct SupplyCache {
+    int room = -1;
+    Box bounds{}; // Reserved interior: residents and ordinary loot cannot spawn here.
+    Vector3 approach{}, reward{};
+};
 struct Arena {
     uint64_t visualSeed = 0;
     MissionTheme theme = MissionTheme::Mine;
@@ -65,6 +82,8 @@ struct Arena {
     int shopRoom = -1;
     std::vector<Box> floors, boundaryWalls, obstacles, walls;
     std::vector<StoryProp> storyProps;
+    std::vector<Breakable> breakables;
+    SupplyCache supplyCache;
     std::set<FloorCell> floorCells;
     Vector3 entrance{0, 0.85f, 10}, exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};
     Arena() = default;
@@ -76,6 +95,10 @@ struct Arena {
     Vector3 doorApproach(int passage, int side) const;
     void rebuildWalls();
     void dressStoryRoom();
+    void prepareBreakables(uint64_t seed);
+    bool reservedSupplyCache(Vector3 point, float radius) const {
+        return supplyCache.room >= 0 && sphereBox(point,radius,supplyCache.bounds);
+    }
     int roomAt(Vector3 p) const;
     bool contains(Vector3 p) const;
     bool blocked(Vector3 p, float radius) const;

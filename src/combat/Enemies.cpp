@@ -128,10 +128,10 @@ void Simulation::updateHazards(float dt) {
             blast.damage = DynamiteDamage;
             blast.radius = hazard.radius;
             blast.areaDamage = true;
+            blast.demolition = Demolition::SpentDynamite;
+            blast.playerDamage = DynamiteSelfDamage;
             emit(blast, hazard.context);
             effectVisual(hazard.position, hazard.radius, 5, .75f);
-            if (dist < hazard.radius + .48f && visible)
-                hurtPlayer(DynamiteSelfDamage, hazard.context, false);
             hazard.alive = false;
         } else if (hazard.kind == HazardKind::Beam) {
             if (segmentSphere(hazard.origin, hazard.position, player.position, hazard.radius + .48f) <= 1 &&
@@ -152,7 +152,8 @@ void Simulation::updateHazards(float dt) {
             if (dist < hazard.radius + 0.3f && visible)
                 hurtPlayer(hazard.damage, hazard.context);
         } else {
-            if (dist < hazard.radius + 0.48f && visible)
+            if (hazard.kind != HazardKind::Powder && hazard.kind != HazardKind::MonsterBomb &&
+                dist < hazard.radius + 0.48f && visible)
                 hurtPlayer(hazard.damage, hazard.context);
             effectVisual(hazard.position, hazard.radius, 0, 0.5f);
             if (hazard.kind == HazardKind::Dynamite)
@@ -166,6 +167,8 @@ void Simulation::updateHazards(float dt) {
                 blast.radius = hazard.radius;
                 blast.areaDamage = true;
                 blast.hostile = hazard.kind == HazardKind::MonsterBomb;
+                blast.playerDamage = hazard.damage;
+                blast.playerDamageHostile = true;
                 emit(blast, hazard.context);
             }
             hazard.alive = false;
@@ -298,7 +301,7 @@ void Simulation::updateEnemies(float dt) {
                     occupied = occupied ||
                                (other.alive && other.id != enemy.id &&
                                 distance(other.position, enemy.target) < other.radius + enemy.radius + 0.2f);
-                if (!occupied && !arena.blocked(enemy.target, enemy.radius)) {
+                if (!occupied && !arena.blocked(enemy.target, enemy.radius) && !arena.reservedSupplyCache(enemy.target,enemy.radius)) {
                     effectVisual(enemy.position, 1.1f, 2, 0.5f);
                     enemy.position = enemy.target;
                 }
@@ -413,6 +416,7 @@ void Simulation::updateEnemies(float dt) {
                                             combatRng.real(bounds.min.z + 1, bounds.max.z - 1)};
                         const float range = distance(destination, player.position);
                         if (range >= 5 && range <= 12 && !arena.blocked(destination, enemy.radius) &&
+                            !arena.reservedSupplyCache(destination,enemy.radius) &&
                             arena.sight(destination, player.position)) {
                             enemy.target = destination;
                             enemy.state = EnemyState::Teleporting;

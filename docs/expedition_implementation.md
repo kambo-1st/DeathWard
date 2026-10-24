@@ -7,7 +7,7 @@ Starting revision: `a413435`. The complete goal is all six milestones below.
 | --- | --- | --- |
 | 1. Configurable room counts | Complete | Growing/Classic presets, safe room allocation, native/WASM and save validation passed (details below) |
 | 2. Early room and corridor dimensions | Complete | Five reversible presets, 50 timed trials, Compact default, navigation/spawn fixes; native/WASM checks passed |
-| 3. Destructible scenery and cache | Pending | Collision/render synchronization, deterministic once-only loot, safe blast ordering, room revisit state |
+| 3. Destructible scenery and cache | Complete | 256-floor placement/navigation sweep; transactional blasts, persistent loot and cache; native/WASM/input checks passed |
 | 4. Six interacting items | Pending | Both acquisition orders, duplicate effects, bounded chains, mouse/arrow firing |
 | 5. Floor identities and first canyon boss | Pending | Progression by expedition floor, complete attack/phase/death behavior, resource-independent victory |
 | 6. Boss expansion and optional rooms | Pending | Two further bosses, three optional room functions, separate pools, resource reachability and economy checks |
@@ -69,3 +69,31 @@ Milestone-2 validation:
 - The expanded enemy test correctly checks opening **and final** floors: smaller openings intentionally offer seven population sizes (5–11 enemies in the 32-seed Mine sample), so demanding eight sizes on the opening floor alone was obsolete. The late-floor sample verifies larger populations without weakening safe-spawn or roster coverage.
 
 Remaining after milestone 2: destructible scenery/cache; six interacting items; floor identities/first canyon boss; two more bosses/optional rooms/reward pools. The overall goal remains active.
+
+### Milestone 3
+
+Milestone 2 committed as `79a2994`. Added an optional reinforced supply alcove, two cracked boulders, one marked ore seam and one powder barrel to non-tutorial, non-Classic floors. A separate seeded placement stream prefers a single ordinary room, falling back to other eligible rooms when necessary. Alcoves have full-size and smaller variants. Terrain, roads, water, doors, keys, story sites and central routes remain protected. Unsafe placements are omitted rather than cutting into terrain or mandatory routes. These independent props never become part of the canyon height field.
+
+Rules:
+
+- A cracked boulder takes one spent dynamite blast, removes its cover and leaves flat rubble. Four out of five seeded rolls contain no loot; the remaining roll gives 1–2 coins.
+- A marked seam takes one spent dynamite blast and yields 3–6 coins.
+- The reinforced cache takes two blasts, visibly cracks after the first, and releases one key plus 8–12 coins inside its opened enclosure. Its three stone side walls remain intact. Nothing mandatory is inside it.
+- Powder barrels have 30 health, so two starting revolver bullets ignite one. A visible 0.65-second fuse precedes an 80-damage, 3.6-metre blast with 20 player damage. The warning radius, fuse and barrel body are visible before detonation. There is no barrel loot. Leaving its room pauses the fuse; revisiting resumes it. Modal screens pause it too.
+- Free Powder-of-Jericho explosions and secondary barrel blasts can ignite barrels but cannot break hard rocks or resource gates. A dynamite kill explicitly loses its hard-demolition permission before generating a free Powder explosion.
+
+Each object has a stable ID, loot seed, health and once-only payout state. One explosion snapshots enemies, player and reachable prop surfaces before applying any destruction; a later explosion sees the changed geometry. Collision is rebuilt from the same object states used by the renderer, including its per-frame shadow casters. Broken props leave only flat, nonblocking debris. Opaque props participate in mouse picking; whole-object player occlusion fading also applies to these props. Player and enemy damage retain their existing cover protection and damage multipliers.
+
+Cache interiors are reserved from resident placement, ordinary coins, summons, burrowing and teleport destinations. Reward positions are traversable after opening. Destroyed objects, partial damage, rewards and armed barrels survive room revisits. The game still resolves interrupted expeditions at load; this milestone does not introduce mid-floor save/resume. Classic remains available without the new props for the original comparison; the five-room tutorial is unchanged. Content version: `deathward-m1-56`.
+
+Milestone-3 validation:
+
+- All **29 native CTest groups passed**, including the new destruction suite. The placement sweep covers **256 floors**: 64 seeds × Mine/Canyon × opening/final floors of Rourke expeditions. All contain the complete set and a sealed, optionally accessible cache; **246/256** fit the entire set into one room. Paths to objectives, door approaches and ordinary keys require no dynamite.
+- Focused tests check pre-blast cover with reversed prop order, later blasts through opened cover, partial damage and visits, exactly-once loot, independent deterministic loot streams, barrel gunfire/fuse/pause/revisit behavior, and free-explosion permission isolation. Additional targeted checks prevent both Western and Isaac-roster teleports/burrowing into the cache and complete a twelve-barrel cascade with exactly twelve secondary explosions and no retained chains.
+- Native Release and WebAssembly Release builds pass. `web/destruction-test.cjs` passes in both Canyon and Mine: two actual placed sticks detonate on their normal fuse, open the cache, and a movement command walks into it and collects the key and coins. No JS or GL errors were reported.
+- Original-style captures inspected: `artifacts/demolition-native-closed.png` and `artifacts/demolition-canyon-open.png`. Initial bright box-shaped rocks were replaced with muted, faceted rocks; demolition guidance uses an information panel rather than an inoperative action button. Generated screenshots are local ignored artifacts.
+- The full native input suite passed: mouse/arrow firing, dynamite placement/kicking/throwing, keys, shops, doors, cheats, camera and modal guards. The broad browser suite passed hub travel/audio, pickups/dynamite/shop/combat/victory, save/reload, interrupted-run recovery and editor flows with no JS/GL errors. The final renderer also excludes the barrel warning ring and fuse glow from shadow casting; physical barrels still cast shadows.
+
+Reproduce the focused suite with `./build/deathward_destruction_tests`. Visual smoke scenes: `--smoke --theme canyon --scene demolition` (closed), `demolition-open` (opened), or `demolition-run` (two real placements followed by entry/collection). Use `--frames 430` for the complete scripted traversal. The browser script uses the same displayed-Chromium environment variables as milestones 1 and 2.
+
+Remaining after milestone 3: six interacting items; floor identities/first canyon boss; two more bosses/optional rooms/reward pools. The overall goal remains active.

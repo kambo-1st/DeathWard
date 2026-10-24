@@ -2,6 +2,7 @@
 #include "items/Items.hpp"
 #include "render/MonsterVisuals.hpp"
 #include "render/WorldPalette.hpp"
+#include "raymath.h"
 #include "rlgl.h"
 #include <iomanip>
 #include <sstream>
@@ -20,6 +21,113 @@ std::string timeLabel(double seconds) {
 }
 void shadow(Vector3 p, float radius) {
     DrawCylinder({p.x, 0.025f, p.z}, radius, radius, 0.012f, 12, Color{24, 27, 26, 120});
+}
+bool propOccludes(const Breakable &prop,const Camera3D &camera,Vector3 player) {
+    PlayerOcclusion occlusion;occlusion.set(camera,player);
+    if(!prop.solid()||!occlusion.intersects(prop.bounds))return false;
+    for(auto target:occlusion.targets()) {
+        const auto ray=occlusion.rayTo(target);
+        const auto hit=GetRayCollisionBox(ray,{prop.bounds.min,prop.bounds.max});
+        if(hit.hit&&hit.distance<distance(ray.position,target)-.15f)return true;
+    }
+    return false;
+}
+void fracturedRock(Box box,Color color) {
+    const auto center=mul(add(box.min,box.max),.5f),size=sub(box.max,box.min);
+    const std::array<Vector2,8> rim{{{-1,-.55f},{-.55f,-1},{.6f,-1},{1,-.45f},
+                                    {1,.6f},{.5f,1},{-.6f,1},{-1,.4f}}};
+    const Vector3 crown{center.x-.07f*size.x,box.max.y,center.z+.05f*size.z};
+    auto point=[&](int i,float y) {return Vector3{center.x+rim[size_t(i)].x*size.x*.5f,y,
+                                                center.z+rim[size_t(i)].y*size.z*.5f};};
+    auto face=[&](Vector3 a,Vector3 b,Vector3 c,float value) {
+        auto n=unit(Vector3CrossProduct(sub(b,a),sub(c,a)));
+        if(dot(n,sub(mul(add(add(a,b),c),1.f/3),center))<0){std::swap(b,c);n=mul(n,-1);}
+        rlColor4ub(static_cast<unsigned char>(color.r*value),static_cast<unsigned char>(color.g*value),
+                    static_cast<unsigned char>(color.b*value),color.a);
+        rlNormal3f(n.x,n.y,n.z);
+        for(auto p:{a,b,c})rlVertex3f(p.x,p.y,p.z);
+    };
+    rlBegin(RL_TRIANGLES);
+    for(int i=0;i<8;++i) {
+        const int j=(i+1)%8;
+        auto a=point(i,box.min.y),b=point(j,box.min.y);
+        auto c=point(j,box.min.y+size.y*.8f),d=point(i,box.min.y+size.y*.8f);
+        const float shade=.92f+.02f*float(i%4);
+        face(a,b,c,shade);face(a,c,d,shade);face(d,c,crown,1.f);
+    }
+    rlEnd();
+}
+void breakableModel(const Breakable &p,float time,Color stone,unsigned char alpha=255,bool depthOnly=false) {
+    auto tint=[&](Color c){c.a=alpha;return c;};
+    const auto center=mul(add(p.bounds.min,p.bounds.max),.5f),size=sub(p.bounds.max,p.bounds.min);
+    const auto base=Vector3{center.x,.035f,center.z};
+    if(p.destroyed) {
+        // Low, nonblocking remnants are visibly flat and cannot resemble intact cover.
+        for(int i=0;i<4;++i) {
+            auto at=add(base,{(float(i%2)-.5f)*size.x*.45f,.04f,(float(i/2)-.5f)*size.z*.45f});
+            DrawCube(at,size.x*.22f,.08f,size.z*.2f,tint(stone));
+        }
+        return;
+    }
+    const Color seam=tint({57,44,37,255});
+    if(p.kind==BreakableKind::PowderBarrel) {
+        DrawCylinderEx(base,add(base,{0,size.y-.035f,0}),size.x*.5f,size.x*.5f,8,tint({119,66,43,255}));
+        for(float y:{.24f,1.08f})
+            DrawCylinderEx({center.x,y,center.z},{center.x,y+.1f,center.z},size.x*.51f,size.x*.51f,8,seam);
+        DrawCylinderEx({center.x,size.y,center.z},{center.x+.12f,size.y+.26f,center.z},.04f,.03f,5,tint(Paper));
+        // An X identifies explosive powder without relying on red alone.
+        for(float side:{-1.f,1.f}) {
+            const float z=center.z+side*(size.z*.5f+.012f);
+            DrawCylinderEx({center.x-.24f,.42f,z},{center.x+.24f,.87f,z},.035f,.035f,5,tint(Gold));
+            DrawCylinderEx({center.x-.24f,.87f,z},{center.x+.24f,.42f,z},.035f,.035f,5,tint(Gold));
+        }
+        if(p.fuse>=0&&!depthOnly) {
+            DrawSphereEx({center.x+.12f,size.y+.29f,center.z},.1f,4,6,tint(Gold));
+            DrawCircle3D({center.x,.06f,center.z},3.6f,{1,0,0},90,
+                         Color{235,115,52,static_cast<unsigned char>(150+70*std::sin(time*24))});
+        }
+        return;
+    }
+    if(p.kind==BreakableKind::CacheGate) {
+        const bool horizontal=size.x>size.z;
+        DrawCubeV(center,size,tint({102,72,49,255}));
+        for(int i=0;i<7;++i) {
+            auto at=center;const float offset=(float(i)/6-.5f)*(horizontal?size.x:size.z)*.92f;
+            if(horizontal)at.x+=offset;else at.z+=offset;
+            DrawCube(at,horizontal?.035f:size.x+.025f,size.y,horizontal?size.z+.025f:.035f,seam);
+        }
+        for(int i=0;i<2;++i) {
+            const float y=.5f+float(i)*.85f;
+            DrawCube({center.x,y,center.z},size.x+.06f,.13f,size.z+.06f,tint(i>=p.health?Rust:Muted));
+        }
+        if(p.health==1) {
+            for(float side:{-1.f,1.f}) {
+                auto a=center,b=center;a.y=.2f;b.y=1.65f;
+                if(horizontal){a.z=b.z=center.z+side*(size.z*.5f+.03f);a.x-=.24f;b.x+=.3f;}
+                else {a.x=b.x=center.x+side*(size.x*.5f+.03f);a.z-=.24f;b.z+=.3f;}
+                DrawCylinderEx(a,b,.065f,.035f,5,seam);
+            }
+        }
+        return;
+    }
+    if(p.kind==BreakableKind::CacheSide) {
+        // Old fitted-stone storage walls: broad courses and joints, not bright flat slabs.
+        DrawCubeV(center,size,tint(stone));
+        for(float y:{.57f,1.19f})DrawCube({center.x,y,center.z},size.x+.012f,.024f,size.z+.012f,seam);
+        return;
+    }
+    fracturedRock(p.bounds,tint(stone));
+    for(float side:{-1.f,1.f}) {
+        const float z=center.z+side*(size.z*.5f+.012f);
+        const Color mark=p.kind==BreakableKind::OreSeam?tint(Gold):seam;
+        const std::array<Vector3,4> points{{{center.x-.3f,.08f,z},{center.x+.14f,.51f,z},
+                                         {center.x-.12f,.83f,z},{center.x+.32f,size.y*.8f,z}}};
+        for(size_t i=1;i<points.size();++i)DrawCylinderEx(points[i-1],points[i],.045f,.035f,5,mark);
+    }
+    const Vector3 crown{center.x-.07f*size.x,size.y+.02f,center.z+.05f*size.z};
+    for(float side:{-1.f,1.f})
+        DrawCylinderEx({center.x,size.y*.8f+.02f,center.z+side*size.z*.5f},crown,.04f,.03f,5,
+                      p.kind==BreakableKind::OreSeam?tint(Gold):seam);
 }
 void projectileMesh(Vector3 p, float radius, Color color) {
     // Eight triangle faces remain a real 3D volume, with no per-vertex trigonometry.
@@ -413,10 +521,14 @@ bool Renderer::button(const std::string &title, float x, float y, float w, float
 }
 std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const Camera3D &camera, Ray ray) {
     westernScene_.prepare(run.arena);
-    if (!westernScene_.loaded() && !westernScene_.terrainReady())
-        return std::nullopt;
     westernScene_.setPlayerOcclusion(camera, run.player.position);
-    return westernScene_.pick(ray, run.player.position);
+    auto best=westernScene_.pick(ray, run.player.position);
+    for(const auto &p:run.arena.breakables) {
+        if(!p.solid()||propOccludes(p,camera,run.player.position))continue;
+        auto hit=GetRayCollisionBox(ray,{p.bounds.min,p.bounds.max});
+        if(hit.hit&&(!best.hit||hit.distance<best.distance))best=hit;
+    }
+    return best;
 }
 void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool collisions,
                          EntityId hoveredEnemy, float deathTime, bool dynamiteArmed, float sandstorm) {
@@ -450,6 +562,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         }
     };
     auto solids = [&](bool depthOnly) {
+        for(const auto &prop:run.arena.breakables)
+            if(visible(prop.bounds)&&(depthOnly||!propOccludes(prop,camera,run.player.position)))
+                breakableModel(prop,float(run.stats.duration),Color{130,115,92,255},255,depthOnly);
         for (const auto &passage : run.arena.passages) {
             if (!visible(passage.floor))
                 continue;
@@ -836,6 +951,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         DrawLine3D(run.player.position, run.player.aim, Teal);
     }
     missionEffects_.draw(camera);
+    lighting.beginPrimitives();
+    rlDisableDepthMask();
+    for(const auto &prop:run.arena.breakables)
+        if(visible(prop.bounds)&&propOccludes(prop,camera,run.player.position))
+            breakableModel(prop,float(run.stats.duration),Color{130,115,92,255},56);
+    rlDrawRenderBatchActive();
+    rlEnableDepthMask();
+    lighting.endPrimitives();
     westernScene_.drawOccluders();
     westernScene_.drawGlass();
     EndMode3D();
@@ -1256,6 +1379,9 @@ Action Renderer::expedition(const Game &game) {
         const float y=run.surveyTutorial?505.f:605.f;
         panel(333, y, 611, 51, Panel);
         wrap(run.message, 351, y+15, 575, 14, Paper);
+    } else if (const auto hint=run.demolitionHint();!hint.empty()) {
+        panel(333,605,611,51,Panel);
+        wrap(hint,351,620,575,14,Paper);
     }
     if (run.rewardOpen && !game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});

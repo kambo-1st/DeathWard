@@ -47,7 +47,8 @@ bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monste
     const auto &bounds = arena.rooms[size_t(room)].bounds;
     const float radius = monster ? monsterDefinition(monster)->radius : enemyDefinition(kind).radius;
     auto valid = [&](Vector3 point) {
-        if (arena.blocked(point, std::max(0.8f, radius)) || distance(point, player.position) < 6)
+        if (arena.blocked(point, std::max(0.8f, radius)) || arena.reservedSupplyCache(point,radius) ||
+            distance(point, player.position) < 6)
             return false;
         if (spaced && !roomSpawnClear(point, radius))
             return false;
@@ -125,6 +126,8 @@ const std::vector<Enemy> &Simulation::roomEnemies(int index) const {
 
 bool Simulation::roomSpawnClear(Vector3 point, float radius) const {
     if (arena.roomAt(point) != room)
+        return false;
+    if (arena.reservedSupplyCache(point,radius))
         return false;
     // Any doorway can become the player's first entrance. Keep its landing clear
     // without moving an already-visible enemy when that doorway is crossed.

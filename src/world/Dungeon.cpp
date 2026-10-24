@@ -435,6 +435,7 @@ void Arena::rebuildWalls() {
     walls = boundaryWalls;
     walls.insert(walls.end(), obstacles.begin(), obstacles.end());
     for(const auto &prop:storyProps)if(prop.bounds.max.y>.45f)walls.push_back(prop.bounds);
+    for(const auto &prop:breakables)if(prop.solid())walls.push_back(prop.bounds);
     for (const auto &passage : passages)
         for (int side = 0; side < 2; ++side)
             if (passage.closed(side))

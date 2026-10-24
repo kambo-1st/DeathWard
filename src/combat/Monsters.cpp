@@ -228,6 +228,7 @@ void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
                          rotateY({.8f + float(attempt / 8) * .45f, 0, 0}, float(attempt % 8) * Pi / 4));
             at.y = .85f;
             if ((placement && !roomSpawnClear(at, d->radius)) || arena.blocked(at, d->radius) ||
+                arena.reservedSupplyCache(at,d->radius) ||
                 distance(at, player.position) < std::max(playerClearance, d->radius + .65f))
                 continue;
             bool occupied = false;
@@ -281,7 +282,7 @@ void Simulation::spawnMonsterDebug(int id) {
     for (int attempt = 0; attempt < 240; ++attempt) {
         Vector3 p{encounterRng.real(bounds.min.x + 1, bounds.max.x - 1), .85f,
                   encounterRng.real(bounds.min.z + 1, bounds.max.z - 1)};
-        if (arena.blocked(p, d->radius) || distance(p, player.position) < 6)
+        if (arena.blocked(p, d->radius) || arena.reservedSupplyCache(p,d->radius) || distance(p, player.position) < 6)
             continue;
         bool occupied = false;
         for (const auto &other : enemies)
@@ -554,7 +555,7 @@ void Simulation::updateMonster(Enemy &e, float dt) {
     if (e.state == EnemyState::Buried || e.state == EnemyState::Teleporting) {
         e.stateTime -= dt;
         if (e.stateTime <= 0) {
-            if (!arena.blocked(e.target, e.radius) && distance(e.target, player.position) > 2)
+            if (!arena.blocked(e.target, e.radius) && !arena.reservedSupplyCache(e.target,e.radius) && distance(e.target, player.position) > 2)
                 e.position = e.target;
             e.state = EnemyState::Exposed;
             e.stateTime = .6f;
@@ -825,7 +826,7 @@ void Simulation::updateMonster(Enemy &e, float dt) {
             for (int n = 0; n < 48; ++n) {
                 Vector3 p{combatRng.real(bounds.min.x + 1, bounds.max.x - 1), .85f,
                           combatRng.real(bounds.min.z + 1, bounds.max.z - 1)};
-                if (arena.blocked(p, e.radius) || distance(p, target) < 3 || distance(p, target) > 14)
+                if (arena.blocked(p, e.radius) || arena.reservedSupplyCache(p,e.radius) || distance(p, target) < 3 || distance(p, target) > 14)
                     continue;
                 e.target = p;
                 e.state = d.motion == M::Burrow ? EnemyState::Buried : EnemyState::Teleporting;

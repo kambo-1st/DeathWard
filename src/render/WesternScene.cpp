@@ -451,6 +451,8 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
                 if (key.room == index && distanceXZ(p, key.position) < 2 + radius)
                     return true;
             const Box footprint{{p.x - radius, 0, p.z - radius}, {p.x + radius, 1, p.z + radius}};
+            if (arena.supplyCache.room >= 0 && overlaps(footprint,arena.supplyCache.bounds,.5f))return true;
+            for (const auto &prop:arena.breakables)if(overlaps(footprint,prop.bounds,.45f))return true;
             for (int link : room.passages)
                 if (overlaps(footprint, arena.passages[size_t(link)].floor, 1.2f))
                     return true;
