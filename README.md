@@ -154,10 +154,10 @@ A third authored hub, **Fort Mercy** (the Redstone Canyon map), combines Black C
 
 An optional [Redstone art-direction POC](docs/redstone_art_poc.md) adds weathered terrain/materials, lower sunlight, drifting dust and removable cloth details. Start with `--hub redstone --art-poc` (browser: `?hub=redstone&art=poc`); F6 compares with the original in the hub/editor. It leaves source assets and saved scenes unchanged and is off by default.
 
-Sixteen **visual styles** can be compared live: **Original**, **Cel-shaded**,
+Seventeen **visual styles** can be compared live: **Original**, **Cel-shaded**,
 **Western comic**, **Painted frontier**, **Wanted poster**, **Western noir**,
 **Retro 3D**, **Woodcut / linocut**, **Watercolor**, **Colored pencil**, **Ink wash**,
-**Miniature diorama**, **Spaghetti Western**, **CRT arcade**, **Spectral frontier**, and **Sumi-e frontier**. In a hub or either editor, **F6**
+**Miniature diorama**, **Spaghetti Western**, **CRT arcade**, **Spectral frontier**, **Sumi-e frontier**, and **Matte frontier**. In a hub or either editor, **F6**
 cycles through them. In hubs and missions, **Pause → Visual Style** offers the
 same selector; mission F6 keeps its cheat behavior. The choice lasts only for
 that session and does not edit maps, saves or visual preferences. Ordinary
@@ -168,7 +168,7 @@ Start directly with `./scripts/run.sh --hub redstone --style comic` or
 `--style original` and `--style cel` select the other presets; the earlier
 `--cel-shading` flag remains an alias for `--style cel`.
 The remaining style names are `poster`, `noir`, `retro`, `woodcut`, `watercolor`,
-`pencil`, `ink`, `diorama`, `cinema`, `crt`, `spectral`, and `sumi`, also accepted by the
+`pencil`, `ink`, `diorama`, `cinema`, `crt`, `spectral`, `sumi`, and `matte`, also accepted by the
 browser's `style` parameter. `--style okami` (or `?style=okami`) is an alias for
 Sumi-e frontier, the Okami-inspired brush-and-ink preset.
 
@@ -205,18 +205,29 @@ ink bleed, warm paper and vivid vermilion/jade accents. It takes inspiration fro
 Okami's brush-and-ink presentation using DeathWard's existing assets, with no
 uniform crosshatching or imported artwork.
 
+Matte frontier follows the supplied low-poly timber-interior reference: continuous
+diffuse light, subdued neutral fill, earthy surface colors, warm authored lamps
+and soft depth-based contact shading. Original green foliage remains green in
+Frontier. Facets stay crisp, with no ink, paper grain, bloom or lens blur. The
+contact effect is a screen-space approximation, not baked AO or new geometry.
+Try `./scripts/run.sh --hub frontier --style matte` or `?hub=frontier&style=matte`.
+Switching back restores the original surfaces and foliage without changing assets.
+
 `deathward_cel_shading_tests` captures matching fort, character and canyon views
 in `artifacts/cel-<style>-<view>.png` (Original uses `before`, Cel uses `after`),
 and checks distinct presets, UI colors, sandstorms, static-frame stability and exact restoration
-of the original and cel-shaded renders after switching presets. The contours
-come from visible depth edges. `web/cel-shading-test.cjs` checks all 16 WebGL
+of the original and cel-shaded renders after switching presets. Additional
+`cel-before-{frontier,saloon}.png` and `cel-matte-{frontier,saloon}.png` captures
+check foliage and an interior cutaway, including restoration of the original lighting.
+The contours
+come from visible depth edges. `web/cel-shading-test.cjs` checks all 17 WebGL
 styles, F6, the Pause selector, unchanged scene data and default-off reloads.
 
 After running the capture test, `python3 scripts/visual-style-report.py` creates
-`artifacts/visual-style-comparison.html`: an offline HTML comparison with 48
+`artifacts/visual-style-comparison.html`: an offline HTML comparison with 51
 embedded screenshots, a draggable split view, style selectors, and fort,
 character and canyon viewpoints. The generated HTML can be shared on its own.
-For a large gallery of all 48 captures, run the same command with `--layout gallery`.
+For a large gallery of all 51 captures, run the same command with `--layout gallery`.
 It writes `artifacts/visual-style-gallery.html`, with one/two-column layouts,
 style filtering and a full-screen image viewer supporting keyboard navigation,
 actual-size inspection and PNG downloads. Images are embedded for offline use.

@@ -140,7 +140,7 @@ void main() {
     vec4 surface = texture(texture0,uv) * colDiffuse * color;
     if(surface.a < .02) discard;
     if(unlit == 0) surface = playerOcclusionSurface(world,surface);
-    if (autumnFoliage != 0) {
+    if (autumnFoliage != 0 && visualStyle != 16) {
         // Recolor only green leaf swatches; the original bark and texture detail remain visible.
         float leaf = smoothstep(.012,.070,surface.g-surface.b) *
                      smoothstep(-.01,.045,surface.g-surface.r*.92);
@@ -151,6 +151,7 @@ void main() {
     if(unlit != 0) { finalColor = surface; return; }
     vec3 n = normalize(normal);
     surface.rgb = artFinish(surface.rgb,world,n);
+    surface.rgb = worldSurfaceColor(surface.rgb);
     // Warm ground bounce and a cool sky fill keep shaded porches readable.
     vec3 light = worldAmbient(n);
     if (artEnabled != 0) light=mix(vec3(.23,.225,.20),vec3(.45,.50,.54),n.y*.5+.5);
@@ -165,11 +166,13 @@ void main() {
         float direct = max(dot(n,d),0.0);
         float shade = i == sunIndex && direct > 0. ? visibility(n,d) : 1.;
         if (visualStyle != 0) { direct = worldDiffuse(direct,shade); shade = 1.; }
+        if (visualStyle == 16 && lightRanges[i] > 0.) attenuation *= 1.18;
         light += direct*lightColors[i]*attenuation*shade;
     }
     for(int i=0;i<fireCount;i++) {
         vec3 delta = firePositions[i]-world;
         float attenuation = pow(max(0.,1.-length(delta)/fireRanges[i]),2.);
+        if (visualStyle == 16) attenuation *= 1.10;
         light += fireColors[i]*attenuation*max(.12,dot(n,normalize(delta+vec3(.0001))));
     }
     finalColor=vec4(surface.rgb*light,surface.a);

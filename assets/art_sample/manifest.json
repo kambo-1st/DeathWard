@@ -1,0 +1,17 @@
+{
+  "source_sha256": {
+    "assets/bandit/bandit.glb": "05065568f5740dc741debb916162915d9151a4ec8b93ea00fbf5f8515bcc1ea8",
+    "assets/town/town.glb": "b931bd09b0873de30ff2aefd674aec1a609c83bfa30b4a16b31c6df423c8b8a8",
+    "assets/town/town.scene": "f35f606800b456d5cf199e0689c6e90251dcab784a4ebc6817e5405f9257c899",
+    "assets/town/town.nav": "b1e79499810813bd15f7fe2939aaf985c6d229ce6e1168c59ad1d89473055d55",
+    "assets/frontier/town.glb": "3d55bed81ff81654d82bb8126d13d3b734a477a12e7527f3b12c8a5bbb411c19",
+    "assets/frontier/town.scene": "edde240992c7a6d00afe37ca27f9a9f450104c3dc1040a487edcd83cce70f437",
+    "assets/frontier/town.nav": "1206544dc5edc1b4b4a2f9ffde568f51f6292687d77f11ff7d079cfb1e02ae0e",
+    "assets/redstone/town.glb": "94d14287d3b22774d820449fbb5b2649104112585892b661f638de45979cdb37",
+    "assets/redstone/town.scene": "2b719d8cc2b37eac58598cf951f06cb81e75f862e80827b236ae83f2d299b7de",
+    "assets/redstone/town.nav": "a87d909b49b25049a606082cdbb3c6e16ecb9e890a3f495129bc0998807efd06"
+  },
+  "hero_animation_streams": "unchanged, all nine clips",
+  "texture_generation": "Built-in imagegen; selected prompt in texture-prompt-v2.txt",
+  "scope": "Standalone art sample. No game assets, maps or saves are modified."
+}

@@ -182,7 +182,7 @@ float orderedDither(vec2 pixel) {
     return (bayer[cell.y*4+cell.x]+.5)/16.-.5;
 }
 // Additional treatments share the same world render and depth; none changes
-// scene assets or UI. IDs 7..15 are defined in core/VisualStyle.hpp.
+// scene assets or UI. IDs 7..16 are defined in core/VisualStyle.hpp.
 vec3 paperColor(vec2 paper) {
     float tooth = dustNoise(paper*.42)-.5;
     float fibre = dustNoise(paper*vec2(.09,.7))-.5;
@@ -239,6 +239,18 @@ float miniatureContact(vec2 uv, float depth) {
 }
 vec3 newStyle(vec2 uv) {
     vec2 paper = gl_FragCoord.xy;
+    if (visualStyle == 16) {
+        vec3 c = max(antialias(uv),vec3(0.));
+        float light = luminance(c);
+        // Keep the diffuse facets crisp. No ink, paper grain, bloom or lens blur.
+        // Neutral umber shadows replace the original plum fill; highlights are
+        // warm without putting a sepia wash over the whole scene.
+        c *= mix(vec3(.965,.985,.96),vec3(1.045,1.015,.945),smoothstep(.22,.85,light));
+        c = mix(vec3(luminance(c)),c,.94);
+        c /= 1.+max(c-.73,vec3(0.))*.80;
+        c *= miniatureContact(uv,inkDepth(uv));
+        return distanceWash(c,uv,vec3(.48,.49,.43),.065);
+    }
     if (visualStyle == 7) {
         vec3 surface = antialias(uv)*1.12;
         float tone = luminance(surface);
@@ -391,7 +403,7 @@ vec3 newStyle(vec2 uv) {
 }
 void main() {
     vec2 uv = fragTexCoord;
-    if (visualStyle >= 7 && visualStyle <= 15) {
+    if (visualStyle >= 7 && visualStyle <= 16) {
         finalColor = vec4(clamp(stormColor(newStyle(uv),uv),0.,1.),1.);
         return;
     }

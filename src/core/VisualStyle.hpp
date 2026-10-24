@@ -7,7 +7,7 @@ namespace dw {
 // Values are shared with the world and post-process shaders.
 enum class VisualStyle {
     Original, Cel, Comic, Painted, Poster, Noir, Retro,
-    Woodcut, Watercolor, Pencil, Ink, Diorama, Cinema, CRT, Spectral, Sumi, Count
+    Woodcut, Watercolor, Pencil, Ink, Diorama, Cinema, CRT, Spectral, Sumi, Matte, Count
 };
 inline constexpr VisualStyle nextVisualStyle(VisualStyle style) {
     return VisualStyle((int(style) + 1) % int(VisualStyle::Count));
@@ -29,6 +29,7 @@ inline constexpr const char *visualStyleName(VisualStyle style) {
     case VisualStyle::CRT: return "CRT arcade";
     case VisualStyle::Spectral: return "Spectral frontier";
     case VisualStyle::Sumi: return "Sumi-e frontier";
+    case VisualStyle::Matte: return "Matte frontier";
     default: return "Original";
     }
 }
@@ -49,6 +50,7 @@ inline constexpr const char *visualStyleSlug(VisualStyle style) {
     case VisualStyle::CRT: return "crt";
     case VisualStyle::Spectral: return "spectral";
     case VisualStyle::Sumi: return "sumi";
+    case VisualStyle::Matte: return "matte";
     default: return "original";
     }
 }

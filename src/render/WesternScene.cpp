@@ -45,7 +45,7 @@ void main() {
     if (surface.a < 0.02) discard;
     surface = playerOcclusionSurface(world,surface);
     vec3 litNormal = gl_FrontFacing ? normalize(normal) : -normalize(normal);
-    finalColor = vec4(surface.rgb * westernDaylight(litNormal,missionSun,missionVisibility(world,litNormal)), surface.a);
+    finalColor = vec4(worldSurfaceColor(surface.rgb) * westernDaylight(litNormal,missionSun,missionVisibility(world,litNormal)), surface.a);
 }
 )GLSL";
 bool overlaps(Box a, Box b, float margin = 0) {

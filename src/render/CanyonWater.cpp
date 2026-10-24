@@ -55,7 +55,7 @@ void main() {
     water *= 1.+ripple*.018+small*.007;
     float glint = pow(max(0.,ripple*.7+small*.3),12.);
     water += vec3(.16,.19,.17)*glint*.18*shade;
-    finalColor = vec4(water*westernDaylight(n,missionSun,shade),1.);
+    finalColor = vec4(worldSurfaceColor(water)*westernDaylight(n,missionSun,shade),1.);
     // The shallow bed is only centimetres below the surface. Two depth-buffer
     // steps prevent distant fords from fighting the bed at the game's near clip.
     gl_FragDepth = max(0.,gl_FragCoord.z-.00000012);

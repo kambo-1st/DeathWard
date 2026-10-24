@@ -20,6 +20,8 @@ float worldDiffuse(float direct, float shade) {
     if (visualStyle == 11) return pow(value,.85)*.90;
     if (visualStyle == 12) return pow(value,1.12);
     if (visualStyle == 14) return value*.72;
+    // Continuous diffuse light: broad matte facets rather than toon bands.
+    if (visualStyle == 16) return mix(value,smoothstep(0.,1.,value),.22)*.96;
     if (visualStyle == 15) {
         float edge = max(fwidth(value),.018);
         return .16+.34*smoothstep(.30-edge,.30+edge,value)+
@@ -49,6 +51,8 @@ vec3 worldAmbient(vec3 n) {
         return mix(vec3(.14,.19,.26),vec3(.30,.40,.47),n.y*.5+.5);
     if (visualStyle == 15)
         return mix(vec3(.24,.20,.30),vec3(.40,.44,.48),smoothstep(.08,.28,n.y));
+    if (visualStyle == 16)
+        return mix(vec3(.22,.215,.195),vec3(.40,.415,.39),n.y*.5+.5);
     if (visualStyle == 5)
         return mix(vec3(.15,.16,.20),vec3(.34,.37,.42),n.y*.5+.5);
     if (visualStyle == 3)
@@ -58,6 +62,18 @@ vec3 worldAmbient(vec3 n) {
     if (visualStyle != 0 && visualStyle != 6 && visualStyle != 13)
         return mix(vec3(.24,.21,.28),vec3(.34,.38,.44),smoothstep(.15,.22,n.y));
     return mix(vec3(.27,.245,.215),vec3(.43,.48,.55),n.y*.5+.5);
+}
+vec3 worldSurfaceColor(vec3 c) {
+    if (visualStyle != 16) return c;
+    // Quiet, earthy body colors with readable olive foliage. Applied to albedo
+    // before lighting, so authored amber lamps retain their own light color.
+    float tone=dot(c,vec3(.299,.587,.114));
+    float green=smoothstep(.012,.09,c.g-max(c.r,c.b));
+    vec3 earthy=mix(vec3(tone),c,.82);
+    float ochre=smoothstep(.06,.25,min(c.r,c.g)-c.b);
+    earthy*=mix(vec3(1.),vec3(.90,.92,.98),ochre*.65);
+    vec3 olive=vec3(.61,.72,.32)*max(tone,.04)*1.32;
+    return mix(earthy,olive,green*.42);
 }
 vec3 westernDaylight(vec3 n, vec3 sun, float shade) {
     // Original Black Creek and Redstone primary sun and weaker golden fill.

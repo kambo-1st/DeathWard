@@ -74,7 +74,7 @@ void main() {
 #else
     vec3 n=gl_FrontFacing ? normalize(normal) : -normalize(normal);
 #endif
-    finalColor=vec4(surface.rgb*westernDaylight(n,missionSun,missionVisibility(world,n)),surface.a);
+    finalColor=vec4(worldSurfaceColor(surface.rgb)*westernDaylight(n,missionSun,missionVisibility(world,n)),surface.a);
 }
 )GLSL";
 constexpr const char *ShadowFunctions = R"GLSL(

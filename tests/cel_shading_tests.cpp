@@ -161,6 +161,75 @@ void canyonViews() {
     for (auto image : {before,after,restored}) UnloadImage(image);
     scene.unload(); post.unload();
 }
+void matteReferenceViews() {
+    // Exercise the parts specific to Matte: original green leaf swatches and
+    // local firelight in an actual building cutaway. Never edit the source map.
+    for (auto kind : {HubKind::Frontier, HubKind::BlackCreek}) {
+        const bool frontier = kind == HubKind::Frontier;
+        TownScene scene;
+        const auto directory = TownScene::assetDirectory(kind);
+        check(scene.load(directory), "Load matte reference hub");
+        scene.document().write("artifacts/matte-reference-before.scene");
+        HubWorld hub;
+        check(hub.load(directory / "town.nav"), "Load matte reference navigation");
+        if (!frontier) {
+            const Vector3 wanted{-14,0,-12};
+            float nearest = 2.25f;
+            // Avoid furniture occupying the exact center of the room.
+            for (float z=wanted.z-1.4f; z<=wanted.z+1.4f; z+=.2f)
+                for (float x=wanted.x-1.4f; x<=wanted.x+1.4f; x+=.2f) {
+                    const float floor = hub.height({x,0,z});
+                    const float d = (x-wanted.x)*(x-wanted.x)+(z-wanted.z)*(z-wanted.z);
+                    if (std::isfinite(floor) && d<nearest) {
+                        hub.player.position = {x,floor+.85f,z};
+                        nearest = d;
+                    }
+                }
+            check(nearest < 2.25f, "Saloon reference has reachable floor");
+        }
+        ObjectAnimationSystem motion;
+        motion.reset(scene.document());
+        motion.update(Tick, [&](Vector3 p) { return hub.height(p); }, hub.player.position);
+        scene.applyAnimation(motion);
+        scene.prepareFlags(1.5);
+        PlayerModel player;
+        player.update(hub.player, 0, &hub);
+        const Vector3 focus = frontier ? Vector3{-38,1,98} : hub.player.position;
+        const Camera3D camera{add(focus, frontier ? Vector3{15,18,15} : Vector3{8,11,8}),
+                              focus,{0,1,0},45,CAMERA_PERSPECTIVE};
+        scene.setPlayerOcclusion(camera, hub.player.position);
+        check(frontier || scene.interior().has_value(), "Saloon cutaway is active");
+        PostProcess post;
+        auto capture = [&](VisualStyle style) {
+            scene.setVisualStyle(style);
+            scene.prepareLighting(camera, [&](Shader depth) { player.draw(hub.player,false,depth); });
+            BeginDrawing();
+            post.begin({154,186,199,255},distance(camera.position,focus),false,style);
+            BeginMode3D(camera);
+            scene.draw(focus);
+            player.draw(hub.player,false,scene.actorShader(),scene.shadowTexture());
+            scene.drawEffects(camera); scene.drawOccluders(); scene.draw(focus,true);
+            EndMode3D();
+            return finish(post);
+        };
+        // Let the cached, texel-snapped shadow camera settle before comparing.
+        auto warmup = capture(VisualStyle::Original);
+        UnloadImage(warmup);
+        auto before = capture(VisualStyle::Original);
+        auto matte = capture(VisualStyle::Matte);
+        auto restored = capture(VisualStyle::Original);
+        const std::string view = frontier ? "frontier" : "saloon";
+        output(before,"before-"+view); output(matte,"matte-"+view);
+        output(restored,"restored-"+view);
+        check(!same(before,matte), "Matte affects foliage and interiors");
+        check(same(before,restored), "Matte restores original foliage and local lighting exactly");
+        scene.document().write("artifacts/matte-reference-after.scene");
+        check(read("artifacts/matte-reference-before.scene") == read("artifacts/matte-reference-after.scene"),
+              "Matte cannot change authored materials, lights or building data");
+        for (auto image : {before,matte,restored}) UnloadImage(image);
+        scene.unload(); player.unload(); post.unload();
+    }
+}
 }
 int main() {
     try {
@@ -176,9 +245,11 @@ int main() {
         InitWindow(1440,1000,"Cel shading comparison");
         check(IsWindowReady(), "A graphics display is required");
         std::filesystem::create_directories("artifacts");
-        townViews(); canyonViews();
+        townViews(); canyonViews(); matteReferenceViews();
         CloseWindow();
-        std::cout << "PASS 16 visual presets, unchanged UI/scene, sandstorms, exact restoration and 48 comparison captures\n";
+        std::cout << "PASS " << int(VisualStyle::Count)
+                  << " visual presets, unchanged UI/scene, sandstorms, exact restoration and "
+                  << int(VisualStyle::Count)*3 << " comparison captures; matte foliage/interior restoration\n";
     } catch (const std::exception &e) {
         std::cerr << "FAIL " << e.what() << '\n';
         if (IsWindowReady()) CloseWindow();

@@ -72,6 +72,11 @@ STYLES = [
          description="An Okami-inspired treatment: bold brush contours, warm paper and vivid painted colors.",
          lighting="Three painted light bands, cool violet shadow fill", finish="Irregular ink contours, soft bleed and vermilion/jade accents",
          character="Bold brushwork over the existing frontier scenery, with creamy highlights and violet-tinted shadows."),
+    dict(id="matte", name="Matte frontier", tag="Earth, timber & amber light",
+         description="Earthy matte surfaces, neutral shadows and warm local lights inspired by the supplied low-poly interior reference.",
+         lighting="Continuous diffuse light, subdued neutral fill, stronger authored lamps",
+         finish="Soft depth-based contact shading, restrained highlights; no ink or bloom",
+         character="Clean low-poly facets with original green foliage, muted timber and subtle distant haze. Contact shading is a screen-space approximation."),
 ]
 VIEWS = [
     dict(id="fort", name="Fort Mercy", note="Architecture, ground, foliage and broad shadows."),
@@ -181,7 +186,7 @@ options(get('view'), data.views);
 options(get('reference'), styles);
 options(get('candidate'), styles);
 get('reference').value = 'cel';
-get('candidate').value = 'sumi';
+get('candidate').value = 'matte';
 function setSplit(value) {
   get('split').value = Math.max(0, Math.min(100, value));
   get('stage').style.setProperty('--split', get('split').value + '%');

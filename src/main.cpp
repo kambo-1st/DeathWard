@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
         else if (arg == "--style" && i + 1 < argc) {
             styleChoice = dw::parseVisualStyle(argv[++i]);
             if (!styleChoice) {
-                std::cerr << "--style must be original, cel, comic, painted, poster, noir, retro, woodcut, watercolor, pencil, ink, diorama, cinema, crt, spectral, sumi or okami\n";
+                std::cerr << "--style must be original, cel, comic, painted, poster, noir, retro, woodcut, watercolor, pencil, ink, diorama, cinema, crt, spectral, sumi (alias: okami) or matte\n";
                 return 2;
             }
         }
@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
                          "  --style NAME        original, cel, comic, painted, poster, noir, retro,\n"
-                         "                      woodcut, watercolor, pencil, ink, diorama, cinema, crt, spectral, sumi (alias: okami)\n"
+                         "                      woodcut, watercolor, pencil, ink, diorama, cinema, crt, spectral, sumi (alias: okami), matte\n"
                          "                      F6 cycles in hubs/editors; Pause selects in missions\n"
                          "  --cel-shading       Alias for --style cel\n"
                          "  --sandstorm         Start with the sandstorm on; K toggles in any map\n"

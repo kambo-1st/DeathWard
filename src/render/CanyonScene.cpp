@@ -49,7 +49,7 @@ void main() {
     vec3 sediment = surface*vec3(.88,.91,.89);
     sediment *= .96 + .08*gravel;
     surface = mix(surface,sediment,bank);
-    vec3 color = surface*westernDaylight(n,sun,shade);
+    vec3 color = worldSurfaceColor(surface)*westernDaylight(n,sun,shade);
     finalColor=playerOcclusionSurface(world,vec4(color,1.));
 }
 )GLSL";

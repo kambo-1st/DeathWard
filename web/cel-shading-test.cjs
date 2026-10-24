@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const styles = ['original', 'cel', 'comic', 'painted', 'poster', 'noir', 'retro',
-  'woodcut', 'watercolor', 'pencil', 'ink', 'diorama', 'cinema', 'crt', 'spectral', 'sumi'];
+  'woodcut', 'watercolor', 'pencil', 'ink', 'diorama', 'cinema', 'crt', 'spectral', 'sumi', 'matte'];
 const cycle = start => Array.from({length: styles.length}, (_, i) => (start + i + 1) % styles.length);
 (async () => {
   const browser = await chromium.launch({headless: true,
@@ -70,7 +70,11 @@ const cycle = start => Array.from({length: styles.length}, (_, i) => (start + i 
     await launch('&style=okami');
     assert.equal(await page.evaluate(() => Module.state.visualStyle), 15);
     await key('F6');
+    await wait(() => Module.state.visualStyle === 16);
+    await key('F6');
     await wait(() => Module.state.visualStyle === 0);
+    await launch('&style=matte');
+    assert.equal(await page.evaluate(() => Module.state.visualStyle), 16);
     await launch('&style=painted', 'town');
     assert.equal(await page.evaluate(() => Module.state.visualStyle), 3);
     await key('Enter'); await wait(() => Module.state.menu);
@@ -89,7 +93,7 @@ const cycle = start => Array.from({length: styles.length}, (_, i) => (start + i 
     assert.equal(await page.evaluate(() => Module.state.visualStyle), 3, 'Mission F6 remains a cheat');
     assert.equal(await page.evaluate(() => Module.ctx.getError()), 0);
     assert.deepEqual(errors, []);
-    console.log('PASS all 16 WebGL styles, CLI aliases, hub/editor F6, hub/mission Pause selector, unchanged map and default-off reload');
+    console.log(`PASS all ${styles.length} WebGL styles, CLI aliases, hub/editor F6, hub/mission Pause selector, unchanged map and default-off reload`);
   } catch (error) {
     console.error(errors);
     console.error(await page.evaluate(() => ({state: window.Module?.state,
