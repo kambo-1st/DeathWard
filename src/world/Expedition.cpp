@@ -9,9 +9,20 @@ uint64_t mix(uint64_t x) {
     return x^(x>>31);
 }
 }
-ExpeditionPlan::ExpeditionPlan(uint64_t value,bool tutorial,WitnessAccount witness)
+const char *expeditionPacingName(ExpeditionPacing pacing) {
+    return pacing == ExpeditionPacing::Classic ? "CLASSIC / 15 ROOMS" : "GROWING / 9 TO 15 ROOMS";
+}
+ExpeditionPlan::ExpeditionPlan(uint64_t value,bool tutorial,WitnessAccount witness,ExpeditionPacing pacingValue)
     :seed(value),account(tutorial?WitnessAccount::None:witness),
-     floorCount(tutorial?1:4+int(mix(value^0x464c4f4f52504c4eULL)%5)) {}
+     floorCount(tutorial?1:4+int(mix(value^0x464c4f4f52504c4eULL)%5)),pacing(pacingValue) {}
+int ExpeditionPlan::roomsOnFloor(int floor) const {
+    if(floor<0||floor>=floorCount)throw std::out_of_range("Invalid expedition floor");
+    if(floorCount==1)return 5;
+    if(pacing==ExpeditionPacing::Classic)return 15;
+    // Four floors: 9,11,13,15. Eight: 9,10,11,12,13,14,15,15.
+    const int growth=std::max(floor,(6*floor+(floorCount-1)/2)/(floorCount-1));
+    return std::min(15,9+growth);
+}
 uint64_t ExpeditionPlan::floorSeed(int floor) const {
     if(floor<0||floor>=floorCount)throw std::out_of_range("Invalid expedition floor");
     // Preserve the original first-floor layout of ordinary expeditions.

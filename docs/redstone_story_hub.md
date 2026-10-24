@@ -48,14 +48,14 @@ particular input method or forcing players to perform artificial checklist tasks
 
 Quest flags remain under `redstone.*`. Old `redstone.daughter_missing` progress
 is accepted as the new survey commission, retaining completed arrival dialogue.
-Campaign format 5 stores floor progress and evidence provenance alongside the
-recovered-document bit; formats 1–4 remain readable. Document pickup requests an immediate checkpoint. The copied
+Campaign format 6 stores floor progress, pacing preset and evidence provenance alongside the
+recovered-document bit; formats 1–5 remain readable. Document pickup requests an immediate checkpoint. The copied
 information survives death, retreat or interrupted-session recovery and points
 back to the commander. Without the documents, the trail remains retryable.
 Legacy pending Before First Light runs recover without mine-related consequences.
 Story returns never rescue miners, destroy the altar, change mine prosperity or
 award the unrelated boss outcome. Ordinary missions retain their own rules and
-15-room layouts.
+growing 9–15-room layouts (or the Classic 15-room preset).
 
 The conductor follows `quest-conductor` if authored in the editor; otherwise he
 appears beside the train. Sleep uses `story-settler-tent-0:*`, the commander uses
@@ -81,7 +81,7 @@ and its existing persistent save slots. Native CPU verification is
 ## Full expeditions and the first account
 
 Every non-tutorial expedition now has **4–8 floors selected by the run seed**.
-Each floor retains the existing **15-room** generator: branching paths, combat
+Floors grow from **9 to 15 rooms**, with a **Classic 15-room** comparison preset: branching paths, combat
 seals, Isaac monsters in canyons, quiet rooms, one shop, keys and 1–2 power rooms.
 Ordinary mine missions use the same floor progression with their Western roster.
 The tutorial remains the sole one-floor/five-room exception.

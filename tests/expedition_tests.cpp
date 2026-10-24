@@ -2,8 +2,10 @@
 #include "world/ArrivalQuest.hpp"
 #include <chrono>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <set>
+#include <sstream>
 #include <stdexcept>
 using namespace dw;
 namespace {
@@ -16,22 +18,32 @@ void plans() {
         counts.insert(a.floorCount);std::set<uint64_t> seeds;std::vector<StoryRoom> sites;
         for(int floor=0;floor<a.floorCount;++floor) {
             check(a.floorSeed(floor)==b.floorSeed(floor),"stable floor seeds");seeds.insert(a.floorSeed(floor));
+            check(a.roomsOnFloor(floor)==b.roomsOnFloor(floor)&&a.roomsOnFloor(floor)>=9&&a.roomsOnFloor(floor)<=15,"seeded bounded room counts");
+            if(floor)check(a.roomsOnFloor(floor)>=a.roomsOnFloor(floor-1),"floors grow monotonically");
+            check(ExpeditionPlan(seed,false,WitnessAccount::Rourke,ExpeditionPacing::Classic).roomsOnFloor(floor)==15,"classic retains fifteen rooms on every floor");
             if(a.storyAt(floor)!=StoryRoom::None)sites.push_back(a.storyAt(floor));
         }
+        check(a.roomsOnFloor(0)==9&&a.roomsOnFloor(a.floorCount-1)==15,"growing starts at nine and finishes at fifteen");
         check(seeds.size()==size_t(a.floorCount),"distinct floor seeds within a run");
         check(sites==std::vector{StoryRoom::SurveyCamp,StoryRoom::SplitRock,StoryRoom::RailwayCutting,StoryRoom::DryCreek},"four ordered story beats within full floors");
         check(ExpeditionPlan(seed,true).floorCount==1,"tutorial is the one-floor exception");
+        check(ExpeditionPlan(seed,true).roomsOnFloor(0)==5,"tutorial retains five rooms");
     }
     check(counts.size()==5,"all expedition lengths occur");
+    bool rejected=false;try{ExpeditionPlan(42).roomsOnFloor(-1);}catch(const std::out_of_range &){rejected=true;}
+    check(rejected,"invalid floor index rejected");
     check(std::string(accountName(WitnessAccount::Cole)).find("ACCOUNT")!=std::string::npos,"Cole is also explicitly attributed");
 }
 void layouts() {
-    for(uint64_t seed:{0ULL,1ULL,42ULL,1866ULL,8192ULL}) {
+    std::set<uint64_t> samples{0,1,42,1866,8192};std::set<int> lengths;
+    for(uint64_t seed=0;lengths.size()<5;++seed)
+        if(lengths.insert(ExpeditionPlan(seed).floorCount).second)samples.insert(seed);
+    for(uint64_t seed:samples) {
         const ExpeditionPlan plan(seed,false,WitnessAccount::Rourke);
         for(int floor=0;floor<plan.floorCount;++floor) {
             const auto site=plan.storyAt(floor);if(site==StoryRoom::None)continue;
-            Arena arena(plan.floorSeed(floor),MissionTheme::Canyon,true,false,site);
-            check(arena.roomCount()==15&&arena.shopRoom>=0,"story preserves 15-room floor and shop");
+            Arena arena(plan.floorSeed(floor),MissionTheme::Canyon,true,false,site,plan.roomsOnFloor(floor));
+            check(arena.roomCount()==plan.roomsOnFloor(floor)&&arena.shopRoom>=0,"story preserves scheduled room count and shop");
             int tagged=0,powers=0;
             for(const auto &room:arena.rooms) {
                 if(room.kind==RoomKind::Power)++powers;
@@ -51,7 +63,7 @@ void layouts() {
                 }
             }
             check(tagged==1&&powers>=1&&powers<=2,"one embedded story site; normal rewards retained");
-            check(!arena.storyProps.empty(),"story dressing fits the generated room");
+            check(!arena.storyProps.empty(),"story dressing fits seed "+std::to_string(seed)+" floor "+std::to_string(floor)+" site "+std::to_string(int(site)));
             for(size_t i=0;i<arena.storyProps.size();++i)for(size_t j=i+1;j<arena.storyProps.size();++j) {
                 const auto a=arena.storyProps[i].bounds,b=arena.storyProps[j].bounds;
                 check(a.max.x<=b.min.x||a.min.x>=b.max.x||a.max.z<=b.min.z||a.min.z>=b.max.z,
@@ -94,7 +106,7 @@ void journey(const std::filesystem::path &path) {
         campaign.data().pending->floorCount==run.expedition.floorCount,"the very first pending save records the account and plan");
     const int total=run.expedition.floorCount;
     for(int floor=0;floor<total;++floor) {
-        check(run.floor==floor&&run.arena.roomCount()==15&&!run.finished,"every floor remains a full ordinary dungeon");
+        check(run.floor==floor&&run.arena.roomCount()==run.expedition.roomsOnFloor(floor)&&!run.finished,"every floor remains a full ordinary dungeon");
         check(!run.rescued&&!run.altarDestroyed,"story has no inherited miner or altar goals");
         run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.player.position=run.arena.exit;run.interact();
         if(run.storyRoomIndex()>=0)check(!run.floorExitRequested&&!run.finished,"unread required site gates the exit");
@@ -114,7 +126,10 @@ void journey(const std::filesystem::path &path) {
             check(run.money()==wallet&&run.keys==3&&run.dynamite==2,"currency, keys and dynamite carry");
             check(run.stats.kills==stats.kills&&run.stats.duration==stats.duration&&run.stats.rooms==stats.rooms+1,"statistics span all floors");
             check(run.room==0&&run.roomClear&&run.enemies.empty()&&run.projectiles.empty()&&run.chains.empty()&&!run.rewardOpen&&!run.shopOpen&&!run.floorExitRequested,"fresh safe entrance without stale combat or modal state");
-            check(run.powerUpsTaken==0&&run.roomEnemies(1).size()>0,"new rewards and populated rooms");
+            check(run.powerUpsTaken==0,"new floor resets cache rewards");
+            for(int index=0;index<run.arena.roomCount();++index)
+                if(run.arena.rooms[size_t(index)].kind==RoomKind::Combat)
+                    check(!run.roomEnemies(index).empty(),"each new combat room is prepopulated");
             for(const auto &room:run.rooms)for(const auto &enemy:room.residents)
                 check(enemy.observedShots==run.stats.shots,"new mirror enemies do not react to shots from earlier floors");
             check(!run.advanceFloor(),"floor transitions cannot repeat without an exit request");
@@ -169,9 +184,9 @@ void saveCompatibility(const std::filesystem::path &path) {
         "1 42 \"deathward-m1-53\" \"The Lost Survey\" \"\" 2 0 0 0 0 5 0 1\n"
         "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n0\n0\n0\n";
     write(4,old);CampaignStore legacy(path);
-    check(legacy.data().pending->floorCount==1&&legacy.data().pending->account==WitnessAccount::None,"format-4 history retains its single-floor meaning");
+    check(legacy.data().pending->floorCount==1&&legacy.data().pending->account==WitnessAccount::None&&legacy.data().pending->pacing==ExpeditionPacing::Classic,"format-4 history retains its single-floor meaning and original layout");
     check(legacy.recover()&&ArrivalQuest::stage(legacy.data().world)==ArrivalStage::Report,"format-4 document recovery remains valid");
-    CampaignStore migrated(path);check(migrated.data().history.back().surveyRecovered&&migrated.data().world.money==105,"format-5 round trip retains old documents and money");
+    CampaignStore migrated(path);check(migrated.data().history.back().surveyRecovered&&migrated.data().world.money==105,"format-6 round trip retains old documents and money");
     migrated.begin(42,RourkeExpeditionTitle);
     CampaignStore beforeFirstCheckpoint(path);
     check(beforeFirstCheckpoint.recover()&&beforeFirstCheckpoint.data().world.prosperity==50&&
@@ -185,11 +200,29 @@ void saveCompatibility(const std::filesystem::path &path) {
     const std::string valid=std::to_string(int(e.room))+" 1 "+std::to_string(e.floor)+" "+std::to_string(e.floorSeed)+"\n";
     const auto at=payload.find(valid);check(at!=std::string::npos,"saved provenance record is present");
     for(const auto &invalid:{"1 4 0 42\n","1 1 8 42\n","4 1 0 42\n","1 1 0 43\n"}) {
-        auto bad=payload;bad.replace(at,valid.size(),invalid);write(5,bad);
+        auto bad=payload;bad.replace(at,valid.size(),invalid);write(6,bad);
         bool rejected=false;try{CampaignStore corrupt(path);}catch(const std::exception &){rejected=true;}
         check(rejected,"invalid witness, floor, site or floor seed is rejected even with a valid checksum");
     }
-    write(5,payload);check(CampaignStore(path).data().pending->evidence==run.evidence,"valid provenance reloads");
+    write(6,payload);check(CampaignStore(path).data().pending->evidence==run.evidence,"valid provenance reloads");
+    // Downgrade the fixture's summary lines to the previous format, preserving
+    // stats/evidence. Real format-5 saves did not have a pacing field.
+    std::string v5=payload;size_t cursor=0;
+    while((cursor=v5.find("\"deathward-",cursor))!=std::string::npos) {
+        std::istringstream summary(v5.substr(cursor));std::string version,title,context;
+        summary>>std::quoted(version)>>std::quoted(title)>>std::quoted(context);
+        const size_t end=v5.find('\n',cursor+size_t(summary.tellg()));
+        const size_t field=v5.rfind(' ',end);
+        v5.erase(field,end-field);cursor=field+1;
+    }
+    write(5,v5);CampaignStore previous(path);
+    check(previous.data().pending->pacing==ExpeditionPacing::Classic&&previous.data().pending->evidence==run.evidence,"format-5 evidence survives and keeps original pacing");
+    previous.recover();previous.begin(42,RourkeExpeditionTitle,ExpeditionPacing::Classic);
+    check(CampaignStore(path).data().pending->pacing==ExpeditionPacing::Classic,"explicit Classic preset survives format-6 save");
+    Simulation classic(42,1,{},MissionTheme::Mine,true,false,WitnessAccount::None,0,ExpeditionPacing::Classic);
+    classic.jumpDebug(classic.finalRoom());classic.clearRoomDebug();
+    classic.player.position=classic.arena.exit;classic.interact();
+    check(classic.advanceFloor()&&classic.arena.roomCount()==15&&classic.expedition.pacing==ExpeditionPacing::Classic,"Classic carries to subsequent floors");
 }
 }
 int main() {

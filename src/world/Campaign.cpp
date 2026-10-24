@@ -50,7 +50,8 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
     out << s.id << ' ' << s.seed << ' ' << std::quoted(s.version) << ' ' << std::quoted(s.expedition) << ' '
         << std::quoted(s.startingContext) << ' ' << int(s.reason) << ' ' << s.rescued << ' ' << s.bossKilled
         << ' ' << s.altarDestroyed << ' ' << s.interrupted << ' ' << s.moneyCollected << ' ' << s.moneySpent
-        << ' ' << s.surveyRecovered << ' ' << s.floor << ' ' << s.floorCount << ' ' << int(s.account) << '\n';
+        << ' ' << s.surveyRecovered << ' ' << s.floor << ' ' << s.floorCount << ' ' << int(s.account)
+        << ' ' << int(s.pacing) << '\n';
     writeStats(out, s.stats);
     out << s.items.size();
     for (auto id : s.items)
@@ -78,6 +79,12 @@ RunSummary readSummary(std::istream &in, int version) {
         if(account<0||account>int(WitnessAccount::Cole)||s.floorCount<1||s.floorCount>8||s.floor<0||s.floor>=s.floorCount)
             throw std::runtime_error("Invalid expedition progress in save");
         s.account=WitnessAccount(account);
+    }
+    if(version>=6) {
+        int pacing=-1;in>>pacing;
+        if(pacing<0||pacing>int(ExpeditionPacing::Classic))
+            throw std::runtime_error("Invalid expedition pacing in save");
+        s.pacing=ExpeditionPacing(pacing);
     }
     if (s.moneyCollected > MaxMoney || s.moneySpent > MaxMoney)
         throw std::runtime_error("Invalid money totals in save");
@@ -181,7 +188,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 5 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 6 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -223,7 +230,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 5 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 6 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);
@@ -237,7 +244,7 @@ std::string CampaignStore::worldContext(const WorldState &w) {
     c.world = w;
     return serialize(c);
 }
-uint64_t CampaignStore::begin(uint64_t seed, const std::string &expedition) {
+uint64_t CampaignStore::begin(uint64_t seed, const std::string &expedition, ExpeditionPacing pacing) {
     if (campaign_.pending)
         throw std::runtime_error("An expedition is already pending");
     Campaign next = campaign_;
@@ -245,6 +252,7 @@ uint64_t CampaignStore::begin(uint64_t seed, const std::string &expedition) {
     s.id = next.nextRunId++;
     s.seed = seed;
     s.expedition = expedition;
+    s.pacing = pacing;
     s.account = expedition==RourkeExpeditionTitle?WitnessAccount::Rourke:WitnessAccount::None;
     s.floorCount = ExpeditionPlan(seed,expedition==SurveyExpeditionTitle||expedition==LegacyDaughterExpeditionTitle,s.account).floorCount;
     s.startingContext = worldContext(next.world);

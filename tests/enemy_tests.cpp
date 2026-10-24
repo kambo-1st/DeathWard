@@ -16,6 +16,7 @@ void tick(Simulation &run, int frames) {
 Simulation fixture() {
     Simulation run(1866, 1, {});
     run.arena = Arena{};
+    run.rooms.resize(run.arena.rooms.size());
     run.arena.bounds = {{-25, -1, -25}, {25, 4, 25}};
     run.arena.walls = {{{-26, -1, -26}, {-25, 4, 26}},
                        {{25, -1, -26}, {26, 4, 26}},
@@ -303,7 +304,7 @@ void testAreaAndEncounters() {
     float minArea = 100000, maxArea = 0;
     for (uint64_t seed = 0; seed < 32; ++seed) {
         Simulation generated(seed, 1, {});
-        for (int index = 0; index < RoomCount; ++index) {
+        for (int index = 0; index < generated.arena.roomCount(); ++index) {
             const auto &layout = generated.arena.rooms[size_t(index)];
             generated.player.position = layout.entry;
             generated.enterRoom(index);

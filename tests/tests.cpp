@@ -18,6 +18,7 @@ dw::Simulation fixture() {
     dw::Simulation run(1866, 1, {});
     // Item/collision contracts use a fixed arena, independent of procedural content.
     run.arena = dw::Arena{};
+    run.rooms.resize(run.arena.rooms.size());
     run.arena.walls = {{{-16, -1, -16}, {16, 2, -15}}, {{-16, -1, 15}, {16, 2, 16}},
                        {{-16, -1, -15}, {-15, 2, 15}}, {{15, -1, -15}, {16, 2, 15}},
                        {{-7, 0, -4}, {-5, 2.5f, 0}},   {{5, 0, 1}, {7, 2.5f, 5}},
@@ -314,7 +315,7 @@ void testDeterminism() {
     b.step({});
     check(a.roomClear && b.roomClear && !a.rewardOpen && !b.rewardOpen,
           "combat rooms clear without giving power-ups");
-    check(a.rooms[dw::RoomCount - 2].offers == b.rooms[dw::RoomCount - 2].offers,
+    check(a.rooms[size_t(a.finalRoom() - 1)].offers == b.rooms[size_t(b.finalRoom() - 1)].offers,
           "combat draws do not change seeded power-room offers");
 }
 void testCampaign(const std::filesystem::path &path) {
@@ -408,7 +409,7 @@ void testCheats() {
     for (const auto &enemy : run.enemies)
         check(dw::distance(enemy.position, run.player.position) > 6,
               "room restart spawns its enemy group safely away from the new player position");
-    const int power = dw::RoomCount - 2;
+    const int power = run.finalRoom() - 1;
     run.jumpDebug(power);
     run.player.position = run.arena.rooms[size_t(power)].objective;
     run.interact();
@@ -437,7 +438,7 @@ void testLoop() {
     dw::Simulation run(1866, 1, {});
     run.godMode = true;
     int powers = 0;
-    for (int room = 0; room < dw::RoomCount; ++room) {
+    for (int room = 0; room < run.arena.roomCount(); ++room) {
         run.player.hp = 30;
         run.player.position = run.arena.rooms[size_t(room)].center;
         run.enterRoom(room);
@@ -498,8 +499,8 @@ void testLoop() {
     check(powers >= 1 && powers <= 2 && run.powerUpsTaken == powers, "at most two powers per floor");
     run.player.position = run.arena.exit;
     run.interact();
-    check(!run.finished && run.floorExitRequested && run.bossKilled && run.stats.rooms == dw::RoomCount,
-          "clearing fifteen rooms opens the next floor without ending the expedition");
+    check(!run.finished && run.floorExitRequested && run.bossKilled && run.stats.rooms == size_t(run.arena.roomCount()),
+          "clearing the full floor opens the next floor without ending the expedition");
     check(run.advanceFloor()&&run.floor==1&&!run.finished,"the ordinary mission continues on a fresh floor");
 }
 } // namespace

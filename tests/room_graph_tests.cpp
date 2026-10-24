@@ -9,10 +9,9 @@ void check(bool value, const char *message) {
     if (!value)
         throw std::runtime_error(message);
 }
-using Distances = std::array<int, dw::RoomCount>;
+using Distances = std::vector<int>;
 Distances distances(const dw::RoomGraph &graph, int source, int limit = dw::RoomCount) {
-    Distances result;
-    result.fill(-1);
+    Distances result(graph.cells.size(), -1);
     result[size_t(source)] = 0;
     std::queue<int> pending;
     pending.push(source);
@@ -63,6 +62,30 @@ std::vector<dw::FloorCell> footprint(const dw::RoomGraph &graph) {
 int main() {
     uint64_t seed = 0;
     try {
+        for(int rooms=dw::MinFloorRooms;rooms<=dw::RoomCount;++rooms)
+            for(seed=0;seed<1024;++seed) {
+                const auto graph=dw::generateRoomGraph(seed,false,rooms);
+                const auto again=dw::generateRoomGraph(seed,false,rooms);
+                check(int(graph.cells.size())==rooms&&graph.cells==again.cells&&graph.links==again.links,"variable count is deterministic");
+                const auto depth=distances(graph,0);
+                check(std::all_of(depth.begin(),depth.end(),[](int d){return d>=0;}),"variable graph is connected");
+                const int ordinary=rooms-graph.powerRooms-1;
+                const auto unlocked=distances(graph,0,ordinary);
+                for(int i=0;i<ordinary;++i)check(unlocked[size_t(i)]>=0,"smaller floors have no key dependency");
+                std::vector<int> degree(size_t(rooms),0);
+                for(const auto &edge:graph.links) {
+                    check(edge[0]>=0&&edge[0]<rooms&&edge[1]>=0&&edge[1]<rooms,"variable graph references valid rooms");
+                    ++degree[size_t(edge[0])];++degree[size_t(edge[1])];
+                    const auto a=graph.cells[size_t(edge[0])],b=graph.cells[size_t(edge[1])];
+                    check(std::abs(a.first-b.first)+std::abs(a.second-b.second)==1,"variable passages only connect adjacent rooms");
+                }
+                check(degree[0]>=2&&degree[0]<=3,"smaller floors retain initial choices");
+                for(int i=ordinary;i<rooms;++i)check(degree[size_t(i)]==1,"smaller floor rewards and boss remain leaf branches");
+                check(depth.back()>=3,"smaller floor boss is beyond the opening rooms");
+                check(rooms>=12||graph.powerRooms==1,"early floors reserve one power cache");
+            }
+        bool rejected=false;try{dw::generateRoomGraph(42,false,8);}catch(const std::invalid_argument &){rejected=true;}
+        check(rejected,"invalid room count rejected");
         std::set<std::vector<dw::FloorCell>> shapes;
         std::set<std::vector<int>> structures;
         std::set<int> loopCounts, leafCounts, bossDepths, diameters, startDegrees;
@@ -130,7 +153,7 @@ int main() {
         check(loopCounts.size() == 4 && leafCounts.size() >= 3 && bossDepths.size() >= 4 &&
                   diameters.size() >= 4 && startDegrees.size() == 2,
               "seeds vary loops, dead ends, route lengths and the starting branch count");
-        std::cout << "PASS 10,004 seeds: deterministic connected graphs, safe passage topology, "
+        std::cout << "PASS 7,168 variable-size graphs and 10,004 Classic seeds: deterministic connected graphs, safe passage topology, "
                      "junctions and locked leaves\n"
                   << "PASS 256-seed diversity: " << shapes.size() << " distinct footprints, "
                   << structures.size() << " distinct structural profiles, " << loopCounts.size()

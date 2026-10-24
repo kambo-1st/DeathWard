@@ -109,6 +109,29 @@ void verifyConnectedFloor(const dw::Arena &arena) {
 
 int main() {
     try {
+        for(int count=dw::MinFloorRooms;count<=dw::RoomCount;++count)
+            for(auto theme:{dw::MissionTheme::Mine,dw::MissionTheme::Canyon})
+                for(uint64_t seed:{0ULL,1ULL,42ULL,1866ULL}) {
+                    dw::Arena arena(seed,theme,true,false,dw::StoryRoom::None,count);
+                    const auto unlocked=reachable(arena);
+                    check(arena.roomCount()==count&&unlocked.contains(arena.shopRoom),"variable floor keeps its count and unlocked shop");
+                    check(arena.rooms[0].kind==dw::RoomKind::Empty&&arena.rooms.back().kind==dw::RoomKind::Boss,"variable floor keeps safe entrance and final boss");
+                    int powers=0;
+                    for(const auto &room:arena.rooms) {
+                        if(room.kind==dw::RoomKind::Power)++powers;
+                        verifyRoute(arena,room.entry,room.objective,.48f,"variable room objective");
+                        for(int index:room.passages) {
+                            const auto &p=arena.passages[size_t(index)];
+                            const int side=p.rooms[0]==int(&room-arena.rooms.data())?0:1;
+                            verifyRoute(arena,room.objective,arena.doorApproach(index,side),.48f,"variable room passage");
+                        }
+                    }
+                    check(powers>=1&&powers<=2&&int(arena.keys.size())>=powers,"variable floor retains rewards and sufficient keys");
+                    for(const auto &key:arena.keys) {
+                        check(unlocked.contains(key.room)&&key.room!=arena.shopRoom,"keys reachable without trading or unlocking");
+                        verifyRoute(arena,arena.rooms[size_t(key.room)].entry,key.position,.48f,"variable floor key");
+                    }
+                }
         std::set<uint64_t> maps;
         for (uint64_t seed = 0; seed < 64; ++seed) {
             dw::Arena arena(seed), repeated(seed);
@@ -194,7 +217,7 @@ int main() {
         check(fingerprint(a.arena) == fingerprint(b.arena),
               "campaign outcomes and run IDs do not change the seeded map");
         a.godMode = a.debugScenario = true;
-        for (int i = 0; i < dw::RoomCount; ++i) {
+        for (int i = 0; i < a.arena.roomCount(); ++i) {
             a.player.position = a.arena.rooms[size_t(i)].entry;
             a.enterRoom(i);
             const auto initial = a.livingEnemies();
@@ -247,10 +270,10 @@ int main() {
         cross(fromSide, next);
         check(travel.roomClear && travel.stats.rooms == cleared && travel.player.hp == health,
               "revisiting cleared rooms cannot repeat encounters or farm healing");
-        const auto &powerRoom = travel.arena.rooms[dw::RoomCount - 2];
+        const auto &powerRoom = travel.arena.rooms[travel.arena.roomCount() - 2];
         const int lockIndex = powerRoom.passages.front();
         const auto &lockedDoor = travel.arena.passages[size_t(lockIndex)];
-        const int outside = lockedDoor.rooms[0] == dw::RoomCount - 2 ? 1 : 0;
+        const int outside = lockedDoor.rooms[0] == travel.arena.roomCount() - 2 ? 1 : 0;
         travel.enterRoom(lockedDoor.rooms[size_t(outside)]);
         travel.clearRoom();
         travel.player.position = travel.arena.doorApproach(lockIndex, outside);

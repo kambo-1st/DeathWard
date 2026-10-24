@@ -32,6 +32,7 @@ struct RunSummary {
     bool rescued = false, bossKilled = false, altarDestroyed = false, interrupted = false;
     bool surveyRecovered = false;
     int floor = 0, floorCount = 1;
+    ExpeditionPacing pacing = ExpeditionPacing::Classic;
     WitnessAccount account = WitnessAccount::None;
     std::vector<StoryEvidence> evidence;
     Stats stats;
@@ -55,7 +56,8 @@ class CampaignStore {
     const std::filesystem::path &path() const {
         return path_;
     }
-    uint64_t begin(uint64_t seed, const std::string &expedition = "Red Hollow Mine");
+    uint64_t begin(uint64_t seed, const std::string &expedition = "Red Hollow Mine",
+                   ExpeditionPacing pacing = ExpeditionPacing::Growing);
     void checkpoint(const RunSummary &summary);
     RunSummary resolve(const RunSummary &summary, EndReason reason);
     bool recover();

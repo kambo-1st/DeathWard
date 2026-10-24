@@ -1024,6 +1024,10 @@ int main(int argc, char **argv) {
         check(game.themeChoice == dw::ThemeChoice::Canyon &&
                   game.offeredTheme() == dw::MissionTheme::Canyon && game.seedText == "1866" && !game.run,
               "canyon selection preserves the editable seed and waits for launch");
+        // The following occlusion/pickup regression uses the original seed's
+        // specific scenery and coin placement. Other input fixtures use Growing.
+        click(500,497);
+        check(game.expeditionPacing==dw::ExpeditionPacing::Classic,"mission board selects Classic through the mouse");
         click(650, 550);
         check(game.run && game.screen == dw::Screen::Expedition, "mouse launch opens expedition");
         check(game.musicScene() == dw::MusicScene::Canyon, "peaceful canyon arrival uses exploration music");
@@ -1297,7 +1301,7 @@ int main(int argc, char **argv) {
         for (int i = 0; i < 220; ++i)
             frame();
         check(game.run->rescued, "left-clicking an objective's body approaches and interacts");
-        const int powerRoom = dw::RoomCount - 2;
+        const int powerRoom = game.run->arena.roomCount() - 2;
         const int lockIndex = game.run->arena.rooms[size_t(powerRoom)].passages.front();
         const auto &lock = game.run->arena.passages[size_t(lockIndex)];
         const int outside = lock.rooms[0] == powerRoom ? 1 : 0;
@@ -1411,7 +1415,7 @@ int main(int argc, char **argv) {
                                                            {framingOffset, 0.85f, framingOffset})) < 0.01f,
               "F12 skips to the next room, resumes and immediately follows with the camera");
         pressKey(KEY_F7);
-        check(game.run->room == dw::Simulation::FinalRoom && !game.run->boss() && game.run->roomThreats() > 0,
+        check(game.run->room == game.run->finalRoom() && !game.run->boss() && game.run->roomThreats() > 0,
               "F7 jumps to the canyon's final monster encounter without a Western boss");
         check(game.musicScene() == dw::MusicScene::Boss, "canyon finale uses boss music without a Sheriff");
         pressKey(KEY_F3, true);
@@ -1444,8 +1448,8 @@ int main(int argc, char **argv) {
                   game.run->player.shotDamage == dw::RevolverDamage + 4 && game.run->items.empty(),
               "player settings survive mission completion and hub travel without retaining item penalties");
         pressKey(KEY_HOME);
-        game.run->jumpDebug(dw::RoomCount - 2);
-        game.run->player.position = game.run->arena.rooms[dw::RoomCount - 2].objective;
+        game.run->jumpDebug(game.run->arena.roomCount() - 2);
+        game.run->player.position = game.run->arena.rooms[game.run->arena.roomCount() - 2].objective;
         game.run->interact();
         check(game.run->rewardOpen, "power-choice modal is open for terminal-cheat verification");
         pressKey(KEY_F9);
@@ -1572,8 +1576,13 @@ int main(int argc, char **argv) {
         game.missionMenu = true;
         orbit(150, 100);
         check(dw::distance(retainedAngle, cameraAngle()) < .0001f, "the station menu blocks camera rotation");
+        game.perform(dw::Action::CycleExpeditionPacing);
+        check(game.expeditionPacing==dw::ExpeditionPacing::Growing,"mission board switches back to Growing pacing");
         game.missionMenu = false;
+        game.perform(dw::Action::CycleExpeditionPacing);
+        check(game.expeditionPacing==dw::ExpeditionPacing::Growing,"pacing changes only while choosing an expedition");
         game.launch();
+        check(game.run->arena.roomCount()==9&&game.campaign.data().pending->pacing==dw::ExpeditionPacing::Growing,"selected pacing reaches gameplay and initial save");
         check(std::abs(cameraDistance() - widestDistance) < 0.01f, "new expeditions retain session zoom");
         check(dw::distance(retainedAngle, cameraAngle()) < .0001f,
               "new expeditions retain session camera rotation");

@@ -22,6 +22,7 @@ void damage(Simulation &run, EntityId target, bool execution = false) {
 Simulation fixture(uint64_t seed = 1866) {
     Simulation run(seed, 1, {});
     run.arena = Arena{};
+    run.rooms.resize(run.arena.rooms.size());
     run.arena.bounds = {{-20, -1, -20}, {20, 4, 20}};
     run.moneyPickups.clear();
     run.enemies.clear();

@@ -4,6 +4,8 @@
 namespace dw {
 enum class WitnessAccount { None, Rourke, Eleanor, Mercer, Cole };
 enum class StoryRoom { None, SurveyCamp, SplitRock, RailwayCutting, DryCreek };
+enum class ExpeditionPacing { Growing, Classic };
+const char *expeditionPacingName(ExpeditionPacing pacing);
 const char *accountName(WitnessAccount account);
 const char *storyRoomName(StoryRoom room);
 const char *storyClaim(StoryRoom room);
@@ -15,8 +17,11 @@ struct ExpeditionPlan {
     uint64_t seed;
     WitnessAccount account;
     int floorCount;
-    ExpeditionPlan(uint64_t seed, bool tutorial = false, WitnessAccount account = WitnessAccount::None);
+    ExpeditionPacing pacing;
+    ExpeditionPlan(uint64_t seed, bool tutorial = false, WitnessAccount account = WitnessAccount::None,
+                   ExpeditionPacing pacing = ExpeditionPacing::Growing);
     uint64_t floorSeed(int floor) const;
+    int roomsOnFloor(int floor) const;
     StoryRoom storyAt(int floor) const;
 };
 struct StoryEvidence {

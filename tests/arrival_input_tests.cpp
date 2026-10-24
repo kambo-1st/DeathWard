@@ -77,7 +77,7 @@ int main() {
         check(game.arrivalStage()==ArrivalStage::RourkeTrail,"Rourke unlocks his account at the trail");
         game.seedText="42";
         walk();while(game.questDialogueOpen())click(790,708);
-        check(game.run&&game.run->testimony()&&!game.run->surveyTutorial&&game.run->arena.roomCount()==15,"Rourke starts a full dungeon expedition");
+        check(game.run&&game.run->testimony()&&!game.run->surveyTutorial&&game.run->arena.roomCount()==9,"Rourke starts a full dungeon expedition");
         const int floors=game.run->expedition.floorCount;
         for(int floor=0;floor<floors;++floor) {
             check(game.run&&game.run->floor==floor,"game loads the next floor without returning to the hub");

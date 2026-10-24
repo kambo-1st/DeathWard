@@ -24,7 +24,7 @@ void generation() {
         for (uint64_t seed : {0ULL, 1ULL, 42ULL, 1866ULL, 69175541ULL}) {
             Simulation a(seed, 1, {}, theme), b(seed, 2, {}, theme);
             const int shop = a.arena.shopRoom;
-            check(shop >= 4 && shop < Simulation::FinalRoom && shop == b.arena.shopRoom,
+            check(shop >= 4 && shop < a.finalRoom() && shop == b.arena.shopRoom,
                   "shop location is seeded and keeps mission objectives intact");
             locations.insert(shop);
             check(std::count_if(a.arena.rooms.begin(), a.arena.rooms.end(),

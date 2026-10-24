@@ -292,7 +292,7 @@ void residentRenderCheck(MissionTheme theme) {
     watcher.y = .85f;
     check(run.arena.roomAt(watcher) < 0, "render fixture watches from the corridor");
     run.player.position = watcher;
-    for (int other = 0; other < RoomCount; ++other)
+    for (int other = 0; other < run.arena.roomCount(); ++other)
         if (other != room)
             run.rooms[size_t(other)].residents.clear();
     const auto &group = run.roomEnemies(room);
@@ -356,7 +356,7 @@ void sceneryInputCheck(MissionTheme theme, float yaw, bool transparent) {
     Camera3D camera{};
     bool found = false;
     std::array<int, 4> candidates{};
-    for (int room = 0; room < RoomCount && !found; ++room) {
+    for (int room = 0; room < run.arena.roomCount() && !found; ++room) {
         const auto bounds = run.arena.rooms[size_t(room)].bounds;
         for (float z = bounds.min.z + 2; z < bounds.max.z - 2 && !found; z += 2)
             for (float x = bounds.min.x + 2; x < bounds.max.x - 2 && !found; x += 2) {

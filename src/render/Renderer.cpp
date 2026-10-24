@@ -998,7 +998,9 @@ Action Renderer::hub(const Game &game) {
                  : "Face Western outlaws. Bring the miners home, break the altar and defeat the Hollow "
                    "Sheriff.",
              270, 238, 727, 21, Paper);
-        text("4-8 seeded floors, fifteen rooms each. Your build carries between floors.", 270, 323, 15,
+        text(game.expeditionPacing == ExpeditionPacing::Classic
+                 ? "4-8 seeded floors, fifteen rooms each. Your build carries between floors."
+                 : "4-8 seeded floors, growing from nine to fifteen rooms. Keep your build.", 270, 323, 15,
              Muted);
         if (button("SEEDED THEME", 270, 354, 230, 34, game.themeChoice == ThemeChoice::Seeded))
             return Action::ThemeSeeded;
@@ -1014,11 +1016,9 @@ Action Renderer::hub(const Game &game) {
         if (game.offeredTheme() == MissionTheme::Canyon) {
             if (button(game.visualSettings.canyonRiver ? "RIVER ON" : "RIVER OFF", 748, 480, 260, 34))
                 return Action::ToggleCanyonRiver;
-            text("Same seed and river setting repeat the terrain.", 270, 490, 13, Muted);
-        } else {
-            text("Replay with the same seed and theme. New Mission chooses a fresh seed.", 270, 482, 13,
-                 Muted);
         }
+        if (button(expeditionPacingName(game.expeditionPacing), 270, 480, 460, 34))
+            return Action::CycleExpeditionPacing;
         if (button(game.offeredTheme() == MissionTheme::Canyon ? "LEAVE FOR THE CANYON"
                                                                : "LEAVE FOR THE MINE",
                    270, 529, 738, 59, true))

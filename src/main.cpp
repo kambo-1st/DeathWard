@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
     bool mute = false, explicitAudio = false, sandstorm = false;
     std::optional<bool> canyonRiver;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
+    dw::ExpeditionPacing expeditionPacing = dw::ExpeditionPacing::Growing;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
     std::filesystem::path sequenceFile;
@@ -113,6 +114,11 @@ int main(int argc, char **argv) {
                 return 2;
             }
             canyonRiver = setting == "on";
+        } else if (arg == "--expedition-pacing" && i + 1 < argc) {
+            const std::string pacing = argv[++i];
+            if (pacing == "growing") expeditionPacing = dw::ExpeditionPacing::Growing;
+            else if (pacing == "classic") expeditionPacing = dw::ExpeditionPacing::Classic;
+            else { std::cerr << "--expedition-pacing must be growing or classic\n"; return 2; }
         } else if (arg == "--theme" && i + 1 < argc) {
             const std::string theme = argv[++i];
             if (theme == "seeded")
@@ -171,6 +177,7 @@ int main(int argc, char **argv) {
                          "  --cinematic         Open the separate Cinematic Editor\n"
                          "  --sequence PATH     Cinematic file to edit (default: arrival.cinematic in hub)\n"
                          "  --cinematic-at SEC  Preview a specific timeline time\n"
+                         "  --expedition-pacing NAME  growing (9-15 rooms, default) or classic (15)\n"
                          "  --canyon-river MODE  on (default) or off; applies to new canyon missions\n"
                          "  --mute              Skip audio initialization\n"
                          "  --audio             Enable audio in scripted checks (silent by default)\n";
@@ -276,6 +283,7 @@ int main(int argc, char **argv) {
         dw::Game game(save, initialHub);
         game.sandstorm = sandstorm || game.arrivalActive();
         game.themeChoice = themeChoice;
+        game.expeditionPacing = expeditionPacing;
         if (smoke || benchmark) game.seedText = "1866";
         game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
         game.visualStyle = styleChoice.value_or(dw::VisualStyle::Original);
@@ -329,7 +337,7 @@ int main(int argc, char **argv) {
             if (smoke && scene == "cheats")
                 game.debug = true;
             if (smoke && scene == "empty") {
-                for (int i = 0; i < dw::RoomCount; ++i)
+                for (int i = 0; i < game.run->arena.roomCount(); ++i)
                     if (game.run->arena.rooms[size_t(i)].kind == dw::RoomKind::Empty) {
                         game.run->jumpDebug(i);
                         game.run->announce("QUIET ROOM / no enemies. Explore the open passages.", 5);
@@ -342,13 +350,13 @@ int main(int argc, char **argv) {
                 game.run->clearRoomDebug();
             }
             if (smoke && (scene == "power" || scene == "reward")) {
-                const int passage = game.run->arena.rooms[dw::RoomCount - 2].passages.front();
+                const int passage = game.run->arena.rooms[game.run->arena.roomCount() - 2].passages.front();
                 game.run->arena.passages[size_t(passage)].locked = false;
-                game.run->enterRoom(dw::RoomCount - 2);
+                game.run->enterRoom(game.run->arena.roomCount() - 2);
                 game.run->player.position = game.run->arena.rooms[size_t(game.run->room)].center;
             }
             if (smoke && scene == "reward") {
-                game.run->enterRoom(dw::RoomCount - 2);
+                game.run->enterRoom(game.run->arena.roomCount() - 2);
                 game.run->player.position = game.run->arena.rooms[size_t(game.run->room)].objective;
                 game.run->interact();
             }

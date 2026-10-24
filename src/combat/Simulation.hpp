@@ -199,7 +199,8 @@ class Simulation {
   public:
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
-               WitnessAccount account = WitnessAccount::None, int floor = 0);
+               WitnessAccount account = WitnessAccount::None, int floor = 0,
+               ExpeditionPacing pacing = ExpeditionPacing::Growing);
     ExpeditionPlan expedition;
     int floor = 0;
     Player player;

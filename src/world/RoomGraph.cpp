@@ -1,8 +1,11 @@
 #include "world/Dungeon.hpp"
 #include <queue>
+#include <stdexcept>
 
 namespace dw {
-RoomGraph generateRoomGraph(uint64_t seed, bool tutorial) {
+RoomGraph generateRoomGraph(uint64_t seed, bool tutorial, int roomCount) {
+    if (!tutorial && (roomCount < MinFloorRooms || roomCount > RoomCount))
+        throw std::invalid_argument("Floor room count must be between 9 and 15");
     Random rng(seed ^ 0x544f504f4c4f4759ULL);
     RoomGraph graph;
     if (tutorial) {
@@ -19,15 +22,17 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial) {
         }
         return graph;
     }
+    graph.cells.resize(size_t(roomCount));
     graph.powerRooms = 1 + int(rng.bounded(2));
-    const int ordinary = RoomCount - graph.powerRooms - 1;
+    if (roomCount < 12) graph.powerRooms = 1;
+    const int ordinary = roomCount - graph.powerRooms - 1;
     const std::array<FloorCell, 4> directions{{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}};
     auto shuffle = [&](auto &values) {
         for (size_t i = values.size(); i > 1; --i)
             std::swap(values[i - 1], values[rng.bounded(uint32_t(i))]);
     };
     std::set<FloorCell> occupied{{0, 0}};
-    std::array<int, RoomCount> degree{};
+    std::vector<int> degree(size_t(roomCount), 0);
     auto link = [&](int a, int b) {
         graph.links.push_back({a, b});
         ++degree[size_t(a)];
@@ -103,8 +108,7 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial) {
     for (size_t i = 0; i < loops; ++i)
         link(shortcuts[i][0], shortcuts[i][1]);
 
-    std::array<int, RoomCount> depth;
-    depth.fill(-1);
+    std::vector<int> depth(size_t(roomCount), -1);
     depth[0] = 0;
     std::queue<int> pending;
     pending.push(0);
@@ -126,7 +130,7 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial) {
     std::erase_if(bossOptions,
                   [&](const auto &option) { return depth[size_t(option.first)] < std::max(2, deepest - 2); });
     const auto boss = bossOptions[rng.bounded(uint32_t(bossOptions.size()))];
-    place(RoomCount - 1, boss.first, boss.second);
+    place(roomCount - 1, boss.first, boss.second);
     for (int i = 0; i < graph.powerRooms; ++i) {
         auto options = openings(ordinary);
         // At least one cache branches off a route, keeping a genuine junction
@@ -134,8 +138,13 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial) {
         if (i == 0 && std::any_of(options.begin(), options.end(),
                                   [&](const auto &option) { return degree[size_t(option.first)] >= 2; }))
             std::erase_if(options, [&](const auto &option) { return degree[size_t(option.first)] < 2; });
+        if (roomCount < 12) {
+            int nearest = roomCount;
+            for (const auto &option : options) nearest = std::min(nearest, depth[size_t(option.first)]);
+            std::erase_if(options, [&](const auto &option) { return depth[size_t(option.first)] > nearest; });
+        }
         const auto cache = options[rng.bounded(uint32_t(options.size()))];
-        place(RoomCount - 2 - i, cache.first, cache.second);
+        place(roomCount - 2 - i, cache.first, cache.second);
     }
 
     // Room identity and objective placement do not dictate the growth order.
@@ -143,11 +152,11 @@ RoomGraph generateRoomGraph(uint64_t seed, bool tutorial) {
     for (int i = 1; i < ordinary; ++i)
         ids.push_back(i);
     shuffle(ids);
-    std::array<int, RoomCount> remap;
-    for (int i = 0; i < RoomCount; ++i)
+    std::vector<int> remap(size_t(roomCount), 0);
+    for (int i = 0; i < roomCount; ++i)
         remap[size_t(i)] = i > 0 && i < ordinary ? ids[size_t(i - 1)] : i;
     const auto cells = graph.cells;
-    for (int i = 0; i < RoomCount; ++i)
+    for (int i = 0; i < roomCount; ++i)
         graph.cells[size_t(remap[size_t(i)])] = cells[size_t(i)];
     for (auto &edge : graph.links)
         for (int &room : edge)

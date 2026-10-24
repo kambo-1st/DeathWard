@@ -50,7 +50,7 @@ const path=require('node:path');
   await walk();await talk();await wait(()=>Module.expedition.account===1);
   const floors=await page.evaluate(()=>Module.expedition.floors);assert.ok(floors>=4&&floors<=8);
   assert.equal(await page.evaluate(()=>Module.expedition.floor),0);
-  assert.equal(await page.evaluate(()=>Module.expedition.rooms),15);
+  assert.equal(await page.evaluate(()=>Module.expedition.rooms),9);
   assert.ok(await page.evaluate(()=>Module.expedition.site)>0);
   await capture('rourke-expedition');
   await key('KeyJ');await wait(()=>Module.expedition.journal);
@@ -58,12 +58,12 @@ const path=require('node:path');
   await click(850,691);await wait(()=>!Module.expedition.journal);
   await key('Escape');await key('KeyT');await wait(()=>Module.state.screen===2);
   await key('Enter');await wait(()=>Module.quest.stage===10&&Module.state.screen===0);
-  await wait(()=>!Module.saving);assert.match(await saved(),/^DEATHWARD 5 /);
+  await wait(()=>!Module.saving);assert.match(await saved(),/^DEATHWARD 6 /);
   assert.match(await saved(),/redstone.rourke_departed/);assert.doesNotMatch(await saved(),/redstone.rourke_returned/);
   await launch('?hub=redstone&verify');assert.equal(await page.evaluate(()=>Module.quest.stage),10);
   await key('KeyJ');await wait(()=>Module.expedition.journal);await key('Escape');
   assert.equal(await page.evaluate(()=>Module.ctx.getError()),0);assert.deepEqual(errors,[]);
-  console.log('PASS browser arrival and testimony launch: tutorial/letter/report, Rourke dialogue, '+floors+'-floor plan with 15 rooms, journal input, retreat and format-5 reload. Full floor/evidence traversal is covered by the native input suite.');
+  console.log('PASS browser arrival and testimony launch: tutorial/letter/report, Rourke dialogue, '+floors+'-floor plan starting with 9 rooms, journal input, retreat and format-6 reload. Full floor/evidence traversal is covered by the native input suite.');
  } catch(e) {console.error(e,errors);console.error(await page.evaluate(()=>({state:Module.state,quest:Module.quest,expedition:Module.expedition})));await capture('failure');throw e;}
  finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

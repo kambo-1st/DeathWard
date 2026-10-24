@@ -198,9 +198,9 @@ void Game::launch(bool freeMission) {
     const auto theme = search||account?MissionTheme::Canyon:resolveTheme(themeChoice, seed);
     auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world,
                                                   theme, visualSettings.canyonRiver,search,
-                                                  account?WitnessAccount::Rourke:WitnessAccount::None);
+                                                  account?WitnessAccount::Rourke:WitnessAccount::None,0,expeditionPacing);
     candidate->tunePlayer(playerHealth, playerDamage);
-    campaign.begin(seed, candidate->summary().expedition);
+    campaign.begin(seed, candidate->summary().expedition, expeditionPacing);
     run = std::move(candidate);
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -295,6 +295,11 @@ void Game::perform(Action action) {
             break;
         case Action::CycleVisualStyle:
             visualStyle = nextVisualStyle(visualStyle);
+            break;
+        case Action::CycleExpeditionPacing:
+            if (screen == Screen::Hub && missionMenu)
+                expeditionPacing = expeditionPacing == ExpeditionPacing::Growing
+                    ? ExpeditionPacing::Classic : ExpeditionPacing::Growing;
             break;
         case Action::ToggleCanyonRiver:
             if (screen == Screen::Hub && missionMenu)

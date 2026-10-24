@@ -90,7 +90,7 @@ int main() {
                 bends |= distance(midpoint, trail[trail.size() / 2]) > 1;
             }
             check(bends, "canyon passages wind between basins");
-            for (int room = 0; room < RoomCount; ++room) {
+            for (int room = 0; room < a.arena.roomCount(); ++room) {
                 a.jumpDebug(room);
                 b.jumpDebug(room);
                 check(a.enemies.size() == b.enemies.size(), "seeded canyon populations repeat");

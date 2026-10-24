@@ -15,6 +15,7 @@ void tick(Simulation &run, int n) {
 Simulation fixture() {
     Simulation run(1866, 1, {});
     run.arena = Arena{};
+    run.rooms.resize(run.arena.rooms.size());
     run.arena.bounds = {{-25, -1, -25}, {25, 8, 25}};
     for (auto &room : run.arena.rooms)
         room.bounds = run.arena.bounds;

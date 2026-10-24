@@ -303,7 +303,7 @@ if (process.env.DEATHWARD_BROWSER) options.executablePath = process.env.DEATHWAR
     assert.ok(await page.evaluate(() => Module.combatParticles.dust > 0));
     await page.screenshot({path: path.join(artifacts, 'web-canyon.png')});
     await key('F7');
-    await wait(() => Module.state.room === 14 && Module.state.enemies > 0);
+    await wait(() => Module.state.room === Module.expedition.rooms - 1 && Module.state.enemies > 0);
     await key('F8');
     await wait(() => Module.state.screen === 2 && Module.state.history === 1 && !Module.saving);
     console.log('PASS canyon launch, firing, camera orbit, final encounter and victory');

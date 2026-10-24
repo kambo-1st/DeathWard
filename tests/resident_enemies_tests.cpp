@@ -13,7 +13,7 @@ void verify(uint64_t seed, MissionTheme theme) {
     Simulation run(seed, 1, {}, theme);
     check(run.enemies.empty() && run.roomClear, "arrival room stays empty and clear");
     std::set<EntityId> identities;
-    for (int room = 0; room < RoomCount; ++room) {
+    for (int room = 0; room < run.arena.roomCount(); ++room) {
         const auto &group = run.roomEnemies(room);
         check(int(group.size()) == run.roomEnemyCount(room), "every room is populated before visiting");
         check(room == 0 || !run.rooms[size_t(room)].visited, "population does not discover rooms");

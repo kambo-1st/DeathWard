@@ -6,9 +6,10 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level)
-    : expedition(seed,tutorial,account),floor(level),
-      arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level)),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing)
+    : expedition(seed,tutorial,account,pacing),floor(level),
+      arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
+            expedition.roomsOnFloor(level)),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -66,7 +67,8 @@ bool Simulation::canUseFloorExit() const {
 bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
-    Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1);
+    Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
+                    expedition.pacing);
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
@@ -111,6 +113,10 @@ std::string Simulation::roomName() const {
     }
     if (arena.rooms[size_t(room)].kind == RoomKind::Shop)
         return "Trader's Rest";
+    if (arena.rooms[size_t(room)].kind == RoomKind::Boss)
+        return roomName(FinalRoom, arena.theme);
+    if (arena.rooms[size_t(room)].kind == RoomKind::Power)
+        return roomName(RoomCount - 2 - (finalRoom() - 1 - room), arena.theme);
     return roomName(room, arena.theme);
 }
 std::string Simulation::tutorialHint() const {
@@ -501,7 +507,7 @@ RunSummary Simulation::summary() const {
     RunSummary s;
     s.id = runId_;
     s.seed = expedition.seed;
-    s.floor=floor;s.floorCount=expedition.floorCount;s.account=expedition.account;s.evidence=evidence;
+    s.floor=floor;s.floorCount=expedition.floorCount;s.pacing=expedition.pacing;s.account=expedition.account;s.evidence=evidence;
     s.expedition = surveyTutorial?SurveyExpeditionTitle:testimony()?RourkeExpeditionTitle:missionTheme(arena.theme).title;
     s.startingContext = CampaignStore::worldContext(startingWorld_);
     s.rescued = legacyObjectives()&&rescued;

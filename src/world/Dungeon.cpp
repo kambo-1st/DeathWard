@@ -80,16 +80,16 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 }
 } // namespace
 
-Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story)
+Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story, int requestedRooms)
     : visualSeed(seed), theme(missionTheme) {
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
-    const auto graph = generateRoomGraph(seed,tutorial);
+    const auto graph = generateRoomGraph(seed,tutorial,requestedRooms);
     rooms.resize(graph.cells.size());
     const int powerRooms = graph.powerRooms;
     if(!tutorial)rooms.back().kind = RoomKind::Boss;
     for (int i = 0; i < powerRooms; ++i)
-        rooms[size_t(RoomCount - 2 - i)].kind = RoomKind::Power;
+        rooms[size_t(roomCount() - 2 - i)].kind = RoomKind::Power;
     auto shuffle = [&](auto &values) {
         for (size_t i = values.size(); i > 1; --i)
             std::swap(values[i - 1], values[layout.bounded(uint32_t(i))]);
@@ -171,7 +171,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             room.objective = sites[layout.bounded(uint32_t(sites.size()))];
         room.bossSpawn = room.center;
     }
-    std::array<bool, RoomCount> hasEntry{};
+    std::vector<bool> hasEntry(rooms.size(), false);
     for (auto &passage : passages) {
         auto &a = rooms[size_t(passage.rooms[0])];
         auto &b = rooms[size_t(passage.rooms[1])];
@@ -292,16 +292,26 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             }
         }
     }
+    // Small floors reserve a shop before allocating keys/quiet rooms. Otherwise
+    // those roles can consume the last eligible ordinary room. Classic stays exact.
+    int reservedShop = -1;
+    if (!tutorial && roomCount() < RoomCount) {
+        std::vector<int> sites;
+        for (int i = 4; i < roomCount(); ++i)
+            if (rooms[size_t(i)].kind == RoomKind::Combat) sites.push_back(i);
+        Random shopPlacement(seed ^ 0x53484f50524f4f4dULL);
+        reservedShop = sites.at(shopPlacement.bounded(uint32_t(sites.size())));
+    }
     // Every key starts in the unlocked combat network, never behind the lock it opens.
     std::vector<int> keyRooms;
     for (int i = 0; i < roomCount(); ++i)
-        if (rooms[size_t(i)].kind == RoomKind::Combat && i != 2 && i != 3)
+        if (rooms[size_t(i)].kind == RoomKind::Combat && i != 2 && i != 3 && i != reservedShop)
             keyRooms.push_back(i);
     shuffle(keyRooms);
     for (int i = 0; !tutorial && i < powerRooms + 1; ++i)
         keys.push_back({keyRooms[size_t(i)], rooms[size_t(keyRooms[size_t(i)])].objective, false});
     std::queue<int> breadth;
-    std::array<bool, RoomCount> seen{};
+    std::vector<bool> seen(rooms.size(), false);
     seen[0] = true;
     breadth.push(0);
     while (!breadth.empty()) {
@@ -321,13 +331,13 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     // the unlocked network and can still contain a key, but never a power pedestal.
     std::vector<int> quietRooms;
     for (int i = 1; i < roomCount(); ++i)
-        if (rooms[size_t(i)].kind == RoomKind::Combat && rooms[size_t(i)].depth > 1 && i != 2 && i != 3)
+        if (rooms[size_t(i)].kind == RoomKind::Combat && rooms[size_t(i)].depth > 1 && i != 2 && i != 3 && i != reservedShop)
             quietRooms.push_back(i);
     shuffle(quietRooms);
     const int quietCount = 1 + int(layout.bounded(2));
     // The entrance is always quiet and counts toward the one-to-two-room limit.
     rooms.front().kind = RoomKind::Empty;
-    for (int i = 1; !tutorial && i < quietCount; ++i)
+    for (int i = 1; !tutorial && i < quietCount && size_t(i - 1) < quietRooms.size(); ++i)
         rooms[size_t(quietRooms[size_t(i - 1)])].kind = RoomKind::Empty;
     // Convert one ordinary room in the unlocked network into a peaceful shop.
     // Preserve the entrance, objective rooms, key sites and separate power caches.
@@ -340,7 +350,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     if(tutorial) {
         rooms[2].kind=rooms.back().kind=RoomKind::Empty;
     } else {
-        shopRoom = shopSites.at(shop.bounded(uint32_t(shopSites.size())));
+        shopRoom = reservedShop >= 0 ? reservedShop : shopSites.at(shop.bounded(uint32_t(shopSites.size())));
         rooms[size_t(shopRoom)].kind = RoomKind::Shop;
     }
     if(!tutorial&&story!=StoryRoom::None) {
@@ -351,8 +361,9 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
                 if((rooms[size_t(i)].kind==RoomKind::Combat||rooms[size_t(i)].kind==RoomKind::Empty)&&
                    rooms[size_t(i)].depth>=2&&i!=2&&i!=3&&
                    std::none_of(keys.begin(),keys.end(),[&](const auto &k){return k.room==i;}))candidates.push_back(i);
-            // The unlocked ordinary network always has an eligible room. Keep a
-            // defensive fallback that still preserves shops, keys and power caches.
+            // Small floors may have no unassigned ordinary room. Overlay a
+            // combat room in that case; shops and power caches stay separate,
+            // while any key at the same objective remains collectible.
             if(candidates.empty())for(int i=1;i<roomCount()-1;++i)
                 if(rooms[size_t(i)].kind==RoomKind::Combat)candidates.push_back(i);
             Random placement(seed^0x53544f5259524f4fULL);
@@ -418,19 +429,28 @@ void Arena::dressStoryRoom() {
         }
         for(const auto &[kind,size]:props) {
             bool placed=false;
+            auto place=[&](Vector3 p,Vector3 footprint) {
+                Box box{{p.x-footprint.x*.5f,0,p.z-footprint.z*.5f},{p.x+footprint.x*.5f,footprint.y,p.z+footprint.z*.5f}};
+                if(!safe(box))return false;
+                if(kind==StoryPropKind::SplitRock) {
+                    auto left=box,right=box;
+                    left.max.x=p.x-.3f;right.min.x=p.x+.3f;right.max.y*=.85f;
+                    storyProps.push_back({kind,left});storyProps.push_back({kind,right});
+                } else storyProps.push_back({kind,box});
+                rebuildWalls();return true;
+            };
             for(float radius=5;radius<22&&!placed;radius+=2)
                 for(int step=0;step<24&&!placed;++step) {
                     const float angle=float(step)*2*Pi/24+float(visualSeed%31)*.1f;
                     const auto p=add(room.objective,{std::cos(angle)*radius,0,std::sin(angle)*radius});
-                    Box box{{p.x-size.x*.5f,0,p.z-size.z*.5f},{p.x+size.x*.5f,size.y,p.z+size.z*.5f}};
-                    if(!safe(box))continue;
-                    if(kind==StoryPropKind::SplitRock) {
-                        auto left=box,right=box;
-                        left.max.x=p.x-.3f;right.min.x=p.x+.3f;right.max.y*=.85f;
-                        storyProps.push_back({kind,left});storyProps.push_back({kind,right});
-                    } else storyProps.push_back({kind,box});
-                    rebuildWalls();placed=true;
+                    placed=place(p,size);
                 }
+            // A narrow basin can leave safe pockets between the coarse radial
+            // samples. Search the whole room before reducing a prop's footprint.
+            for(float scale:{1.f,.8f,.65f})
+                for(float x=room.bounds.min.x+2;x<room.bounds.max.x-2&&!placed;x+=.5f)
+                    for(float z=room.bounds.min.z+2;z<room.bounds.max.z-2&&!placed;z+=.5f)
+                        placed=place({x,0,z},mul(size,scale));
         }
     }
 }

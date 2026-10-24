@@ -35,6 +35,7 @@ enum class Action {
     ThemeSeeded,
     ThemeMine,
     ThemeCanyon,
+    CycleExpeditionPacing,
     TravelHub,
     TravelFrontier,
     TravelRedstone,
@@ -125,6 +126,7 @@ class Game {
     uint64_t audioContext = 0;
     std::string seedText = "1866", error;
     ThemeChoice themeChoice = ThemeChoice::Canyon;
+    ExpeditionPacing expeditionPacing = ExpeditionPacing::Growing;
     MissionTheme offeredTheme() const;
     bool quit = false, paused = false, slow = false, debug = true, collisionDebug = false, resetArmed = false;
     bool debugPanelOpen = false;

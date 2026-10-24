@@ -11,6 +11,7 @@ void check(bool ok, const char *message) {
 Simulation fixture() {
     Simulation s(1866, 1, {});
     s.arena = Arena{};
+    s.rooms.resize(s.arena.rooms.size());
     s.arena.bounds = {{-25, -1, -25}, {25, 4, 25}};
     s.arena.walls = {{{-26, -1, -26}, {-25, 5, 26}},
                      {{25, -1, -26}, {26, 5, 26}},

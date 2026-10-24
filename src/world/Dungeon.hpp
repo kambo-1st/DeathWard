@@ -8,7 +8,9 @@
 #include <set>
 
 namespace dw {
+// Original comparison preset. Runtime loops must use arena.roomCount().
 inline constexpr int RoomCount = 15;
+inline constexpr int MinFloorRooms = 9;
 inline constexpr float FloorTile = 2;
 using FloorCell = std::pair<int, int>;
 enum class RoomKind { Combat, Power, Boss, Empty, Shop };
@@ -17,7 +19,7 @@ struct RoomGraph {
     std::vector<std::array<int, 2>> links;
     int powerRooms = 1;
 };
-RoomGraph generateRoomGraph(uint64_t seed, bool tutorial = false);
+RoomGraph generateRoomGraph(uint64_t seed, bool tutorial = false, int rooms = RoomCount);
 struct RoomLayout {
     Box bounds;
     Vector3 center{}, entry{}, exit{}, objective{}, bossSpawn{};
@@ -67,7 +69,7 @@ struct Arena {
     Vector3 entrance{0, 0.85f, 10}, exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
-                   bool tutorial = false, StoryRoom story = StoryRoom::None);
+                   bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount);
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;
