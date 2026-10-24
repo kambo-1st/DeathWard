@@ -55,6 +55,26 @@ FloorDimensions ExpeditionPlan::dimensionsOnFloor(int floor) const {
     result.maxGapTiles=8+4*floor/span;
     return result;
 }
+FloorProfile ExpeditionPlan::profileOnFloor(int floor) const {
+    if(floor<0||floor>=floorCount)throw std::out_of_range("Invalid expedition floor");
+    if(floorCount==1||pacing==ExpeditionPacing::Classic)return {};
+    const int band=std::min(3,floor*4/floorCount);
+    static const std::array<FloorProfile,4> profiles{{
+        {0,"Outer Washes",{6,2,0,2},9,1,95,1.1f,2,1,1,1,.5f},
+        {1,"Broken Quarry",{2,4,5,2},14,3,85,1.f,4,2,1,3,.7f},
+        {2,"Abandoned Works",{1,3,2,6},18,4,80,.94f,2,2,3,2,.65f},
+        {3,"Storm Cut",{2,4,4,3},22,5,75,.88f,3,1,2,2,1.f}
+    }};
+    return profiles[size_t(band)];
+}
+const char *encounterPatternName(EncounterPattern pattern) {
+    switch(pattern) {
+    case EncounterPattern::Crossfire:return "Staggered crossfire";
+    case EncounterPattern::ChargeLane:return "Charge lane";
+    case EncounterPattern::SupplyGuard:return "Guarded pocket";
+    default:return "Pursuit and cover";
+    }
+}
 uint64_t ExpeditionPlan::floorSeed(int floor) const {
     if(floor<0||floor>=floorCount)throw std::out_of_range("Invalid expedition floor");
     // Preserve the original first-floor layout of ordinary expeditions.

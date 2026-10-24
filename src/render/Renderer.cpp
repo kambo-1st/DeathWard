@@ -198,7 +198,26 @@ void cowboy(Vector3 p, Vector3 direction, Color coat, float scale, bool boss = f
     DrawCube(add({p.x, 1.15f * scale, p.z}, mul(direction, 0.29f * scale)), 0.16f * scale, 0.16f * scale,
              0.16f * scale, Gold);
 }
+void ridgebackModel(const Enemy &e,bool drawShadow) {
+    if(e.state==EnemyState::Buried)return;
+    const auto p=e.position;
+    if(drawShadow)shadow(p,1.35f);
+    const Color shell=e.flash>0?Paper:Color{111,100,85,255};
+    const Color plates=e.flash>0?Paper:Color{155,129,94,255};
+    rlPushMatrix();rlTranslatef(p.x,0,p.z);rlRotatef(std::atan2(e.facing.x,e.facing.z)*180/Pi,0,1,0);
+    DrawSphereEx({0,.8f,0},1.12f,6,8,shell);
+    for(float z:{-.65f,0.f,.65f}) {
+        DrawCube({0,1.48f,z},1.5f,.24f,.42f,plates);
+        DrawCylinder({0,1.7f,z},0,.24f,.55f,5,plates);
+    }
+    DrawSphereEx({0,.72f,1.05f},.55f,5,6,shell);
+    for(float x:{-.72f,.72f})for(float z:{-.65f,.65f})
+        DrawCube({x,.25f,z},.5f,.5f,.55f,plates);
+    for(float x:{-.28f,.28f})DrawSphereEx({x,.95f,1.5f},.09f,4,5,e.phase?Rust:Gold);
+    rlPopMatrix();
+}
 void enemyModel(const Enemy &enemy, bool drawShadow = true) {
+    if(enemy.bossKind==BossKind::Ridgeback){ridgebackModel(enemy,drawShadow);return;}
     if (enemy.kind == EnemyKind::Monster) {
         drawMonsterModel(enemy, drawShadow);
         return;
@@ -343,6 +362,31 @@ void shopkeeper(Vector3 p, float time, bool drawShadow = true) {
     DrawCylinder({p.x + .1f, .93f, p.z + 1.1f}, .18f, .18f, .09f, 10, Gold);
 }
 void enemyWarning(const Enemy &enemy, const Simulation &run) {
+    if(enemy.bossKind==BossKind::Ridgeback) {
+        auto p=enemy.position;p.y=.1f;
+        if(enemy.state==EnemyState::Buried) {
+            auto at=enemy.target;at.y=.11f;
+            DrawCircle3D(at,2.7f,{1,0,0},90,Gold);
+            DrawCircle3D(at,.7f+std::max(0.f,enemy.stateTime)*1.5f,{1,0,0},90,Paper);
+        } else if(enemy.state==EnemyState::Windup||enemy.state==EnemyState::Charging) {
+            auto end=enemy.position;
+            const float span=distance(enemy.position,enemy.target);
+            for(float d=.25f;d<=span;d+=.25f) {
+                const auto next=add(enemy.position,mul(enemy.facing,d));
+                if(!run.arena.clear(end,next,enemy.radius))break;
+                end=next;
+            }
+            end.y=.1f;
+            const Vector3 side{-enemy.facing.z*1.45f,0,enemy.facing.x*1.45f};
+            for(float sign:{-1.f,1.f})DrawCylinderEx(add(p,mul(side,sign)),add(end,mul(side,sign)),.055f,.055f,4,Gold);
+            DrawLine3D(p,end,Paper);
+            DrawTriangle3D(add(end,mul(enemy.facing,.8f)),sub(end,side),add(end,side),Gold);
+        } else if(enemy.state==EnemyState::Stunned) {
+            DrawCircle3D(p,enemy.radius+.3f,{1,0,0},90,Teal);
+            DrawSphereWires(add(enemy.position,{0,1.6f,0}),.35f,4,6,Teal);
+        }
+        return;
+    }
     if (enemy.kind == EnemyKind::Monster) {
         drawMonsterWarning(enemy, run);
         return;
@@ -624,6 +668,8 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 DrawCube({p.x+.14f,.3f,p.z+.04f},.018f,.02f,.39f,Muted);
             }
         }
+        if(!westernScene_.loaded())for(const auto &prop:run.arena.floorProps)
+            if(visible(prop.bounds))DrawCubeV(mul(add(prop.bounds.min,prop.bounds.max),.5f),sub(prop.bounds.max,prop.bounds.min),theme.stone);
         if(!westernScene_.loaded())for(const auto &prop:run.arena.storyProps)
             if(visible(prop.bounds))DrawCubeV(mul(add(prop.bounds.min,prop.bounds.max),.5f),sub(prop.bounds.max,prop.bounds.min),theme.stone);
         if (run.arena.shopRoom >= 0) {
@@ -1290,7 +1336,7 @@ Action Renderer::expedition(const Game &game) {
          : physicalRoom == run.arena.shopRoom ? "Trader's Rest"
                                               : run.roomName(),
          41, 58, 25, Paper);
-    text("SEED " + game.seedText + "   /   " + timeLabel(run.stats.duration), 42, 91, 12, Muted);
+    text("SEED " + game.seedText + " / " + timeLabel(run.stats.duration)+(run.arena.profile.active()?" / "+std::string(run.arena.profile.name):""), 42, 91, 11, Muted);
     panel(964, 22, 292, 131, Panel);
     if(run.surveyTutorial) {
         text("THE LOST SURVEY / FLOOR 1",982,37,13,Gold);
@@ -1311,14 +1357,15 @@ Action Renderer::expedition(const Game &game) {
     text(run.altarDestroyed ? "[+] Altar destroyed" : "[ ] Altar / chamber 4", 982, 91, 15,
          run.altarDestroyed ? Teal : Muted);
     text(run.arena.theme == MissionTheme::Canyon
-             ? (run.bossKilled ? "[+] Infested Mesa cleared" : "[ ] Clear the Infested Mesa")
+             ? (run.arena.profile.active()?(run.bossKilled?"[+] Canyon guardian defeated":"[ ] Defeat the canyon guardian"):(run.bossKilled ? "[+] Infested Mesa cleared" : "[ ] Clear the Infested Mesa"))
              : (run.bossKilled ? "[+] Sheriff defeated" : "[ ] Sheriff / locked court"),
          982, 117, 15, run.bossKilled ? Teal : Muted);
     }
     dungeonMap(game);
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
-        text("THE HOLLOW SHERIFF / PHASE " + std::to_string(boss->phase + 1), 429, 37, 14, Paper);
+        text(std::string(bossName(boss->bossKind))+" / PHASE " + std::to_string(boss->phase + 1), 429, 37, 14, Paper);
+        if(boss->bossKind==BossKind::Ridgeback)text(boss->phase?"TWO CHARGES / BREAK COVER TO STUN":"DODGE THE LANE / PUNISH RECOVERY",429,53,10,Gold);
         panel(429, 66, 442, 9, Ink);
         DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * std::max(0.0f, boss->hp / boss->maxHp)),
                       int(9 * sy_), Rust);

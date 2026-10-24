@@ -97,8 +97,10 @@ int main() {
                 check(int(a.livingEnemies()) == a.roomEnemyCount(room),
                       "canyon groups including the finale and companions respect the area budget");
                 for (size_t i = 0; i < a.enemies.size(); ++i) {
-                    check(a.enemies[i].kind == EnemyKind::Monster && a.enemies[i].monster != 0,
-                          "every canyon enemy including the final encounter is from the Isaac catalog");
+                    check(room==a.finalRoom()
+                              ? a.enemies[i].kind==EnemyKind::Boss&&a.enemies[i].bossKind==BossKind::Ridgeback
+                              : a.enemies[i].kind==EnemyKind::Monster&&a.enemies[i].monster!=0,
+                          "canyon keeps Isaac ordinary enemies and its dedicated canyon boss");
                     check(a.enemies[i].kind == b.enemies[i].kind &&
                               a.enemies[i].monster == b.enemies[i].monster &&
                               distance(a.enemies[i].position, b.enemies[i].position) < .001f,
@@ -122,8 +124,8 @@ int main() {
             check(a.roomClear && a.bossKilled && !a.boss(),
                   "clearing the canyon finale satisfies its objective without a Sheriff");
             a.startBoss();
-            check(!a.roomClear && !a.bossKilled && !a.boss() && a.roomThreats() > 0,
-                  "replaying the canyon finale restores its monster group");
+            check(!a.roomClear && !a.bossKilled && a.boss() && a.boss()->bossKind==BossKind::Ridgeback && a.roomThreats() == 1,
+                  "replaying the canyon finale restores its dedicated guardian");
             a.clearRoomDebug();
             a.spawnEnemies(30);
             a.godMode = true;
@@ -184,8 +186,8 @@ int main() {
             for (const auto &enemy : mineRun.enemies)
                 check(enemy.kind != EnemyKind::Monster, "random mine cheat spawns retain Western enemies");
             Simulation canyonReturn(1866, 4, store.data().world, MissionTheme::Canyon);
-            check(canyonReturn.followup && canyonReturn.bossKilled,
-                  "a return canyon visit recognizes its own previous completion");
+            check(!canyonReturn.bossKilled&&canyonReturn.roomEnemies(canyonReturn.finalRoom()).front().bossKind==BossKind::Ridgeback,
+                  "a completed campaign still has a living guardian on a fresh expedition");
         }
         std::filesystem::remove(path);
         std::cout << "PASS seeded/explicit themes, organic terrain, connected routes, seals, reproducible "

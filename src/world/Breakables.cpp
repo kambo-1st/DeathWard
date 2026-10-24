@@ -39,7 +39,8 @@ void Arena::prepareBreakables(uint64_t seed) {
                     if (river.distance < river.width + 1) return false;
                 }
             }
-        if (supplyCache.room >= 0 && overlaps(area,supplyCache.bounds,1.3f)) return false;
+        if (supplyCache.room >= 0 && (overlaps(area,supplyCache.bounds,1.3f)||
+            sphereBox(supplyCache.approach,1.5f,area))) return false;
         for (const auto &prop : breakables) if (overlaps(area,prop.bounds,1.1f)) return false;
         return true;
     };
@@ -91,8 +92,14 @@ void Arena::prepareBreakables(uint64_t seed) {
         std::erase(candidates,supplyCache.room);
         candidates.insert(candidates.begin(),supplyCache.room);
     }
-    for (auto kind : {BreakableKind::CrackedRock,BreakableKind::CrackedRock,
-                      BreakableKind::OreSeam,BreakableKind::PowderBarrel}) {
+    std::vector<BreakableKind> mix{BreakableKind::CrackedRock,BreakableKind::CrackedRock,
+                                  BreakableKind::OreSeam,BreakableKind::PowderBarrel};
+    if(profile.active()) {
+        mix.assign(size_t(profile.rocks),BreakableKind::CrackedRock);
+        mix.insert(mix.end(),size_t(profile.seams),BreakableKind::OreSeam);
+        mix.insert(mix.end(),size_t(profile.barrels),BreakableKind::PowderBarrel);
+    }
+    for (auto kind : mix) {
         bool placed=false;
         for (int room : candidates) {
             const auto &r=rooms[size_t(room)];

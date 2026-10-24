@@ -72,6 +72,7 @@ struct SupplyCache {
 struct Arena {
     uint64_t visualSeed = 0;
     MissionTheme theme = MissionTheme::Mine;
+    FloorProfile profile;
     std::shared_ptr<CanyonTerrain> canyon;
     // Default construction provides an empty test arena; expeditions always supply a seed.
     Box bounds{{-15, -1, -15}, {15, 4, 15}};
@@ -81,7 +82,7 @@ struct Arena {
     std::vector<KeyPickup> keys;
     int shopRoom = -1;
     std::vector<Box> floors, boundaryWalls, obstacles, walls;
-    std::vector<StoryProp> storyProps;
+    std::vector<StoryProp> storyProps, floorProps;
     std::vector<Breakable> breakables;
     SupplyCache supplyCache;
     std::set<FloorCell> floorCells;
@@ -89,12 +90,14 @@ struct Arena {
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
                    bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount,
-                   FloorDimensions dimensions = {});
+                   FloorDimensions dimensions = {}, FloorProfile profile = {});
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;
     void rebuildWalls();
     void dressStoryRoom();
+    void dressFloor();
+    void prepareBossArena();
     void prepareBreakables(uint64_t seed);
     bool reservedSupplyCache(Vector3 point, float radius) const {
         return supplyCache.room >= 0 && sphereBox(point,radius,supplyCache.bounds);

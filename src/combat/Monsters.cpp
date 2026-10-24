@@ -472,7 +472,7 @@ void Simulation::moveMonster(Enemy &e, Vector3 velocity, float dt) {
 void Simulation::updateMonster(Enemy &e, float dt) {
     const auto &d = *monsterDefinition(e.monster);
     const int t = type(e), v = variant(e);
-    e.cooldown -= dt / (e.friendly ? 1.0f : EnemyCooldownMultiplier);
+    e.cooldown -= dt / (e.friendly ? 1.0f : EnemyCooldownMultiplier*arena.profile.cooldownScale);
     e.auxiliary -= dt;
     e.trailTime -= dt;
     e.age += dt;

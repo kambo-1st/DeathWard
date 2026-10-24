@@ -133,9 +133,14 @@ void layouts() {
         auto &a=run.arena;
         const std::string tag=" seed "+std::to_string(seed)+" theme "+std::to_string(int(theme))+" floor "+std::to_string(floor);
         check(a.supplyCache.room>=0,"cache must have a safe placement"+tag);
-        check(a.breakables.size()==8,"all five destructible props and three cache sides fit"+tag);
-        if(std::all_of(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room==a.supplyCache.room;}))++clustered;
-        for(const auto &p:a.breakables)check(p.room>0&&p.room<run.finalRoom()&&a.rooms[size_t(p.room)].story==StoryRoom::None,"story, entrance and boss arenas are protected");
+        const int ordinary=int(std::count_if(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room!=run.finalRoom();}));
+        const int expected=a.profile.active()?4+a.profile.rocks+a.profile.seams+a.profile.barrels:8;
+        check(ordinary==expected,"all profile destructibles and three cache sides fit"+tag);
+        if(std::all_of(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room==a.supplyCache.room||p.room==run.finalRoom();}))++clustered;
+        for(const auto &p:a.breakables) {
+            if(p.room==run.finalRoom())check(a.profile.active()&&p.kind==BreakableKind::CrackedRock&&p.paid,"boss counterplay cover has no farmable payout");
+            else check(p.room>0&&p.room<run.finalRoom()&&a.rooms[size_t(p.room)].story==StoryRoom::None,"ordinary demolition protects story and entrance");
+        }
         for(auto &p:a.passages){p.locked=false;p.sealed={false,false};}a.rebuildWalls();
         for(const auto &r:a.rooms) {
             check(!a.path(r.center,r.objective,.48f).empty(),"objective remains reachable without dynamite"+tag);

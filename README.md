@@ -286,7 +286,7 @@ Mine rooms have different dimensions (20–28 units per side on Compact opening 
 
 **The Isaac monster roster for IDs 10–89 is also playable**, including variants, with new 3D creature silhouettes and seeded room groups. Special behaviors include regenerating piles, protective shells, directional armor, lasers, splitting shots, burrowing, linked enemies and offspring. Permanent hazards cannot prevent room completion. Use **comma / period**, then **Shift+F4**, to test a specific ID. See the [catalog and adaptation notes](docs/isaac_monsters.md).
 
-**Enemy count scales with the room's generated floor area:** subtract obstacle footprints, divide by 70, round up, then clamp to 4–24. Missing corners and corridors do not count. For example, 700 usable square units gives 10 enemies; 1,400 gives 20. Each group mixes up to three seeded types, with clear spawn space and safe landing areas at every doorway. Quiet rooms, power caches and the shop have no enemies; the first boss encounter stays a single Sheriff. Revisits after defeating the Sheriff use an area-scaled ordinary group.
+**Western Mine and Classic Canyon enemy counts scale with the room's generated floor area:** subtract obstacle footprints, divide by 70, round up, then clamp to 4–24. Missing corners and corridors do not count. For example, 700 usable square units gives 10 enemies; 1,400 gives 20. Each group mixes up to three seeded types, with clear spawn space and safe landing areas at every doorway. Quiet rooms, power caches and the shop have no enemies; the first boss encounter stays a single Sheriff. Revisits after defeating the Sheriff use an area-scaled ordinary group.
 
 **Free power-ups appear in 1–2 dedicated rooms per floor.** Unlock a power room, approach its pedestal, and choose one of two items. Each pedestal works once, yielding at most two free power-ups on that floor. Two additional powers can be bought at its shop. Powers carry into subsequent floors. Combat rooms do not award items.
 
@@ -364,9 +364,11 @@ The generated rooms use **textured PolygonWestern scenery**: stacked crates for 
 
 **Redstone Canyon** uses irregular basins and winding trails cut into a continuous rock terrain. Outcrops replace cube cover; the visible triangles also define movement, bullet and sight collisions. The original atlas supplies brown cliff faces and pale faceted caps, with directional terrain shadows and sparse rocks/cacti. Cliffs and cover keep their full generated height. The mine keeps its existing generator. A seed and theme reproduce their own geometry and encounters; canyon enemy counts use the basin's navigable floor area. Free missions in both settings share the miners and altar objectives; the Redstone story search has its own objective. Canyon completion is tracked separately from defeating the mine’s Sheriff. See [mission theming](docs/mission_themes.md) for extension points.
 
-**Isaac Canyon is the default mission choice** and uses only the Isaac monster catalog, including its final encounter. **Western Mine** retains all fifteen original enemy types and the Hollow Sheriff. Random spawn cheats follow the selected theme; the specific-ID cheat remains available in either setting. See [the enemy review and Isaac character comparison](docs/isaac_review.md).
+**Isaac Canyon is the default mission choice.** Its ordinary encounters use the Isaac monster catalog; modern canyon floors end with the dedicated **Ridgeback** boss. Classic retains its original final monster group. **Western Mine** retains all fifteen original enemy types and the Hollow Sheriff. Random spawn cheats follow the selected theme; the specific-ID cheat remains available in either setting. See [the enemy review and Isaac character comparison](docs/isaac_review.md).
 
-The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat, or death if the character is already dying. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated boss becomes a follow-up encounter on subsequent visits.
+The miners are in chamber 3. The altar is in chamber 4. Both are optional; the town remembers which you completed. Closing the window counts as retreat, or death if the character is already dying. A crash resolves retreat from the last checkpoint on the next launch. Rescues persist even when the expedition fails. Clearing a later expedition with the miners safe repairs the mine's lost prosperity. Resolved objectives never award the same permanent bonus twice; the defeated Mine Sheriff becomes a follow-up encounter on subsequent visits. Modern canyon floors always contain a living guardian, even after a previous expedition succeeded.
+
+Modern canyon expeditions progress through **Outer Washes → Broken Quarry → Abandoned Works → Storm Cut** across their existing 4–8 floors. Room area caps crowding; threat budgets and specialist limits select pursuit, crossfire, charge-lane and guarded-pocket patterns. Later bands add role combinations, faster cooldowns and different breakable/scenery mixes. Ridgeback marks its burrow and charge, becomes vulnerable during recovery, and chains two charges below half health. Fragile cover can interrupt it; dynamite is optional. Story evidence still gates departure. See [floor progression and boss rules](docs/expedition_progression.md).
 
 ## Eleven expedition items
 
@@ -404,7 +406,7 @@ Combinations follow explicit rules independent of acquisition order. Split inher
 | Comma / period | Select the previous / next monster ID |
 | Shift + F4 | Spawn the selected monster on safe floor for testing |
 | F6 / Shift + F6 | Grant all eleven items / add three keys |
-| F7 | Start or replay the final encounter: Isaac group in Canyon, Sheriff/follow-up in Mine |
+| F7 | Start or replay the final encounter: Ridgeback in modern Canyon, Isaac group in Classic, Sheriff/follow-up in Mine |
 | F8 / F9 | Finish successfully / die |
 | F10 | Toggle 3D collision volumes and projectile paths |
 | F11 | Stress scene: 100 enemies and 600 shots with all five effects |

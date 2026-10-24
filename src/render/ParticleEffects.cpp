@@ -298,6 +298,10 @@ void ParticleEffects::prepareMission(const Simulation &run, const Camera3D &came
                     // Do not render clouds inside rocks, through sealed passages,
                     // or across the player. Dust is atmosphere, never a vision penalty.
                     if (!run.arena.contains(position) || run.arena.blocked(position,p.size*.5f)) continue;
+                    p.alpha *= run.arena.profile.dust;
+                    if(run.arena.profile.active()&&run.arena.roomAt(position)==run.finalRoom())continue;
+                    // Keep every threat and its telegraph clear, including stationary ranged roles.
+                    for(const auto &enemy:run.enemies)if(enemy.alive&&distance(position,enemy.position)<4)p.alpha=0;
                     p.alpha *= std::clamp((distance(position,run.player.position)-1.5f)/4.f,0.f,1.f);
                     if (p.alpha > .001f) append(size_t(e-library_.emitters.begin()),p,position,1,view);
                 }

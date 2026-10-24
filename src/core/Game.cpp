@@ -30,7 +30,8 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
     // collision geometry for those targets instead.
     const auto storyWalls=std::count_if(run.arena.storyProps.begin(),run.arena.storyProps.end(),
         [](const auto &prop){return prop.bounds.max.y>.45f;});
-    const size_t firstWall = scenery ? run.arena.boundaryWalls.size() + run.arena.obstacles.size() + storyWalls : 0;
+    const size_t firstWall = scenery ? run.arena.boundaryWalls.size() + run.arena.obstacles.size() + storyWalls + std::count_if(run.arena.floorProps.begin(),run.arena.floorProps.end(),
+        [](const auto &p){return p.bounds.max.y>.45f;}) : 0;
     for (size_t i = firstWall; i < run.arena.walls.size(); ++i) {
         const auto &wall = run.arena.walls[i];
         const auto hit = GetRayCollisionBox(ray, {wall.min, wall.max});

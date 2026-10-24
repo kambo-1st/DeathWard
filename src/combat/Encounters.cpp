@@ -33,6 +33,7 @@ EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
     Enemy enemy;
     enemy.id = nextEntity_++;
     enemy.kind = kind;
+    if(kind==EnemyKind::Boss)enemy.bossKind=BossKind::Sheriff;
     enemy.position = position;
     enemy.position.y = 0.85f;
     enemy.hp = enemy.maxHp = definition.hp;
@@ -115,6 +116,7 @@ int Simulation::roomEnemyCount(int index) const {
     if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop)
         return 0;
     if(surveyTutorial)return index==1?2:3;
+    if(arena.profile.active())return layout.kind==RoomKind::Boss?1:int(floorEncounter(index).monsters.size());
     if (layout.kind == RoomKind::Boss && arena.theme == MissionTheme::Mine && !followup)
         return 1;
     return std::clamp(int(std::ceil(layout.usableArea() / 70.0f)), 4, 24);
@@ -175,6 +177,11 @@ void Simulation::spawnRoomEnemies() {
             enemies.back().hp=enemies.back().maxHp=24;
             enemies.back().cooldown=1.8f;
         }
+        return;
+    }
+    if(arena.profile.active()) {
+        if(layout.kind==RoomKind::Boss)spawnCanyonBoss();
+        else spawnFloorEnemies();
         return;
     }
     if (room == finalRoom() && arena.theme == MissionTheme::Mine && !followup) {

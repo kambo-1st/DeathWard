@@ -77,8 +77,10 @@ void planBoundaryRiver(const Arena &arena, CanyonTerrain &field) {
             outer = std::max(outer, dot(room.center, outward));
         std::vector<int> rooms;
         for (int i = 0; i < int(arena.rooms.size()); ++i)
-            if (dot(arena.rooms[size_t(i)].center, outward) >= outer - .1f)
+            if (dot(arena.rooms[size_t(i)].center, outward) >= outer - .1f &&
+                !(arena.profile.active()&&arena.rooms[size_t(i)].kind==RoomKind::Boss))
                 rooms.push_back(i);
+        if(rooms.empty())continue;
         std::stable_sort(rooms.begin(), rooms.end(), [&](int a, int b) {
             return arena.rooms[size_t(a)].depth < arena.rooms[size_t(b)].depth;
         });

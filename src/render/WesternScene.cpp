@@ -253,7 +253,8 @@ void WesternScene::generate(const Arena &arena) {
     lighting_.invalidate();
     if (arena.theme == MissionTheme::Canyon && arena.canyon) {
         generateCanyon(arena);
-        for(const auto &prop:arena.storyProps) {
+        auto props=arena.storyProps;props.insert(props.end(),arena.floorProps.begin(),arena.floorProps.end());
+        for(const auto &prop:props) {
             const auto asset=prop.kind==StoryPropKind::Cart?WesternAsset::Cart:
                 prop.kind==StoryPropKind::SplitRock?WesternAsset::RockA:
                 prop.kind==StoryPropKind::Rail?WesternAsset::Rail:

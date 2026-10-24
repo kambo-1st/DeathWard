@@ -39,6 +39,10 @@ bool Simulation::hurtPlayer(float damage, const Context &context, bool hostile) 
 float Simulation::enemyDamage(const Enemy &enemy, const Event &event) const {
     if (event.execution)
         return event.damage;
+    if(enemy.bossKind==BossKind::Ridgeback) {
+        if(enemy.state==EnemyState::Buried)return 0;
+        if(enemy.state==EnemyState::Stunned)return event.damage*1.25f;
+    }
     if (enemy.kind == EnemyKind::Monster) {
         const auto *d = monsterDefinition(enemy.monster);
         const int type = enemy.monster / 10000, variant = enemy.monster / 100 % 100;
@@ -280,6 +284,7 @@ void Simulation::updateEnemies(float dt) {
     for (auto &enemy : enemies) {
         if (!enemy.alive)
             continue;
+        if(enemy.bossKind==BossKind::Ridgeback){updateCanyonBoss(enemy,dt);continue;}
         if (enemy.kind == EnemyKind::Monster) {
             updateMonster(enemy, dt);
             continue;

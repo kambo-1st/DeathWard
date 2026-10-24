@@ -81,8 +81,8 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 } // namespace
 
 Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story,
-             int requestedRooms, FloorDimensions dimensions)
-    : visualSeed(seed), theme(missionTheme) {
+             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile)
+    : visualSeed(seed), theme(missionTheme), profile(floorProfile) {
     if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
        dimensions.minGapTiles<4||dimensions.maxGapTiles<dimensions.minGapTiles||dimensions.maxGapTiles>16)
         throw std::invalid_argument("Invalid floor dimensions");
@@ -133,14 +133,14 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         int halfX, halfZ;
         const bool small=dimensions.smallerRooms;
         const bool boss=room.kind==RoomKind::Boss;
-        const int minimum=small?(boss?8:dimensions.minHalfTiles):6;
+        const int minimum=profile.active()&&boss?8:small?(boss?8:dimensions.minHalfTiles):6;
         const int maximum=small?(boss?10:dimensions.maxHalfTiles):10;
-        if(small) {
+        if(small||profile.active()) {
             bool available=false;
             for(int x=minimum;x<=maximum;++x)for(int z=minimum;z<=maximum;++z)
                 available=available||!usedSizes.contains({x,z});
-            // Compact ranges can contain fewer size pairs than room slots. Start
-            // a fresh cycle rather than retrying forever after exhausting them.
+            // Compact rooms and the narrower modern boss size pool can exhaust
+            // their pairs. Start a fresh cycle rather than retrying forever.
             if(!available)
                 for(int x=minimum;x<=maximum;++x)for(int z=minimum;z<=maximum;++z)usedSizes.erase({x,z});
         }
@@ -152,7 +152,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             {room.center.x - float(halfX) * FloorTile, 0, room.center.z - float(halfZ) * FloorTile},
             {room.center.x + float(halfX) * FloorTile, 3, room.center.z + float(halfZ) * FloorTile}};
         // Cycle a seeded sequence of footprints so every expedition has visible shape variety.
-        room.shape = (int(seed % 4) + i) % 4;
+        room.shape = profile.active() && boss ? 1 : (int(seed % 4) + i) % 4;
         const bool mirrorX = layout.bounded(2), mirrorZ = layout.bounded(2);
         std::set<FloorCell> local;
         for (int x = -halfX; x < halfX; ++x)
@@ -430,11 +430,13 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     if (theme == MissionTheme::Canyon)
         buildCanyon(*this, canyonRiver);
     dressStoryRoom();
+    if(profile.active()) { dressFloor(); prepareBossArena(); }
 }
 void Arena::rebuildWalls() {
     walls = boundaryWalls;
     walls.insert(walls.end(), obstacles.begin(), obstacles.end());
     for(const auto &prop:storyProps)if(prop.bounds.max.y>.45f)walls.push_back(prop.bounds);
+    for(const auto &prop:floorProps)if(prop.bounds.max.y>.45f)walls.push_back(prop.bounds);
     for(const auto &prop:breakables)if(prop.solid())walls.push_back(prop.bounds);
     for (const auto &passage : passages)
         for (int side = 0; side < 2; ++side)
@@ -453,6 +455,7 @@ void Arena::dressStoryRoom() {
             routes.push_back(doorApproach(link,side));
         }
         auto safe=[&](Box box) {
+            if(profile.active() && room.kind==RoomKind::Boss && sphereBox(room.center,11.5f,box))return false;
             for(const auto &prop:storyProps)
                 if(box.min.x<prop.bounds.max.x+.5f&&box.max.x>prop.bounds.min.x-.5f&&
                    box.min.z<prop.bounds.max.z+.5f&&box.max.z>prop.bounds.min.z-.5f)return false;

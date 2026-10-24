@@ -165,7 +165,10 @@ int main(int argc, char **argv) {
                          ", frontier or redstone\n  --smoke              "
                          "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
                          "power, reward, empty, cheats, "
-                         "boss, summary, demolition or demolition-open (with --smoke)\n  --benchmark          Render the 100-enemy / "
+                         "boss, summary, demolition, demolition-open, demolition-run,\n"
+                         "                      build-bank, build-shrapnel, build-return, build-braid,\n"
+                         "                      ridgeback, ridgeback-late, ridgeback-fight,\n"
+                         "                      profile-quarry, profile-works or profile-storm (with --smoke)\n  --benchmark          Render the 100-enemy / "
                          "600-shot stress scenario\n  --frames N           Scripted frame count (default "
                          "180)\n  --screenshot PATH    Save a PNG before scripted exit\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
@@ -203,8 +206,15 @@ int main(int argc, char **argv) {
     if (scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
         scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats" &&
         scene != "demolition" && scene != "demolition-open" && scene != "demolition-run" &&
-        scene != "build-bank" && scene != "build-shrapnel" && scene != "build-return" && scene != "build-braid") {
+        scene != "build-bank" && scene != "build-shrapnel" && scene != "build-return" && scene != "build-braid" &&
+        scene != "ridgeback" && scene != "ridgeback-late" && scene != "ridgeback-fight" &&
+        scene != "profile-quarry" && scene != "profile-works" && scene != "profile-storm") {
         std::cerr << "Unknown smoke scene: " << scene << '\n';
+        return 2;
+    }
+    if (smoke && (scene.starts_with("ridgeback") || scene.starts_with("profile-")) &&
+        (themeChoice != dw::ThemeChoice::Canyon || expeditionPacing == dw::ExpeditionPacing::Classic)) {
+        std::cerr << "Canyon progression scenes require --theme canyon and a non-Classic pacing preset.\n";
         return 2;
     }
     // Scripted verification never modifies the player's campaign by default.
@@ -326,6 +336,15 @@ int main(int argc, char **argv) {
             game.launch(true);
             if (!game.run)
                 throw std::runtime_error(game.error);
+            if(smoke&&(scene=="ridgeback-late"||scene.starts_with("profile-"))) {
+                int floor=game.run->expedition.floorCount-1;
+                if(scene.starts_with("profile-")) {
+                    const int band=scene=="profile-quarry"?1:scene=="profile-works"?2:3;
+                    floor=0;while(game.run->expedition.profileOnFloor(floor).band<band)++floor;
+                }
+                game.run=std::make_unique<dw::Simulation>(1866,1,game.campaign.data().world,dw::MissionTheme::Canyon,
+                    canyonRiver.value_or(true),false,dw::WitnessAccount::None,floor,expeditionPacing);
+            }
             game.run->godMode = true;
             game.run->debugScenario = true;
             if (benchmark)
@@ -339,6 +358,15 @@ int main(int argc, char **argv) {
             }
             if (smoke && scene == "boss")
                 game.run->startBoss();
+            if(smoke&&scene.starts_with("ridgeback")) {
+                game.run->startBoss();
+                game.run->player.position=dw::add(game.run->arena.rooms.back().center,{0,0,9.7f});
+                if(scene=="ridgeback-late"&&game.run->boss()) {
+                    auto *boss=game.run->findEnemy(game.run->boss()->id);boss->hp=boss->maxHp*.49f;
+                }
+                if(scene=="ridgeback-fight") {game.run->godMode=false;game.run->dynamite=0;}
+            }
+            if(smoke&&scene.starts_with("profile-"))game.run->jumpDebug(2);
             if(smoke&&scene.starts_with("build-")) {
                 game.run->jumpDebug(2);
                 const auto build=scene=="build-bank"?std::vector<dw::ItemId>{dw::ItemId::Ricochet,dw::ItemId::Rail,dw::ItemId::Lodestone}:
@@ -498,6 +526,17 @@ int main(int argc, char **argv) {
                         if(frame==350)input.moveTarget=game.run->arena.supplyCache.reward;
                     }
                     if(scene=="build-braid")input.placeDynamite=frame==30;
+                }
+                if(scene.starts_with("ridgeback")) {
+                    input={};
+                    if(const auto *boss=game.run->boss();boss&&scene=="ridgeback-fight") {
+                        const auto center=game.run->arena.rooms.back().center;
+                        auto delta=dw::sub(game.run->player.position,center);delta.y=0;
+                        const auto radial=dw::unit(delta);const Vector3 tangent{-radial.z,0,radial.x};
+                        input.fire=true;input.aim=boss->position;
+                        input.movement=dw::unit(dw::add(tangent,dw::mul(radial,std::clamp((9.7f-dw::length(delta))*.7f,-2.f,2.f))));
+                        input.dodge=boss->state==dw::EnemyState::Charging&&dw::distance(boss->position,game.run->player.position)<5;
+                    }
                 }
                 game.run->step(input);
                 game.updateCamera(dw::Tick);
@@ -829,6 +868,10 @@ int main(int argc, char **argv) {
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
             if(game.run) {
+                const auto *guardian=game.run->boss();
+                EM_ASM({if(Module.verify)Module.guardian=({band:$0,kind:$1,state:$2,phase:$3,hp:$4,playerHp:$5,clear:!!$6,time:$7});},
+                    game.run->arena.profile.band,guardian?int(guardian->bossKind):0,guardian?int(guardian->state):-1,
+                    guardian?guardian->phase:-1,guardian?guardian->hp:0,game.run->player.hp,int(game.run->roomClear),game.run->stats.duration);
                 int friendly=0,spikes=0,homing=0,returning=0,caps=0,children=0;
                 for(const auto &p:game.run->projectiles)if(!p.hostile) {
                     ++friendly;spikes+=p.attack.rail;homing+=p.attack.homingTurn>0;

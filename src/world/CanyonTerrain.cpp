@@ -182,7 +182,7 @@ void buildCanyon(Arena &arena, bool river) {
         return d;
     };
     for (auto &room : arena.rooms) {
-        const int desired = 3 + int(rng.bounded(3));
+        const int desired = arena.profile.active() ? (room.kind==RoomKind::Boss?0:arena.profile.outcrops+int(rng.bounded(2))) : 3+int(rng.bounded(3));
         for (int attempt = 0; attempt < 180 && int(room.obstacles.size()) < desired; ++attempt) {
             Outcrop r{{rng.real(room.bounds.min.x + 4, room.bounds.max.x - 4), 0,
                        rng.real(room.bounds.min.z + 4, room.bounds.max.z - 4)},

@@ -49,9 +49,13 @@ enum class EnemyState {
     Exposed,
     Returning
 };
+enum class BossKind { None, Sheriff, Ridgeback };
+const char *bossName(BossKind kind);
 struct Enemy {
     EntityId id = 0;
     EnemyKind kind = EnemyKind::Rusher;
+    BossKind bossKind = BossKind::None;
+    int bossCombo = 0, bossCycles = 0;
     Vector3 position{}, velocity{};
     float hp = 40, maxHp = 40, radius = 0.65f, cooldown = 1, flash = 0, age = 0;
     int phase = 0;
@@ -201,8 +205,13 @@ struct Input {
     bool placeDynamite = false;
     bool fire = false, dodge = false, interact = false, standStill = false;
 };
+struct EncounterPlan {
+    EncounterPattern pattern = EncounterPattern::Pursuit;
+    int budget = 0, spent = 0, specialists = 0;
+    std::vector<int> monsters;
+};
 struct RoomProgress {
-    bool visited = false, cleared = false, rewardTaken = false;
+    bool visited = false, cleared = false, rewardTaken = false, bossPaid = false;
     std::array<ItemId, 2> offers{};
     // The active room uses Simulation::enemies; other rooms keep their actual group here.
     std::vector<Enemy> residents;
@@ -290,6 +299,7 @@ class Simulation {
     size_t roomThreats() const;
     void spawnEnemies(int count);
     int roomEnemyCount(int index) const;
+    EncounterPlan floorEncounter(int index) const;
     const std::vector<Enemy> &roomEnemies(int index) const;
     void spawnRoomEnemies();
     void startBoss();
@@ -382,6 +392,10 @@ class Simulation {
     void updatePlayer(const Input &input, float dt);
     void kickDynamiteOnContact(Vector3 previousPosition);
     void beginBossEncounter();
+    void spawnFloorEnemies();
+    void spawnCanyonBoss();
+    void updateCanyonBoss(Enemy &enemy,float dt);
+    void rewardCanyonBoss(const Enemy &enemy);
     void prepareRoomEnemies(int index);
     bool roomSpawnClear(Vector3 position, float radius) const;
     void updateEnemies(float dt);

@@ -9,7 +9,8 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                        bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing)
     : expedition(seed,tutorial,account,pacing),floor(level),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
-            expedition.roomsOnFloor(level),expedition.dimensionsOnFloor(level)),
+            expedition.roomsOnFloor(level),expedition.dimensionsOnFloor(level),
+            theme==MissionTheme::Canyon?expedition.profileOnFloor(level):FloorProfile{}),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -23,6 +24,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     bossKilled = theme == MissionTheme::Canyon ? world.flags.contains("canyon_cleared") : world.bossDefeated;
     followup = bossKilled;
     if(surveyTutorial||testimony())rescued=altarDestroyed=bossKilled=followup=false;
+    if(arena.profile.active())bossKilled=followup=false;
     player.position = arena.entrance;
     player.aim = arena.rooms[0].center;
     player.facing = unit(sub(player.aim, player.position));
@@ -50,6 +52,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
     enterRoom(0);
     if(surveyTutorial)announce("THE LOST SURVEY / One floor. Recover Bell's records and return to Fort Mercy.",6);
     else if(testimony())announce(std::string(accountName(expedition.account))+" / Follow his route; examine what remains.",6);
+    else if(arena.profile.active())announce(std::string(arena.profile.name)+" / Follow the trails and face the canyon guardian.",5);
     else announce(std::string(missionTheme(theme).region) +
                  (followup ? " / return to unfinished business" : " / find the six missing miners"),
              5);
@@ -117,7 +120,7 @@ std::string Simulation::roomName() const {
     if (arena.rooms[size_t(room)].kind == RoomKind::Shop)
         return "Trader's Rest";
     if (arena.rooms[size_t(room)].kind == RoomKind::Boss)
-        return roomName(FinalRoom, arena.theme);
+        return arena.profile.active()?"Ridgeback Hollow":roomName(FinalRoom, arena.theme);
     if (arena.rooms[size_t(room)].kind == RoomKind::Power)
         return roomName(RoomCount - 2 - (finalRoom() - 1 - room), arena.theme);
     return roomName(room, arena.theme);
@@ -318,6 +321,10 @@ void Simulation::startBoss() {
     jumpDebug(finalRoom(), true);
 }
 void Simulation::beginBossEncounter() {
+    if(const auto *e=boss();e&&e->bossKind==BossKind::Ridgeback) {
+        announce(std::string(testimony()?accountName(expedition.account):arena.profile.name)+
+                 " / RIDGEBACK. Dodge the marked charge; punish its recovery.",6);return;
+    }
     if(testimony()) {announce(std::string(accountName(expedition.account))+
         (lastFloor()?" / THE DRY CREEK. Clear the room, then examine the evidence.":" / Clear the final room to continue deeper."),6);return;}
     announce(arena.theme == MissionTheme::Canyon ? "THE INFESTED MESA / clear the final monster group"
@@ -706,6 +713,7 @@ void Simulation::process(const Event &e) {
             effectVisual(target->position, 0.8f, 1);
             if (target->kind == EnemyKind::Boss) {
                 bossKilled = true;
+                if(target->bossKind==BossKind::Ridgeback)rewardCanyonBoss(*target);
                 checkpointNeeded = true;
             }
             hit.type = EventType::EnemyKilled;

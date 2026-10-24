@@ -50,6 +50,9 @@ add_library(deathward_core
     src/world/Expedition.cpp
     src/world/Dungeon.cpp
     src/world/Breakables.cpp
+    src/world/FloorDressing.cpp
+    src/combat/FloorEncounters.cpp
+    src/combat/CanyonBoss.cpp
     src/world/CanyonTerrain.cpp
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
@@ -228,6 +231,9 @@ if(NOT EMSCRIPTEN)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(deathward_floor_progression_tests tests/floor_progression_tests.cpp)
+    target_link_libraries(deathward_floor_progression_tests PRIVATE deathward_core)
+    add_test(NAME floor_progression COMMAND deathward_floor_progression_tests)
     add_executable(deathward_item_build_tests tests/item_build_tests.cpp)
     target_link_libraries(deathward_item_build_tests PRIVATE deathward_core)
     add_test(NAME item_builds COMMAND deathward_item_build_tests)

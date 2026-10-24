@@ -58,7 +58,7 @@ int main() {
                         run.arena.sealRoom(-1);
                     }
                     if(pacing==ExpeditionPacing::ShortCorridors) {
-                        Arena original(seed,theme,true,false,StoryRoom::None,run.arena.roomCount());
+                        Arena original(seed,theme,true,false,StoryRoom::None,run.arena.roomCount(),{},run.arena.profile);
                         for(size_t i=0;i<original.rooms.size();++i) {
                             const auto &a=original.rooms[i],&b=run.arena.rooms[i];
                             check(distance(sub(a.bounds.max,a.bounds.min),sub(b.bounds.max,b.bounds.min))<.001f&&a.shape==b.shape,"corridor trial preserves room dimensions and shapes");

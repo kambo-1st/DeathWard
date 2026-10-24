@@ -42,7 +42,7 @@ void layouts() {
         const ExpeditionPlan plan(seed,false,WitnessAccount::Rourke);
         for(int floor=0;floor<plan.floorCount;++floor) {
             const auto site=plan.storyAt(floor);if(site==StoryRoom::None)continue;
-            Arena arena(plan.floorSeed(floor),MissionTheme::Canyon,true,false,site,plan.roomsOnFloor(floor),plan.dimensionsOnFloor(floor));
+            Arena arena(plan.floorSeed(floor),MissionTheme::Canyon,true,false,site,plan.roomsOnFloor(floor),plan.dimensionsOnFloor(floor),plan.profileOnFloor(floor));
             check(arena.roomCount()==plan.roomsOnFloor(floor)&&arena.shopRoom>=0,"story preserves scheduled room count and shop");
             int tagged=0,powers=0;
             for(const auto &room:arena.rooms) {
