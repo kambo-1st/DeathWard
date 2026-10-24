@@ -118,7 +118,7 @@ With Emscripten activated (tested with 4.0.15):
 python3 scripts/serve-web.py
 ```
 
-Open **http://127.0.0.1:8080/**, wait for loading and click **Enter Black Creek**. The WebAssembly version includes all three hubs, missions, original textures, lighting, post processing, music and effects. It requires WebGL 2, a keyboard and a mouse. Campaigns, audio preferences and town-editor saves stay in that browser, separately from desktop saves. See the [browser guide](docs/browser.md) for setup, hosting, controls and verification.
+Open **http://127.0.0.1:8080/**, wait for loading and click **Enter Black Creek**. The WebAssembly version includes all three hubs, missions, original textures, lighting, post processing, music and effects. It requires WebGL 2 and a keyboard; mouse controls also remain available. Campaigns, audio preferences and town-editor saves stay in that browser, separately from desktop saves. See the [browser guide](docs/browser.md) for setup, hosting, controls and verification.
 
 To prepare a static-server upload, run `python3 scripts/package-web.py` after building. Extract `dist/deathward-web.zip` into the destination's public directory. The same package works at a domain root or a subdirectory, including `deathward.kambo.us/` and `kambo.us/deathward/`, without editing paths.
 
@@ -298,7 +298,9 @@ Mine rooms have different dimensions (20–28 units per side on Compact opening 
 
 **Walk into lit dynamite to give it a small nudge.** Both WASD and click-to-move kick it automatically on contact, moving it roughly one character width. Walking away after placing a charge leaves it at your feet until you return and bump into it. Kicking uses no key or button, costs no ammo, and keeps the original fuse burning. The bundle bounces off solid scenery; high airborne charges remain out of foot reach.
 
-Click the **Mode: Place / Mode: Throw** switch above that button to enable the retained throwing mode. In Throw mode, **B** throws at the cursor; **Throw Dynamite** selects a trajectory preview, then a world click throws. Escape, the right button, or the action button cancels targeting. Switching back to Place also cancels targeting without spending ammo. Mode choice lasts for the current game session; new sessions default to Place.
+Press **C** or click the **Mode: Place / Mode: Throw** switch above that button to enable throwing. In Throw mode, **Throw Dynamite** selects a mouse trajectory preview, then a world click throws. Escape, the right button, or the action button cancels targeting. Switching back to Place also cancels targeting without spending ammo. Mode choice lasts for the current game session; new sessions default to Place.
+
+**B works even with the mouse parked over the HUD.** In Throw mode, B throws ten units in the held arrow direction, otherwise the movement direction, otherwise the direction the character faces. Hold B with an arrow to throw without firing a bullet on that press. Mouse targeting remains available through the Throw Dynamite button. **C** switches modes.
 
 Both modes use the same red dynamite bundle, sparking fuse, explosion sound, fire and smoke. The blast deals 100 damage within a 4.5-unit radius and can hurt you for 25 HP. Solid cover blocks blast damage; dodging and invulnerability protect the player. Optional throws aim up to 12 units away and bounce off scenery; the preview includes bouncing and the blast area. Low cover can be cleared, while tall walls and canyon rock stop a throw. Dynamite kills trigger your existing kill effects.
 
@@ -308,7 +310,7 @@ The shop sells one **three-charge refill pack for 15 coins**, with a carrying li
 
 **Golden doors require one key.** Keys appear at seeded locations in combat rooms after those rooms are cleared, or immediately upon entering a quiet room; left-click a key or walk over it to collect it. Keys are consumed when unlocking a power room or the boss room. Unlocks persist for the run. All keys are placed in the connected area accessible without spending a key, and there are enough for every lock, so choosing a power room first cannot make the boss unreachable.
 
-The camera follows you through corridors. The mission map shows branches, your position, keys carried, and free powers claimed: **P** marks a power room, **E** an enemy-free room, **S** the shop, **B** the boss, **?** a story site, and **K** a discovered, uncollected key. Red gates are sealed for combat, golden gates need a key, and green gates are open. The final room's lantern advances to the next floor; on the last floor it returns to the hub. The HUD shows the floor and room counts. Expedition length and reward balance still need human playtesting.
+The camera follows you through corridors. The mission map shows branches, your position, keys carried, and free powers claimed: **P** marks a power room, **E** an enemy-free room, **S** the shop, **B** the boss, **?** a story site, and **K** a discovered, uncollected key. Red gates are sealed for combat, golden gates need a key, and green gates are open. After clearing the final room, a pulsing teal exit beacon and a large **NEXT FLOOR** marker show where to continue; on the last floor the marker says **RETURN TO FORT/HUB**. The marker remains visible through scenery and stays within the screen at close zoom. Click it to approach, or walk to the beacon and press **E / Enter**. An amber **EXIT LOCKED** marker explains any required evidence or tutorial records still missing. Boss rewards are optional. The minimap marks an available exit with **>**. The HUD shows the floor and room counts. Expedition length and reward balance still need human playtesting.
 
 | Control | Action |
 | --- | --- |
@@ -320,19 +322,24 @@ The camera follows you through corridors. The mission map shows branches, your p
 | Shift + left button | Fire toward the cursor while standing still |
 | Right button | Fire the revolver directly toward the cursor |
 | Hold middle button + drag | Rotate around the character; drag vertically to tilt |
+| Q / R | Rotate the camera using the keyboard |
+| Insert / Delete | Tilt the camera up / down |
 | Space / Dodge button | Dodge; brief invulnerability, then cooldown |
-| Mouse wheel | Zoom in / out; scroll up to move closer, down to pull back |
+| Mouse wheel / Page Up / Page Down | Zoom in / out |
 | B / Place Dynamite button | Place a charge at your feet (default mode) |
-| Mode: Place / Throw button | Switch between ground placement and optional throwing |
+| C / Mode: Place / Throw button | Switch between ground placement and optional throwing |
 | Walk into lit dynamite | Automatically nudge it a short distance |
-| E / nearby interaction button | Interact near an objective or shopkeeper |
+| E / Enter / nearby interaction button | Open or unlock a nearby door, examine evidence, use a shop or reward, or continue through the floor exit |
 | 1 / 2 | Choose one item at a power-room pedestal |
 | 1 / 2 / 3 / 4 in the shop | Buy medicine / first power / second power / dynamite pack |
 | Escape in the shop | Close trade and return to play |
 | Escape / Pause button | Pause / resume; click Keep Going to resume with the mouse |
+| Tab / Shift+Tab / arrows in menus | Select an available button; Enter or Space activates it |
+| H while paused / Keyboard Controls button | Show the complete keyboard guide |
 | T while paused | Retreat and resolve consequences |
 | H in the hub | Inspect previous runs |
 | J / Journal button | Read recovered claims, observations and open questions |
+| L | Reread Eleanor's letter after recovering it |
 
 Start each expedition with **100 HP** and **24 revolver damage**. Enemy kills, room clears and room entry provide no automatic healing. The revolver fires continuously while holding an enemy, an arrow key, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
 
@@ -342,7 +349,7 @@ With cheats enabled, pause a mission to use **Player Settings**: adjust base hea
 
 Left-click follows the contextual move/attack/interact pattern in [Blizzard's Diablo manual](https://ftp.blizzard.com/pub/misc/Diablo.PDF). Click ground to walk there, or hold to steer. Click an enemy's body to attack; holding keeps that target until release, and its death never turns the attack into a movement order. Attacking cancels the current mouse route. WASD overrides mouse navigation and remains available while firing; Shift holds position. RMB uses the prototype's only weapon, the revolver.
 
-Arrow keys also fire during missions, independently of the cursor. Hold an arrow while moving with WASD to strafe, or hold two adjacent arrows for diagonal fire. Opposite arrows cancel each other. Arrow aiming takes priority over mouse aiming while held, follows camera rotation, and works with the cursor over the HUD. Release the arrows to return to mouse aiming. Menus and dynamite placement/targeting keep their existing input guards.
+Arrow keys also fire during missions, independently of the cursor. Hold an arrow while moving with WASD to strafe, or hold two adjacent arrows for diagonal fire. Opposite arrows cancel each other. Arrow aiming takes priority over mouse aiming while held, follows camera rotation, and works with the cursor over the HUD. Release the arrows to return to mouse aiming. Menus and dynamite placement/targeting block gunfire. Release menu-navigation arrows before firing again after closing a panel.
 
 Left-click the miners, altar, a key, a power pedestal, the shopkeeper, a doorway, or the return lantern to approach and use it. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse.
 
@@ -449,7 +456,7 @@ ctest --test-dir build --output-on-failure
 ./build/deathward --benchmark --frames 600 --screenshot artifacts/stress.png
 ```
 
-The nineteen core CTest suites need no graphics display or audio device. Audio presentation checks cover confirmed cues, priorities, bounded queues and unchanged gameplay randomness. Mission-theme checks cover seeded selection, organic terrain reproduction, clear routes, sealed entrances, safe enemy placement, surface collision and persisted canyon checkpoints/history. `deathward_input_tests` exercises mouse controls and function-key cheats through raylib's input system in a hidden window. `deathward_player_model_tests` checks the packaged mesh, texture, all nine clips, blending, simulation timing, root-motion removal and resource cleanup. `deathward_western_assets_tests` checks the scenery atlas, glass, scale, collision alignment, route clearance, seed reproduction, canyon terrain/mesh alignment and resource cleanup. `deathward_occlusion_tests` compares whole-object transparency in towns and canyon wall sections at different zoom levels, checks that translucent scenery remains visible, verifies restoration and unchanged collision, and saves before/after captures under `artifacts`. `deathward_audio_tests` exercises the real audio device, packaged sounds, voice limits, panning, pause/mute, crossfades, looping, preferences and cleanup; it captures and silences its output unless passed `--audible`. The graphics suites require an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
+The nineteen core CTest suites need no graphics display or audio device. Audio presentation checks cover confirmed cues, priorities, bounded queues and unchanged gameplay randomness. Mission-theme checks cover seeded selection, organic terrain reproduction, clear routes, sealed entrances, safe enemy placement, surface collision and persisted canyon checkpoints/history. `deathward_input_tests` exercises mouse controls, keyboard-only play and function-key cheats through raylib's input system in a hidden window. Use `--keyboard-only` for hub/setup navigation, menus, dynamite over the HUD, directed throws, camera controls, key-locked doors, purchases, rewards and evidence-gated floor exits; it saves exit and controls captures in `artifacts/`. `deathward_player_model_tests` checks the packaged mesh, texture, all nine clips, blending, simulation timing, root-motion removal and resource cleanup. `deathward_western_assets_tests` checks the scenery atlas, glass, scale, collision alignment, route clearance, seed reproduction, canyon terrain/mesh alignment and resource cleanup. `deathward_occlusion_tests` compares whole-object transparency in towns and canyon wall sections at different zoom levels, checks that translucent scenery remains visible, verifies restoration and unchanged collision, and saves before/after captures under `artifacts`. `deathward_audio_tests` exercises the real audio device, packaged sounds, voice limits, panning, pause/mute, crossfades, looping, preferences and cleanup; it captures and silences its output unless passed `--audible`. The graphics suites require an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
 
 Enemy tests cover all fifteen behaviors, attack warnings, armor and support, cover and dodge counters, delayed hazards and chain cleanup, plus area-scaled populations and safe placements across 32 seeds. Tests also cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Fast room-network checks cover 10,004 seeds, including rotation/reflection-independent footprint comparisons and graph diversity checks across 256 seeds. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power and enemy-free rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. Cheat checks cover disabled hotkeys, unobstructed play with cheats enabled, single-group encounters, effect cleanup, room/boss replay, preserved rewards and paused/modal outcomes. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `empty`, `cheats`, `boss` and `summary`.
 

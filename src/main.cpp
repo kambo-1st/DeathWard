@@ -45,7 +45,7 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
-    bool smoke = false, benchmark = false, startEditor = false, artPoc = false;
+    bool smoke = false, benchmark = false, startEditor = false, artPoc = false, startExpedition = false;
     std::optional<dw::VisualStyle> styleChoice;
     bool startCinematic = false, intro = false, fullExperience = false, explicitSave = false;
     bool mute = false, explicitAudio = false, sandstorm = false;
@@ -66,6 +66,8 @@ int main(int argc, char **argv) {
         }
         else if (arg == "--full-experience")
             fullExperience = true;
+        else if (arg == "--expedition")
+            startExpedition = true;
         else if (arg == "--slots" && i + 1 < argc)
             slotsDirectory = argv[++i];
         else if (arg == "--art-poc")
@@ -158,7 +160,7 @@ int main(int argc, char **argv) {
                 return 2;
             }
         } else if (arg == "--help") {
-            std::cout << "DeathWard\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
+            std::cout << "DeathWard\n  --expedition         Start directly in a playable expedition\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
                          " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
                          "black-creek"
@@ -315,6 +317,10 @@ int main(int argc, char **argv) {
                     throw std::runtime_error("Could not reload the upgraded town navigation.");
                 game.updateCamera(1);
             }
+        if(startExpedition&&!startEditor&&!startCinematic&&!intro&&!fullExperience&&!smoke&&!benchmark) {
+            game.launch(true);
+            if(!game.run)throw std::runtime_error(game.error);
+        }
         dw::Renderer renderer;
         const dw::Game::SceneryPicker pickScenery = [&](const auto &run, const auto &camera, Ray ray) {
             return renderer.pickScenery(run, camera, ray);
@@ -887,6 +893,10 @@ int main(int argc, char **argv) {
                 game.run && game.run->arena.canyon && !game.run->arena.canyon->roadRooms.empty()
                     ? game.run->arena.canyon->roadRooms[1] : -1);
             EM_ASM({ if (Module.state) Module.state.sandstorm = !!$0; }, game.sandstorm);
+            const auto exitMarker=game.floorExitMarker();
+            EM_ASM({if(Module.verify)Module.navigation=({focus:$0,help:!!$1,floor:$2,exitReady:!!$3,exitX:$4,exitY:$5});},
+                int(game.keyboardFocus()),game.controlsOpen,game.run?game.run->floor:-1,
+                game.run&&game.run->canUseFloorExit(),exitMarker?exitMarker->x:-1,exitMarker?exitMarker->y:-1);
             if(game.run) {
                 const auto &trade=game.run->rooms[size_t(game.run->room)];
                 EM_ASM({if(Module.verify)Module.economy=({service:$0,open:!!$1,coins:$2,keys:$3,dynamite:$4,maxHP:$5,hp:$6,sold0:!!$7,sold1:!!$8,reward:!!$9,itemCount:$10});},

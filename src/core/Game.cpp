@@ -253,6 +253,7 @@ void Game::resetPointerInput() {
     leftCommand_ = LeftCommand::None;
     attackTarget_ = hoveredEnemy = 0;
     dodgeQueued_ = interactQueued_ = standStillQueued_ = false;
+    dodgeAimQueued_.reset();
     moveQueued_.reset();
     doorQueued_.reset();
     fireQueued_.reset();
@@ -265,9 +266,12 @@ void Game::close() {
 }
 void Game::perform(Action action) {
     try {
+        if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
         if(letterVisible()&&action!=Action::CloseLetter&&action!=Action::Quit)return;
         if(journalVisible()&&action!=Action::CloseJournal&&action!=Action::JournalPrevious&&action!=Action::JournalNext&&action!=Action::Quit)return;
         switch (action) {
+        case Action::Controls: controlsOpen=true;resetPointerInput();break;
+        case Action::CloseControls: controlsOpen=false;resetPointerInput();break;
         case Action::ReadJournal: journalOpen=true;journalIndex=0;resetPointerInput();town.stop();break;
         case Action::CloseJournal:
             journalOpen=false;if(run)run->storyOpen=StoryRoom::None;
@@ -645,7 +649,15 @@ Vector3 Game::cameraFocus() const {
     const float framing = std::sqrt(8.0f) * cameraZoom_;
     return sub(position, {framing * std::cos(cameraYaw_), .85f, framing * std::sin(cameraYaw_)});
 }
-void Game::updateCameraInput() {
+void Game::updateCameraInput(float dt) {
+    const float step=std::clamp(dt,0.f,.1f);
+    const float orbit=float(IsKeyDown(KEY_R))-float(IsKeyDown(KEY_Q));
+    const float tilt=float(IsKeyDown(KEY_INSERT))-float(IsKeyDown(KEY_DELETE));
+    const float zoom=float(IsKeyDown(KEY_PAGE_UP))-float(IsKeyDown(KEY_PAGE_DOWN));
+    cameraYaw_=std::remainder(cameraYaw_+orbit*1.5f*step,2*PI);
+    cameraPitch_=std::clamp(cameraPitch_+tilt*.8f*step,MinCameraPitch,MaxCameraPitch);
+    cameraZoomTarget_=std::clamp(cameraZoomTarget_*std::exp(-zoom*step),MinCameraZoom,MaxCameraZoom);
+    if(orbit!=0||tilt!=0)camera.position=add(camera.target,cameraOffset());
     const bool over = pointerOverControls();
     if (!over) {
         const float wheel = std::clamp(GetMouseWheelMoveV().y, -20.0f, 20.0f);
@@ -681,7 +693,7 @@ void Game::updateCamera(float dt) {
     camera.position = add(camera.target, cameraOffset());
 }
 bool Game::pointerOverControls() const {
-    if(journalVisible()||letterVisible())return true;
+    if(controlsOpen||journalVisible()||letterVisible())return true;
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
     const float y = mouse.y * 800.0f / float(GetScreenHeight());
@@ -699,6 +711,117 @@ bool Game::pointerOverControls() const {
            (x >= 24 && x <= 300 && y >= 594 && y <= 660) || (x >= 396 && x <= 936 && y >= 690 && y <= 734) ||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
+}
+Game::Menu Game::menuContext() const {
+    if(controlsOpen)return Menu::Controls;
+    if(journalVisible())return Menu::Journal;
+    if(letterVisible())return Menu::Letter;
+    if(screen==Screen::Hub&&questDialogueOpen())return Menu::Dialogue;
+    if(paused)return screen==Screen::Hub?Menu::HubPause:Menu::ExpeditionPause;
+    if(screen==Screen::Hub&&missionMenu)return Menu::Missions;
+    if(screen==Screen::Expedition&&run&&!run->dead) {
+        if(run->shopOpen)return Menu::Shop;
+        if(run->rewardOpen)return Menu::Reward;
+    }
+    if(screen==Screen::History)return Menu::History;
+    if(screen==Screen::Summary)return Menu::Summary;
+    return Menu::None;
+}
+std::vector<Action> Game::menuActions() const {
+    const auto context=menuContext();
+    if(context==Menu::Controls)return {Action::CloseControls};
+    if(context==Menu::Journal) {
+        if(journalEntries().size()>1)return {Action::CloseJournal,Action::JournalPrevious,Action::JournalNext};
+        return {Action::CloseJournal};
+    }
+    if(context==Menu::Letter)return {Action::CloseLetter};
+    if(context==Menu::Dialogue)return {Action::QuestNext,Action::QuestCancel};
+    if(context==Menu::HubPause||context==Menu::ExpeditionPause) {
+        std::vector<Action> result;result.reserve(32);
+        result.push_back(Action::Resume);result.push_back(Action::Controls);
+        if(screen==Screen::Hub) {
+            result.insert(result.end(),{Action::EditTown,Action::Quit,Action::TravelHub,
+                secondaryTravelHub(activeHub)==HubKind::Redstone?Action::TravelRedstone:Action::TravelFrontier});
+        } else result.insert(result.end(),{Action::Retreat,Action::Quit});
+        result.insert(result.end(),{Action::MasterDown,Action::MasterUp,Action::EffectsDown,Action::EffectsUp,
+            Action::AmbienceDown,Action::AmbienceUp,Action::MusicDown,Action::MusicUp,Action::AudioMute,
+            Action::AudioTest,Action::VegetationLess,Action::VegetationMore,Action::CycleVisualStyle});
+        if(screen==Screen::Expedition) {
+            result.push_back(Action::ToggleGroundDetail);
+            if(debug&&run&&!run->dead)result.insert(result.end(),{Action::HealthDown,Action::HealthUp,
+                Action::DamageDown,Action::DamageUp,Action::ResetPlayer});
+        }
+        result.push_back(Action::ToggleSandstorm);
+        return result;
+    }
+    if(context==Menu::Missions) {
+        std::vector<Action> result{Action::Launch,Action::ThemeSeeded,Action::ThemeMine,Action::ThemeCanyon,
+            Action::NewSeed,Action::CycleExpeditionPacing};
+        if(offeredTheme()==MissionTheme::Canyon)result.push_back(Action::ToggleCanyonRiver);
+        result.push_back(Action::CloseMissions);
+        return result;
+    }
+    if(context==Menu::Shop) {
+        std::vector<Action> result;
+        const int count=run->arena.rooms[size_t(run->room)].kind==RoomKind::Service?2:4;
+        for(int i=0;i<count;++i)if(run->shopUnavailable(i).empty())result.push_back(Action(int(Action::BuyShop0)+i));
+        result.push_back(Action::CloseShop);
+        return result;
+    }
+    if(context==Menu::Reward)return {Action::Reward0,Action::Reward1,Action::CloseShop};
+    if(context==Menu::History) {
+        if(inspectedHistory())return {Action::Hub,Action::Previous,Action::Next};
+        return {Action::Hub};
+    }
+    if(context==Menu::Summary)return {Action::Hub,Action::History};
+    return {};
+}
+Action Game::keyboardFocus() const {
+    const auto actions=menuActions();
+    if(actions.empty())return Action::None;
+    return keyboardMenu_==menuContext()&&std::find(actions.begin(),actions.end(),keyboardFocus_)!=actions.end()
+        ?keyboardFocus_:actions.front();
+}
+bool Game::updateMenuInput() {
+    const auto actions=menuActions();
+    keyboardFocus_=keyboardFocus();
+    keyboardMenu_=menuContext();
+    if(actions.empty())return false;
+    menuArrowsHeld_=true;
+    resetPointerInput();
+    if(controlsOpen&&IsKeyPressed(KEY_ESCAPE)) {perform(Action::CloseControls);return true;}
+    if(paused&&!controlsOpen&&IsKeyPressed(KEY_H)) {perform(Action::Controls);return true;}
+    // Preserve journal/history page shortcuts; Tab still visits their buttons.
+    if(journalVisible()||screen==Screen::History) {
+        if(IsKeyPressed(KEY_LEFT)||IsKeyPressed(KEY_RIGHT)) {
+            perform(journalVisible()?(IsKeyPressed(KEY_LEFT)?Action::JournalPrevious:Action::JournalNext):
+                (IsKeyPressed(KEY_LEFT)?Action::Previous:Action::Next));
+            return true;
+        }
+    }
+    const auto pressed=[](int key){return IsKeyPressed(key)||IsKeyPressedRepeat(key);};
+    int direction=0;
+    if(pressed(KEY_TAB))direction=(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT))?-1:1;
+    else if(pressed(KEY_DOWN)||pressed(KEY_RIGHT))direction=1;
+    else if(pressed(KEY_UP)||pressed(KEY_LEFT))direction=-1;
+    if(direction) {
+        const int at=int(std::find(actions.begin(),actions.end(),keyboardFocus_)-actions.begin());
+        keyboardFocus_=actions[size_t((at+direction+int(actions.size()))%int(actions.size()))];
+        return true;
+    }
+    if(IsKeyPressed(KEY_ENTER)||IsKeyPressed(KEY_KP_ENTER)||IsKeyPressed(KEY_SPACE)) {
+        perform(keyboardFocus_);
+        return true;
+    }
+    return controlsOpen;
+}
+std::optional<Vector2> Game::floorExitMarker() const {
+    if(screen!=Screen::Expedition||!run||run->dead||run->room!=run->finalRoom()||!run->roomClear||
+        paused||controlsOpen||journalVisible()||letterVisible()||run->shopOpen||run->rewardOpen)return std::nullopt;
+    const auto projected=GetWorldToScreen(add(run->arena.exit,{0,4.2f,0}),camera);
+    // Clear of the title, minimap and bottom controls, including at close zoom.
+    return Vector2{std::clamp(projected.x*1280.f/GetScreenWidth(),150.f,850.f),
+                   std::clamp(projected.y*800.f/GetScreenHeight(),180.f,480.f)};
 }
 MissionTheme Game::offeredTheme() const {
     uint64_t seed = 0;
@@ -757,7 +880,7 @@ void Game::updateHub(float dt) {
     townObjects.update(std::min(dt, .1f), [&](Vector3 p) { return town.height(p); }, town.player.position);
     town.setMovingSolids(townObjects.solids());
     const bool over = pointerOverControls();
-    updateCameraInput();
+    updateCameraInput(dt);
     Vector3 forward = unit({camera.target.x - camera.position.x, 0, camera.target.z - camera.position.z});
     Vector3 right{-forward.z, 0, forward.x};
     Vector3 movement = add(mul(forward, float(IsKeyDown(KEY_W)) - float(IsKeyDown(KEY_S))),
@@ -816,6 +939,7 @@ void Game::updateHub(float dt) {
 }
 void Game::update(float dt, const SceneryPicker &pickScenery) {
     try {
+        if(updateMenuInput())return;
         if(journalVisible()) {
             resetPointerInput();checkpoint();
             if(IsKeyPressed(KEY_ESCAPE)||IsKeyPressed(KEY_ENTER))perform(Action::CloseJournal);
@@ -830,6 +954,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
         }
         if(screen==Screen::Hub&&(questDialogueOpen()||sleeping())) {updateHub(dt);return;}
         if((screen==Screen::Hub||screen==Screen::Expedition)&&IsKeyPressed(KEY_J)) {perform(Action::ReadJournal);return;}
+        if((screen==Screen::Hub||screen==Screen::Expedition)&&IsKeyPressed(KEY_L)) {perform(Action::ReadLetter);return;}
         debugInput();
         if (IsKeyPressed(KEY_K) && (screen == Screen::Hub || screen == Screen::Expedition))
             perform(Action::ToggleSandstorm);
@@ -900,7 +1025,8 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
                 perform(Action::Reward1);
             return;
         }
-        updateCameraInput();
+        if(IsKeyPressed(KEY_C))perform(Action::DynamiteMode);
+        updateCameraInput(dt);
         Input input;
         // Camera-relative movement projected onto XZ, so W moves up the screen.
         Vector3 forward =
@@ -908,6 +1034,11 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
         Vector3 right{-forward.z, 0, forward.x};
         input.movement = add(mul(forward, float(IsKeyDown(KEY_W)) - float(IsKeyDown(KEY_S))),
                              mul(right, float(IsKeyDown(KEY_D)) - float(IsKeyDown(KEY_A))));
+        if(!IsKeyDown(KEY_UP)&&!IsKeyDown(KEY_DOWN)&&!IsKeyDown(KEY_LEFT)&&!IsKeyDown(KEY_RIGHT))
+            menuArrowsHeld_=false;
+        const Vector3 arrowDirection = menuArrowsHeld_?Vector3{}:
+            add(mul(forward, float(IsKeyDown(KEY_UP)) - float(IsKeyDown(KEY_DOWN))),
+                mul(right, float(IsKeyDown(KEY_RIGHT)) - float(IsKeyDown(KEY_LEFT))));
         const bool overControls = pointerOverControls();
         input.aim = run->player.aim;
         Ray ray = GetScreenToWorldRay(GetMousePosition(), camera);
@@ -932,7 +1063,16 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
                 }
             }
         }
-        const auto pointed = overControls ? PointerTarget{} : pickTarget(*run, ray, scenery);
+        auto pointed = overControls ? PointerTarget{} : pickTarget(*run, ray, scenery);
+        bool exitMarkerHovered=false;
+        if(const auto marker=floorExitMarker()) {
+            const Vector2 mouse{GetMouseX()*1280.f/GetScreenWidth(),GetMouseY()*800.f/GetScreenHeight()};
+            exitMarkerHovered=CheckCollisionPointRec(mouse,{marker->x-120,marker->y-30,240,76});
+            if(exitMarkerHovered) {
+                pointed={};
+                if(run->canUseFloorExit())pointed.objective=run->arena.exit;
+            }
+        }
         hoveredEnemy = pointed.enemy;
         if (const auto *enemy = run->findEnemy(hoveredEnemy))
             input.aim = enemy->position;
@@ -941,7 +1081,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
         const bool rightDown = IsMouseButtonDown(MOUSE_BUTTON_RIGHT);
         if (!rightDown)
             cancelFireHeld_ = false;
-        const bool dynamiteKey = IsKeyPressed(KEY_B) && !overControls &&
+        const bool dynamiteKey = IsKeyPressed(KEY_B) &&
                                  !(debug && (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)));
         const bool dynamiteGesture =
             dynamiteArmed || dynamiteQueued_.has_value() || placeDynamiteQueued_ || dynamiteKey;
@@ -949,9 +1089,11 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             dynamiteArmed = false;
             cancelFireHeld_ = true;
         } else if ((dynamiteArmed && leftPressed && !overControls) || dynamiteKey) {
-            if (dynamiteThrowMode)
-                dynamiteQueued_ = input.aim;
-            else
+            if (dynamiteThrowMode) {
+                const auto direction=length(arrowDirection)>.01f?unit(arrowDirection):
+                    length(input.movement)>.01f?unit(input.movement):run->player.facing;
+                dynamiteQueued_ = dynamiteKey?add(run->player.position,mul(direction,10)):input.aim;
+            } else
                 placeDynamiteQueued_ = true;
             dynamiteArmed = false;
             moveQueued_.reset();
@@ -970,10 +1112,15 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             moveQueued_.reset();
             doorQueued_.reset();
             attackTarget_ = pointed.enemy;
-            leftCommand_ = attackTarget_                         ? LeftCommand::Attack
+            leftCommand_ = exitMarkerHovered                     ? LeftCommand::Interact
+                           : attackTarget_                         ? LeftCommand::Attack
                            : (pointed.objective || pointed.door) ? LeftCommand::Interact
                                                                  : LeftCommand::Move;
             if (leftCommand_ == LeftCommand::Interact && !input.standStill && !rightDown) {
+                if(exitMarkerHovered&&!run->canUseFloorExit())
+                    run->announce(run->surveyTutorial&&!run->surveyRecovered?
+                        "Recover Bell's records and Eleanor's letter before leaving.":
+                        "Examine the marked story site before leaving this floor.",4);
                 if (pointed.door)
                     doorQueued_ = pointed.door;
                 else
@@ -997,14 +1144,14 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
                 mouseMoveCooldown_ = 0.1f;
             }
         }
-        const Vector3 arrowDirection =
-            add(mul(forward, float(IsKeyDown(KEY_UP)) - float(IsKeyDown(KEY_DOWN))),
-                mul(right, float(IsKeyDown(KEY_RIGHT)) - float(IsKeyDown(KEY_LEFT))));
         if (!dynamiteGesture && length(arrowDirection) > .01f) {
             // Arrows take aim priority while held, even with the cursor over the HUD.
             input.aimDirection = unit(arrowDirection);
             input.fire = true;
         }
+        if(IsKeyPressed(KEY_SPACE)&&!input.aimDirection&&!leftDown&&!rightDown)
+            dodgeAimQueued_=run->player.facing;
+        if(dodgeAimQueued_&&!input.aimDirection)input.aimDirection=dodgeAimQueued_;
         const bool arrowPressed = input.aimDirection &&
             (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_RIGHT));
         if (input.fire && (arrowPressed || leftPressed || IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))) {
@@ -1022,7 +1169,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             doorQueued_.reset();
         }
         dodgeQueued_ = dodgeQueued_ || IsKeyPressed(KEY_SPACE);
-        interactQueued_ = interactQueued_ || IsKeyPressed(KEY_E);
+        interactQueued_ = interactQueued_ || IsKeyPressed(KEY_E) || IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER);
         input.moveTarget = moveQueued_;
         input.doorTarget = doorQueued_;
         input.dodge = dodgeQueued_;
@@ -1044,6 +1191,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             fireQueued_.reset();
             standStillQueued_ = false;
             dodgeQueued_ = interactQueued_ = false;
+            dodgeAimQueued_.reset();
             if (run->finished || run->dead || run->rewardOpen || run->shopOpen || run->letterOpen ||
                 run->storyOpen!=StoryRoom::None || run->floorExitRequested)
                 break;

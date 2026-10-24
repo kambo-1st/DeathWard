@@ -43,8 +43,8 @@
       <p id="status" role="status" aria-live="polite">Loading the frontier…</p>
       <button id="start" disabled type="button">Enter Black Creek</button>
       <p id="problem" hidden></p>
-      <p class="hint">Click to move or attack. You can also move with W, A, S and D. Scroll to zoom; hold the middle mouse button to rotate. Escape pauses.</p>
-      <p class="hint">Sound starts when you enter. A keyboard and mouse are required.</p>
+      <p class="hint">WASD moves, arrows fire, B places dynamite, E or Enter interacts. Escape pauses; H while paused opens the controls guide. Mouse controls also work.</p>
+      <p class="hint">Sound starts when you enter. Keyboard-only play is supported.</p>
     </article></section>
   </main>
   <script>
@@ -149,7 +149,7 @@
     canvas.addEventListener('wheel', event => event.preventDefault(), {passive: false});
     window.addEventListener('keydown', event => {
       if (document.activeElement === canvas && (event.code.startsWith('F') && /^F\d+$/.test(event.code) ||
-          ['Space', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code) ||
+          ['Space', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Insert', 'Delete'].includes(event.code) ||
           event.ctrlKey && ['KeyS', 'KeyD', 'KeyZ', 'KeyY'].includes(event.code))) event.preventDefault();
     });
     canvas.addEventListener('webglcontextlost', event => {

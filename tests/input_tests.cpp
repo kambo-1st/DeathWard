@@ -16,6 +16,129 @@ constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
 }
+void keyboardInputCheck(const std::filesystem::path &directory) {
+    dw::Game game(directory/"keyboard.save");
+    game.debug=false;game.seedText="1866";game.themeChoice=dw::ThemeChoice::Canyon;
+    auto frame=[&](float dt=dw::Tick) {
+        game.update(dt);BeginDrawing();EndDrawing();
+        check(game.error.empty(),"keyboard controls cause no game errors");
+    };
+    auto key=[&](int code) {mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    auto focus=[&](dw::Action action) {
+        for(int i=0;i<45&&game.keyboardFocus()!=action;++i)key(KEY_TAB);
+        check(game.keyboardFocus()==action,"the requested menu action is reachable with Tab");
+    };
+    mouseEvent(MousePosition,1100,200);frame();
+    key(KEY_ESCAPE);check(game.paused,"Escape pauses the hub without a mouse");
+    key(KEY_H);check(game.controlsOpen,"pause H opens the complete control guide");
+    key(KEY_ESCAPE);check(!game.controlsOpen&&game.paused,"help closes back to pause");
+    focus(dw::Action::MusicDown);const float music=game.audioSettings.music;key(KEY_ENTER);
+    check(game.audioSettings.music<music&&game.paused,"keyboard focus changes a pause setting");
+    key(KEY_ESCAPE);check(!game.paused,"Escape returns to hub exploration");
+    key(KEY_E);
+    for(int i=0;i<2400&&!game.missionMenu;++i)frame(.1f);
+    check(game.missionMenu,"E approaches the mission board and opens expedition setup");
+    focus(dw::Action::ThemeMine);key(KEY_ENTER);
+    check(game.themeChoice==dw::ThemeChoice::Mine&&game.missionMenu,"Enter activates the selected theme without launching");
+    focus(dw::Action::ThemeCanyon);key(KEY_ENTER);
+    focus(dw::Action::Launch);key(KEY_ENTER);
+    check(game.run&&game.screen==dw::Screen::Expedition,"keyboard setup launches a canyon expedition");
+    auto &run=*game.run;
+    game.updateCamera(10);
+    check(game.pointerOverControls(),"cursor stays parked over the minimap");
+    const int ammo=run.dynamite;game.accumulator=0;
+    mouseEvent(KeyDown,KEY_B);frame(.001f);mouseEvent(KeyUp,KEY_B);frame(.001f);
+    check(run.dynamite==ammo,"short keyboard bomb tap is queued until the fixed tick");
+    frame();
+    check(run.dynamite==ammo-1&&run.hazards.back().settled,"B places dynamite even with cursor over HUD and cheats off");
+    run.clearRoomDebug();run.dynamiteCooldown=0;
+    key(KEY_C);check(game.dynamiteThrowMode,"C switches to throwing without a mouse");
+    const auto f=dw::unit(Vector3{game.camera.target.x-game.camera.position.x,0,game.camera.target.z-game.camera.position.z});
+    const Vector3 right{-f.z,0,f.x};const auto shots=run.stats.shots;
+    mouseEvent(KeyDown,KEY_RIGHT);mouseEvent(KeyDown,KEY_B);frame();
+    check(run.dynamite==ammo-2&&!run.hazards.back().settled&&run.stats.shots==shots,
+          "B plus arrow throws without also firing a bullet");
+    auto velocity=run.hazards.back().velocity;velocity.y=0;
+    check(dw::dot(dw::unit(velocity),right)>.99f,"keyboard throw follows the selected screen-relative direction");
+    mouseEvent(KeyUp,KEY_RIGHT);mouseEvent(KeyUp,KEY_B);frame();
+    run.clearRoomDebug();run.dynamiteCooldown=0;key(KEY_C);
+    const auto oldAngle=dw::unit(dw::sub(game.camera.position,game.camera.target));
+    mouseEvent(KeyDown,KEY_Q);for(int i=0;i<15;++i)frame();mouseEvent(KeyUp,KEY_Q);frame();
+    check(dw::distance(oldAngle,dw::unit(dw::sub(game.camera.position,game.camera.target)))>.1f,
+          "Q rotates the camera independently of the cursor");
+    const auto zoom=game.cameraZoomPercent();
+    mouseEvent(KeyDown,KEY_PAGE_UP);for(int i=0;i<15;++i)frame();mouseEvent(KeyUp,KEY_PAGE_UP);frame();
+    check(game.cameraZoomPercent()>zoom+5,"Page Up zooms while cursor is over HUD");
+    const auto pitch=dw::unit(dw::sub(game.camera.position,game.camera.target)).y;
+    mouseEvent(KeyDown,KEY_INSERT);for(int i=0;i<10;++i)frame();mouseEvent(KeyUp,KEY_INSERT);frame();
+    check(dw::unit(dw::sub(game.camera.position,game.camera.target)).y>pitch,"Insert tilts the camera");
+    run.player.facing={1,0,0};run.player.dodgeCooldown=0;key(KEY_SPACE);
+    check(run.player.dodgeDirection.x>.99f,"stationary keyboard dodge follows facing, not the parked mouse");
+    run.healDebug();run.clearRoomDebug();
+    const auto gate=std::find_if(run.arena.passages.begin(),run.arena.passages.end(),[](const auto &p){return p.locked;});
+    check(gate!=run.arena.passages.end(),"keyboard fixture has an optional locked door");
+    const int passage=int(gate-run.arena.passages.begin());
+    const int side=run.arena.rooms[size_t(gate->rooms[0])].kind==dw::RoomKind::Power?1:0;
+    run.jumpDebug(gate->rooms[size_t(side)]);run.clearRoomDebug();
+    run.player.position=run.arena.doorApproach(passage,side);run.player.position.y=.85f;run.keys=0;
+    key(KEY_E);check(gate->locked,"E cannot unlock a door without its key");
+    run.keys=1;key(KEY_E);check(!gate->locked&&run.keys==0,"E opens a locked door and spends exactly one key");
+    run.jumpDebug(run.arena.shopRoom);run.clearRoomDebug();run.moneyCollected=100;
+    run.player.hp=40;run.player.position=run.arena.rooms[size_t(run.room)].objective;run.player.position.y=.85f;
+    key(KEY_E);check(run.shopOpen,"E opens a nearby shop");
+    focus(dw::Action::BuyShop0);key(KEY_ENTER);
+    check(run.shopOffers[0].sold&&run.player.hp==80,"Enter buys the focused medicine offer");
+    const auto shopTime=run.stats.duration;
+    mouseEvent(KeyDown,KEY_B);mouseEvent(KeyDown,KEY_E);frame();
+    mouseEvent(KeyUp,KEY_B);mouseEvent(KeyUp,KEY_E);frame();
+    check(run.stats.duration==shopTime&&run.hazards.empty(),"trade menus freeze combat and cannot deploy bombs");
+    key(KEY_ESCAPE);check(!run.shopOpen&&!game.paused,"Escape closes a trade without pausing");
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.player.position=run.rewardPosition(run.room);
+    run.player.position.y=.85f;key(KEY_E);
+    check(run.rewardOpen,"E opens the optional boss reward");
+    key(KEY_RIGHT);check(game.keyboardFocus()==dw::Action::Reward1,"arrow selects the second boss reward");
+    const auto item=run.offers[1];key(KEY_ENTER);
+    check(!run.rewardOpen&&run.itemStacks(item)==1,"Enter claims only the focused reward");
+    const float hp=run.player.hp;const auto marker=game.floorExitMarker();
+    check(marker&&marker->x>=150&&marker->x<=850&&marker->y>=180&&marker->y<=480,"exit marker stays inside unobstructed HUD bounds");
+    run.player.position=run.arena.rooms.back().center;run.player.position.y=.85f;game.updateCamera(10);
+    const auto clickable=game.floorExitMarker();
+    mouseEvent(MousePosition,int(clickable->x),int(clickable->y));mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();
+    mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+    check(run.moveDestination()&&dw::distance(*run.moveDestination(),run.arena.exit)<1,
+          "clicking the large exit marker routes to the actual exit");
+    run.jumpDebug(run.finalRoom());
+    run.player.position=run.arena.exit;run.player.position.y=.85f;game.updateCamera(10);
+    dw::Renderer renderer;
+    auto capture=[&](const char *name) {
+        BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+        std::filesystem::create_directories("artifacts");
+        check(ExportImage(image,(std::string("artifacts/")+name+".png").c_str()),"save keyboard/exit visual capture");
+        UnloadImage(image);EndDrawing();
+    };
+    capture("exit-beacon-keyboard");
+    key(KEY_ENTER);
+    check(game.run->floor==1&&game.run->itemStacks(item)==1&&game.run->player.hp==hp,
+          "Enter at the exit advances one floor and carries the build without healing");
+    // A story floor still requires evidence, even though the exit is clearly marked.
+    game.run=std::make_unique<dw::Simulation>(1866,game.campaign.data().pending->id,game.campaign.data().world,
+        dw::MissionTheme::Canyon,true,false,dw::WitnessAccount::Rourke);
+    auto &story=*game.run;story.jumpDebug(story.finalRoom());story.clearRoomDebug();
+    story.player.position=story.arena.exit;story.player.position.y=.85f;game.updateCamera(10);
+    check(game.floorExitMarker()&&!story.canUseFloorExit(),"locked story exit remains visible");
+    capture("exit-beacon-locked");key(KEY_E);check(story.floor==0,"keyboard exit preserves required evidence gate");
+    const int site=story.storyRoomIndex();story.jumpDebug(site);story.clearRoomDebug();
+    story.player.position=story.arena.rooms[size_t(site)].objective;story.player.position.y=.85f;
+    key(KEY_E);check(game.journalVisible()&&story.storySeen(),"E examines required story evidence");
+    key(KEY_ENTER);check(!game.journalVisible(),"Enter closes the field journal");
+    story.jumpDebug(story.finalRoom());story.player.position=story.arena.exit;story.player.position.y=.85f;
+    key(KEY_E);check(game.run->floor==1,"E advances once required evidence has been examined");
+    key(KEY_ESCAPE);focus(dw::Action::Controls);key(KEY_ENTER);capture("keyboard-controls");key(KEY_ESCAPE);
+    focus(dw::Action::Retreat);key(KEY_ENTER);check(game.screen==dw::Screen::Summary,"keyboard menus resolve a retreat");
+    key(KEY_ENTER);check(game.screen==dw::Screen::Hub,"Enter returns from summary to hub");
+    renderer.unload();
+    std::cout<<"PASS keyboard hub/setup, menus/settings, bombs over HUD, directed throws, camera, doors, trades, rewards and evidence-gated floor exits\n";
+}
 void arrowInputCheck(const std::filesystem::path &directory, dw::MissionTheme theme) {
     const std::string name = theme == dw::MissionTheme::Canyon ? "canyon" : "mine";
     dw::Game game(directory / ("arrows-" + name + ".save"));
@@ -781,6 +904,10 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if(mode.empty()||mode=="--keyboard-only") {
+            keyboardInputCheck(directory);
+            if(mode=="--keyboard-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
         if(mode.empty()||mode=="--economy-only") {
             economyInputCheck(directory);
             if(mode=="--economy-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}

@@ -51,6 +51,7 @@ class Renderer {
   private:
     float sx_ = 1, sy_ = 1;
     float sandstormStrength_ = 0;
+    Action keyboardFocus_ = Action::None;
     PlayerModel playerModel_;
     AnimalModels animalModels_;
     TownActorModels characterModels_;
@@ -63,7 +64,8 @@ class Renderer {
     void text(const std::string &value, float x, float y, int size, Color color) const;
     void wrap(const std::string &value, float x, float y, float width, int size, Color color) const;
     void panel(float x, float y, float w, float h, Color color) const;
-    bool button(const std::string &title, float x, float y, float w, float h, bool primary = false) const;
+    bool button(Action action, const std::string &title, float x, float y, float w, float h, bool primary = false) const;
+    void floorExitMarker(const Game &game);
     Action hub(const Game &game);
     Action questUI(const Game &game);
     Action expedition(const Game &game);

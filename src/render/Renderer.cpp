@@ -626,12 +626,16 @@ void Renderer::panel(float x, float y, float w, float h, Color color) const {
     DrawRectangleRec(rect, color);
     DrawRectangleLinesEx(rect, 1, Border);
 }
-bool Renderer::button(const std::string &title, float x, float y, float w, float h, bool primary) const {
+bool Renderer::button(Action action, const std::string &title, float x, float y, float w, float h, bool primary) const {
     Rectangle rect{x * sx_, y * sy_, w * sx_, h * sy_};
     bool hover = CheckCollisionPointRec(GetMousePosition(), rect);
     DrawRectangleRec(rect, primary ? (hover ? Paper : Gold) : (hover ? Color{49, 63, 63, 255} : Panel));
     DrawRectangleLinesEx(rect, 1, primary ? Gold : Border);
     text(title, x + 18, y + (h - 18) / 2, 18, primary ? Ink : Paper);
+    if(action!=Action::None&&action==keyboardFocus_) {
+        DrawRectangleLinesEx({rect.x-4*sx_,rect.y-4*sy_,rect.width+8*sx_,rect.height+8*sy_},
+                             2*std::min(sx_,sy_),Teal);
+    }
     return hover && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
 }
 std::optional<RayCollision> Renderer::pickScenery(const Simulation &run, const Camera3D &camera, Ray ray) {
@@ -948,8 +952,14 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     }
     lantern(run.arena.exit, run.canUseFloorExit() ? Teal : Gold,
             westernScene_.loaded());
-    if (run.canUseFloorExit())
-        DrawCircle3D({run.arena.exit.x, 0.1f, run.arena.exit.z}, 1.8f, {1, 0, 0}, 90, Teal);
+    if (run.canUseFloorExit()) {
+        const auto p=run.arena.exit;
+        const float pulse=.5f+.5f*std::sin(float(run.stats.duration)*2.5f);
+        for(float radius:{1.8f,2.1f,2.5f+.3f*pulse})
+            DrawCircle3D({p.x,.12f,p.z},radius,{1,0,0},90,Teal);
+        DrawCylinderEx(add(p,{0,.15f,0}),add(p,{0,5.2f,0}),.18f,.08f,8,{112,204,180,100});
+        DrawSphereEx(add(p,{0,5.2f+.15f*pulse,0}),.3f,6,8,Paper);
+    }
     std::vector<const Enemy *> drawnEnemies;
     for (int room = 0; room < run.arena.roomCount(); ++room) {
         if (room != run.room && !visible(run.arena.rooms[size_t(room)].bounds))
@@ -1207,25 +1217,25 @@ Action Renderer::hub(const Game &game) {
     }
     if (!game.missionMenu && !game.paused) {
         panel(24, 700, 676, 76, Panel);
-        if (button(game.arrivalActive()?(game.walkingToQuest()?"WALKING TO OBJECTIVE":"CURRENT OBJECTIVE"):
+        if (button(game.arrivalActive()?Action::QuestAction:Action::Missions, game.arrivalActive()?(game.walkingToQuest()?"WALKING TO OBJECTIVE":"CURRENT OBJECTIVE"):
                    game.walkingToMission ? "WALKING TO MISSIONS" : "MISSIONS", 38, 712, 255, 44, true))
             return game.arrivalActive()?Action::QuestAction:Action::Missions;
-        if (button("RUN HISTORY", 305, 712, 179, 44))
+        if (button(Action::History, "RUN HISTORY", 305, 712, 179, 44))
             return Action::History;
-        if (button("PAUSE", 496, 712, 188, 44))
+        if (button(Action::Pause, "PAUSE", 496, 712, 188, 44))
             return Action::Pause;
         panel(856, 646, 400, 130, Panel);
         const auto other = secondaryTravelHub(game.activeHub);
-        if (button(std::string("TRAVEL TO ") + hubShortName(other), 870, 658, 372, 44))
+        if (button(other == HubKind::Redstone ? Action::TravelRedstone : Action::TravelFrontier, std::string("TRAVEL TO ") + hubShortName(other), 870, 658, 372, 44))
             return other == HubKind::Redstone ? Action::TravelRedstone : Action::TravelFrontier;
-        if (button(std::string("TRAVEL TO ") + hubShortName(primaryTravelHub(game.activeHub)),
+        if (button(Action::TravelHub, std::string("TRAVEL TO ") + hubShortName(primaryTravelHub(game.activeHub)),
                    870, 712, 372, 44))
             return Action::TravelHub;
     }
     if (game.debug && game.debugPanelOpen && !game.missionMenu && !game.paused) {
         panel(24, 140, 456, 105, Panel);
         text("CHEATS ON / F10 route / G haunting", 40, 157, 13, Teal);
-        if (button(game.resetArmed ? "CONFIRM RESET (backup saved)" : "RESET CAMPAIGN", 40, 189, 420, 38))
+        if (button(Action::Reset, game.resetArmed ? "CONFIRM RESET (backup saved)" : "RESET CAMPAIGN", 40, 189, 420, 38))
             return Action::Reset;
     }
     if (game.missionMenu) {
@@ -1245,28 +1255,28 @@ Action Renderer::hub(const Game &game) {
                  ? "4-8 seeded floors, fifteen rooms each. Your build carries between floors."
                  : "4-8 seeded floors, growing from nine to fifteen rooms. Keep your build.", 270, 323, 15,
              Muted);
-        if (button("SEEDED THEME", 270, 354, 230, 34, game.themeChoice == ThemeChoice::Seeded))
+        if (button(Action::ThemeSeeded, "SEEDED THEME", 270, 354, 230, 34, game.themeChoice == ThemeChoice::Seeded))
             return Action::ThemeSeeded;
-        if (button("WESTERN MINE", 510, 354, 239, 34, game.themeChoice == ThemeChoice::Mine))
+        if (button(Action::ThemeMine, "WESTERN MINE", 510, 354, 239, 34, game.themeChoice == ThemeChoice::Mine))
             return Action::ThemeMine;
-        if (button("ISAAC CANYON", 759, 354, 249, 34, game.themeChoice == ThemeChoice::Canyon))
+        if (button(Action::ThemeCanyon, "ISAAC CANYON", 759, 354, 249, 34, game.themeChoice == ThemeChoice::Canyon))
             return Action::ThemeCanyon;
         panel(270, 402, 460, 65, Ink);
         text("MISSION SEED", 287, 413, 12, Muted);
         text(game.seedText.empty() ? "Type a seed..." : game.seedText, 287, 437, 20, Gold);
-        if (button("NEW MISSION", 748, 408, 260, 51))
+        if (button(Action::NewSeed, "NEW MISSION", 748, 408, 260, 51))
             return Action::NewSeed;
         if (game.offeredTheme() == MissionTheme::Canyon) {
-            if (button(game.visualSettings.canyonRiver ? "RIVER ON" : "RIVER OFF", 748, 480, 260, 34))
+            if (button(Action::ToggleCanyonRiver, game.visualSettings.canyonRiver ? "RIVER ON" : "RIVER OFF", 748, 480, 260, 34))
                 return Action::ToggleCanyonRiver;
         }
-        if (button(expeditionPacingName(game.expeditionPacing), 270, 480, 460, 34))
+        if (button(Action::CycleExpeditionPacing, expeditionPacingName(game.expeditionPacing), 270, 480, 460, 34))
             return Action::CycleExpeditionPacing;
-        if (button(game.offeredTheme() == MissionTheme::Canyon ? "LEAVE FOR THE CANYON"
+        if (button(Action::Launch, game.offeredTheme() == MissionTheme::Canyon ? "LEAVE FOR THE CANYON"
                                                                : "LEAVE FOR THE MINE",
                    270, 529, 738, 59, true))
             return Action::Launch;
-        if (button("BACK TO TOWN", 270, 609, 738, 43))
+        if (button(Action::CloseMissions, "BACK TO TOWN", 270, 609, 738, 43))
             return Action::CloseMissions;
     } else if (game.paused) {
         panel(0, 0, 1280, 800, Color{8, 14, 15, 155});
@@ -1277,17 +1287,17 @@ Action Renderer::hub(const Game &game) {
              378, 226, 514, 17, Muted);
         for (size_t i = 0; i < world.npcs.size(); ++i)
             wrap(world.npcs[i].name + ": " + npcDialogue(world, i), 378, 310 + float(i) * 48, 514, 13, Paper);
-        if (button("KEEP EXPLORING", 378, 485, 514, 50, true))
+        if (button(Action::Resume, "KEEP EXPLORING", 378, 485, 514, 50, true))
             return Action::Resume;
-        if (button("TOWN EDITOR", 378, 547, 250, 43))
+        if (button(Action::EditTown, "TOWN EDITOR", 378, 547, 250, 43))
             return Action::EditTown;
-        if (button("QUIT", 642, 547, 250, 43))
+        if (button(Action::Quit, "QUIT", 642, 547, 250, 43))
             return Action::Quit;
-        if (button(std::string("TRAVEL TO ") + hubShortName(primaryTravelHub(game.activeHub)),
+        if (button(Action::TravelHub, std::string("TRAVEL TO ") + hubShortName(primaryTravelHub(game.activeHub)),
                    378, 603, 514, 43))
             return Action::TravelHub;
         const auto other = secondaryTravelHub(game.activeHub);
-        if (button(std::string("TRAVEL TO ") + hubShortName(other), 378, 655, 514, 43))
+        if (button(other == HubKind::Redstone ? Action::TravelRedstone : Action::TravelFrontier, std::string("TRAVEL TO ") + hubShortName(other), 378, 655, 514, 43))
             return other == HubKind::Redstone ? Action::TravelRedstone : Action::TravelFrontier;
     }
     return Action::None;
@@ -1310,17 +1320,17 @@ Action Renderer::questUI(const Game &game) {
         const std::string label=!final?"CONTINUE":stage==ArrivalStage::Tent?"SLEEP UNTIL MORNING":
             (stage==ArrivalStage::RourkeTrail||stage==ArrivalStage::RourkeSearching)?"FOLLOW HIS ACCOUNT":
             (stage==ArrivalStage::Trail||stage==ArrivalStage::Searching)?"RECOVER THE RECORDS":"CONTINUE";
-        if(button(label,566,686,488,46,true))return Action::QuestNext;
-        if(button("NOT YET",226,686,320,46))return Action::QuestCancel;
+        if(button(Action::QuestNext, label,566,686,488,46,true))return Action::QuestNext;
+        if(button(Action::QuestCancel, "NOT YET",226,686,320,46))return Action::QuestCancel;
         return Action::None;
     }
     if(game.campaign.data().world.flags.contains("redstone.survey_recovered"))
-        if(button("READ ELEANOR'S LETTER",898,225,340,32))return Action::ReadLetter;
+        if(button(Action::ReadLetter, "READ ELEANOR'S LETTER",898,225,340,32))return Action::ReadLetter;
     if(const auto marker=game.questMarker()) {
         panel(880,30,376,188,Panel);
         text(marker->title,898,46,17,Gold);
         wrap(marker->instruction,898,79,340,18,Paper);
-        if(button(game.walkingToQuest()?"WALKING...":marker->action,898,166,340,36,true))return Action::QuestAction;
+        if(button(Action::QuestAction, game.walkingToQuest()?"WALKING...":marker->action,898,166,340,36,true))return Action::QuestAction;
         const auto p=game.questMarkerScreen();
         const Vector2 top{p.x*sx_,(p.y-25)*sy_}, left{(p.x-18)*sx_,p.y*sy_},
                       right{(p.x+18)*sx_,p.y*sy_}, bottom{p.x*sx_,(p.y+25)*sy_};
@@ -1386,10 +1396,45 @@ void Renderer::dungeonMap(const Game &game) {
         for (const auto &key : run.arena.keys)
             if (key.room == i && !key.collected && run.rooms[size_t(i)].visited)
                 label = "K";
+        if(i==run.finalRoom()&&run.rooms[size_t(i)].cleared&&run.storySeen()&&
+           (!run.surveyTutorial||run.surveyRecovered)) {
+            label=">";
+            DrawCircleLines(int(at.x*sx_),int(at.y*sy_),8*std::min(sx_,sy_),Paper);
+        }
         text(label, at.x - 4, at.y - 4, 9, run.rooms[size_t(i)].visited ? Ink : Paper);
     }
     auto at = point(run.player.position);
     DrawCircleV({at.x * sx_, at.y * sy_}, 3.5f * std::min(sx_, sy_), Paper);
+}
+void Renderer::floorExitMarker(const Game &game) {
+    const auto marker=game.floorExitMarker();
+    if(!marker)return;
+    const auto &run=*game.run;
+    const bool ready=run.canUseFloorExit();
+    const auto color=ready?Teal:Gold;
+    const float x=marker->x,y=marker->y;
+    const std::string label=!ready?"EXIT LOCKED":!run.lastFloor()?"NEXT FLOOR":
+        run.surveyTutorial||run.testimony()?"RETURN TO FORT":"RETURN TO HUB";
+    panel(x-120,y-30,240,76,Panel);
+    DrawRectangleLinesEx({(x-120)*sx_,(y-30)*sy_,240*sx_,76*sy_},2*std::min(sx_,sy_),color);
+    text(label,x-103,y-18,18,color);
+    if(ready) {
+        const int meters=int(std::round(distance(run.player.position,run.arena.exit)));
+        text(distance(run.player.position,run.arena.exit)<2.8f?"E or Enter to continue":std::to_string(meters)+" m / click to approach",x-103,y+9,12,Paper);
+        text(run.lastFloor()?"Your expedition ends here":"Your build carries to the next floor",x-103,y+29,10,Muted);
+    } else {
+        text(run.surveyTutorial&&!run.surveyRecovered?"Recover the survey records":"Examine the ? story site first",x-103,y+10,12,Paper);
+        text("The exit opens after this objective",x-103,y+29,10,Muted);
+    }
+    // A screen-space arrow remains readable through rock and at the view edge.
+    const auto target=GetWorldToScreen(add(run.arena.exit,{0,.2f,0}),game.camera);
+    const Vector2 delta{target.x/sx_-x,target.y/sy_-y};
+    const float magnitude=std::max(.001f,std::hypot(delta.x,delta.y));
+    const Vector2 direction{delta.x/magnitude,delta.y/magnitude},side{-direction.y,direction.x};
+    const auto vertex=[&](float along,float across) {
+        return Vector2{(x+direction.x*along+side.x*across)*sx_,(y-52+direction.y*along+side.y*across)*sy_};
+    };
+    DrawTriangle(vertex(14,0),vertex(-9,-10),vertex(-9,10),color);
 }
 Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
@@ -1410,7 +1455,7 @@ Action Renderer::expedition(const Game &game) {
     if(run.surveyTutorial) {
         text("THE LOST SURVEY / FLOOR 1",982,37,13,Gold);
         wrap(run.surveyRecovered?"Records and letter recovered. Return to Fort Mercy.":"Recover Bell's records from the survey camp.",982,65,256,16,Paper);
-        if(run.surveyRecovered&&button("READ LETTER",982,120,256,26))return Action::ReadLetter;
+        if(run.surveyRecovered&&button(Action::ReadLetter,"READ LETTER",982,120,256,26))return Action::ReadLetter;
         panel(330,568,620,88,Panel);
         wrap(run.tutorialHint(),348,584,584,17,Paper);
     } else if(run.testimony()) {
@@ -1418,7 +1463,7 @@ Action Renderer::expedition(const Game &game) {
         const auto site=run.expedition.storyAt(run.floor);
         wrap(site==StoryRoom::None?"Follow the trails to the next floor.":
             std::string(run.storySeen()?"[+] Examined: ":"[?] Examine: ")+storyRoomName(site),982,65,256,16,Paper);
-        if(button("FIELD JOURNAL",982,120,256,26))return Action::ReadJournal;
+        if(button(Action::ReadJournal, "FIELD JOURNAL",982,120,256,26))return Action::ReadJournal;
     } else {
     text("BRING SOMETHING BACK", 982, 37, 13, Gold);
     text(run.rescued ? "[+] Six miners safe" : "[ ] Miners / chamber 3", 982, 65, 15,
@@ -1431,6 +1476,7 @@ Action Renderer::expedition(const Game &game) {
          982, 117, 15, run.bossKilled ? Teal : Muted);
     }
     dungeonMap(game);
+    floorExitMarker(game);
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
         text(std::string(bossName(boss->bossKind))+" / PHASE " + std::to_string(boss->phase + 1), 429, 37, 14, Paper);
@@ -1440,7 +1486,8 @@ Action Renderer::expedition(const Game &game) {
                       int(9 * sy_), Rust);
     } else {
         const auto kind = run.arena.rooms[size_t(run.room)].kind;
-        text(run.roomClear ? (kind == RoomKind::Service ? "REST STOP / NO ENEMIES" : kind == RoomKind::Shop    ? "SHOP / NO ENEMIES"
+        text(run.room==run.finalRoom()&&run.roomClear?(run.canUseFloorExit()?"EXIT OPEN / FOLLOW THE BEACON":"FLOOR CLEAR / RECOVER THE EVIDENCE"):
+             run.roomClear ? (kind == RoomKind::Service ? "REST STOP / NO ENEMIES" : kind == RoomKind::Shop    ? "SHOP / NO ENEMIES"
                               : kind == RoomKind::Empty ? "QUIET ROOM / NO ENEMIES"
                               : kind == RoomKind::Power ? "POWER CACHE"
                                                         : "CHAMBER CLEARED")
@@ -1470,21 +1517,21 @@ Action Renderer::expedition(const Game &game) {
                                                                            : "PLACE DYNAMITE / ") +
                                       std::to_string(run.dynamite);
     if (!game.paused && !run.rewardOpen && !run.shopOpen && !run.dead) {
-        if (button(game.dynamiteThrowMode ? "MODE: THROW" : "MODE: PLACE", 24, 594, 276, 28))
+        if (button(Action::DynamiteMode, game.dynamiteThrowMode ? "MODE: THROW" : "MODE: PLACE", 24, 594, 276, 28))
             controls = Action::DynamiteMode;
-        if (button(dynamiteLabel, 24, 626, 276, 34, game.dynamiteArmed))
+        if (button(Action::Dynamite, dynamiteLabel, 24, 626, 276, 34, game.dynamiteArmed))
             controls = Action::Dynamite;
         const std::string interaction = run.nearbyInteraction();
         if (!interaction.empty()) {
-            if (button(interaction, 396, 690, 186, 44, true))
+            if (button(Action::Interact, interaction, 396, 690, 186, 44, true))
                 controls = Action::Interact;
         } else {
             panel(396, 690, 186, 44, Panel);
             text("EXPLORE", 414, 704, 18, Muted);
         }
-        if (button("DODGE", 598, 690, 154, 44))
+        if (button(Action::Dodge, "DODGE", 598, 690, 154, 44))
             controls = Action::Dodge;
-        if (button("PAUSE", 768, 690, 168, 44))
+        if (button(Action::Pause, "PAUSE", 768, 690, 168, 44))
             controls = Action::Pause;
     }
     if (!run.items.empty()) {
@@ -1519,11 +1566,11 @@ Action Renderer::expedition(const Game &game) {
             text(item.rarity, x + 20, 337, 12, std::string(item.rarity) == "CURSED" ? Rust : Gold);
             wrap(item.name, x + 20, 377, 237, 25, Paper);
             wrap(item.description, x + 20, 453, 237, 16, Muted);
-            if (button("TAKE IT  [" + std::to_string(i + 1) + "]", x + 20, 540, 239, 36, true))
+            if (button(Action(int(Action::Reward0) + i), "TAKE IT  [" + std::to_string(i + 1) + "]", x + 20, 540, 239, 36, true))
                 return Action(int(Action::Reward0) + i);
         }
     }
-    if(run.rewardOpen&&!game.paused&&button("LEAVE IT FOR NOW",430,628,420,40))return Action::CloseShop;
+    if(run.rewardOpen&&!game.paused&&button(Action::CloseShop,"LEAVE IT FOR NOW",430,628,420,40))return Action::CloseShop;
     if(run.shopOpen&&!game.paused&&run.arena.rooms[size_t(run.room)].kind==RoomKind::Service) {
         panel(0,0,1280,800,Color{9,15,18,210});panel(200,120,880,580,Panel);
         text(roomServiceName(run.arena.rooms[size_t(run.room)].service),230,145,32,Paper);
@@ -1534,10 +1581,10 @@ Action Renderer::expedition(const Game &game) {
             panel(x,268,390,338,Ink);wrap(offer.name,x+18,288,354,24,Paper);
             wrap(offer.description,x+18,350,354,15,Muted);wrap(offer.cost,x+18,502,354,15,Gold);
             if(unavailable.empty()) {
-                if(button("ACCEPT",x+18,554,354,36,true))return Action(int(Action::BuyShop0)+i);
+                if(button(Action(int(Action::BuyShop0)+i), "ACCEPT",x+18,554,354,36,true))return Action(int(Action::BuyShop0)+i);
             } else {panel(x+18,554,354,36,Border);text(unavailable,x+28,566,12,Muted);}
         }
-        if(button("LEAVE",430,635,420,40))return Action::CloseShop;
+        if(button(Action::CloseShop, "LEAVE",430,635,420,40))return Action::CloseShop;
     }
     if (run.shopOpen && !game.paused && run.arena.rooms[size_t(run.room)].kind!=RoomKind::Service) {
         panel(0, 0, 1280, 800, Color{9, 15, 18, 210});
@@ -1559,7 +1606,7 @@ Action Renderer::expedition(const Game &game) {
             text(std::to_string(offer.price) + " COINS", x + 18, 488, 16, Gold);
             const auto unavailable = run.shopUnavailable(i);
             if (unavailable.empty()) {
-                if (button("BUY", x + 18, 519, 239, 34, true))
+                if (button(Action(int(Action::BuyShop0) + i), "BUY", x + 18, 519, 239, 34, true))
                     return Action(int(Action::BuyShop0) + i);
             } else {
                 panel(x + 18, 519, 239, 34, Border);
@@ -1568,13 +1615,13 @@ Action Renderer::expedition(const Game &game) {
         }
         const auto refillUnavailable = run.shopUnavailable(3);
         if (refillUnavailable.empty()) {
-            if (button("BUY 3 DYNAMITE / 15 COINS", 200, 591, 552, 38, true))
+            if (button(Action::BuyShop3, "BUY 3 DYNAMITE / 15 COINS", 200, 591, 552, 38, true))
                 return Action::BuyShop3;
         } else {
             panel(200, 591, 552, 38, Border);
             text("3 DYNAMITE / " + refillUnavailable, 218, 604, 13, Muted);
         }
-        if (button("LEAVE SHOP", 779, 591, 295, 38))
+        if (button(Action::CloseShop, "LEAVE SHOP", 779, 591, 295, 38))
             return Action::CloseShop;
     }
     if (game.paused) {
@@ -1583,30 +1630,31 @@ Action Renderer::expedition(const Game &game) {
         text("TAKE A BREATH", 435, 269, 30, Paper);
         wrap("Retreat ends your build and changes the town. Closing the game also counts as retreat.", 436,
              326, 402, 17, Muted);
-        text("Click to move, attack or interact. Shift holds position.", 436, 389, 12, Muted);
-        text("Hold middle + drag to rotate. Scroll to zoom. Space dodges.", 436, 407, 11, Muted);
-        if (button("KEEP GOING   [ESC]", 436, 423, 408, 45, true))
+        text("WASD move / arrows fire / Space dodge", 436, 380, 12, Paper);
+        text("B dynamite / C mode / E or Enter interact", 436, 399, 12, Paper);
+        if (button(Action::Resume, "KEEP GOING   [ESC]", 436, 423, 408, 45, true))
             return Action::Resume;
-        if (button(std::string("RETREAT TO ") + hubShortName(game.activeHub) + "   [T]",
+        if (button(Action::Retreat, std::string("RETREAT TO ") + hubShortName(game.activeHub) + "   [T]",
                    436, 486, 408, 45))
             return Action::Retreat;
+        if(button(Action::Quit,"QUIT",436,566,408,38))return Action::Quit;
         if (game.debug && !run.dead) {
             panel(895, 240, 361, 318, Panel);
             text("PLAYER SETTINGS", 915, 263, 22, Gold);
             text("BASE HEALTH", 915, 309, 13, Muted);
             text(std::to_string(int(run.player.baseHealth)), 915, 333, 25, Paper);
-            if (button("-", 1134, 307, 44, 44))
+            if (button(Action::HealthDown, "-", 1134, 307, 44, 44))
                 return Action::HealthDown;
-            if (button("+", 1192, 307, 44, 44))
+            if (button(Action::HealthUp, "+", 1192, 307, 44, 44))
                 return Action::HealthUp;
             text("Maximum with items: " + std::to_string(int(run.player.maxHp)), 915, 369, 13, Muted);
             text("SHOT DAMAGE", 915, 403, 13, Muted);
             text(std::to_string(int(run.player.shotDamage)), 915, 427, 25, Paper);
-            if (button("-", 1134, 402, 44, 44))
+            if (button(Action::DamageDown, "-", 1134, 402, 44, 44))
                 return Action::DamageDown;
-            if (button("+", 1192, 402, 44, 44))
+            if (button(Action::DamageUp, "+", 1192, 402, 44, 44))
                 return Action::DamageUp;
-            if (button("RESTORE DEFAULTS", 915, 474, 321, 40))
+            if (button(Action::ResetPlayer, "RESTORE DEFAULTS", 915, 474, 321, 40))
                 return Action::ResetPlayer;
             text("Applies now and to later missions this session.", 915, 532, 11, Muted);
         }
@@ -1660,18 +1708,18 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
         y += line.size() > 68 ? 49 : 32;
     }
     text("THE BUILD IS GONE. THE CONSEQUENCES REMAIN.", 60, 693, 23, Gold);
-    if (button(std::string("RETURN TO ") + hubShortName(game.activeHub), 60,
+    if (button(Action::Hub, std::string("RETURN TO ") + hubShortName(game.activeHub), 60,
                740, 341, 42, true))
         return Action::Hub;
     if (history) {
         text(std::to_string(game.historyIndex + 1) + " / " +
                  std::to_string(game.campaign.data().history.size()),
              641, 752, 14, Muted);
-        if (button("< PREVIOUS", 755, 740, 216, 42))
+        if (button(Action::Previous, "< PREVIOUS", 755, 740, 216, 42))
             return Action::Previous;
-        if (button("NEXT >", 990, 740, 230, 42))
+        if (button(Action::Next, "NEXT >", 990, 740, 230, 42))
             return Action::Next;
-    } else if (button("INSPECT RUN HISTORY", 871, 740, 349, 42))
+    } else if (button(Action::History, "INSPECT RUN HISTORY", 871, 740, 349, 42))
         return Action::History;
     return Action::None;
 }
@@ -1735,18 +1783,19 @@ Action Renderer::audioPanel(const Game &game) {
         const float y = 321 + float(i) * 52;
         text(labels[i], 43, y, 12, Muted);
         text(std::to_string(int(std::round(values[i] * 100))) + "%", 43, y + 19, 18, Paper);
-        if (button("-", 211, y, 38, 37))
+        if (button(Action(int(Action::MasterDown) + int(i) * 2), "-", 211, y, 38, 37))
             return Action(int(Action::MasterDown) + int(i) * 2);
-        if (button("+", 264, y, 38, 37))
+        if (button(Action(int(Action::MasterUp) + int(i) * 2), "+", 264, y, 38, 37))
             return Action(int(Action::MasterUp) + int(i) * 2);
     }
-    if (button(s.muted ? "UNMUTE" : "MUTE", 43, 550, 122, 39))
+    if (button(Action::AudioMute, s.muted ? "UNMUTE" : "MUTE", 43, 550, 122, 39))
         return Action::AudioMute;
-    if (button("TEST", 180, 550, 122, 39))
+    if (button(Action::AudioTest, "TEST", 180, 550, 122, 39))
         return Action::AudioTest;
     return Action::None;
 }
 Action Renderer::draw(const Game &game) {
+    keyboardFocus_=game.keyboardFocus();
     visualStyle = game.visualStyle;
     if (game.screen == Screen::Hub || game.screen == Screen::Expedition) {
         const float step = std::clamp(GetFrameTime(), 0.f, .1f) * .65f;
@@ -1776,13 +1825,14 @@ Action Renderer::draw(const Game &game) {
         else {
             text("NO EXPEDITIONS YET", 80, 140, 40, Paper);
             text("Bring back a story worth remembering.", 82, 211, 20, Muted);
-            if (button(std::string("BACK TO ") + hubShortName(game.activeHub), 82,
+            if (button(Action::Hub, std::string("BACK TO ") + hubShortName(game.activeHub), 82,
                        290, 365, 51, true))
                 action = Action::Hub;
         }
         break;
     }
     if (game.paused && (game.screen == Screen::Hub || game.screen == Screen::Expedition)) {
+        if(button(Action::Controls,"KEYBOARD CONTROLS [H]",915,170,321,42))action=Action::Controls;
         const auto audioAction = audioPanel(game);
         if (audioAction != Action::None)
             action = audioAction;
@@ -1790,23 +1840,23 @@ Action Renderer::draw(const Game &game) {
         text("VEGETATION", 43, 644, 22, Gold);
         text("Generated missions", 43, 674, 12, Muted);
         text(std::to_string(game.visualSettings.vegetation) + "%", 43, 707, 22, Paper);
-        if (button("LESS", 143, 700, 75, 39))
+        if (button(Action::VegetationLess, "LESS", 143, 700, 75, 39))
             action = Action::VegetationLess;
-        if (button("MORE", 229, 700, 75, 39))
+        if (button(Action::VegetationMore, "MORE", 229, 700, 75, 39))
             action = Action::VegetationMore;
         panel(344, 24, 592, 94, Panel);
         text("VISUAL STYLE", 365, 46, 20, Gold);
-        text("Click to cycle / this session", 365, 90, 12, Muted);
-        if (button(visualStyleName(game.visualStyle), 554, 38, 358, 38))
+        text("Cycle / this session", 365, 90, 12, Muted);
+        if (button(Action::CycleVisualStyle, visualStyleName(game.visualStyle), 554, 38, 358, 38))
             action = Action::CycleVisualStyle;
         if (game.screen == Screen::Expedition) {
             panel(895, 580, 361, 105, Panel);
             text("GROUND SURFACE", 915, 599, 22, Gold);
-            if (button(game.visualSettings.groundDetail ? "DETAIL ON" : "DETAIL OFF", 915, 634, 321, 34))
+            if (button(Action::ToggleGroundDetail, game.visualSettings.groundDetail ? "DETAIL ON" : "DETAIL OFF", 915, 634, 321, 34))
                 action = Action::ToggleGroundDetail;
         }
         panel(895, 697, 361, 64, Panel);
-        if (button(game.sandstorm ? "SANDSTORM ON [K]" : "SANDSTORM OFF [K]", 915, 711, 321, 36))
+        if (button(Action::ToggleSandstorm, game.sandstorm ? "SANDSTORM ON [K]" : "SANDSTORM OFF [K]", 915, 711, 321, 36))
             action = Action::ToggleSandstorm;
     }
     if (game.debug && game.debugPanelOpen && game.run && !game.paused && !game.run->rewardOpen &&
@@ -1822,8 +1872,30 @@ Action Renderer::draw(const Game &game) {
     }
     panel(1160, 2, 96, 18, Panel);
     text(std::to_string(GetFPS()) + " FPS", 1170, 5, 12, Teal);
+    if(keyboardFocus_!=Action::None&&!game.controlsOpen) {
+        panel(380,778,520,20,Panel);
+        text("Tab / arrows select    Enter confirm    Esc back",394,783,12,Teal);
+    }
+    if(game.controlsOpen) {
+        panel(0,0,1280,800,{8,12,16,235});panel(235,80,810,650,Panel);
+        text("KEYBOARD CONTROLS",267,110,30,Gold);
+        const std::array<std::pair<const char *,const char *>,13> rows{{
+            {"W A S D","Move relative to the camera"},{"Arrow keys","Fire; combine two for diagonal shots"},
+            {"Space","Dodge in your movement / facing direction"},{"E / Enter","Use nearby doors, evidence, trades and exits"},
+            {"B","Place dynamite; in Throw mode, throw ahead"},{"C","Switch Place / Throw (arrows aim throws)"},
+            {"Q / R","Rotate the camera"},{"Page Up / Down","Zoom in / out"},{"Insert / Delete","Tilt the camera"},
+            {"J / L","Field journal / reread Eleanor's letter"},{"1 / 2 / 3 / 4","Choose a reward or buy a shop offer"},
+            {"Tab / arrows","Select menu buttons; Enter / Space confirms"},{"Escape","Close a panel, cancel a throw, or pause"}
+        }};
+        for(size_t i=0;i<rows.size();++i) {
+            const float y=173+float(i)*34;
+            text(rows[i].first,267,y,16,Teal);text(rows[i].second,492,y,15,Paper);
+        }
+        text("Walk into lit dynamite to nudge it. T while paused retreats.",267,636,14,Muted);
+        return button(Action::CloseControls,"BACK",644,672,365,38,true)?Action::CloseControls:Action::None;
+    }
     if(game.screen==Screen::Hub&&!game.paused&&!game.questDialogueOpen()&&!game.sleeping()&&!game.missionMenu)
-        if(button("JOURNAL",24,636,178,32))action=Action::ReadJournal;
+        if(button(Action::ReadJournal, "JOURNAL",24,636,178,32))action=Action::ReadJournal;
     if(game.journalVisible()) {
         panel(0,0,1280,800,{8,12,16,225});panel(208,78,864,660,Panel);
         const auto entries=game.journalEntries();
@@ -1848,10 +1920,10 @@ Action Renderer::draw(const Game &game) {
             text(std::to_string(index+1)+" / "+std::to_string(entries.size()),240,630,14,Muted);
         }
         if(entries.size()>1) {
-            if(button("PREVIOUS",240,671,210,38))return Action::JournalPrevious;
-            if(button("NEXT",466,671,210,38))return Action::JournalNext;
+            if(button(Action::JournalPrevious, "PREVIOUS",240,671,210,38))return Action::JournalPrevious;
+            if(button(Action::JournalNext, "NEXT",466,671,210,38))return Action::JournalNext;
         }
-        return button("CLOSE JOURNAL",728,671,312,38,true)?Action::CloseJournal:Action::None;
+        return button(Action::CloseJournal, "CLOSE JOURNAL",728,671,312,38,true)?Action::CloseJournal:Action::None;
     }
     if(game.letterVisible()) {
         panel(0,0,1280,800,{8,12,16,220});panel(240,160,800,470,Panel);
@@ -1859,7 +1931,7 @@ Action Renderer::draw(const Game &game) {
         text("Found with Silas Bell's survey records",272,239,16,Muted);
         wrap(ArrivalQuest::Letter,272,292,736,22,Paper);
         wrap("An undated letter. It records Eleanor's words, not an explanation of Bell's death.",272,497,736,16,Muted);
-        return button("KEEP THE LETTER",728,564,280,42,true)?Action::CloseLetter:Action::None;
+        return button(Action::CloseLetter, "KEEP THE LETTER",728,564,280,42,true)?Action::CloseLetter:Action::None;
     }
     return action;
 }

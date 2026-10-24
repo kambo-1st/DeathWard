@@ -75,7 +75,9 @@ enum class Action {
     ReadJournal,
     CloseJournal,
     JournalPrevious,
-    JournalNext
+    JournalNext,
+    Controls,
+    CloseControls
 };
 class Game {
   public:
@@ -101,6 +103,7 @@ class Game {
     bool readingLetter = false;
     bool letterVisible() const { return readingLetter||(run&&run->letterOpen); }
     bool journalOpen = false;
+    bool controlsOpen = false;
     int journalIndex = 0;
     bool journalVisible() const { return journalOpen||(run&&run->storyOpen!=StoryRoom::None); }
     std::vector<StoryEvidence> journalEntries() const;
@@ -147,6 +150,9 @@ class Game {
         return 100.0f / cameraZoom_;
     }
     bool pointerOverControls() const;
+    Action keyboardFocus() const;
+    // Logical 1280 x 800 coordinates, shared by rendering and mouse picking.
+    std::optional<Vector2> floorExitMarker() const;
 
   private:
     enum class LeftCommand { None, Move, Attack, Interact };
@@ -155,10 +161,18 @@ class Game {
     bool dodgeQueued_ = false, interactQueued_ = false;
     bool standStillQueued_ = false;
     bool cancelFireHeld_ = false;
+    Action keyboardFocus_ = Action::None;
+    enum class Menu { None, Controls, Journal, Letter, Dialogue, HubPause, ExpeditionPause, Missions, Shop, Reward, History, Summary };
+    Menu keyboardMenu_ = Menu::None;
+    bool menuArrowsHeld_ = false;
+    Menu menuContext() const;
+    std::vector<Action> menuActions() const;
+    bool updateMenuInput();
     struct FireCommand {
         Vector3 aim;
         std::optional<Vector3> direction;
     };
+    std::optional<Vector3> dodgeAimQueued_;
     std::optional<Vector3> moveQueued_;
     std::optional<FireCommand> fireQueued_;
     std::optional<Vector3> dynamiteQueued_;
@@ -171,7 +185,7 @@ class Game {
     Vector2 cameraDragPosition_{};
     Vector3 cameraOffset() const;
     Vector3 cameraFocus() const;
-    void updateCameraInput();
+    void updateCameraInput(float dt);
     void snapCamera();
     void resetPointerInput();
     void debugInput();

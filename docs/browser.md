@@ -3,8 +3,9 @@
 DeathWard has an Emscripten / WebAssembly build using WebGL 2 and Web Audio. Both
 original hubs, canyon and mine missions, enemy rosters, the animated player,
 lighting, post processing, scenery transparency, outlines, music and sound effects
-use the same game code and packaged assets as the desktop build. A keyboard and
-mouse are required; touch controls are not provided.
+use the same game code and packaged assets as the desktop build. Gameplay supports
+a keyboard alone, as well as the existing mouse controls; touch controls are not
+provided.
 
 ## Build and run locally
 
@@ -40,6 +41,16 @@ zooms, right-clicking fires, and middle dragging rotates without browser scrolli
 or context menus. The Fullscreen button expands the canvas. Resizing preserves
 input coordinates and recreates rendering targets. Changing tabs or losing focus
 pauses gameplay; resume from the game's pause menu.
+
+Keyboard play uses WASD to move, arrows to fire, Space to dodge, B for dynamite,
+C to switch placement/throwing, and E or Enter for nearby doors, objectives and
+floor exits. Q/R rotate, Page Up/Down zoom, and Insert/Delete tilt. Tab or arrows
+select menu buttons, Enter/Space activates, and Escape closes. Pause then press
+H for the full guide. The HTML start button can be focused with Tab and activated
+with Enter; it focuses the game canvas. Page keys do not scroll the page while
+the canvas is focused. `node web/keyboard-test.cjs` verifies keyboard play against
+the local server (`DEATHWARD_WEB_URL` overrides its default port 8091), including
+menu focus, bombs over the HUD, zoom, input guards and the visible floor exit.
 
 Campaigns, audio preferences and saved town-editor changes use IndexedDB in this
 browser, at this site address. The header shows when a save is in progress or has
