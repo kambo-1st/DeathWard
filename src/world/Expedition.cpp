@@ -10,7 +10,22 @@ uint64_t mix(uint64_t x) {
 }
 }
 const char *expeditionPacingName(ExpeditionPacing pacing) {
-    return pacing == ExpeditionPacing::Classic ? "CLASSIC / 15 ROOMS" : "GROWING / 9 TO 15 ROOMS";
+    switch(pacing) {
+    case ExpeditionPacing::Classic:return "CLASSIC / 15 ROOMS";
+    case ExpeditionPacing::ShortCorridors:return "TRIAL / SHORT CORRIDORS";
+    case ExpeditionPacing::SmallRooms:return "TRIAL / SMALL ROOMS";
+    case ExpeditionPacing::Compact:return "COMPACT / 9 TO 15 ROOMS";
+    default:return "GROWING / 9 TO 15 ROOMS";
+    }
+}
+ExpeditionPacing nextExpeditionPacing(ExpeditionPacing pacing) {
+    switch(pacing) {
+    case ExpeditionPacing::Growing:return ExpeditionPacing::ShortCorridors;
+    case ExpeditionPacing::ShortCorridors:return ExpeditionPacing::SmallRooms;
+    case ExpeditionPacing::SmallRooms:return ExpeditionPacing::Compact;
+    case ExpeditionPacing::Compact:return ExpeditionPacing::Classic;
+    default:return ExpeditionPacing::Growing;
+    }
 }
 ExpeditionPlan::ExpeditionPlan(uint64_t value,bool tutorial,WitnessAccount witness,ExpeditionPacing pacingValue)
     :seed(value),account(tutorial?WitnessAccount::None:witness),
@@ -22,6 +37,23 @@ int ExpeditionPlan::roomsOnFloor(int floor) const {
     // Four floors: 9,11,13,15. Eight: 9,10,11,12,13,14,15,15.
     const int growth=std::max(floor,(6*floor+(floorCount-1)/2)/(floorCount-1));
     return std::min(15,9+growth);
+}
+FloorDimensions ExpeditionPlan::dimensionsOnFloor(int floor) const {
+    if(floor<0||floor>=floorCount)throw std::out_of_range("Invalid expedition floor");
+    FloorDimensions result;
+    result.smallerRooms=pacing==ExpeditionPacing::SmallRooms||pacing==ExpeditionPacing::Compact;
+    result.shorterCorridors=pacing==ExpeditionPacing::ShortCorridors||pacing==ExpeditionPacing::Compact;
+    // Keep the authored tutorial's room envelopes. It can still compare shorter
+    // connectors without losing any of its five story steps.
+    if(floorCount==1)result.smallerRooms=false;
+    const int span=std::max(1,floorCount-1);
+    if(result.smallerRooms) {
+        result.minHalfTiles=5+floor/span;
+        result.maxHalfTiles=7+3*floor/span;
+    }
+    result.minGapTiles=4+2*floor/span;
+    result.maxGapTiles=8+4*floor/span;
+    return result;
 }
 uint64_t ExpeditionPlan::floorSeed(int floor) const {
     if(floor<0||floor>=floorCount)throw std::out_of_range("Invalid expedition floor");

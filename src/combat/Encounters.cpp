@@ -130,6 +130,10 @@ bool Simulation::roomSpawnClear(Vector3 point, float radius) const {
     // without moving an already-visible enemy when that doorway is crossed.
     for (int passage : arena.rooms[size_t(room)].passages) {
         const int side = arena.passages[size_t(passage)].rooms[0] == room ? 0 : 1;
+        // Gates are open while residents are prepared. Reserve their complete
+        // future collider, including corners outside the circular landing zone.
+        if (sphereBox(point,radius,arena.passages[size_t(passage)].gates[size_t(side)]))
+            return false;
         if (distance(point, arena.doorApproach(passage, side)) < radius + 2.5f)
             return false;
     }

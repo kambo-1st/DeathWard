@@ -9,7 +9,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                        bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing)
     : expedition(seed,tutorial,account,pacing),floor(level),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
-            expedition.roomsOnFloor(level)),
+            expedition.roomsOnFloor(level),expedition.dimensionsOnFloor(level)),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -293,7 +293,7 @@ bool Simulation::useDoor(int passage, int side) {
         arena.rebuildWalls();
         announce("Door unlocked. Keys carried: " + std::to_string(keys), 3);
     }
-    requestMove(arena.doorApproach(passage, 1 - side));
+    requestMove(arena.doorApproach(passage, 1 - side),false);
     return true;
 }
 void Simulation::requestDoor(int passage, int side) {
@@ -305,10 +305,10 @@ void Simulation::requestDoor(int passage, int side) {
         return;
     }
     if (!door.locked) {
-        requestMove(arena.doorApproach(passage, 1 - side));
+        requestMove(arena.doorApproach(passage, 1 - side),false);
         return;
     }
-    requestMove(arena.doorApproach(passage, side));
+    requestMove(arena.doorApproach(passage, side),false);
     doorOnArrival_ = std::pair{passage, side};
 }
 void Simulation::startBoss() {

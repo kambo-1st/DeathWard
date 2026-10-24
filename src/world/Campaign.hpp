@@ -57,7 +57,7 @@ class CampaignStore {
         return path_;
     }
     uint64_t begin(uint64_t seed, const std::string &expedition = "Red Hollow Mine",
-                   ExpeditionPacing pacing = ExpeditionPacing::Growing);
+                   ExpeditionPacing pacing = ExpeditionPacing::Compact);
     void checkpoint(const RunSummary &summary);
     RunSummary resolve(const RunSummary &summary, EndReason reason);
     bool recover();

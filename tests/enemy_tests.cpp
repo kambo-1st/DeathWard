@@ -302,8 +302,14 @@ void testAreaAndEncounters() {
     std::set<EnemyKind> seen;
     std::set<int> populations;
     float minArea = 100000, maxArea = 0;
-    for (uint64_t seed = 0; seed < 32; ++seed) {
-        Simulation generated(seed, 1, {});
+    int earlyLargest=0,lateLargest=0;
+    // Compact opening rooms intentionally have a narrower population range.
+    // Check the complete size progression instead of demanding late-floor
+    // populations in the opening rooms.
+    for(int phase:{0,1}) for (uint64_t seed = 0; seed < 32; ++seed) {
+        const ExpeditionPlan plan(seed);
+        Simulation generated(seed,1,{},MissionTheme::Mine,true,false,WitnessAccount::None,
+                             phase?plan.floorCount-1:0);
         for (int index = 0; index < generated.arena.roomCount(); ++index) {
             const auto &layout = generated.arena.rooms[size_t(index)];
             generated.player.position = layout.entry;
@@ -313,6 +319,8 @@ void testAreaAndEncounters() {
             if (layout.kind != RoomKind::Combat)
                 continue;
             populations.insert(int(generated.livingEnemies()));
+            auto &largest=phase?lateLargest:earlyLargest;
+            largest=std::max(largest,int(generated.livingEnemies()));
             minArea = std::min(minArea, layout.usableArea());
             maxArea = std::max(maxArea, layout.usableArea());
             std::set<int> kinds;
@@ -324,7 +332,10 @@ void testAreaAndEncounters() {
                 check(generated.arena.roomAt(enemy.position) == index &&
                           !generated.arena.blocked(enemy.position, enemy.radius) &&
                           distance(enemy.position, generated.player.position) >= 6,
-                      "every type spawns on safe room floor away from the entrance");
+                      "spawn seed="+std::to_string(seed)+" phase="+std::to_string(phase)+" room="+std::to_string(index)+
+                      " actualRoom="+std::to_string(generated.arena.roomAt(enemy.position))+
+                      " blocked="+std::to_string(generated.arena.blocked(enemy.position,enemy.radius))+
+                      " entryDistance="+std::to_string(distance(enemy.position,generated.player.position)));
                 for (const auto &other : generated.enemies)
                     if (enemy.id != other.id)
                         check(distance(enemy.position, other.position) >= enemy.radius + other.radius,
@@ -339,11 +350,12 @@ void testAreaAndEncounters() {
                   "rooms use a readable mixture of two or three roles");
         }
     }
+    std::cout << "POPULATION seeds=32 opening/final floors area=" << minArea << ".." << maxArea
+              << " enemies=" << *populations.begin() << ".." << *populations.rbegin()
+              << " types=" << seen.size() << " populations=" << populations.size() << '\n';
     check(seen.size() == OrdinaryEnemyCount && populations.size() >= 8,
           "seeded mines include all original enemy types and varied population sizes");
-    std::cout << "POPULATION seeds=32 area=" << minArea << ".." << maxArea
-              << " enemies=" << *populations.begin() << ".." << *populations.rbegin()
-              << " types=" << seen.size() << '\n';
+    check(lateLargest>earlyLargest,"larger late rooms support larger enemy populations");
     Simulation a(1866, 1, {}), b(1866, 2, {});
     b.jumpDebug(4);
     b.spawnEnemies(20);

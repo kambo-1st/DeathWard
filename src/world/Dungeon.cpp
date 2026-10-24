@@ -80,8 +80,12 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 }
 } // namespace
 
-Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story, int requestedRooms)
+Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story,
+             int requestedRooms, FloorDimensions dimensions)
     : visualSeed(seed), theme(missionTheme) {
+    if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
+       dimensions.minGapTiles<4||dimensions.maxGapTiles<dimensions.minGapTiles||dimensions.maxGapTiles>16)
+        throw std::invalid_argument("Invalid floor dimensions");
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
     const auto graph = generateRoomGraph(seed,tutorial,requestedRooms);
@@ -127,9 +131,22 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         const int cx = xs.at(cell.first), cz = zs.at(cell.second);
         room.center = {float(cx) * FloorTile, 0.85f, float(cz) * FloorTile};
         int halfX, halfZ;
+        const bool small=dimensions.smallerRooms;
+        const bool boss=room.kind==RoomKind::Boss;
+        const int minimum=small?(boss?8:dimensions.minHalfTiles):6;
+        const int maximum=small?(boss?10:dimensions.maxHalfTiles):10;
+        if(small) {
+            bool available=false;
+            for(int x=minimum;x<=maximum;++x)for(int z=minimum;z<=maximum;++z)
+                available=available||!usedSizes.contains({x,z});
+            // Compact ranges can contain fewer size pairs than room slots. Start
+            // a fresh cycle rather than retrying forever after exhausting them.
+            if(!available)
+                for(int x=minimum;x<=maximum;++x)for(int z=minimum;z<=maximum;++z)usedSizes.erase({x,z});
+        }
         do {
-            halfX = 6 + int(layout.bounded(5));
-            halfZ = 6 + int(layout.bounded(5));
+            halfX = minimum + int(layout.bounded(uint32_t(maximum-minimum+1)));
+            halfZ = minimum + int(layout.bounded(uint32_t(maximum-minimum+1)));
         } while (!usedSizes.insert({halfX, halfZ}).second);
         room.bounds = {
             {room.center.x - float(halfX) * FloorTile, 0, room.center.z - float(halfZ) * FloorTile},
@@ -170,6 +187,42 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         if (!sites.empty())
             room.objective = sites[layout.bounded(uint32_t(sites.size()))];
         room.bossSpawn = room.center;
+    }
+    if(dimensions.shorterCorridors) {
+        // Repack whole rows/columns after choosing each room's footprint. This
+        // preserves the graph and cardinal entrances without crossing trails.
+        // A separate stream leaves sizes, shapes and objectives unchanged in the
+        // corridors-only trial. Larger boss envelopes retain the space they need.
+        Random spacing(seed^0x434f525249444f52ULL);
+        auto compactAxis=[&](bool xAxis) {
+            std::map<int,int> extents,positions{{0,0}};
+            for(size_t i=0;i<rooms.size();++i) {
+                const auto &r=rooms[i];const auto cell=graph.cells[i];
+                const int coordinate=xAxis?cell.first:cell.second;
+                const float width=xAxis?r.bounds.max.x-r.bounds.min.x:r.bounds.max.z-r.bounds.min.z;
+                extents[coordinate]=std::max(extents[coordinate],int(std::lround(width/(2*FloorTile))));
+            }
+            auto gap=[&](int a,int b) {
+                return extents.at(a)+extents.at(b)+dimensions.minGapTiles+
+                    int(spacing.bounded(uint32_t(dimensions.maxGapTiles-dimensions.minGapTiles+1)));
+            };
+            for(int i=1;i<=extents.rbegin()->first;++i)positions[i]=positions.at(i-1)+gap(i-1,i);
+            for(int i=-1;i>=extents.begin()->first;--i)positions[i]=positions.at(i+1)-gap(i,i+1);
+            return positions;
+        };
+        const auto compactX=compactAxis(true),compactZ=compactAxis(false);
+        floorCells.clear();
+        for(size_t i=0;i<rooms.size();++i) {
+            auto &r=rooms[i];const auto cell=graph.cells[i];
+            const Vector3 delta{compactX.at(cell.first)*FloorTile-r.center.x,0,compactZ.at(cell.second)*FloorTile-r.center.z};
+            r.center=add(r.center,delta);r.objective=add(r.objective,delta);r.bossSpawn=add(r.bossSpawn,delta);
+            r.bounds.min=add(r.bounds.min,delta);r.bounds.max=add(r.bounds.max,delta);
+            for(auto &floor:r.floors) {
+                floor.min=add(floor.min,delta);floor.max=add(floor.max,delta);
+                for(int x=int(floor.min.x/FloorTile);x<int(floor.max.x/FloorTile);++x)
+                    for(int z=int(floor.min.z/FloorTile);z<int(floor.max.z/FloorTile);++z)floorCells.insert({x,z});
+            }
+        }
     }
     std::vector<bool> hasEntry(rooms.size(), false);
     for (auto &passage : passages) {

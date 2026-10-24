@@ -6,7 +6,7 @@ Starting revision: `a413435`. The complete goal is all six milestones below.
 | Milestone | Status | Validation and remaining work |
 | --- | --- | --- |
 | 1. Configurable room counts | Complete | Growing/Classic presets, safe room allocation, native/WASM and save validation passed (details below) |
-| 2. Early room and corridor dimensions | Pending | Separate trials, fixed-seed pacing measurements, navigation/spawn/terrain checks |
+| 2. Early room and corridor dimensions | Complete | Five reversible presets, 50 timed trials, Compact default, navigation/spawn fixes; native/WASM checks passed |
 | 3. Destructible scenery and cache | Pending | Collision/render synchronization, deterministic once-only loot, safe blast ordering, room revisit state |
 | 4. Six interacting items | Pending | Both acquisition orders, duplicate effects, bounded chains, mouse/arrow firing |
 | 5. Floor identities and first canyon boss | Pending | Progression by expedition floor, complete attack/phase/death behavior, resource-independent victory |
@@ -44,3 +44,28 @@ Validation completed:
 Reproduction: `cmake --build build --parallel 4`, `ctest --test-dir build --output-on-failure --parallel 4`, `./build/deathward_input_tests`, `./build/deathward_arrival_input_tests`. Browser build: `EMSDK=/path/to/emsdk scripts/build-web.sh`; serve with `python3 scripts/serve-web.py --port 8091`, then run the browser scripts with `DEATHWARD_WEB_URL=http://127.0.0.1:8091/`, `DEATHWARD_HEADFUL=1` and `DEATHWARD_BROWSER=/path/to/chromium`.
 
 Next: measure room count, corridor spacing and room dimensions as separate milestone-2 trials. Human playtest pacing and final balance are not established by these structural checks.
+
+
+### Milestone 2
+
+Milestone 1 committed as `f3d1ad2`. Added initial, opt-in `corridors`, `rooms`, and `compact` pacing trials alongside Growing and Classic. The ten-seed comparison supports Compact as the new default. All trial presets use the same 9–15-room schedule. Smaller opening rooms target 20–28 metres; compact boss envelopes retain 32–40 metres. Later floors gradually regain larger room sizes. The tutorial keeps its original five room envelopes and can trial shorter connectors.
+
+The corridor trial moves complete rows/columns after generating room sizes, shapes and objectives, using a separate spacing stream. It reserves each row/column's largest room extent to avoid overlap. Actual corridor lengths can therefore exceed the nominal gap beside smaller rooms or large boss arenas; measurements must report that rather than claim all corridors fit 8–16 metres. Compact size pools reset when exhausted so a small range cannot hang the generator.
+
+Measurements, default selection and final validation are complete. Results are recorded below.
+
+
+The automated player completed all **50 first-floor trials** (10 seeds × 5 presets), using normal navigation, weapons, enemy behavior and the first offered item, with invulnerability enabled. The CSV is `docs/research/deathward-pacing-trials.csv`; the reproducible controller is `scripts/measure-expedition-pacing.cpp`. Compact averaged 159.3 simulated seconds to clear every room and reach the exit, compared with 222.4 for Growing and 430.7 for Classic. These are scripted-player comparisons, not estimates of normal player completion time. The narrower-room-only trial lengthened corridors, confirming that the changes must be measured separately.
+
+The trial exposed an existing interaction bug: passage movement could retarget a nearby altar and stop short of the next room. Explicit passage requests now keep their destination and skip object interaction; ordinary ground/object clicks retain their behavior. Regression coverage checks both direct passage use and click-to-door commands. All 50 trials completed after this fix. Content version advances to `deathward-m1-55` for the new default; all comparison presets remain available.
+
+
+Milestone-2 validation:
+
+- Native Release build and **28/28 CTest tests pass**, including early/final-floor population and safe-spawn checks over 32 seeds, all pacing variants, sealed-gate clearance, size-pair exhaustion, compact story dressing, navigation and the five-room tutorial.
+- The native input suite passed with Compact as the default, as did the full tutorial/Rourke/evidence/return traversal. Original-style Compact combat was visually inspected in `artifacts/expedition-compact-m2.png`.
+- The final WebAssembly build succeeds. The broad browser suite passed default Compact combat, pickups, dynamite, shop, victory, persistence and editor flows without JS/GL errors. The pacing-specific browser suite checks all five presets, including actual preset IDs, room dimensions and dynamically indexed power/boss rooms.
+- Classic's original ten-seed layout CSV remains byte-identical. All 50 scripted pacing trials complete after the navigation and gate-spawn fixes; their final CSV is unchanged by the gate-spawn correction.
+- The expanded enemy test correctly checks opening **and final** floors: smaller openings intentionally offer seven population sizes (5–11 enemies in the 32-seed Mine sample), so demanding eight sizes on the opening floor alone was obsolete. The late-floor sample verifies larger populations without weakening safe-spawn or roster coverage.
+
+Remaining after milestone 2: destructible scenery/cache; six interacting items; floor identities/first canyon boss; two more bosses/optional rooms/reward pools. The overall goal remains active.

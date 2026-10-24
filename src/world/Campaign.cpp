@@ -82,7 +82,7 @@ RunSummary readSummary(std::istream &in, int version) {
     }
     if(version>=6) {
         int pacing=-1;in>>pacing;
-        if(pacing<0||pacing>int(ExpeditionPacing::Classic))
+        if(pacing<0||pacing>int(ExpeditionPacing::Compact))
             throw std::runtime_error("Invalid expedition pacing in save");
         s.pacing=ExpeditionPacing(pacing);
     }

@@ -183,9 +183,15 @@ void Simulation::cancelMove() {
     interactOnArrival_ = false;
     doorOnArrival_.reset();
 }
-void Simulation::requestMove(Vector3 target) {
+void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
     target.y = player.position.y;
     cancelMove();
+    // An explicit passage command must reach its threshold even when an altar,
+    // shop or cache happens to lie near the approach. Ground clicks may interact.
+    if(!interactAtDestination) {
+        movePath_=arena.path(player.position,target,.48f);
+        return;
+    }
     const auto &site=arena.rooms[size_t(room)];
     if(site.story!=StoryRoom::None&&roomClear&&distance(target,site.objective)<2.4f) {
         target=site.objective;interactOnArrival_=true;

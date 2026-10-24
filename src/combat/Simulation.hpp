@@ -200,7 +200,7 @@ class Simulation {
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
-               ExpeditionPacing pacing = ExpeditionPacing::Growing);
+               ExpeditionPacing pacing = ExpeditionPacing::Compact);
     ExpeditionPlan expedition;
     int floor = 0;
     Player player;
@@ -344,7 +344,7 @@ class Simulation {
     void monsterBeam(const Enemy &enemy, Vector3 direction, float delay = .4f);
     void monsterLines(const Enemy &enemy, HazardKind kind, bool diagonal = false);
     void moveMonster(Enemy &enemy, Vector3 velocity, float dt);
-    void requestMove(Vector3 target);
+    void requestMove(Vector3 target, bool interactAtDestination = true);
     void cancelMove();
     bool accept(Event event);
     void process(const Event &event);

@@ -4,8 +4,15 @@
 namespace dw {
 enum class WitnessAccount { None, Rourke, Eleanor, Mercer, Cole };
 enum class StoryRoom { None, SurveyCamp, SplitRock, RailwayCutting, DryCreek };
-enum class ExpeditionPacing { Growing, Classic };
+enum class ExpeditionPacing { Growing, Classic, ShortCorridors, SmallRooms, Compact };
 const char *expeditionPacingName(ExpeditionPacing pacing);
+ExpeditionPacing nextExpeditionPacing(ExpeditionPacing pacing);
+struct FloorDimensions {
+    // Half extents in two-metre floor tiles. Defaults preserve original geometry.
+    int minHalfTiles = 6, maxHalfTiles = 10;
+    bool smallerRooms = false, shorterCorridors = false;
+    int minGapTiles = 4, maxGapTiles = 8;
+};
 const char *accountName(WitnessAccount account);
 const char *storyRoomName(StoryRoom room);
 const char *storyClaim(StoryRoom room);
@@ -19,9 +26,10 @@ struct ExpeditionPlan {
     int floorCount;
     ExpeditionPacing pacing;
     ExpeditionPlan(uint64_t seed, bool tutorial = false, WitnessAccount account = WitnessAccount::None,
-                   ExpeditionPacing pacing = ExpeditionPacing::Growing);
+                   ExpeditionPacing pacing = ExpeditionPacing::Compact);
     uint64_t floorSeed(int floor) const;
     int roomsOnFloor(int floor) const;
+    FloorDimensions dimensionsOnFloor(int floor) const;
     StoryRoom storyAt(int floor) const;
 };
 struct StoryEvidence {

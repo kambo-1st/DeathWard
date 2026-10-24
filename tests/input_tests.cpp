@@ -1026,7 +1026,7 @@ int main(int argc, char **argv) {
               "canyon selection preserves the editable seed and waits for launch");
         // The following occlusion/pickup regression uses the original seed's
         // specific scenery and coin placement. Other input fixtures use Growing.
-        click(500,497);
+        for(int i=0;i<5&&game.expeditionPacing!=dw::ExpeditionPacing::Classic;++i)click(500,497);
         check(game.expeditionPacing==dw::ExpeditionPacing::Classic,"mission board selects Classic through the mouse");
         click(650, 550);
         check(game.run && game.screen == dw::Screen::Expedition, "mouse launch opens expedition");

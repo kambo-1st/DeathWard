@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
     bool mute = false, explicitAudio = false, sandstorm = false;
     std::optional<bool> canyonRiver;
     dw::ThemeChoice themeChoice = dw::ThemeChoice::Canyon;
-    dw::ExpeditionPacing expeditionPacing = dw::ExpeditionPacing::Growing;
+    dw::ExpeditionPacing expeditionPacing = dw::ExpeditionPacing::Compact;
     dw::HubKind initialHub = dw::HubKind::BlackCreek;
     std::filesystem::path editorDirectory;
     std::filesystem::path sequenceFile;
@@ -118,7 +118,10 @@ int main(int argc, char **argv) {
             const std::string pacing = argv[++i];
             if (pacing == "growing") expeditionPacing = dw::ExpeditionPacing::Growing;
             else if (pacing == "classic") expeditionPacing = dw::ExpeditionPacing::Classic;
-            else { std::cerr << "--expedition-pacing must be growing or classic\n"; return 2; }
+            else if (pacing == "corridors") expeditionPacing = dw::ExpeditionPacing::ShortCorridors;
+            else if (pacing == "rooms") expeditionPacing = dw::ExpeditionPacing::SmallRooms;
+            else if (pacing == "compact") expeditionPacing = dw::ExpeditionPacing::Compact;
+            else { std::cerr << "--expedition-pacing must be growing, classic, corridors, rooms or compact\n"; return 2; }
         } else if (arg == "--theme" && i + 1 < argc) {
             const std::string theme = argv[++i];
             if (theme == "seeded")
@@ -177,7 +180,7 @@ int main(int argc, char **argv) {
                          "  --cinematic         Open the separate Cinematic Editor\n"
                          "  --sequence PATH     Cinematic file to edit (default: arrival.cinematic in hub)\n"
                          "  --cinematic-at SEC  Preview a specific timeline time\n"
-                         "  --expedition-pacing NAME  growing (9-15 rooms, default) or classic (15)\n"
+                         "  --expedition-pacing NAME  compact (default), growing, classic, corridors or rooms\n"
                          "  --canyon-river MODE  on (default) or off; applies to new canyon missions\n"
                          "  --mute              Skip audio initialization\n"
                          "  --audio             Enable audio in scripted checks (silent by default)\n";
@@ -814,11 +817,15 @@ int main(int argc, char **argv) {
             }
             EM_ASM({
                 if(Module.verify)Module.expedition=({floor:$0,floors:$1,rooms:$2,account:$3,site:$4,
-                    evidence:$5,journal:!!$6,letter:!!$7,evidenceX:$8,evidenceY:$9,exitX:$10,exitY:$11});
+                    evidence:$5,journal:!!$6,letter:!!$7,evidenceX:$8,evidenceY:$9,exitX:$10,exitY:$11,
+                    pacing:$12,roomWidth:$13,roomDepth:$14});
             },game.run?game.run->floor:-1,game.run?game.run->expedition.floorCount:0,
               game.run?game.run->arena.roomCount():0,game.run?int(game.run->expedition.account):0,
               game.run?game.run->storyRoomIndex():-1,game.run?int(game.run->evidence.size()):0,
-              game.journalVisible(),game.letterVisible(),evidencePixel.x,evidencePixel.y,exitPixel.x,exitPixel.y);
+              game.journalVisible(),game.letterVisible(),evidencePixel.x,evidencePixel.y,exitPixel.x,exitPixel.y,
+              game.run?int(game.run->expedition.pacing):-1,
+              game.run?game.run->arena.rooms[size_t(game.run->room)].bounds.max.x-game.run->arena.rooms[size_t(game.run->room)].bounds.min.x:0,
+              game.run?game.run->arena.rooms[size_t(game.run->room)].bounds.max.z-game.run->arena.rooms[size_t(game.run->room)].bounds.min.z:0);
             EM_ASM({
                 if(Module.verify) Module.cinematic=({active:!!$0,time:$1,playing:!!$2,dirty:!!$3,storm:$4,voices:$5});
                 if(Module.verify) Object.assign(Module.cinematic,({cast:$6,speaker:UTF8ToString($7),story:!!$8,ending:!!$9,track:$10,key:$11,trainSpeed:$12}));

@@ -15,7 +15,7 @@ const assert = require('node:assert/strict');
   });
   const base = process.env.DEATHWARD_WEB_URL || 'http://127.0.0.1:8080/';
   try {
-    for (const [pacing, rooms] of [['growing', 9], ['classic', 15]]) {
+    for (const [pacing, rooms] of [['growing', 9], ['classic', 15], ['corridors', 9], ['rooms', 9], ['compact', 9]]) {
       for (const scene of ['power', 'boss']) {
         await page.goto(`${base}?verify&mute&smoke&frames=100000&theme=canyon&scene=${scene}&pacing=${pacing}`);
         await page.waitForFunction(() => window.Module?.ready, null, {timeout: 90000});
@@ -25,6 +25,11 @@ const assert = require('node:assert/strict');
           state: Module.state, expedition: Module.expedition, gl: Module.ctx.getError(),
         }));
         assert.equal(result.expedition.rooms, rooms);
+        assert.equal(result.expedition.pacing, ['growing', 'classic', 'corridors', 'rooms', 'compact'].indexOf(pacing));
+        if (pacing === 'rooms' || pacing === 'compact') {
+          for (const extent of [result.expedition.roomWidth, result.expedition.roomDepth])
+            assert.ok(scene === 'boss' ? extent >= 32 && extent <= 40 : extent >= 20 && extent <= 28);
+        }
         assert.ok(result.expedition.floors >= 4 && result.expedition.floors <= 8);
         assert.equal(result.state.room, rooms - (scene === 'power' ? 2 : 1));
         assert.equal(result.state.error, '');

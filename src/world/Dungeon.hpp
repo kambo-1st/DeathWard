@@ -69,7 +69,8 @@ struct Arena {
     Vector3 entrance{0, 0.85f, 10}, exit{0, 0.85f, -13}, miners{-10, 0.85f, -8}, altar{10, 0.85f, -8};
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
-                   bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount);
+                   bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount,
+                   FloorDimensions dimensions = {});
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;

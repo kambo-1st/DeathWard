@@ -298,8 +298,7 @@ void Game::perform(Action action) {
             break;
         case Action::CycleExpeditionPacing:
             if (screen == Screen::Hub && missionMenu)
-                expeditionPacing = expeditionPacing == ExpeditionPacing::Growing
-                    ? ExpeditionPacing::Classic : ExpeditionPacing::Growing;
+                expeditionPacing = nextExpeditionPacing(expeditionPacing);
             break;
         case Action::ToggleCanyonRiver:
             if (screen == Screen::Hub && missionMenu)
