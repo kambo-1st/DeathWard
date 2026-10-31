@@ -1,0 +1,42 @@
+{
+  "status": "partial visual inspection; not full readability acceptance",
+  "style": "Original",
+  "inspected_native": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/linux-charge.png",
+      "observation": "Cart remains on visible curved rails; bombs and blast warning rings are present during fast passes. Far-side head detail is small."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/linux-recovery.png",
+      "observation": "Recovery cart is visible along the same track; head tint/lean is subtle at normal camera distance and needs stronger readability review."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/linux-fire-refined.png",
+      "observation": "Four orange/gold flame trails are individually visible across the rail crossing. Ground remains visible between individual flames. Refines the initial solid-orange cross."
+    }
+  ],
+  "inspected_wasm": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/final-hornfel/wasm-resident-hornfel-charge-580.png",
+      "observation": "Final flame rendering appears in the seeded arena after cart exit. Four cardinal directions visible in isometric projection."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/final-hornfel/wasm-resident-hornfel-charge-pits-1830.png",
+      "observation": "Persistent flames and recovering cart coexist on a source arena with pits; front terrain and rails remain legible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/final-hornfel/wasm-resident-hornfel-charge-curves-930.png",
+      "observation": "Curved-route recovering cart and airborne recovery projectile rendered; projectile is small. Camera/HUD may hide far-side threats."
+    }
+  ],
+  "initial_revision": {
+    "path": "docs/reports/isaac-enemy-port/hornfel_charge/linux-fire.png",
+    "finding": "Continuous orange ground stripes were too dominant; revised to individual flames and faint heat marks."
+  },
+  "limits": [
+    "Procedural flame shapes and recovery tell are provisional; not final art acceptance.",
+    "No all-camera/occlusion, color-vision or mixed-hazard readability sweep.",
+    "Displayed FPS is incidental under concurrent work, not a controlled performance measurement.",
+    "Screenshots are renderer evidence; native collision/behavior tests establish the corresponding rules."
+  ]
+}

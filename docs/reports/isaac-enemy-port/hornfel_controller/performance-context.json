@@ -1,0 +1,7 @@
+{
+  "captured_utc": "2026-10-26T05:15:39.475228+00:00",
+  "compiler": "GCC, -O3 -std=c++20, current native core archive",
+  "scope": "Actual generated boss fights, 60 warmup ticks excluded; headless simulation step timing only. Native/browser regression and builds ran concurrently; uncontrolled machine load. Not rendered frame-time or WASM acceptance.",
+  "samples": "docs/reports/isaac-enemy-port/hornfel_controller/starting-kit.txt",
+  "limits": "Four starting-kit fights, no mixed builds, repeated-seed distribution, human acceptance or full controller stress."
+}

@@ -1,0 +1,8 @@
+HORNFEL_STARTING_KIT seed=10 floor=2 layout=hornfel_special_5225 pits=12 seconds=81.4 hp=37.5 dead=0 clear=1 escaped=0 completed=1 state=5 kills=1 inventory=6 max_hp=100 shot_damage=24 items=0 god=0 combat_teleports=0
+HORNFEL_NATIVE_STEP seed=10 samples=4824 mean_us=9.11912 p50_us=8.93 p95_us=12.81 max_us=248.475 peak_bombs=5 peak_projectiles=17 suppressed=0 render=0 baseline_comparison=0 human_acceptance=0
+HORNFEL_STARTING_KIT seed=58 floor=3 layout=hornfel_special_5229 pits=7 seconds=55.8833 hp=37.5 dead=0 clear=1 escaped=0 completed=1 state=5 kills=1 inventory=6 max_hp=100 shot_damage=24 items=0 god=0 combat_teleports=0
+HORNFEL_NATIVE_STEP seed=58 samples=3293 mean_us=8.29869 p50_us=6.9 p95_us=11.45 max_us=276.667 peak_bombs=7 peak_projectiles=6 suppressed=0 render=0 baseline_comparison=0 human_acceptance=0
+HORNFEL_STARTING_KIT seed=953 floor=2 layout=hornfel_special_5223 pits=20 seconds=65.7833 hp=62.5 dead=0 clear=1 escaped=0 completed=1 state=5 kills=1 inventory=6 max_hp=100 shot_damage=24 items=0 god=0 combat_teleports=0
+HORNFEL_NATIVE_STEP seed=953 samples=3887 mean_us=28.134 p50_us=9.51 p95_us=14.5 max_us=10929.6 peak_bombs=6 peak_projectiles=15 suppressed=0 render=0 baseline_comparison=0 human_acceptance=0
+HORNFEL_STARTING_KIT seed=1254 floor=3 layout=hornfel_special_5227 pits=0 seconds=84.2833 hp=37.5 dead=0 clear=1 escaped=0 completed=1 state=5 kills=1 inventory=6 max_hp=100 shot_damage=24 items=0 god=0 combat_teleports=0
+HORNFEL_NATIVE_STEP seed=1254 samples=4997 mean_us=9.75417 p50_us=9.159 p95_us=13.79 max_us=282.546 peak_bombs=7 peak_projectiles=18 suppressed=0 render=0 baseline_comparison=0 human_acceptance=0

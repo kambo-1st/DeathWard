@@ -1,0 +1,105 @@
+PASS WASM resident-shell: invulnerable head, flesh attacks and arena
+PASS WASM tuff-pair: segmented armor/ownership or flyer death
+PASS WASM tuff-armor: segmented armor/ownership or flyer death
+PASS WASM resident-tuff: segmented armor/ownership or flyer death
+PASS WASM sucker-death: segmented armor/ownership or flyer death
+PASS WASM ink-death: segmented armor/ownership or flyer death
+PASS WASM supply-stock: actual supplied-bomb lifecycle
+PASS WASM supply-carry: actual supplied-bomb lifecycle
+PASS WASM supply-throw: actual supplied-bomb lifecycle
+PASS WASM supply-death: actual supplied-bomb lifecycle
+PASS WASM quake-left: landing, wave direction and lifecycle
+PASS WASM quake-up: landing, wave direction and lifecycle
+PASS WASM quake-right: landing, wave direction and lifecycle
+PASS WASM quake-down-plate: landing, wave direction and lifecycle
+PASS WASM maw-normal: actual suction and Original presentation
+PASS WASM maw-broken-cycle: actual suction and Original presentation
+PASS WASM maw-plate: actual suction and Original presentation
+PASS WASM maw-projectiles: actual suction and Original presentation
+PASS WASM statue-stone: attacks, lifecycle and Original rendering
+PASS WASM statue-vomit: attacks, lifecycle and Original rendering
+PASS WASM statue-triple: attacks, lifecycle and Original rendering
+PASS WASM statue-eye: attacks, lifecycle and Original rendering
+PASS WASM statue-fixed: attacks, lifecycle and Original rendering
+PASS WASM statue-cross: attacks, lifecycle and Original rendering
+PASS WASM statue-cross-alt: attacks, lifecycle and Original rendering
+PASS WASM statue-always: attacks, lifecycle and Original rendering
+PASS WASM statue-always-alt: attacks, lifecycle and Original rendering
+PASS WASM statue-brimstone: attacks, lifecycle and Original rendering
+PASS WASM resident-quake-left: actual seeded stage, active controller and floor plate
+PASS WASM resident-quake-up: actual seeded stage, active controller and floor plate
+PASS WASM resident-quake-right: actual seeded stage, active controller and floor plate
+PASS WASM resident-quake-down: actual seeded stage, active controller and floor plate
+PASS WASM resident-statue-fixed: actual seeded stage, active controller and floor plate
+PASS WASM resident-statue-brimstone: actual seeded stage, active controller and floor plate
+PASS WASM resident-maw: actual seeded stage, active controller and floor plate
+PASS WASM resident-broken-maw: actual seeded stage, active controller and floor plate
+PASS WASM shadow-contact: actual companion system and Original presentation
+PASS WASM shadow-copies: actual companion system and Original presentation
+PASS WASM shadow-path: actual companion system and Original presentation
+PASS WASM shadow-fire: actual companion system and Original presentation
+PASS WASM drowned-death-volley: variant behavior and presentation
+PASS WASM dank-reflection: variant behavior and presentation
+PASS WASM princess-diagonal: variant behavior and presentation
+PASS WASM level2-steering: variant behavior and presentation
+PASS WASM drowned-repeat-fire: variant behavior and presentation
+PASS WASM princess-repeat-fire: variant behavior and presentation
+PASS WASM resident-drowned-charger: variant behavior and presentation
+PASS WASM resident-level2-charger: variant behavior and presentation
+PASS WASM bloat-down: real controller and Original presentation
+PASS WASM bloat-sides: real controller and Original presentation
+PASS WASM bloat-above: real controller and Original presentation
+PASS WASM bloat-green: real controller and Original presentation
+PASS WASM resident-bloat: real controller and Original presentation
+PASS WASM charger-cardinal: real controller and Original presentation
+PASS WASM peep-thresholds: boss form, owned eyes, attacks, cleanup
+PASS WASM peep-cyan: boss form, owned eyes, attacks, cleanup
+PASS WASM peep-yellow: boss form, owned eyes, attacks, cleanup
+PASS WASM resident-peep: boss form, owned eyes, attacks in generated stage
+PASS WASM resident-iblob: actual seed 92, floor 2, source 15.0.0
+PASS WASM resident-grilled: actual seed 1, floor 0, source 15.3.0
+PASS WASM resident-flaming: actual seed 98, floor 0, source 29.0.0
+PASS WASM enemy 11.0.0: 1 shots, 40 HP, one threat, Original rendering
+PASS WASM enemy 11.1.0: 0 shots, 32 HP, one threat, Original rendering
+PASS WASM enemy 12.0.0: 1 shots, 64 HP, one threat, Original rendering
+PASS WASM enemy 14.0.0: 1 shots, 48 HP, one threat, Original rendering
+PASS WASM enemy 14.1.0: 2 shots, 72 HP, one threat, Original rendering
+PASS WASM enemy 10.3.1: 0 shots, 88 HP, one threat, Original rendering
+PASS WASM enemy 10.3.2: 0 shots, 88 HP, one threat, Original rendering
+PASS WASM enemy 10.3.3: 0 shots, 88 HP, one threat, Original rendering
+PASS WASM enemy 10.3.4: 0 shots, 88 HP, one threat, Original rendering
+PASS WASM enemy 10.3.5: 0 shots, 88 HP, one threat, Original rendering
+PASS WASM enemy 853.0.0: 0 shots, 24 HP, one threat, Original rendering
+PASS WASM enemy 15.0.0: 4 shots, 80 HP, one threat, Original rendering
+PASS WASM enemy 15.1.0: 4 shots, 80 HP, one threat, Original rendering
+PASS WASM enemy 15.2.0: 8 shots, 96 HP, one threat, Original rendering
+PASS WASM enemy 15.3.0: 4 shots, 96 HP, one threat, Original rendering
+PASS WASM enemy 872.0.0: 4 shots, 80 HP, one threat, Original rendering
+PASS WASM Cloggy: opposite curve directions on successive actual volleys
+PASS WASM clotty-flame: 1 threats, 0 kills
+PASS WASM clotty-burning: 1 threats, 0 kills
+PASS WASM clotty-live-fire: 1 threats, 0 kills
+PASS WASM fire-above-cover: 1 threats, 0 kills
+PASS WASM clotty-flooded: 1 threats, 0 kills
+PASS WASM clotty-flooded-death: 0 threats, 1 kills
+PASS WASM hopper-fire-burn: 1 threats, 0 kills
+PASS WASM hopper-wander: airborne arc and grounded landing
+PASS WASM flaming-pursuit: airborne arc and grounded landing
+PASS WASM hopper-cover: airborne arc and grounded landing
+PASS WASM flaming-cover: airborne arc and grounded landing
+PASS WASM hopper-cover-morph: airborne arc and grounded landing
+PASS WASM moter-split: 2 threats, 1 kills
+PASS WASM moter-overkill: 0 threats, 1 kills
+PASS WASM drowned-hive-split: 1 threats, 1 kills
+PASS WASM drowned-hive-overkill: 0 threats, 1 kills
+PASS WASM globin-goo: 1 threats, 0 kills
+PASS WASM globin-regrown: 1 threats, 0 kills
+PASS WASM globin-finished: 0 threats, 1 kills
+PASS WASM cursed-goo: 2 threats, 0 kills
+PASS WASM cursed-regrown: 2 threats, 0 kills
+PASS WASM Rotten brood: timed children, six-child cap, physical spacing, survive parent death
+PASS WASM Rotten orbit: acceleration, bounded speed and lateral travel
+PASS WASM flight-cover-shooter: visible flight elevation and reachable player
+PASS WASM flight-cover-pursuit: visible flight elevation and reachable player
+PASS WASM flight-river: visible flight elevation and reachable player
+PASS WASM Ring Fly formation: translating circle, preserved slots and founder-independent lifetime

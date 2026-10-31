@@ -1,0 +1,19 @@
+HORNFEL_CONFIG rejects=13 snapshots=2
+HORNFEL_DECOYS reservations=2 lifecycle=2 hit_rules=4 atomic_payload=1 cover_bypass=1
+HORNFEL_THROWS single=1 double=2 small_mines=3 large_mines=4 frames=17,27,34 separate_cart_doors=1 inactive_pause=1
+HORNFEL_CHARGE layout=hornfel_special_5220 repeats=6 passes=7 bombs=8 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=0
+HORNFEL_CHARGE layout=hornfel_special_5228 repeats=6 passes=7 bombs=10 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=1
+FIRE_WAVES cardinal=4 atomic_capacity=1 player_damage=1 wall_stop=1 pit_stop=1 reactions=1 ally_damage=1 clear_survival=1 inactive_pause=1 expiry=1
+HORNFEL_LIFECYCLE cart_hp=768 flee_hp=320 killed_bonus=3 escaped_bonus=0 no_escape_kill=1 atomic_mines=1
+HORNFEL_ISOLATED_ESCAPE completed=1 seconds=7.71667
+HORNFEL_ROUTE layout=hornfel_special_5220 seed=924 floor=2 pits=0
+HORNFEL_ROUTE layout=hornfel_special_5221 seed=298 floor=3 pits=0
+HORNFEL_ROUTE layout=hornfel_special_5222 seed=490 floor=2 pits=9
+HORNFEL_ROUTE layout=hornfel_special_5223 seed=953 floor=2 pits=20
+HORNFEL_ROUTE layout=hornfel_special_5224 seed=19 floor=2 pits=0
+HORNFEL_ROUTE layout=hornfel_special_5225 seed=10 floor=2 pits=12
+HORNFEL_ROUTE layout=hornfel_special_5226 seed=92 floor=3 pits=0
+HORNFEL_ROUTE layout=hornfel_special_5227 seed=1254 floor=3 pits=0
+HORNFEL_ROUTE layout=hornfel_special_5228 seed=57 floor=2 pits=0
+HORNFEL_ROUTE layout=hornfel_special_5229 seed=58 floor=3 pits=7
+HORNFEL_REACHABILITY layouts=10 stage=1 standard=1 tutorial_excluded=1

@@ -1,0 +1,187 @@
+{
+  "status": "source_review_only_not_runtime_implementation",
+  "baseline": "Repentance1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_api_registration": {
+    "method": "FireBossProjectiles",
+    "address": "0x6a3420",
+    "name_address": "0xb53500",
+    "registration_address": "0x8076a6"
+  },
+  "newer_signature": {
+    "pattern": "558bec83e4f883ec54f30f1005",
+    "matches": 0,
+    "note": "No signature match in baseline; native registration establishes identity instead."
+  },
+  "windows": [
+    {
+      "name": "periodic_predicate",
+      "start": "0x684790",
+      "end_exclusive": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_charge_review/native/periodic_predicate.asm"
+    },
+    {
+      "name": "scaled_counter_crossing",
+      "start": "0x6847e0",
+      "end_exclusive": "0x684852",
+      "raw_sha256": "3114e2f81eb2fc94d3f4b8769e72049337e5841d1ffe29957db2cd22a677191d",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_charge_review/native/scaled_counter_crossing.asm"
+    },
+    {
+      "name": "room_inset_predicate",
+      "start": "0x7cf0a0",
+      "end_exclusive": "0x7cf158",
+      "raw_sha256": "fcab5d98e3e1a281b7ec3a6c4a1afbf2c5e31f707ecd609e956feb34c922bb82",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_charge_review/native/room_inset_predicate.asm"
+    },
+    {
+      "name": "random_unit_vector",
+      "start": "0x659290",
+      "end_exclusive": "0x6592ef",
+      "raw_sha256": "d692c335c6eb08e51ecd9a1de076cea055dc56d03b47126c5913845e1fb314b1",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_charge_review/native/random_unit_vector.asm"
+    },
+    {
+      "name": "projectile_params_flags_init",
+      "start": "0x430d70",
+      "end_exclusive": "0x430e44",
+      "raw_sha256": "c74c8a4a1a343af16300ad287a5239944ad4e5f359bf44c1bbc35185b9e01407",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_charge_review/native/projectile_params_flags_init.asm"
+    },
+    {
+      "name": "fire_boss_projectiles_prefix",
+      "start": "0x6a3420",
+      "end_exclusive": "0x6a3480",
+      "raw_sha256": "4bdd48cf604bb321f939e125a91f1b264f172e74db01a5fcf6ae0693a1bd14ab",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_charge_review/native/fire_boss_projectiles_prefix.asm"
+    },
+    {
+      "name": "native_api_registration",
+      "start": "0x8076a6",
+      "end_exclusive": "0x8076b0",
+      "raw_sha256": "eccabf7560431f2a768f50c2a6d9a47ecb863cd7416cc3fe0e8a90e669573a6b",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_charge_review/native/native_api_registration.asm"
+    }
+  ],
+  "animation": {
+    "attributes": {
+      "Name": "ChargeFinish",
+      "FrameNum": "87",
+      "Loop": "false"
+    },
+    "triggers": [
+      {
+        "EventId": "2",
+        "AtFrame": "22"
+      },
+      {
+        "EventId": "1",
+        "AtFrame": "46"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "topic": "Selection",
+      "addresses": [
+        "0x4a5695-0x4a572c"
+      ],
+      "contract": "After earlier decoy selection fails, state6 and zero byte0xaf2 allow a random low-three-bit-zero test (1/8 for uniform RNG). Entry must have a nonnull paired door different from itself. Select state10, set cart parameter0xb08 to0.1, retain entry door, set byte0xaf2=100 and repeat byte0xaf6=RNG%3+6.",
+      "limits": "This is a conditional selection probability, not an unconditional per-pass probability. Prior decoy selection and paired-route eligibility matter."
+    },
+    {
+      "topic": "Charge movement",
+      "addresses": [
+        "0x4a67d9-0x4a67fd",
+        "0x4bbd98-0x4bbe17"
+      ],
+      "contract": "State10 adds0.08 to cart parameter0xb08, capped at30. Cart AI adds normalized rail direction times1.3 times this parameter to velocity and sets rider friction0.8.",
+      "limits": "0xb08 is not direct world speed. Full movement order, integration and the separate native movement cap must inform conversion. Existing DeathWard constant12 world-units/second is a declared adaptation."
+    },
+    {
+      "topic": "Repeated traversal",
+      "addresses": [
+        "0x4a5a3a-0x4a5b30",
+        "0x4a800c-0x4a8043"
+      ],
+      "contract": "State10 keeps both paired doors requested open. At exit, positive repeat byte teleports cart to stored entry through SetMinecartPosVel, decrements byte, and copies cart position to actor. No ordinary outside wait. Counter6-8 represents repeats after the initial pass:7-9 fast traversals if uninterrupted.",
+      "limits": "Do not sweep collision across the teleport chord. Rail endcap routes that return to the same door fail the native paired-door condition."
+    },
+    {
+      "topic": "Charge bomb cadence",
+      "addresses": [
+        "0x4a6803-0x4a6835",
+        "0x684790-0x6847db"
+      ],
+      "contract": "Periodic helper uses (global field0x1a30dc + actor field0x20) modulo15; returns false when actor flag0x4000 or helper0x6d0380 is active. Bomb spawn also requires room-inset predicate with margin20 native units.",
+      "limits": "Do not label actor field0x20 as animation time, or equate15 to an unconditional elapsed-time timer without identifying the clock and suppression conditions."
+    },
+    {
+      "topic": "Charge bomb placement",
+      "addresses": [
+        "0x4a6835-0x4a68fa",
+        "0x659290-0x6592ef",
+        "0x7cf10a-0x7cf158"
+      ],
+      "contract": "Candidate target is current actor position plus a random unit vector times U[0,1). A subsequent room helper adjusts the target. Spawn entity4 variant0 and call existing Hornfel bomb launch helper0x4a6080.",
+      "limits": "Charge bombs are scattered around the rail position, not the ordinary attack aimed at the player. Exact target-adjustment helper0x7cf240 semantics remain to verify."
+    },
+    {
+      "topic": "Counter decay",
+      "addresses": [
+        "0x4a7a83-0x4a7ad9",
+        "0x6847e0-0x684852"
+      ],
+      "contract": "Counter bytes0xaf0..0xaf3 decrement only when helper returns nonzero. With offset0 and divisor3, helper returns trunc(actor[0x2fc]/3)-trunc(actor[0x2f8]/3), subject to the same suppression gates.",
+      "limits": "The earlier150/30=5seconds mine-cooldown interpretation is not established. Both100 charge and150 mine counters use this crossing helper; field semantics must be identified before claiming exact elapsed seconds."
+    },
+    {
+      "topic": "Recovery entry",
+      "addresses": [
+        "0x4a5a64-0x4a5ac7",
+        "0x4a5163-0x4a5279",
+        "0x4a5731-0x4a5744"
+      ],
+      "contract": "Exhausted repeat byte changes to hidden state7, timer1, cart parameter capped at6. Helper reuses retained entry, restores visibility/collision and enters state11.",
+      "limits": "Recovery is another traversal from the original entry. It must not start in the middle of the room or choose a new random rail."
+    },
+    {
+      "topic": "Recovery animation and speed",
+      "addresses": [
+        "0x4a68ff-0x4a6b07",
+        "0x4a80db-0x4a80e2"
+      ],
+      "contract": "ChargeFinish has87 animation frames at30FPS, Sound22 and Shoot46. Before the Shoot event has occurred, subtract0.75 from cart parameter with floor0.8. Afterward add0.1 with cap1.2. State11 has no animation-finished transition in this dispatch: ordinary room exit resolves it.",
+      "limits": "An87-frame animation is not a fixed87-frame recovery state. Do not count the recovery traversal among the initial fast traversals."
+    },
+    {
+      "topic": "Recovery projectile",
+      "addresses": [
+        "0x4a6924-0x4a6a60",
+        "0x6a3420"
+      ],
+      "contract": "Shoot constructs ProjectileParams at ebp-0xe8; Scale at+0x14 is2. It ORs8 into high flags word+0x5c (bit35 FIRE_WAVE). FireBossProjectiles, identified by installed native API function/name registration, receives count1, predicted target and trajectoryModifier10. Prediction is target position + target velocity *0.1*distance. Returned fields0x368-=0.6,0x370=2,0x364=0.7*old-3.",
+      "limits": "The third FireBossProjectiles argument is a trajectory modifier per the matched API declaration, not proven shot speed10. Returned projectile fields need native accessor verification before labeling their meanings. Exact cardinal-fire aftermath timing/damage/propagation is separate work."
+    }
+  ],
+  "api_evidence": {
+    "url": "https://wofsauge.github.io/IsaacDocs/rep/enums/ProjectileFlags.html",
+    "snapshot": "docs/reports/isaac-enemy-port/hornfel_charge_review/sources/projectile-flags.html",
+    "claim": "FIRE_WAVE=1<<35; native high-word OR8 and parameter layout independently establish the bit."
+  },
+  "next_implementation": [
+    "Verify native clock fields and suppression gates, then choose and document DeathWard timing conversion.",
+    "Implement external charge selection and retained-route repeat/recovery states with explicit acceleration/friction adaptation.",
+    "Add reusable ballistic impact and cardinal fire-wave support with capacity, cover, pit, room-lifetime and ownership rules.",
+    "Test exact repeat count, no teleport-chord hits, original recovery entry, event46 one-shot emission, exit-based recovery and mid-charge dismount.",
+    "Use actual seeded arenas for Linux/WASM visual, starting-kit balance and rendered performance checks."
+  ],
+  "unchanged_gaps": [
+    "Decoys",
+    "passengers",
+    "Fly Bomb escort ownership",
+    "source-specific rewards",
+    "full six-gate acceptance"
+  ]
+}

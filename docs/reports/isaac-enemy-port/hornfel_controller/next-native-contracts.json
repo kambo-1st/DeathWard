@@ -1,0 +1,57 @@
+{
+  "status": "Source review for the next controller increment; not implemented by this checkpoint.",
+  "baseline": "Repentance1.7.9b",
+  "source_sha256": {
+    "docs/reports/isaac-enemy-port/hornfel/native/hornfel_update_ai.asm": "02a95eefcc992479fd180ee36a31ee626b583e983ab2e924e057f422eb81fa4d",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5a10.asm": "0544c9f8c904b415b541ced0c217bdd5c696e410197601f7afc680fd61ccdcdd"
+  },
+  "decoy": {
+    "id": "906.1.0",
+    "damage_queue": {
+      "addresses": [
+        "0x4a65d0-0x4a66d5"
+      ],
+      "positive_damage_gate": "[actor+0x14] must be positive before processing this branch; exact accumulator semantics remain to verify.",
+      "flag_gate": "([actor+0x18] &4)!=0 immediately sets HP to1 and death byte. Bit meaning is not named here because the native field/flag API mapping is still unverified.",
+      "ordinary_hit": "For a positive queued amount <=10: subtract2 when RNG%3==0, otherwise1. For amount>10: subtract3 when RNG%3==0, otherwise2. Zero/nonpositive entries do not subtract.",
+      "completion": "After the queue, HP<1 is clamped to1 and sets death; otherwise HP<1.5 also sets death. A plain4HP target receiving regular unscaled damage is incorrect.",
+      "units": "The >10 threshold is in source damage units. DeathWard hit conversion needs an explicit mapping, not comparison with unchanged24-damage player shots."
+    },
+    "destruction": {
+      "addresses": [
+        "0x4a7af2-0x4a7c81"
+      ],
+      "bombs": "Loop count6; each spawns entity4 variant3 (Troll Bomb), owner=decoy. Random angle in[0,2pi), initial vector magnitude5+15*U in native units.",
+      "other": "Two effect spawns and a call carrying numeric mask0x1004 precede the bombs. Function/mask meaning must be resolved before treating it as a specific damage event."
+    }
+  },
+  "charge_exit": {
+    "addresses": [
+      "helper_4a5a10:0x4a5a3a-0x4a5b30"
+    ],
+    "repeat": "Only state10 with nonnull endpoint reference uses this branch. When repeat byte0xaf6>0, derive a door vector through0x4a8340, call uniquely matched SetMinecartPosVel0x4bc1e0, decrement counter, copy cart position to rider. This is an immediate native reposition, not the normal45-count outside wait.",
+    "recovery": "When repeat byte is exhausted, set state7, hide/disable flags, timer1 and clamp cart speed to at most6. Exact following recovery/vomit animation and timing still need a separate complete contract."
+  },
+  "ordinary_exit": {
+    "addresses": [
+      "helper_4a5a10:0x4a5b36-0x4a5c29"
+    ],
+    "outside": "State6 and timer45, clear visible/collision fields; native actor position copied to secondary position fields.",
+    "companions": "Queries entity819 and selects those whose reference at0x314 matches the Hornfel owner; detaches reference and caps HP to3.5. This is evidence for releasing Fly Bomb companions on exit, not deleting them."
+  },
+  "next_steps": [
+    "Resolve the damage accumulator/mask accessor against actual native bindings before implementing decoy damage categories.",
+    "Finish high-speed entry/selection and recovery states using the existing verified counter and animation metadata; count initial/repeated/recovery passes separately.",
+    "Implement child cart/decoy and819 companion ownership with capacity, room persistence and completion tests.",
+    "Preserve source-specific drops, Horny Boys restrictions and special-mode routes as separate work."
+  ],
+  "charge_recovery_animation": {
+    "source": "docs/reports/isaac-enemy-port/hornfel/animations/manifest.json",
+    "name": "ChargeFinish",
+    "frames": 87,
+    "fps": 30,
+    "sound_frame": 22,
+    "shoot_frame": 46,
+    "native_use": "0x4a68ff plays ChargeFinish;0x4a6910 tests Shoot before constructing a directed projectile. Projectile parameter flags include8; exact native fireball integration and cardinal aftermath remain to verify."
+  }
+}

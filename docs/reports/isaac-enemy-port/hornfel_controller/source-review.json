@@ -1,0 +1,56 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "status": "Partial Hornfel controller and actual cart/door arena integration. Not a completed source port.",
+  "previous_goal_turn": "Progress: implemented reusable validated rail geometry, corrected hostile ordnance identities and preserved native/animation evidence. Current work uses that checkpoint without modifying its artifacts.",
+  "evidence": [
+    "docs/reports/isaac-enemy-port/hornfel/native-review.json",
+    "docs/reports/isaac-enemy-port/hornfel/animations/manifest.json",
+    "docs/reports/isaac-enemy-port/hornfel_controller/native/manifest.json",
+    "docs/reports/isaac-enemy-port/hornfel_controller/rail-source.json",
+    "docs/reports/isaac-enemy-port/ordnance/sources/hornfel.wikitext"
+  ],
+  "implemented": {
+    "boss": "906.0.0 dedicated rail-riding controller, separate hidden/opening/riding/cart-loss/fleeing/completed states; no generic enemy AI.",
+    "cart": "965.0.0 typed runtime component with its own entity ID, rider reference, route/distance/pose and visible/intact lifetime. Does not create an ordinary HP bar, kill reward or room threat.",
+    "doors": "967.0.0 typed runtime components with independent IDs and visible opening/closing panels. Same exact wall endpoints drive movement and presentation. Never misidentified as906.1 decoys.",
+    "attacks": "Single/double bombs release at authored30FPS frames17 and17/27; mine salvo at34. Single/double/mines weighted3:1:1, with mines omitted during150/30-second cooldown. Bomb identities4.0/4.8/4.16 weighted6:3:1. Mines use4.15 and count3 or4 from authored native grid area (width+2)*(height+2)>135.",
+    "phases": "Cart-phase240*3.2=768HP. Lethal cart damage resets HP to100*3.2=320, detaches the rider, plays32/30 seconds of Sad, then begins fleeing with an initial90/30-second retreat interval before nearest reachable rail-door search. No kill/reward at cart loss. Grounded dismount sets the correct vertical position. Flee retreat remains inside the authored room until door completion.",
+    "completion": "Both killing and successful escape resolve the boss encounter. Escape is not an EnemyKilled event and gives no extra dynamite. A kill adds3 dynamite instead of the common1; the separate source1/7 special collectible chance remains missing.",
+    "arena": "All ten normal source rail templates are selected with a separate seed stream in Standard Broken Quarry (band1). Dimensions are selected before room/corridor placement. All source pits and rail-over-pit cells block grounded movement; terrain is lowered visibly. Ordinary source rock cells are destructible and paid once with no fabricated extra loot. Restricted source player entrance sides are preserved; a180-degree rotation aligns them with the generated boss entrance. Void/Double Trouble remain separate, not silently assigned as ordinary fights. After terrain reshaping, navigation cells are rebuilt over the same footprint; otherwise formerly clipped canyon corners could strand the grounded rider. Failed grounded path queries within rail bounds retry with a0.5-unit grid, retaining actual pits and solid collision. Boss coins use the reachable reward site, not a possibly submerged room center. Water rendering excludes the rail arena footprint so a distant river does not visually flood dry authored pits.",
+    "lifetime": "Cart, doors, pending attack targets and all boss timers remain in RoomProgress while inactive. Ordnance retains its producer identity and persists independently through cart loss, escape and death. Mine salvos reserve capacity and retry without rerolling or partial emission. Debug execution/room reset clears the controller explicitly."
+  },
+  "native_findings_this_batch": [
+    "Three unique minecart API signatures verified against the preserved executable SHA256.",
+    "Bidirectional rider/cart reference management and position/velocity/grid updates recovered from actual matching functions.",
+    "Native rail projection identifies end-stop reversal; the previous local reversal policy is supported for entry into the cap. Centered cardinal crossing keeps the incoming axis under the direction-weighted segment score. Arbitrary collision/off-rail projection remains unported.",
+    "Preserved native40-unit tile geometry for all11 rail variants; corrected9=south and10=north end caps independently confirmed.",
+    "Hornfel attack helper0x4a5c40 gives single/double/mines weights3/1/1, omits mines while byte0xaf0 is positive and sets it to150 on selection."
+  ],
+  "adaptations": [
+    "Source40-unit cells map to4 world units. Curved shared physical paths remain a3D adaptation of the native polyline/projection geometry; they are not claimed numerically identical. End stops currently turn at cell center instead of the native4-unit beyond-center endpoint.",
+    "World rail speed12, flee speed4, opening0.3s, inter-attack delay0.5s and outside1.5s are external. Outside45 and flee90 are interpreted at30Hz as local timing conversions; authored animation30FPS is directly verified, all engine timer rates are not.",
+    "Cart follows actual swept curve segments. At a wall endpoint an unfinished attack is retained until its final emission/capacity retry completes; this local policy avoids losing ordnance but differs from unreviewed native interruption behavior.",
+    "Single/double throws predict target velocity by a random0.1-0.3 seconds. Native prediction also multiplies by native target distance; complete units/tick conversion and launch dynamics remain unresolved. Current shared0.7s ballistic lob/fuse and hostile damage remain local tuning.",
+    "Mine placement tries8 legal candidates and favors spacing; this is only a partial adaptation of the native candidate selection, not an exact recovered sampler.",
+    "A cart destroyed over a pit dismounts its grounded rider at the nearest legal point. Terrain uses the existing height-field lattice; pit collision bounds preserve the authored cell footprint while visible slopes interpolate at the edge.",
+    "Graph entry and exit are DeathWard progression points; template restricted entrance sides are respected, but large-room source multiple door-slot offsets are not yet mapped one-for-one. Normal room weights are a local use of storedSTB weights, not a claim about native special-room selection.",
+    "The ordinary DeathWard boss money/item reward remains. The killed/escaped distinction changes the bomb bonus and kill event; source unlocks and the1/7 collectible bonus are not implemented. Original visual style/player defaults are unchanged."
+  ],
+  "missing": [
+    "High-speed repeated passes, acceleration, rapid bombing, recovery/vomit fireball and cardinal fire trails.",
+    "906.1 decoy scheduling, special damage normalization/flags and six-bomb destruction; this record stays missing.",
+    "Occasional two Fly Bomb companions, fire/TNT/creature carts and source fireplace props.",
+    "Complete native timing, attack interruption, bomb flight/fuse/pushing, hostile fire durability and item/character exceptions.",
+    "Horny Boys split/escape/drop restrictions and full optional Void/Double Trouble encounters.",
+    "Varied-build fight balance and controlled native/WASM performance acceptance. No record passes all six gates."
+  ],
+  "validation_summary": {
+    "native_suites": 57,
+    "native_behavior": "behavior.txt",
+    "normal_templates_checked": 10,
+    "native_captures": 4,
+    "starting_kit_fights": 4,
+    "browser": "All142 cases passed across37+105 completed probes on the same final WASM build; obsolete Shell fixture failure preserved separately.",
+    "complete_ports": 0
+  }
+}

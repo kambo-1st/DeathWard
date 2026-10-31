@@ -1,0 +1,46 @@
+{
+  "status": "review_progress_no_runtime_changes",
+  "previous_turn": "progress: partial Hornfel controller/arenas",
+  "this_turn": "progress: charge selection, repeat, recovery, bomb cadence/placement and parameter-contract review",
+  "created_utc": "2026-10-26T05:52:53.752090+00:00",
+  "previous_checkpoint": "docs/reports/isaac-enemy-port/hornfel_controller/checkpoint.json",
+  "runtime_checkpoint_unchanged": "99a48de5cb37b4bb",
+  "source_review": "docs/reports/isaac-enemy-port/hornfel_charge_review/source-review.json",
+  "source_findings": 9,
+  "historical_artifacts_verified": 328,
+  "checklist_unchanged": {
+    "records": 653,
+    "reviewed": 128,
+    "in_progress": 81,
+    "existing_unverified": 79,
+    "missing": 481,
+    "excluded": 12,
+    "complete": 0,
+    "remaining": 641
+  },
+  "sources_sha256": {
+    "scripts/isaac-reference/analyze-hornfel-charge.py": "a6965d103a1125d605ebac0ccd9cac905e750a60be10d46d629916c1b7abc163",
+    "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462",
+    "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/ProjectileParams.zhl": "3c8f79cac8f6e244240b3e6a8b0e62fe2ec2dbc4f123821bd9d496fd99179115",
+    "docs/reports/isaac-enemy-port/hornfel/animations/manifest.json": "b397e7062b385e7e06bd3b99ad90193b09e6aa0831e163137751184189664e85",
+    "docs/reports/isaac-enemy-port/hornfel_controller/checkpoint.json": "8c558da79e4b63857112a67165cccc43dd9b8af4abc85f0d520d580f1e1e8d60",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5120.asm": "d281cee2e570d3425dff5733ca26d32f3c82894ea405c9cfcaaf5fc9663faff2",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5a10.asm": "0544c9f8c904b415b541ced0c217bdd5c696e410197601f7afc680fd61ccdcdd",
+    "docs/reports/isaac-enemy-port/hornfel/native/hornfel_update_ai.asm": "02a95eefcc992479fd180ee36a31ee626b583e983ab2e924e057f422eb81fa4d",
+    "docs/reports/isaac-enemy-port/hornfel/native/hornfel_update_frame.asm": "6660d67658d5c765965a1eac80fdcf484a1cf29b890b1a53a364d2043e64d66f",
+    "docs/reports/isaac-enemy-port/hornfel_controller/native/cart_ai_candidate.asm": "1f313c9ced1e4d8ac510522d0309fefeb7f585a9126dca8068269023a02eedc7"
+  },
+  "artifacts_sha256": {
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/native/fire_boss_projectiles_prefix.asm": "87307580935cb42598b9d9d3fd453e9667a368ba6936b8aa30fba79ef3455976",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/native/native_api_registration.asm": "d06bf186f475b206f6643a6b0d1efae0715a96c07ac30e0ee30e01a5fe573e8a",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/native/periodic_predicate.asm": "b6b19cf58e52abbbdf3b420612909e3958529f0e5ebd747bcab2eb9fe8edfcd0",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/native/projectile_params_flags_init.asm": "133e5948d868de15230776957a575131cb12e4fa1228bb704ac9c8214462e623",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/native/random_unit_vector.asm": "689753c277cc7a70f44046e9e5e5c619598ce2c075a9fff101f5d97dc56193f9",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/native/room_inset_predicate.asm": "32b75b184252f4d89d4c988c4173e8d060ce9fbfc8f28ba911ff9095910b3bbf",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/native/scaled_counter_crossing.asm": "6c97c36b8ee3de42207584c976f3afe777bbb39df8747bddb658273646631e72",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/source-review.json": "ef3209d8ee6423d1c25430ec2d45c6d5ba05c0205b94bc0ccef878a1417b754e",
+    "docs/reports/isaac-enemy-port/hornfel_charge_review/sources/projectile-flags.html": "dfcffd849e4f717de80a17b2d95be2986bd63190eb9d37eab733fc79e29c5127"
+  },
+  "validation": "Hashes, installed native API registration and animation assertions; existing runtime tests are not rerun or newly claimed.",
+  "goal_status": "active; no records newly complete"
+}

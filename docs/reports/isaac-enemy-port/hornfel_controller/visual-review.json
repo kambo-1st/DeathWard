@@ -1,0 +1,35 @@
+{
+  "result": "partial_pass",
+  "style": "Original",
+  "linux": [
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel_controller/linux-rail-pits.png",
+      "observation": "Actual seeded5223 arena: visible rails bridge dry lowered pits, matching solid rock props and door portals. Hornfel and thrown payload are visible; the far-side cart approaches HUD overlap."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel_controller/linux-cart.png",
+      "observation": "Cart, wheels and rider are distinct from a generic monster model. Body follows rail direction; shared rails cast shadows."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel_controller/linux-dismount.png",
+      "observation": "The rider is on foot after cart loss. Phase2 health and escape instruction are visible. No cart body remains attached."
+    }
+  ],
+  "wasm": [
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel_controller/full/wasm-resident-hornfel-pits-240.png",
+      "observation": "Actual seeded boss and dry pit footprint match native Original presentation. A thrown bomb, its danger ring, explosion and red radial aftermath are visible; small shots overlap rails and blast particles."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel_controller/full/wasm-hornfel-escape-900.png",
+      "observation": "Escape removes boss and health bar, closes rail doors and satisfies the guardian objective. Probe verifies zero kill events and no additional dynamite; isolated debug scene intentionally does not certify ordinary room-clear flow."
+    }
+  ],
+  "limitations": [
+    "Only listed captures were individually inspected. Other case captures are preserved as probe evidence, not all-camera visual review.",
+    "Cart can leave the camera view or overlap HUD at far arena edges; small ordnance and rail clutter require readability acceptance.",
+    "Source charge/recovery, decoys, other passengers and fireplace props are not rendered because their controllers remain unfinished.",
+    "Dry pit edges interpolate on the existing low-poly height-field lattice; rail bridges currently use rails and ties without extra architectural supports.",
+    "No controlled rendered performance acceptance; frame counters during concurrent regression are not a benchmark."
+  ]
+}

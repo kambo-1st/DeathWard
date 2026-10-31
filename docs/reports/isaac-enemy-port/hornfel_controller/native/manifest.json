@@ -1,0 +1,296 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "signature_source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+  "signature_sha256": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462",
+  "anchors": {
+    "MinecartUpdateChild": {
+      "address": "0x4bc2d0",
+      "signature": "558bec51538bd98b8b"
+    },
+    "MinecartBreak": {
+      "address": "0x4bc040",
+      "signature": "538bdc83ec0883e4f083c404558b6b??896c24??8bec81ec88000000"
+    },
+    "SetMinecartPosVel": {
+      "address": "0x4bc1e0",
+      "signature": "558becf30f100d????????538b5d"
+    }
+  },
+  "windows": [
+    {
+      "name": "cart_movement",
+      "start": "0x4bb2b0",
+      "end_exclusive": "0x4bb867",
+      "raw_sha256": "ba5470f835add74e663e29579d66d250c80ee1c8564bd16cef1c3ee20d1474db",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_controller/native/cart_movement.asm",
+      "artifact_sha256": "417fad7f0b74314011844827bca2f3dc3f1fd1270414b1dc07d278793d4d40c9"
+    },
+    {
+      "name": "cart_frame",
+      "start": "0x4bb870",
+      "end_exclusive": "0x4bba36",
+      "raw_sha256": "410e9bc3449c412440e0b892abd2dee7588330fb4e3dbf01f6f580dfe5e8395e",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_controller/native/cart_frame.asm",
+      "artifact_sha256": "06a64a703793a2c87c2aea4337011b96235a211255719119ab608bfb61d8cb76"
+    },
+    {
+      "name": "cart_ai_candidate",
+      "start": "0x4bba40",
+      "end_exclusive": "0x4bc03c",
+      "raw_sha256": "67585515d49d562b5ae3def9e1da3656470fb65e867a99af4b97c5f24943d8f8",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_controller/native/cart_ai_candidate.asm",
+      "artifact_sha256": "1f313c9ced1e4d8ac510522d0309fefeb7f585a9126dca8068269023a02eedc7"
+    },
+    {
+      "name": "cart_break",
+      "start": "0x4bc040",
+      "end_exclusive": "0x4bc1e0",
+      "raw_sha256": "c3662b92fc5f3649772094f2b6d036aa2a2155d96dfbb9bf53b6f08f7f836a32",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_controller/native/cart_break.asm",
+      "artifact_sha256": "04a4fe34a1feae52854d22f3dbd0ee1c50801843ac390311143de8934c2b4fd1"
+    },
+    {
+      "name": "cart_position_velocity",
+      "start": "0x4bc1e0",
+      "end_exclusive": "0x4bc29a",
+      "raw_sha256": "b93269758d63cfa4be4c5c7f11e7f0ad6942e4c8d3fe34e2c18f3c24dc96d730",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_controller/native/cart_position_velocity.asm",
+      "artifact_sha256": "546434b4ccff2b6abbf1d0d0dd8b9e15ec491636279447036061067bcdaa4f20"
+    },
+    {
+      "name": "cart_attach",
+      "start": "0x4bc2d0",
+      "end_exclusive": "0x4bc373",
+      "raw_sha256": "b775e0ab33ff6c1b872dc72967fcc4ef0b7161177692c902d215b26b18ca159f",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_controller/native/cart_attach.asm",
+      "artifact_sha256": "b748c9d471a101679b74615531ed51924b450d4cbbd83aab7a638eeb01d3b629"
+    },
+    {
+      "name": "rail_projection",
+      "start": "0x939120",
+      "end_exclusive": "0x9395a1",
+      "raw_sha256": "7aa452a019bac2892cda3135bef025f3e5225974ef5dd431f883c87b1d4f3ad7",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel_controller/native/rail_projection.asm",
+      "artifact_sha256": "5ad000b12d02b22237acea4f984a32a31443eaa94c1173e64edc24ac7df3f1c0"
+    }
+  ],
+  "rail_table_address": "0xbc76f0",
+  "rail_table_stride": 68,
+  "rail_cell_native_units": 40,
+  "rail_geometry": [
+    {
+      "variant": 0,
+      "count": 2,
+      "points": [
+        [
+          -13.0,
+          0.0
+        ],
+        [
+          13.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "variant": 1,
+      "count": 2,
+      "points": [
+        [
+          0.0,
+          -13.0
+        ],
+        [
+          0.0,
+          13.0
+        ]
+      ]
+    },
+    {
+      "variant": 2,
+      "count": 3,
+      "points": [
+        [
+          0.0,
+          13.0
+        ],
+        [
+          4.0,
+          4.0
+        ],
+        [
+          13.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "variant": 3,
+      "count": 3,
+      "points": [
+        [
+          0.0,
+          13.0
+        ],
+        [
+          -4.0,
+          4.0
+        ],
+        [
+          -13.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "variant": 4,
+      "count": 3,
+      "points": [
+        [
+          0.0,
+          -13.0
+        ],
+        [
+          4.0,
+          -4.0
+        ],
+        [
+          13.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "variant": 5,
+      "count": 3,
+      "points": [
+        [
+          0.0,
+          -13.0
+        ],
+        [
+          -4.0,
+          -4.0
+        ],
+        [
+          -13.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "variant": 6,
+      "count": 5,
+      "points": [
+        [
+          -13.0,
+          0.0
+        ],
+        [
+          13.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -13.0
+        ],
+        [
+          0.0,
+          13.0
+        ]
+      ]
+    },
+    {
+      "variant": 7,
+      "count": 2,
+      "points": [
+        [
+          13.0,
+          0.0
+        ],
+        [
+          -4.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "variant": 8,
+      "count": 2,
+      "points": [
+        [
+          -13.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "variant": 9,
+      "count": 2,
+      "points": [
+        [
+          0.0,
+          13.0
+        ],
+        [
+          0.0,
+          -4.0
+        ]
+      ]
+    },
+    {
+      "variant": 10,
+      "count": 2,
+      "points": [
+        [
+          0.0,
+          -13.0
+        ],
+        [
+          0.0,
+          4.0
+        ]
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "claim": "MinecartUpdateChild clears prior rider/cart references and binds both directions; cart child offset0x318 and rider cart offset0x32c.",
+      "evidence": "0x4bc2d7-0x4bc365"
+    },
+    {
+      "claim": "SetMinecartPosVel updates position, current grid index, velocity and stored rail direction.",
+      "evidence": "0x4bc1fb-0x4bc28e"
+    },
+    {
+      "claim": "Movement projects onto rail geometry through0x939120. It samples movement in bounded substeps, queries the current tile and reverses the returned direction when the helper endpoint flag is set.",
+      "evidence": "0x4bb550-0x4bb665"
+    },
+    {
+      "claim": "Variants7/8/9/10 are endpoint segments. At along>=1 and positive incoming dot tangent, the helper sets its endpoint flag. This supports reversal when approached into the cap.",
+      "evidence": "0x9391c7-0x9391df;0x939504-0x93953c"
+    },
+    {
+      "claim": "Vertical cap9 starts at(0,13) and ends at(0,-4);10 starts at(0,-13) and ends at(0,4). Their inward ports are south and north respectively.",
+      "evidence": "rail table at0xbc76f0"
+    },
+    {
+      "claim": "The projection scores candidate segments using distance and an incoming-direction term. Straight crossing traversal is supported for centered cardinal entry, but arbitrary off-track/collision approach behavior is not claimed by a compiled route.",
+      "evidence": "0x93938b-0x9394d1;crossing tablevariant6"
+    }
+  ],
+  "limitations": [
+    "Only three API signatures uniquely identify names; other function names follow local call/prologue context.",
+    "The runtime curved physical path remains a declared3D adaptation; it is not a reimplementation of every native projection/collision detail.",
+    "Door scheduling, bomb fuse/tick semantics, passengers and all boss attack states are not resolved by this cart excerpt."
+  ]
+}

@@ -1,0 +1,43 @@
+PASS WASM hornfel: rails, cart/door lifetime and phase completion
+PASS WASM hornfel-escape: rails, cart/door lifetime and phase completion
+PASS WASM hornfel-killed: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-pits: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-restricted-door: rails, cart/door lifetime and phase completion
+PASS WASM ordnance-normal: typed component, fuse and aftermath
+PASS WASM ordnance-hornfel_normal: typed component, fuse and aftermath
+PASS WASM ordnance-hot: typed component, fuse and aftermath
+PASS WASM ordnance-sad: typed component, fuse and aftermath
+PASS WASM ordnance-brimstone: typed component, fuse and aftermath
+PASS WASM loki: independent bodies, health, actions and group completion rules
+PASS WASM lokii: independent bodies, health, actions and group completion rules
+PASS WASM lokii-half-death: independent bodies, health, actions and group completion rules
+PASS WASM resident-loki: independent bodies, health, actions and group completion rules
+PASS WASM resident-lokii: independent bodies, health, actions and group completion rules
+PASS WASM boom-normal: family behavior, presentation and source-stage health
+PASS WASM boom-red: family behavior, presentation and source-stage health
+PASS WASM boom-drowned: family behavior, presentation and source-stage health
+PASS WASM dragon-cardinal: family behavior, presentation and source-stage health
+PASS WASM dragon-diagonal: family behavior, presentation and source-stage health
+PASS WASM bone-fly: family behavior, presentation and source-stage health
+PASS WASM sick-boom: family behavior, presentation and source-stage health
+PASS WASM tainted-boom: family behavior, presentation and source-stage health
+PASS WASM resident-boom: family behavior, presentation and source-stage health
+PASS WASM resident-red-boom: family behavior, presentation and source-stage health
+PASS WASM resident-drowned-boom: family behavior, presentation and source-stage health
+PASS WASM resident-dragon: family behavior, presentation and source-stage health
+PASS WASM resident-dragon-x: family behavior, presentation and source-stage health
+PASS WASM resident-bone-fly: family behavior, presentation and source-stage health
+PASS WASM resident-sick-boom: family behavior, presentation and source-stage health
+PASS WASM fly-bomb-pursuit: contact/death ordnance and owner lifecycle
+PASS WASM fly-bomb-death: contact/death ordnance and owner lifecycle
+PASS WASM eternal-fly-bombs: contact/death ordnance and owner lifecycle
+PASS WASM resident-fly-bomb: contact/death ordnance and owner lifecycle
+PASS WASM shell-head: invulnerable head, flesh attacks and arena
+PASS WASM shell-middle: invulnerable head, flesh attacks and arena
+PASS WASM shell-tail: invulnerable head, flesh attacks and arena
+Browser errors: []
+Failure state: {"problem":"Requested natural resident/source does not occur in this seeded floor"}
+page.waitForFunction: Timeout 90000ms exceeded.
+    at /home/kambo/workspace/DeathWard/web/enemy-port-test.cjs:235:20 {
+  name: 'TimeoutError'
+}

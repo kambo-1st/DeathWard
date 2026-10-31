@@ -1,0 +1,16 @@
+[ 20%] Built target glfw
+[ 71%] Built target deathward_core
+[ 77%] Built target raylib
+[ 80%] Built target deathward_skinning
+[ 80%] Built target deathward_cloth
+[ 82%] Built target deathward_particles
+[ 85%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/CanyonWater.cpp.o
+[ 85%] Linking CXX static library libdeathward_mission_lighting.a
+[ 85%] Built target deathward_mission_lighting
+[ 85%] Built target deathward_runtime_assets
+[ 85%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/render/WesternScene.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/render/CanyonScene.cpp.o
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward

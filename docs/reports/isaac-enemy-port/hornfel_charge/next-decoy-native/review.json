@@ -1,0 +1,116 @@
+{
+  "status": "source review for next increment; no decoy runtime implementation",
+  "baseline": "Repentance1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "anchors": {
+    "base_take_damage_unique_signature": {
+      "address": "0x684bb0",
+      "pattern": "558bec83e4f883ec3c5356578bf9837f??01"
+    },
+    "npc_remove_unique_signature": {
+      "address": "0x68ff80",
+      "pattern": "568bf1817e??62030000"
+    },
+    "npc_vtable": {
+      "address": "0xb49398",
+      "take_damage_slot": "0x20",
+      "take_damage": "0x6ac370",
+      "remove_slot": "0x28",
+      "remove": "0x68ff80",
+      "entries": [
+        "0x68f9c0",
+        "0x68fba0",
+        "0x69b0e0",
+        "0x69b140",
+        "0x6a8a40",
+        "0x6a8d50",
+        "0x6aa670",
+        "0x688600",
+        "0x6ac370",
+        "0x695560",
+        "0x68ff80",
+        "0x407620"
+      ]
+    },
+    "native_take_damage_api": {
+      "registration": "0x805653",
+      "thunk": "0x8604e9",
+      "name": "0xb51928"
+    },
+    "native_bomb_damage_api": {
+      "registration": "0x80a081",
+      "function": "0x6d1750",
+      "name": "0xb54e44",
+      "newer_prologue_matches": 0
+    }
+  },
+  "findings": [
+    "Native TakeDamage API thunk dispatches virtual slot0x20. Independently matched NPC Remove identifies the NPC table; its TakeDamage forwards all damage/flags/source/countdown arguments to uniquely matched base TakeDamage0x684bb0.",
+    "Base TakeDamage queues a record at actor+8, adds accepted damage to float actor+0x14 and ORs low/high64-bit input damage flags into actor+0x18/+0x1c. This verifies that the decoy branch examines accumulated accepted damage and flags, not raw HP or an unrelated field.",
+    "Decoy checks positive accumulated damage, then flag bit4. Pinned API enum names bit4 DAMAGE_EXPLOSION. Otherwise each positive queued amount<=10 subtracts1, or2 on RNG%3==0; amount>10 subtracts2, or3 on that outcome. Queue records stride0x38. Final HP<1.5 sets death, clamping values<1 to1.",
+    "Decoy destruction invokes native BombDamage before its six Troll Bomb spawns. At the call: position=decoy position, damage110, radius75, lineCheck=false, source=null, tear flags allzero, damage flags0x1004, damageSource=false. Pinned enum maps0x1004 to EXPLOSION|TNT. The direct blast must not be omitted or replaced by the six later fuses."
+  ],
+  "limits": [
+    "DamageFlag names come from the pinned public API header; this binary has no matching literal enum-name strings. Numeric flag transport is independently verified in installed code.",
+    "Base TakeDamage performs gating, callbacks and other damage scaling before queuing. This is not a complete damage-system reconstruction.",
+    "The damage>10 test requires an explicit DeathWard-to-source damage conversion. Player defaults must remain unchanged.",
+    "The direct110damage/75radius are native units. Source-specific blast masks, damage conversion and six-bomb launch/fuse physics still need runtime design and tests.",
+    "Decoy selection, rail ownership, removal/completion and capacity handling remain unfinished. No enemy completion count changes."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/take_damage_registration.asm",
+      "start": "0x805653",
+      "end_exclusive": "0x80565d",
+      "raw_sha256": "478ed6faab90048bef8f1063a2d4bccad14a23452cc166fcda4ae6ddf98ea173"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/take_damage_virtual_thunk.asm",
+      "start": "0x8604e9",
+      "end_exclusive": "0x8604ee",
+      "raw_sha256": "579b2e1b6d39616da530788b93c52c0ee1015fd331fad20b9efbe7e3d7ceb847"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/npc_remove_prefix.asm",
+      "start": "0x68ff80",
+      "end_exclusive": "0x68ffb0",
+      "raw_sha256": "8f1ff6b679b6e2af91ebe13a0091c876bc7a48930f6415b9116925737519b404"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/npc_take_damage_forwarding.asm",
+      "start": "0x6ac370",
+      "end_exclusive": "0x6ac39f",
+      "raw_sha256": "ceb654d6b7d4d0d7ee0e17fbd549dc1864855103ed2c8fac4a88ce8fb26e07f6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/base_take_damage.asm",
+      "start": "0x684bb0",
+      "end_exclusive": "0x685009",
+      "raw_sha256": "b6317089a8561dd0cf62ceab1f57c9ed311c5063949525438e4fc42c5f5f9fc5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/decoy_damage_queue.asm",
+      "start": "0x4a65d0",
+      "end_exclusive": "0x4a66da",
+      "raw_sha256": "9e9490ae9c15f64c0a31c4a3208ff8531575a56338092ebc61f8ae194510b844"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/decoy_destruction.asm",
+      "start": "0x4a7af8",
+      "end_exclusive": "0x4a7c82",
+      "raw_sha256": "5ddcd70e8fc90885a18e82bf7c1bd54cfeb78799defd3f3ed8766ce40bbdc773"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/bomb_damage_registration.asm",
+      "start": "0x80a081",
+      "end_exclusive": "0x80a08b",
+      "raw_sha256": "d229163ce0c066299ed460f7a40795496dfdcd11aaaa1a188c97ac31f002a6f0"
+    }
+  ],
+  "source_sha256": {
+    "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/Entity.zhl": "9f90636e3a82fe8a218fad2972e949459fc980224253c890ff4363b21de44d3d",
+    "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462",
+    "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/Game.zhl": "bda2b0eec4fc534df3d9e4bf2d498ac447afd55f32a2af076106bd42b6dc3115",
+    "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/Global.zhl": "96b8f35c7eb8325a5a583c99579186b08d869b93d99439d59687aded845bf4dc"
+  }
+}
