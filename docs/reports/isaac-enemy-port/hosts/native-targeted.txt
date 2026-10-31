@@ -1,0 +1,6 @@
+NATURAL_HOST 27.0 seed=3 floor=1 room=6
+NATURAL_HOST 27.1 seed=5 floor=2 room=6
+NATURAL_HOST 247.0 seed=28 floor=2 room=5
+NATURAL_HOST 204.0 seed=31 floor=2 room=2
+NATURAL_HOST 859.0 seed=0 floor=5 room=3
+PASS Hosts: armor events, delayed openings, burning exception, contact, physical volleys, motion, lifecycle, config and seeded rooms

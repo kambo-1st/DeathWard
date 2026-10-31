@@ -1,0 +1,108 @@
+{
+  "verified_utc": "2026-10-28T15:40:35.964236+00:00",
+  "result": "scoped_native_pass_full_acceptance_open",
+  "mechanics_fingerprint": "d5eac3de94379181",
+  "monster_definitions": 212,
+  "source_checks": {
+    "native_command": "python3 scripts/isaac-reference/analyze-leper.py --check",
+    "animation_command": "python3 scripts/isaac-reference/extract-leper-animations.py --check",
+    "result": "pass",
+    "complete_functions": 3,
+    "selected_shared_windows": 4,
+    "animation_files": 5
+  },
+  "native_tests": {
+    "unique_suites_passed": 6,
+    "suites": [
+      "leper_flesh",
+      "black_globin_family",
+      "floor_progression",
+      "mechanics_content",
+      "monster_behaviors",
+      "monster_flight"
+    ],
+    "final_flesh": "docs/reports/isaac-enemy-port/leper/validation/leper-second.txt",
+    "regressions": [
+      "docs/reports/isaac-enemy-port/leper/validation/native-first.txt",
+      "docs/reports/isaac-enemy-port/leper/validation/native-support.txt"
+    ],
+    "initial_failure": "First Flesh test harness segfaulted in movement(). The sample outlived the flesh contact-consumption window. The final harness samples live movement sooner, checks existence before dereferencing, and marks synthetic re-entry rooms as combat. All final Flesh checks pass; initial failing log/backtrace remain preserved. No runtime workaround was added for this test failure."
+  },
+  "placement": {
+    "natural_residents": [
+      {
+        "seed": 0,
+        "floor": 5,
+        "room": 12,
+        "band": 3
+      },
+      {
+        "seed": 1,
+        "floor": 6,
+        "room": 4,
+        "band": 3
+      },
+      {
+        "seed": 1,
+        "floor": 6,
+        "room": 7,
+        "band": 3
+      }
+    ],
+    "scope": "Flesh standalone Scarred Womb route is enabled in final band. Four parent records and their actual shed-child route remain missing."
+  },
+  "starting_kit": {
+    "cases": [
+      {
+        "seed": 0,
+        "seconds": 3.13333,
+        "remaining_hp": 100.0,
+        "cleared": true
+      },
+      {
+        "seed": 1,
+        "seconds": 2.66667,
+        "remaining_hp": 100.0,
+        "cleared": true
+      },
+      {
+        "seed": 2,
+        "seconds": 2.81667,
+        "remaining_hp": 100.0,
+        "cleared": true
+      },
+      {
+        "seed": 3,
+        "seconds": 3.08333,
+        "remaining_hp": 100.0,
+        "cleared": true
+      }
+    ],
+    "scope": "Three source-stage-seven flesh enemies, starting revolver and dodge, no upgrades/bombs/god mode. Scoped bot evidence, not human mixed-room balance acceptance."
+  },
+  "captures": "docs/reports/isaac-enemy-port/leper/native/captures.json",
+  "visual_review": "docs/reports/isaac-enemy-port/leper/visual-review.json",
+  "limitations": [
+    "Parent shedding and same-entity Gusher morph remain unimplemented.",
+    "Champions, status/control, exact native collision/time integration and serialized parity remain open.",
+    "Full human visual/balance and controlled performance gates remain open.",
+    "WASM builds/checks intentionally skipped per user."
+  ],
+  "sha256": {
+    "build/deathward": "1a57df45f9fb8b80fd2a9792a1a07e3319720b5571a046abf6a6401f3c003ea5",
+    "build/deathward_leper_flesh_tests": "0b2dc798071cea485d6f3266a180c3614558f08932d4e110b3c51c064af7cc79",
+    "build/libdeathward_core.a": "3a8620f8563b316bd78c8e926e14849d66a7ae38036c6686036683c0ecec7b6a",
+    "src/combat/LeperFlesh.cpp": "0902ee3c5c1b18826eaf264d68d63993600a4f560c6f07270570e8d411426573",
+    "tests/leper_flesh_tests.cpp": "3f77d429914541e03a679b4a565b29cc0f0533d6502b2e7e6e97bbe7a30e9f43",
+    "assets/mechanics/leper.mechanics": "46d0a67e9dd2a38cdbcc542f9e4bb487eb4b16c173b121fb5aa26d7061fc246e",
+    "src/content/Mechanics.hpp": "de9a422048c1dbc951e1bd51f229778be9873ead79f1dc54a57c52006ce3f3e4",
+    "src/content/Mechanics.cpp": "c42e9273c3389a3f45cefc13d90c23cfad09a86a507a9a7a777d8141856bbc0c",
+    "src/combat/Simulation.cpp": "1d7cd8744f4930db471cf6bdd4081839daca8c5533e639050714b6e3a8054013",
+    "src/combat/Simulation.hpp": "aec0db82a5196a27c86f97aaaeeadbebfe15e91b096c5ca7297b4ffe6487c8ce",
+    "src/combat/Monsters.cpp": "d518d0343312719004f2362db75b9a488c7cf722d22327b064b4eb4f17db5566",
+    "src/combat/Enemies.cpp": "dc6808ae8cb4afbc19742628927174857cdd6f06157f0b2b34e5c0b96b4b4969",
+    "src/render/MonsterVisuals.hpp": "8e7b3629aad96a824a4f07f66614e74cbbfb67be042be5fffc1cea61784cdc2a",
+    "scripts/isaac-reference/analyze-leper.py": "53de3b9f667ac24b4ead6c37a228581801ca508b72f0c736a1c2e256fea5b011",
+    "scripts/isaac-reference/extract-leper-animations.py": "d03017a1149ff7b838ec5b4d698b1421396377a375b93dd059d878852b3f21ef"
+  }
+}

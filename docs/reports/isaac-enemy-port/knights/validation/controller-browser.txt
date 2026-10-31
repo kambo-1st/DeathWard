@@ -1,0 +1,7 @@
+START loose-pair
+PASS loose-pair
+START black-mask
+page.waitForFunction: Timeout 90000ms exceeded.
+    at /home/kambo/workspace/DeathWard/web/knight-test.cjs:50:16 {
+  name: 'TimeoutError'
+}

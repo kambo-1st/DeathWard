@@ -1,0 +1,7 @@
+MASK cardinal_half_plane=1 loose_armored=1 bypasses=1 specular_speed=1 grace15=1
+PAIR same_id=1 scale=1 no_duplicate_rewards=1 invulnerability=1 capacity=1 orphan=1 nearest_unique=1
+PON source_hop=1 landing_patch=1 life125=1 red_damage=1 fade=1 blocked_target_retry=1 capacity_after_death=1
+CONFIG immutable_reload=1 invalid_profiles=4
+NATURAL_PON seed=33 floor=4 room=7 context=0
+PLACEMENT floors=92 rooms=1116 pursuit=89 planned=1
+PASS Knight armor/lifecycle and Pon contracts

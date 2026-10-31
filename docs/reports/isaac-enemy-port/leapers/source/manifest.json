@@ -1,0 +1,130 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 34,
+    "index": 16,
+    "case": "0x69a19f",
+    "controller": "0x514450"
+  },
+  "constants": {
+    "high_leap_progress_step": {
+      "address": "0xb6a234",
+      "value": 0.019999999552965164
+    },
+    "prejump_damping": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "normal_ring_speed": {
+      "address": "0xb6a95c",
+      "value": 9.0
+    },
+    "hard_ring_speed": {
+      "address": "0xb6a98c",
+      "value": 12.0
+    },
+    "large_creep_scale": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "small_creep_scale": {
+      "address": "0xb6a6f0",
+      "value": 1.5
+    },
+    "target_range": {
+      "address": "0xb6ab34",
+      "value": 130.0
+    },
+    "wander": {
+      "address": "0xb6aaf0",
+      "value": 95.0
+    },
+    "boss_shot_planar": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "boss_shot_fall_base": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "boss_shot_fall_random": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "trajectory_bias": {
+      "address": "0xb6a3c4",
+      "value": 0.3199999928474426
+    },
+    "size_low": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "size_step": {
+      "address": "0xb6a434",
+      "value": 0.4000000059604645
+    },
+    "size_jitter": {
+      "address": "0xb6a274",
+      "value": 0.05000000074505806
+    }
+  },
+  "strings": {
+    "0xb405cc": "Hop",
+    "0xb405f4": "BigJumpUp",
+    "0xb430e4": "BigJumpDown",
+    "0xb40338": "Jump",
+    "0xb4034c": "Land"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/source/controller.asm",
+      "start": "0x514450",
+      "end": "0x516dda",
+      "raw_sha256": "c3654c5889ad6cd265388dd724e956fbd6e6a7d9090ad35fccda0b4cfb3e1b45",
+      "sha256": "36b274c004b56a8a12c71ff0c02be30750a9d6684f1e9b85e661a48fc628ff3a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/source/boss_projectiles.asm",
+      "start": "0x6a3420",
+      "end": "0x6a3970",
+      "raw_sha256": "2c9458a658e2b64e29ac724a8655ee2b5a62c9ad9753cce4673ad898c74e0037",
+      "sha256": "219ef0ba1d01904fe78f3eb9452eb4b03dd2562f793797bd7e6619baa7836fe3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ec0",
+      "raw_sha256": "369935e5430f63710266eab256fbed2c7bb8610e6c3c8ac19577baf4dcf9390a",
+      "sha256": "40daa567d9e2d04ad8d9cc7f37d83d353f99f2864ae117198c0c1f7daf2622b2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/source/projectile_defaults.asm",
+      "start": "0x62f1ef",
+      "end": "0x62f2d0",
+      "raw_sha256": "9e4fa495b866108d9027dbd320e3b46a557bcd63d521affce743a9ecc4cbfdb2",
+      "sha256": "7c63ab8d86672d6aa14403dd3762584f8ead6d1d6e28946b6b60483c6ea20b52"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/source/flight_integrator.asm",
+      "start": "0x636567",
+      "end": "0x6365d5",
+      "raw_sha256": "e36d0d4128d9429273b807db099763ca63eae641b49ffaf016bafbeec05a697b",
+      "sha256": "6d4276f523c6bb04773dcddb94d31a06ec64c31db9b9c131fcc1eef42cdd082f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/source/current_accumulated_events.asm",
+      "start": "0x405e90",
+      "end": "0x405fcb",
+      "raw_sha256": "86ff32c63e0c0f5b7266ea6261335796aa0b4be7c8a0969a4ede901acd2a6564",
+      "sha256": "6bad9dd0abb002d729aefe253e0f20d830a5e77486a1a4a6c09c034ec04bd046"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/source/normal_target_helper.asm",
+      "start": "0x695a30",
+      "end": "0x695c2e",
+      "raw_sha256": "600d76bba642781741fc8e1585cd14184fd586d979b00b3f9eafbdfd4f72dce9",
+      "sha256": "5fa37a34aac81e4ff33ddb31f28b041323525d95f594029167fd3e0857ed2ae2"
+    }
+  ]
+}

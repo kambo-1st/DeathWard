@@ -1,0 +1,22 @@
+{
+  "bands": [
+    {
+      "seed": 4,
+      "floor": 5,
+      "room": 2,
+      "band": 2
+    },
+    {
+      "seed": 51,
+      "floor": 5,
+      "room": 9,
+      "band": 3
+    }
+  ],
+  "river": {
+    "seed": 51,
+    "floor": 5,
+    "room": 9,
+    "band": 3
+  }
+}

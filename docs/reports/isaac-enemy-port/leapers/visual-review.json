@@ -1,0 +1,69 @@
+{
+  "inspected": 12,
+  "accepted_smoke": 10,
+  "limited": 2,
+  "full_gate": false,
+  "method": "Each listed image was opened and inspected individually. Other captured frames are archived but not certified. FPS labels are not a controlled performance benchmark.",
+  "captures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/native-normal.png",
+      "result": "accepted_smoke",
+      "notes": "Muted red headless body, arms and physical elevated pose read against the ground."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/native-sticky.png",
+      "result": "accepted_smoke",
+      "notes": "Dark body, red stump and black slow patches are distinct from normal Leaper; close-view only."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-final/normal-warning.png",
+      "result": "limited",
+      "notes": "Landing marker is readable, but the source actor is clipped at the bottom of this camera view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-final/normal-high.png",
+      "result": "accepted_smoke",
+      "notes": "High airborne silhouette and ground shadow are separated; committed marker remains visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-final/normal-volley.png",
+      "result": "accepted_smoke",
+      "notes": "Four separated red cardinal bullets and their shadows are visible around the landed body."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-final/sticky-volley.png",
+      "result": "accepted_smoke",
+      "notes": "Scattered dark physical shots and accumulated creep are visible; dark-on-shadow cases remain unreviewed."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-terrain/cover-high.png",
+      "result": "accepted_smoke",
+      "notes": "Body clears the crate with a readable destination marker on the opposite side."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-terrain/river-high.png",
+      "result": "accepted_smoke",
+      "notes": "High leap crosses water toward legal ground. This image is usable though the earlier test demanded an inappropriate surviving-volley capture."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-remaining/river-high.png",
+      "result": "accepted_smoke",
+      "notes": "Corrected river case shows visible elevation, ground marker and preserved canyon geometry."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-remaining/resident-normal-resident.png",
+      "result": "accepted_smoke",
+      "notes": "Normal body is distinguishable among the actual mixed room population at its natural middle-floor witness."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-remaining/resident-sticky-resident.png",
+      "result": "limited",
+      "notes": "Sticky and creep are visible, but the player and neighboring body crowd the landing next to rock cover; not broad readability acceptance."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leapers/web-remaining/death-death.png",
+      "result": "accepted_smoke",
+      "notes": "Owner is gone; previously created creep and ordinary loot remain visible without a phantom enemy."
+    }
+  ]
+}

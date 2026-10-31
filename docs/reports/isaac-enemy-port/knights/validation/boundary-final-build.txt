@@ -1,0 +1,33 @@
+[ 17%] Built target glfw
+[ 20%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 82%] Built target deathward_core
+[ 82%] Built target deathward_cloth
+[ 82%] Built target deathward_particles
+[ 85%] Built target deathward_skinning
+[ 88%] Built target deathward_mission_lighting
+[ 88%] Built target deathward_runtime_assets
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_knight_tests
+[100%] Built target deathward_knight_tests
+[ 21%] Built target glfw
+[ 25%] Built target raylib
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_crackle_tests
+[100%] Built target deathward_crackle_tests
+[ 95%] Built target deathward_core
+[ 95%] Linking CXX executable deathward_brain_tests
+[100%] Built target deathward_brain_tests
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests
+[ 21%] Built target glfw
+[ 25%] Built target raylib
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

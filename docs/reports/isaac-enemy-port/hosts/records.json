@@ -1,0 +1,958 @@
+{
+  "27.0.0": {
+    "key": "27.0.0",
+    "id": 27,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Host",
+    "xml": {
+      "anm2path": "027.000_Host.anm2",
+      "baseHP": "14",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "15",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "27",
+      "name": "#HOST",
+      "numGridCollisionPoints": "12",
+      "portrait": "24",
+      "reroll": "true",
+      "shadowSize": "25",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:27.0.0",
+    "wiki_matches": [
+      {
+        "page": "Host",
+        "box": 0,
+        "group": "entity",
+        "fields": {
+          "id": "27",
+          "base hp": "[edition alternatives: baseline: 15; Afterbirth onward: 14]",
+          "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Scarred Womb / \nSheol / Cathedral / \nchallenge /",
+          "behavior": "Stationary enemy that is normally invulnerable. Raises its head up when Isaac gets close, revealing a fleshy stem that can be damaged. Upon raising its head, it will fire 3 blood shots in a spread and lower its head again."
+        },
+        "section_indices": [
+          0
+        ],
+        "name": "Host",
+        "variant": 0,
+        "subtype": 0,
+        "id": 27,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Host"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 14.0,
+      "2": 14.0,
+      "3": 14.0,
+      "4": 14.0,
+      "5": 14.0,
+      "6": 14.0,
+      "7": 14.0,
+      "8": 14.0,
+      "9": 14.0,
+      "10": 14.0,
+      "11": 14.0,
+      "12": 14.0,
+      "13": 14.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Host",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 46,
+        "positive_weight_templates": 46
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 45,
+        "positive_weight_templates": 45
+      },
+      "rooms/07.depths.stb": {
+        "templates": 14,
+        "positive_weight_templates": 14
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 13,
+        "positive_weight_templates": 13
+      },
+      "rooms/10.womb.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/14.sheol.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/15.cathedral.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/26.the void.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/greed/04.caves.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/greed/05.catacombs.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/greed/06.flooded caves.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/greed/07.depths.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/08.necropolis.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/09.dank depths.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/24.the shop.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Host",
+      "motion": "Still",
+      "attack": "Spread",
+      "shape": "Skull",
+      "catalog_base_hp": 88.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 47,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Host",
+        "section": 0
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "health-and-defenses",
+      "status-effects",
+      "conditional-vulnerability"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "27.1.0": {
+    "key": "27.1.0",
+    "id": 27,
+    "variant": 1,
+    "subtype": 0,
+    "name": "Red Host",
+    "xml": {
+      "anm2path": "027.001_Red Host.anm2",
+      "baseHP": "15",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "15",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "27",
+      "name": "#RED_HOST",
+      "numGridCollisionPoints": "12",
+      "portrait": "175",
+      "reroll": "true",
+      "shadowSize": "25",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:27.1.0",
+    "wiki_matches": [
+      {
+        "page": "Host",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "name": "Red Host",
+          "variant": "1",
+          "base hp": "15",
+          "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+          "replace": "Host",
+          "replace chance": "9.49%",
+          "behavior": "Stationary enemy that can be damaged even when its head is lowered. Fire 5 spread blood shots when it raises its head."
+        },
+        "section_indices": [
+          2
+        ],
+        "name": "Red Host",
+        "variant": 1,
+        "subtype": 0,
+        "id": 27,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Host"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 15.0,
+      "2": 15.0,
+      "3": 15.0,
+      "4": 15.0,
+      "5": 15.0,
+      "6": 15.0,
+      "7": 15.0,
+      "8": 15.0,
+      "9": 15.0,
+      "10": 15.0,
+      "11": 15.0,
+      "12": 15.0,
+      "13": 15.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Red Host",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/07.depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/10.womb.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/11.utero.stb": {
+        "templates": 13,
+        "positive_weight_templates": 13
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/greed/04.caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/05.catacombs.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/06.flooded caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/10.womb.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/11.utero.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/12.scarred womb.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Red Host",
+      "motion": "Still",
+      "attack": "Spread",
+      "shape": "Skull",
+      "catalog_base_hp": 112.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 48,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Host",
+        "section": 2
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "conditional-vulnerability"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "204.0.0": {
+    "key": "204.0.0",
+    "id": 204,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Mobile Host",
+    "xml": {
+      "anm2path": "204.000_Mobile Host.anm2",
+      "baseHP": "14",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "10",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "204",
+      "name": "#MOBILE_HOST",
+      "numGridCollisionPoints": "12",
+      "portrait": "72",
+      "reroll": "true",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:204.0.0",
+    "wiki_matches": [
+      {
+        "page": "Host",
+        "box": 3,
+        "group": "entity",
+        "fields": {
+          "name": "Mobile Host",
+          "id": "204",
+          "base hp": "[edition alternatives: baseline: 20; Afterbirth onward: 14]",
+          "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nchallenge /",
+          "behavior": "Acts like the Host, but follows Isaac and deals contact damage."
+        },
+        "section_indices": [
+          4
+        ],
+        "name": "Mobile Host",
+        "variant": 0,
+        "subtype": 0,
+        "id": 204,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Host"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 14.0,
+      "2": 14.0,
+      "3": 14.0,
+      "4": 14.0,
+      "5": 14.0,
+      "6": 14.0,
+      "7": 14.0,
+      "8": 14.0,
+      "9": 14.0,
+      "10": 14.0,
+      "11": 14.0,
+      "12": 14.0,
+      "13": 14.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Mobile Host",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 18,
+        "positive_weight_templates": 18
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 18,
+        "positive_weight_templates": 18
+      },
+      "rooms/07.depths.stb": {
+        "templates": 10,
+        "positive_weight_templates": 10
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 14,
+        "positive_weight_templates": 14
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/10.womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/11.utero.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/14.sheol.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/15.cathedral.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/08.necropolis.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/greed/09.dank depths.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/greed/24.the shop.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Host",
+        "section": 4
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "status-effects",
+      "conditional-vulnerability",
+      "randomness"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "247.0.0": {
+    "key": "247.0.0",
+    "id": 247,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Flesh Mobile Host",
+    "xml": {
+      "anm2path": "247.000_Flesh Mobile Host.anm2",
+      "baseHP": "27",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "10",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "247",
+      "name": "#FLESH_MOBILE_HOST",
+      "numGridCollisionPoints": "12",
+      "portrait": "179",
+      "reroll": "true",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:247.0.0",
+    "wiki_matches": [
+      {
+        "page": "Host",
+        "box": 4,
+        "group": "entity",
+        "fields": {
+          "name": "Flesh Mobile Host",
+          "id": "247",
+          "base hp": "27",
+          "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+          "behavior": "Acts like the Red Host, but follows Isaac and deals contact damage."
+        },
+        "section_indices": [
+          5
+        ],
+        "name": "Flesh Mobile Host",
+        "variant": 0,
+        "subtype": 0,
+        "id": 247,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Host"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 27.0,
+      "2": 27.0,
+      "3": 27.0,
+      "4": 27.0,
+      "5": 27.0,
+      "6": 27.0,
+      "7": 27.0,
+      "8": 27.0,
+      "9": 27.0,
+      "10": 27.0,
+      "11": 27.0,
+      "12": 27.0,
+      "13": 27.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Flesh Mobile Host",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/07.depths.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/10.womb.stb": {
+        "templates": 19,
+        "positive_weight_templates": 19
+      },
+      "rooms/11.utero.stb": {
+        "templates": 26,
+        "positive_weight_templates": 26
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 23,
+        "positive_weight_templates": 23
+      },
+      "rooms/26.the void.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/11.utero.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/12.scarred womb.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Host",
+        "section": 5
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "27.3.0": {
+    "key": "27.3.0",
+    "id": 27,
+    "variant": 3,
+    "subtype": 0,
+    "name": "hard host",
+    "xml": {
+      "anm2path": "027.003_hard host.anm2",
+      "baseHP": "15",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "15",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "27",
+      "name": "#HARD_HOST",
+      "numGridCollisionPoints": "12",
+      "portrait": "247",
+      "shadowSize": "25",
+      "stageHP": "0",
+      "variant": "3"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:27.3.0",
+    "wiki_matches": [
+      {
+        "page": "Host",
+        "box": 2,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Hard Host",
+          "variant": "3",
+          "base hp": "15",
+          "environment": "Mines / Ashpit / \nchallenge /",
+          "behavior": "Stationary enemy that is normally invulnerable. Raises its head up when Isaac gets close, revealing a fleshy stem that can be damaged. Shortly after raising its head, it slams its head down and fires a rock wave towards Isaac."
+        },
+        "section_indices": [
+          3
+        ],
+        "name": "Hard Host",
+        "variant": 3,
+        "subtype": 0,
+        "id": 27,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Host"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 15.0,
+      "2": 15.0,
+      "3": 15.0,
+      "4": 15.0,
+      "5": 15.0,
+      "6": 15.0,
+      "7": 15.0,
+      "8": 15.0,
+      "9": 15.0,
+      "10": 15.0,
+      "11": 15.0,
+      "12": 15.0,
+      "13": 15.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Hard Host",
+    "room_library_presence": {
+      "rooms/29.mines.stb": {
+        "templates": 57,
+        "positive_weight_templates": 57
+      },
+      "rooms/30.ashpit.stb": {
+        "templates": 55,
+        "positive_weight_templates": 55
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/greed/29.mines.stb": {
+        "templates": 12,
+        "positive_weight_templates": 12
+      },
+      "rooms/greed/30.ashpit.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Hard Host",
+      "motion": "Still",
+      "attack": "Shot",
+      "shape": "Skull",
+      "catalog_base_hp": 112.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 49,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Host",
+        "section": 3
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "grid-and-explosions"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+}

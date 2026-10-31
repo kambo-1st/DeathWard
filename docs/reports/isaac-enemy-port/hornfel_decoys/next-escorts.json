@@ -1,0 +1,21 @@
+{
+  "status": "source preflight for next increment; no escort runtime change",
+  "sources": [
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5120.asm",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5a10.asm",
+    "docs/reports/isaac-enemy-port/hornfel_decoys/native/manifest.json"
+  ],
+  "findings": [
+    "Ordinary ride selection reaches a1/3 RNG branch at0x4a576a. Decoy, charge and recovery branches bypass it.",
+    "Counts all type819 actors plus type4 variant14 ordnance; if total>=4 it does not spawn escorts.",
+    "Minimum squared distance to all players must exceed57600 (240native units) at0x4a5856.",
+    "Spawns two819.0 actors at random angular offsets of radius6native units, with inherited entry direction rotated by a random[-20,20)degree angle. Both set Parent=Hornfel and clear source flag4.",
+    "On ordinary rail exit, helper4a5a10 finds all819 whose Parent equals this Hornfel, clears Parent, and clamps HitPoints to min(current,3.5). Native property getter/name pairs independently prove both offsets."
+  ],
+  "unknowns": [
+    "Recover attached819 AI before treating this as ordinary chase spawning.",
+    "Confirm native source field and entrance velocity units; source launch direction helper4a8340 is separate.",
+    "Keep cleanup after repeated charge and recovery distinct; source exit helper has early returns.",
+    "Owner death/removal, room-clear liability, route boundaries, source immunities and capacity admission need independent tests."
+  ]
+}

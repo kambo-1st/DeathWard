@@ -1,0 +1,28 @@
+START river
+PROGRESS river 11 leaps 0 volleys 0
+PROGRESS river 110 leaps 0 volleys 0
+PROGRESS river 210 leaps 0 volleys 0
+PASS river volleys 1
+START resident-normal
+PROGRESS resident-normal 11 leaps 0 volleys 0
+PROGRESS resident-normal 110 leaps 1 volleys 0
+PASS resident-normal volleys 1
+START resident-sticky
+PROGRESS resident-sticky 11 leaps 0 volleys 0
+PROGRESS resident-sticky 111 leaps 0 volleys 0
+PROGRESS resident-sticky 210 leaps 0 volleys 0
+PROGRESS resident-sticky 310 leaps 0 volleys 0
+PROGRESS resident-sticky 436 leaps 1 volleys 0
+PASS resident-sticky volleys 1
+START death
+PROGRESS death 11 leaps 0 volleys 0
+PROGRESS death 111 leaps 0 volleys 0
+PROGRESS death 211 leaps 0 volleys 0
+PROGRESS death 310 leaps 0 volleys 0
+PROGRESS death 410 leaps 0 volleys 0
+PROGRESS death 541 leaps 1 volleys 0
+PROGRESS death 610 leaps 1 volleys 1
+PROGRESS death 710 leaps 2 volleys 1
+PROGRESS death 810 leaps 2 volleys 2
+PROGRESS death 910 leaps undefined volleys undefined
+PASS death volleys 2

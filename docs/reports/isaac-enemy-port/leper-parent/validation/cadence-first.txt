@@ -1,0 +1,6 @@
+PASS batched thresholds, Morph-before-subtraction, full flesh impulses, transitions and stun
+PASS evasion, pursuit force/timers, contact policy and last-form creep
+MORPH trials32 gusher=19 dead=13 delays=13
+PASS mortality, overkill, same-entity Gusher, no duplicate rewards, remainder and retained flesh
+CADENCE_CHILD index=0 whole=0,-2 split=0.460623,-2.86287
+FAIL fatal frame preserves death-site translation and final flesh position at30/60Hz

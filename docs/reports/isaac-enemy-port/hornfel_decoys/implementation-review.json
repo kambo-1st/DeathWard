@@ -1,0 +1,43 @@
+{
+  "status": "partial Hornfel decoy implementation; no completed-port claim",
+  "records": [
+    "906.0.0",
+    "906.1.0",
+    "965.0.0",
+    "967.0.0"
+  ],
+  "selection": "External conditional1250/10000 chance before charge;2/3 attempts according to native grid-size threshold. Free entrance and paired exit required. Existing decoys and retained destruction records consume a bounded per-encounter budget derived from limits.enemies.",
+  "ownership": "Independent actor, cart identity, room record, and rail distance. Creation occurs outside enemy vector iteration. Unspawned requests cancel after owner completion; emitted riders finish their rail journey even after owner completion. This last lifetime policy is an explicit local adaptation pending full native owner-reference audit.",
+  "health": "Four hit-health points. Queued hits normalize damage by3.2, keep strict>10 native threshold, and add one point with1/3 chance. Batched explosion priority avoids unnecessary weak-hit RNG. Standard projectile hits work. No direct-spawn API, ordinary pool, homing/companion target, ordinary kill counter, independent boss bar/reward, or item-on-kill dispatch.",
+  "removal": "Rail endpoint removes actor/cart quietly and releases reservations. Destruction retains an exactly-once aftermath independently of erased actor. Contact consumes the dummy even if invulnerability suppresses player HP loss; native exception parity remains pending.",
+  "aftermath": "One immediate cover-bypassing explosion plus six physical delayed4.3 bombs. Atomic admission reserves the entire bomb salvo and event, retains already chosen velocities under capacity pressure, and preserves source identity. Real Hornfel is explicitly excluded from these blasts; this is not the complete native source/flag immunity matrix.",
+  "external_values": {
+    "damage_conversion": 3.2,
+    "direct_blast_damage": 352,
+    "direct_blast_radius": 7.5,
+    "player_blast_damage": 20,
+    "bomb_count": 6,
+    "bomb_speed_range": [
+      15,
+      60
+    ],
+    "bomb_profile": "normal",
+    "cart_speed": 12,
+    "contact_damage": 20,
+    "decoy_cooldown_seconds": 3.3333333333333335,
+    "initial_local_delay_seconds": 5
+  },
+  "local_adaptations": [
+    "Active-time5s initial gate and100/30s cooldown approximate unmapped room/native counters.",
+    "Constant12world-unit/s carts and .3s opening replace native drive/event ordering. Early arrival avoidance uses generated entry position,1s active grace and6world-unit distance.",
+    "Old main-door pair is avoided when alternatives exist; single-route fallback never relaxes another rider reservation.",
+    "Damage and distance conversion are explicit settings; six-bomb fuse, gravity, damping, bounce and explosion behavior reuse the existing local normal hostile profile.",
+    "Original-style procedural miner and minecart geometry with a warmer wooden dummy face; no Isaac art shipped.",
+    "Source status immunities are represented by dedicated controller and target exclusions; broad item/status interaction parity remains incomplete."
+  ],
+  "limits": [
+    "No passengers or optional two Fly Bomb escorts yet.",
+    "No source-specific reward table, unlocks, Horny Boys or optional encounter approval.",
+    "All six acceptance gates remain open; automated balance and simulation timings do not substitute for human or rendered-performance acceptance."
+  ]
+}

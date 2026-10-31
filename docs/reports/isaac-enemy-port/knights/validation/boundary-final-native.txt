@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/5 Test  #2: mechanics_content ................   Passed    2.97 sec
+    Start 29: monster_behaviors
+2/5 Test #29: monster_behaviors ................   Passed    3.70 sec
+    Start 36: brain
+3/5 Test #36: brain ............................   Passed    1.25 sec
+    Start 41: knight_lifecycle
+4/5 Test #41: knight_lifecycle .................   Passed    2.26 sec
+    Start 65: crackle_discrete_fire_jets
+5/5 Test #65: crackle_discrete_fire_jets .......   Passed    0.78 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  10.96 sec

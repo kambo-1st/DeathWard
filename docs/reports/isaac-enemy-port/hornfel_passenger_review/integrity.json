@@ -1,0 +1,41 @@
+{
+  "previous_checkpoint": "docs/reports/isaac-enemy-port/hornfel_escorts/checkpoint.json",
+  "previous_checkpoint_sha256": "755f4d63e593c4494aafb8c7b8e5829120124053eba7a3d198378364525124fe",
+  "previous_checkpoint_files_compared": 244,
+  "unchanged": 236,
+  "expected_maintained_changes": {
+    "README.md": {
+      "old_sha256": "7ea290c6758d8d19103fffa532aa8f4220b75de7ffb6c5e10cbda8ecbddf97e3",
+      "current_sha256": "227f579301abf0051b56fc985407201e7a888dbe5bafde9179c7b2fafad25dd5",
+      "reason": "maintained documentation/checklist updated for new source review"
+    },
+    "docs/isaac_monsters.md": {
+      "old_sha256": "d6a18115b96cf9fb248ee7290917c57d8fb8ae7f96796bfa5ea3b891c646a6fc",
+      "current_sha256": "ae8b4ce1e82258afe40a239a41c31cf9af3da44e3bbf3cb621fb7b41cb15c413",
+      "reason": "maintained documentation/checklist updated for new source review"
+    },
+    "docs/research/isaac-enemy-port-status.csv": {
+      "old_sha256": "d99d9dabbd14815113fb2e7a41b24c4bbc6b9fe0381a9ca78811578c7c4348fc",
+      "current_sha256": "dfb8d3f9e329fc4290dbb25c91c68871c10387f02f87eda2847b31354f59ab1e",
+      "reason": "maintained documentation/checklist updated for new source review"
+    },
+    "docs/research/isaac-enemy-port-status.json": {
+      "old_sha256": "d3e53297d3679548ec4103e99304a40bc2c45166bb92a0f3f494f33e2f339da7",
+      "current_sha256": "1ccdb5c3fc819e8358471fa708939553c4082bc012ae13cd780763d072cb4d91",
+      "reason": "maintained documentation/checklist updated for new source review"
+    },
+    "docs/research/isaac-enemy-port-validation.json": {
+      "old_sha256": "e2f79dc721add342109d400df971ced43a6ae5819f00fc98b2977023dfb25445",
+      "current_sha256": "65fdaf526cab3a84a0baa1bed6699cec9b23917ddbe55458ca1bd3b5775ec603",
+      "reason": "maintained documentation/checklist updated for new source review"
+    }
+  },
+  "runtime_files_unchanged": 105,
+  "build_files_unchanged": 8,
+  "historical_artifacts_verified_unchanged": 3159,
+  "historical_hash_sources": {
+    "docs/reports/isaac-enemy-port/hornfel_escorts/historical-integrity.json": "8e13775605cdd3125532f6b404313f126fd814dd7f4a170b5b266926d972a0e7",
+    "docs/reports/isaac-enemy-port/hornfel_escorts/checkpoint.json": "755f4d63e593c4494aafb8c7b8e5829120124053eba7a3d198378364525124fe"
+  },
+  "result": "all runtime/build/historical artifacts unchanged; only five expected maintained documents differ from prior checkpoint"
+}

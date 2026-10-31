@@ -1,0 +1,34 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": [
+    {
+      "name": "collision_brake",
+      "address": "0xb6a214",
+      "value": 0.009999999776482582
+    },
+    {
+      "name": "radial_arrival",
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    {
+      "name": "radial_force",
+      "address": "0xb6a480",
+      "value": 0.5
+    }
+  ],
+  "references": {
+    "docs/reports/isaac-enemy-port/boils/source/random_walk_helper.asm": "dafb89014a790a46b0c19f22baf59eefe4e040f3075d3953df11d788c2ebc7fb",
+    "docs/reports/isaac-enemy-port/crackle/source/manifest.json": "1e376746203fc106f9dde6013d9a967f9185cb74f0a0089a11915a1c1cfb858e",
+    "docs/reports/isaac-enemy-port/crackle/source/wave_propagation.asm": "383d962ed2c3f61d65c273346ee5efff33ddfd16a1776c0482955610e7715d2c",
+    "docs/reports/isaac-enemy-port/crackle/source/jet_pulses_and_lifetime.asm": "c0da891d07ab8ea81d51f9f16a5eac9e87ec01c6609d88751d9c0edf7e8babda",
+    "docs/reports/isaac-enemy-port/gurgle_mortality/source/entity_ref.asm": "61f4ab302c7f86e58e3223a513013b139c0a79d578c41a5fba44ad927c429ccd"
+  },
+  "findings": [
+    "50178a calls MoveRandomly(true)7a6180 for Brainless with no committed charge direction, before standard grid wander. Random arrival is3, not15.",
+    "501d34 and5020bc brake collision momentum by.01, not.1.",
+    "501b52..501c34 emit three1000.148 generators at heading+180+90*i for i=-1,0,1. Crackle effect metadata/controller can be reused with three authored directions.",
+    "Black source collision mass100 vs10 ordinary. Current inverse-mass crowd displacement preserves relative weight; full native physics, status and knockback not certified.",
+    "50154b..50157b cancels queued damage from EntityRef Type1000, Variant147, SpawnerType!=1. The pinned EntityRef constructor distinguishes SpawnerType at+8 from subtype. Black immunity is scoped to non-player-produced fire jets, not arbitrary Flame/Burning."
+  ]
+}

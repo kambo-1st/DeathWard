@@ -1,0 +1,14 @@
+PASS source force/friction, stage HP, floating cover/walls, source cadence and six shapes
+chain 1 depth 0 effect -1: queue capacity
+chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+PASS predictive mortality, contact consumption, invulnerability/stun and retained death attack
+NATURAL_LEPER_FLESH seed=0 floor=5 room=12 band=3
+NATURAL_LEPER_FLESH seed=1 floor=6 room=4 band=3
+NATURAL_LEPER_FLESH seed=1 floor=6 room=7 band=3
+PASS external reload, invalid/duplicate config and seeded placement
+LEPER_FLESH_STARTING_KIT seed=0 seconds=3.13333 hp=100 cleared=1
+LEPER_FLESH_STARTING_KIT seed=1 seconds=2.66667 hp=100 cleared=1
+LEPER_FLESH_STARTING_KIT seed=2 seconds=2.81667 hp=100 cleared=1
+LEPER_FLESH_STARTING_KIT seed=3 seconds=3.08333 hp=100 cleared=1
+PASS Leper Flesh

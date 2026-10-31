@@ -1,0 +1,150 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "27": {
+      "index": 14,
+      "case": "0x69a2bf",
+      "controller": "0x4ff200"
+    },
+    "859": {
+      "index": 14,
+      "case": "0x69a2bf",
+      "controller": "0x4ff200"
+    },
+    "204": {
+      "index": 73,
+      "case": "0x699be4",
+      "controller": "0x51f510"
+    },
+    "247": {
+      "index": 73,
+      "case": "0x699be4",
+      "controller": "0x51f510"
+    }
+  },
+  "constants": {
+    "range": {
+      "address": "0xb6abe4",
+      "value": 240.0
+    },
+    "range_squared": {
+      "address": "0xb6ad68",
+      "value": 57600.0
+    },
+    "float_force": {
+      "address": "0xb6a4a0",
+      "value": 0.550000011920929
+    },
+    "float_retention": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "shot_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "walk_idle_friction": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "walk_attack_friction": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "path_friction": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "path_gain": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "path_cap": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "spread2_forward": {
+      "address": "0xb6a5ec",
+      "value": 0.9610000252723694
+    },
+    "spread2_side": {
+      "address": "0xb6a39c",
+      "value": 0.2759999930858612
+    },
+    "spread5_inner_forward": {
+      "address": "0xb6a600",
+      "value": 0.9779999852180481
+    },
+    "spread5_inner_side": {
+      "address": "0xb6a360",
+      "value": 0.20800000429153442
+    },
+    "spread5_outer_forward": {
+      "address": "0xb6a5b0",
+      "value": 0.9139999747276306
+    },
+    "spread5_outer_side": {
+      "address": "0xb6a43c",
+      "value": 0.40700000524520874
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/host.asm",
+      "start": "0x4ff200",
+      "end": "0x500132",
+      "raw_sha256": "2eb8aefe11235a45ff487e683b14ae3e82c9247e03ecf2716c6f0a2d69eff659",
+      "sha256": "fe5415a5823bc9f820bc680c66ef9e95dba7a7eb6c4d6ad6f86b413c25f8831a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/mobile_host.asm",
+      "start": "0x51f510",
+      "end": "0x52002d",
+      "raw_sha256": "318b9875c3b32b03301510863cb9310a6112aaaa0362a3b683da33daa3bf4b05",
+      "sha256": "5369248d5c45eef1855c8c7a35d7f46bc75d6d770d0553a679700f5a798e2b89"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/grid_path.asm",
+      "start": "0x7a3650",
+      "end": "0x7a4813",
+      "raw_sha256": "a63c08242d9973fb51fb3c0c7c595c0f83b95889d1d8f05d7271009b7b2a2191",
+      "sha256": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/acquisition.asm",
+      "start": "0x6a15a0",
+      "end": "0x6a174c",
+      "raw_sha256": "956a97cf9f32325c50e893e6cae07e58a26229d52fb8a0deaf50efb813ca9cc6",
+      "sha256": "3aa17539fcfcdf31c68bfbb09d92224e2cc49d93447f98a903706e2475cfea5c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/cadence.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/age_cadence.asm",
+      "start": "0x6847e0",
+      "end": "0x684852",
+      "raw_sha256": "3114e2f81eb2fc94d3f4b8769e72049337e5841d1ffe29957db2cd22a677191d",
+      "sha256": "f080409245b440a02e70762eda343ae440cb3e50d88f2ea10d42f79681c2269a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ec0",
+      "raw_sha256": "369935e5430f63710266eab256fbed2c7bb8610e6c3c8ac19577baf4dcf9390a",
+      "sha256": "40daa567d9e2d04ad8d9cc7f37d83d353f99f2864ae117198c0c1f7daf2622b2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hosts/source/fire_projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a3420",
+      "raw_sha256": "f67feb27f0c5f637e022002e36222355a197c764ca267f3d4fbfe67cc0249ce5",
+      "sha256": "2d0a0127cface958faafe4918f9dc1da192324a9d65ef901eaef5dba90a0cbaf"
+    }
+  ]
+}

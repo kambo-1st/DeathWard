@@ -1,0 +1,714 @@
+[
+  {
+    "key": "310.0.0",
+    "id": 310,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Leper",
+    "xml": {
+      "anm2path": "310.000_Leper.anm2",
+      "baseHP": "60",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "5",
+      "collisionRadius": "15",
+      "friction": "1",
+      "id": "310",
+      "name": "#LEPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "169",
+      "reroll": "true",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:310.0.0",
+    "wiki_matches": [
+      {
+        "page": "Mulligan",
+        "box": 6,
+        "group": "entity",
+        "fields": {
+          "dlc": "a+",
+          "name": "Leper",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "id": "310",
+          "base hp": "60",
+          "environment": "Scarred Womb / \nchallenge /",
+          "behavior": "Alternating between walking towards and running away from Isaac. Releases a Leper Flesh each time it takes enough damage. At low health, constantly chases Isaac and leaves behind damaging red creep. Spawns a Leper Flesh and Gusher upon death."
+        },
+        "section_indices": [
+          7
+        ],
+        "name": "Leper",
+        "variant": 0,
+        "subtype": 0,
+        "id": 310,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Mulligan"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 60.0,
+      "2": 60.0,
+      "3": 60.0,
+      "4": 60.0,
+      "5": 60.0,
+      "6": 60.0,
+      "7": 60.0,
+      "8": 60.0,
+      "9": 60.0,
+      "10": 60.0,
+      "11": 60.0,
+      "12": 60.0,
+      "13": 60.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Leper",
+    "room_library_presence": {
+      "rooms/12.scarred womb.stb": {
+        "templates": 17,
+        "positive_weight_templates": 17
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Mulligan",
+        "section": 7
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "child-spawns-and-ownership",
+      "grid-and-explosions",
+      "health-and-defenses",
+      "room-floor-run-events",
+      "locomotion-and-navigation",
+      "randomness"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "310.0.1",
+    "id": 310,
+    "variant": 0,
+    "subtype": 1,
+    "name": "Leper_2",
+    "xml": {
+      "anm2path": "310.000_Leper_2.anm2",
+      "baseHP": "45",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "15",
+      "friction": "1",
+      "id": "310",
+      "name": "#LEPER_STAGE_2",
+      "numGridCollisionPoints": "12",
+      "portrait": "169",
+      "reroll": "true",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "subtype": "1",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:310.0.1",
+    "wiki_matches": [
+      {
+        "page": "Mulligan",
+        "box": 6,
+        "group": "entity",
+        "fields": {
+          "dlc": "a+",
+          "name": "Leper",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "id": "310",
+          "base hp": "60",
+          "environment": "Scarred Womb / \nchallenge /",
+          "behavior": "Alternating between walking towards and running away from Isaac. Releases a Leper Flesh each time it takes enough damage. At low health, constantly chases Isaac and leaves behind damaging red creep. Spawns a Leper Flesh and Gusher upon death."
+        },
+        "section_indices": [
+          7
+        ],
+        "name": "Leper",
+        "variant": 0,
+        "subtype": 0,
+        "id": 310,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Mulligan"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 45.0,
+      "2": 45.0,
+      "3": 45.0,
+      "4": 45.0,
+      "5": 45.0,
+      "6": 45.0,
+      "7": 45.0,
+      "8": 45.0,
+      "9": 45.0,
+      "10": 45.0,
+      "11": 45.0,
+      "12": 45.0,
+      "13": 45.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Leper",
+    "room_library_presence": {
+      "rooms/12.scarred womb.stb": {
+        "templates": 48,
+        "positive_weight_templates": 48
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Mulligan",
+        "section": 7
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "child-spawns-and-ownership",
+      "grid-and-explosions",
+      "health-and-defenses",
+      "room-floor-run-events",
+      "locomotion-and-navigation",
+      "randomness"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "310.0.2",
+    "id": 310,
+    "variant": 0,
+    "subtype": 2,
+    "name": "Leper_3",
+    "xml": {
+      "anm2path": "310.000_Leper_3.anm2",
+      "baseHP": "30",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "15",
+      "friction": "1",
+      "id": "310",
+      "name": "#LEPER_STAGE_3",
+      "numGridCollisionPoints": "12",
+      "portrait": "169",
+      "reroll": "true",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "subtype": "2",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:310.0.2",
+    "wiki_matches": [
+      {
+        "page": "Mulligan",
+        "box": 6,
+        "group": "entity",
+        "fields": {
+          "dlc": "a+",
+          "name": "Leper",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "id": "310",
+          "base hp": "60",
+          "environment": "Scarred Womb / \nchallenge /",
+          "behavior": "Alternating between walking towards and running away from Isaac. Releases a Leper Flesh each time it takes enough damage. At low health, constantly chases Isaac and leaves behind damaging red creep. Spawns a Leper Flesh and Gusher upon death."
+        },
+        "section_indices": [
+          7
+        ],
+        "name": "Leper",
+        "variant": 0,
+        "subtype": 0,
+        "id": 310,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Mulligan"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 30.0,
+      "2": 30.0,
+      "3": 30.0,
+      "4": 30.0,
+      "5": 30.0,
+      "6": 30.0,
+      "7": 30.0,
+      "8": 30.0,
+      "9": 30.0,
+      "10": 30.0,
+      "11": 30.0,
+      "12": 30.0,
+      "13": 30.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Leper",
+    "room_library_presence": {
+      "rooms/12.scarred womb.stb": {
+        "templates": 63,
+        "positive_weight_templates": 63
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Mulligan",
+        "section": 7
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "child-spawns-and-ownership",
+      "grid-and-explosions",
+      "health-and-defenses",
+      "room-floor-run-events",
+      "locomotion-and-navigation",
+      "randomness"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "310.0.3",
+    "id": 310,
+    "variant": 0,
+    "subtype": 3,
+    "name": "Leper_4",
+    "xml": {
+      "anm2path": "310.000_Leper_4.anm2",
+      "baseHP": "15",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "15",
+      "friction": "1",
+      "id": "310",
+      "name": "#LEPER_STAGE_4",
+      "numGridCollisionPoints": "12",
+      "portrait": "169",
+      "reroll": "true",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "subtype": "3",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:310.0.3",
+    "wiki_matches": [
+      {
+        "page": "Mulligan",
+        "box": 6,
+        "group": "entity",
+        "fields": {
+          "dlc": "a+",
+          "name": "Leper",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "id": "310",
+          "base hp": "60",
+          "environment": "Scarred Womb / \nchallenge /",
+          "behavior": "Alternating between walking towards and running away from Isaac. Releases a Leper Flesh each time it takes enough damage. At low health, constantly chases Isaac and leaves behind damaging red creep. Spawns a Leper Flesh and Gusher upon death."
+        },
+        "section_indices": [
+          7
+        ],
+        "name": "Leper",
+        "variant": 0,
+        "subtype": 0,
+        "id": 310,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Mulligan"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 15.0,
+      "2": 15.0,
+      "3": 15.0,
+      "4": 15.0,
+      "5": 15.0,
+      "6": 15.0,
+      "7": 15.0,
+      "8": 15.0,
+      "9": 15.0,
+      "10": 15.0,
+      "11": 15.0,
+      "12": 15.0,
+      "13": 15.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Leper",
+    "room_library_presence": {
+      "rooms/12.scarred womb.stb": {
+        "templates": 40,
+        "positive_weight_templates": 40
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Mulligan",
+        "section": 7
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "child-spawns-and-ownership",
+      "grid-and-explosions",
+      "health-and-defenses",
+      "room-floor-run-events",
+      "locomotion-and-navigation",
+      "randomness"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "310.1.0",
+    "id": 310,
+    "variant": 1,
+    "subtype": 0,
+    "name": "Leper Flesh",
+    "xml": {
+      "anm2path": "310.001_Leper Flesh.anm2",
+      "baseHP": "5",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "gridCollision": "walls",
+      "id": "310",
+      "name": "#LEPER_FLESH",
+      "numGridCollisionPoints": "12",
+      "portrait": "170",
+      "reroll": "true",
+      "shadowSize": "17",
+      "stageHP": "1.5",
+      "variant": "1"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:310.1.0",
+    "wiki_matches": [
+      {
+        "page": "Mulligan",
+        "box": 7,
+        "group": "entity",
+        "fields": {
+          "dlc": "a+",
+          "name": "Leper Flesh",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "variant": "1",
+          "base hp": "5",
+          "stage hp": "1.5",
+          "environment": "Scarred Womb / \nTreasure / (Scarred Womb Only)\nSpawned from Lepers",
+          "behavior": "Floats slowly toward Isaac and fires a predictive projectile at him upon death."
+        },
+        "section_indices": [
+          8
+        ],
+        "name": "Leper Flesh",
+        "variant": 1,
+        "subtype": 0,
+        "id": 310,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Mulligan"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 6.5,
+      "2": 8.0,
+      "3": 9.5,
+      "4": 11.0,
+      "5": 11.0,
+      "6": 12.2,
+      "7": 13.4,
+      "8": 14.6,
+      "9": 15.8,
+      "10": 17.0,
+      "11": 17.0,
+      "12": 17.0,
+      "13": 17.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Leper Flesh",
+    "room_library_presence": {
+      "rooms/12.scarred womb.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Mulligan",
+        "section": 8
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "projectile-transform",
+      "child-spawns-and-ownership",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+]

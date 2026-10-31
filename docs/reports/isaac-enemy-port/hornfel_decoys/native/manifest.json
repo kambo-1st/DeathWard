@@ -1,0 +1,102 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/entry_and_decoy_selection.asm",
+      "start": "0x4a5120",
+      "end_exclusive": "0x4a5a10",
+      "raw_sha256": "54c13bf683286c20ab8a62062f1b7b7cadb18deac16db6669a38c50bf7145c08"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/door_picker.asm",
+      "start": "0x4a8150",
+      "end_exclusive": "0x4a8335",
+      "raw_sha256": "740a45883d0f47d71909cc77e87b8dffa049b37d3a0cf73475bf21beda8f5ada"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/cart_offroom_removal.asm",
+      "start": "0x4bbf75",
+      "end_exclusive": "0x4bc01a",
+      "raw_sha256": "2ffcd55a1ec665291a92238d3462dd9a0bbed911020276ca33873365b0977dde"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/decoy_init.asm",
+      "start": "0x4a64a2",
+      "end_exclusive": "0x4a64f0",
+      "raw_sha256": "1c8a262a662501e1274d19ef8564b20f3dee626dac00cfd042c64b3cbab6112c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/damage_filter_and_death.asm",
+      "start": "0x4a79ff",
+      "end_exclusive": "0x4a7c82",
+      "raw_sha256": "b7bbfdb857e52fe4a610e4c8fd66c78e152583056471c3681272e189b5a2dc11"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/room_count_registration.asm",
+      "start": "0x808e3e",
+      "end_exclusive": "0x808e52",
+      "raw_sha256": "6b6919c352fed05a9fa1753c23193a772eecfdc6ca09285bb84eb2e17d9f95c0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/alive_enemies_count.asm",
+      "start": "0x448000",
+      "end_exclusive": "0x448016",
+      "raw_sha256": "06e6da9d996956678cd12633c6d9d9d247c2e3dcfd2a20ef29bd35c25113764b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/alive_bosses_count.asm",
+      "start": "0x448020",
+      "end_exclusive": "0x448036",
+      "raw_sha256": "8b831e80487c153fd2e4b669434d86119081c2657c24134a327964d59021a0f1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/hitpoints_property_registration.asm",
+      "start": "0x8054c3",
+      "end_exclusive": "0x8054d2",
+      "raw_sha256": "7482b2e43989fbb99bf1d320448398f8668939dd7000baca0e701d9b5ba59094"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/hitpoints_getter.asm",
+      "start": "0x412220",
+      "end_exclusive": "0x412227",
+      "raw_sha256": "5c5ae9af116cf2fe785b448246ddc23267100e6f00e36b53e1a704c2533e967e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/parent_property_registration.asm",
+      "start": "0x80534c",
+      "end_exclusive": "0x80535b",
+      "raw_sha256": "eef0c30f55e7f507bd7b8d23f3511cf02f5f10803a15abbf0c417f71ed9523d4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_decoys/native/parent_getter.asm",
+      "start": "0x422c10",
+      "end_exclusive": "0x422c17",
+      "raw_sha256": "76f59aa3351c63a7dc6ce01c21fbbb26b539a0b064893d7150a9fce9a0e85f7a"
+    }
+  ],
+  "door_entry_distance_squared": 3600.0,
+  "room_count_api": {
+    "GetAliveEnemiesCount": {
+      "name": "0xb54294",
+      "function": "0x448000"
+    },
+    "GetAliveBossesCount": {
+      "name": "0xb54264",
+      "function": "0x448020"
+    }
+  },
+  "properties": {
+    "HitPoints": {
+      "name": "0xb519e4",
+      "getter": "0x412220",
+      "setter": "0x427350",
+      "offset": "0x2d8"
+    },
+    "Parent": {
+      "name": "0xb51b84",
+      "getter": "0x422c10",
+      "setter": "0x6818e0",
+      "offset": "0x314"
+    }
+  }
+}

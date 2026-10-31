@@ -1,0 +1,153 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 41,
+      "index": 25,
+      "case": "0x699d07",
+      "controller": "0x5014f0"
+    },
+    {
+      "type": 840,
+      "index": 16,
+      "case": "0x69a19f",
+      "controller": "0x514450"
+    }
+  ],
+  "constants": {
+    "grid": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "brainless_retention": {
+      "address": "0xb6a594",
+      "value": 0.8799999952316284
+    },
+    "walk_force": {
+      "address": "0xb6a53c",
+      "value": 0.75
+    },
+    "selfless_walk_force": {
+      "address": "0xb6a680",
+      "value": 1.25
+    },
+    "loose_walk_force": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "black_walk_force": {
+      "address": "0xb6a4e0",
+      "value": 0.6600000262260437
+    },
+    "charge_force": {
+      "address": "0xb6a614",
+      "value": 1.0
+    },
+    "selfless_charge_multiplier": {
+      "address": "0xb6a710",
+      "value": 1.649999976158142
+    },
+    "black_initial_charge": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "black_charge_acceleration": {
+      "address": "0xb6a290",
+      "value": 0.07000000029802322
+    },
+    "black_charge_max": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "prediction_max_frames": {
+      "address": "0xb6a9b0",
+      "value": 16.0
+    },
+    "charge_range": {
+      "address": "0xb6aba8",
+      "value": 200.0
+    },
+    "alignment_tolerance": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "charge_cross_pull": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "impact_min_speed": {
+      "address": "0xb6a940",
+      "value": 8.0
+    },
+    "impact_alignment": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "pon_spawn_offset": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "impact_lift_speed": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "impact_gravity": {
+      "address": "0xb6a64c",
+      "value": 1.100000023841858
+    }
+  },
+  "strings": {
+    "0xb406e4": "Up",
+    "0xb406f0": "Down",
+    "0xb42f28": "Hori"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/knights/source/knight_controller.asm",
+      "start": "0x5014f0",
+      "end": "0x502de7",
+      "raw_sha256": "6e77683b8cb84a7667e60a08e38eda94cd07356e765d7bd601a817c0fbbfd111",
+      "sha256": "773e6e450f2c756eabbb7cc0b7cf373655319c1af644213fb57ecf267063b9df"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/knights/source/pon_shared_hopper.asm",
+      "start": "0x514450",
+      "end": "0x516dda",
+      "raw_sha256": "c3654c5889ad6cd265388dd724e956fbd6e6a7d9090ad35fccda0b4cfb3e1b45",
+      "sha256": "36b274c004b56a8a12c71ff0c02be30750a9d6684f1e9b85e661a48fc628ff3a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/knights/source/mask_damage_direction.asm",
+      "start": "0x6aa830",
+      "end": "0x6aabd9",
+      "raw_sha256": "61541897a252eecb1b134243cab48d53b2126fea0925bded2e4b9d078ba520a0",
+      "sha256": "8e4319394bb5687edf7b655276f63a1b60bd812aec0d3830219d9a772e4322a6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/knights/source/grid_wander.asm",
+      "start": "0x7a51e0",
+      "end": "0x7a617d",
+      "raw_sha256": "ef71ccb69cba5c9049682eaa58ee22518c8c116b8243e5f6825dcd56d0b6fa97",
+      "sha256": "9b4fea12a9e0f9ed56cd562307d1b6a8d6b4789069742e0229c555ef5a771fd6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/knights/source/black_tear_reflection.asm",
+      "start": "0x6a3a39",
+      "end": "0x6a3da4",
+      "raw_sha256": "97a34e82ecbf5a11a07d4094fecec4a81a588033bd44907934c8351d47c0d22c",
+      "sha256": "afdf0a66bf9b50a01d8b9f22037a79bdee46da479609c29cfac10b035a7cc004"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/knights/source/tear_collision.asm",
+      "start": "0x64dcd0",
+      "end": "0x6500d0",
+      "raw_sha256": "01eea5e0ae3d3f175f50fcbadd614f7731195188191eadec6bd12e9b766e1cef",
+      "sha256": "a220713b754300174d7e19a832e86190396d807f2db9814bc556b2dfd393c449"
+    }
+  ]
+}

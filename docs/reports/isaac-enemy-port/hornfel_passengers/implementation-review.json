@@ -1,0 +1,31 @@
+{
+  "status": "partial implementation; further boss work deferred in favor of regular enemies",
+  "source_review": "docs/reports/isaac-enemy-port/hornfel_passenger_review/source-review.json",
+  "implemented": [
+    "Independent externally configured room traffic: fixed30Hz timer counts, initial150..359 and recurring large-room half interval, attempts consume blocked/pending selections.",
+    "Shared paired-door reservations and persistent inactive-room state. No live boss stops spawning; actual room clear quietly removes attached riders/doors.",
+    "Fire33.0 and TNT292.0: hit-count vs damage-batch durability, real projectile hits, extinguishing, flame ignition, retained TNT blast, local physical pushing, mounted removal vs ground remnants.",
+    "Original procedural fire/ash and marked TNT/scrap render with separate carriers."
+  ],
+  "pending": [
+    "Five exact creature slots remain unavailable, preserving seven-way choice without substituting generic AI.",
+    "Source loot callbacks, all item/status/geometry exceptions, world clock/physics fidelity, static fireplace dressing and Mine Crafter producers.",
+    "Existing13Hornfel browser timing fixtures need rediscovery because the independent controller consumes shared combat RNG. This pass does not claim the old17-case regression passed on this build.",
+    "Starting-kit/varied-build/human balance and controlled rendered performance not rerun; incomplete passenger density prevents final acceptance."
+  ],
+  "validation": {
+    "native_suites": 58,
+    "native_result": "all pass",
+    "native_seconds": 164.96,
+    "wasm_cases": 6,
+    "wasm_errors": [],
+    "browser_report": "docs/reports/isaac-enemy-port/hornfel_passengers/browser/results.json"
+  },
+  "adaptations": [
+    "Native units x.1 for distances and x3.2 for damage except environmental hit-count HP; room controller30Hz in60Hz simulation.",
+    "Contact cadence, TNT pushing/3D collision, explosion player damage and cart speed/door animation are DeathWard tuning.",
+    "Empty cart breaks after.1s locally; exact native entity-update/physics order remains open."
+  ],
+  "visual_review": "Inspected native fire-cart and WASM TNT-cart captures: distinct payloads seated in carriers, Original palette, visible shadows. Full occlusion/zoom readability and high-density performance remain unaccepted.",
+  "priority": "Regular enemies and their required offspring are now the first workstream."
+}

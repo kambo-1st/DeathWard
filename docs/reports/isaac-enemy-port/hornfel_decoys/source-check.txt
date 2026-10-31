@@ -1,0 +1,1 @@
+PASS: 12 preserved decoy windows; room counts, HP/Parent properties, entry distance and damage virtual slot

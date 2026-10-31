@@ -1,0 +1,21 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 36: brain
+1/2 Test #36: brain ............................***Failed    1.22 sec
+MOVEMENT hp64 X.85 Y.8 charge=.8v+direction global7 committed=1 prediction=1 cover=1 bodies=1 grid=1 safe_grid=1
+CREEP crowd5 periods12/24 fast_half_step=1 radius2.46 lifetime125 fade40 damage12.5 owner_survival=1 clear=1 capacity=1 suspend=1
+STARTING_KIT seconds=8.68333 hp=100
+CONFIG immutable=1 invalid_profiles=6
+NATURAL_BRAIN seed=26 floor=3 room=2 band=3
+fixed seeded witness contains a real Brain without injection
+
+    Start 65: crackle_discrete_fire_jets
+2/2 Test #65: crackle_discrete_fire_jets .......   Passed    0.81 sec
+
+50% tests passed, 1 tests failed out of 2
+
+Total Test time (real) =   2.03 sec
+
+The following tests FAILED:
+	 36 - brain (Failed)
+Errors while running CTest

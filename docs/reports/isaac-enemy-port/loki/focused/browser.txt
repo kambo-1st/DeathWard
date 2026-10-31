@@ -1,0 +1,6 @@
+PASS WASM loki: independent bodies, health, actions and group completion rules
+PASS WASM lokii: independent bodies, health, actions and group completion rules
+PASS WASM lokii-half-death: independent bodies, health, actions and group completion rules
+PASS WASM resident-loki: independent bodies, health, actions and group completion rules
+PASS WASM resident-lokii: independent bodies, health, actions and group completion rules
+PASS WASM tainted-boom: family behavior, presentation and source-stage health

@@ -1,0 +1,159 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 310,
+    "index": 127,
+    "case": "0x699edb",
+    "parent": "0x5346d0",
+    "variant1": "0x5351f0"
+  },
+  "windows": [
+    {
+      "name": "parent",
+      "start": "0x5346d0",
+      "end_exclusive": "0x5351ea",
+      "complete_function": true,
+      "instructions": 685,
+      "raw_sha256": "6bf7d420cdc82ed16b6c0c684b868a4e2ce3ca0cce1669fd5c19a2a8f5c040df",
+      "path": "docs/reports/isaac-enemy-port/leper/source/parent.asm",
+      "sha256": "3636ba8ae033173e62c9eaca351fe4a4032490bbd369384e11b3b279fda335af"
+    },
+    {
+      "name": "flesh",
+      "start": "0x5351f0",
+      "end_exclusive": "0x5358df",
+      "complete_function": true,
+      "instructions": 389,
+      "raw_sha256": "cf923ac1e8315d4dab13814d97ff6785f36ff2b7b0ef0c409c5f8c9484ec9878",
+      "path": "docs/reports/isaac-enemy-port/leper/source/flesh.asm",
+      "sha256": "4e06f324b3cfd9f2cecc9246a198da8fcd6acf61bab72f5adf0775a08bda1093"
+    },
+    {
+      "name": "damage-reaction",
+      "start": "0x68b970",
+      "end_exclusive": "0x68c801",
+      "complete_function": true,
+      "instructions": 842,
+      "raw_sha256": "965bceb9735dfdc5b11e3697b24d190cff78c7ef0eaf386acc35bd71d009ba95",
+      "path": "docs/reports/isaac-enemy-port/leper/source/damage-reaction.asm",
+      "sha256": "c9d7759558b246da4d08858ddf8bca908ca409cc2e37f5c85a24315a477dd7bb"
+    },
+    {
+      "name": "normal-ai-call",
+      "start": "0x69ce57",
+      "end_exclusive": "0x69ce99",
+      "complete_function": false,
+      "instructions": 13,
+      "raw_sha256": "6ef384e92ae8eddae34371d15fbabbbbced0a6caaea4d5f0ace8308bd09007f6",
+      "path": "docs/reports/isaac-enemy-port/leper/source/normal-ai-call.asm",
+      "sha256": "a61b61d529afbcc19653b611cd3f7419539117f7a6896483a8cb9ea63268fd71"
+    },
+    {
+      "name": "base-update-call",
+      "start": "0x69f855",
+      "end_exclusive": "0x69f919",
+      "complete_function": false,
+      "instructions": 34,
+      "raw_sha256": "ca620972416b9ed44f839af5c9379f86f87226dfe401a5b02548a27127aa34e3",
+      "path": "docs/reports/isaac-enemy-port/leper/source/base-update-call.asm",
+      "sha256": "b22cd1188e7fc96c66f5b528b1f18e44306385b79151869656b6916e061f1fb0"
+    },
+    {
+      "name": "friction-integration",
+      "start": "0x686406",
+      "end_exclusive": "0x686497",
+      "complete_function": false,
+      "instructions": 29,
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf",
+      "path": "docs/reports/isaac-enemy-port/leper/source/friction-integration.asm",
+      "sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    },
+    {
+      "name": "queued-damage-subtraction",
+      "start": "0x686d98",
+      "end_exclusive": "0x686eb6",
+      "complete_function": false,
+      "instructions": 70,
+      "raw_sha256": "c76d7569d64cda23157f19246a3f61a4477b30f2ec5ab1e7c1db1d328bb16ad6",
+      "path": "docs/reports/isaac-enemy-port/leper/source/queued-damage-subtraction.asm",
+      "sha256": "0496ab25b53dd3e606d675b051bd9c244a3a4a4d2f614ad101c85dfc6ff93911"
+    }
+  ],
+  "constants": {
+    "flesh_retention": {
+      "address": "0xb6a5d8",
+      "value": 0.949999988079071
+    },
+    "flesh_force": {
+      "address": "0xb6a304",
+      "value": 0.15000000596046448
+    },
+    "prediction_distance_factor": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "shot_speed": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "parent_overkill": {
+      "address": "0xb6aef8",
+      "value": -25.0
+    },
+    "blood_minimum": {
+      "address": "0xb6a434",
+      "value": 0.4000000059604645
+    }
+  },
+  "claims": [
+    {
+      "at": "535231..5353c1;686406..686497",
+      "meaning": "Flesh multiplies friction by .95, directly adds .15*(unit target + 2*random unit), then common integration applies friction to the resulting velocity."
+    },
+    {
+      "at": "5353c6..535509",
+      "meaning": "InitSeed chooses six Idle shapes and flip. State0 becomes4 and sets kill-on-player-contact byte16c."
+    },
+    {
+      "at": "53555a..535745",
+      "meaning": "Six-tick effect111 emissions are cosmetic, not hostile shots."
+    },
+    {
+      "at": "535764..5358cc",
+      "meaning": "Dead flesh fires mode0 once: target position plus target velocity times .1*native distance; normalized planar speed10. Writes at params+2c..54 are color fields, not falling modifiers."
+    },
+    {
+      "at": "534c8b..535010",
+      "meaning": "Parent predicts HP minus pending damage. Loop uses (3-subtype)*maxHP/(4-subtype), increments subtype, emits flesh; only after the loop invokes Morph. The reaction helper68b970 is not a config reset."
+    }
+  ],
+  "shared_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/nest/source/player_collision.asm",
+      "sha256": "ec24abc5e98c37cb6ee003c9097bdf7016ba5aa1e45074467884dcd525ca9d94"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/nest/source/kill.asm",
+      "sha256": "f2a3873fe80c2b25f61687a178d6b882da23a21278e17a9c95a918765b391d8b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/projectile_params_defaults.asm",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/params_physics_and_damage.asm",
+      "sha256": "f9cbb31608864f71590234fdd5d8e11258d00da6804c36d3cc07a2b56f5d08b5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    }
+  ],
+  "preflight_corrections": [
+    "controller-preflight also contains unrelated function5358e0; use the bounded parent/flesh functions.",
+    "configuration-preflight is a partial damage reaction helper, not NPC configuration.",
+    "damage-apply-preflight starts misaligned in a special damage branch; it is not evidence of general damage order.",
+    "Parent multiple-hit/update/morph ordering still requires a runtime contract before implementation."
+  ]
+}

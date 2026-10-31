@@ -1,0 +1,18 @@
+{
+  "result": "partial_visual_review",
+  "style": "Original",
+  "inspected": [
+    "docs/reports/isaac-enemy-port/hornfel_escorts/linux-escorts-850.png",
+    "docs/reports/isaac-enemy-port/hornfel_escorts/browser/wasm-resident-hornfel-escorts-850.png",
+    "docs/reports/isaac-enemy-port/hornfel_escorts/browser/wasm-resident-hornfel-escorts-pits-1000.png"
+  ],
+  "observations": [
+    "Both procedural bomb flies are visible separately beside the rail-riding Hornfel in Linux and WASM; existing low-poly scene treatment retained.",
+    "Browser release sample shows living flies after Hornfel has left the visible rail.",
+    "Body health/attachment changes are verified by probes, not inferred from the still images."
+  ],
+  "limits": [
+    "Fixed camera samples only; HUD and distant rail entrance occlusion remain a broader readability concern.",
+    "No source animation/assets copied, no complete visual or rendered performance acceptance."
+  ]
+}

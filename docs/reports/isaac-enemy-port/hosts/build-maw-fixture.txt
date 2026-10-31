@@ -1,0 +1,4 @@
+[ 95%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_maw_family_tests.dir/tests/maw_family_tests.cpp.o
+[100%] Linking CXX executable deathward_maw_family_tests
+[100%] Built target deathward_maw_family_tests

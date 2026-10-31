@@ -1,0 +1,26 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  80: leper_flesh
+      Start  82: mulligan_family
+      Start  77: hive_evaders
+ 1/10 Test  #80: leper_flesh ......................   Passed    3.88 sec
+      Start  78: nest_family
+ 2/10 Test  #78: nest_family ......................   Passed    9.26 sec
+      Start   5: floor_progression
+ 3/10 Test  #77: hive_evaders .....................   Passed   58.48 sec
+      Start 101: adaptive_armor
+ 4/10 Test #101: adaptive_armor ...................   Passed    0.20 sec
+      Start  89: headless_family
+ 5/10 Test  #89: headless_family ..................   Passed    0.41 sec
+      Start  30: monster_behaviors
+ 6/10 Test  #30: monster_behaviors ................   Passed    3.93 sec
+      Start   2: mechanics_content
+ 7/10 Test   #2: mechanics_content ................   Passed    2.03 sec
+      Start  81: leper_family
+ 8/10 Test  #81: leper_family .....................   Passed    1.85 sec
+ 9/10 Test  #82: mulligan_family ..................   Passed   88.83 sec
+10/10 Test   #5: floor_progression ................   Passed  175.21 sec
+
+100% tests passed, 0 tests failed out of 10
+
+Total Test time (real) = 188.35 sec

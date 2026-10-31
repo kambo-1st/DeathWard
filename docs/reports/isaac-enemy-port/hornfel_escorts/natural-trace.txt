@@ -1,0 +1,385 @@
+seed=10 floor=2 frame=1 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=18 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=36 state=6 charge=1 passes=0 repeats=8 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=390 state=7 charge=1 passes=9 repeats=8 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=392 state=8 charge=1 passes=9 repeats=8 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=483 state=8 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=538 state=8 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=556 state=0 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=646 state=1 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=10 floor=2 frame=664 state=2 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=2 released=0
+ FLY id=49 hp=22.4 parent=26 x=-125.53 z=37.6022
+ FLY id=50 hp=22.4 parent=26 x=-125.435 z=37.7974
+seed=10 floor=2 frame=807 state=2 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=0
+ FLY id=49 hp=22.4 parent=26 x=-90.9439 z=41.0607
+ FLY id=50 hp=22.4 parent=26 x=-91.879 z=42.7392
+seed=10 floor=2 frame=954 state=0 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+ FLY id=49 hp=11.2 parent=0 x=-102.478 z=55.2929
+ FLY id=50 hp=11.2 parent=0 x=-102.633 z=55.2775
+seed=10 floor=2 frame=1044 state=1 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+ FLY id=49 hp=11.2 parent=0 x=-101.006 z=51.5188
+ FLY id=50 hp=11.2 parent=0 x=-101.869 z=51.0616
+seed=10 floor=2 frame=1062 state=2 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+ FLY id=49 hp=11.2 parent=0 x=-100.359 z=50.7704
+ FLY id=50 hp=11.2 parent=0 x=-101.478 z=50.1526
+seed=10 floor=2 frame=1404 state=0 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=1494 state=1 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=1512 state=6 charge=2 passes=0 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=1866 state=7 charge=2 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=1868 state=8 charge=2 passes=9 repeats=8 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=1959 state=8 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=2021 state=8 charge=2 passes=9 repeats=8 shots=2 fire=1 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=2032 state=0 charge=2 passes=9 repeats=8 shots=2 fire=1 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=2122 state=1 charge=2 passes=9 repeats=8 shots=2 fire=1 decoys=2 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=2140 state=9 charge=2 passes=9 repeats=8 shots=2 fire=1 decoys=2 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=2290 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=2 destroyed=0 removed=0 escorts=2 released=2
+seed=10 floor=2 frame=2376 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=2480 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=2570 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=2588 state=2 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=2824 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=2914 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=4 destroyed=0 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=2932 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=4 destroyed=0 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=3070 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=4 destroyed=1 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=3161 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=3168 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=3258 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=2 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=3276 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=2 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=3471 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=3 removed=2 escorts=2 released=2
+seed=10 floor=2 frame=3512 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=3 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=3616 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=3 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=3706 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=3 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=3724 state=2 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=3 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=3976 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=6 destroyed=3 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=4066 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=3 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=4084 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=3 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=4222 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=3 escorts=2 released=2
+seed=10 floor=2 frame=4320 state=9 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=4424 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=4514 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=4532 state=2 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=4872 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=4962 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=4980 state=2 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=5302 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=5392 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=5410 state=2 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=5770 state=0 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=5860 state=1 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=10 floor=2 frame=5878 state=2 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=8 destroyed=4 removed=4 escorts=2 released=2
+seed=953 floor=2 frame=1 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=953 floor=2 frame=18 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=953 floor=2 frame=36 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=953 floor=2 frame=284 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=953 floor=2 frame=374 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=953 floor=2 frame=392 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=953 floor=2 frame=491 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=0 escorts=0 released=0
+seed=953 floor=2 frame=684 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=700 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=790 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=808 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=1088 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=1178 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=1196 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=1486 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=1576 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=0 released=0
+seed=953 floor=2 frame=1594 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=0
+ FLY id=59 hp=22.4 parent=27 x=165.455 z=91.7495
+ FLY id=60 hp=22.4 parent=27 x=165.53 z=91.7879
+seed=953 floor=2 frame=2006 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+ FLY id=59 hp=11.2 parent=0 x=130.787 z=70.473
+ FLY id=60 hp=11.2 parent=0 x=130.784 z=70.8547
+seed=953 floor=2 frame=2096 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+ FLY id=59 hp=11.2 parent=0 x=133.385 z=73.7071
+ FLY id=60 hp=11.2 parent=0 x=132.722 z=75.3776
+seed=953 floor=2 frame=2114 state=6 charge=1 passes=0 repeats=8 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+ FLY id=59 hp=11.2 parent=0 x=133.739 z=74.6317
+ FLY id=60 hp=11.2 parent=0 x=133.14 z=76.2751
+seed=953 floor=2 frame=2514 state=7 charge=1 passes=9 repeats=8 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=2516 state=8 charge=1 passes=9 repeats=8 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=2607 state=8 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=2670 state=8 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=2716 state=0 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=2806 state=1 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=2824 state=2 charge=1 passes=9 repeats=8 shots=1 fire=1 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=2939 state=2 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=3094 state=0 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=2 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=3184 state=1 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=3202 state=9 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=1 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=3301 state=9 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=2 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=3482 state=0 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=2 removed=1 escorts=2 released=2
+seed=953 floor=2 frame=3510 state=0 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=3572 state=1 charge=1 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=3590 state=6 charge=2 passes=0 repeats=8 shots=1 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=3952 state=7 charge=2 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=3954 state=8 charge=2 passes=9 repeats=8 shots=1 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4045 state=8 charge=2 passes=9 repeats=8 shots=2 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4103 state=8 charge=2 passes=9 repeats=8 shots=2 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4126 state=0 charge=2 passes=9 repeats=8 shots=2 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4216 state=1 charge=2 passes=9 repeats=8 shots=2 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4234 state=6 charge=3 passes=0 repeats=6 shots=2 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4372 state=6 charge=3 passes=1 repeats=6 shots=2 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4570 state=7 charge=3 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4572 state=8 charge=3 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4663 state=8 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4726 state=8 charge=3 passes=7 repeats=6 shots=3 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4772 state=0 charge=3 passes=7 repeats=6 shots=3 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4862 state=1 charge=3 passes=7 repeats=6 shots=3 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4880 state=2 charge=3 passes=7 repeats=6 shots=3 fire=1 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=4995 state=2 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=5170 state=0 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=5260 state=1 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=5278 state=2 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=5568 state=0 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=5658 state=1 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=5676 state=2 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=953 floor=2 frame=5946 state=0 charge=3 passes=7 repeats=6 shots=3 fire=0 decoys=4 destroyed=2 removed=2 escorts=2 released=2
+seed=57 floor=2 frame=1 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=18 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=36 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=378 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=468 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=486 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=802 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=892 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=910 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=1226 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=1316 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=57 floor=2 frame=1334 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=0
+ FLY id=66 hp=22.4 parent=30 x=-119.53 z=-46.5443
+ FLY id=67 hp=22.4 parent=30 x=-119.53 z=-45.4043
+seed=57 floor=2 frame=1624 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=1
+ FLY id=67 hp=11.2 parent=0 x=-68.456 z=-40.0173
+seed=57 floor=2 frame=1714 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=2 released=1
+ FLY id=67 hp=11.2 parent=0 x=-72.8847 z=-40.2371
+seed=57 floor=2 frame=1732 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=2 released=1
+ FLY id=67 hp=11.2 parent=0 x=-73.8391 z=-40.4998
+seed=57 floor=2 frame=1991 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=1 escorts=2 released=1
+seed=57 floor=2 frame=2048 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=2 released=1
+seed=57 floor=2 frame=2138 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=2 released=1
+seed=57 floor=2 frame=2156 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=1
+ FLY id=78 hp=22.4 parent=30 x=-119.53 z=-53.6061
+ FLY id=79 hp=22.4 parent=30 x=-119.53 z=-53.9598
+seed=57 floor=2 frame=2498 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+ FLY id=78 hp=11.2 parent=0 x=-84.1662 z=-32.5307
+ FLY id=79 hp=11.2 parent=0 x=-84.4763 z=-32.8582
+seed=57 floor=2 frame=2588 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+ FLY id=78 hp=11.2 parent=0 x=-84.7776 z=-37.0052
+ FLY id=79 hp=11.2 parent=0 x=-86.351 z=-35.51
+seed=57 floor=2 frame=2606 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+ FLY id=78 hp=11.2 parent=0 x=-85.0984 z=-37.9418
+ FLY id=79 hp=11.2 parent=0 x=-86.4517 z=-36.4949
+seed=57 floor=2 frame=2948 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3038 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3056 state=6 charge=1 passes=0 repeats=7 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3444 state=7 charge=1 passes=8 repeats=7 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3446 state=8 charge=1 passes=8 repeats=7 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3537 state=8 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3601 state=8 charge=1 passes=8 repeats=7 shots=1 fire=1 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3662 state=0 charge=1 passes=8 repeats=7 shots=1 fire=1 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3752 state=1 charge=1 passes=8 repeats=7 shots=1 fire=1 decoys=2 destroyed=0 removed=2 escorts=4 released=3
+seed=57 floor=2 frame=3770 state=2 charge=1 passes=8 repeats=7 shots=1 fire=1 decoys=2 destroyed=0 removed=2 escorts=6 released=3
+ FLY id=128 hp=22.4 parent=30 x=-119.53 z=-45.402
+ FLY id=129 hp=22.4 parent=30 x=-119.53 z=-46.227
+seed=57 floor=2 frame=3870 state=2 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=3
+ FLY id=128 hp=22.4 parent=30 x=-92.9404 z=-44.9263
+ FLY id=129 hp=22.4 parent=30 x=-94.8797 z=-41.1624
+seed=57 floor=2 frame=4029 state=0 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+ FLY id=128 hp=11.2 parent=0 x=-69.6825 z=-38.6123
+seed=57 floor=2 frame=4119 state=1 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+ FLY id=128 hp=11.2 parent=0 x=-73.15 z=-40.7633
+seed=57 floor=2 frame=4137 state=2 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+ FLY id=128 hp=11.2 parent=0 x=-74.112 z=-40.9972
+seed=57 floor=2 frame=4517 state=0 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=4607 state=1 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=4625 state=2 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=4941 state=0 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=5031 state=1 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=5049 state=2 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=5371 state=0 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=2 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=5461 state=1 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=4 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=5479 state=9 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=4 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=5738 state=0 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=4 destroyed=0 removed=2 escorts=6 released=4
+seed=57 floor=2 frame=5795 state=0 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=4 destroyed=0 removed=4 escorts=6 released=4
+seed=57 floor=2 frame=5828 state=1 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=4 destroyed=0 removed=4 escorts=6 released=4
+seed=57 floor=2 frame=5846 state=2 charge=1 passes=8 repeats=7 shots=1 fire=0 decoys=4 destroyed=0 removed=4 escorts=6 released=4
+seed=58 floor=3 frame=1 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=58 floor=3 frame=18 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=58 floor=3 frame=36 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=58 floor=3 frame=440 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=58 floor=3 frame=530 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=58 floor=3 frame=548 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=0
+ FLY id=39 hp=22.4 parent=23 x=-26.47 z=-129.404
+ FLY id=40 hp=22.4 parent=23 x=-26.5034 z=-130.326
+seed=58 floor=3 frame=960 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+ FLY id=39 hp=11.2 parent=0 x=-67.1178 z=-132.047
+ FLY id=40 hp=11.2 parent=0 x=-67.5119 z=-132.984
+seed=58 floor=3 frame=1050 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+ FLY id=39 hp=11.2 parent=0 x=-63.448 z=-131.205
+ FLY id=40 hp=11.2 parent=0 x=-64.0624 z=-132.286
+seed=58 floor=3 frame=1068 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+ FLY id=39 hp=11.2 parent=0 x=-62.6433 z=-130.628
+ FLY id=40 hp=11.2 parent=0 x=-63.2779 z=-131.682
+seed=58 floor=3 frame=1472 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=58 floor=3 frame=1562 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=58 floor=3 frame=1580 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=58 floor=3 frame=2050 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=58 floor=3 frame=2140 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=2 released=2
+seed=58 floor=3 frame=2158 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=4 released=2
+ FLY id=70 hp=22.4 parent=23 x=-77.53 z=-130.531
+ FLY id=71 hp=22.4 parent=23 x=-77.4002 z=-130.017
+seed=58 floor=3 frame=2522 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=4 released=4
+ FLY id=70 hp=11.2 parent=0 x=-33.8531 z=-124.814
+ FLY id=71 hp=11.2 parent=0 x=-33.4632 z=-123.116
+seed=58 floor=3 frame=2612 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=4 released=4
+ FLY id=70 hp=11.2 parent=0 x=-37.5303 z=-125.624
+ FLY id=71 hp=11.2 parent=0 x=-35.9974 z=-121.671
+seed=58 floor=3 frame=2630 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=4 released=4
+ FLY id=70 hp=11.2 parent=0 x=-38.5044 z=-125.448
+ FLY id=71 hp=11.2 parent=0 x=-36.984 z=-121.753
+seed=58 floor=3 frame=2990 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=4 released=4
+seed=58 floor=3 frame=3080 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=4 released=4
+seed=58 floor=3 frame=3098 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=4
+ FLY id=82 hp=22.4 parent=23 x=-77.53 z=-129.492
+ FLY id=83 hp=22.4 parent=23 x=-77.53 z=-130.411
+seed=58 floor=3 frame=3510 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=6
+ FLY id=82 hp=11.2 parent=0 x=-30.1535 z=-125.128
+ FLY id=83 hp=11.2 parent=0 x=-30.1802 z=-125.326
+seed=58 floor=3 frame=3600 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=6
+ FLY id=82 hp=11.2 parent=0 x=-34.0397 z=-123.733
+ FLY id=83 hp=11.2 parent=0 x=-33.6926 z=-126.24
+seed=58 floor=3 frame=3618 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=6
+ FLY id=82 hp=11.2 parent=0 x=-35.0289 z=-123.692
+ FLY id=83 hp=11.2 parent=0 x=-34.6674 z=-126.068
+seed=58 floor=3 frame=4062 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=4152 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=4170 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=4570 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=4660 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=4678 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=4773 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=5042 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=0 escorts=6 released=6
+seed=58 floor=3 frame=5082 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=6 released=6
+seed=58 floor=3 frame=5132 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=6 released=6
+seed=58 floor=3 frame=5150 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=6 released=6
+seed=58 floor=3 frame=5562 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=6 released=6
+seed=58 floor=3 frame=5652 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=6 released=6
+seed=58 floor=3 frame=5670 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=1 removed=1 escorts=6 released=6
+seed=924 floor=2 frame=1 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=18 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=36 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=268 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=358 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=376 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=580 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=670 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=688 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1048 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1138 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1156 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1426 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1516 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1534 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1766 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1856 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=1874 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=2086 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=2176 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=2194 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=924 floor=2 frame=2214 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=0 released=0
+seed=924 floor=2 frame=2446 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=2 destroyed=0 removed=2 escorts=0 released=0
+seed=924 floor=2 frame=2536 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=2 escorts=0 released=0
+seed=924 floor=2 frame=2554 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=2 escorts=0 released=0
+seed=924 floor=2 frame=2758 state=9 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=3 escorts=0 released=0
+seed=924 floor=2 frame=2894 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=0 released=0
+seed=924 floor=2 frame=2984 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=0 released=0
+seed=924 floor=2 frame=3002 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=0
+ FLY id=63 hp=22.4 parent=23 x=138.365 z=108.47
+ FLY id=64 hp=22.4 parent=23 x=137.421 z=108.47
+seed=924 floor=2 frame=3214 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+ FLY id=63 hp=11.2 parent=0 x=120.809 z=124.893
+ FLY id=64 hp=11.2 parent=0 x=121.694 z=123.546
+seed=924 floor=2 frame=3304 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=3322 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=3662 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=3752 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=3770 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4130 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4220 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4238 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4578 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4668 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4686 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4890 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4980 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=924 floor=2 frame=4998 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=4 released=2
+ FLY id=116 hp=22.4 parent=23 x=147.53 z=122
+ FLY id=117 hp=22.4 parent=23 x=147.53 z=121.413
+seed=924 floor=2 frame=5358 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=4 released=3
+ FLY id=117 hp=11.2 parent=0 x=117.261 z=112.314
+seed=924 floor=2 frame=5448 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=4 released=3
+ FLY id=117 hp=11.2 parent=0 x=119.359 z=114.697
+seed=924 floor=2 frame=5466 state=2 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=4 released=3
+ FLY id=117 hp=11.2 parent=0 x=119.538 z=115.671
+seed=924 floor=2 frame=5806 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=4 released=3
+seed=924 floor=2 frame=5896 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=4 released=3
+seed=924 floor=2 frame=5914 state=6 charge=1 passes=0 repeats=6 shots=0 fire=0 decoys=4 destroyed=0 removed=4 escorts=4 released=3
+seed=749 floor=2 frame=1 state=0 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=18 state=1 charge=0 passes=0 repeats=0 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=36 state=6 charge=1 passes=0 repeats=6 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=390 state=7 charge=1 passes=7 repeats=6 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=392 state=8 charge=1 passes=7 repeats=6 shots=0 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=483 state=8 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=543 state=8 charge=1 passes=7 repeats=6 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=608 state=0 charge=1 passes=7 repeats=6 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=698 state=1 charge=1 passes=7 repeats=6 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=716 state=2 charge=1 passes=7 repeats=6 shots=1 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=812 state=2 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=1058 state=0 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=1148 state=1 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=1166 state=2 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=1488 state=0 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=1578 state=1 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=1596 state=2 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=1918 state=0 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2008 state=1 charge=1 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2026 state=6 charge=2 passes=0 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2380 state=7 charge=2 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2382 state=8 charge=2 passes=7 repeats=6 shots=1 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2473 state=8 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2536 state=8 charge=2 passes=7 repeats=6 shots=2 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2598 state=0 charge=2 passes=7 repeats=6 shots=2 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2688 state=1 charge=2 passes=7 repeats=6 shots=2 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2706 state=2 charge=2 passes=7 repeats=6 shots=2 fire=1 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=2805 state=2 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=3028 state=0 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=0 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=3118 state=1 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=3136 state=9 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=2 destroyed=0 removed=0 escorts=0 released=0
+seed=749 floor=2 frame=3395 state=9 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=2 destroyed=0 removed=1 escorts=0 released=0
+seed=749 floor=2 frame=3452 state=0 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=0 released=0
+seed=749 floor=2 frame=3542 state=1 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=0 released=0
+seed=749 floor=2 frame=3560 state=2 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=0 released=0
+seed=749 floor=2 frame=3882 state=0 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=2 destroyed=0 removed=2 escorts=0 released=0
+seed=749 floor=2 frame=3972 state=1 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=2 escorts=0 released=0
+seed=749 floor=2 frame=3990 state=9 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=2 escorts=0 released=0
+seed=749 floor=2 frame=4249 state=9 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=3 escorts=0 released=0
+seed=749 floor=2 frame=4306 state=0 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=0 released=0
+seed=749 floor=2 frame=4396 state=1 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=0 released=0
+seed=749 floor=2 frame=4414 state=2 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=0 released=0
+seed=749 floor=2 frame=4736 state=0 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=0 released=0
+seed=749 floor=2 frame=4826 state=1 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=0 released=0
+seed=749 floor=2 frame=4844 state=2 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=0
+ FLY id=127 hp=22.4 parent=30 x=76.47 z=-43.9134
+ FLY id=128 hp=22.4 parent=30 x=76.4714 z=-43.6288
+seed=749 floor=2 frame=5206 state=0 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+ FLY id=127 hp=11.2 parent=0 x=127.343 z=-37.2357
+ FLY id=128 hp=11.2 parent=0 x=127.259 z=-37.1373
+seed=749 floor=2 frame=5296 state=1 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+ FLY id=127 hp=11.2 parent=0 x=122.56 z=-38.5105
+ FLY id=128 hp=11.2 parent=0 x=122.485 z=-38.4415
+seed=749 floor=2 frame=5314 state=2 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+ FLY id=127 hp=11.2 parent=0 x=121.603 z=-38.7654
+ FLY id=128 hp=11.2 parent=0 x=121.53 z=-38.7022
+seed=749 floor=2 frame=5674 state=0 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=4 destroyed=0 removed=4 escorts=2 released=2
+seed=749 floor=2 frame=5764 state=1 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=6 destroyed=0 removed=4 escorts=2 released=2
+seed=749 floor=2 frame=5782 state=9 charge=2 passes=7 repeats=6 shots=2 fire=0 decoys=6 destroyed=0 removed=4 escorts=2 released=2

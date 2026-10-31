@@ -1,0 +1,86 @@
+{
+  "note": "Stopped after measuring very low progress in Chrome156; rerun uses previously validated Chrome149. Not a measured game-code regression.",
+  "result": {
+    "id": 1,
+    "result": {
+      "result": {
+        "type": "object",
+        "value": {
+          "frame": 164,
+          "style": "Original",
+          "error": "",
+          "actor": {
+            "type": 34,
+            "variant": 0,
+            "subtype": 0,
+            "hp": 80,
+            "maxHp": 80,
+            "state": 0,
+            "x": -71.99684143066406,
+            "z": -116.00015258789062,
+            "entity": 17,
+            "summoner": 0,
+            "vx": -3.582000494003296,
+            "vz": 0.0448608361184597,
+            "radius": 0.6000000238418579,
+            "y": 0.8500000238418579,
+            "vy": 0,
+            "formation": 0,
+            "componentOwner": 0,
+            "componentSlot": -1,
+            "carrier": 0,
+            "environment": false,
+            "spent": false,
+            "destructionPending": false,
+            "followParent": 0,
+            "followTick": 0,
+            "bossGroup": 0,
+            "half": 0,
+            "attack": 0,
+            "step": 0,
+            "cycles": 0,
+            "friendly": false,
+            "hurtCooldown": 0,
+            "swimming": false,
+            "swimAcceleration": 0,
+            "hopFrame": -1,
+            "thrown": false,
+            "throwFrame": 0,
+            "throwDuration": 0,
+            "lift": 0,
+            "segmented": 0,
+            "armor": 0,
+            "head": false,
+            "settling": false,
+            "targetHop": {
+              "frame": -1,
+              "counter": 1,
+              "hops": 3,
+              "landings": 3,
+              "airborne": false,
+              "ready": false,
+              "pursuing": true,
+              "bonus": 0,
+              "dx": -72,
+              "dz": -116,
+              "mx": -1.194000244140625,
+              "mz": 0.014953612349927425
+            },
+            "leaper": {
+              "phase": 0,
+              "frame": 0,
+              "leaps": 0,
+              "landings": 0,
+              "volleys": 0,
+              "patches": 0,
+              "pending": false,
+              "tx": 0,
+              "tz": 0,
+              "progress": 0
+            }
+          }
+        }
+      }
+    }
+  }
+}

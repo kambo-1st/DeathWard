@@ -1,0 +1,16 @@
+{
+  "start": "0x804185",
+  "end": "0x804263",
+  "raw_sha256": "dceebef2eec7197dcc53bb10cef127d7f210e4d278a6cf4f9475a9979f832522",
+  "sha256": "fbd063897f19464e48b278e7e95f17fef8e7c839ba8d2c0ab03a524025908c2c",
+  "properties": {
+    "GridCollision": 0,
+    "HeightModifier": 4,
+    "FallingSpeedModifier": 8,
+    "FallingAccelModifier": 12,
+    "VelocityMulti": 16,
+    "Scale": 20,
+    "HomingStrength": 28
+  },
+  "finding": "Host writes VelocityMulti1.07; Floast1.2 plus byte98 skip-common flag. Common modes2/5 multiply shots1.2 and add .4 parent velocity; Floast skips that common step."
+}

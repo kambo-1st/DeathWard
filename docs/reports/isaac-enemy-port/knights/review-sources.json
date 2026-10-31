@@ -1,0 +1,1362 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "records": [
+    {
+      "key": "41.0.0",
+      "id": 41,
+      "variant": 0,
+      "subtype": 0,
+      "name": "Knight",
+      "xml": {
+        "anm2path": "041.000_Knight.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "41",
+        "name": "#KNIGHT",
+        "numGridCollisionPoints": "12",
+        "portrait": "37",
+        "reroll": "true",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:41.0.0",
+      "wiki_matches": [
+        {
+          "page": "Knight",
+          "box": 0,
+          "group": "entity",
+          "fields": {
+            "id": "41",
+            "image name": "* [Before Repentance] Rebirth",
+            "base hp": "20",
+            "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nUtero / \nSheol / Cathedral / \nChallenge /",
+            "behavior": "Moves erratically around the room and charges towards Isaac when in line of sight. Can only be damaged with regular tears from behind."
+          },
+          "section_indices": [
+            0
+          ],
+          "name": "Knight",
+          "variant": 0,
+          "subtype": 0,
+          "id": 41,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Knight"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 20.0,
+        "2": 20.0,
+        "3": 20.0,
+        "4": 20.0,
+        "5": 20.0,
+        "6": 20.0,
+        "7": 20.0,
+        "8": 20.0,
+        "9": 20.0,
+        "10": 20.0,
+        "11": 20.0,
+        "12": 20.0,
+        "13": 20.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Knight",
+      "room_library_presence": {
+        "rooms/04.caves.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/05.catacombs.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/06.flooded caves.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/07.depths.stb": {
+          "templates": 47,
+          "positive_weight_templates": 47
+        },
+        "rooms/08.necropolis.stb": {
+          "templates": 22,
+          "positive_weight_templates": 22
+        },
+        "rooms/09.dank depths.stb": {
+          "templates": 48,
+          "positive_weight_templates": 48
+        },
+        "rooms/11.utero.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/14.sheol.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/15.cathedral.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/07.depths.stb": {
+          "templates": 12,
+          "positive_weight_templates": 12
+        },
+        "rooms/greed/08.necropolis.stb": {
+          "templates": 14,
+          "positive_weight_templates": 14
+        },
+        "rooms/greed/09.dank depths.stb": {
+          "templates": 14,
+          "positive_weight_templates": 14
+        },
+        "rooms/greed/14.sheol.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/24.the shop.stb": {
+          "templates": 5,
+          "positive_weight_templates": 5
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Knight",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Skull",
+        "catalog_base_hp": 104.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 77,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Knight",
+          "section": 0
+        }
+      ],
+      "feature_triage": [
+        "damage-modifiers",
+        "projectile-transform",
+        "grid-and-explosions",
+        "locomotion-and-navigation",
+        "conditional-vulnerability",
+        "randomness"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "41.1.0",
+      "id": 41,
+      "variant": 1,
+      "subtype": 0,
+      "name": "Selfless Knight",
+      "xml": {
+        "anm2path": "041.001_Selfless Knight.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "41",
+        "name": "#SELFLESS_KNIGHT",
+        "numGridCollisionPoints": "12",
+        "portrait": "38",
+        "reroll": "true",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:41.1.0",
+      "wiki_matches": [
+        {
+          "page": "Knight",
+          "box": 1,
+          "group": "entity",
+          "fields": {
+            "name": "Selfless Knight",
+            "variant": "1",
+            "base hp": "20",
+            "environment": "Sheol / \nchallenge /",
+            "replace": "Knight",
+            "replace chance": "4.96%",
+            "behavior": "Moves erratically around the room and charges towards Isaac very quickly when in line of sight. Can only be damaged with regular tears from behind."
+          },
+          "section_indices": [
+            2
+          ],
+          "name": "Selfless Knight",
+          "variant": 1,
+          "subtype": 0,
+          "id": 41,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Knight"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 20.0,
+        "2": 20.0,
+        "3": 20.0,
+        "4": 20.0,
+        "5": 20.0,
+        "6": 20.0,
+        "7": 20.0,
+        "8": 20.0,
+        "9": 20.0,
+        "10": 20.0,
+        "11": 20.0,
+        "12": 20.0,
+        "13": 20.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Selfless Knight",
+      "room_library_presence": {
+        "rooms/14.sheol.stb": {
+          "templates": 26,
+          "positive_weight_templates": 26
+        },
+        "rooms/greed/14.sheol.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/24.the shop.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Selfless Knight",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Skull",
+        "catalog_base_hp": 112.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 78,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Knight",
+          "section": 2
+        }
+      ],
+      "feature_triage": [
+        "conditional-vulnerability"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "41.2.0",
+      "id": 41,
+      "variant": 2,
+      "subtype": 0,
+      "name": "loose knight",
+      "xml": {
+        "anm2path": "041.002_loose knight.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "41",
+        "name": "#LOOSE_KNIGHT",
+        "numGridCollisionPoints": "12",
+        "portrait": "230",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "2"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:41.2.0",
+      "wiki_matches": [
+        {
+          "page": "Knight",
+          "box": 4,
+          "group": "entity",
+          "fields": {
+            "dlc": "r",
+            "name": "Loose Knight",
+            "id": "41",
+            "variant": "2",
+            "base hp": "20",
+            "environment": "Ashpit / \nMausoleum / \nchallenge /",
+            "replace": "Knight",
+            "replace chance": "1.67%",
+            "behavior": "Moves erratically around the room, charges toward Isaac when in line of sight. When its health is depleted, it turns into a Brainless Knight and a Pon."
+          },
+          "section_indices": [
+            5
+          ],
+          "name": "Loose Knight",
+          "variant": 2,
+          "subtype": 0,
+          "id": 41,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Knight"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 20.0,
+        "2": 20.0,
+        "3": 20.0,
+        "4": 20.0,
+        "5": 20.0,
+        "6": 20.0,
+        "7": 20.0,
+        "8": 20.0,
+        "9": 20.0,
+        "10": 20.0,
+        "11": 20.0,
+        "12": 20.0,
+        "13": 20.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Loose Knight",
+      "room_library_presence": {
+        "rooms/30.ashpit.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/31.mausoleum.stb": {
+          "templates": 39,
+          "positive_weight_templates": 39
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/31.mausoleum.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Loose Knight",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Skull",
+        "catalog_base_hp": 112.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 79,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Knight",
+          "section": 5
+        }
+      ],
+      "feature_triage": [
+        "status-effects",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "41.3.0",
+      "id": 41,
+      "variant": 3,
+      "subtype": 0,
+      "name": "empty knight",
+      "xml": {
+        "anm2path": "041.003_empty knight.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "41",
+        "name": "#BRAINLESS_KNIGHT",
+        "numGridCollisionPoints": "12",
+        "portrait": "231",
+        "shadowSize": "14",
+        "shutdoors": "false",
+        "stageHP": "0",
+        "variant": "3"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:41.3.0",
+      "wiki_matches": [
+        {
+          "page": "Knight",
+          "box": 5,
+          "group": "entity",
+          "fields": {
+            "dlc": "r",
+            "name": "Brainless Knight",
+            "variant": "3",
+            "environment": "Mausoleum /",
+            "behavior": "Alternates between running around the room along the cardinal directions and aimlessly walking in circles. Charges at Isaac when in line of sight. Dies when its corresponding Pon dies."
+          },
+          "section_indices": [
+            6
+          ],
+          "name": "Brainless Knight",
+          "variant": 3,
+          "subtype": 0,
+          "id": 41,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Knight"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 20.0,
+        "2": 20.0,
+        "3": 20.0,
+        "4": 20.0,
+        "5": 20.0,
+        "6": 20.0,
+        "7": 20.0,
+        "8": 20.0,
+        "9": 20.0,
+        "10": 20.0,
+        "11": 20.0,
+        "12": 20.0,
+        "13": 20.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Brainless Knight",
+      "room_library_presence": {
+        "rooms/31.mausoleum.stb": {
+          "templates": 18,
+          "positive_weight_templates": 18
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/31.mausoleum.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Brainless Knight",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Headless",
+        "catalog_base_hp": 96.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 80,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Knight",
+          "section": 6
+        }
+      ],
+      "feature_triage": [
+        "health-and-defenses",
+        "room-floor-run-events",
+        "locomotion-and-navigation",
+        "conditional-vulnerability"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "41.4.0",
+      "id": 41,
+      "variant": 4,
+      "subtype": 0,
+      "name": "black knight",
+      "xml": {
+        "anm2path": "041.004_black knight.anm2",
+        "baseHP": "30",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "100",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "41",
+        "name": "#BLACK_KNIGHT",
+        "numGridCollisionPoints": "12",
+        "portrait": "281",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "4"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:41.4.0",
+      "wiki_matches": [
+        {
+          "page": "Knight",
+          "box": 6,
+          "group": "entity",
+          "fields": {
+            "dlc": "r",
+            "name": "Black Knight",
+            "variant": "4",
+            "base hp": "30",
+            "environment": "Gehenna / \nchallenge /",
+            "behavior": "Moves erratically around the room, charges toward Isaac when in line of sight. Unleashes waves of fire in all cardinal directions upon charging into an obstacle. Shots that hit it from the front are deflected back at Isaac."
+          },
+          "section_indices": [
+            7
+          ],
+          "name": "Black Knight",
+          "variant": 4,
+          "subtype": 0,
+          "id": 41,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Knight"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 30.0,
+        "2": 30.0,
+        "3": 30.0,
+        "4": 30.0,
+        "5": 30.0,
+        "6": 30.0,
+        "7": 30.0,
+        "8": 30.0,
+        "9": 30.0,
+        "10": 30.0,
+        "11": 30.0,
+        "12": 30.0,
+        "13": 30.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Black Knight",
+      "room_library_presence": {
+        "rooms/32.gehenna.stb": {
+          "templates": 43,
+          "positive_weight_templates": 43
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Black Knight",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Skull",
+        "catalog_base_hp": 144.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 81,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Knight",
+          "section": 7
+        }
+      ],
+      "feature_triage": [
+        "projectile-transform",
+        "grid-and-explosions",
+        "health-and-defenses",
+        "room-floor-run-events",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "840.0.0",
+      "id": 840,
+      "variant": 0,
+      "subtype": 0,
+      "name": "pon",
+      "xml": {
+        "anm2path": "840.000_pon.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "840",
+        "name": "#PON",
+        "numGridCollisionPoints": "12",
+        "portrait": "232",
+        "shadowSize": "25",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:840.0.0",
+      "wiki_matches": [
+        {
+          "page": "Brain",
+          "box": 4,
+          "group": "entity",
+          "fields": {
+            "dlc": "r",
+            "name": "Pon",
+            "id": "840",
+            "base hp": "20",
+            "environment": "Mines / \nMausoleum /",
+            "behavior": "Hops around the room, leaving damaging red creep wherever it lands. Upon death, its associated Brainless Knight dies with it."
+          },
+          "section_indices": [
+            5
+          ],
+          "name": "Pon",
+          "variant": 0,
+          "subtype": 0,
+          "id": 840,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Brain"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 20.0,
+        "2": 20.0,
+        "3": 20.0,
+        "4": 20.0,
+        "5": 20.0,
+        "6": 20.0,
+        "7": 20.0,
+        "8": 20.0,
+        "9": 20.0,
+        "10": 20.0,
+        "11": 20.0,
+        "12": 20.0,
+        "13": 20.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Pon",
+      "room_library_presence": {
+        "rooms/29.mines.stb": {
+          "templates": 13,
+          "positive_weight_templates": 13
+        },
+        "rooms/31.mausoleum.stb": {
+          "templates": 39,
+          "positive_weight_templates": 39
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/31.mausoleum.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Pon",
+        "motion": "Hop",
+        "attack": "None",
+        "shape": "Blob",
+        "catalog_base_hp": 64.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 137,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Brain",
+          "section": 5
+        }
+      ],
+      "feature_triage": [
+        "child-spawns-and-ownership"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    }
+  ],
+  "articles": {
+    "Knight": {
+      "title": "Knight",
+      "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Knight",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271631",
+      "revision": 271631,
+      "timestamp": "2026-10-15T18:43:18Z",
+      "license": "CC BY-SA 4.0",
+      "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "level": 0,
+          "text": "Knights are enemies that can normally only be damaged from their exposed brains on the backs of their heads. However, explosions, attacks that pierce enemies (Brimstone, Cupid's Arrow, etc.), or melee attacks (Spirit Sword, Mom's Knife, etc.), will deal damage from any direction. The Knight normally walks around in random directions and will dash at Isaac if he is within line of sight."
+        },
+        {
+          "heading": "Variations",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Selfless Knight",
+          "level": 3,
+          "text": "Selfless Knights are considerably faster than regular Knights but otherwise function the same. Rather than an exposed brain, they have Isaac's face on the backs of their heads."
+        },
+        {
+          "heading": "Floating Knight",
+          "level": 3,
+          "text": "Floating Knights are similar to ordinary Knights but are slightly slower and can fly over obstacles."
+        },
+        {
+          "heading": "Bone Knight",
+          "level": 3,
+          "text": "Bone Knights are similar to ordinary Knights but leaves behind a short-lasting trail of damaging Red Creep. They charge faster than an ordinary Knight, but not as fast as the Selfless Knight. [Before Repentance] Bone Knights are the only variant of Knights that are susceptible to knockback both from the front and from the back."
+        },
+        {
+          "heading": "Loose Knight",
+          "level": 3,
+          "text": "Loose Knights are similar to ordinary Knights, but move slower and separates into a Brainless Knight and Pon when killed."
+        },
+        {
+          "heading": "Brainless Knight",
+          "level": 3,
+          "text": "Brainless Knights are a variant of Knight created when a Loose Knight dies. They alternate between running around the room along the cardinal directions and aimlessly walking in circles, charging at Isaac when he gets in line of sight. It dies when its corresponding Pon dies; otherwise, they are invincible."
+        },
+        {
+          "heading": "Black Knight",
+          "level": 3,
+          "text": "Black Knights are a variant of Knight that have slightly higher health and will walk erratically around the room, charging at Isaac if he is within line of sight. When charging, they accelerate rapidly, sending waves of fire in the cardinal directions and becoming stunned momentarily after colliding with a wall or obstacle. A Black Knight's mask will also reflect any of Isaac's tears that come in contact with it. They are almost immune to knockback and other forced-movement (such as Black Hole)."
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "text": "\u2022 [Repentance+] Hagalaz has the following interactions with the Knight and its variations:\n\n\u2022 Knight, Floating Knight, Bone Knight - Destroys and leaves behind a Brain\n\n\u2022 Selfless Knight - Notably, no effect\n\n\u2022 Loose Knight, Black Knight - Destroys and leaves behind a Pon\n\n\u2022 Brainless Knight - Destroys and leaves nothing\n[end edition note] \n\n\u2022 The Knight is a monster in two segments: an invisible, invincible \"shield\" segment that leads the way and the visible \"body\" that follows close behind. The shield takes no damage and partially covers the body, stopping shots that would damage it.\n\n\u2022 Sometimes, when a Knight changes directions, it appears to pause for a moment; this is because the shield segment is moving past the body segment, and the body won't move until the shield moves away from it, the same way the trailing segments of Larry Jr. or Buttlicker chains behave.\n\n\u2022 [Afterbirth+ onward] Prior to Booster Pack #5, the Knight and its variants were briefly invulnerable when they spawned, or when Isaac entered the room they are in. They would become vulnerable when they started moving.\n\n\u2022 In the original Binding of Isaac, Knights were completely vulnerable when they spawned; the shield segment did not cover the Knight's front until it started moving, so Isaac could shoot it in the face for damage as soon as it appeared.\n\n\u2022 Items that provide a fear effect (like Dark Matter) work remarkably well because they run away from Isaac, exposing their weak side.\n\n\u2022 Items that have a damage-over-time effect (such as Fire Mind or Scorpio) also work well, since hitting them on the shield portion will still inflict the effect and mitigate the need to hit them from behind.\n\n\u2022 The name of the monster is a reference to the Darknut (also known as Tartnuc) enemy from The Legend of Zelda who, similar to Knights, cannot be harmed from their front.\n\n\u2022 Floating Knights cannot fly over key blocks.\n\n\u2022 If Isaac charms a Knight and it is the only enemy in the room, the Knight will chase Isaac but will not charge, making the Knight more difficult to damage until the effect is gone."
+        },
+        {
+          "heading": "Trivia",
+          "level": 2,
+          "text": "\u2022 [Repentance] The Black Knight, Brainless Knight, and Loose Knight first appeared in the Antibirth mod.\n\n\u2022 In Antibirth, Brainless Knights were referred to as Empty Knights.\n\n\u2022 Black Knights had a slightly different appearance in Antibirth and would spawn in the Mausoleum.\n\n\u2022 Knights and their variants first appear in Chapter 2 (Caves,Catacombs,Flooded Caves), but become much more common in Chapter 3 (Depths,Necropolis,Dank Depths).\n\n\u2022 [Repentance] The functionality of Black Knights and their ability to deflect Isaac's tears from the front is similar to that of Eternal Knight champions in the original flash version of the Binding of Isaac: Eternal Edition.\n\n\u2022 [Repentance+] Bone Knight is the only Knight variant that does not play sound effects."
+        },
+        {
+          "heading": "Gallery",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Bugs",
+          "level": 2,
+          "text": "Bug note: The hitbox of Dark Red Champion Knights (and their variants) do not change when they crumble into goo, and they must be shot from the back to damage them."
+        }
+      ],
+      "boxes": [
+        {
+          "template": "infobox monster",
+          "section": 0,
+          "fields": {
+            "id": "41",
+            "image name": "* [Before Repentance] Rebirth",
+            "base hp": "20",
+            "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nUtero / \nSheol / Cathedral / \nChallenge /",
+            "behavior": "Moves erratically around the room and charges towards Isaac when in line of sight. Can only be damaged with regular tears from behind."
+          },
+          "group": "entity",
+          "id": 41,
+          "name": "Knight",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            0
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 2,
+          "fields": {
+            "name": "Selfless Knight",
+            "variant": "1",
+            "base hp": "20",
+            "environment": "Sheol / \nchallenge /",
+            "replace": "Knight",
+            "replace chance": "4.96%",
+            "behavior": "Moves erratically around the room and charges towards Isaac very quickly when in line of sight. Can only be damaged with regular tears from behind."
+          },
+          "group": "entity",
+          "id": 41,
+          "name": "Selfless Knight",
+          "variant": 1,
+          "subtype": 0,
+          "section_indices": [
+            2
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 3,
+          "fields": {
+            "name": "Floating Knight",
+            "image name": "* [Before Repentance] Rebirth",
+            "id": "254",
+            "base hp": "20",
+            "environment": "Depths / Necropolis / Dank Depths / \nCathedral / \nboss /",
+            "behavior": "Behaves like the Knight but slower, and can fly over all obstacles."
+          },
+          "group": "entity",
+          "id": 254,
+          "name": "Floating Knight",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            3
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 4,
+          "fields": {
+            "dlc": "a",
+            "name": "Bone Knight",
+            "image name": "* [Before Repentance] Afterbirth",
+            "id": "283",
+            "base hp": "20",
+            "environment": "Sheol / \nDark Room / Chest /",
+            "behavior": "Moves erratically around the room, charges toward Isaac when in line of sight, and leaves behind a short-lasting trail of damaging Red Creep. Can only be damaged with regular tears from behind."
+          },
+          "group": "entity",
+          "id": 283,
+          "name": "Bone Knight",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            4
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 5,
+          "fields": {
+            "dlc": "r",
+            "name": "Loose Knight",
+            "id": "41",
+            "variant": "2",
+            "base hp": "20",
+            "environment": "Ashpit / \nMausoleum / \nchallenge /",
+            "replace": "Knight",
+            "replace chance": "1.67%",
+            "behavior": "Moves erratically around the room, charges toward Isaac when in line of sight. When its health is depleted, it turns into a Brainless Knight and a Pon."
+          },
+          "group": "entity",
+          "id": 41,
+          "name": "Loose Knight",
+          "variant": 2,
+          "subtype": 0,
+          "section_indices": [
+            5
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 6,
+          "fields": {
+            "dlc": "r",
+            "name": "Brainless Knight",
+            "variant": "3",
+            "environment": "Mausoleum /",
+            "behavior": "Alternates between running around the room along the cardinal directions and aimlessly walking in circles. Charges at Isaac when in line of sight. Dies when its corresponding Pon dies."
+          },
+          "group": "entity",
+          "id": 41,
+          "name": "Brainless Knight",
+          "variant": 3,
+          "subtype": 0,
+          "section_indices": [
+            6
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 7,
+          "fields": {
+            "dlc": "r",
+            "name": "Black Knight",
+            "variant": "4",
+            "base hp": "30",
+            "environment": "Gehenna / \nchallenge /",
+            "behavior": "Moves erratically around the room, charges toward Isaac when in line of sight. Unleashes waves of fire in all cardinal directions upon charging into an obstacle. Shots that hit it from the front are deflected back at Isaac."
+          },
+          "group": "entity",
+          "id": 41,
+          "name": "Black Knight",
+          "variant": 4,
+          "subtype": 0,
+          "section_indices": [
+            7
+          ]
+        }
+      ]
+    },
+    "Brain": {
+      "title": "Brain",
+      "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Brain",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270038",
+      "revision": 270038,
+      "timestamp": "2026-10-03T03:04:15Z",
+      "license": "CC BY-SA 4.0",
+      "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "level": 0,
+          "text": "Brains slide around the room erratically in the cardinal directions, leaving a trail of red creep, they deal a whole heart of contact damage. When Isaac is within line of sight they will charge in his direction until they collide with an obstacle or another enemy similar to Knights."
+        },
+        {
+          "heading": "Variants",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Poison Mind",
+          "level": 3,
+          "text": "Poison Minds behave like regular Brains, but they slide diagonally and leave a trail of green creep.\n\n[Repentance] Poison Minds float, passing over obstacles, and explode when killed."
+        },
+        {
+          "heading": "Black Globin's Head",
+          "level": 3,
+          "text": "Black Globin's Heads behave like Brains, but they target Isaac directly, chasing him."
+        },
+        {
+          "heading": "Festering Guts",
+          "level": 3,
+          "text": "Festering Guts are spawned exclusively by Gutted Fatty. They travel around the room randomly in cardinal directions and occasionally spawn a Charger."
+        },
+        {
+          "heading": "Pon",
+          "level": 3,
+          "text": "Pons hop around erratically leaving red creep wherever they land. If close to Isaac then they will hop towards Isaac chasing him similarly to Hoppers.\n\nThey can spawn with a paired Brainless Knight in which killing them is required to kill their corresponding Brainless Knight. A Pon and a Brainless Knight pair will always spawn when Loose Knight is killed."
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "text": "\u2022 [Afterbirth+ onward] If Poison Minds aren't unlocked yet, they are replaced by Brains."
+        },
+        {
+          "heading": "Trivia",
+          "level": 2,
+          "text": "\u2022 [Repentance] The Pon first appeared in the Antibirth mod where it could also appear in Depths.\n\n\u2022 [Repentance] The name of Pon is likely a pun in reference to the homophonic pronunciation of the Pons region of the brain and pawns from chess."
+        }
+      ],
+      "boxes": [
+        {
+          "template": "infobox monster",
+          "section": 0,
+          "fields": {
+            "id": "32",
+            "image name": "* [Before Repentance] Rebirth",
+            "base hp": "20",
+            "environment": "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+            "behavior": "Slowly crawls around the room, leaving a trail of red creep."
+          },
+          "group": "entity",
+          "id": 32,
+          "name": "Brain",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            0
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 2,
+          "fields": {
+            "dlc": "a+",
+            "name": "Poison Mind",
+            "image name": "* [Before Repentance] Afterbirth+",
+            "id": "301",
+            "base hp": "20",
+            "environment": "Depths / Necropolis / \nWomb / Utero / Scarred Womb / \nCorpse / \nchallenge / \n[Before Repentance] Chance to replace Brains",
+            "behavior": "Slowly [Before Repentance] crawls/ [Repentance] floats around the room diagonally, leaving a trail of damaging green creep. [Repentance] Explodes upon death.",
+            "unlocked by": "The gate is open!"
+          },
+          "group": "entity",
+          "id": 301,
+          "name": "Poison Mind",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            2
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 3,
+          "fields": {
+            "dlc": "a",
+            "name": "Black Globin's Head",
+            "id": "279",
+            "base hp": "20",
+            "environment": "Cellar / \nDepths / Necropolis / Dank Depths / \nSheol / \nchallenge / number magnet / curse / Super Secret / \nSpawned after killing a Black Globin.",
+            "behavior": "Slides towards Isaac, leaving a trail of damaging red creep."
+          },
+          "group": "entity",
+          "id": 279,
+          "name": "Black Globin's Head",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            3
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 4,
+          "fields": {
+            "dlc": "r",
+            "name": "Festering Guts",
+            "id": "831",
+            "variant": "20",
+            "base hp": "22",
+            "environment": "Corpse / \nSpawned exclusively by Gutted Fatties.",
+            "behavior": "Spawned by Gutted Fatty, Festering Guts randomly slide around the room and occasionally spawn a Charger."
+          },
+          "group": "entity",
+          "id": 831,
+          "name": "Festering Guts",
+          "variant": 20,
+          "subtype": 0,
+          "section_indices": [
+            4
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 5,
+          "fields": {
+            "dlc": "r",
+            "name": "Pon",
+            "id": "840",
+            "base hp": "20",
+            "environment": "Mines / \nMausoleum /",
+            "behavior": "Hops around the room, leaving damaging red creep wherever it lands. Upon death, its associated Brainless Knight dies with it."
+          },
+          "group": "entity",
+          "id": 840,
+          "name": "Pon",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            5
+          ]
+        }
+      ]
+    }
+  },
+  "interpretation": "Installed mask-direction helper overrides the wiki inference of an independent invisible shield. Hagalaz changes explicitly marked Repentance+ are excluded."
+}

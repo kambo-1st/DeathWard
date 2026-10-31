@@ -1,0 +1,41 @@
+START cover
+PROGRESS cover 11 leaps 0 volleys 0
+PROGRESS cover 110 leaps 0 volleys 0
+PROGRESS cover 211 leaps 0 volleys 0
+PASS cover volleys 1
+START river
+PROGRESS river 11 leaps 0 volleys 0
+PROGRESS river 110 leaps 0 volleys 0
+PROGRESS river 210 leaps 0 volleys 0
+PROGRESS river 310 leaps 1 volleys 1
+PROGRESS river 410 leaps 1 volleys 1
+PROGRESS river 510 leaps 1 volleys 1
+PROGRESS river 610 leaps 1 volleys 1
+PROGRESS river 710 leaps 1 volleys 1
+PROGRESS river 810 leaps 2 volleys 1
+PROGRESS river 910 leaps 2 volleys 2
+PROGRESS river 1010 leaps 3 volleys 2
+PROGRESS river 1110 leaps 3 volleys 3
+PROGRESS river 1210 leaps 4 volleys 4
+PROGRESS river 1310 leaps 4 volleys 4
+PROGRESS river 1410 leaps 4 volleys 4
+PROGRESS river 1510 leaps 4 volleys 4
+PROGRESS river 1610 leaps 4 volleys 4
+PROGRESS river 1710 leaps 4 volleys 4
+PROGRESS river 1810 leaps 4 volleys 4
+PROGRESS river 1910 leaps 4 volleys 4
+PROGRESS river 2010 leaps 4 volleys 4
+PROGRESS river 2110 leaps 4 volleys 4
+PROGRESS river 2210 leaps 4 volleys 4
+PROGRESS river 2310 leaps 4 volleys 4
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(result.captures.high&&result.captures.volley)
+
+    at /home/kambo/workspace/DeathWard/web/leaper-test.cjs:53:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '=='
+}

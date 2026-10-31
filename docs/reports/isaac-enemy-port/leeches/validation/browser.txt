@@ -1,0 +1,12 @@
+START leech
+PASS leech
+START kamikaze
+PASS kamikaze
+START holy
+PASS holy
+START resident-leech
+PASS resident-leech
+START resident-kamikaze
+PASS resident-kamikaze
+START resident-holy
+PASS resident-holy

@@ -1,0 +1,339 @@
+{
+  "scope": "Partial normal-hostile Host27.0, Red Host27.1, Mobile Host204, Flesh Mobile Host247 and Floast859; Hard Host27.3 research only.",
+  "source": "docs/reports/isaac-enemy-port/hosts/source-review.md",
+  "adaptations": [
+    "Source30Hz, distance x.1, velocity x3, HP x3.2; established local hostile damage10.",
+    "Collision-aware3D movement/local path solver, physical combat-plane shots with five-second lifetime, whole-volley capacity retry, stun cancels/closes the cast.",
+    "Original procedural skull/stem, unarmored red flesh, walking legs and floating body; no source artwork imported.",
+    "Authored ordinary specialist pools: first four from band1, Floast band3, cap1 each; not on the opening floor."
+  ],
+  "remaining": [
+    "Hard Host27.3 is source-reviewed only: legacy HP/generic AI remain unverified; aimed physical rock shockwave, cover destruction and nearby knockback need implementation. Mushroom300 has a separate controller.",
+    "Native status/champion/friendly/control branches, subtype99/Bracelet transformations and grimace interactions remain open.",
+    "Poison/booger/spike/crush distinctions, source projectile height/fall/lifetime, native grid and RNG parity remain open.",
+    "Native replacement probabilities and exact alternate-stage placement remain open; local pools use documented authored weights/costs.",
+    "Full combat readability, balance and controlled Linux/WASM performance acceptance remain open; no complete port is claimed."
+  ],
+  "native": {
+    "passed": 76,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/hosts/native.xml",
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "boil_family",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "hosts",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "maw_family",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "corrected_reports": [
+      "docs/reports/isaac-enemy-port/hosts/maw-corrected.xml",
+      "docs/reports/isaac-enemy-port/hosts/boom-corrected-2.xml"
+    ],
+    "behavior": "docs/reports/isaac-enemy-port/hosts/native-targeted.txt",
+    "corrections": "Full run passed74/76. Maw fixture now uses each expedition actual first band1 floor; Bone Fly retains earlier seed candidates and adds an independently verified seed93/floor3/room3. Both corrected suites pass. First Bone retry was terminated with143 and is retained without claiming a pass. Initial Host fixture used an out-of-range fixed floor and was corrected to use the generated expedition plan."
+  },
+  "browser": {
+    "cases": 10,
+    "report": "docs/reports/isaac-enemy-port/hosts/web-clean/results.json",
+    "scope": "Production WASM five regular Host identities plus seeded residents, runtime armor windows, physical projectiles, movement, health and Original-style captures. Native tests cover incoming damage and saturation. Partial acceptance only.",
+    "errors": [],
+    "build": "docs/reports/isaac-enemy-port/hosts/build-wasm-clean.txt",
+    "startup_diagnostic": "docs/reports/isaac-enemy-port/hosts/browser-diagnostic.txt"
+  },
+  "visual": {
+    "scope": "Twenty-eight final Original-style images inspected:13Linux and15productionWASM. Bodies and open/closed poses visible. Static appearance evidence only; not full combat readability, balance or performance certification.",
+    "final_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Grounded ivory skull and exposed red stem visible; three physical shots separate from body."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-red-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Vulnerable red body and five-shot fan visible against sand."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-mobile-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Skull, stem and walking feet visible; raised and lowered poses distinct."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-flesh-mobile-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body and walking feet visible, with five-shot fan in isolated attack view."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-floast.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Floating skull and displaced ground shadow visible; moving body near bottom of isolated view and three shots visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-natural-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Host visible beside the well, distinct from surrounding breakable cover."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-natural-red-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red Host visible in open road area; other nearby enemies and cover retained."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-natural-flesh-mobile-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body visible beside/at the protagonist in contact. Native view has some overlap; browser view shows separated silhouettes."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-natural-mobile-host.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Body visible in cliff shadow, overlapping the protagonist at contact. Small leg/face details are less clear; combat readability remains open."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-grounded-natural-floast.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Hovering skull visible at the river edge with its shadow and physical projectiles."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-settled-host-closed.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Settled-camera closed pose: Grounded ivory skull and exposed red stem visible; three physical shots separate from body."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-settled-mobile-host-closed.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Settled-camera closed pose: Skull, stem and walking feet visible; raised and lowered poses distinct."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/native-settled-floast-closed.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Settled-camera closed pose: Floating skull and displaced ground shadow visible; moving body near bottom of isolated view and three shots visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/flesh-mobile-host-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Lowered/recovery pose visible after camera settling. Red body remains vulnerable; this label refers only to animation state."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/flesh-mobile-host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body and walking feet visible, with five-shot fan in isolated attack view."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/floast-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Lowered/recovery pose visible after camera settling. Skull armor closed; Floast remains floating."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/floast.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Floating skull and displaced ground shadow visible; moving body near bottom of isolated view and three shots visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/host-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Lowered/recovery pose visible after camera settling. Skull lowered over stem; distinct from raised pose."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Grounded ivory skull and exposed red stem visible; three physical shots separate from body."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/mobile-host-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Lowered/recovery pose visible after camera settling. Skull lowered over stem; distinct from raised pose."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/mobile-host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Skull, stem and walking feet visible; raised and lowered poses distinct."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/natural-flesh-mobile-host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body visible beside/at the protagonist in contact. Native view has some overlap; browser view shows separated silhouettes."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/natural-floast.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Hovering skull visible at the river edge with its shadow and physical projectiles."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/natural-host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Host visible beside the well, distinct from surrounding breakable cover."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/natural-mobile-host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Body visible in cliff shadow, overlapping the protagonist at contact. Small leg/face details are less clear; combat readability remains open."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/natural-red-host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red Host visible in open road area; other nearby enemies and cover retained."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/red-host-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Lowered/recovery pose visible after camera settling. Red body remains vulnerable; this label refers only to animation state."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hosts/web-clean/red-host.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Vulnerable red body and five-shot fan visible against sand."
+      }
+    ],
+    "defects": [
+      {
+        "before": "docs/reports/isaac-enemy-port/hosts/native-host.png",
+        "after": "docs/reports/isaac-enemy-port/hosts/native-grounded-host.png",
+        "finding": "Old generic type27 pedestal drew underneath dedicated Host. Generic pedestal is now excluded when the actor has dedicated Host runtime."
+      },
+      {
+        "before": "docs/reports/isaac-enemy-port/hosts/native-final-host.png",
+        "after": "docs/reports/isaac-enemy-port/hosts/native-grounded-host.png",
+        "finding": "Stationary stem floated above terrain; explicit ground root now grounds stationary/walking bodies, retaining Floast hover."
+      },
+      {
+        "before": "docs/reports/isaac-enemy-port/hosts/native-grounded-host-closed.png",
+        "after": "docs/reports/isaac-enemy-port/hosts/native-settled-host-closed.png",
+        "finding": "Early frame10 closed capture preceded camera settling and obscured body behind cliff; frame180 captures used instead. Runtime unchanged."
+      }
+    ],
+    "limitations": [
+      "Natural Mobile Host overlaps the protagonist in cliff shadow. Contact readability still needs full combat acceptance.",
+      "Floast isolated open view is near the bottom edge; its closed view shows hovering skull near the far wall.",
+      "FPS overlays are incidental measurements while other build/test tasks ran. No controlled performance gate claimed.",
+      "Natural Flesh Mobile Host did not emit an observed projectile during the browser sample; its isolated case did, and native tests cover attacks. Seeded case establishes reachability and runtime state only."
+    ]
+  },
+  "complete": false
+}

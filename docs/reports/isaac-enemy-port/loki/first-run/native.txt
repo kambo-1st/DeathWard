@@ -1,0 +1,138 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start 45: boom_flies
+      Start  5: floor_progression
+      Start  7: expedition_destruction
+      Start  3: expedition_economy
+ 1/54 Test  #5: floor_progression ................***Failed    7.15 sec
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_CHARGER id=855.0 seed=0 floor=5 room=12 variant=0
+NATURAL_GRILLED seed=1 floor=0 room=4
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+FAIL source bosses stay in their reviewed stage bands
+
+      Start 16: canyon_rivers
+ 2/54 Test #16: canyon_rivers ....................   Passed   16.37 sec
+      Start  9: expedition
+ 3/54 Test  #3: expedition_economy ...............   Passed   32.89 sec
+      Start 44: fly_bombs
+ 4/54 Test  #9: expedition .......................   Passed   13.30 sec
+      Start 10: expedition_pacing
+ 5/54 Test #45: boom_flies .......................   Passed   39.45 sec
+      Start 53: generated_dungeons
+ 6/54 Test #44: fly_bombs ........................   Passed   13.41 sec
+      Start  6: item_builds
+ 7/54 Test #10: expedition_pacing ................   Passed   10.26 sec
+      Start  4: canyon_bosses
+ 8/54 Test  #4: canyon_bosses ....................   Passed    7.04 sec
+      Start 15: canyon_roads
+ 9/54 Test  #6: item_builds ......................   Passed    8.49 sec
+      Start 37: bloat_boss_and_chargers
+10/54 Test  #7: expedition_destruction ...........   Passed   55.31 sec
+      Start 30: monster_flight
+11/54 Test #37: bloat_boss_and_chargers ..........   Passed    2.01 sec
+      Start 48: shell_boss
+12/54 Test #30: monster_flight ...................   Passed    2.98 sec
+      Start 39: companion_familiars
+13/54 Test #48: shell_boss .......................   Passed    2.77 sec
+      Start 36: monster_boss_components
+14/54 Test #39: companion_familiars ..............   Passed    1.72 sec
+      Start 35: monster_replacements
+15/54 Test #36: monster_boss_components ..........   Passed    1.46 sec
+      Start 47: segmented_bosses
+16/54 Test #15: canyon_roads .....................   Passed    6.97 sec
+      Start 49: mission_themes
+17/54 Test #35: monster_replacements .............   Passed    1.79 sec
+      Start 42: quake_waves
+18/54 Test #42: quake_waves ......................   Passed    0.70 sec
+      Start 41: maw_attraction
+19/54 Test #53: generated_dungeons ...............   Passed   23.30 sec
+      Start 40: room_statues
+20/54 Test #47: segmented_bosses .................   Passed    1.82 sec
+      Start 25: mission_shop
+21/54 Test #41: maw_attraction ...................   Passed    0.84 sec
+      Start 52: enemy_behaviors
+22/54 Test #40: room_statues .....................   Passed    0.66 sec
+      Start 43: supplied_bombs
+23/54 Test #43: supplied_bombs ...................   Passed    0.55 sec
+      Start 13: arrival_quest
+24/54 Test #13: arrival_quest ....................   Passed    1.02 sec
+      Start 26: money_pickups
+25/54 Test #49: mission_themes ...................   Passed    4.04 sec
+      Start 24: player_dynamite
+26/54 Test #25: mission_shop .....................   Passed    2.30 sec
+      Start 34: monster_hopping
+27/54 Test #34: monster_hopping ..................   Passed    0.25 sec
+      Start 32: monster_patterns
+28/54 Test #32: monster_patterns .................   Passed    0.24 sec
+      Start 27: resident_enemies
+29/54 Test #24: player_dynamite ..................   Passed    0.96 sec
+      Start 33: monster_fire_reactions
+30/54 Test #52: enemy_behaviors ..................   Passed    2.79 sec
+      Start 17: redstone_hub
+31/54 Test #26: money_pickups ....................   Passed    1.22 sec
+      Start 38: charger_variants
+32/54 Test #33: monster_fire_reactions ...........   Passed    0.21 sec
+      Start 29: monster_behaviors
+33/54 Test #38: charger_variants .................   Passed    0.18 sec
+      Start  2: mechanics_content
+34/54 Test #27: resident_enemies .................   Passed    0.84 sec
+      Start 22: train_motion
+35/54 Test #17: redstone_hub .....................   Passed    0.54 sec
+      Start 31: monster_formations
+36/54 Test #31: monster_formations ...............   Passed    0.14 sec
+      Start 54: generated_room_graphs
+37/54 Test #22: train_motion .....................   Passed    0.51 sec
+      Start 51: core_contracts
+38/54 Test #54: generated_room_graphs ............   Passed    0.59 sec
+      Start 11: flag_cloth
+39/54 Test #51: core_contracts ...................   Passed    0.44 sec
+      Start  1: enemy_port_coverage
+40/54 Test  #2: mechanics_content ................   Passed    1.17 sec
+      Start 21: ambient_animals
+41/54 Test #11: flag_cloth .......................   Passed    0.17 sec
+      Start 12: save_slots
+42/54 Test #12: save_slots .......................   Passed    0.06 sec
+      Start 14: cinematic_timeline
+43/54 Test  #1: enemy_port_coverage ..............   Passed    0.29 sec
+      Start  8: walkable_areas
+44/54 Test #21: ambient_animals ..................   Passed    0.16 sec
+      Start 28: audio_presentation
+45/54 Test #14: cinematic_timeline ...............   Passed    0.08 sec
+      Start 23: object_animation
+46/54 Test  #8: walkable_areas ...................   Passed    0.03 sec
+      Start 50: imported_town_navigation
+47/54 Test #23: object_animation .................   Passed    0.04 sec
+      Start 18: building_navigation
+48/54 Test #28: audio_presentation ...............   Passed    0.05 sec
+      Start 19: particle_emission
+49/54 Test #19: particle_emission ................   Passed    0.02 sec
+      Start 20: town_characters
+50/54 Test #18: building_navigation ..............   Passed    0.02 sec
+      Start 46: loki_bosses
+51/54 Test #20: town_characters ..................   Passed    0.02 sec
+52/54 Test #50: imported_town_navigation .........   Passed    0.06 sec
+53/54 Test #46: loki_bosses ......................   Passed    0.95 sec
+54/54 Test #29: monster_behaviors ................   Passed    3.18 sec
+
+98% tests passed, 1 tests failed out of 54
+
+Total Test time (real) =  69.48 sec
+
+The following tests FAILED:
+	  5 - floor_progression (Failed)
+Errors while running CTest

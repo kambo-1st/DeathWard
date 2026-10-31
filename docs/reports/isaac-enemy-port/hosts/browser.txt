@@ -1,0 +1,6 @@
+START host browser 141.0.7390.37
+page.evaluate: TypeError: Cannot read properties of undefined (reading 'getExtension')
+    at eval (eval at evaluate (:290:30), <anonymous>:1:31)
+    at UtilityScript.evaluate (<anonymous>:292:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at /home/kambo/workspace/DeathWard/web/host-test.cjs:20:32

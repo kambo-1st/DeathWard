@@ -1,0 +1,215 @@
+{
+  "title": "Host",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Host",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270008",
+  "revision": 270008,
+  "timestamp": "2026-10-02T09:56:00Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "[disambig msg: the enemy; the challenge; The Host] \n\nHosts are immobile skulls. When lowered down, which is their normal state, they are invincible to every source of damage except status effects such as poison, burning, being knocked into a wall by Hemoptysis, or Knockout Drops' knockback. Occasionally, they will pop up and shoot three spread shots towards Isaac, revealing a fleshy stem that can be damaged. Attacking a Host while it is lowered will increase the delay before it pops up: if it takes what would be a large amount of damage at once they will grimace.\n\nHosts deal no contact damage either when closed or open.\n\n[Repentance+] Hagalaz has special interactions with these enemies when used:\n\n\u2022 Host - Destroys and leaves behind a Red Host\n\n\u2022 Hard Host - Destroys and leaves behind a Red Host\n\n\u2022 Mobile Host - Destroys and leaves behind a Flesh Mobile Host\n\n\u2022 Floast - Destroys and does not leave behind anything [end edition note]"
+    },
+    {
+      "heading": "Variations",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Red Host",
+      "level": 3,
+      "text": "Red Hosts can replace regular Hosts in any area. Their skull is replaced by a vulnerable red fleshlike material. Unlike normal Hosts, they can still take damage when lowered down, but they will fire 5 blood shots instead of 3."
+    },
+    {
+      "heading": "Hard Host",
+      "level": 3,
+      "text": "Hard Hosts behave similarly to regular Hosts, however instead of firing any shots when they lift their skull, they slam down and fire a tremor towards Isaac. The tremor will destroy most obstacles and damage most monsters in its path. They also deal damage on contact. If Isaac is too close to a Hard Host when it slams down he will be knocked back."
+    },
+    {
+      "heading": "Mobile Host",
+      "level": 3,
+      "text": "Mobile Hosts function the same as the original hosts but now do contact damage and slowly approach Isaac. They also have a more random delay between the times they open up, unlike the immobile Host which opens up instantly if it has a line of sight to Isaac and has been closed for a set amount of time without being shot."
+    },
+    {
+      "heading": "Flesh Mobile Host",
+      "level": 3,
+      "text": "Flesh Mobile Hosts are like Mobile Hosts, but can be damaged at any time and will fire 5 blood shots instead of 3."
+    },
+    {
+      "heading": "Floast",
+      "level": 3,
+      "text": "Floasts bounce around diagonally, occasionally opening up to shoot a triple shot like regular Hosts. Unlike regular Hosts, they deal contact damage and resemble Mobile Hosts more in that sense."
+    },
+    {
+      "heading": "Mushroom",
+      "level": 3,
+      "text": "Mushrooms appear exclusively in Chapter 2 and have a 20% chance to replace Hosts.\n\nMushrooms start by hiding inside of their cap. While inside, they take only 25% damage. Occasionally, they pop out for a few seconds, shooting 4 red shots in either the cardinal or diagonal directions. Unlike Hosts, Mushrooms deal contact damage."
+    },
+    {
+      "heading": "Notes",
+      "level": 2,
+      "text": "\u2022 Mushrooms will not resist damage while petrified.\n\n\u2022 If Mushrooms aren't unlocked yet, they are replaced by Hosts.\n\n\u2022 [Repentance] The rock waves spawned by Hard Hosts can open Secret Rooms and Super Secret Rooms."
+    },
+    {
+      "heading": "Gallery",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Trivia",
+      "level": 2,
+      "text": "\u2022 Hosts originated from a multiplayer flash game created by Edmund McMillen called HOST.\n\n\u2022 Hosts are very similar to the Met enemies from the Mega Man series. Both are immune to any kind of damage when they are lowered down, and when they pop up, they become vulnerable and shoot three shots.\n\n\u2022 Additionally, Mobile Hosts behave like the Neo Met, a version of the Met that walks after shooting.\n\n\u2022 The Gate physically resembles a giant Host.\n\n\u2022 [edition anr] In the game's files, Red Hosts and their walking variations have grimace animations that are impossible to see in-game because they are always vulnerable.\n\n\u2022 [Repentance] When Mom's Bracelet is used on a Host/Mobile Host, the resulting Red Host/Flesh Mobile Host will use its respective grimace animation.\n\n\u2022 [Repentance] Using Mom's Bracelet on a Host/Mobile Host will transform it into a Red Host/Flesh Mobile Host.\n\n\u2022 A Mobile Host's body won't change color when transformed. [end edition note] \n\n\u2022 [Repentance] Floasts and Hard Hosts originate from the Antibirth mod. In Antibirth, Floasts used be to called Floating Hosts.\n\n\u2022 [Repentance] The Floast's name is a reference to a monster of the same name from The End is Nigh."
+    },
+    {
+      "heading": "Bugs",
+      "level": 2,
+      "text": "Bug note: If Hosts or Mobile Hosts are affected by fear, [Afterbirth onward] shrink, or stunned, then if the effect wears off at the same time as they try to attack you, they sometimes attack without the corresponding animation.\nBug note: Little Horn effect cannot be triggered on Mobile Hosts.\nBug note: If two Mobile Hosts are affected by permenant Charm (on the C0CKFGHT seed), they do not become vulnerable when touching eachother, meaning they cannot attack eachother or be damaged by isaac, softlocking the game"
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "id": "27",
+        "base hp": "[edition alternatives: baseline: 15; Afterbirth onward: 14]",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Scarred Womb / \nSheol / Cathedral / \nchallenge /",
+        "behavior": "Stationary enemy that is normally invulnerable. Raises its head up when Isaac gets close, revealing a fleshy stem that can be damaged. Upon raising its head, it will fire 3 blood shots in a spread and lower its head again."
+      },
+      "group": "entity",
+      "id": 27,
+      "name": "Host",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "name": "Red Host",
+        "variant": "1",
+        "base hp": "15",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+        "replace": "Host",
+        "replace chance": "9.49%",
+        "behavior": "Stationary enemy that can be damaged even when its head is lowered. Fire 5 spread blood shots when it raises its head."
+      },
+      "group": "entity",
+      "id": 27,
+      "name": "Red Host",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 3,
+      "fields": {
+        "dlc": "r",
+        "name": "Hard Host",
+        "variant": "3",
+        "base hp": "15",
+        "environment": "Mines / Ashpit / \nchallenge /",
+        "behavior": "Stationary enemy that is normally invulnerable. Raises its head up when Isaac gets close, revealing a fleshy stem that can be damaged. Shortly after raising its head, it slams its head down and fires a rock wave towards Isaac."
+      },
+      "group": "entity",
+      "id": 27,
+      "name": "Hard Host",
+      "variant": 3,
+      "subtype": 0,
+      "section_indices": [
+        3
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 4,
+      "fields": {
+        "name": "Mobile Host",
+        "id": "204",
+        "base hp": "[edition alternatives: baseline: 20; Afterbirth onward: 14]",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nchallenge /",
+        "behavior": "Acts like the Host, but follows Isaac and deals contact damage."
+      },
+      "group": "entity",
+      "id": 204,
+      "name": "Mobile Host",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        4
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 5,
+      "fields": {
+        "name": "Flesh Mobile Host",
+        "id": "247",
+        "base hp": "27",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+        "behavior": "Acts like the Red Host, but follows Isaac and deals contact damage."
+      },
+      "group": "entity",
+      "id": 247,
+      "name": "Flesh Mobile Host",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        5
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 6,
+      "fields": {
+        "dlc": "r",
+        "name": "Floast",
+        "id": "859",
+        "base hp": "20",
+        "environment": "Utero / \nCorpse / \nchallenge /",
+        "behavior": "Floats diagonally around the room and is normally invulnerable. When Isaac gets close, reveals a fleshy stem that can be damaged and fires 3 blood shots in an angle at him before hiding its stem again."
+      },
+      "group": "entity",
+      "id": 859,
+      "name": "Floast",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        6
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 7,
+      "fields": {
+        "dlc": "a+",
+        "name": "Mushroom",
+        "image": "Mushroom (Enemy).png",
+        "id": "300",
+        "base hp": "23",
+        "environment": "Caves / Catacombs / Flooded Caves /",
+        "replace": "Host, Red Host",
+        "replace chance": "20%",
+        "replace notes": "[Repentance] in Chapter 2",
+        "behavior": "Stationary enemy that occasionally pops up and fires four shots in the cardinal or diagonal directions. Takes less damage while its head is down.",
+        "unlocked by": "The gate is open!"
+      },
+      "group": "entity",
+      "id": 300,
+      "name": "Mushroom",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        7
+      ]
+    }
+  ]
+}

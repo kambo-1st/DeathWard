@@ -1,0 +1,26 @@
+{
+  "verified_utc": "2026-10-28T15:40:35.964236+00:00",
+  "result": "partial_progress",
+  "mechanics_fingerprint": "d5eac3de94379181",
+  "monster_definitions": 212,
+  "counts": {
+    "in_progress": 196,
+    "missing": 427,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "reviewed": 229,
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/leper/native-summary.json",
+  "roster_breakdown": "docs/reports/isaac-enemy-port/leper/roster-progress.json",
+  "next_work": "Continue prioritized regular enemies: four Leper parent subtypes need exact staged-damage/morph ordering and actual Flesh offspring route. Then Bouncer, Quakey, Gas Dwarf, Clickety Clack and the unclassified ordinary roster. Skip WASM; existing acceptance gaps remain open.",
+  "wasm_waiver": {
+    "visual_wasm": {
+      "authority": "user",
+      "instruction": "pursure goal - Skip WASM check!",
+      "date": "2026-10-28"
+    }
+  },
+  "live_jobs": "All builds, tests, source checks and six native captures for this slice have completed.",
+  "visual_review": "docs/reports/isaac-enemy-port/leper/visual-review.json"
+}

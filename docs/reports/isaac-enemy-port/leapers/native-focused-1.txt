@@ -1,0 +1,2 @@
+PASS ordinary hops, native BigJump timing, target snapshot, cardinal/scattered shots, flight and creep
+FAIL released shots survive owner and hold completion

@@ -1,0 +1,61 @@
+{
+  "verified_utc": "2026-10-28T15:42:34.638646+00:00",
+  "result": "partial_pass",
+  "style": "Original",
+  "captures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/native/flesh.png",
+      "sha256": "1eb168bf7a7ae4319439ed696d29375b2e4ea1b497e03347eb21b67f705ce4cb",
+      "inspected": true,
+      "width": 1440,
+      "height": 900,
+      "notes": "Single low-poly tissue chunk visible above ground with separate shadow; Original palette preserved."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/native/drifting.png",
+      "sha256": "723d4ce7917cbae3b4277cebcc61d78062082c912a83aed37b777dbe34591e1d",
+      "inspected": true,
+      "width": 1440,
+      "height": 900,
+      "notes": "At frame90 the flesh has already consumed itself on player contact. Retained as contact aftermath; this is not a live-motion view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/native/death-shot.png",
+      "sha256": "aba51e29545040cd9b6b16bf7a0c532e524bb33298a7bf9a3f437b0f4a2a6b35",
+      "inspected": true,
+      "width": 1440,
+      "height": 900,
+      "notes": "One muted pink projectile is visible between death position and player; small/light shot has limited contrast against lit sand, so full readability is not accepted."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/native/drifting-live.png",
+      "sha256": "e600940597e77845654161db0f7a72cbd988e5485dc8bd0080d649b88de11ae9",
+      "inspected": true,
+      "width": 1440,
+      "height": 900,
+      "notes": "Frame40 shows live tissue closer to player with cosmetic blood marks behind it."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/native/flesh-group.png",
+      "sha256": "cc87ec9e9de392bfb56713b642e882ceaef4892f3f7a80023c9e85f5bb4ef25b",
+      "inspected": true,
+      "width": 1440,
+      "height": 900,
+      "notes": "Six independently placed chunks show seeded orientation/lobe variation, no source sprites."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/native/natural.png",
+      "sha256": "e11c69431b1c56eddb1d7cf3e61ea602877325535bde0777f9ad8de11287e6b9",
+      "inspected": true,
+      "width": 1440,
+      "height": 900,
+      "notes": "Actual seed0/floor5/room12 resident; flesh is visible among other late-band actors and terrain in the Original style."
+    }
+  ],
+  "limitations": [
+    "Procedural silhouette/material adaptation; no claim of source sprite equivalence.",
+    "Death projectile needs broader mixed-lighting/readability review.",
+    "Static captures do not certify continuous-animation quality, human combat balance or performance.",
+    "No WASM checks run."
+  ]
+}

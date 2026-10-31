@@ -1,0 +1,88 @@
+{
+  "verified_utc": "2026-10-28T16:31:57.492503+00:00",
+  "result": "partial_pass",
+  "platform": "Linux WSLg native raylib, Original style",
+  "resolution": [
+    1440,
+    900
+  ],
+  "captures": "docs/reports/isaac-enemy-port/leper-parent/native/captures.json",
+  "inspected": [
+    {
+      "name": "form-0",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/form-0.png",
+      "observation": "Four pale tissue lobes and eyes above the body; grounded shadow, no clipping in isolated arena."
+    },
+    {
+      "name": "form-1",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/form-1.png",
+      "observation": "One exposed dark wound. Difference from intact form is subtle at the normal gameplay camera."
+    },
+    {
+      "name": "form-2",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/form-2.png",
+      "observation": "Two remaining pale lobes and smaller upper silhouette; no eyes. Form distinction still needs human readability review."
+    },
+    {
+      "name": "form-3",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/form-3.png",
+      "observation": "One pale lobe and exposed dark wounds; visibly reduced head silhouette."
+    },
+    {
+      "name": "shedding",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/shedding.png",
+      "observation": "Source hit of20HP changes intact form to subtype2, with two independent Flesh children and parent hit flash. Probe confirms32remaining worldHP."
+    },
+    {
+      "name": "last-form-creep",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/last-form-creep.png",
+      "observation": "Pursuing parent has reached player; small red damaging patches form a clear ground trail."
+    },
+    {
+      "name": "mortality",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/mortality.png",
+      "observation": "Ordinary death branch shows four separate Flesh children after a large intact-parent hit; parent removed."
+    },
+    {
+      "name": "natural-0",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/natural-0.png",
+      "observation": "Actual seed0 floor5 room1 contains intact and subtype1 parents alongside other enemies; both models visible."
+    },
+    {
+      "name": "natural-2",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/natural-2.png",
+      "observation": "Actual seed1 floor6 room1 contains subtype2 in canyon shadow. Body visible but reduced contrast; broader shadow readability remains open."
+    },
+    {
+      "name": "natural-3",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/natural-3.png",
+      "observation": "Actual seed1 floor6 room4 contains subtype3 near a cliff. Terrain occludes part of the group and hidden-threat outlines are visible. This is reachability evidence, not full visibility acceptance."
+    },
+    {
+      "name": "morph-at-2",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/morph-at-2.png",
+      "observation": "Native probe confirms original parent ID remains alive as11.0 at32HP; scarred gray Gusher body, exposed red neck and one Flesh child visible."
+    },
+    {
+      "name": "morph-at-20",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/morph-at-20.png",
+      "observation": "Second successful same-entity gray Gusher case with one Flesh child and lingering parent creep."
+    },
+    {
+      "name": "morph-at-40",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/morph-at-40.png",
+      "observation": "Non-morph branch leaves one Flesh child and lingering creep; parent absent."
+    },
+    {
+      "name": "morph-at-60",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/native/morph-at-60.png",
+      "observation": "Second non-morph branch, one Flesh child and multiple remaining creep patches."
+    }
+  ],
+  "limits": [
+    "Small differences between neighboring parent forms need human review at gameplay zoom.",
+    "Natural subtype3 view is partially terrain-occluded; natural subtype2 is shadowed. Existing outlines remain visible.",
+    "No exhaustive lighting/occlusion matrix, visual performance benchmark or human balance acceptance.",
+    "WASM intentionally skipped."
+  ]
+}

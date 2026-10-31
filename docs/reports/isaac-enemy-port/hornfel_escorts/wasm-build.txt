@@ -1,0 +1,145 @@
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /tmp/deathward-emsdk
+PATH += /tmp/deathward-emsdk/upstream/emscripten
+
+Setting environment variables:
+PATH = /tmp/deathward-emsdk:/tmp/deathward-emsdk/upstream/emscripten:/home/kambo/.codex/packages/app-server-daemon/releases/0.164.0-x86_64-unknown-linux-musl/codex-path:/home/kambo/.opencode/bin:/home/kambo/.wasmer/bin:/home/kambo/.local/bin:/home/kambo/.nvm/versions/node/v24.2.0/bin:/home/kambo/.codex/tmp/arg0-linux/codex-arg0vSlpft:/home/kambo/.codex/tmp/arg0-linux/codex-arg06Pw1Vn:/home/kambo/.codex/packages/app-server-daemon/releases/0.163.0-x86_64-unknown-linux-musl/codex-path:/home/kambo/.codex/tmp/arg0/codex-arg0SYjrew:/home/kambo/.codex/packages/app-server-daemon/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/kambo/.codex/tmp/arg0/codex-arg0rQnhG6:/home/kambo/.nvm/versions/node/v24.2.0/lib/node_modules/@openai/codex/node_modules/@openai/codex-linux-x64/vendor/x86_64-unknown-linux-musl/codex-path:/home/kambo/.rvm/gems/ruby-3.3.6/bin:/home/kambo/.rvm/gems/ruby-3.3.6@global/bin:/home/kambo/.rvm/rubies/ruby-3.3.6/bin:/home/kambo/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/home/kambo/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/java8path:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/Embarcadero/Studio/23.0/bin:/mnt/c/Users/Public/Documents/Embarcadero/Studio/23.0/Bpl:/mnt/c/Program Files (x86)/Embarcadero/Studio/23.0/bin64:/mnt/c/Users/Public/Documents/Embarcadero/Studio/23.0/Bpl/Win64:/mnt/c/Users/bohus/AppData/Local/Programs/cursor/resources/app/bin:/mnt/c/Program Files/Lapce/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Meld/:/mnt/c/Program Files/GitHub CLI/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files (x86)/TimeStored.com:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Users/bohus/.cargo/bin:/mnt/c/Users/bohus/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/bohus/AppData/Local/JetBrains/Toolbox/scripts:/mnt/c/xampp/php/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Users/bohus/.wasmer/bin:/mnt/c/Users/bohus/.wasmer/globals/wapm_packages/.bin:/mnt/c/Users/bohus/.config/herd/bin/nvm:/mnt/c/Program Files/nodejs:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/CMake/bin:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Users/bohus/.config/herd/bin:/mnt/c/Users/bohus/scoop/shims:/mnt/c/Users/bohus/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/bohus/AppData/Local/Programs/Ollama:/mnt/c/Users/bohus/.dotnet/tools:/mnt/c/Users/bohus/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-7.1-full_build/bin:/mnt/c/Users/bohus/.lmstudio/bin:/mnt/c/Program Files/Git/usr/bin:/mnt/c/Users/bohus/AppData/Local/Programs/Windsurf/bin:/home/kambo/wabt/build:/home/kambo/.rvm/bin
+EMSDK_NODE = /tmp/deathward-emsdk/node/24.19.0_64bit/bin/node
+configure: cmake -S /home/kambo/workspace/DeathWard -B /home/kambo/workspace/DeathWard/build-web -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DCMAKE_TOOLCHAIN_FILE=/tmp/deathward-emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_CROSSCOMPILING_EMULATOR=/tmp/deathward-emsdk/node/24.19.0_64bit/bin/node
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_WEB
+--   GRAPHICS=GRAPHICS_API_OPENGL_ES3
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build-web
+Consolidate compiler generated dependencies of target raylib
+[  8%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[ 11%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+[ 14%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+[ 19%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 23%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 24%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireWaves.cpp.o
+[ 27%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 28%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 29%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 33%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 37%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 38%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 41%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SuppliedBombs.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FlyBombs.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyBombs.cpp.o
+[ 44%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 48%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 49%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 51%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 51%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 53%] Linking CXX static library libdeathward_core.a
+[ 70%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+[ 72%] Built target deathward_cloth
+[ 75%] Built target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 76%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 80%] Built target deathward_mission_lighting
+[ 81%] Linking CXX static library libdeathward_particles.a
+[ 82%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 82%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 84%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 85%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 86%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+[ 87%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorNavigation.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 89%] Building CXX object CMakeFiles/deathward.dir/src/render/PlayerModel.cpp.o
+[ 90%] Building CXX object CMakeFiles/deathward.dir/src/render/AnimalModels.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/core/Game.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/core/GameQuest.cpp.o
+[ 93%] Linking CXX executable index.html
+[100%] Built target deathward
+Browser build ready. Run: python3 scripts/serve-web.py

@@ -1,0 +1,15 @@
+MASK cardinal_half_plane=1 loose_armored=1 bypasses=1 specular_speed=1 grace15=1
+PAIR same_id=1 scale=1 no_duplicate_rewards=1 invulnerability=1 capacity=1 orphan=1 nearest_unique=1
+PON source_hop=1 landing_patch=1 life125=1 red_damage=1 fade=1 blocked_target_retry=1 capacity_after_death=1
+MOVEMENT cardinal_commit=1 no_generic_windup=1 no_timeout=1 selfless_force=1 black_acceleration=1 occlusion=1 remnant_wander=1
+IMPACT three_directions=1 discrete_jets=1 lift=1 recovery45=1 ordinary_no_payload=1 capacity_after_death=1
+CONFIG immutable_reload=1 invalid_profiles=7
+NATURAL_KNIGHT id=41.0 seed=0 floor=2 room=5 context=0
+NATURAL_KNIGHT id=41.2 seed=0 floor=3 room=2 context=0
+NATURAL_KNIGHT id=41.1 seed=0 floor=5 room=7 context=0
+NATURAL_KNIGHT id=41.4 seed=1 floor=6 room=7 context=0
+BRAIN_WITNESS seed=4 floor=5 room=2 band=2 river=0
+BRAIN_WITNESS seed=26 floor=3 room=2 band=3 river=0
+NATURAL_KNIGHT id=840.0 seed=33 floor=4 room=7 context=0
+PLACEMENT floors=140 rooms=1856 variants=5
+PASS Knight armor/lifecycle and Pon contracts

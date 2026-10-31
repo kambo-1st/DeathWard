@@ -1,0 +1,19 @@
+{
+  "result": "partial_visual_review",
+  "style": "Original",
+  "inspected": [
+    "docs/reports/isaac-enemy-port/hornfel_decoys/linux-decoys-final-650.png",
+    "docs/reports/isaac-enemy-port/hornfel_decoys/final-hornfel/wasm-resident-hornfel-decoys-650.png",
+    "docs/reports/isaac-enemy-port/hornfel_decoys/final-hornfel/wasm-hornfel-decoy-destruction-2940.png",
+    "docs/reports/isaac-enemy-port/hornfel_decoys/final-hornfel/wasm-hornfel-decoy-contact-2940.png"
+  ],
+  "observations": [
+    "Separate miner/cart silhouettes visibly follow different rails; wooden decoy face uses the existing scene palette.",
+    "Contact-destroyed body is removed; real delayed bombs and warning circles remain around the point of contact.",
+    "Linux and browser samples retain the original low-poly lighting/material treatment; no reported graphics or JavaScript error."
+  ],
+  "limits": [
+    "Fixed camera/HUD can clip far rail entrances or actors; screenshots are not a complete occlusion/readability audit.",
+    "No source-art reproduction, full animation parity or rendered performance certification."
+  ]
+}

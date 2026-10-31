@@ -1,0 +1,9 @@
+PASS ordinary hops, native BigJump timing, target snapshot, cardinal/scattered shots, flight and creep
+PASS bounded capacity, room suspension, stun, death and surviving-shot completion
+COVER peak=7.99114 z=7.99989 target=8
+PASS real cover/river geometry, legal target adjustment, validated immutable reload
+NATURAL_LEAPER variant=0 seed=2 floor=4 room=4
+NATURAL_LEAPER variant=1 seed=8 floor=4 room=3
+LEAPER_STARTING_KIT variant=0 seconds=2.73333 hp=75
+LEAPER_STARTING_KIT variant=1 seconds=2.43333 hp=87.5
+PASS Leaper and Sticky Leaper

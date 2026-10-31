@@ -1,0 +1,6 @@
+{
+  "url": "https://raw.githubusercontent.com/wofsauge/IsaacDocs/main/docs/enums/DamageFlag.md",
+  "saved": "DamageFlag.md",
+  "sha256": "e4c06715fd6d2416e146d5afd63bc50568fa031c7dcf61a5c2ae3d4c302fcd55",
+  "scope": "Public API flag-name mapping only. Controller behavior pinned separately to installed1.7.9b executable. 0x8000 means POISON_BURN, not INVINCIBLE. Wiki/Open pages inaccessible through web tool (403); preserved archived Host revision270008 is the behavioral secondary reference."
+}

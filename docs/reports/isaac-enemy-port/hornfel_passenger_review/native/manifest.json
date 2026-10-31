@@ -1,0 +1,305 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constructor_signature": "558bec51568bf18975??e8????????c706????????8bc6c786????????00000000c786????????00000000c786????????00000000c786????????00000000c786????????00000000",
+  "declaration": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityEffect.zhl",
+  "declaration_sha256": "b02cf8d4c8ccad6574c7f967a7265e6951b91715a743bb3f0334745f686dbbe7",
+  "effect_vtable": "0xb459f0",
+  "effect_update": "0x5bdf00",
+  "variant_table": "0x5e9214",
+  "effect_152_case": "0x5c3090",
+  "controller": "0x4a9240",
+  "payload_table": [
+    {
+      "id": "823.0.0",
+      "index": 0
+    },
+    {
+      "id": "820.0.0",
+      "index": 1
+    },
+    {
+      "id": "827.0.0",
+      "index": 2
+    },
+    {
+      "id": "227.0.0",
+      "index": 3
+    },
+    {
+      "id": "87.0.0",
+      "index": 4
+    },
+    {
+      "id": "33.0.0",
+      "index": 5
+    },
+    {
+      "id": "292.0.0",
+      "index": 6
+    }
+  ],
+  "dispatch": {
+    "823": {
+      "index": 158,
+      "case": "0x69a0eb",
+      "ai": "0x4eae80"
+    },
+    "820": {
+      "index": 155,
+      "case": "0x69a0d3",
+      "ai": "0x4e94a0"
+    },
+    "827": {
+      "index": 162,
+      "case": "0x69a0bb",
+      "ai": "0x4e82e0"
+    },
+    "227": {
+      "index": 86,
+      "case": "0x699d4f",
+      "ai": "0x525830"
+    },
+    "87": {
+      "index": 58,
+      "case": "0x699a1c",
+      "ai": "0x508ef0"
+    },
+    "33": {
+      "index": 19,
+      "case": "0x699cd7",
+      "ai": "0x6a7ae0"
+    },
+    "292": {
+      "index": 113,
+      "case": "0x699df7",
+      "ai": "0x6acb80"
+    }
+  },
+  "api_anchors": {
+    "IsClear": {
+      "name": "0xb5406c",
+      "function": "0x427700"
+    },
+    "GetAliveBossesCount": {
+      "name": "0xb54264",
+      "function": "0x448020"
+    },
+    "SpawnerType": {
+      "name": "0xb50f10",
+      "function": "0x422ac0"
+    },
+    "Timeout": {
+      "name": "0xb53004",
+      "field": "0x3ac",
+      "registration": "0x806fed"
+    },
+    "LifeSpan": {
+      "name": "0xb530c0",
+      "field": "0x3b0",
+      "registration": "0x806fe1"
+    },
+    "Remove": {
+      "name": "0xb50174",
+      "function": "0x860511"
+    },
+    "Kill": {
+      "name": "0xb51910",
+      "function": "0x8604fd"
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/effect_constructor.asm",
+      "start": "0x5b7820",
+      "end_exclusive": "0x5b7882",
+      "raw_sha256": "2a528b0f6aeba71ca5787a5ab3e3119d6d022259c5339ce9ccb22c5846fcd464",
+      "artifact_sha256": "e945a0ecad238cd074cdd77d691afac501141d7aea7d10ee078533b51720c97a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/effect_dispatch.asm",
+      "start": "0x5be281",
+      "end_exclusive": "0x5be2b8",
+      "raw_sha256": "1d0ea96b8c2907393c1e699e5f89541dbb94694e0ab4d979012e7acff9da6f02",
+      "artifact_sha256": "5bbc952036333ae0449cf4116cb4e261ef077ef9040201b8a27c53bc87f9babd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/effect_152_case.asm",
+      "start": "0x5c3090",
+      "end_exclusive": "0x5c30a0",
+      "raw_sha256": "983d520f4656c56792aa172de5509e3a05177a9a9720e7d862c1ab7ed3bf3939",
+      "artifact_sha256": "3cbc568bd65f89bdab430791ab7660f9cfa1379a476bc570c5cf5dceec85e6f9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/effect_timer_epilogue.asm",
+      "start": "0x5e9122",
+      "end_exclusive": "0x5e9168",
+      "raw_sha256": "189359fdb76b600d31bf16000d1c0c0ceb91963bea3a4158696602fb3958b165",
+      "artifact_sha256": "abcbca7ea997be58250ea3beff79614c58688cababe67c5c2517e7174cb105be"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/effect_timer_api.asm",
+      "start": "0x806fe1",
+      "end_exclusive": "0x806ff9",
+      "raw_sha256": "4393a8671a5f61e8d8e4be9d2e8b9b1598c29d15cf42debf91a297dca71c955f",
+      "artifact_sha256": "efaa97516e40d1dd400220bcb9190eae43864aa45ff67f08b9cd0be872c0f11b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/passenger_controller.asm",
+      "start": "0x4a9240",
+      "end_exclusive": "0x4a9678",
+      "raw_sha256": "083135b62b6b24511e9984d0a6fcfb70194cb48e13aefc866bdc1ffd1cf0266e",
+      "artifact_sha256": "7329fdfeed1804ea717e3e3fae187a38684fbf24571c2a795e73e2a56d901675"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/room_clear_cleanup.asm",
+      "start": "0x4a48b0",
+      "end_exclusive": "0x4a4be5",
+      "raw_sha256": "5e211464c18c4fe67fc4342f7216402e1d2838fc68a2243dc4df09e1d25375b7",
+      "artifact_sha256": "1fad9cc2d58ab007eaa28ba1f45e6b39b823da062771800a8110e0b5f45372a0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/door_picker.asm",
+      "start": "0x4a8150",
+      "end_exclusive": "0x4a8335",
+      "raw_sha256": "740a45883d0f47d71909cc77e87b8dffa049b37d3a0cf73475bf21beda8f5ada",
+      "artifact_sha256": "f677c8672b1607dd5e3c7b31307d453b4a19a645e400114755d2361110ff365f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/door_entry_direction.asm",
+      "start": "0x4a8340",
+      "end_exclusive": "0x4a8495",
+      "raw_sha256": "b12ec9f67a255be7c7c982041a46d4693989ab9d4720ed402471dbeb0af3976f",
+      "artifact_sha256": "509309d994e13929a2c31401ab7f030465aeba9047015f365732c271dc92ee95"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/door_reservation.asm",
+      "start": "0x4a8710",
+      "end_exclusive": "0x4a8795",
+      "raw_sha256": "e16f6c12bc12dca52089882fb058969659b4e47ab437d29a434fa3f587dab604",
+      "artifact_sha256": "b773704cb71d35d394857f07e63e2c4ddf76106d5721ec30ae804b6c464df413"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/spawn_carrier.asm",
+      "start": "0x68eff0",
+      "end_exclusive": "0x68f0c1",
+      "raw_sha256": "fcc92d809af1f4f18031d1216c80acbcaffa820fe71002a64b0835af65f424a7",
+      "artifact_sha256": "114a693f92aee9699cbd9256998a1d68e30943af966a338b690404f992af8435"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/cart_ai.asm",
+      "start": "0x4bba40",
+      "end_exclusive": "0x4bc03c",
+      "raw_sha256": "67585515d49d562b5ae3def9e1da3656470fb65e867a99af4b97c5f24943d8f8",
+      "artifact_sha256": "1cd9e953d6bad5c50cfa087c09703e1b47a51a6daa4ad6315fc9fe6e421ba678"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/cart_break.asm",
+      "start": "0x4bc040",
+      "end_exclusive": "0x4bc1d2",
+      "raw_sha256": "62d5f12bc558b43acbc70572b25318103a07888ce0214e49a2556e50c2380329",
+      "artifact_sha256": "e32e2f35881a587682caf4de964cb633c57fdcaaf60eac1f146b4fdaf4bbbcd6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/cart_attachment.asm",
+      "start": "0x4bc2d0",
+      "end_exclusive": "0x4bc373",
+      "raw_sha256": "b775e0ab33ff6c1b872dc72967fcc4ef0b7161177692c902d215b26b18ca159f",
+      "artifact_sha256": "43b742333e60376450959c475c01d3ff001c52b3b2ce07c348aa82ee48cfb9eb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/alive_boss_count.asm",
+      "start": "0x448020",
+      "end_exclusive": "0x448036",
+      "raw_sha256": "8b831e80487c153fd2e4b669434d86119081c2657c24134a327964d59021a0f1",
+      "artifact_sha256": "09dafdc816e316a26e27bb29502c42cb0f19c47549c292298727d1352b1e9a4e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/room_clear_getter.asm",
+      "start": "0x427700",
+      "end_exclusive": "0x427709",
+      "raw_sha256": "627952d17160cd68e8e9837315649430e3bba761f24f89b9ca75ac192f3cce4a",
+      "artifact_sha256": "4a31e724b0ed25a06c66023a4414c43e00c8030e909429f8c7ad1113655f9903"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/spawner_type_getter.asm",
+      "start": "0x422ac0",
+      "end_exclusive": "0x422ac4",
+      "raw_sha256": "3b2eded1bf6b0f7390191ad1371a956a736f9d18c2a7de0db7e90886555b69e1",
+      "artifact_sha256": "896c1936786baefa350af2cf8160f64c4ad3a62330346dab16be2ee200714c9e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/fireplace_ai_preflight.asm",
+      "start": "0x6a7ae0",
+      "end_exclusive": "0x6a8a39",
+      "raw_sha256": "e746e5dbab600cc3366a64d16eb3ff5bd81ef69e973f077947341b8aefd4ec52",
+      "artifact_sha256": "c6c1ec802c1b08ec0dc478408e8966f1d5fa950f0c251112aa8fe575c49f45a0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/movable_tnt_ai_preflight.asm",
+      "start": "0x6acb80",
+      "end_exclusive": "0x6ad715",
+      "raw_sha256": "58c13854263711bfc46d84c92c5d21a2d5893105c5c3b0cce13ffb890f9d54d7",
+      "artifact_sha256": "6110b5ba7f1703666bf52741d43a95ef8cff6c4f81e472b61d41ce30686c28b8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/npc_823_case.asm",
+      "start": "0x69a0eb",
+      "end_exclusive": "0x69a0f7",
+      "raw_sha256": "bb2905e9daaa4f3a29df2111dffe5e0a597dbe3a5ca7a3730ad4a3b48ff2f8c1",
+      "artifact_sha256": "001afd9de841c275894e481bdcbef9e39526d904b3f45f962637742501567325"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/npc_820_case.asm",
+      "start": "0x69a0d3",
+      "end_exclusive": "0x69a0df",
+      "raw_sha256": "3583ffd652127269c87075948228e713fa973ea219e97fc251cbea179e6f6a96",
+      "artifact_sha256": "6fbe54243240c6ba6b8afe2e73abbdc4da8236546a07a2316f22aaae5b62516d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/npc_827_case.asm",
+      "start": "0x69a0bb",
+      "end_exclusive": "0x69a0c7",
+      "raw_sha256": "7051dd11d699bb23f6579037c737e8cc393c7322cef7d2a301f33263fa5d3dc1",
+      "artifact_sha256": "129de9b1fb30bc63ba52f3bac75166fd0ed1881509586de04af6a95f12d13c69"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/npc_227_case.asm",
+      "start": "0x699d4f",
+      "end_exclusive": "0x699d5b",
+      "raw_sha256": "0d329fca0fc927e52f023989ca89d640b399a539333b37417767771f545eefaf",
+      "artifact_sha256": "693eeaaf7c3139c19ade8e918eee628d5a90371f9442a6983f3ee5dfd899ae8a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/npc_87_case.asm",
+      "start": "0x699a1c",
+      "end_exclusive": "0x699a28",
+      "raw_sha256": "d34c7abc43f6bc50ddec5551955e43ad837625e7ac121ef0f3e84f8816e2b7ad",
+      "artifact_sha256": "827ccd84137e87b571194ce407a24fc41ff8659bfa7aafa1be7ea19019361ecd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/npc_33_case.asm",
+      "start": "0x699cd7",
+      "end_exclusive": "0x699ce3",
+      "raw_sha256": "ddd42aa25d271fe9342d7e80d1dd895717b34de2569616b104dafd8e1ccc33cd",
+      "artifact_sha256": "3742c5fa15f2d643218678cdabba39788b360eff392313666bcf87b13915c5fd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/npc_292_case.asm",
+      "start": "0x699df7",
+      "end_exclusive": "0x699e03",
+      "raw_sha256": "57555235991080bcf35400f907ecd4ae6387dae00cf8046daa018f41ca84541e",
+      "artifact_sha256": "50512a841008ebd67c772ee589d29b591aa96185553e5c1ed03889ed9b15a750"
+    }
+  ],
+  "virtual_dispatch": {
+    "Remove": {
+      "slot": 40,
+      "bytes": "8b01ff6028"
+    },
+    "Kill": {
+      "slot": 36,
+      "bytes": "8b01ff6024"
+    }
+  }
+}

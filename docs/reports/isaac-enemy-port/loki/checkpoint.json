@@ -1,0 +1,767 @@
+{
+  "status": "Partial Loki/Lokii checkpoint. Full 653-record enemy-port goal remains active; zero completed ports.",
+  "baseline": "Repentance 1.7.9b",
+  "created_utc": "2026-10-26T02:50:26.927765+00:00",
+  "mechanics_fingerprint": "8c776d256f195ffa",
+  "runtime_definitions": 157,
+  "item_definitions": 12,
+  "ids": [
+    "69.0.0",
+    "69.1.0"
+  ],
+  "checklist": {
+    "reviewed": 128,
+    "implementations": {
+      "in_progress": 78,
+      "existing_unverified": 79,
+      "missing": 484,
+      "excluded": 12
+    },
+    "completed": 0,
+    "remaining": 641
+  },
+  "source_review": "docs/reports/isaac-enemy-port/loki/source-review.json",
+  "native": {
+    "passed": 54,
+    "failed": 0,
+    "tests": {
+      "enemy_port_coverage": {
+        "result": "pass",
+        "seconds": 0.329541
+      },
+      "mechanics_content": {
+        "result": "pass",
+        "seconds": 1.3987
+      },
+      "expedition_economy": {
+        "result": "pass",
+        "seconds": 39.5973
+      },
+      "canyon_bosses": {
+        "result": "pass",
+        "seconds": 6.83688
+      },
+      "floor_progression": {
+        "result": "pass",
+        "seconds": 71.5626
+      },
+      "item_builds": {
+        "result": "pass",
+        "seconds": 8.06379
+      },
+      "expedition_destruction": {
+        "result": "pass",
+        "seconds": 60.4966
+      },
+      "walkable_areas": {
+        "result": "pass",
+        "seconds": 0.0351562
+      },
+      "expedition": {
+        "result": "pass",
+        "seconds": 13.6461
+      },
+      "expedition_pacing": {
+        "result": "pass",
+        "seconds": 9.44833
+      },
+      "flag_cloth": {
+        "result": "pass",
+        "seconds": 0.198877
+      },
+      "save_slots": {
+        "result": "pass",
+        "seconds": 0.0583746
+      },
+      "arrival_quest": {
+        "result": "pass",
+        "seconds": 1.16348
+      },
+      "cinematic_timeline": {
+        "result": "pass",
+        "seconds": 0.07969
+      },
+      "canyon_roads": {
+        "result": "pass",
+        "seconds": 6.89864
+      },
+      "canyon_rivers": {
+        "result": "pass",
+        "seconds": 16.0286
+      },
+      "redstone_hub": {
+        "result": "pass",
+        "seconds": 0.629815
+      },
+      "building_navigation": {
+        "result": "pass",
+        "seconds": 0.0229142
+      },
+      "particle_emission": {
+        "result": "pass",
+        "seconds": 0.0242341
+      },
+      "town_characters": {
+        "result": "pass",
+        "seconds": 0.022581
+      },
+      "ambient_animals": {
+        "result": "pass",
+        "seconds": 0.183127
+      },
+      "train_motion": {
+        "result": "pass",
+        "seconds": 0.524792
+      },
+      "object_animation": {
+        "result": "pass",
+        "seconds": 0.0479715
+      },
+      "player_dynamite": {
+        "result": "pass",
+        "seconds": 1.08156
+      },
+      "mission_shop": {
+        "result": "pass",
+        "seconds": 2.77728
+      },
+      "money_pickups": {
+        "result": "pass",
+        "seconds": 1.41621
+      },
+      "resident_enemies": {
+        "result": "pass",
+        "seconds": 0.948439
+      },
+      "audio_presentation": {
+        "result": "pass",
+        "seconds": 0.0578587
+      },
+      "monster_behaviors": {
+        "result": "pass",
+        "seconds": 3.63481
+      },
+      "monster_flight": {
+        "result": "pass",
+        "seconds": 3.05453
+      },
+      "monster_formations": {
+        "result": "pass",
+        "seconds": 0.162011
+      },
+      "monster_patterns": {
+        "result": "pass",
+        "seconds": 0.317113
+      },
+      "monster_fire_reactions": {
+        "result": "pass",
+        "seconds": 0.228796
+      },
+      "monster_hopping": {
+        "result": "pass",
+        "seconds": 0.308327
+      },
+      "monster_replacements": {
+        "result": "pass",
+        "seconds": 2.28897
+      },
+      "monster_boss_components": {
+        "result": "pass",
+        "seconds": 1.8134
+      },
+      "bloat_boss_and_chargers": {
+        "result": "pass",
+        "seconds": 1.93284
+      },
+      "charger_variants": {
+        "result": "pass",
+        "seconds": 0.220823
+      },
+      "companion_familiars": {
+        "result": "pass",
+        "seconds": 2.0857
+      },
+      "room_statues": {
+        "result": "pass",
+        "seconds": 0.843893
+      },
+      "maw_attraction": {
+        "result": "pass",
+        "seconds": 0.938517
+      },
+      "quake_waves": {
+        "result": "pass",
+        "seconds": 0.846264
+      },
+      "supplied_bombs": {
+        "result": "pass",
+        "seconds": 0.719702
+      },
+      "fly_bombs": {
+        "result": "pass",
+        "seconds": 12.5207
+      },
+      "boom_flies": {
+        "result": "pass",
+        "seconds": 45.8039
+      },
+      "loki_bosses": {
+        "result": "pass",
+        "seconds": 1.22676
+      },
+      "segmented_bosses": {
+        "result": "pass",
+        "seconds": 2.37913
+      },
+      "shell_boss": {
+        "result": "pass",
+        "seconds": 3.38212
+      },
+      "mission_themes": {
+        "result": "pass",
+        "seconds": 4.95494
+      },
+      "imported_town_navigation": {
+        "result": "pass",
+        "seconds": 0.0642291
+      },
+      "core_contracts": {
+        "result": "pass",
+        "seconds": 0.579197
+      },
+      "enemy_behaviors": {
+        "result": "pass",
+        "seconds": 3.30142
+      },
+      "generated_dungeons": {
+        "result": "pass",
+        "seconds": 23.1815
+      },
+      "generated_room_graphs": {
+        "result": "pass",
+        "seconds": 0.701471
+      }
+    },
+    "log": "docs/reports/isaac-enemy-port/loki/full/native.txt",
+    "detail": "docs/reports/isaac-enemy-port/loki/full/native-detail.txt",
+    "post_documentation_check": "docs/reports/isaac-enemy-port/loki/checklist.txt",
+    "note": "Full CTest run preceded the final checklist metadata update; the checklist was separately validated again after that update."
+  },
+  "browser": {
+    "passed": 132,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/loki/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/loki/full/browser.txt"
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "total_ordinary_conditional_ids": 36,
+    "dedicated_boss_root_ids": [
+      "68.0.0",
+      "68.1.0",
+      "19.2.0",
+      "19.3.0",
+      "69.0.0",
+      "69.1.0"
+    ],
+    "stage_regression_floors": 170,
+    "new_fixtures": [
+      {
+        "id": "69.0.0",
+        "seed": 2,
+        "floor_zero_based": 3,
+        "room": 12,
+        "band": 2,
+        "name": "Abandoned Works"
+      },
+      {
+        "id": "69.1.0",
+        "seed": 3,
+        "floor_zero_based": 3,
+        "room": 14,
+        "band": 3,
+        "name": "Storm Cut"
+      }
+    ],
+    "scope": "Normal final-room boss routes; optional support, degraded and special source encounter modes remain missing. Story evidence and surviving summons still gate progression.",
+    "report": "docs/reports/isaac-enemy-port/loki/behavior.txt"
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "review": "docs/reports/isaac-enemy-port/loki/visual-review.json",
+    "linux": [
+      "docs/reports/isaac-enemy-port/loki/linux-loki.png",
+      "docs/reports/isaac-enemy-port/loki/linux-lokii.png",
+      "docs/reports/isaac-enemy-port/loki/linux-lokii-half.png"
+    ],
+    "wasm": "docs/reports/isaac-enemy-port/loki/full/wasm-probes.json",
+    "artifact_regression": "docs/reports/isaac-enemy-port/loki/artifact-regression.json"
+  },
+  "balance": {
+    "result": "partial_pass",
+    "fights": 8,
+    "cleared": 8,
+    "minimum_remaining_hp": 50,
+    "maximum_remaining_hp": 100,
+    "report": "docs/reports/isaac-enemy-port/loki/starting-kit-probe.txt",
+    "scope": "Automated normal input, starting kit with no acquired items, bomb use, god mode or combat teleports. Enemy/barrel explosions can still occur. Human/mixed-build acceptance is missing."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "report": "docs/reports/isaac-enemy-port/loki/performance.txt",
+    "context": "docs/reports/isaac-enemy-port/loki/performance-context.json",
+    "scope": "CPU-only simulation timings, no baseline comparison, rendered or WASM performance acceptance."
+  },
+  "limitations": [
+    "Native action weights, volley intervals, vanish/reappear windows and teleport distance are unmeasured; configured values are explicit local tuning.",
+    "Meat Cleaver conversion from Loki into Lokii is not yet implemented.",
+    "Loki optional Poky/four-corner Stone Grimace room variants and degraded/Double Trouble/challenge/boss-rush/Void routes remain missing.",
+    "Shared versus per-half source Red Boom Fly cap needs native confirmation; the current shared cap is a declared local interpretation.",
+    "No human/mixed-build or rendered Linux/WASM performance acceptance is claimed by this checkpoint.",
+    "Final resident capture places a half partly off-screen; camera/readability and generic phase/hint labels need further acceptance."
+  ],
+  "failures_resolved": [
+    "Compile test assumed a nonexistent Projectile.age field; tracking actual projectile IDs verifies new volley membership.",
+    "Initial floor progression test incorrectly treated every non-Peep/non-segmented Isaac boss as Bloat; it now verifies Loki/Lokii body groups, stage bands, HP and placement separately.",
+    "First exit test ignored a required story evidence gate; it now verifies the block, visits/interacts with the actual story site, then checks exit.",
+    "Initial Lokii half mesh had inward triangle winding; corrected and recaptured in both platforms.",
+    "Tainted blast artifact persisted with particles/generic visuals individually disabled. A powder-barrel GL line in the derivative-normal pass was replaced with triangle cylinders, preserving the warning and fixing the captured artifact. All temporary diagnostic bypasses were removed.",
+    "New boss-pool weights invalidated the old green Bloat resident fixture; actual generated seed 4 / zero-based floor 4 / room 12 replaced it. No actor was forced into the resident test."
+  ],
+  "next_dependencies": "docs/reports/isaac-enemy-port/loki/next-dependencies.json",
+  "runtime_sha256": {
+    "CMakeLists.txt": "1cbe4a94a7a3f02ff2a7b78e7a5db15f6652875333bf76791d779c4393627a43",
+    "assets/mechanics/behaviors.mechanics": "49c45b03a2005fe597edea753520760bf42a15a6d5ab3d1ed60e6533fad2a3b8",
+    "assets/mechanics/boom_flies.mechanics": "859f167c7ff71782d2e413e96b0b9c201d9464b0801dd72f114ba2586fe83943",
+    "assets/mechanics/bosses.mechanics": "404394fdbfdf561e287a16870ed28ad26deebb90ef1acd6b10252c1b810b18a3",
+    "assets/mechanics/builds.mechanics": "0bcf33eba3828c05bcf713256ef15a31c3968425d1cb6dfb1eed888a138c1514",
+    "assets/mechanics/chargers.mechanics": "5a8cb81b52180875ab49528f0e4c630611e1ad89e1ba8fc8ee9a6ebddc66cd29",
+    "assets/mechanics/companions.mechanics": "22ddb472b8d292e1ccccc689ef6ec31568355c437ccc3d4d87841f407ae95dca",
+    "assets/mechanics/deaths.mechanics": "2301cbd02f5459983f5c506a8c928ef569929e8b8263435a6fad8c14789172d5",
+    "assets/mechanics/encounters.mechanics": "6d66c8578d8b1238164c181582f26856c9713df4e3a3237f65b53d3353d56651",
+    "assets/mechanics/fire.mechanics": "ca66fab40ece6e1bd196182fd834590df0da94a0c77223169747f9fa3f9e8502",
+    "assets/mechanics/fly_bombs.mechanics": "c325126411b64e4e946a0a178bdbbdcd6bc4f9b1c53041f55e227dcf7ac46061",
+    "assets/mechanics/formations.mechanics": "a465f037bb9d3722019fb49bd39e5f99d9e7b732bc05c61d747244f0ea037acc",
+    "assets/mechanics/hops.mechanics": "8850939c80eabd9b40354de81f98542f13371ab677eba102ea7bd8e504c1c47d",
+    "assets/mechanics/items.mechanics": "ad33532c0b4456cd01838feefb4de58f4752478f62250a9818d3a2dcfbe66b7e",
+    "assets/mechanics/loki.mechanics": "4ca0897d15b6f3bcef2ca70c6d5c517871d8d9e41d41d8b80c4718d3211db38f",
+    "assets/mechanics/monsters.mechanics": "4a70dbdc68eddc03db08705c25cee955247bc1f41e92ae9efa07aca74703dd00",
+    "assets/mechanics/pools.mechanics": "dbfbf853ead0cf3b94c3aae315fb941d499fb639f956846961aa2be66431006b",
+    "assets/mechanics/replacements.mechanics": "5f79c6441fb062f5e8410b0674909559252d8ebe58b197c7cc48001e90099a9e",
+    "assets/mechanics/segmented.mechanics": "fa7bb1a9f80e5bf678de4e0ddf2675431f03b6cf72c8aa4f82a94783078f36a1",
+    "assets/mechanics/shell.mechanics": "8d529ab7bd17c25ade650ef0df964530c405f1f5840b8ec21c97b4d91f4d6730",
+    "assets/mechanics/stages.mechanics": "ecb01977180ab3cc17fd5b55efa69e0ecbe58d5b9c7ca6635a3580af45751d76",
+    "assets/mechanics/statues.mechanics": "080a9c86d2bec364bfbeea65894425df6cc502f1051221b3a03c09864c396ff5",
+    "scripts/isaac-reference/plan-enemies.py": "50e727fefdf7807e9acd80755caf568caac91cfffad9f4fee64ba384bdd542fb",
+    "scripts/isaac-reference/track-enemies.py": "6fb588a6d5a882ff2c00892ce8a4031b12d6983f66346aab4aa64f948d434962",
+    "src/combat/BloatBoss.cpp": "47c37be2acf282cb0ba6478218e8baced89f00a2d376e57fdca092c57d947770",
+    "src/combat/BoomFlies.cpp": "5afff95d89b7679d6a0ae0e0fb2515d988c064c0e3a8bcc4166638837f88e9ad",
+    "src/combat/CanyonBoss.cpp": "143383616708b9fb2ef1312c9efa4ee44520195da6f5cdb71cd7853d1e499c9e",
+    "src/combat/Charging.cpp": "9f955b8c2d88839e7eecb675771337dc9208411f71addcfbae638e3d1f6dc10c",
+    "src/combat/Companions.cpp": "c7b323c82ce8374e383d4ce1c1cdae36b052afb69ad8410f4274774921737623",
+    "src/combat/Destruction.cpp": "0eb6a569cc8fcd115d2a39b40241d8151d4685d62a635c2ec6f5aaee996e06a5",
+    "src/combat/Dynamite.cpp": "84c918800d521d86ca31985d475414c8ceaceaf8869358c6d49ed2f69e2ed0fa",
+    "src/combat/Encounters.cpp": "c3d63ae423bdd727d283370918bc736e42b9245f39bcb8a6a885590fac28cc67",
+    "src/combat/Enemies.cpp": "65d9e584d49e3ae29bcc1055debe4eaa69eea403fa15b00e6815f6ffc75c3960",
+    "src/combat/FireReactions.cpp": "c683628cf24049ddadb101a7efb3c5cda1504067fdcc120520c2767e732a6aca",
+    "src/combat/FlyBombs.cpp": "52cba9ffa1c557de01b84f53a87dbd5ec6d78f8ac89d363d992fe4418b4d48cc",
+    "src/combat/Hopping.cpp": "f101721200e94b1074b0b355f21bfef26a2c0aebc1ca307e00697f5959daef53",
+    "src/combat/LokiBoss.cpp": "d0f2d4257d613d428e332d810155ff70b55b3014f12f8f9368494d2a5d4470e6",
+    "src/combat/MonsterBoss.cpp": "987c4cb42197a74b4233c0e8cd7a40870615eb00df1436653f929611ae7fb17a",
+    "src/combat/Monsters.cpp": "37273dbf9e3db237dc60cdbd0da9beabe0ae25ba30c3d89b7a5adc6259243b74",
+    "src/combat/Navigation.cpp": "8ace7d1fa863ca92ebab0f3173592f99e8cc72e28f21ef4ef0f651167efa706b",
+    "src/combat/OwnedComponents.cpp": "830754ef50812f1cedff3d9252c08d699388543ba43401544f233dea95ea7a9b",
+    "src/combat/SegmentedBoss.cpp": "00784b7ee4805c1c83d26fee588685a24748d41cdf493549b6384c26e7662fe4",
+    "src/combat/ShellBoss.cpp": "25aaa2ba95797a8ed3ac96169a5dbf5c9cd05701e326ae970d9681704618ef57",
+    "src/combat/Simulation.cpp": "909d6c3a90af60d95eba36bc526421a6ca0d985c96692fa660733042202ad703",
+    "src/combat/Simulation.hpp": "aeaaac72ebe6424a10c9663614cb799fec9fba39c15f30d457222280c514ab98",
+    "src/combat/Statues.cpp": "dfc6ae0e41f22bafc0c3595eb682eb9da475bea4f08ce787658a074315438b8e",
+    "src/combat/SuppliedBombs.cpp": "545a9ef197d7e8ae6004762be0afd2587803c2e63f1407d8b3a058b61a9d5775",
+    "src/content/EncounterVariants.cpp": "3154a3c4515c16d3b1937b12eec1f522d268dbe46fa06176a40a9127717f59cd",
+    "src/content/Mechanics.cpp": "9de8e63a8e179155c626ae4bac181beccf2feb25b3d6b3797abb3fccdf8c8b99",
+    "src/content/Mechanics.hpp": "0174a600e5f1eb27e7a56b3590ea24f2f5e28a26fc435ce0a4a7e909a9b1d562",
+    "src/core/Game.cpp": "af202cbabf667eb08113e4678b7be181e9b208037865e7aad2e5506a91acf732",
+    "src/core/Types.hpp": "08ac9c07c578b6e8937c21c81ffed35c52ee1c5a1125b84ffa859a24721c7789",
+    "src/main.cpp": "d7c468496eeb4416b2f7e0d278f5fd2c3f873b00f5fd1f56dcd58fc27140c28d",
+    "src/render/MissionLighting.cpp": "d10c7da15ee554338a0ee08b8bc1fa2396889d5aa9a611f52b6b16af261cef75",
+    "src/render/MonsterVisuals.hpp": "72a5f7e5116c3e90c61e3eb8ced81185c0c9912766fbcfa202ae296a1c8fa64e",
+    "src/render/Renderer.cpp": "db549af2a49ade81e121312d384045d83464f6388b9abd6928e69f2a60663d66",
+    "src/world/Dungeon.cpp": "3b6dea21f88e5ea88f242402ac0cff96a22af7c8786be2f5b19936a9236fe53b",
+    "src/world/Dungeon.hpp": "7bfddfffc4d7ada8f664cf98d2591b89964e229cc73c0254b0c2a77e5459b287",
+    "src/world/Expedition.hpp": "6dbc13c2f49c986b2bc22377c74f72f355a471b02187cb13a48e06cfe3c153f0",
+    "src/world/FlightNavigation.cpp": "0a4203d24214c88a8f23c0d7bcd0fd5e24dea150f4b8dac476d0ff845bf4f845",
+    "src/world/FloorDressing.cpp": "e02f8938625205b5b69824d17a33f7a6e2fda7862c040ebfe79b6af7a548ae20",
+    "tests/bloat_tests.cpp": "ca93e01493cab789314a078298e1dd98c323e57af5c44d84281862d618212560",
+    "tests/boom_fly_tests.cpp": "e1326010ace0a99afa66360a60a33d7a1014106ef71607211e53f849ecbfe359",
+    "tests/charger_variant_tests.cpp": "4351307ff5584985e51665e82c28ef1a3940a0f309193e44818f6e45b2926adf",
+    "tests/companion_tests.cpp": "d81494db50b92f214d01a664345a9bb6a9ca3dfe4a06102cea494f8087b4877a",
+    "tests/expedition_economy_tests.cpp": "0622d34726e5445eb35b7fe8f13d04e9a03d176d3be4f4e1ec48f22bc9ed39f9",
+    "tests/floor_progression_tests.cpp": "f67cc231ea2c117d9b46cb271b0f79dadac47517b01e422e988e47c15dfccbb8",
+    "tests/fly_bomb_tests.cpp": "2dcdf71708830d4e290b4b2528949916bcd1a1e15232a3b00cf10fc1832a2b60",
+    "tests/input_tests.cpp": "574edccb86fb2895bb723f8911fed14d3597c4eb6c84eb1000780c710cda45cb",
+    "tests/loki_tests.cpp": "6f0721e6780a425802b8fdd3f24465bc3655ca723452541766e2c0721a8d5ea0",
+    "tests/maw_tests.cpp": "e34b0c3ddf04aa15204fdf4d8889ffef13243642a89dc7fd7564f1ae00e86b73",
+    "tests/mechanics_tests.cpp": "ef3c50e91bd13baccb9c5c271a2ed1d94624a9659b510044e03d07e6cd94aa89",
+    "tests/monster_boss_tests.cpp": "37c1f90a84ef435445d3895e3e5dbb64064586f6545b5439bddd200ce9ba0298",
+    "tests/monster_tests.cpp": "3822c37ce9eb7ee3623be59dddf54598dc00bff20090b6fc728ebaa4879b04f9",
+    "tests/pacing_tests.cpp": "af40a45c9ed3ecd3337f6ff84ed68b6c2ec9bbe61966f87716b75e4626160253",
+    "tests/quake_tests.cpp": "ab0478a79ceeec74ddbb9735c465465518278a490d31cfea4cc9ae53fd067073",
+    "tests/replacement_tests.cpp": "b0c865d853afed057afc501717988a0a3f57e4b6d105e4e8dd4a22718f1bd4b9",
+    "tests/segmented_boss_tests.cpp": "9fa14a50349e998a12ce694a5cded88057b5086496dfeee43bc3d672af7746d7",
+    "tests/shell_tests.cpp": "17064e1dd055d2034aa8247209699b57751b99a3cf6c59dff8f491f4d379e982",
+    "tests/statue_tests.cpp": "13aec90151c86c489b84cd2812c54ebfc8117b2472ce3d0c031d13de190f29c0",
+    "tests/supplied_bomb_tests.cpp": "cea404f62ee05af2a59ce585a2be33f997fa3302d90e327a3336897c9739723e",
+    "web/enemy-port-test.cjs": "d90e3fce1da3ce79fe9091e264ff23a84ed08c6db411884dc8b47eea58dd7aaf",
+    "web/shell.html": "eddfd148057f41c64fd6b830f322d089bae9a2731269e132d34a7bb95f78821f"
+  },
+  "build_sha256": {
+    "build/deathward": "7eee29bcbe22930de639e3393ad42abb33c0ade14574bd26b6af2c34c3cd10e3",
+    "build-web/index.wasm": "5f08cec3dfdecffb12f9bcaf9589d49960e9cfc4fabb5f1a439df9b0813ebc01",
+    "build-web/index.js": "12de891f4c9a69df1122e672fbdeeb8c08d9ac2440ec1458ba653c9383a977d1",
+    "build-web/index.data": "efb518e3579a6bb6a2dc27495a3d9b72698b4cdd6eb1b9b685b92eb38f31b2c1"
+  },
+  "reference_sha256": {
+    "README.md": "7823bdb240d41eac1c78ebd32219f9ded48fbbd17ad58b4c6f532d4c8a3ce050",
+    "docs/isaac_monsters.md": "2f723d227d1d12cb688190c8e7e70c67c3a04f0c87c31dbcb0f3e243382781ab",
+    "docs/research/isaac-enemy-port-plan.json": "eb1f287cb7613ef031360c12bd9148c01f5a9fee3a5735e023eed85c2a1761aa",
+    "docs/research/isaac-enemy-port-status.csv": "80386fcbdaa72c57c78c3208efaa4b30cf2968c1faaee36db5f611cae00f6a50",
+    "docs/research/isaac-enemy-port-status.json": "9dbe94833ba24112fee1272c5dc3664c15bae8320c9d9ee7f1938c08818e4fad",
+    "docs/research/isaac-enemy-port-validation.json": "4c39f4f7360dfd7d1911ea9ff6b7e26c2b86dedd3282b9223e3f9ccc88850017",
+    "docs/research/isaac-mechanics-reference.json": "51a84e580d93a78f6cf220cc173ebd4abc0d32ad127ffb64cfd85efa8a5cc00e"
+  },
+  "artifacts_sha256": {
+    "docs/reports/isaac-enemy-port/loki/artifact-regression.json": "5f1aa0d08a5969ef144af4eece7d01b85c57c4fa06356eca8c9eac3a3edd1ab2",
+    "docs/reports/isaac-enemy-port/loki/behavior.txt": "865c6a5f1dc96a8f8446ef1658792f1cd0e8cba632483f378d20a0fcfb978fe6",
+    "docs/reports/isaac-enemy-port/loki/checklist.txt": "12fc04882c6d244b7d65cd224fefee5e99100dad668adfbd19d303fac31562ed",
+    "docs/reports/isaac-enemy-port/loki/final-verification.json": "93dccba1d241af1e1e0c4e39af2c378d994f3341e0d4ffd0106e21877980b0de",
+    "docs/reports/isaac-enemy-port/loki/first-run/behavior-story-gate.txt": "0421e5c64507ed8c4327a579dcabf62b1a73b6acdbe616bb8bf2389b553586a5",
+    "docs/reports/isaac-enemy-port/loki/first-run/build-error.txt": "eab14a3ec22271171d3361f332433ab1bbae630a148b609b0bf59a404bc90bf2",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-loki.png": "284203ba172bc5fd0e4c3361aa3b02cd9c69824e6de706e8d49ecacde33ab6ba",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-loki.txt": "1056eb0cafa1d21f0c9abb35577a67562d405eed680ef60dd147183766dae499",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-lokii-half.png": "2e4fa3eed16fb1f7efe26555acc9fbc8b94fa031d693b7d4caa2413d4b5f8273",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-lokii-half.txt": "b75d394f7e277df8c7f92ff0495c09bc339c62f59b5f62d7d5351dd1d005dff9",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-lokii.png": "7d325828935068bf4cd7a73be7ff4c3cd36299c027490fdaff5c6ae330faf861",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-lokii.txt": "b3d04c034f017fc76cda0bdc301186ae10176e6095a8e9ecbe8e16e519741206",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-110.png": "b16c0014c6bebbcaec3d37a91cba2e44932dc9bab7e89e4e4b20f7a1effc8ef4",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-110.txt": "c92791deded4250d74ef634126244c1c8722c59d74a8a3707a2fb723159c6f4f",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-all.png": "03d0fdfed7dbdb21a4efcdc06c99b55a29c2ee3f244c42fe48f5c7129cc4e307",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-all.txt": "0c045ff757892e030f2beb148a0ac1d20512fe17593d70da1a756fc5f11b157a",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-mesh.png": "f9e293ef04d0d08e704a896231bc1abe7529921ebe77ea06d1fc9fa19a27f712",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-mesh.txt": "d30197cd90f01de31927d21cc237c06e925ed4f38f0ab4b1cb98c88b581e030e",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-sprite.png": "444f6970b2536ed03b326b08b2951403d497c358813a6f543d4457fccde925b0",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-sprite.txt": "607023d94f76ff9383da377ecc77c52d177b4da2dcc5307a9304c28188eab5e5",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-visual.png": "238eb169e9f0c62f53781525cf9380680cb3bc46895fafdb9ab448ffe50c4d64",
+    "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-no-visual.txt": "47b568fd5ee451b530e902ab0aa9bd1e314c43063afeaa7dfda4ac524c96de3a",
+    "docs/reports/isaac-enemy-port/loki/first-run/native-detail.txt": "30c1fed53bc61b06558a89ef536d5b16380217ef25124d14b7a4e5eaa7ce5d96",
+    "docs/reports/isaac-enemy-port/loki/first-run/native.txt": "ccab8f9739f9945060fc4bbb23e96a952bb710028258c1d16d0710840d9635a3",
+    "docs/reports/isaac-enemy-port/loki/first-run/native.xml": "47f985f282b8da3e194874973871f162b039816685426bcc3a5cb3700cec2dcd",
+    "docs/reports/isaac-enemy-port/loki/focused/browser.txt": "33809e4f198e5c89a3591d75219180b026c0726ee5bf6eb4bd73991729e36007",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-loki-180.png": "5ffaad8932ee18ec22224e1724714daf9b5b9931bed733fd8a8e2aa56bafd5f2",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-loki-360.png": "63413f38381dce83c50cd272ee8a4bfe1b1474ec48a096ecc1ba1a9907afe7ce",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-loki-45.png": "4984fc3a671d656a7b6ead597059977486798a2ddea4f3abf06e55c584bd1322",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-loki-650.png": "0241f1449b35e7d871c618ae4d969daa2832eff4211cae0f269ef5ab3f0fb7f8",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-lokii-180.png": "42de7b06acd6150c4a88c3ca3de67f0bf543806df59c4125e5acba0c6e1ff2f1",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-lokii-360.png": "0e484d943ece69c288c79927488850d6ec62eae5d39553d1dabc218d7c07fcf4",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-lokii-45.png": "fdbe23dedc7cf7780fb0d234fecf814f4960e39214b8d681d05b79646348ae8a",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-lokii-650.png": "7571c3a878be387588269c21c913d49f3cf2ab4980eb34e5a9e8981fd159c3c3",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-lokii-half-death-310.png": "fedfe09e52d6e95b5e8dd8d286fce8cceb5368925541acf7df1052431edc38db",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-lokii-half-death-45.png": "f1414bab81d36c35f370514aacefd797fdbd0fa7eb02fd12a2b8372a6c8efc0b",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-lokii-half-death-450.png": "5117142188ed821a48443bd7ccd53472b5f98a0ea2e1ad27e16b9f85474af25c",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-probes.json": "ea55a118ef4397c892d687bf0a9a3e100edaadfad77f18b79e31f9f7ccc59af2",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-resident-loki-180.png": "c109f06bbf0c6224675988ed9e1d59c088e0c97f48a890b97605849b65c2335b",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-resident-loki-360.png": "8a1b530c93fb1824782d580ceb2cc4a733688c66a39efba6a61e5fe7b8de3d18",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-resident-loki-45.png": "816cc724af8ce66760a2b4ab68f20499ef50faabc34ec6ec6b57b8abfb8cce3d",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-resident-lokii-180.png": "af3a05a3454f67f76600ee636b6066aa9f089bd981dfe98ea788ba4039e5a1dc",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-resident-lokii-360.png": "b4e6671fdb53e44e9f03fc28a03f60cb5a38898699776b8d0d76ab8a16ef6e89",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-resident-lokii-45.png": "df979fc10d125afee95f2e24c2cd44a6bdace63e0e40cc726029f2f00ac85467",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-tainted-boom-110.png": "29b905961ba5975802cc07964e33b9db02bff38db37bf68f5b923a06712aa7de",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-tainted-boom-240.png": "e61c1ce90176701775efe3f8d10d41c4f3d253e414d72cd1a74c30e9bfcf3d49",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-tainted-boom-45.png": "891cf177286127af38574062479aa024e96b28b4b4f895bacc49afe7d431b784",
+    "docs/reports/isaac-enemy-port/loki/focused/wasm-tainted-boom-65.png": "56187bc65670a0357d387f3845afdf95eb258ac4e74a19ed4f2cd92ed85da3b3",
+    "docs/reports/isaac-enemy-port/loki/full/browser.txt": "68a495ad66cfe10f5d3e3532e76cfe26c946dc8befc7e011dfbd6120bfede36f",
+    "docs/reports/isaac-enemy-port/loki/full/native-detail.txt": "55e0f297494c4d6f6457a603c7fc66768be80dcb7aefeb277c117f5a63f3e0f5",
+    "docs/reports/isaac-enemy-port/loki/full/native.txt": "28893591751a9844645329ea9759675887266c4b53e7a1bee4e64dca2291b050",
+    "docs/reports/isaac-enemy-port/loki/full/native.xml": "303b1138510e0bd061726e65fd3b8c54c8e3f0af5fac33b94f33d679f2312efb",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-10.3.1.png": "247684490f50024ea6dbc8447b1325b1acdad5ff3eedd01c0b1aae3aa2d7b0ef",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-10.3.2.png": "c7c09e8d4f30b890fa00ad2e4abce0581bc452d92e58db5c8995cfb4fceaf19d",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-10.3.3.png": "20df1fc5104f90130c93934d377aa94c069e98a12f34137c3f6c48d0b61fc63a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-10.3.4.png": "ecfacb93463d8e3025f0bd1861dc0821fd340732232eaf2f57c9d708b10911b0",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-10.3.5.png": "2b5a787680e2d07fb21631e9e1230c01debb16db7a8a693a8d76151987cac6d2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-11.0.0.png": "4fc56a9dabc7bd9d9594f73ece7a741ad883376add2d1c52fbf666bf5796cbe4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-11.1.0.png": "af39ae9c0c9c031b97e07898aa8e305581b69c1c7e888308db92773e42eb9364",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-12.0.0.png": "6121fc92f78da0f1c004b5ec95e21c94cd8ba201f08d6387d0ed337e57262982",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-14.0.0.png": "0a6015f0bb7afbd88229927952bec4413801171d24ac93a05cf400e1a86407e7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-14.1.0.png": "d08583a168ed9495ce07d35de1e05a4ac50b310b49f6c0fd03a42b8dcc7994db",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-15.0.0.png": "1f72ae7e102c0193bd0103f5610da44c7997c2af378d17c6a65c164c4926d109",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-15.1.0.png": "351b969eeaa3677893a20be1df13a7d722703741b84d704e8f48506687aac372",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-15.2.0.png": "e9586eba4b41b29620510f6b1958eb753484bb63fcf58be4f75136748227f716",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-15.3.0.png": "b079695794e436a98d7c84eb160c7ac1b631e6dc5c210079537f60bbd4d96661",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-853.0.0.png": "d6d573cf585eb9a6a4810faa599a0eaae4a0937024f599eb4fe370fc7286d5af",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-872.0.0.png": "3d23d182fcaa6feb19e401fed87a75c01e5827b35dbbc7aa5d1549f0a00daee3",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-bloat-above.png": "ac953b64a11b4ab2c11fe12e0ff195497ecc7229b6895750d7dc58dc16dac738",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-bloat-down.png": "95f57f5d8ecba5e73a8a396dcc4f4c2c4467caf08870c30e987a6d4026483e13",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-bloat-green-creep.png": "32e4001a4dfcebbe7ff9005f37b0c58aaf8ba8ef89b2d7b4f0aad660932f8c0c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-bloat-green.png": "2c3fc9d2b4cea5d00a685d2b1db473fe87fa8f902dc996333879285af8e4ac8b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-bloat-sides.png": "e982485f362aefc1f66ae7fa30999216fbf5efffdfc8941bcc6282dbf98af632",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-bone-fly-45.png": "834cb954ce10582e5ac0d608e71f25e473463c82be86672493e7cdafe0330a5f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-bone-fly-65.png": "98c9f929c3ba6db881f9eb6e4bc44fa32fbae4d6a4320fada37e3a23889e32b4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-boom-drowned-45.png": "0b08ff9e2fab5c03fbce6deeddd9ec1cdb26c3f008e78b2cc546aa15b90b4830",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-boom-drowned-65.png": "30df73a27e21e6a111580a5353c19d80796ab6845ed3bd70a5fed6cbc2d039d5",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-boom-normal-45.png": "dbcc2dd00502b84be56a9cba45ddc6df053b6e2f1ac900b8dbc2c9f69c8baa49",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-boom-normal-65.png": "7c136bdd0557024843ec061b53f7ad50ce78e7559b17c271c3be8776eb06d4fd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-boom-red-45.png": "901e1b2d51603ffe215e1712c400454f029736f89e666012fc80e42eb8ed8289",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-boom-red-65.png": "e1124a4d7716ea4fb9948b3a270065eff7732a1872382499be3c2b4cc1203836",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-charger-cardinal.png": "1200a6ecc86fd23a187e56e7d0ab30502023f220e77f5f1e064b81fc610b945a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-cloggy-curves.png": "45dcdcf3493fed90d37b6075f222b1ed26532c918ecd350b08c625e70acb934a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-clotty-burning.png": "57770412205c5b197eec11d2a1031375c759be2f71f596c8b67b14ffb55bab51",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-clotty-flame.png": "0b538c28a11d9b012684d7c3c11b0ac9eb9106b48bc08d883747fb14d66ad5a4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-clotty-flooded-death.png": "6d13adf2ffa7ae199d7fa60cad3a94f011f8647d678b23072c408d4df6fb6727",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-clotty-flooded.png": "f9553f5f5dae7c269b193973e63fe421f65918958c4429ff7be60937bd1fe4d4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-clotty-live-fire.png": "a8e8dd7903f02ebc30144ef379929be9314ffad329c14ce8b3249df5deb867d2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-cursed-goo.png": "9d720ddf55bd73370c46071ee2e2a2e904e2d490eb9bb3be125a19273ac75124",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-cursed-regrown.png": "e9d62921d18f91a23616e3f9227cfb6175d7c601eb2b6f1737577a28bd095956",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-dank-reflection-110.png": "d735d0631c4e07c20f509b26252f9a1c2199b3cb1628146df6e6541c28ac3809",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-dank-reflection-30.png": "404b8254a590f069b6c4994e17facee2063b7b3c185f192cda07695fe54e3f60",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-dank-reflection-70.png": "0a9effa258c576c08b2603669ac14076a2bd9a2a23738c3569b3a5926cb315dc",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-dragon-cardinal-45.png": "605bf81024e32ea446653a7886905a242295526860241d518d7738f3a157e324",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-dragon-cardinal-65.png": "1d7737d706b2261e8fb9b523be5132ea132d2a68214bfa7d44b8599c63a90ce7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-dragon-diagonal-45.png": "223a86d783d4d486c816c650ca351d06f81bc67c71e93aee6ace0b26cfcdc480",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-dragon-diagonal-65.png": "320a5af3bb3712fbd4b057a56d7822f5d33c9fe950b7f1435154514b8508be2c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-drowned-death-volley-15.png": "8f5ff70dd5ee943f2809c0b3b72d1714f1debaa186ca1d4a3840a43713f062dd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-drowned-death-volley-48.png": "1febf9946777aafc15a6d2991f57399732626be37a28894e4607dd6ed6a6e1f8",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-drowned-hive-overkill.png": "27b1ff19ac5c11dde45783d44ed35371ecb78b7c56fc58f09d06685c4c7316f6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-drowned-hive-split.png": "001b8767d8c91356ba5f09ad7c9e686da029cc7d543887538038964f90ead047",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-drowned-repeat-fire-15.png": "9169c028cb39754fcea96f8471513523b5a3c8b20a0b42cc1e87502235eb9553",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-drowned-repeat-fire-45.png": "9da0e4f6fa696243a798a130de4943d5a5b91e9b88e879537effe0c20f5617a6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-eternal-fly-bombs-15.png": "a85e9d4a644fbb50bf2f6571022c9b6708e20ec04a88c4d67ab671c429dbe11e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-eternal-fly-bombs-155.png": "6e5e093547dda2aaa0ee4a133a66d37c4f1fec3f55ead987e4ec774aac7a9bbf",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-eternal-fly-bombs-65.png": "e16650a04541595d94f47921613635e296584a613ceb9984cce3a5f62fb91d71",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-eternal-fly-bombs-95.png": "28fa8eedc4cfe706004c97407bb8c05b64fee951453f4cdd5004f13a93c4e665",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-fire-above-cover.png": "fc863884c682f32f2a5329c62cc89717aac9fca3d4e7e692639ff5c84f8442a7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-flaming-cover.png": "8f37e0d9aa8d52f89cbf12a1c172c8f4557323ec31480b90459455ce5d3c3af4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-flaming-pursuit.png": "47ab6ce6ac6c0345eac367f5f04bdc99ba5afec9d6685c15a17c17383b09855c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-flight-cover-pursuit.png": "f5ae350ddb65671697da0460e90c8f37f2108a55f39c934f5c5e33a2bee80bd8",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-flight-cover-shooter.png": "a2e352aae8e61bbff051d4a36019280f67cf1ddd25c7785920fbc46fb2ba1c61",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-flight-river.png": "eec1415d77e660d193ca1d88425343082dea18ffae78239cfbd2073821fd8ad6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-fly-bomb-death-125.png": "643776e6bdab06da5afb48cf1a36ad82d01f0a945f47a0bb8add162b076c588a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-fly-bomb-death-15.png": "548ceb53a8f62494e10cb46117dfa54ef326d4f1b5185072ac40367d523a1f85",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-fly-bomb-death-65.png": "893815cbf9942a82a5c0dafeafdbaf3afed8dc539a4c03e7b22048c21cadd41d",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-fly-bomb-pursuit-15.png": "548ceb53a8f62494e10cb46117dfa54ef326d4f1b5185072ac40367d523a1f85",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-fly-bomb-pursuit-280.png": "55245bd5cad4e039534ec15abfb3dd69fbb6d0a657f61a80a8d402da818c189b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-fly-bomb-pursuit-80.png": "3708c564f8cc4e3e1021c6da88f127966ba1ee68b19595c002bf17b9e9c2f805",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-globin-finished.png": "85b053615dab2bd0cd18788a6df0f7d6782c3edcc711a8c687c2feb12ecc7c4d",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-globin-goo.png": "afa75879d3f3b4ac3b81e94f0639fe390ae16ec5fc6f84b32f966c66508631f5",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-globin-regrown.png": "cb6176dded6525b5a2d8e9ec4ad435d64094d4b7aa10e62b9d119fe9c8aff4f6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-hopper-cover-morph.png": "75b05c560353e4c75d2f7a87291103d3e5aebcf761e875bbdb9c7a6479d0fabc",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-hopper-cover.png": "e4941a881c466eb2cf659cc0583e1d15d8af0267fd996f023a8e5f2a7291f4d2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-hopper-fire-burn.png": "6d3328063441a4ff43307dafd3f4af31d0c4d013bfec7b5f31bcaed521e74468",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-hopper-wander.png": "590a7b2ab5dd12b30f5083de6d28530ed2a7a9b697c13d36cd30e8801625e385",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-ink-death-125.png": "475fa48280998585239637a88111f4b619bc42a02f4a8f2caa7acf0558ab93de",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-ink-death-15.png": "a48ddf788a700504667643e0af23b92c02d7ee8e3e64f5bda6a8169d57cf97c3",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-level2-steering-10.png": "8b3e391097330f5bdc244b8ba279619923fe920dbb887ed272896399000ff375",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-level2-steering-40.png": "76130bee8c50089e87c6efa53fd5f345394f11edfb34c52b09cdcad09b8d2dc9",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-loki-180.png": "f682167ba31ac32364327bec4484acd4171bacd2fca78f85fd7e649f47ac5f7c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-loki-360.png": "b7c99d1c4d2197f684d1b080a3aec49334ec9fa68ebecb006b13d316abc77ca7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-loki-45.png": "816d41ad0675f20d67526662a760c5d25ae61ea49626fd26666a98600f22375a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-loki-650.png": "0241f1449b35e7d871c618ae4d969daa2832eff4211cae0f269ef5ab3f0fb7f8",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-lokii-180.png": "b2177e07554c464f3797c709c44b6b1492e8074f2abe7c248e83bacb76c65819",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-lokii-360.png": "e9d6d20a0b8852e9ca281fc5876ad8c017ede001d3a61b6dddf8a934394c4bec",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-lokii-45.png": "fdbe23dedc7cf7780fb0d234fecf814f4960e39214b8d681d05b79646348ae8a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-lokii-650.png": "7571c3a878be387588269c21c913d49f3cf2ab4980eb34e5a9e8981fd159c3c3",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-lokii-half-death-310.png": "ee69f0e1b7a052f127e60d5f8aab68ab431a432e77b0ffc90b45e385baf6ad2b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-lokii-half-death-45.png": "5217d9934d5b47ccc89e30317aac87db2c2364d04fe9e4d57e68dd4efb8dbdc1",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-lokii-half-death-450.png": "1a06b944f4866f6d67e2ca5b03c849dca949e3fdda3d5a20a75d7feee907a6f3",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-broken-cycle-245.png": "cb8a5b5dd5cd21acce558cbf0fdef077b8b710648d27c8c8e031b3f34ea74160",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-broken-cycle-400.png": "e17603cc10dd5b8aff4e3c2d7055736343243f34e883b3d6f4fa6f917b755fce",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-broken-cycle-490.png": "babac98856b2003b1a156591836131cb136e8d321e97ea6ef5902932c847fe43",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-broken-cycle-60.png": "86576df78e4fc4f8710448debc771aee440a34c3898d5639faa76f4f4b3d484d",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-normal-30.png": "c24138b02a079e0002d1176827311979311ab4d209e002dbd3317d00bbf2621c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-normal-90.png": "1e0a2a7738d94d9645256b37475a10ea1360e2e7307b7b9bc9f7ce8a52cd1197",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-plate-120.png": "6f9c44d4921af655398e7d93bc4c78a1ff41f6c1793175340a4e2a011e8c6150",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-plate-30.png": "d1871fc3c6dd77be2ec0e6a0ea41b741878225a10b739b24fa2098b91aa203f0",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-plate-300.png": "744677eafb5db5fb539c7a08daf67f9ba097983a162a781fb890aca47ffe080b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-projectiles-30.png": "b3b52581f598a471048ccd448638dec317677ac96356d770d87be45e8e643987",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-maw-projectiles-60.png": "1227e4e0e615bc308e7a445ff8fe9af6de5a28f90fdb69571545607cd6befc31",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-moter-overkill.png": "8a881a3bc5d099e030b6b328d16f2b64ba2320c226fac675e53da0b29be35511",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-moter-split.png": "499bfeb78b4ceea756fcfaf23e21eef181c3b98a9f4c8225e21542eedc8bd3a3",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-peep-cyan.png": "c1e3943c409010131b747b64e8fba46c90440ac90f2a2bd88872cf180131dd7a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-peep-thresholds.png": "e58485a3ffc730232264ea25c53a2a5e15ce068d478ee6b6b3179cb66f18522b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-peep-yellow.png": "e69c87cbbf118c1ee1843c6d71721a5002abec835416804705448b29391dbba2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-princess-diagonal-12.png": "4de08123a4fa9c4cabc4b8765f5d42ee99769749a4b4287d528c31c1b608144d",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-princess-diagonal-45.png": "742ff09e7d28074b77932a7ba5ce552c3e814ce0400f5b6ae5290c526f15bcdc",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-princess-repeat-fire-15.png": "23acfc593330e59e25931bd4e8fc6f337b488657ef8edb3ac76489b0af904e5d",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-princess-repeat-fire-45.png": "2314b6f0a5e9ff720788ac49af4e8c0c53c88e6b9a6338a37175fc24126c19c0",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-probes.json": "1f56b8cfe223384893d9b4a922f8deaab872c26f787acd8d3cd6392e3446a894",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-down-plate-165.png": "1652bb5ce0b8dd897ef049939104598577fc8ffc9f53b78faaa33afb8f56815e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-down-plate-195.png": "e25249a01844680cf2b84d330dfce13e211b86bf5cd7eeccf3a84157287c2c79",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-down-plate-225.png": "091f5571ef227102c61531fad82809da2737ef7681e31cd9f46ab2793dc3af3b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-down-plate-375.png": "17040740aec1644cb3288e25af8735fc942c6066d17b8c718d58e1881e6912a4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-left-165.png": "85d28e0bf8c73982638ae0342e824a10cf8b3c965a1ca07f3ddb7915dca36d1b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-left-195.png": "f2adb68a94776154e4e5cfb37c3c5fcece39b60c92599396bd2da779f1fbe04e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-left-225.png": "60651dccc192810d9a2300a19e1403df81f91716d7019c116686bfa3f5aca034",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-left-375.png": "409f529de6709e516038034b24967f1c883909c7752bed3ff56db843a8b5e75b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-right-165.png": "4741964f4d289e9ff2ece1b2f84c9ba251d6794d665def2474dccee5d030079a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-right-195.png": "df507c5fcad88e91aea29e46b3afd818c8a752a7065ef3bd367adc0083ab745c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-right-225.png": "cccac03997e62b608c4dd85f69277445c0f22d10f13a95418173042bfa3bd725",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-right-375.png": "ea3658fa7b45193e2139f09f17f23e5cacd333105c1e41ec095b6aaf9c8d0d7e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-up-165.png": "a3dfcc5151d4d22c8582d7f6ffd8ef4b6ad140706358475020eecd1fba9d8296",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-up-195.png": "fcf078a2b67ebe6b328fc2125a4c415e734caf5bd36c05e6908adf9f8850cdbc",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-up-225.png": "5d1c715e6064725c5c28599bafcfccf7d4e7b3e0f1abb1c5e69d2c8ae57d1d99",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-quake-up-375.png": "2151c5280429905ec8153c52b26d66c2c2663a1b1e71620db40fa36806eefe3f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-bloat.png": "eef5801f6e75efd5ef7d5f8cc9d9213ee3766fd78810dc8b790a01cf373a7934",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-bone-fly-45.png": "ba4f591e61f3827e6f1721dcf8b6d8b4506dcdaa3125f5a05cb47292a4c788a8",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-bone-fly-80.png": "db7b08b3987310b544f09b61b82d610f530328ed511488c0c137ad86ab344bb6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-boom-45.png": "69b57645c020265ad50d1613c6caecf14fa51f0151dc3b3417ae8c0b065594c1",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-boom-80.png": "afca1c9058914ab40647f7820f660c0948c826aa360c2543720941817744a316",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-broken-maw.png": "bd051fafa1edd6fe7dfdf0069b74a92a95df5c39aa578024ca620e7a5853ab67",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-dragon-45.png": "10b5e983fbebe4898d2e99f2d27459901917223ea33b89b9d314f9988de72f4e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-dragon-80.png": "fef48c649f3eeacec5a98f4fd77912d8a5cf34cdcf2ad7423e232c3b18f787d7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-dragon-x-45.png": "8a34e3b5efcdf9e60f0b8925d73c6865c769ff9fcff5f21b959a9f40db60ae72",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-dragon-x-80.png": "6e38cd9f96de93d99fbbcedf57080fbdb7dfaf96e6c02cff5c8bbc4ac9a1d3c6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-drowned-boom-45.png": "7b5ad6d3e853c0db2d961da34f2a8f2cb6f84de69b132c5dd7dd0d6a63e5a390",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-drowned-boom-80.png": "70a53970c9d38cfc1998e30dfe9754fb41ef153218b2fb2a3f9569eb0eebd919",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-drowned-charger-60.png": "78aca90de5a39c50ac6d7fe2bab68348e16dc10bac85d4b965f26d7eedc0f947",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-flaming.png": "5a0438c28aa604994f2a15e7cedcc46e4a2179bf4a638d27fe109c8aadc80145",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-fly-bomb-15.png": "b8e24339f4e9f4268626b89268106d2769594769da42cc559978dd2afebaf399",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-fly-bomb-80.png": "302b5d81d25fc934bd6381c93c6e0a53252bbb5c048ed1fc854c668a25f241b4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-grilled.png": "d4bb8f03e5f3984b4e3237937c9d73d4cd848700728a4ec05c505cc6cc3d4a8a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-iblob.png": "525929ff39d992b17d6d022700a0d390f894c0955ef2bb23efc67f48e2203a68",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-level2-charger-60.png": "6545d49cd55f0ce0eb810d3b63daa08dbfcd75bb9d2a3c574eee06672e5ca1d6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-loki-180.png": "9c8360c8706b606ec6abc96018b30d9dcad93b341ec1a1e1d38ab2cf1ca56977",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-loki-360.png": "e2a788c367bcdd7b34ceca26dbac7329c11abae55db9d4b7617d6c3a740054c2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-loki-45.png": "f6ddb62e6832256e38c32620948aa863345af2b8ea0c9a43c82a73b528d08542",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-lokii-180.png": "0b1dea3ef8773656d98252ffa59a5bc204b29f41b8c9400ea627181ef58e57fd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-lokii-360.png": "05d38739190a3c576afcaf2cdd1f347cefd4ae1e029bc9bca201df3eaa20860c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-lokii-45.png": "2cf95f301b6d7f305c961f54d326c5dfd6e603f6accffdb2b4b81af2a3f81bb5",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-maw.png": "eaa88286437549296025d5b3dcc319e7476cdeb34baaae5815ac33233f837a3f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-peep.png": "fbd3c442694b48a2b1fdc89d6de5a62e48f99329fb553f806d948c8b5ec265e2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-quake-down.png": "ea5472d4e55a9d6442f8790ccd1fda65bed791b6639b288434d05a059ec240de",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-quake-left.png": "d29f581efd829ca95b01533371852cc5b8bbe14097f7544cada25d2b08ae8577",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-quake-right.png": "11906ec8bd131e52297e673960ca11dc33da3a865f2610ac0dc0d13a40e742d3",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-quake-up.png": "6847c11e84d520b521d855170dbb41cb844d70504343f77d7c9c80f1e42a853b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-red-boom-45.png": "831b8b914c0ebb56c2862993955576e5bd74055c55b66ba85169b3a3731940e0",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-red-boom-80.png": "a4df0de7b7fb228f6ae5a3c2700998dc535ce0036cdc2b28fc58ed43cb7e9fe2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-shell-15.png": "0f421dfbb8119822083aff67da87b7a760daed0db22cd2399a8f279c1d76e3e7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-shell-190.png": "b90ffdcfc3c3fab5ac2d941614df975d63b3275c2e50af3714708513ce1732ce",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-shell-350.png": "4895f6a6eb1ef247acab7dde2b9e6e3df3935aea3b3493521657d12c4444e92f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-sick-boom-45.png": "60743f7879ae99fda92eaef20cbe1bbafef67c15b3d3bad23351b1954f2075bd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-sick-boom-80.png": "a62bd1c6ce023d04b56be36c0acacc66e3af0ac0b5cad8c37a63f1f4795e601f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-statue-brimstone.png": "f7a2c60089f468c4f133dd2ed6d59d084eb3f94db938c510995c290129756eb7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-statue-fixed.png": "e917dca9fd12576090ae407c5a7d86a2692460a24351b3479e61df54febefb0b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-tuff-15.png": "6b841537670a3f863bdccffc76e00d6361891fadd260443e152e361e1211a7a8",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-tuff-190.png": "2ca7cfbc907e6116b7e4b437659a6d1f9b588cc5fd89500dc196a373bb41d140",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-tuff-350.png": "193f501aaeeb973ec8a29817358288c56b075216c347e9a91c97ec81ba7944f1",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-ring-formation.png": "600a6ef8dd1575fc9b207333e8c6998fd7762324ed96e81974ddd154be8d117e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-rotten-brood-cycle.png": "cfc45cb5e5dc77a3f1a3efb389e1142ed1ee14e0e0371f8ccae03acfab7b51b9",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-rotten-brood-spaced.png": "43fb63c52bc590c04a43c3a139972785cf820fe336a44ad6a85b71221bc4617b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-rotten-orbit-cycle.png": "afd352ccb2652c33537f5382e4c23fe16bc9406f5767fff39cecfe3e840e3c11",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-contact-12.png": "bc9ae294a939cda3a510e040fa789595a5bf9e3905278e9df827fb42ac8f765c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-contact-300.png": "86db9930113b8e0bea207b41ddcf57624157dda9ce0d1a72c7494e1e7e99354b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-contact-90.png": "d5f18587a605e39ef69b59fd2893b794b99985e5ceb31444e56859c76f110ec9",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-copies-12.png": "80d2d97d8e0f6d3e3d91ace146a46b5c5d94c800829acf16b1a34a4209fa9f71",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-copies-90.png": "a9c00d1c1382e61c94d46445677f4d8effdd7fd65894ac39c4d9205545af8a93",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-fire-15.png": "9253cd1366a62c9e0a95e42d4e511273340a7f919d597eaa0f0625cf1413fad7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-fire-45.png": "59eedf8ea4c0b677407ce901dbac653f050000def502b9234b50dba9b5c04223",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-path-32.png": "16175583606e4eab010d934bd0a934d9792ed12cd2d18b2b6544247d85a3aa1b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shadow-path-45.png": "eda5f97d604988e947d6918fa3833db49194e1c90bbe40f52df84d3e06ef7d97",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-head-100.png": "a212e9099dac64dbdacb461f3f5f8550d93ad4efc58062ca2afaef4cc7132536",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-head-15.png": "73e28fd947225c8c53a4fda6aeebe1ad2f38b25455e3064ffb2665c4083aacbd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-head-25.png": "c6172701b7241c0e3f2a5d3d6146514b23f406fe3e7c8897ba97199d668462b1",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-head-65.png": "6877dc9179efb2df843217a0c3616105a3fbb886995da2207f51309fed2927f7",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-middle-110.png": "c780418e5fc5ec5f5283b35c530c70633b12481b01627617ab18bbcf41cb108a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-middle-15.png": "73e28fd947225c8c53a4fda6aeebe1ad2f38b25455e3064ffb2665c4083aacbd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-middle-415.png": "9a2108d2236afb24cc0dcf5d8a491add834614969d5100cff3d1dcc7d025223b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-middle-65.png": "a9ab7f57d0ab1d80c17f53c5ce4be5bf0e57a6af157f599839d590d905382e70",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-middle-90.png": "0c6f8d137a968dd8c76fcfe0394df5f25a208c5845b5b3881451b4a8114b1cdc",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-tail-110.png": "9c9a9a2fda8f71bedb7aabddc7f54029391cdd9bcad6df342b2b90cbe2319886",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-tail-15.png": "73e28fd947225c8c53a4fda6aeebe1ad2f38b25455e3064ffb2665c4083aacbd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-shell-tail-65.png": "26a1f5faaf8107e2eeeaf1665112b334854f5f7251eb7aebe9a1597f77b51bcf",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-sick-boom-45.png": "f2afd6770972fcdeb3cda91d61c11028a73105e305a51258339988218f8fa675",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-sick-boom-65.png": "62d42c7ef29ea62256618c8c1371743fbcdab5336c29fc06be44692b0a37ae6c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-120.png": "a5c0fe8f088405c1cd7de780c5aa99ed6bb1497fb6e4000c1e6953b9c6cd82e2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-45.png": "02a68fd6a326eba698545d85fdd1a88a85b028bcb91880de9075839cb96fa673",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-90.png": "bd2160f6d7c6d573ca2459c99009d606f62d5d945e35d1cb699c9e57da46e09b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-alt-120.png": "e8fe298ba934c7fbdc4de0bb55de4973418ae8f66bd4637868bd042fa0615718",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-alt-45.png": "119d57ffdd736ccb4f2dfce5dc2efaa7d48c6b8f82aa71a5855d0d0495d8a329",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-alt-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-always-alt-90.png": "10e963962c1ed04eafd253fb2ff423641a38ab06e0cb00f03fd86f7f629c47ca",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-brimstone-120.png": "ea5da14f572bac206391e85403569506f626c943f6166640f48e0befe6f5995e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-brimstone-200.png": "cfae77b31f684682e697bc893f6815b590e20b268b76eb26789099b271b38740",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-brimstone-32.png": "dbec9d7148d807e3ff2d8d2d21c671352b1222482cf94fa16fc52758a221583f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-brimstone-60.png": "b55de451494056befb8997b19e4c3a6409a85a00f016992eec7908b2fd0f5b8a",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-cross-45.png": "0ba7a0f4856b95b6d92249fa9a9fbe80c722f9e2736b6976b9bd765f6ee4fc37",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-cross-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-cross-90.png": "6254455ce7f8dbc1b137aec7e6958923242e8ec2a7025c07d9fca806f5a891d6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-cross-alt-45.png": "e43d4c912963b431036b049bfbbfa1f05af2ee11211a36554ff2ed8767053b32",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-cross-alt-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-cross-alt-90.png": "ab04e932a780b7ef803a8782f6549dc80a88f633351e6de14f62d5f364879b6f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-eye-45.png": "b284f3cc239704eddcb0554a327dd547e4f9eea2ce8fb71a5e03574b2fb767f1",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-eye-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-eye-70.png": "ba01d0c8edfc26729897dab2d86e53d8b7cfd89c976732d8e092664e4f34b280",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-eye-90.png": "052f7c1110c69b166e59d7dd67995e75b708a87dadad744b4b4cde7ae3dc5774",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-fixed-120.png": "24208c23133cce5a02ed7e775a9458dae7296845a0a115e50249e2311977bd3c",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-fixed-160.png": "0657d7a83f1abd1d27fa87e86aed00135d51e14b851a3816f941d35b6e4a6171",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-fixed-30.png": "30cc512ccbf77e566f58936ccc3f83c16209ce8b4c0d7fec9662c55430a57bf5",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-fixed-90.png": "d5a16d47b8e88d609ad4912bf8296296ab53280e21754ab8bb134a5a49691b32",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-stone-30.png": "1e00bb890d3fd85a09ef3f6f196a58d7f63cbce42cda959a64deeda335be6a8d",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-stone-90.png": "490710233e8723fb2bf326ed52db7f0526ea9913a4594a19562a6013201f4ec6",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-triple-30.png": "e40c0b6afd615da1962d8237e0f3bad388b8c4648b066d1b579549a91f458501",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-triple-90.png": "5e409c397f1cd1ee56c9df3e323404029149d8257df803e92638ad8fe437c122",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-vomit-30.png": "52423b36fb8577348ddcea3b790779200990a0606d02fc3204874e1e527c36dd",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-statue-vomit-90.png": "339850be5a615f1df348d9a0ad61a6af340fb8175c35c511e199cf0fedee4267",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-sucker-death-125.png": "86d870b2ffe7652ca0e207545f4f8cad3a3a43c8841c786ae4121ae4a8016d6f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-sucker-death-15.png": "b8103045725e4db9842a6b24388d70de0f683d1941d3ca99272a91d4f9c4b92b",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-carry-185.png": "c56a8089ddf21cb14f5a85868436ad992d0133b9026a35cfb7d3d71eb6d962a9",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-carry-220.png": "c75fef970a6f99765ffacd05bb3f79657714cf8915347f1aee38dae46a404514",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-carry-40.png": "15709313c6865c7567ca7b3babe9996f3597509bc03e31922a2fe12e7ca6180e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-death-15.png": "a18f894d43fd97dc4439f2458ff8d63c9ac517e0e64fc326c0f2508a54d79e58",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-death-150.png": "01b00353991edded3485b4b10b3dc04c826c0f6ed09d0441d8d6982aa965dd98",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-death-45.png": "c4a506a51f25eff4ec0354a0f58db62775f1aab74cabaa55a1dd9bbf87fa9f99",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-stock-15.png": "a18f894d43fd97dc4439f2458ff8d63c9ac517e0e64fc326c0f2508a54d79e58",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-stock-400.png": "de2d36f260447c0249466a91e11962972f318e85c89639cbb82d17251102f9c4",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-throw-130.png": "0dda209949f955bad6cb56875a6324c8fa417d665268b131e58c06888758bf3f",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-throw-220.png": "3f84ba4b99f07048822d5095e547122aa2ac427daca41569866c66746c4b99a8",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-throw-40.png": "1b7ee746506492c93070eea6eec32d6c52268b1907b8b791fbdb87988f7c48a2",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-supply-throw-65.png": "58f16729b21f8aa57961d5e0f3658afb4aec8a46070a574d12f1e2fb83f4c5be",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tainted-boom-110.png": "29b905961ba5975802cc07964e33b9db02bff38db37bf68f5b923a06712aa7de",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tainted-boom-240.png": "1ce43ab4531b38f27f0bc42ab168ca2b2bc9317e808ade322aca5e252ecb2672",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tainted-boom-45.png": "891cf177286127af38574062479aa024e96b28b4b4f895bacc49afe7d431b784",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tainted-boom-65.png": "56187bc65670a0357d387f3845afdf95eb258ac4e74a19ed4f2cd92ed85da3b3",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-armor-120.png": "61b19347edcee690e2b4240868e059905bced1c0e76381189bdb98fca673f5fa",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-armor-25.png": "972011f5b9c926de0827012c0b1425cc6cc2dfa6a0daf0931a93639027867646",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-armor-350.png": "bf0a3e05555fff3ad1a36d39022cdec513ade825ac5b8df68c9d0aee23f2ca8e",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-armor-415.png": "72eb1e8c2809874160d2e97612d2cca8d2a858713af1d76d70d6432aab495e22",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-armor-530.png": "ccb08a6f321e0fcf43940ca418ce2ff0eecb8c2582e5ba527b5dd607793dca71",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-armor-65.png": "f8f36f2a2801fa3521a3d238585ce76873d32cb45e54d23e1adc861067039902",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-pair-15.png": "c2c06f84280d8a4e51a8037afef7257e8f12e202ab98f54aaf173087b3a127ff",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-pair-190.png": "2a3046f49da7af60da906c61c8aefcf5a738ba22067895c23fc2edbbc878abb0",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tuff-pair-350.png": "bfa1200c7c6c12ae82e5b0a95f23aa9a6f5e313cb96249c7603e66afe0bdf477",
+    "docs/reports/isaac-enemy-port/loki/green-fixture-probe.cpp": "6d848e18425c4e812583aee183d49155f5d090a7f50617b40fb7dd94b8c863d5",
+    "docs/reports/isaac-enemy-port/loki/green-fixture-result.txt": "5bc2dc11e1f2b3cbff26d1f17f08fba6521c80955bb873b3e6a030db13b7c78e",
+    "docs/reports/isaac-enemy-port/loki/linux-loki.png": "231f7865b0284e47aab0a97968e03cb278320e32007e00d4c3b642b48f728120",
+    "docs/reports/isaac-enemy-port/loki/linux-loki.txt": "1056eb0cafa1d21f0c9abb35577a67562d405eed680ef60dd147183766dae499",
+    "docs/reports/isaac-enemy-port/loki/linux-lokii-half.png": "c1250b3d6d5d6cfb56895e8a0fbf65aa65b0ed89749e59aee4b6131a90fff306",
+    "docs/reports/isaac-enemy-port/loki/linux-lokii-half.txt": "b75d394f7e277df8c7f92ff0495c09bc339c62f59b5f62d7d5351dd1d005dff9",
+    "docs/reports/isaac-enemy-port/loki/linux-lokii.png": "5182271d3c83fb7ee0fd1b814e0ba0dc2cb5b77611099e23e7073e5fb1066bf7",
+    "docs/reports/isaac-enemy-port/loki/linux-lokii.txt": "b3d04c034f017fc76cda0bdc301186ae10176e6095a8e9ecbe8e16e519741206",
+    "docs/reports/isaac-enemy-port/loki/linux-tainted-fixed.png": "2b518c7f196f549fbac8ec069d5385dec702c1405ea35eba700b742ffd686f64",
+    "docs/reports/isaac-enemy-port/loki/linux-tainted-fixed.txt": "45f61518a72c61c78fdfdab81c1c9492ae96bd586ad16060ef1bde84228196b6",
+    "docs/reports/isaac-enemy-port/loki/native-build.txt": "67730c3347d760b7a57c03f3931a77b05c71d4dcdb2e616f2943f242cb1986d3",
+    "docs/reports/isaac-enemy-port/loki/next-dependencies.json": "2d409f9a206723e19d041107c5d83464d944241dcb8003f2e7aa7e229f82b8d4",
+    "docs/reports/isaac-enemy-port/loki/performance-context.json": "15f983afce3315ca56bde85e5ce375ee01f0ea6655adf61ca444cb7af17c9a84",
+    "docs/reports/isaac-enemy-port/loki/performance-probe.cpp": "149ed683eca6b5db4d65e47d93696da3d73dae32096bc70590e99d6539f69b1f",
+    "docs/reports/isaac-enemy-port/loki/performance-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/reports/isaac-enemy-port/loki/performance.txt": "cfc8a73f02b68a71d437ba155abf5a3a4946718804842a73a55619884c5c26f6",
+    "docs/reports/isaac-enemy-port/loki/reference-validation.txt": "4ecad08eaed6af825f41fb0a39978b34ac80397f3151a6f68c0ce1887760361c",
+    "docs/reports/isaac-enemy-port/loki/resident-fixture-results.txt": "3748ff3293e1fd4ba68ae9644926b3b31f3709f46ff2e72f09112f2b41c469a4",
+    "docs/reports/isaac-enemy-port/loki/source-review.json": "426093689218b3df0cef12cf02ce831dbd53c89c142ca55e8a85ed8f1b35d9ee",
+    "docs/reports/isaac-enemy-port/loki/starting-kit-probe.cpp": "6d96c94604126a1c3de44803afef82693b0e15ab07935f52b2a1fab26e86e0ef",
+    "docs/reports/isaac-enemy-port/loki/starting-kit-probe.txt": "84ae30d2baa77cdd05e35e43112a1de5d5ef53fd597c9e074895cca022c87f05",
+    "docs/reports/isaac-enemy-port/loki/starting-kit-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/reports/isaac-enemy-port/loki/visual-review.json": "f994cee9c1ec4be141f1e6c03ab417e1a02dfa05cf252408923503de593840e7",
+    "docs/reports/isaac-enemy-port/loki/wasm-build.txt": "c982bd2385257eaad88e720700a239589e3993026d96df3798669255d7e0e370"
+  }
+}

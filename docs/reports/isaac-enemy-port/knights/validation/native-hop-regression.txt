@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 44: monster_hopping
+1/2 Test #44: monster_hopping ..................   Passed    1.68 sec
+    Start 82: leapers
+2/2 Test #82: leapers ..........................   Passed    2.57 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   4.25 sec

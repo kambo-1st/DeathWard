@@ -1,0 +1,26 @@
+{
+  "verified_utc": "2026-10-28T16:31:57.492503+00:00",
+  "result": "partial_progress",
+  "mechanics_fingerprint": "45d263966d0bc5b7",
+  "monster_definitions": 216,
+  "counts": {
+    "in_progress": 200,
+    "missing": 423,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "reviewed": 229,
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/leper-parent/native-summary.json",
+  "roster_breakdown": "docs/reports/isaac-enemy-port/leper-parent/roster-progress.json",
+  "next_work": "Continue prioritized regular enemies: Bouncer, Quakey, Gas Dwarf and Clickety Clack, then the233 pending nonboss records requiring classification. All four Leper parent forms now have source-backed implementations with scoped Linux evidence. Keep full acceptance gaps open and skip WASM.",
+  "wasm_waiver": {
+    "visual_wasm": {
+      "authority": "user",
+      "instruction": "pursure goal - Skip WASM check!",
+      "date": "2026-10-28"
+    }
+  },
+  "live_jobs": "All builds, tests, source checks and14native captures for this slice completed.",
+  "visual_review": "docs/reports/isaac-enemy-port/leper-parent/visual-review.json"
+}

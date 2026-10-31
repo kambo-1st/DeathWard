@@ -1,0 +1,25 @@
+{
+  "status": "partial Hornfel escort implementation; full goal remains active",
+  "runtime_definitions_added": 0,
+  "mechanics_fingerprint": "18c70b73086ac372",
+  "affected_records": [
+    "906.0.0",
+    "819.0.0"
+  ],
+  "implementation": {
+    "selection": "Ordinary Riding entry only, after higher-priority decoy/charge selection. Exact1-in3 draw, combined all819/small4.14bomb pre-count<4, player distance>24. Source child count2.",
+    "spawning": "Actor-vector-safe post-update atomic pair. Source random circular spawn radius.6 and launch spread\u00b120degrees. Physical entrance clamping; optional capacity rejection is consumed for this entry.",
+    "movement": "Distinct parent reference and30Hz native-unit momentum. Soft wobbling radial shell, tangential force, weakened skewed player attraction and wander. Physical flight sweep prevents cliff/wall escape. Local world speedcap24. No rig/source-art change.",
+    "release": "Ordinary rail exit clears attachment and caps current health at11.2 without healing. Original maxHP22.4 and summoner attribution remain. Independent chase thereafter. Cart loss keeps live parent; parent death/removal clears attachment without the exit cap.",
+    "completion": "Survivors retain ordinary room threats and existing contact/shot-death ordnance. Boss escape/reward does not delete them. Inactive rooms preserve follow clock. Debug clear cleans all controller state.",
+    "economy": "generation1 follows the existing no-coin-farming rule for summoned offspring.",
+    "configuration": "New validated hornfel_escort and fly_bomb_follow rows in existing immutable external mechanics snapshots."
+  },
+  "source_review": "docs/reports/isaac-enemy-port/hornfel_escorts/source-review.json",
+  "validation_limits": [
+    "Starting-kit input sampling is automated, not human balance approval.",
+    "Source-exact friction, global phase, status/item exceptions, inherited death-bomb parent/momentum and full controller parity remain open.",
+    "New/updated seeded action sample times reflect RNG consumption by real optional escort selection and movement; assertions still check concrete phases and payloads."
+  ],
+  "next": "Additional rail cart payloads/passengers and owner-linked tiny-bomb physics/flags; maintain source uncertainty instead of certifying full parity."
+}

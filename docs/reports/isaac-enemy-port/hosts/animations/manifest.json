@@ -1,0 +1,519 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    },
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/027.003_hard host.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/hosts/animations/027.003_hard host.anm2",
+      "sha256": "3600d0ae115d1ab9752352bd1f1b6a81e516cf95e4e0dd1ebe05ca22f346e8e5",
+      "checksum": "0x4f7fd600",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Open"
+        },
+        {
+          "Id": "1",
+          "Name": "Close"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "71",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "10"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "54"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "DummyShoot",
+            "FrameNum": "61",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "10"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "53"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bombed",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/859.000_floating host.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/hosts/animations/859.000_floating host.anm2",
+      "sha256": "4c79ab2ba5ffd316df965cb95ac138d96c686ddf0b5e18a462c4454950c2552e",
+      "checksum": "0x89815c53",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        },
+        {
+          "Id": "1",
+          "Name": "Open"
+        },
+        {
+          "Id": "2",
+          "Name": "Close"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "63",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "10"
+            },
+            {
+              "EventId": "0",
+              "AtFrame": "24"
+            },
+            {
+              "EventId": "2",
+              "AtFrame": "54"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "32",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "22",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bombed",
+            "FrameNum": "32",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/027.000_Host.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/hosts/animations/027.000_Host.anm2",
+      "sha256": "067dfdf002dbd24346f0db22215b9bcb63f3ff3e442cf3d9e37e55ee34d5e91b",
+      "checksum": "0xc9f7fd4f",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 2:19:17 PM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Open"
+        },
+        {
+          "Id": "1",
+          "Name": "Close"
+        },
+        {
+          "Id": "2",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "61",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "9"
+            },
+            {
+              "EventId": "2",
+              "AtFrame": "24"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "55"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bombed",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/027.001_Red Host.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/hosts/animations/027.001_Red Host.anm2",
+      "sha256": "7bb9f03716cde3dc08a402d97b586e4955eea09cb78eb69246b6ee8a5a957add",
+      "checksum": "0xab80edec",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 2:21:07 PM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Open"
+        },
+        {
+          "Id": "1",
+          "Name": "Close"
+        },
+        {
+          "Id": "2",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "61",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "9"
+            },
+            {
+              "EventId": "2",
+              "AtFrame": "24"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "55"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bombed",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/204.000_Mobile Host.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/hosts/animations/204.000_Mobile Host.anm2",
+      "sha256": "3fb6c466be55c84130002968134fb721dd933f9a1f534233e5caa8c380f4e86e",
+      "checksum": "0x337fbd4d",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "01.03.2020 15:26:40",
+        "Fps": "30",
+        "Version": "4"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Destructible"
+        },
+        {
+          "Id": "1",
+          "Name": "Invincible"
+        },
+        {
+          "Id": "2",
+          "Name": "Poof"
+        },
+        {
+          "Id": "3",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "20",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "20",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "61",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "10"
+            },
+            {
+              "EventId": "2",
+              "AtFrame": "26"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "53"
+            },
+            {
+              "EventId": "3",
+              "AtFrame": "24"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bombed",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/247.000_Flesh Mobile Host.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/hosts/animations/247.000_Flesh Mobile Host.anm2",
+      "sha256": "25af3d3fcd23bf86f0fe83dd479bb72ce3f0e733b3d5742aa25d026859eee965",
+      "checksum": "0x4b6406be",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "5/19/2014 12:37:03 PM",
+        "Version": "3",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Destructible",
+          "Id": "0"
+        },
+        {
+          "Name": "Invincible",
+          "Id": "1"
+        },
+        {
+          "Name": "Poof",
+          "Id": "2"
+        },
+        {
+          "Name": "Shoot",
+          "Id": "3"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "20",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "20",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "61",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "10"
+            },
+            {
+              "EventId": "2",
+              "AtFrame": "26"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "53"
+            },
+            {
+              "EventId": "3",
+              "AtFrame": "24"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bombed",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

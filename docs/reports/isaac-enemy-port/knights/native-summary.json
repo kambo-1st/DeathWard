@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "suites": [
+    "mechanics_content",
+    "monster_behaviors",
+    "brain",
+    "knight_lifecycle",
+    "crackle_discrete_fire_jets"
+  ],
+  "ctest": "docs/reports/isaac-enemy-port/knights/validation/jet-final-native.txt",
+  "expanded_knight_contracts": "docs/reports/isaac-enemy-port/knights/validation/jet-final-contracts.txt",
+  "native_captures": [
+    "jet-native-captures/black-impact.png",
+    "jet-native-captures/knight-charge.png",
+    "jet-native-captures/loose-pair.png"
+  ],
+  "scope": "Five current scoped suites, final extra mass/jet contract check and three rendered captures. Earlier full-build evidence is historical."
+}

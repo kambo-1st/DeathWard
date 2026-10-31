@@ -1,0 +1,63 @@
+{
+  "scope": "Known lower-edge opaque black artifact only; not a general visual acceptance metric.",
+  "diagnosis": "Reproduced in native and WASM. Disabling all particles, only mesh particles, only sprites, or generic visual effects individually did not remove it. Powder barrel fuse warning was a GL line inside the derivative-normal lit primitive pass. Replacing this ring with thin cylinder triangles removes the black region while preserving the visible warning.",
+  "captures": [
+    {
+      "label": "native-before",
+      "path": "docs/reports/isaac-enemy-port/loki/first-run/linux-tainted-110.png",
+      "roi": [
+        200,
+        800,
+        600,
+        900
+      ],
+      "near_black_pixels_rgb_max_le_2": 14704
+    },
+    {
+      "label": "native-after",
+      "path": "docs/reports/isaac-enemy-port/loki/linux-tainted-fixed.png",
+      "roi": [
+        200,
+        800,
+        600,
+        900
+      ],
+      "near_black_pixels_rgb_max_le_2": 0
+    },
+    {
+      "label": "wasm-before",
+      "path": "docs/reports/isaac-enemy-port/boom_flies/full/wasm-tainted-boom-110.png",
+      "roi": [
+        150,
+        780,
+        510,
+        848
+      ],
+      "near_black_pixels_rgb_max_le_2": 12752
+    },
+    {
+      "label": "wasm-after",
+      "path": "docs/reports/isaac-enemy-port/loki/focused/wasm-tainted-boom-110.png",
+      "roi": [
+        150,
+        780,
+        510,
+        848
+      ],
+      "near_black_pixels_rgb_max_le_2": 0
+    },
+    {
+      "label": "wasm-final-full-regression",
+      "path": "docs/reports/isaac-enemy-port/loki/full/wasm-tainted-boom-110.png",
+      "roi": [
+        150,
+        780,
+        510,
+        848
+      ],
+      "near_black_pixels_rgb_max_le_2": 0
+    }
+  ],
+  "temporary_instrumentation": "DEATHWARD_PARTICLE_PROBE/DEATHWARD_VISUAL_PROBE removed before final builds.",
+  "captures_assertion": "Both baseline regions contain more than 1000 near-black pixels; all three fixed regions contain zero."
+}

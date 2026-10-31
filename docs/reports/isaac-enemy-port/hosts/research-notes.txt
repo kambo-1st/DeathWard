@@ -1,0 +1,1 @@
+Initial metadata extraction used resources/gfx for Hard Host and Floast, so they were not found before reaching the older ARCH000/1 animation archive. Correct paths are resources-dlc3/gfx; corrected extractor resolves all six through checksum-verified ARCH000/2 DLC archives. No v1 content or sprite artwork was imported.

@@ -1,0 +1,28 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  80: leper_flesh
+    Start  81: leper_family
+    Start 101: adaptive_armor
+1/6 Test #101: adaptive_armor ...................   Passed    0.18 sec
+    Start  89: headless_family
+2/6 Test  #89: headless_family ..................   Passed    0.35 sec
+    Start  30: monster_behaviors
+3/6 Test  #81: leper_family .....................***Failed    0.74 sec
+PASS batched thresholds, Morph-before-subtraction, full flesh impulses, transitions and stun
+PASS evasion, pursuit force/timers, contact policy and last-form creep
+MORPH trials32 gusher=19 dead=13 delays=13
+PASS mortality, overkill, same-entity Gusher, no duplicate rewards, remainder and retained flesh
+FAIL fatal frame preserves death-site translation and final flesh position at30/60Hz
+
+    Start   2: mechanics_content
+4/6 Test   #2: mechanics_content ................   Passed    1.73 sec
+5/6 Test  #80: leper_flesh ......................   Passed    3.35 sec
+6/6 Test  #30: monster_behaviors ................   Passed    3.27 sec
+
+83% tests passed, 1 tests failed out of 6
+
+Total Test time (real) =   3.80 sec
+
+The following tests FAILED:
+	 81 - leper_family (Failed)
+Errors while running CTest

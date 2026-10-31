@@ -1,0 +1,23 @@
+{
+  "style": "Original",
+  "inspected": [
+    "jet-native-captures/black-impact.png",
+    "jet-native-captures/knight-charge.png",
+    "jet-native-captures/loose-pair.png",
+    "jet-web/black-mask-impact.png",
+    "jet-web/resident-selfless-charge.png",
+    "jet-web/loose-pair-pair.png",
+    "jet-web/pon-river-hop.png",
+    "jet-web/resident-pon-creep.png"
+  ],
+  "count": 8,
+  "findings": [
+    "Mask plate visibly follows protected direction; ordinary Knight contact pose remains simple procedural geometry.",
+    "Black impact now creates visible orange jets within its room and retains96HP. Foreground cliffs obscure part of the fan in the captured angle.",
+    "Loose remnant and lobed pink Pon are distinguishable after transformation. The triggering blast briefly obscures both; the later native image shows them clearly.",
+    "Pon is visibly airborne over actual river terrain, with a separate ground shadow.",
+    "Natural Selfless appears with a mixed population beside a river; natural Pon has visible red landing pools.",
+    "Large overlapping creep circles and bodies clustered around the player reduce readability. High-speed tint, original walk/impact animation detail and all-camera occlusion parity remain open."
+  ],
+  "performance_scope": "FPS overlays are incidental samples, including startup and capture overhead. No controlled performance/balance acceptance is claimed."
+}

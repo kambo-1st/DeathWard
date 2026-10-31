@@ -1,0 +1,94 @@
+{
+  "status": "implementation handoff; no completed runtime from this pass",
+  "controller_identity": "1000.152 is an effect outside the653NPC checklist; attach its requirement to906.0,965.0 and967.0.",
+  "steps": [
+    {
+      "step": 1,
+      "work": "Implement reusable passenger transport and externally validated controller scheduling.",
+      "requirements": [
+        "Separate room controller, rider and carrier lifetimes; a SpawnerType is not a death-linked Parent.",
+        "Reserve both door endpoints alongside real/decoy carts; pause on inactive rooms.",
+        "Expose source timer counts, threshold135, exact ordered seven-ID table and local clock/speed conversions.",
+        "Preserve timeout reset on failed attempt and stop spawning with no live boss.",
+        "Keep invalid/unfinished payloads visibly unapproved; do not silently redistribute their weights among finished passengers."
+      ]
+    },
+    {
+      "step": 2,
+      "work": "Implement33.0 fireplace and292.0 movable TNT as reusable environmental actors.",
+      "requirements": [
+        "Source hit-count durability, extinguishing/detonation and no room-clear threat.",
+        "Use real gameplay fire/TNT interactions; existing decorative flames/static barrels are insufficient.",
+        "Mounted normal exit is quiet removal; mounted destruction differs from a stationary inert remnant.",
+        "Resolve loot callbacks, blast flags, attack-source attribution and admission under bounded capacity."
+      ]
+    },
+    {
+      "step": 3,
+      "work": "Port the five carried creatures and their mandatory children before enabling the full table.",
+      "requirements": [
+        "Quakey: approach, aimed jump,8rock landing shots, falling rocks and proximity knockback.",
+        "Danny: aimed irregular rock burst, early-entry pressure, long recovery and at most two living Rock Spider offspring; audit actual subtype emission.",
+        "Faceless: wandering six-way shots, damage/proximity-triggered pursuit and faster firing, Pacer/Gusher outcome.",
+        "Bony: wandering, alignment/visibility gating, brief stop and distinctive bone projectile.",
+        "Gurgle: fast pursuit, explosive lob, explosion/fireball immunity exceptions and Splasher death replacement.",
+        "Mounted transport must preserve targeting/attacks and explicitly handle jumps, offspring and death."
+      ]
+    },
+    {
+      "step": 4,
+      "work": "Enable complete passenger table in seeded Broken Quarry Hornfel arenas and validate.",
+      "requirements": [
+        "All seven payload identities naturally reachable over fixed seeds and all ten normal rail templates.",
+        "No overlapping endpoint reservation, stuck doors or instant retry storms.",
+        "Boss death/escape, surviving ordinary threats, cart removal and final cleanup have separate assertions.",
+        "Native and WASM projectile/contact/blast/durability/offspring/lifecycle probes.",
+        "Original-style fire/TNT/creature/cart visuals and legible telegraphs at game camera.",
+        "Starting-kit and varied-build fight balance plus rendered native/WASM performance; no completion from headless smoke alone."
+      ]
+    }
+  ],
+  "candidate_floor_routing": [
+    {
+      "id": "823.0.0",
+      "ordinary": "Broken Quarry/Mines identity",
+      "dedicated": "Hornfel passenger"
+    },
+    {
+      "id": "820.0.0",
+      "ordinary": "Broken Quarry/Mines-Ashpit identity",
+      "dedicated": "Hornfel passenger"
+    },
+    {
+      "id": "827.0.0",
+      "ordinary": "Broken Quarry, later conditional Scarred-Womb-like band",
+      "dedicated": "Hornfel passenger"
+    },
+    {
+      "id": "227.0.0",
+      "ordinary": "Broken Quarry onward, budgeted ranged role",
+      "dedicated": "Hornfel passenger; other source summons require separate audit"
+    },
+    {
+      "id": "87.0.0",
+      "ordinary": "Broken Quarry onward, limited explosive-pressure role",
+      "dedicated": "Hornfel passenger"
+    },
+    {
+      "id": "33.0.0",
+      "ordinary": "environmental placement only, never enemy pool",
+      "dedicated": "Hornfel passenger"
+    },
+    {
+      "id": "292.0.0",
+      "ordinary": "environmental placement only, never enemy pool",
+      "dedicated": "Hornfel passenger and separate item-created TNT"
+    }
+  ],
+  "routing_status": "proposed only; no encounter pool changes in this pass",
+  "next_precise_source_work": [
+    "Mounted generic entity movement/physics override and common NPC damage queue.",
+    "Fire/TNT full payload behavior and source removal/reward differentiation.",
+    "Five saved creature AI dispatch targets, plus Rock Spider payload subtype selection."
+  ]
+}

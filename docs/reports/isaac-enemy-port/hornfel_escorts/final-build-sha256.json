@@ -1,0 +1,10 @@
+{
+  "build-web/index.data": "15c6e22c1c4dd1533c370a75ff6c38cd0e2c2db8da2f49277195dcd7b82353d6",
+  "build-web/index.data.gz": "e97215f479816374ef6211aac3001820b9dae7eb29fe0cb487b46ec3a7252616",
+  "build-web/index.html": "b6cd1f7b4de0e02933516758f187ed61f62d9fe07b8614f17d702a619e7d343e",
+  "build-web/index.js": "bc13bb3869fa27bd991339470a008aaed83bc9e663e611218fdb8f5842d0791d",
+  "build-web/index.js.gz": "85cad0abd46d6fc0d12e0368b0d935c71899f94533a79e4ed5f66ebdc95d26ea",
+  "build-web/index.wasm": "af71873f731f3d56ed7503ffc8534744c27f2f149461c4c7f40280218f5d0874",
+  "build-web/index.wasm.gz": "80380513549c10351360d347acc78ad1f2af5ef97fdf2f09bb8db868e08099ef",
+  "build/deathward": "6cd806402ff897ee95219c77c650bbee0563f07b7847d3d70b2254aba6419bc4"
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="3"
+	timestamp="2026-10-26T19:13:12"
+	>
+	<testcase name="hornfel_boss" classname="hornfel_boss" time="3.70013" status="run">
+		<system-out>chain 0 depth 0 effect -1: enemy bomb capacity
+HORNFEL_CONFIG rejects=13 snapshots=2
+HORNFEL_DECOYS reservations=2 lifecycle=2 hit_rules=4 projectile_hit=1 contact_death=1 atomic_payload=1 retained_death_cap=1 cover_bypass=1
+HORNFEL_THROWS single=1 double=2 small_mines=3 large_mines=4 frames=17,27,34 separate_cart_doors=1 inactive_pause=1
+HORNFEL_CHARGE layout=hornfel_special_5220 repeats=6 passes=7 bombs=8 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=0
+HORNFEL_CHARGE layout=hornfel_special_5228 repeats=6 passes=7 bombs=10 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=1
+FIRE_WAVES cardinal=4 atomic_capacity=1 player_damage=1 wall_stop=1 pit_stop=1 reactions=1 ally_damage=1 clear_survival=1 inactive_pause=1 expiry=1
+HORNFEL_LIFECYCLE cart_hp=768 flee_hp=320 killed_bonus=3 escaped_bonus=0 no_escape_kill=1 atomic_mines=1
+HORNFEL_ISOLATED_ESCAPE completed=1 seconds=7.71667
+HORNFEL_ROUTE layout=hornfel_special_5220 seed=924 floor=2 pits=0
+HORNFEL_ROUTE layout=hornfel_special_...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+</testsuite>

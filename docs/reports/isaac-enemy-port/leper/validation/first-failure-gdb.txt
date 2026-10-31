@@ -1,0 +1,7 @@
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555575ad2 in (anonymous namespace)::movement() ()
+#0  0x0000555555575ad2 in (anonymous namespace)::movement() ()
+#1  0x000055555557261c in main ()

@@ -1,0 +1,51 @@
+{
+  "inspected_utc": "2026-10-28T02:45:53.014388+00:00",
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/native/holy.png",
+      "inspected": true,
+      "finding": "Pale body and haloed fly render beside cliff; near-overlap and camera-follow framing limit readability assessment."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/native/kamikaze.png",
+      "inspected": true,
+      "finding": "Dark flying segmented body and separated ground shadow visible beside player; rear angle hides mouth eye."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/web/leech-charge.png",
+      "inspected": true,
+      "finding": "Red segmented body and flight shadow readable; small mouth detail at this zoom."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/web/kamikaze-charge.png",
+      "inspected": true,
+      "finding": "Dark variant distinct in open terrain; front eye not visible from rear camera angle."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/web/holy-charge.png",
+      "inspected": true,
+      "finding": "Pale parent and separate orbiting fly both visible; geometry remains Original style."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/web/holy-death.png",
+      "inspected": true,
+      "finding": "Parent and fly absent after lethal hit; blast flash visible and nearby powder scenery reacts."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/web/resident-kamikaze-idle.png",
+      "inspected": true,
+      "finding": "Natural mixed room shows dark and red Leeches with terrain and other enemies; cliffs can still obscure camera angles."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/web/resident-holy-idle.png",
+      "inspected": true,
+      "finding": "Natural pale Leech and orbiter visible among mixed actors; overlapping bodies still limit broader combat readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leeches/native/leech.png",
+      "inspected": true,
+      "finding": "Normal red flying segmented body and shadow visible beside player; rear view does not establish mouth detail/readability from all angles."
+    }
+  ],
+  "scope": "Nine manually inspected Original-style captures. Enemy-follow camera and early startup samples are not all-camera visual acceptance or controlled performance measurements; incidental FPS overlays are not benchmarks."
+}

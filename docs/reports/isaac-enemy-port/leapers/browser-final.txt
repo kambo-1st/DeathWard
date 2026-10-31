@@ -1,0 +1,22 @@
+START normal
+PROGRESS normal 11 leaps 0 volleys 0
+PROGRESS normal 110 leaps 0 volleys 0
+PROGRESS normal 210 leaps 0 volleys 0
+PROGRESS normal 311 leaps 0 volleys 0
+PROGRESS normal 410 leaps 0 volleys 0
+PROGRESS normal 537 leaps 1 volleys 0
+PASS normal volleys 1
+START sticky
+PROGRESS sticky 11 leaps 0 volleys 0
+PROGRESS sticky 110 leaps 0 volleys 0
+PROGRESS sticky 210 leaps 0 volleys 0
+PROGRESS sticky 311 leaps 0 volleys 0
+PROGRESS sticky 410 leaps 0 volleys 0
+PROGRESS sticky 538 leaps 1 volleys 0
+PASS sticky volleys 1
+START cover
+PROGRESS cover 11 leaps 0 volleys 0
+page.waitForFunction: Timeout 90000ms exceeded.
+    at /home/kambo/workspace/DeathWard/web/leaper-test.cjs:23:16 {
+  name: 'TimeoutError'
+}

@@ -1,0 +1,230 @@
+{
+  "enemy_port_coverage": {
+    "result": "pass",
+    "seconds": 0.362093
+  },
+  "mechanics_content": {
+    "result": "pass",
+    "seconds": 1.59915
+  },
+  "expedition_economy": {
+    "result": "pass",
+    "seconds": 46.3765
+  },
+  "canyon_bosses": {
+    "result": "pass",
+    "seconds": 11.2215
+  },
+  "floor_progression": {
+    "result": "pass",
+    "seconds": 79.0446
+  },
+  "item_builds": {
+    "result": "pass",
+    "seconds": 13.5309
+  },
+  "expedition_destruction": {
+    "result": "pass",
+    "seconds": 65.7786
+  },
+  "walkable_areas": {
+    "result": "pass",
+    "seconds": 0.0327634
+  },
+  "expedition": {
+    "result": "pass",
+    "seconds": 19.3053
+  },
+  "expedition_pacing": {
+    "result": "pass",
+    "seconds": 15.5909
+  },
+  "flag_cloth": {
+    "result": "pass",
+    "seconds": 0.207526
+  },
+  "save_slots": {
+    "result": "pass",
+    "seconds": 0.0931492
+  },
+  "arrival_quest": {
+    "result": "pass",
+    "seconds": 1.29544
+  },
+  "cinematic_timeline": {
+    "result": "pass",
+    "seconds": 0.0758085
+  },
+  "canyon_roads": {
+    "result": "pass",
+    "seconds": 9.77995
+  },
+  "canyon_rivers": {
+    "result": "pass",
+    "seconds": 22.8709
+  },
+  "redstone_hub": {
+    "result": "pass",
+    "seconds": 0.580421
+  },
+  "building_navigation": {
+    "result": "pass",
+    "seconds": 0.0264876
+  },
+  "particle_emission": {
+    "result": "pass",
+    "seconds": 0.0219322
+  },
+  "town_characters": {
+    "result": "pass",
+    "seconds": 0.0192926
+  },
+  "ambient_animals": {
+    "result": "pass",
+    "seconds": 0.255086
+  },
+  "train_motion": {
+    "result": "pass",
+    "seconds": 0.500867
+  },
+  "object_animation": {
+    "result": "pass",
+    "seconds": 0.0528163
+  },
+  "player_dynamite": {
+    "result": "pass",
+    "seconds": 1.37804
+  },
+  "mission_shop": {
+    "result": "pass",
+    "seconds": 2.54886
+  },
+  "money_pickups": {
+    "result": "pass",
+    "seconds": 1.41819
+  },
+  "resident_enemies": {
+    "result": "pass",
+    "seconds": 1.05679
+  },
+  "audio_presentation": {
+    "result": "pass",
+    "seconds": 0.0578814
+  },
+  "monster_behaviors": {
+    "result": "pass",
+    "seconds": 3.78369
+  },
+  "monster_flight": {
+    "result": "pass",
+    "seconds": 3.71674
+  },
+  "monster_formations": {
+    "result": "pass",
+    "seconds": 0.180702
+  },
+  "monster_patterns": {
+    "result": "pass",
+    "seconds": 0.25
+  },
+  "monster_fire_reactions": {
+    "result": "pass",
+    "seconds": 0.246926
+  },
+  "monster_hopping": {
+    "result": "pass",
+    "seconds": 0.294814
+  },
+  "monster_replacements": {
+    "result": "pass",
+    "seconds": 1.89398
+  },
+  "monster_boss_components": {
+    "result": "pass",
+    "seconds": 1.59025
+  },
+  "bloat_boss_and_chargers": {
+    "result": "pass",
+    "seconds": 2.14035
+  },
+  "charger_variants": {
+    "result": "pass",
+    "seconds": 0.20856
+  },
+  "companion_familiars": {
+    "result": "pass",
+    "seconds": 1.83428
+  },
+  "room_statues": {
+    "result": "pass",
+    "seconds": 0.736899
+  },
+  "maw_attraction": {
+    "result": "pass",
+    "seconds": 1.01188
+  },
+  "quake_waves": {
+    "result": "pass",
+    "seconds": 0.80227
+  },
+  "supplied_bombs": {
+    "result": "pass",
+    "seconds": 0.6955
+  },
+  "fly_bombs": {
+    "result": "pass",
+    "seconds": 19.77
+  },
+  "enemy_bomb_payloads": {
+    "result": "pass",
+    "seconds": 0.831966
+  },
+  "authored_rails": {
+    "result": "pass",
+    "seconds": 0.031962
+  },
+  "boom_flies": {
+    "result": "pass",
+    "seconds": 53.4143
+  },
+  "loki_bosses": {
+    "result": "pass",
+    "seconds": 1.14567
+  },
+  "hornfel_boss": {
+    "result": "pass",
+    "seconds": 5.03033
+  },
+  "segmented_bosses": {
+    "result": "pass",
+    "seconds": 1.95771
+  },
+  "shell_boss": {
+    "result": "pass",
+    "seconds": 3.20777
+  },
+  "mission_themes": {
+    "result": "pass",
+    "seconds": 4.35872
+  },
+  "imported_town_navigation": {
+    "result": "pass",
+    "seconds": 0.0657032
+  },
+  "core_contracts": {
+    "result": "pass",
+    "seconds": 0.557409
+  },
+  "enemy_behaviors": {
+    "result": "pass",
+    "seconds": 3.19206
+  },
+  "generated_dungeons": {
+    "result": "pass",
+    "seconds": 37.1891
+  },
+  "generated_room_graphs": {
+    "result": "pass",
+    "seconds": 0.660418
+  }
+}

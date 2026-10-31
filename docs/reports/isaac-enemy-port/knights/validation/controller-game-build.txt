@@ -1,0 +1,24 @@
+[ 17%] Built target glfw
+[ 20%] Built target raylib
+[ 82%] Built target deathward_core
+[ 82%] Built target deathward_cloth
+[ 85%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 85%] Built target deathward_skinning
+[ 88%] Built target deathward_mission_lighting
+[ 88%] Built target deathward_runtime_assets
+[ 88%] Linking CXX static library libdeathward_particles.a
+[ 88%] Built target deathward_particles
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorNavigation.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/render/PlayerModel.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/render/AnimalModels.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/core/Game.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/core/GameQuest.cpp.o
+[ 94%] Linking CXX executable deathward
+[100%] Built target deathward
+gmake: *** No rule to make target 'deathward_mechanics_check'.  Stop.

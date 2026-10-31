@@ -1,0 +1,30 @@
+START host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS host
+START red-host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS red-host
+START mobile-host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS mobile-host
+START flesh-mobile-host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS flesh-mobile-host
+START floast browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS floast
+START natural-host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-host
+START natural-red-host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-red-host
+START natural-flesh-mobile-host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-flesh-mobile-host
+START natural-mobile-host browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-mobile-host
+START natural-floast browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-floast

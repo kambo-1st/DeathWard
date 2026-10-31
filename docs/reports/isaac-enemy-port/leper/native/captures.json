@@ -1,0 +1,137 @@
+[
+  {
+    "name": "flesh",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-310.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "1",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/leper/native/flesh.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "1a57df45f9fb8b80fd2a9792a1a07e3319720b5571a046abf6a6401f3c003ea5"
+  },
+  {
+    "name": "drifting",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-310.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "90",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/leper/native/drifting.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "1a57df45f9fb8b80fd2a9792a1a07e3319720b5571a046abf6a6401f3c003ea5"
+  },
+  {
+    "name": "death-shot",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-310.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "36",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/leper/native/death-shot.png",
+      "--enemy-hit",
+      "30",
+      "1000"
+    ],
+    "exit": 0,
+    "binary_sha256": "1a57df45f9fb8b80fd2a9792a1a07e3319720b5571a046abf6a6401f3c003ea5"
+  },
+  {
+    "name": "drifting-live",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-310.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "40",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/leper/native/drifting-live.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "1a57df45f9fb8b80fd2a9792a1a07e3319720b5571a046abf6a6401f3c003ea5"
+  },
+  {
+    "name": "flesh-group",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-310.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "1",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/leper/native/flesh-group.png",
+      "--enemy-count",
+      "6"
+    ],
+    "exit": 0,
+    "binary_sha256": "1a57df45f9fb8b80fd2a9792a1a07e3319720b5571a046abf6a6401f3c003ea5"
+  },
+  {
+    "name": "natural",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-310.1.0",
+      "--resident-seed",
+      "0",
+      "--resident-floor",
+      "5",
+      "--enemy-camera-follow",
+      "--frames",
+      "1",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/leper/native/natural.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "1a57df45f9fb8b80fd2a9792a1a07e3319720b5571a046abf6a6401f3c003ea5"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "passed": 8,
+  "suites": [
+    "mechanics_content",
+    "floor_progression",
+    "resident_enemies",
+    "monster_behaviors",
+    "monster_flight",
+    "cardinal_walkers",
+    "leech_behavior",
+    "maw_family"
+  ],
+  "scope": "Eight scoped Linux suites after extending floor-test ownership assertions. Not the full95-suite run or all acceptance gates.",
+  "initial_run": {
+    "path": "docs/reports/isaac-enemy-port/leeches/validation/native.txt",
+    "passed": 7,
+    "failed": 1,
+    "reason": "Floor assertion counted Psychic Maw but not new Holy Leech required orbiters."
+  },
+  "corrected_floor_run": "docs/reports/isaac-enemy-port/leeches/validation/floor.txt",
+  "detailed_evidence": [
+    "docs/reports/isaac-enemy-port/leeches/validation/native-detailed.txt",
+    "docs/reports/isaac-enemy-port/leeches/validation/floor-detailed.txt"
+  ],
+  "placement": {
+    "floors": 31,
+    "rooms": 375,
+    "witnesses": [
+      {
+        "id": "55.0.0",
+        "seed": 0,
+        "floor": 4,
+        "room": 6
+      },
+      {
+        "id": "55.1.0",
+        "seed": 0,
+        "floor": 4,
+        "room": 8
+      },
+      {
+        "id": "55.2.0",
+        "seed": 11,
+        "floor": 4,
+        "room": 5
+      }
+    ]
+  }
+}

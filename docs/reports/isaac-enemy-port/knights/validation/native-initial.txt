@@ -1,0 +1,2 @@
+MASK cardinal_half_plane=1 loose_armored=1 bypasses=1 specular_speed=1 grace15=1
+morph preserves health scale without kill or loot

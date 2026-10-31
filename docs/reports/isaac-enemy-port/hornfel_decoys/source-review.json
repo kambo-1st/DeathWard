@@ -1,0 +1,55 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "status": "bounded native and pinned article review; not complete source reconstruction",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "previous_damage_proof": "docs/reports/isaac-enemy-port/hornfel_charge/next-decoy-native/review.json",
+  "native_windows": "docs/reports/isaac-enemy-port/hornfel_decoys/native/manifest.json",
+  "verifier": "scripts/isaac-reference/analyze-hornfel-decoys.py --check",
+  "findings": [
+    {
+      "claim": "906.1 enters state16 with low flags0x140011: no status effects, no target, no death trigger, boss-death trigger already consumed. XML health is4. Same animation resource has DecoyIdle, a two-frame loop.",
+      "source": "0x4a64a2 and preserved hornfel/animations/manifest.json"
+    },
+    {
+      "claim": "Conditional 1/8 decoy selection precedes the charge branch. It requires a zero byte cooldown, controller field+0x3ac>4 when controller exists, fewer than two living non-boss enemies, and another free rail entrance.",
+      "source": "0x4a52db-0x4a5367; native GetAliveEnemiesCount0x448000 and GetAliveBossesCount0x448020 identified by unique function/name registration pairs0x808e3e/0x808e48"
+    },
+    {
+      "claim": "Attempts two decoys for grid width*height<=135 and three otherwise, stopping when no available door remains. This is the native attempt count, not the article summary of1-2 visible dummies.",
+      "source": "0x4a5373-0x4a539b"
+    },
+    {
+      "claim": "Each decoy attaches to its own minecart and reserves its entrance and paired exit. Door picker rejects either occupied endpoint; early entry avoidance rejects distance squared<=3600 native units from room entry. The real boss then rides in state14, with a30-59 counter before its taunt and byte cooldown100.",
+      "source": "0x4a53a1-0x4a5579 and door picker0x4a8150"
+    },
+    {
+      "claim": "A cart carrying the real906.0 is exempt from the generic off-room removal path. A decoy906.1 is not exempt; outside-room handling invokes rider and cart Remove via virtual slot0x28. This is distinct from death and does not imply a bomb salvo.",
+      "source": "0x4bbf75-0x4bbfed; NPC virtual-slot proof in previous damage review"
+    },
+    {
+      "claim": "Positive queued accepted damage is resolved as hit-count health. Any accumulated explosion flag kills before per-hit RNG; otherwise each hit removes1 or2 base points according to strict native damage>10, plus one point with1/3 chance. Final HP<1.5 dies, clamping HP below1 to1.",
+      "source": "previous next-decoy-native/decoy_damage_queue.asm"
+    },
+    {
+      "claim": "Death invokes immediate BombDamage: damage110, radius75, lineCheck=false, null source, damage flags0x1004. It then spawns six4.3 Troll Bombs with random angle and speed5+15U, attributed to the decoy.",
+      "source": "0x4a7b4f-0x4a7c82; earlier native BombDamage registration proof"
+    },
+    {
+      "claim": "Walking into a decoy also destroys it; contact deals a whole heart. Native player-collision callback and invulnerability exceptions are not recovered in this increment.",
+      "source": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268740; cached article in docs/research/isaac-mechanics-reference.json"
+    },
+    {
+      "claim": "Common Hornfel damage-queue filtering rejects explosion amounts when source subtype is not1 and source type is not player1. Same-type lasers and certain effect147 sources have additional filters. Decoy hit-count resolution precedes this common filter.",
+      "source": "0x4a79ff-0x4a7a76"
+    },
+    {
+      "claim": "Independent native property registrations identify HitPoints getter0x412220 at offset0x2d8 and Parent getter0x422c10 at offset0x314. This confirms the hit-health field and the source controller/escort parent references without importing newer binary offsets.",
+      "source": "native/manifest.json properties and four additional windows"
+    }
+  ],
+  "uncertain": [
+    "Room-controller150/4 field semantics and exact decrement/update ordering; not interpreted as a proven five-second delay.",
+    "Base TakeDamage gating and all source collision/status exceptions remain incomplete.",
+    "Independent carts/passengers, source rewards, special encounters and complete Horny Boys behavior are separate unfinished dependencies."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "checkpoint": "docs/reports/isaac-enemy-port/guts/checkpoint.json",
+  "artifact_files_checked": 70,
+  "unchanged": true,
+  "scope": "Prior frozen source/report evidence only; current runtime and build changes are intentional."
+}

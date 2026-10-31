@@ -1,0 +1,93 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "819": {
+      "index": 3,
+      "case": "0x69a0c7"
+    },
+    "906": {
+      "index": 218,
+      "case": "0x69a31f"
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/npc_ai_dispatch.asm",
+      "start": "0x699730",
+      "end_exclusive": "0x699784",
+      "raw_sha256": "b3a43f7021754a97419a6e26aa1422fe99ac668e29e5f9617665a717e59746ab",
+      "artifact_sha256": "4fbc2f0d0506717f74df006137a47b58177e4ff62012309b9718aafe48a17fe3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/fly_dispatch_case.asm",
+      "start": "0x69a0c7",
+      "end_exclusive": "0x69a0d3",
+      "raw_sha256": "fed569b0e57f62f50b319173f25430873e82a551cc1256e8c8569d1b4384f6a2",
+      "artifact_sha256": "b0aa14ea7a893b63369679500dbadcdffc312cfa51480e03b89b83a0f880c246"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/hornfel_dispatch_case.asm",
+      "start": "0x69a31f",
+      "end_exclusive": "0x69a32b",
+      "raw_sha256": "e6240865d9b2dc9ca3fbd42589416a8abc31b86396bcf890fe5c63a4e4a698f1",
+      "artifact_sha256": "047694b705eae2d185c695e250d0574bf727ff59c7ccf05e2199cb0acf127154"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/shared_fly_ai.asm",
+      "start": "0x4f4e30",
+      "end_exclusive": "0x4f6ed0",
+      "raw_sha256": "8f155c59499d59196f8783062d371595c24b0782f5b2cc6193d563696ca13eb2",
+      "artifact_sha256": "f694edaa1e5e8a7753b8a7442230c317ae206b09d43ef027895c0bceec29a32e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/hornfel_entry.asm",
+      "start": "0x4a5120",
+      "end_exclusive": "0x4a5a04",
+      "raw_sha256": "93a732dc900420e0e418f1abf1e62f334712906c6a49e6b5426714b6c810f487",
+      "artifact_sha256": "74a0599c72c03a035061a12180bba77c6db381ad9c859e9bfb1796add6954290"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/hornfel_exit.asm",
+      "start": "0x4a5a10",
+      "end_exclusive": "0x4a5c40",
+      "raw_sha256": "8552f5e8047c90be565b57fa26261b2b534f56076bd4cb4380991a3183e8fbde",
+      "artifact_sha256": "beb6e35c5347db0f53c9141effad8b0d73cd0bae35943f06a5682f8d4ec9ffe5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/global_frame_gate.asm",
+      "start": "0x684790",
+      "end_exclusive": "0x6847d9",
+      "raw_sha256": "67ae1c63922a7d1e74fa0480d478269542e249ce91a734652efe265e56450608",
+      "artifact_sha256": "6e3af47b4718052ef9fbb8516ec98c60888bdcfa4441d197fc32d4ba1aa2d8a4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/elapsed_frame_gate.asm",
+      "start": "0x6847e0",
+      "end_exclusive": "0x684852",
+      "raw_sha256": "3114e2f81eb2fc94d3f4b8769e72049337e5841d1ffe29957db2cd22a677191d",
+      "artifact_sha256": "f246a73880798155b0e4eb51b08fc94ad89d77907e562f0d55c03dfffd003330"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/add_velocity.asm",
+      "start": "0x422b60",
+      "end_exclusive": "0x422bcf",
+      "raw_sha256": "544f78f82e6fae2f3ee69e46b0ddb409eb0e74b88b5f31b1d55f4bb75e6cad33",
+      "artifact_sha256": "643590e846a90b81075db49a48abb83cef9a6858354fa3913b7d3274a199ecea"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/hp_getter.asm",
+      "start": "0x412220",
+      "end_exclusive": "0x412227",
+      "raw_sha256": "5c5ae9af116cf2fe785b448246ddc23267100e6f00e36b53e1a704c2533e967e",
+      "artifact_sha256": "5d2558318b880bd57bc7d8d20cb053420eb450e3e3a9e63cbc1014b729907597"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hornfel_escorts/native/parent_getter.asm",
+      "start": "0x422c10",
+      "end_exclusive": "0x422c17",
+      "raw_sha256": "76f59aa3351c63a7dc6ce01c21fbbb26b539a0b064893d7150a9fce9a0e85f7a",
+      "artifact_sha256": "43be335892e5d7392d55c405104a64c053c100e85cce305d73516ebc3a65c475"
+    }
+  ]
+}

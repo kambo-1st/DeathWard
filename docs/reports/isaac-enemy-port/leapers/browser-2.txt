@@ -1,0 +1,11 @@
+START normal
+Debugger listening on ws://127.0.0.1:9229/9d22bff8-2ec6-4faf-9d17-fe7d3127c3a1
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Debugger ending on ws://127.0.0.1:9229/9d22bff8-2ec6-4faf-9d17-fe7d3127c3a1
+For help, see: https://nodejs.org/en/docs/inspector
+Debugger attached.
+Debugger ending on ws://127.0.0.1:9229/9d22bff8-2ec6-4faf-9d17-fe7d3127c3a1
+For help, see: https://nodejs.org/en/docs/inspector
+page.waitForFunction: Target page, context or browser has been closed
+    at /home/kambo/workspace/DeathWard/web/leaper-test.cjs:23:16

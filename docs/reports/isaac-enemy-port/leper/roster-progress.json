@@ -1,0 +1,59 @@
+{
+  "verified_utc": "2026-10-28T15:40:35.964236+00:00",
+  "source_enemy_records": 468,
+  "source_boss_records": 185,
+  "nonboss_missing": 252,
+  "missing_by_disposition": {
+    "environment": 8,
+    "dedicated": 2,
+    "pending": 233,
+    "item_dependency": 1,
+    "ordinary": 8
+  },
+  "confirmed_ordinary": {
+    "in_progress": 146,
+    "missing": 8
+  },
+  "meaning": "Exact records include variants/offspring. Pending nonboss records are not all confirmed standalone regular enemies. In-progress means implementation with full acceptance still open.",
+  "known_ordinary_missing": [
+    {
+      "id": "310.0.0",
+      "name": "Leper"
+    },
+    {
+      "id": "310.0.1",
+      "name": "Leper"
+    },
+    {
+      "id": "310.0.2",
+      "name": "Leper"
+    },
+    {
+      "id": "310.0.3",
+      "name": "Leper"
+    },
+    {
+      "id": "822.0.0",
+      "name": "Bouncer"
+    },
+    {
+      "id": "823.0.0",
+      "name": "Quakey"
+    },
+    {
+      "id": "874.0.0",
+      "name": "Gas Dwarf"
+    },
+    {
+      "id": "889.0.0",
+      "name": "Clickety Clack"
+    }
+  ],
+  "wasm_waiver": {
+    "visual_wasm": {
+      "authority": "user",
+      "instruction": "pursure goal - Skip WASM check!",
+      "date": "2026-10-28"
+    }
+  }
+}

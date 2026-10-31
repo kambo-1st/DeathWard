@@ -1,0 +1,17 @@
+PASS WASM hornfel: rails, cart/door lifetime and phase completion
+PASS WASM hornfel-decoy-destruction: rails, cart/door lifetime and phase completion
+PASS WASM hornfel-decoy-contact: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-decoys: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-escorts: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-escorts-pits: rails, cart/door lifetime and phase completion
+PASS WASM hornfel-escape: rails, cart/door lifetime and phase completion
+PASS WASM hornfel-killed: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-pits: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-restricted-door: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-charge: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-charge-pits: rails, cart/door lifetime and phase completion
+PASS WASM resident-hornfel-charge-curves: rails, cart/door lifetime and phase completion
+PASS WASM fly-bomb-pursuit: contact/death ordnance and owner lifecycle
+PASS WASM fly-bomb-death: contact/death ordnance and owner lifecycle
+PASS WASM eternal-fly-bombs: contact/death ordnance and owner lifecycle
+PASS WASM resident-fly-bomb: contact/death ordnance and owner lifecycle

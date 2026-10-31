@@ -1,0 +1,2 @@
+Valid mechanics: 13 items, 176 monster definitions; fingerprint f76820643f7192cc
+Loaded from "/home/kambo/workspace/DeathWard/assets/mechanics"

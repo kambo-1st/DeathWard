@@ -1,0 +1,252 @@
+{
+  "status": "source review only; no passenger runtime enabled and no completed port claimed",
+  "baseline": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "evidence_method": "Bounded disassembly of the installed executable, exact API registrations and pinned local XML/wiki records. This is not recovered source or a dynamic trace of Isaac.",
+  "native_manifest": "docs/reports/isaac-enemy-port/hornfel_passenger_review/native/manifest.json",
+  "findings": [
+    {
+      "claim": "Effect1000.152 dispatches to0x4a9240. The effect constructor uniquely matches the pinned signature; its vtable Update slot points to0x5bdf00. The variant-1 table at0x5e9214 maps152 to0x5c3090, which calls the controller.",
+      "evidence": [
+        "effect_constructor",
+        "effect_dispatch",
+        "effect_152_case"
+      ]
+    },
+    {
+      "claim": "Initialization calls the rail setup helper0x4a3fb0, sets state1, and assigns Timeout and LifeSpan to150+(globalRNG%210), inclusive150..359. Initialization does not halve this delay in large rooms.",
+      "evidence": [
+        "passenger_controller:0x4a9264-0x4a929a",
+        "effect_timer_api"
+      ]
+    },
+    {
+      "claim": "The common effect epilogue decrements a positive Timeout by one and sets byte0x16b when it reaches zero. The controller reads that byte on a later update. Thus it is a timeout latch here, not an NPC death-only flag. Preserve this update order.",
+      "evidence": [
+        "effect_timer_epilogue",
+        "passenger_controller:0x4a92e2-0x4a92ef"
+      ]
+    },
+    {
+      "claim": "Passenger attempts require max(0,room[0x12c8]+room[0x12cc])>0. The installed GetAliveBossesCount registration/getter verifies that this means living bosses, not all enemies. No independent numeric passenger-count cap is present in this bounded controller; available paired doors limit admission.",
+      "evidence": [
+        "alive_boss_count",
+        "passenger_controller:0x4a92c7-0x4a92dc"
+      ]
+    },
+    {
+      "claim": "When the room-clear bit is set, the controller calls cleanup0x4a48b0 and removes itself. Installed IsClear verifies descriptor+0x44 bit0. The controller does not equate boss disappearance with immediate cleanup of every payload.",
+      "evidence": [
+        "room_clear_getter",
+        "passenger_controller:0x4a92b2-0x4a92c7"
+      ]
+    },
+    {
+      "claim": "The picker considers type967 doors whose reservation pointer is null and whose paired door is also unreserved. During the initial room-entry grace it excludes squared distance<=3600 native units from the entry location. It chooses one available door using globalRNG modulo candidate count. A zero rail direction rejects the attempt.",
+      "evidence": [
+        "door_picker",
+        "door_entry_direction",
+        "passenger_controller:0x4a92ef-0x4a9336"
+      ]
+    },
+    {
+      "claim": "The payload index is globalRNG%7. Exact ordered(type,variant) pairs are(823,0),(820,0),(827,0),(227,0),(87,0),(33,0),(292,0), all subtype0. Six pairs come from three constant blocks; the final pair is constructed by immediate instructions. No weighting/duplication appears in this table.",
+      "evidence": [
+        "passenger_controller:0x4a9336-0x4a93c6",
+        "native/manifest.json:payload_table"
+      ]
+    },
+    {
+      "claim": "The factory creates the selected NPC with subtype0 and no spawner entity, clears flag mask0x4, then sets SpawnerType906. Installed SpawnerType getter verifies offset0x34. This alone is not a live Parent or lifetime ownership link to the Hornfel actor.",
+      "evidence": [
+        "passenger_controller:0x4a9388-0x4a9610",
+        "spawner_type_getter"
+      ]
+    },
+    {
+      "claim": "The attachment helper creates type965 variant0, initializes drive1, sets position/velocity from the selected door, and links rider[0x32c] with cart[0x318]. Door reservation then references the rider from both paired endpoints. Rider and carrier are separate entities.",
+      "evidence": [
+        "spawn_carrier",
+        "door_reservation",
+        "cart_attachment"
+      ]
+    },
+    {
+      "claim": "After every elapsed attempt, including no available door or invalid direction, the controller draws a new150..359 delay, clears the timeout latch, and sets both Timeout and LifeSpan. For room grid width*height>135 it uses integer division by2, yielding75..179. It does not immediately retry a blocked route each frame.",
+      "evidence": [
+        "passenger_controller:0x4a961d-0x4a9660"
+      ]
+    },
+    {
+      "claim": "Ordinary cart AI removes a non-Hornfel rider and the carrier after the out-of-room test; the real906.0 rider is exempt from this ordinary exit branch. A cart without a rider increments a counter and breaks after it exceeds2. A passenger must therefore distinguish leaving/removal from gameplay death and loot.",
+      "evidence": [
+        "cart_ai:0x4bbe29-0x4bbe59",
+        "cart_ai:0x4bbf75-0x4bbfef",
+        "cart_break"
+      ]
+    },
+    {
+      "claim": "Installed Lua Remove and Kill registrations dispatch to virtual offsets0x28 and0x24 respectively. Cart exit and room cleanup use Remove, not Kill; the distinction is established independently of newer structure declarations.",
+      "evidence": [
+        "native/manifest.json:api_anchors.Remove",
+        "native/manifest.json:api_anchors.Kill",
+        "native/manifest.json:virtual_dispatch"
+      ]
+    },
+    {
+      "claim": "Room-clear cleanup collects967 doors and all entities with a cart pointer. It creates poof effects and removes each carried entity plus its carrier; it also removes the doors. Free Fly Bomb escorts are not selected solely for having a former Hornfel parent.",
+      "evidence": [
+        "room_clear_cleanup:0x4a4b30-0x4a4b9c",
+        "room_clear_cleanup:0x4a4930-0x4a497a",
+        "room_clear_cleanup:0x4a4984-0x4a4a17"
+      ]
+    },
+    {
+      "claim": "Movable TNT uses a special incoming-damage accumulator: ordinary positive damage causes one or two HP units of loss with a1/3 extra-unit draw; explosion flag mask0x4 uses four, clamped at1. A mounted destroyed TNT is removed, whereas a non-mounted TNT leaves an inert low-HP state. These are preflight findings, not a complete damage/contact/loot audit.",
+      "evidence": [
+        "movable_tnt_ai_preflight:0x6acc1c-0x6accbe",
+        "movable_tnt_ai_preflight:0x6ad603-0x6ad6f8"
+      ]
+    },
+    {
+      "claim": "Normal fireplace damage is processed per queued hit, with an extra1/3 unit and a higher base above damage10; extinguishing disables collision and changes state. The mounted case bypasses fixed grid updates. Native5HP is therefore not a justification for ordinary linear5x3.2HP damage. Reward/status/flooding variants remain a separate audit.",
+      "evidence": [
+        "fireplace_ai_preflight:0x6a8102-0x6a8328",
+        "fireplace_ai_preflight:0x6a7cfd-0x6a7d21"
+      ]
+    }
+  ],
+  "payloads": [
+    {
+      "id": "823.0.0",
+      "index": 0,
+      "name": "Quakey",
+      "base_hp": "45",
+      "stage_hp": "0",
+      "shuts_doors": true,
+      "native_ai": "0x4eae80",
+      "behavior_sections": [
+        {
+          "page": "Fatty",
+          "section": 17
+        }
+      ],
+      "implementation": "not implemented by this source review"
+    },
+    {
+      "id": "820.0.0",
+      "index": 1,
+      "name": "Danny",
+      "base_hp": "40",
+      "stage_hp": "0",
+      "shuts_doors": true,
+      "native_ai": "0x4e94a0",
+      "behavior_sections": [
+        {
+          "page": "Danny",
+          "section": 0
+        }
+      ],
+      "implementation": "not implemented by this source review"
+    },
+    {
+      "id": "827.0.0",
+      "index": 2,
+      "name": "Faceless",
+      "base_hp": "20",
+      "stage_hp": "0",
+      "shuts_doors": true,
+      "native_ai": "0x4e82e0",
+      "behavior_sections": [
+        {
+          "page": "Faceless",
+          "section": 0
+        }
+      ],
+      "implementation": "not implemented by this source review"
+    },
+    {
+      "id": "227.0.0",
+      "index": 3,
+      "name": "Bony",
+      "base_hp": "8",
+      "stage_hp": "2",
+      "shuts_doors": true,
+      "native_ai": "0x525830",
+      "behavior_sections": [
+        {
+          "page": "Bony",
+          "section": 0
+        }
+      ],
+      "implementation": "not implemented by this source review"
+    },
+    {
+      "id": "87.0.0",
+      "index": 4,
+      "name": "Gurgle",
+      "base_hp": "40",
+      "stage_hp": "0",
+      "shuts_doors": true,
+      "native_ai": "0x508ef0",
+      "behavior_sections": [
+        {
+          "page": "Gaper",
+          "section": 9
+        }
+      ],
+      "implementation": "not implemented by this source review"
+    },
+    {
+      "id": "33.0.0",
+      "index": 5,
+      "name": "Fire Place",
+      "base_hp": "5",
+      "stage_hp": "0",
+      "shuts_doors": false,
+      "native_ai": "0x6a7ae0",
+      "behavior_sections": [],
+      "implementation": "not implemented by this source review"
+    },
+    {
+      "id": "292.0.0",
+      "index": 6,
+      "name": "Movable TNT",
+      "base_hp": "4",
+      "stage_hp": "0",
+      "shuts_doors": false,
+      "native_ai": "0x6acb80",
+      "behavior_sections": [],
+      "implementation": "not implemented by this source review"
+    }
+  ],
+  "timing_contract": {
+    "units": "effect updates, not yet certified wall-clock seconds",
+    "initial_timeout": {
+      "base": 150,
+      "random_modulus": 210,
+      "min": 150,
+      "max": 359,
+      "large_room_halving": false
+    },
+    "retry_timeout": {
+      "base": 150,
+      "random_modulus": 210,
+      "large_room_grid_area_threshold_exclusive": 135,
+      "large_room_integer_divisor": 2
+    },
+    "attempt_gate": "timeout latch AND at least one alive boss; candidate door and nonzero rail direction required for actual spawning",
+    "attempt_failures_consume_interval": true,
+    "selection": "globalRNG modulo7 in native table order",
+    "clock_order": "controller first, common effect timeout decrement/latch second",
+    "normal_time_adaptation_if_30hz": "150..359 counts correspond to5..11.9667 seconds;75..179 correspond to2.5..5.9667. This conversion remains an explicit local adaptation until update cadence is measured."
+  },
+  "uncertainties": [
+    "Five creature AI dispatch targets are identified, but their full native movement/attack/damage functions have not been reviewed by this pass.",
+    "Rider position/velocity override order within the common entity/physics pipeline is unresolved; do not freeze every passenger AI while mounted.",
+    "The general NPC damage callback, mounted damage eligibility, exact fire/TNT reward logic and player/item/status exceptions need review before shipping payloads.",
+    "Door opening/closing timing, reservation release after deferred removals, global RNG phase and engine update cadence are not reproduced by this source-only report.",
+    "Room-clear cleanup may expose differences in the current decoy completion adaptation; test boss removal, surviving escorts and all rider types together.",
+    "Existing source-stage hints map to DeathWard floor bands, not a replacement of the4-8floor expedition structure or the Mine roster."
+  ]
+}

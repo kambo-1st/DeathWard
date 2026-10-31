@@ -1,0 +1,16 @@
+Testing: loki_bosses
+46/54 Test: loki_bosses
+Command: "/home/kambo/workspace/DeathWard/build/deathward_loki_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"loki_bosses" start time: Oct 26 03:28 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: Loki encounter capacity
+chain 0 depth 0 effect -1: Loki encounter placement
+LOKI_VOLLEYS ordered=4,4,4 axes=cardinal,diagonal,cardinal ring=8 independent_halves=1
+LOKI_TELEPORT absent_immunity=1 grounded_vulnerability=1 landing_revalidation=1 inactive_pause=1 contact=25
+LOKI_GROUPS normal_children=4 red_children=1 atomic_spawn=1 per_half_hp=1120 aggregate_health=1 single_payout=1 child_clear=1
+LOKI_ROUTE seed=2 floor=3 band=2 id=69.0 bodies=1
+LOKI_ROUTE seed=3 floor=3 band=3 id=69.1 bodies=2
+PASS Loki and Lokii partial controllers
+

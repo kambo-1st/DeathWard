@@ -1,0 +1,22 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/3 Test  #2: mechanics_content ................   Passed    2.01 sec
+    Start 29: monster_behaviors
+2/3 Test #29: monster_behaviors ................   Passed    4.48 sec
+    Start 36: brain
+3/3 Test #36: brain ............................***Failed    1.17 sec
+MOVEMENT hp64 X.85 Y.8 charge=.8v+direction global7 committed=1 prediction=1 cover=1 bodies=1 grid=1 safe_grid=1
+CREEP crowd5 periods12/24 fast_half_step=1 radius2.46 lifetime125 fade40 damage12.5 owner_survival=1 clear=1 capacity=1 suspend=1
+STARTING_KIT seconds=8.68333 hp=100
+CONFIG immutable=1 invalid_profiles=6
+fixed seeded witness contains a real Brain without injection
+
+
+67% tests passed, 1 tests failed out of 3
+
+Total Test time (real) =   7.66 sec
+
+The following tests FAILED:
+	 36 - brain (Failed)
+Errors while running CTest

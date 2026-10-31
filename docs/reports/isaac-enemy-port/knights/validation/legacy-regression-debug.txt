@@ -1,0 +1,8 @@
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+chain 0 depth 0 effect -1: monster offspring capacity
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555555761b4 in (anonymous namespace)::regenerationAndOffspring() ()
+#0  0x00005555555761b4 in (anonymous namespace)::regenerationAndOffspring() ()
+#1  0x000055555556e2ba in main ()

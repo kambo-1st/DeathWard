@@ -1,0 +1,20 @@
+{
+  "status": "next-increment source preflight only; no passenger/controller runtime implemented",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "signature_source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityEffect.zhl",
+  "signature_source_sha256": "b02cf8d4c8ccad6574c7f967a7265e6951b91715a743bb3f0334745f686dbbe7",
+  "constructor_signature": "558bec51568bf18975??e8????????c706????????8bc6c786????????00000000c786????????00000000c786????????00000000c786????????00000000c786????????00000000",
+  "constructor": "0x5b7820",
+  "constructor_end_exclusive": "0x5b7882",
+  "constructor_raw_sha256": "2a528b0f6aeba71ca5787a5ab3e3119d6d022259c5339ce9ccb22c5846fcd464",
+  "constructor_artifact": "docs/reports/isaac-enemy-port/hornfel_escorts/effect-constructor-next.asm",
+  "vtable": "0xb459f0",
+  "update_vtable_offset": 12,
+  "update": "0x5bdf00",
+  "finding": "Unique installed constructor signature writes this vtable. Slot12 is Update by pinned declaration. Direct newer Update signature does not match installed1.7.9b (stack frame differs). Effect1000.152 is created/referenced as Hornfel Parent at0x4a6309\u20130x4a63a0. Variant152 dispatch within this large effect Update remains to locate.",
+  "next": [
+    "Locate1000.152 update dispatch and passenger spawn/cap/timing branches.",
+    "Keep fire/TNT/creature payload identities separate from rider906 and decoy906.1.",
+    "SharedFlyAI reveals native4.14 parent/velocity inheritance and counters46\u201360; verify bomb field meanings before changing current fuse or immunity."
+  ]
+}

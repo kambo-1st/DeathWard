@@ -1,0 +1,76 @@
+{
+  "status": "source-backed escort increment; no claim of complete Hornfel or Fly Bomb parity",
+  "baseline": "Installed Repentance1.7.9b",
+  "native_manifest": "docs/reports/isaac-enemy-port/hornfel_escorts/native/manifest.json",
+  "dispatch": {
+    "npc_ai": "0x699730",
+    "type_index_table": "0x69abc0",
+    "case_table": "0x69a7f8",
+    "819": {
+      "index": 3,
+      "case": "0x69a0c7",
+      "call": "0x4f4e30"
+    },
+    "906": {
+      "index": 218,
+      "case": "0x69a31f",
+      "call": "0x4a6280"
+    }
+  },
+  "findings": [
+    {
+      "window": "hornfel_entry",
+      "addresses": "0x4a5749\u20130x4a5990",
+      "finding": "Only ordinary entry reaches RNG%3==0; combined live type819 and type4/variant14 count must be<4, nearest player squared distance>57600. Attempts exactly two819.0.0. Count3 may become5; this is a pre-spawn gate, not a post-spawn cap."
+    },
+    {
+      "window": "hornfel_entry",
+      "addresses": "0x4a5870\u20130x4a59e0",
+      "finding": "Launch vector rotates entrance direction by [-20,20)degrees; random position offset radius6native units; spawner and Parent are Hornfel. Clears flagbit4; this report does not infer unsupported status immunity from that bit."
+    },
+    {
+      "window": "shared_fly_ai",
+      "addresses": "0x4f6162\u20130x4f6347",
+      "finding": "Every third global frame, if Parent exists, special control field+e6c==-1, and parent distance<260: desired radius65+sin(globalFrame*.02)*5; error clamp[-5,5]; radial force unit(parent-self)*error*.5; tangent(-dz,dx)*.2/(abs(error)+2), with native friction division via+2c4 and add-velocity helper."
+    },
+    {
+      "window": "shared_fly_ai",
+      "addresses": "0x4f64f5\u20130x4f651a;0x4f67c1\u20130x4f6a35",
+      "finding": "Target refreshed on three-frame gate. Two-frame movement gate applies skewed player delta(dx-dy,(dy+dx)*.5); Parent multiplies by.2; normalized force2*min(max(distance-25,0)*.08,1.2) in ordinary non-Skatole branch."
+    },
+    {
+      "window": "shared_fly_ai",
+      "addresses": "0x4f6d0e\u20130x4f6e78",
+      "finding": "Every4globalframes at remainder1, wander=(wander+randomDirection*.6)*.4. Every3frames at remainder2, adds2*wander and multiplies friction by.6. Source also includes screen-boundary wander correction and status/champion branches, which remain outside this increment."
+    },
+    {
+      "window": "global_frame_gate",
+      "addresses": "0x684790\u20130x6847d9",
+      "finding": "Helper tests(globalFrame+offset)%period==0 when not frozen; not a flag query. elapsed_frame_gate returns integer elapsed interval difference."
+    },
+    {
+      "window": "hornfel_exit",
+      "addresses": "0x4a5b36\u20130x4a5c0b",
+      "finding": "Ordinary exit loops type819 whose Parent==Hornfel, clears Parent, sets HitPoints=min(HP,3.5). Repeated charge early returns bypass this. Exact HitPoints/Parent property registrations independently verify+2d8/+314."
+    },
+    {
+      "window": "shared_fly_ai",
+      "addresses": "0x4f592f\u20130x4f59fd",
+      "finding": "Death-byte/type819 branch spawns type4 variant14 using fly position/velocity and source, copies Parent, and assigns two ordnance counters60-RNG%15. This independently confirms Small Bomb identity, but counter meaning/rate still needs verification."
+    }
+  ],
+  "adaptations": [
+    "World/native length scale.1 and HP scale3.2: player clearance24, offset.6, released HP cap11.2.",
+    "Per-active-encounter30Hz clock instead of full source room global frame. Fixed60Hz movement, baseline friction integration, physical3D flight collisions and world speed cap24 are explicit local choices. Screen-coordinate boundary wander correction is replaced by real room geometry.",
+    "Optional spawn pair admitted atomically outside enemy iteration. Capacity/physical-placement failure skips that entry, never emits a partial or late group. Entrances clamp offsets inside the actual flight footprint.",
+    "Parent removal releases remaining flies without applying ordinary-exit HP cap. Cart destruction preserves live rider parent. Generic source reference deletion is approximated by next-update invalid-parent release.",
+    "Standalone Fly Bomb pursuit and Eternal Fly Bomb orbit remain existing controllers; this increment does not claim their newly discovered shared native AI has been fully ported.",
+    "Escorts use generation1 so existing summoned-offspring anti-farming policy suppresses coin drops. This is DeathWard economy policy, not a recovered Isaac drop rule."
+  ],
+  "open": [
+    "Full source shared-fly friction/reset integration and global frame phase equivalence; status/champion/Skatole/charm paths.",
+    "Source collision callbacks and Hornfel immunity to every escort/ordnance route remain incompletely recovered.",
+    "Additional Hornfel cart passengers, room controller/fireplace props, special rewards and all six acceptance gates.",
+    "Source death bomb inherits parent and momentum and assigns counter46\u201360. Existing shared tiny-bomb fuse/vertical drop remain local; parent-linked bomb immunity/callback effects need separate review."
+  ]
+}

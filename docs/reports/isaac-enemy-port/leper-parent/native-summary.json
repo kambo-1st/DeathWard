@@ -1,0 +1,156 @@
+{
+  "verified_utc": "2026-10-28T16:31:57.492503+00:00",
+  "result": "scoped_native_pass_full_acceptance_open",
+  "mechanics_fingerprint": "45d263966d0bc5b7",
+  "monster_definitions": 216,
+  "source_checks": {
+    "result": "pass",
+    "commands": [
+      "python3 scripts/isaac-reference/analyze-leper.py --check",
+      "python3 scripts/isaac-reference/extract-leper-animations.py --check",
+      "python3 scripts/isaac-reference/analyze-leper-parent-order.py --check"
+    ],
+    "parent_order_windows": 5,
+    "algebra_fixtures": 5,
+    "scope": "Installed executable hash and retained bounded native/animation evidence; no live original-game execution."
+  },
+  "native_tests": {
+    "unique_suites_passed": 10,
+    "suites": [
+      "leper_family",
+      "leper_flesh",
+      "hive_evaders",
+      "nest_family",
+      "mulligan_family",
+      "headless_family",
+      "adaptive_armor",
+      "mechanics_content",
+      "monster_behaviors",
+      "floor_progression"
+    ],
+    "first": "docs/reports/isaac-enemy-port/leper-parent/validation/native-first.txt",
+    "final": "docs/reports/isaac-enemy-port/leper-parent/validation/native-cadence-fixed.txt",
+    "details": "docs/reports/isaac-enemy-port/leper-parent/validation/last-native.log",
+    "initial_failure": "The additional30/60Hz fatal-frame test caught early child admission during the first half-update. Parent movement and death location changed collision-aware offspring placement. Birth choices now remain staged until the source frame completes. Initial failing native-final.txt and cadence-first.txt are retained; final test checks all four child positions and passes.",
+    "capture_harness_note": "All14 game capture commands exited0. The extra-capture wrapper initially searched for id=11 instead of the logged id=11.0 and incorrectly reported no Gusher. Logs prove successful Gusher captures at hit frames2 and20; no game or configuration change was needed."
+  },
+  "placement": {
+    "parent_residents": [
+      {
+        "subtype": 1,
+        "seed": 0,
+        "floor": 5,
+        "room": 1
+      },
+      {
+        "subtype": 0,
+        "seed": 0,
+        "floor": 5,
+        "room": 1
+      },
+      {
+        "subtype": 2,
+        "seed": 1,
+        "floor": 6,
+        "room": 1
+      },
+      {
+        "subtype": 3,
+        "seed": 1,
+        "floor": 6,
+        "room": 4
+      }
+    ],
+    "flesh_residents": [
+      {
+        "seed": 0,
+        "floor": 5,
+        "room": 5,
+        "band": 3
+      },
+      {
+        "seed": 2,
+        "floor": 5,
+        "room": 3,
+        "band": 3
+      },
+      {
+        "seed": 5,
+        "floor": 4,
+        "room": 3,
+        "band": 3
+      }
+    ],
+    "scope": "All four exact parent forms have actual seeded final-band residents, max1 of each form per room. Parent-to-Flesh route and independent Flesh placement are both enabled."
+  },
+  "starting_kit": {
+    "cases": [
+      {
+        "seed": 0,
+        "seconds": 14.75,
+        "remaining_hp": 100.0,
+        "kills": 14,
+        "cleared": true
+      },
+      {
+        "seed": 1,
+        "seconds": 13.7333,
+        "remaining_hp": 100.0,
+        "kills": 14,
+        "cleared": true
+      },
+      {
+        "seed": 2,
+        "seconds": 20.4333,
+        "remaining_hp": 100.0,
+        "kills": 14,
+        "cleared": true
+      },
+      {
+        "seed": 3,
+        "seconds": 18.3667,
+        "remaining_hp": 100.0,
+        "kills": 14,
+        "cleared": true
+      }
+    ],
+    "scope": "All four parent forms together at source stage7, starting revolver/dodge, no upgrades/bombs/god mode; each case clears14 parent/offspring enemies. Not human mixed-room balance acceptance."
+  },
+  "mortality": {
+    "seeded_trials": 32,
+    "gusher": 19,
+    "ordinary_death": 13,
+    "distinct_initial_delays": 13,
+    "scope": "All trials emit required pieces; same-entity Gusher starts full32HP with no parent kill reward. Strict overkill, queued-hit remainder and capacity pressure also covered."
+  },
+  "captures": "docs/reports/isaac-enemy-port/leper-parent/native/captures.json",
+  "visual_review": "docs/reports/isaac-enemy-port/leper-parent/visual-review.json",
+  "limitations": [
+    "Native champions, status/control and item-specific interactions, exact collision and serialized parity remain open.",
+    "Neighboring form distinctions, shadow contrast and cliff occlusion need broader human visual acceptance.",
+    "Four isolated starting-kit bots are not mixed-room/human balance acceptance; controlled performance gate remains open.",
+    "Static original-game source analysis only; no original executable live-oracle comparison.",
+    "WASM builds/checks intentionally skipped per user."
+  ],
+  "sha256": {
+    "build/deathward": "05ee294805242b353ebb3069ff9f228f7c392601c32ab347af0bf0e6aa6b4d92",
+    "build/deathward_leper_tests": "f612b4d5dd58bd657a2334d3054fc7252240502fc2c52fd2f336b1e694a67bef",
+    "build/deathward_leper_flesh_tests": "450e3d05d425f2120fc7c35c489a3942e66426762fd9258c9f9e5de3b9c4a87e",
+    "build/libdeathward_core.a": "743a2b8416be666a926e0dada77bdddab59944f5fab65f2996cccaff05ffadec",
+    "src/combat/Lepers.cpp": "04170170b303ee6ab3d4b3f3571ff8c7ebf3ae0a7aa060b5e875def8abfa3100",
+    "tests/leper_tests.cpp": "d6e3910db2f01870e16345e07a522f0c5eb4e1f1cb25df04cb2beb44eb20492e",
+    "assets/mechanics/leper.mechanics": "9b4ecea6790849c71fc1104f9a3ab89e72c0ed98fadd184ac5f2d00d6abba743",
+    "src/content/Mechanics.hpp": "b4ab3dae1bc812a41b2b413f47164fd32c472db3eba820a27d0e34c7ccb76926",
+    "src/content/Mechanics.cpp": "728c7f4d389aa80fdeafe67111a2b4406449451d5a9a7cde9b76bc9cb6625955",
+    "src/content/EncounterVariants.cpp": "7d63efe5d206dd35d072d6eb489298102aaa4a299380387eb8af9fd626daef22",
+    "src/combat/Simulation.cpp": "6266558fef699914b86aff21094b5978a1e17205a876a31c03e394959679a8a2",
+    "src/combat/Simulation.hpp": "b1cecbb429be4e5b2bc78cd051834df38b8f5d3df4f30ca43c85235571b6ed0d",
+    "src/combat/Monsters.cpp": "a97cbe5ddf4a576bace04c2eaae34d422433bfa12956af2105814eb4a5cfaeb9",
+    "src/combat/Enemies.cpp": "8e687758bb9fd9488f7b930c559cab3f801bb2f8fa9fb65d48e98359db554c82",
+    "src/combat/AdaptiveArmor.cpp": "84d31993a1d2360fbdbf54b58f8093610f7bf03e51cefe42de8e7fe035c52c5f",
+    "src/combat/GroundPursuit.cpp": "be71c3681cca2abeb62e566ff88d6d86f5f548bfc0722d85848fde8f6f52e4cf",
+    "src/combat/Evaders.cpp": "67e9c776d8583f6f08d27b70718ff6b3d69cb21ef1b6a779f107d4de16789f6a",
+    "src/render/MonsterVisuals.hpp": "c640c760d93604097d67a8092eb8428853f5b2b4afcb14933555b7218a1b4db0",
+    "scripts/isaac-reference/analyze-leper-parent-order.py": "1ed8c403e47cf8624536029c63a7b4bef5f09acbf23c450a1a327a6eb1100cb5"
+  }
+}

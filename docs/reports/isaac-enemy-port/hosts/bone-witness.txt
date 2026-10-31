@@ -1,0 +1,1 @@
+BONE_WITNESS seed=93 floor=3 room=3

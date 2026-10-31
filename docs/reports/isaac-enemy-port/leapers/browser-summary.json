@@ -1,0 +1,50 @@
+{
+  "passed": 7,
+  "cases": [
+    {
+      "name": "normal",
+      "report": "docs/reports/isaac-enemy-port/leapers/web-final/results.json",
+      "pass": true,
+      "last_frame": 571
+    },
+    {
+      "name": "sticky",
+      "report": "docs/reports/isaac-enemy-port/leapers/web-final/results.json",
+      "pass": true,
+      "last_frame": 571
+    },
+    {
+      "name": "cover",
+      "report": "docs/reports/isaac-enemy-port/leapers/web-terrain/results.json",
+      "pass": true,
+      "last_frame": 286
+    },
+    {
+      "name": "river",
+      "report": "docs/reports/isaac-enemy-port/leapers/web-remaining/results.json",
+      "pass": true,
+      "last_frame": 286
+    },
+    {
+      "name": "resident-normal",
+      "report": "docs/reports/isaac-enemy-port/leapers/web-remaining/results.json",
+      "pass": true,
+      "last_frame": 178
+    },
+    {
+      "name": "resident-sticky",
+      "report": "docs/reports/isaac-enemy-port/leapers/web-remaining/results.json",
+      "pass": true,
+      "last_frame": 448
+    },
+    {
+      "name": "death",
+      "report": "docs/reports/isaac-enemy-port/leapers/web-remaining/results.json",
+      "pass": true,
+      "last_frame": 914
+    }
+  ],
+  "browser": "149.0.7827.55",
+  "errors": [],
+  "note": "Seven accepted cases across three runs. Earlier failures preserved: illegal cover-test player waypoint, river volley capture consumed by stationary player, missing default browser and interrupted slow Chrome156 run. Production runtime unchanged by fixture corrections."
+}

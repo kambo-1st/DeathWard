@@ -1,0 +1,11 @@
+{
+  "result": "pass",
+  "checks": {
+    "git_diff_check": "passed",
+    "node_syntax_check": "passed",
+    "mechanics_content": "157 NPC / 12 items / 8c776d256f195ffa",
+    "maintained_checklist": "653 identities, 128 reviewed, 78 in progress, zero complete",
+    "historical_artifact_integrity": "1167 matching artifact hashes across 5 prior checkpoints; no historical checkpoint rewritten"
+  },
+  "scope": "Builds and full regression results are recorded separately in checkpoint.json. Metadata-only edits after full native tests were checked separately; no runtime changes followed the tested builds."
+}

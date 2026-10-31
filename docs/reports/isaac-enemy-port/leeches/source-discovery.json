@@ -1,0 +1,699 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "records": [
+    {
+      "key": "55.0.0",
+      "id": 55,
+      "variant": 0,
+      "subtype": 0,
+      "name": "Leech",
+      "xml": {
+        "anm2path": "055.000_Leech.anm2",
+        "baseHP": "25",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "2",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "55",
+        "name": "#LEECH",
+        "numGridCollisionPoints": "12",
+        "portrait": "43",
+        "reroll": "true",
+        "shadowSize": "17",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:55.0.0",
+      "wiki_matches": [
+        {
+          "page": "Leech (Enemy)",
+          "box": 0,
+          "group": "entity",
+          "fields": {
+            "name": "Leech",
+            "image name": "* [Before Repentance] Rebirth",
+            "id": "55",
+            "base hp": "25",
+            "environment": "Depths / Dank Depths / \nWomb / Utero / Scarred Womb / \nCorpse / \nSheol / Cathedral / \nchallenge /",
+            "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage."
+          },
+          "section_indices": [
+            0
+          ],
+          "name": "Leech",
+          "variant": 0,
+          "subtype": 0,
+          "id": 55,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Leech",
+        "Leech (Enemy)"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 25.0,
+        "2": 25.0,
+        "3": 25.0,
+        "4": 25.0,
+        "5": 25.0,
+        "6": 25.0,
+        "7": 25.0,
+        "8": 25.0,
+        "9": 25.0,
+        "10": 25.0,
+        "11": 25.0,
+        "12": 25.0,
+        "13": 25.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Leech",
+      "room_library_presence": {
+        "rooms/07.depths.stb": {
+          "templates": 5,
+          "positive_weight_templates": 5
+        },
+        "rooms/09.dank depths.stb": {
+          "templates": 5,
+          "positive_weight_templates": 5
+        },
+        "rooms/10.womb.stb": {
+          "templates": 34,
+          "positive_weight_templates": 34
+        },
+        "rooms/11.utero.stb": {
+          "templates": 21,
+          "positive_weight_templates": 21
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 36,
+          "positive_weight_templates": 36
+        },
+        "rooms/14.sheol.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/15.cathedral.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/33.corpse.stb": {
+          "templates": 18,
+          "positive_weight_templates": 18
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Leech",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Worm",
+        "catalog_base_hp": 64.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 99,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Leech (Enemy)",
+          "section": 0
+        }
+      ],
+      "feature_triage": [
+        "damage-modifiers",
+        "fire-rate-and-charge",
+        "health-and-defenses",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "55.1.0",
+      "id": 55,
+      "variant": 1,
+      "subtype": 0,
+      "name": "Kamikaze Leech",
+      "xml": {
+        "anm2path": "055.001_Kamikaze Leech.anm2",
+        "baseHP": "25",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "2",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "55",
+        "name": "#KAMIKAZE_LEECH",
+        "numGridCollisionPoints": "12",
+        "portrait": "44",
+        "reroll": "true",
+        "shadowSize": "17",
+        "stageHP": "0",
+        "tags": "explosive_soul",
+        "variant": "1"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:55.1.0",
+      "wiki_matches": [
+        {
+          "page": "Leech (Enemy)",
+          "box": 1,
+          "group": "entity",
+          "fields": {
+            "name": "Kamikaze Leech",
+            "image name": "* [Before Repentance] Rebirth",
+            "variant": "1",
+            "base hp": "25",
+            "environment": "Necropolis / \nSheol / \nDark Room / \nchallenge /",
+            "replace": "Leech",
+            "replace chance": "4.96%",
+            "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage. Explodes upon death."
+          },
+          "section_indices": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "name": "Kamikaze Leech",
+          "variant": 1,
+          "subtype": 0,
+          "id": 55,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Leech (Enemy)"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 25.0,
+        "2": 25.0,
+        "3": 25.0,
+        "4": 25.0,
+        "5": 25.0,
+        "6": 25.0,
+        "7": 25.0,
+        "8": 25.0,
+        "9": 25.0,
+        "10": 25.0,
+        "11": 25.0,
+        "12": 25.0,
+        "13": 25.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Kamikaze Leech",
+      "room_library_presence": {
+        "rooms/08.necropolis.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/14.sheol.stb": {
+          "templates": 44,
+          "positive_weight_templates": 44
+        },
+        "rooms/16.dark room.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/14.sheol.stb": {
+          "templates": 15,
+          "positive_weight_templates": 15
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Kamikaze Leech",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Worm",
+        "catalog_base_hp": 64.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 100,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Leech (Enemy)",
+          "section": 1
+        },
+        {
+          "page": "Leech (Enemy)",
+          "section": 2
+        },
+        {
+          "page": "Leech (Enemy)",
+          "section": 3
+        },
+        {
+          "page": "Leech (Enemy)",
+          "section": 4
+        },
+        {
+          "page": "Leech (Enemy)",
+          "section": 5
+        }
+      ],
+      "feature_triage": [
+        "damage-modifiers",
+        "fire-rate-and-charge",
+        "projectile-transform",
+        "child-spawns-and-ownership",
+        "health-and-defenses",
+        "room-floor-run-events",
+        "locomotion-and-navigation",
+        "forms-and-transformations"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "55.2.0",
+      "id": 55,
+      "variant": 2,
+      "subtype": 0,
+      "name": "Holy Leech",
+      "xml": {
+        "anm2path": "055.002_Holy Leech.anm2",
+        "baseHP": "25",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "2",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "55",
+        "name": "#HOLY_LEECH",
+        "numGridCollisionPoints": "12",
+        "portrait": "44",
+        "reroll": "true",
+        "shadowSize": "17",
+        "stageHP": "0",
+        "tags": "explosive_soul",
+        "variant": "2"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:55.2.0",
+      "wiki_matches": [
+        {
+          "page": "Leech (Enemy)",
+          "box": 2,
+          "group": "entity",
+          "fields": {
+            "name": "Holy Leech",
+            "image name": "* [Before Repentance] Rebirth",
+            "variant": "2",
+            "base hp": "25",
+            "environment": "Utero / \nCathedral / \nchallenge /",
+            "replace": "Leech, Kamikaze Leech",
+            "replace chance": "1%",
+            "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage. Explodes upon death. Spawns with an Eternal Fly circling it, which instantly dies when the Holy Leech explodes."
+          },
+          "section_indices": [
+            3
+          ],
+          "name": "Holy Leech",
+          "variant": 2,
+          "subtype": 0,
+          "id": 55,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Leech (Enemy)"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 25.0,
+        "2": 25.0,
+        "3": 25.0,
+        "4": 25.0,
+        "5": 25.0,
+        "6": 25.0,
+        "7": 25.0,
+        "8": 25.0,
+        "9": 25.0,
+        "10": 25.0,
+        "11": 25.0,
+        "12": 25.0,
+        "13": 25.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Holy Leech",
+      "room_library_presence": {
+        "rooms/11.utero.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/15.cathedral.stb": {
+          "templates": 50,
+          "positive_weight_templates": 50
+        },
+        "rooms/greed/24.the shop.stb": {
+          "templates": 7,
+          "positive_weight_templates": 7
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Holy Leech",
+        "motion": "Charge",
+        "attack": "None",
+        "shape": "Worm",
+        "catalog_base_hp": 80.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 101,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Leech (Enemy)",
+          "section": 3
+        }
+      ],
+      "feature_triage": [
+        "projectile-transform",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    }
+  ],
+  "article": {
+    "title": "Leech (Enemy)",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Leech_%28Enemy%29",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268624",
+    "revision": 268624,
+    "timestamp": "2026-08-25T17:45:34Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "[disambig msg: the monster; the item; Leech] \n\nLeeches are flying monsters introduced in the vanilla content of The Binding of Isaac: Rebirth.\n\nSimilar to Chargers, if Isaac lines up with a Leech horizontally or vertically, the Leech will quickly charge towards him. Leeches do a full heart of contact damage.\n\n[Repentance] Leeches and their variants are immune to knockback."
+      },
+      {
+        "heading": "Variations",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Kamikaze Leech",
+        "level": 3,
+        "text": "Kamikaze Leeches are a unique type of Leech with an eye in their mouth. They are introduced in the vanilla content of The Binding of Isaac: Rebirth and commonly found in Sheol but can appear elsewhere such as Necropolis and Dark Room.\n\nThese behave similarly to normal Leeches, but explode upon death. They can be spawned by a couple of bosses, such as Satan's second form; as well, two of these will also appear to either side of The Fallen during the first phase of this battle."
+      },
+      {
+        "heading": "Holy Leech",
+        "level": 3,
+        "text": "Holy Leeches are white-colored variants of the Kamikaze Leech commonly found in the Cathedral, but can occasionally appear in Utero.\n\nThese behave similarly to Kamikaze Leeches, but have an Eternal Fly circling them. Because the Holy Leech explodes upon death, the Eternal Fly will die instantly and only serves to block projectiles."
+      },
+      {
+        "heading": "Small Leech",
+        "level": 3,
+        "text": "Small Leeches are small, juvenile versions of the Leech added in The Binding of Isaac: Repentance DLC.\n\nThey are quite similar to normal Leeches and make the same sound effect (albeit higher-pitched), but they have no knockback immunity, and continuously chase Isaac rather than only pursuing him if Isaac lines up with one horizontally or vertically. They are also very small in size and can swim over flooded gaps.\n\nPrimarily spawned by Prey and Lil Blub, and can be found in Buckets. They will also spawn during Wormwood's boss fight, after Wormwood charges out from the wall.\n\nWhen in a room without water, Small Leeches make small, short hops towards Isaac."
+      },
+      {
+        "heading": "Adult Leech",
+        "level": 3,
+        "text": "Adult Leeches are bigger and stronger versions of the Leech added in The Binding of Isaac: Repentance DLC.\n\nThey are characterized by their large size and much higher amount of health in comparison to typical Leeches. They behave like Leeches but will only charge horizontally and release a ring of 12 blood shots in all directions upon colliding with a wall. Upon taking a certain amount of damage, they burrow underground then reappear by attempting to crash into Isaac from above (a sound cue will play prior to it crashing down) and sending out a ring of 10 blood shots in all directions on impact, which only occurs once per Adult Leech."
+      },
+      {
+        "heading": "Gallery",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "\u2022 Kamikaze Leech was first added in the Halloween update for the original Flash version of The Binding of Isaac.\n\n\u2022 Holy Leech was first added in the original Flash game's Wrath of the Lamb DLC.\n\n\u2022 The Leech's charging sound effect is, in reality, a man saying \"EHHH\" sped up. This can be revealed by listening to the attack sound of a Large Champion Leech.\n\n\u2022 [Repentance] The Small Leech and Adult Leech first appeared in the fan DLC Antibirth.\n\n\u2022 The Adult Leech's design is from a mockup for a Corpse altfloor by artist NotYourSagittarius created in February 2015."
+      },
+      {
+        "heading": "References",
+        "level": 2,
+        "text": ""
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "name": "Leech",
+          "image name": "* [Before Repentance] Rebirth",
+          "id": "55",
+          "base hp": "25",
+          "environment": "Depths / Dank Depths / \nWomb / Utero / Scarred Womb / \nCorpse / \nSheol / Cathedral / \nchallenge /",
+          "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage."
+        },
+        "group": "entity",
+        "id": 55,
+        "name": "Leech",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 1,
+        "fields": {
+          "name": "Kamikaze Leech",
+          "image name": "* [Before Repentance] Rebirth",
+          "variant": "1",
+          "base hp": "25",
+          "environment": "Necropolis / \nSheol / \nDark Room / \nchallenge /",
+          "replace": "Leech",
+          "replace chance": "4.96%",
+          "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage. Explodes upon death."
+        },
+        "group": "entity",
+        "id": 55,
+        "name": "Kamikaze Leech",
+        "variant": 1,
+        "subtype": 0,
+        "section_indices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 3,
+        "fields": {
+          "name": "Holy Leech",
+          "image name": "* [Before Repentance] Rebirth",
+          "variant": "2",
+          "base hp": "25",
+          "environment": "Utero / \nCathedral / \nchallenge /",
+          "replace": "Leech, Kamikaze Leech",
+          "replace chance": "1%",
+          "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage. Explodes upon death. Spawns with an Eternal Fly circling it, which instantly dies when the Holy Leech explodes."
+        },
+        "group": "entity",
+        "id": 55,
+        "name": "Holy Leech",
+        "variant": 2,
+        "subtype": 0,
+        "section_indices": [
+          3
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 4,
+        "fields": {
+          "dlc": "r",
+          "name": "Small Leech",
+          "image scale": "1/2",
+          "id": "810",
+          "base hp": "5",
+          "environment": "Downpour / Dross / \ntreasure / (Downpour only)\nsecret / (Dross only)\nboss / challenge /",
+          "behavior": "Chases Isaac continuously, not stopping at walls. Able to swim over gaps."
+        },
+        "group": "entity",
+        "id": 810,
+        "name": "Small Leech",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          4
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 5,
+        "fields": {
+          "dlc": "r",
+          "name": "Adult Leech",
+          "id": "854",
+          "base hp": "90",
+          "environment": "Corpse / \nchallenge /",
+          "behavior": "Wanders around the room, quickly charging at Isaac when he lines up horizontally with him and releasing a ring of blood shots upon colliding with a wall. After taking a certain amount of damage, burrows into the ground and reappears by falling above Isaac, releasing another ring of blood shots and only performing this behavior once."
+        },
+        "group": "entity",
+        "id": 854,
+        "name": "Adult Leech",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          5
+        ]
+      }
+    ]
+  }
+}

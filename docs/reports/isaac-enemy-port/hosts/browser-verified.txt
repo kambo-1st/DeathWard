@@ -1,0 +1,4 @@
+page.waitForFunction: Timeout 90000ms exceeded.
+    at /home/kambo/workspace/DeathWard/web/host-test.cjs:19:15 {
+  name: 'TimeoutError'
+}

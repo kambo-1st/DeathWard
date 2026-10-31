@@ -1,0 +1,11 @@
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_knight_tests
+[ 95%] Building CXX object CMakeFiles/deathward_knight_tests.dir/tests/knight_tests.cpp.o
+/home/kambo/workspace/DeathWard/tests/knight_tests.cpp: In function ‘void {anonymous}::placement()’:
+/home/kambo/workspace/DeathWard/tests/knight_tests.cpp:186:16: error: ‘floorProfile’ was not declared in this scope
+  186 |             if(floorProfile(floor,plan.floorCount,false).band<1)continue;
+      |                ^~~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/deathward_knight_tests.dir/build.make:76: CMakeFiles/deathward_knight_tests.dir/tests/knight_tests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:2842: CMakeFiles/deathward_knight_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2849: CMakeFiles/deathward_knight_tests.dir/rule] Error 2
+gmake: *** [Makefile:1357: deathward_knight_tests] Error 2

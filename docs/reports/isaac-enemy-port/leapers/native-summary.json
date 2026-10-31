@@ -1,0 +1,8 @@
+{
+  "passed": 83,
+  "total": 83,
+  "failed": 0,
+  "report": "docs/reports/isaac-enemy-port/leapers/native-full.txt",
+  "focused": "docs/reports/isaac-enemy-port/leapers/native-focused-final.txt",
+  "note": "All83 CTest suites pass on final runtime. Leaper test target was rebuilt before CTest reached it, adding explicit physical-collision/slow checks; same final test binary independently passed focused run. Initial fixture failures and build logs preserved."
+}

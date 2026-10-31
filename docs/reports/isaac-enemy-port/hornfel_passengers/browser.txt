@@ -1,0 +1,6 @@
+PASS fire-extinguish
+PASS fire-flooded
+PASS tnt-blast
+PASS tnt-ignition
+PASS natural-fire-passenger
+PASS natural-tnt-passenger

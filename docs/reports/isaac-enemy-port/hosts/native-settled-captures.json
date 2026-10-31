@@ -1,0 +1,65 @@
+[
+  {
+    "name": "host-closed",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-27.0.0",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hosts/native-settled-host-closed.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/hosts/native-settled-host-closed.png",
+    "log": "docs/reports/isaac-enemy-port/hosts/native-settled-host-closed.txt"
+  },
+  {
+    "name": "mobile-host-closed",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-204.0.0",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hosts/native-settled-mobile-host-closed.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/hosts/native-settled-mobile-host-closed.png",
+    "log": "docs/reports/isaac-enemy-port/hosts/native-settled-mobile-host-closed.txt"
+  },
+  {
+    "name": "floast-closed",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-859.0.0",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hosts/native-settled-floast-closed.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/hosts/native-settled-floast-closed.png",
+    "log": "docs/reports/isaac-enemy-port/hosts/native-settled-floast-closed.txt"
+  }
+]

@@ -1,0 +1,41 @@
+1 state=0 decoys=0 removed=0 escorts=0 released=0
+18 state=1 decoys=0 removed=0 escorts=0 released=0
+36 state=6 decoys=0 removed=0 escorts=0 released=0
+405 state=7 decoys=0 removed=0 escorts=0 released=0
+407 state=8 decoys=0 removed=0 escorts=0 released=0
+639 state=0 decoys=0 removed=0 escorts=0 released=0
+729 state=1 decoys=0 removed=0 escorts=0 released=0
+747 state=2 decoys=0 removed=0 escorts=0 released=0
+1089 state=0 decoys=0 removed=0 escorts=0 released=0
+1179 state=1 decoys=2 removed=0 escorts=0 released=0
+1197 state=9 decoys=2 removed=0 escorts=0 released=0
+DECOY_FRAME 1200 alive=1 x=-0.0352097 z=-19.2008 dist=0.8 route=3 removed=0
+DECOY_FRAME 1200 alive=1 x=11.0769 z=-19.2 dist=0.8 route=5 removed=0
+DECOY_FRAME 1300 alive=1 x=-2.76923 z=-0.516624 dist=20.8 route=3 removed=0
+DECOY_FRAME 1300 alive=1 x=11.0769 z=0.799942 dist=20.8 route=5 removed=0
+DECOY_FRAME 1400 alive=1 x=-10.9035 z=12.6418 dist=40.8001 route=3 removed=0
+DECOY_FRAME 1400 alive=1 x=0.986107 z=11.5033 dist=40.8001 route=5 removed=0
+1538 state=0 decoys=2 removed=2 escorts=0 released=0
+1628 state=1 decoys=2 removed=2 escorts=0 released=0
+1646 state=2 decoys=2 removed=2 escorts=0 released=0
+1886 state=0 decoys=2 removed=2 escorts=0 released=0
+1976 state=1 decoys=2 removed=2 escorts=0 released=0
+1994 state=2 decoys=2 removed=2 escorts=2 released=0
+2264 state=0 decoys=2 removed=2 escorts=2 released=0
+2354 state=1 decoys=4 removed=2 escorts=2 released=0
+2372 state=9 decoys=4 removed=2 escorts=2 released=0
+DECOY_FRAME 2400 alive=1 x=-11.0769 z=-14.2 dist=5.8 route=1 removed=2
+DECOY_FRAME 2400 alive=1 x=0.00376892 z=14.2001 dist=5.8 route=4 removed=2
+DECOY_FRAME 2500 alive=1 x=-13.6829 z=4.47169 dist=25.8 route=1 removed=2
+DECOY_FRAME 2500 alive=1 x=11.0769 z=3.82424 dist=25.8 route=4 removed=2
+DECOY_FRAME 2600 alive=1 x=1.3877 z=0 dist=45.8001 route=1 removed=2
+DECOY_FRAME 2600 alive=1 x=11.0769 z=-16.1758 dist=45.8001 route=4 removed=2
+2713 state=0 decoys=4 removed=4 escorts=2 released=0
+2803 state=1 decoys=4 removed=4 escorts=2 released=0
+2821 state=2 decoys=4 removed=4 escorts=2 released=0
+3069 state=0 decoys=4 removed=4 escorts=2 released=0
+3159 state=1 decoys=4 removed=4 escorts=2 released=0
+3177 state=2 decoys=4 removed=4 escorts=2 released=0
+3537 state=0 decoys=4 removed=4 escorts=2 released=0
+3627 state=1 decoys=4 removed=4 escorts=2 released=0
+3645 state=2 decoys=4 removed=4 escorts=2 released=0

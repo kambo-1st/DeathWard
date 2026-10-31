@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/isaac-reference/analyze-hornfel-passengers.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": "PASS: effect152 dispatch, seven passenger identities/AI targets, seven API anchors, 26 native windows\n"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/isaac-reference/analyze-hornfel-escorts.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": "PASS: 819/906 dispatch, HP/Parent API pairings, and 11 escort code windows\n"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/isaac-reference/track-enemies.py",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": "{\n  \"total\": 653,\n  \"identity_verified\": 653,\n  \"source_archive_available\": true,\n  \"reviewed\": 133,\n  \"dispositions\": {\n    \"ordinary\": 66,\n    \"dedicated\": 7,\n    \"environment\": 12,\n    \"pending\": 520,\n    \"boss\": 8,\n    \"item_dependency\": 2,\n    \"component\": 10,\n    \"hazard\": 16,\n    \"excluded\": 12\n  },\n  \"implementations\": {\n    \"in_progress\": 82,\n    \"existing_unverified\": 79,\n    \"missing\": 480,\n    \"excluded\": 12\n  },\n  \"complete\": 0,\n  \"remaining\": 641,\n  \"milestones\": [\n    {\n      \"number\": 1,\n      \"status\": \"in_progress\"\n    },\n    {\n      \"number\": 2,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 3,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 4,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 5,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 6,\n      \"status\": \"pending\"\n    }\n  ]\n}\n"
+  }
+]

@@ -1,0 +1,189 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "name": "npc-take-damage",
+      "start": "0x6ac370",
+      "end_exclusive": "0x6acafd",
+      "complete_function": true,
+      "instructions": 488,
+      "raw_sha256": "0cf6e6217c958c8e49480a85de014b89f9e7bdaf68cfd967d93200df58ba9a74",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/source/npc-take-damage.asm",
+      "sha256": "62462e67cf8ec488834c31a5bacccc6bf2e8c585e66600a9fe7eef46d3a5f703"
+    },
+    {
+      "name": "default-extra-ai-flags",
+      "start": "0x68fba0",
+      "end_exclusive": "0x68fc46",
+      "complete_function": false,
+      "instructions": 25,
+      "raw_sha256": "ba891c2178633e944fd6f5b5c3ca6cd66d614fb8ad3fa5b102dce7a77eb1d7bb",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/source/default-extra-ai-flags.asm",
+      "sha256": "fb3a9bce12aebdc4de4d9cdc1a329a198d1f3a08a8900b7f1edb50f92c0f1a6c"
+    },
+    {
+      "name": "ordinary-ai-call",
+      "start": "0x69cda8",
+      "end_exclusive": "0x69ce99",
+      "complete_function": false,
+      "instructions": 58,
+      "raw_sha256": "269fafc5e1421328a3a4722687aefdbfafb1539efb989647ce287e033aa327f7",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/source/ordinary-ai-call.asm",
+      "sha256": "6d7ff36adc5d7c43fe9647c9a5b5bdf3aa22c7e02efc2306e009860b6425d1c7"
+    },
+    {
+      "name": "queued-damage-reset",
+      "start": "0x68701d",
+      "end_exclusive": "0x687038",
+      "complete_function": false,
+      "instructions": 5,
+      "raw_sha256": "510bd72a30e3be5a1e873ca625e632de5fa858c61458ef88b69f82d01c9487ca",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/source/queued-damage-reset.asm",
+      "sha256": "b5a32da9cb9baf1bbcf5d81ac8ad3d973c44f121b145d2bd83d60b295ecfa53e"
+    },
+    {
+      "name": "headless-state-entry",
+      "start": "0x4f8e40",
+      "end_exclusive": "0x4f9008",
+      "complete_function": false,
+      "instructions": 116,
+      "raw_sha256": "9ac53d45e8f29b7c7aa07f416db25db7408acc248fe8417d7502fb5f659cf3c0",
+      "path": "docs/reports/isaac-enemy-port/leper-parent/source/headless-state-entry.asm",
+      "sha256": "2de315060187bc013649147f534623e92c2d50f4e8fa9b1c2c55641950bc3f0b"
+    }
+  ],
+  "shared_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/source/manifest.json",
+      "sha256": "6b7083cc3e300e9ab1ebcc5954e11faad093e1df69e7e4ae0bd4bb90bc033dfb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/leper/animations/manifest.json",
+      "sha256": "ebadde17783bd64da012938adde5978dbbabeeda8b8431d443e06353bb926cb6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/base-config.asm",
+      "sha256": "d44b00677e9bc0a0ceaadf926e1008e02e7bc1591054266c92202fabdb2ded9f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/npc-config.asm",
+      "sha256": "47a82eb4b11f7accff02b9a79f16f1c9fbbb1d8564dee26acb7c0436e15c5c48"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/direct_damage.asm",
+      "sha256": "da56e6dcb1287d5672156ab2c421dd43a6cb32752d8d524b9f41e26d7a603870"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/body-complete.asm",
+      "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/nest/source/evade_pathfinder.asm",
+      "sha256": "614544eaa7ac8518ce1cab9234aacb252ac68bf87bfd820fa472ee260ae3f4d1"
+    }
+  ],
+  "claims": [
+    "NPC TakeDamage forwards to684bb0. The complete forwarder has no direct current-HP write; base TakeDamage queues hits and accumulates14.",
+    "Ordinary NPC AI runs at69ce94 before the shared update at69f8a9. The reset sets extra-AI flags to zero; Leper does not opt into extra callbacks.",
+    "Parent534c8b predicts currentHP minus queued damage; all loop thresholds use the same maxHP. Only after loop534ff2 calls Morph.",
+    "Morph reloads subtype maxHP via config and clamps currentHP before the common queued subtraction at686e81. Queue and pending-damage14 are cleared at68701d.",
+    "The common subtraction stops after a lethal ordinary hit; leftover parent hits must not be applied to a same-entity Gusher.",
+    "Headless controller only special-cases State0; no State4 guard exists in its complete controller. Inherited State16 does not freeze a morphed Gusher.",
+    "Evade AA0 equals pathfinder base364 plus73c. It is the proximity memory: interval14, near resets3, far decrements; chase lottery requires memory<=0."
+  ],
+  "reference_calculations": [
+    {
+      "input": {
+        "stage": 0,
+        "hp": 60,
+        "max_hp": 60,
+        "queued_hits": [
+          14
+        ]
+      },
+      "result": {
+        "stage": 0,
+        "hp": 46,
+        "max_hp": 60,
+        "shed": 0,
+        "hits_applied": 1
+      }
+    },
+    {
+      "input": {
+        "stage": 0,
+        "hp": 60,
+        "max_hp": 60,
+        "queued_hits": [
+          15
+        ]
+      },
+      "result": {
+        "stage": 1,
+        "hp": 30,
+        "max_hp": 45,
+        "shed": 1,
+        "hits_applied": 1
+      }
+    },
+    {
+      "input": {
+        "stage": 0,
+        "hp": 60,
+        "max_hp": 60,
+        "queued_hits": [
+          20
+        ]
+      },
+      "result": {
+        "stage": 2,
+        "hp": 10,
+        "max_hp": 30,
+        "shed": 2,
+        "hits_applied": 1
+      }
+    },
+    {
+      "input": {
+        "stage": 0,
+        "hp": 60,
+        "max_hp": 60,
+        "queued_hits": [
+          10,
+          10
+        ]
+      },
+      "result": {
+        "stage": 2,
+        "hp": 10,
+        "max_hp": 30,
+        "shed": 2,
+        "hits_applied": 2
+      }
+    },
+    {
+      "input": {
+        "stage": 0,
+        "hp": 60,
+        "max_hp": 60,
+        "queued_hits": [
+          20,
+          20
+        ]
+      },
+      "result": {
+        "stage": 3,
+        "hp": -5,
+        "max_hp": 15,
+        "shed": 3,
+        "hits_applied": 1
+      }
+    }
+  ],
+  "scope": "Normal hostile non-champion path. Static source analysis plus explicit algebra; no claim of original-game live execution or status/control parity."
+}

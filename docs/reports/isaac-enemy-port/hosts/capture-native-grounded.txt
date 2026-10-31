@@ -1,0 +1,13 @@
+PASS host
+PASS red-host
+PASS mobile-host
+PASS flesh-mobile-host
+PASS floast
+PASS host-closed
+PASS mobile-host-closed
+PASS floast-closed
+PASS natural-host
+PASS natural-red-host
+PASS natural-flesh-mobile-host
+PASS natural-mobile-host
+PASS natural-floast

@@ -1,0 +1,203 @@
+[  1%] Building C object _deps/raylib-build/raylib/CMakeFiles/raylib.dir/raudio.c.o
+In file included from <built-in>:377:
+<command line>:21:9: warning: 'MAX_MESH_VERTEX_BUFFERS' macro redefined [-Wmacro-redefined]
+   21 | #define MAX_MESH_VERTEX_BUFFERS 9
+      |         ^
+<command line>:20:9: note: previous definition is here
+   20 | #define MAX_MESH_VERTEX_BUFFERS 7
+      |         ^
+[  2%] Building CXX object CMakeFiles/deathward_core.dir/src/content/ContentId.cpp.o
+In file included from /home/kambo/workspace/DeathWard/build-web/_deps/raylib-src/src/raudio.c:218:
+/home/kambo/workspace/DeathWard/build-web/_deps/raylib-src/src/external/stb_vorbis.c:1404:75: warning: pointer comparison always evaluates to false [-Wtautological-compare]
+ 1404 |       if (f->stream_start + loc >= f->stream_end || f->stream_start + loc < f->stream_start) {
+      |                                                                           ^
+[  3%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+2 warnings generated.
+[  4%] Building C object _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rcore.c.o
+In file included from <built-in>:377:
+<command line>:21:9: warning: 'MAX_MESH_VERTEX_BUFFERS' macro redefined [-Wmacro-redefined]
+   21 | #define MAX_MESH_VERTEX_BUFFERS 9
+      |         ^
+<command line>:20:9: note: previous definition is here
+   20 | #define MAX_MESH_VERTEX_BUFFERS 7
+      |         ^
+/home/kambo/workspace/DeathWard/build-web/_deps/raylib-src/src/rcore.c:528:17: warning: Warning: Getting image from the clipboard might not work without SUPPORT_FILEFORMAT_PNG or SUPPORT_FILEFORMAT_JPG [-W#pragma-messages]
+  528 |         #pragma message ("Warning: Getting image from the clipboard might not work without SUPPORT_FILEFORMAT_PNG or SUPPORT_FILEFORMAT_JPG")
+      |                 ^
+2 warnings generated.
+[  4%] Building C object _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rmodels.c.o
+In file included from <built-in>:377:
+<command line>:21:9: warning: 'MAX_MESH_VERTEX_BUFFERS' macro redefined [-Wmacro-redefined]
+   21 | #define MAX_MESH_VERTEX_BUFFERS 9
+      |         ^
+<command line>:20:9: note: previous definition is here
+   20 | #define MAX_MESH_VERTEX_BUFFERS 7
+      |         ^
+1 warning generated.
+[  5%] Building C object _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rshapes.c.o
+In file included from <built-in>:377:
+<command line>:21:9: warning: 'MAX_MESH_VERTEX_BUFFERS' macro redefined [-Wmacro-redefined]
+   21 | #define MAX_MESH_VERTEX_BUFFERS 9
+      |         ^
+<command line>:20:9: note: previous definition is here
+   20 | #define MAX_MESH_VERTEX_BUFFERS 7
+      |         ^
+1 warning generated.
+[  6%] Building C object _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtext.c.o
+In file included from <built-in>:377:
+<command line>:21:9: warning: 'MAX_MESH_VERTEX_BUFFERS' macro redefined [-Wmacro-redefined]
+   21 | #define MAX_MESH_VERTEX_BUFFERS 9
+      |         ^
+<command line>:20:9: note: previous definition is here
+   20 | #define MAX_MESH_VERTEX_BUFFERS 7
+      |         ^
+1 warning generated.
+[  7%] Building C object _deps/raylib-build/raylib/CMakeFiles/raylib.dir/rtextures.c.o
+In file included from <built-in>:377:
+<command line>:21:9: warning: 'MAX_MESH_VERTEX_BUFFERS' macro redefined [-Wmacro-redefined]
+   21 | #define MAX_MESH_VERTEX_BUFFERS 9
+      |         ^
+<command line>:20:9: note: previous definition is here
+   20 | #define MAX_MESH_VERTEX_BUFFERS 7
+      |         ^
+1 warning generated.
+[  8%] Building C object _deps/raylib-build/raylib/CMakeFiles/raylib.dir/utils.c.o
+In file included from <built-in>:377:
+<command line>:21:9: warning: 'MAX_MESH_VERTEX_BUFFERS' macro redefined [-Wmacro-redefined]
+   21 | #define MAX_MESH_VERTEX_BUFFERS 9
+      |         ^
+<command line>:20:9: note: previous definition is here
+   20 | #define MAX_MESH_VERTEX_BUFFERS 7
+      |         ^
+1 warning generated.
+[  9%] Linking C static library libraylib.a
+[  9%] Built target raylib
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[ 11%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[ 14%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RailTraffic.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnvironmentActors.cpp.o
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+[ 19%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 23%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 24%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mortality.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LobWalkers.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HeadShooters.cpp.o
+[ 27%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MawFamily.cpp.o
+[ 28%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hosts.cpp.o
+[ 29%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BuzzFlies.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Evaders.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Swimmers.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spiders.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SpiderVariants.cpp.o
+[ 33%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LongLegs.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Boils.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Willos.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireWaves.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 37%] Building CXX object CMakeFiles/deathward_core.dir/src/cinematic/Cinematic.cpp.o
+[ 38%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownDocument.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownWalkArea.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Particles.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ObjectAnimation.cpp.o
+[ 41%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 44%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FlagCloth.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Campaign.cpp.o
+[ 48%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Expedition.cpp.o
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:80:60: warning: missing field 'bossRails' initializer [-Wmissing-field-initializers]
+   80 |         {0,"Outer Washes",{6,2,0,2},9,1,95,1.1f,2,1,1,1,.5f},
+      |                                                            ^
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:81:61: warning: missing field 'bossRails' initializer [-Wmissing-field-initializers]
+   81 |         {1,"Broken Quarry",{2,4,5,2},14,3,85,1.f,4,2,1,3,.7f},
+      |                                                             ^
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:82:65: warning: missing field 'bossRails' initializer [-Wmissing-field-initializers]
+   82 |         {2,"Abandoned Works",{1,3,2,6},18,4,80,.94f,2,2,3,2,.65f},
+      |                                                                 ^
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:83:58: warning: missing field 'bossRails' initializer [-Wmissing-field-initializers]
+   83 |         {3,"Storm Cut",{2,4,4,3},22,5,75,.88f,3,1,2,2,1.f}
+      |                                                          ^
+4 warnings generated.
+[ 49%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Dungeon.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RailNetwork.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RailArena.cpp.o
+[ 51%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FlightNavigation.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Breakables.cpp.o
+[ 53%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FloorDressing.cpp.o
+[ 54%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 55%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 55%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonTerrain.cpp.o
+[ 57%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRiver.cpp.o
+[ 58%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRoad.cpp.o
+[ 59%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomGraph.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 60%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 61%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 62%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 63%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 64%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SuppliedBombs.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FlyBombs.cpp.o
+[ 65%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyBombs.cpp.o
+[ 66%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 67%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 68%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 69%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 70%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 70%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+[ 71%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 72%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 73%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 74%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 75%] Linking CXX static library libdeathward_core.a
+[ 75%] Built target deathward_core
+[ 76%] Building CXX object CMakeFiles/deathward_cloth.dir/src/render/FlagCloth.cpp.o
+[ 77%] Building CXX object CMakeFiles/deathward_skinning.dir/src/render/SkinnedModel.cpp.o
+[ 78%] Linking CXX static library libdeathward_cloth.a
+[ 78%] Built target deathward_cloth
+[ 79%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 80%] Building CXX object CMakeFiles/deathward_skinning.dir/src/render/ArtWardrobe.cpp.o
+[ 81%] Linking CXX static library libdeathward_skinning.a
+[ 81%] Built target deathward_skinning
+[ 81%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/MissionLighting.cpp.o
+[ 82%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/GroundSurface.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/RedstoneArt.cpp.o
+[ 84%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/CanyonWater.cpp.o
+[ 84%] Linking CXX static library libdeathward_particles.a
+[ 84%] Built target deathward_particles
+[ 85%] Linking CXX static library libdeathward_mission_lighting.a
+[ 85%] Built target deathward_mission_lighting
+[ 86%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 86%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 87%] Building CXX object CMakeFiles/deathward.dir/src/audio/AudioSystem.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/audio/MusicDirector.cpp.o
+[ 89%] Building CXX object CMakeFiles/deathward.dir/src/cinematic/CinematicAudio.cpp.o
+[ 90%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 90%] Building CXX object CMakeFiles/deathward.dir/src/render/PostProcess.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+[ 93%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorNavigation.cpp.o
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/PlayerModel.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/AnimalModels.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/render/WesternScene.cpp.o
+[ 97%] Building CXX object CMakeFiles/deathward.dir/src/render/CanyonScene.cpp.o
+[ 98%] Building CXX object CMakeFiles/deathward.dir/src/render/TownScene.cpp.o
+[ 99%] Building CXX object CMakeFiles/deathward.dir/src/core/Game.cpp.o
+[100%] Building CXX object CMakeFiles/deathward.dir/src/core/GameQuest.cpp.o
+[100%] Linking CXX executable index.html
+[100%] Built target deathward

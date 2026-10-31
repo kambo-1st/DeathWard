@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 64: maw_family
+1/1 Test #64: maw_family .......................   Passed   29.82 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =  29.83 sec

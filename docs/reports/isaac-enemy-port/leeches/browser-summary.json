@@ -1,0 +1,54 @@
+{
+  "pass": true,
+  "isolated": 3,
+  "natural": 3,
+  "renderer": [
+    "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+  ],
+  "cases": [
+    {
+      "name": "leech",
+      "pass": true,
+      "charges": 3,
+      "stops": 2,
+      "child": false
+    },
+    {
+      "name": "kamikaze",
+      "pass": true,
+      "charges": 3,
+      "stops": 2,
+      "child": false
+    },
+    {
+      "name": "holy",
+      "pass": true,
+      "charges": 3,
+      "stops": 2,
+      "child": true
+    },
+    {
+      "name": "resident-leech",
+      "pass": true,
+      "charges": 3,
+      "stops": 2,
+      "child": false
+    },
+    {
+      "name": "resident-kamikaze",
+      "pass": true,
+      "charges": 2,
+      "stops": 2,
+      "child": false
+    },
+    {
+      "name": "resident-holy",
+      "pass": true,
+      "charges": 6,
+      "stops": 5,
+      "child": true
+    }
+  ],
+  "evidence": "docs/reports/isaac-enemy-port/leeches/web/results.json",
+  "scope": "Scoped Original-style production WASM movement, death and natural populations. Full status parity, all-camera visuals, balance and performance remain open."
+}

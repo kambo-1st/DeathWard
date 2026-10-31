@@ -1,0 +1,37 @@
+seed=10 floor=2 layout=hornfel_special_5225
+0 state=0 route=0 attempts=0 unavailable=0 spawned=0 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+17 state=1 route=2 attempts=0 unavailable=0 spawned=0 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+35 state=2 route=2 attempts=0 unavailable=0 spawned=0 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+305 state=0 route=2 attempts=0 unavailable=0 spawned=0 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+395 state=1 route=4 attempts=0 unavailable=0 spawned=0 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+413 state=2 route=4 attempts=0 unavailable=0 spawned=0 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+491 state=2 route=4 attempts=1 unavailable=0 spawned=1 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+PASSENGER 508 id=33.0 actor=50 route=6 x=-74.2 z=38
+793 state=0 route=4 attempts=1 unavailable=0 spawned=1 removed=0 decoys=0 escorts=0 released=0 shot=0 passes=0
+883 state=1 route=6 attempts=1 unavailable=0 spawned=1 removed=1 decoys=0 escorts=0 released=0 shot=0 passes=0
+901 state=2 route=6 attempts=1 unavailable=0 spawned=1 removed=1 decoys=0 escorts=2 released=0 shot=0 passes=0
+1063 state=2 route=6 attempts=2 unavailable=1 spawned=1 removed=1 decoys=0 escorts=2 released=0 shot=0 passes=0
+1243 state=0 route=6 attempts=2 unavailable=1 spawned=1 removed=1 decoys=0 escorts=2 released=2 shot=0 passes=0
+1333 state=1 route=1 attempts=2 unavailable=1 spawned=1 removed=1 decoys=0 escorts=2 released=2 shot=0 passes=0
+1351 state=6 route=1 attempts=2 unavailable=1 spawned=1 removed=1 decoys=0 escorts=2 released=2 shot=0 passes=0
+1605 state=6 route=1 attempts=3 unavailable=1 spawned=2 removed=1 decoys=0 escorts=2 released=2 shot=0 passes=3
+PASSENGER 1622 id=33.0 actor=74 route=0 x=-125.8 z=38
+1757 state=7 route=1 attempts=3 unavailable=1 spawned=2 removed=1 decoys=0 escorts=2 released=2 shot=0 passes=8
+1759 state=8 route=1 attempts=3 unavailable=1 spawned=2 removed=1 decoys=0 escorts=2 released=2 shot=0 passes=8
+1850 state=8 route=1 attempts=3 unavailable=1 spawned=2 removed=1 decoys=0 escorts=2 released=2 shot=1 passes=8
+1991 state=0 route=1 attempts=3 unavailable=1 spawned=2 removed=2 decoys=0 escorts=2 released=2 shot=1 passes=8
+2081 state=1 route=2 attempts=3 unavailable=1 spawned=2 removed=2 decoys=2 escorts=2 released=2 shot=1 passes=8
+2099 state=9 route=2 attempts=4 unavailable=2 spawned=2 removed=2 decoys=2 escorts=2 released=2 shot=1 passes=8
+2335 state=0 route=2 attempts=4 unavailable=2 spawned=2 removed=2 decoys=2 escorts=2 released=2 shot=1 passes=8
+2425 state=1 route=6 attempts=4 unavailable=2 spawned=2 removed=2 decoys=2 escorts=2 released=2 shot=1 passes=8
+2443 state=2 route=6 attempts=4 unavailable=2 spawned=2 removed=2 decoys=2 escorts=4 released=2 shot=1 passes=8
+2667 state=2 route=6 attempts=5 unavailable=2 spawned=3 removed=2 decoys=2 escorts=4 released=2 shot=1 passes=8
+PASSENGER 2684 id=33.0 actor=97 route=5 x=-96 z=55.8
+2783 state=0 route=6 attempts=5 unavailable=2 spawned=3 removed=2 decoys=2 escorts=4 released=4 shot=1 passes=8
+2873 state=1 route=7 attempts=5 unavailable=2 spawned=3 removed=2 decoys=2 escorts=4 released=4 shot=1 passes=8
+2891 state=2 route=7 attempts=5 unavailable=2 spawned=3 removed=2 decoys=2 escorts=6 released=4 shot=1 passes=8
+3127 state=0 route=7 attempts=5 unavailable=2 spawned=3 removed=3 decoys=2 escorts=6 released=6 shot=1 passes=8
+3217 state=1 route=3 attempts=5 unavailable=2 spawned=3 removed=3 decoys=2 escorts=6 released=6 shot=1 passes=8
+3235 state=2 route=3 attempts=5 unavailable=2 spawned=3 removed=3 decoys=2 escorts=6 released=6 shot=1 passes=8
+3347 state=2 route=3 attempts=6 unavailable=3 spawned=3 removed=3 decoys=2 escorts=6 released=6 shot=1 passes=8
+3575 state=0 route=3 attempts=6 unavailable=3 spawned=3 removed=3 decoys=2 escorts=6 released=6 shot=1 passes=8

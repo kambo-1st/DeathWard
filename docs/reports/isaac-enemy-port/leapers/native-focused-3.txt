@@ -1,0 +1,4 @@
+PASS ordinary hops, native BigJump timing, target snapshot, cardinal/scattered shots, flight and creep
+PASS bounded capacity, room suspension, stun, death and surviving-shot completion
+COVER peak=7.99114 z=6.925 target=8
+FAIL high leap lands beyond cover

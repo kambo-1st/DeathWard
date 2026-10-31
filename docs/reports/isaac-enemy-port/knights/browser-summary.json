@@ -1,0 +1,147 @@
+{
+  "pass": true,
+  "cases": 11,
+  "isolated_cases": 6,
+  "natural_population_cases": 5,
+  "renderer": [
+    "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+  ],
+  "cases_summary": [
+    {
+      "name": "loose-pair",
+      "pass": true,
+      "charges": 0,
+      "impacts": 0,
+      "hops": 4,
+      "patches": 3,
+      "captures": [
+        "mask",
+        "charge",
+        "pair",
+        "creep"
+      ]
+    },
+    {
+      "name": "black-mask",
+      "pass": true,
+      "charges": 1,
+      "impacts": 1,
+      "hops": 0,
+      "patches": 0,
+      "captures": [
+        "mask",
+        "charge",
+        "impact"
+      ]
+    },
+    {
+      "name": "knight",
+      "pass": true,
+      "charges": 16,
+      "impacts": 0,
+      "hops": 0,
+      "patches": 0,
+      "captures": [
+        "mask",
+        "charge"
+      ]
+    },
+    {
+      "name": "selfless",
+      "pass": true,
+      "charges": 12,
+      "impacts": 0,
+      "hops": 0,
+      "patches": 0,
+      "captures": [
+        "mask",
+        "charge"
+      ]
+    },
+    {
+      "name": "resident-knight",
+      "pass": true,
+      "charges": 29,
+      "impacts": 0,
+      "hops": 0,
+      "patches": 0,
+      "captures": [
+        "mask",
+        "charge"
+      ]
+    },
+    {
+      "name": "resident-selfless",
+      "pass": true,
+      "charges": 18,
+      "impacts": 0,
+      "hops": 0,
+      "patches": 0,
+      "captures": [
+        "mask",
+        "charge"
+      ]
+    },
+    {
+      "name": "resident-loose",
+      "pass": true,
+      "charges": 0,
+      "impacts": 0,
+      "hops": 0,
+      "patches": 0,
+      "captures": [
+        "mask"
+      ]
+    },
+    {
+      "name": "resident-black",
+      "pass": true,
+      "charges": 1,
+      "impacts": 0,
+      "hops": 0,
+      "patches": 0,
+      "captures": [
+        "mask",
+        "charge"
+      ]
+    },
+    {
+      "name": "pon",
+      "pass": true,
+      "charges": 0,
+      "impacts": 0,
+      "hops": 7,
+      "patches": 6,
+      "captures": [
+        "hop",
+        "creep"
+      ]
+    },
+    {
+      "name": "pon-river",
+      "pass": true,
+      "charges": 0,
+      "impacts": 0,
+      "hops": 7,
+      "patches": 6,
+      "captures": [
+        "hop",
+        "creep"
+      ]
+    },
+    {
+      "name": "resident-pon",
+      "pass": true,
+      "charges": 0,
+      "impacts": 0,
+      "hops": 7,
+      "patches": 6,
+      "captures": [
+        "hop",
+        "creep"
+      ]
+    }
+  ],
+  "evidence": "docs/reports/isaac-enemy-port/knights/jet-web/results.json",
+  "scope": "Scoped production WASM mechanics/population/render smoke, not full six-gate acceptance."
+}

@@ -1,0 +1,288 @@
+[
+  {
+    "record_key": "entity:34.0.0",
+    "id": "34.0.0",
+    "source_name": "Leaper",
+    "display_name": "Leaper",
+    "source_group": "enemy",
+    "boss_pool_id": null,
+    "source_base_hp": "25",
+    "source_stage_hp": "0",
+    "current_runtime": {
+      "name": "Leaper",
+      "behavior": "legacy",
+      "natural": true,
+      "hazard": false,
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 60
+    },
+    "identity_conflict": false,
+    "naming_alias_review": false,
+    "current_floor_pools": [
+      {
+        "band": 2,
+        "pattern": "pursuit",
+        "role": "specialist",
+        "weight": 1,
+        "cost": 3,
+        "maximum": 1,
+        "members": 1,
+        "floor_variant": "any",
+        "source": "assets/mechanics/encounters.mechanics",
+        "line": 15
+      },
+      {
+        "band": 3,
+        "pattern": "pursuit",
+        "role": "specialist",
+        "weight": 1,
+        "cost": 3,
+        "maximum": 1,
+        "members": 1,
+        "floor_variant": "any",
+        "source": "assets/mechanics/encounters.mechanics",
+        "line": 15
+      },
+      {
+        "band": 2,
+        "pattern": "crossfire",
+        "role": "specialist",
+        "weight": 2,
+        "cost": 3,
+        "maximum": 2,
+        "members": 1,
+        "floor_variant": "any",
+        "source": "assets/mechanics/encounters.mechanics",
+        "line": 22
+      },
+      {
+        "band": 3,
+        "pattern": "crossfire",
+        "role": "specialist",
+        "weight": 2,
+        "cost": 3,
+        "maximum": 2,
+        "members": 1,
+        "floor_variant": "any",
+        "source": "assets/mechanics/encounters.mechanics",
+        "line": 22
+      }
+    ],
+    "current_replacement_routes": [],
+    "current_boss_pools": [],
+    "current_component_routes": [],
+    "suggested_identity_for_current_name": null,
+    "review_role": "enemy_or_component_review",
+    "review_approved": false,
+    "implementation_status": "unverified_existing",
+    "source_stage_evidence": [
+      {
+        "file": "rooms/04.caves.stb",
+        "source_stage": "caves",
+        "templates": 3,
+        "positive_weight_templates": 3,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/05.catacombs.stb",
+        "source_stage": "catacombs",
+        "templates": 2,
+        "positive_weight_templates": 2,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/06.flooded caves.stb",
+        "source_stage": "flooded caves",
+        "templates": 3,
+        "positive_weight_templates": 3,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/07.depths.stb",
+        "source_stage": "depths",
+        "templates": 45,
+        "positive_weight_templates": 45,
+        "proposed_band": 2,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/08.necropolis.stb",
+        "source_stage": "necropolis",
+        "templates": 21,
+        "positive_weight_templates": 21,
+        "proposed_band": 2,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/09.dank depths.stb",
+        "source_stage": "dank depths",
+        "templates": 40,
+        "positive_weight_templates": 40,
+        "proposed_band": 2,
+        "source_path": "main"
+      }
+    ],
+    "separate_mode_or_special_evidence": [
+      {
+        "file": "rooms/36.backwards.stb",
+        "source_stage": "backwards",
+        "templates": 2,
+        "positive_weight_templates": 2,
+        "reason": "Special encounter or mode library; requires dedicated encounter rules."
+      },
+      {
+        "file": "rooms/greed/04.caves.stb",
+        "source_stage": "caves",
+        "templates": 5,
+        "positive_weight_templates": 5,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      },
+      {
+        "file": "rooms/greed/05.catacombs.stb",
+        "source_stage": "catacombs",
+        "templates": 5,
+        "positive_weight_templates": 5,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      },
+      {
+        "file": "rooms/greed/06.flooded caves.stb",
+        "source_stage": "flooded caves",
+        "templates": 5,
+        "positive_weight_templates": 5,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      }
+    ],
+    "boss_pool_evidence": [],
+    "source_band_candidates": [
+      1,
+      2
+    ],
+    "proposed_first_band": 1,
+    "proposed_first_band_name": "Broken Quarry",
+    "proposal_basis": "positive_room_template_review",
+    "ordinary_spawn_approved": false,
+    "has_any_room_templates": true,
+    "has_article": true,
+    "wiki_environment_review": [
+      "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nchallenge /"
+    ],
+    "article_revisions": [
+      {
+        "title": "Hopper",
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267012"
+      }
+    ],
+    "feature_review_hints": [
+      "projectile-transform",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+    "unresolved_native_parameters": [
+      "walk_speed_world_units_per_second",
+      "acceleration",
+      "attack_cooldown_seconds",
+      "telegraph_seconds",
+      "projectile_speed",
+      "attack_selection_weights",
+      "animation_event_ticks"
+    ],
+    "required_review": [
+      "root/component/hazard/unused classification",
+      "parent and child dependencies",
+      "source-edition behavior contract",
+      "terrain and arena requirements",
+      "threat cost and exclusive combinations",
+      "visual and damage-window contract",
+      "source numbers versus DeathWard conversion",
+      "stage eligibility and deterministic reachability",
+      "behavior tests and render capture"
+    ]
+  },
+  {
+    "record_key": "entity:34.1.0",
+    "id": "34.1.0",
+    "source_name": "sticky leaper",
+    "display_name": "Sticky Leaper",
+    "source_group": "enemy",
+    "boss_pool_id": null,
+    "source_base_hp": "28",
+    "source_stage_hp": "0",
+    "current_runtime": {
+      "name": "Sticky Leaper",
+      "behavior": "legacy",
+      "natural": true,
+      "hazard": false,
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 61
+    },
+    "identity_conflict": false,
+    "naming_alias_review": false,
+    "current_floor_pools": [],
+    "current_replacement_routes": [],
+    "current_boss_pools": [],
+    "current_component_routes": [],
+    "suggested_identity_for_current_name": null,
+    "review_role": "enemy_or_component_review",
+    "review_approved": false,
+    "implementation_status": "unverified_existing",
+    "source_stage_evidence": [
+      {
+        "file": "rooms/09.dank depths.stb",
+        "source_stage": "dank depths",
+        "templates": 61,
+        "positive_weight_templates": 61,
+        "proposed_band": 2,
+        "source_path": "main"
+      }
+    ],
+    "separate_mode_or_special_evidence": [],
+    "boss_pool_evidence": [],
+    "source_band_candidates": [
+      2
+    ],
+    "proposed_first_band": 2,
+    "proposed_first_band_name": "Abandoned Works",
+    "proposal_basis": "positive_room_template_review",
+    "ordinary_spawn_approved": false,
+    "has_any_room_templates": true,
+    "has_article": true,
+    "wiki_environment_review": [
+      "Dank Depths / \nchallenge /"
+    ],
+    "article_revisions": [
+      {
+        "title": "Hopper",
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267012"
+      }
+    ],
+    "feature_review_hints": [
+      "child-spawns-and-ownership",
+      "economy-and-pools"
+    ],
+    "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+    "unresolved_native_parameters": [
+      "walk_speed_world_units_per_second",
+      "acceleration",
+      "attack_cooldown_seconds",
+      "telegraph_seconds",
+      "projectile_speed",
+      "attack_selection_weights",
+      "animation_event_ticks"
+    ],
+    "required_review": [
+      "root/component/hazard/unused classification",
+      "parent and child dependencies",
+      "source-edition behavior contract",
+      "terrain and arena requirements",
+      "threat cost and exclusive combinations",
+      "visual and damage-window contract",
+      "source numbers versus DeathWard conversion",
+      "stage eligibility and deterministic reachability",
+      "behavior tests and render capture"
+    ]
+  }
+]
