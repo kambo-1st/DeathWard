@@ -1,0 +1,59 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 56,
+      "index": 36,
+      "case": "0x699ab8",
+      "controller": "0x5106d0"
+    }
+  ],
+  "constants": {
+    "retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "range": {
+      "address": "0xb6abf8",
+      "value": 260.0
+    },
+    "target_min_squared": {
+      "address": "0xb6ad60",
+      "value": 40000.0
+    },
+    "axis_range_squared": {
+      "address": "0xb6ad88",
+      "value": 160000.0
+    },
+    "alignment": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "grid": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    }
+  },
+  "strings": {},
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/lump/source/controller.asm",
+      "start": "0x5106d0",
+      "end": "0x51115c",
+      "raw_sha256": "462b51dabcb21c01beacad0c36b3fce6bf0b7a01f33b9ab6c6b3277274747f85",
+      "sha256": "28453eae18676e812a89d0e738fd900775d95aad50acc255692fa9a0f504fdc8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/lump/source/room_point.asm",
+      "start": "0x7d9b50",
+      "end": "0x7d9dbf",
+      "raw_sha256": "61a0e2b4a052966c2bc2455264b405c0f5a042dfc00332de72a611d4f1994d76",
+      "sha256": "859a35f59101825b76fdab817409b9c21e24338a470703f34c212af7b7c2887e"
+    }
+  ]
+}

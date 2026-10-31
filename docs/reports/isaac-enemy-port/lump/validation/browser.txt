@@ -1,0 +1,4 @@
+START lump
+PASS lump {"volleys":3,"burrows":3,"relocations":4}
+START resident-lump
+PASS resident-lump {"volleys":3,"burrows":3,"relocations":5}

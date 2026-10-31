@@ -1,0 +1,5119 @@
+[
+  {
+    "frame": 6,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 4,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.10000000149011612,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 19,
+          "kind": 0,
+          "x": -78.51506042480469,
+          "y": 0.8500000238418579,
+          "z": -127.48493957519531,
+          "vx": 14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.899998664855957,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -81.48493957519531,
+          "y": 0.8500000238418579,
+          "z": -127.48493957519531,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.899998664855957,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -81.48493957519531,
+          "y": 0.8500000238418579,
+          "z": -124.51506042480469,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.899998664855957,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 22,
+          "kind": 0,
+          "x": -78.51506042480469,
+          "y": 0.8500000238418579,
+          "z": -124.51506042480469,
+          "vx": 14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.899998664855957,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0,
+    "capture": "docs/reports/isaac-enemy-port/mulligans/web/mulligoon-death.png"
+  },
+  {
+    "frame": 17,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.28333336114883423,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -84.20732879638672,
+          "y": 0.8500000238418579,
+          "z": -130.20726013183594,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.716662883758545,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -84.20732879638672,
+          "y": 0.8500000238418579,
+          "z": -121.79267120361328,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.716662883758545,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 20,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.33333340287208557,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -84.94979858398438,
+          "y": 0.8500000238418579,
+          "z": -130.94970703125,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.666662216186523,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -84.94979858398438,
+          "y": 0.8500000238418579,
+          "z": -121.05020141601562,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.666662216186523,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 23,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.3833334445953369,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -85.69226837158203,
+          "y": 0.8500000238418579,
+          "z": -131.69215393066406,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.616661548614502,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -85.69226837158203,
+          "y": 0.8500000238418579,
+          "z": -120.30773162841797,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.616661548614502,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 26,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.43333348631858826,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -86.43473815917969,
+          "y": 0.8500000238418579,
+          "z": -132.43460083007812,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.5666608810424805,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -86.43473815917969,
+          "y": 0.8500000238418579,
+          "z": -119.56526184082031,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.5666608810424805,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 31,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.516666829586029,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -87.67218780517578,
+          "y": 0.8500000238418579,
+          "z": -133.67201232910156,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.483326435089111,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -87.67218780517578,
+          "y": 0.8500000238418579,
+          "z": -118.32781219482422,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.483326435089111,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 36,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.6000000834465027,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -88.90963745117188,
+          "y": 0.8500000238418579,
+          "z": -134.909423828125,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.399991989135742,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -88.90963745117188,
+          "y": 0.8500000238418579,
+          "z": -117.09036254882812,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.399991989135742,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 41,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.6833333373069763,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -90.14708709716797,
+          "y": 0.8500000238418579,
+          "z": -136.14683532714844,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.316657543182373,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -90.14708709716797,
+          "y": 0.8500000238418579,
+          "z": -115.85291290283203,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.316657543182373,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 46,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 2,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.76666659116745,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [
+        {
+          "entity": 20,
+          "kind": 0,
+          "x": -91.38453674316406,
+          "y": 0.8500000238418579,
+          "z": -137.38424682617188,
+          "vx": -14.8492431640625,
+          "vy": 0,
+          "vz": -14.8492431640625,
+          "curve": 0,
+          "life": 4.233323097229004,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        },
+        {
+          "entity": 21,
+          "kind": 0,
+          "x": -91.38453674316406,
+          "y": 0.8500000238418579,
+          "z": -114.61546325683594,
+          "vx": -14.849239349365234,
+          "vy": 0,
+          "vz": 14.849245071411133,
+          "curve": 0,
+          "life": 4.233323097229004,
+          "owner": 17,
+          "gravity": 0,
+          "blastRadius": 0,
+          "radius": 0.2199999988079071,
+          "damage": 10,
+          "impactPending": false
+        }
+      ],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 51,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.8499998450279236,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 56,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 0.9333330988883972,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 61,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.0166664123535156,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 66,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.0999996662139893,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 71,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.183332920074463,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 75,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.2499995231628418,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 80,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.3333327770233154,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 85,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.416666030883789,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 90,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.4999992847442627,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 95,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.5833325386047363,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 100,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.66666579246521,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 105,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.7499990463256836,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 110,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.8333323001861572,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 115,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.9166655540466309,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 120,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 1.9999988079071045,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 125,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 2.083332061767578,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 130,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 2.1666653156280518,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 135,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 2.2499985694885254,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 140,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 2.333331823348999,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 145,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 0,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [
+        {
+          "entity": 18,
+          "source": 17,
+          "monster": [
+            16,
+            1,
+            0
+          ],
+          "ordnance": [
+            4,
+            3,
+            0
+          ],
+          "room": 8,
+          "x": -80,
+          "y": 0.18000000715255737,
+          "z": -126,
+          "age": 2.4166650772094727,
+          "fuse": 2.433333396911621,
+          "damage": 320,
+          "playerDamage": 20,
+          "marker": false,
+          "payload": 0,
+          "detonated": false,
+          "effectAge": 0,
+          "configured": true,
+          "beams": []
+        }
+      ],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 150,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 155,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 160,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 165,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 170,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 175,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 180,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 185,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 1,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 190,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 3,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 195,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 3,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 200,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 3,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 205,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 3,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  },
+  {
+    "frame": 210,
+    "probe": {
+      "type": 16,
+      "variant": 1,
+      "subtype": 0,
+      "alive": false,
+      "hp": 0,
+      "state": -1,
+      "graphState": -1,
+      "x": 0,
+      "z": 0,
+      "shots": 4,
+      "projectiles": 0,
+      "threats": 0,
+      "kills": 1,
+      "entity": 17,
+      "playerX": -80,
+      "playerZ": -118,
+      "actors": [],
+      "dung": [],
+      "startX": -80,
+      "startZ": -126,
+      "y": 0,
+      "playerY": 0.8500000238418579,
+      "flightBlocked": false,
+      "waterBlocked": false,
+      "groundBlocked": false,
+      "resident": {
+        "natural": false,
+        "source": [
+          0,
+          0,
+          0
+        ],
+        "floor": 0,
+        "room": 8,
+        "scorched": true,
+        "patches": 16,
+        "variant": 1,
+        "dampPatches": 0
+      },
+      "charge": {
+        "fx": 0,
+        "fz": 0,
+        "recovery": 0
+      },
+      "boss": {
+        "form": 0,
+        "parts": 0,
+        "attack": 0,
+        "cycles": 0
+      },
+      "segmented": {
+        "groups": [],
+        "paid": false,
+        "killed": false,
+        "health": 0
+      },
+      "fireWaves": [],
+      "familiars": [],
+      "playerHp": 100,
+      "statue": {
+        "disabled": false,
+        "volleys": 0,
+        "fx": 0,
+        "fz": 0,
+        "clear": false,
+        "explosions": 3,
+        "pulling": false,
+        "phase": 0,
+        "lift": 0
+      },
+      "plates": [],
+      "supply": {
+        "inventory": 4,
+        "carried": 0,
+        "produced": 0,
+        "pending": 0,
+        "bombs": []
+      },
+      "enemyBombs": [],
+      "pendingEnemyBombs": 0,
+      "groups": [],
+      "bullets": [],
+      "hazards": [],
+      "flooded": false,
+      "sourceStage": 1
+    },
+    "style": "Original",
+    "error": "",
+    "gl": 0
+  }
+]

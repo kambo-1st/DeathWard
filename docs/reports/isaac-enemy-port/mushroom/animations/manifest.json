@@ -1,0 +1,79 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/300.000_MushroomMan.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/mushroom/animations/300.000_MushroomMan.anm2",
+      "sha256": "99fa9a0b3fdf862610eadb750424c18438b1db4eb8ad50055cf31b223a1ddaee",
+      "checksum": "0x11035463",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "02.09.2016 13:42:54",
+        "Version": "2",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Blocking",
+            "FrameNum": "17",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Reveal",
+            "FrameNum": "6",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "3"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Revealed",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Hide",
+            "FrameNum": "6",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bestiary",
+            "FrameNum": "100",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

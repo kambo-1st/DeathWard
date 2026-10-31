@@ -1,0 +1,5 @@
+MAW_INPUT normal_z=6.61054 broken_z=5.1026 keyboard=1 dodge=1 mouse=1 stationary=1 no_shots=1
+MAW_LIFECYCLE four_seconds=1 inactive_phase=1 active_resume=1 clear_persistence=1 plate=1 exceptional_respawn=1
+MAW_PROJECTILES both_teams=1 current_velocity=1 height=1 gravity=1 terrain=1 corridor=1 opposing_fields=1 aggregate_limit=1
+MAW_CONFIG actual_force=1 snapshot_isolation=1
+PASS Maw suction, alternating cycle, both projectile teams, collision and configured snapshots

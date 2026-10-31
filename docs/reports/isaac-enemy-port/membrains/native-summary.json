@@ -1,0 +1,25 @@
+{
+  "result": "partial_pass",
+  "unique_suites_passed": 8,
+  "scope": [
+    "membrain_family",
+    "guts_family",
+    "brain",
+    "source_projectile_motion",
+    "mechanics_content",
+    "monster_behaviors",
+    "floor_progression",
+    "resident_enemies"
+  ],
+  "initial_run": {
+    "path": "validation/native-initial.txt",
+    "passed": 6,
+    "failed": 1,
+    "failure": "Brain old seed51/floor5/room9 no longer contains a Brain after encounter pool expansion"
+  },
+  "correction": "Native search found a real Brain in interior-river seed245/floor3/room10; test retains both habitat bands and actual water collision checks. No runtime behavior relaxed.",
+  "recheck": "validation/native-recheck.txt",
+  "final_membrain_test": "validation/membrain.txt",
+  "brain_river_search": "validation/brain-river-search.txt",
+  "limit": "Scoped suites only; not full registered suite run, balance, performance or full acceptance."
+}

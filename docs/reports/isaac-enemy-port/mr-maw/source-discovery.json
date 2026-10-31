@@ -1,0 +1,759 @@
+{
+  "created_utc": "2026-10-27T20:52:34.706238+00:00",
+  "previous_checkpoint": "docs/reports/isaac-enemy-port/brain/checkpoint.json",
+  "article": {
+    "title": "Mr. Maw",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Mr._Maw",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269831",
+    "revision": 269831,
+    "timestamp": "2026-09-30T10:20:42Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "Mr. Maw walks towards Isaac and when in range it will launch its head towards him. It appears to be a Maw attached to a Gusher and will turn into either upon death depending on the killed body segment. It can also randomly separate at will into a Gusher and a Maw."
+      },
+      {
+        "heading": "Variations",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Mr. Red Maw",
+        "level": 3,
+        "text": "Mr. Red Maw behaves similarly to Mr. Maw, but moves quicker and has a Red Maw as its head instead of a regular Maw. If the Red Maw segment is killed first, it will release four shots in the cardinal directions like a regular Red Maw. It can also occasionally separate at will."
+      },
+      {
+        "heading": "Mr. Mine",
+        "level": 3,
+        "text": "Mr. Mines are chained to pits and will attempt to launch themselves at Isaac if he comes near. They will occasionally burrow and pop up in another pit, often near Isaac. Upon death, they fire six shots in all directions.\n\n[Before Repentance] Since pits have a chance to replace rocks in the Flooded Caves where Mr. Mine resides, this can give them more tiles to utilize."
+      },
+      {
+        "heading": "Swinger",
+        "level": 3,
+        "text": "Swingers behave differently to its variants as rather than firing its head, the Swinger's head is constantly detached and spins around its base clockwise in a fixed radius, while slowly sliding towards Isaac. The cord connecting the head and body of a Swinger isn't solid and does not deal damage. If the base is killed, the spinning head turns into a Maw, and if the head is killed, the base turns into a Globin in its goo form which then can reform into a Globin.\n\nWhen entering a room, their heads will be retracted and slowly rotate outwards until they reach max length. [Afterbirth+ onward] Since Booster Pack #5, Swingers extend their heads at a much slower pace, making it easier to avoid damage."
+      },
+      {
+        "heading": "Gallery",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "\u2022 Mr. Mine and Mr. Red Maw were added in Booster Pack #5.\n\n\u2022 Though the Maw appears to have eyes when attached to the Globin, if the Maw survives and spawns upon the Swinger's death, then it will have empty eye sockets.\n\n\u2022 [Afterbirth+ onward] Mr. Maw makes Gaper noises while chasing Isaac, while Mr. Red Maw makes the Maw noise only if the Red Maw segment dies first.\n\n\u2022 Mr. Mine is based on the enemy Crunch from The End is Nigh."
+      },
+      {
+        "heading": "Bugs",
+        "level": 2,
+        "text": "Bug note: Using the D10 on any monster with several pieces will reroll every piece into a monster. For the case of Mr. Maw, his cord dots are considered as pieces, and each will turn into a new monster.\nBug note: If a Swinger's neck touches a red poop, the neck sometimes disappears while the Swinger keeps swinging."
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "id": "35",
+          "base hp": "25",
+          "environment": "Caves / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nchallenge /",
+          "behavior": "Walks towards Isaac and attacks by launching its head towards him. Turns into a Maw or Gusher upon death depending on the killed body segment. Occasionally separates at will."
+        },
+        "group": "entity",
+        "id": 35,
+        "name": "Mr. Maw",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 2,
+        "fields": {
+          "dlc": "a+",
+          "name": "Mr. Red Maw",
+          "variant": "2",
+          "base hp": "25",
+          "environment": "Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nchallenge /",
+          "replace": "Mr. Maw",
+          "replace chance": "6.67%",
+          "behavior": "Walks towards Isaac and attacks by launching its head towards him. Turns into a Red Maw or Gusher upon death depending on the killed body segment. Occasionally separates at will."
+        },
+        "group": "entity",
+        "id": 35,
+        "name": "Mr. Red Maw",
+        "variant": 2,
+        "subtype": 0,
+        "section_indices": [
+          2
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 3,
+        "fields": {
+          "dlc": "a+",
+          "name": "Mr. Mine",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "id": "311",
+          "base hp": "20",
+          "environment": "Flooded Caves /",
+          "behavior": "Can only appear in pits. Attempts to launch itself at Isaac if he comes near. Occasionally burrows and pops up in another pit, and fires six shots in all directions upon death."
+        },
+        "group": "entity",
+        "id": 311,
+        "name": "Mr. Mine",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          3
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 4,
+        "fields": {
+          "name": "Swinger",
+          "id": "216",
+          "base hp": "38",
+          "environment": "Womb / Utero / Scarred Womb / \nchallenge /",
+          "behavior": "Slowly moves towards Isaac as its head swings around its base. Upon death, spawns a Maw or a Globin depending on which part is killed."
+        },
+        "group": "entity",
+        "id": 216,
+        "name": "Swinger",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          4
+        ]
+      }
+    ]
+  },
+  "records": [
+    {
+      "record_key": "entity:35.0.0",
+      "id": "35.0.0",
+      "source_name": "Mr. Maw Body",
+      "display_name": "Mr. Maw",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Mr. Maw",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 62
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 53,
+          "positive_weight_templates": 53,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 30,
+          "positive_weight_templates": 30,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 13,
+          "positive_weight_templates": 13,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 7,
+          "positive_weight_templates": 7,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/15.cathedral.stb",
+          "source_stage": "cathedral",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 11,
+          "positive_weight_templates": 11,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 11,
+          "positive_weight_templates": 11,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 9,
+          "positive_weight_templates": 9,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/24.the shop.stb",
+          "source_stage": "the shop",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "proposed_first_band": 1,
+      "proposed_first_band_name": "Broken Quarry",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Caves / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Mr. Maw",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269831"
+        }
+      ],
+      "feature_review_hints": [
+        "locomotion-and-navigation",
+        "randomness"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:35.1.0",
+      "id": "35.1.0",
+      "source_name": "Mr. Maw Head",
+      "display_name": "Mr. Maw Head",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Mr. Maw Head",
+        "behavior": "legacy",
+        "natural": false,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 63
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "existing_support_or_hazard_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [],
+      "separate_mode_or_special_evidence": [],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [],
+      "proposed_first_band": null,
+      "proposed_first_band_name": null,
+      "proposal_basis": "parent_or_scripted_encounter_review_required",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": false,
+      "has_article": true,
+      "wiki_environment_review": [],
+      "article_revisions": [
+        {
+          "title": "Mr. Maw",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269831"
+        }
+      ],
+      "feature_review_hints": [],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:35.2.0",
+      "id": "35.2.0",
+      "source_name": "Mr. Red Maw Body",
+      "display_name": "Mr. Red Maw",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Mr. Red Maw",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 64
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 19,
+          "positive_weight_templates": 19,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 16,
+          "positive_weight_templates": 16,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 9,
+          "positive_weight_templates": 9,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/15.cathedral.stb",
+          "source_stage": "cathedral",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/24.the shop.stb",
+          "source_stage": "the shop",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "proposed_first_band": 1,
+      "proposed_first_band_name": "Broken Quarry",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Mr. Maw",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269831"
+        }
+      ],
+      "feature_review_hints": [
+        "locomotion-and-navigation"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:35.3.0",
+      "id": "35.3.0",
+      "source_name": "Mr. Red Maw Head",
+      "display_name": "Mr. Red Maw Head",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "10",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Mr. Red Maw Head",
+        "behavior": "legacy",
+        "natural": false,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 65
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "existing_support_or_hazard_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [],
+      "separate_mode_or_special_evidence": [],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [],
+      "proposed_first_band": null,
+      "proposed_first_band_name": null,
+      "proposal_basis": "parent_or_scripted_encounter_review_required",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": false,
+      "has_article": true,
+      "wiki_environment_review": [],
+      "article_revisions": [
+        {
+          "title": "Mr. Maw",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269831"
+        }
+      ],
+      "feature_review_hints": [],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:35.10.0",
+      "id": "35.10.0",
+      "source_name": "Mr. Maw Neck",
+      "display_name": "Mr. Maw Neck",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": null,
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "not_implemented",
+      "source_stage_evidence": [],
+      "separate_mode_or_special_evidence": [],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [],
+      "proposed_first_band": null,
+      "proposed_first_band_name": null,
+      "proposal_basis": "parent_or_scripted_encounter_review_required",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": false,
+      "has_article": true,
+      "wiki_environment_review": [],
+      "article_revisions": [
+        {
+          "title": "Mr. Maw",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269831"
+        }
+      ],
+      "feature_review_hints": [],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    }
+  ]
+}

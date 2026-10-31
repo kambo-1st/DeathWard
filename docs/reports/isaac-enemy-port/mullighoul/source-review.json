@@ -1,0 +1,81 @@
+{
+  "scope": [
+    "808.0.0 Willo",
+    "817.1.0 Mullighoul"
+  ],
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "findings": [
+    "Type808 dispatch545510. Init radius120, multiplier1, initial40counter and regroup544b70. XML6HP/stage0/contact0/gridnone. Ordinary subtype0 is separate from Min-Min special emergence/dive helpers.",
+    "Regroup selects living subtype0Willos with the same Parent pointer; takes minimumexisting angle offset and reassigns2pi*n/count. Attackstate8 copies its offset to b0c so regrouping cannot move its committed attack slot. Ordinary Mullighoul spawning sets SpawnerEntity but no Parent, so Willos join the ownerless cohort.",
+    "Orbit center is Parent position when present, otherwise mean eligible player positions. Target is center+(cos(theta)*radius,sin(theta)*radius*.84), theta=offset-(globalFrame+halfFrame+optionalAheadFrames)*.5*pi*.035. Single-player ordinary case uses current player center.",
+    "Tracking takes twice player velocity divided by friction as carry, adds a .5correction from predicted body to orbit target, caps that correction at10sourceunits, and adds the carry. Native collisionNONE allows orbit through grid solids and outside room.",
+    "Ready state3 makes a1/9random check. Ordinary subtype0 additionally requires no projectile cooldown, nonnegative entity height, squared target-point error<=400, room-position validity and absence of fear/confusion/shrink flags0x1000a00. Any living subtype0Willo in state8 or9 blocks another attack. Successful acquisition enters8 and copies current orbit slot.",
+    "State8 playsAttack, runs the shared event helper and continues orbit tracking. ANM2Attack36/30FPS hasWarn6andShoot24. Completion returns3. No fixed extra cooldown is set by this controller. Special states9/10/6/7/13 have distinct boss/underwater behavior; they are preserved but not claimed implemented.",
+    "Shoot aims toward target position plus one target velocity, normalized*10. FireProjectiles mode0 uses BulletFlags0x2000=NO_WALL_COLLIDE per installed enums.lua. Ownerless subtype0adds4to FallingSpeedModifier. Common mode0defaults are fallingSpeed-3/fallingAccel.1; ordinary shot therefore starts atheight-23, fallingSpeed1, and uses .9falling retention plus base.1and authored.1 acceleration.",
+    "Mullighoul817variant1 init sets height-6 and gridcollision6(no pits); it does not gain rocks/walls-free flight. Shared Hive18frameHeadAttack/Shoot4spits808.0.0 without disposable-contact flag. InstalledHP14 contradicts wiki infobox13; XML is baseline.",
+    "The native817death adjustment is shared by variants0and1: max(1,ceil(4/(1+.2*roompopulation))-1),then subtract signedNPC+bc6 and clamp0. Normal zero-counter result3alone/2with2others/1with5others; no random1..2cap. HP<=-20suppresses. Variant1creates Willos directly; variant0uses thrown Small Leech helper.",
+    "Existing inherited source reviews preserve shared evasion and common projectile integration. Physical3D scales, fire damage intervals, safe birth capacity and local habitat weights remain explicit DeathWard adaptations; full native status/item/boss-spawn behavior is not certified."
+  ],
+  "source_manifest": "docs/reports/isaac-enemy-port/mullighoul/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/mullighoul/animations/manifest.json",
+  "wiki": {
+    "articles": [
+      {
+        "title": "Fly",
+        "revision": 268920,
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268920"
+      },
+      {
+        "title": "Mulligan",
+        "revision": 271647,
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271647"
+      }
+    ],
+    "preserved": "docs/reports/isaac-enemy-port/mullighoul/wiki-source.json",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "access": "Current fetches failed; pinned previously preserved full articles retained. Installed code and metadata resolve contradictory/abbreviated wiki descriptions."
+  },
+  "adaptations": [
+    "Source HP x3.2, XZ distance x0.1 and source velocity x3. Existing player defaults and global enemy damage multiplier remain unchanged. Willo has 19.2 HP; Mullighoul has 44.8 HP; both have harmless body contact.",
+    "Willo uses one ownerless, single-player cohort per configured identity, ordered by stable local entity ID. Source regrouping is filtered by Parent pointer. Ordinary Mullighoul children have no Parent and use the ownerless cohort; summoner provenance does not make an orbit owner.",
+    "Orbit targets use the global simulation clock at 60 Hz and source angular rate. Tracking is integrated by the existing 60 Hz simulation; attack/random/event clocks use 30 Hz. This is not a bit-identical native frame/interpolation implementation.",
+    "Willo bodies ignore grid scenery, including outer cliffs, to preserve the source player-centred orbit. Shooting requires the actor centre inside the current room rectangle and within the source settled range. Rectangular room validity is a local approximation on irregular canyon borders.",
+    "A Willo projectile uses source speed 10, one-update player prediction and NO_WALL_COLLIDE. Local vertical scale 0.05 converts source height -23, falling speed +1, damping 0.9 and acceleration +0.2/update into height 1.15, upward speed -1.5, gravity 9 and retention 0.9. Local radius 0.25 represents native ground termination at height -5. Four-second lifetime is a safety limit beyond ordinary landing, not a recovered native constant.",
+    "Mullighoul hover height 0.6 is added to the standard body centre. Reusable swim navigation ignores water but respects solid obstacles, gates, raised terrain and room boundaries. Native grid collision 6 does not imply rock/wall-free flight.",
+    "Existing capacity and retained-event rules preserve pending Willo shots and death births. Pending births keep rooms sealed. Stun cancels the attack and releases the cohort lock. These are integration policies, not full native status/item parity.",
+    "Willo uses the existing Original procedural flying-body silhouette with a pale yellow-green tint and flashing Warn phase; Mullighoul retains the existing walker silhouette at elevated height. No source sprite artwork is imported.",
+    "Downpour/Flooded Caves source habitats map to sparse wet Broken Quarry band-1 pools. Willo crossfire entries spawn pairs at cost 2 with max 3; Mullighoul pursuit entries cost 3 with max 1. These local weights/costs are not source room probabilities.",
+    "Existing Original windup aim lines accompany the recovered Willo Warn flash; those generic telegraphs are a local presentation choice. Existing attraction statues can bend and accelerate wall-passing Willo projectiles."
+  ],
+  "remaining": [
+    "Willo Parent-owned orbit, multiple-player averaging, friendly/item-control paths, fear/confusion/shrink attack suppression and complete status/time-scale interactions remain unfinished. Native initial 40-counter and appear lifecycle are not reproduced.",
+    "Min-Min underwater spawn/dive and special states 6/7/9/10/13 are preserved in source evidence but not implemented by this ordinary-enemy slice. Additional boss work remains deferred by user priority.",
+    "Mullighoul native nonzero NPC+bc6 death-count counter, champions and complete friendly/status/item interactions remain unresolved. The normal zero-counter death path is implemented.",
+    "Shared Hive grid-path/cache/initial-impulse equivalence and exact Willo native half-frame tracking are not certified. Local physical navigation and room-boundary approximations are explicit.",
+    "Generic silhouettes, all-angle readability, broad balance, controlled native/WASM performance acceptance and the full six-gate checklist remain open. Both exact IDs remain in_progress, not complete."
+  ],
+  "natural_witnesses": [
+    {
+      "id": "808.0.0",
+      "seed": 3,
+      "floor": 1,
+      "room": 6
+    },
+    {
+      "id": "817.1.0",
+      "seed": 80,
+      "floor": 2,
+      "room": 8
+    }
+  ],
+  "evidence_corrections": [
+    "The initial source finding labelled flag mask 0x1000a00 as fear/confusion/freeze. Installed enums.lua establishes bits 9 CONFUSION, 11 FEAR and 24 SHRINK. Corrected before freezing; disassembly bytes are unchanged.",
+    "Native init upper flag 0x2000 at +0x164 corresponds to bit 45 NO_PLAYER_CONTROL, not a knockback flag.",
+    "Initial compile used nonexistent MonsterAttack::Aimed; corrected to existing Shot. Initial config used unsupported pool pattern artillery; corrected to crossfire. Both failed logs are retained.",
+    "The first browser run incorrectly required orbit runtime on the same frame as a child spawn. Events drain after the controller pass; the child initializes on the next update. The fixture now permits only that one-update admission interval. The first three completed browser cases and failure log are retained.",
+    "The first native death screenshot command used browser-style FRAME:DAMAGE syntax. Native CLI requires separate FRAME DAMAGE arguments. It rejected the command before running; corrected capture is separately named.",
+    "The second browser run passed seven isolated cases, then found a type-236 attraction statue changing Willo projectile speed in the natural seeded room. Diagnostic telemetry confirms the existing force and 40-unit cap. Isolated shots remain 30; the natural fixture now explicitly validates that interaction. No runtime change was needed. Only the two unresolved natural cases are rerun."
+  ]
+}

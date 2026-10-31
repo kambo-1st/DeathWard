@@ -1,0 +1,90 @@
+[
+  {
+    "name": "closed",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-300.0.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/mushroom/native-final-closed.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/mushroom/native-final-closed.png",
+    "log": "docs/reports/isaac-enemy-port/mushroom/native-final-closed.txt"
+  },
+  {
+    "name": "burst",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-300.0.0",
+      "--frames",
+      "266",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/mushroom/native-final-burst.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/mushroom/native-final-burst.png",
+    "log": "docs/reports/isaac-enemy-port/mushroom/native-final-burst.txt"
+  },
+  {
+    "name": "exposed",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-300.0.0",
+      "--frames",
+      "280",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/mushroom/native-final-exposed.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/mushroom/native-final-exposed.png",
+    "log": "docs/reports/isaac-enemy-port/mushroom/native-final-exposed.txt"
+  },
+  {
+    "name": "resident",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-300.0.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/mushroom/native-final-resident.png",
+      "--resident-seed",
+      "1",
+      "--resident-floor",
+      "2"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/mushroom/native-final-resident.png",
+    "log": "docs/reports/isaac-enemy-port/mushroom/native-final-resident.txt"
+  }
+]

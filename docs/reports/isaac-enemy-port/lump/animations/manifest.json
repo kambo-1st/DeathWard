@@ -1,0 +1,93 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/056.000_Lump.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/lump/animations/056.000_Lump.anm2",
+      "sha256": "51651c8b34f271580485bd74f2c3dc6c364eb3227f7f2035cf3cc0427357462d",
+      "checksum": "0x2f41b615",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/15/2014 11:11:51 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Sound",
+          "Id": "0"
+        },
+        {
+          "Name": "Shoot",
+          "Id": "1"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shake",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "22",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "6"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Emerge",
+            "FrameNum": "29",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Spit",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "4"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Hide",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

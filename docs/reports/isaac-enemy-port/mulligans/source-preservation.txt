@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/analyze-mulligans.py", line 53, in <module>
+    if __name__=='__main__':main()
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/analyze-mulligans.py", line 15, in main
+    assert read(0xb51a60,17)==b'CollidesWithGrid\x00\x00'
+AssertionError

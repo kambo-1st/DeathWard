@@ -1,0 +1,200 @@
+{
+  "scope": "Partial normal-hostile Mushroom300.0 closed resistance, source-frame cycle and cardinal/diagonal physical cross.",
+  "source": "docs/reports/isaac-enemy-port/mushroom/source-review.md",
+  "adaptations": [
+    "Source30Hz, distance x.1, velocity x3, HP x3.2; source23HP becomes73.6, source7 shot speed becomes21. Authored radius.7 and base10 hostile contact/projectile damage.",
+    "Physical combat-plane projectiles have authored5second lifetime and ordinary wall collision; original cap/stem art has no imported source artwork.",
+    "Whole four-shot cross waits under projectile/event capacity pressure without rerolling its orientation; local stun pauses the cycle and room suspension preserves it.",
+    "Anchored body restoration prevents local separation/impulses from causing drift. Native grid/entity physics and ordering are not asserted identical.",
+    "Direct seeded Caves-analogue band1 specialist placement is authored; Mine, tutorial, hubs, expedition length and player defaults stay unchanged."
+  ],
+  "remaining": [
+    "Petrification and its loss of closed resistance, champions and controlled/friendly native branches remain open.",
+    "Exact native RNG and damage-queue/update ordering, projectile vertical physics and special item/status interactions remain open.",
+    "Source20% Host/Red Host replacement and unlock conditions remain open; direct band1 specialist weight2/cost3/cap1 is an adaptation.",
+    "Full combat readability, balance and controlled Linux/WASM performance acceptance remain open; no complete port is claimed."
+  ],
+  "native": {
+    "passed": 78,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/mushroom/native-final.xml",
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "boil_family",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hard_host",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "hosts",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "maw_family",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "mushroom",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "initial_report": "docs/reports/isaac-enemy-port/mushroom/native.xml",
+    "behavior": "docs/reports/isaac-enemy-port/mushroom/native-targeted.txt",
+    "corrections": "Initial full run77/78: unchanged expedition_pacing exposed a solid Grimace blocking the room center in Classic seed0/Canyon/room1. Generic placement now reserves the actual statue footprint and checks entry/center/objective/door connectivity, matching the progression spawner. Final full78/78pass; no test weakened."
+  },
+  "browser": {
+    "cases": 3,
+    "report": "docs/reports/isaac-enemy-port/mushroom/web-placement/results.json",
+    "scope": "Production WASM Mushroom normal cycle/cross projectiles, closed quarter-damage hit, actual seeded resident and Original appearance. Special statuses and full six-gate acceptance remain open.",
+    "errors": [],
+    "build": "docs/reports/isaac-enemy-port/mushroom/build-wasm-placement.txt",
+    "corrections": "Initial behavior cases passed but inherited single aimed warning ray misrepresented the fixed-axis cross. Suppressed it for Mushroom. Final browser run follows rendering and statue placement fixes; compressed assets refreshed."
+  },
+  "visual": {
+    "scope": "Eleven final Original-style images individually inspected: four Linux and seven production WASM. Closed cap, raised stem, physical cross bursts and natural mixed-room resident visible. Static appearance only; full combat readability, balance and controlled performance remain open.",
+    "final_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/native-final-burst.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Raised cap and pale stem, four separated red bullets around the actor; no misleading aimed warning line."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/native-final-closed.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Low orange-brown spotted cap against sand, stem concealed and shadow attached; distinct from raised pose."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/native-final-exposed.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Pale exposed stem and elevated spotted cap readable; bullets have traveled outward, one partly covered by the minimap. No aimed warning ray."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/native-final-resident.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed spotted cap visible in actual seeded mixed room beside other enemies and a statue; distinct low silhouette."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/isolated-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed spotted cap is low and readable against the canyon floor; stem hidden."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/isolated-burst.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Four separate red shots clearly surround the raised cap and pale stem. No single aimed warning ray remains."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/isolated-exposed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Raised cap and pale stem remain visible after firing; outward shots contrast with the sand. Body shadow reads as attached."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/closed-hit-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed cap still visible after a test hit, with a small depleted health indicator. Quarter damage is established by probe assertions, not inferred from bar pixels."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/closed-hit-burst.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Damaged Mushroom raises cap and emits four distinct shots; no misleading target ray. Health bar and enemy stay visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/closed-hit-exposed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Pale exposed stem and raised cap remain readable after the test hit; shots disperse outward and damaged health indicator persists."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/resident-resident.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed Mushroom visible in the seeded mixed encounter alongside statue and other enemies. This checks one view, not full mixed-combat readability."
+      }
+    ],
+    "superseded": [
+      "web-final: behavior passed; misleading aimed warning ray still present before rendering correction.",
+      "native-*.png: earlier captures before final placement build; native-burst frame259 too early to show bullets. Accepted native-final-burst is frame266."
+    ]
+  },
+  "complete": false
+}

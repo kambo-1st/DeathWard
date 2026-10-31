@@ -1,0 +1,9 @@
+IDENTITY independent_hp=1 body_death=maw head_death=gusher red_cross=4 neck_harmless=1
+MOTION pursuit=1 global4=1 launch42=1 spring_order=1 return=1 cover=1 contact12.5=1
+LIFECYCLE required_birth_retry=1 prebirth_death=1 completion=1 red_cross_retry=1
+CONFIG shared_profile=1 immutable=1 voluntary_split=1 invalid_profiles=5
+STARTING_KIT variant=0 cover=0 seconds=3.26667 hp=87.5 threats=0 shots=11
+STARTING_KIT variant=0 cover=1 seconds=3.26667 hp=87.5 threats=0 shots=11
+STARTING_KIT variant=2 cover=0 seconds=2.06667 hp=100 threats=0 shots=7
+STARTING_KIT variant=2 cover=1 seconds=2.06667 hp=100 threats=0 shots=7
+PASS linked head family

@@ -1,0 +1,6 @@
+PASS maw
+PASS red-maw
+PASS psychic-maw
+PASS natural-maw
+PASS natural-red-maw
+PASS natural-psychic-maw

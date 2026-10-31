@@ -1,0 +1,79 @@
+{
+  "scope": "Observed inactive generated residents; active behavior/physics not yet verified.",
+  "bands": [
+    {
+      "seed": 1,
+      "floor": 4,
+      "room": 3,
+      "band": 2,
+      "variant": 2,
+      "flooded": false,
+      "river": false
+    },
+    {
+      "seed": 4,
+      "floor": 5,
+      "room": 2,
+      "band": 2,
+      "variant": 0,
+      "flooded": false,
+      "river": false
+    },
+    {
+      "seed": 6,
+      "floor": 3,
+      "room": 11,
+      "band": 3,
+      "variant": 2,
+      "flooded": false,
+      "river": true
+    },
+    {
+      "seed": 7,
+      "floor": 4,
+      "room": 3,
+      "band": 3,
+      "variant": 0,
+      "flooded": false,
+      "river": false
+    },
+    {
+      "seed": 65,
+      "floor": 2,
+      "room": 5,
+      "band": 1,
+      "variant": 2,
+      "flooded": true,
+      "river": false
+    },
+    {
+      "seed": 75,
+      "floor": 1,
+      "room": 2,
+      "band": 1,
+      "variant": 0,
+      "flooded": true,
+      "river": false
+    }
+  ],
+  "rivers": [
+    {
+      "seed": 6,
+      "floor": 3,
+      "room": 11,
+      "band": 3,
+      "variant": 2,
+      "flooded": false,
+      "river": true
+    },
+    {
+      "seed": 81,
+      "floor": 3,
+      "room": 7,
+      "band": 2,
+      "variant": 0,
+      "flooded": false,
+      "river": true
+    }
+  ]
+}

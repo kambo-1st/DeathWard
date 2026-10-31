@@ -1,0 +1,39 @@
+{
+  "pass": true,
+  "cases": [
+    {
+      "name": "lump",
+      "pass": true,
+      "phases": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "volleys": 3,
+      "burrows": 3,
+      "relocations": 4,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "resident-lump",
+      "seed": 0,
+      "floor": 5,
+      "room": 2,
+      "pass": true,
+      "phases": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "volleys": 3,
+      "burrows": 3,
+      "relocations": 5,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    }
+  ],
+  "scope": "Two production WASM cases: isolated controller and natural seed0/floor5/room2. Every captured visible footprint legal; hidden phase intangible and still a threat. Not full acceptance."
+}

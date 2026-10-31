@@ -1,0 +1,20 @@
+PASS mulligan-live
+PASS mulligoon-live
+PASS mulliboom-proximity
+PASS mulligan-death
+PASS mulligan-overkill
+PASS mulligoon-death
+PASS mulliboom-death
+PASS natural-mulligan
+PASS natural-mulligoon
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(capture)
+
+    at /home/kambo/workspace/DeathWard/web/mulligan-test.cjs:76:4 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

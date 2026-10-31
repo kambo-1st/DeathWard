@@ -1,0 +1,1 @@
+invalid definition not diagnosed: non-pool independent charge actor

@@ -1,0 +1,369 @@
+{
+  "status": "Partial Maw attraction checkpoint; full 653-record goal remains active and no record is newly certified complete.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "mechanics_fingerprint": "af388d4fc406063b",
+  "runtime_definitions": 146,
+  "item_definitions": 12,
+  "ids": [
+    "235.0.0",
+    "236.0.0"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/maws/source-review.json",
+  "native": {
+    "passed": 47,
+    "failed": 0,
+    "seconds": 73.39,
+    "basis": "One complete 47-suite native run after the Maw runtime, projectile injection and external content changes.",
+    "tests": {
+      "enemy_port_coverage": {
+        "result": "pass",
+        "seconds": 0.33159
+      },
+      "mechanics_content": {
+        "result": "pass",
+        "seconds": 1.16729
+      },
+      "expedition_economy": {
+        "result": "pass",
+        "seconds": 35.4759
+      },
+      "canyon_bosses": {
+        "result": "pass",
+        "seconds": 7.11762
+      },
+      "floor_progression": {
+        "result": "pass",
+        "seconds": 70.3184
+      },
+      "item_builds": {
+        "result": "pass",
+        "seconds": 8.34578
+      },
+      "expedition_destruction": {
+        "result": "pass",
+        "seconds": 59.1222
+      },
+      "walkable_areas": {
+        "result": "pass",
+        "seconds": 0.0370054
+      },
+      "expedition": {
+        "result": "pass",
+        "seconds": 14.5227
+      },
+      "expedition_pacing": {
+        "result": "pass",
+        "seconds": 10.0698
+      },
+      "flag_cloth": {
+        "result": "pass",
+        "seconds": 0.19432
+      },
+      "save_slots": {
+        "result": "pass",
+        "seconds": 0.0822549
+      },
+      "arrival_quest": {
+        "result": "pass",
+        "seconds": 1.08248
+      },
+      "cinematic_timeline": {
+        "result": "pass",
+        "seconds": 0.0618834
+      },
+      "canyon_roads": {
+        "result": "pass",
+        "seconds": 8.15052
+      },
+      "canyon_rivers": {
+        "result": "pass",
+        "seconds": 17.9027
+      },
+      "redstone_hub": {
+        "result": "pass",
+        "seconds": 0.605534
+      },
+      "building_navigation": {
+        "result": "pass",
+        "seconds": 0.0214934
+      },
+      "particle_emission": {
+        "result": "pass",
+        "seconds": 0.0188655
+      },
+      "town_characters": {
+        "result": "pass",
+        "seconds": 0.0168943
+      },
+      "ambient_animals": {
+        "result": "pass",
+        "seconds": 0.171351
+      },
+      "train_motion": {
+        "result": "pass",
+        "seconds": 0.516831
+      },
+      "object_animation": {
+        "result": "pass",
+        "seconds": 0.0556477
+      },
+      "player_dynamite": {
+        "result": "pass",
+        "seconds": 1.08054
+      },
+      "mission_shop": {
+        "result": "pass",
+        "seconds": 2.45802
+      },
+      "money_pickups": {
+        "result": "pass",
+        "seconds": 1.28361
+      },
+      "resident_enemies": {
+        "result": "pass",
+        "seconds": 0.902083
+      },
+      "audio_presentation": {
+        "result": "pass",
+        "seconds": 0.05379
+      },
+      "monster_behaviors": {
+        "result": "pass",
+        "seconds": 3.25663
+      },
+      "monster_flight": {
+        "result": "pass",
+        "seconds": 3.0447
+      },
+      "monster_formations": {
+        "result": "pass",
+        "seconds": 0.148854
+      },
+      "monster_patterns": {
+        "result": "pass",
+        "seconds": 0.264562
+      },
+      "monster_fire_reactions": {
+        "result": "pass",
+        "seconds": 0.218044
+      },
+      "monster_hopping": {
+        "result": "pass",
+        "seconds": 0.249837
+      },
+      "monster_replacements": {
+        "result": "pass",
+        "seconds": 1.67512
+      },
+      "monster_boss_components": {
+        "result": "pass",
+        "seconds": 1.70738
+      },
+      "bloat_boss_and_chargers": {
+        "result": "pass",
+        "seconds": 2.28909
+      },
+      "charger_variants": {
+        "result": "pass",
+        "seconds": 0.201613
+      },
+      "companion_familiars": {
+        "result": "pass",
+        "seconds": 1.77908
+      },
+      "room_statues": {
+        "result": "pass",
+        "seconds": 0.653751
+      },
+      "maw_attraction": {
+        "result": "pass",
+        "seconds": 0.814243
+      },
+      "mission_themes": {
+        "result": "pass",
+        "seconds": 4.2508
+      },
+      "imported_town_navigation": {
+        "result": "pass",
+        "seconds": 0.0626165
+      },
+      "core_contracts": {
+        "result": "pass",
+        "seconds": 0.497743
+      },
+      "enemy_behaviors": {
+        "result": "pass",
+        "seconds": 2.95055
+      },
+      "generated_dungeons": {
+        "result": "pass",
+        "seconds": 23.6829
+      },
+      "generated_room_graphs": {
+        "result": "pass",
+        "seconds": 0.65815
+      }
+    }
+  },
+  "browser": {
+    "passed": 87,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/maws/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/maws/full/browser-tests.txt",
+    "count_policy": "87 distinct cases in one complete final run. Four new isolated Maw cases and two real seeded Maw rooms join 81 prior regressions. The eight-case targeted run repeats cases and does not increase this count."
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/maws/maw_attraction.txt",
+    "covered": "Actual idle/keyboard/dodge/mouse/stand-still player movement; stronger Broken force; zero shot emission/contact damage/room threat; four-second on/off boundaries and resumed cycle; ordinary-clear persistence; actual plate contact and permanent shutdown; inactive-room phase persistence; exceptional kill/respawn without ordinary kill rewards; real projectile acceleration for both teams; stopped acceleration after plate contact; vertical bounds and preserved ballistic gravity; wall/corridor bounds; cancellation and bounded stacking; file-only force change and immutable snapshot.",
+    "limits": "Named source-item/reroll/status interactions and unmeasured native force/phase details remain open."
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/maws/floor_progression.txt",
+    "actual_canyon_floors": 170,
+    "ordinary_conditional_ids": 29,
+    "hazard_ids": 10,
+    "stage_bands": {
+      "235.0.0": [
+        1,
+        2,
+        3
+      ],
+      "236.0.0": [
+        1,
+        2,
+        3
+      ]
+    },
+    "actual_fixtures": [
+      {
+        "id": "235.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 5
+      },
+      {
+        "id": "236.0.0",
+        "seed": 1,
+        "floor_zero_based": 2,
+        "room": 5
+      }
+    ],
+    "all_hazard_fixtures": [
+      {
+        "id": "202.10.0",
+        "seed": 0,
+        "floor_zero_based": 3,
+        "room": 8
+      },
+      {
+        "id": "42.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 1
+      },
+      {
+        "id": "203.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 2
+      },
+      {
+        "id": "235.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 5
+      },
+      {
+        "id": "201.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 7
+      },
+      {
+        "id": "202.0.0",
+        "seed": 1,
+        "floor_zero_based": 2,
+        "room": 4
+      },
+      {
+        "id": "236.0.0",
+        "seed": 1,
+        "floor_zero_based": 2,
+        "room": 5
+      },
+      {
+        "id": "42.2.0",
+        "seed": 1,
+        "floor_zero_based": 6,
+        "room": 12
+      },
+      {
+        "id": "42.1.0",
+        "seed": 2,
+        "floor_zero_based": 3,
+        "room": 2
+      },
+      {
+        "id": "202.10.1",
+        "seed": 5,
+        "floor_zero_based": 4,
+        "room": 11
+      }
+    ],
+    "scope": "Both Maws occur in real seeded source-backed bands 1–3, with a reachable optional pressure plate and retained ordinary companions. The 170-floor regression reaches ten hazard identities, preserves 29 ordinary/conditional identities, mandatory routes, the four bands and unchanged room/threat budgets. No Maw enters opening-band, tutorial or Mine pools."
+  },
+  "configuration": {
+    "result": "pass_for_tested_scope",
+    "files": [
+      "assets/mechanics/statues.mechanics",
+      "assets/mechanics/monsters.mechanics"
+    ],
+    "scope": "Finite/bounded force, range, height, speed limit, paired cycle values and existing independent-hazard rules. Invalid duplicate/wrong-controller/overspeed/incomplete cycle values are rejected. Reloaded snapshots change actual movement while existing snapshots retain their force. Shot columns are unused in attraction mode."
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/maws/linux-normal.png",
+      "docs/reports/isaac-enemy-port/maws/linux-inactive.png",
+      "docs/reports/isaac-enemy-port/maws/linux-resident-broken.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/maws/full/wasm-maw-normal-90.png",
+      "docs/reports/isaac-enemy-port/maws/full/wasm-maw-broken-cycle-400.png",
+      "docs/reports/isaac-enemy-port/maws/full/wasm-maw-projectiles-60.png",
+      "docs/reports/isaac-enemy-port/maws/full/wasm-resident-maw.png",
+      "docs/reports/isaac-enemy-port/maws/full/wasm-resident-broken-maw.png"
+    ],
+    "observation": "Original-style wide dark mouths and sparse inward dust identify active Maws; Broken Maw has cracks and closes during its inactive phase. Native and browser captures show real generated companions and floor plates. The pull can crowd the stationary spectator against the Maw and nearby enemies. Dust is subtle and some plates/threats overlap HUD or scenery from particular views; all-camera/mixed-room readability remains unfinished. Screenshot FPS is not a controlled performance result."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/maws/maw_attraction.txt",
+    "scope": "Synthetic unchanged starting-character checks preserve 100 HP/24 shot damage and demonstrate keyboard, mouse and dodge counter-movement against the configured stronger force. These isolated checks do not establish varied-build or mixed-encounter human balance."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Structural bounds only: active fields cached per simulation step; one optional hazard per generated combat room; configured aggregate peak/speed and existing actor/projectile limits. No controlled native/WASM current-roster performance acceptance."
+  },
+  "failures_resolved": [
+    "Initial browser displacement assertion assumed seven units of starting separation, but the actual isolated scene starts eight units away. Preserved failure shows inward displacement to 7.25 at frame 32; corrected fixture tests meaningful displacement from its real initial state.",
+    "Adding Maw pool weights changes only optional-hazard selection; resident turret browser fixtures were updated to the newly discovered real seeds rather than injecting actors."
+  ],
+  "limitations": [
+    "D10-to-Broken-Maw reroll requires a real item producer; generic replacement is not this interaction. Chaos Card, Euthanasia, Little Horn, Infestation 2, Dead Eye and Fire Mind dependencies remain open.",
+    "Source exact forces, distance curve, height behavior, stacking, startup phase and inactive-room timing remain unmeasured.",
+    "Full dedicated trap encounters, spikes around Maw placements and mixed-room encounter balance remain unfinished.",
+    "All-camera readability, human/varied-build balance and controlled Linux/WASM performance need acceptance evidence."
+  ],
+  "reproduction": {
+    "native": "./build/deathward_maw_tests",
+    "full_native": "ctest --test-dir build -j4 --output-on-failure",
+    "browser": "node web/enemy-port-test.cjs with Playwright, DEATHWARD_BROWSER and packaged server on port 8098",
+    "resident": "./build/deathward --smoke --scene resident-236.0.0 --resident-seed 1 --resident-floor 2 --theme canyon --style original --frames 120 --mute --screenshot /tmp/maw-resident.png",
+    "cycle": "./build/deathward --smoke --scene enemy-236.0.0 --enemy-player-side below --enemy-player-at 250 0 8 --theme canyon --style original --frames 400 --mute --screenshot /tmp/maw-inactive.png"
+  }
+}

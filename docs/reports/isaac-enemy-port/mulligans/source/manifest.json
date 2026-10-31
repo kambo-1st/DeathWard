@@ -1,0 +1,299 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": {
+    "normal_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "hard_speed": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "overkill": {
+      "address": "0xb6aeb8",
+      "value": -10.0
+    },
+    "contact_period": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "contact_squared_range": {
+      "address": "0xb6ace4",
+      "value": 1600.0
+    },
+    "walk_retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "chase_retention": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "diagonal_axis": {
+      "address": "0xb6a524",
+      "value": 0.7071067690849304
+    },
+    "bomb_base_radius": {
+      "address": "0xb6aac4",
+      "value": 75.0
+    },
+    "double_player_damage_threshold": {
+      "address": "0xb6aad8",
+      "value": 85.0
+    }
+  },
+  "findings": [
+    "Type16 dispatches4f9a70. Variants0/1 use the same EvadeTarget and MoveRandomly primitives reviewed for Hive, then.8friction. Variant2 uses FindGridPath with speed1.2, marker0,direct-pathtrue, then.9friction.",
+    "Variants0/1 test Entity+188 and RNG%300==0 on ready updates, then playExplode and enterstate5. This is CollidesWithGrid: the installed Lua registration binds that exact name to getter641420which returns byte+188. It is not a fixed-age or arbitrary nearby-player trigger.",
+    "State5 multiplies friction by.8 and waits for animation completion. Extracted30FPS Explode lasts29frames with no trigger events. Completion calls BombDamage with40damage,60radius,lineChecktrue,sourceactor,flags4anddamageSourcefalse; emits mode6cardinal shots and Kill. Normal shot speed7; hardmode10.",
+    "Mulliboom checks source interval5 with offset0; target squared distance<1600callsKill. This is a40-unit proximity trigger, not a literal radius-sum collision despite the wiki contact shorthand. No explosion windup for variant2. Dead processing always calls the same40/60BombDamage and visual effects.",
+    "Mulligoon dead processing always emits mode7diagonal shots and spawns type4variant3Troll Bomb with itself as producer. Voluntary detonation already emitted the cardinal mode6and immediate40/60blast, yielding eight total shots plus the delayed bomb.",
+    "Mulligan death requiresHP>-10. Count=max(0,4-signedWordNPC+bc6); no room-population denominator. Each child independently selects RNG%11:0..6Fly13,7Pooter14,8..10AttackFly18. Offset is randomangle*U*6without the Hive minimum2. Children do not receive live-spit contact-expiry flags. Nonzero+bc6counter lifecycle remains unverified.",
+    "RTTI Entity_Bomb@IsaacRepentance vtableb48ce8maps Init67aba0/Update67ae90. Init sets damage100 and count45; variants3/4/8/18add independent RNG%30. Normal radius starts75 for damage100. Generic blast damage below85passes player damage1; above/equal85passes2, unless special damage flags override it.",
+    "Troll count45..74is initialized source data, not yet proof of wall-clock fuse: Update uses animation count and extends a state-dependent appearance timer. Local seconds=(45+RNG%30)/30is an explicit provisional interpretation; full animation/fuse, pushing/kicking/status/item parity remains pending.",
+    "Shared pathfinding gaps from the Hive review remain. Local retained payload capacity, sourceHPx3.2and physical3D projectile/blast treatment are explicit adaptations, not native engine equivalence."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/type16_dispatch.asm",
+      "start": "0x699790",
+      "end": "0x69979c",
+      "raw_sha256": "e29698b4a1323eed43e8c3cf33e3b6e85bcb6a4abfcb4538a3dfe03aa2356ef1",
+      "sha256": "99ce04c36546d72bb6dfa71c1b6cb2fb6d84262ebeba5020f9e7f34c60059562"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/controller.asm",
+      "start": "0x4f9a70",
+      "end": "0x4fa1db",
+      "raw_sha256": "d4889cc0ccf820a3f89287bbc1a4b92f54e86bf0bd6ddecca893368fa6c22720",
+      "sha256": "c1177c9638ba2524a256f46e879275324b68e9973b1d2ea52f3efceaa82ec825"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/grid_collision_lua_binding.asm",
+      "start": "0x805473",
+      "end": "0x805482",
+      "raw_sha256": "5fc8e5ec816fe5b09fae2ffe4d79cee6e9dfd8b6f42e4a3bef62b7b847172924",
+      "sha256": "cb471b3556ef9507ac7cb8571fe39df45b628520e76eed511b3c1c6b1d83fb10"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/grid_collision_getter.asm",
+      "start": "0x641420",
+      "end": "0x641427",
+      "raw_sha256": "5bfdbc1e0625d36015a0a43e31f6788a182b962ad5c5f71e8637453a6258323e",
+      "sha256": "88fdc9bbf3768361897e75ba7ac6e2262a483e9b161b2d81880be46574c236d3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/source_interval.asm",
+      "start": "0x6847e0",
+      "end": "0x684852",
+      "raw_sha256": "3114e2f81eb2fc94d3f4b8769e72049337e5841d1ffe29957db2cd22a677191d",
+      "sha256": "f080409245b440a02e70762eda343ae440cb3e50d88f2ea10d42f79681c2269a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/cardinal_diagonal_modes.asm",
+      "start": "0x6a269d",
+      "end": "0x6a2ac0",
+      "raw_sha256": "0d89f3e2700d5d3ad28d68d29b3111b809f4635299f8f65ff99fb1da4dffe68c",
+      "sha256": "913c611d34ec1a95d1e481180b142db2dd7b6ea0c953b77a62aaf526f72dfcc2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/bomb_initialization.asm",
+      "start": "0x67aba0",
+      "end": "0x67ae83",
+      "raw_sha256": "c27ce2cdaef73333f200fd289ea903bfd766d25422b57e4975708d96ef3565df",
+      "sha256": "5387b336eb7fe1ef37c8ebae20754cf08ab338dba29e8876b7d4a636945a74f6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/bomb_appearance_timer.asm",
+      "start": "0x67afe6",
+      "end": "0x67b053",
+      "raw_sha256": "589ac4e607bbe21820af1275c598a41e930943ca2b8f5d5e1590a6d4b0262534",
+      "sha256": "9a303e0b04767216dec9dfd61e12d440bcf6d92457c861a85ff48b92db050ffe"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/bomb_animation_count.asm",
+      "start": "0x67b481",
+      "end": "0x67b4e4",
+      "raw_sha256": "03edcb53542cb54139fe8f3396d545d22f6b38e1a8304715648e607f5b491f4b",
+      "sha256": "db8e53d2cedf684e052bc81b967c1b84b65942fdbf4d15414f82410092f7af04"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/bomb_explosion_call.asm",
+      "start": "0x67ccfa",
+      "end": "0x67cda0",
+      "raw_sha256": "72215d3d43ab6db658b5b04dabdfdf8b9598ad4df120f62249994066b68d3fd9",
+      "sha256": "c5786fd3ddc243e94b008c91e9663663a5af219be846acee875e23197c54cc3e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/bomb_explosion_radius.asm",
+      "start": "0x6d26e0",
+      "end": "0x6d2752",
+      "raw_sha256": "821e6c738f8966039037b54b4155680129396edadb8757c97b05e13a803610b4",
+      "sha256": "efcaf83e43757daa23f32b958b98c03ba2ea279df78a57941ab5fffb97942dbd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/bomb_radius_application.asm",
+      "start": "0x6d28fa",
+      "end": "0x6d294e",
+      "raw_sha256": "383891bfad343b2f64610be66055ef03394185a5ce93b5b7f54de281f23c9450",
+      "sha256": "71ca56842bf06346ee27f64d2ec15328a322935f27ae5cd97d532f967812cf0c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mulligans/source/blast_player_damage.asm",
+      "start": "0x6d205b",
+      "end": "0x6d20c4",
+      "raw_sha256": "bb486d1cc8b713567d09bf7ce0fdb334f04185c84b43faa34683e056d0681a08",
+      "sha256": "5ad5a316b8e1cd9547ddc8cd78679ebc28eec88dc8ed691c33f2b87ec7da820b"
+    }
+  ],
+  "records": {
+    "16.0.0": {
+      "xml": {
+        "anm2path": "016.000_Mulligan.anm2",
+        "baseHP": "13",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "0",
+        "collisionMass": "6",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "16",
+        "name": "#MULLIGAN",
+        "numGridCollisionPoints": "12",
+        "portrait": "11",
+        "reroll": "true",
+        "shadowSize": "13",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/00.special rooms.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/01.basement.stb": {
+          "templates": 32,
+          "positive_weight_templates": 32
+        },
+        "rooms/02.cellar.stb": {
+          "templates": 14,
+          "positive_weight_templates": 14
+        },
+        "rooms/03.burning basement.stb": {
+          "templates": 26,
+          "positive_weight_templates": 26
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        }
+      }
+    },
+    "16.1.0": {
+      "xml": {
+        "anm2path": "016.001_Mulligoon.anm2",
+        "baseHP": "13",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "0",
+        "collisionMass": "6",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "16",
+        "name": "#MULLIGOON",
+        "numGridCollisionPoints": "12",
+        "portrait": "12",
+        "reroll": "true",
+        "shadowSize": "13",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "room_library_presence": {
+        "rooms/01.basement.stb": {
+          "templates": 10,
+          "positive_weight_templates": 10
+        },
+        "rooms/02.cellar.stb": {
+          "templates": 12,
+          "positive_weight_templates": 12
+        },
+        "rooms/03.burning basement.stb": {
+          "templates": 11,
+          "positive_weight_templates": 11
+        },
+        "rooms/greed/01.basement.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/02.cellar.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/greed/03.burning basement.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        }
+      }
+    },
+    "16.2.0": {
+      "xml": {
+        "anm2path": "016.002_Mulliboom.anm2",
+        "baseHP": "13",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "0",
+        "collisionMass": "6",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "16",
+        "name": "#MULLIBOOM",
+        "numGridCollisionPoints": "12",
+        "portrait": "13",
+        "reroll": "true",
+        "shadowSize": "13",
+        "stageHP": "0",
+        "tags": "explosive_soul",
+        "variant": "2"
+      },
+      "room_library_presence": {
+        "rooms/01.basement.stb": {
+          "templates": 8,
+          "positive_weight_templates": 8
+        },
+        "rooms/02.cellar.stb": {
+          "templates": 40,
+          "positive_weight_templates": 40
+        },
+        "rooms/03.burning basement.stb": {
+          "templates": 10,
+          "positive_weight_templates": 10
+        },
+        "rooms/04.caves.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/05.catacombs.stb": {
+          "templates": 9,
+          "positive_weight_templates": 9
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/01.basement.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/02.cellar.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/03.burning basement.stb": {
+          "templates": 7,
+          "positive_weight_templates": 7
+        }
+      }
+    }
+  }
+}

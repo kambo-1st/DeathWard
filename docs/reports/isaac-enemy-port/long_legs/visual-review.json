@@ -1,0 +1,62 @@
+{
+  "style": "Original",
+  "inspected_final_captures": 12,
+  "captures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/native-crazy.png",
+      "observation": "Tall dark Crazy body, long legs reaching ground and shadows visible beside player. Red occlusion outline resolves overlapping limbs; crowd readability remains a separate open gate."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/native-sack.png",
+      "observation": "Partly/full grown red Sack silhouette is separate from the player and has a matching ground shadow."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-baby.png",
+      "observation": "Large cream Baby with long dark legs is visible beside cover in its actual seeded room, distinct from the smaller green spiders around the player."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-small-baby.png",
+      "observation": "Small cream Baby has a lower body and spread legs beside a ruined structure; original room dressing and protagonist retained."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-crazy.png",
+      "observation": "Large dark Crazy appears with other residents in the actual Survey Camp room; contact overlap is outlined, but broad crowd readability is not certified."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-small-crazy.png",
+      "observation": "Smaller dark Crazy silhouette appears in its actual room with a projectile visible above the ground and unchanged canyon occlusion treatment."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-baby.png",
+      "observation": "Cream long-legged Baby and green smaller spiders match the native seeded-room composition."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-small-baby.png",
+      "observation": "Low cream Baby silhouette and leg shadows visible beside the ruined structure, matching Linux."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-crazy.png",
+      "observation": "Tall dark Crazy and original mixed roster match native seeded room; red outline on overlapping geometry remains visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-small-crazy.png",
+      "observation": "Shorter dark variant and airborne projectile match the native scene."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/web/crazy-cover.png",
+      "observation": "Tall dark Crazy has moved around the solid crate and is rendered beside the player. Telemetry and focused fixture establish legal navigation."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/web/sack-late.png",
+      "observation": "Red Sack remains behind its two grounded green Spider offspring; throwing and landing are established separately by frame telemetry."
+    }
+  ],
+  "result": "Partial visual pass:12 usable Linux/WASM captures inspected, covering all four parents and Sack in real seeded rooms or isolated/cover scenes. Initial poorly framed captures retained and excluded. Full combat readability, balance and performance acceptance remain open.",
+  "limitations": [
+    "Procedural DeathWard geometry rather than Isaac sprite imports.",
+    "Screenshots cannot prove attack timing, white-creep slowing or throw collision; native tests and browser telemetry cover those features.",
+    "Static-player captures permit contact overlap and do not establish full combat/crowd readability.",
+    "Frame counters and incidental FPS overlays are not controlled performance measurements.",
+    "Isolated fleeing Babies leave the player-centered camera; early20frame captures show camera interpolation, not valid silhouette evidence."
+  ]
+}

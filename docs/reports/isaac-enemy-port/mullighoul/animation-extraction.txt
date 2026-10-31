@@ -1,0 +1,172 @@
+[
+  {
+    "source": "resources-dlc3/gfx/808.000_willo.anm2",
+    "archive": "resources/packed/repentance.a",
+    "path": "docs/reports/isaac-enemy-port/mullighoul/animations/808.000_willo.anm2",
+    "sha256": "a8817508cc2af9faadbbe5fff31a602d1519bf641156dc377f6b3100db19f63e",
+    "checksum": "0x62782a5a",
+    "info": {
+      "CreatedBy": "trtv",
+      "CreatedOn": "05.07.2019 16:05:56",
+      "Fps": "30",
+      "Version": "2"
+    },
+    "events": [
+      {
+        "Id": "0",
+        "Name": "Warn"
+      },
+      {
+        "Id": "1",
+        "Name": "Shoot"
+      },
+      {
+        "Id": "2",
+        "Name": "Splash"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Fly",
+          "FrameNum": "12",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Attack",
+          "FrameNum": "36",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "24"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "12",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "UnderwaterAttack",
+          "FrameNum": "38",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "20"
+          },
+          {
+            "EventId": "2",
+            "AtFrame": "34"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "UnderwaterSpawn",
+          "FrameNum": "12",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "UnderwaterDive",
+          "FrameNum": "12",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "2",
+            "AtFrame": "8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "resources-dlc3/gfx/817.001_mullighoul.anm2",
+    "archive": "resources/packed/repentance.a",
+    "path": "docs/reports/isaac-enemy-port/mullighoul/animations/817.001_mullighoul.anm2",
+    "sha256": "21e5f95842c31041bbde111898b6d5eea78599498c91ddb9e397184f15bffc64",
+    "checksum": "0x3039cf3d",
+    "info": {
+      "CreatedBy": "trtv",
+      "CreatedOn": "05.06.2019 17:58:31",
+      "Fps": "30",
+      "Version": "3"
+    },
+    "events": [
+      {
+        "Id": "0",
+        "Name": "Shoot"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "WalkHori",
+          "FrameNum": "10",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "WalkVert",
+          "FrameNum": "10",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadWalk",
+          "FrameNum": "13",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadAppear",
+          "FrameNum": "21",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadAttack",
+          "FrameNum": "18",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      }
+    ]
+  }
+]

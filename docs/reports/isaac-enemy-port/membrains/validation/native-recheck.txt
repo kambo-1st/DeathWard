@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 36: brain
+1/2 Test #36: brain ............................   Passed    1.12 sec
+    Start 44: membrain_family
+2/2 Test #44: membrain_family ..................   Passed    2.00 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   3.12 sec

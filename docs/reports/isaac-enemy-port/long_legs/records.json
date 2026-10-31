@@ -1,0 +1,895 @@
+{
+  "30.2.0": {
+    "key": "30.2.0",
+    "id": 30,
+    "variant": 2,
+    "subtype": 0,
+    "name": "Sack",
+    "xml": {
+      "anm2path": "030.002_Sack.anm2",
+      "baseHP": "20",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "100",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "30",
+      "name": "#SACK",
+      "numGridCollisionPoints": "12",
+      "portrait": "28",
+      "reroll": "true",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "2"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:30.2.0",
+    "wiki_matches": [
+      {
+        "page": "Boil",
+        "box": 2,
+        "group": "entity",
+        "fields": {
+          "name": "Sack",
+          "variant": "2",
+          "base hp": "20",
+          "environment": "Cellar / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nboss / Curse /",
+          "replace": "Boil, Gut",
+          "replace chance": "1%",
+          "behavior": "Stationary enemy that decreases in size when hit, but regenerates to its full size until fully destroyed. Occasionally spawns Spiders when fully swollen."
+        },
+        "section_indices": [
+          3
+        ],
+        "name": "Sack",
+        "variant": 2,
+        "subtype": 0,
+        "id": 30,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Boil",
+      "Sack (Disambiguation)"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 20.0,
+      "3": 20.0,
+      "4": 20.0,
+      "5": 20.0,
+      "6": 20.0,
+      "7": 20.0,
+      "8": 20.0,
+      "9": 20.0,
+      "10": 20.0,
+      "11": 20.0,
+      "12": 20.0,
+      "13": 20.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Sack",
+    "room_library_presence": {
+      "rooms/00.special rooms.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 64,
+        "positive_weight_templates": 64
+      },
+      "rooms/04.caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 12,
+        "positive_weight_templates": 12
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/07.depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/26.the void.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/greed/02.cellar.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/greed/05.catacombs.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/06.flooded caves.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/greed/08.necropolis.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/09.dank depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Sack",
+      "motion": "Still",
+      "attack": "Spawn",
+      "shape": "Blob",
+      "catalog_base_hp": 88.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 56,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Boil",
+        "section": 3
+      }
+    ],
+    "feature_triage": [
+      "projectile-transform",
+      "child-spawns-and-ownership",
+      "status-effects",
+      "room-floor-run-events"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "206.0.0": {
+    "key": "206.0.0",
+    "id": 206,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Baby Long Legs",
+    "xml": {
+      "anm2path": "205.000_Baby Long Legs.anm2",
+      "baseHP": "16",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "6",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "206",
+      "name": "#BABY_LONG_LEGS",
+      "numGridCollisionPoints": "12",
+      "portrait": "186",
+      "reroll": "true",
+      "shadowSize": "11",
+      "stageHP": "4",
+      "tags": "spider",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:206.0.0",
+    "wiki_matches": [
+      {
+        "page": "Baby Long Legs",
+        "box": 0,
+        "group": "entity",
+        "fields": {
+          "id": "206",
+          "base hp": "16",
+          "stage hp": "4",
+          "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths /",
+          "behavior": "Runs away from Isaac and frequently spawns Spiders."
+        },
+        "section_indices": [
+          0
+        ],
+        "name": "Baby Long Legs",
+        "variant": 0,
+        "subtype": 0,
+        "id": 206,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Baby Long Legs"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 24.0,
+      "3": 28.0,
+      "4": 32.0,
+      "5": 32.0,
+      "6": 35.2,
+      "7": 38.4,
+      "8": 41.6,
+      "9": 44.8,
+      "10": 48.0,
+      "11": 48.0,
+      "12": 48.0,
+      "13": 48.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Baby Long Legs",
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 17,
+        "positive_weight_templates": 17
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/04.caves.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/07.depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Baby Long Legs",
+        "section": 0
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "206.1.0": {
+    "key": "206.1.0",
+    "id": 206,
+    "variant": 1,
+    "subtype": 0,
+    "name": "Small Baby Long Legs",
+    "xml": {
+      "anm2path": "205.001_Small Baby Long Legs.anm2",
+      "baseHP": "12",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "6",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "206",
+      "name": "#SMALL_BABY_LONG_LEGS",
+      "numGridCollisionPoints": "12",
+      "portrait": "74",
+      "reroll": "true",
+      "shadowSize": "8",
+      "stageHP": "4",
+      "tags": "spider",
+      "variant": "1"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:206.1.0",
+    "wiki_matches": [
+      {
+        "page": "Baby Long Legs",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "name": "Small Baby Long Legs",
+          "variant": "1",
+          "base hp": "12",
+          "stage hp": "4",
+          "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves /",
+          "behavior": "Runs away from Isaac and occasionally spawns weaker, slower regenerating Sacks."
+        },
+        "section_indices": [
+          2
+        ],
+        "name": "Small Baby Long Legs",
+        "variant": 1,
+        "subtype": 0,
+        "id": 206,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Baby Long Legs"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 16.0,
+      "2": 20.0,
+      "3": 24.0,
+      "4": 28.0,
+      "5": 28.0,
+      "6": 31.2,
+      "7": 34.4,
+      "8": 37.6,
+      "9": 40.8,
+      "10": 44.0,
+      "11": 44.0,
+      "12": 44.0,
+      "13": 44.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Small Baby Long Legs",
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/04.caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/02.cellar.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Baby Long Legs",
+        "section": 2
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "health-and-defenses",
+      "status-effects"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "207.0.0": {
+    "key": "207.0.0",
+    "id": 207,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Crazy Long Legs",
+    "xml": {
+      "anm2path": "206.000_Crazy Long Legs.anm2",
+      "baseHP": "16",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "6",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "207",
+      "name": "#CRAZY_LONG_LEGS",
+      "numGridCollisionPoints": "12",
+      "portrait": "187",
+      "reroll": "true",
+      "shadowSize": "11",
+      "stageHP": "4",
+      "tags": "spider",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:207.0.0",
+    "wiki_matches": [
+      {
+        "page": "Crazy Long Legs",
+        "box": 0,
+        "group": "entity",
+        "fields": {
+          "id": "207",
+          "base hp": "16",
+          "stage hp": "4",
+          "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nWomb / Utero / Scarred Womb /",
+          "behavior": "Chases Isaac, dealing touch damage. Occasionally stops to spit 8 blood shots in all directions."
+        },
+        "section_indices": [
+          0
+        ],
+        "name": "Crazy Long Legs",
+        "variant": 0,
+        "subtype": 0,
+        "id": 207,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Crazy Long Legs"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 24.0,
+      "3": 28.0,
+      "4": 32.0,
+      "5": 32.0,
+      "6": 35.2,
+      "7": 38.4,
+      "8": 41.6,
+      "9": 44.8,
+      "10": 48.0,
+      "11": 48.0,
+      "12": 48.0,
+      "13": 48.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Crazy Long Legs",
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 20,
+        "positive_weight_templates": 20
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/04.caves.stb": {
+        "templates": 14,
+        "positive_weight_templates": 14
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 13,
+        "positive_weight_templates": 13
+      },
+      "rooms/10.womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/11.utero.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Crazy Long Legs",
+        "section": 0
+      }
+    ],
+    "feature_triage": [
+      "room-floor-run-events"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "207.1.0": {
+    "key": "207.1.0",
+    "id": 207,
+    "variant": 1,
+    "subtype": 0,
+    "name": "Small Crazy Long Legs",
+    "xml": {
+      "anm2path": "206.001_Small Crazy Long Legs.anm2",
+      "baseHP": "12",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "6",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "207",
+      "name": "#SMALL_CRAZY_LONG_LEGS",
+      "numGridCollisionPoints": "12",
+      "portrait": "75",
+      "reroll": "true",
+      "shadowSize": "8",
+      "stageHP": "4",
+      "tags": "spider",
+      "variant": "1"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:207.1.0",
+    "wiki_matches": [
+      {
+        "page": "Crazy Long Legs",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "name": "Small Crazy Long Legs",
+          "variant": "1",
+          "base hp": "12",
+          "stage hp": "4",
+          "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nDepths / Dank Depths / \nWomb / Utero / Scarred Womb /",
+          "behavior": "Chases Isaac, dealing touch damage. Occasionally stops to spit 4 blood shots in the diagonal directions."
+        },
+        "section_indices": [
+          2
+        ],
+        "name": "Small Crazy Long Legs",
+        "variant": 1,
+        "subtype": 0,
+        "id": 207,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Crazy Long Legs"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 16.0,
+      "2": 20.0,
+      "3": 24.0,
+      "4": 28.0,
+      "5": 28.0,
+      "6": 31.2,
+      "7": 34.4,
+      "8": 37.6,
+      "9": 40.8,
+      "10": 44.0,
+      "11": 44.0,
+      "12": 44.0,
+      "13": 44.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Small Crazy Long Legs",
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 15,
+        "positive_weight_templates": 15
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/04.caves.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/07.depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/10.womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/11.utero.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/02.cellar.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Crazy Long Legs",
+        "section": 2
+      }
+    ],
+    "feature_triage": [
+      "status-effects",
+      "room-floor-run-events"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+}

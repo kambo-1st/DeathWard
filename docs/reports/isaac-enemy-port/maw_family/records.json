@@ -1,0 +1,774 @@
+{
+  "26.0.0": {
+    "key": "26.0.0",
+    "id": 26,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Maw",
+    "xml": {
+      "anm2path": "026.000_Maw.anm2",
+      "baseHP": "20",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "7",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "26",
+      "name": "#MAW",
+      "numGridCollisionPoints": "12",
+      "portrait": "21",
+      "reroll": "true",
+      "shadowSize": "16",
+      "stageHP": "0",
+      "variant": "0",
+      "gridCollision": "walls"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:26.0.0",
+    "wiki_matches": [
+      {
+        "page": "Maw",
+        "box": 0,
+        "group": "entity",
+        "fields": {
+          "id": "26",
+          "base hp": "20",
+          "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+          "behavior": "Slowly floats towards Isaac, firing a blood shot at him when he is in their range."
+        },
+        "section_indices": [
+          0
+        ],
+        "name": "Maw",
+        "variant": 0,
+        "subtype": 0,
+        "id": 26,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Maw"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 20.0,
+      "3": 20.0,
+      "4": 20.0,
+      "5": 20.0,
+      "6": 20.0,
+      "7": 20.0,
+      "8": 20.0,
+      "9": 20.0,
+      "10": 20.0,
+      "11": 20.0,
+      "12": 20.0,
+      "13": 20.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Maw",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 40,
+        "positive_weight_templates": 40
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 20,
+        "positive_weight_templates": 20
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 43,
+        "positive_weight_templates": 43
+      },
+      "rooms/07.depths.stb": {
+        "templates": 14,
+        "positive_weight_templates": 14
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 14,
+        "positive_weight_templates": 14
+      },
+      "rooms/10.womb.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/11.utero.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/greed/04.caves.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/greed/05.catacombs.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/greed/06.flooded caves.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/greed/07.depths.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/greed/08.necropolis.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/09.dank depths.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Maw",
+      "motion": "Chase",
+      "attack": "Shot",
+      "shape": "Skull",
+      "catalog_base_hp": 64.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 44,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Maw",
+        "section": 0
+      }
+    ],
+    "feature_triage": [
+      "status-effects",
+      "conditional-vulnerability"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "26.1.0": {
+    "key": "26.1.0",
+    "id": 26,
+    "variant": 1,
+    "subtype": 0,
+    "name": "Red Maw",
+    "xml": {
+      "anm2path": "026.001_Red Maw.anm2",
+      "baseHP": "20",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "7",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "26",
+      "name": "#RED_MAW",
+      "numGridCollisionPoints": "12",
+      "portrait": "22",
+      "reroll": "true",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "1",
+      "gridCollision": "walls"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:26.1.0",
+    "wiki_matches": [
+      {
+        "page": "Maw",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "name": "Red Maw",
+          "image name": "* [Before Repentance] Rebirth",
+          "variant": "1",
+          "base hp": "20",
+          "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nChest /",
+          "replace": "Maw",
+          "replace chance": "9.49%",
+          "behavior": "Floats quickly towards Isaac and releases 4 blood shots in the cardinal directions upon death."
+        },
+        "section_indices": [
+          2
+        ],
+        "name": "Red Maw",
+        "variant": 1,
+        "subtype": 0,
+        "id": 26,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Maw"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 20.0,
+      "3": 20.0,
+      "4": 20.0,
+      "5": 20.0,
+      "6": 20.0,
+      "7": 20.0,
+      "8": 20.0,
+      "9": 20.0,
+      "10": 20.0,
+      "11": 20.0,
+      "12": 20.0,
+      "13": 20.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Red Maw",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 19,
+        "positive_weight_templates": 19
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 22,
+        "positive_weight_templates": 22
+      },
+      "rooms/07.depths.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/10.womb.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/11.utero.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/17.chest.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/07.depths.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/greed/08.necropolis.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/greed/09.dank depths.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/greed/10.womb.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/greed/11.utero.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/greed/12.scarred womb.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/14.sheol.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Red Maw",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Skull",
+      "catalog_base_hp": 64.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 45,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Maw",
+        "section": 2
+      }
+    ],
+    "feature_triage": [
+      "projectile-transform"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "26.2.0": {
+    "key": "26.2.0",
+    "id": 26,
+    "variant": 2,
+    "subtype": 0,
+    "name": "Psychic Maw",
+    "xml": {
+      "anm2path": "026.002_Psychic Maw.anm2",
+      "baseHP": "20",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "7",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "26",
+      "name": "#PSYCHIC_MAW",
+      "numGridCollisionPoints": "12",
+      "portrait": "23",
+      "reroll": "true",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "tags": "homing_soul",
+      "variant": "2",
+      "gridCollision": "walls"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:26.2.0",
+    "wiki_matches": [
+      {
+        "page": "Maw",
+        "box": 2,
+        "group": "entity",
+        "fields": {
+          "name": "Psychic Maw",
+          "image name": "* [Before Repentance] Rebirth",
+          "variant": "2",
+          "base hp": "20",
+          "environment": "Caves / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nMausoleum / \nUtero / \nCathedral /",
+          "replace": "Maw, Red Maw",
+          "replace chance": "1%",
+          "behavior": "Slowly floats towards Isaac, firing homing shots at him when he is in their range. Spawns with an Eternal Fly orbiting around it."
+        },
+        "section_indices": [
+          3
+        ],
+        "name": "Psychic Maw",
+        "variant": 2,
+        "subtype": 0,
+        "id": 26,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Maw"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 20.0,
+      "3": 20.0,
+      "4": 20.0,
+      "5": 20.0,
+      "6": 20.0,
+      "7": 20.0,
+      "8": 20.0,
+      "9": 20.0,
+      "10": 20.0,
+      "11": 20.0,
+      "12": 20.0,
+      "13": 20.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Psychic Maw",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/07.depths.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/11.utero.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/15.cathedral.stb": {
+        "templates": 18,
+        "positive_weight_templates": 18
+      },
+      "rooms/26.the void.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/31.mausoleum.stb": {
+        "templates": 17,
+        "positive_weight_templates": 17
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/24.the shop.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/greed/31.mausoleum.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Psychic Maw",
+      "motion": "Chase",
+      "attack": "Shot",
+      "shape": "Skull",
+      "catalog_base_hp": 88.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 46,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Maw",
+        "section": 3
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "child-spawns-and-ownership",
+      "health-and-defenses",
+      "locomotion-and-navigation",
+      "conditional-vulnerability"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  "96.0.0": {
+    "key": "96.0.0",
+    "id": 96,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Eternal Fly",
+    "xml": {
+      "anm2path": "096.000_Eternal Fly.anm2",
+      "baseHP": "300",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "gridCollision": "walls",
+      "id": "96",
+      "name": "#ETERNAL_FLY",
+      "numGridCollisionPoints": "0",
+      "portrait": "176",
+      "shadowSize": "11",
+      "shutdoors": "false",
+      "stageHP": "0",
+      "tags": "fly",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:96.0.0",
+    "wiki_matches": [
+      {
+        "page": "Fly",
+        "box": 4,
+        "group": "entity",
+        "fields": {
+          "name": "Eternal Fly",
+          "id": "96",
+          "image name": "* [Before Repentance] Rebirth",
+          "environment": "All Chapters\nboss / treasure / secret / dirty bedroom / vault / I AM ERROR /",
+          "behavior": "Invulnerable fly that circles Corny Poop and various monsters. Deals contact damage. Turns into a vulnerable Attack Fly after the object or monster it circles is destroyed."
+        },
+        "section_indices": [
+          8,
+          9
+        ],
+        "name": "Eternal Fly",
+        "variant": 0,
+        "subtype": 0,
+        "id": 96,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Fly"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 300.0,
+      "2": 300.0,
+      "3": 300.0,
+      "4": 300.0,
+      "5": 300.0,
+      "6": 300.0,
+      "7": 300.0,
+      "8": 300.0,
+      "9": 300.0,
+      "10": 300.0,
+      "11": 300.0,
+      "12": 300.0,
+      "13": 300.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Eternal Fly",
+    "room_library_presence": {},
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Eternal Fly",
+      "motion": "Orbit",
+      "attack": "None",
+      "shape": "Fly",
+      "catalog_base_hp": 32.0,
+      "behavior": "legacy",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 134,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Fly",
+        "section": 8
+      },
+      {
+        "page": "Fly",
+        "section": 9
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "health-and-defenses",
+      "room-floor-run-events",
+      "locomotion-and-navigation",
+      "forms-and-transformations"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+}

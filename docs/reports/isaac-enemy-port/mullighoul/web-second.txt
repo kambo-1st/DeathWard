@@ -1,0 +1,16 @@
+PASS willo-orbit
+PASS willo-cohort
+PASS willo-cover
+PASS mullighoul-live
+PASS mullighoul-river
+PASS mullighoul-death
+PASS mullighoul-overkill
+AssertionError [ERR_ASSERTION]: Willo planar shot speed: 32.77028015100038 vs 30
+    at near (/home/kambo/workspace/DeathWard/web/mullighoul-test.cjs:10:26)
+    at /home/kambo/workspace/DeathWard/web/mullighoul-test.cjs:53:119 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

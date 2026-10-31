@@ -1,0 +1,215 @@
+{
+  "scope": "Partial normal-hostile Maw26.0/26.1/26.2 and Psychic-linked Eternal Fly96.0; regular-enemy priority.",
+  "source": "docs/reports/isaac-enemy-port/maw_family/source-review.md",
+  "adaptations": [
+    "Source30Hz with native distance x.1 and velocity x3; collision-aware3D flight and local finite projectile lifetime.",
+    "HP x3.2 and established hostile damage conversion; authored band1–3 specialist costs/weights/cap1, no opening floor.",
+    "Whole pending death volleys and required offspring survive capacity pressure; room-owned deferred births preserve lifecycle.",
+    "Original procedural pale/red/purple heads, stitched mouths/Psychic eye, purple homing shots and white orbiting fly; safe shader normal fallback."
+  ],
+  "remaining": [
+    "Native appearance/teleport overlays, parent visibility/grid ownership/outer margins, hard/champion/status/control branches and exact RNG/grid parity remain open.",
+    "Eternal Fly corn-poop ownership and other parents are not complete; Holy Leech legacy cleanup retained pending parent review.",
+    "Released Eternal Fly contact-death claim remains unresolved in native collision code; no unverified contact-death flag invented.",
+    "Native three-frame homing target selection, friendly targeting, source shot height/lifetime and status-modified homing strength remain open.",
+    "Native variant replacement probabilities, full combat readability, balance and controlled Linux/WASM performance acceptance remain open."
+  ],
+  "native": {
+    "passed": 75,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/maw_family/native-final.xml",
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "boil_family",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "maw_family",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "corrected_report": "docs/reports/isaac-enemy-port/maw_family/floor-corrected-2.xml",
+    "behavior": "docs/reports/isaac-enemy-port/maw_family/native-targeted-residents.txt",
+    "initial_run": "docs/reports/isaac-enemy-port/maw_family/native.xml",
+    "corrections": "Initial75-suite run passed74. Drowned Hive witness invalidated by larger pools; independent production search found118/floor2/room6. Fixture keeps earlier candidates. Final full run includes resident birth-queue lifecycle fix; floor fixture then corrected to distinguish mandatory orbiters from ordinary counts and allow their source-prescribed initial overlap with their parent. All75unique suites pass across full and corrected runs."
+  },
+  "browser": {
+    "cases": 6,
+    "report": "docs/reports/isaac-enemy-port/maw_family/web-final/results.json",
+    "scope": "Production WASM normal Maw family health, live pursuit/casts/projectile sizes/homing profile and required child, Original visuals. Native tests cover death and saturation. Not complete enemy parity/balance/performance certification.",
+    "errors": []
+  },
+  "visual": {
+    "scope": "Twelve final Original-style Linux/WASM images inspected. Bodies visible; Psychic required fly visible in isolated and seeded rooms. Static appearance smoke review only, not full combat readability or performance certification.",
+    "final_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/native-final-maw.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/native-final-red-maw.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/native-final-psychic-maw.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-maw.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-red-maw.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-psychic-maw.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/web-final/maw.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/web-final/red-maw.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/web-final/psychic-maw.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/web-final/natural-maw.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/web-final/natural-red-maw.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/maw_family/web-final/natural-psychic-maw.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+      }
+    ],
+    "defects": [
+      {
+        "before": "docs/reports/isaac-enemy-port/maw_family/native-psychic-maw.png",
+        "after": "docs/reports/isaac-enemy-port/maw_family/native-psychic-normal-fix.png",
+        "finding": "Zero surface derivative from halo line propagated undefined lighting through bloom; guarded normal removes observed black block."
+      },
+      {
+        "before": "docs/reports/isaac-enemy-port/maw_family/native-natural-psychic-maw.png",
+        "after": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-psychic-maw.png",
+        "finding": "Pre-entry room preparation discarded pending child. Final capture includes required fly."
+      }
+    ],
+    "limitations": [
+      "Red Maw overlaps the protagonist in contact captures. Small stitched-face details are not always readable at this zoom.",
+      "Browser FPS overlays are incidental. Initial Chromium1248 capture shows1FPS; final Chromium1194 captures show59–64FPS, different uncontrolled runs. No controlled performance acceptance."
+    ]
+  },
+  "complete": false
+}

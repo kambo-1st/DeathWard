@@ -1,0 +1,11 @@
+ATTACK variants3=1 HP198.4=1 Shoot29=1 Attack70=1 hop_vulnerable=1 ring8=1 cap8=1 no_LOS_gate=1
+MOVEMENT render_partition=1 whole_packet_backpressure=1 contact25=1
+CYST init=1 interval31=1 current_aim=1 rolling=1 no_creep=1 capacity=1
+LIFECYCLE repeated_wall_bounce=1 ground_terminal=1 exact_children=1 execution=1 debug_clear=1 capacity=1 completion=1
+CONFIG immutable_reload=1 invalid_profiles=5
+NATURAL_MEMBRAIN id=57.0.0 seed=1 floor=6 room=8
+NATURAL_MEMBRAIN id=57.1.0 seed=1 floor=5 room=7
+NATURAL_MEMBRAIN id=57.2.0 seed=11 floor=4 room=3
+NATURAL_MEMBRAIN id=862.0.0 seed=22 floor=7 room=1
+PLACEMENT four_natural_records=1 active_controllers=1
+PASS MemBrain family and Cyst

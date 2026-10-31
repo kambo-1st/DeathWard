@@ -1,0 +1,2 @@
+WITNESS id=16.0 seed=7 floor=0 room=1
+WITNESS id=16.1 seed=21 floor=0 room=5

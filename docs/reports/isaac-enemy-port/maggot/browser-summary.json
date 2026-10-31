@@ -1,0 +1,79 @@
+{
+  "passed": 10,
+  "total": 10,
+  "browser": "149.0.7827.55",
+  "errors": [],
+  "cases": [
+    {
+      "name": "maggot",
+      "pass": true,
+      "last_frame": 243,
+      "movement": 38.79902922898187,
+      "report": "docs/reports/isaac-enemy-port/maggot/web/results.json"
+    },
+    {
+      "name": "maggot-cover",
+      "pass": true,
+      "last_frame": 240,
+      "movement": 35.941482441819865,
+      "report": "docs/reports/isaac-enemy-port/maggot/web/results.json"
+    },
+    {
+      "name": "maggot-river",
+      "pass": true,
+      "last_frame": 242,
+      "movement": 37.44510112117066,
+      "report": "docs/reports/isaac-enemy-port/maggot/web/results.json"
+    },
+    {
+      "name": "maggot-death",
+      "pass": true,
+      "last_frame": 182,
+      "movement": 27.78356678698257,
+      "report": "docs/reports/isaac-enemy-port/maggot/web/results.json"
+    },
+    {
+      "name": "resident-quarry",
+      "pass": true,
+      "last_frame": 243,
+      "movement": 31.174821679326087,
+      "report": "docs/reports/isaac-enemy-port/maggot/web/results.json"
+    },
+    {
+      "name": "resident-storm",
+      "pass": true,
+      "last_frame": 242,
+      "movement": 37.32708811083213,
+      "report": "docs/reports/isaac-enemy-port/maggot/web/results.json"
+    },
+    {
+      "name": "spitty",
+      "pass": true,
+      "last_frame": 241,
+      "movement": 17.850322561109866,
+      "report": "docs/reports/isaac-enemy-port/maggot/web-spitty-regression/results.json"
+    },
+    {
+      "name": "conjoined",
+      "pass": true,
+      "last_frame": 242,
+      "movement": 18.524062909408357,
+      "report": "docs/reports/isaac-enemy-port/maggot/web-spitty-regression/results.json"
+    },
+    {
+      "name": "tainted-spitty",
+      "pass": true,
+      "last_frame": 242,
+      "movement": 23.95995330810547,
+      "report": "docs/reports/isaac-enemy-port/maggot/web-spitty-regression/results.json"
+    },
+    {
+      "name": "tainted-death",
+      "pass": true,
+      "last_frame": 242,
+      "movement": 23.323486328125,
+      "report": "docs/reports/isaac-enemy-port/maggot/web-spitty-regression/results.json"
+    }
+  ],
+  "scope": "Six Maggot cases and four Spitty compatibility cases on final production build. Automated physics/controller and source-health evidence; screenshot inspection is separately recorded."
+}

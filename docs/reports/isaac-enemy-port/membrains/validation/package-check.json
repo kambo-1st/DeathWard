@@ -1,0 +1,17 @@
+[
+  {
+    "file": "index.js",
+    "decompressed_sha256": "62977f4cb35e1c8e237c29439c370bb2c08bc20fd152b2638d2da68d86592f53",
+    "matches": true
+  },
+  {
+    "file": "index.wasm",
+    "decompressed_sha256": "96778270d31f4931f4dd8d1aa2e05873af41bb54359ef8ea05d8f2e739c84ee1",
+    "matches": true
+  },
+  {
+    "file": "index.data",
+    "decompressed_sha256": "f96d73b3c0d972ba73aa1eafb7777f4dad3cecb8b8365069b94eb09ac6926c75",
+    "matches": true
+  }
+]

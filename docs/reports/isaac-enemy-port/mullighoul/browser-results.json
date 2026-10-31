@@ -1,0 +1,116 @@
+{
+  "checks": [
+    {
+      "case": "willo-orbit",
+      "distance": 148.1871656048946,
+      "warning": true,
+      "shot": true,
+      "birth": false,
+      "wet": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-orbit-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-orbit.png"
+    },
+    {
+      "case": "willo-cohort",
+      "distance": 150.67646299334277,
+      "warning": true,
+      "shot": true,
+      "birth": false,
+      "wet": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-cohort-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-cohort.png"
+    },
+    {
+      "case": "willo-cover",
+      "distance": 148.54107215281863,
+      "warning": true,
+      "shot": true,
+      "birth": false,
+      "wet": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-cover-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-cover.png"
+    },
+    {
+      "case": "mullighoul-live",
+      "distance": 50.054633833256375,
+      "warning": true,
+      "shot": true,
+      "birth": true,
+      "wet": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-live-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-live.png"
+    },
+    {
+      "case": "mullighoul-river",
+      "distance": 18.82328942630991,
+      "warning": true,
+      "shot": true,
+      "birth": true,
+      "wet": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-river-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-river.png"
+    },
+    {
+      "case": "mullighoul-death",
+      "distance": 9.096396433837878,
+      "warning": true,
+      "shot": true,
+      "birth": true,
+      "firstChildren": 3,
+      "wet": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-death-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-death.png"
+    },
+    {
+      "case": "mullighoul-overkill",
+      "distance": 9.099301915479124,
+      "warning": true,
+      "shot": true,
+      "birth": true,
+      "firstChildren": 0,
+      "wet": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-overkill-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-overkill.png"
+    },
+    {
+      "case": "natural-willo",
+      "distance": 149.35143660799594,
+      "warning": true,
+      "shot": true,
+      "birth": false,
+      "wet": false,
+      "pulled": true,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-willo-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-willo.png"
+    },
+    {
+      "case": "natural-mullighoul",
+      "distance": 23.37488877815582,
+      "warning": true,
+      "shot": true,
+      "birth": true,
+      "wet": false,
+      "pulled": false,
+      "result": "pass",
+      "evidence": "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-mullighoul-samples.json",
+      "capture": "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-mullighoul.png"
+    }
+  ],
+  "errors": [],
+  "mechanics_fingerprint": "13e2ff60d3fc3643",
+  "source_reports": [
+    "docs/reports/isaac-enemy-port/mullighoul/web-final/results.json",
+    "docs/reports/isaac-enemy-port/mullighoul/web-residents/results.json"
+  ],
+  "scope": "Nine Original-style production WASM cases: single/cohort/cover Willo orbit and attack telemetry, Mullighoul live/death offspring, overkill, hover in a river room, and both actual seeded wet-band residents. Natural Willo projectiles interact with a type-236 attraction statue. Exact source timing, projectile collision, water/solid collision and retained completion are covered separately by native fixtures. Full parity, broad balance and controlled performance remain open.",
+  "execution_note": "Seven isolated cases passed in the second browser run, before an incorrect natural-room constant-speed assertion failed. The third run validates only the two unresolved natural cases, with the existing attraction field accounted for. No runtime/content/build changes occurred between these runs.",
+  "fixture_failures": "docs/reports/isaac-enemy-port/mullighoul/browser-fixture-corrections.txt"
+}

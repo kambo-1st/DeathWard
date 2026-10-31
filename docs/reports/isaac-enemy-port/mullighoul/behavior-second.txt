@@ -1,0 +1,8 @@
+PASS elliptical player orbit, redistribution and attack serialization
+PASS Warn6/Shoot24/Attack36, damped shot, capacity and stun
+PASS body/contact/fire vulnerability and separate wall-passing projectile policy
+PASS Mullighoul live/death children,overkill,completion and hover navigation
+NATURAL_WILLO_FAMILY id=808.0 seed=3 floor=1 room=6
+NATURAL_WILLO_FAMILY id=817.1 seed=80 floor=2 room=8
+PASS validated content and seeded Willo/Mullighoul residents
+PASS Willo and Mullighoul

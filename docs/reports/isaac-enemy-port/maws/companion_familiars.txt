@@ -1,0 +1,9 @@
+SHADOW_PRODUCER duplicate_once=1 max_live=16 item_owner=1 removal_stops_only_producer=1
+SHADOW_PATH lag=1 catch_up=1 bounded_history=1
+SHADOW_CONTACT enemy_damage=27.84 ally_damage=3.2 player_damage=0 cardinal_target=1
+SHADOW_DAMAGE player_bomb_immune=1 hostile_blast=1 repeated_fire=1 beam=1 no_death_rewards=1
+SHADOW_PROJECTILES hostile_interception=1 player_pass_through=1 kill_hook_isolation=1
+SHADOW_LIFETIME transition_expiry=1 no_resurrection=1 room_clear=1
+SHADOW_BARGAIN seed=3 floor=0 room=6 slot=1 hp=80
+SHADOW_PERSISTENCE floor_carry=1 expired_allies=1 fresh_producer=1 journal_item=1
+PASS My Shadow producer, allied combat and room lifetime

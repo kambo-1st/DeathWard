@@ -1,0 +1,953 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "records": [
+    {
+      "key": "57.0.0",
+      "id": 57,
+      "variant": 0,
+      "subtype": 0,
+      "name": "MemBrain",
+      "xml": {
+        "anm2path": "057.000_MemBrain.anm2",
+        "baseHP": "62",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "2",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "57",
+        "name": "#MEMBRAIN",
+        "numGridCollisionPoints": "12",
+        "portrait": "46",
+        "reroll": "true",
+        "shadowSize": "42",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:57.0.0",
+      "wiki_matches": [
+        {
+          "page": "MemBrain",
+          "box": 0,
+          "group": "entity",
+          "fields": {
+            "name": "MemBrain",
+            "image name": "* [Before Repentance] Rebirth",
+            "id": "57",
+            "base hp": "62",
+            "environment": "Depths / Dank Depths / \nWomb / Utero / Scarred Womb / \nChest / \nchallenge /",
+            "behavior": "Slowly moves around the room, occasionally hopping and firing 8 large blood shots in all directions. Splits into 2 Brains upon death."
+          },
+          "section_indices": [
+            0
+          ],
+          "name": "MemBrain",
+          "variant": 0,
+          "subtype": 0,
+          "id": 57,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "MemBrain"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 62.0,
+        "2": 62.0,
+        "3": 62.0,
+        "4": 62.0,
+        "5": 62.0,
+        "6": 62.0,
+        "7": 62.0,
+        "8": 62.0,
+        "9": 62.0,
+        "10": 62.0,
+        "11": 62.0,
+        "12": 62.0,
+        "13": 62.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "MemBrain",
+      "room_library_presence": {
+        "rooms/07.depths.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/09.dank depths.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/10.womb.stb": {
+          "templates": 34,
+          "positive_weight_templates": 34
+        },
+        "rooms/11.utero.stb": {
+          "templates": 33,
+          "positive_weight_templates": 33
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 39,
+          "positive_weight_templates": 39
+        },
+        "rooms/17.chest.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/26.the void.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 5,
+          "positive_weight_templates": 5
+        },
+        "rooms/greed/10.womb.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/11.utero.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/12.scarred womb.stb": {
+          "templates": 7,
+          "positive_weight_templates": 7
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "MemBrain",
+        "motion": "Hop",
+        "attack": "Ring",
+        "shape": "Blob",
+        "catalog_base_hp": 144.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 103,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "MemBrain",
+          "section": 0
+        }
+      ],
+      "feature_triage": [
+        "damage-modifiers",
+        "projectile-transform",
+        "child-spawns-and-ownership",
+        "health-and-defenses",
+        "status-effects",
+        "room-floor-run-events",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "57.1.0",
+      "id": 57,
+      "variant": 1,
+      "subtype": 0,
+      "name": "Mama Guts",
+      "xml": {
+        "anm2path": "057.001_Mama Guts.anm2",
+        "baseHP": "62",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "2",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "57",
+        "name": "#MAMA_GUTS",
+        "numGridCollisionPoints": "12",
+        "portrait": "47",
+        "reroll": "true",
+        "shadowSize": "40",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:57.1.0",
+      "wiki_matches": [
+        {
+          "page": "MemBrain",
+          "box": 1,
+          "group": "entity",
+          "fields": {
+            "name": "Mama Guts",
+            "variant": "1",
+            "base hp": "62",
+            "environment": "Necropolis / \nWomb / Utero / Scarred Womb / \nchallenge / \n5.71% Chance to replace MemBrains",
+            "behavior": "Slowly moves around the room, occasionally hopping and firing 8 large blood shots in all directions. Splits into 2 Guts upon death."
+          },
+          "section_indices": [
+            2
+          ],
+          "name": "Mama Guts",
+          "variant": 1,
+          "subtype": 0,
+          "id": 57,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "MemBrain"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 62.0,
+        "2": 62.0,
+        "3": 62.0,
+        "4": 62.0,
+        "5": 62.0,
+        "6": 62.0,
+        "7": 62.0,
+        "8": 62.0,
+        "9": 62.0,
+        "10": 62.0,
+        "11": 62.0,
+        "12": 62.0,
+        "13": 62.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Mama Guts",
+      "room_library_presence": {
+        "rooms/08.necropolis.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/10.womb.stb": {
+          "templates": 10,
+          "positive_weight_templates": 10
+        },
+        "rooms/11.utero.stb": {
+          "templates": 30,
+          "positive_weight_templates": 30
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 12,
+          "positive_weight_templates": 12
+        },
+        "rooms/greed/11.utero.stb": {
+          "templates": 8,
+          "positive_weight_templates": 8
+        },
+        "rooms/greed/12.scarred womb.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Mama Guts",
+        "motion": "Hop",
+        "attack": "Ring",
+        "shape": "Blob",
+        "catalog_base_hp": 144.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 104,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "MemBrain",
+          "section": 2
+        }
+      ],
+      "feature_triage": [
+        "child-spawns-and-ownership",
+        "status-effects",
+        "room-floor-run-events",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "57.2.0",
+      "id": 57,
+      "variant": 2,
+      "subtype": 0,
+      "name": "Dead Meat",
+      "xml": {
+        "anm2path": "057.002_Dead Meat.anm2",
+        "baseHP": "62",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "2",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "57",
+        "name": "#DEAD_MEAT",
+        "numGridCollisionPoints": "12",
+        "portrait": "375",
+        "reroll": "true",
+        "shadowSize": "40",
+        "stageHP": "0",
+        "variant": "2"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:57.2.0",
+      "wiki_matches": [
+        {
+          "page": "MemBrain",
+          "box": 2,
+          "group": "entity",
+          "fields": {
+            "dlc": "r",
+            "name": "Dead Meat",
+            "variant": "2",
+            "base hp": "62",
+            "environment": "Corpse / \nchallenge /",
+            "behavior": "Slowly moves around the room, occasionally hopping and firing 8 large blood shots in all directions that bounce off the walls. Splits into 2 Cysts upon death."
+          },
+          "section_indices": [
+            3
+          ],
+          "name": "Dead Meat",
+          "variant": 2,
+          "subtype": 0,
+          "id": 57,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "MemBrain"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 62.0,
+        "2": 62.0,
+        "3": 62.0,
+        "4": 62.0,
+        "5": 62.0,
+        "6": 62.0,
+        "7": 62.0,
+        "8": 62.0,
+        "9": 62.0,
+        "10": 62.0,
+        "11": 62.0,
+        "12": 62.0,
+        "13": 62.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Dead Meat",
+      "room_library_presence": {
+        "rooms/33.corpse.stb": {
+          "templates": 23,
+          "positive_weight_templates": 23
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Dead Meat",
+        "motion": "Hop",
+        "attack": "Ring",
+        "shape": "Blob",
+        "catalog_base_hp": 160.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 105,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "MemBrain",
+          "section": 3
+        }
+      ],
+      "feature_triage": [
+        "child-spawns-and-ownership",
+        "status-effects",
+        "room-floor-run-events",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "862.0.0",
+      "id": 862,
+      "variant": 0,
+      "subtype": 0,
+      "name": "cyst",
+      "xml": {
+        "anm2path": "862.000_cyst.anm2",
+        "baseHP": "25",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "862",
+        "name": "#CYST",
+        "numGridCollisionPoints": "12",
+        "portrait": "282",
+        "shadowSize": "21",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:862.0.0",
+      "wiki_matches": [
+        {
+          "page": "Guts",
+          "box": 3,
+          "group": "entity",
+          "fields": {
+            "dlc": "r",
+            "name": "Cyst",
+            "id": "862",
+            "base hp": "25",
+            "environment": "Corpse / \nchallenge /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, regularly firing blood shots at Isaac."
+          },
+          "section_indices": [
+            4
+          ],
+          "name": "Cyst",
+          "variant": 0,
+          "subtype": 0,
+          "id": 862,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Guts"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 25.0,
+        "2": 25.0,
+        "3": 25.0,
+        "4": 25.0,
+        "5": 25.0,
+        "6": 25.0,
+        "7": 25.0,
+        "8": 25.0,
+        "9": 25.0,
+        "10": 25.0,
+        "11": 25.0,
+        "12": 25.0,
+        "13": 25.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Cyst",
+      "room_library_presence": {
+        "rooms/33.corpse.stb": {
+          "templates": 24,
+          "positive_weight_templates": 24
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Cyst",
+        "motion": "Wall",
+        "attack": "Shot",
+        "shape": "Blob",
+        "catalog_base_hp": 56.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 140,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Guts",
+          "section": 4
+        }
+      ],
+      "feature_triage": [
+        "child-spawns-and-ownership"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    }
+  ],
+  "articles": {
+    "MemBrain": {
+      "title": "MemBrain",
+      "url": "https://bindingofisaacrebirth.wiki.gg/wiki/MemBrain",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267035",
+      "revision": 267035,
+      "timestamp": "2026-07-29T16:10:53Z",
+      "license": "CC BY-SA 4.0",
+      "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "level": 0,
+          "text": "MemBrains are much larger Brains that slowly move around the room and occasionally hop to fire 8 blood shots in all directions. They have a large amount of health and will split into two Brains upon death. Membrains deal a whole heart of damage with contact and projectiles."
+        },
+        {
+          "heading": "Variants",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Mama Guts",
+          "level": 3,
+          "text": "Mama Guts are large versions of the regular Guts. They slowly move around the room, occasionally hopping and firing 8 large blood shots in all directions. Upon death, it splits into 2 Guts."
+        },
+        {
+          "heading": "Dead Meat",
+          "level": 3,
+          "text": "Dead Meats are bigger versions of the Cysts that move around the room slowly, occasionally hopping which fires 8 large blood shots in all directions that bounce off the walls like Rubber Cement. Upon death, they split into 2 Cysts."
+        },
+        {
+          "heading": "Dinga",
+          "level": 3,
+          "text": "Dingas are large Dips that behave similarly to MemBrains. Dingas slide around the room aimlessly and occasionally hop, spawning Dips or shooting poop shots in 8 directions. Splits into two Squirts when killed."
+        },
+        {
+          "heading": "Mega Clotty",
+          "level": 3,
+          "text": "Mega Clotties slowly move around the room, occasionally hopping. When one hops, it will usually fire six blood shots around itself, but it can also alternatively leave a puddle of Red Creep near itself. Even more rarely, the hop may spawn a Clotty or a collapsed Globin. Upon death, it\u2019ll split into two Clotty. Even though the sprite shows three conjoined Clotties, it always creates two upon death, and will never spawn three."
+        },
+        {
+          "heading": "Gallery",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "text": "\u2022 All monsters listed on this page deal one whole heart of contact damage except for Mega Clotty which deals half a heart of contact damage."
+        },
+        {
+          "heading": "Trivia",
+          "level": 2,
+          "text": "\u2022 MemBrain is a pun on the word membrane, which means a thin, flexible layer of body tissue.\n\n\u2022 Mama Guts slightly resembles a digestive system.\n\n\u2022 [Afterbirth onward] The Mega Clotty\u2019s behavior coincidentally bears some resemblance to a fan idea of a boss called \u201cMega Clotty,\u201d as, besides its name, this 2012 idea mentions that its behavior would be jumping up to shoot out blood shots as well as spawning one Clotty. However, the Mega Clotty is implemented as an enemy, not a boss, and some of its conceptual behaviors on the ideas wiki were never implemented for the fact that it\u2019s purely coincidental. [end edition note]"
+        }
+      ],
+      "boxes": [
+        {
+          "template": "infobox monster",
+          "section": 0,
+          "fields": {
+            "name": "MemBrain",
+            "image name": "* [Before Repentance] Rebirth",
+            "id": "57",
+            "base hp": "62",
+            "environment": "Depths / Dank Depths / \nWomb / Utero / Scarred Womb / \nChest / \nchallenge /",
+            "behavior": "Slowly moves around the room, occasionally hopping and firing 8 large blood shots in all directions. Splits into 2 Brains upon death."
+          },
+          "group": "entity",
+          "id": 57,
+          "name": "MemBrain",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            0
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 2,
+          "fields": {
+            "name": "Mama Guts",
+            "variant": "1",
+            "base hp": "62",
+            "environment": "Necropolis / \nWomb / Utero / Scarred Womb / \nchallenge / \n5.71% Chance to replace MemBrains",
+            "behavior": "Slowly moves around the room, occasionally hopping and firing 8 large blood shots in all directions. Splits into 2 Guts upon death."
+          },
+          "group": "entity",
+          "id": 57,
+          "name": "Mama Guts",
+          "variant": 1,
+          "subtype": 0,
+          "section_indices": [
+            2
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 3,
+          "fields": {
+            "dlc": "r",
+            "name": "Dead Meat",
+            "variant": "2",
+            "base hp": "62",
+            "environment": "Corpse / \nchallenge /",
+            "behavior": "Slowly moves around the room, occasionally hopping and firing 8 large blood shots in all directions that bounce off the walls. Splits into 2 Cysts upon death."
+          },
+          "group": "entity",
+          "id": 57,
+          "name": "Dead Meat",
+          "variant": 2,
+          "subtype": 0,
+          "section_indices": [
+            3
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 4,
+          "fields": {
+            "name": "Dinga",
+            "image name": "* [Before Repentance] Rebirth",
+            "id": "223",
+            "base hp": "62",
+            "environment": "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nChest / \nboss / challenge /",
+            "behavior": "Slowly moves around the room, occasionally hopping to spawn Dips or fire 8 Brown shots in all directions. Splits 2 Squirts upon death."
+          },
+          "group": "entity",
+          "id": 223,
+          "name": "Dinga",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            4
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 5,
+          "fields": {
+            "dlc": "a",
+            "name": "Mega Clotty",
+            "id": "282",
+            "base hp": "20",
+            "environment": "Cellar / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+            "behavior": "Slowly moves around the room, occasionally hopping and either firing 6 blood shots in all directions, leaving a puddle of Red Creep, or spawning a Clotty or a collapsed Globin. Splits into two Clotty upon death."
+          },
+          "group": "entity",
+          "id": 282,
+          "name": "Mega Clotty",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            5
+          ]
+        }
+      ]
+    },
+    "Guts": {
+      "title": "Guts",
+      "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Guts",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266739",
+      "revision": 266739,
+      "timestamp": "2026-07-27T05:31:51Z",
+      "license": "CC BY-SA 4.0",
+      "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "level": 0,
+          "text": "Guts is a monster that attaches itself to a wall or obstacle, such as a rock, rolling around the contour of the terrain.\nIf the obstacle it is attached to is destroyed, then it will continue rolling in the direction it was previously traveling until it meets another wall or obstacle.\n\nThey make up for their limited movement by being very fast, and in numbers they can tighten movement space (especially in layouts containing narrow passages). Two of them are spawned by Mama Guts upon death."
+        },
+        {
+          "heading": "Variations",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Scarred Guts",
+          "level": 3,
+          "text": "Scarred Guts are paler versions of the regular Guts. They have a 50% chance of replacing normal Guts in the Scarred Womb. They behave identically to regular Guts but leave behind a trail of damaging Red Creep and move slightly faster than their regular counterparts."
+        },
+        {
+          "heading": "Slog",
+          "level": 3,
+          "text": "Slogs are much darker than Guts and bear a yellow eye in their center that follows Isaac's position. Initially, they behave identically to Guts while moving slightly slower and leaving behind a trail of slowing Black Creep. However, when Isaac cardinally aligns with them, they charge at him until colliding with a wall or obstacle, where they will then resume their previous behavior. Slogs are exclusive to the Dank Depths."
+        },
+        {
+          "heading": "Cyst",
+          "level": 3,
+          "text": "Cysts behave like normal Guts but they will occasionally shoot 1 blood shot towards Isaac if he is close enough.\n\nTwo of them will be spawned if a Dead Meat is killed."
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "text": "\u2022 Guts and their variants are immune to Strange Attractor's effect."
+        },
+        {
+          "heading": "Gallery",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Trivia",
+          "level": 2,
+          "text": "\u2022 [Repentance] The Cyst first appeared in the Antibirth mod.\n\n\u2022 Cysts in real life are abnormal growths, usually non-cancerous, filled with fluid or other semi-solid substances. Some even develop in organs or contain pores."
+        }
+      ],
+      "boxes": [
+        {
+          "template": "infobox monster",
+          "section": 0,
+          "fields": {
+            "id": "40",
+            "base hp": "25",
+            "environment": "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nboss /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it."
+          },
+          "group": "entity",
+          "id": 40,
+          "name": "Guts",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            0
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 2,
+          "fields": {
+            "dlc": "a",
+            "name": "Scarred Guts",
+            "image name": "* [Before Repentance] Afterbirth",
+            "variant": "1",
+            "base hp": "28",
+            "environment": "Womb / Scarred Womb / \nchallenge /",
+            "replace": "Guts",
+            "replace chance": "50%",
+            "replace notes": "in Scarred Womb",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, leaving a trail of damaging Red Creep."
+          },
+          "group": "entity",
+          "id": 40,
+          "name": "Scarred Guts",
+          "variant": 1,
+          "subtype": 0,
+          "section_indices": [
+            2
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 3,
+          "fields": {
+            "dlc": "r",
+            "name": "Slog",
+            "variant": "2",
+            "base hp": "28",
+            "environment": "Dank Depths / \nchallenge /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, charging at Isaac when he is in sight."
+          },
+          "group": "entity",
+          "id": 40,
+          "name": "Slog",
+          "variant": 2,
+          "subtype": 0,
+          "section_indices": [
+            3
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 4,
+          "fields": {
+            "dlc": "r",
+            "name": "Cyst",
+            "id": "862",
+            "base hp": "25",
+            "environment": "Corpse / \nchallenge /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, regularly firing blood shots at Isaac."
+          },
+          "group": "entity",
+          "id": 862,
+          "name": "Cyst",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            4
+          ]
+        }
+      ]
+    }
+  }
+}

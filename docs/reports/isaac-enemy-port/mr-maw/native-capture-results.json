@@ -1,0 +1,48 @@
+[
+  {
+    "case": "red-head-death",
+    "exit_code": 0,
+    "args": [
+      "build/deathward",
+      "--smoke",
+      "--mute",
+      "--scene",
+      "enemy-35.2.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--enemy-camera-follow",
+      "--enemy-partner-hit",
+      "30",
+      "10000",
+      "--frames",
+      "38",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/mr-maw/native-red-head-death.png"
+    ]
+  },
+  {
+    "case": "body-death",
+    "exit_code": 0,
+    "args": [
+      "build/deathward",
+      "--smoke",
+      "--mute",
+      "--scene",
+      "enemy-35.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--enemy-camera-follow",
+      "--enemy-hit",
+      "30",
+      "10000",
+      "--frames",
+      "38",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/mr-maw/native-body-death.png"
+    ]
+  }
+]

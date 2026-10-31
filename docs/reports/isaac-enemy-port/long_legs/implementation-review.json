@@ -1,0 +1,191 @@
+{
+  "scope": [
+    "206.0.0 Baby Long Legs",
+    "206.1.0 Small Baby Long Legs",
+    "207.0.0 Crazy Long Legs",
+    "207.1.0 Small Crazy Long Legs",
+    "30.2.0 Sack"
+  ],
+  "mechanics_fingerprint": "64bd7ece6bf04647",
+  "native": {
+    "covered_suites": 73,
+    "passed": 73,
+    "failed": 0,
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "initial_full_run": {
+      "report": "docs/reports/isaac-enemy-port/long_legs/native.xml",
+      "passed": 71,
+      "failed": [
+        "hive_evaders",
+        "mulligan_family"
+      ]
+    },
+    "corrected_runs": [
+      "docs/reports/isaac-enemy-port/long_legs/hive-corrected.xml",
+      "docs/reports/isaac-enemy-port/long_legs/mulligan-corrected.xml"
+    ],
+    "scope": "73 unique native suites pass across the full run and two corrected reachability fixtures. New specialists changed seeded selections; the unchanged first100seeds no longer contained Drowned Hive. Independent production search found seed245/floor1/room7. Mulligan/Mulligoon now use seeds7and21. Tests retain original samples plus actual new witnesses. Runtime/build content unchanged after the full build; only the two fixtures were rebuilt.",
+    "behavior": "docs/reports/isaac-enemy-port/long_legs/behavior-final.txt",
+    "behavior_scope": "Long Legs45frame attacks, Lay26/Shoot22, exact8way/4diagonal volleys and physical arc fields, retained atomic volleys, Baby twins/opposite impulses/global population gating, Small Baby Sack/white creep, source Sack current/maxHP and regenerative recurrence/damage reset/noncontact, thrown Spider landing/controller reset, movement around cover/retreat, strict immutable config and four actual seeded parent witnesses."
+  },
+  "browser": {
+    "cases": 10,
+    "report": "docs/reports/isaac-enemy-port/long_legs/web/results.json",
+    "errors": [],
+    "scope": "Ten Original-style production WASM cases: four Long Legs parents, regenerating/throwing Sack, Crazy cover navigation and all four actual seeded parent rooms. Exact frame events, volleys, birth impulses/capacity and regen are checked in native fixtures. Full native special branches and all six acceptance gates are not certified."
+  },
+  "visual": {
+    "style": "Original",
+    "inspected_final_captures": 12,
+    "captures": [
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/native-crazy.png",
+        "observation": "Tall dark Crazy body, long legs reaching ground and shadows visible beside player. Red occlusion outline resolves overlapping limbs; crowd readability remains a separate open gate."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/native-sack.png",
+        "observation": "Partly/full grown red Sack silhouette is separate from the player and has a matching ground shadow."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-baby.png",
+        "observation": "Large cream Baby with long dark legs is visible beside cover in its actual seeded room, distinct from the smaller green spiders around the player."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-small-baby.png",
+        "observation": "Small cream Baby has a lower body and spread legs beside a ruined structure; original room dressing and protagonist retained."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-crazy.png",
+        "observation": "Large dark Crazy appears with other residents in the actual Survey Camp room; contact overlap is outlined, but broad crowd readability is not certified."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/native-natural-small-crazy.png",
+        "observation": "Smaller dark Crazy silhouette appears in its actual room with a projectile visible above the ground and unchanged canyon occlusion treatment."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-baby.png",
+        "observation": "Cream long-legged Baby and green smaller spiders match the native seeded-room composition."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-small-baby.png",
+        "observation": "Low cream Baby silhouette and leg shadows visible beside the ruined structure, matching Linux."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-crazy.png",
+        "observation": "Tall dark Crazy and original mixed roster match native seeded room; red outline on overlapping geometry remains visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/web/natural-small-crazy.png",
+        "observation": "Shorter dark variant and airborne projectile match the native scene."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/web/crazy-cover.png",
+        "observation": "Tall dark Crazy has moved around the solid crate and is rendered beside the player. Telemetry and focused fixture establish legal navigation."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/long_legs/web/sack-late.png",
+        "observation": "Red Sack remains behind its two grounded green Spider offspring; throwing and landing are established separately by frame telemetry."
+      }
+    ],
+    "result": "Partial visual pass:12 usable Linux/WASM captures inspected, covering all four parents and Sack in real seeded rooms or isolated/cover scenes. Initial poorly framed captures retained and excluded. Full combat readability, balance and performance acceptance remain open.",
+    "limitations": [
+      "Procedural DeathWard geometry rather than Isaac sprite imports.",
+      "Screenshots cannot prove attack timing, white-creep slowing or throw collision; native tests and browser telemetry cover those features.",
+      "Static-player captures permit contact overlap and do not establish full combat/crowd readability.",
+      "Frame counters and incidental FPS overlays are not controlled performance measurements.",
+      "Isolated fleeing Babies leave the player-centered camera; early20frame captures show camera interpolation, not valid silhouette evidence."
+    ]
+  },
+  "adaptations": [
+    "SourceHPx3.2, XZdistancesx.1 and velocitiesx3. Four LongLegs maxHP64/51.2on opening floor; Sack initial22.4/max64. Normal player health/damage, Mine roster, hubs, Original style and expedition structure unchanged.",
+    "Source30Hz decisions within60Hzphysical simulation. Canyon A* and sampled retreat destinations replace rectangular grid cache/retry/diagonal bias; direct physical clear approximates Crazy CheckLine. This is not native grid/timeScale/RNG parity.",
+    "External long_legs and sack records contain attack events/chances/forces/regeneration/offspring/projectile values. Common evasion cadence/ranges and navigation sampling follow existing reviewed Hive adaptation.",
+    "Crazy projectiles use height.65, initial upward15+/-.15, gravity27and retention.9 in local3D, translating sourceheight-13, verticalspeed-10+/-.1, total acceleration.6 with heightscale.05. Physical scenery can intercept arcs. Native graphical sprite-scale details are not copied.",
+    "Sack throw reuses validated physical arcs and legal landing. Source free-grid-cell selection is sampled on actual local terrain; blocked births retain requests, eventually trying a vertical throw. Body/shot collision is suspended during thrown state; normal Spider cannot land on deep water, while wet-replaced Strider can.",
+    "Local spawn/event limits retain attacks and mandatory children instead of dropping payloads. Baby twins keep opposite unit impulses. SmallBaby overlap replacement removes the old Sack without kill rewards. The white Tar hazard radius1and lifetime6seconds are explicit local presentation values; exact sourceeffect25radius/lifetime remains unverified.",
+    "Sack starts at source7HP immediately on creation so dormant scenes show its partly grown state. This moves initialization ahead of its first activeAI tick. Status/stun resets are local integration; full native status parity remains open.",
+    "LongLegs tall/four-family silhouettes and slower small-variant stride animation use Original procedural geometry and palette. Existing Sack health-based shrink display is retained. Sparse specialistsmax1perroom, bigBabybands0..2/smallBaby0..1, bigCrazy0..1and3/smallCrazy0..3 follow habitat presence; weights/costs are local balancing choices."
+  ],
+  "remaining": [
+    "Hardmode/Sack champion regen, full damage-flag filtering, status/friendly/player-control/BurstingSack branches and native grid/RNG/timeScale equivalence are not complete.",
+    "Whitecreep exact source dimensions/lifetime, full native free-position selection/overlap replacement radius, native audio and sprite events, and all parent-specific Spider thrown branches require further review.",
+    "Broad readability, long-run balance and controlled Linux/WASM performance acceptance remain open; all five records stay in_progress until six gates pass.",
+    "Thrown Spider/Strider status timers need the same detailed review as swimmer throwing; ordinary source throw/landing is covered, full native status parity is not."
+  ],
+  "complete": false,
+  "historical_artifacts_preserved": 5816
+}

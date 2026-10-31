@@ -1,0 +1,9 @@
+{
+  "passed": 86,
+  "total": 86,
+  "failed": 0,
+  "full_report": "docs/reports/isaac-enemy-port/maggot/native-full.txt",
+  "focused": "docs/reports/isaac-enemy-port/maggot/native-focused-1.txt",
+  "shared_controller_regression": "docs/reports/isaac-enemy-port/maggot/spitty-regression-1.txt",
+  "scope": "Full native regression plus dedicated Maggot behavior, starting-kit feasibility and actual seeded residents. Not full six-gate parity."
+}

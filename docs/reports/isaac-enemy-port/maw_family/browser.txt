@@ -1,0 +1,18 @@
+START maw browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS maw
+START red-maw browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS red-maw
+START psychic-maw browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS psychic-maw
+START natural-maw browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-maw
+START natural-red-maw browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-red-maw
+START natural-psychic-maw browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS natural-psychic-maw

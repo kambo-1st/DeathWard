@@ -1,0 +1,13 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp: In static member function ‘static std::shared_ptr<const dw::MechanicsLibrary> dw::MechanicsLibrary::load(const std::filesystem::__cxx11::path&)’:
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp:1274:119: error: ‘Aimed’ is not a member of ‘dw::MonsterAttack’
+ 1274 |         require(d&&d->flying&&!d->roomHazard&&!d->contact&&d->motion==MonsterMotion::Orbit&&d->attack==MonsterAttack::Aimed&&
+      |                                                                                                                       ^~~~~
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:90: CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:371: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:3323: CMakeFiles/deathward_mullighoul_tests.dir/rule] Error 2
+gmake: *** [Makefile:1617: deathward_mullighoul_tests] Error 2

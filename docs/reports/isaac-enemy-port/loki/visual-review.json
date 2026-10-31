@@ -1,0 +1,25 @@
+{
+  "result": "partial_pass",
+  "style": "Original",
+  "native_inspected": [
+    "docs/reports/isaac-enemy-port/loki/linux-loki.png",
+    "docs/reports/isaac-enemy-port/loki/linux-lokii.png",
+    "docs/reports/isaac-enemy-port/loki/linux-lokii-half.png"
+  ],
+  "wasm_final_inspected": [
+    "docs/reports/isaac-enemy-port/loki/full/wasm-resident-lokii-180.png",
+    "docs/reports/isaac-enemy-port/loki/full/wasm-tainted-boom-110.png"
+  ],
+  "earlier_focused_evidence": "docs/reports/isaac-enemy-port/loki/focused/wasm-probes.json",
+  "findings": [
+    "Loki has a whole rounded body; Lokii has two closed half bodies with distinct cut faces. The inward triangle winding found in the initial native captures was corrected; those captures remain under first-run/.",
+    "The first Lokii half can die while the other remains active and the aggregate health bar reads 50%. Native behavior tests also verify the final shared payout.",
+    "The known lower-edge black blast artifact is absent in the inspected final Linux/WASM captures; the warning circle remains visible as thin triangle geometry.",
+    "The resident Lokii frame 180 places one half partly outside the right edge. Camera framing and simultaneous threat readability remain incomplete.",
+    "The existing PHASE 1 HUD label remains generic, and the hint still says watch both halves after one dies. These are presentation limitations.",
+    "Isolated enemy fixtures retain the underlying test arena title; actual generated encounters use the dedicated encounter.",
+    "Small facial features, bullets against bright sand, HUD/terrain occlusion and all-camera readability are not accepted by these screenshots.",
+    "Screenshot FPS counters are startup/display samples, not controlled performance measurements."
+  ],
+  "artifact_regression": "docs/reports/isaac-enemy-port/loki/artifact-regression.json"
+}

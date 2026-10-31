@@ -1,0 +1,26 @@
+{
+  "id": "21.0.0",
+  "source": "tests/cardinal_walker_tests.cpp and native-focused-1.txt",
+  "floor_indexing": "zero-based internal floor indices",
+  "witnesses": [
+    {
+      "seed": 0,
+      "floor": 2,
+      "room": 2,
+      "band": 1
+    },
+    {
+      "seed": 0,
+      "floor": 5,
+      "room": 1,
+      "band": 3
+    }
+  ],
+  "interior_river": {
+    "seed": 0,
+    "floor": 5,
+    "room": 3,
+    "simulated_ticks": 240
+  },
+  "scope": "Generated residents, no manually inserted monsters; native test verifies dedicated runtime, activation, legal footprint and ordinary habitat bands."
+}

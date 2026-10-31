@@ -1,0 +1,173 @@
+{
+  "status": "Source discovery for the next ordinary enemy; no completed review or implementation claimed.",
+  "id": "21.0.0",
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "index": 9,
+    "case": "0x699968",
+    "controller": "0x51afa0"
+  },
+  "shared_controller": {
+    "path": "docs/reports/isaac-enemy-port/spitties/source/controller.asm",
+    "sha256": "775a958f736b3c88ff4e70ac4ba504df58e2f1386f3ed8f713e647919121bc88"
+  },
+  "constants": {
+    "walk_force": {
+      "address": "0xb6a53c",
+      "value": 0.75,
+      "bytes": "0000403f"
+    },
+    "retention": {
+      "address": "0xb6a588",
+      "value": 0.8500000238418579,
+      "bytes": "9a99593f"
+    },
+    "vertical_axis_retention": {
+      "address": "0xb6a5f0",
+      "value": 0.9647058248519897,
+      "bytes": "f6f6763f"
+    }
+  },
+  "source_xml": {
+    "anm2path": "021.000_Maggot.anm2",
+    "baseHP": "15",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "1",
+    "collisionMass": "7",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "21",
+    "name": "#MAGGOT",
+    "numGridCollisionPoints": "12",
+    "portrait": "14",
+    "reroll": "true",
+    "shadowSize": "17",
+    "stageHP": "0",
+    "variant": "0"
+  },
+  "source_room_presence": {
+    "rooms/00.special rooms.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    },
+    "rooms/04.caves.stb": {
+      "templates": 37,
+      "positive_weight_templates": 37
+    },
+    "rooms/05.catacombs.stb": {
+      "templates": 10,
+      "positive_weight_templates": 10
+    },
+    "rooms/06.flooded caves.stb": {
+      "templates": 35,
+      "positive_weight_templates": 35
+    },
+    "rooms/33.corpse.stb": {
+      "templates": 17,
+      "positive_weight_templates": 17
+    },
+    "rooms/36.backwards.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/04.caves.stb": {
+      "templates": 9,
+      "positive_weight_templates": 9
+    },
+    "rooms/greed/05.catacombs.stb": {
+      "templates": 9,
+      "positive_weight_templates": 9
+    },
+    "rooms/greed/06.flooded caves.stb": {
+      "templates": 10,
+      "positive_weight_templates": 10
+    }
+  },
+  "wiki": {
+    "title": "Maggot",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Maggot",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266753",
+    "revision": 266753,
+    "timestamp": "2026-07-27T05:31:57Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "A Maggot is a type of monster introduced in the vanilla content of The Binding of Isaac: Rebirth. They can be commonly found in Chapter 2. [Afterbirth onward] They can also be found wandering about within libraries.\n\nAs their name suggests, they're blind, white insect maggots that lack any appendages. They crawl around the room slowly and aimlessly, but will deal damage upon full contact."
+      },
+      {
+        "heading": "Variations",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Small Maggot",
+        "level": 3,
+        "text": "Small Maggots are a type of Maggots added in The Binding of Isaac: Repentance DLC. They can be exclusively found in Corpse.\n\nThey are quite similar to regular Maggots but are variants that are very small in size. Shortly after spawning, they very slowly crawl towards Isaac. They are primarily spawned by Pustules, Level 2 Horfs , and Corpse's bosses."
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "\u2022 The Maggots first appear in the original Flash version of The Binding of Isaac.\n\n\u2022 [Repentance] Small Maggots originate from the Antibirth mod."
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "id": "21",
+          "base hp": "15",
+          "environment": "Caves / Catacombs / Flooded Caves / \nCorpse / \nboss / library /",
+          "behavior": "Aimlessly moves around the room, dealing contact damage."
+        },
+        "group": "entity",
+        "id": 21,
+        "name": "Maggot",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 2,
+        "fields": {
+          "dlc": "r",
+          "name": "Small Maggot",
+          "id": "853",
+          "image scale": "1/2",
+          "base hp": "10",
+          "environment": "Corpse / \nchallenge / \nsecret / (Corpse only)",
+          "behavior": "Slowly crawls toward Isaac, dealing contact damage."
+        },
+        "group": "entity",
+        "id": 853,
+        "name": "Small Maggot",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          2
+        ]
+      }
+    ]
+  },
+  "findings": [
+    "Maggot uses the same installed root controller and cardinal path helper as Spitty, but selects force .75 at 0x51b733..0x51b748.",
+    "The charging-family branch is false for type21 (0x51b6d6..0x51b6f8); the primary shooting branch at 0x51c92b accepts only type31/243. Ordinary Maggot has contact damage and no projectile attack.",
+    "Source base HP15 maps to48 under the existing x3.2 conversion; current generic definition incorrectly remains40.",
+    "Current encounter entry spans bands1..3; actual source room presence is Caves-family and Corpse, plus special/Ascent/Greed. Ordinary band2 placement needs a deliberate source-backed decision.",
+    "Existing Small Maggot853 behavior is a separate controller; do not give regular Maggot its player-pursuit behavior."
+  ],
+  "next_steps": [
+    "Extract and verify highest-priority021.000_Maggot.anm2 metadata; inspect appearance and walking animation contracts.",
+    "Share the bounded source-rate cardinal wandering primitive with Spitty while keeping independent family profiles and state.",
+    "Implement correct health, source movement and contact; retain required collision/status/lifecycle rules and explicitly document adaptations.",
+    "Validate determinism without pursuit, cover/water legality, seeded stage placement, player damage, Linux/WASM visuals and remaining acceptance gates."
+  ]
+}

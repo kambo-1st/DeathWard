@@ -1,0 +1,80 @@
+{
+  "result": "partial_pass",
+  "style": "Original",
+  "manual_image_inspections": 12,
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/native/membrain.png",
+      "platform": "Linux",
+      "inspected": true,
+      "finding": "Pink folded body visibly raised over its shadow during the hop."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/native/mama-guts.png",
+      "platform": "Linux",
+      "inspected": true,
+      "finding": "Mama Guts ring has eight separated red shots and an exposed mouth."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/native/dead-meat.png",
+      "platform": "Linux",
+      "inspected": true,
+      "finding": "Dead Meat has a green body and a visibly rotated ring."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/native/cyst.png",
+      "platform": "Linux",
+      "inspected": true,
+      "finding": "Cyst is smaller, green and grounded beside the room wall."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/membrain-hop.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Hop visible without generic target warning."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/mama-guts-ring.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Expanded eight-shot ring visible, rather than only the coincident emission frame."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/dead-meat-children.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Two smaller Cysts visible after parent death; remaining parent projectiles persist."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/cyst-shot.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Single aimed shot visible after leaving moving Cyst."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/resident-membrain-ring.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Natural four-threat room shows full ring and nearby cover."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/resident-mama-guts-ring.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Natural six-threat riverside room shows ring amid other actors; overlapping bodies near player still need broader readability work."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/resident-dead-meat-ring.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Natural room shows rotated ring near barrel/rock cover and interior water."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/web/resident-cyst-shot.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Natural nine-threat room shows grounded Cyst near player; shot may impact before this capture, so trajectory evidence is in trace."
+    }
+  ],
+  "limits": "Authored procedural silhouettes, not source sprite parity. Captures verify selected poses/patterns only; full camera/occlusion/accessibility, default-kit balance and controlled performance remain open. FPS overlays are not a benchmark."
+}

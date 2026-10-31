@@ -1,0 +1,96 @@
+{
+  "checks": [
+    {
+      "case": "baby",
+      "attacks": 5,
+      "child": true,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 102.98113563534078,
+      "sampleCount": 140
+    },
+    {
+      "case": "small-baby",
+      "attacks": 5,
+      "child": true,
+      "thrown": false,
+      "maxHealth": 51.20000076293945,
+      "travel": 66.32545923355464,
+      "sampleCount": 160
+    },
+    {
+      "case": "crazy",
+      "attacks": 3,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 5.90789794921875,
+      "sampleCount": 80
+    },
+    {
+      "case": "small-crazy",
+      "attacks": 3,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 51.20000076293945,
+      "travel": 5.90789794921875,
+      "sampleCount": 80
+    },
+    {
+      "case": "sack",
+      "attacks": 2,
+      "child": true,
+      "thrown": true,
+      "maxHealth": 64,
+      "travel": 0,
+      "sampleCount": 160
+    },
+    {
+      "case": "crazy-cover",
+      "attacks": 4,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 14.030731409482872,
+      "sampleCount": 100
+    },
+    {
+      "case": "natural-baby",
+      "attacks": 3,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 37.88010263001588,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-small-baby",
+      "attacks": 2,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 51.20000076293945,
+      "travel": 43.5329561040425,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-crazy",
+      "attacks": 3,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 5.129012346894051,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-small-crazy",
+      "attacks": 2,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 51.20000076293945,
+      "travel": 4.9079340882659785,
+      "sampleCount": 50
+    }
+  ],
+  "errors": [],
+  "scope": "Ten Original-style production WASM cases: four Long Legs parents, regenerating/throwing Sack, Crazy cover navigation and all four actual seeded parent rooms. Exact frame events, volleys, birth impulses/capacity and regen are checked in native fixtures. Full native special branches and all six acceptance gates are not certified."
+}

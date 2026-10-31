@@ -1,0 +1,11 @@
+{
+  "previous": "docs/reports/isaac-enemy-port/leeches/checkpoint.json",
+  "sha256": "cf93f368b99d0c3be9f56470b19d80fb4b70920b4fd10ad3f57e48a00d71eb43",
+  "artifact_files_unchanged": 55,
+  "starting_revalidation": {
+    "runtime_files": 107,
+    "build_files": 18,
+    "artifact_files": 55,
+    "changed": []
+  }
+}

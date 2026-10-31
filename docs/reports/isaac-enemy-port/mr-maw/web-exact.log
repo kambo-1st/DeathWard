@@ -1,0 +1,6 @@
+START exact-normal
+PASS exact-normal
+START exact-red
+PASS exact-red
+START exact-body-death
+PASS exact-body-death

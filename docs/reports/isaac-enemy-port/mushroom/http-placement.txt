@@ -1,0 +1,13 @@
+127.0.0.1 - - [27/Oct/2026 08:30:13] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:14] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-300.0.0 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:15] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:15] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:15] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:35] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-300.0.0&enemy-hit=10%3A8 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:35] "GET /index.js HTTP/1.1" 304 -
+127.0.0.1 - - [27/Oct/2026 08:30:35] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:35] "GET /index.wasm HTTP/1.1" 304 -
+127.0.0.1 - - [27/Oct/2026 08:30:59] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-300.0.0&resident-seed=1&resident-floor=2 HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:59] "GET /index.js HTTP/1.1" 304 -
+127.0.0.1 - - [27/Oct/2026 08:30:59] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [27/Oct/2026 08:30:59] "GET /index.wasm HTTP/1.1" 304 -

@@ -1,0 +1,4 @@
+PASS closed
+PASS burst
+PASS exposed
+PASS resident

@@ -1,0 +1,1 @@
+FOUND seed=245 floor=3 room=10

@@ -1,0 +1,100 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 57,
+      "index": 37,
+      "case": "0x699a34",
+      "controller": "0x50a450"
+    },
+    {
+      "type": 862,
+      "index": 24,
+      "case": "0x69a26b",
+      "controller": "0x5031b0"
+    }
+  ],
+  "constants": {
+    "retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "wander_force": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "wander_radius": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "wander_arrival": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "stuck_speed_squared": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "cyst_force": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "cyst_retention": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    }
+  },
+  "strings": {},
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/source/controller.asm",
+      "start": "0x50a450",
+      "end": "0x50adae",
+      "raw_sha256": "b5e1340a5b84c8a29cd55d64132334590ca7a4f92761522ad3b592ea1be6b5d3",
+      "sha256": "88d60bf4a9ec3909a4a8be9948b8bef94c7aaa17c9db06d8973e3adc25b1d336"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/source/cyst_guts_controller.asm",
+      "start": "0x5031b0",
+      "end": "0x5054da",
+      "raw_sha256": "a34e60a1bacd826df5068413fb1b4349620be74fcd13432756ee894f9cb1827c",
+      "sha256": "00f55297222607845db0707d4dabb1dadf3c76a16a59b802839eed830a5fa158"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/source/random_walk.asm",
+      "start": "0x7a6180",
+      "end": "0x7a64a9",
+      "raw_sha256": "c9fbefa689af02e86b31d7ac66a303c72fa2e02304dd8054c74de070bb0fb258",
+      "sha256": "dafb89014a790a46b0c19f22baf59eefe4e040f3075d3953df11d788c2ebc7fb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/source/population.asm",
+      "start": "0x6ad7a0",
+      "end": "0x6ad86d",
+      "raw_sha256": "652b9ee0f9132ad43a41b76ff0dbce3ba3144d7d6915b7b7aa1660d2dc3aa9ac",
+      "sha256": "94610750707bacb9ab0456948e73fb9079c6c2552a4ad16979543bfaf173b3d6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/source/projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a33ec",
+      "raw_sha256": "450521a19558deb4c799a9999bef9f2cdd43c1e6080cc03d13fe72cd4fcbaec9",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "raw_sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/membrains/source/projectile_bounce.asm",
+      "start": "0x636a23",
+      "end": "0x636be1",
+      "raw_sha256": "3332b752ad0bb3e07053c15e8a1c262bd28fa6b697a12e98d6a1731b32bf5235",
+      "sha256": "39d42ea2ca042eec22adbf0382d7cdd21b7029a454d446b1f8a526479e824a58"
+    }
+  ]
+}

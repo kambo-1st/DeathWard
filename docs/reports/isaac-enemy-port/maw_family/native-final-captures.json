@@ -1,0 +1,140 @@
+[
+  {
+    "name": "maw",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-26.0.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maw_family/native-final-maw.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/maw_family/native-final-maw.png",
+    "log": "docs/reports/isaac-enemy-port/maw_family/native-final-maw.txt"
+  },
+  {
+    "name": "red-maw",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-26.1.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maw_family/native-final-red-maw.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/maw_family/native-final-red-maw.png",
+    "log": "docs/reports/isaac-enemy-port/maw_family/native-final-red-maw.txt"
+  },
+  {
+    "name": "psychic-maw",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-26.2.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maw_family/native-final-psychic-maw.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/maw_family/native-final-psychic-maw.png",
+    "log": "docs/reports/isaac-enemy-port/maw_family/native-final-psychic-maw.txt"
+  },
+  {
+    "name": "natural-maw",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-26.0.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maw_family/native-final-natural-maw.png",
+      "--resident-seed",
+      "3",
+      "--resident-floor",
+      "1"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-maw.png",
+    "log": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-maw.txt"
+  },
+  {
+    "name": "natural-red-maw",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-26.1.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maw_family/native-final-natural-red-maw.png",
+      "--resident-seed",
+      "3",
+      "--resident-floor",
+      "1"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-red-maw.png",
+    "log": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-red-maw.txt"
+  },
+  {
+    "name": "natural-psychic-maw",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-26.2.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maw_family/native-final-natural-psychic-maw.png",
+      "--resident-seed",
+      "9",
+      "--resident-floor",
+      "2"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-psychic-maw.png",
+    "log": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-psychic-maw.txt"
+  }
+]

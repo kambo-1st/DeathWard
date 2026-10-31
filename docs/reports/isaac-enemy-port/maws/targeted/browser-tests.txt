@@ -1,0 +1,8 @@
+PASS WASM maw-normal: actual suction and Original presentation
+PASS WASM maw-broken-cycle: actual suction and Original presentation
+PASS WASM maw-plate: actual suction and Original presentation
+PASS WASM maw-projectiles: actual suction and Original presentation
+PASS WASM resident-statue-fixed: actual seeded stage, active controller and floor plate
+PASS WASM resident-statue-brimstone: actual seeded stage, active controller and floor plate
+PASS WASM resident-maw: actual seeded stage, active controller and floor plate
+PASS WASM resident-broken-maw: actual seeded stage, active controller and floor plate

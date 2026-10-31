@@ -1,0 +1,158 @@
+Start testing: Oct 28 04:07 CET
+----------------------------------------------------------
+2/96 Testing: mechanics_content
+2/96 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 28 04:07 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,-7 new=1,9
+Mechanics contracts passed
+<end of output>
+Test time =   2.40 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 28 04:07 CET
+"mechanics_content" time elapsed: 00:00:02
+----------------------------------------------------------
+
+5/96 Testing: floor_progression
+5/96 Test: floor_progression
+Command: "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"floor_progression" start time: Oct 28 04:07 CET
+Output:
+----------------------------------------------------------
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=7 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=10 variant=0
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_REPLACEMENT seed=2 floor=2 room=4 source=85.0 target=814.0
+NATURAL_REPLACEMENT seed=2 floor=2 room=4 source=85.0 target=814.0
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_CHARGER id=855.0 seed=4 floor=6 room=2 variant=0
+NATURAL_REPLACEMENT seed=5 floor=2 room=2 source=23.0 target=23.1
+NATURAL_STATUE id=202.10.1 seed=5 floor=4 room=11
+NATURAL_CHARGER id=23.3 seed=7 floor=2 room=3 variant=0
+NATURAL_STATUE id=804.0 seed=9 floor=2 room=2
+NATURAL_STATUE id=804.0.2 seed=10 floor=2 room=7
+NATURAL_GRILLED seed=44 floor=0 room=2
+NATURAL_STATUE id=804.0.3 seed=44 floor=2 room=6
+NATURAL_STATUE id=804.0.1 seed=52 floor=1 room=6
+NATURAL_REPLACEMENT seed=52 floor=3 room=4 source=15.1 target=15.2
+NATURAL_REPLACEMENT seed=114 floor=0 room=2 source=16.0 target=16.1
+NATURAL_REPLACEMENT seed=116 floor=0 room=1 source=29.0 target=54.0
+Replacement coverage: I.Blob=1 Grilled=1 Hopper substitutions=1 Drowned substitutions=20
+Scorched floors=38 Hopper substitutions=1 Drowned substitutions=20
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+Activated Ring Fly groups band=2 count=2
+Activated Hopper forms band=0 count=2
+Activated Hopper forms band=1 count=2
+Activated Hopper forms band=2 count=2
+Reachable pool identities=104
+band=0 meanThreat=4.48009
+band=1 meanThreat=6.26453
+band=2 meanThreat=8.21099
+band=3 meanThreat=11.2237
+Reachable statue identities=14
+Validated 411 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss
+<end of output>
+Test time = 144.33 sec
+----------------------------------------------------------
+Test Passed.
+"floor_progression" end time: Oct 28 04:10 CET
+"floor_progression" time elapsed: 00:02:24
+----------------------------------------------------------
+
+27/96 Testing: resident_enemies
+27/96 Test: resident_enemies
+Command: "/home/kambo/workspace/DeathWard/build/deathward_resident_enemies_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"resident_enemies" start time: Oct 28 04:10 CET
+Output:
+----------------------------------------------------------
+PASS resident groups, corridor inactivity, ambient animation, entry continuity, doorway clearance, companions, cleared revisits and debug replay in both themes
+<end of output>
+Test time =   0.81 sec
+----------------------------------------------------------
+Test Passed.
+"resident_enemies" end time: Oct 28 04:10 CET
+"resident_enemies" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/96 Testing: monster_behaviors
+29/96 Test: monster_behaviors
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_behaviors" start time: Oct 28 04:10 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 180 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.1 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.1 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.1 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.1 entity=48 x=0.486997 z=7.04164
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.3.4 entity=48 x=0.486997 z=7.04164
+PASS monster roster, armor, regeneration, summons, linked deaths, room hazards, beams, collision and projectiles
+<end of output>
+Test time =   3.53 sec
+----------------------------------------------------------
+Test Passed.
+"monster_behaviors" end time: Oct 28 04:10 CET
+"monster_behaviors" time elapsed: 00:00:03
+----------------------------------------------------------
+
+43/96 Testing: lump_behavior
+43/96 Test: lump_behavior
+Command: "/home/kambo/workspace/DeathWard/build/deathward_lump_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"lump_behavior" start time: Oct 28 04:10 CET
+Output:
+----------------------------------------------------------
+FIRING hp=96 check=7 cooldown=63 Spit=20 Shoot=4 Hide=16 actual_shots=3 flight=1 vulnerability=1
+SEQUENCE phase_independent_acquisition=1 random_hide=1 random_emerge=1 appear_collision=1 walls=1
+RELOCATION actual_move=1 native_anchor_retention=1 solids=1 bounds=1 source_distance_fallback=1
+CAPACITY whole_volley=1 frozen_aim=1 completion=1 contact=12.5
+CONFIG immutable_reload=1 invalid_profiles=6
+NATURAL_LUMP seed=0 floor=5 room=2
+NATURAL_LUMP seed=0 floor=5 room=9
+PLACEMENT floors=1 band=3
+PASS Lump
+<end of output>
+Test time =   0.62 sec
+----------------------------------------------------------
+Test Passed.
+"lump_behavior" end time: Oct 28 04:10 CET
+"lump_behavior" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 28 04:10 CET

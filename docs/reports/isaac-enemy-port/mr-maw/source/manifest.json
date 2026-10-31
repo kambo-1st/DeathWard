@@ -1,0 +1,145 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 35,
+      "index": 20,
+      "case": "0x6999f8",
+      "controller": "0x506130"
+    }
+  ],
+  "constants": {
+    "normal_pursuit": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "red_pursuit": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "body_throw_retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "head_prediction": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "range_squared": {
+      "address": "0xb6ad48",
+      "value": 16900.0
+    },
+    "launch_speed": {
+      "address": "0xb6a9a0",
+      "value": 14.0
+    },
+    "return_distance": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "timer_minimum": {
+      "address": "0xb6af0c",
+      "value": -30.0
+    },
+    "spring_timer_divisor": {
+      "address": "0xb6aa4c",
+      "value": 45.0
+    },
+    "spring_base": {
+      "address": "0xb6a6c8",
+      "value": 1.399999976158142
+    },
+    "spring_subtract": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "head_retention_base": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "head_retention_timer_scale": {
+      "address": "0xb6a1e4",
+      "value": 0.00279999990016222
+    },
+    "neck_last_slot": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "neck_fraction": {
+      "address": "0xb6a2ec",
+      "value": 0.125
+    },
+    "neck_center": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "neck_sag_span": {
+      "address": "0xb6aafc",
+      "value": 100.0
+    },
+    "neck_sag_height": {
+      "address": "0xb6a9b0",
+      "value": 16.0
+    },
+    "neck_y_offset": {
+      "address": "0xb6aa14",
+      "value": 31.0
+    }
+  },
+  "strings": {
+    "0xb42f30": "MrMawBodyHori",
+    "0xb42f50": "MrMawBodyVert"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/source/controller.asm",
+      "start": "0x506130",
+      "end": "0x507258",
+      "raw_sha256": "905740bd4636c8f0281c4d0f504abbafe097023c41c5e898d787168aeaaf208b",
+      "sha256": "868f3225a14fea65c9741d34e4030fc324da47ea6bc03c022b23c013ea112ff2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/source/morph.asm",
+      "start": "0x697c60",
+      "end": "0x697e21",
+      "raw_sha256": "811937034eaac8ea8aefdf30ca2ba54dd4c4b9adffeb4f6bdd5ac279fa9e19a6",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/source/pathfinder.asm",
+      "start": "0x7a3650",
+      "end": "0x7a482c",
+      "raw_sha256": "0bb4bf9f4eb2f2a345dba546d23d805ec66514f0d57ff9191ff1cd30b4ccdc06",
+      "sha256": "0664515e90a392bf76891132368f488e6ccf712b47b2c340246739031b289b10"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/source/pursuit_target.asm",
+      "start": "0x695a30",
+      "end": "0x695dfb",
+      "raw_sha256": "0f62713521233940514437e3250bd2921ea7571e13ce450b4ef5f3338a5b5331",
+      "sha256": "bfe91501aec68acd851b7b4610d904e4d1df19e88073d8aa287912f12ce97436"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/source/path_force.asm",
+      "start": "0x7a7610",
+      "end": "0x7a7a00",
+      "raw_sha256": "d2c048564460fe95d1284363b07ece3e618c57c438b65b5729803f31005e5844",
+      "sha256": "0dd83ac5e2dca0daeb4bb9830dd47e170d8c2993f24418efa7565b3f25262eae"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/source/base_movement.asm",
+      "start": "0x686406",
+      "end": "0x68649a",
+      "raw_sha256": "6daabb77c51e24eb1403508ae788ecc0d7fef96070fa5db8ab4c4f2ab2a64378",
+      "sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/source/global_interval.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "scope": "Individually inspected Original-style captures. Smoke evidence only; mixed-room/all-camera acceptance remains open. FPS captured while native and WASM builds were running is not controlled performance evidence.",
+  "full_gate": false,
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/native-open.png",
+      "platform": "Linux",
+      "result": "limited",
+      "observation": "Pale segmented body partly visible at foreground cliff edge; orange occlusion outline locates the enemy. Cannot assess whole-body readability from this view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/native-cover.png",
+      "platform": "Linux",
+      "result": "limited",
+      "observation": "Foreground cliff hides the body; orange outline remains. This is evidence of occlusion feedback only, not the Maggot silhouette or crate traversal."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/native-river.png",
+      "platform": "Linux",
+      "result": "accepted_smoke",
+      "observation": "Four-lobed pale body and ground shadow visible beside canyon wall, on dry bank next to river. No eyes or generic attack apparatus. Small low-contrast body still needs mixed-room readability review."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/native-death.png",
+      "platform": "Linux",
+      "result": "accepted_smoke",
+      "observation": "Enemy body removed, zero-hostiles counter visible and small loot/death feedback at last position. No offspring or projectile packet visible. Foreground cliff limits the ground view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/web/maggot-walk.png",
+      "platform": "WASM",
+      "result": "limited",
+      "observation": "Foreground cliff partly hides pale body; occlusion outline locates it. Whole-body readability is not established."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/web/maggot-cover-walk.png",
+      "platform": "WASM",
+      "result": "accepted_smoke",
+      "observation": "Pale segmented body and shadow clearly visible beside player and barrel; physical crate also visible, no projectile apparatus."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/web/maggot-river-walk.png",
+      "platform": "WASM",
+      "result": "accepted_smoke",
+      "observation": "Visible pale body on dry river bank, below canyon wall; original rendering and ground shadow intact."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/web/maggot-death-walk.png",
+      "platform": "WASM",
+      "result": "limited",
+      "observation": "Pre-death body partly hidden at foreground cliff edge; outline is visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/web/maggot-death-death.png",
+      "platform": "WASM",
+      "result": "accepted_smoke",
+      "observation": "Body absent, zero-hostiles counter and loot feedback visible; no offspring or death projectile appears."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/web/resident-quarry-walk.png",
+      "platform": "WASM",
+      "result": "accepted_smoke",
+      "observation": "Actual mixed-room resident visible next to player and rock, distinct small segmented body among larger threats."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maggot/web/resident-storm-walk.png",
+      "platform": "WASM",
+      "result": "accepted_smoke",
+      "observation": "Actual late-band resident visible on clear ground beside rock; other enemies retain their original presentation."
+    }
+  ],
+  "summary": {
+    "inspected": 11,
+    "accepted_smoke": 7,
+    "limited": 4
+  }
+}

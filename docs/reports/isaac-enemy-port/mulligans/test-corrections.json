@@ -1,0 +1,15 @@
+{
+  "initial_behavior_logs": [
+    "behavior-initial.txt",
+    "behavior-2.txt",
+    "behavior-3.txt"
+  ],
+  "corrections": [
+    "Retained payload events are admitted at drain reconciliation and processed on the next tick; recovery assertions now allow two ticks. Production logic was not changed for this fixture correction.",
+    "The initial500-seed first-floor search found Mulligan/Mulligoon but missed the1%Mulliboom substitution. The replacement odds remain unchanged. The final test uses real known first-floor witnesses and searches the appropriate band1 direct Mulliboom route; seed54floor2room5 proves actual placement. First-floor1%witness remains explicit future coverage.",
+    "Completion fixture now runs with debugScenario=false so pending death payload and later room clear assertions exercise real completion logic. A real breakable-rock and nearby-monster blast fixture was added.",
+    "Browser total-explosion counter includes scenery. Mulliboom proximity samples show one immediate blast by frame11 and a delayed second by frame51 from ignited nearby powder scenery. Browser checks now assert the immediate first blast, producer death and no Troll Bomb without mistaking later world blasts for duplicate producer emission; the isolated native fixture asserts exactly one. Initial browser log/test/results and focused samples are preserved.",
+    "Nine browser cases passed; natural Mulliboom behavior assertions passed but screenshot-at-frame60 failed because it had already completed its proximity explosion. Capture for that natural variant now occurs at the first live sample; only this failed case is retried. All browser evidence uses the same unchanged WASM build.",
+    "The early natural Mulliboom screenshot advances browser frames while awaiting capture; it can explode before a second live sample. Movement now includes known spawn position to first observed position. Preserved failed samples prove1.0059units displacement by frame6; this fixes sampling accounting without reducing the movement assertion or changing gameplay."
+  ]
+}

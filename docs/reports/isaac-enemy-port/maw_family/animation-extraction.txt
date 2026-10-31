@@ -1,0 +1,214 @@
+[
+  {
+    "source": "resources/gfx/026.000_Maw.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/maw_family/animations/026.000_Maw.anm2",
+    "sha256": "99836989d098612c4b1d7874e50fbb091cf547b5ad23b2e9f77f6aa6e9cd1bbf",
+    "checksum": "0x9e5839c2",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 4:13:16 PM",
+      "Version": "104",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "2",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "26",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Shoot",
+          "FrameNum": "20",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "BodySegment",
+          "FrameNum": "1",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/026.001_Red Maw.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/maw_family/animations/026.001_Red Maw.anm2",
+    "sha256": "c7082dfe427b2985011615b3db408ee471409e0f66bb0c0b5186c1b5c283fbd6",
+    "checksum": "0x822d074b",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "5/16/2014 2:15:47 PM",
+      "Version": "103",
+      "Fps": "30"
+    },
+    "events": [],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "2",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "26",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Shoot",
+          "FrameNum": "20",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/026.002_Psychic Maw.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/maw_family/animations/026.002_Psychic Maw.anm2",
+    "sha256": "d9ac838ac15197fac2e05ed75c55b6ff4db57052919cfb6cce282426c982368a",
+    "checksum": "0x8bfbf47c",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 4:13:36 PM",
+      "Version": "106",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "14",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "26",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Shoot",
+          "FrameNum": "20",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/096.000_Eternal Fly.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/maw_family/animations/096.000_Eternal Fly.anm2",
+    "sha256": "43b0805b1e939e9be54077fdc7aeeaedfe47584df3f1e4665ad76a851e5914cf",
+    "checksum": "0x5f0bd9f8",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "5/16/2014 12:02:55 PM",
+      "Version": "103",
+      "Fps": "30"
+    },
+    "events": [],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Fly",
+          "FrameNum": "2",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "TeleportOut",
+          "FrameNum": "5",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "TeleportIn",
+          "FrameNum": "5",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Blink",
+          "FrameNum": "4",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Die",
+          "FrameNum": "11",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "13",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  }
+]

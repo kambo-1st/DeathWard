@@ -1,0 +1,442 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "status": "Partial controller and normal boss-route implementation; not full port acceptance.",
+  "ids": [
+    "69.0.0",
+    "69.1.0"
+  ],
+  "contracts": {
+    "69.0.0": {
+      "movement": "Teleports to random positions away from player.",
+      "targeting": "Player-relative teleport separation; volleys use fixed cardinal/diagonal axes.",
+      "attacks": "Four cardinal shots, four diagonal, four cardinal; alternative eight-shot ring or Boom Fly summon. Whole-heart contact.",
+      "vulnerability": "Source350HP, no stageHP. Meat Cleaver converts into Lokii rather than generic duplication.",
+      "phases": "Independent teleport/attack cycles; optional Poky or four corner Stone Grimaces are encounter-specific support.",
+      "offspring": "Boom Fly25.0.0, at most four live. Meat Cleaver split uses69.1.0.",
+      "completion": "Root defeat pays encounter once; summoned threats and optional invulnerable support need explicit local room-clear policy.",
+      "adaptations": "350 source HP per body becomes1120 using the established x3.2 conversion; contact20 becomes25 through the existing hostile multiplier. World-space fixed volley axes, safe grounded teleports, local action weights/timings in loki.mechanics. Lokii shares a one-fly live/pending cap across both halves. Independent body IDs share one bossGroup; initial pair placement is atomic. Dead-half metadata persists until final death for aggregate HUD/attack cleanup. Children survive the boss and still block ordinary room clear. Existing story evidence remains necessary for floor exit.",
+      "unknowns": [
+        "Native action weights, volley intervals, vanish/reappear windows and teleport distance are unmeasured; configured values are explicit local tuning.",
+        "Meat Cleaver conversion from Loki into Lokii is not yet implemented.",
+        "Loki optional Poky/four-corner Stone Grimace room variants and degraded/Double Trouble/challenge/boss-rush/Void routes remain missing.",
+        "Shared versus per-half source Red Boom Fly cap needs native confirmation; the current shared cap is a declared local interpretation.",
+        "No human/mixed-build or rendered Linux/WASM performance acceptance is claimed by this checkpoint."
+      ]
+    },
+    "69.1.0": {
+      "movement": "Two halves teleport independently to random room positions.",
+      "targeting": "Each half makes its own attack choices; projectiles retain fixed axes.",
+      "attacks": "Same cardinal/diagonal/cardinal volley and eight-shot ring as Loki; Red Boom Fly summon. Whole-heart contact.",
+      "vulnerability": "350HP PER HALF, not350 aggregate; no stageHP.",
+      "phases": "Two autonomous halves; one dying must not delete the other or pay full encounter twice.",
+      "offspring": "Red Boom Fly25.1.0 with maximum one alive. Whether the source cap is shared across both halves needs native confirmation.",
+      "completion": "Both halves must be resolved before a single encounter payout; Red children retain ordinary hostile lifetime.",
+      "adaptations": "350 source HP per body becomes1120 using the established x3.2 conversion; contact20 becomes25 through the existing hostile multiplier. World-space fixed volley axes, safe grounded teleports, local action weights/timings in loki.mechanics. Lokii shares a one-fly live/pending cap across both halves. Independent body IDs share one bossGroup; initial pair placement is atomic. Dead-half metadata persists until final death for aggregate HUD/attack cleanup. Children survive the boss and still block ordinary room clear. Existing story evidence remains necessary for floor exit.",
+      "unknowns": [
+        "Native action weights, volley intervals, vanish/reappear windows and teleport distance are unmeasured; configured values are explicit local tuning.",
+        "Meat Cleaver conversion from Loki into Lokii is not yet implemented.",
+        "Loki optional Poky/four-corner Stone Grimace room variants and degraded/Double Trouble/challenge/boss-rush/Void routes remain missing.",
+        "Shared versus per-half source Red Boom Fly cap needs native confirmation; the current shared cap is a declared local interpretation.",
+        "No human/mixed-build or rendered Linux/WASM performance acceptance is claimed by this checkpoint."
+      ]
+    }
+  },
+  "source_revisions": {
+    "Loki": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=261933",
+    "Lokii": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=261934"
+  },
+  "source_xml": {
+    "69.0.0": {
+      "anm2path": "069.000_Loki.anm2",
+      "baseHP": "350",
+      "boss": "1",
+      "bossID": "15",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "69",
+      "name": "#LOKI",
+      "numGridCollisionPoints": "12",
+      "portrait": "36",
+      "shadowSize": "19",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "69.1.0": {
+      "anm2path": "069.001_Lokii.anm2",
+      "baseHP": "350",
+      "boss": "1",
+      "bossID": "31",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "69",
+      "name": "#LOKII",
+      "numGridCollisionPoints": "12",
+      "portrait": "37",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "906.0.0": {
+      "anm2path": "906.000_hornfel.anm2",
+      "baseHP": "240",
+      "boss": "1",
+      "bossID": "82",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "906",
+      "name": "#HORNFEL",
+      "numGridCollisionPoints": "12",
+      "portrait": "108",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "0"
+    },
+    "906.1.0": {
+      "anm2path": "906.000_hornfel.anm2",
+      "baseHP": "4",
+      "boss": "1",
+      "bossID": "82",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "906",
+      "name": "Hornfel Decoy",
+      "numGridCollisionPoints": "12",
+      "portrait": "109",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "1"
+    },
+    "920.0.0": {
+      "anm2path": "920.000_horny boys.anm2",
+      "baseHP": "707",
+      "boss": "1",
+      "bossID": "101",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "30",
+      "collisionRadius": "30",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "920",
+      "name": "#HORNY_BOYS",
+      "numGridCollisionPoints": "12",
+      "portrait": "136",
+      "shadowSize": "22",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "0"
+    },
+    "965.0.0": {
+      "anm2path": "965.000_minecart.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "100",
+      "collisionRadius": "13",
+      "friction": "1",
+      "hasFloorAlts": "true",
+      "id": "965",
+      "name": "Minecart",
+      "numGridCollisionPoints": "12",
+      "portrait": "200",
+      "shadowSize": "15",
+      "shutdoors": "false",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "967.0.0": {
+      "anm2path": "grid/door_10_bossroomdoor_rails.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "967",
+      "name": "Hornfel Door",
+      "numGridCollisionPoints": "12",
+      "portrait": "109",
+      "shadowSize": "18",
+      "shutdoors": "false",
+      "stageHP": "0",
+      "tags": "noreroll",
+      "variant": "0"
+    }
+  },
+  "stage_evidence": {
+    "69.0.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/15.cathedral.stb",
+          "source_stage": "cathedral",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/16.dark room.stb",
+          "source_stage": "dark room",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/17.chest.stb",
+          "source_stage": "chest",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "boss_pool_evidence": [
+        {
+          "pool": "depths",
+          "weight": 1.0,
+          "proposed_band": 2
+        },
+        {
+          "pool": "necropolis",
+          "weight": 1.0,
+          "proposed_band": 2
+        },
+        {
+          "pool": "dank depths",
+          "weight": 1.0,
+          "proposed_band": 2
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ]
+    },
+    "69.1.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/16.dark room.stb",
+          "source_stage": "dark room",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/17.chest.stb",
+          "source_stage": "chest",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "boss_pool_evidence": [
+        {
+          "pool": "womb",
+          "weight": 1.0,
+          "proposed_band": 3
+        },
+        {
+          "pool": "utero",
+          "weight": 1.0,
+          "proposed_band": 3
+        },
+        {
+          "pool": "scarred womb",
+          "weight": 1.0,
+          "proposed_band": 3
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ]
+    }
+  },
+  "source_reference": "docs/research/isaac-mechanics-reference.json",
+  "source_reference_sha256": "51a84e580d93a78f6cf220cc173ebd4abc0d32ad127ffb64cfd85efa8a5cc00e",
+  "license": "CC BY-SA 4.0 for source-derived wiki summaries",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors. DeathWard implementation, tests and local adaptations are separately identified.",
+  "edition_exclusion": "Repentance+1% Loki/Lokii collectible drop notes are not applied to the1.7.9b baseline."
+}

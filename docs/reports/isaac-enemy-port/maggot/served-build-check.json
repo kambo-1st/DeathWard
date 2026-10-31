@@ -1,0 +1,23 @@
+{
+  "build_exit": 0,
+  "files": [
+    {
+      "path": "build-web/index.js",
+      "sha256": "5f7946274c21c963f965916973743dd428ee5a9ac39f94a80587be2d52c094e2",
+      "gzip_sha256": "1bbccf1f62b24bed29d72a8be3ac31f40a85981d6d9f6c2132b225a6a9de9ab6",
+      "gzip_matches": true
+    },
+    {
+      "path": "build-web/index.wasm",
+      "sha256": "362370f69e182d8e1df11283c4dce9ec7956b19863ae80c9b3e74cb96aae53a0",
+      "gzip_sha256": "0a3c168f7b552a5a4db49472cadb02ff1097120cd1c9abf1c37fa65ed9228789",
+      "gzip_matches": true
+    },
+    {
+      "path": "build-web/index.data",
+      "sha256": "704be0990398ac9716e477e4737de09bf3d7d4e808a83b57861c03d700e161fe",
+      "gzip_sha256": "895d292666dccc01cc45142959fd7af5fc5cbbe3de657e645beb1020d5e7b0b1",
+      "gzip_matches": true
+    }
+  ]
+}

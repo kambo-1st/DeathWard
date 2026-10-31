@@ -1,0 +1,13 @@
+PRIMARY 31.0 count=1 source_frames=16 shoot=6
+PRIMARY 243.0 count=2 source_frames=16 shoot=6
+PRIMARY 31.1 count=10 source_frames=16 shoot=6
+WALK burst_event=1 no_pursuit=1 stun=1 room_suspend=1
+CAPACITY packet_atomicity=1 death_retention=1 owner_lifetime=1 completion=1
+GEOMETRY cover=1 CONFIG immutable_reload=1 invalid_profiles=5
+STARTING_KIT 31.0 seconds=1.35 health=100
+STARTING_KIT 243.0 seconds=1.63333 health=100
+STARTING_KIT 31.1 seconds=20.5333 health=87.5
+NATURAL_SPITTY id=31.0.0 seed=0 floor=4 room=9 band=2
+NATURAL_SPITTY id=243.0.0 seed=2 floor=4 room=4 band=2
+NATURAL_SPITTY id=31.1.0 seed=2 floor=5 room=1 band=3
+PASS Spitty family

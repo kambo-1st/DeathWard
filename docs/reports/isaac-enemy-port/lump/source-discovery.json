@@ -1,0 +1,266 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "records": [
+    {
+      "key": "56.0.0",
+      "id": 56,
+      "variant": 0,
+      "subtype": 0,
+      "name": "Lump",
+      "xml": {
+        "anm2path": "056.000_Lump.anm2",
+        "baseHP": "30",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "56",
+        "name": "#LUMP",
+        "numGridCollisionPoints": "12",
+        "portrait": "45",
+        "reroll": "true",
+        "shadowSize": "0",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:56.0.0",
+      "wiki_matches": [
+        {
+          "page": "Lump",
+          "box": 0,
+          "group": "entity",
+          "fields": {
+            "id": "56",
+            "base hp": "30",
+            "environment": "Womb / Utero / Scarred Womb / \nboss /",
+            "behavior": "Fires 3 spread blood shots at Isaac when he gets in its line of sight. Will burrow underground and reappear elsewhere after firing."
+          },
+          "section_indices": [
+            0,
+            1
+          ],
+          "name": "Lump",
+          "variant": 0,
+          "subtype": 0,
+          "id": 56,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Lump"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 30.0,
+        "2": 30.0,
+        "3": 30.0,
+        "4": 30.0,
+        "5": 30.0,
+        "6": 30.0,
+        "7": 30.0,
+        "8": 30.0,
+        "9": 30.0,
+        "10": 30.0,
+        "11": 30.0,
+        "12": 30.0,
+        "13": 30.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Lump",
+      "room_library_presence": {
+        "rooms/00.special rooms.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/10.womb.stb": {
+          "templates": 47,
+          "positive_weight_templates": 47
+        },
+        "rooms/11.utero.stb": {
+          "templates": 43,
+          "positive_weight_templates": 43
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 52,
+          "positive_weight_templates": 52
+        },
+        "rooms/greed/10.womb.stb": {
+          "templates": 12,
+          "positive_weight_templates": 12
+        },
+        "rooms/greed/11.utero.stb": {
+          "templates": 10,
+          "positive_weight_templates": 10
+        },
+        "rooms/greed/12.scarred womb.stb": {
+          "templates": 18,
+          "positive_weight_templates": 18
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Lump",
+        "motion": "Burrow",
+        "attack": "Spread",
+        "shape": "Blob",
+        "catalog_base_hp": 88.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 102,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Lump",
+          "section": 0
+        },
+        {
+          "page": "Lump",
+          "section": 1
+        }
+      ],
+      "feature_triage": [
+        "room-floor-run-events",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    }
+  ],
+  "article": {
+    "title": "Lump",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Lump",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266755",
+    "revision": 266755,
+    "timestamp": "2026-07-27T05:31:57Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "Lumps remain stationary in one spot and shoot a spread of three shots towards Isaac when he comes within range, then they burrow underground and resurface in a different part of the room. If they resurface in range to shoot at Isaac, they will do so incredibly quickly before burrowing underground again.\n\nLumps will also burrow underground to reappear elsewhere if Isaac doesn't approach them for a short period of time."
+      },
+      {
+        "heading": "Notes",
+        "level": 3,
+        "text": "• When a Lump is a Green or Purple Champion, it can be seen teleporting around the room while burrowed."
+      },
+      {
+        "heading": "Variations",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Tar Boy",
+        "level": 3,
+        "text": "Tar Boys occasionally fire a short-ranged spray of shots towards Isaac that leaves behind slowing Black Creep. It can also burrow underground and resurface in a different part of the room, much like the Lump. However, it is only able to resurface in areas that have Black Creep and it will prefer to resurface close to Isaac.\n\nIf Isaac is standing on Black Creep, Tar Boys can [Before Repentance] launch a fountain of tar shots straight upwards out of the Creep where Isaac is standing/ [Repentance] create a Nerve Ending-like tentacle directly underneath Isaac. This can also occur with Black Creep spawned by other enemies such as Gushes."
+      },
+      {
+        "heading": "Gallery",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "• Tar Boys were added in Booster Pack #4.\n\n• Lumps had a radically different appearance in the original Binding of Isaac.\n\n• [Afterbirth onward] Previously, Lumps appeared as Light Brown in the Scarred Womb. As of Booster Pack #5, Lumps are now red in this environment. [end edition note] \n\n• Tar Boy is a reference to the Newgrounds animation of the same name."
+      },
+      {
+        "heading": "Bugs",
+        "level": 2,
+        "text": "Bug note: If you stun a Lump at the same time that it burrows underground, it will cause their sound effect to repeat continuously for a few seconds.\nBug note: If a Lump spawns as a Light White Champion, when the Lump burrows underground, its Eternal Fly will rapidly teleport around the room, potentially resulting in unavoidable damage."
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "id": "56",
+          "base hp": "30",
+          "environment": "Womb / Utero / Scarred Womb / \nboss /",
+          "behavior": "Fires 3 spread blood shots at Isaac when he gets in its line of sight. Will burrow underground and reappear elsewhere after firing."
+        },
+        "group": "entity",
+        "id": 56,
+        "name": "Lump",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0,
+          1
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 3,
+        "fields": {
+          "dlc": "a+",
+          "name": "Tar Boy",
+          "id": "307",
+          "base hp": "55",
+          "environment": "Dank Depths / \nchallenge /",
+          "behavior": "Fires a short-ranged spray of shots that leave behind slowing Black Creep. Occasionally burrows underground and reappears under any pools of black creep in the room. If Isaac stands on the Creep, the Tar Boy can [Before Repentance] fire shots straight upwards out of the Creep underneath Isaac/ [Repentance] send out a tentacle underneath Isaac."
+        },
+        "group": "entity",
+        "id": 307,
+        "name": "Tar Boy",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          3
+        ]
+      }
+    ]
+  }
+}

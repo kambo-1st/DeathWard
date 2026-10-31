@@ -1,0 +1,23 @@
+{
+  "passed": 5,
+  "suites": [
+    "mechanics_content",
+    "floor_progression",
+    "resident_enemies",
+    "monster_behaviors",
+    "lump_behavior"
+  ],
+  "scope": "Five scoped native suites, not full96-suite run or six acceptance gates.",
+  "log": "docs/reports/isaac-enemy-port/lump/validation/native-detailed.txt",
+  "witnesses": [
+    {
+      "id": "56.0.0",
+      "seed": 0,
+      "floor": 5,
+      "rooms": [
+        2,
+        9
+      ]
+    }
+  ]
+}

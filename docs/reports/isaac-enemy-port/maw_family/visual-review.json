@@ -1,0 +1,105 @@
+{
+  "scope": "Twelve final Original-style Linux/WASM images inspected. Bodies visible; Psychic required fly visible in isolated and seeded rooms. Static appearance smoke review only, not full combat readability or performance certification.",
+  "final_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/native-final-maw.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/native-final-red-maw.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/native-final-psychic-maw.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-maw.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-red-maw.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-psychic-maw.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/web-final/maw.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/web-final/red-maw.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/web-final/psychic-maw.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/web-final/natural-maw.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale flying head visible against the sand; generated-room cover and shadow remain distinct."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/web-final/natural-red-maw.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Red body visible at contact, overlapping the protagonist; crowded-contact readability remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/web-final/natural-psychic-maw.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Purple head and its white orbiting fly are both visible; halo has no black-block artifact."
+    }
+  ],
+  "defects": [
+    {
+      "before": "docs/reports/isaac-enemy-port/maw_family/native-psychic-maw.png",
+      "after": "docs/reports/isaac-enemy-port/maw_family/native-psychic-normal-fix.png",
+      "finding": "Zero surface derivative from halo line propagated undefined lighting through bloom; guarded normal removes observed black block."
+    },
+    {
+      "before": "docs/reports/isaac-enemy-port/maw_family/native-natural-psychic-maw.png",
+      "after": "docs/reports/isaac-enemy-port/maw_family/native-final-natural-psychic-maw.png",
+      "finding": "Pre-entry room preparation discarded pending child. Final capture includes required fly."
+    }
+  ],
+  "limitations": [
+    "Red Maw overlaps the protagonist in contact captures. Small stitched-face details are not always readable at this zoom.",
+    "Browser FPS overlays are incidental. Initial Chromium1248 capture shows1FPS; final Chromium1194 captures show59\u201364FPS, different uncontrolled runs. No controlled performance acceptance."
+  ]
+}

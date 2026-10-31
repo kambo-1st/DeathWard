@@ -1,0 +1,122 @@
+{
+  "passed": 16,
+  "total": 16,
+  "final_build_passed": 10,
+  "browser": "149.0.7827.55",
+  "cases": [
+    {
+      "name": "normal",
+      "pass": true,
+      "last_frame": 122,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+      "build_scope": "before observer-only hook"
+    },
+    {
+      "name": "red",
+      "pass": true,
+      "last_frame": 122,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+      "build_scope": "before observer-only hook"
+    },
+    {
+      "name": "body-death",
+      "pass": true,
+      "last_frame": 31,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+      "build_scope": "before observer-only hook"
+    },
+    {
+      "name": "red-head-death",
+      "pass": true,
+      "last_frame": 32,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+      "build_scope": "before observer-only hook"
+    },
+    {
+      "name": "normal-cover",
+      "pass": true,
+      "last_frame": 121,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+      "build_scope": "before observer-only hook"
+    },
+    {
+      "name": "normal-river",
+      "pass": true,
+      "last_frame": 121,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+      "build_scope": "before observer-only hook"
+    },
+    {
+      "name": "exact-normal",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-exact/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "exact-red",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-exact/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "exact-body-death",
+      "pass": true,
+      "last_frame": 21,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-exact/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "resident-2-band-2-seed-1",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "resident-0-band-2-seed-4",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "resident-2-band-3-seed-6",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "resident-0-band-3-seed-7",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "resident-2-band-1-seed-65",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "resident-0-band-1-seed-75",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+      "build_scope": "final observer build"
+    },
+    {
+      "name": "resident-0-band-2-seed-81",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+      "build_scope": "final observer build"
+    }
+  ],
+  "errors": [],
+  "scope": "Six focused behavior cases before observer-only hook; ten cases on final production build (seven actual populations, three exact-render cases). No gameplay change between builds. Blank first capture set rejected and preserved separately."
+}

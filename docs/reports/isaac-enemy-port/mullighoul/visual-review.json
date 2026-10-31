@@ -1,0 +1,28 @@
+{
+  "style": "Original",
+  "result": "Partial visual pass: selected Linux and WASM captures inspected. Willo flying bodies, orbit spacing, flashing attack presentation, Mullighoul hover and independent children are visible. Source artwork and all-angle/crowd readability are not certified.",
+  "inspected": [
+    "docs/reports/isaac-enemy-port/mullighoul/native-willo-cohort.png",
+    "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-live.png",
+    "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-early.png",
+    "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-death-final.png",
+    "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-river.png",
+    "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-cohort.png",
+    "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-live.png",
+    "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-death.png",
+    "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-willo.png",
+    "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-mullighoul.png"
+  ],
+  "observations": [
+    "Native and browser cohort captures show spaced flying bodies around the player, with pale yellow-green bodies and ground shadows. One member can overlap a cliff; the existing hidden-enemy outline appears there.",
+    "The initial late native live capture placed the fleeing parent behind the top-right HUD and a child near the health panel. An additional frame65 capture clearly shows the elevated walker body and nearby Willo. This is a camera/readability limitation, not proof of a missing actor.",
+    "The river capture shows scenery and existing red outlines but is insufficient alone to prove water traversal. The native movement fixture independently verifies actual crossing while respecting rocks; browser telemetry confirms hover in the river room.",
+    "Death captures show four Willos: one previously emitted live child and three independent death children. This does not mean the death payload itself is four.",
+    "Both natural captures preserve production actors and scenery. The Mullighoul body, spawned Willo and other ordinary residents are visible together. The natural Willo room includes the existing attraction statue; speed changes are verified by telemetry.",
+    "Existing generic yellow windup lines remain, alongside the new Willo Warn flash. No whole-scene filter or source sprite import was used."
+  ],
+  "limits": [
+    "Selected frames/cameras only. Generic Original fly/walker shapes remain; full visual-equivalence and broad readability acceptance are open.",
+    "No controlled performance conclusion is drawn from screenshot FPS counters during concurrent tests."
+  ]
+}

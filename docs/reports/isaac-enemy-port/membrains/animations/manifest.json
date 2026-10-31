@@ -1,0 +1,208 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    },
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/057.002_Dead Meat.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/membrains/animations/057.002_Dead Meat.anm2",
+      "sha256": "63ef67407912aedce0302e0f7a0d57d9b33ae942f1f6d10ddb21ef0dfb722aa0",
+      "checksum": "0xa0fd4ea7",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "11.06.2020 02:40:41",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Wiggle",
+            "FrameNum": "30",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "70",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "29"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/862.000_cyst.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/membrains/animations/862.000_cyst.anm2",
+      "sha256": "ddcd3c61f71cb2827aa6fbda1e0dc27ade20d871c1685e49bb66b67e014cabdc",
+      "checksum": "0xc38c35d",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "10",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Roll",
+            "FrameNum": "24",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/057.000_MemBrain.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/membrains/animations/057.000_MemBrain.anm2",
+      "sha256": "c8c375b4c6d94bf207aa84ca09a5050df3c6de2180478575462ab44602e1fdab",
+      "checksum": "0x5fbfa9ca",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/15/2014 11:15:10 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Wiggle",
+            "FrameNum": "30",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "70",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "29"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/057.001_Mama Guts.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/membrains/animations/057.001_Mama Guts.anm2",
+      "sha256": "64e50c17435c7755db6eda75188cc8f91e469dc619bbb7d696faf1a15fb37fdf",
+      "checksum": "0xf600ec1f",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/15/2014 11:17:29 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Wiggle",
+            "FrameNum": "30",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "70",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "29"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+AssertionError [ERR_ASSERTION]: physical movement
+    at /home/kambo/workspace/DeathWard/web/mulligan-test.cjs:70:32 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

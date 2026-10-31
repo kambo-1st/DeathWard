@@ -1,0 +1,140 @@
+{
+  "inspected": [
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/native-open.png",
+      "result": "accepted_smoke",
+      "scope": "Original style; detached head, separate body and eight visible cord beads are legible in unobstructed scene. No claims about all cameras/mixed rooms.",
+      "performance": "FPS overlay is not controlled evidence: builds, tests and unrelated CPU jobs were running."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/native-red-head-death.png",
+      "result": "accepted_smoke",
+      "scope": "Existing body has become Gusher; head and neck removed; red death projectiles visible. Native focused test, not screenshot alone, establishes exact four-shot count."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/native-body-death.png",
+      "result": "limited",
+      "scope": "Surviving Maw is partly covered by lower-left HUD; not accepted as a full readability view. Retained as evidence for improved capture."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/native-body-death-early.png",
+      "result": "accepted_smoke",
+      "scope": "Earlier Linux capture shows the surviving Maw fully above the HUD beside the protagonist; the body and neck are absent."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/normal-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Original-style normal body, thrown head and connecting bead cord are separately legible in this open-room view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/red-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Original-style red palette distinguishes the body/head pair; thrown head and cord are separately visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/normal-cover-attached.png",
+      "result": "limited",
+      "scope": "Cover silhouette is visible, but the obstacle hides body/head detail. This verifies the outline smoke view, not full attack readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/normal-attached.png",
+      "result": "limited",
+      "scope": "The rendered capture shows an extended/returning head despite the attached filename: simulation advances between probe and screenshot. Not evidence of the exact attached pose."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/red-attached.png",
+      "result": "limited",
+      "scope": "The rendered capture shows an extended/returning head despite the attached filename: simulation advances between probe and screenshot. Not evidence of the exact attached pose."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/body-death-survivor.png",
+      "result": "limited",
+      "scope": "Released Maw is partly covered by the dynamite HUD. Behavior is verified by the sampled state; this view is not accepted for full survivor readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/red-head-death-survivor.png",
+      "result": "accepted_smoke",
+      "scope": "Surviving Gusher and departing red shots are visible. Exact four-shot cardinal packet comes from behavior checks, not this image alone."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/normal-river-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Body remains on the bank while the thrown head and cord are visible over the river."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-initial/normal-river-attached.png",
+      "result": "limited",
+      "scope": "Body and returning head are visible beside the bank; screenshot timing does not establish an exact attached pose."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-exact/exact-normal-attached.png",
+      "result": "accepted_smoke",
+      "scope": "Exact carried head centered above body, cord hidden."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-exact/exact-normal-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Exact first launched pose; initial open capture supplies long-cord readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-exact/exact-red-attached.png",
+      "result": "accepted_smoke",
+      "scope": "Exact red carried pose and distinct palette."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-exact/exact-red-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Exact first red launch pose; long-cord view is in initial capture set."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-exact/exact-body-death-survivor.png",
+      "result": "accepted_smoke",
+      "scope": "Released Maw fully visible away from HUD; body and neck absent."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/resident-2-band-2-seed-1-attached.png",
+      "result": "limited",
+      "scope": "Red pair visible but cliff silhouette partly masks lower body."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/resident-0-band-2-seed-4-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Normal early throw beside generated scenery and unchanged population."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/resident-2-band-3-seed-6-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Red early throw beside actual river and unchanged residents."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/resident-0-band-3-seed-7-attached.png",
+      "result": "accepted_smoke",
+      "scope": "Normal carried pair visible beside rock in populated late-band room."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/resident-2-band-1-seed-65-attached.png",
+      "result": "accepted_smoke",
+      "scope": "Early red carried pair visible in actual Flooded habitat."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/resident-0-band-1-seed-75-attached.png",
+      "result": "limited",
+      "scope": "Normal pair visible; protagonist partly obscured by foreground cliff."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/resident-0-band-2-seed-81-extended.png",
+      "result": "accepted_smoke",
+      "scope": "Normal head/body separating beside rock and actual river."
+    }
+  ],
+  "full_gate": false,
+  "performance_note": "FPS overlays were captured under concurrent unrelated CPU work; these are not controlled rendering-performance evidence.",
+  "rejected_capture_set": {
+    "path": "docs/reports/isaac-enemy-port/mr-maw/web-residents/",
+    "reason": "Four inspected images were blank. RAF wrapper ran before async C++ render resumed. None accepted as visual evidence; behavioral assertions are separate.",
+    "replaced_by": [
+      "docs/reports/isaac-enemy-port/mr-maw/web-exact/",
+      "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/"
+    ]
+  }
+}

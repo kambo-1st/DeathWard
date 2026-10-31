@@ -1,0 +1,291 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "808": {
+      "index": 145,
+      "address": "0x699f8f"
+    },
+    "817": {
+      "index": 10,
+      "address": "0x699fef"
+    }
+  },
+  "states": {
+    "0": "0x545574",
+    "1": "0x546459",
+    "2": "0x546459",
+    "3": "0x5456e4",
+    "4": "0x546459",
+    "5": "0x546459",
+    "6": "0x545a86",
+    "7": "0x545db5",
+    "8": "0x54585b",
+    "9": "0x54587d",
+    "10": "0x5458d1",
+    "11": "0x546459",
+    "12": "0x546459",
+    "13": "0x54638f"
+  },
+  "constants": {
+    "tracking_gain": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "angular_factor": {
+      "address": "0xb6a260",
+      "value": 0.03500000014901161
+    },
+    "ellipse_z": {
+      "address": "0xb6a580",
+      "value": 0.8399999737739563
+    },
+    "angular_pi": {
+      "address": "0xb6a874",
+      "value": 3.1415927410125732
+    },
+    "ring_spacing": {
+      "address": "0xb6a914",
+      "value": 6.2831854820251465
+    },
+    "settle_squared": {
+      "address": "0xb6ac60",
+      "value": 400.0
+    },
+    "velocity_cap_and_shot_speed": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "settle_range": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "ownerless_falling_modifier": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "overkill": {
+      "address": "0xb6aee4",
+      "value": -20.0
+    },
+    "population_scale": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "projectile_retention": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    }
+  },
+  "findings": [
+    "Type808 dispatch545510. Init radius120, multiplier1, initial40counter and regroup544b70. XML6HP/stage0/contact0/gridnone. Ordinary subtype0 is separate from Min-Min special emergence/dive helpers.",
+    "Regroup selects living subtype0Willos with the same Parent pointer; takes minimumexisting angle offset and reassigns2pi*n/count. Attackstate8 copies its offset to b0c so regrouping cannot move its committed attack slot. Ordinary Mullighoul spawning sets SpawnerEntity but no Parent, so Willos join the ownerless cohort.",
+    "Orbit center is Parent position when present, otherwise mean eligible player positions. Target is center+(cos(theta)*radius,sin(theta)*radius*.84), theta=offset-(globalFrame+halfFrame+optionalAheadFrames)*.5*pi*.035. Single-player ordinary case uses current player center.",
+    "Tracking takes twice player velocity divided by friction as carry, adds a .5correction from predicted body to orbit target, caps that correction at10sourceunits, and adds the carry. Native collisionNONE allows orbit through grid solids and outside room.",
+    "Ready state3 makes a1/9random check. Ordinary subtype0 additionally requires no projectile cooldown, nonnegative entity height, squared target-point error<=400, room-position validity and absence of fear/confusion/shrink flags0x1000a00. Any living subtype0Willo in state8 or9 blocks another attack. Successful acquisition enters8 and copies current orbit slot.",
+    "State8 playsAttack, runs the shared event helper and continues orbit tracking. ANM2Attack36/30FPS hasWarn6andShoot24. Completion returns3. No fixed extra cooldown is set by this controller. Special states9/10/6/7/13 have distinct boss/underwater behavior; they are preserved but not claimed implemented.",
+    "Shoot aims toward target position plus one target velocity, normalized*10. FireProjectiles mode0 uses BulletFlags0x2000=NO_WALL_COLLIDE per installed enums.lua. Ownerless subtype0adds4to FallingSpeedModifier. Common mode0defaults are fallingSpeed-3/fallingAccel.1; ordinary shot therefore starts atheight-23, fallingSpeed1, and uses .9falling retention plus base.1and authored.1 acceleration.",
+    "Mullighoul817variant1 init sets height-6 and gridcollision6(no pits); it does not gain rocks/walls-free flight. Shared Hive18frameHeadAttack/Shoot4spits808.0.0 without disposable-contact flag. InstalledHP14 contradicts wiki infobox13; XML is baseline.",
+    "The native817death adjustment is shared by variants0and1: max(1,ceil(4/(1+.2*roompopulation))-1),then subtract signedNPC+bc6 and clamp0. Normal zero-counter result3alone/2with2others/1with5others; no random1..2cap. HP<=-20suppresses. Variant1creates Willos directly; variant0uses thrown Small Leech helper.",
+    "Existing inherited source reviews preserve shared evasion and common projectile integration. Physical3D scales, fire damage intervals, safe birth capacity and local habitat weights remain explicit DeathWard adaptations; full native status/item/boss-spawn behavior is not certified."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/willo_dispatch.asm",
+      "start": "0x699f8f",
+      "end": "0x699f9b",
+      "raw_sha256": "29effedfb60c2a6c4b8658fde91f289ba43366866a165f63493d2d63d288b3f8",
+      "sha256": "798afa703c076380bf7f8f1ff5236aa8c64ce575157ea02f5acd197919a88950"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/mullighoul_dispatch.asm",
+      "start": "0x699fef",
+      "end": "0x699ffb",
+      "raw_sha256": "e7fa8e8fccc95ba4815c6bd99956a23b31b28b0a528baf5eb2683fab89898a7d",
+      "sha256": "24653e9a8f3c928edf6cf68607f50cee6269f38c0881e32d7159c40dc86d78e2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/regroup.asm",
+      "start": "0x544b70",
+      "end": "0x544dbc",
+      "raw_sha256": "a4bec26164ae88fa3383f40c6805a91c7e424af8b4566918880f66b5512a578f",
+      "sha256": "5724ffcf68c56fcf6d7123d40c1ea4397209f14217fab3b61bd869e8f94765a8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/orbit_target.asm",
+      "start": "0x544dc0",
+      "end": "0x544eba",
+      "raw_sha256": "ab19ff15a20e96349357464d1d2d3352bdae55ebb1eea410619f3d26caa84698",
+      "sha256": "1f6ba6b4e464bf73fee8a7408160a8bc71eaaf29b3d79500e06176fb6e45e71f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/orbit_center.asm",
+      "start": "0x544ec0",
+      "end": "0x544ff6",
+      "raw_sha256": "a129e881748b32c137976fc73cab740bf6e9366d9b23466fadf9f02ff4f16994",
+      "sha256": "f66409389e7199dd09a10d6d523b65eac146f37963958134d95cacf4e5702a5c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/orbit_tracking.asm",
+      "start": "0x545000",
+      "end": "0x54521d",
+      "raw_sha256": "c8951936d4cf6828f92d423e750b538ca767943da163e460a883a2a693b7fae5",
+      "sha256": "408afe80437e6056c005710c5658fa569003e275ebd64700dd42e3e4509c3ff2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/attack_events.asm",
+      "start": "0x545220",
+      "end": "0x5454fe",
+      "raw_sha256": "9c354cf639426d80401eaba8da24da6535aeadd885a5e0d75032de748a70f912",
+      "sha256": "f87ddf82050f093245d62a16be2a1cff88078347c8fcebd38e8e43fecf8eb41c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/willo_controller.asm",
+      "start": "0x545510",
+      "end": "0x54647e",
+      "raw_sha256": "d215e38205b96ad7fe915f9f7a17c05e0d018c90f13ef0cd8d96906ca8e7108a",
+      "sha256": "02f01d2770d7270481f32dfbfdf8663d7fde2150d687596e455c301f50e7ebdd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/boss_special_spawn_helper.asm",
+      "start": "0x5464c0",
+      "end": "0x546691",
+      "raw_sha256": "932d47d9460a85ddc75c6fbcd6566f14951098ec7a1f681a6c5fde7f8a60a9fd",
+      "sha256": "2f4ff141c4bf732df82de6858bb2ff186d1c9865a4e18ba12f8cbe61b5f69698"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/mullighoul_hover.asm",
+      "start": "0x4fa226",
+      "end": "0x4fa27a",
+      "raw_sha256": "183843565006aa57862a3ab86e7d7ebb487af87fa6ca606ac3b60825342fd58a",
+      "sha256": "3065dd02b528b46fbc032e4af68fe4c6aebcb811b6fea28f1c6465ce62e4389e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/mullighoul_live_child.asm",
+      "start": "0x4fa868",
+      "end": "0x4fa8cb",
+      "raw_sha256": "be20c7b3c11859081ef62b7c4b44a62402d01e06f8cf025fc80efe31639d30d1",
+      "sha256": "95b2e63fdb28db016aa1877c23aed8d0dfd2adfb6e6c8eeff4aa927736178309"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/mullighoul_death_count.asm",
+      "start": "0x4faccb",
+      "end": "0x4fada7",
+      "raw_sha256": "c4b4af1607fdd887600ffe418092e49a117e6b033359098faa97460abfe19686",
+      "sha256": "b07df216187da95c252ba7f831f924869c442db87e6a372dba455e6caaa6b0e0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/mullighoul_death_child.asm",
+      "start": "0x4fb036",
+      "end": "0x4fb068",
+      "raw_sha256": "d45f15066c5b0f725b9c34e2bdd1ac4df7adf29878fe820df1bfbc013ed206de",
+      "sha256": "9bd1892100c7933733e52d247af458e016ea38eafdf812bf147f5a46991ca1ce"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/mullighoul_child_admission.asm",
+      "start": "0x4fb157",
+      "end": "0x4fb175",
+      "raw_sha256": "13435b8133f3ced81f5fdb26b054905e068d2f97c373b7840a0058d41c4f3f01",
+      "sha256": "ab249ae2414cd2f6d0a863b05ded28985fd2475ab159aa3e8d0efe6eed9195ab"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mullighoul/source/projectile_falling_application.asm",
+      "start": "0x6a3059",
+      "end": "0x6a31b8",
+      "raw_sha256": "c1c252775643ed40355367e79e461b1f1e8c3754104ab1ed7527de7075fa2453",
+      "sha256": "7c5ce7257b16f6ff62f6fc373f627a588829f6eeef60ca6be4e6ca3308283a87"
+    }
+  ],
+  "records": {
+    "808.0.0": {
+      "xml": {
+        "anm2path": "808.000_willo.anm2",
+        "baseHP": "6",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "0",
+        "collisionMass": "3",
+        "collisionRadius": "17",
+        "friction": "1",
+        "gridCollision": "none",
+        "id": "808",
+        "name": "#WILLO",
+        "numGridCollisionPoints": "0",
+        "portrait": "210",
+        "shadowSize": "10",
+        "stageHP": "0",
+        "tags": "fly",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/00.special rooms.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/06.flooded caves.stb": {
+          "templates": 11,
+          "positive_weight_templates": 11
+        },
+        "rooms/27.downpour.stb": {
+          "templates": 53,
+          "positive_weight_templates": 53
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/greed/06.flooded caves.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/27.downpour.stb": {
+          "templates": 10,
+          "positive_weight_templates": 10
+        }
+      }
+    },
+    "817.1.0": {
+      "xml": {
+        "anm2path": "817.001_mullighoul.anm2",
+        "baseHP": "14",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "0",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "817",
+        "name": "#MULLIGHOUL",
+        "numGridCollisionPoints": "12",
+        "portrait": "225",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "room_library_presence": {
+        "rooms/27.downpour.stb": {
+          "templates": 27,
+          "positive_weight_templates": 27
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/06.flooded caves.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/27.downpour.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        }
+      }
+    }
+  },
+  "dependencies": [
+    "docs/reports/isaac-enemy-port/hive/source/manifest.json",
+    "docs/reports/isaac-enemy-port/gurgle_lobs/source/manifest.json",
+    "docs/reports/isaac-enemy-port/tainted_pooter/source/manifest.json"
+  ],
+  "projectile_enum_source": "reference/isaac-repentance-1.7.9b/loose/resources/scripts/enums.lua"
+}

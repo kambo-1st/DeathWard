@@ -1,0 +1,20 @@
+{
+  "result": "Inspected Original low-poly Mulligan/Mulligoon bodies with ground shadows, live blue Mulliboom body, four death children, a real visible Troll Bomb with diagonal shots/telegraph, and a production Mulligoon resident room. Early scripted captures show camera-transition cliff occlusion; delayed-death browser captures provide clearer evidence. Native live Mulliboom remains partly framed by foreground terrain. These are limited visual smoke checks, not full source silhouettes/animation, all-angle readability or performance acceptance.",
+  "linux": [
+    "docs/reports/isaac-enemy-port/mulligans/native-mulligan.png",
+    "docs/reports/isaac-enemy-port/mulligans/native-mulligoon.png",
+    "docs/reports/isaac-enemy-port/mulligans/native-mulliboom-live.png"
+  ],
+  "wasm": [
+    "docs/reports/isaac-enemy-port/mulligans/web/mulligan-death-visible.png",
+    "docs/reports/isaac-enemy-port/mulligans/web/mulligoon-death-visible.png",
+    "docs/reports/isaac-enemy-port/mulligans/web/natural-mulligoon.png",
+    "docs/reports/isaac-enemy-port/mulligans/web/mulliboom-proximity-after.png"
+  ],
+  "additional_capture_validation": "docs/reports/isaac-enemy-port/mulligans/browser-visuals.json",
+  "limits": [
+    "Existing generic silhouettes are retained; source eye and appearance animation fidelity remains open.",
+    "Rapid Mulliboom death can precede camera settling. Early native/browser captures are retained with that limitation.",
+    "DisplayedFPS is not a controlled performance benchmark; no FPS acceptance claim."
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "title": "Maw",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Maw",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=265079",
+  "revision": 265079,
+  "timestamp": "2026-06-24T17:27:32Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "[distinguish: Mr. Maw; Mega Maw] \n\nMaws slowly drift towards Isaac while spitting a blood shot at him when near him, the latter behavior is similar to that of Horfs.\n\nThey resemble pale floating heads with misshapen eye sockets that drip blood and an open mouth with only two teeth."
+    },
+    {
+      "heading": "Variants",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Red Maw",
+      "level": 3,
+      "text": "Red Maws float towards Isaac considerably faster than the Maw but do not fire any projectiles. Instead it will fire 4 blood shots in cardinal directions upon death, similar to Suckers.\n\nThey resemble other types of Maw, but with pink skin and a their mouth stitched shut, as if to prevent blood shots from being fired."
+    },
+    {
+      "heading": "Psychic Maw",
+      "level": 3,
+      "text": "Psychic Maws behave identically to Maws but fire purple homing shots that deal a whole heart of damage. Similar to the Hanger, the Psychic Maw will always spawn with an Eternal Fly circling it.\n\nThe Psychic Maw resembles a pale floating head with its eyes and mouth stitched shut and a third eye opened in its forehead dripping blood. The third eye emits a small purple fire."
+    },
+    {
+      "heading": "Bugs",
+      "level": 2,
+      "text": "Bug note: If you slow, stun or fear a Maw at the same time that it tries to shoot Isaac, its sound effect will loop infinitely until the Maw is killed."
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "id": "26",
+        "base hp": "20",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+        "behavior": "Slowly floats towards Isaac, firing a blood shot at him when he is in their range."
+      },
+      "group": "entity",
+      "id": 26,
+      "name": "Maw",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "name": "Red Maw",
+        "image name": "* [Before Repentance] Rebirth",
+        "variant": "1",
+        "base hp": "20",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nChest /",
+        "replace": "Maw",
+        "replace chance": "9.49%",
+        "behavior": "Floats quickly towards Isaac and releases 4 blood shots in the cardinal directions upon death."
+      },
+      "group": "entity",
+      "id": 26,
+      "name": "Red Maw",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 3,
+      "fields": {
+        "name": "Psychic Maw",
+        "image name": "* [Before Repentance] Rebirth",
+        "variant": "2",
+        "base hp": "20",
+        "environment": "Caves / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nMausoleum / \nUtero / \nCathedral /",
+        "replace": "Maw, Red Maw",
+        "replace chance": "1%",
+        "behavior": "Slowly floats towards Isaac, firing homing shots at him when he is in their range. Spawns with an Eternal Fly orbiting around it."
+      },
+      "group": "entity",
+      "id": 26,
+      "name": "Psychic Maw",
+      "variant": 2,
+      "subtype": 0,
+      "section_indices": [
+        3
+      ]
+    }
+  ]
+}

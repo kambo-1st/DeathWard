@@ -1,0 +1,89 @@
+[
+  {
+    "name": "open",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-21.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maggot/native-open.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "cover",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-21.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maggot/native-cover.png",
+      "--enemy-terrain",
+      "cover"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "river",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-21.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maggot/native-river.png",
+      "--enemy-terrain",
+      "river"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "death",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-21.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "188",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/maggot/native-death.png",
+      "--enemy-hit",
+      "180",
+      "10000"
+    ],
+    "exit": 0
+  }
+]

@@ -1,0 +1,16 @@
+START membrain
+PASS membrain {"volleys":2,"shots":0,"actualShots":16,"childFrames":61,"bounces":0}
+START mama-guts
+PASS mama-guts {"volleys":2,"shots":0,"actualShots":16,"childFrames":61,"bounces":0}
+START dead-meat
+PASS dead-meat {"volleys":2,"shots":0,"actualShots":16,"childFrames":61,"bounces":16}
+START cyst
+PASS cyst {"volleys":0,"shots":9,"actualShots":9,"childFrames":0,"bounces":0}
+START resident-membrain
+PASS resident-membrain {"volleys":3,"shots":0,"actualShots":24,"childFrames":0,"bounces":0}
+START resident-mama-guts
+PASS resident-mama-guts {"volleys":3,"shots":0,"actualShots":24,"childFrames":0,"bounces":0}
+START resident-dead-meat
+PASS resident-dead-meat {"volleys":3,"shots":0,"actualShots":24,"childFrames":0,"bounces":54}
+START resident-cyst
+PASS resident-cyst {"volleys":0,"shots":9,"actualShots":9,"childFrames":0,"bounces":0}

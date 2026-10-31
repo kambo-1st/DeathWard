@@ -1,0 +1,52 @@
+Start testing: Oct 28 04:39 CET
+----------------------------------------------------------
+36/97 Testing: brain
+36/97 Test: brain
+Command: "/home/kambo/workspace/DeathWard/build/deathward_brain_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"brain" start time: Oct 28 04:39 CET
+Output:
+----------------------------------------------------------
+MOVEMENT hp64 X.85 Y.8 charge=.8v+direction global7 committed=1 prediction=1 cover=1 bodies=1 grid=1 safe_grid=1
+CREEP crowd5 periods12/24 fast_half_step=1 radius2.46 lifetime125 fade40 damage12.5 owner_survival=1 clear=1 capacity=1 suspend=1
+STARTING_KIT seconds=8.68333 hp=100
+CONFIG immutable=1 invalid_profiles=6
+NATURAL_BRAIN seed=4 floor=5 room=2 band=2
+NATURAL_BRAIN seed=245 floor=3 room=10 band=3
+RIVER_BRAIN seed=245 floor=3 room=10
+PASS Brain
+<end of output>
+Test time =   1.12 sec
+----------------------------------------------------------
+Test Passed.
+"brain" end time: Oct 28 04:39 CET
+"brain" time elapsed: 00:00:01
+----------------------------------------------------------
+
+44/97 Testing: membrain_family
+44/97 Test: membrain_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_membrain_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"membrain_family" start time: Oct 28 04:39 CET
+Output:
+----------------------------------------------------------
+ATTACK variants3=1 HP198.4=1 Shoot29=1 Attack70=1 hop_vulnerable=1 ring8=1 cap8=1 no_LOS_gate=1
+MOVEMENT render_partition=1 whole_packet_backpressure=1 contact25=1
+CYST init=1 interval31=1 current_aim=1 rolling=1 no_creep=1 capacity=1
+LIFECYCLE repeated_wall_bounce=1 ground_terminal=1 exact_children=1 execution=1 debug_clear=1 capacity=1 completion=1
+CONFIG immutable_reload=1 invalid_profiles=5
+NATURAL_MEMBRAIN id=57.0.0 seed=1 floor=6 room=8
+NATURAL_MEMBRAIN id=57.1.0 seed=1 floor=5 room=7
+NATURAL_MEMBRAIN id=57.2.0 seed=11 floor=4 room=3
+NATURAL_MEMBRAIN id=862.0.0 seed=22 floor=7 room=1
+PLACEMENT four_natural_records=1 active_controllers=1
+PASS MemBrain family and Cyst
+<end of output>
+Test time =   2.00 sec
+----------------------------------------------------------
+Test Passed.
+"membrain_family" end time: Oct 28 04:39 CET
+"membrain_family" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Oct 28 04:39 CET

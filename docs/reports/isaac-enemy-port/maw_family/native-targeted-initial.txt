@@ -1,0 +1,3 @@
+NATURAL_MAW variant=0 seed=3 floor=1 room=6
+NATURAL_MAW variant=1 seed=3 floor=1 room=7
+FAIL all three variants reachable in seeded rooms

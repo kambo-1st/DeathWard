@@ -1,0 +1,78 @@
+{
+  "scope": [
+    "206.0.0 Baby Long Legs",
+    "206.1.0 Small Baby Long Legs",
+    "207.0.0 Crazy Long Legs",
+    "207.1.0 Small Crazy Long Legs",
+    "30.2.0 Sack"
+  ],
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "source_manifest": "docs/reports/isaac-enemy-port/long_legs/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/long_legs/animations/manifest.json",
+  "wiki": "docs/reports/isaac-enemy-port/long_legs/wiki-source.json",
+  "findings": [
+    "206and207 share dispatch699bd8/controller51edf0. Initialstate0->4, normal state4movement, state8attack. BurstingSack377, friendly, fear/confusion and controlled-player branches are separate.",
+    "Normal Baby uses EvadeTarget7a4830. Source helper checks every14staggered frames: visible250 or hidden170range sets flee countdown3. Native path force1.079; when not fleeing it wanders. Small uses the same movement call; its Walk animation is10frames rather than5. Both are radius13, collisionDamage1, baseHP16/12 +stageHP4.",
+    "Baby ready requires room alive-enemy count6ad7a0<6, not an owner-specific3child limit. Denominator100normal/200small. When evade counterNPC+aa0<=0, an additional half-denominator chance can trigger before the ordinary chance. Fear/shrink0x1000800 suppresses laying. LayEgg45frames, Lay26.",
+    "Normal Baby spawns85.0.0 at its position with a random unit velocity. Independent RNG%20==0 adds a second Spider with opposite velocity. Small instead spawns30.2.0Sack plus1000.25white creep at its position. Source spawn call does not halve maxHP.",
+    "Crazy follows FindGridPath7a3650 at speed.65/marker900/direct flagtrue. Attack requires pathfinder byteNPC+a90, mapped to helper+72c and written from CheckLine. RNG%50starts45frame Attack; Shoot22. Small and normal use the same path speed in installed code, despite wiki describing small as slower; animation stride is10rather than5frames.",
+    "LongLegs ready assigns friction.8 at51f244, overwriting the helper friction rather than multiplying it. FindGridPath adds impulse min(distance*.1,2)*speed divided by.7. Attack multiplies current base friction by.5. This differs from shared Hive movement and was corrected after the initial passing focused fixture.",
+    "Crazy Shoot uses FireProjectiles mode8normal/mode7small. Shared speed8+2U and vector(speed,0); mode7normalizes diagonal components by1/sqrt2. ProjectileParams offsets4/8/12 are10,-10,.5: height modifier10, falling speed modifier-10, acceleration modifier.5. Mode7/8retain initial height-23, falling speed(U-.5)*.2 and falling acceleration0 before these modifiers; global falling acceleration contributes.1.",
+    "Sack uses shared30controller5054e0. Normal-mode initialization sets currentHP7, maxHP remains XML20. Hardmode1/3 uses7+U*(max(7,maxHP*.8)-7). This local slice uses normal mode. Source4/6legged artwork does not alter radius13. CollisionDamage0.",
+    "Damage resets Sack growth accumulatorNPC+b00. Under fullHP, add priorGrowth*1.2*timeScale to currentHP and clamp. Increase accumulator by.02*timeScale, or.01for black champion36; Sack multiplies growth by.8 and common code by another.8 (normal scale1). Native Shrink frame13-round(13*HP/maxHP) displays size.",
+    "Full Sack has1/50attack check; beyond230source distance also requires1/4. If room count>=8or random(count)!=0, use Shake26frames with no child. Otherwise Shoot24frames/Shoot12. Damage below max cancels the active animation and returns to growth.",
+    "Sack child85is thrown in state6: initialheight-10, verticalspeed-8, gravity+.7/source update, planarvelocity=(target-origin)*.04. If player closer than250-20U, select free position near midpoint within70; otherwise nearSack within100. Source child collision class0while thrown, then ordinary ground controller on landing. Existing reusable thrown offspring now supports Spider/Strider as well as swimmers.",
+    "Pinned wiki Baby revision262967 and Crazy262966 agree on flee/lay versus chase/fire and white slowing creep. Native timers/probabilities/HP initialization and equal movement parameters take precedence for1.7.9b. Boil article supplies Sack context; copied withCCBYSA4attribution."
+  ],
+  "adaptations": [
+    "SourceHPx3.2, XZdistancesx.1 and velocitiesx3. Four LongLegs maxHP64/51.2on opening floor; Sack initial22.4/max64. Normal player health/damage, Mine roster, hubs, Original style and expedition structure unchanged.",
+    "Source30Hz decisions within60Hzphysical simulation. Canyon A* and sampled retreat destinations replace rectangular grid cache/retry/diagonal bias; direct physical clear approximates Crazy CheckLine. This is not native grid/timeScale/RNG parity.",
+    "External long_legs and sack records contain attack events/chances/forces/regeneration/offspring/projectile values. Common evasion cadence/ranges and navigation sampling follow existing reviewed Hive adaptation.",
+    "Crazy projectiles use height.65, initial upward15+/-.15, gravity27and retention.9 in local3D, translating sourceheight-13, verticalspeed-10+/-.1, total acceleration.6 with heightscale.05. Physical scenery can intercept arcs. Native graphical sprite-scale details are not copied.",
+    "Sack throw reuses validated physical arcs and legal landing. Source free-grid-cell selection is sampled on actual local terrain; blocked births retain requests, eventually trying a vertical throw. Body/shot collision is suspended during thrown state; normal Spider cannot land on deep water, while wet-replaced Strider can.",
+    "Local spawn/event limits retain attacks and mandatory children instead of dropping payloads. Baby twins keep opposite unit impulses. SmallBaby overlap replacement removes the old Sack without kill rewards. The white Tar hazard radius1and lifetime6seconds are explicit local presentation values; exact sourceeffect25radius/lifetime remains unverified.",
+    "Sack starts at source7HP immediately on creation so dormant scenes show its partly grown state. This moves initialization ahead of its first activeAI tick. Status/stun resets are local integration; full native status parity remains open.",
+    "LongLegs tall/four-family silhouettes and slower small-variant stride animation use Original procedural geometry and palette. Existing Sack health-based shrink display is retained. Sparse specialistsmax1perroom, bigBabybands0..2/smallBaby0..1, bigCrazy0..1and3/smallCrazy0..3 follow habitat presence; weights/costs are local balancing choices."
+  ],
+  "remaining": [
+    "Hardmode/Sack champion regen, full damage-flag filtering, status/friendly/player-control/BurstingSack branches and native grid/RNG/timeScale equivalence are not complete.",
+    "Whitecreep exact source dimensions/lifetime, full native free-position selection/overlap replacement radius, native audio and sprite events, and all parent-specific Spider thrown branches require further review.",
+    "Broad readability, long-run balance and controlled Linux/WASM performance acceptance remain open; all five records stay in_progress until six gates pass.",
+    "Thrown Spider/Strider status timers need the same detailed review as swimmer throwing; ordinary source throw/landing is covered, full native status parity is not."
+  ],
+  "corrections": [
+    "A test patch initially referred to a helper called hit while the copied fixture named it damage; no source files were changed by that failed patch. Helper naming was corrected.",
+    "Focused first pass used the Hive-style friction combination. Subsequent native review established ready assignment.8 rather than multiplication and an attack multiplier.5; implementation and config corrected before final tests.",
+    "Crazy attack eligibility was tightened from any navigable path to direct physical clearance after resolving sourceNPC+a90 to pathfinder CheckLine byte+72c.",
+    "Adding four regular specialists changed weighted seeded room selections. The existing Hive test found no Drowned Hive in seeds0..99. An independent production search found22.1.0 at seed245/floor1/room7 on a Flooded floor; the regression retains the original sample and adds that actual rare witness. No Hive mechanics or replacement probability changed.",
+    "Initial isolated native captures at frame20 were taken before the camera settled, while frame140 isolated Babies had fled out of view. Those captures are preserved but do not count as visual approval. Actual seeded room captures at frame140 provide visible Baby and Small Baby silhouettes instead.",
+    "The full native run also exposed stale Mulligan/Mulligoon witnesses after the new pools. Independent production search found16.0 at seed7/floor0/room1 and16.1 at seed21/floor0/room5. Tests retain old samples1/6 and add7/21; all three variant reachability assertions remain. No Mulligan mechanics or probabilities changed."
+  ],
+  "natural_witnesses": [
+    {
+      "id": "206.1.0",
+      "seed": 1,
+      "floor": 0,
+      "room": 4
+    },
+    {
+      "id": "207.0.0",
+      "seed": 3,
+      "floor": 0,
+      "room": 5
+    },
+    {
+      "id": "207.1.0",
+      "seed": 4,
+      "floor": 0,
+      "room": 3
+    },
+    {
+      "id": "206.0.0",
+      "seed": 9,
+      "floor": 0,
+      "room": 1
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "scope": [
+    "808.0.0 Willo",
+    "817.1.0 Mullighoul"
+  ],
+  "mechanics_fingerprint": "13e2ff60d3fc3643",
+  "native": {
+    "covered_suites": 70,
+    "passed": 70,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/mullighoul/native.xml",
+    "behavior": "docs/reports/isaac-enemy-port/mullighoul/behavior-final.txt",
+    "scope": "Full native CTest run. Focused fixtures verify elliptical orbit, regrouping, player tracking, shared attack lock, Warn6/Shoot24/Attack36, projectile physics and capacity, interruption, harmless contact and fire vulnerability, wall-passing shots versus ordinary shots, Mullighoul hover and water/rock navigation, live/death children, population counts, overkill, retained completion, immutable configuration/rejection and both actual seeded residents."
+  },
+  "browser": {
+    "cases": 9,
+    "report": "docs/reports/isaac-enemy-port/mullighoul/browser-results.json",
+    "errors": [],
+    "scope": "Nine Original-style production WASM cases: single/cohort/cover Willo orbit and attack telemetry, Mullighoul live/death offspring, overkill, hover in a river room, and both actual seeded wet-band residents. Natural Willo projectiles interact with a type-236 attraction statue. Exact source timing, projectile collision, water/solid collision and retained completion are covered separately by native fixtures. Full parity, broad balance and controlled performance remain open."
+  },
+  "visual": {
+    "style": "Original",
+    "result": "Partial visual pass: selected Linux and WASM captures inspected. Willo flying bodies, orbit spacing, flashing attack presentation, Mullighoul hover and independent children are visible. Source artwork and all-angle/crowd readability are not certified.",
+    "inspected": [
+      "docs/reports/isaac-enemy-port/mullighoul/native-willo-cohort.png",
+      "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-live.png",
+      "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-early.png",
+      "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-death-final.png",
+      "docs/reports/isaac-enemy-port/mullighoul/native-mullighoul-river.png",
+      "docs/reports/isaac-enemy-port/mullighoul/web-final/willo-cohort.png",
+      "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-live.png",
+      "docs/reports/isaac-enemy-port/mullighoul/web-final/mullighoul-death.png",
+      "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-willo.png",
+      "docs/reports/isaac-enemy-port/mullighoul/web-residents/natural-mullighoul.png"
+    ],
+    "observations": [
+      "Native and browser cohort captures show spaced flying bodies around the player, with pale yellow-green bodies and ground shadows. One member can overlap a cliff; the existing hidden-enemy outline appears there.",
+      "The initial late native live capture placed the fleeing parent behind the top-right HUD and a child near the health panel. An additional frame65 capture clearly shows the elevated walker body and nearby Willo. This is a camera/readability limitation, not proof of a missing actor.",
+      "The river capture shows scenery and existing red outlines but is insufficient alone to prove water traversal. The native movement fixture independently verifies actual crossing while respecting rocks; browser telemetry confirms hover in the river room.",
+      "Death captures show four Willos: one previously emitted live child and three independent death children. This does not mean the death payload itself is four.",
+      "Both natural captures preserve production actors and scenery. The Mullighoul body, spawned Willo and other ordinary residents are visible together. The natural Willo room includes the existing attraction statue; speed changes are verified by telemetry.",
+      "Existing generic yellow windup lines remain, alongside the new Willo Warn flash. No whole-scene filter or source sprite import was used."
+    ],
+    "limits": [
+      "Selected frames/cameras only. Generic Original fly/walker shapes remain; full visual-equivalence and broad readability acceptance are open.",
+      "No controlled performance conclusion is drawn from screenshot FPS counters during concurrent tests."
+    ]
+  },
+  "adaptations": [
+    "Source HP x3.2, XZ distance x0.1 and source velocity x3. Existing player defaults and global enemy damage multiplier remain unchanged. Willo has 19.2 HP; Mullighoul has 44.8 HP; both have harmless body contact.",
+    "Willo uses one ownerless, single-player cohort per configured identity, ordered by stable local entity ID. Source regrouping is filtered by Parent pointer. Ordinary Mullighoul children have no Parent and use the ownerless cohort; summoner provenance does not make an orbit owner.",
+    "Orbit targets use the global simulation clock at 60 Hz and source angular rate. Tracking is integrated by the existing 60 Hz simulation; attack/random/event clocks use 30 Hz. This is not a bit-identical native frame/interpolation implementation.",
+    "Willo bodies ignore grid scenery, including outer cliffs, to preserve the source player-centred orbit. Shooting requires the actor centre inside the current room rectangle and within the source settled range. Rectangular room validity is a local approximation on irregular canyon borders.",
+    "A Willo projectile uses source speed 10, one-update player prediction and NO_WALL_COLLIDE. Local vertical scale 0.05 converts source height -23, falling speed +1, damping 0.9 and acceleration +0.2/update into height 1.15, upward speed -1.5, gravity 9 and retention 0.9. Local radius 0.25 represents native ground termination at height -5. Four-second lifetime is a safety limit beyond ordinary landing, not a recovered native constant.",
+    "Mullighoul hover height 0.6 is added to the standard body centre. Reusable swim navigation ignores water but respects solid obstacles, gates, raised terrain and room boundaries. Native grid collision 6 does not imply rock/wall-free flight.",
+    "Existing capacity and retained-event rules preserve pending Willo shots and death births. Pending births keep rooms sealed. Stun cancels the attack and releases the cohort lock. These are integration policies, not full native status/item parity.",
+    "Willo uses the existing Original procedural flying-body silhouette with a pale yellow-green tint and flashing Warn phase; Mullighoul retains the existing walker silhouette at elevated height. No source sprite artwork is imported.",
+    "Downpour/Flooded Caves source habitats map to sparse wet Broken Quarry band-1 pools. Willo crossfire entries spawn pairs at cost 2 with max 3; Mullighoul pursuit entries cost 3 with max 1. These local weights/costs are not source room probabilities.",
+    "Existing Original windup aim lines accompany the recovered Willo Warn flash; those generic telegraphs are a local presentation choice. Existing attraction statues can bend and accelerate wall-passing Willo projectiles."
+  ],
+  "remaining": [
+    "Willo Parent-owned orbit, multiple-player averaging, friendly/item-control paths, fear/confusion/shrink attack suppression and complete status/time-scale interactions remain unfinished. Native initial 40-counter and appear lifecycle are not reproduced.",
+    "Min-Min underwater spawn/dive and special states 6/7/9/10/13 are preserved in source evidence but not implemented by this ordinary-enemy slice. Additional boss work remains deferred by user priority.",
+    "Mullighoul native nonzero NPC+bc6 death-count counter, champions and complete friendly/status/item interactions remain unresolved. The normal zero-counter death path is implemented.",
+    "Shared Hive grid-path/cache/initial-impulse equivalence and exact Willo native half-frame tracking are not certified. Local physical navigation and room-boundary approximations are explicit.",
+    "Generic silhouettes, all-angle readability, broad balance, controlled native/WASM performance acceptance and the full six-gate checklist remain open. Both exact IDs remain in_progress, not complete."
+  ],
+  "complete": false,
+  "historical_artifacts_preserved": 5553
+}

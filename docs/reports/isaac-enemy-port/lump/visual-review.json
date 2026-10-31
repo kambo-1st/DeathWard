@@ -1,0 +1,24 @@
+{
+  "style": "Original",
+  "scope": "Manual inspection of3native and4browser images; authored procedural low body, no imported sprite artwork. Partial visual evidence.",
+  "inspected": [
+    "native/spit.png",
+    "native/hide.png",
+    "native/hidden.png",
+    "web/lump-spit.png",
+    "web/lump-hidden.png",
+    "web/lump-appear.png",
+    "web/resident-lump-spit.png"
+  ],
+  "findings": [
+    "Native spit clearly shows three separated red projectiles. Rounded lobed body, eyes and mouth readable at normal160% camera.",
+    "Hide visibly squashes; fully hidden body and shadow disappear. Camera-follow capture tracks underground position, so native hidden view differs from the player camera.",
+    "Browser Appear shows body rising near canyon wall on legal ground. Natural resident appears alongside other enemies in an actual expedition room.",
+    "Browser first-Shoot captures contain overlapping newly born shots; separated spread is inspected in native spit and checked numerically. Natural crowding and small facial details remain readability limitations."
+  ],
+  "limitations": [
+    "No all-camera/champion/style/audio parity claim.",
+    "Startup FPS overlays are not controlled performance evidence.",
+    "No default-kit expedition balance certification."
+  ]
+}

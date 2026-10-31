@@ -1,0 +1,146 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "206": {
+      "case": "0x699bd8",
+      "controller": "0x51edf0",
+      "index": 74
+    },
+    "207": {
+      "case": "0x699bd8",
+      "controller": "0x51edf0",
+      "index": 74
+    },
+    "30": {
+      "case": "0x6999ec",
+      "controller": "0x5054e0",
+      "index": 17
+    }
+  },
+  "constants": {
+    "sack_initial_HP": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "sack_friction": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "sack_near": {
+      "address": "0xb6abd0",
+      "value": 230.0
+    },
+    "sack_aim": {
+      "address": "0xb6abec",
+      "value": 250.0
+    },
+    "sack_regen_gain": {
+      "address": "0xb6a670",
+      "value": 1.2000000476837158
+    },
+    "sack_growth": {
+      "address": "0xb6a234",
+      "value": 0.019999999552965164
+    },
+    "black_champion_growth": {
+      "address": "0xb6a214",
+      "value": 0.009999999776482582
+    },
+    "spider_throw_delta": {
+      "address": "0xb6a264",
+      "value": 0.03999999910593033
+    },
+    "diagonal_normalize": {
+      "address": "0xb6a524",
+      "value": 0.7071067690849304
+    }
+  },
+  "strings": {
+    "0xb432bc": "Lay Egg",
+    "0xb432a8": "Lay",
+    "0xb40510": "Attack",
+    "0xb400ac": "Shoot",
+    "0xb41e70": "Shrink",
+    "0xb41e80": "Shake"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/long_legs_dispatch.asm",
+      "start": "0x699bd8",
+      "end": "0x699be4",
+      "raw_sha256": "883004e49c80aaeb7b0e4bad4aa0e392839107cf0dcf0cfc12363dccc984e14a",
+      "sha256": "1bbe5ee832c217f8641f61ab266478d4d3ae78906891e2d58012623abb4b12a0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/sack_dispatch.asm",
+      "start": "0x6999ec",
+      "end": "0x6999f8",
+      "raw_sha256": "e09528f1d2ca0236e059a4547946815e1c1e2c964d9b9a860877694504d6a6cf",
+      "sha256": "466d4103758573736e60f6172ce9bcad6051fa9fb38484075fd304d0ef3168e9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/long_legs_controller.asm",
+      "start": "0x51edf0",
+      "end": "0x51f504",
+      "raw_sha256": "08e33e6e84d3c2abe47b8bab6a491873ab7dbb60713aaa55f1d53e7515cc310f",
+      "sha256": "b65206b3ec92de1cedc1b41e7550ebb39fcc2eae9fb6d33cc10d6c46f34372a3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/sack_controller.asm",
+      "start": "0x5054e0",
+      "end": "0x50612d",
+      "raw_sha256": "faac5f0cb8dfb6f542755bb2eb9454f0cf2de206c1c2f788471d8e0eb717b2c2",
+      "sha256": "d99dfc0faedf8204955a6155d1fa08cc33066a182a69de9085d7f1b59314bce5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/random_unit_vector.asm",
+      "start": "0x659290",
+      "end": "0x6592ef",
+      "raw_sha256": "d692c335c6eb08e51ecd9a1de076cea055dc56d03b47126c5913845e1fb314b1",
+      "sha256": "f21260f8e00d1daf4b6000b55c60d456c1dc13dc39efa5680d13b276bf373091"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/chase_pathfinder.asm",
+      "start": "0x7a3650",
+      "end": "0x7a4813",
+      "raw_sha256": "a63c08242d9973fb51fb3c0c7c595c0f83b95889d1d8f05d7271009b7b2a2191",
+      "sha256": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/evade_pathfinder.asm",
+      "start": "0x7a4830",
+      "end": "0x7a51d1",
+      "raw_sha256": "c3ddbd2f42a72f9b122982ced38dc81776910582ba4f06556211eaa67b84028b",
+      "sha256": "614544eaa7ac8518ce1cab9234aacb252ac68bf87bfd820fa472ee260ae3f4d1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/diagonal_shots.asm",
+      "start": "0x6a286f",
+      "end": "0x6a2a49",
+      "raw_sha256": "4edee7578f252b085e3214212f15e8af477466d929abd0618633103ed7ffcd57",
+      "sha256": "af79f01d708f949d1c0fca9b3493a71f4acb7038e6e074ef7377ffcc0348d7ce"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/eight_way_shots.asm",
+      "start": "0x6a2a49",
+      "end": "0x6a2ff1",
+      "raw_sha256": "ac0fd1a302cf701c25be018b1e03fa6683b75549c73cf8034d16a8d971aafdd6",
+      "sha256": "52f3fcece97f58d0766ad35c3a056fec8f3101b889615de3565f756fd048bea1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/projectile_falling_application.asm",
+      "start": "0x6a3059",
+      "end": "0x6a31b8",
+      "raw_sha256": "c1c252775643ed40355367e79e461b1f1e8c3754104ab1ed7527de7075fa2453",
+      "sha256": "7c5ce7257b16f6ff62f6fc373f627a588829f6eeef60ca6be4e6ca3308283a87"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/projectile_initial_fall.asm",
+      "start": "0x62f1ef",
+      "end": "0x62f2d0",
+      "raw_sha256": "9e4fa495b866108d9027dbd320e3b46a557bcd63d521affce743a9ecc4cbfdb2",
+      "sha256": "7c63ab8d86672d6aa14403dd3762584f8ead6d1d6e28946b6b60483c6ea20b52"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "scope": [
+    "16.0.0 Mulligan",
+    "16.1.0 Mulligoon",
+    "16.2.0 Mulliboom"
+  ],
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "findings": [
+    "Type16 dispatches4f9a70. Variants0/1 use the same EvadeTarget and MoveRandomly primitives reviewed for Hive, then.8friction. Variant2 uses FindGridPath with speed1.2, marker0,direct-pathtrue, then.9friction.",
+    "Variants0/1 test Entity+188 and RNG%300==0 on ready updates, then playExplode and enterstate5. This is CollidesWithGrid: the installed Lua registration binds that exact name to getter641420which returns byte+188. It is not a fixed-age or arbitrary nearby-player trigger.",
+    "State5 multiplies friction by.8 and waits for animation completion. Extracted30FPS Explode lasts29frames with no trigger events. Completion calls BombDamage with40damage,60radius,lineChecktrue,sourceactor,flags4anddamageSourcefalse; emits mode6cardinal shots and Kill. Normal shot speed7; hardmode10.",
+    "Mulliboom checks source interval5 with offset0; target squared distance<1600callsKill. This is a40-unit proximity trigger, not a literal radius-sum collision despite the wiki contact shorthand. No explosion windup for variant2. Dead processing always calls the same40/60BombDamage and visual effects.",
+    "Mulligoon dead processing always emits mode7diagonal shots and spawns type4variant3Troll Bomb with itself as producer. Voluntary detonation already emitted the cardinal mode6and immediate40/60blast, yielding eight total shots plus the delayed bomb.",
+    "Mulligan death requiresHP>-10. Count=max(0,4-signedWordNPC+bc6); no room-population denominator. Each child independently selects RNG%11:0..6Fly13,7Pooter14,8..10AttackFly18. Offset is randomangle*U*6without the Hive minimum2. Children do not receive live-spit contact-expiry flags. Nonzero+bc6counter lifecycle remains unverified.",
+    "RTTI Entity_Bomb@IsaacRepentance vtableb48ce8maps Init67aba0/Update67ae90. Init sets damage100 and count45; variants3/4/8/18add independent RNG%30. Normal radius starts75 for damage100. Generic blast damage below85passes player damage1; above/equal85passes2, unless special damage flags override it.",
+    "Troll count45..74is initialized source data, not yet proof of wall-clock fuse: Update uses animation count and extends a state-dependent appearance timer. Local seconds=(45+RNG%30)/30is an explicit provisional interpretation; full animation/fuse, pushing/kicking/status/item parity remains pending.",
+    "Shared pathfinding gaps from the Hive review remain. Local retained payload capacity, sourceHPx3.2and physical3D projectile/blast treatment are explicit adaptations, not native engine equivalence."
+  ],
+  "source_manifest": "docs/reports/isaac-enemy-port/mulligans/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/mulligans/animations/manifest.json",
+  "wiki": {
+    "title": "Mulligan",
+    "revision": 271647,
+    "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271647",
+    "preserved_text": "docs/reports/isaac-enemy-port/hive/mulligan-wiki.wikitext",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "supports": "Variant descriptions and 9.49% Mulligoon / 1% Mulliboom replacement chances; installed executable supersedes contact shorthand with its explicit 40-unit proximity test."
+  },
+  "adaptations": [
+    "Source HP and monster blast damage multiplied by 3.2; all bodies have 41.6 HP. Source distances multiply by .1; native 30 Hz projectile velocity multiplies by 3 for local units/second. Collision radii .6/.65 remain local geometry.",
+    "Source player half-heart/full-heart blast damage maps to 10/20 local damage before existing EnemyDamageMultiplier1.25. Player defaults remain unchanged.",
+    "Source flee/wander/chase forces and friction use 30 Hz updates with physical canyon navigation and body avoidance. No source rectangular grid imported.",
+    "Death blasts/shots/bombs are admitted together or retained until runtime capacity returns. Pending death payload keeps room sealed. An admitted Troll Bomb persists after producer removal and room clear.",
+    "Mulligan four-child count models the zero-initialized native NPC+bc6 counter. Existing bounded offspring generation and safe placement retry remain.",
+    "Troll Bomb initialized count45+RNG%30 maps provisionally to a1.5..74/30-second fuse. This is not verified native appearance-animation timing.",
+    "Normal-mode projectile speed7 is used; native hard-mode speed10 remains future difficulty support.",
+    "Local sparse pursuit weights, threat costs and caps map reviewed source stages into canyon bands; they are balance choices. Band0 Mulligan gets9.49%Mulligoon phase0 then1%Mulliboom phase1; standard band1 has a direct Mulliboom route."
+  ],
+  "remaining": [
+    "Exact native grid movement initial impulse, diagonal bias, adaptive search/cache, knockback/status and time-scale behavior remain unfinished.",
+    "Troll Bomb appearance state, animation-driven countdown, pushing/kicking and complete item/status behavior need further recovery; initialized count is known but wall-clock fuse is provisional.",
+    "Nonzero native NPC+bc6 counter lifecycle and its reduced Mulligan death offspring count remain unresolved.",
+    "Full charm, friendly, champion, item, appearance and hard-mode behavior is not certified.",
+    "Original generic body visuals retain existing silhouettes; eye/animation fidelity, all-angle readability, broad balance and controlled native/WASM performance acceptance remain open.",
+    "First-floor1%Mulliboom rules are validated as configured; this slice records actual first-floor Mulligan/Mulligoon and band1Mulliboom residents, not a first-floor1%Mulliboom witness."
+  ],
+  "natural_witnesses": [
+    {
+      "id": "16.0.0",
+      "seed": 2,
+      "floor": 0,
+      "room": 3
+    },
+    {
+      "id": "16.1.0",
+      "seed": 105,
+      "floor": 0,
+      "room": 4
+    },
+    {
+      "id": "16.2.0",
+      "seed": 54,
+      "floor": 2,
+      "room": 5
+    }
+  ]
+}

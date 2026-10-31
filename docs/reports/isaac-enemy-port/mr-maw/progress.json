@@ -1,0 +1,294 @@
+{
+  "status": "Mr. Maw implementation checkpoint: 88 native suites have passing evidence; seven native and seven WASM actual residents pass; six focused browser cases plus three exact-frame cases pass; four starting-kit fights pass. Full acceptance remains open.",
+  "previous_checkpoint": "docs/reports/isaac-enemy-port/brain/checkpoint.json",
+  "scope": [
+    "35.0.0",
+    "35.1.0",
+    "35.2.0",
+    "35.3.0",
+    "35.10.0"
+  ],
+  "source": "source/manifest.json",
+  "animation_metadata": "animations/manifest.json",
+  "runtime": [
+    "src/combat/LinkedHeads.cpp",
+    "assets/mechanics/linked_heads.mechanics"
+  ],
+  "pending": [
+    "Remaining native status/control fidelity and exact RNG/grid/update equivalence",
+    "All-camera mixed-room readability, including foreground cliff limits",
+    "Full-floor/mixed-build balance and controlled Linux/WASM rendered performance",
+    "Implement regular Baby family38 before more bosses"
+  ],
+  "previous_goal_turn": "Progress: inspected and persisted browser/native combat results. This continuation completed generated WASM activation, fixed blank async captures, inspected final images and preserved Baby source evidence.",
+  "source_check": {
+    "command": "python3 scripts/isaac-reference/analyze-mr-maw.py --check",
+    "result": "pass",
+    "native_windows": 7,
+    "animations": 5
+  },
+  "native_build": {
+    "path": "docs/reports/isaac-enemy-port/mr-maw/build-initial.txt",
+    "result": "pass"
+  },
+  "native_focused": {
+    "path": "docs/reports/isaac-enemy-port/mr-maw/native-kit-initial.txt",
+    "result": "partial_pass",
+    "scope": "Independent HP, source movement/spring/timing, damage/split survivor transitions, red death cross, retained allocation, actual room completion, external configuration rejection."
+  },
+  "native_regression": {
+    "path": "docs/reports/isaac-enemy-port/mr-maw/native-regression.txt",
+    "passed": 85,
+    "total": 88,
+    "failures": [
+      "floor_progression: now counts linked heads separately and asserts reciprocal ownership",
+      "monster_behaviors: now verifies neck cannot spawn outside owner",
+      "brain: replacing three stale natural-spawn witnesses from actual generator"
+    ],
+    "corrections": [
+      {
+        "path": "docs/reports/isaac-enemy-port/mr-maw/native-regression-corrections.txt",
+        "result": "monster_behaviors passed; stronger placement check found elevated newborn head"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/mr-maw/native-attachment-fix.txt",
+        "result": "Brain, linked_head and floor_progression passed3/3."
+      }
+    ],
+    "current_summary": "docs/reports/isaac-enemy-port/mr-maw/native-summary.json",
+    "current_passed": 88,
+    "remaining_failures": 0
+  },
+  "live_jobs": {},
+  "counts": {
+    "total": 653,
+    "identity_verified": 653,
+    "source_archive_available": true,
+    "reviewed": 178,
+    "dispositions": {
+      "ordinary": 107,
+      "dedicated": 7,
+      "environment": 12,
+      "pending": 475,
+      "boss": 8,
+      "item_dependency": 2,
+      "component": 14,
+      "hazard": 16,
+      "excluded": 12
+    },
+    "implementations": {
+      "in_progress": 136,
+      "missing": 460,
+      "existing_unverified": 45,
+      "excluded": 12
+    },
+    "complete": 0,
+    "remaining": 641,
+    "milestones": [
+      {
+        "number": 1,
+        "status": "in_progress"
+      },
+      {
+        "number": 2,
+        "status": "pending"
+      },
+      {
+        "number": 3,
+        "status": "pending"
+      },
+      {
+        "number": 4,
+        "status": "pending"
+      },
+      {
+        "number": 5,
+        "status": "pending"
+      },
+      {
+        "number": 6,
+        "status": "pending"
+      }
+    ]
+  },
+  "source_fidelity_note": "No six-gate completion claimed. Native control/status/champion details and full balance/performance acceptance remain open.",
+  "finished_jobs": {
+    "initial_native_build": 0,
+    "initial_wasm_build": 0,
+    "focused_native_carried_pose": 0,
+    "seven_resident_activations": 0,
+    "brain_witness_search": 0,
+    "resident_search_first_range": 1,
+    "resident_search_remaining_range": 143,
+    "final_wasm_attachment_build": 0,
+    "final_floor_progression": 0,
+    "browser_test_server": 143,
+    "source_recheck": 0,
+    "browser_initial": 0,
+    "browser_residents_initial": 0,
+    "browser_exact": 0,
+    "browser_residents_final": 0,
+    "native_early_survivor_capture": 0,
+    "native_capture_hook_build": 0,
+    "wasm_capture_hook_build": 0,
+    "final_browser_server": 143
+  },
+  "resident_activation": {
+    "path": "docs/reports/isaac-enemy-port/mr-maw/native-residents.txt",
+    "passed": 7,
+    "frames_per_case": 240,
+    "bands": [
+      1,
+      2,
+      3
+    ],
+    "body_variants": [
+      0,
+      2
+    ],
+    "interior_river_cases": 2
+  },
+  "remaining_next_actions": [
+    "Remaining native status/control fidelity and exact RNG/grid/update equivalence",
+    "All-camera mixed-room readability, including foreground cliff limits",
+    "Full-floor/mixed-build balance and controlled Linux/WASM rendered performance",
+    "Implement regular Baby family38 before more bosses"
+  ],
+  "updated_utc": "2026-10-27T21:57:53.542532+00:00",
+  "last_verified_processes": [],
+  "current_verification": "Mr. Maw implementation checkpoint: 88 native suites have passing evidence; seven native and seven WASM actual residents pass; six focused browser cases plus three exact-frame cases pass; four starting-kit fights pass. Full acceptance remains open.",
+  "browser": {
+    "passed": 16,
+    "total": 16,
+    "final_build_passed": 10,
+    "browser": "149.0.7827.55",
+    "cases": [
+      {
+        "name": "normal",
+        "pass": true,
+        "last_frame": 122,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+        "build_scope": "before observer-only hook"
+      },
+      {
+        "name": "red",
+        "pass": true,
+        "last_frame": 122,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+        "build_scope": "before observer-only hook"
+      },
+      {
+        "name": "body-death",
+        "pass": true,
+        "last_frame": 31,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+        "build_scope": "before observer-only hook"
+      },
+      {
+        "name": "red-head-death",
+        "pass": true,
+        "last_frame": 32,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+        "build_scope": "before observer-only hook"
+      },
+      {
+        "name": "normal-cover",
+        "pass": true,
+        "last_frame": 121,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+        "build_scope": "before observer-only hook"
+      },
+      {
+        "name": "normal-river",
+        "pass": true,
+        "last_frame": 121,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-initial/results.json",
+        "build_scope": "before observer-only hook"
+      },
+      {
+        "name": "exact-normal",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-exact/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "exact-red",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-exact/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "exact-body-death",
+        "pass": true,
+        "last_frame": 21,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-exact/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "resident-2-band-2-seed-1",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "resident-0-band-2-seed-4",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "resident-2-band-3-seed-6",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "resident-0-band-3-seed-7",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "resident-2-band-1-seed-65",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "resident-0-band-1-seed-75",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+        "build_scope": "final observer build"
+      },
+      {
+        "name": "resident-0-band-2-seed-81",
+        "pass": true,
+        "last_frame": 241,
+        "report": "docs/reports/isaac-enemy-port/mr-maw/web-residents-final/results.json",
+        "build_scope": "final observer build"
+      }
+    ],
+    "errors": [],
+    "scope": "Six focused behavior cases before observer-only hook; ten cases on final production build (seven actual populations, three exact-render cases). No gameplay change between builds. Blank first capture set rejected and preserved separately."
+  },
+  "starting_kit": {
+    "path": "docs/reports/isaac-enemy-port/mr-maw/native-kit-initial.txt",
+    "passed": 4,
+    "total": 4,
+    "result": "partial_pass",
+    "scope": "Normal and red pair in open/cover fixtures; actual movement/fire input, default 100 HP and 24 damage, no god mode or scripted damage. Isolated combat only, not full-floor balance."
+  },
+  "process_note": "All owned builds, browser tests and source exports have terminated. Final browser server session92815 was stopped with SIGTERM, confirmed exit143. No owned jobs remain.",
+  "pool_ids": {
+    "direct": 82,
+    "including_replacements": 86
+  }
+}

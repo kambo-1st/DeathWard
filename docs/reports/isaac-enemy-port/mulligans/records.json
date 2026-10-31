@@ -1,0 +1,149 @@
+{
+  "16.0.0": {
+    "xml": {
+      "anm2path": "016.000_Mulligan.anm2",
+      "baseHP": "13",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "16",
+      "name": "#MULLIGAN",
+      "numGridCollisionPoints": "12",
+      "portrait": "11",
+      "reroll": "true",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "room_library_presence": {
+      "rooms/00.special rooms.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/01.basement.stb": {
+        "templates": 32,
+        "positive_weight_templates": 32
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 14,
+        "positive_weight_templates": 14
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 26,
+        "positive_weight_templates": 26
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      }
+    }
+  },
+  "16.1.0": {
+    "xml": {
+      "anm2path": "016.001_Mulligoon.anm2",
+      "baseHP": "13",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "16",
+      "name": "#MULLIGOON",
+      "numGridCollisionPoints": "12",
+      "portrait": "12",
+      "reroll": "true",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 10,
+        "positive_weight_templates": 10
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 12,
+        "positive_weight_templates": 12
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/greed/01.basement.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/greed/02.cellar.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    }
+  },
+  "16.2.0": {
+    "xml": {
+      "anm2path": "016.002_Mulliboom.anm2",
+      "baseHP": "13",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "16",
+      "name": "#MULLIBOOM",
+      "numGridCollisionPoints": "12",
+      "portrait": "13",
+      "reroll": "true",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "tags": "explosive_soul",
+      "variant": "2"
+    },
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 40,
+        "positive_weight_templates": 40
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 10,
+        "positive_weight_templates": 10
+      },
+      "rooms/04.caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/01.basement.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/02.cellar.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      }
+    }
+  }
+}

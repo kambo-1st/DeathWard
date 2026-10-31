@@ -1,0 +1,8 @@
+MOVEMENT source_force=.75 retention=.85 independent_target=1 seeded=1 no_projectiles=1
+LIFECYCLE cover=1 recovery=1 stun=1 room_suspend=1 death_clear=1
+STARTING_KIT seconds=2.91667 health=100 contact=12.5
+CONFIG immutable_reload=1 invalid_profiles=6
+NATURAL_MAGGOT seed=0 floor=2 room=2 band=1
+NATURAL_MAGGOT seed=0 floor=5 room=1 band=3
+RIVER_MAGGOT seed=0 floor=5 room=3
+PASS cardinal walkers

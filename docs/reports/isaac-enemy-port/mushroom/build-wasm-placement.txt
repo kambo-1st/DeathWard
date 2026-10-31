@@ -1,0 +1,11 @@
+[  7%] Built target raylib
+[  8%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[  9%] Linking CXX static library libdeathward_core.a
+[ 75%] Built target deathward_core
+[ 79%] Built target deathward_skinning
+[ 80%] Built target deathward_cloth
+[ 82%] Built target deathward_particles
+[ 85%] Built target deathward_mission_lighting
+Consolidate compiler generated dependencies of target deathward
+[ 86%] Linking CXX executable index.html
+[100%] Built target deathward

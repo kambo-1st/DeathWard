@@ -1,0 +1,13 @@
+[  7%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[  7%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[  7%] Linking CXX static library libdeathward_core.a
+[ 74%] Built target deathward_core
+[ 76%] Built target deathward_cloth
+[ 79%] Built target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+[ 83%] Built target deathward_mission_lighting
+[ 85%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 85%] Linking CXX executable index.html
+[100%] Built target deathward

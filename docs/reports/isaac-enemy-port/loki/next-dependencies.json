@@ -1,0 +1,21 @@
+{
+  "status": "Full enemy-port goal remains active. Next dependencies, not implementation claims.",
+  "continue_from": "docs/reports/isaac-enemy-port/loki/source-review.json",
+  "sequence": [
+    "Finish hostile ordnance payload contracts and runtime support for normal/Hot/Sad/Brimstone bomb flavors; do not import player-only damage/factions from item wiki pages. Preserve bounded active/pending queues and actual fuse timing.",
+    "Implement Hornfel906.0 with real rail/door arena, decoy906.1, minecart965, door967 and external1000.152 room-controller duties. Handle legitimate phase2 escape completion and prevent escape when spawned by Horny Boys split.",
+    "Implement Horny Boys920 ordered19-volley/182-shot barrage, three landing-fire shots, Boom Fly/Eternal group producer, and alternative teleport-bomb sequences. Preserve split into Loki plus phase2 Hornfel and drop ordering.",
+    "Add required source item interactions including Meat Cleaver Loki-to-Lokii and the shared fly-item/faction exceptions. Standard controllers and seeded routes do not substitute for these paths.",
+    "Before adding stage_health to any transforming family, repair FireReactions.cpp normalization to use effective source/target stage HP; test fractional/current HP policies and scaled offspring."
+  ],
+  "source_contracts": "docs/reports/isaac-enemy-port/boom_flies/next-contracts.json",
+  "ordnance_preflight": "docs/reports/isaac-enemy-port/boom_flies/next-dependency-review.json",
+  "specific_loki_gaps": [
+    "Meat Cleaver conversion",
+    "Optional Poky/four Stone Grimaces support templates",
+    "Degraded/Double Trouble/challenge/boss-rush/Void encounters",
+    "Native confirmation of shared Red Boom Fly cap",
+    "Mixed-build and rendered performance acceptance"
+  ],
+  "full_roster": "All641 non-excluded records still require full acceptance; do not redefine the goal around these dependencies."
+}

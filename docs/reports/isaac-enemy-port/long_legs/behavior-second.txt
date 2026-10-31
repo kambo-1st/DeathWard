@@ -1,0 +1,9 @@
+PASS Crazy45/Shoot22,8way and4diagonal shots, stageHP, arc fields and atomic capacity
+PASS Baby45/Lay26, twins, population cap, independent wet children and Small Baby Sack/white creep
+PASS Sack growth/reset, swell, thrown Spider landing, noncontact and lethal damage
+PASS ground pursuit/retreat and strict immutable config
+NATURAL_LONG_LEGS id=206.1 seed=1 floor=0 room=4
+NATURAL_LONG_LEGS id=207.0 seed=3 floor=0 room=5
+NATURAL_LONG_LEGS id=207.1 seed=4 floor=0 room=3
+NATURAL_LONG_LEGS id=206.0 seed=9 floor=0 room=1
+PASS Long Legs and Sack

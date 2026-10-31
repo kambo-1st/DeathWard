@@ -1,0 +1,276 @@
+[
+  {
+    "source": "resources/gfx/030.002_Sack.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/long_legs/animations/030.002_Sack.anm2",
+    "sha256": "2e398eb5d54ae788ddea398f0f0727982a6f5d225cd4b7d89bf6ac23aa108849",
+    "checksum": "0x67ab9eb4",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 4:20:08 PM",
+      "Version": "106",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Shake",
+          "FrameNum": "26",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "1",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Shoot",
+          "FrameNum": "24",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "12"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "Shrink",
+          "FrameNum": "14",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/205.000_Baby Long Legs.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/long_legs/animations/205.000_Baby Long Legs.anm2",
+    "sha256": "801e9a058b982ab5907cd1e689ac51ac2f10b25c94872ad34763286fa28ba75c",
+    "checksum": "0x6d169d1a",
+    "info": {
+      "CreatedBy": "Unknown",
+      "CreatedOn": "5/19/2014 9:31:20 AM",
+      "Version": "4",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Lay",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "1",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Walk",
+          "FrameNum": "5",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Lay Egg",
+          "FrameNum": "45",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/205.001_Small Baby Long Legs.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/long_legs/animations/205.001_Small Baby Long Legs.anm2",
+    "sha256": "e8eacf8411938c0fe053b74d14d454bca9f21bb763c1ed87beee11872d2ef44b",
+    "checksum": "0xf9fd7c32",
+    "info": {
+      "CreatedBy": "Unknown",
+      "CreatedOn": "29/08/2014 1:36:22 PM",
+      "Version": "5",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Lay",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "1",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Walk",
+          "FrameNum": "10",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Lay Egg",
+          "FrameNum": "45",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/206.000_Crazy Long Legs.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/long_legs/animations/206.000_Crazy Long Legs.anm2",
+    "sha256": "4800d81d787367a5f3533a269ac3645a6da8f386fab30400a7c1422c58c3622a",
+    "checksum": "0xf7111579",
+    "info": {
+      "CreatedBy": "Unknown",
+      "CreatedOn": "5/19/2014 9:37:04 AM",
+      "Version": "5",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      },
+      {
+        "Name": "poof02",
+        "Id": "1"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "1",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Walk",
+          "FrameNum": "5",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Attack",
+          "FrameNum": "45",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "22"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "23"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/206.001_Small Crazy Long Legs.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/long_legs/animations/206.001_Small Crazy Long Legs.anm2",
+    "sha256": "b61ce24479c59cd6407e2a1e2d57a05160f1ef4abf358761ba5d4930eda060ff",
+    "checksum": "0xf78edb28",
+    "info": {
+      "CreatedBy": "Unknown",
+      "CreatedOn": "29/08/2014 1:36:16 PM",
+      "Version": "6",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      },
+      {
+        "Name": "poof02",
+        "Id": "1"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "1",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Walk",
+          "FrameNum": "10",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Attack",
+          "FrameNum": "45",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "22"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "23"
+          }
+        ]
+      }
+    ]
+  }
+]

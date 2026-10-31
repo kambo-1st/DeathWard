@@ -1,0 +1,4 @@
+NATURAL_MAW variant=0 seed=3 floor=1 room=6
+NATURAL_MAW variant=1 seed=3 floor=1 room=7
+NATURAL_MAW variant=2 seed=9 floor=2 room=6
+PASS Maw family: movement, timing, homing, linked orbit/release/regen, queue pressure, external config and seeded rooms

@@ -1,0 +1,9 @@
+FIRING hp=96 check=7 cooldown=63 Spit=20 Shoot=4 Hide=16 actual_shots=3 flight=1 vulnerability=1
+SEQUENCE phase_independent_acquisition=1 random_hide=1 random_emerge=1 appear_collision=1 walls=1
+RELOCATION actual_move=1 native_anchor_retention=1 solids=1 bounds=1 source_distance_fallback=1
+CAPACITY whole_volley=1 frozen_aim=1 completion=1 contact=12.5
+CONFIG immutable_reload=1 invalid_profiles=6
+NATURAL_LUMP seed=0 floor=5 room=2
+NATURAL_LUMP seed=0 floor=5 room=9
+PLACEMENT floors=1 band=3
+PASS Lump

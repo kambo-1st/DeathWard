@@ -1,0 +1,12 @@
+START maggot
+PASS maggot
+START maggot-cover
+PASS maggot-cover
+START maggot-river
+PASS maggot-river
+START maggot-death
+PASS maggot-death
+START resident-quarry
+PASS resident-quarry
+START resident-storm
+PASS resident-storm

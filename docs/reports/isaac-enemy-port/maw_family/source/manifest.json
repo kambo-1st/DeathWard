@@ -1,0 +1,117 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "26": {
+      "index": 13,
+      "case": "0x6999e0",
+      "controller": "0x4feb40"
+    },
+    "96": {
+      "index": 64,
+      "case": "0x699914",
+      "controller": "0x4f8860"
+    }
+  },
+  "constants": {
+    "range": {
+      "address": "0xb6aba8",
+      "value": 200.0
+    },
+    "pursuit": {
+      "address": "0xb6a2f0",
+      "value": 0.12999999523162842
+    },
+    "retention": {
+      "address": "0xb6a5c4",
+      "value": 0.9300000071525574
+    },
+    "shot_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "red_multiplier": {
+      "address": "0xb6a864",
+      "value": 3.0
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/maw.asm",
+      "start": "0x4feb40",
+      "end": "0x4ff1f7",
+      "raw_sha256": "72b3a8c34e60efae72f05aa13dd1db730a447c8c17ce397bc6c042ace69be071",
+      "sha256": "60b20c5c05ce00b210b77fa18a415da5aeceb42d1a33686dc67ae173260ec31a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/eternal_fly.asm",
+      "start": "0x4f8860",
+      "end": "0x4f8e28",
+      "raw_sha256": "b2eca01e6e7e61247c23638f8b3f9abf7e994504f673a18e476f9dfdfa5ad627",
+      "sha256": "161dc7cb54a8508eed284a4d48fe1a4ad90a17379414d6b415c760f400f71283"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/acquisition.asm",
+      "start": "0x6a15a0",
+      "end": "0x6a174c",
+      "raw_sha256": "956a97cf9f32325c50e893e6cae07e58a26229d52fb8a0deaf50efb813ca9cc6",
+      "sha256": "3aa17539fcfcdf31c68bfbb09d92224e2cc49d93447f98a903706e2475cfea5c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/cadence.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430e90",
+      "raw_sha256": "b0972cf033767bce29916055a9b4aad413cd59f928e416893aadeeadd4ecfcd1",
+      "sha256": "be0130aeba1558049cec9eb834cc79f468b9fb410fdbc5e3aa43b8c2280ebf22"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/fire_projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a3420",
+      "raw_sha256": "f67feb27f0c5f637e022002e36222355a197c764ca267f3d4fbfe67cc0249ce5",
+      "sha256": "2d0a0127cface958faafe4918f9dc1da192324a9d65ef901eaef5dba90a0cbaf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/homing.asm",
+      "start": "0x6348ac",
+      "end": "0x634ab9",
+      "raw_sha256": "ea62f91527e42ac45aafb0f1c5df5e077b22492f9f7d87b200646a6745fba7c1",
+      "sha256": "c6423fb6e7205477aa9e6782e5eb69cab0f8f4493d2282f8394c22f8d9a816a6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/released_fly_regeneration.asm",
+      "start": "0x4f58ec",
+      "end": "0x4f592f",
+      "raw_sha256": "f2fd46a5ccbc30aefac572949daad9fefa9c0e1c4173d6e2b43de738f50370ce",
+      "sha256": "d46d17a9e6fd94fe1576351f267daeda23a6a6cacdae74c7093d1f2b1993377e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/homing_binding.asm",
+      "start": "0x80421b",
+      "end": "0x804225",
+      "raw_sha256": "8498537ce6755d2baf583af25ea19d211716ec2d30e013787cb5d53b9d3e2609",
+      "sha256": "afc0ab86beb36e420e1eb1183eb4b4eeaf2b8b9a1f62bc14a3d67623164c6c61"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/homing_getter.asm",
+      "start": "0x5ef0e0",
+      "end": "0x5ef0e8",
+      "raw_sha256": "355cd7f049ba6f077bf08040ddcfd49b258e5340f14285c94e9535857e20ab42",
+      "sha256": "8049425fecd091c19c7ba645e63e41c03cc72c02d219704c319d361ceb84716c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/maw_family/source/vector_helpers.asm",
+      "start": "0x962380",
+      "end": "0x962ce7",
+      "raw_sha256": "f6ef7fe6e37b43c485cfb3ac42c2a534dfc88a49cccaf2da92aa5278f1c0d1e8",
+      "sha256": "8e931b8fb19281371b70bca678070efbcadf8e0426058d00fe06708781496df9"
+    }
+  ]
+}

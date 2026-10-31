@@ -1,0 +1,86 @@
+{
+  "808.0.0": {
+    "xml": {
+      "anm2path": "808.000_willo.anm2",
+      "baseHP": "6",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "3",
+      "collisionRadius": "17",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "808",
+      "name": "#WILLO",
+      "numGridCollisionPoints": "0",
+      "portrait": "210",
+      "shadowSize": "10",
+      "stageHP": "0",
+      "tags": "fly",
+      "variant": "0"
+    },
+    "room_library_presence": {
+      "rooms/00.special rooms.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/27.downpour.stb": {
+        "templates": 53,
+        "positive_weight_templates": 53
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      },
+      "rooms/greed/06.flooded caves.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/greed/27.downpour.stb": {
+        "templates": 10,
+        "positive_weight_templates": 10
+      }
+    }
+  },
+  "817.1.0": {
+    "xml": {
+      "anm2path": "817.001_mullighoul.anm2",
+      "baseHP": "14",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "7",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "817",
+      "name": "#MULLIGHOUL",
+      "numGridCollisionPoints": "12",
+      "portrait": "225",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "room_library_presence": {
+      "rooms/27.downpour.stb": {
+        "templates": 27,
+        "positive_weight_templates": 27
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/greed/06.flooded caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/27.downpour.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    }
+  }
+}

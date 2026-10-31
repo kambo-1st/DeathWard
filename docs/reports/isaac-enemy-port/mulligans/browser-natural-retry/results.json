@@ -1,0 +1,5 @@
+{
+  "checks": [],
+  "errors": [],
+  "scope": "Ten production-mechanics Original-style scenes: regular Mulligan family movement, source-scaled health, offspring/overkill, real Troll Bomb and diagonal shots, immediate Mulliboom proximity/death blasts, and three actual seeded residents. Native tests cover exact update timing, random collision trigger, retained death payloads and destruction. World explosion totals may include secondary powder-barrel blasts; native isolated tests verify one producer blast. Full parity, broad balance and controlled performance remain open."
+}

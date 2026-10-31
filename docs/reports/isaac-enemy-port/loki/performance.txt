@@ -1,0 +1,3 @@
+LOKI_NATIVE_STEP variant=0 groups=1 samples=1800 mean_us=1.39498 p50_us=1.4 p95_us=1.91 max_us=11.7 peak_actors=2 peak_projectiles=36 shots=132 suppressed=0 render=0 baseline_comparison=0
+LOKI_NATIVE_STEP variant=1 groups=1 samples=1800 mean_us=2.79907 p50_us=2.79 p95_us=3.63 max_us=45.65 peak_actors=3 peak_projectiles=68 shots=272 suppressed=0 render=0 baseline_comparison=0
+LOKI_NATIVE_STEP variant=2 groups=12 samples=1800 mean_us=31.1729 p50_us=30.93 p95_us=41.44 max_us=279.63 peak_actors=36 peak_projectiles=540 shots=2592 suppressed=0 render=0 baseline_comparison=0

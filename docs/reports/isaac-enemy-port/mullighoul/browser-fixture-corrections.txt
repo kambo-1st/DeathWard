@@ -1,0 +1,17 @@
+The first run passed all three Willo-only scenes, then rejected a newborn
+Mullighoul child before its first controller update. Spawn events drain after
+that frame's controller pass; the next update initializes the orbit. The fixture
+now allows exactly that one-update admission interval.
+
+The second run passed seven isolated scenes. The natural Willo scene failed an
+unconditional 30-unit projectile-speed assertion. Diagnostic samples show its
+actual production residents include a type-236 attraction statue. Existing
+Simulation::updateProjectiles applies that field to all projectiles. Observed
+Willo speeds 30.0000..33.9002 are below the configured statue cap of 40. This is
+an existing interaction, not an altered source shot speed. The natural fixture
+now requires the interaction and its speed cap; isolated scenes still assert
+30. No runtime or content changes were made for these two fixture corrections.
+
+The seven passed isolated cases are retained in web-final/results.json. Only
+the two unresolved natural cases are rerun in web-residents/results.json.
+The combined browser report identifies each evidence source explicitly.

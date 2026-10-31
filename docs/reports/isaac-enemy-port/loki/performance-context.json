@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-26T02:47:03.096725+00:00",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
+  "logical_cpus": 12,
+  "load_before": [
+    7.759765625,
+    8.46435546875,
+    8.54833984375
+  ],
+  "compile": "c++ -O3 -std=c++20 -Isrc -Ibuild/_deps/raylib-src/src docs/reports/isaac-enemy-port/loki/performance-probe.cpp build/libdeathward_core.a -o /tmp/deathward-loki-perf",
+  "command": "/tmp/deathward-loki-perf",
+  "scope": "CPU-only simulation; 60 warmup ticks, 1800 timed ticks per configuration. No rendering, baseline comparison or WASM timing. Browser regression completed before measurement.",
+  "load_after": [
+    7.759765625,
+    8.46435546875,
+    8.54833984375
+  ]
+}

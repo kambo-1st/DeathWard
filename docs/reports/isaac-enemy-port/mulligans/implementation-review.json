@@ -1,0 +1,69 @@
+{
+  "scope": [
+    "16.0.0 Mulligan",
+    "16.1.0 Mulligoon",
+    "16.2.0 Mulliboom"
+  ],
+  "mechanics_fingerprint": "6db1f4889ab4996d",
+  "native": {
+    "covered_suites": 68,
+    "passed": 68,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/mulligans/native.xml",
+    "behavior": "docs/reports/isaac-enemy-port/mulligans/behavior-final.txt",
+    "scope": "Full native CTest run. Focused family fixture verifies actual collision-triggered detonation,29-frame timing/death interruption,4independent weighted children and scaled overkill,4/8shot rings,real randomized Troll Bomb,atomic capacity retry and actual room completion,5-frame proximity/half-heart damage,nearby monster/rock blast effects,immutable snapshots and three actual production residents."
+  },
+  "browser": {
+    "cases": 10,
+    "report": "docs/reports/isaac-enemy-port/mulligans/web/results.json",
+    "errors": [],
+    "scope": "Ten production-mechanics Original-style scenes: regular Mulligan family movement, source-scaled health, offspring/overkill, real Troll Bomb and diagonal shots, immediate Mulliboom proximity/death blasts, and three actual seeded residents. Native tests cover exact update timing, random collision trigger, retained death payloads and destruction. World explosion totals may include secondary powder-barrel blasts; native isolated tests verify one producer blast. Full parity, broad balance and controlled performance remain open.",
+    "coverage": {
+      "initial_nine_passes": "docs/reports/isaac-enemy-port/mulligans/browser-nine-results.json",
+      "focused_retry": "docs/reports/isaac-enemy-port/mulligans/browser-natural-final/results.json",
+      "note": "Nine cases passed in the full run. Only natural Mulliboom was retried after screenshot timing and first-sample movement accounting corrections. Production native/WASM mechanics were unchanged. Two extra delayed-death visual captures passed separately.",
+      "wasm_sha256": "e479976d62e95478cd6305fadaa11ebec09b8007874dd94eb95b818048ffc903",
+      "data_sha256": "0303d4c138d8fbaa1ab4eeca394fcdd72bdad6ff3c9ac7062c81de16de41a23d"
+    }
+  },
+  "visual": {
+    "result": "Inspected Original low-poly Mulligan/Mulligoon bodies with ground shadows, live blue Mulliboom body, four death children, a real visible Troll Bomb with diagonal shots/telegraph, and a production Mulligoon resident room. Early scripted captures show camera-transition cliff occlusion; delayed-death browser captures provide clearer evidence. Native live Mulliboom remains partly framed by foreground terrain. These are limited visual smoke checks, not full source silhouettes/animation, all-angle readability or performance acceptance.",
+    "linux": [
+      "docs/reports/isaac-enemy-port/mulligans/native-mulligan.png",
+      "docs/reports/isaac-enemy-port/mulligans/native-mulligoon.png",
+      "docs/reports/isaac-enemy-port/mulligans/native-mulliboom-live.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/mulligans/web/mulligan-death-visible.png",
+      "docs/reports/isaac-enemy-port/mulligans/web/mulligoon-death-visible.png",
+      "docs/reports/isaac-enemy-port/mulligans/web/natural-mulligoon.png",
+      "docs/reports/isaac-enemy-port/mulligans/web/mulliboom-proximity-after.png"
+    ],
+    "additional_capture_validation": "docs/reports/isaac-enemy-port/mulligans/browser-visuals.json",
+    "limits": [
+      "Existing generic silhouettes are retained; source eye and appearance animation fidelity remains open.",
+      "Rapid Mulliboom death can precede camera settling. Early native/browser captures are retained with that limitation.",
+      "DisplayedFPS is not a controlled performance benchmark; no FPS acceptance claim."
+    ]
+  },
+  "adaptations": [
+    "Source HP and monster blast damage multiplied by 3.2; all bodies have 41.6 HP. Source distances multiply by .1; native 30 Hz projectile velocity multiplies by 3 for local units/second. Collision radii .6/.65 remain local geometry.",
+    "Source player half-heart/full-heart blast damage maps to 10/20 local damage before existing EnemyDamageMultiplier1.25. Player defaults remain unchanged.",
+    "Source flee/wander/chase forces and friction use 30 Hz updates with physical canyon navigation and body avoidance. No source rectangular grid imported.",
+    "Death blasts/shots/bombs are admitted together or retained until runtime capacity returns. Pending death payload keeps room sealed. An admitted Troll Bomb persists after producer removal and room clear.",
+    "Mulligan four-child count models the zero-initialized native NPC+bc6 counter. Existing bounded offspring generation and safe placement retry remain.",
+    "Troll Bomb initialized count45+RNG%30 maps provisionally to a1.5..74/30-second fuse. This is not verified native appearance-animation timing.",
+    "Normal-mode projectile speed7 is used; native hard-mode speed10 remains future difficulty support.",
+    "Local sparse pursuit weights, threat costs and caps map reviewed source stages into canyon bands; they are balance choices. Band0 Mulligan gets9.49%Mulligoon phase0 then1%Mulliboom phase1; standard band1 has a direct Mulliboom route."
+  ],
+  "remaining": [
+    "Exact native grid movement initial impulse, diagonal bias, adaptive search/cache, knockback/status and time-scale behavior remain unfinished.",
+    "Troll Bomb appearance state, animation-driven countdown, pushing/kicking and complete item/status behavior need further recovery; initialized count is known but wall-clock fuse is provisional.",
+    "Nonzero native NPC+bc6 counter lifecycle and its reduced Mulligan death offspring count remain unresolved.",
+    "Full charm, friendly, champion, item, appearance and hard-mode behavior is not certified.",
+    "Original generic body visuals retain existing silhouettes; eye/animation fidelity, all-angle readability, broad balance and controlled native/WASM performance acceptance remain open.",
+    "First-floor1%Mulliboom rules are validated as configured; this slice records actual first-floor Mulligan/Mulligoon and band1Mulliboom residents, not a first-floor1%Mulliboom witness."
+  ],
+  "complete": false,
+  "historical_artifacts_preserved": 5369
+}

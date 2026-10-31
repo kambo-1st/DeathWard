@@ -1,0 +1,10 @@
+PASS baby
+PASS small-baby
+PASS crazy
+PASS small-crazy
+PASS sack
+PASS crazy-cover
+PASS natural-baby
+PASS natural-small-baby
+PASS natural-crazy
+PASS natural-small-crazy

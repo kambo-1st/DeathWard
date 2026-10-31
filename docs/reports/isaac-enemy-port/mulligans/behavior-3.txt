@@ -1,0 +1,9 @@
+PASS grid-triggered detonation,29-frame windup, ordinary death interruption and no fixed-age trigger
+PASS four independent death draws, scaled overkill, persistent flies and crowd-independent count
+PAYLOAD voluntary=0 bombs=1 shots=4 explosions=0
+PAYLOAD voluntary=1 bombs=1 shots=8 explosions=1
+PASS Mulligoon4/8shot rings, real randomized Troll Bomb and atomic capacity retry
+PASS source5-frame proximity, immediate blast, half-heart conversion and fast pursuit
+NATURAL_MULLIGAN id=16.0 seed=2 floor=0 room=3
+NATURAL_MULLIGAN id=16.1 seed=105 floor=0 room=4
+FAIL all three regular variants naturally reachable through production source/replacement pools
