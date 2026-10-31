@@ -133,7 +133,9 @@ void layouts() {
         auto &a=run.arena;
         const std::string tag=" seed "+std::to_string(seed)+" theme "+std::to_string(int(theme))+" floor "+std::to_string(floor);
         check(a.supplyCache.room>=0,"cache must have a safe placement"+tag);
-        const int ordinary=int(std::count_if(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room!=run.finalRoom();}));
+        // Dung is independently configured dressing. Preserve the strict count
+        // for the existing rocks, ore, powder and optional-cache structure.
+        const int ordinary=int(std::count_if(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room!=run.finalRoom()&&p.kind!=BreakableKind::Dung;}));
         const int expected=a.profile.active()?4+a.profile.rocks+a.profile.seams+a.profile.barrels:8;
         check(ordinary==expected,"all profile destructibles and three cache sides fit"+tag);
         if(std::all_of(a.breakables.begin(),a.breakables.end(),[&](const auto &p){return p.room==a.supplyCache.room||p.room==run.finalRoom();}))++clustered;

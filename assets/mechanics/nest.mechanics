@@ -1,0 +1,24 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b type205. Source20HP, zero stage growth and harmless body.
+monster 205.0.0 "Nest" Flee Spawn Walker 64 1.5 .7 4.333333333 .133333333 2 0 0 0 1 legacy
+stage_health 205.0.0 20 0 3.2
+# Shared ground evasion; HeadAttack18 frames, Shoot4. Native base75 + uniform55..74.
+evader 205.0.0 .1 25 17 14 3 .8 .5 .9 1.079 30 18 4 75 4 8 20 69 85.0.0 1
+evader_cooldown_bonus 205.0.0 55 74
+evader_child_contact_death 205.0.0
+# Native overrides population count to1, then RNG&1 chooses94.0 or29.1 equally.
+# Zero offset/impulse. Population declaration retains this required child under capacity pressure.
+death nest
+ overkill -64
+ population_offspring 1 0 0 0 0 0
+ outcome 1
+  offspring 94.0.0 1 1 1
+ endoutcome
+ outcome 1
+  offspring 29.1.0 1 1 1
+ endoutcome
+end
+death_for 205.0.0 nest
+# Source Basement/Cellar, Caves/Catacombs/Flooded and Necropolis room-library presence.
+# Local sparse specialist weights, not claimed source occurrence probabilities.
+encounter 0 2 pursuit specialist 205.0.0 1 3 1

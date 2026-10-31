@@ -51,11 +51,11 @@ void writeSummary(std::ostream &out, const RunSummary &s) {
         << std::quoted(s.startingContext) << ' ' << int(s.reason) << ' ' << s.rescued << ' ' << s.bossKilled
         << ' ' << s.altarDestroyed << ' ' << s.interrupted << ' ' << s.moneyCollected << ' ' << s.moneySpent
         << ' ' << s.surveyRecovered << ' ' << s.floor << ' ' << s.floorCount << ' ' << int(s.account)
-        << ' ' << int(s.pacing) << '\n';
+        << ' ' << int(s.pacing) << ' ' << std::quoted(s.mechanicsFingerprint) << '\n';
     writeStats(out, s.stats);
     out << s.items.size();
     for (auto id : s.items)
-        out << ' ' << int(id);
+        out << ' ' << std::quoted(itemKeyText(id));
     out << '\n' << s.consequences.size() << '\n';
     for (const auto &line : s.consequences)
         out << std::quoted(line) << '\n';
@@ -91,14 +91,18 @@ RunSummary readSummary(std::istream &in, int version) {
     if (reason < 0 || reason > 3)
         throw std::runtime_error("Invalid outcome in save");
     s.reason = EndReason(reason);
+    if(version>=7)in>>std::quoted(s.mechanicsFingerprint);
     readStats(in, s.stats);
     size_t n = count(in, 4096);
     for (size_t i = 0; i < n; ++i) {
-        int id = -1;
-        in >> id;
-        if (id < 0 || id >= ItemCount)
-            throw std::runtime_error("Invalid saved item");
-        s.items.push_back(ItemId(id));
+        if(version>=7) {
+            std::string key;in>>std::quoted(key);
+            s.items.push_back(parseItemKey(key)); // Preserve IDs even if their package is absent.
+        } else {
+            int id=-1;in>>id;
+            if(id<0||id>=ItemCount)throw std::runtime_error("Invalid saved item");
+            s.items.push_back(ItemId(id));
+        }
     }
     n = count(in, 100);
     for (size_t i = 0; i < n; ++i) {
@@ -188,7 +192,7 @@ void saveAtomic(const std::filesystem::path &path, const Campaign &c) {
         std::ofstream out(temp, std::ios::binary | std::ios::trunc);
         if (!out)
             throw std::runtime_error("Cannot create save: " + temp.string());
-        out << "DEATHWARD 6 " << checksum(payload) << '\n' << payload;
+        out << "DEATHWARD 7 " << checksum(payload) << '\n' << payload;
         out.flush();
         if (!out)
             throw std::runtime_error("Cannot write campaign save");
@@ -230,7 +234,7 @@ CampaignStore::CampaignStore(std::filesystem::path path) : path_(std::move(path)
     in >> magic >> version >> hash;
     in.get();
     std::string payload((std::istreambuf_iterator<char>(in)), {});
-    if (magic != "DEATHWARD" || version < 1 || version > 6 || checksum(payload) != hash)
+    if (magic != "DEATHWARD" || version < 1 || version > 7 || checksum(payload) != hash)
         throw std::runtime_error("Campaign save is damaged or unsupported. Original file was preserved: " +
                                  path_.string());
     campaign_ = deserialize(payload, version);

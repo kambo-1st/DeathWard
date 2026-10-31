@@ -1,0 +1,24 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b; source HPx3.2, XZ distancesx.1, native30Hz.
+monster 808.0.0 "Willo" Orbit Shot Fly 19.2 2 .5 1.2 .8 1 1 0 0 1 legacy
+monster 817.1.0 "Mullighoul" Flee Spawn Walker 44.8 1.5 .7 2.5 .133333333 3 0 0 0 1 legacy
+stage_health 808.0.0 6 0 3.2
+stage_health 817.1.0 14 0 3.2
+# scale,radius,ellipse,angle/update,tracking gain/cap,player carry,settled range,
+# random check denominator,Attack/Warn/Shoot,lead frames,shot XZ speed/damage,
+# shot height/upward speed/gravity/retention/radius/TTL,no-wall collision.
+willo 808.0.0 .1 120 .84 .054977871 .5 10 2 20 9 36 6 24 1 30 10 1.15 -1.5 9 .9 .25 4 1
+evader 817.1.0 .1 25 17 14 3 .8 .5 .9 1.079 30 18 4 75 4 8 20 69 808.0.0 1
+evader_hover 817.1.0 .6
+# Native817 adjustment applies to BOTH variants; no random1..2 cap for Mullighoul.
+death mullighoul
+ overkill -64
+ population_offspring 4 .2 0 0 0 0
+ population_adjustment -1 1
+ outcome 1
+  offspring 808.0.0 1 1 1
+ endoutcome
+end
+death_for 817.1.0 mullighoul
+encounter 1 1 crossfire specialist 808.0.0 1 2 3 2 flooded
+encounter 1 1 pursuit specialist 817.1.0 1 3 1 1 flooded

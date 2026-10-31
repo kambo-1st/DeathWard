@@ -133,6 +133,7 @@ int main() {
                     }
                 }
         std::set<uint64_t> maps;
+        int floorsWithExtraQuietRoom=0;
         for (uint64_t seed = 0; seed < 64; ++seed) {
             dw::Arena arena(seed), repeated(seed);
             check(fingerprint(arena) == fingerprint(repeated), "same seed reproduces all geometry");
@@ -172,7 +173,8 @@ int main() {
             }
             check(powers >= 1 && powers <= 2, "one or two separate power rooms");
             check(shops == 1, "exactly one unlocked shop room");
-            check(empty >= 1 && empty <= 2, "one or two additional enemy-free rooms");
+            check(empty >= 1 && empty <= 2, "safe entrance and at most one additional quiet room");
+            floorsWithExtraQuietRoom+=empty==2;
             check(arena.rooms[0].kind == dw::RoomKind::Empty,
                   "the starting room is enemy-free for every seed");
             check(arena.rooms[2].kind == dw::RoomKind::Combat && arena.rooms[3].kind == dw::RoomKind::Combat,
@@ -293,6 +295,9 @@ int main() {
         travel.player.position = travel.arena.doorApproach(lockIndex, outside);
         check(travel.useDoor(lockIndex, outside) && travel.keys == 0,
               "unlocked doors do not charge another key");
+        check(floorsWithExtraQuietRoom>=5&&floorsWithExtraQuietRoom<=22,
+              "extra quiet rooms remain occasional across seeds, rather than half the floors");
+        std::cout << "Extra quiet rooms: " << floorsWithExtraQuietRoom << " / 64 seeded floors\n";
         std::cout << "PASS 64 seeds: deterministic varied geometry, connected floor, doors, objectives and "
                      "boss clearance\n"
                   << "PASS branches, reachable keys, locks, combat seals, unique pickups and revisits\n";

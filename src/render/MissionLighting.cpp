@@ -70,10 +70,14 @@ void main() {
     if (surface.a < .02) discard;
 #ifdef PRIMITIVE
     // Some raylib primitives do not supply normals. Derivatives recover their facets.
-    vec3 n=normalize(cross(dFdx(world),dFdy(world)));
+    vec3 rawNormal=cross(dFdx(world),dFdy(world));
 #else
-    vec3 n=gl_FrontFacing ? normalize(normal) : -normalize(normal);
+    vec3 rawNormal=gl_FrontFacing ? normal : -normal;
 #endif
+    // Lines (including orbiting-fly halos) can have zero surface derivatives.
+    // Keep undefined normals out of lighting and the downstream bloom blur.
+    float normalLengthSquared=dot(rawNormal,rawNormal);
+    vec3 n=normalLengthSquared>1e-12 ? rawNormal*inversesqrt(normalLengthSquared) : vec3(0.,1.,0.);
     finalColor=vec4(worldSurfaceColor(surface.rgb)*westernDaylight(n,missionSun,missionVisibility(world,n)),surface.a);
 }
 )GLSL";

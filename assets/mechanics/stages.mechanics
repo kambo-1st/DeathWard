@@ -1,0 +1,8 @@
+DEATHWARD_MECHANICS 1
+# Explicit DW balance mapping, not a reproduction of Isaac's chapter graph.
+# band source-stage-on-first-floor source-stage-on-second-floor-in-band
+# Inactive/tutorial/Classic fixtures retain source stage 1.
+source_stages 0 1 2
+source_stages 1 3 4
+source_stages 2 5 6
+source_stages 3 7 8

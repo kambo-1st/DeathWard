@@ -62,6 +62,17 @@ void breakableModel(const Breakable &p,float time,Color stone,unsigned char alph
     auto tint=[&](Color c){c.a=alpha;return c;};
     const auto center=mul(add(p.bounds.min,p.bounds.max),.5f),size=sub(p.bounds.max,p.bounds.min);
     const auto base=Vector3{center.x,.035f,center.z};
+    if(p.kind==BreakableKind::Dung) {
+        const float intact=p.destroyed?0.f:float(p.health)/float(std::max(1,p.initialHealth));
+        const Color dirt=tint({88,65,39,255}),dry=tint({122,91,53,255});
+        DrawCylinderEx(base,add(base,{0,.1f,0}),size.x*.48f,size.x*.42f,7,dirt);
+        if(!p.destroyed) {
+            const float height=.3f+(size.y-.3f)*intact;
+            DrawCylinderEx(add(base,{0,.09f,0}),add(base,{.08f,height*.65f,0}),size.x*.42f,size.x*.25f,7,dirt);
+            DrawCylinderEx(add(base,{.08f,height*.65f,0}),add(base,{-.06f,height,0}),size.x*.26f,.04f,6,dry);
+        }
+        return;
+    }
     if(p.destroyed) {
         // Low, nonblocking remnants are visibly flat and cannot resemble intact cover.
         for(int i=0;i<4;++i) {
@@ -84,8 +95,15 @@ void breakableModel(const Breakable &p,float time,Color stone,unsigned char alph
         }
         if(p.fuse>=0&&!depthOnly) {
             DrawSphereEx({center.x+.12f,size.y+.29f,center.z},.1f,4,6,tint(Gold));
-            DrawCircle3D({center.x,.06f,center.z},3.6f,{1,0,0},90,
-                         Color{235,115,52,static_cast<unsigned char>(150+70*std::sin(time*24))});
+            // This runs under the lit primitive shader, which obtains face
+            // normals from derivatives. GL_LINES have degenerate derivatives
+            // and can produce NaNs that spread through HDR post-processing.
+            const Color warning{235,115,52,static_cast<unsigned char>(150+70*std::sin(time*24))};
+            for(int n=0;n<32;++n) {
+                const auto a=add({center.x,.06f,center.z},rotateY({3.6f,0,0},float(n)*2*Pi/32));
+                const auto b=add({center.x,.06f,center.z},rotateY({3.6f,0,0},float(n+1)*2*Pi/32));
+                DrawCylinderEx(a,b,.018f,.018f,4,warning);
+            }
         }
         return;
     }
@@ -239,11 +257,26 @@ void frontierBossModel(const Enemy &e,bool drawShadow) {
     }
     rlPopMatrix();
 }
-void enemyModel(const Enemy &enemy, bool drawShadow = true) {
+void enemyModel(const Enemy &enemy, const MechanicsLibrary &content, bool drawShadow = true) {
+    if(enemy.monster==monsterId(227)||enemy.monster==monsterId(277)){drawBonyModel(enemy,drawShadow);return;}
+    if(const auto *rules=content.environmentActor(enemy.monster)){drawEnvironmentActorModel(enemy,*rules,drawShadow);return;}
     if(enemy.bossKind==BossKind::Ridgeback){ridgebackModel(enemy,drawShadow);return;}
     if(enemy.bossKind==BossKind::PowderForeman||enemy.bossKind==BossKind::StormMarshal){frontierBossModel(enemy,drawShadow);return;}
+    if(enemy.segmentedEncounter){drawSegmentedBossModel(enemy,drawShadow);return;}
+    if(content.hornfel(enemy.monster)||content.hornfelDecoy(enemy.monster)){drawHornfelModel(enemy,drawShadow);return;}
+    if(content.loki(enemy.monster)){drawLokiModel(enemy,drawShadow);return;}
+    if(enemy.bossKind==BossKind::Isaac){drawPeepModel(enemy,drawShadow);return;}
+    if(content.flyBomb(enemy.monster)){drawFlyBombModel(enemy,drawShadow);return;}
+    if(const auto *boom=content.boomFly(enemy.monster)){drawBoomFlyModel(enemy,*boom,drawShadow);return;}
     if (enemy.kind == EnemyKind::Monster) {
-        drawMonsterModel(enemy, drawShadow);
+        const float scale=enemy.statuses?enemy.statuses->visualScale:1;
+        if(scale!=1) {
+            const auto anchor=add(enemy.position,{0,-.85f,0});
+            rlPushMatrix();rlTranslatef(anchor.x,anchor.y,anchor.z);
+            rlScalef(scale,scale,scale);rlTranslatef(-anchor.x,-anchor.y,-anchor.z);
+        }
+        drawMonsterModel(enemy, *content.monster(enemy.monster), drawShadow, content.charge(enemy.monster));
+        if(scale!=1)rlPopMatrix();
         return;
     }
     rlPushMatrix();
@@ -401,6 +434,34 @@ void servicePerson(Vector3 p,RoomService service,float time,bool drawShadow) {
     }
 }
 void enemyWarning(const Enemy &enemy, const Simulation &run) {
+    if(enemy.mushroom)return; // Cap reveal telegraphs its fixed-axis cross; an aimed ray would misrepresent it.
+    if(enemy.targetHop) {
+        if(enemy.leaper&&enemy.leaper->phase&&(enemy.leaper->phase==1||enemy.targetHop->airborne)) {
+            const auto at=enemy.leaper->target;
+            DrawCircle3D({at.x,.09f,at.z},enemy.radius+.45f,{1,0,0},90,Gold);
+            DrawCircle3D({at.x,.1f,at.z},.2f,{1,0,0},90,Paper);
+            return;
+        }
+        if(enemy.state==EnemyState::Windup)DrawCircle3D({enemy.position.x,.08f,enemy.position.z},enemy.radius+.15f,{1,0,0},90,Gold);
+        return;
+    }
+    if(run.content->hornfel(enemy.monster)||run.content->hornfelDecoy(enemy.monster))return; // Rail motion and visible held bombs communicate its actions.
+    if(run.content->loki(enemy.monster)) {
+        if(enemy.state==EnemyState::Windup)DrawCircle3D({enemy.position.x,.08f,enemy.position.z},enemy.radius+.2f,{1,0,0},90,Gold);
+        return;
+    }
+    if(enemy.bossKind==BossKind::Isaac) {
+        if(enemy.state==EnemyState::Windup||enemy.hop.active) {
+            const bool bloat=run.content->bloat(enemy.monster)!=nullptr;
+            auto at=(enemy.bossAttack==2||(bloat&&enemy.bossAttack==1))?enemy.target:enemy.position;at.y=.09f;
+            const auto *p=run.content->peep(enemy.monster);
+            const auto *b=run.content->bloat(enemy.monster);
+            const float radius=enemy.bossAttack==0?(p?p->creepRadius:b?b->creepRadius:enemy.radius+.5f):enemy.radius+.5f;
+            DrawCircle3D(at,radius,{1,0,0},90,Gold);
+            if(enemy.bossAttack==2)DrawCircle3D(at,.35f,{1,0,0},90,Paper);
+        }
+        return;
+    }
     if(enemy.bossKind==BossKind::PowderForeman||enemy.bossKind==BossKind::StormMarshal) {
         auto p=enemy.position;p.y=.09f;
         auto lane=[&](float angle,Color color,float width) {
@@ -526,6 +587,46 @@ void enemyWarning(const Enemy &enemy, const Simulation &run) {
                  warning);
 }
 void drawHazard(const Hazard &hazard) {
+    if(hazard.kind==HazardKind::FireWave) {
+        const float span=planarDistance(hazard.origin,hazard.position);
+        const int count=std::clamp(int(std::ceil(span/.55f)),1,80);
+        const auto direction=unit(sub(hazard.position,hazard.origin));
+        const Vector3 side{-direction.z,0,direction.x};
+        for(int n=0;n<=count;++n) {
+            auto at=add(hazard.origin,mul(direction,span*float(n)/float(count)));at.y=.06f;
+            const float height=.65f+.2f*std::sin(hazard.age*14+float(n)*1.7f);
+            DrawCylinder(at,hazard.radius,hazard.radius,.035f,6,{138,56,29,140});
+            DrawCylinder(at,.02f,hazard.radius*.6f,height,5,{225,92,30,255});
+            const auto spark=add(at,mul(side,(n%2?1.f:-1.f)*hazard.radius*.45f));
+            DrawCylinder(spark,0,hazard.radius*.27f,height*.8f,5,{255,197,84,255});
+        }
+        return;
+    }
+    if(hazard.kind==HazardKind::RockWave) {
+        if(hazard.rockWave) {
+            const auto &wave=*hazard.rockWave;
+            for(size_t n=0;n<wave.trail.size();++n) {
+                auto at=wave.trail[n];at.y=.025f;
+                const float strength=float(n+1)/float(wave.trail.size());
+                const float radius=wave.rules.visualRadius*(.5f+.5f*strength);
+                DrawCylinder(at,0,radius,radius*1.8f,5,{154,130,97,255});
+                DrawCylinder(add(at,{radius*.5f,0,radius*.35f}),0,radius*.6f,radius,5,{184,156,113,255});
+            }
+            return;
+        }
+        const auto direction=unit(horizontal(hazard.velocity));
+        const float speed=length(hazard.velocity),trail=std::min(hazard.age,hazard.waveTrail)*speed;
+        const Vector3 side{-direction.z,0,direction.x};
+        for(int n=0;n<7;++n) {
+            const float fraction=float(n)/7,offset=trail*fraction;
+            auto at=sub(hazard.position,mul(direction,offset));at.y=.04f;
+            const float height=(1-fraction)*hazard.radius*1.8f;
+            DrawCylinder(add(at,mul(side,(n%2?.16f:-.16f))),0,hazard.radius*(1-.5f*fraction),height,5,
+                n%2?Color{151,119,85,255}:Color{181,148,104,255});
+        }
+        DrawCircle3D({hazard.position.x,.09f,hazard.position.z},hazard.radius,{1,0,0},90,Gold);
+        return;
+    }
     if (hazard.kind == HazardKind::PlayerDynamite || hazard.kind == HazardKind::BossCharge) {
         const auto p = hazard.position;
         const float fuse = std::clamp(hazard.age / hazard.delay, 0.f, 1.f);
@@ -559,16 +660,23 @@ void drawHazard(const Hazard &hazard) {
         if (warning)
             DrawLine3D(hazard.origin, hazard.position, Gold);
         else {
-            DrawCylinderEx(hazard.origin, hazard.position, hazard.radius, hazard.radius, 8, Rust);
-            DrawCylinderEx(hazard.origin, hazard.position, hazard.radius * .35f, hazard.radius * .35f, 6,
-                           Paper);
+            const float scale=hazard.ownedBeam&&hazard.fadeAge>=0?std::pow(hazard.fadeScale,hazard.fadeAge*30):1;
+            const float alpha=hazard.ownedBeam&&hazard.fadeAge>=0?
+                std::clamp(1-hazard.fadeAge/hazard.fadeDuration,0.f,1.f):1;
+            const float radius=hazard.radius*scale;
+            DrawCylinderEx(hazard.origin, hazard.position, radius, radius, 8, Fade(hazard.tint.a?hazard.tint:Rust,alpha));
+            DrawCylinderEx(hazard.origin, hazard.position, radius * .35f, radius * .35f, 6,Fade(Paper,alpha));
         }
         return;
     }
     Vector3 ground{hazard.position.x, 0.09f, hazard.position.z};
+    if(hazard.kind==HazardKind::Fire)ground.y=std::max(.09f,hazard.position.y-.85f+.09f);
     const bool warning = hazard.age < hazard.delay;
-    const Color color = hazard.kind == HazardKind::Ring ? Gold : Rust;
+    const float opacity=hazard.fadeAge<0||hazard.fadeDuration<=0?1:
+        std::clamp(1-hazard.fadeAge/hazard.fadeDuration,0.f,1.f);
+    const Color color = Fade(hazard.kind == HazardKind::Ring ? Gold : Rust,opacity);
     float radius = hazard.radius;
+    if(hazard.fadeAge>=0)radius*=std::pow(hazard.fadeScale,hazard.fadeAge*30);
     if (hazard.kind == HazardKind::Ring)
         radius *= std::clamp((hazard.age - hazard.delay) / hazard.duration, 0.0f, 1.0f);
     DrawCircle3D(ground, radius, {1, 0, 0}, 90, color);
@@ -591,9 +699,10 @@ void drawHazard(const Hazard &hazard) {
         }
     } else if (hazard.kind == HazardKind::Tar || hazard.kind == HazardKind::Creep ||
                hazard.kind == HazardKind::Gas) {
-        const Color pool = hazard.kind == HazardKind::Tar   ? Color{42, 35, 46, 200}
+        Color pool = hazard.tint.a>0?hazard.tint:hazard.kind == HazardKind::Tar   ? Color{42, 35, 46, 200}
                            : hazard.kind == HazardKind::Gas ? Color{117, 141, 62, 140}
                                                             : Color{137, 43, 43, 190};
+        pool.a=static_cast<unsigned char>(float(pool.a)*opacity);
         DrawCylinder(ground, radius, radius, .04f, 12, pool);
         if (hazard.kind == HazardKind::Gas)
             DrawSphereEx(add(ground, {0, .35f, 0}), radius * .65f, 5, 8, pool);
@@ -679,7 +788,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 if (depthOnly &&
                     (enemy.state == EnemyState::Buried || enemy.state == EnemyState::Teleporting))
                     continue;
-                enemyModel(enemy, !depthOnly && !lighting.ready());
+                enemyModel(enemy, *run.content, !depthOnly && !lighting.ready());
             }
         }
     };
@@ -743,17 +852,24 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 DrawCube({p.x+.14f,.3f,p.z+.04f},.018f,.02f,.39f,Muted);
             }
         }
+        for(const auto &progress:run.rooms)for(const auto &plate:progress.plates) {
+            const auto p=plate.position;const float height=plate.pressed?.035f:.12f;
+            DrawCube({p.x,height*.5f,p.z},1.3f,height,1.3f,plate.pressed?Muted:Gold);
+            DrawCube({p.x,height+.01f,p.z},.9f,.02f,.9f,plate.pressed?Teal:Border);
+        }
         if(!westernScene_.loaded())for(const auto &prop:run.arena.floorProps)
             if(visible(prop.bounds))DrawCubeV(mul(add(prop.bounds.min,prop.bounds.max),.5f),sub(prop.bounds.max,prop.bounds.min),theme.stone);
         if(!westernScene_.loaded())for(const auto &prop:run.arena.storyProps)
             if(visible(prop.bounds))DrawCubeV(mul(add(prop.bounds.min,prop.bounds.max),.5f),sub(prop.bounds.max,prop.bounds.min),theme.stone);
-        if (run.arena.shopRoom >= 0) {
-            const auto merchant = run.arena.rooms[size_t(run.arena.shopRoom)].objective;
-            if (distance(run.player.position, merchant) < 60)
-                shopkeeper(merchant, float(run.stats.duration), !depthOnly && !lighting.ready());
+        // One trader per room, whether it offers shop stock or a specialist service.
+        // Select the role once instead of drawing independent trader lists.
+        for(const auto &site:run.arena.rooms) {
+            if(distance(run.player.position,site.objective)>=60)continue;
+            if(site.kind==RoomKind::Shop)
+                shopkeeper(site.objective,float(run.stats.duration),!depthOnly&&!lighting.ready());
+            else if(site.kind==RoomKind::Service)
+                servicePerson(site.objective,site.service,float(run.stats.duration),!depthOnly&&!lighting.ready());
         }
-        for(const auto &site:run.arena.rooms)if(site.kind==RoomKind::Service&&distance(run.player.position,site.objective)<60)
-            servicePerson(site.objective,site.service,float(run.stats.duration),!depthOnly&&!lighting.ready());
         for (int i = 0; i < run.arena.roomCount(); ++i) {
             const auto &room = run.arena.rooms[size_t(i)];
             if ((room.kind!=RoomKind::Power&&!run.rewardAvailable(i))||distance(run.player.position,run.rewardPosition(i))>60)
@@ -787,6 +903,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         BeginShaderMode(primitiveDepth);
         solids(true);
         enemies(true);
+        drawRailEncounter(run);
         if (!westernScene_.loaded() && !westernScene_.terrainReady())
             for (size_t i = 0; i < run.arena.boundaryWalls.size() + run.arena.obstacles.size(); ++i) {
                 const auto &wall = run.arena.walls[i];
@@ -819,6 +936,24 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     if (!westernScene_.loaded() && !westernScene_.terrainReady())
         for (const auto &box : run.arena.floors)
             floor(box, theme.floor);
+    // Local ash or damp sediment identifies the context without changing geometry.
+    auto deposits=[&](const auto &patches,Color color) {
+        for(const auto &patch:patches)if(planarDistance(patch.position,run.player.position)<60) {
+            for(int layer=2;layer>=1;--layer)for(int i=0;i<12;++i) {
+                auto edge=[&](int n) {
+                    const float a=patch.angle+float(n)*Pi/6;
+                    const float r=patch.radius*float(layer)*.5f*(.8f+.15f*std::sin(a*3));
+                    return add(patch.position,{std::cos(a)*r,float(2-layer)*.002f,std::sin(a)*r});
+                };
+                auto center=patch.position;center.y+=float(2-layer)*.002f;
+                auto tint=color;tint.a=static_cast<unsigned char>(layer==2?35:65);
+                DrawTriangle3D(center,edge(i+1),edge(i),tint);
+            }
+        }
+    };
+    deposits(run.arena.scorchPatches,{63,49,43,255});
+    deposits(run.arena.dampPatches,{62,88,89,255});
+    drawRailEncounter(run);
     for (size_t i = 0; i < run.arena.walls.size(); ++i) {
         const auto &wall = run.arena.walls[i];
         if (i >= run.arena.boundaryWalls.size() + run.arena.obstacles.size() || !visible(wall))
@@ -978,9 +1113,10 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             if (!e.alive)
                 continue;
             drawnEnemies.push_back(&e);
-            if (e.id == hoveredEnemy)
+            if(e.friendly)DrawCircle3D({e.position.x,.07f,e.position.z},e.radius+.1f,{1,0,0},90,Teal);
+            if (e.id == hoveredEnemy && !(e.adultLeech&&e.adultLeech->intangible))
                 DrawCircle3D({e.position.x, 0.08f, e.position.z}, e.radius + 0.25f, {1, 0, 0}, 90, Rust);
-            if (room == run.room)
+            if (room == run.room&&!e.friendly)
                 enemyWarning(e, run);
             const auto *partner = partnerOf(e);
             if (e.monster == monsterId(89) && e.partner) {
@@ -1000,8 +1136,112 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                 DrawSphereWires(e.position, e.radius, 6, 8, Rust);
         }
     }
+    const auto groundPool=[](const Hazard &h) {
+        return h.kind==HazardKind::Creep||h.kind==HazardKind::Tar||h.kind==HazardKind::Gas;
+    };
     for (const auto &hazard : run.hazards)
-        drawHazard(hazard);
+        if(!groundPool(hazard))drawHazard(hazard);
+    if(std::any_of(run.hazards.begin(),run.hazards.end(),groundPool)) {
+        // Coplanar translucent trails must blend without writing over each
+        // other's depth. Keep terrain depth testing, and flush once per pass.
+        rlDrawRenderBatchActive();
+        rlDisableDepthMask();
+        for(const auto &hazard:run.hazards)if(groundPool(hazard))drawHazard(hazard);
+        rlDrawRenderBatchActive();
+        rlEnableDepthMask();
+    }
+    for(const auto &burst:run.fireWaves)if(burst.room==run.room) {
+        if(burst.rules.jetStepFrames) {
+            for(const auto &jet:burst.jets) {
+                const float age=burst.age-jet.born,life=float(burst.rules.jetLifeFrames)/30;
+                const float fade=std::clamp(1-age/life,0.f,1.f);
+                auto at=jet.position;at.y=.04f;
+                const bool active=age<=float(burst.rules.jetPulseB)/30;
+                const auto alpha=static_cast<unsigned char>(fade*255);
+                DrawCylinder(at,0,burst.rules.radius*.55f*jet.scale,2.2f*jet.scale*fade,6,
+                    active?Color{248,121,32,alpha}:Color{105,76,61,static_cast<unsigned char>(fade*140)});
+                if(active) {
+                    DrawCylinder(at,0,burst.rules.radius*.24f*jet.scale,1.4f*jet.scale,5,{255,220,127,alpha});
+                    DrawCircle3D(at,burst.rules.radius,{1,0,0},90,{232,120,37,140});
+                }
+            }
+        } else for(int n=0;n<4;++n) {
+            Hazard flame;flame.kind=HazardKind::FireWave;flame.radius=burst.rules.radius;flame.age=burst.age;
+            if(burst.segment(n,flame.origin,flame.position))drawHazard(flame);
+        }
+    }
+    for(const auto &bomb:run.suppliedBombs) {
+        // Lift the carried prop clear of the protagonist's hat. Collision and
+        // explosion origin remain at the gameplay charge position.
+        const auto p=add(bomb.charge.position,{0,bomb.state==SuppliedBombState::Carried?.92f:.12f,0});
+        const bool lit=bomb.state!=SuppliedBombState::Pickup;
+        DrawSphereEx(p,.3f,6,8,{55,50,43,255});
+        DrawCylinderEx(add(p,{0,-.2f,0}),add(p,{0,.2f,0}),.315f,.315f,8,{102,87,65,255});
+        DrawCylinderEx(add(p,{0,.25f,0}),add(p,{.12f,.44f,0}),.035f,.025f,5,Paper);
+        if(lit) {
+            DrawSphereEx(add(p,{.12f,.44f,0}),.07f+.025f*std::sin(bomb.charge.age*50),4,6,Gold);
+            const float remaining=std::clamp(1-bomb.charge.age/bomb.charge.delay,0.f,1.f);
+            DrawCircle3D({p.x,.09f,p.z},bomb.charge.radius,{1,0,0},90,Rust);
+            DrawCircle3D({p.x,.1f,p.z},.3f+.45f*remaining,{1,0,0},90,Gold);
+        } else DrawCircle3D({p.x,.06f,p.z},.55f,{1,0,0},90,Teal);
+    }
+    for(const auto &bomb:run.enemyBombs) {
+        if(bomb.room!=run.room)continue;
+        const auto p=bomb.charge.position;
+        if(bomb.detonated) {
+            Hazard effect;effect.delay=0;effect.age=bomb.effectAge;
+            effect.origin=effect.position=add(p,{0,.67f,0});
+            if(bomb.rules.payload==EnemyBombPayload::Hot) {
+                effect.kind=HazardKind::Fire;effect.radius=bomb.rules.fieldRadius;effect.duration=bomb.rules.fieldDuration;
+                drawHazard(effect);
+            } else if(bomb.rules.payload==EnemyBombPayload::Brimstone) {
+                effect.kind=HazardKind::Beam;effect.radius=bomb.rules.beamRadius;effect.duration=bomb.rules.beamDuration;
+                effect.tint={176,35,58,255};
+                for(auto end:bomb.beamEnds){effect.position=end;drawHazard(effect);}
+            }
+            continue;
+        }
+        if(bomb.blastMarker) {
+            const float ground=run.arena.canyon?run.arena.canyon->height(p.x,p.z):0;
+            const Vector3 at{p.x,ground+.08f,p.z};
+            const float pulse=.65f+.35f*std::sin(bomb.charge.age*30);
+            for(const auto axis:{Vector3{1,0,0},Vector3{0,0,1}})
+                DrawCylinderEx(sub(at,mul(axis,.55f)),add(at,mul(axis,.55f)),.055f,.055f,5,Fade(Gold,pulse));
+            continue;
+        }
+        const auto payload=bomb.rules.payload;
+        if(bomb.configured&&payload==EnemyBombPayload::Brimstone) {
+            DrawCylinderEx(sub(p,{0,.12f,0}),add(p,{0,.08f,0}),.35f,.35f,8,{70,38,45,255});
+            for(const auto axis:{Vector3{1,0,0},Vector3{0,0,1}})
+                DrawCylinderEx(sub(add(p,{0,.1f,0}),mul(axis,.27f)),add(add(p,{0,.1f,0}),mul(axis,.27f)),.035f,.035f,5,Rust);
+        } else {
+            const Color tint=bomb.configured&&payload==EnemyBombPayload::Hot?Color{184,75,34,255}:
+                bomb.configured&&payload==EnemyBombPayload::Sad?Color{79,116,142,255}:Color{48,43,49,255};
+            DrawSphereEx(p,.25f,6,8,tint);
+            if(bomb.configured&&payload==EnemyBombPayload::Hot)
+                DrawCylinderEx(add(p,{0,.1f,0}),add(p,{0,.65f,0}),.18f,0,5,Gold);
+            if(bomb.configured&&payload==EnemyBombPayload::Sad)
+                for(float x:{-.1f,.1f})DrawSphereEx(add(p,{x,.08f,-.23f}),.055f,4,6,Ink);
+        }
+        DrawCylinderEx(add(p,{0,.18f,0}),add(p,{.09f,.37f,0}),.025f,.02f,5,Paper);
+        DrawSphereEx(add(p,{.09f,.37f,0}),.06f+.015f*std::sin(bomb.charge.age*55),4,6,Gold);
+        const float ground=run.arena.canyon?run.arena.canyon->height(p.x,p.z):0;
+        DrawCircle3D({p.x,ground+.055f,p.z},bomb.charge.radius,{1,0,0},90,Rust);
+        const float remaining=std::clamp(1-bomb.charge.age/bomb.charge.delay,0.f,1.f);
+        DrawCircle3D({p.x,ground+.065f,p.z},.25f+.35f*remaining,{1,0,0},90,Gold);
+    }
+    for(const auto &f:run.familiars) {
+        auto at=f.position;at.y=.045f;
+        const auto side=Vector3{-f.facing.z,0,f.facing.x};
+        DrawCylinderEx(at,add(at,{0,.018f,0}),f.radius*.7f,f.radius*.7f,16,{34,31,43,190});
+        const auto head=add(at,mul(f.facing,f.radius*.65f));
+        DrawCylinderEx(head,add(head,{0,.02f,0}),f.radius*.4f,f.radius*.4f,12,{34,31,43,190});
+        for(int n:{-1,1}) {
+            const auto arm=add(at,mul(side,float(n)*f.radius*.65f));
+            DrawCylinderEx(arm,add(arm,{0,.016f,0}),f.radius*.25f,f.radius*.25f,8,{34,31,43,190});
+        }
+        if(collisions)DrawSphereWires(f.position,f.radius,5,8,Teal);
+    }
     if (dynamiteArmed) {
         const auto trajectory = run.dynamiteTrajectory(run.player.aim);
         for (size_t i = 1; i < trajectory.size(); ++i)
@@ -1026,14 +1266,25 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     if (run.player.dodge > 0)
         DrawSphereWires(run.player.position, 0.9f, 5, 8, Teal);
     for (const auto &p : run.projectiles) {
+        if(p.flightRetention>0)shadow(p.position,p.radius*1.4f);
         Color color = p.hostile     ? (p.bounces > 0 ? Color{204, 132, 232, 255} : Rust)
                       : p.ghost     ? Teal
                       : p.lastRound ? Paper
                                     : Gold;
         if (p.kind == ProjectileKind::Rock || p.kind == ProjectileKind::ReturningHead)
             color = Color{182, 171, 141, 255};
+        if (p.kind == ProjectileKind::Homing && p.sourceHoming) color={174,99,218,255};
+        if (p.kind == ProjectileKind::Tar) color={58,48,55,255};
+        if (p.kind == ProjectileKind::Ember) color={240,150,65,255};
+        if (p.kind == ProjectileKind::Brown) color={88,49,25,255};
+        if (p.kind == ProjectileKind::Yellow) color={221,185,46,255};
+        if (p.kind == ProjectileKind::Ipecac || p.kind == ProjectileKind::Green) color={124,208,53,255};
+        if (p.kind == ProjectileKind::Bone) color={229,214,176,255};
+        if (p.kind == ProjectileKind::DarkBone) color={92,86,70,255};
+        if(p.tint.a)color=p.tint;
         if(!p.hostile&&p.attack.capDamage>0&&!p.capSpent)color={248,166,75,255};
         if(!p.hostile&&p.attack.rail)projectileMesh(p.position,p.radius,color,unit(p.velocity),3.5f);
+        else if(p.kind==ProjectileKind::Bone||p.kind==ProjectileKind::DarkBone)projectileMesh(p.position,p.radius,color,unit(p.velocity),2.8f);
         else projectileMesh(p.position, p.radius, color);
     }
     // Keep triangles and lines in separate batches. Alternating for each projectile
@@ -1044,6 +1295,15 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
                       : p.lastRound ? Paper
                                     : Gold;
         if(!p.hostile&&(p.returning||p.attack.homingTurn>0))color=p.returning?Teal:Color{121,183,199,255};
+        if (p.kind == ProjectileKind::Homing && p.sourceHoming) color={174,99,218,255};
+        if (p.kind == ProjectileKind::Tar) color={58,48,55,255};
+        if (p.kind == ProjectileKind::Ember) color={240,150,65,255};
+        if (p.kind == ProjectileKind::Brown) color={88,49,25,255};
+        if (p.kind == ProjectileKind::Yellow) color={221,185,46,255};
+        if (p.kind == ProjectileKind::Ipecac || p.kind == ProjectileKind::Green) color={124,208,53,255};
+        if (p.kind == ProjectileKind::Bone) color={229,214,176,255};
+        if (p.kind == ProjectileKind::DarkBone) color={92,86,70,255};
+        if(p.tint.a)color=p.tint;
         Vector3 tail = sub(p.position, mul(unit(p.velocity), p.hostile ? 0.35f : p.attack.rail?1.f:0.6f));
         DrawLine3D(tail, p.position, color);
         if (p.kind == ProjectileKind::Hook) {
@@ -1060,7 +1320,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         float t = 1 - effect.life / effect.maxLife;
         Color color = effect.kind == 0 ? Gold : effect.kind == 2 ? Teal : effect.kind == 4 ? Rust : Paper;
         color.a = static_cast<unsigned char>(180 * (1 - t));
-        if (effect.kind == 5) {
+        if (effect.kind == 7) {
+            // Cosmetic blood splat: flat, bounded lifetime, no damage/collision.
+            DrawCylinder(effect.position,effect.radius,effect.radius,.012f,7,
+                         {111,35,31,static_cast<unsigned char>(140*(1-t))});
+        } else if (effect.kind == 5) {
             for (int i = 0; i < 8; ++i) {
                 const float angle = float(i) * 2 * Pi / 8;
                 auto p = add(effect.position, {std::cos(angle) * t * effect.radius * .6f, .3f + t * 1.8f,
@@ -1110,18 +1374,18 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         postProcess_.outlineOccluded(camera, [&] {
             for (const auto *e : drawnEnemies)
                 if (outlineEligible(*e))
-                    enemyModel(*e, false);
+                    enemyModel(*e, *run.content, false);
         });
     for (const auto &e : run.enemies)
-        if (e.alive && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {
+        if (e.alive && e.maxHp>0 && !e.dyingEggy() && !(e.adultLeech&&e.adultLeech->intangible) && (e.hp < e.maxHp || e.id == hoveredEnemy) && e.kind != EnemyKind::Boss) {
             Vector2 at = GetWorldToScreen(add(e.position, {0, 1.6f, 0}), camera);
             if (e.id == hoveredEnemy && e.kind == EnemyKind::Monster) {
-                const auto &d = *monsterDefinition(e.monster);
+                const auto &d = *run.content->monster(e.monster);
                 const std::string label = d.name;
                 text(label, at.x / sx_ - 60, at.y / sy_ - 25, 12, d.roomHazard ? Gold : Paper);
             }
             DrawRectangle(int(at.x) - 18, int(at.y) - 5, 36, 4, Ink);
-            DrawRectangle(int(at.x) - 18, int(at.y) - 5, int(36 * std::max(0.0f, e.hp / e.maxHp)), 4, Rust);
+            DrawRectangle(int(at.x) - 18, int(at.y) - 5, int(36 * std::max(0.0f, e.hp / e.maxHp)), 4, e.friendly?Teal:Rust);
         }
 }
 Action Renderer::hub(const Game &game) {
@@ -1366,7 +1630,7 @@ void Renderer::dungeonMap(const Game &game) {
     const auto totalPowers =
         std::count_if(run.arena.rooms.begin(), run.arena.rooms.end(),
                       [](const RoomLayout &room) { return room.kind == RoomKind::Power; });
-    text(run.surveyTutorial?"ONE FLOOR / SURVEY TRAIL":
+    text(run.surveyTutorial?"SURVEY TRAIL":
              "KEYS " + std::to_string(run.keys) + "   POWERS " + std::to_string(run.powerUpsTaken) + " / " + std::to_string(totalPowers),
          1053, 201, 11, Paper);
     text("MONEY " + number(run.money()), 1053, 216, 11, Gold);
@@ -1459,7 +1723,7 @@ void Renderer::itemIcon(ItemId item,Rectangle rect) const {
     case ItemId::Return: line(-9,7,8,7);line(8,7,8,-7);line(8,-7,-9,-7);line(-9,-7,-3,-12);line(-9,-7,-3,-2);break;
     case ItemId::Cap: circle(0,0,5);for(int i=0;i<8;++i){float a=float(i)*Pi/4;line(std::cos(a)*7,std::sin(a)*7,std::cos(a)*11,std::sin(a)*11);}break;
     case ItemId::Braid: for(float x:{-7.f,0.f,7.f})line(x,9,x,-5);line(-7,-5,0,-10);line(0,-10,7,-5);break;
-    case ItemId::Count: break;
+    case ItemId::Count: circle(0,0,8);line(0,-5,0,2);circle(0,6,1);break;
     }
 }
 Action Renderer::buildStrip(const Game &game) {
@@ -1469,12 +1733,12 @@ Action Renderer::buildStrip(const Game &game) {
     const Vector2 mouse{GetMouseX()/sx_,GetMouseY()/sy_};
     const ItemDefinition *hovered=nullptr;
     int index=0;
-    for(const auto &item:itemDefinitions()) {
+    for(const auto &item:game.run->content->items()) {
         const auto stacks=game.run->itemStacks(item.id);if(!stacks)continue;
         const Rectangle rect{strip.x+float(index++)*expeditionHud::ItemStride,strip.y,expeditionHud::ItemSize,expeditionHud::ItemSize};
         const bool hover=CheckCollisionPointRec(mouse,rect);
         panel(rect.x,rect.y,rect.width,rect.height,hover?Border:Panel);
-        itemIcon(item.id,rect);
+        itemIcon(item.id.legacy().value_or(ItemId::Count),rect);
         if(stacks>1)text(std::to_string(stacks),rect.x+24,rect.y+25,10,Paper);
         if(hover)hovered=&item;
     }
@@ -1491,10 +1755,10 @@ Action Renderer::buildDetails(const Game &game) {
     text("YOUR BUILD",160,60,28,Gold);
     text("Powers last for this expedition. Copies are shown beside each name.",160,100,14,Muted);
     int index=0;
-    if(game.run)for(const auto &item:itemDefinitions()) {
+    if(game.run)for(const auto &item:game.run->content->items()) {
         const auto stacks=game.run->itemStacks(item.id);if(!stacks)continue;
         const float x=152+float(index%2)*496,y=133+float(index/2)*92;++index;
-        panel(x,y,480,86,Ink);itemIcon(item.id,{x+8,y+10,38,38});
+        panel(x,y,480,86,Ink);itemIcon(item.id.legacy().value_or(ItemId::Count),{x+8,y+10,38,38});
         text(std::string(item.name)+(stacks>1?" x"+std::to_string(stacks):""),x+58,y+10,16,Gold);
         wrap(item.description,x+58,y+35,408,12,Paper);
     }
@@ -1505,17 +1769,13 @@ Action Renderer::expedition(const Game &game) {
     const auto &run = *game.run;
     drawWorld(run, game.camera, game.collisionDebug, game.hoveredEnemy, game.deathTime, game.dynamiteArmed,
               sandstormStrength_);
-    const auto location=expeditionHud::Location;
-    panel(location.x,location.y,location.width,location.height,Panel);
-    text("FLOOR " + std::to_string(run.floor+1)+" / "+std::to_string(run.expedition.floorCount),42,33,14,Gold);
-    text(run.arena.profile.active()?run.arena.profile.name:missionTheme(run.arena.theme).region,42,54,11,Muted);
     if(run.stats.duration-run.roomEnteredAt<3.0) {
-        panel(24,78,292,34,Panel);
-        text(run.roomName(),40,87,18,Paper);
+        panel(24,22,292,34,Panel);
+        text(run.roomName(),40,31,18,Paper);
     }
     panel(964, 22, 292, 131, Panel);
     if(run.surveyTutorial) {
-        text("THE LOST SURVEY / FLOOR 1",982,37,13,Gold);
+        text("THE LOST SURVEY",982,37,13,Gold);
         wrap(run.surveyRecovered?"Records and letter recovered. Return to Fort Mercy.":"Recover Bell's records from the survey camp.",982,65,256,16,Paper);
         if(run.surveyRecovered&&button(Action::ReadLetter,"READ LETTER",982,120,256,26))return Action::ReadLetter;
         panel(330,568,620,88,Panel);
@@ -1541,17 +1801,18 @@ Action Renderer::expedition(const Game &game) {
     floorExitMarker(game);
     if (const auto *boss = run.boss()) {
         panel(412, 24, 476, 70, Panel);
-        text(std::string(bossName(boss->bossKind))+" / PHASE " + std::to_string(boss->phase + 1), 429, 37, 14, Paper);
+        const auto bossLabel=boss->bossKind==BossKind::Isaac?run.content->monster(boss->monster)->name:std::string(bossName(boss->bossKind));
+        text(bossLabel+(boss->segmentedEncounter?"":" / PHASE " + std::to_string(boss->phase + 1)), 429, 37, 14, Paper);
         if(canyonBoss(boss->bossKind))text(bossHint(*boss),429,53,10,Gold);
         panel(429, 66, 442, 9, Ink);
-        DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * std::max(0.0f, boss->hp / boss->maxHp)),
+        DrawRectangle(int(429 * sx_), int(66 * sy_), int(442 * sx_ * run.bossHealthFraction(*boss)),
                       int(9 * sy_), Rust);
     } else if(!run.roomClear) {
         text(number(run.roomThreats())+" HOSTILES",440,38,14,Paper);
     } else if(run.arena.rooms[size_t(run.room)].kind==RoomKind::Combat&&run.stats.duration-run.roomClearedAt<1.4) {
         text("ROOM CLEAR",440,38,14,Teal);
     }
-    panel(24, 674, 344, 101, Panel);
+    panel(24, 674, 344, 64, Panel);
     text("HEALTH", 41, 686, 12, Muted);
     text(std::to_string(int(std::max(0.0f, run.player.hp))) + " / " + std::to_string(int(run.player.maxHp)),
          264, 685, 14, Paper);
@@ -1559,13 +1820,6 @@ Action Renderer::expedition(const Game &game) {
     DrawRectangle(int(41 * sx_), int(709 * sy_),
                   int(310 * sx_ * std::clamp(run.player.hp / run.player.maxHp, 0.0f, 1.0f)), int(9 * sy_),
                   run.player.hp < run.player.maxHp * 0.3f ? Rust : Teal);
-    for (int i = 0; i < 6; ++i) {
-        Rectangle r{(43 + float(i) * 25) * sx_, 736 * sy_, 15 * sx_, 23 * sy_};
-        DrawRectangleRec(r, i == run.player.nextRound - 1  ? Gold
-                            : i < run.player.nextRound - 1 ? Muted
-                                                           : Color{54, 58, 52, 255});
-    }
-    text("ROUND " + std::to_string(run.player.nextRound) + " / 6", 209, 741, 13, Muted);
     Action controls = Action::None;
     if (!game.paused && !game.buildOpen && !run.rewardOpen && !run.shopOpen && !run.dead) {
         const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
@@ -1575,8 +1829,6 @@ Action Renderer::expedition(const Game &game) {
         if(control(Action::Dynamite,(game.dynamiteArmed?"CANCEL ":"DYNAMITE ")+std::to_string(run.dynamite),bomb,game.dynamiteArmed))
             controls=Action::Dynamite;
         if(control(Action::DynamiteMode,game.dynamiteThrowMode?"THROW":"PLACE",mode))controls=Action::DynamiteMode;
-        if(game.showExpeditionInteraction()&&control(Action::Interact,run.nearbyInteraction(),expeditionHud::Interact,true))
-            controls=Action::Interact;
         const auto dodge=expeditionHud::Dodge;
         if(control(Action::Dodge,"DODGE",dodge))controls=Action::Dodge;
         if(run.player.dodgeCooldown>0)
@@ -1604,7 +1856,7 @@ Action Renderer::expedition(const Game &game) {
         text("Take ONE power. The other is lost. This cache can only be used once.", 204, 265, 16, Muted);
         for (int i = 0; i < int(run.offers.size()); ++i) {
             float x = 339 + float(i) * 301;
-            const auto &item = itemDefinition(run.offers[size_t(i)]);
+            const auto &item = itemDefinition(run.offers[size_t(i)],*run.content);
             panel(x, 314, 279, 279, Panel);
             text(item.rarity, x + 20, 337, 12, std::string(item.rarity) == "CURSED" ? Rust : Gold);
             wrap(item.name, x + 20, 377, 237, 25, Paper);
@@ -1638,7 +1890,7 @@ Action Renderer::expedition(const Game &game) {
         for (int i = 0; i < 3; ++i) {
             const auto &offer = run.shopOffers[size_t(i)];
             const bool medicine = offer.kind == ShopOfferKind::Medicine;
-            const auto &item = itemDefinition(offer.item);
+            const auto &item = itemDefinition(offer.item,*run.content);
             const float x = 200 + float(i) * 295;
             panel(x, 280, 275, 287, Ink);
             text(medicine ? "SUPPLIES" : item.rarity, x + 18, 298, 12,
@@ -1669,11 +1921,12 @@ Action Renderer::expedition(const Game &game) {
     }
     if (game.paused) {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Color{9, 15, 18, 210});
-        panel(407,134,466,86,Panel);
-        text(run.roomName(),435,151,20,Paper);
+        panel(407,124,466,108,Panel);
+        text(std::string("EXPEDITION / ")+(run.arena.profile.active()?run.arena.profile.name:missionTheme(run.arena.theme).region),435,138,12,Gold);
+        text(run.roomName(),435,159,20,Paper);
         text("FLOOR "+std::to_string(run.floor+1)+" / "+std::to_string(run.expedition.floorCount)+
-             "   ROOM "+std::to_string(run.room+1)+" / "+std::to_string(run.arena.roomCount()),435,181,12,Gold);
-        text("SEED "+game.seedText+"   /   "+timeLabel(run.stats.duration),435,201,11,Muted);
+             "   ROOM "+std::to_string(run.room+1)+" / "+std::to_string(run.arena.roomCount()),435,186,12,Gold);
+        text("SEED "+game.seedText+"   /   "+timeLabel(run.stats.duration),435,207,11,Muted);
         panel(407, 240, 466, 318, Panel);
         text("TAKE A BREATH", 435, 269, 30, Paper);
         wrap("Retreat ends your build and changes the town. Closing the game also counts as retreat.", 436,
@@ -1734,13 +1987,17 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
     panel(60, 336, 512, 316, Panel);
     text("WHAT YOU LOST", 80, 357, 16, Gold);
     int row = 0;
-    for (int i = 0; i < ItemCount; ++i) {
-        auto n = std::count(s.items.begin(), s.items.end(), ItemId(i));
-        if (n) {
-            text(itemDefinition(ItemId(i)).name + (n > 1 ? " x" + std::to_string(n) : ""),
-                 81+float(row/6)*245,399+float(row%6)*31,16,Paper);
-            ++row;
+    std::map<ItemKey,size_t> lost;
+    for(const auto &key:s.items)++lost[key];
+    for(const auto &[key,n]:lost) {
+        if(row==11&&lost.size()>12) {
+            text("+"+std::to_string(lost.size()-11)+" more powers",326,554,16,Muted);
+            break;
         }
+        const auto *definition=defaultMechanics()->item(key);
+        text((definition?definition->name:itemKeyText(key)) + (n > 1 ? " x" + std::to_string(n) : ""),
+             81+float(row/6)*245,399+float(row%6)*31,16,Paper);
+        ++row;
     }
     if (row == 0)
         wrap("A plain revolver. The next expedition may tell a different story.", 81, 405, 440, 19, Muted);

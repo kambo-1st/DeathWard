@@ -37,28 +37,61 @@ bool Simulation::hurtPlayer(float damage, const Context &context, bool hostile) 
 }
 
 float Simulation::enemyDamage(const Enemy &enemy, const Event &event) const {
+    if(const auto *fly=content->flyBomb(enemy.monster);fly&&fly->orbitOwner)
+        return event.debugExecution||(enemy.selfDetonated&&event.execution&&event.context.sourceEntity==enemy.id)?event.damage:0;
     if (event.execution)
         return event.damage;
+    // Source radial-damage collection skips EntityCollisionClass 0. A direct
+    // scripted damage call is separate and is not granted blanket immunity.
+    if(enemy.adultLeech&&enemy.adultLeech->intangible&&event.areaDamage)return 0;
+    if(enemy.rockSpider&&enemy.rockSpider->height<content->rockSpider(enemy.monster)->entityHeight&&event.areaDamage)return 0;
+    if(const auto *p=content->hardy(enemy.monster);p&&(event.explosionDamage||event.damageKind==DamageKind::Crush))return event.damage*p->blastMultiplier;
+    if(enemy.friendly) {
+        const auto *c=content->companion(enemy.monster);
+        if(!c||enemy.companionHurtCooldown>0)return 0;
+        if(!event.hostile&&!event.harmsCompanions&&event.damageKind==DamageKind::Physical)return 0;
+        return std::max(0.f,event.damage*c->incomingScale);
+    }
+    // Source jump windows are not measured: complete airborne immunity is an
+    // explicit 3D adaptation. Windup, recovery and all grounded poses are vulnerable.
+    if(content->monsterBoss(enemy.monster)&&enemy.hop.active)return 0;
+    if(content->loki(enemy.monster)&&enemy.state==EnemyState::Teleporting)return 0;
+    if(content->hornfel(enemy.monster)&&enemy.state==EnemyState::Teleporting)return 0;
     if(enemy.bossKind==BossKind::Ridgeback) {
         if(enemy.state==EnemyState::Buried)return 0;
         if(enemy.state==EnemyState::Stunned)return event.damage*1.25f;
     }
     if (enemy.kind == EnemyKind::Monster) {
-        const auto *d = monsterDefinition(enemy.monster);
-        const int type = enemy.monster / 10000, variant = enemy.monster / 100 % 100;
+        const auto *d = content->monster(enemy.monster);
+        const int type = enemy.monster.type, variant = enemy.monster.variant;
         if (d->roomHazard || enemy.friendly || enemy.state == EnemyState::Buried ||
             enemy.state == EnemyState::Teleporting)
             return 0;
-        if (type == 27 && variant != 1 && enemy.state != EnemyState::Windup &&
+        if(const auto *h=content->host(enemy.monster);h&&h->armored&&event.damageKind!=DamageKind::Burning&&
+            (!enemy.host||!enemy.host->exposed))return 0;
+        if (!content->host(enemy.monster)&&d->behavior=="legacy" && type == 27 && variant != 1 && enemy.state != EnemyState::Windup &&
             enemy.state != EnemyState::Exposed)
             return 0;
-        if (((type == 41 && variant != 2 && variant != 3) || (type == 23 && variant == 3)) &&
-            !event.areaDamage && !event.armorPiercing && dot(unit(event.direction), enemy.facing) < .35f)
-            return 0;
-        if (type == 41 && variant == 3 && enemy.partner && findEnemy(enemy.partner))
-            return 0;
+        if(const auto *c=content->charge(enemy.monster);c&&c->tailRadius>0) {
+            const auto tail=chargeTailPosition(enemy);
+            // Piercing alone does not invent a weak point in the armored head.
+            if(event.areaDamage) {
+                if(distance(event.position,tail)>event.radius+c->tailRadius*enemy.radius||!arena.sight(event.position,tail))return 0;
+            } else if(!event.weakPointHit)return 0;
+        }
+        if(const auto *pair=content->linkedRemnant(enemy.monster);pair&&enemy.monster==pair->body)return 0;
+        if(maskBlocks(enemy,event))return 0;
     }
     float amount = event.damage;
+    if(const auto *p=content->mushroom(enemy.monster);p&&(!enemy.mushroom||enemy.mushroom->blocking()))
+        amount*=p->closedDamageScale;
+    if(enemy.kind==EnemyKind::Monster)
+        if(const auto *definition=content->monster(enemy.monster))
+            if(const auto *graph=content->behavior(definition->behavior)) {
+                const size_t state=enemy.behavior.initialized&&enemy.behavior.graph==graph->key?
+                    enemy.behavior.state:graph->initialIndex;
+                amount*=graph->states.at(state).damageScale;
+            }
     if (enemy.kind == EnemyKind::Ironhide && enemy.state != EnemyState::Stunned && !event.armorPiercing &&
         !event.areaDamage && dot(unit(event.direction), enemy.facing) < -0.25f)
         amount *= 0.35f;
@@ -72,7 +105,13 @@ float Simulation::enemyDamage(const Enemy &enemy, const Event &event) const {
 }
 
 void Simulation::shootEnemy(const Enemy &enemy, Vector3 direction, float damage, float speed, int bounces,
-                            ProjectileKind kind) {
+                            ProjectileKind kind, float life, float curve) {
+    if(const auto *d=content->monster(enemy.monster);d&&d->flying&&std::abs(direction.y)<.00001f) {
+        // Preserve authored XZ patterns while giving elevated volleys the
+        // player's combat-plane elevation. Aimed 3D shots already carry it.
+        direction.y=(player.position.y-enemy.position.y)/std::max(1.f,planarDistance(enemy.position,player.position));
+        direction=unit(direction);
+    }
     audioCues.push(enemy.kind == EnemyKind::Monster ? AudioCueKind::MonsterAttack : AudioCueKind::EnemyShot,
                    enemy.position);
     Event shot;
@@ -87,6 +126,8 @@ void Simulation::shootEnemy(const Enemy &enemy, Vector3 direction, float damage,
     shot.speed = speed;
     shot.bounces = bounces;
     shot.projectileKind = kind;
+    shot.projectileLife = life;
+    shot.projectileCurve = curve;
     shot.context.sourceEntity = enemy.id;
     queueRoot(shot);
     if (enemy.kind != EnemyKind::Monster && kind == ProjectileKind::Bullet)
@@ -98,34 +139,69 @@ void Simulation::addHazard(Hazard hazard) {
         suppress(hazard.context, "hazard capacity");
         return;
     }
-    if (!hazard.context.chainId)
-        hazard.context = {nextChain_++, 0, hazard.context.sourceEntity, -1};
+    if (!hazard.context.chainId) {
+        hazard.context.chainId=nextChain_++;hazard.context.generation=0;hazard.context.sourceEffect=-1;
+    }
+    Event source;source.context=hazard.context;source.hostile=hazard.kind!=HazardKind::PlayerDynamite;
+    identifyDamageSource(source);hazard.context=source.context;
     ++chains[hazard.context.chainId].active;
     hazards.push_back(hazard);
 }
 
 void Simulation::clearHazards(bool preservePlayer) {
-    for (const auto &hazard : hazards) {
-        if(preservePlayer&&hazard.kind==HazardKind::PlayerDynamite)continue;
+    auto keep=[&](const Hazard &h) {
+        if(!preservePlayer)return false;
+        if(h.fadeOnRoomClear&&h.fadeDuration>0)return true;
+        if(h.kind==HazardKind::PlayerDynamite)return true;
+        if(h.rockWave)return true; // Emitted crush generators outlive their owner.
+        const auto *owner=findEnemy(h.context.sourceEntity);
+        return owner&&owner->alive&&content->statue(owner->monster)&&!owner->statueDisabled;
+    };
+    for (auto &hazard : hazards) {
+        if(preservePlayer&&roomClear&&hazard.fadeOnRoomClear&&hazard.fadeDuration>0)
+            hazard.fadeAge=std::max(0.f,hazard.fadeAge);
+        if(keep(hazard))continue;
         auto it = chains.find(hazard.context.chainId);
         if (it != chains.end() && it->second.active)
             --it->second.active;
     }
-    std::erase_if(hazards,[&](const Hazard &h){return !preservePlayer||h.kind!=HazardKind::PlayerDynamite;});
+    std::erase_if(hazards,[&](const Hazard &h){return !keep(h);});
 }
 
 void Simulation::updateHazards(float dt) {
     std::vector<Hazard> children;
     for (auto &hazard : hazards) {
+        if(hazard.ownedBeam)followOwnedBeam(hazard);
+        if(hazard.ownerBound) {
+            const auto *owner=findEnemy(hazard.context.sourceEntity);
+            if(!owner||!owner->alive||(content->statue(owner->monster)&&owner->statueDisabled)) {
+                auto it=chains.find(hazard.context.chainId);if(it!=chains.end()&&it->second.active)--it->second.active;
+                hazard.alive=false;continue;
+            }
+        }
         const float previousAge = hazard.age;
         if (hazard.kind == HazardKind::PlayerDynamite || hazard.kind == HazardKind::BossCharge)
             advanceDynamite(hazard, arena, std::min(dt, std::max(0.f, hazard.delay - hazard.age)));
         hazard.age += dt;
         if (hazard.age < hazard.delay)
             continue;
+        const bool expired=hazard.ownedBeam?hazard.age>hazard.delay+hazard.duration+1e-6f:
+            hazard.age>=hazard.delay+hazard.duration;
+        if(hazard.fadeDuration>0&&(hazard.fadeAge>=0||expired)) {
+            hazard.fadeAge=std::max(0.f,hazard.fadeAge)+dt;
+            if(hazard.fadeAge>=hazard.fadeDuration) {
+                hazard.alive=false;
+                auto it=chains.find(hazard.context.chainId);
+                if(it!=chains.end()&&it->second.active)--it->second.active;
+            }
+            continue; // The disappearing patch cannot damage or slow anyone.
+        }
+        if(hazard.kind!=HazardKind::RockWave&&!hazard.ownedBeam)exposeCompanionsToHazard(hazard,previousAge);
         const float dist = distance(player.position, hazard.position);
         const bool visible = arena.sight(hazard.position, player.position);
-        if (hazard.kind == HazardKind::PlayerDynamite) {
+        if (hazard.kind == HazardKind::RockWave) {
+            advanceRockWave(hazard,dt);
+        } else if (hazard.kind == HazardKind::PlayerDynamite) {
             Event blast;
             blast.type = EventType::Explosion;
             blast.position = hazard.position;
@@ -135,6 +211,7 @@ void Simulation::updateHazards(float dt) {
             blast.radius = hazard.radius;
             blast.areaDamage = true;
             blast.demolition = Demolition::SpentDynamite;
+            blast.ignoreAdaptiveArmor=true;
             blast.playerDamage = hazard.damage;
             emit(blast, hazard.context);
             if(hazard.braidCopies>0&&!hazard.secondary) {
@@ -162,11 +239,12 @@ void Simulation::updateHazards(float dt) {
             blast.demolition=Demolition::Soft; // Never supplies free keys/cache access.
             emit(blast,hazard.context);hazard.alive=false;
         } else if (hazard.kind == HazardKind::Beam) {
-            if (segmentSphere(hazard.origin, hazard.position, player.position, hazard.radius + .48f) <= 1 &&
+            if(hazard.ownedBeam)damageOwnedBeam(hazard,dt);
+            else if (segmentSphere(hazard.origin, hazard.position, player.position, hazard.radius + .48f) <= 1 &&
                 arena.sight(hazard.origin, player.position))
                 hurtPlayer(hazard.damage, hazard.context);
         } else if (hazard.kind == HazardKind::Tar) {
-            if (dist < hazard.radius + .3f && visible)
+            if (hazard.harmsPlayer && dist < hazard.radius + .3f && visible)
                 player.slowTime = .3f;
         } else if (hazard.kind == HazardKind::Ring) {
             const float before =
@@ -177,8 +255,11 @@ void Simulation::updateHazards(float dt) {
                 hazard.hitPlayer = hurtPlayer(hazard.damage, hazard.context);
         } else if (hazard.kind == HazardKind::Fire || hazard.kind == HazardKind::Creep ||
                    hazard.kind == HazardKind::Gas || hazard.kind == HazardKind::HolyLight) {
-            if (dist < hazard.radius + 0.3f && visible)
+            const bool active=hazard.kind!=HazardKind::Fire||
+                (hazard.alive&&hazard.age<hazard.delay+hazard.duration);
+            if (active&&hazard.harmsPlayer&&dist < hazard.radius + 0.3f && visible)
                 hurtPlayer(hazard.damage, hazard.context);
+            if(active&&hazard.kind==HazardKind::Fire)exposeMonstersToFire(hazard);
         } else {
             if (hazard.kind != HazardKind::Powder && hazard.kind != HazardKind::MonsterBomb &&
                 dist < hazard.radius + 0.48f && visible)
@@ -195,13 +276,14 @@ void Simulation::updateHazards(float dt) {
                 blast.radius = hazard.radius;
                 blast.areaDamage = true;
                 blast.hostile = hazard.kind == HazardKind::MonsterBomb;
+                blast.harmsCompanions = true; // Enemy powder and bomb producers, even after owner cleanup.
                 blast.playerDamage = hazard.damage;
                 blast.playerDamageHostile = true;
                 emit(blast, hazard.context);
             }
             hazard.alive = false;
         }
-        if (hazard.age >= hazard.delay + hazard.duration)
+        if (!hazard.rockWave&&!hazard.ownedBeam&&hazard.age >= hazard.delay + hazard.duration)
             hazard.alive = false;
         if (!hazard.alive) {
             auto it = chains.find(hazard.context.chainId);
@@ -288,13 +370,32 @@ void Simulation::performEnemyAttack(Enemy &enemy) {
 }
 
 void Simulation::updateEnemies(float dt) {
+    syncWilloOrbits();
+    updateFormations(dt);
+    updateSegmentedBosses(dt);
     // Offspring are queued and flushed after this loop; no vector references are invalidated.
     for (auto &enemy : enemies) {
-        if (!enemy.alive)
+        if(enemy.leper&&enemy.leper->pendingCreep)flushLeperCreep(enemy);
+        if (!enemy.alive) {
+            if(enemy.leperFlesh&&!enemy.leperFlesh->pendingShots.empty())flushLeperFleshShot(enemy);
+            if(enemy.headless&&!enemy.headless->pendingShots.empty())flushHeadlessShot(enemy);
+            if(enemy.faceless&&!enemy.faceless->pendingShots.empty())flushFacelessShots(enemy);
+            if(enemy.hardy&&!enemy.hardy->pendingShots.empty())flushHardyShots(enemy);
+            if(enemy.danny&&!enemy.danny->pendingShots.empty())flushDannyShots(enemy);
+            if(enemy.slide&&!enemy.slide->deathShot.empty())flushSlideDeath(enemy);
+            if(enemy.maw&&enemy.maw->deathPending)shootMawDeath(enemy);
+            if(enemy.spitty&&enemy.spitty->deathPending)shootSpitty(enemy,false,true);
+            if(enemy.linkedHead&&enemy.linkedHead->deathPending)shootLinkedHeadDeath(enemy);
+            if(enemy.landingCreep&&!enemy.landingCreep->pending.empty())flushLandingCreep(enemy);
+            if(enemy.knight&&enemy.knight->pendingImpact)flushKnightImpact(enemy);
             continue;
+        }
+        if(enemy.segmentedEncounter)continue; // The ordered chain advances exactly once.
+        if(enemy.faceless&&!content->faceless(enemy.monster)&&flushFacelessShots(enemy))enemy.faceless.reset();
         if(canyonBoss(enemy.bossKind)){updateCanyonBoss(enemy,dt);continue;}
         if (enemy.kind == EnemyKind::Monster) {
-            updateMonster(enemy, dt);
+            updateMonsterStatuses(enemy, dt);
+            updateMaskArmor(enemy,dt);
             continue;
         }
         if (enemy.kind == EnemyKind::Chainbound) {

@@ -1,0 +1,13 @@
+DEATHWARD_MECHANICS 1
+# Ordinary Brain32 only: installed1.7.9b cardinal wander, committed charge, red creep.
+monster 32.0.0 "Brain" Wander None Blob 64 1.5 .6 2.4 .55 3 0 1 0 1 legacy
+stage_health 32.0.0 20 0 3.2
+# scale force X/Y damping contact WalkFrames grid arrival stuckSpeed retries cells stuckFrames
+brain 32.0.0 .1 .75 .85 .8 20 30 40 5 .6 10 11 10
+# global check interval; source alignment/range/prediction; charge damping; grid correction
+brain_charge 32.0.0 7 20 200 16 .8 .1
+# crowd threshold; dense/sparse source intervals; extra-emission speed threshold;
+# local radius/damage; source lifetime/fade frames; visual shrink per source frame
+brain_creep 32.0.0 5 12 24 3 2.46 10 125 40 .98
+# Source Depths/Womb family habitat; authored local weights and per-room cap.
+encounter 2 3 pursuit specialist 32.0.0 1 3 2

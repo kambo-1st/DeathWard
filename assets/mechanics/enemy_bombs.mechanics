@@ -1,0 +1,18 @@
+DEATHWARD_MECHANICS 1
+# Hostile ordnance for Hornfel/Horny Boys. These are components, not NPC pool entries.
+# Hornfel's verified 1.7.9b spawn helper uses 4.0 / 4.8 / 4.16; mine attack uses 4.15.
+# The separate 4.3 Troll Bomb profile is for decoy payloads and other producers.
+# See docs/reports/isaac-enemy-port/hornfel/native-review.json; Horny Boys callers still need review.
+# Timings, dimensions, damage and producer immunity are explicit DeathWard tuning.
+# key ordnance payload fuse radius enemy-damage player-damage flight range harms-producer
+enemy_bomb normal 4.3.0 blast 1.5 3 100 20 .7 14 0
+enemy_bomb hornfel_normal 4.0.0 blast 1.5 3 100 20 .7 14 0
+enemy_bomb hot 4.8.0 hot 1.5 3 100 20 .7 14 0
+enemy_bomb sad 4.16.0 sad 1.5 3 100 20 .7 14 0
+enemy_bomb brimstone 4.15.0 brimstone 1.2 3 100 20 .7 14 0
+# Contact / fire radius / duration / damage. Hostile fire durability needs native review.
+enemy_bomb_hot hot 10 1.2 10 10
+# Ring count / speed / damage / lifetime. Never inherits the player's items or damage.
+enemy_bomb_sad sad 10 8 10 5
+# Four cardinal beams: range / radius / duration / damage. Existing shared hurt cooldown applies.
+enemy_bomb_brimstone brimstone 40 .25 1 10

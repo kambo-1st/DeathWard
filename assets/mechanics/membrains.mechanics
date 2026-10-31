@@ -1,0 +1,30 @@
+DEATHWARD_MECHANICS 1
+# Installed1.7.9b: all57 variants HP62/contact2; Cyst HP25/contact1.
+monster 57.0.0 "MemBrain" Wander None Blob 198.4 1.8 .85 3 0 4 0 1 0 1 legacy
+monster 57.1.0 "Mama Guts" Wander None Blob 198.4 1.8 .85 3 0 4 0 1 0 1 legacy
+monster 57.2.0 "Dead Meat" Wander None Blob 198.4 1.8 .85 3 0 5 0 1 0 1 legacy
+monster 862.0.0 "Cyst" Wall None Blob 80 2.8 .6 1 0 3 0 1 0 1 legacy
+stage_health 57.0.0 62 0 3.2
+stage_health 57.1.0 62 0 3.2
+stage_health 57.2.0 62 0 3.2
+stage_health 862.0.0 25 0 3.2
+# scale/force/retention/radial distance/arrival/stuck speed/stuck chance/contact;
+# attack chance/population cap/Wiggle/Attack/Shoot frames; exact child/offset.
+membrain 57.0.0 .1 .5 .8 40 3 .316227766 10 20 30 8 30 70 29 32.0.0 1
+membrain 57.1.0 .1 .5 .8 40 3 .316227766 10 20 30 8 30 70 29 40.0.0 1
+membrain 57.2.0 .1 .5 .8 40 3 .316227766 10 20 30 8 30 70 29 862.0.0 1
+# speed/angle/height/up min/max/gravity/retention/radius/damage/life/repeated wall bounce.
+# Normal mode8 is cardinal+diagonal speed10; Dead Meat mode9 speed8/8shots/anglePi/8,
+# FallingAccelModifier=-.07, NO_WALL_COLLIDE + BOUNCE handled by real3D reflection.
+membrain_shot 57.0.0 30 0 1.15 -.15 .15 4.5 .9 .308 20 8 0
+membrain_shot 57.1.0 30 0 1.15 -.15 .15 4.5 .9 .308 20 8 0
+membrain_shot 57.2.0 24 .3926990817 1.15 -.15 .15 1.35 .9 .308 20 8 1
+# Cyst rolls with normal Guts force. Counter reaches30 then fires next update.
+guts 862.0.0 .1 3 .6 40 10 .4 10 24
+# threshold/overlay frames/speed/damage/height/up/gravity/retention/radius/life.
+guts_shot 862.0.0 30 10 30 10 1.15 4.5 9 .9 .22 8
+# Ordinary template habitats; authored weights/cost/caps, not source probabilities.
+encounter 2 3 crossfire specialist 57.0.0 1 5 1
+encounter 2 3 crossfire specialist 57.1.0 1 5 1
+encounter 3 3 crossfire specialist 57.2.0 1 6 1
+encounter 3 3 pursuit specialist 862.0.0 2 3 2

@@ -1,0 +1,20 @@
+DEATHWARD_MECHANICS 1
+# Scorched Washes is DW's explicit Burning Basement encounter-context analogue.
+# Variant selection weights are local art/difficulty tuning, not Isaac odds.
+floor_variant 0 standard 2
+floor_variant 0 scorched 1
+floor_variant 1 standard 2
+floor_variant 1 flooded 1
+floor_variant 2 standard 2
+floor_variant 2 dank 1
+floor_variant 3 standard 2
+floor_variant 3 scarred 1
+
+# source target first-band last-band condition chance-basis-points extra-reserved-threat
+# Pinned Clotty infobox oldid=266727: I.Blob replaces Clotty/Clot with 1% chance.
+replace_monster 15.0.0 15.2.0 0 3 any 100 1
+replace_monster 15.1.0 15.2.0 0 3 any 100 1
+# Pinned Hopper infobox oldid=267012: 60%, specifically in Burning Basement.
+replace_monster 29.0.0 54.0.0 0 0 scorched 6000 1
+# Charger oldid=270010: Repentance replaces Charger (not Maggot/Spitty) 50% in Flooded Caves.
+replace_monster 23.0.0 23.1.0 1 1 flooded 5000 1

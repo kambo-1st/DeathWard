@@ -1,0 +1,17 @@
+DEATHWARD_MECHANICS 1
+# Installed1.7.9b ordinary NPC armor: strength, history frames, floor, correction.
+# Source30Hz history includes this frame's pending batch; no invented99% ramp.
+adaptive_armor 14.2.0 30 120 .09 .18
+adaptive_armor 22.3.0 30 120 .09 .18
+adaptive_armor 25.6.0 10 120 .09 .18
+adaptive_armor 29.3.0 30 120 .09 .18
+adaptive_armor 31.1.0 30 120 .09 .18
+adaptive_armor 61.7.0 10 120 .09 .18
+adaptive_armor 855.0.0 2.5 120 .09 .18
+# Source base health is required by the soft-cap formula. Pooter/Hopper already
+# declare it in their family profiles. Other behavior remains separately reviewed.
+stage_health 22.3.0 100 0 3.2
+stage_health 25.6.0 20 0 3.2
+stage_health 31.1.0 60 0 3.2
+stage_health 61.7.0 14 0 3.2
+stage_health 855.0.0 40 0 3.2

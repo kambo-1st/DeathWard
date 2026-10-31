@@ -1,0 +1,12 @@
+DEATHWARD_MECHANICS 1
+# Installed 1.7.9b Small Maggot853; HP10x3.2, stageHP0. Native force and
+# curvature run at30Hz; registry speed is descriptive, not the movement driver.
+monster 853.0.0 "Small Maggot" Chase None Worm 32 5.4 .3 2 0 4 0 1 0 1 legacy
+stage_health 853.0.0 10 0 3.2
+# scale retention forceMin forceMax pursuitMultiplier curveDegrees lookahead
+# obstacleTurnDegrees alertRange contact initialMin/Max turnMin/Max
+# globalAlertInterval alertChance forgetChance obstacleAttempts walkFrames
+small_maggot 853.0.0 .1 .8 .15 .45 2 2 6 90 80 10 10 39 10 39 4 4 25 10 13
+# Corpse template presence -> final canyon band. Weight/cost are local tuning;
+# required brood children also use this exact controller.
+encounter 3 3 any basic 853.0.0 1 1 0

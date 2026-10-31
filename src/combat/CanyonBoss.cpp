@@ -11,11 +11,21 @@ const char *bossName(BossKind kind) {
     }
 }
 const char *bossHint(const Enemy &e) {
+    if(e.monster==monsterId(906))return e.phase?"HE IS RUNNING FOR A RAIL DOOR":"WATCH THE TRACKS AND THE BOMBS";
+    if(e.monster.type==69)return e.monster.variant==1?"CARDINAL / DIAGONAL / CARDINAL — WATCH BOTH HALVES":"CARDINAL / DIAGONAL / CARDINAL — WATCH THE FLIES";
+    if(e.monster==monsterId(19,3))return "BOMBS BREAK BONE ARMOR / SHOOT EXPOSED SEGMENTS";
+    if(e.segmentedEncounter)return "BOMBS BREAK STONE ARMOR / SHOOT EXPOSED SEGMENTS";
+    if(e.bossKind==BossKind::Isaac)return e.monster==monsterId(68,1)?"LASERS TO THE SIDES AND BELOW / WATCH THE JUMPS":"WATCH THE LANDING / KEEP CLEAR OF EYES AND CREEP";
     if(e.bossKind==BossKind::Ridgeback)return e.phase?"TWO CHARGES / BREAK COVER TO STUN":"DODGE THE LANE / PUNISH RECOVERY";
     if(e.bossKind==BossKind::PowderForeman)return "STEP INTO CHARGES TO KICK / WATCH THE FUSE";
     return e.phase?"SWEEP THEN VOLLEY / EACH ATTACK IS WARNED":"MOVE THROUGH THE OPEN GAP / PUNISH RECOVERY";
 }
 void Simulation::spawnCanyonBoss() {
+    if(arena.profile.boss==BossKind::Isaac) {
+        if(!spawnMonster(arena.profile.bossMonster,arena.rooms[size_t(room)].bossSpawn,0,-1,arena.profile.bossForm))
+            throw std::runtime_error("Configured boss cannot fit its complete encounter in this arena");
+        flushMonsterSpawns(nullptr,6);return;
+    }
     const auto id=spawn(EnemyKind::Boss,arena.rooms[size_t(room)].bossSpawn);
     auto *e=findEnemy(id);if(!e)return;
     e->bossKind=arena.profile.boss;e->radius=e->bossKind==BossKind::Ridgeback?1.2f:1.f;
@@ -24,6 +34,7 @@ void Simulation::spawnCanyonBoss() {
     e->cooldown=1.2f;e->state=EnemyState::Ready;e->home=e->position;
 }
 void Simulation::updateCanyonBoss(Enemy &e,float dt) {
+    if(e.bossKind==BossKind::Isaac){updateMonsterBoss(e,dt);return;}
     if(e.bossKind!=BossKind::Ridgeback){updateFrontierBoss(e,dt);return;}
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.velocity={};
     e.phase=e.hp<=e.maxHp*.5f?1:0;
@@ -110,11 +121,14 @@ void Simulation::updateCanyonBoss(Enemy &e,float dt) {
 }
 void Simulation::rewardCanyonBoss(const Enemy &enemy) {
     auto &progress=rooms[size_t(room)];
-    for(auto &p:projectiles)if(p.hostile&&p.context.sourceEntity==enemy.id){p.alive=false;p.cancelled=true;}
+    const auto belongs=[&](EntityId source) {
+        return source==enemy.id||(enemy.bossGroup&&std::any_of(enemies.begin(),enemies.end(),[&](const auto &body){return body.id==source&&body.bossGroup==enemy.bossGroup;}));
+    };
+    for(auto &p:projectiles)if(p.hostile&&belongs(p.context.sourceEntity)){p.alive=false;p.cancelled=true;}
     // Cancel queued attacks too. The death transition can occur before another
     // attack emitted in the same tick reaches the front of the event queue.
     std::erase_if(queue_,[&](const Event &e) {
-        if(e.context.sourceEntity!=enemy.id||(!e.hostile&&!e.playerDamageHostile))return false;
+        if(!belongs(e.context.sourceEntity)||(!e.hostile&&!e.playerDamageHostile))return false;
         auto it=chains.find(e.context.chainId);if(it!=chains.end()&&it->second.queued)--it->second.queued;
         return true;
     });
@@ -122,10 +136,13 @@ void Simulation::rewardCanyonBoss(const Enemy &enemy) {
     for(auto &prop:arena.breakables)if(prop.room==room&&prop.kind==BreakableKind::PowderBarrel)prop.fuse=-1;
     if(progress.bossPaid)return;
     progress.bossPaid=true;
-    const auto at=arena.rooms[size_t(room)].center;
+    const auto &layout=arena.rooms[size_t(room)];
+    const auto at=arena.rails?layout.reward:layout.center;
     moneyPickups.push_back({at,6+2*std::max(0,arena.profile.band),0,true});
     // Supply, never a required key or a healing-on-kill loop.
-    dynamite=std::min(MaxDynamite,dynamite+1);
+    const auto &hornfel=rooms[size_t(room)].hornfel;
+    const int supply=content->hornfel(enemy.monster)?(hornfel&&hornfel->escaped?0:3):1;
+    dynamite=std::min(MaxDynamite,dynamite+supply);
     checkpointNeeded=true;
 }
 } // namespace dw

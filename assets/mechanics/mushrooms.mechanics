@@ -1,0 +1,11 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b: Mushroom300,23sourceHP, no stageHP.
+monster 300.0.0 "Mushroom" Still Spread Skull 73.6 0 .7 2 .8 3 0 1 0 1 legacy
+stage_health 300.0.0 23 0 3.2
+# hideFrames revealFrames ShootFrame timerQuantum blockingChoices revealedChoices;
+# closedDamageScale shotSpeed diagonalComponent shotDamage shotLife contactDamage.
+# Native closed timer30*(1..5), exposed timer30*(1..3); modes6/7 speed7*3.
+mushroom 300.0.0 6 6 3 30 5 3 .25 21 .70710677 10 5 10
+# Direct source room templates in Caves/Catacombs/Flooded Caves.
+# Authored weight/cost/cap; source Host replacement/unlocks remain separate work.
+encounter 1 1 crossfire specialist 300.0.0 2 3 1

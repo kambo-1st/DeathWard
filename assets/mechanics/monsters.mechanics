@@ -1,0 +1,82 @@
+DEATHWARD_MECHANICS 1
+# id name motion attack shape hp speed radius cooldown windup depth flying contact hazard natural behavior
+# Current DeathWard balance, NOT original Isaac numbers.
+# .0 has the .1 animation file but its native subtype dispatch is unverified.
+# Keep a provisional .1 behavior alias for debug/reference, outside natural pools.
+monster 15.0.0 "Clotty" Wander Cross Blob 80 1.8 .6 2.4 .55 1 0 1 0 1 wandering_clotty
+monster 15.1.0 "Clot" Wander Diagonal Blob 80 1.8 .6 2.4 .55 1 0 1 0 1 wandering_clot
+monster 15.2.0 "I.Blob" Wander Ring Blob 96 1.7 .65 2.8 .7 2 0 1 0 1 wandering_iblob
+monster 15.3.0 "Grilled Clotty" Wander Cross Blob 96 3 .6 2.4 .65 3 0 1 0 1 wandering_grilled
+monster 22.2.0 "Holy Mulligan" Flee Spawn Walker 120 1.6 .7 4 .85 3 0 1 0 1 legacy
+monster 22.3.0 "Tainted Mulligan" Flee Spawn Walker 320 1.5 .8 5 1 4 0 1 0 1 legacy
+monster 23.0.0 "Charger" Charge None Worm 64 1.5 .6 2.4 .55 1 0 1 0 1 legacy
+monster 23.0.1 "My Shadow" Charge None Worm 64 1.5 .5 2 .5 1 0 1 0 0 legacy
+monster 23.1.0 "Drowned Charger" Charge None Worm 70.4 1.5 .6 2.4 .55 1 0 1 0 1 legacy
+monster 23.2.0 "Dank Charger" Charge None Worm 83.2 1.5 .65 2.5 .7 3 0 1 0 1 legacy
+monster 23.3.0 "Carrion Princess" Charge None Worm 83.2 1.5 .7 2.5 .7 3 0 1 0 1 legacy
+monster 24.0.0 "Globin" Chase None Walker 96 3.1 .6 2.4 .55 1 0 1 0 1 legacy
+monster 24.1.0 "Gazing Globin" Chase None Walker 96 4 .6 2 .5 2 0 1 0 1 legacy
+monster 24.2.0 "Dank Globin" Chase None Walker 112 3.1 .65 2 .5 3 0 1 0 1 legacy
+monster 24.3.0 "Cursed Globin" Chase None Walker 112 4 .65 2 .5 4 0 1 0 1 legacy
+monster 29.0.0 "Hopper" Hop None Headless 32 3.5 .6 2.4 .55 1 0 1 0 1 legacy
+monster 29.1.0 "Trite" Hop None Spider 32 6 .5 2.1 .55 2 0 1 0 1 legacy
+monster 29.2.0 "Eggy" Hop None Spider 70.4 3.8 .65 2.5 .6 3 0 1 0 1 legacy
+monster 29.3.0 "Tainted Hopper" Hop None Headless 256 4 .8 3 .8 4 0 1 0 1 legacy
+monster 34.0.0 "Leaper" Hop None Headless 80 5 .6 2.8 .8 2 0 1 0 1 legacy
+monster 34.1.0 "Sticky Leaper" Hop None Headless 89.6 5 .65 2.8 .8 3 0 1 0 1 legacy
+monster 41.0.0 "Knight" Charge None Skull 64 1.8 .7 2.6 .65 2 0 1 0 1 legacy
+monster 41.1.0 "Selfless Knight" Charge None Skull 64 2 .7 2.5 .65 3 0 1 0 1 legacy
+monster 41.2.0 "Loose Knight" Charge None Skull 64 1.8 .7 2.6 .7 3 0 1 0 1 legacy
+monster 41.3.0 "Brainless Knight" Charge None Headless 64 1.8 .7 2.6 .65 3 0 1 0 0 legacy
+monster 41.4.0 "Black Knight" Charge None Skull 96 1.8 .75 3 .8 4 0 1 0 1 legacy
+monster 42.0.0 "Stone Grimace" Still Shot Stone 64 0 .7 2.8 .3 2 0 0 1 1 legacy
+monster 42.1.0 "Vomit Grimace" Still Lob Stone 64 0 .7 3.5 .35 3 0 0 1 1 legacy
+monster 42.2.0 "Triple Grimace" Still Spread Stone 64 0 .7 3 .3 3 0 0 1 1 legacy
+monster 201.0.0 "Stone Eye" Still Beam Eye 3.2 0 .6 .12 0 3 0 0 1 0 legacy
+monster 202.0.0 "Constant Stone Shooter" Still Shot Stone 3.2 0 .7 .25 0 2 0 0 1 0 legacy
+monster 202.10.0 "Cross Stone Shooter" Still Cross Stone 3.2 0 .7 .6 0 2 0 0 1 0 legacy
+monster 202.10.1 "Cross Stone Shooter" Still Cross Stone 3.2 0 .7 .6 0 2 0 0 1 0 legacy
+monster 202.11.0 "Cross Stone Shooter (always on)" Still Cross Stone 3.2 0 .7 .6 0 3 0 0 1 0 legacy
+monster 202.11.1 "Cross Stone Shooter (always on)" Still Cross Stone 3.2 0 .7 .6 0 3 0 0 1 0 legacy
+monster 203.0.0 "Brimstone Head" Still Beam Stone 3.2 0 .7 2 .45 3 0 0 1 0 legacy
+monster 235.0.0 "Gaping Maw" Still None Stone 320 0 .7 1 0 2 0 0 1 0 legacy
+monster 236.0.0 "Broken Gaping Maw" Still None Stone 320 0 .7 1 0 2 0 0 1 0 legacy
+monster 44.0.0 "Poky" Bounce None Stone 1 2.5 .65 2 .6 2 0 1 1 1 legacy
+monster 44.1.0 "Slide" Charge None Stone 1 0 .65 3 .8 3 0 1 1 1 legacy
+monster 54.0.0 "Flaming Hopper" Hop None Headless 64 6 .6 1.6 .45 2 0 1 0 1 legacy
+monster 58.0.0 "Para-Bite" Burrow None Worm 80 2.4 .6 3 .7 2 0 1 0 1 legacy
+monster 58.1.0 "Scarred Para-Bite" Burrow Shot Worm 88 2.4 .6 3 .7 3 0 1 0 1 legacy
+monster 59.0.0 "Fred" Burrow Cross Worm 104 0 .65 3 .8 3 0 1 0 1 legacy
+monster 60.0.0 "Eye" Still Beam Eye 88 0 .65 3 1 3 0 1 0 1 legacy
+monster 60.1.0 "Bloodshot Eye" Still Beam Eye 112 0 .75 3.5 1.2 3 0 1 0 1 legacy
+monster 60.2.0 "Holy Eye" Still Light Eye 112 0 .75 3.5 1 4 0 1 0 1 legacy
+monster 61.0.0 "Sucker" Chase None Fly 32 1.8 .5 2 .6 2 1 1 0 1 legacy
+monster 61.1.0 "Spit" Chase None Fly 48 1.8 .5 2 .6 2 1 1 0 1 legacy
+monster 61.2.0 "Soul Sucker" Chase None Fly 64 1.8 .5 2 .6 3 1 1 0 1 legacy
+monster 61.3.0 "Ink" Chase None Fly 32 1.8 .5 2 .6 3 1 1 0 1 legacy
+monster 61.4.0 "Mama Fly" Flee Spawn Fly 112 2 .65 4 .85 3 1 1 0 1 legacy
+monster 61.5.0 "Bulb" Wander None Fly 48 2.5 .45 2 .6 3 1 0 0 1 legacy
+monster 61.6.0 "Bloodfly" Chase None Fly 48 2.8 .5 2 .6 3 1 1 0 1 legacy
+monster 61.7.0 "Tainted Sucker" Chase None Fly 44.8 1.8 .6 2 .6 4 1 0 0 1 legacy
+# Attached boss components: never choose as independent room enemies.
+# entities2.xml uses variant 10 for Peep Eye; variant 1 is The Bloat itself.
+monster 68.10.0 "Peep Eye" Bounce None Eye 1 2.8 .6 2 .6 3 1 1 1 0 legacy
+monster 68.11.0 "Bloat Eye" Bounce None Eye 1 2.8 .6 2 .6 3 1 1 1 0 legacy
+monster 77.0.0 "Embryo" Hop None Blob 40 3 .45 2.4 .55 1 0 1 0 1 legacy
+monster 80.0.0 "Moter" Chase None Fly 72 3 .5 2 .6 2 1 1 0 1 legacy
+monster 86.0.0 "Keeper" Hop Spread Skull 96 2 .6 2.7 .7 2 0 1 0 1 legacy
+monster 89.0.0 "Buttlicker" Chain None Worm 64 2.5 .6 2.4 .55 1 0 1 0 1 legacy
+monster 222.0.0 "Ring Fly" Orbit None Fly 32 2.6 .35 2 .5 3 1 1 0 1 legacy
+monster 840.0.0 "Pon" Hop None Blob 64 3 .6 2 .5 3 0 1 0 1 legacy
+monster 861.0.0 "Pustule" Still None Blob 56 0 .5 5 .8 3 0 0 0 0 legacy
+
+# Dross-family curved crossfire; HP/speed/timing are provisional local conversion.
+monster 872.0.0 "Cloggy" Wander Cross Blob 80 1.8 .6 2.4 .55 2 0 1 0 1 wandering_cloggy
+
+# Quake: source 20 HP at the established 3.2 conversion; ordinary invulnerability.
+monster 804.0.0 "Quake Grimace" Still None Stone 64 0 .7 3 0 2 0 0 1 0 legacy
+monster 804.0.1 "Quake Grimace" Still None Stone 64 0 .7 3 0 2 0 0 1 0 legacy
+monster 804.0.2 "Quake Grimace" Still None Stone 64 0 .7 3 0 2 0 0 1 0 legacy
+monster 804.0.3 "Quake Grimace" Still None Stone 64 0 .7 3 0 2 0 0 1 0 legacy
+
+monster 809.0.0 "Bomb Grimace" Still None Stone 64 0 .7 1 0 2 0 0 1 0 legacy

@@ -1,0 +1,30 @@
+DEATHWARD_MECHANICS 1
+# Installed1.7.9b type16. Existing Original meshes, sourceHP13x3.2.
+monster 16.0.0 "Mulligan" Flee None Walker 41.6 2 .6 2.4 .55 1 0 0 0 1 legacy
+monster 16.1.0 "Mulligoon" Flee None Walker 41.6 2 .65 2.4 .7 2 0 0 0 1 legacy
+monster 16.2.0 "Mulliboom" Chase None Walker 41.6 3.2 .6 2.4 .7 2 0 0 0 1 legacy
+stage_health 16.0.0 13 0 3.2
+stage_health 16.1.0 13 0 3.2
+stage_health 16.2.0 13 0 3.2
+evader_body 16.0.0 .1 25 17 14 3 .8 .5 .9 1.079
+evader_detonation 16.0.0 300 29
+evader_body 16.1.0 .1 25 17 14 3 .8 .5 .9 1.079
+evader_detonation 16.1.0 300 29
+evader_body 16.2.0 .1 25 17 14 3 .9 .5 .9 1.2
+evader_chase 16.2.0 5 4
+# Source100HP blast/75radius, initialized count45+RNG%30. Seconds are the
+# local30Hz fuse interpretation; appearance/state-countdown parity remains open.
+enemy_bomb mulligoon_troll 4.3.0 blast 1.5 7.5 320 20 .7 14 1
+enemy_bomb_fuse_jitter mulligoon_troll 29
+# damage/player damage/radius/trigger; ordinary/self shot count, angle/speed/damage; bomb.
+# Source self blast40HP/60radius and half-heart player damage; shots7native speed.
+death_payload 16.0.0 128 10 6 self 0 4 0 21 10 -
+death_payload 16.1.0 128 10 6 self 4 8 .7853981634 21 10 mulligoon_troll
+death_payload 16.2.0 128 10 6 always 0 0 0 21 10 -
+# Opening-floor source presence. Independent phase1 checks preserve a1% final
+# Mulliboom substitution after the9.49% Mulligoon replacement.
+encounter 0 0 pursuit specialist 16.0.0 2 2 1
+encounter 1 1 pursuit specialist 16.2.0 1 3 1 1 standard
+replace_monster 16.0.0 16.1.0 0 0 any 949 0 0
+replace_monster 16.0.0 16.2.0 0 0 any 100 1 1
+replace_monster 16.1.0 16.2.0 0 0 any 100 1 1

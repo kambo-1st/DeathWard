@@ -1,163 +1,17 @@
 #include "combat/Simulation.hpp"
+#include "content/Mechanics.hpp"
 #include <stdexcept>
 
 namespace dw {
 namespace {
 using M = MonsterMotion;
 using A = MonsterAttack;
-using S = MonsterShape;
-// DeathWard base stats; shared enemy tuning is applied during simulation.
-constexpr MonsterDefinition Catalog[]{
-    {monsterId(10), "Frowning Gaper", M::Chase, A::None, S::Walker, 72},
-    {monsterId(10, 1), "Gaper", M::Chase, A::None, S::Walker, 64},
-    {monsterId(10, 2), "Flaming Gaper", M::Chase, A::None, S::Walker, 80, 2.8f},
-    {monsterId(10, 3), "Rotten Gaper", M::Chase, A::Shot, S::Walker, 88, 2.1f},
-    {monsterId(11), "Gusher", M::Wander, A::Shot, S::Headless, 40, 1.6f},
-    {monsterId(11, 1), "Pacer", M::Wander, A::None, S::Headless, 32, 1.6f},
-    {monsterId(12), "Horf", M::Still, A::Shot, S::Skull, 64, 0},
-    {monsterId(13), "Fly", M::Still, A::None, S::Fly, 24, 0, .35f, 3, .5f, 1, true, false},
-    {monsterId(14), "Pooter", M::Chase, A::Shot, S::Fly, 48, 1, .45f, 2.4f, .55f, 1, true, false},
-    {monsterId(14, 1), "Super Pooter", M::Chase, A::Spread, S::Fly, 72, 1, .5f, 2.6f, .65f, 2, true, false},
-    {monsterId(14, 2), "Tainted Pooter", M::Chase, A::Spread, S::Fly, 120, 1, .6f, 3, .8f, 4, true, false},
-    {monsterId(15), "Clotty", M::Wander, A::Cross, S::Blob, 80, 1.8f},
-    {monsterId(15, 1), "Clot", M::Wander, A::Diagonal, S::Blob, 80, 1.8f},
-    {monsterId(15, 2), "I.Blob", M::Wander, A::Ring, S::Blob, 96, 1.7f, .65f, 2.8f, .7f, 2},
-    {monsterId(15, 3), "Grilled Clotty", M::Wander, A::Cross, S::Blob, 96, 3, .65f, 2.4f, .65f, 3},
-    {monsterId(16), "Mulligan", M::Flee, A::None, S::Walker, 72, 2},
-    {monsterId(16, 1), "Mulligoon", M::Flee, A::None, S::Walker, 88, 2, .65f, 2.4f, .7f, 2},
-    {monsterId(16, 2), "Mulliboom", M::Chase, A::None, S::Walker, 48, 3.2f, .6f, 2.4f, .7f, 2},
-    {monsterId(18), "Attack Fly", M::Chase, A::None, S::Fly, 32, 3.2f, .38f, 2, .5f, 1, true},
-    {monsterId(21), "Maggot", M::Wander, A::None, S::Worm, 40, 1.5f},
-    {monsterId(22), "Hive", M::Flee, A::Spawn, S::Walker, 112, 1.5f, .7f, 4, .85f, 2},
-    {monsterId(22, 1), "Drowned Hive", M::Flee, A::Spawn, S::Walker, 112, 1.5f, .7f, 4, .85f, 3},
-    {monsterId(22, 2), "Holy Mulligan", M::Flee, A::Spawn, S::Walker, 120, 1.6f, .7f, 4, .85f, 3},
-    {monsterId(22, 3), "Tainted Mulligan", M::Flee, A::Spawn, S::Walker, 192, 1.5f, .8f, 5, 1, 4},
-    {monsterId(23), "Charger", M::Charge, A::None, S::Worm, 64, 1.5f},
-    {monsterId(23, 0, 1), "My Shadow", M::Charge, A::None, S::Worm, 64, 2, .5f, 2, .5f, 1, false, true, false,
-     false},
-    {monsterId(23, 1), "Drowned Charger", M::Charge, A::None, S::Worm, 72, 1.5f},
-    {monsterId(23, 2), "Dank Charger", M::Charge, A::None, S::Worm, 96, 1.5f, .65f, 2.5f, .7f, 3},
-    {monsterId(23, 3), "Carrion Princess", M::Charge, A::None, S::Worm, 112, 1.8f, .7f, 2.5f, .7f, 3},
-    {monsterId(24), "Globin", M::Chase, A::None, S::Walker, 96, 2.4f},
-    {monsterId(24, 1), "Gazing Globin", M::Chase, A::None, S::Walker, 96, 3.3f, .6f, 2, .5f, 2},
-    {monsterId(24, 2), "Dank Globin", M::Chase, A::None, S::Walker, 112, 2.2f, .65f, 2, .5f, 3},
-    {monsterId(24, 3), "Cursed Globin", M::Chase, A::None, S::Walker, 112, 2.5f, .65f, 2, .5f, 4},
-    {monsterId(25), "Boom Fly", M::Bounce, A::None, S::Fly, 48, 2.6f, .55f, 2, .5f, 2, true},
-    {monsterId(25, 1), "Red Boom Fly", M::Bounce, A::None, S::Fly, 48, 2.6f, .55f, 2, .5f, 2, true},
-    {monsterId(25, 2), "Drowned Boom Fly", M::Bounce, A::None, S::Fly, 56, 2.6f, .55f, 2, .5f, 3, true},
-    {monsterId(25, 3), "Dragon Fly", M::Bounce, A::None, S::Fly, 64, 2.6f, .55f, 2, .5f, 3, true},
-    {monsterId(25, 3, 1), "Dragon Fly X", M::Bounce, A::None, S::Fly, 64, 2.6f, .55f, 2, .5f, 3, true},
-    {monsterId(25, 4), "Bone Fly", M::Bounce, A::Shot, S::Fly, 64, 2.6f, .55f, 2, .6f, 3, true},
-    {monsterId(25, 5), "Sick Boom Fly", M::Bounce, A::None, S::Fly, 64, 2.6f, .55f, 2, .5f, 3, true},
-    {monsterId(25, 6), "Tainted Boom Fly", M::Bounce, A::None, S::Fly, 96, 2.6f, .65f, 2, .5f, 4, true},
-    {monsterId(26), "Maw", M::Chase, A::Shot, S::Skull, 64, 1.7f, .55f, 2.4f, .55f, 1, true},
-    {monsterId(26, 1), "Red Maw", M::Chase, A::None, S::Skull, 64, 3.3f, .55f, 2.4f, .55f, 2, true},
-    {monsterId(26, 2), "Psychic Maw", M::Chase, A::Shot, S::Skull, 88, 1.7f, .6f, 3, .8f, 3, true},
-    {monsterId(27), "Host", M::Still, A::Spread, S::Skull, 88, 0, .7f, 2.8f, .8f, 2},
-    {monsterId(27, 1), "Red Host", M::Still, A::Spread, S::Skull, 112, 0, .7f, 2.8f, .8f, 2},
-    {monsterId(27, 3), "Hard Host", M::Still, A::Shot, S::Skull, 112, 0, .7f, 3, .85f, 3},
-    {monsterId(29), "Hopper", M::Hop, A::None, S::Headless, 48, 3.5f},
-    {monsterId(29, 1), "Trite", M::Hop, A::None, S::Spider, 48, 6, .5f, 2.1f, .55f, 2},
-    {monsterId(29, 2), "Eggy", M::Hop, A::None, S::Spider, 96, 3.8f, .65f, 2.5f, .6f, 3},
-    {monsterId(29, 3), "Tainted Hopper", M::Hop, A::Ring, S::Headless, 192, 4, .8f, 3, .8f, 4},
-    {monsterId(30), "Boil", M::Still, A::Burst, S::Blob, 88, 0},
-    {monsterId(30, 1), "Gut", M::Still, A::Lob, S::Blob, 88, 0, .6f, 3, .8f, 2},
-    {monsterId(30, 2), "Sack", M::Still, A::Spawn, S::Blob, 88, 0, .65f, 4, .8f, 2},
-    {monsterId(31), "Spitty", M::Wander, A::Spitty, S::Worm, 48, 1.2f},
-    {monsterId(31, 1), "Tainted Spitty", M::Wander, A::Spitty, S::Worm, 160, 1.8f, .8f, 2, .6f, 4},
-    {monsterId(32), "Brain", M::Wander, A::None, S::Blob, 56, 1.5f},
-    {monsterId(34), "Leaper", M::Hop, A::Cross, S::Headless, 80, 5, .6f, 2.8f, .8f, 2},
-    {monsterId(34, 1), "Sticky Leaper", M::Hop, A::Burst, S::Headless, 96, 5, .65f, 2.8f, .8f, 3},
-    {monsterId(35), "Mr. Maw", M::Chase, A::Head, S::Walker, 104, 1.8f, .65f, 3, .7f, 2},
-    {monsterId(35, 1), "Mr. Maw Head", M::Orbit, A::None, S::Skull, 48, 8, .45f, 3, .7f, 2, true, true, false,
-     false},
-    {monsterId(35, 2), "Mr. Red Maw", M::Chase, A::Head, S::Walker, 112, 2.8f, .65f, 2.6f, .7f, 3},
-    {monsterId(35, 3), "Mr. Red Maw Head", M::Orbit, A::None, S::Skull, 48, 9, .45f, 3, .7f, 3, true, true,
-     false, false},
-    {monsterId(38), "Baby", M::Teleport, A::Shot, S::Walker, 80, 1.4f, .55f, 2.8f, .6f, 2, true},
-    {monsterId(38, 1), "Angelic Baby", M::Teleport, A::Spread, S::Walker, 96, 1.6f, .55f, 2.8f, .7f, 3, true},
-    {monsterId(38, 1, 1), "Angelic Baby (small)", M::Teleport, A::Shot, S::Walker, 40, 1.6f, .35f, 3, .7f, 2,
-     true, true, false, false},
-    {monsterId(38, 3), "Wrinkly Baby", M::Charge, A::Spread, S::Walker, 96, 2, .6f, 3, .7f, 3, true},
-    {monsterId(39), "Vis", M::Wander, A::Beam, S::Headless, 104, 1.3f, .7f, 3.5f, 1, 3},
-    {monsterId(39, 1), "Double Vis", M::Wander, A::DoubleBeam, S::Headless, 120, 1.3f, .7f, 3.5f, 1, 3},
-    {monsterId(39, 2), "Chubber", M::Wander, A::Head, S::Headless, 112, 1.3f, .7f, 3.5f, .9f, 3},
-    {monsterId(39, 3), "Scarred Double Vis", M::Wander, A::QuadBeam, S::Headless, 144, 1.3f, .75f, 4, 1.1f,
-     4},
-    {monsterId(40), "Guts", M::Wall, A::None, S::Blob, 64, 2.8f},
-    {monsterId(40, 1), "Scarred Guts", M::Wall, A::None, S::Blob, 72, 2.8f, .6f, 2, .6f, 2},
-    {monsterId(40, 2), "Slog", M::Wall, A::None, S::Blob, 88, 3, .6f, 2.5f, .65f, 3},
-    {monsterId(41), "Knight", M::Charge, A::None, S::Skull, 104, 1.8f, .7f, 2.6f, .65f, 2},
-    {monsterId(41, 1), "Selfless Knight", M::Charge, A::None, S::Skull, 112, 2, .7f, 2.5f, .65f, 3},
-    {monsterId(41, 2), "Loose Knight", M::Charge, A::None, S::Skull, 112, 1.8f, .7f, 2.6f, .7f, 3},
-    {monsterId(41, 3), "Brainless Knight", M::Charge, A::None, S::Headless, 96, 1.8f, .7f, 2.6f, .65f, 3,
-     false, true, false, false},
-    {monsterId(41, 4), "Black Knight", M::Charge, A::None, S::Skull, 144, 1.8f, .75f, 3, .8f, 4},
-    {monsterId(42), "Stone Grimace", M::Still, A::Shot, S::Stone, 1, 0, .7f, 2.8f, .8f, 2, false, false,
-     true},
-    {monsterId(42, 1), "Vomit Grimace", M::Still, A::Lob, S::Stone, 1, 0, .7f, 3.5f, .9f, 3, false, false,
-     true},
-    {monsterId(42, 2), "Triple Grimace", M::Still, A::Spread, S::Stone, 1, 0, .7f, 3, .9f, 3, false, false,
-     true},
-    {monsterId(44), "Poky", M::Bounce, A::None, S::Stone, 1, 2.5f, .65f, 2, .6f, 2, false, true, true},
-    {monsterId(44, 1), "Slide", M::Charge, A::None, S::Stone, 1, 0, .65f, 3, .8f, 3, false, true, true},
-    {monsterId(53), "Dople", M::Mirror, A::Shot, S::Walker, 80, 2, .6f, 1, .25f, 2},
-    {monsterId(53, 1), "Evil Twin", M::Mirror, A::Spread, S::Walker, 112, 2, .6f, 1, .25f, 3, true},
-    {monsterId(54), "Flaming Hopper", M::Hop, A::None, S::Headless, 64, 6, .6f, 1.6f, .45f, 2},
-    {monsterId(55), "Leech", M::Charge, A::None, S::Worm, 64, 2, .55f, 2, .5f, 2},
-    {monsterId(55, 1), "Kamikaze Leech", M::Charge, A::None, S::Worm, 64, 2, .55f, 2, .6f, 3},
-    {monsterId(55, 2), "Holy Leech", M::Charge, A::None, S::Worm, 80, 2, .55f, 2, .6f, 3},
-    {monsterId(56), "Lump", M::Burrow, A::Spread, S::Blob, 88, 0, .6f, 2.5f, .65f, 2},
-    {monsterId(57), "MemBrain", M::Hop, A::Ring, S::Blob, 144, 1.8f, .85f, 3, .8f, 3},
-    {monsterId(57, 1), "Mama Guts", M::Hop, A::Ring, S::Blob, 144, 1.8f, .85f, 3, .8f, 3},
-    {monsterId(57, 2), "Dead Meat", M::Hop, A::Ring, S::Blob, 160, 1.8f, .85f, 3, .9f, 4},
-    {monsterId(58), "Para-Bite", M::Burrow, A::None, S::Worm, 80, 2.4f, .6f, 3, .7f, 2},
-    {monsterId(58, 1), "Scarred Para-Bite", M::Burrow, A::Shot, S::Worm, 88, 2.4f, .6f, 3, .7f, 3},
-    {monsterId(59), "Fred", M::Burrow, A::Cross, S::Worm, 104, 0, .65f, 3, .8f, 3},
-    {monsterId(60), "Eye", M::Still, A::Beam, S::Eye, 88, 0, .65f, 3, 1, 3},
-    {monsterId(60, 1), "Bloodshot Eye", M::Still, A::Beam, S::Eye, 112, 0, .75f, 3.5f, 1.2f, 3},
-    {monsterId(60, 2), "Holy Eye", M::Still, A::Light, S::Eye, 112, 0, .75f, 3.5f, 1, 4},
-    {monsterId(61), "Sucker", M::Chase, A::None, S::Fly, 48, 1.8f, .5f, 2, .6f, 2, true},
-    {monsterId(61, 1), "Spit", M::Chase, A::None, S::Fly, 48, 1.8f, .5f, 2, .6f, 2, true},
-    {monsterId(61, 2), "Soul Sucker", M::Chase, A::None, S::Fly, 64, 1.8f, .5f, 2, .6f, 3, true},
-    {monsterId(61, 3), "Ink", M::Chase, A::None, S::Fly, 56, 1.8f, .5f, 2, .6f, 3, true},
-    {monsterId(61, 4), "Mama Fly", M::Flee, A::Spawn, S::Fly, 112, 2, .65f, 4, .85f, 3, true},
-    {monsterId(61, 5), "Bulb", M::Wander, A::None, S::Fly, 48, 2.5f, .45f, 2, .6f, 3, true, false},
-    {monsterId(61, 6), "Bloodfly", M::Chase, A::None, S::Fly, 48, 2.8f, .5f, 2, .6f, 3, true},
-    {monsterId(61, 7), "Tainted Sucker", M::Chase, A::None, S::Fly, 96, 1.8f, .6f, 2, .6f, 4, true, false},
-    {monsterId(68, 1), "Peep Eye", M::Bounce, A::None, S::Eye, 1, 2.8f, .6f, 2, .6f, 3, true, true, true},
-    {monsterId(68, 11), "Bloat Eye", M::Bounce, A::None, S::Eye, 1, 2.8f, .6f, 2, .6f, 3, true, true, true},
-    {monsterId(77), "Embryo", M::Hop, A::None, S::Blob, 40, 3, .45f},
-    {monsterId(80), "Moter", M::Chase, A::None, S::Fly, 72, 3, .5f, 2, .6f, 2, true},
-    {monsterId(85), "Spider", M::Wander, A::None, S::Spider, 32, 3.5f, .4f},
-    {monsterId(86), "Keeper", M::Hop, A::Spread, S::Skull, 96, 2, .6f, 2.7f, .7f, 2},
-    {monsterId(87), "Gurgle", M::Chase, A::Lob, S::Walker, 104, 1.8f, .65f, 3, .8f, 3},
-    {monsterId(87, 1), "Crackle", M::Chase, A::Lob, S::Walker, 112, 1.8f, .65f, 3.5f, .9f, 3},
-    {monsterId(88), "Walking Boil", M::Wander, A::Burst, S::Blob, 88, 1.7f},
-    {monsterId(88, 1), "Walking Gut", M::Wander, A::Lob, S::Blob, 88, 1.7f, .65f, 3, .8f, 2},
-    {monsterId(88, 2), "Walking Sack", M::Wander, A::Spawn, S::Blob, 104, 1.7f, .65f, 4, .8f, 2},
-    {monsterId(89), "Buttlicker", M::Chain, A::None, S::Worm, 64, 2.5f},
-    // Required offspring outside the requested range; never drawn into the natural room pool.
-    {monsterId(96), "Eternal Fly", M::Orbit, A::None, S::Fly, 32, 3, .35f, 2, .5f, 2, true, true, true,
-     false},
-    {monsterId(222), "Ring Fly", M::Orbit, A::None, S::Fly, 32, 2.6f, .35f, 2, .5f, 3, true, true, false,
-     false},
-    {monsterId(238), "Splasher", M::Wander, A::Lob, S::Headless, 40, 1.6f, .5f, 3, .7f, 3, false, true, false,
-     false},
-    {monsterId(840), "Pon", M::Hop, A::None, S::Blob, 64, 3, .5f, 2, .5f, 3, false, true, false, false},
-    {monsterId(853), "Small Maggot", M::Wander, A::None, S::Worm, 24, 1.6f, .3f, 2, .5f, 3, false, true,
-     false, false},
-    {monsterId(861), "Pustule", M::Still, A::None, S::Blob, 56, 0, .5f, 5, .8f, 3, false, false, false,
-     false},
-    {monsterId(862), "Cyst", M::Wall, A::Shot, S::Blob, 56, 2.6f, .5f, 3, .6f, 3, false, true, false, false},
-    {monsterId(884), "Swarm Spider", M::Hop, A::None, S::Spider, 20, 4.5f, .25f, .6f, .15f, 3, false, true,
-     false, false},
-};
+
 int type(const Enemy &e) {
-    return e.monster / 10000;
+    return e.monster.type;
 }
 int variant(const Enemy &e) {
-    return e.monster / 100 % 100;
+    return e.monster.variant;
 }
 Vector3 flatDirection(Vector3 a, Vector3 b) {
     auto d = sub(b, a);
@@ -166,74 +20,236 @@ Vector3 flatDirection(Vector3 a, Vector3 b) {
 }
 } // namespace
 std::span<const MonsterDefinition> monsterCatalog() {
-    return Catalog;
+    return defaultMechanics()->monsters();
 }
-const MonsterDefinition *monsterDefinition(int id) {
-    for (const auto &d : Catalog)
-        if (d.id == id)
-            return &d;
-    return nullptr;
-}
-std::string monsterIdText(int id) {
-    auto result = std::to_string(id / 10000) + "." + std::to_string(id / 100 % 100);
-    if (id % 100)
-        result += "." + std::to_string(id % 100);
-    return result;
+const MonsterDefinition *monsterDefinition(MonsterId id) {
+    return defaultMechanics()->monster(id);
 }
 
-EntityId Simulation::spawnMonster(int id, Vector3 position) {
-    const auto *d = monsterDefinition(id);
+EntityId Simulation::spawnMonster(MonsterId id, Vector3 position,EntityId owner,int slot,BossForm form) {
+    id=content->spawnIdentity(id,arena.profile);
+    // Source subtype zero selects one of three rock silhouettes from InitSeed.
+    // Use the seeded encounter stream; explicit subtypes remain exact identities.
+    if(content->rockSpider(id)&&id.subtype==0)id=monsterId(id.type,id.variant,1+int(encounterRng.bounded(3)));
+    // Native default Rotten Gaper morphs uniformly into subtypes1..5 from
+    // InitSeed. DeathWard uses its deterministic encounter stream at allocation.
+    if(content->rottenGaper(id)&&id.subtype==0)id=monsterId(id.type,id.variant,1+int(encounterRng.bounded(5)));
+    const auto *d = content->monster(id);
     if (!d)
         return 0;
+    if(content->linkedNeck(id))return 0; // Owned visual pieces, never free-standing enemies.
+    if(content->monsterBoss(id)&&!content->bossFormAllowed(id,form))return 0;
+    if(content->loki(id))return owner?0:spawnLoki(id,position);
+    if(content->hornfel(id))return owner?0:spawnHornfel(id,position);
+    if(content->hornfelDecoy(id))return 0; // Only the rail controller can allocate this rider.
+    if(content->segmentedBoss(id))return owner?0:spawnSegmentedBoss(id,position);
+    const auto *flyBomb=content->flyBomb(id);
+    const auto *returning=content->returningBody(id);
+    if(returning) {
+        const auto *parent=findEnemy(owner);
+        if(!parent||!parent->alive||parent->monster!=returning->owner)return 0;
+    } else if(flyBomb&&flyBomb->orbitOwner) {
+        const auto *parent=findEnemy(owner);
+        if(!parent||!parent->alive||parent->monster!=flyBomb->orbitOwner||slot<0||slot>=flyBomb->orbitCount||
+            (parent->bossParts&(1u<<slot)))return 0;
+    } else if(const auto *component=content->component(id)) {
+        const auto *parent=findEnemy(owner);
+        if(!parent||!parent->alive||parent->monster!=component->owner||slot<0||slot>=2||
+            (parent->bossParts&(1u<<slot)))return 0;
+    } else if(owner)return 0;
     const auto entity = spawn(EnemyKind::Monster, position);
     if (!entity)
         return 0;
     auto &e = enemies.back();
     e.monster = id;
-    e.hp = e.maxHp = d->hp;
+    if(content->rockSpider(id))e.rockSpider=RockSpiderRuntime{};
+    if(content->hardy(id))e.hardy=HardyRuntime{};
+    if(content->danny(id))e.danny=DannyRuntime{};
+    if(content->faceless(id))e.faceless=FacelessRuntime{};
+    if(content->gaper(id))e.gaper=GaperRuntime{};
+    if(content->blackGlobin(id))e.blackGlobin=BlackGlobinRuntime{};
+    if(content->leper(id))e.leper=LeperRuntime{};
+    if(content->leperFlesh(id)) {
+        auto &f=e.leperFlesh.emplace();f.shape=int(encounterRng.bounded(6));f.flip=encounterRng.bounded(2)!=0;
+    }
+    if(content->rottenGaper(id))e.rottenGaper=RottenGaperRuntime{};
+    if(content->smallMaggot(id))e.smallMaggot=SmallMaggotRuntime{};
+    if(content->headless(id))e.headless=HeadlessRuntime{};
+    if(content->environmentActor(id))e.environment=EnvironmentActorRuntime{};
+    e.hp = e.maxHp = content->monsterHealth(id,arena.profile.sourceStage);
+    if(const auto *s=content->sack(id))e.hp=std::min(e.maxHp,s->initialHealth*s->healthScale);
+    if(const auto *p=content->boil(id);p&&!p->walking)e.hp=std::min(e.maxHp,p->cycle.initialHealth*p->cycle.healthScale);
     e.radius = d->radius;
+    if(d->flying)e.position.y=arena.flightHeight(e.position,e.radius);
     e.home = e.position;
     e.facing = rotateY({1, 0, 0}, float(entity % 8) * Pi / 4 + Pi / 4);
+    if(content->boomFly(id))e.facing=rotateY({1,0,0},float(entity%4)*Pi/2+Pi/4);
     e.observedShots = stats.shots;
-    e.friendly = id == monsterId(23, 0, 1);
-    if (id == monsterId(26, 2) || id == monsterId(55, 2))
-        queueMonster(monsterId(96), add(position, {1.2f, 0, 0}), entity);
-    if (type(e) == 35 && (variant(e) == 0 || variant(e) == 2))
-        queueMonster(monsterId(35, variant(e) + 1), add(position, {1, 0, 0}), entity);
-    if (id == monsterId(41, 3))
-        queueMonster(monsterId(840), add(position, {1.5f, 0, 0}), entity);
+    e.friendly = content->companion(id)!=nullptr;
+    if(const auto *lob=content->lobWalker(id)) {
+        e.lob=LobWalkerRuntime{};
+        if(!lob->attackFrames)e.cooldown=float(lob->initialMin+int(encounterRng.bounded(unsigned(lob->initialMax-lob->initialMin+1))))/30;
+    }
+    if(const auto *s=content->statue(id)) {
+        e.facing=e.statueFacing=rotateY({0,0,-1},float(entity%4)*Pi/2+s->angle);
+        if(s->attack==StatueAttack::Quake) {
+            const std::array<Vector3,4> axes{{{-1,0,0},{0,0,-1},{1,0,0},{0,0,1}}};
+            e.facing=e.statueFacing=axes[size_t(s->quakeAxis)];
+        }
+        e.cooldown=s->interval*.5f;
+        syncStatueBodies();
+    }
+    if(content->component(id)||(flyBomb&&flyBomb->orbitOwner)) {
+        e.componentOwner=owner;e.componentSlot=slot;
+        e.facing=rotateY({1,0,0},Pi/4+float(slot)*Pi);
+        findEnemy(owner)->bossParts|=1u<<slot;
+    }
+    if(content->monsterBoss(id))initializeMonsterBoss(e,form);
+    if(const auto *p=content->maw(id)) {
+        e.maw=MawRuntime{};e.cooldown=0;
+        if(p->child)queueMonster(p->child,e.position,entity,0,false,1,0,0,0,-1,{},true);
+    }
+    if(content->eternalFly(id))e.eternalFly=EternalFlyRuntime{};
+    if(content->spitty(id)){e.spitty=SpittyRuntime{};e.cooldown=0;e.facing={0,0,1};}
+    if(content->cardinalWalker(id)){e.cardinalWalker=AxisWanderRuntime{};e.cooldown=0;e.facing={0,0,1};}
+    if(content->knight(id)){e.knight=KnightRuntime{};e.cooldown=0;e.facing={0,0,1};}
+    if(content->mirror(id)){e.mirror=MirrorRuntime{};e.cooldown=0;}
+    if(content->brain(id)){e.brain=BrainRuntime{};e.cooldown=0;e.facing={0,0,1};}
+    if(content->adultLeech(id)){e.adultLeech=AdultLeechRuntime{};e.cooldown=0;e.facing={1,0,0};}
+    if(content->slide(id)){e.slide=SlideRuntime{};e.cooldown=0;}
+    if(content->memBrain(id)){e.memBrain=MemBrainRuntime{};e.cooldown=0;}
+    if(content->lump(id)){e.lump=LumpRuntime{};e.lump->anchor=e.position;e.cooldown=0;}
+    if(content->baby(id)){e.baby=BabyRuntime{};e.cooldown=0;}
+    if(content->vis(id)){e.vis=VisRuntime{};e.cooldown=0;e.facing={0,0,1};}
+    if(const auto *g=content->guts(id)){e.guts=GutsRuntime{};e.guts->recovery=g->recoveryFrames;e.cooldown=0;e.facing={0,0,1};}
+    if(returning) {
+        e.returningBody=ReturningBodyRuntime{};e.componentOwner=owner;
+        e.hp=e.maxHp=0;e.velocity={};e.cooldown=0;
+    }
+    if(const auto *p=content->linkedHead(id)) {
+        e.linkedHead=LinkedHeadRuntime{};e.cooldown=0;
+        if(id==p->body)queueMonster(p->head,e.position,entity,0,false,1,0,0,0,-1,{},true);
+        else e.lift=p->headLift; // Correct carried pose even in an inactive room.
+    }
+    if(content->host(id)){e.host=HostRuntime{};e.cooldown=0;}
+    if(content->mushroom(id)){e.mushroom=MushroomRuntime{};e.cooldown=0;}
+    if(content->targetHop(id)){e.targetHop=TargetHopRuntime{};e.cooldown=0;}
+    if(content->leaper(id))e.leaper=LeaperRuntime{};
+    if(content->hopRings(id))e.hopRings=HopRingRuntime{};
+    if(content->eggy(id))e.eggy=EggyRuntime{};
+    if(content->adaptiveArmor(id))e.adaptiveArmor=AdaptiveArmorRuntime{};
+    if(const auto *p=content->leech(id)) {
+        e.leech=LeechRuntime{};e.cooldown=0;e.facing={0,0,1};
+        if(p->child)queueMonster(p->child,e.position,entity,0,false,1,0,0,0,-1,{},true);
+    }
+    if(content->maskArmor(id))updateMaskArmor(e,0);
+    if(content->linkedRemnant(id))e.linkedRemnant=LinkedRemnantRuntime{};
+    if(content->landingCreep(id))e.landingCreep=LandingCreepRuntime{};
     return entity;
 }
-void Simulation::queueMonster(int id, Vector3 at, EntityId partner, int generation, bool collapsed) {
-    if (pendingMonsters_.size() + livingEnemies() >= limits.enemies || generation > 4) {
+void Simulation::queueMonster(MonsterId id, Vector3 at, EntityId partner, int generation, bool collapsed,
+                              float healthScale, int regrowthSplits, EntityId summoner,EntityId componentOwner,int componentSlot,
+                              std::optional<ItemKey> sourceItem,bool retained,std::optional<ThrownOffspringRuntime> thrown,Vector3 impulse) {
+    if ((!retained&&pendingMonsters_.size() + livingEnemies() >= limits.enemies) || generation > 4) {
         suppress({}, "monster offspring capacity");
         return;
     }
-    pendingMonsters_.push_back({id, at, partner, generation, collapsed});
+    id=content->spawnIdentity(id,arena.profile);
+    pendingMonsters_.push_back({id, at, partner, generation, collapsed, healthScale, regrowthSplits, summoner,componentOwner,componentSlot,sourceItem,retained,0,thrown,impulse,{},{},{}});
+    if(const auto *parent=findEnemy(summoner))pendingMonsters_.back().spawnerType=parent->monster.type;
+    if(const auto *buzz=content->buzzFly(id);buzz&&summoner)if(const auto *parent=findEnemy(summoner)) {
+        const auto policy=buzz->contactSummoners.find(parent->monster);
+        if(policy!=buzz->contactSummoners.end())pendingMonsters_.back().contactRetention=policy->second;
+    }
+}
+void Simulation::summonMonsters(const Enemy &e, const BehaviorSummon &rule) {
+    const auto alive=std::count_if(enemies.begin(),enemies.end(),[&](const auto &child){return child.alive&&child.summoner==e.id;});
+    const auto pending=std::count_if(pendingMonsters_.begin(),pendingMonsters_.end(),[&](const auto &child){return child.summoner==e.id;});
+    const int count=std::min(rule.count,std::max(0,rule.ownerLimit-int(alive+pending)));
+    for(int n=0;n<count;++n) {
+        const auto offset=rotateY(mul(e.facing,-rule.spacing),float(n)*2*Pi/float(count));
+        queueMonster(rule.monster,add(e.position,offset),0,e.generation+1,false,rule.healthScale,0,e.id);
+    }
 }
 void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
     // Copy a request before spawning: spawn can append a paired child to this queue.
     size_t cursor = 0;
-    while (cursor < pendingMonsters_.size() && cursor < limits.enemies) {
+    std::vector<MonsterSpawn> retained;
+    while (cursor < pendingMonsters_.size()) {
         const auto request = pendingMonsters_[cursor++];
-        const auto *d = monsterDefinition(request.id);
+        const auto *d = content->monster(request.id);
         if (!d)
             continue;
+        if(request.componentOwner) {
+            const auto *parent=findEnemy(request.componentOwner);
+            if(!parent||!parent->alive)continue;
+        }
+        const auto *pair=content->linkedRemnant(request.id);
+        const bool pairedChild=pair&&request.id==pair->child&&request.partner;
+        if(pairedChild) {
+            const auto *parent=findEnemy(request.partner);
+            if(!parent||!parent->alive||parent->monster!=pair->body)continue;
+        }
+        const bool attachedFly=content->eternalFly(request.id)&&request.partner&&request.retained;
+        if(attachedFly) {
+            const auto *parent=findEnemy(request.partner);
+            if(!parent||!parent->alive)continue;
+        }
+        if(livingEnemies()>=limits.enemies) {
+            if(request.retained)retained.push_back(request);
+            continue;
+        }
         Vector3 at = request.position;
+        auto thrown=request.thrown;
         at.y = .85f;
         bool placed = false;
-        for (int attempt = 0; attempt < 65; ++attempt) {
+        if(attachedFly){at=findEnemy(request.partner)->position;placed=true;}
+        if(content->returningBody(request.id)) {
+            // This attack starts inside its parent and passes grid geometry.
+            // Ordinary offspring placement would invent a displaced launch.
+            placed=true;
+        }
+        if(const auto *p=content->linkedHead(request.id);p&&request.id==p->head) {
+            if(const auto *parent=findEnemy(request.partner);parent&&parent->alive&&parent->monster==p->body) {
+                // The head is attached to its body at birth, including when the
+                // player touches that body. Ordinary offspring clearance would
+                // otherwise displace or permanently withhold this required part.
+                at=parent->position;placed=true;
+            }
+        }
+        if(const auto *parent=findEnemy(request.summoner);parent&&parent->alive)
+            if(const auto *p=content->rottenGaper(parent->monster);p&&p->brood&&p->child==request.id&&
+               !arena.blocked(at,d->radius)) {
+                // Native brood births overlap the parent's body with zero
+                // velocity. Body separation resolves overlap after birth.
+                placed=true;
+            }
+        for (int attempt = 0; !placed&&attempt < 65; ++attempt) {
             if (attempt)
                 at = add(request.position,
                          rotateY({.8f + float(attempt / 8) * .45f, 0, 0}, float(attempt % 8) * Pi / 4));
+            if(thrown&&attempt==64)at=thrown->origin; // A vertical birth remains possible in narrow spaces.
             at.y = .85f;
-            if ((placement && !roomSpawnClear(at, d->radius)) || arena.blocked(at, d->radius) ||
+            if ((placement && !roomSpawnClear(at, d->radius)) ||
+                ((content->strider(request.id)||((content->swimmer(request.id)||(content->slide(request.id)&&content->slide(request.id)->floodedPits))&&arena.swimmingRoom(room)))?arena.swimBlocked(at,d->radius,room):
+                 d->flying?arena.flightBlocked(at,d->radius,room):arena.blocked(at,d->radius)) ||
                 arena.reservedSupplyCache(at,d->radius) ||
-                distance(at, player.position) < std::max(playerClearance, d->radius + .65f))
+                (!pairedChild&&!content->companion(request.id)&&distance(at, player.position) < std::max(playerClearance, d->radius + .65f)))
                 continue;
+            if(d->flying)at.y=arena.flightHeight(at,d->radius);
+            if(thrown&&!planThrownOffspring(*thrown,at,d->radius,
+                content->strider(request.id)||((content->swimmer(request.id)||(content->slide(request.id)&&content->slide(request.id)->floodedPits))&&arena.swimmingRoom(room))))continue;
             bool occupied = false;
             for (const auto &other : enemies)
                 if (other.alive && distance(at, other.position) < d->radius + other.radius + .05f) {
+                    // Eggy's released Swarms already have player-object-only
+                    // collision; the non-colliding husk and peers cannot cage them.
+                    if(request.swarmHop&&content->swarmSpider(request.id))continue;
+                    if(pairedChild&&other.id==request.partner)continue;
+                    // Loki emits its fly at its body, as in the source. Other
+                    // bodies still exclude the new child; flight separates it.
+                    if(content->eternalFly(request.id)&&other.id==request.partner)continue;
+                    if(other.bossGroup==request.summoner&&request.summoner&&content->loki(other.monster))continue;
                     occupied = true;
                     break;
                 }
@@ -243,39 +259,84 @@ void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
             }
         }
         if (!placed) {
-            suppress({}, "monster offspring placement");
+            if(request.retained)retained.push_back(request);
+            else suppress({}, "monster offspring placement");
             continue;
         }
-        auto entity = spawnMonster(request.id, at);
-        if (!entity)
+        auto entity = spawnMonster(request.id, at,request.componentOwner,request.componentSlot);
+        if (!entity) {
+            if(request.retained)retained.push_back(request);
             continue;
+        }
         auto &e = *findEnemy(entity);
-        if (placement)
-            e.cooldown = placement->real(.6f, 1.8f);
+        if (placement) {
+            if(const auto *lob=content->lobWalker(e.monster);lob&&!lob->attackFrames)
+                e.cooldown=float(lob->initialMin+int(placement->bounded(unsigned(lob->initialMax-lob->initialMin+1))))/30;
+            else e.cooldown = placement->real(.6f, 1.8f);
+        }
+        if(content->maw(e.monster))e.cooldown=0;
+        if(length(request.impulse)>0)e.velocity=request.impulse;
+        if(request.slide)e.slide=request.slide;
+        if(request.rockSpider){e.rockSpider=request.rockSpider;e.lift=-e.rockSpider->height*content->rockSpider(e.monster)->scale;}
+        if(e.returningBody) {
+            e.returningBody->initialVelocity=e.velocity;e.facing=unit(horizontal(e.velocity));
+            e.returningBody->motion.push_back({e.position,e.position,0,1});
+        }
+        if(request.swarmHop) {
+            e.swarmSpider=request.swarmHop;
+            e.velocity=mul(request.swarmHop->momentum,content->swarmSpider(e.monster)->scale*30);
+            e.state=EnemyState::Jumping;
+        }
         e.partner = request.partner;
+        if(const auto *p=content->linkedHead(e.monster);p&&e.monster==p->head)
+            if(auto *parent=findEnemy(request.partner);parent&&parent->alive&&parent->monster==p->body) {
+                parent->partner=entity;
+                // Free-flight elevation must not pull a newborn attached head
+                // away from a body beside raised canyon scenery.
+                e.position=parent->position;
+            }
+        e.summoner = request.summoner;
+        e.spawnerType=request.spawnerType;
+        if(thrown) {
+            e.thrownOffspring=thrown;
+            e.position=thrown->origin;e.position.y=.85f-thrown->height*thrown->profile.heightScale;
+            e.velocity={};e.lift=0;
+        }
+        if(request.contactRetention>0) {
+            if(!e.buzz)e.buzz=BuzzFlyRuntime{};
+            e.buzz->diesOnContact=true;e.buzz->contactRetention=request.contactRetention;
+        }
+        if(request.childContactDeath&&content->spider(e.monster)) {
+            if(!e.spider)e.spider=SpiderRuntime{};
+            e.spider->diesOnContact=true;
+        }
+        e.companionItem = request.sourceItem;
         e.generation = request.generation;
-        if (e.monster == monsterId(24, 3))
-            e.maxHp *= std::pow(.7f, float(e.generation));
+        e.hp *= request.healthScale;e.maxHp *= request.healthScale;
+        e.regrowthSplits = request.regrowthSplits;
         if (request.collapsed) {
             e.state = EnemyState::Collapsed;
-            e.stateTime = 2.5f;
-            e.hp = e.maxHp * .25f;
+            const auto *regrowth = content->regrowth(e.monster);
+            e.stateTime = regrowth ? regrowth->delay : 2.5f;
+            e.hp = e.maxHp * (regrowth ? regrowth->gooFraction : .25f);
         }
-        if (request.id == monsterId(840)) {
-            if (auto *parent = findEnemy(request.partner))
-                parent->partner = entity;
+        if(pairedChild) {
+            auto *parent=findEnemy(request.partner);parent->partner=entity;
+            parent->linkedRemnant=LinkedRemnantRuntime{true,false};
         }
     }
-    pendingMonsters_.clear();
+    pendingMonsters_=std::move(retained);
 }
 size_t Simulation::roomThreats() const {
-    return size_t(std::count_if(enemies.begin(), enemies.end(), [](const Enemy &e) {
-        const auto *d = monsterDefinition(e.monster);
-        return e.alive && !e.friendly && (!d || !d->roomHazard);
+    return size_t(std::count_if(enemies.begin(), enemies.end(), [this](const Enemy &e) {
+        const auto *d = content->monster(e.monster);
+        const auto *pair=content->linkedRemnant(e.monster);
+        return e.alive && !e.friendly && (!d || !d->roomHazard)&&(!pair||e.monster!=pair->body);
     }));
 }
-void Simulation::spawnMonsterDebug(int id) {
-    const auto *d = monsterDefinition(id);
+void Simulation::spawnMonsterDebug(MonsterId id) {
+    id=content->spawnIdentity(id,arena.profile);
+    const auto *d = content->monster(id);
     if (!d)
         return;
     const auto &bounds = arena.rooms[size_t(room)].bounds;
@@ -346,9 +407,9 @@ void Simulation::monsterLines(const Enemy &e, HazardKind kind, bool diagonal) {
     }
 }
 void Simulation::attackMonster(Enemy &e) {
-    const auto &d = *monsterDefinition(e.monster);
+    const auto &d = *content->monster(e.monster);
     const int t = type(e), v = variant(e);
-    auto aim = flatDirection(e.position, e.target);
+    auto aim = d.flying?unit(sub(e.target,e.position)):flatDirection(e.position, e.target);
     const auto projectile = (t == 26 && v == 2)   ? ProjectileKind::Homing
                             : (t == 14 && v == 2) ? ProjectileKind::SplitShot
                             : (t == 15 && v == 1) ? ProjectileKind::Tar
@@ -401,7 +462,7 @@ void Simulation::attackMonster(Enemy &e) {
         }
         break;
     case A::Spawn: {
-        int child = monsterId(85), count = 1;
+        MonsterId child = monsterId(85); int count = 1;
         if (t == 22) {
             child = v == 0   ? monsterId(18)
                     : v == 1 ? monsterId(23, 1)
@@ -411,14 +472,8 @@ void Simulation::attackMonster(Enemy &e) {
         }
         if (t == 61)
             child = monsterId(861);
-        // Limit each summoner's live children as well as the global population.
-        const auto children = std::count_if(enemies.begin(), enemies.end(), [&](const Enemy &other) {
-            return other.alive && other.partner == e.id;
-        });
-        if (children < 6)
-            for (int n = 0; n < std::min(count, 6 - int(children)); ++n)
-                queueMonster(child, add(e.position, rotateY({1.6f, 0, 0}, float(n) * 2 * Pi / float(count))),
-                             e.id, e.generation + 1);
+        // Population ownership must not reuse the paired-body/attack-target link.
+        summonMonsters(e,{child,count,6,t == 22 && v == 1 ? .5f : 1.f,1.6f});
         break;
     }
     case A::Beam:
@@ -462,15 +517,59 @@ void Simulation::attackMonster(Enemy &e) {
     }
 }
 
-void Simulation::moveMonster(Enemy &e, Vector3 velocity, float dt) {
-    const auto before = e.position;
-    // Keep movement, projectile collision and the rendered body on the same navigable surface.
-    e.position = arena.move(before, mul(velocity, dt), e.radius);
-    e.velocity = mul(sub(e.position, before), 1 / dt);
-}
-
 void Simulation::updateMonster(Enemy &e, float dt) {
-    const auto &d = *monsterDefinition(e.monster);
+    if(!updateLinkedRemnant(e))return;
+    if(content->knight(e.monster)){updateKnight(e,dt);return;}
+    if(content->mirror(e.monster)){updateMirror(e,dt);return;}
+    if(content->adultLeech(e.monster)){updateAdultLeech(e,dt);return;}
+    if(content->hardy(e.monster)){updateHardy(e,dt);return;}
+    if(content->danny(e.monster)){updateDanny(e,dt);return;}
+    if(content->gaper(e.monster)){updateGaper(e,dt);return;}
+    if(content->blackGlobin(e.monster)){updateBlackGlobin(e,dt);return;}
+    if(content->leper(e.monster)){updateLeper(e,dt);return;}
+    if(content->leperFlesh(e.monster)){updateLeperFlesh(e,dt);return;}
+    if(content->rottenGaper(e.monster)){updateRottenGaper(e,dt);return;}
+    if(content->smallMaggot(e.monster)){updateSmallMaggot(e,dt);return;}
+    if(content->headless(e.monster)){updateHeadless(e,dt);return;}
+    if(content->faceless(e.monster)){updateFaceless(e,dt);return;}
+    if(content->slide(e.monster)){updateSlide(e,dt);return;}
+    if(content->memBrain(e.monster)){updateMemBrain(e,dt);return;}
+    if(content->lump(e.monster)){updateLump(e,dt);return;}
+    if(content->leech(e.monster)){updateLeech(e,dt);return;}
+    if(e.returningBody){updateReturningBody(e,dt);return;}
+    if(content->vis(e.monster)){updateVis(e,dt);return;}
+    if(content->guts(e.monster)){updateGuts(e,dt);return;}
+    if(content->baby(e.monster)){updateBaby(e,dt);return;}
+    if(content->linkedHead(e.monster)){updateLinkedHead(e,dt);return;}
+    if(content->brain(e.monster)){updateBrain(e,dt);return;}
+    if(content->cardinalWalker(e.monster)){updateCardinalWalker(e,dt);return;}
+    if(content->spitty(e.monster)){updateSpitty(e,dt);return;}
+    if(content->rockSpider(e.monster)){updateRockSpider(e,dt);return;}
+    if(e.environment){updateEnvironmentActor(e,dt);return;}
+    if(content->maw(e.monster)){updateMaw(e,dt);return;}
+    if(content->eternalFly(e.monster)){updateEternalFly(e,dt);return;}
+    if(content->host(e.monster)){updateHost(e,dt);return;}
+    if(content->mushroom(e.monster)){updateMushroom(e,dt);return;}
+    if(e.dyingEggy()){updateEggyDeath(e,dt);return;}
+    if(content->targetHop(e.monster)){updateTargetHop(e,dt);return;}
+    if(content->hornfelDecoy(e.monster))return; // Independent component update, outside vector iteration.
+    if(content->boomFly(e.monster)){updateBoomFly(e,dt);return;}
+    if(content->strider(e.monster)){updateStrider(e,dt);return;}
+    if(content->longLegs(e.monster)){updateLongLegs(e,dt);return;}
+    if(content->sack(e.monster)||content->boil(e.monster)){updateSack(e,dt);return;}
+    if(content->swarmSpider(e.monster)){updateSwarmSpider(e,dt);return;}
+    if(content->spider(e.monster)){updateSpider(e,dt);return;}
+    if(content->willo(e.monster)){updateWillo(e,dt);return;}
+    if(content->swimmer(e.monster)){updateSwimmer(e,dt);return;}
+    if(content->evader(e.monster)){updateEvader(e,dt);return;}
+    if(content->headShooter(e.monster)){updateHeadShooter(e,dt);return;}
+    if(content->buzzFly(e.monster)){updateBuzzFly(e,dt);return;}
+    if(content->lobWalker(e.monster)){updateLobWalker(e,dt);return;}
+    if(content->flyBomb(e.monster)){updateFlyBomb(e,dt);return;}
+    if(content->statue(e.monster)){updateStatue(e,dt);return;}
+    if(content->component(e.monster)){updateOwnedComponent(e,dt);return;}
+    if(content->charge(e.monster)){updateCharge(e,dt);return;}
+    const auto &d = *content->monster(e.monster);
     const int t = type(e), v = variant(e);
     e.cooldown -= dt / (e.friendly ? 1.0f : EnemyCooldownMultiplier*arena.profile.cooldownScale);
     e.auxiliary -= dt;
@@ -478,17 +577,27 @@ void Simulation::updateMonster(Enemy &e, float dt) {
     e.age += dt;
     e.pathTime -= dt;
     e.flash = std::max(0.0f, e.flash - dt);
+    e.fireContactCooldown = std::max(0.f,e.fireContactCooldown-dt);
     e.velocity = {};
     e.lift = 0;
+    if(const auto *hop=content->hop(e.monster)) {
+        updateHop(e,d,*hop,dt);
+        return;
+    }
+    if(const auto *graph=content->behavior(d.behavior)) {
+        updateBehavior(e,d,*graph,dt);
+        return;
+    }
+    if(const auto *formation=content->formation(e.monster)) {
+        if(e.state==EnemyState::Stunned) {
+            e.stateTime-=dt;if(e.stateTime<=0)e.state=EnemyState::Ready;
+            return;
+        }
+        updateFormationMember(e,*formation,dt);
+        return;
+    }
     if (t == 29 && v == 3 && e.phase > 0 && e.phase < 4 && e.auxiliary <= 0)
         attackMonster(e);
-    if (e.monster == monsterId(29))
-        for (const auto &hazard : hazards)
-            if (hazard.kind == HazardKind::Fire && hazard.age >= hazard.delay &&
-                distance(hazard.position, e.position) < hazard.radius) {
-                e.monster = monsterId(54);
-                break;
-            }
     auto target = player.position;
     if (e.friendly) {
         float best = 100000;
@@ -528,13 +637,6 @@ void Simulation::updateMonster(Enemy &e, float dt) {
             return;
         }
     }
-    if (t == 41 && v == 3 && e.partner) {
-        const auto *partner = findEnemy(e.partner);
-        if (!partner || !partner->alive) {
-            e.alive = false;
-            return;
-        }
-    }
     if (e.state == EnemyState::Stunned) {
         e.stateTime -= dt;
         if (e.stateTime <= 0)
@@ -543,7 +645,7 @@ void Simulation::updateMonster(Enemy &e, float dt) {
     }
     if (e.state == EnemyState::Collapsed) {
         e.stateTime -= dt;
-        if (v == 1)
+        if (t == 24 && v == 1)
             moveMonster(e, mul(direction, -1.3f), dt);
         if (e.stateTime <= 0) {
             e.state = EnemyState::Ready;
@@ -610,13 +712,7 @@ void Simulation::updateMonster(Enemy &e, float dt) {
         const float speed = t == 41 && v == 1 ? 16 : t == 35 ? 12 : 11;
         moveMonster(e, mul(e.facing, speed), dt);
         const bool impact = distance(before, e.position) < speed * dt * .65f;
-        if (t == 23 && v == 2 && e.trailTime <= 0) {
-            monsterPatch(e, HazardKind::Tar, e.position, .7f, 0, 2.5f);
-            e.trailTime = .22f;
-        }
-        if (impact && t == 23 && v == 2 && e.stateTime > 0)
-            e.facing = mul(e.facing, -1);
-        else if (impact || e.stateTime <= 0) {
+        if (impact || e.stateTime <= 0) {
             if (t == 41 && v == 4)
                 monsterLines(e, HazardKind::Fire);
             if (t == 38) {
@@ -650,8 +746,6 @@ void Simulation::updateMonster(Enemy &e, float dt) {
             }
         }
     } else {
-        if (t == 10 && v == 0 && sight)
-            e.awakened = true;
         if (t == 30)
             e.hp = std::min(e.maxHp, e.hp + dt * 12);
         if (t == 861) {
@@ -662,16 +756,15 @@ void Simulation::updateMonster(Enemy &e, float dt) {
                 e.radius = .5f;
             }
         }
-        if ((t == 32 || (t == 40 && v == 1) || (t == 25 && v == 5) || (t == 10 && v == 2)) &&
+        if ((t == 32 || (t == 40 && v == 1)) &&
             e.trailTime <= 0) {
             monsterPatch(e,
-                         t == 25   ? HazardKind::Gas
-                         : t == 10 ? HazardKind::Fire
-                                   : HazardKind::Creep,
+                         HazardKind::Creep,
                          e.position, .7f, 0, 2.6f);
             e.trailTime = .5f;
         }
         if ((t == 16 && v == 2 && dist < 1.4f) || (t == 16 && v < 2 && e.age > 12 && dist < 4)) {
+            e.selfDetonated = true;
             Event death;
             death.type = EventType::Damage;
             death.target = e.id;
@@ -686,7 +779,7 @@ void Simulation::updateMonster(Enemy &e, float dt) {
         case M::Teleport:
         case M::Burrow:
             if (d.speed > 0)
-                movement = mul(direction, d.speed * (t == 10 && v == 0 && e.awakened ? 1.5f : 1));
+                movement = mul(direction, d.speed);
             if (d.attack != A::None && dist < 5 && t != 10 && t != 87)
                 movement = {};
             break;
@@ -702,7 +795,9 @@ void Simulation::updateMonster(Enemy &e, float dt) {
             e.observedShots = stats.shots;
             break;
         case M::Orbit: {
-            const auto *parent = findEnemy(e.partner);
+            // Legacy orbiters still use their old anchor until their formation
+            // controller is ported; the anchor is not their population owner.
+            const auto *parent = findEnemy(e.partner ? e.partner : e.summoner);
             auto center = parent && parent->alive ? parent->position : target;
             const auto goal = add(center, rotateY({t == 35 ? 1.1f : 1.6f, 0, 0}, e.age * 2 + float(e.id)));
             movement = mul(flatDirection(e.position, goal), std::min(6.0f, distance(goal, e.position) / dt));
@@ -750,20 +845,13 @@ void Simulation::updateMonster(Enemy &e, float dt) {
                 movement = mul(direction, d.speed);
             break;
         }
-        if (t == 10 && v == 3) {
-            // Stable facial temperament: chase, hesitate, or back away while spitting.
-            const int temperament = int(e.id % 3);
-            if (temperament == 1 && std::fmod(e.age, 2.0f) < .7f)
-                movement = {};
-            if (temperament == 2 && dist < 5)
-                movement = mul(direction, -d.speed);
-        }
-        if (!sight && length(movement) > .1f && (d.motion == M::Chase || d.motion == M::Charge)) {
+        if (length(movement) > .1f && (d.motion == M::Chase || d.motion == M::Charge) &&
+            !(d.flying?arena.flightClear(e.position,target,e.radius,room):arena.clear(e.position,target,e.radius))) {
             if (e.pathTime <= 0) {
-                e.path = arena.path(e.position, target, e.radius);
+                e.path = d.flying?arena.flightPath(e.position,target,e.radius,room):arena.path(e.position,target,e.radius);
                 e.pathTime = 1.1f;
             }
-            while (!e.path.empty() && distance(e.position, e.path.front()) < .4f)
+            while (!e.path.empty() && planarDistance(e.position, e.path.front()) < .08f)
                 e.path.erase(e.path.begin());
             if (!e.path.empty())
                 movement = mul(flatDirection(e.position, e.path.front()), d.speed);
@@ -771,12 +859,14 @@ void Simulation::updateMonster(Enemy &e, float dt) {
         // Preserve exact mirroring/orbit positioning and committed jump/charge trajectories.
         if (!e.friendly && d.motion != M::Mirror && d.motion != M::Orbit)
             movement = mul(movement, EnemyMovementMultiplier);
+        if (d.motion == M::Chase)
+            movement = steerMonsterBodies(e, movement);
         const auto before = e.position;
         moveMonster(e, movement, dt);
         if (length(movement) > .1f && distance(before, e.position) < length(movement) * dt * .5f) {
             if (d.motion == M::Bounce) {
                 // Reflect only the blocked component; never drift through a boundary.
-                const auto probe = arena.move(before, {movement.x * dt, 0, 0}, e.radius);
+                const auto probe = d.flying?arena.fly(before,{movement.x*dt,0,0},e.radius,room):arena.move(before, {movement.x * dt, 0, 0}, e.radius);
                 if (std::abs(probe.x - before.x) < std::abs(movement.x * dt) * .5f)
                     e.facing.x = -e.facing.x;
                 else
@@ -852,30 +942,97 @@ void Simulation::updateMonster(Enemy &e, float dt) {
 }
 
 bool Simulation::collapseMonster(Enemy &e) {
-    if (type(e) != 24 || e.state == EnemyState::Collapsed)
+    const auto *regrowth = content->regrowth(e.monster);
+    if (!regrowth || e.state == EnemyState::Collapsed)
         return false;
     e.state = EnemyState::Collapsed;
-    e.stateTime = 2.5f;
-    e.hp = std::max(12.0f, e.maxHp * .25f);
+    e.stateTime = regrowth->delay;
+    // A scaled summoned body may start below the floor; collapse must never heal
+    // its maximum HP up to an unscaled definition's minimum.
+    e.maxHp = std::min(e.maxHp, std::max(regrowth->minimumHealth, e.maxHp * regrowth->healthRetention));
+    e.hp = e.maxHp * regrowth->gooFraction;
     e.lift = 0;
-    if (variant(e) == 2) {
+    if (e.monster == monsterId(24, 2)) {
         queueMonster(monsterId(85), e.position, 0, e.generation + 1);
         monsterPatch(e, HazardKind::Tar, e.position, 1.3f, 0, 4);
     }
-    if (variant(e) == 3 && e.generation < 3) {
-        ++e.generation;
-        e.maxHp *= .7f;
-        e.hp = e.maxHp * .3f;
-        queueMonster(e.monster, e.position, 0, e.generation, true);
+    if (e.regrowthSplits < regrowth->splitLimit) {
+        ++e.regrowthSplits;
+        queueMonster(e.monster, e.position, 0, e.generation + 1, true,
+                     e.maxHp / content->monster(e.monster)->hp, e.regrowthSplits);
     }
     return true;
 }
-void Simulation::monsterDeath(const Enemy &e, const Event &event) {
+void Simulation::monsterDeathOffspring(const Enemy &e, const MonsterDeathRule &rule) {
+    // Overkill uses post-hit health. Voluntary detonation is a distinct death cause,
+    // so its synthetic lethal damage must not incorrectly suppress the offspring.
+    if (!e.selfDetonated && rule.overkill && e.hp <= *rule.overkill)
+        return;
+    uint32_t totalWeight = 0;
+    for (const auto &outcome : rule.outcomes) totalWeight += uint32_t(outcome.weight);
+    int draws=1;
+    if(rule.population) {
+        const auto &p=*rule.population;
+        // Native count is room-wide, not this parent's living offspring. Include
+        // already reserved births so simultaneous deaths cannot evade the budget.
+        draws=int(std::ceil(p.budget/(1+float(roomThreats()+pendingMonsters_.size())*p.crowdScale)));
+        draws=std::max(p.minimum,draws+p.adjustment);
+        if(p.capMinimum)draws=std::min(draws,p.capMinimum+int(combatRng.bounded(unsigned(p.capMaximum-p.capMinimum+1))));
+    }
+    std::vector<std::pair<MonsterId, float>> children;
+    for(int draw=0;draw<draws;++draw) {
+        auto choice=combatRng.bounded(totalWeight);
+        for(const auto &outcome:rule.outcomes) {
+            if(choice>=uint32_t(outcome.weight)){choice-=uint32_t(outcome.weight);continue;}
+            for(const auto &group:outcome.offspring) {
+                const int count=group.minimum+int(combatRng.bounded(uint32_t(group.maximum-group.minimum+1)));
+                for(int n=0;n<count;++n)children.emplace_back(group.monster,group.healthScale);
+            }
+            break;
+        }
+    }
+    auto axis = rule.layout == OffspringLayout::Perpendicular
+        ? rotateY(flatDirection(e.position, player.position), Pi / 2) : Vector3{1, 0, 0};
+    if(rule.layout==OffspringLayout::Perpendicular&&planarDistance(e.position,player.position)<.001f)axis=rotateY({1,0,0},combatRng.real(0,2*Pi));
+    for (size_t n = 0; n < children.size(); ++n) {
+        const float angle=rule.population?combatRng.real(0,2*Pi):float(n)*2*Pi/float(children.size());
+        const float spacing=rule.population?std::max(rule.population->radiusMinimum,combatRng.real(0,rule.population->radiusMaximum)):rule.spacing;
+        auto at=add(e.position,mul(rotateY(axis,angle),spacing));
+        std::optional<ThrownOffspringRuntime> thrown;
+        if(rule.launch) {
+            thrown=ThrownOffspringRuntime{};thrown->profile=*rule.launch;thrown->origin=e.position;thrown->origin.y=.85f;
+            at=add(thrown->origin,add(mul(rotateY(axis,angle),combatRng.real(0,rule.launch->radius)),
+                mul(rotateY(axis,combatRng.real(0,2*Pi)),rule.launch->scatter)));
+        }
+        queueMonster(children[n].first,at,0,e.generation+1,false,children[n].second,0,0,0,-1,{},bool(rule.population)||bool(thrown)||rule.impulse>0,thrown,mul(rotateY(axis,angle),rule.impulse));
+    }
+}
+void Simulation::monsterDeath(Enemy &e, const Event &event) {
+    if(content->hardy(e.monster))return; // Exact death child handled with damage.
+    if(content->rockSpider(e.monster))return; // In-place death morph / retained hot coal handled with damage.
+    if(content->slide(e.monster))return; // Exact non-debug offspring are processed with damage.
+    if(content->memBrain(e.monster))return; // Required children also survive ordinary execution deaths.
+    if(content->linkedHead(e.monster))return; // Linked transitions also run for non-debug executions.
+    if(content->spitty(e.monster))return; // Death packet also covers non-debug execution.
+    if(content->boomFly(e.monster))return; // Includes non-debug execution; handled by process(Damage).
+    if(content->flyBomb(e.monster))return; // Distinct contact/death ordnance is handled even for execution deaths.
     const int t = type(e), v = variant(e);
+    if(const auto *cross=content->deathCross(e.monster)) {
+        for(int n=0;n<4;++n)shootEnemy(e,rotateY({1,0,0},cross->angle+float(n)*Pi/2),cross->damage,cross->speed);
+        if(cross->creepRadius>0) {
+            Hazard h;h.kind=cross->creepDamage>0?HazardKind::Creep:HazardKind::Tar;h.position={e.position.x,.85f,e.position.z};h.delay=0;
+            h.radius=cross->creepRadius;h.duration=cross->creepDuration;h.damage=cross->creepDamage;
+            h.context.sourceEntity=e.id;h.tint={36,32,43,220};addHazard(h);
+        }
+        return;
+    }
     // Resolve orbiters before room completion can remove a defeated parent's last threat.
     for (auto &child : enemies) {
         if (!child.alive || child.partner != e.id || child.monster != monsterId(96))
             continue;
+        if(content->eternalFly(child.monster)) {
+            releaseEternalFly(child);continue;
+        }
         if (t == 55 && v == 2)
             child.alive = false;
         else {
@@ -884,73 +1041,34 @@ void Simulation::monsterDeath(const Enemy &e, const Event &event) {
             child.hp = child.maxHp = 32;
         }
     }
-    auto offspring = [&](int id, int count) {
+    auto offspring = [&](MonsterId id, int count) {
         for (int n = 0; n < count; ++n)
             queueMonster(id, add(e.position, rotateY({1, 0, 0}, float(n) * 2 * Pi / float(count))), 0,
                          e.generation + 1);
     };
     auto bomb = [&] { monsterPatch(e, HazardKind::MonsterBomb, e.position, 2.8f, .7f, 0); };
-    if (t == 10 && v < 3)
-        offspring(monsterId(11, combatRng.bounded(4) ? 1 : 0), 1);
-    if (t == 16) {
-        if (v == 0) {
-            offspring(monsterId(18), 2);
-            offspring(monsterId(13), 1);
-            if (e.age > 12)
-                monsterPattern(e, 4);
-        }
+    if (const auto *rule = content->deathRule(e.monster))
+        monsterDeathOffspring(e, *rule);
+    if (t == 16&&!content->evader(e.monster)) {
+        if (v == 0 && e.selfDetonated)
+            monsterPattern(e, 4);
         if (v == 1) {
             bomb();
-            monsterPattern(e, e.age > 12 ? 8 : 4, Pi / 4);
+            monsterPattern(e, e.selfDetonated ? 8 : 4, Pi / 4);
         }
         if (v == 2)
-            bomb();
+            monsterPatch(e, HazardKind::MonsterBomb, e.position, 2.8f, 0, 0);
     }
-    if (t == 22) {
-        if (v == 0) {
-            offspring(monsterId(18), 3);
-            offspring(monsterId(14), 1);
-        }
-        if (v == 1)
-            offspring(monsterId(23, 1), 2);
-        if (v == 2)
-            offspring(monsterId(77), 2);
-        if (v == 3) {
-            offspring(monsterId(18), 3);
-            offspring(monsterId(61), 2);
-            offspring(monsterId(25), 1);
-        }
-    }
-    if (t == 23 && v == 1)
-        monsterPattern(e, 4, Pi / 4);
+    if (const auto *c=content->charge(e.monster);c&&c->deathShots)
+        for(int n=0;n<c->deathShots;++n)
+            shootEnemy(e,rotateY({1,0,0},c->deathAngle+float(n)*2*Pi/float(c->deathShots)),c->deathDamage,c->deathSpeed);
     if (t == 24 && v == 2)
         monsterPatch(e, HazardKind::Tar, e.position, 1.6f, 0, 4);
-    if (t == 25) {
-        if (v == 0 || v == 2)
-            bomb();
-        if (v == 1)
-            monsterPattern(e, 6);
-        if (v == 2) {
-            monsterPattern(e, 4);
-            if (combatRng.bounded(2))
-                offspring(monsterId(23, 1), 1);
-        }
-        if (v == 3)
-            monsterLines(e, HazardKind::Fire, e.monster % 100 == 1);
-        if (v == 4)
-            monsterPattern(e, 3);
-        if (v == 5) {
-            monsterPattern(e, 6);
-            monsterPatch(e, HazardKind::Gas, e.position, 3, .4f, 4);
-        }
-        if (v == 6) {
-            bomb();
-            monsterLines(e, HazardKind::MonsterBomb);
-        }
-    }
-    if (t == 26 && v == 1)
-        monsterPattern(e, 4);
-    if (t == 29 && v == 2)
+    if(const auto *p=content->maw(e.monster);p&&p->deathShots) {
+        if(!e.maw)e.maw=MawRuntime{};
+        e.maw->deathPending=true;shootMawDeath(e);
+    } else if (t == 26 && v == 1)monsterPattern(e,4);
+    if (t == 29 && v == 2 && !content->eggy(e.monster))
         offspring(monsterId(884), 5);
     if (t == 31 && v == 1) {
         monsterPattern(e, 8);
@@ -964,9 +1082,8 @@ void Simulation::monsterDeath(const Enemy &e, const Event &event) {
             parent->hp = parent->maxHp = 40;
         }
     }
-    if (t == 41 && v == 2)
-        offspring(monsterId(41, 3), 1);
-    if (t == 55 && v > 0)
+
+    if (t == 55 && v > 0 && !content->deathBlast(e.monster))
         bomb();
     if (t == 57)
         offspring(v == 0 ? monsterId(32) : v == 1 ? monsterId(40) : monsterId(862), 2);
@@ -987,10 +1104,6 @@ void Simulation::monsterDeath(const Enemy &e, const Event &event) {
         if (v == 7)
             monsterPattern(e, 6, 0, 7, ProjectileKind::BurstShot);
     }
-    if (t == 80)
-        offspring(monsterId(18), 2);
-    if (t == 87 && v == 0 && combatRng.bounded(2))
-        offspring(monsterId(238), 1);
     if (t == 861) {
         offspring(monsterId(853), 2);
         monsterPatch(e, HazardKind::Creep, e.position, 1.6f, 0, 4);

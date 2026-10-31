@@ -44,11 +44,14 @@ EntityId Simulation::spawn(EnemyKind kind, Vector3 position) {
     return enemy.id;
 }
 
-bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monster) {
-    const auto &bounds = arena.rooms[size_t(room)].bounds;
-    const float radius = monster ? monsterDefinition(monster)->radius : enemyDefinition(kind).radius;
+bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, MonsterId monster) {
+    const auto &layout = arena.rooms[size_t(room)];
+    const auto &bounds = layout.bounds;
+    const float radius = monster ? content->monster(monster)->radius : enemyDefinition(kind).radius;
     auto valid = [&](Vector3 point) {
-        if (arena.blocked(point, std::max(0.8f, radius)) || arena.reservedSupplyCache(point,radius) ||
+        // Terrain collision samples the perimeter: a larger clearance ring can
+        // miss a narrow water/terrain feature touched by the actual body.
+        if (arena.blocked(point, radius) || (radius < .8f && arena.blocked(point, .8f)) || arena.reservedSupplyCache(point,radius) ||
             distance(point, player.position) < 6)
             return false;
         if (spaced && !roomSpawnClear(point, radius))
@@ -57,6 +60,22 @@ bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monste
             for (const auto &other : enemies)
                 if (other.alive && distance(point, other.position) < radius + other.radius + 0.35f)
                     return false;
+        if(content->statue(monster)) {
+            // Classic rooms and debug spawns also create solid statue bodies.
+            // Test the eventual footprint before accepting it, just as the
+            // progression-specific statue spawner does. Open floor at the
+            // candidate alone does not prove that room routes stay open.
+            const float half=radius*.85f;
+            arena.movementBodies.push_back({{point.x-half,-1,point.z-half},{point.x+half,8,point.z+half}});
+            bool connected=!arena.blocked(layout.center,.8f)&&!arena.blocked(layout.entry,.8f)&&
+                !arena.path(layout.entry,layout.center,.8f).empty()&&!arena.path(layout.center,layout.objective,.8f).empty();
+            for(int link:layout.passages)if(connected) {
+                const int side=arena.passages[size_t(link)].rooms[0]==room?0:1;
+                connected=!arena.path(layout.center,arena.doorApproach(link,side),.8f).empty();
+            }
+            arena.movementBodies.pop_back();
+            if(!connected)return false;
+        }
         return true;
     };
     auto create = [&](Vector3 point) {
@@ -64,6 +83,8 @@ bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monste
             return false;
         // Normal rooms use their own stream, independent of prior room visits.
         enemies.back().cooldown = rng.real(0.6f, 1.8f);
+        if(const auto *lob=content->lobWalker(monster);lob&&!lob->attackFrames)
+            enemies.back().cooldown=float(lob->initialMin+int(rng.bounded(unsigned(lob->initialMax-lob->initialMin+1))))/30;
         return true;
     };
     for (int attempt = 0; attempt < 240; ++attempt) {
@@ -82,14 +103,14 @@ bool Simulation::placeEnemy(EnemyKind kind, Random &rng, bool spaced, int monste
 
 void Simulation::spawnEnemies(int count) {
     // Random testing spawns use the same roster as the current mission.
-    std::vector<int> monsters;
-    for (const auto &d : monsterCatalog())
+    std::vector<MonsterId> monsters;
+    for (const auto &d : content->monsters())
         if (d.natural)
             monsters.push_back(d.id);
     EntityId unpaired = 0;
     for (int i = 0; i < count && livingEnemies() < limits.enemies; ++i) {
         if (arena.theme == MissionTheme::Canyon) {
-            const int monster = monsters[encounterRng.bounded(uint32_t(monsters.size()))];
+            const auto monster = monsters[encounterRng.bounded(uint32_t(monsters.size()))];
             if (!placeEnemy(EnemyKind::Monster, encounterRng, false, monster))
                 break;
             continue;
@@ -146,6 +167,7 @@ bool Simulation::roomSpawnClear(Vector3 point, float radius) const {
 }
 
 void Simulation::prepareRoomEnemies(int index) {
+    std::erase_if(suppliedBombs,[&](const auto &bomb){return bomb.room==index&&bomb.state!=SuppliedBombState::Carried;});
     const int previousRoom = room;
     const auto previousPosition = player.position;
     const auto previousRng = encounterRng;
@@ -155,14 +177,24 @@ void Simulation::prepareRoomEnemies(int index) {
     enemies = {};
     enemies.reserve(limits.enemies);
     room = index;
+    rooms[size_t(index)].formations.clear();
+    rooms[size_t(index)].segmented.clear();
+    rooms[size_t(index)].hornfel.reset();
+    rooms[size_t(index)].plates.clear();
+    rooms[size_t(index)].residents.clear();
     player.position = arena.rooms[size_t(index)].entry;
     spawnRoomEnemies();
+    // Required components must exist in resident rooms before the player enters.
+    // Retain births that cannot yet fit instead of discarding this room's queue.
+    flushMonsterSpawns();
+    rooms[size_t(index)].pendingSpawns=std::move(pendingMonsters_);
     rooms[size_t(index)].residents = std::move(enemies);
     enemies = std::move(active);
     room = previousRoom;
     player.position = previousPosition;
     encounterRng = previousRng;
     pendingMonsters_ = std::move(pending);
+    syncStatueBodies();
 }
 
 void Simulation::spawnRoomEnemies() {
@@ -190,21 +222,21 @@ void Simulation::spawnRoomEnemies() {
     }
     Random composition(seed_ ^ 0x524f4f4d47524f55ULL ^ (uint64_t(room + 1) * 0x9e3779b97f4a7c15ULL));
     if (arena.theme == MissionTheme::Canyon) {
-        std::vector<int> pool;
-        for (const auto &d : monsterCatalog())
-            if (d.natural && d.depth <= std::max(1, layout.depth))
+        std::vector<MonsterId> pool;
+        for (const auto &d : content->monsters())
+            if (d.natural && !content->formation(d.id) && d.depth <= std::max(1, layout.depth))
                 pool.push_back(d.id);
-        const std::array<int, 6> basics{monsterId(10, 1), monsterId(14), monsterId(18),
+        const std::array<MonsterId, 6> basics{monsterId(10, 1), monsterId(14), monsterId(18),
                                         monsterId(21),    monsterId(11), monsterId(85)};
-        const int basic = basics[composition.bounded(uint32_t(basics.size()))];
-        const int special = pool[composition.bounded(uint32_t(pool.size()))];
-        const auto &definition = *monsterDefinition(special);
+        const auto basic = basics[composition.bounded(uint32_t(basics.size()))];
+        const auto special = pool[composition.bounded(uint32_t(pool.size()))];
+        const auto &definition = *content->monster(special);
         const int count = roomEnemyCount(room);
         const int specialCount = definition.roomHazard ? 1 : std::max(1, count / 3);
         Random placement(seed_ ^ 0x535041574e524f4fULL ^ (uint64_t(room + 1) * 0xbf58476d1ce4e5b9ULL));
         EntityId leader = 0;
         for (int n = 0; n < count;) {
-            int id = n < specialCount ? special : basic;
+            auto id = n < specialCount ? special : basic;
             const bool companion = id == monsterId(26, 2) || id == monsterId(55, 2) || id == monsterId(35) ||
                                    id == monsterId(35, 2);
             if (companion && n + 2 > count)

@@ -1,0 +1,32 @@
+DEATHWARD_MECHANICS 1
+# Repentance1.7.9b exact IDs. Tainted HP/armor live in adaptive_armor.mechanics.
+monster 31.0.0 "Spitty" Wander Spitty Worm 32 1.2 .6 1.166666667 .2 1 0 1 0 1 legacy
+monster 31.1.0 "Tainted Spitty" Wander Spitty Worm 192 1.2 .8 1.166666667 .2 4 0 1 0 1 legacy
+monster 243.0.0 "Conjoined Spitty" Wander Spitty Worm 57.6 1.2 .65 1.166666667 .2 2 0 1 0 1 legacy
+stage_health 31.0.0 10 0 3.2
+stage_health 243.0.0 18 0 3.2
+# kind, source-distance scale, force, friction, Z-axis correction, contact;
+# attack probability divisor, attack/event frames, horizontal/vertical walk lengths,
+# walking Shoot event (0 none), grid, arrival, stuck speed, retries/cells/stuck frames.
+spitty 31.0.0 normal .1 .72 .85 .964705825 10 35 16 6 12 24 0 40 5 .6 10 11 10
+spitty 243.0.0 conjoined .1 .72 .85 .964705825 10 35 16 6 12 24 0 40 5 .6 10 11 10
+spitty 31.1.0 tainted .1 .72 .85 .964705825 20 35 16 6 12 24 6 40 5 .6 10 11 10
+# role speed height upMin upMax gravity retention radius damage life.
+# Horizontal .1, vertical .05 world scales. Gravity includes native +.1/frame.
+spitty_flight 31.0.0 shot 24 .45 4.65 4.65 4.41 .9 .22 10 8
+spitty_flight 243.0.0 shot 24 .45 4.65 4.65 4.41 .9 .22 10 8
+spitty_flight 31.1.0 shot 54 .65 4.5 4.5 7.65 .9 .22 10 8
+spitty_flight 31.1.0 burst 21 1.15 7.5 43.5 63.9 .9 .22 10 8
+# Mode9 rings retain init fallingSpeed[-.1,.1], fallingAccel0; modifier-.07.
+spitty_flight 31.1.0 death 24 1.15 -.15 .15 1.35 .9 .22 10 8
+# Stream count, size/start decrement, per-index acceleration decrement,
+# per-index jitter radians, per-index world gravity adjustment.
+spitty_stream 31.1.0 10 1.7 .1 .03 .0174532925 -.225
+spitty_burst 31.1.0 3 4 .9 .4 .05
+spitty_death 31.1.0 8 1.25 .3926990817
+# Caves-family source habitats; sparse ordinary crossfire from band1.
+encounter 1 2 crossfire specialist 31.0.0 2 3 1
+encounter 1 2 crossfire specialist 243.0.0 1 4 1
+# Explicit DeathWard adaptation: native Ascent-only variant becomes rare band3
+# crossfire reinforcement; this does not claim ordinary native stage membership.
+encounter 3 3 crossfire specialist 31.1.0 1 7 1

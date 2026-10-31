@@ -1,0 +1,9 @@
+DEATHWARD_MECHANICS 1
+# Repentance My Shadow: a contact familiar, never an ordinary hostile pool entry.
+# Source allied HP 20 and hit damage 8.7 use the existing 3.2 enemy-unit conversion.
+# Timings, physical size and incoming damage conversion are explicit local tuning.
+charge 23.0.1 11 1.5 .8 .7 .7 1.8
+# id contact-damage attack-interval hurt-interval incoming-damage-scale lifetime
+companion 23.0.1 27.84 .7 .45 .32 room
+# item child max-live lag-seconds radius per-enemy-contact-interval
+contact_familiar isaac:collectible:433 23.0.1 16 .15 .6 .25

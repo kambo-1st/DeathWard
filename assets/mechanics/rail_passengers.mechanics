@@ -1,0 +1,20 @@
+DEATHWARD_MECHANICS 1
+# Environmental hit-count health, not ordinary source HP times3.2.
+monster 33.0.0 "Fire Place" Still None Blob 5 0 .65 1 0 2 0 1 1 0 legacy
+monster 292.0.0 "Movable TNT" Still None Stone 4 0 1 1 0 2 0 0 1 0 legacy
+# identity kind damage-normalization contact contact-interval blast-damage radius player-damage push-speed retention
+# HP thresholds/hit RNG are native. Damage/radius scale, contact cadence and3D pushing are local adaptations.
+environment_actor 33.0.0 fireplace 3.2 10 .5 320 7.5 20 8 .8
+environment_actor 292.0.0 tnt 3.2 0 .5 320 7.5 20 8 .8
+# owner enabled initial-min/max-counts large-room-area divisor local-Hz world-speed door-seconds
+# First interval is not halved. Every later attempted spawn resets the interval,
+# including unavailable/blocked payloads. Pending slots are never rerolled.
+rail_traffic 906.0.0 1 150 359 135 2 30 12 .3
+# Native modulo7 order. Five creature behaviors are explicitly unfinished.
+rail_passenger 906.0.0 823.0.0 pending
+rail_passenger 906.0.0 820.0.0 pending
+rail_passenger 906.0.0 827.0.0 pending
+rail_passenger 906.0.0 227.0.0 pending
+rail_passenger 906.0.0 87.0.0 pending
+rail_passenger 906.0.0 33.0.0 available
+rail_passenger 906.0.0 292.0.0 available

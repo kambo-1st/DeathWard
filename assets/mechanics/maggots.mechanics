@@ -1,0 +1,12 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b Maggot21.0: blind cardinal wanderer, contact only.
+# Regular Maggot is distinct from Small Maggot853's slow player pursuit.
+monster 21.0.0 "Maggot" Wander None Worm 48 1.5 .6 2.4 .55 1 0 1 0 1 legacy
+stage_health 21.0.0 15 0 3.2
+# distance scale, force, friction, Z correction, contact, horizontal/vertical
+# animation frames, grid, arrival, stuck speed, retries/cells/stuck frames.
+cardinal_walker 21.0.0 .1 .75 .85 .964705825 10 12 24 40 5 .6 10 11 10
+# Source Caves-family and Corpse habitats; no ordinary Depths-equivalent route.
+# Weights, threat cost and physical canyon paths are DeathWard adaptations.
+encounter 1 1 any basic 21.0.0 1 1 0
+encounter 3 3 any basic 21.0.0 1 1 0

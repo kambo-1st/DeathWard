@@ -1,0 +1,6 @@
+DEATHWARD_MECHANICS 1
+# id shape capacity radius angular-radians/sec centre-speed assembly-speed
+# Ring Fly's ten-member limit and death-resistant ring come from the pinned Fly
+# article. World-unit geometry, speeds and incremental slot admission are local
+# DeathWard tuning; these are not measured Isaac engine constants.
+formation 222.0.0 ring 10 2.4 2.6 1.4 8

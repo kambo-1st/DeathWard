@@ -83,6 +83,8 @@ FloorProfile ExpeditionPlan::profileOnFloor(int floor) const {
         {3,"Storm Cut",{2,4,4,3},22,5,75,.88f,3,1,2,2,1.f}
     }};
     auto result=profiles[size_t(band)];
+    result.floor=floor;
+    result.stageStep=floor>0&&std::min(3,(floor-1)*4/floorCount)==band?1:0;
     result.boss=bossOnFloor(floor);
     return result;
 }

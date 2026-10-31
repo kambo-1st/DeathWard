@@ -1,5 +1,36 @@
 # Preserved Isaac research files
 
+The expanded [mechanics reference](../docs/reports/isaac-mechanics-reference-2026-10-25.html)
+adds a searchable catalog, detailed behavior/effect dossiers, item interaction
+index and implementation plan. Its [JSON dataset](../docs/research/isaac-mechanics-reference.json)
+and [CSV review queue](../docs/research/isaac-implementation-backlog.csv) are
+versionable. It is research for the next implementation step, not a claim that
+all mechanics have been ported.
+
+New revision-pinned wiki API responses, SHA-256 provenance sidecars, EID naming
+sources and a pinned REPENTOGON source snapshot are preserved in
+`reference/isaac-mechanics-study/`. That directory is gitignored and must be
+included separately in backups. The original game installation is unchanged.
+The public source snapshot is mod/API code, not the complete original Isaac
+source. Current wiki/Repentance+ statements remain distinguished from the local
+Repentance 1.7.9b numeric baseline.
+
+To rebuild the expanded report from the preserved inputs:
+
+```sh
+python3 -m venv reference/isaac-mechanics-study/venv
+reference/isaac-mechanics-study/venv/bin/pip install -r scripts/isaac-reference/requirements.txt
+reference/isaac-mechanics-study/venv/bin/python scripts/isaac-reference/compile.py
+reference/isaac-mechanics-study/venv/bin/python scripts/isaac-reference/enrich.py
+reference/isaac-mechanics-study/venv/bin/python scripts/isaac-reference/build.py
+reference/isaac-mechanics-study/venv/bin/python scripts/isaac-reference/validate.py
+```
+
+The collector and inventory builder are in `scripts/isaac-reference/`. Existing
+cached responses remain pinned; the rebuild above does not need network access
+once the Python dependency is installed. The generated validation records check
+data joins and hashes, not empirical gameplay parity.
+
 The [expedition study](../docs/isaac_expedition_study.md) and its
 [offline HTML edition](../docs/reports/isaac-expedition-study-2026-10-24.html)
 are the lasting report. The local source data used by that study is preserved at:

@@ -1,0 +1,152 @@
+DEATHWARD_MECHANICS 1
+# Pure pursuit, with no invented ranged attack or entity-ID temperament.
+behavior pursuing_body ready 24
+state ready ready chase 0 1
+endstate
+end
+
+# Rotten Gaper now uses its source-timed rotten_gapers.mechanics controller.
+
+# Small Maggot now uses its source-timed small_maggot controller.
+
+# Generic aimed-shooter graph for authored content. Horf now uses its own
+# source-timed head_shooter profile instead of these provisional timings.
+# behavior key initial-state acquisition-range
+behavior aimed_shooter ready 24
+# count angular-spacing-radians damage speed
+projectiles 1 0 10 9
+# state name presentation motion duration-seconds|windup incoming-damage-scale
+state ready ready still 0 1
+transition fire attack_ready 0
+endstate
+state fire windup still windup 1
+enter lock_target
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+
+# Pacer and Gusher now use the source-timed headless.mechanics controller.
+
+# These drift slowly instead of chasing/stopping at a fixed player distance.
+behavior drifting_pooter ready 24
+projectiles 1 0 10 9
+wander 0.7 1.8
+state ready ready wander 0 1
+motion_speed 0.25
+transition fire attack_ready 0
+endstate
+state fire windup wander windup 1
+motion_speed 0.25
+enter lock_target
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+
+behavior drifting_super_pooter ready 24
+projectiles 2 0.44 10 9
+wander 0.7 1.8
+state ready ready wander 0 1
+motion_speed 0.25
+transition fire attack_ready 0
+endstate
+state fire windup wander windup 1
+motion_speed 0.25
+enter lock_target
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+
+# Clotty family: fixed room axes, independent of the player and wandering heading.
+# Timing, speeds, the .12-radian offset and .9-rad/s curvature are DW tuning.
+# Ember is presentation only; the source does not establish a ground-fire patch.
+behavior wandering_clotty ready 24
+projectiles 4 0 10 9
+projectile_pattern radial 0
+projectile_kind bullet
+wander 0.7 1.8
+state ready ready wander 0 1
+transition fire cooldown_ready 0
+endstate
+state fire windup wander windup 1
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+
+behavior wandering_clot ready 24
+projectiles 4 0 10 9
+projectile_pattern radial 0.7853981634
+projectile_kind tar
+projectile_life 1.2
+wander 0.7 1.8
+state ready ready wander 0 1
+transition fire cooldown_ready 0
+endstate
+state fire windup wander windup 1
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+
+behavior wandering_iblob ready 24
+projectiles 8 0 10 9
+projectile_pattern radial 0
+projectile_kind bullet
+wander 0.7 1.8
+state ready ready wander 0 1
+transition fire cooldown_ready 0
+endstate
+state fire windup wander windup 1
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+
+behavior wandering_grilled ready 24
+projectiles 4 0 10 9
+projectile_pattern radial 0.12
+projectile_kind ember
+wander 0.7 1.8
+state ready ready wander 0 1
+transition fire cooldown_ready 0
+endstate
+state fire windup wander windup 1
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+
+behavior wandering_cloggy ready 24
+projectiles 4 0 10 9
+projectile_pattern radial 0
+projectile_kind brown
+projectile_curve 0.9 alternate
+wander 0.7 1.8
+state ready ready wander 0 1
+transition fire cooldown_ready 0
+endstate
+state fire windup wander windup 1
+enter warning
+exit fire
+exit reset_cooldown
+transition ready timer 0
+endstate
+end
+

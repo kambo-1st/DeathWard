@@ -1,0 +1,14 @@
+DEATHWARD_MECHANICS 1
+# Tuff Twins: per-segment source HP 35 -> local 112, independent armor remains 15.
+monster 19.2.0 "Tuff Twins" Chain None Worm 112 1.8 .65 5 0 2 0 1 0 0 legacy
+# id chains segments minimum-new-chain supplier suppliers spacing armor blast-near blast-far speed exposed-speed-bonus turn-min turn-max contact
+boss_chain 19.2.0 2 6 3 809.0.0 2 1.55 15 .25 .14 1.8 .8 1.2 3.4 10
+# id armored-child exposed-child head-interval room-child-limit max-burst body-interval body-shots shot-speed shot-damage
+boss_chain_attacks 19.2.0 61.3.0 61.0.0 5 4 2 3 7 7.5 10
+# Mines analogue: standard Broken Quarry only, excluding the flooded Caves variant.
+boss_pool 1 19.2.0 normal 2 standard
+# Pursuing flyers use four cardinal/ordinal death shots, with local dimensions.
+# id angle shot-speed damage creep-radius duration creep-damage (0 = slowing black creep)
+# No Tar projectiles: Ink's black creep appears at its death position.
+death_cross 61.0.0 0 8 10 0 0 0
+death_cross 61.3.0 .7853981634 8 10 2 4 0

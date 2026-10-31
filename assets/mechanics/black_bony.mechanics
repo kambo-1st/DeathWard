@@ -1,0 +1,51 @@
+DEATHWARD_MECHANICS 1
+# Exact tuple277.0, not Bony227.1 (Holy). Same source HP8+2stage as normal Bony.
+monster 277.0.0 "Black Bony" Wander Shot Skull 32 3.75 .65 .016666667 .133333333 4 0 1 0 1 black_bony_burst
+stage_health 277.0.0 8 2 3.2
+# Installed BombDamage:40native damage,60native radius, line-check=true.
+# Local damage x3.2/radius x.1; player damage20 before current hostile multiplier.
+death_blast 277.0.0 128 20 6
+
+# Each13-frame animation finishes before repeating. Three Shoot events at4,17,30
+# native frames; current-target aim on each. No extra alignment check mid-burst.
+behavior black_bony_burst ready 20
+projectiles 1 0 10 30
+projectile_kind dark_bone
+projectile_aim player
+projectile_life 5
+aimed_alignment 2 .1 .533333333
+wander .7 1.8
+state ready ready axis_wander 0 1
+transition throw1 aligned_attack_ready 0
+endstate
+state throw1 windup still .133333333 1
+enter lock_target
+enter warning
+exit fire
+transition recover1 timer 0
+endstate
+state recover1 ready still .3 1
+transition throw2 timer 0
+endstate
+state throw2 windup still .133333333 1
+enter lock_target
+exit fire
+transition recover2 timer 0
+endstate
+state recover2 ready still .3 1
+transition throw3 timer 0
+endstate
+state throw3 windup still .133333333 1
+enter lock_target
+exit fire
+transition recover3 timer 0
+endstate
+state recover3 ready still .3 1
+transition ready timer 0
+endstate
+end
+
+# Rare Mines/Ashpit analogue; main Depths/Sheol routes in later bands.
+encounter 1 1 crossfire specialist 277.0.0 1 4 1 1 standard
+encounter 2 3 crossfire specialist 277.0.0 1 4 1
+encounter 2 3 supply_guard specialist 277.0.0 1 4 1

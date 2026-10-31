@@ -1,0 +1,10 @@
+DEATHWARD_MECHANICS 1
+# Source body HP 35 -> local 112. Heads are invulnerable and excluded from aggregate HP.
+monster 19.3.0 "The Shell" Chain None Worm 112 3.5 .65 5 0 2 1 1 0 0 legacy
+# id chains parts promotion-min supplier count spacing armor speed exposed-slowdown steer-range turn-rate flesh-speed settling-speed contact
+boss_shell 19.3.0 2 5 3 809.0.0 2 1.55 15 3.5 .6 6 .35 .8 5 10
+# id tail-child spawn-interval room-child-cap middle-interval shot-speed spread damage
+# Timings/speeds/cap are local tuning, not measured native values.
+boss_shell_attacks 19.3.0 819.0.0 5 4 2.8 8 .22 10
+# Ashpit analogue: standard Broken Quarry, dedicated doubled arena.
+boss_pool 1 19.3.0 normal 1 standard

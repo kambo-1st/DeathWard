@@ -1,0 +1,49 @@
+DEATHWARD_MECHANICS 1
+# Repentance 1.7.9b ordinary statuses, source frames at 30 Hz.
+# status_effects ID additive-cap refresh-period confusion-radius
+# freeze_effect ID additive-cap passive-velocity-retention (AI and animation pause)
+# slow_effect ID actor-time-scale shot-time-scale negative-duration-refresh
+# shrink_effect ID additive-cap target-visual-scale approach-per-source-update
+# charm_effect ID target-period range squared-charmed-penalty contact-period health-scale contact-offset divisor gain NPC-shot-damage
+# Temporary Charm only; permanent negative-duration conversion remains unsupported.
+# damage_status ID poison|burn cap period first-tick minimum-damage (DeathWard HP)
+# fear_motion ID scale seen-range hidden-range check-period memory outer-friction wander-force wander-friction path-force alert-friction
+status_effects 10.0.0 120 15 24
+charm_effect 10.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 10.0.0 120 .01
+slow_effect 10.0.0 .5 .5 2
+shrink_effect 10.0.0 150 .333 .166666667
+damage_status 10.0.0 poison 120 20 2 6.4
+damage_status 10.0.0 burn 120 20 2 6.4
+fear_motion 10.0.0 .1 25 17 14 3 .8 .5 .9 1.079 1
+status_effects 10.1.0 120 15 24
+charm_effect 10.1.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 10.1.0 120 .01
+slow_effect 10.1.0 .5 .5 2
+shrink_effect 10.1.0 150 .333 .166666667
+damage_status 10.1.0 poison 120 20 2 6.4
+damage_status 10.1.0 burn 120 20 2 6.4
+fear_motion 10.1.0 .1 25 17 14 3 .8 .5 .9 1.079 1
+status_effects 11.0.0 120 15 24
+charm_effect 11.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 11.0.0 120 .01
+slow_effect 11.0.0 .5 .5 2
+shrink_effect 11.0.0 150 .333 .166666667
+damage_status 11.0.0 poison 120 20 2 6.4
+damage_status 11.0.0 burn 120 20 2 6.4
+fear_motion 11.0.0 .1 25 17 14 3 .75 .5 .9 1.079 .8
+status_effects 11.1.0 120 15 24
+charm_effect 11.1.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 11.1.0 120 .01
+slow_effect 11.1.0 .5 .5 2
+shrink_effect 11.1.0 150 .333 .166666667
+damage_status 11.1.0 poison 120 20 2 6.4
+damage_status 11.1.0 burn 120 20 2 6.4
+fear_motion 11.1.0 .1 25 17 14 3 .75 .5 .9 1.079 .8
+status_effects 12.0.0 120 15 24
+charm_effect 12.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 12.0.0 120 .01
+slow_effect 12.0.0 .5 .5 2
+shrink_effect 12.0.0 150 .333 .166666667
+damage_status 12.0.0 poison 120 20 2 6.4
+damage_status 12.0.0 burn 120 20 2 6.4

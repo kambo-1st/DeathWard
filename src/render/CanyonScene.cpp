@@ -77,7 +77,7 @@ void WesternScene::generateCanyon(const Arena &arena) {
         return;
     const auto &field = *arena.canyon;
     terrainField_ = arena.canyon;
-    water_.prepare(field);
+    water_.prepare(field,arena.rails?&arena.rails->bounds:nullptr);
     const auto fragment = withPlayerOcclusion(
         MissionLighting::withShadows(GroundSurface::withDetail(TerrainFragment).c_str()).c_str());
     terrainShader_ = loadWorldShader(TerrainVertex, fragment.c_str());

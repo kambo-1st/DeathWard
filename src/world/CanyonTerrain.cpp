@@ -30,17 +30,20 @@ struct TrailSegment {
 };
 } // namespace
 
-Vector3 CanyonTerrain::vertex(int ix, int iz) const {
-    return {x + float(ix) * step, heights[size_t(iz * width + ix)], z + float(iz) * step};
+Vector3 CanyonTerrain::vertex(int ix, int iz, bool boundaryOnly) const {
+    const auto index=size_t(iz * width + ix);
+    const float h=boundaryOnly && boundaryHeights.size()==heights.size() ?
+        std::min(heights[index],boundaryHeights[index]) : heights[index];
+    return {x + float(ix) * step, h, z + float(iz) * step};
 }
-float CanyonTerrain::height(float px, float pz) const {
+float CanyonTerrain::height(float px, float pz, bool boundaryOnly) const {
     const float gx = (px - x) / step, gz = (pz - z) / step;
     const int ix = int(std::floor(gx)), iz = int(std::floor(gz));
     if (ix < 0 || iz < 0 || ix >= width - 1 || iz >= depth - 1)
         return 20;
     const float u = gx - ix, v = gz - iz;
-    const float a = heights[size_t(iz * width + ix)], b = heights[size_t(iz * width + ix + 1)],
-                c = heights[size_t((iz + 1) * width + ix)], d = heights[size_t((iz + 1) * width + ix + 1)];
+    const float a=vertex(ix,iz,boundaryOnly).y,b=vertex(ix+1,iz,boundaryOnly).y,
+                c=vertex(ix,iz+1,boundaryOnly).y,d=vertex(ix+1,iz+1,boundaryOnly).y;
     return u >= v ? a + u * (b - a) + v * (d - b) : a + v * (c - a) + u * (d - c);
 }
 bool CanyonTerrain::blocked(Vector3 p, float radius) const {
@@ -54,7 +57,7 @@ bool CanyonTerrain::blocked(Vector3 p, float radius) const {
     }
     return false;
 }
-SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius) const {
+SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius, bool boundaryOnly) const {
     const auto direction = sub(to, from);
     const auto volume =
         segmentBox(from, to, {{x, -10000, z}, {x + (width - 1) * step, 10000, z + (depth - 1) * step}});
@@ -64,9 +67,9 @@ SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius) const {
     const auto start = add(from, mul(direction, begin));
     int ix = std::clamp(int(std::floor((start.x - x) / step)), 0, width - 2);
     int iz = std::clamp(int(std::floor((start.z - z) / step)), 0, depth - 2);
-    if (height(start.x, start.z) > start.y - radius) {
+    if (height(start.x, start.z, boundaryOnly) > start.y - radius) {
         const Vector3 normal =
-            unit(cross(sub(vertex(ix, iz + 1), vertex(ix, iz)), sub(vertex(ix + 1, iz), vertex(ix, iz))));
+            unit(cross(sub(vertex(ix, iz + 1,boundaryOnly), vertex(ix, iz,boundaryOnly)), sub(vertex(ix + 1, iz,boundaryOnly), vertex(ix, iz,boundaryOnly))));
         return {true, volume.t, normal};
     }
     const int sx = direction.x >= 0 ? 1 : -1, sz = direction.z >= 0 ? 1 : -1;
@@ -95,8 +98,8 @@ SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius) const {
             if (edge(a, b) >= -margin && edge(b, c) >= -margin && edge(c, a) >= -margin)
                 best = {true, t, normal};
         };
-        const auto a = vertex(ix, iz), b = vertex(ix + 1, iz), c = vertex(ix, iz + 1),
-                   d = vertex(ix + 1, iz + 1);
+        const auto a = vertex(ix, iz,boundaryOnly), b = vertex(ix + 1, iz,boundaryOnly), c = vertex(ix, iz + 1,boundaryOnly),
+                   d = vertex(ix + 1, iz + 1,boundaryOnly);
         triangle(a, d, b);
         triangle(a, c, d);
         if (best.hit)
@@ -248,6 +251,7 @@ void buildCanyon(Arena &arena, bool river) {
             });
     }
     field->heights.resize(size_t(field->width * field->depth));
+    field->boundaryHeights.resize(field->heights.size());
     // Broad, planar cap facets subdivide exactly onto the collision lattice.
     // A separate stream keeps this surface detail independent of trails/cover.
     Random capRng(arena.visualSeed ^ 0x4d45534143415053ULL);
@@ -298,6 +302,7 @@ void buildCanyon(Arena &arena, bool river) {
                     height = std::lerp(height, -1.65f, channel);
                 }
             }
+            field->boundaryHeights[size_t(z * field->width + x)] = height;
             for (const auto &r : rocks) {
                 const auto local = rotateY(sub(p, r.center), r.angle);
                 const float u = local.x / r.rx, v = local.z / r.rz;

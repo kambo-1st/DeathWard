@@ -1,0 +1,47 @@
+DEATHWARD_MECHANICS 1
+# Stable IDs: package:kind:number. Native hooks execute through the bounded event queue.
+item "dw:collectible:0" "Ricochet Coin" "COMMON" "Bullets bounce three times per copy. Body piercing survives a bank shot."
+end
+
+item "dw:collectible:1" "Split Lead" "STRANGE" "Hits split into two smaller shots. Fragments share the remaining lifetime and chain budget."
+hook split per_copy
+end
+
+item "dw:collectible:2" "Judas Bullet" "CURSED" "Every sixth primary shot gains six pierces per copy. Lose 20% maximum health per copy."
+pickup_health 0.8 10
+end
+
+item "dw:collectible:3" "Powder of Jericho" "STRANGE" "Kills explode; explosion kills can explode again. Free blasts cannot open hard cover."
+hook powder per_copy
+end
+
+item "dw:collectible:4" "Hangman's Coin" "STRANGE" "Repeat the killing projectile's original specification. Blast damage never increases ghost damage."
+hook ghost per_copy
+end
+
+item "dw:collectible:5" "Scatter Cylinder" "STRANGE" "A short fan of weak pellets. Rail makes three heavier spikes. Copies add pellets, up to nine."
+end
+
+item "dw:collectible:6" "Rail Spike" "STRANGE" "Heavy, slower piercing shots with a slower cadence. Copies add weight and pierces, up to five copies."
+end
+
+item "dw:collectible:7" "Lodestone Sight" "STRANGE" "Slower shots bend toward visible enemies. Each fragment seeks independently. Copies improve turning, up to four."
+end
+
+item "dw:collectible:8" "Return Spring" "STRANGE" "Short shots return to you. One body per leg; piercing adds targets. Outbound bounces only. Copies extend reach, up to four."
+end
+
+item "dw:collectible:9" "Blasting Cap" "DANGEROUS" "Lower bullet damage; the first body hit explodes once and can hurt you. Copies strengthen the blast and risk, up to four."
+hook cap once
+end
+
+item "dw:collectible:10" "Fuse Braid" "DANGEROUS" "Smaller dynamite blast leaves two weaker delayed charges. They can strike cover again. Copies add power and fuse time, up to four."
+end
+
+item "isaac:collectible:433" "My Shadow" "STRANGE" "A trailing shadow spawns allied Chargers when enemies touch it. Up to sixteen allies; they last for this room."
+end
+
+# Enemy-interaction dependency only. No natural pool until its other fly effects
+# are implemented; existing loadouts and reward distributions remain unchanged.
+item "isaac:collectible:9" "Skatole" "STRANGE" "Pooters and Super Pooters stop shooting."
+end

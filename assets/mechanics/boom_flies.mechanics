@@ -1,0 +1,59 @@
+DEATHWARD_MECHANICS 1
+# Repentance 1.7.9b source baseHP=8, stageHP=3. Local conversion x3.2.
+# The monster HP column is the stage-one fallback; the controller uses source-stage HP.
+monster 25.0.0 "Boom Fly" Bounce None Fly 35.2 2.6 .55 2 0 2 1 1 0 1 legacy
+monster 25.1.0 "Red Boom Fly" Bounce None Fly 35.2 2.6 .55 2 0 2 1 1 0 1 legacy
+monster 25.2.0 "Drowned Boom Fly" Bounce None Fly 35.2 2.6 .55 2 0 3 1 1 0 1 legacy
+monster 25.3.0 "Dragon Fly" Bounce None Fly 35.2 2.6 .55 2 0 3 1 1 0 1 legacy
+monster 25.3.1 "Dragon Fly X" Bounce None Fly 35.2 2.6 .55 2 0 3 1 1 0 1 legacy
+monster 25.4.0 "Bone Fly" Bounce None Fly 35.2 2.6 .55 2 0 3 1 1 0 1 legacy
+monster 25.5.0 "Sick Boom Fly" Bounce None Fly 35.2 2.6 .55 2 0 3 1 1 0 1 legacy
+# Ascent-only: no ordinary placement. Source shieldStrength=10 needs adaptive damage scaling.
+monster 25.6.0 "Tainted Boom Fly" Bounce None Fly 64 2.6 .65 2 0 4 1 1 0 0 legacy
+stage_health 25.0.0 8 3 3.2
+stage_health 25.1.0 8 3 3.2
+stage_health 25.2.0 8 3 3.2
+stage_health 25.3.0 8 3 3.2
+stage_health 25.3.1 8 3 3.2
+stage_health 25.4.0 8 3 3.2
+stage_health 25.5.0 8 3 3.2
+
+# id kind contact-damage blast-enemy blast-player radius delay diagonal-lines
+# Movement speed, damage conversion, blast dimensions and timings are local tuning.
+# Blast damage 100 is NOT a recovered Boom Fly source value.
+boom_fly 25.0.0 normal 10 100 20 3 0 0
+boom_fly 25.1.0 red 10 0 0 3 0 0
+boom_fly 25.2.0 drowned 10 100 20 3 0 0
+boom_fly 25.3.0 dragon 10 0 0 3 0 0
+boom_fly 25.3.1 dragon 10 0 0 3 0 1
+boom_fly 25.4.0 bone 10 0 0 3 0 0
+boom_fly 25.5.0 sick 10 0 0 3 0 0
+boom_fly 25.6.0 tainted 20 100 20 3 .6 0
+# id death-count speed damage live-interval cardinal-alignment range
+boom_shots 25.1.0 6 8 10 2 .8 24
+boom_shots 25.2.0 4 8 10 2 .8 24
+boom_shots 25.4.0 3 9 10 2 .8 24
+boom_shots 25.5.0 6 8 10 2 .8 24
+# Child chance is unspecified by source; 50% is explicit local tuning.
+boom_child 25.2.0 23.1.0 5000
+# id trail-interval/radius/duration death-radius/duration spread line-range/step/delay field-damage
+boom_field 25.3.0 .6 .7 2.5 .7 4 2.25 30 1.25 .025 8
+boom_field 25.3.1 .6 .7 2.5 .7 4 2.25 30 1.25 .025 8
+boom_field 25.5.0 .6 .7 2.5 1.3 12 2.25 30 1.5 .065 8
+boom_field 25.6.0 .6 .7 2.5 1.3 12 2.25 100 2 .065 8
+
+# Source habitats projected onto reviewed local bands. Not every variant in every room.
+encounter 1 3 supply_guard specialist 25.0.0 2 3 2
+encounter 1 3 supply_guard specialist 25.1.0 1 3 1
+encounter 1 1 supply_guard specialist 25.2.0 1 4 1 1 flooded
+encounter 2 2 supply_guard specialist 25.2.0 1 4 1
+encounter 1 1 crossfire specialist 25.3.0 1 4 1 1 standard
+encounter 1 1 crossfire specialist 25.3.1 1 4 1 1 standard
+encounter 1 1 crossfire specialist 25.4.0 1 4 1 1 standard
+encounter 3 3 supply_guard specialist 25.5.0 1 4 1
+
+# Ordered variant passes: Red 9.49%; Flooded then replaces either source with 50% Drowned.
+# Dross is not a separate local context yet; its Red-replacement exclusion remains open.
+replace_monster 25.0.0 25.1.0 1 3 any 949 0 0
+replace_monster 25.0.0 25.2.0 1 1 flooded 5000 1 1
+replace_monster 25.1.0 25.2.0 1 1 flooded 5000 1 1

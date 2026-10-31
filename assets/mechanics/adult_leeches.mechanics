@@ -1,0 +1,16 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b Adult Leech. SourceHP90, no stageHP; walls-only body.
+monster 854.0.0 "Adult Leech" Wander None Worm 288 2.8 1.05 2 0 6 1 1 0 1 legacy
+stage_health 854.0.0 90 0 3.2
+# scale/contact/walk force+retention/heading chance/recovery retention/charge chance;
+# alignment/charge retention/initial gain/increment/max/range/steer deadzone+factor+cap;
+# impact minimum speed/dot/recoil/recovery frames/walk frames.
+adult_leech 854.0.0 .1 20 .7 .8 30 .9 3 30 .86 .5 .2 5 500 10 .12 2 10 .6 2.5 12 16
+# HP threshold/Y distance/chance/grid/pull/retention; Burrow duration/Sound/Hit;
+# hidden minimum/emerge chance; ChargeDown duration/Hit/Sound; follow force+retention/settle/free retention.
+adult_leech_burrow 854.0.0 .66 80 3 40 .3 .8 25 8 22 30 15 43 18 31 .8 .7 .7 .8
+# count/speed/gravity/height/up min+max/retention/radius/damage/life/origin offset.
+adult_leech_shot 854.0.0 wall 12 30 8.1 1.15 -.15 .15 .9 .22 10 8 .8
+adult_leech_shot 854.0.0 landing 10 24 3.6 1.15 -.15 .15 .9 .22 10 8 0
+# Corpse habitat; local weight/cost/cap are authored encounter decisions.
+encounter 3 3 charge_lane specialist 854.0.0 1 7 1

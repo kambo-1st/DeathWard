@@ -30,6 +30,9 @@ struct RoomLayout {
     RoomKind kind = RoomKind::Combat;
     StoryRoom story = StoryRoom::None;
     RoomService service = RoomService::None;
+    // Room-wide condition (e.g. a future Flush effect). A river crossing is
+    // not automatically a flooded room: dry banks must remain dry gameplay.
+    bool flooded = false;
     Vector3 reward{};
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;
@@ -56,7 +59,8 @@ struct KeyPickup {
 };
 enum class StoryPropKind { Cart, Crate, SplitRock, Rail, Timber };
 struct StoryProp { StoryPropKind kind; Box bounds; };
-enum class BreakableKind { CrackedRock, OreSeam, PowderBarrel, CacheGate, CacheSide };
+struct ScorchPatch { Vector3 position; float radius=1, angle=0; };
+enum class BreakableKind { CrackedRock, OreSeam, PowderBarrel, CacheGate, CacheSide, Dung };
 struct Breakable {
     uint64_t id = 0, lootSeed = 0;
     int room = 0;
@@ -66,6 +70,7 @@ struct Breakable {
     int health = 1;
     float fuse = -1;
     bool destroyed = false, paid = false;
+    int initialHealth = 1;
     bool solid() const { return !destroyed; }
 };
 struct SupplyCache {
@@ -78,6 +83,7 @@ struct Arena {
     MissionTheme theme = MissionTheme::Mine;
     FloorProfile profile;
     std::shared_ptr<CanyonTerrain> canyon;
+    std::optional<RailNetwork> rails;
     // Default construction provides an empty test arena; expeditions always supply a seed.
     Box bounds{{-15, -1, -15}, {15, 4, 15}};
     std::vector<RoomLayout> rooms = std::vector<RoomLayout>(RoomCount);
@@ -86,7 +92,13 @@ struct Arena {
     std::vector<KeyPickup> keys;
     int shopRoom = -1;
     std::vector<Box> floors, boundaryWalls, obstacles, walls;
+    // Solid actor footprints affect navigation, not world-ray hits. Projectiles
+    // still reach the actual hazard entity and its invulnerability/item hooks.
+    std::vector<Box> movementBodies;
+    std::vector<Box> flightWalls, flightCover;
+    bool flightCollisionPrepared = false;
     std::vector<StoryProp> storyProps, floorProps;
+    std::vector<ScorchPatch> scorchPatches, dampPatches;
     std::vector<Breakable> breakables;
     SupplyCache supplyCache;
     std::set<FloorCell> floorCells;
@@ -103,6 +115,7 @@ struct Arena {
     void dressFloor();
     void allocateServices();
     void prepareBossArena();
+    void prepareRailArena(int index=-1);
     void prepareBreakables(uint64_t seed);
     bool reservedSupplyCache(Vector3 point, float radius) const {
         return supplyCache.room >= 0 && sphereBox(point,radius,supplyCache.bounds);
@@ -114,6 +127,16 @@ struct Arena {
     bool clear(Vector3 from, Vector3 to, float radius) const;
     SegmentHit trace(Vector3 from, Vector3 to, float radius = 0) const;
     Vector3 move(Vector3 from, Vector3 delta, float radius) const;
+    bool flightBlocked(Vector3 point, float radius, int room) const;
+    bool flightClear(Vector3 from, Vector3 to, float radius, int room) const;
+    float flightHeight(Vector3 point, float radius) const;
+    Vector3 fly(Vector3 from, Vector3 delta, float radius, int room) const;
+    bool swimmingRoom(int room) const;
+    bool swimBlocked(Vector3 point, float radius, int room) const;
+    bool swimClear(Vector3 from, Vector3 to, float radius, int room) const;
+    Vector3 swim(Vector3 from, Vector3 delta, float radius, int room) const;
+    std::vector<Vector3> flightPath(Vector3 from, Vector3 target, float radius, int room) const;
     std::vector<Vector3> path(Vector3 from, Vector3 target, float radius) const;
+    std::vector<Vector3> swimPath(Vector3 from,Vector3 target,float radius,int room) const;
 };
 } // namespace dw

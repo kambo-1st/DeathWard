@@ -1,0 +1,44 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b; sourceHPx3.2, source30Hz events.
+monster 30.0.0 "Boil" Still Burst Blob 64 0 .4 1 1 1 0 0 0 1 legacy
+monster 30.1.0 "Gut" Still Lob Blob 64 0 .4 1 1 1 0 0 0 1 legacy
+monster 88.0.0 "Walking Boil" Wander Burst Blob 64 2 .4 1 1 1 0 1 0 1 legacy
+monster 88.1.0 "Walking Gut" Wander Lob Blob 64 2 .4 1 1 1 0 1 0 1 legacy
+monster 88.2.0 "Walking Sack" Wander Spawn Blob 64 2 .4 1 1 1 0 1 0 1 legacy
+stage_health 30.0.0 20 0 3.2
+stage_health 30.1.0 20 0 3.2
+stage_health 88.0.0 20 0 3.2
+stage_health 88.1.0 20 0 3.2
+stage_health 88.2.0 20 0 3.2
+# boil ID walking payload; HPscale initialHP growth retention healing;
+# chance farChance population; attack/event/shake frames; near/aim/jitter/scatter;
+# child; movement scale/friction/force/reach/arrival, contactDamage, throwHeight.
+# Walkers ignore the growth fields and begin at fullHP. Stationary Sack keeps
+# its backward-compatible sack profile in long_legs.mechanics (retention.64).
+boil 30.0.0 0 blood 3.2 7 .02 .8 1.2 50 4 8 24 12 26 23 25 2 7 10 0.0.0 .1 .75 0 40 3 0 -10
+boil 30.1.0 0 ipecac 3.2 7 .02 .8 1.2 50 4 8 24 12 26 23 25 2 7 10 0.0.0 .1 .75 0 40 3 0 -10
+boil 88.0.0 1 blood 3.2 7 .02 .8 1.2 50 4 8 24 12 26 23 25 2 7 10 0.0.0 .1 .75 .5 40 3 10 -30
+boil 88.1.0 1 ipecac 3.2 7 .02 .8 1.2 50 4 8 24 12 26 23 25 2 7 10 0.0.0 .1 .75 .5 40 3 10 -30
+boil 88.2.0 1 spider 3.2 7 .02 .64 1.2 50 4 8 24 12 26 23 25 2 7 10 85.0.0 .1 .75 .5 40 3 10 -30
+# shots min/max; planar speed/scatter; height/upmin/upmax/gravity;
+# aimed velocity multipliers; radius; blast radius/NPC damage/player damage.
+boil_projectiles 30.0.0 3 4 21 10.5 1.15 7.5 43.5 63.9 1 1 .15 0 0 10
+boil_projectiles 30.1.0 1 1 11.55 5.775 1.15 24.75 49.95 50.4 .6 1.6 .24 6 160 20
+boil_projectiles 88.0.0 3 4 21 10.5 1.15 7.5 43.5 63.9 1 1 .15 0 0 10
+boil_projectiles 88.1.0 1 1 11.55 5.775 1.15 24.75 49.95 50.4 .6 1.6 .24 6 160 20
+# Both native controllers filter hostile/environment explosions, while allowing
+# player/familiar/friendly/TNT damage. Ordinary fire and gunfire still hurt.
+source_immunity 30.0.0 0 1
+source_immunity 30.1.0 0 1
+source_immunity 30.2.0 0 1
+source_immunity 88.0.0 0 1
+source_immunity 88.1.0 0 1
+source_immunity 88.2.0 0 1
+# Positive source room-library habitats, mapped to local bands. Local weights;
+# native5.71%/1% substitutions are not inferred from the wiki and remain open.
+encounter 1 3 crossfire specialist 30.0.0 2 3 1
+encounter 1 2 supply_guard specialist 30.1.0 1 4 1
+encounter 0 2 pursuit specialist 30.2.0 1 3 1
+encounter 1 3 crossfire specialist 88.0.0 1 3 1
+encounter 1 2 supply_guard specialist 88.1.0 1 4 1
+encounter 0 2 pursuit specialist 88.2.0 1 3 1

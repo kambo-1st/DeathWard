@@ -27,6 +27,9 @@ struct CanyonTerrain {
     float x = 0, z = 0, step = 1.25f;
     int width = 0, depth = 0;
     std::vector<float> heights;
+    // Terrain before interior outcrops: flight still respects canyon boundaries.
+    // Queries also take the minimum with live heights so later fords/roads stay open.
+    std::vector<float> boundaryHeights;
     std::vector<std::vector<Vector3>> trails;
     CanyonRiverKind riverKind = CanyonRiverKind::None;
     std::vector<RiverPoint> river;
@@ -36,12 +39,12 @@ struct CanyonTerrain {
     std::vector<int> roadRooms, roadPassages;
     RoadSample roadSample(Vector3 p) const;
     RiverSample riverSample(Vector3 p) const;
-    float height(float px, float pz) const;
-    Vector3 vertex(int ix, int iz) const;
+    float height(float px, float pz, bool boundaryOnly = false) const;
+    Vector3 vertex(int ix, int iz, bool boundaryOnly = false) const;
     bool blocked(Vector3 p, float radius) const;
     bool waterBlocked(Vector3 p) const;
     bool waterClear(Vector3 from, Vector3 to, float radius) const;
-    SegmentHit trace(Vector3 from, Vector3 to, float radius = 0) const;
+    SegmentHit trace(Vector3 from, Vector3 to, float radius = 0, bool boundaryOnly = false) const;
 };
 void planCanyonRiver(const Arena &arena, CanyonTerrain &field);
 void connectInteriorRiver(Arena &arena, const std::vector<float> &dryHeights);

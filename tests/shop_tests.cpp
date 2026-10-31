@@ -19,7 +19,7 @@ void approach(Simulation &run) {
     check(run.shopOpen, "approaching and interacting opens the peaceful shop");
 }
 void generation() {
-    std::set<int> locations, items;
+    std::set<int> locations; std::set<ItemKey> items;
     for (auto theme : {MissionTheme::Mine, MissionTheme::Canyon})
         for (uint64_t seed : {0ULL, 1ULL, 42ULL, 1866ULL, 69175541ULL}) {
             Simulation a(seed, 1, {}, theme), b(seed, 2, {}, theme);
@@ -56,7 +56,7 @@ void generation() {
                           a.shopOffers[size_t(slot)].price == (slot == 0 ? 10 : 25),
                       "stock and prices reproduce from the seed");
                 if (slot)
-                    items.insert(int(a.shopOffers[size_t(slot)].item));
+                    items.insert(a.shopOffers[size_t(slot)].item);
             }
             approach(a);
             check(a.roomClear && a.rooms[size_t(shop)].cleared && a.enemies.empty(),

@@ -1,0 +1,113 @@
+DEATHWARD_MECHANICS 1
+# Reviewed behavior sources and open parity work: docs/research/isaac-enemy-port-status.json.
+# Thresholds use DeathWard HP. Reviewed source thresholds explicitly convert at
+# x3.2 below; remaining provisional families still document their local tuning.
+# Empty outcomes mean no child. Weights are independent of placement RNG.
+
+# Installed1.7.9b4f726c..4f72f9: same-entity morph, not death offspring.
+# Strict post-hit >-25nativeHP => >-80DWHP; the cap does not grow with maxHP.
+# One half die. Of successful ordinary/Frowning rolls, one third become Pacer
+# and two thirds Gusher. Flaming still draws modulo3 but always becomes Gusher.
+# Controller/state initialization evidence: reports/isaac-enemy-port/gaper/source.
+lethal_morph 10.0.0 11.0.0 5000 80 .666666667 1.3
+lethal_morph_roll 10.0.0 1 2
+lethal_morph_choice 10.0.0 11.1.0 1
+lethal_morph_choice 10.0.0 11.0.0 2
+lethal_morph 10.1.0 11.0.0 5000 80 .666666667 1.3
+lethal_morph_roll 10.1.0 1 2
+lethal_morph_choice 10.1.0 11.1.0 1
+lethal_morph_choice 10.1.0 11.0.0 2
+lethal_morph 10.2.0 11.0.0 5000 80 .666666667 1.3
+lethal_morph_roll 10.2.0 1 2
+lethal_morph_choice 10.2.0 11.0.0 3
+
+# Installed1.7.9b: four independent7:3:1draws, without Hive population scaling.
+# Source-10overkill converts by3.2; random offsets have no Hive minimum radius.
+death mulligan
+overkill -32
+population_offspring 4 0 0 0 0 .6
+outcome 7
+offspring 13.0.0 1 1 1
+endoutcome
+outcome 3
+offspring 18.0.0 1 1 1
+endoutcome
+outcome 1
+offspring 14.0.0 1 1 1
+endoutcome
+end
+death_for 16.0.0 mulligan
+
+# Installed source: ceil(4/(1+.2*room population)), then an independent
+# 7/11 Fly, 3/11 Attack Fly, 1/11 Pooter choice per child. Radius=max(2,U*6).
+# Source post-hit -20 HP converts consistently with source HP at x3.2.
+death hive
+overkill -64
+population_offspring 4 .2 0 0 .2 .6
+outcome 7
+offspring 13.0.0 1 1 1
+endoutcome
+outcome 3
+offspring 18.0.0 1 1 1
+endoutcome
+outcome 1
+offspring 14.0.0 1 1 1
+endoutcome
+end
+death_for 22.0.0 hive
+
+death drowned_hive
+overkill -64
+population_offspring 4 .2 1 2 .2 .6
+outcome 1
+offspring 23.1.0 1 1 .5
+endoutcome
+end
+death_for 22.1.0 drowned_hive
+
+death holy_mulligan
+overkill -20
+outcome 1
+offspring 77.0.0 1 2 1
+endoutcome
+end
+death_for 22.2.0 holy_mulligan
+
+# Ascent-only eligibility is still a dedicated encounter task. These death choices
+# cover the documented types; their weights/counts are explicitly local tuning.
+death tainted_mulligan
+overkill -20
+outcome 1
+offspring 13.0.0 1 1 1
+offspring 18.0.0 1 1 1
+offspring 61.0.0 1 1 1
+endoutcome
+outcome 1
+offspring 61.1.0 1 1 1
+offspring 61.3.0 1 1 1
+offspring 25.0.0 1 1 1
+endoutcome
+outcome 1
+offspring 13.0.0 1 1 1
+offspring 18.0.0 1 1 1
+offspring 25.1.0 1 1 1
+endoutcome
+end
+death_for 22.3.0 tainted_mulligan
+
+death moter
+overkill -20
+offspring_layout perpendicular 1
+outcome 1
+offspring 18.0.0 2 2 1
+endoutcome
+end
+death_for 80.0.0 moter
+
+# id health-retention goo-fraction delay minimum-max-health split-limit
+# Sources establish weakening, regeneration and bounded splitting, not these
+# exact fractions, times or split limit. Those are DeathWard tuning values.
+regrowth 24.0.0 0.8 0.25 2.5 12 0
+regrowth 24.1.0 0.8 0.25 2.5 12 0
+regrowth 24.2.0 0.8 0.25 2.5 12 0
+regrowth 24.3.0 0.7 0.3 1.5 12 3

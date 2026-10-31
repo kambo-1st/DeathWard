@@ -17,3 +17,4 @@ __pycache__/
 
 # Local Isaac research inputs; report, measurements and instructions remain versionable.
 /reference/isaac-repentance-1.7.9b/
+/reference/isaac-mechanics-study/

@@ -276,7 +276,7 @@ Generated floors now have soft sand/dirt color patches, fine grain, tiny gravel 
 
 **Enemies are already present before you enter.** Mission startup prepares every room's seeded group, and nearby rooms render their occupants with idle breathing, bobbing and creature animations. They ignore you in corridors; crossing the room threshold starts combat with those same enemies, without respawning or relocating them. Idle animation does not advance attack timers or create offspring. Hidden residents use the existing enemy outlines.
 
-**The starting room is always enemy-free**, with open passages from the moment you enter. It counts toward the limit of 1–2 ordinary rooms with no enemies; the seed may choose one additional quiet room, separate from the peaceful power rooms and shop. These quiet rooms have open passages, no enemies or power pedestal, and may contain a key. The miners, altar and boss retain their encounters.
+**The starting room is always enemy-free**, with open passages from the moment you enter. It counts toward the limit of 1–2 ordinary rooms with no enemies; each non-tutorial floor has a 20% seeded chance of one additional quiet room, separate from the peaceful power rooms and shop. An optional service room can use that extra quiet slot instead. These quiet rooms have open passages, no enemies or power pedestal, and may contain a key. The miners, altar and boss retain their encounters.
 
 **The room network grows from the seed**: two or three starting routes, variable branch lengths and junctions, dead ends, and zero to three loops. Boss and power rooms attach at branch ends instead of fixed corners. Room spacing also varies, producing different corridor lengths. Click **New Mission** or press **N in the station menu** to choose a new seed; keeping the same seed deliberately reproduces the same layout.
 
@@ -292,7 +292,7 @@ Mine rooms have different dimensions (20–28 units per side on Compact opening 
 
 **Money appears on room floors and sometimes drops from defeated enemies.** Ground piles follow the mission seed, with 1–2 piles in the starting room and up to four in larger rooms. Each pile is worth 1–5 coins; ordinary enemies and bosses have a 35% drop chance. Walk over a pile or click it to approach and collect it. Enemy drops bounce briefly before collection. The wallet is shown beside the mission map and in all three hubs; collected money stays with the campaign after any mission outcome, including retreat or defeat. Run history records earnings. Summoned offspring, friendly creatures and permanent hazards do not drop money, and saves from before the money feature start with a zero wallet.
 
-**Each non-tutorial floor has one enemy-free shop, marked S on the map.** Its location and two different power-ups follow the floor seed. Click the shopkeeper at the counter to approach and trade, or use the nearby **Trade** button. Field Medicine restores up to 40 HP for 10 coins; each power-up costs 25 coins. Each offer can be bought once per floor, and medicine cannot be purchased at full health. Trading pauses the mission; click **Leave Shop** or press Escape to continue. The shop is reachable without a key. Purchases checkpoint immediately, and spending stays deducted after victory, retreat, defeat or interrupted-run recovery. Bought powers last for the current expedition. Existing wallets are preserved when upgrading saves.
+**Each non-tutorial floor has one enemy-free shop, marked S on the map.** Its location and two different power-ups follow the floor seed. Each shop or service room has at most one trader. Field Surgeons cannot appear on floors 1–3; they become eligible on floor 4. Click the shopkeeper at the counter to approach and trade, or press **E / Enter** while nearby. Field Medicine restores up to 40 HP for 10 coins; each power-up costs 25 coins. Each offer can be bought once per floor, and medicine cannot be purchased at full health. Trading pauses the mission; click **Leave Shop** or press Escape to continue. The shop is reachable without a key. Purchases checkpoint immediately, and spending stays deducted after victory, retreat, defeat or interrupted-run recovery. Bought powers last for the current expedition. Existing wallets are preserved when upgrading saves.
 
 **Dynamite starts at three charges per expedition and defaults to ground placement.** Press **B** or click **Dynamite** above the health bar to put a charge at your feet. It stays on the ground and explodes after a two-second fuse, giving you time to move away. The cursor does not choose the placement location.
 
@@ -310,7 +310,7 @@ The shop sells one **three-charge refill pack for 15 coins**, with a carrying li
 
 **Golden doors require one key.** Keys appear at seeded locations in combat rooms after those rooms are cleared, or immediately upon entering a quiet room; left-click a key or walk over it to collect it. Keys are consumed when unlocking a power room or the boss room. Unlocks persist for the run. All keys are placed in the connected area accessible without spending a key, and there are enough for every lock, so choosing a power room first cannot make the boss unreachable.
 
-The camera follows you through corridors. The mission map shows branches, your position, keys carried, and free powers claimed: **P** marks a power room, **E** an enemy-free room, **S** the shop, **B** the boss, **?** a story site, and **K** a discovered, uncollected key. Red gates are sealed for combat, golden gates need a key, and green gates are open. After clearing the final room, a pulsing teal exit beacon and a large **NEXT FLOOR** marker show where to continue; on the last floor the marker says **RETURN TO FORT/HUB**. The marker remains visible through scenery and stays within the screen at close zoom. Click it to approach, or walk to the beacon and press **E / Enter**. An amber **EXIT LOCKED** marker explains any required evidence or tutorial records still missing. Boss rewards are optional. The minimap marks an available exit with **>**. The HUD keeps the floor count visible and briefly shows the room name on entry. Pause shows the room index, seed and elapsed time. Owned powers use a compact icon strip; click an icon or press Tab for descriptions and stack counts. Nearby interactions appear only when available, and lit-powder warnings take priority over routine notifications. Expedition length and reward balance still need human playtesting.
+The camera follows you through corridors. The mission map shows branches, your position, keys carried, and free powers claimed: **P** marks a power room, **E** an enemy-free room, **S** the shop, **B** the boss, **?** a story site, and **K** a discovered, uncollected key. Red gates are sealed for combat, golden gates need a key, and green gates are open. After clearing the final room, a pulsing teal exit beacon and a large **NEXT FLOOR** marker show where to continue; on the last floor the marker says **RETURN TO FORT/HUB**. The marker remains visible through scenery and stays within the screen at close zoom. Click it to approach, or walk to the beacon and press **E / Enter**. An amber **EXIT LOCKED** marker explains any required evidence or tutorial records still missing. Boss rewards are optional. The minimap marks an available exit with **>**. The HUD briefly shows the room name on entry. The expedition details in Pause show the floor identity, floor and room counts, seed and elapsed time. Owned powers use a compact icon strip; click an icon or press Tab for descriptions and stack counts. Use world clicks or E/Enter for nearby interactions; there is no interaction button on the HUD. Lit-powder warnings take priority over routine notifications. Expedition length and reward balance still need human playtesting.
 
 | Control | Action |
 | --- | --- |
@@ -329,7 +329,7 @@ The camera follows you through corridors. The mission map shows branches, your p
 | B / Dynamite button | Place a charge at your feet (default mode) |
 | C / Place / Throw button | Switch between ground placement and optional throwing |
 | Walk into lit dynamite | Automatically nudge it a short distance |
-| E / Enter / nearby interaction button | Open or unlock a nearby door, examine evidence, use a shop or reward, or continue through the floor exit |
+| E / Enter | Open or unlock a nearby door, examine evidence, use a shop or reward, or continue through the floor exit |
 | 1 / 2 | Choose one item at a power-room pedestal |
 | 1 / 2 / 3 / 4 in the shop | Buy medicine / first power / second power / dynamite pack |
 | Escape in the shop | Close trade and return to play |
@@ -342,7 +342,7 @@ The camera follows you through corridors. The mission map shows branches, your p
 | J / Journal button | Read recovered claims, observations and open questions |
 | L | Reread Eleanor's letter after recovering it |
 
-Start each expedition with **100 HP** and **24 revolver damage**. Enemy kills, room clears and room entry provide no automatic healing. The revolver fires continuously while holding an enemy, an arrow key, Shift + LMB, or RMB; there is no reload action or reload pause. The six-round display tracks the next shot in a repeating cycle, so every sixth shot still triggers last-round effects. Judas Bullet still costs 20% of maximum health per copy.
+Start each expedition with **100 HP** and **24 revolver damage**. Enemy kills, room clears and room entry provide no automatic healing. The revolver fires continuously while holding an enemy, an arrow key, Shift + LMB, or RMB; there is no reload action or reload pause. The repeating six-shot cycle still triggers last-round effects, without an ammunition display on the HUD. Judas Bullet still costs 20% of maximum health per copy.
 
 Both enemy rosters now deal **25% more damage**, move **10% faster during ordinary movement**, and have **15% shorter attack cooldowns**. A former 10-damage hit now deals 12.5. The mine's Sheriff shares this tuning. Attack warnings, projectile speeds, committed charges/jumps, enemy health and the player's dodge/hurt protection retain their existing values; mirror movement, orbit positioning and friendly monsters retain their original movement behavior.
 
@@ -352,7 +352,7 @@ Left-click follows the contextual move/attack/interact pattern in [Blizzard's Di
 
 Arrow keys also fire during missions, independently of the cursor. Hold an arrow while moving with WASD to strafe, or hold two adjacent arrows for diagonal fire. Opposite arrows cancel each other. Arrow aiming takes priority over mouse aiming while held, follows camera rotation, and works with the cursor over the HUD. Release the arrows to return to mouse aiming. Menus and dynamite placement/targeting block gunfire. Release menu-navigation arrows before firing again after closing a panel.
 
-Left-click the miners, altar, a key, a power pedestal, the shopkeeper, a doorway, or the return lantern to approach and use it. Nearby interactions, dodge and pause also have clickable buttons, so the expedition is playable with a two-button mouse.
+Left-click the miners, altar, a key, a power pedestal, the shopkeeper, a doorway, or the return lantern to approach and use it. Dodge, dynamite and pause have clickable buttons, so the expedition is playable with a two-button mouse.
 
 Hold the middle mouse button and drag to orbit the camera in town or a mission. Horizontal dragging rotates around the character; vertical dragging tilts between 25 and 75 degrees above the ground. Release to keep that angle. WASD follows the current camera direction, and ground clicks use the rotated view. Start the drag over the world; HUD controls and open menus do not start camera gestures.
 
@@ -413,7 +413,7 @@ Combinations follow explicit rules independent of acquisition order. Split inher
 | F4 / F5 | Spawn 20 / 100 enemy roots from the current mission's roster, plus attached companions |
 | Comma / period | Select the previous / next monster ID |
 | Shift + F4 | Spawn the selected monster on safe floor for testing |
-| F6 / Shift + F6 | Grant all eleven items / add three keys |
+| F6 / Shift + F6 | Grant all loaded items / add three keys |
 | F7 | Start or replay the final encounter: seeded guardian in modern Canyon, Isaac group in Classic, Sheriff/follow-up in Mine |
 | F8 / F9 | Finish successfully / die |
 | F10 | Toggle 3D collision volumes and projectile paths |
@@ -437,6 +437,1214 @@ One checksummed, versioned snapshot contains world state, pending-run metadata a
 
 Room-network growth, room geometry, per-room enemy composition/placement, reward and combat RNG streams are independent. Room populations and types do not depend on visitation order. Spawn positions reproduce when entering from the same position; a different entrance can adjust placements to keep the player safe. The same seed and content version reproduce the complete map; power-room offers are fixed per room, while initial campaign state and relevant choices also determine encounter setup. Full combat input replay is not implemented. History records the version, seed and starting world context, along with the lost build, counters and consequences.
 
+## Editable mechanics
+
+Gameplay definitions load from [`assets/mechanics`](assets/mechanics) at startup.
+The current eleven Western powers, My Shadow and 216 monster definitions use this
+registry. These remain DeathWard adaptations; the research catalog has **not**
+been imported wholesale or certified as exact Isaac behavior.
+
+| File | Editable values |
+| --- | --- |
+| [`items.mechanics`](assets/mechanics/items.mechanics) | Stable item keys, names, descriptions, pickup health costs and native effect subscriptions |
+| [`builds.mechanics`](assets/mechanics/builds.mechanics) | Damage, projectile speed/lifetime/radius, homing, returning shots, blast values, piercing, ricochets, pellet count, cadence, copy limits and conditional combinations |
+| [`pools.mechanics`](assets/mechanics/pools.mechanics) | Armory, shop, boss and bargain item weights for the canyon progression preset |
+| [`encounters.mechanics`](assets/mechanics/encounters.mechanics) | Floor-band eligibility, weighted enemy roles, threat costs and per-room limits |
+| [`monsters.mechanics`](assets/mechanics/monsters.mechanics) | HP, speed, collision radius, attack cooldown, windup, eligibility, legacy movement/attack/appearance choices and behavior graph selection |
+| [`behaviors.mechanics`](assets/mechanics/behaviors.mechanics) | Named enemy states, movement, vulnerability, attack patterns, transitions and enter/exit actions |
+| [`rotten_gapers.mechanics`](assets/mechanics/rotten_gapers.mechanics) | Source-timed Rotten subtype selection, force-based pursuit, brood spawning/avoidance and orbit steering |
+| [`horf.mechanics`](assets/mechanics/horf.mechanics) | Horf health, opening-band placement, acquisition interval, attack/Shoot/cooldown frames, range and projectile values |
+| [`buzz_flies.mechanics`](assets/mechanics/buzz_flies.mechanics) | Fly/Pooter/Attack Fly forces, shot timing, item and dung morphs, live-summon contact policy and seeded destructible dung |
+| [`evaders.mechanics`](assets/mechanics/evaders.mechanics) | Hive/Drowned Hive fleeing, population-sensitive spawning, animation events and Flooded replacement |
+| [`nest.mechanics`](assets/mechanics/nest.mechanics) | Nest fleeing, randomized spit cooldown, live-spider contact expiry and Trite/Big Spider death choice |
+| [`black_globin.mechanics`](assets/mechanics/black_globin.mechanics) | Black Globin accumulated-damage Spider throws, independent pursuing head/creep and wandering brood body |
+| [`leper.mechanics`](assets/mechanics/leper.mechanics) | Four Leper forms: evasion/pursuit, batched shedding, creep and gray Gusher mortality; independent Flesh drifting/contact/death shot; final-band placement |
+| [`mulligans.mechanics`](assets/mechanics/mulligans.mechanics) | Mulligan family evasion/pursuit, collision-triggered detonation, death payloads and early-floor placement |
+| [`prey.mechanics`](assets/mechanics/prey.mechanics) | Prey spawning and thrown death children, Small Leech wet/dry movement, wet-floor placement |
+| [`mullighoul.mechanics`](assets/mechanics/mullighoul.mechanics) | Willo orbit, shared attack timing and wall-passing shots; Mullighoul hover, spawning and wet-floor placement |
+| [`spiders.mechanics`](assets/mechanics/spiders.mechanics) | Spider/Big Spider stop-and-burst movement, committed targeting, split impulses and early-floor placement |
+| [`rock_spiders.mechanics`](assets/mechanics/rock_spiders.mechanics) | Rock/Coal Spider disguise, reveal, skitter counters, falling bounce, fire/death transformations and temporary hot-coal wear |
+| [`dannies.mechanics`](assets/mechanics/dannies.mechanics) | Danny/Coal Boy movement, timed rock/coal attacks, owned offspring limits and damage-driven aggression |
+| [`hardies.mechanics`](assets/mechanics/hardies.mechanics) | Hardy charge timing, impact stages, projectile clusters, thrown Rock Spiders and stronger death Dip. |
+| [`spider_variants.mechanics`](assets/mechanics/spider_variants.mechanics) | Strider rowing, Swarm hop events/weights and wet-floor birth replacement |
+| [`long_legs.mechanics`](assets/mechanics/long_legs.mechanics) | Baby/Crazy Long Legs, Sack regeneration, offspring and projectile arcs |
+| [`boils.mechanics`](assets/mechanics/boils.mechanics) | Boil/Gut growth, walking variants, blood/Ipecac volleys, explosion immunity and stage pools |
+| [`deaths.mechanics`](assets/mechanics/deaths.mechanics) | Weighted or population-scaled death offspring, overkill suppression, child health scaling and regeneration/splitting rules |
+| [`bosses.mechanics`](assets/mechanics/bosses.mechanics) | Dedicated boss pools, Peep/Bloat attacks/forms and owned bouncing eyes |
+| [`loki.mechanics`](assets/mechanics/loki.mechanics) | Loki/Lokii body counts, teleport and volley timing, fly caps, action weights and boss routing |
+| [`segmented.mechanics`](assets/mechanics/segmented.mechanics) | Tuff chain composition, armor, movement, attacks, variant-filtered boss routing and four-way flyer death shots/creep |
+| [`shell.mechanics`](assets/mechanics/shell.mechanics) | Shell chains, invulnerable heads, explosive armor, grounded flesh, attacks and doubled boss arena routing |
+| [`fly_bombs.mechanics`](assets/mechanics/fly_bombs.mechanics) | Normal and owned Fly Bombs, contact/death ordnance and sparse floor placement |
+| [`enemy_bombs.mechanics`](assets/mechanics/enemy_bombs.mechanics) | Hostile regular/Troll/Hot/Bloody Sad/Brimstone payloads, trajectory, fuse, damage and producer immunity; no NPC spawn entries |
+| [`rails.mechanics`](assets/mechanics/rails.mechanics) | Authored rail cells, ordinary pits, rocks, restricted entrances and validated wall-to-wall routes |
+| [`hornfel.mechanics`](assets/mechanics/hornfel.mechanics) | Partial Hornfel controller: cart/doors, bombs, repeated charge passes, recovery fire waves, dismount/escape and seeded Broken Quarry arenas |
+| [`boom_flies.mechanics`](assets/mechanics/boom_flies.mechanics) | Diagonal flyer variants, bone shots, fire/gas/death effects, offspring and ordered replacements |
+| [`stages.mechanics`](assets/mechanics/stages.mechanics) | Explicit source-stage mapping for HP formulas within the four expedition bands |
+| [`chargers.mechanics`](assets/mechanics/chargers.mechanics) | Charge axes, reflection, steering, stationary recovery, tar, tail armor and death volleys |
+| [`companions.mechanics`](assets/mechanics/companions.mechanics) | Friendly charge actors, contact/damage conversion, room lifetime and item-driven contact familiars |
+| [`statues.mechanics`](assets/mechanics/statues.mechanics) | Stationary hazard attacks, clear/plate policies, re-entry removal and separate seeded hazard pools |
+| [`first_floor_statuses.mechanics`](assets/mechanics/first_floor_statuses.mechanics) | Opt-in Fear/Confusion/Freeze/Slow, Poison/Burn, Shrink and temporary Charm for Frowning Gaper, Gaper, Gusher, Pacer and Horf |
+
+Edit the files, validate, then restart the game. Native development builds read
+the checkout's files directly, so balance edits need **no C++ rebuild**. Portable
+builds read `assets/mechanics` beside the executable. Browser builds preload the
+files into the WASM filesystem: rebuild and redeploy the browser package after
+an edit. Files are not watched or reloaded during play.
+
+```sh
+cmake --build build --target deathward_check_mechanics
+./build/deathward_check_mechanics assets/mechanics
+ctest --test-dir build -R 'mechanics_content|item_builds|monster_behaviors' --output-on-failure
+```
+
+All `.mechanics` files in that directory are loaded in filename order. Each
+begins with `DEATHWARD_MECHANICS 1`. Fields are whitespace separated; quote names
+and descriptions containing spaces. `#` starts a comment outside a quoted value.
+Duplicate identities, unknown operations, invalid numeric values and missing
+rule/graph/pool references fail validation. Syntax errors include file and line;
+cross-reference errors name the definition. The loader builds a complete new
+snapshot before publishing it, so a failed load cannot partly replace live rules.
+
+The first five enemy ports expose `Simulation::applyEnemyStatus(id, status, frames)`
+and `removeEnemyStatus`. `EnemyStatus::Fear`, `EnemyStatus::Confusion` and
+`EnemyStatus::Freeze` use
+30-Hz source-frame durations: positive applications add up to the configured cap
+(120 by default); negative applications retain at least the absolute duration.
+The effects remain independent through headless transformations and pause in
+inactive rooms. Other controllers reject application until explicitly supported.
+This API does not grant the player a new perk. To inspect it in a native capture:
+
+```sh
+./build/deathward --smoke --theme canyon --style original --scene enemy-10.1.0 \
+  --enemy-status 1 confusion 120 --enemy-camera-follow --frames 90 --mute
+```
+
+Repeat `--enemy-status FRAME fear|confusion|freeze|slow|poison|burn|shrink|charm DURATION` for scripted changes;
+duration `0` removes that effect. `FRAME` is the capture frame, while `DURATION`
+uses the 30-Hz simulation clock. This option requires an isolated enemy smoke
+scene. It does not change ordinary gameplay controls.
+
+Freeze holds AI, animation, attack windups and reloads until thawing. Enemies
+retain contact damage, ordinary vulnerabilities and room-threat status. Existing
+projectiles keep moving, while selected shots waiting for capacity resume after
+thawing. `freeze_effect ID CAP RETENTION` enables the effect independently for
+a reviewed controller; the native defaults are `120 .01`. Small passive motion
+and external impulses still use physical collision. This is ordinary Freeze;
+Midas freezing, ice corpses and player item hooks remain separate work.
+
+`EnemyStatus::Slow` uses different duration rules: positive durations add without
+the 120-frame cap; a negative duration replaces the remaining time with two
+source frames. `slow_effect ID ACTOR_SCALE SHOT_SCALE NEGATIVE_REFRESH` controls
+the values, with native defaults `.5 .5 2`. Animation and cooldowns slow while
+AI acquisition checks retain their real-time cadence. Movement uses the source
+force/friction calculation and physical collision. Newly selected Horf/Gusher
+shots retain their own slower flight after the shooter recovers or dies;
+already emitted shots keep their previous speed. These configuration scales are
+custom tuning controls, not Isaac's API `SlowValue` parameter, which the reviewed
+ordinary NPC clock does not read. Other controllers and projectile families are
+not claimed supported until reviewed.
+
+`EnemyStatus::Poison` and `EnemyStatus::Burn` have separate duration, tick phase
+and damage. `damage_status ID poison|burn CAP PERIOD FIRST_TICK MIN_DAMAGE`
+uses defaults `120 20 2 6.4` for these five enemies. Duration expires before the
+hit check, so three source frames are needed for the first hit on update two;
+later hits are twenty updates apart. Reapplication keeps the original tick phase
+and stronger damage, with capped positive accumulation and minimum-duration
+negative refresh. Freeze and Slow do not slow periodic damage.
+
+`applyEnemyStatus(id, status, frames, damage, context)` accepts explicit damage
+in DeathWard HP units and snapshots producer attribution. Nonpositive power uses
+the resolved player build damage for Player/Ally sources, or the configured
+minimum otherwise. The native two-HP floor maps to 6.4 under the existing enemy
+HP conversion. Both effects use the existing Burning damage channel, preserving
+ordinary death/morph and item-event handling. A full event queue retains one due
+hit per effect and pauses that effect's clock until admission. This queue policy
+and retained producer attribution are local adaptations; arbitrary native
+source ancestry and item duration multipliers remain separate integration work.
+The CLI uses the default player damage; no new player item is granted.
+
+`EnemyStatus::Shrink` uses `shrink_effect ID CAP TARGET_SCALE APPROACH`, with
+defaults `150 .333 .166666667`. Moving enemies flee and new Horf/Gusher attacks
+are suppressed; committed shots continue. The model approaches one-third size
+on the real 30-Hz clock, including during Freeze or Slow, then gradually recovers.
+The installed baseline samples collision size only on initial application and
+restores it immediately on removal; visual scale and collision radius are separate.
+Walking over a shrunken enemy kills it without contact damage or a headless
+transformation. DeathWard uses its existing execution/event pipeline, retaining
+one kill intent if the queue is full. These five controllers are supported;
+player item producers, champions and other controllers still need review.
+See the [Shrink source evidence](docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/manifest.json)
+for native rules and explicit adaptations.
+
+`EnemyStatus::Charm` currently implements **temporary Charm** for those same five.
+Positive durations retain the greater of the existing and new duration, without
+the 120/150-frame cap. Negative duration is rejected: permanent conversion and
+followers are still unfinished. The enemy remains a room threat and can still
+hurt the player. With another eligible enemy present, Gapers pursue it and Horf
+aims at it; Gusher/Pacer retain their random movement. Confusion, Fear, Freeze,
+Slow and headless transformations preserve their separate rules.
+
+```text
+# ID target-period range squared-Charm-penalty contact-period HP-scale offset divisor gain NPC-shot-damage
+charm_effect 12.0.0 15 500 1600 3 3.2 110 100 33 19.2
+```
+
+Target selection caches the nearest eligible enemy and penalizes another
+temporarily charmed target. Physical cover still blocks movement, firing and
+contact. Horf/Gusher shots keep their NPC flight and independent player damage;
+Charm adds enemy collision and 19.2 enemy HP damage under the default conversion.
+Already emitted shots and selected Gusher payloads retain that policy after
+expiry. They do not inherit the player's weapon build.
+
+NPC contact uses the source max-HP damage curve and a three-source-frame hit
+history. Freeze holds that history; queue pressure retains one selected hit per
+actor. Contact is sampled at 30 Hz with swept physical bodies. Arbitrarily long
+caller steps do not reconstruct every missing inter-actor physics frame.
+No new player item grants Charm yet. Permanent conversion, related item producers
+and the cohort's full acceptance remain open. The
+[Charm evidence](docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/manifest.json)
+and [runtime source review](docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-runtime/manifest.json)
+record the native rules and adaptations.
+
+To add a simple power, create another `.mechanics` file, for example:
+
+```text
+DEATHWARD_MECHANICS 1
+item demo:collectible:1 "Heavy Lead" "COMMON" "Ten extra damage per copy, up to three copies."
+end
+rule heavy_lead 5 demo:collectible:1 3 always
+modify damage add 10 0 per_copy
+end
+pool armory demo:collectible:1 4
+pool shop demo:collectible:1 2
+```
+
+This adds a working item and reward entries without expanding the `ItemId` enum.
+The key is `package:kind:number`; kinds are `collectible`, `trinket`, `card`,
+`pill` and `internal`. Categories keep identities separate; card/pill use slots,
+trinket equipment and new art are still separate implementation work. New powers
+currently use a generic icon. Retain the shipped `dw:collectible:0` through `10`
+keys, which are also referenced by existing native mechanics and old saves.
+
+A rule header is `rule key priority owner stack_cap always|sixth`. A zero cap
+uses all owned copies. Rules execute by ascending `(priority, key)`, independent
+of pickup order, starting from fresh base attack values. Add
+`requires dw:collectible:6 1 -1` for a Rail interaction, or use `0 0` to require
+its absence. Requirements are ANDed; `-1` means no maximum. A modifier is
+`modify stat operation first extra once|per_copy`, where its operand is
+`first + extra * (effective_copies - 1)`. `per_copy` repeats the operation that
+many times. Operations are `set`, `add`, `multiply`, `min` (upper bound), `max`
+(lower bound), and `ratio`. Ratio inserts a denominator stat before the two
+numbers: `modify life ratio speed 14 0 once` gives 14 units of travel.
+
+Supported stats are `damage`, `speed`, `life`, `radius`, `homing`, `return_range`,
+`cap_damage`, `cap_radius`, `cap_self_damage`, `pierce`, `bounces`, `pellets`,
+`cadence`, `scatter` and `rail`. The last two are flags. Final values are bounded;
+integer projectile counts are truncated. There is a 256-copy inventory limit.
+Pool weights are integers from 0 to 10000; zero excludes an entry. Each named
+pool must have at least two positive entries, and each pair of offers is drawn
+without replacement. Tutorial/Classic rewards keep their original restricted
+selection. The existing build-inspection layout still targets a small inventory;
+paging and custom icons will be needed before exposing hundreds of powers.
+
+Enemy IDs are full `type.variant.subtype` tuples, avoiding decimal-packing
+collisions such as `912.100.0` versus `913.0.0`. A `monster` row uses the columns
+listed at the top of its file. Speeds are DeathWard world units per second;
+timings are seconds, and existing global/floor difficulty multipliers still
+apply. Keep the shipped enemy IDs while native encounters and offspring depend
+on them. `natural`/`depth` govern legacy selection; the progression preset uses
+the external encounter pools. Peep Eye is `68.10.0`; `68.1.0` is reserved for The
+Bloat boss. Boss eyes cannot spawn independently from encounter pools.
+
+An encounter entry is `encounter first_band last_band pattern role id weight
+cost maximum [members [variant]]`. Bands run from 0 (Outer Washes) to 3 (Storm Cut); ranges are
+inclusive. Patterns are `any`, `pursuit`, `crossfire`, `charge_lane` and
+`supply_guard`; roles are `basic` or `specialist`. Weight 0 disables a choice;
+maximum 0 leaves it limited by the room's threat and population budgets.
+Optional `members` defaults to one. Cost buys the entire group; the maximum
+still caps individual actors. A group consumes one specialist choice and all
+of its actor slots. If it cannot fit, selection skips it rather than silently
+spawning part of a group. Two ordinary support slots remain reserved.
+Selection is seeded and ignores room graph depth and combat RNG. Duplicate
+entries for an overlapping band/pattern fail validation, even across roles.
+Each band/pattern requires an unlimited, positive-weight cost-1 single-actor basic and a
+positive-weight specialist. Components/hazards cannot enter ordinary pools.
+For example, `encounter 1 1 charge_lane specialist 23.0.0 3 3 2` permits up to
+two Chargers in Broken Quarry charge-lane rooms. This edits the
+existing row; adding it twice is an error. Tutorial, Classic and Mine roster
+selection remain separate. Pool inclusion does not certify Isaac behavior.
+
+Optional `variant` restricts an encounter to `standard`, `scorched` or `flooded`; omit it
+for any context. In `replacements.mechanics`, `floor_variant band variant weight`
+selects a floor context on its own seeded stream. An omitted band defaults to
+Standard. Shipped opening-band weights are Standard 2, Scorched 1; this ratio is
+DeathWard tuning. Scorched Washes has local ash deposits and a distinct name on
+the expedition screen. Band 1 similarly uses Standard 2 / Flooded 1. Flooded
+Quarry adds flat damp-sediment decals and marks ordinary combat rooms flooded,
+so dry-only fire reactions no longer apply there. These are local environment
+adaptations; full source shallow-water art is not reproduced. Geometry, story
+sites, roads and rivers keep their seeds.
+
+Conditional substitutions use:
+
+```text
+replace_monster 15.0.0 15.2.0 0 3 any 100 1
+replace_monster 15.1.0 15.2.0 0 3 any 100 1
+replace_monster 29.0.0 54.0.0 0 0 scorched 6000 1
+```
+
+Columns are source ID, target ID, first/last band, `any|standard|scorched|flooded`,
+chance in basis points (0–10000), and extra reserved threat. Thus I.Blob has a
+1% chance to replace a selected Clotty or Clot; normal Hopper has a 60% chance
+to become Flaming Hopper in Scorched Washes, the Burning Basement analogue.
+`replace_monster 23.0.0 23.1.0 1 1 flooded 5000 1` gives normal Chargers a
+50% replacement chance in Flooded Quarry. It does not replace Maggots/Spitties
+using their pre-Repentance rule or apply in dry Quarry/other bands.
+These are per selected actor, not per room or floor. The source entry's caps and
+slots apply; substitutions run once after composition, never recursively.
+Extra threat is reserved even on a failed/disabled roll, keeping composition
+stable when only chance changes. Overlapping conditions, linked bodies,
+formations, hazards and grouped sources fail validation. A cost-1 unconditional
+basic with no extra reservation and an unconditional specialist must remain.
+Explicit/debug/offspring spawns do not run these room substitutions. Existing
+run snapshots and residents never reroll after editing the file or re-entry.
+
+Clotty is currently selected in bands 1 and 3; Clot in 1–3; Grilled only in
+Scorched opening pursuit rooms. Delaying Clotty/Clot to Broken Quarry is local
+difficulty tuning. Grilled's Chest source route awaits a dedicated encounter.
+
+`formations.mechanics` binds a reusable ring controller:
+
+```text
+formation 222.0.0 ring 10 2.4 2.6 1.4 8
+```
+
+After the ID and shape come capacity, radius, angular speed in radians/second,
+center speed and assembly speed. The installed Ring Fly rule permits ten
+members. Speeds and radius are local 3D tuning. The group center pursues the
+player while flies rotate in stable slots. Deaths leave gaps; arrivals fill
+them or split the largest angular gap without moving existing slots. Group
+identity is independent of the founding fly and summoner. Inactive-room state
+is retained. Formation clearance respects walls and gates while crossing
+interior cover/water. A room too narrow for a ring uses individual flight
+pursuit until a valid circle can form. Existing runs retain their immutable
+rules when the file changes. Specialized item reactions remain unfinished.
+
+Normal pursuit rooms in Outer Washes through Abandoned Works can select four
+Ring Flies for three threat points, capped at four initial members per room.
+This does not change the tutorial, Classic selection or native Mine roster.
+Capture a ten-fly formation and founder death with `--smoke --scene enemy-222.0.0
+--enemy-count 10 --enemy-hit 200 1000 --frames 240 --theme canyon --style original`.
+Browser smoke scenes accept `enemy-count=10`; probes expose group centers,
+slots and each actor's independent formation ID.
+
+A graph starts with `behavior key initial_state range`, optionally followed by
+`projectiles count angular_spacing_radians damage speed`. States use
+`state name ready|windup|exposed still|chase|flee|wander|orbit duration incoming_damage_scale`;
+`duration` can be `windup` to use the monster's value. Scale 0 gives immunity,
+1 gives normal damage. `enter` and `exit` accept `lock_target`, `warning`, `fire`
+`reset_cooldown`, or `summon`. A transition is `transition target guard value`; guards are
+`always`, `timer`, `attack_ready`, `cooldown_ready`, and `health_below`. Only `health_below` uses
+the value (a health fraction); use 0 otherwise. Transitions use file order as
+priority, with at most one transition per fixed simulation tick. Close states
+with `endstate` and the graph with `end`. Graph state survives room re-entry;
+inactive rooms continue ambient animation without attacks.
+
+Graph headers also accept `projectile_aim locked|facing|player` (default locked),
+`projectile_life seconds` (default 5), and `wander minimum_seconds maximum_seconds`
+(default 0.7–1.8). `motion_speed multiplier` inside a state scales the monster's
+movement speed (default 1). `cooldown_ready` fires autonomously without range or
+line-of-sight acquisition; `attack_ready` requires both. Gusher uses autonomous
+facing shots with a 0.8-second life; Pooters use slow wandering and aimed fire.
+
+Fixed room-axis patterns use `projectile_pattern radial angle_radians`; the
+existing aimed fan remains the default (`fan 0`). Radial shots divide a full
+circle evenly and ignore player direction. `projectile_curve radians_per_second
+fixed|alternate` adds constant world-up curvature; alternating volleys retain
+their order through stun and room re-entry. Shot motion survives its shooter.
+`projectile_kind bullet|tar|ember|brown` selects the shot presentation; only
+`tar` makes a slowing patch. Ember color alone does not create ground fire.
+Clotty, Clot, I.Blob, Grilled Clotty and Cloggy use these primitives. Cloggy
+currently appears only as one specialist in Broken Quarry crossfire rooms.
+Rare I.Blob replacement and full source parity remain unfinished. All angular speeds,
+world-unit movement and timings are explicitly local tuning.
+
+
+`fire.mechanics` defines reactive damage and in-place transformations:
+
+```text
+# id condition flame-scale burning-scale target|none trigger health-policy
+fire_reaction 15.0.0 dry 0 0 15.3.0 both fraction
+fire_reaction 15.3.0 dry 0 0 none both fraction
+fire_reaction 29.0.0 any 0 1 54.0.0 flame fraction
+fire_reaction 54.0.0 any 0 1 none flame fraction
+```
+
+`dry` disables that rule in a room whose `RoomLayout::flooded` flag is true;
+`any` applies in either condition. `Flame` and `Burning` are separate damage
+channels, distinct from physical damage. Clotty transforms and ignores fire
+in a dry room, but takes ordinary fire damage without transforming in a flooded
+room. Hopper transforms on flame contact and its flaming form still takes
+burning-status damage. `fraction` retains the remaining health percentage and
+scaled spawn HP; `current` retains current HP, capped by the new maximum. These
+health policies are explicit DeathWard conversions, not verified native values.
+The loader rejects unknown targets, cycles, mismatched collision bodies and
+known multipart/formation transformations that need a dedicated controller.
+
+A transformation preserves entity ID, position, team, summoner, stun and existing
+projectiles. It cancels the old attack and never produces kill rewards. A
+compatible hopping form finishes its committed arc before using its new hop
+parameters, so transformation cannot drop it into water or cover. The
+public `Simulation::addFire` primitive creates a bounded real flame, with separate
+player/monster damage targeting. Existing hostile fire keeps the Mine roster's
+friendly-fire policy while exposing reactive monsters to flame contact. Monster
+contact pulses share a 0.5-second target cooldown; that interval and the 3D
+vertical reach are local tuning. Flame visuals follow the actual fire height,
+including fire above cover. A burning damage channel does not yet implement
+a timed burning status or its item producers.
+
+For isolated captures, repeat `--enemy-flame-hit FRAME DAMAGE` or
+`--enemy-burn-hit FRAME DAMAGE`, or use `--enemy-fire FRAME` to create a real flame
+at the actor. `--enemy-flooded` sets the room gameplay condition for testing;
+it does not generate flooded map art. The browser accepts the corresponding
+query parameters, with typed hits written as `FRAME:DAMAGE`. River crossings
+retain dry banks and do not automatically set the room-wide flooded condition.
+All fire rules participate in immutable mechanics snapshots and their fingerprint.
+
+`hops.mechanics` configures source-derived ordinary/Flaming Hopper locomotion:
+
+```text
+# id scale idle hop jump land bonusA bonusB rangeBase rangeBonus overshoot wander
+# margin grid arrival nearRange farForce groundFactor retention stuckSpeed stuckAge
+# releaseChance localHeight contactDamage [targetVelocityLeadFrames]
+target_hop 29.0.0 .1 0 26 4 17 0 0 130 1.3 200 95 5 40 10 30 .05 .1 .7 .75 30 10 1.4 10
+target_hop 54.0.0 .1 0 26 5 18 50 0 130 1.3 200 95 5 40 10 30 .05 .1 .7 .75 30 10 1.8 10 5
+```
+
+Both forms wander outside their detection range and pursue nearby targets.
+At the source rate of 30 Hz, ordinary Hopper uses a strict 130-unit range and no random bonus.
+Flaming Hopper adds a uniform 0–50 bonus to range/destination distance and leads
+target velocity by 5 source frames. Destination-based inertia replaces the older
+fixed-distance/flight-time tuning. Hop lasts 26 frames: normal Jump 4/Land 17,
+Flaming Jump 5/Land 18. Source HP 10/20 converts to 32/64. Existing protagonist stats
+and conditional replacement odds are unchanged.
+
+A hop commits a destination and predicts a legal landing through the actual
+stepped trajectory. Local height/cover clearance permits rocks and water while
+preserving full boundaries and closed gates. Projectiles, contact, aiming and
+fire use the physical airborne body. Stun and a compatible fire transformation
+retain the committed flight; the latter keeps the old motion profile until
+landing, then adopts the new one. Source flame conversion preserves HP fraction
+without a kill/reward. Room re-entry preserves motion. `--enemy-terrain hop-cover`
+provides an isolated crate-crossing capture; WASM accepts the same query value.
+The optional final leadFrames value defaults to 0 and accepts 0–60; invalid content
+rejects the entire immutable snapshot.
+
+Normal Hoppers are sparse pursuit specialists in bands 0–2. On Scorched Washes,
+the external replacement rule substitutes Flaming Hopper in 60% of selected
+Hopper slots. The replacement reserves its additional threat cost before rolling.
+
+`enemy_bombs.mechanics` defines five hostile payload profiles. `throwEnemyBomb`
+uses real terrain-aware ballistic charges; Hot adds contact damage and lingering
+fire, Sad adds a ten-shot ring, and Brimstone adds four cover-clipped cardinal
+beams. Player upgrades do not modify them. Aftermath persists through producer
+death and room clear, and pauses in inactive rooms. Event/projectile saturation
+retains the whole armed burst until capacity recovers. Timings, damage, producer
+immunity and hostile fire lifetime are declared local tuning; source-exact fire
+durability, bomb pushing and other interactions remain unresolved. These are
+components for dedicated Hornfel/Horny Boys encounters. Hornfel now uses them;
+Horny Boys remains unimplemented. They are not ordinary enemies. Test with `--smoke --scene enemy-69.0.0 --enemy-bomb hot`
+(browser: `?smoke&scene=enemy-69.0.0&enemy-bomb=hot`). See the
+[source review](docs/reports/isaac-enemy-port/ordnance/source-review.json) and
+[native corrections](docs/reports/isaac-enemy-port/hornfel/native-review.json).
+The `normal` profile is a Troll Bomb (`4.3`); `hornfel_normal` is the regular bomb
+(`4.0`) used by Hornfel. The `sad` profile uses Bloody Sad Bomb (`4.16`), corrected
+from the earlier candidate `4.7`. The verified native selection weights are
+6:3:1 for regular/Hot/Bloody Sad are used by the partial Hornfel controller.
+Current flight and fuse values remain local tuning.
+
+`rails.mechanics` contains 15 source-backed Hornfel layouts. Its format is:
+
+```text
+rail_layout example 2 2
+# layout x z rail-variant over-pit
+rail_cell example 0 0 0 0
+rail_cell example 1 0 0 0
+```
+
+Here variant `0` is an east/west straight tile. Every internal port must have a
+reciprocal neighbor; ports at the footprint edge become wall entries. Invalid
+dimensions, duplicate tiles, disconnected ports and entry routes trapped in
+loops reject the entire candidate snapshot. Existing expeditions retain their
+immutable content; a successful reload affects a new expedition. Browser builds
+require repackaging. `RailNetwork::fit` provides curved paths, distance sampling,
+swept movement segments and pit-cell geometry. Native disassembly now supports
+centered straight crossing traversal and end-stop reversal; the current curves
+and exact turning point remain documented world-space adaptations.
+`rail_pit`, `rail_rock` and `rail_closed_entrances` retain additional source
+geometry and disabled player entrances. The generator rotates a template when
+needed to keep a source pit from blocking its entrance.
+
+`hornfel.mechanics` selects ten normal templates for Standard Broken Quarry.
+The generated footprint has rendered rails, grounded-blocking pits, destructible
+rocks and separately animated rail doors. Hornfel rides a typed cart, throws
+single/double bombs and Brimstone mines at source animation events, and dismounts
+with 320 HP when the 768-HP cart phase ends. Killing him gives three extra
+dynamite; escape resolves the encounter without that bonus or a kill event.
+Eligible paired tracks can also select seven to nine accelerating passes along
+the same route, followed by a slower recovery traversal. Its frame-46 fireball
+lands and sends four flame trails along the cardinal axes. Cover and pits stop
+the trails; emitted fire survives the rider's death and ordinary room clear.
+`hornfel_charge` and `hornfel_recovery` configure the drive, cooldowns, ballistics
+and fire values. New content snapshots leave an existing run's rules intact.
+The native drive constants and animation events are sourced; elapsed cooldowns,
+world physics and fire propagation values remain declared local adaptations.
+Decoys use separate reserved tracks, hit-count health and six-bomb explosions.
+Ordinary entries can also bring two Fly Bomb escorts. They steer around the
+living rider, then detach and retain at most 11.2 HP when he exits. Cart loss
+keeps the living rider as their parent; his removal releases them without that
+exit-only health cap. Surviving flies remain room-clear threats.
+
+```text
+# owner child one-in-N count combined-fly/small-bomb-limit player-clearance
+# spawn-radius launch-spread-degrees released-HP-cap; zero N disables escorts
+hornfel_escort 906.0.0 819.0.0 3 2 4 24 .6 20 11.2
+```
+
+`fly_bomb_follow` in `fly_bombs.mechanics` exposes the attached movement forces.
+Both rows are validated and reload into new immutable content snapshots. Their
+source formulas, local 3D conversions and remaining uncertainty are recorded in
+the [escort source review](docs/reports/isaac-enemy-port/hornfel_escorts/source-review.json).
+`rail_passengers.mechanics` now configures independent cart traffic plus normal
+fireplace and movable TNT payloads, including hit-count damage, ignition and
+quiet exits. Five creature payload slots, source fireplace dressing and the
+special collectible bonus remain unfinished. The
+[passenger source review](docs/reports/isaac-enemy-port/hornfel_passenger_review/source-review.json)
+identifies all seven payloads and the separate timed room controller; its
+[implementation handoff](docs/reports/isaac-enemy-port/hornfel_passenger_review/implementation-plan.json)
+does not enable unfinished payloads in gameplay. The
+[partial transport review](docs/reports/isaac-enemy-port/hornfel_passengers/implementation-review.json)
+records 58 passing native suites and six focused WASM cases; broader browser
+timing fixtures and acceptance remain open. **Regular enemies now take priority
+over further boss work.** Source-exact behavior, fight balance and
+complete acceptance are not claimed. See the
+[charge implementation review](docs/reports/isaac-enemy-port/hornfel_charge/implementation-review.json)
+and the preceding [controller review](docs/reports/isaac-enemy-port/hornfel_controller/source-review.json).
+The native `authored_rails`/`hornfel_boss` tests and browser probes check the
+shared geometry and actual encounter separately.
+
+`bony.mechanics` adds ordinary Bony: cardinal wandering, alignment and sight
+acquisition, a stopped throw with a fast aimed bone, and a distinct skeleton model.
+Its timing comes from the recovered 13-frame animation (Shoot at frame 4).
+Sparse crossfire/supply-guard roles start in Broken Quarry. All 59 native suites
+are covered after a roster-coverage test fix, and three focused WASM cases pass.
+This remains a partial port; mounted behavior, special item/status interactions
+and full acceptance are pending. See the
+[Bony review](docs/reports/isaac-enemy-port/bony/implementation-review.json).
+
+`buzz_flies.mechanics` replaces ordinary Fly/Pooter legacy movement with shared
+30 Hz buzzing forces. `buzz_shot` supplies Pooter's acquisition, cast, Shoot and
+cooldown frames, projectile values and cooldown damping. `dung_morph` exposes the
+one-in-N transformation chance; `dung_props` controls eligible floor bands,
+maximum pile count, geometry and damage steps. Ordinary dung takes shots and
+bombs, remains as a harmless remnant, and can trigger a live Fly-to-Pooter morph
+without a kill reward. Placement protects mandatory routes and cache approaches.
+Mine, Classic and the tutorial receive no dung. These files use the same immutable
+snapshot/restart workflow as other mechanics. Special variants, items/statuses
+and complete acceptance remain pending. See the
+[Fly/Pooter review](docs/reports/isaac-enemy-port/fly_pooter/implementation-review.json).
+
+`buzz_pair ID FORWARD SIDE` adds an atomic two-shot volley to a configured
+buzzing shooter. Super Pooter uses native coefficients `.961 .276`, source
+health 8 × 3.2, and the same normal-mode Attack14/Shoot6/delay35 as Pooter.
+`buzz_suppress ID ITEM_KEY` binds a registered item to attack suppression while
+preserving movement and room-threat participation. The Skatole dependency
+currently covers all three Pooter variants and Attack Fly and is outside natural item pools;
+its other fly effects remain unfinished. Super Pooter has sparse crossfire
+roles across all four bands. The old generic graph remains available for
+external compatibility. See the
+[Super Pooter report](docs/reports/isaac-enemy-port/super_pooter/README.md).
+
+`buzz_chase ID TARGET_FRAMES FORCE_FRAMES AXIS_SCALE DEADZONE GAIN FORCE CONTACT`
+adds cached, distance-dependent pursuit. Attack Fly uses `3 2 .5 25 .08 1.2 10`:
+the second planar axis is halved before normalization, preserving its weaker
+pursuit along that axis. Its source 5 HP converts to 16. `buzz_item_morph ID ITEM
+TARGET` transforms it to a harmless Fly in place when Skatole is owned, clamping
+remaining HP without healing or granting a kill. `buzz_contact_summon CHILD
+SOURCE RETENTION` marks live Hive summons for contact expiry and `.9` pursuit
+friction; flies released on death remain persistent. These profiles are external,
+validated and held in immutable snapshots. Sparse pursuit rooms use Attack Flies
+across all four bands. Boss-specific children and full status/item parity remain
+pending. See the [Attack Fly report](docs/reports/isaac-enemy-port/attack_fly/README.md).
+
+`buzz_volley ID COUNT FORWARD SIDE ...` supplies unnormalized velocity
+coefficients for a complete volley (2–16 shots). `buzz_back_split ID ROOT_RADIUS
+ANGLE_DEGREES CHILD_SPEED CHILD_DAMAGE CHILD_RADIUS OFFSET LIFE` adds two smaller
+backward shots on physical terminal impact. Tainted Pooter uses four source-based
+vectors, Attack14/Shoot6/delay63, 240 HP, and backward splits at ±24 degrees.
+Timeouts, cancellation and live bounces do not split. Whole volleys/pairs wait
+when capacity is exhausted; released projectiles retain their birth configuration
+after reload or owner death. Native projectile height curves and its dedicated
+Ascent-equivalent encounter remain pending; ordinary floor pools are unchanged.
+See the [Tainted Pooter report](docs/reports/isaac-enemy-port/tainted_pooter/README.md).
+
+`evaders.mechanics` supplies a reusable ground evader/spawner:
+
+```text
+evader ID SCALE VISIBLE_RANGE HIDDEN_RANGE PROXIMITY_FRAMES STICKY_CHECKS RETENTION WANDER_FORCE WANDER_RETENTION PATH_FORCE ATTACK_RANGE ATTACK_FRAMES SHOOT_FRAME COOLDOWN_FRAMES POP_MIN POP_MAX CROWD_DELAY_MIN CROWD_DELAY_MAX CHILD_ID CHILD_HEALTH
+```
+
+Hive and Drowned Hive check proximity every 14 source frames and keep three
+positive checks of evasion memory. They wander otherwise. HeadAttack lasts 18
+frames and spits at frame 4; the 75-frame timer advances while evading. Room-wide
+population, including reserved births, delays further spawning. The bodies have
+64/57.6 HP and no contact damage; Drowned offspring have half normal Charger HP.
+The native grid search is adapted to canyon navigation; its exact initial
+impulse, diagonal bias and tile-cache behavior remain pending. Hive is a sparse
+specialist in bands 0–2, with a 50% Drowned replacement in band-1 Flooded floors.
+See the [Hive report](docs/reports/isaac-enemy-port/hive/README.md). These profiles
+follow the existing immutable snapshot/restart reload policy.
+
+`nest.mechanics` uses the same ground controller, with two optional extensions:
+
+```text
+evader_cooldown_bonus ID MINIMUM_EXTRA_FRAMES MAXIMUM_EXTRA_FRAMES
+evader_child_contact_death ID
+```
+
+Nest adds a uniform 55–74 source frames to the base 75-frame cooldown. Its body
+has 64 HP and harmless contact. Shoot at frame 4 emits one full-health Spider
+that dies when touching the player, including during player invulnerability.
+This policy is stored with the pending birth, so losing the parent cannot erase
+it. Death instead releases one equally likely Big Spider or Trite; Big Spider's
+later children keep ordinary contact behavior. Post-hit HP at or below −64
+suppresses this death offspring. Sparse natural placement covers bands 0–2.
+All ground evaders now consume their native initialization update before moving
+or attacking. See the [Nest report](docs/reports/isaac-enemy-port/nest/README.md)
+for evidence, geometry adaptations and remaining parity limits.
+
+`leper.mechanics` configures all four parent forms and Leper Flesh. Parents use
+shared evasion, timed pursuit, source-ordered batched damage/shedding, last-form
+creep and a same-entity gray Gusher death branch. Births and accepted damage stay
+consistent across split source frames and inactive-room round trips. Flesh uses
+floating random pursuit, contact consumption and a predictive death shot. Required
+offspring/attacks retain room completion under capacity pressure. All four forms
+and independent Flesh have sparse final-band placement. See the
+[parent report](docs/reports/isaac-enemy-port/leper-parent/README.md) and
+[Flesh investigation](docs/reports/isaac-enemy-port/leper/README.md) for evidence,
+external parameters and remaining acceptance gaps.
+
+`black_globin.mechanics` configures three distinct threats. The parent emits a
+Spider when HP lost since its previous emission strictly exceeds 16, polling
+once per source update. Death separates the head and body without regrowing goo
+or a second unconditional Spider. `brain_pursuit` selects direct ground pursuit
+instead of ordinary Brain charge while retaining red creep. `headless_brood`
+selects Spider production below five room enemies, with a 90-or-180-frame reload.
+Health, motion, child identities, thresholds and timing remain external; the
+shared ground path helper also serves Gapers. Pending required births retain
+room completion. See the [Black Globin report](docs/reports/isaac-enemy-port/black-globin/README.md)
+for native evidence, source-stage placement and open fidelity/acceptance work.
+
+`mulligans.mechanics` extends the ground-evader controller with non-spawning bodies:
+
+```text
+evader_body ID SCALE VISIBLE_RANGE HIDDEN_RANGE PROXIMITY_FRAMES STICKY_CHECKS RETENTION WANDER_FORCE WANDER_RETENTION PATH_FORCE
+evader_detonation ID CHANCE_DENOMINATOR ANIMATION_FRAMES
+evader_chase ID CONTACT_CHECK_FRAMES CONTACT_RANGE
+death_payload ID DAMAGE PLAYER_DAMAGE RADIUS always|self NORMAL_SHOTS SELF_SHOTS ANGLE SPEED SHOT_DAMAGE BOMB_KEY|-
+enemy_bomb_fuse_jitter BOMB_KEY MAX_ADDED_FRAMES
+```
+
+Mulligan and Mulligoon can arm a 29-frame detonation on an actual terrain
+collision, with a 1/300 check. Mulliboom pursues and checks a four-unit proximity
+radius every five source frames. Their 41.6 HP bodies do no contact damage.
+Mulligan releases four independent weighted offspring on death unless post-hit
+HP is at most -32; this threshold scales source -10 by 3.2. Mulligoon releases
+four diagonal shots and a real Troll Bomb, or eight shots plus an immediate
+blast when self-detonating. Mulliboom explodes immediately. Pending payloads
+retain all effects and prevent room completion until capacity returns.
+The Troll Bomb adds 0–29 source frames to its configured fuse; translating its
+initialized source count into wall-clock seconds remains provisional.
+See the [Mulligan family report](docs/reports/isaac-enemy-port/mulligans/README.md)
+for source evidence, seeded placement and remaining parity work.
+
+`horf.mechanics` adds a reusable `head_shooter` controller. Its external row is
+`head_shooter ID CHECK_FRAMES COOLDOWN_FRAMES ATTACK_FRAMES SHOOT_FRAME RANGE SPEED DAMAGE LIFE`.
+Horf uses source normal-mode timing at 30 Hz, aims at the player's current position
+on Shoot, stays grounded and appears in opening-band rooms. The existing generic
+aimed-shooter graph remains available for other content. Invalid profiles are
+rejected; loading a new snapshot leaves active expeditions unchanged. Hard-mode,
+status/knockback and projectile-height parity remain unfinished. See the
+[Horf review](docs/reports/isaac-enemy-port/horf_fly/implementation-review.json).
+
+`gurgle.mechanics` now also defines `lob_walker` attack timing/movement and
+`lob_projectile` physical flight profiles for Gurgle and Splasher. Source attack
+frames run at 30 Hz; damped arcing shots collide with terrain, show ground shadows,
+and preserve their explosions under queue pressure. Both enter seeded specialist
+pools after the opening band. Crackle now adds `lob_fire_wave` for separate cardinal
+fire jets: step interval/spacing/count, lifetime, damage pulse frames, radius,
+monster/player damage and visual scale loss. Its sparse placement is limited to
+standard Broken Quarry. Movement remains a documented 3D adaptation, and exact
+source scheduling/status and full balance/performance acceptance remain open.
+See the [lob review](docs/reports/isaac-enemy-port/gurgle_lobs/implementation-review.json)
+and [Crackle review](docs/reports/isaac-enemy-port/crackle/implementation-review.json).
+
+`gurgle.mechanics` began the regular Gurgle/Crackle/Splasher family with corrected
+stage health and two reusable rules: `source_immunity ID FIRE EXPLOSION` preserves
+player/allied/TNT exceptions, and `lethal_morph ID TARGET CHANCE OVERKILL MIN MAX`
+uses basis-point probability and delay bounds in seconds. A successful morph
+keeps its actor ID and gives no kill reward. As with the other external rules,
+validation is atomic and running expeditions retain their existing snapshot.
+The [mortality review](docs/reports/isaac-enemy-port/gurgle_mortality/implementation-review.json)
+records passing Linux/WASM checks and unfinished movement, attacks and placement.
+
+`black_bony.mechanics` adds the ordinary Black Bony variant: three complete
+throw cycles, dark bones aimed at the current player, and an immediate death blast.
+The reusable `death_blast` row exposes enemy/player damage and radius; pending
+blasts survive event-queue pressure. Sparse cap-one specialists appear from
+standard Broken Quarry onward. Native60/focusedWASM6 pass after a test-only
+rare-replacement sampling fix; six/six bot mixed-room samples cleared. See the
+[Black Bony review](docs/reports/isaac-enemy-port/black_bony/implementation-review.json)
+for remaining source and acceptance work.
+
+`loki.mechanics` adds dedicated Loki and Lokii controllers in bands 2 and 3.
+Loki emits cardinal, diagonal, then cardinal volleys, an eight-shot ring, or a
+Boom Fly; teleports choose and recheck a safe grounded destination. Lokii has
+two independently attacking halves with 1120 HP **each** (source 350 × 3.2),
+an aggregate health bar and one encounter payout. Its Red Boom Fly cap is shared
+across both halves as an explicit local interpretation. Summoned flies survive
+the boss and still gate room clear; story evidence still gates the floor exit.
+Meat Cleaver conversion, optional support layouts and special encounter routes
+remain unfinished. See the [contract and adaptations](docs/reports/isaac-enemy-port/loki/source-review.json).
+
+`boom_flies.mechanics` now separates eight Boom Fly controller variants. Seven
+have ordinary seeded routes; Tainted remains a partial Ascent-only controller
+without a gameplay route or its source adaptive armor. Bone Fly fires on cardinal
+alignment; Dragon/X death fires follow different axes; Sick leaves a gas trail,
+eight death clouds and six green shots. Normal and Drowned explode immediately.
+The Tainted warning/explosion chain survives ordinary room clear. Skatole,
+Beelzebub, champions and source-exact numeric tuning remain unfinished.
+
+```text
+# source base HP, stage increment, DeathWard scale
+stage_health 25.0.0 8 3 3.2
+# band, source stage for first and second floor in this band
+source_stages 1 3 4
+# source target bands context chance/basis-points extra-cost phase
+replace_monster 25.0.0 25.1.0 1 3 any 949 0 0
+replace_monster 25.0.0 25.2.0 1 1 flooded 5000 1 1
+replace_monster 25.1.0 25.2.0 1 1 flooded 5000 1 1
+```
+
+The optional final replacement phase is 0–3 and defaults to zero for existing
+rules. One rule can apply per phase, with independent seeded rolls. Later phases
+can transform the preceding result; rules in the same phase never recursively
+reroll it. Threat reservation includes the most expensive configured branch,
+even at zero chance, preserving base composition when only odds change.
+
+Stage health uses the source formula
+`(base + increment * (min(stage, 4) + .8 * clamp(stage - 5, 0, 5))) * scale`.
+The `monster` HP column must match its stage-one fallback. The mapping preserves
+4–8 expedition floors and does not use room depth. Existing runs keep immutable
+snapshots; there is no live file watcher. Full configuration and declared local
+conversions are in the [source review](docs/reports/isaac-enemy-port/boom_flies/source-review.json).
+
+`bosses.mechanics` defines dedicated encounters separately from ordinary rooms:
+
+```text
+boss_native 1 5
+boss_pool 1 68.0.0 normal 3
+boss_pool 1 68.0.0 cyan 1
+boss_pool 1 68.0.0 yellow 1
+component_bounce 68.10.0 68.0.0 10 1.5
+```
+
+Band 1 is Broken Quarry, the Caves-equivalent part of the expedition. These local
+weights retain the existing canyon boss half the time and select Peep otherwise.
+Boss selection uses a separate seeded stream; it does not reroll ordinary rooms
+or terrain. Tutorial and inactive progression profiles do not use these pools.
+`component_bounce` takes component ID, owner ID, contact damage and bomb-deflection
+strength. Components require a living matching owner and a unique detached slot;
+they cannot be selected as independent threats or generic offspring.
+
+The `boss_peep` row takes boss ID, eye ID, flight duration, jump distance, base/max
+apex, creep radius/duration, shot speed/damage, body contact damage, yellow size/
+speed multipliers, trail interval/radius and three action weights (creep, ring,
+jump). Its monster row supplies HP, body radius, cooldown and windup. Peep's
+8-shot ring, 12-shot landing and eye thresholds at two-thirds/one-third health
+are controller rules. Cyan starts with both eyes; yellow is 15% smaller, faster
+and leaves a continuous yellow trail. Numeric timing, distances, damage conversion
+and complete airborne immunity are documented DeathWard adaptations.
+
+`--scene enemy-68.0.0 --enemy-boss-form normal|cyan|yellow` isolates a form.
+`--enemy-execute FRAME DAMAGE` bypasses defenses for deterministic cleanup probes;
+it is not an implementation of Isaac's named instant-kill items. Browser values
+use `FRAME:DAMAGE`. `--scene resident-68.0.0 --resident-seed 0 --resident-floor 2`
+captures the actual seeded cyan boss with its owned eyes. As with other mechanics
+edits, these definitions enter a new expedition snapshot; current runs retain
+their original settings.
+
+Bloat has a separate `boss_bloat` controller. Its fields are boss/eye/Charger IDs,
+long-flight duration/distance/base and maximum apex, short-flight duration/apex,
+large-creep radius/duration, landing-creep radius, shot speed/damage, contact damage
+and three weights (large creep, short hop, long jump). Normal Bloat emits eight
+fixed-orientation shots after either hop. Green Bloat emits two arcing explosives
+after a short hop or three after a long jump, uses green creep and summons two
+Chargers during the large-creep action. Its dedicated pools are bands 2 and 3;
+the native bosses retain weight 6, normal Bloat 3 and green Bloat 1 in each band.
+
+These rows must follow their `boss_bloat` declaration:
+
+```text
+# owner range radius duration recovery alignment-width damage
+boss_lasers 68.1.0 32 .32 .7 1.5 .8 10
+# owner flight-seconds gravity spread blast-radius blast-damage live/pending summon cap
+boss_ipecac 68.1.0 1.1 12 2 2.8 20 12
+```
+
+The laser pair faces fixed world south or both lateral directions, never north,
+and has no advance warning delay, matching the reviewed source onset. Solid
+cover clips the rays; owner death cancels them. The local socket positions,
+alignment width, durations and damage are explicit 3D adaptations. Green shots
+use gravity and real impact explosions, with ordinary hostile-damage and soft
+demolition rules. They are not an implementation of the player's Ipecac item.
+
+`chargers.mechanics` now defines normal, Drowned, Dank, Carrion Princess and
+Level 2 Charger movement. Their shared controller wanders without pursuing and
+immediately acquires the configured alignment with line of sight:
+
+```text
+# id dash-speed max-dash-seconds alignment-width recovery wander-min wander-max
+charge 23.2.0 17 1.7 .8 .8 .7 1.8
+# id cardinal|diagonal stop|reflect turn-radians/sec stationary-recovery contact-damage
+charge_mode 23.2.0 cardinal reflect 0 .65 10
+# id tar-interval radius duration (slowing, never damaging)
+charge_trail 23.2.0 .12 .7 2.5
+# id tail-center-offset tail-radius, as fractions of the navigation radius
+charge_tail 23.3.0 .65 .35
+# id count angle-degrees speed damage
+charge_death 23.1.0 4 45 7 10
+```
+
+Extension rows require a preceding `charge` row for the same ID. Defaults are
+cardinal, stop on collision, no steering/pause/trail/tail/death volley and contact
+10. Duplicate rows, invalid values and incompatible controllers are rejected.
+The examples edit the existing rows; they should not be appended as duplicates.
+All movement/timing/geometry values are documented local tuning. Existing runs
+retain their immutable configuration; reloading applies to new snapshots.
+
+Normal/Drowned Chargers keep a straight heading. Drowned has 10% more HP and
+four fixed diagonal death shots. Dank uses a faster swept, reflecting dash and
+pauses before moving again. Carrion Princess acquires diagonally; its rendered
+pink tail is a separate hit volume, while head/midsection remain armored even
+against piercing bullets. Explosions/fire must reach the tail under the local
+3D policy. Level 2 starts cardinally and steers at a bounded rate during its
+slower dash. Ordinary stages are normal 1/3, Drowned 1/2, Dank 2, Princess 1,
+Level 2 3. Green Bloat can still summon normal Chargers in bands 2/3. Elleech
+still needs a dedicated Ascent encounter; these records are partial ports.
+
+My Shadow (`isaac:collectible:433`) is now available through seeded Smuggler
+bargains, the local analogue of its source Devil pool. Its delayed shadow
+produces friendly `23.0.1` Chargers when enemies touch it, up to sixteen living
+allies. Duplicate item copies retain one producer. Allies wander and acquire
+aligned enemies, take hostile contact/shots and damaging hazards, and expire
+when the player leaves the room. They never seal doors or award enemy loot on
+death. Ordinary player bullets pass through them and player dynamite is harmless
+to them. Dark bodies and teal rings distinguish allies in Original rendering.
+
+```text
+# id outgoing-contact attack-interval hurt-interval incoming-scale lifetime
+companion 23.0.1 27.84 .7 .45 .32 room
+# item child live-cap lag radius contact-interval-per-enemy
+contact_familiar isaac:collectible:433 23.0.1 16 .15 .6 .25
+```
+
+Source HP 20 and allied damage 8.7 use the existing 3.2 unit conversion (64 HP,
+27.84 damage). The other values are explicit local tuning. Athame, Jumper Cables,
+Duct Tape, Eraser, Ace cards, slowdown and Blood Puppy exceptions remain open;
+the companion event system is not a claim those items are implemented.
+`--enemy-item isaac:collectible:433` grants the real item in an isolated capture;
+the browser accepts repeated `enemy-item` parameters. Resident captures reject
+these inventory overrides. Native development changes take effect on restart;
+WASM requires repackaging, as with the other mechanics files.
+
+For isolated scripted pursuit/ricochet captures, `--enemy-player-at FRAME X Z`
+moves the invulnerable spectator to a legal offset from the actor's initial
+position. Browser syntax is `enemy-player-at=15:8:-8`; at most 64 moves are
+allowed. For example, a Dank capture with `--enemy-player-side above
+--enemy-player-at 15 8 -8` lets the committed dash reach the far wall.
+Use `--scene enemy-68.1.0 --enemy-boss-form normal|green` and
+`--enemy-player-side above|below|left|right|diagonal` for isolated captures.
+`--scene resident-68.1.0 --resident-seed 1 --resident-floor 4` selects a real green
+Bloat encounter. Browser queries accept the same values.
+
+Grimace hazards have a separate controller and placement pool. Stone, Vomit and
+Triple Grimaces stop firing when combat ends but remain solid. Constant Stone
+Shooters and Brimstone Heads keep firing until the player steps on all of their
+room's pressure plates. Cross shooters alternate cardinal and diagonal volleys;
+ordinary variants stop after combat, while the explicit always-on variants
+remain experimental and outside normal floor pools. Stone Eyes rotate and fire
+flickering beams, stop after combat and disappear after cleared-room re-entry.
+Vomit shots are real arcing explosives. Ordinary shots/bombs cannot destroy
+these actors; the exceptional-death event path exists, but the named Isaac
+instant-kill items are not implemented by this controller.
+
+```text
+# id attack clear interval windup damage speed spread range beam-radius beam-duration turn-rate initial-angle remove-on-cleared-reentry
+statue 42.2.0 triple combat 3 .3 10 8 .22 32 .25 .08 0 0 0
+statue_rooms 1 2500
+statue_pool 1 3 any 42.2.0 2
+```
+
+`statue_rooms` is a room selection chance in basis points. At most one statue is
+added to a selected combat room, separately from its ordinary enemy budget.
+Placement checks footprints, entrances, objective paths, roads and river banks;
+an optional hazard is omitted when no safe footprint exists. Walking, dodging,
+mouse navigation and flight respect its body. These timings, damage conversions,
+subtype startup phases and weights are local adaptations, not measured native
+constants. Named item interactions, Cross re-entry quirks, full trap-room routing
+and remaining hazard families are unfinished.
+
+`--enemy-clear FRAME` invokes real room completion in an isolated capture;
+`--enemy-reenter FRAME` leaves and re-enters it. Statue captures provide a plate
+at offset `-5 5`; `--enemy-player-at 100 -5 5` presses it through actual movement
+state. The browser accepts the same flags as query parameters. Resident captures
+reject these lifecycle overrides and preserve the actual seeded hazard, ordinary
+enemies and pressure plate. For example:
+
+```sh
+./build/deathward --smoke --scene resident-202.0.0 --resident-seed 2 --resident-floor 5 --theme canyon --style original --frames 120 --mute --screenshot /tmp/statue-room.png
+```
+
+Gaping Maw and Broken Gaping Maw attract the player and bend both player and
+enemy projectiles without firing shots. Broken Maw alternates four seconds of
+stronger attraction with four seconds inactive. Room clearance leaves these
+fields active; stepping on their room's plates shuts them down. The cycle pauses
+while the room is inactive and resumes on return. The original visual style uses
+a larger open mouth and inward-moving dust; Broken Maw has visible cracks and
+closes during its inactive phase.
+
+```text
+statue 236.0.0 attraction plates 1 0 1 1 0 24 .25 .08 0 0 0
+# id player-speed projectile-acceleration projectile-speed-limit height active-seconds inactive-seconds
+statue_attraction 236.0.0 4 24 40 4 4 4
+```
+
+The generic shot columns are unused for attraction. The `24` range is in world
+units; force falls linearly to zero at that distance. Attraction is horizontal,
+leaving projectile gravity unchanged. Combined fields cancel or add, capped at
+the strongest participating configured peak. Faster incoming projectiles keep
+their existing speed ceiling. These force/geometry/stacking choices are explicit
+3D adaptations; the four-second Broken Maw cycle comes from the source review.
+All numeric fields enter the immutable content snapshot. Edits apply to new
+expeditions. D10 and other named source-item exceptions remain unfinished.
+
+For projectile checks, repeat `--enemy-shot FRAME player|hostile X Z VX VZ` in an
+isolated enemy capture. Offsets are relative to the captured actor and create
+actual projectile events. The browser form uses colon-separated values, for
+example `enemy-shot=5:hostile:-6:-6:6:0`. Resident captures reject injected shots.
+
+Quake Grimace subtypes `804.0.0`–`804.0.3` keep their source left/up/right/down
+axes (`-X/-Z/+X/+Z`). They hop in place and emit a travelling rock front on each
+three-second landing. Plates stop future landings; ordinary combat clearance
+does not. An emitted wave finishes its course. The visible trailing rocks do
+not repeatedly damage the player.
+
+```text
+statue 804.0.3 quake plates 3 0 10 10 0 32 .25 .08 0 0 0
+# id axis hop-height hop-seconds wave-radius visual-trail-seconds
+statue_quake 804.0.3 3 1 .45 .5 .5
+```
+
+The generic interval is landing-to-landing; windup and beam columns are unused.
+Speed, range, radius, hop shape and base damage are local 3D tuning. Base damage
+10 uses the unchanged hostile multiplier of 1.25 on player impact. The wave stops
+at the first solid obstruction and cannot hit through cover or into corridors.
+It opens an optional cache wall, paying its existing seeded reward once, without
+consuming dynamite. It also breaks cracked rocks; ore seams and structural walls
+stay intact. This cache interaction is a declared analogue for the source's
+secret-wall opening, **not full secret/super-secret-room implementation**.
+
+All four Quakes enter only source-backed band 1, separately from ordinary enemy
+budgets. Placement retains their fixed axis, at least six units of clear attack
+lane and a reachable plate. Try an actual generated encounter:
+
+```sh
+./build/deathward --smoke --scene resident-804.0.0 --resident-seed 9 --resident-floor 2 --theme canyon --style original --frames 210 --mute --screenshot /tmp/quake-room.png
+```
+
+Bomb Grimace `809.0.0` supplies a separate throwable bomb. Unlit pickup `5.41.0`
+does not add inventory; taking it starts the fuse of armed entity `4.13.0`.
+Walk onto it, or click it to approach. While carrying it, mouse attack or arrow
+fire throws it; **B** places it (or throws in Throw mode). The HUD bomb control
+also works with zero ordinary dynamite. Throwing preserves the fuse, which can
+expire while held. The lit-bomb hint and ground ring show the current danger.
+
+```text
+statue 809.0.0 supply never 1 0 1 1 0 24 .25 .08 0 0 0
+# id replenish fuse radius damage self-damage range flight pickup-radius death-drops
+statue_supply 809.0.0 2.5 3 4.5 100 25 12 .7 .75 10
+```
+
+These timings and dimensions are declared local tuning. Each supplier tracks its
+own unlit stock; taking it schedules replacement even while the previous bomb
+is still armed. Exceptional destruction produces ten additional unlit pickups.
+The floor-wide limit is 128 supplied bombs; blocked/capped drops retry instead of
+spawning inside cover. Ground stock persists across rooms, thrown bombs pause
+with inactive rooms, and a carried fuse continues through room/floor travel.
+Supplied explosions have their own demolition provenance and spend no inventory.
+They do not silently inherit the player's Braid modifier.
+
+This controller is **not in ordinary room pools**. Tuff Twins and The Shell
+each create two suppliers in their dedicated encounters. Mother's Shadow escape
+still needs encounter work. To inspect the support mechanic in isolation:
+
+```sh
+./build/deathward --smoke --scene enemy-809.0.0 --theme canyon --frames 220 --enemy-player-at 30 0 2 --enemy-player-attack 60 10 2 --mute --screenshot /tmp/supplied-bomb.png
+./build/deathward_input_tests --supplied-bomb-only
+```
+
+Tuff Twins `19.2.0` is a paired segmented boss in **standard Broken Quarry**,
+not Flooded Quarry. Each worm starts with six parts, independent stone armor,
+and a shared encounter health bar. Supplied bombs strip armor; ordinary shots
+then hurt the exposed parts. Both worms and their surviving offspring must be
+defeated to clear the room. A severed head does not pay a separate boss reward.
+
+```text
+# id chains parts split-min supplier supplier-count spacing armor blast-near blast-far speed exposed-bonus turn-min turn-max contact
+boss_chain 19.2.0 2 6 3 809.0.0 2 1.55 15 .25 .14 1.8 .8 1.2 3.4 10
+# id armored-child exposed-child head-interval room-cap burst-max body-interval body-shots shot-speed shot-damage
+boss_chain_attacks 19.2.0 61.3.0 61.0.0 5 4 2 3 7 7.5 10
+boss_pool 1 19.2.0 normal 2 standard
+# id angle shot-speed damage creep-radius duration creep-damage (zero = slowing)
+death_cross 61.3.0 .7853981634 8 10 2 4 0
+```
+
+These values live in `assets/mechanics/segmented.mechanics`. The optional final
+`boss_pool` field filters the floor variant. Loading a new mechanics snapshot
+changes future runs; an active run retains its existing definitions. Sucker's
+four death shots are cardinal; Ink's are diagonal with slowing black creep at
+the death position. Their source HP 10 becomes 32 under the existing conversion.
+
+This remains a **partial port**: exact split edge cases, native timings,
+named-item exceptions and starting-kit balance remain open. Short rear fragments
+currently reattach without losing HP, and armor-stripping explosions do not
+spill excess damage into flesh; these are declared local policies.
+
+```sh
+./build/deathward --smoke --scene resident-19.2.0 --resident-seed 1 --resident-floor 2 --theme canyon --style original --frames 180 --mute --screenshot /tmp/tuff-room.png
+```
+
+`--enemy-player-attack FRAME X Z` drives the real attack input toward an offset
+from the captured actor. Browser captures use `enemy-player-attack=60:10:2`.
+It is separate from `--enemy-fire`, which creates environmental fire. Generated
+resident captures reject both position and attack overrides.
+
+Fly Bomb `819.0.0` now uses a separate pursuing/circling controller and appears
+sparsely in standard Broken Quarry rooms. Contact detonates immediately for 40
+enemy damage; a shot death drops a real delayed bomb dealing 100 enemy damage.
+The delayed bomb remains dangerous after the room clears. Both damage paths
+use the existing hostile player multiplier, yielding 12.5 and 25 player damage.
+
+```text
+# id ordnance circle-range curve-strength steering fuse radius contact-enemy contact-player death-enemy death-player
+fly_bomb 819.0.0 4.14.0 6 .7 4 1 3 40 10 100 20
+# child owner count radius angular-speed
+fly_bomb_orbit 819.1.0 25.0.0 3 2 1.8
+```
+
+`assets/mechanics/fly_bombs.mechanics` holds both monster definitions, controller
+values and the ordinary route. Reloading creates a new immutable snapshot;
+active expeditions retain their original values. Speeds, fuse and dimensions
+are local tuning. The tiny bomb's `4.14.0` mapping is inferred from installed
+Small Bomb data, not confirmed by native AI code.
+
+Eternal Fly Bomb `819.1.0` requires a real Boom Fly owner, keeps three orbital
+slots, ignores ordinary damage, and drops bombs when that owner dies. This is
+**a dependency implementation**: The Horny Boys producer is still missing,
+so the variant has no ordinary gameplay pool. Its isolated capture creates the
+actual owning group, rather than an unowned invulnerable enemy:
+
+```sh
+./build/deathward --smoke --scene resident-819.0.0 --resident-seed 0 --resident-floor 2 --theme canyon --frames 80 --mute --screenshot /tmp/fly-bomb-room.png
+./build/deathward --smoke --scene enemy-819.1.0 --theme canyon --frames 55 --mute --screenshot /tmp/eternal-fly-bombs.png
+```
+
+Ordnance pauses in inactive rooms, survives ordinary room clear, and is discarded
+by explicit debug clear. It neither consumes dynamite inventory nor inherits
+player bomb-item modifiers. Native tests cover real explosions stripping Tuff
+armor and demolishing authored rocks. Shell now supplies its normal Fly Bomb
+offspring route. Fly-item exceptions and full behavior/balance acceptance remain open.
+
+The Shell `19.3.0` appears in **standard Broken Quarry**, in a boss arena with
+one doubled axis. Two five-part chains have invulnerable heads, 15-point bone
+armor and 112-HP bodies. Explosions strip armor; grounded exposed middle parts
+fire aimed triples, while exposed ends spawn Fly Bombs. Attached flesh slows
+the chain. Detached groups pursue slowly; lone flesh stays stationary. Both
+worms share one reward, and surviving offspring must die before the room clears.
+
+`assets/mechanics/shell.mechanics` exposes the separate Shell controller:
+
+```text
+# id chains parts promotion-min supplier count spacing armor speed slowdown steer-range turn-rate flesh-speed settling-speed contact
+boss_shell 19.3.0 2 5 3 809.0.0 2 1.55 15 3.5 .6 6 .35 .8 5 10
+# id tail-child interval room-child-cap middle-interval shot-speed spread damage
+boss_shell_attacks 19.3.0 819.0.0 5 4 2.8 8 .22 10
+boss_pool 1 19.3.0 normal 1 standard
+```
+
+Movement/attack timings, grounded landing above cover/water and ambiguous split
+edge cases are explicit local policies in the [source review](docs/reports/isaac-enemy-port/shell/source-review.json).
+Tuff's explosive resistance and exposed acceleration do not apply to Shell.
+Special source routes and named item exceptions remain unfinished.
+
+```sh
+./build/deathward --smoke --scene resident-19.3.0 --resident-seed 7 --resident-floor 2 --theme canyon --frames 190 --mute --screenshot /tmp/shell-room.png
+./build/deathward --smoke --scene enemy-19.3.0 --enemy-segment 2 --enemy-blast 60 100 --theme canyon --frames 100 --mute --screenshot /tmp/shell-flesh.png
+```
+
+`--enemy-segment INDEX` selects a real member of the spawned encounter for damage
+probes; it never creates a detached test body. Browser probes accept
+`enemy-segment=2`. Index 0 is the first head, 1–4 its bodies, 5 the other head.
+This option is limited to isolated smoke captures; resident captures retain
+the actual generated encounter.
+
+Graph headers can also define `summon TYPE.VARIANT.SUBTYPE count owner_limit
+health_multiplier spacing`. The `summon` action queues those children and counts
+both live and pending summons against that owner limit. Ownership is separate
+from paired-body links and current attack targets. Children survive their
+parent unless their own behavior says otherwise; ownership and timers persist
+through room departure and return. Global population/generation/placement limits
+still apply. Rotten Gaper `10.3.3` uses its dedicated source controller instead:
+after more than 60 active frames at 30 Hz, each update has a 1-in-8 spawn chance.
+A successful roll resets the counter even at the six-child cap. Small Maggots
+start at the parent's position with zero velocity and use their own controller.
+
+`orbit desired_radius acceleration` configures momentum for the `orbit` motion.
+The actor accelerates toward a tangential/radial steering direction instead of
+instantly aiming at the player. Collision clips actual velocity; occluded
+approaches use navigation. Inertia can produce a wider path than the desired
+radius. This generic graph motion remains available for authored content.
+Rotten Gaper `10.3.5` instead uses source momentum projection, a six-world-unit
+steering radius, distance-dependent force and 0.9 velocity retention. Its actual
+path can be wider. Default subtype `.0` now selects uniformly among `.1`–`.5`
+using the seeded encounter stream. All forms enter Storm Cut only. Pool limits
+apply to entries; a default selector can resolve to an already present subtype.
+See [`rotten_gapers.mechanics`](assets/mechanics/rotten_gapers.mechanics) and the
+[source contract](docs/reports/isaac-enemy-port/rotten-gaper/implementation-contract.json).
+
+For an isolated original-style enemy capture:
+
+```sh
+./build/deathward --smoke --scene enemy-14.1.0 --theme canyon --style original --frames 42 --mute --screenshot artifacts/enemy-14.1.png
+```
+
+To inspect actual residents from the seeded stage regression without replacing
+the room's population, use `--scene resident-ID`. These captures use Rourke's
+account, zero-based floor numbers, a temporary save and an invulnerable spectator:
+
+```sh
+./build/deathward --smoke --scene resident-15.2.0 --resident-seed 46 --resident-floor 2 --resident-from 15.0.0 --frames 200 --mute
+./build/deathward --smoke --scene resident-15.3.0 --resident-seed 1 --resident-floor 0 --frames 130 --mute
+./build/deathward --smoke --scene resident-54.0.0 --resident-seed 98 --resident-floor 0 --resident-from 29.0.0 --frames 130 --mute
+```
+
+`--resident-from` optionally filters the original selected identity. A missing
+resident is an explicit error, not a fallback spawn. Native and browser probes
+retain the source tuple, floor context and complete room population. The browser
+accepts these same named query parameters with `?verify&smoke&scene=resident-ID`.
+Scripted damage, terrain, counts and flooded overrides remain isolated-enemy
+options and cannot change a resident capture.
+
+The browser equivalent is `?verify&mute&smoke&theme=canyon&scene=enemy-14.1.0&frames=42`.
+`Module.enemyProbe` exposes the selected tuple, state, HP and projectile counts
+for browser checks. Missing definitions fail explicitly instead of spawning a
+fallback. These captures verify the current implementation, not source parity.
+
+Add `--enemy-hit 30 96` to damage that actor on simulation frame 30. Repeat the
+option to test successive phases, for example `--enemy-hit 190 96
+--enemy-hit 220 50` to collapse it again and then finish the goo. Hits target the original actor and have
+no effect after its true death. Browser captures accept repeated
+`&enemy-hit=30:96` parameters. `Module.enemyProbe.actors` reports live children,
+their exact tuples, health, maximum health, state, physical radius, position,
+velocity and summon owner. These controls require an
+isolated smoke scene and keep the temporary-save behavior.
+
+Ground pursuers steer around nearby bodies. A bounded collision pass separates
+actual actor positions before projectile collision, sweeps corrections through
+terrain, and leaves the player's walking/dodge controls intact. Stationary
+shooters stay anchored. Pursuit navigation checks body clearance at corners;
+crowded narrow approaches use deterministic yielding. Intangible actors,
+linked formations and room hazards still need their own reviewed collision
+policies. Contact skins, inverse-area pushing weights and steering/yield values
+are DeathWard adaptations, not recovered Isaac engine constants.
+
+Flying definitions use separate navigation: they cross interior outcrops,
+props and deep water, while enclosing cliffs, sealed gates and the active room
+boundary remain solid. Their actual position and hitbox rise over cover; mouse
+picking and aimed shots follow that height. Arrow fire keeps its horizontal
+bearing and adjusts elevation toward the nearest visible body along that line.
+Homing can turn vertically. Grounded offspring are not allowed to spawn in deep
+water where a flying parent died. This is a 3D interpretation of airborne grid
+collision, not Isaac's original height system. Per-family transformations,
+formations and item interactions still require their own implementation checks.
+
+Use `--enemy-terrain cover` with an isolated enemy smoke scene to add a two-metre
+crate. `--enemy-terrain river` finds a real seeded interior channel with safe
+banks and no ford along the test route. Browser smoke scenes accept
+`&enemy-terrain=cover` or `&enemy-terrain=river`. The probe includes actual actor
+height, starting position and flight/water collision results.
+
+Death recipes start with `death key`; `overkill -25` suppresses offspring when
+**post-hit** health is at most -25. Omit it for no overkill suppression.
+`offspring_layout radial|perpendicular spacing` chooses child offsets; blocked
+offsets still use safe placement. Each `outcome positive_weight` contains zero
+or more `offspring TYPE.VARIANT.SUBTYPE minimum maximum health_multiplier`
+lines and ends with `endoutcome`. An empty outcome means no child. End the
+recipe with `end`, then bind it using `death_for TYPE.VARIANT.SUBTYPE key`.
+One outcome is selected per death. Each outcome is limited to 64 potential
+children, additionally bounded by the existing population/placement limits.
+Voluntary self-detonation bypasses overkill suppression. Cheat execution skips
+death offspring. New content snapshots see edits; existing expeditions retain
+their loaded rules.
+
+The optional `population_offspring BUDGET CROWD_SCALE CAP_MIN CAP_MAX RADIUS_MIN RADIUS_MAX`
+changes a death recipe to independent weighted draws. The draw count is
+`ceil(BUDGET / (1 + CROWD_SCALE * room_population))`, including reserved births.
+A nonzero cap range supplies a random upper bound; `0 0` disables that cap.
+Each outcome must contain exactly one child. Hive uses budget 4, factor .2 and
+Fly/Attack Fly/Pooter weights 7:3:1. Drowned Hive adds a cap of 1–2 and produces
+half-health Drowned Chargers. Their overkill threshold is -64 local HP, converting
+the recovered source threshold -20 by the same 3.2 scale as their health.
+Reserved children retry capacity or safe placement and keep the room sealed;
+room reset and debug execution clear pending births. The existing offspring
+generation bound still applies. Live-spit contact behavior is captured with the
+request so it survives removal of the summoner; death children do not inherit it.
+
+`regrowth TYPE.VARIANT.SUBTYPE health_retention goo_fraction delay minimum_max_health split_limit`
+configures collapse and regrowth for legacy actors. Maximum health decreases
+once per collapse, down to its floor; goo has the configured fraction of that
+reduced health. Finishing goo kills it. A positive split limit also creates a
+second goo body with the same reduced health and remaining split budget.
+Graph actors need explicit collapsed-state support before using this rule.
+The shipped fractions, delays, mixture weights and split cap are documented
+DeathWard tuning unless a family report establishes recovered values. Older
+overkill profiles retain source numbers in **DeathWard health points**; the Hive
+profiles above explicitly convert their threshold with their HP scale.
+
+This is an extension foundation. The existing event queue still bounds effect
+chains and snapshots projectile properties. Native `split`, `powder`, `ghost`
+and `cap` hooks can be attached to new items; their algorithms, Fuse Braid,
+boss-specific logic, most legacy AI and some numeric constants remain C++.
+Further mechanics such as composable beams, shared boss health, additional formation shapes or active items need
+additional engine primitives and tests before graphs/rules can compose them.
+
+Each expedition keeps an immutable mechanics snapshot across floors. Run records
+include its content fingerprint and namespaced item keys. Save format 7 reads
+formats 1–6, converts legacy item numbers, and preserves unknown package keys in
+history. Older executables cannot read format 7. The fingerprint identifies the
+loaded text; it is not a replay guarantee or a full live-combat save.
+
 ## Verify
 
 ```sh
@@ -457,7 +1665,7 @@ ctest --test-dir build --output-on-failure
 ./build/deathward --benchmark --frames 600 --screenshot artifacts/stress.png
 ```
 
-The nineteen core CTest suites need no graphics display or audio device. Audio presentation checks cover confirmed cues, priorities, bounded queues and unchanged gameplay randomness. Mission-theme checks cover seeded selection, organic terrain reproduction, clear routes, sealed entrances, safe enemy placement, surface collision and persisted canyon checkpoints/history. `deathward_input_tests` exercises mouse controls, keyboard-only play and function-key cheats through raylib's input system in a hidden window. Use `--hud-only` for compact-control hitboxes, item inspection, modal input guards and danger-warning priority; it saves HUD and build-detail captures in `artifacts/`. Use `--keyboard-only` for hub/setup navigation, menus, dynamite over the HUD, directed throws, camera controls, key-locked doors, purchases, rewards and evidence-gated floor exits; it saves exit and controls captures in `artifacts/`. `deathward_player_model_tests` checks the packaged mesh, texture, all nine clips, blending, simulation timing, root-motion removal and resource cleanup. `deathward_western_assets_tests` checks the scenery atlas, glass, scale, collision alignment, route clearance, seed reproduction, canyon terrain/mesh alignment and resource cleanup. `deathward_occlusion_tests` compares whole-object transparency in towns and canyon wall sections at different zoom levels, checks that translucent scenery remains visible, verifies restoration and unchanged collision, and saves before/after captures under `artifacts`. `deathward_audio_tests` exercises the real audio device, packaged sounds, voice limits, panning, pause/mute, crossfades, looping, preferences and cleanup; it captures and silences its output unless passed `--audible`. The graphics suites require an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
+The core CTest suites need no graphics display or audio device. The mechanics suite covers invalid definitions, file-only items and combinations, immutable snapshots, event provenance, full enemy IDs, graph phases and old/new inventory save formats. Audio presentation checks cover confirmed cues, priorities, bounded queues and unchanged gameplay randomness. Mission-theme checks cover seeded selection, organic terrain reproduction, clear routes, sealed entrances, safe enemy placement, surface collision and persisted canyon checkpoints/history. `deathward_input_tests` exercises mouse controls, keyboard-only play and function-key cheats through raylib's input system in a hidden window. Use `--hud-only` for compact-control hitboxes, item inspection, modal input guards and danger-warning priority; it saves HUD and build-detail captures in `artifacts/`. Use `--keyboard-only` for hub/setup navigation, menus, dynamite over the HUD, directed throws, camera controls, key-locked doors, purchases, rewards and evidence-gated floor exits; it saves exit and controls captures in `artifacts/`. `deathward_player_model_tests` checks the packaged mesh, texture, all nine clips, blending, simulation timing, root-motion removal and resource cleanup. `deathward_western_assets_tests` checks the scenery atlas, glass, scale, collision alignment, route clearance, seed reproduction, canyon terrain/mesh alignment and resource cleanup. `deathward_occlusion_tests` compares whole-object transparency in towns and canyon wall sections at different zoom levels, checks that translucent scenery remains visible, verifies restoration and unchanged collision, and saves before/after captures under `artifacts`. `deathward_audio_tests` exercises the real audio device, packaged sounds, voice limits, panning, pause/mute, crossfades, looping, preferences and cleanup; it captures and silences its output unless passed `--audible`. The graphics suites require an X11/OpenGL display, as do the render checks; `xvfb-run` is also suitable where available. Input checks use a temporary campaign. Scripted render checks use a fresh temporary campaign by default. An explicit `--save PATH` opts into that campaign.
 
 Enemy tests cover all fifteen behaviors, attack warnings, armor and support, cover and dodge counters, delayed hazards and chain cleanup, plus area-scaled populations and safe placements across 32 seeds. Tests also cover swept 3D collisions, all five item effects and representative compositions, single-kill transitions, chain ceilings and reclamation, RNG independence, atomic campaign outcomes/recovery, repeat visits, and the complete chamber progression. Fast room-network checks cover 10,004 seeds, including rotation/reflection-independent footprint comparisons and graph diversity checks across 256 seeds. Generated-map checks cover 64 seeds, identical-seed reproduction, different room dimensions/footprints, floor connectivity, branching and loops, combat seals, key reachability, locked doors, limited power and enemy-free rooms, objectives, boss clearance, enemy spawns, continuous traversal and backtracking. Cheat checks cover disabled hotkeys, unobstructed play with cheats enabled, single-group encounters, effect cleanup, room/boss replay, preserved rewards and paused/modal outcomes. The benchmark renders repeated stress bursts and reports frame times, population counts, peak projectiles, kills, chain depth and suppressions. See the [verification results](docs/verification.md) for the recorded baseline and its limits. Smoke scenes also include `key`, `power`, `reward`, `empty`, `cheats`, `boss` and `summary`.
 
@@ -486,6 +1694,24 @@ The hub separately imports the complete original Demo scene into `assets/town`: 
 
 ## Research and design reports
 
+The [complete Isaac mechanics reference](docs/reports/isaac-mechanics-reference-2026-10-25.html)
+is a searchable offline catalog of items, trinkets, consumables, enemies, boss
+components, HP scaling and documented interactions. It includes a DeathWard
+implementation plan, source/version distinctions and explicit unknowns. The
+[structured dataset](docs/research/isaac-mechanics-reference.json) and
+[implementation review queue](docs/research/isaac-implementation-backlog.csv)
+support the next implementation phase; collecting a record does not mean its
+behavior has been ported or verified in gameplay.
+
+The [full enemy port plan](docs/isaac_monsters.md#full-enemy-port-plan--2026-10-25)
+audits the current runtime against all 653 researched enemy/boss/component
+records and proposes placement within the existing expedition difficulty bands.
+Its [review queue](docs/research/isaac-enemy-port-review.csv) and
+[structured stage evidence](docs/research/isaac-enemy-port-plan.json) distinguish
+candidate placements from approved spawns and include the Peep Eye/Bloat ID
+conflict. This newer code audit supersedes the old report's runtime-coverage
+snapshot; no gameplay changes are made by generating the plan.
+
 The [Isaac expedition study](docs/isaac_expedition_study.md)
 ([offline HTML report](docs/reports/isaac-expedition-study-2026-10-24.html)) records
 the local Repentance data analysis and proposals for build-changing items,
@@ -501,10 +1727,343 @@ reference copy. Aggregate measurements and the analysis tools accompany the repo
 ## Code map
 
 - `src/combat`: fixed-step simulation, 3D collision, AI, spatial broad phase and event budgets.
-- `src/items`: the item registry and independent effect handlers.
+- `src/content`: validated external mechanics, stable identities, build rules and behavior definitions.
+- `src/items`: resolved weapon builds, weighted reward pools and native event effect handlers.
 - `src/world`: seeded dungeon geometry, persistent world state, consequences, history and atomic save transactions.
 - `src/core`: application flow, input, math and deterministic RNG.
 - `src/render`: 3D rendering, instanced seeded scenery, player animation blending and menus; no combat rules.
 - `tests`: gameplay and persistence contract checks.
 
 The [design brief](weird_west_3d_prototype_agent_brief.md) describes the wider experiment. This implementation extends Milestone 1 with the Western and monster rosters and seeded room networks. The 25-item catalog and three expeditions remain future content work.
+
+
+### Prey and Small Leech configuration
+
+[`prey.mechanics`](assets/mechanics/prey.mechanics) adds exact IDs 817.0.0 and
+810.0.0. `swimmer` configures source scale, wet acceleration/cap/retention/speed,
+dry retention/hop chance/impulse range, animation duration/Land event, visual
+hop height, contact damage, bounce and three edge margins. Small Leeches swim
+in flooded or river-crossed rooms and hop on dry ground. Swimming preserves
+solid obstacles and room boundaries while allowing water crossings.
+
+Within a death rule, `population_adjustment OFFSET MINIMUM` changes the
+population-based offspring count before its optional cap. Prey uses −1 and 1.
+`offspring_launch RADIUS SCATTER HEIGHT_SCALE INITIAL_HEIGHT INITIAL_VELOCITY
+GRAVITY PLANAR_MULTIPLIER` defines an airborne birth; its children must have a
+swimmer controller. Prey uses `8 1 .1 -10 -8 .7 .04`, producing a 23-update
+flight at 30 Hz. These values are copied into each pending birth, so retained
+requests keep their launch policy. Births wait for capacity and a validated
+3D arc/landing; airborne children ignore projectile and body contact, with
+normal collision restored on landing. Area damage remains effective.
+
+These external profiles use the existing immutable mechanics reload system.
+Invalid ranges, duplicate profiles, conflicting controllers and unsupported
+thrown-child types are rejected. The [Prey report](docs/reports/isaac-enemy-port/prey/README.md)
+distinguishes recovered values from local navigation/visual adaptations and
+remaining parity work. These are partial regular-enemy ports.
+
+### Willo and Mullighoul configuration
+
+`mullighoul.mechanics` adds regular enemies 808.0.0 and 817.1.0. The `willo`
+row supplies, in order: source scale, radius, ellipse ratio, angular step per
+30 Hz update, tracking gain/cap, player-velocity carry, settled range, random
+attack denominator, Attack/Warn/Shoot frames, target lead frames, projectile
+planar speed/damage, height/upward speed/gravity/retention/radius/lifetime, and
+wall-collision bypass. Attack timing must satisfy `Warn < Shoot < Attack`.
+Willos redistribute their orbit when membership changes, retain the shooting
+actor's committed slot, and allow one attack at a time. Capacity limits retain
+the pending shot. Wall-passing projectiles still hit the player and ground.
+
+`evader_hover ID HEIGHT` follows an existing `evader` row and enables movement
+over water while retaining solid-obstacle and room-boundary collision. The
+height must be positive and no greater than two local units. Mullighoul uses
+0.6. This is distinct from unrestricted flight: ordinary Willo orbits ignore
+grid scenery, while Mullighoul routes around it.
+
+The existing population death policy gives Mullighoul three Willos alone,
+two with two other actors, and one with five. Extreme overkill suppresses the
+births. Both identities use sparse wet band-1 pools. File loading validates
+these profiles, and active simulations retain immutable content snapshots;
+reloads affect subsequent simulations. See the
+[Willo/Mullighoul report](docs/reports/isaac-enemy-port/mullighoul/README.md)
+for recovered source rules, local scales and incomplete interactions.
+
+### Spider movement and grounded offspring impulses
+
+`spiders.mechanics` configures Spider (85.0.0) and Big Spider (94.0.0) with the
+same controller. A `spider` row takes: source scale, retention, movement force,
+idle threshold, wandering counter, acquisition range minimum/maximum, target
+lead in source frames, wandering distance minimum/maximum, arrival radius,
+stuck-speed threshold, narrow-gap check denominator, contact damage, and target
+margins left/top/right/bottom. Distances and movement force use source units;
+contact damage uses local units. All event clocks run at 30 Hz inside the
+existing 60 Hz simulation. A burst keeps its selected destination; it does not
+continuously steer toward a moving player.
+
+`offspring_impulse SPEED` belongs in a death rule before its outcomes. It applies
+an outward velocity in the configured offspring layout, measured in local units
+per second. It cannot be combined with `offspring_launch`. Requests retain their
+impulse and keep the room sealed if capacity or legal placement delays birth.
+Big Spider uses two perpendicular offsets of one local unit and speed 30, with
+full-health ordinary Spider children. These are grounded births. The ordinary
+overkill condition still suppresses the entire payload.
+
+Both profiles are validated at load time and retain the existing immutable
+snapshot/reload policy. Their [implementation report](docs/reports/isaac-enemy-port/spiders/README.md)
+records source evidence, adaptations, seeded placement and remaining gaps.
+
+### Strider, Swarm Spider and all-birth replacement
+
+`spider_variants.mechanics` defines independent `strider` and `swarm_spider`
+controllers. Strider exposes movement scale, glide retention, rowing force range,
+ready/chase/wander probability denominators, stroke/Row event frames, angular
+tracking, visual height and contact damage. Its 20-frame stroke applies one
+impulse at frame 6 and uses water-crossing collision while respecting solid cover.
+
+Swarm Spider exposes scale, ground retention, two distance thresholds, turning
+and early-completion probabilities, visual hop height, damage and player-objects
+collision. Three distance tiers each supply short/medium/long weights; each hop
+then supplies total/Jump/Land frames, speed range and angle spread. The source
+10/12/18-frame hops keep their ground collider. The player-objects policy also
+prevents enemy crowd separation and fireplace-body contact damage; it does not
+grant immunity to player flames, burning status, bullets or explosions.
+
+`replace_spawn SOURCE TARGET FIRST_BAND LAST_BAND VARIANT` is a deterministic
+final replacement in phase 3. It applies to both floor residents and every direct
+or queued birth, before stats and placement. Unlike random `replace_monster`, it
+can replace an entire grouped entry without splitting the group. Chained/cyclic
+spawn replacements are rejected. The wet band-1 rule replaces ordinary Spider
+births with Striders, including Big Spider children and their retained impulses.
+
+These profiles use the existing immutable snapshot and reload policy. See the
+[Strider/Swarm report](docs/reports/isaac-enemy-port/spider_variants/README.md)
+for source evidence, local adaptations and remaining gaps.
+
+### Long Legs and regenerating Sack profiles
+
+`long_legs.mechanics` contains the four Baby/Crazy Long Legs identities and the
+Sack child. `long_legs` selects flee/lay or chase/volley behavior, source attack
+frames, event timing, population checks, child/twin rules and physical shot arcs.
+`sack` configures initial HP, regenerative acceleration, population-gated attacks,
+throw targeting and its child. Source-stage HP uses the existing `stage_health`
+directive. Profiles are validated and reloaded through the same immutable mechanics
+snapshots as the rest of the roster. See the [Long Legs report](docs/reports/isaac-enemy-port/long_legs/README.md)
+for source evidence, local adaptations and pending parity work.
+
+### Boil family profiles
+
+`boils.mechanics` replaces generic Boil, Gut and walking-family behavior with
+source-derived attack events and physical projectiles. A `boil` row selects
+stationary growth or wandering, its payload, growth/attack cycle, movement and
+throw height. A `boil_projectiles` row supplies volley counts, speed/scatter,
+height/falling fields, aimed multipliers and explosion values. The existing
+`sack` directive remains compatible and shares the cycle implementation.
+
+Stationary variants start at 7/20 source HP and recover; walkers start full and
+never regenerate. All six have source-aware explosion immunity. Values use the
+same validated immutable reload snapshots as other mechanics: rejected content
+cannot partially modify an active run. See the [Boil family report](docs/reports/isaac-enemy-port/boils/README.md)
+for source evidence, local conversions and unfinished acceptance gates.
+
+### Tainted Hopper landing rings
+
+`tainted_hopper.mechanics` binds the shared `target_hop` controller to a four-stage
+`hop_rings` sequence. Its first three landings chain into the next hop; the fourth
+finishes recovery. The rings contain4/6/8/12 projectiles with physical falling
+flight. A sparse band3 encounter rule adds at most one initial Tainted Hopper.
+
+The `hop_rings` fields are monsterID,damage,lifetime,radius,height,minimum and
+maximum upward velocity,gravity,flight retention,stage count,then count/speed
+pairs. Invalid counts,speeds,flight ranges or incompatible bindings reject the
+whole content snapshot. Changes use the existing immutable reload mechanism.
+The [report](docs/reports/isaac-enemy-port/tainted_hopper/README.md) separates
+source behavior from3D adaptations. Shared adaptive armor is now implemented
+for this regular variant; the four-stage attack still has open acceptance gates.
+
+
+### Regular enemy adaptive armor
+
+`assets/mechanics/adaptive_armor.mechanics` binds the installed-source armor
+algorithm to seven existing regular variants. Each source30Hz tick averages
+raw accepted damage over up to120 frames, including the current batch and quiet
+frames. The soft cap is maximumHP/strength. Above the cap, all ordinary hits in
+that batch use `r + max(minimum - correction*r, 0)`, where `r=cap/recentDPS`.
+
+```
+adaptive_armor 29.3.0 30 120 .09 .18
+```
+
+Fields are exact monster ID, strength, history frames, minimum and correction.
+Strength must be positive and at most1000; history is1–600; minimum and correction
+are in0–1 with correction at least minimum. Bindings require ordinary independent
+bodies, excluding registered bosses, components, companions and room hazards.
+Invalid files reject the whole reload. Existing simulations retain their immutable
+content snapshot; new simulations use the successful reload.
+
+Real dynamite and physical source Bomb bodies bypass reduction while contributing
+to recent damage. Piercing bullets and arbitrary explosive effects do not imply
+that bypass. A separate internal flag skips both history and scaling. Pending
+hits preserve their event context and chain budget through room suspension and
+resolve once; execution cancels them. The protagonist's HP and damage are unchanged.
+
+See the [source and implementation report](docs/reports/isaac-enemy-port/adaptive_armor/README.md).
+Shared component/boss armor, source protection/version reconciliation and full
+per-enemy acceptance remain open. Adding this mechanic does not certify seven
+complete enemy ports.
+
+### Leaper high jumps
+
+`assets/mechanics/leapers.mechanics` extends `target_hop` with an occasional
+committed high leap. Normal Leapers fire a four-way cardinal shot only on the
+high landing. Sticky Leapers leave non-damaging slowing creep on ordinary and
+high landings, with six scattered physical shots on the high landing. Their
+bullet tint is independent of impact behavior, so shots do not create extra tar.
+
+The `leaper` fields are ID, selection denominator, Up duration/Jump frame,
+Down duration/Land frame, progress step, local arc height, legal-target search
+radius, Sticky flag, shot count/speed/damage/life/height, upward velocity range,
+gravity/retention, base radius, size base/step/jitter, small/big creep radii and
+creep duration. Frames use source30Hz. Invalid phase ordering, flight values or
+conflicting landing controllers reject the entire immutable reload snapshot.
+Existing runs keep their loaded values; new runs use successfully reloaded data.
+
+Normal Leapers now occupy sparse middle-floor bands1–2; Sticky Leapers occupy
+band2. Their source HP converts to80 and89.6. Ground landing markers communicate
+the committed target while Original procedural visuals distinguish the variants.
+The [source review](docs/reports/isaac-enemy-port/leapers/source-review.md) records
+source evidence, explicit3D adaptations and remaining acceptance work.
+
+The [Vis beam-body batch](docs/reports/isaac-enemy-port/vis/implementation-review.md)
+adds dedicated Vis, Double Vis and Scarred Double Vis controllers. Profiles in
+`assets/mechanics/vis.mechanics` define cardinal wandering, acquisition, animation
+events and complete one/two/four-beam attacks. Beams follow their owner and damage
+other enemy types; fading beams are currently harmless as a documented adaptation.
+The configured local width preserves canyon readability. Original visuals and the
+100HP/24-damage starting character remain intact. The final six acceptance gates
+remain unfinished; this is an implementation batch, not a claim of full Isaac parity.
+
+The [Knight/Pon family](docs/reports/isaac-enemy-port/knights/source-review.md) uses
+`knight`, `knight_random`, `knight_impact`, `knight_fire_wave`, `mask_armor`,
+`linked_remnant` and `landing_creep` profiles in `assets/mechanics/knights.mechanics`.
+They configure movement, armor, reflection, linked offspring and ground effects.
+Content reload creates a validated immutable snapshot; existing runs retain their
+current snapshot. Full behavioral/visual/balance acceptance is still open.
+
+The [Leech family](docs/reports/isaac-enemy-port/leeches/source-review.md) uses
+`leech` profiles in `assets/mechanics/leeches.mechanics`: flying cardinal wander,
+committed charge, native momentum/timing, contact damage and optional owned fly.
+Kamikaze and Holy use immediate `death_blast` profiles. Holy's retained orbiter
+is canceled if its parent dies before it can spawn, and removed with the parent.
+Content reload validates a new immutable snapshot. Full status, creation-path,
+visual, balance and performance acceptance remains open.
+
+The [Dople/Evil Twin family](docs/reports/isaac-enemy-port/dople/source-review.md)
+uses `mirror` profiles in `assets/mechanics/mirrors.mechanics`. They configure
+weapon-delay-driven attacks, the Twin's cooldown, projectile spread and motion,
+and reflected movement inheritance. Both use room-centered positioning and zero
+contact damage; the late-floor planner allows one mirror enemy per room. Immutable
+reloads retain the existing run's snapshot. Native spike/status/physics and full
+visual/balance/performance parity are still open.
+
+The [Guts family](docs/reports/isaac-enemy-port/guts/source-review.md) uses external
+`guts`, `guts_charge` and `guts_creep` profiles in `assets/mechanics/guts.mechanics`.
+They control contour movement, source-frame timing, charge and independent ground
+trails. The seeded `dank` and `scarred` encounter contexts preserve Original canyon
+rendering while gating Slog and Scarred Guts replacement. This is an in-progress
+port, with recorded Linux/WASM checks and explicit remaining parity gaps.
+
+The [Chubber batch](docs/reports/isaac-enemy-port/chubber/implementation-review.md)
+adds its owned returning attack body, with external tuning in
+`assets/mechanics/chubber.mechanics`. It passes terrain, slows before returning
+toward its moving parent, blocks ordinary/spectral shots, and allows piercing
+shots through. Zero HP means invulnerability, without independent loot or a
+room-completion requirement. All four Vis bodies have sparse seeded placements
+in their reviewed floor bands. Exact common-physics timing, missing item/status
+interactions, broader visual coverage, balance and performance remain open.
+
+The [Lump controller](docs/reports/isaac-enemy-port/lump/source-review.md) uses
+`lump` and `lump_shot` in `assets/mechanics/lumps.mechanics`. These expose its
+30Hz attack/burrow timing, relocation constraints, chance denominators, anchor
+motion and three-projectile flight. Hide remains vulnerable until its animation
+ends; the buried body is invisible and intangible but remains a room threat.
+Band3 placement follows its Womb-family source habitats. The previous position
+is retained when a room has no valid relocation candidate. Full native status,
+visual, balance and performance acceptance is still pending.
+
+The [MemBrain family and Cyst](docs/reports/isaac-enemy-port/membrains/source-review.md)
+use `membrain`, `membrain_shot` and `guts_shot` profiles in
+`assets/mechanics/membrains.mechanics`. The parents wander, remain damageable
+through their visual hop, and emit eight shots at Attack frame29. Dead Meat
+uses a slower rotated ring that repeatedly reflects from lateral solids until
+landing. Death produces two real Brains, Guts or Cysts; retained births prevent
+premature room completion. Cyst rolls while firing every31 source updates.
+Profiles include HP, timing, flight, damage, offspring and seeded late-floor
+placement. Linux/WASM evidence and explicit remaining fidelity gaps are linked
+from the batch checkpoint; this is still an in-progress port.
+
+The [Adult Leech](docs/reports/isaac-enemy-port/adult-leech/implementation-review.json)
+uses `adult_leech`, `adult_leech_burrow` and `adult_leech_shot` profiles in
+`assets/mechanics/adult_leeches.mechanics`. Its horizontal charge steers slightly
+vertically; strong wall hits release12 shots. Below66%HP it can burrow once,
+then fall near the player and release10 shots. Source animation events control
+collision and warning phases. The hidden body has no health bar or hover target.
+It appears in late-band charge-lane rooms; natural witness seed5/floor4/room1
+uses zero-based indices. This remains a partial port; special creation paths,
+full status fidelity, balance and performance acceptance are still open.
+
+The [Dinga family](docs/reports/isaac-enemy-port/dinga/implementation-review.json)
+uses `dip`, `squirt`, `membrain`, `membrain_shot` and `dinga` profiles in
+`assets/mechanics/dinga.mechanics`. These expose movement, attack timing,
+stage HP, projectile flight, living/death offspring and floor placement. Dip
+makes random dashes; Squirt winds up before a committed slide. Dinga's hop
+spawns Dips or brown shots and pushes nearby Dips. Its death chain produces two
+Squirts and then four Dips, with retained births preventing premature room clear.
+Native/WASM checks cover these ordinary paths; full status, item, audiovisual,
+balance and performance fidelity remain open.
+
+
+The [Dip and Squirt variants](docs/reports/isaac-enemy-port/dip-variants/implementation-review.json)
+add Corn217.1, Brownie Corn217.2, Big Corn217.3, Dank Squirt220.1, Drip870
+and Splurt871. Profiles live in `assets/mechanics/dip_variants.mechanics`.
+Corn has stronger random impulses; Brownie follows the installed ordinary
+controller despite a conflicting wiki description. Big Corn shoots a predictive
+corn projectile on death. Drip chains short bursts and sometimes aims at the
+player. Splurt charges twice, retargeting during its shorter second windup,
+and releases two moving Drips. Dank Squirt leaves slowing black creep and
+releases two real Clots. Big Corn, Drip and Splurt cross flooded pits while
+retaining solid-wall collision, including during offspring placement and crowd
+separation. Deferred deaths/births keep the room sealed until resolved.
+
+`slide_swim`, `drip_chain`, `splurt`, `slide_creep` and `slide_death_shot`
+extend the existing `dip`/`squirt` profiles. Configuration reload creates a new
+validated content snapshot; existing simulations retain their old snapshot.
+Timing, movement, HP, shots, creep and seeded encounter weights are external.
+Try `./build/deathward --smoke --scene enemy-871.0.0 --theme canyon --style original --frames 480 --mute` for the double charge. Natural witnesses and Linux/WASM
+evidence are recorded in the [batch report](docs/reports/isaac-enemy-port/dip-variants/checkpoint.json).
+These remain partial ports: source status/item/control interactions, full
+creep-effect parity, alternate production and final acceptance remain open.
+
+
+Ordinary Gapers (10.0/10.1/10.2) use `gaper` profiles in
+`assets/mechanics/gapers.mechanics`. Profiles expose source-timed acceleration,
+friction, head and walking frames, contact damage and HP. Frowning eyes open
+once a ground path becomes clear, with the speed increase starting on the next
+head frame. `lethal_morph_roll` and ordered `lethal_morph_choice` rows in
+`deaths.mechanics` configure same-entity Gusher/Pacer transformations. These
+keep their entity and ownership, and do not pay a premature kill reward.
+
+Scorched Washes can replace either ordinary parent with Flaming Gapers; other
+opening contexts use ordinary/Frowning bodies. Existing simulations retain
+immutable configuration snapshots when files are reloaded. See the
+[Gaper contract](docs/reports/isaac-enemy-port/gaper/movement-contract.json)
+for source evidence, external field order and remaining acceptance gaps.
+
+Small Maggots (853.0.0) use `small_maggot` profiles in
+`assets/mechanics/small_maggots.mechanics`, both as offspring and as late-floor
+residents. They have 32 HP, a seeded 10–39-frame initial delay, retained momentum,
+curving movement and separate awareness/line-of-sight checks. The profile exposes
+distance conversion, friction, force range, pursuit multiplier, curvature,
+obstacle lookahead/turn limits, awareness range, contact damage, initial/turn
+timer ranges, awareness cadence/chance, forget chance and walking frames.
+Reloaded files affect new content snapshots; active simulations keep theirs.
+Native status, camouflage, special thrown states and full acceptance remain open.

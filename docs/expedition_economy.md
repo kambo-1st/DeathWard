@@ -2,7 +2,7 @@
 
 Milestone 6 adds three optional functions to modern canyon floors, within the existing 9–15-room budget. The five-room tutorial, Classic comparison and Western Mine retain their earlier room allocation, locks and reward rules. Story sites remain attached to their scheduled floors and never become paid trades.
 
-Early floors select one service room; floors with at least twelve rooms select up to two different services. Selection uses an independent seed stream and prefers side branches. The entry, miners, altar, shop, power rooms, boss and scheduled story site are protected. At least three ordinary combat rooms remain. Service rooms have no enemies. Walk to the person or click them to open the offers. The shop modal pauses combat, and both offers have mouse buttons and the existing number-key shortcuts.
+Early floors select one service room; floors with at least twelve rooms select up to two different services. Selection uses an independent seed stream and prefers side branches. Floors 1–3 draw only the exchange and smuggler; the Field Surgeon becomes eligible on floor 4, regardless of expedition length or difficulty band. The entry, miners, altar, shop, power rooms, boss and scheduled story site are protected. At least three ordinary combat rooms remain. Each shop or service room contains one trader; a shopkeeper and a specialist never share a room. Service rooms have no enemies. Walk to the person or click them to open the offers. The shop modal pauses combat, and both offers have mouse buttons and the existing number-key shortcuts.
 
 | Function | Offer | Limit |
 | --- | --- | --- |

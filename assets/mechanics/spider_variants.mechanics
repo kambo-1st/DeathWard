@@ -1,0 +1,13 @@
+DEATHWARD_MECHANICS 1
+monster 814.0.0 "Strider" Wander None Spider 20.8 3.5 .4 1 .2 1 0 1 0 1 legacy
+monster 884.0.0 "Swarm Spider" Hop None Spider 15.04 4.5 .4 1 .2 1 0 1 0 1 legacy
+stage_health 814.0.0 6.5 0 3.2
+stage_health 884.0.0 4.5 .2 3.2
+# scale retention force-min/max ready/check chances stroke/Row frames turn hover contact
+strider 814.0.0 .1 .95 6 9 4 2 3 20 6 .2 .8 10
+# scale retention near/far ranges turn denominators early-finish height contact player-objects-only
+# three distance-tier weights; then each hop: total/Jump/Land frames, speed-min/max, spread-degrees
+swarm_spider 884.0.0 .1 .7 100 200 4 20 4 .35 10 1 5 3 0 2 3 2 2 3 9 10 2 8 5 6 45 12 3 9 8 10 20 18 4 14 10 13 10
+# All births, including Big Spider children, become Striders in wet band1.
+replace_spawn 85.0.0 814.0.0 1 1 flooded
+encounter 0 2 pursuit basic 884.0.0 1 2 8 4

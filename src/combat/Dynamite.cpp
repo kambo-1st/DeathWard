@@ -2,7 +2,7 @@
 
 namespace dw {
 namespace {
-constexpr float Gravity = 18, ChargeRadius = .18f, FlightTime = .7f;
+constexpr float Gravity = DynamiteGravity, ChargeRadius = .18f, FlightTime = .7f;
 constexpr float KickContactRadius = .72f, KickSpeed = 5.5f, KickLift = 1.4f;
 } // namespace
 void advanceDynamite(Hazard &charge, const Arena &arena, float dt) {

@@ -39,9 +39,9 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
         if (hit.hit)
             nearest = std::min(nearest, hit.distance);
     }
-    auto hits = [&](Vector3 p, float radius, float height) {
+    auto hits = [&](Vector3 p, float radius, float height, float base=0) {
         const auto hit =
-            GetRayCollisionBox(ray, {{p.x - radius, 0, p.z - radius}, {p.x + radius, height, p.z + radius}});
+            GetRayCollisionBox(ray, {{p.x - radius, base, p.z - radius}, {p.x + radius, base+height, p.z + radius}});
         if (!hit.hit || hit.distance >= nearest)
             return false;
         nearest = hit.distance;
@@ -91,12 +91,16 @@ PointerTarget pickTarget(const Simulation &run, Ray ray, const std::optional<Ray
             result.objective = coin.position;
             result.door.reset();
         }
+    for(const auto &bomb:run.suppliedBombs)
+        if(bomb.state==SuppliedBombState::Pickup&&hits(bomb.charge.position,.45f,.7f)) {
+            result.objective=add(bomb.charge.position,{0,.67f,0});result.door.reset();
+        }
     // Aim at enemy bodies (including their occlusion outlines) through scenery.
     // Only the camera ray ignores cover; the fired projectile still collides.
     nearest = std::numeric_limits<float>::infinity();
     for (const auto &enemy : run.enemies) {
-        if (enemy.alive && !enemy.friendly && enemy.state != EnemyState::Buried &&
-            hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.5f)) {
+        if (enemy.alive && !enemy.friendly && !(enemy.adultLeech&&enemy.adultLeech->intangible) && !(enemy.environment&&enemy.environment->spent) && enemy.state != EnemyState::Buried &&
+            hits(enemy.position, enemy.radius, enemy.kind == EnemyKind::Boss ? 3.4f : 2.5f,enemy.position.y-.85f)) {
             result.enemy = enemy.id;
             result.objective.reset();
             result.door.reset();
@@ -466,12 +470,12 @@ void Game::perform(Action action) {
                     placeDynamiteQueued_ = true;
                     break;
                 }
-                const bool arm = !dynamiteArmed && run->dynamite > 0;
+                const bool arm = !dynamiteArmed && (run->dynamite > 0||run->carriedBomb());
                 resetPointerInput();
                 dynamiteArmed = arm;
                 if (arm)
                     run->announce("Choose a landing point. Escape cancels.",3,MessageKind::ThrowAim);
-                else if (run->dynamite == 0)
+                else if (run->dynamite == 0&&!run->carriedBomb())
                     run->announce("Out of dynamite. The shop sells a refill pack.");
             }
             break;
@@ -556,9 +560,9 @@ void Game::debugInput() {
     if (IsKeyPressed(KEY_F10))
         collisionDebug = !collisionDebug;
     if (IsKeyPressed(KEY_LEFT_BRACKET))
-        selectedItem = (selectedItem + ItemCount - 1) % ItemCount;
+        selectedItem = (selectedItem + int(defaultMechanics()->items().size()) - 1) % int(defaultMechanics()->items().size());
     if (IsKeyPressed(KEY_RIGHT_BRACKET))
-        selectedItem = (selectedItem + 1) % ItemCount;
+        selectedItem = (selectedItem + 1) % int(defaultMechanics()->items().size());
     if (!run)
         return;
     const bool shift = IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT);
@@ -607,8 +611,8 @@ void Game::debugInput() {
             run->keys += 3;
             run->debugNotice("CHEAT / added 3 keys");
         } else
-            for (int i = 0; i < ItemCount; ++i)
-                run->grant(ItemId(i));
+            for (const auto &item:run->content->items())
+                run->grant(item.id);
     }
     if (IsKeyPressed(KEY_F7) || IsKeyPressed(KEY_F12)) {
         if (IsKeyPressed(KEY_F7))
@@ -633,10 +637,10 @@ void Game::debugInput() {
     if (IsKeyPressed(KEY_F11))
         run->startStress();
     if (IsKeyPressed(KEY_I))
-        run->grant(ItemId(selectedItem));
+        run->grant(run->content->items()[size_t(selectedItem)%run->content->items().size()].id);
     if (IsKeyPressed(KEY_V))
         for (int i = 0; i < 5; ++i)
-            run->grant(ItemId(run->rewardRng.bounded(ItemCount)));
+            run->grant(run->content->items()[run->rewardRng.bounded(uint32_t(run->content->items().size()))].id);
     if (IsKeyPressed(KEY_P))
         paused = !paused;
     if (IsKeyPressed(KEY_O))
@@ -720,25 +724,18 @@ bool Game::pointerOverControls() const {
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
            (live&&(over(expeditionHud::Dynamite)||over(expeditionHud::DynamiteMode)||
                over(expeditionHud::Dodge)||over(expeditionHud::Pause)||
-               (showExpeditionInteraction()&&over(expeditionHud::Interact))||
                (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
 }
-bool Game::showExpeditionInteraction() const {
-    if(!run)return false;
-    const auto label=run->nearbyInteraction();
-    // The exit already has a clickable marker. Keep other nearby actions,
-    // including a boss reward which may happen to stand beside the exit.
-    return !label.empty()&&label!="NEXT FLOOR"&&label!="RETURN TO FORT"&&label!="RETURN HOME";
-}
 int Game::ownedItemTypes() const {
     int count=0;
-    if(run)for(int i=0;i<ItemCount;++i)count+=run->itemStacks(ItemId(i))>0;
+    if(run)for(const auto &item:run->content->items())count+=run->itemStacks(item.id)>0;
     return count;
 }
 std::string Game::expeditionNotice() const {
     if(!run)return {};
+    if(run->carriedBomb())return "LIT BOMB / THROW OR PLACE";
     if(const auto warning=run->demolitionWarning();!warning.empty())return warning;
     const bool visible=run->messageTime>0&&
         (run->messageKind==MessageKind::Notice||
@@ -1153,6 +1150,7 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             doorQueued_.reset();
             attackTarget_ = pointed.enemy;
             leftCommand_ = exitMarkerHovered                     ? LeftCommand::Interact
+                           : run->carriedBomb()                    ? LeftCommand::Attack
                            : attackTarget_                         ? LeftCommand::Attack
                            : (pointed.objective || pointed.door) ? LeftCommand::Interact
                                                                  : LeftCommand::Move;
@@ -1170,7 +1168,8 @@ void Game::update(float dt, const SceneryPicker &pickScenery) {
             } else if (leftDown && leftCommand_ == LeftCommand::Attack) {
                 // Lock the clicked enemy until release, including when the cursor moves.
                 // Once it dies, keep the attack gesture from turning into a movement order.
-                if (const auto *enemy = run->findEnemy(attackTarget_); enemy && enemy->alive) {
+                if(run->carriedBomb())input.fire=true;
+                else if (const auto *enemy = run->findEnemy(attackTarget_); enemy && enemy->alive) {
                     input.aim = enemy->position;
                     input.fire = true;
                 }

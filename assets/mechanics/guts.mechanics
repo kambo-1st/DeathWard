@@ -1,0 +1,25 @@
+DEATHWARD_MECHANICS 1
+# Installed 1.7.9b: HP25/28/28, fixed health; local HP conversion3.2.
+monster 40.0.0 "Guts" Wall None Blob 80 2.8 .6 2.4 .55 3 0 1 0 1 legacy
+monster 40.1.0 "Scarred Guts" Wall None Blob 89.6 2.8 .6 2 .6 4 0 1 0 1 legacy
+monster 40.2.0 "Slog" Wall None Blob 89.6 3 .6 2.5 .65 3 0 1 0 1 legacy
+stage_health 40.0.0 25 0 3.2
+stage_health 40.1.0 28 0 3.2
+stage_health 40.2.0 28 0 3.2
+# scale source-force retention grid arrival cross-axis-pull local-contact RollFrames
+guts 40.0.0 .1 3 .6 40 10 .4 10 24
+guts 40.1.0 .1 3.3 .6 40 10 .4 10 24
+guts 40.2.0 .1 2.45 .6 40 10 .4 10 24
+# ChargeStartFrames recoveryFrames hitFrames predictionFrames multiplier brake recoveryAcceleration
+guts_charge 40.2.0 6 60 11 5 1.8 .1 .05
+# kind normal/charging source interval lifetime fade; local radius/damage; fade scale.
+# Radius retains DeathWard's small ground-trail footprint; not claimed native-size parity.
+guts_creep 40.1.0 red 2 2 20 40 .75 10 .98
+guts_creep 40.2.0 tar 4 1 150 40 .75 0 .98
+# Main-library habitat evidence, authored local costs/weights. Dank/Scarred are
+# encounter contexts; they retain Original canyon geometry and materials.
+encounter 2 3 pursuit specialist 40.0.0 1 3 2
+encounter 3 3 pursuit specialist 40.1.0 1 4 1
+encounter 2 2 charge_lane specialist 40.2.0 1 4 1 1 dank
+# Source 50% replacement is specific to Scarred Womb's local counterpart.
+replace_monster 40.0.0 40.1.0 3 3 scarred 5000 1

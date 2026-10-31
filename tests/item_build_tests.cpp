@@ -148,7 +148,7 @@ void braid() {
     check(limited.stats.explosions==2&&limited.stats.suppressed==1&&limited.chains.empty(),"hazard capacity bounds children without leaking active work");
 }
 void rewardsAndSave() {
-    std::set<ItemId> offered;
+    std::set<ItemKey> offered;
     for(uint64_t seed=0;seed<32;++seed) {
         Simulation run(seed,1,{});
         for(const auto &r:run.rooms)for(auto i:r.offers)offered.insert(i);

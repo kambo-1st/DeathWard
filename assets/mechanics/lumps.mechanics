@@ -1,0 +1,12 @@
+DEATHWARD_MECHANICS 1
+# Repentance1.7.9b Lump: HP30, contact1; source distances x.1, HP x3.2, damage x10.
+monster 56.0.0 "Lump" Burrow None Blob 96 0 .6 2.1 .1333333 3 0 1 0 1 legacy
+stage_health 56.0.0 30 0 3.2
+# scale/anchor retention/contact; hide/appear chance denominators; Hide/Appear/Shake frames;
+# source random-room margin, axis exclusion, axis-distance exclusion, minimum distance, cell.
+lump 56.0.0 .1 .7 10 50 20 16 22 2 20 20 400 200 40
+# check/cooldown/Spit/Shoot frames; world range/base speed/damage/lifetime;
+# shot height/up/gravity/vertical retention/radius. Native mode2 adds1.2 speed +.4 body velocity.
+lump_shot 56.0.0 7 63 20 4 26 21 10 8 1.15 6 9 .9 .22
+# Womb/Utero/Scarred Womb ordinary templates. Local weight/cost/cap are authored.
+encounter 3 3 crossfire specialist 56.0.0 2 3 2

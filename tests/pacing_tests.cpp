@@ -53,8 +53,27 @@ int main() {
                             else check(width.x>=20&&width.x<=28&&width.z>=20&&width.z<=28,"ordinary opening rooms use 20-28 metre envelopes");
                         }
                         run.arena.sealRoom(i);
-                        for(const auto &enemy:run.roomEnemies(i))
-                            check(!run.arena.blocked(enemy.position,enemy.radius),"smaller floor residents spawn clear of scenery");
+                        for(const auto &enemy:run.roomEnemies(i)) {
+                            if(run.content->statue(enemy.monster)) {
+                                auto bodies=std::move(run.arena.movementBodies);
+                                const bool clear=!run.arena.blocked(enemy.position,enemy.radius);
+                                run.arena.movementBodies=std::move(bodies);
+                                check(clear,"stationary hazard spawns clear of scenery, excluding its own solid footprint");
+                            } else {
+                                const auto *definition=run.content->monster(enemy.monster);
+                                const bool flying=definition&&definition->flying;
+                                // Flying offspring may start over water or low cover. The
+                                // walking mask is deliberately stricter than their own mask.
+                                const bool blocked=flying?run.arena.flightBlocked(enemy.position,enemy.radius,i):
+                                    run.arena.blocked(enemy.position,enemy.radius);
+                                if(flying)check(enemy.position.y>=run.arena.flightHeight(enemy.position,enemy.radius)-.001f,
+                                    "flying residents clear their supporting surface");
+                                if(blocked)std::cerr<<"BLOCKED_RESIDENT pacing="<<int(pacing)<<" theme="<<int(theme)
+                                    <<" room="<<i<<" monster="<<monsterIdText(enemy.monster)<<" position="
+                                    <<enemy.position.x<<','<<enemy.position.y<<','<<enemy.position.z<<" radius="<<enemy.radius<<'\n';
+                                check(!blocked,"smaller floor residents spawn clear of scenery");
+                            }
+                        }
                         run.arena.sealRoom(-1);
                     }
                     if(pacing==ExpeditionPacing::ShortCorridors) {

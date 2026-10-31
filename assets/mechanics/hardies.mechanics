@@ -1,0 +1,12 @@
+DEATHWARD_MECHANICS 1
+# Installed1.7.9b Hardy826: charge frame36; three productive impacts.
+monster 826.0.0 "Hardy" Charge None Stone 153.6 3 .52 2.4 .55 1 0 1 0 1 legacy
+stage_health 826.0.0 42 6 3.2
+# scale retention idleRetention force launch chance check launchFrame hitFrames cooldown slowAfter
+# slowSpeed stopSpeed brake collisionBrake impactDot contact blastMultiplier deathChild childHP rockChild
+hardy 826.0.0 .1 .95 .5 .7 20 5 5 36 26 60 30 9 1 .8 .6 .5 10 2.5 217.0.0 2 818.0.0
+# child offset height spread speedMin/Max verticalMin/Max; shot scale height radius damage life;
+# ringSpeed clusterSpeed scatter fallingMin/Max gravity retention.
+hardy_payload 826.0.0 20 -10 120 1 3 -5 -3 .1 1.15 .22 10 8 10 7 3.5 -19 5 18.9 .9
+# Mines/Ashpit source templates; Quarry specialist.
+encounter 1 1 pursuit specialist 826.0.0 1 3 2

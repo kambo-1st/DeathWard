@@ -1,0 +1,25 @@
+DEATHWARD_MECHANICS 1
+# Installed type26, all variants:20 sourceHP x3.2. Flying walls-only chasers.
+monster 26.0.0 "Maw" Chase Shot Skull 64 1.7 .55 .933333333 .133333333 1 1 1 0 1 legacy
+monster 26.1.0 "Red Maw" Chase None Skull 64 3.3 .55 .933333333 .133333333 2 1 1 0 1 legacy
+monster 26.2.0 "Psychic Maw" Chase Shot Skull 64 1.7 .55 .933333333 .133333333 3 1 1 0 1 legacy
+stage_health 26.0.0 20 0 3.2
+stage_health 26.1.0 20 0 3.2
+stage_health 26.2.0 20 0 3.2
+# scale force retention contact shoots; acquisition/cooldown/animation/event;
+# range speed damage life radius; death count/speed/damage. Fixed30Hz source.
+maw 26.0.0 .1 .13 .93 10 1 7 28 20 4 20 21 10 5 .22 0 24 10
+maw 26.1.0 .1 .39 .93 10 0 7 28 20 4 20 21 10 5 .22 4 24 10
+maw 26.2.0 .1 .13 .93 10 1 7 28 20 4 20 21 20 5 .33 0 24 10
+# Child; homing range, acceleration/frame in world velocity, retention, lead gate.
+maw_psychic 26.2.0 96.0.0 10 4.2 .92 .0166666667
+monster 96.0.0 "Eternal Fly" Orbit None Fly 960 3 .4 2 .5 2 1 1 1 0 legacy
+stage_health 96.0.0 300 0 3.2
+# Released actor; parent orbit radii/radians per frame/follow; radius ramp/regen/contact.
+eternal_fly 96.0.0 18.0.0 2.5 2 .125663706 .5 90 60 10
+# Authored canyon reachability, Caves onward. These weights are not claimed to
+# reproduce native room tables or the native variant replacement probabilities.
+encounter 1 3 pursuit specialist 26.0.0 2 3 1
+encounter 1 3 crossfire specialist 26.0.0 2 3 1
+encounter 1 3 pursuit specialist 26.1.0 1 3 1
+encounter 1 3 crossfire specialist 26.2.0 1 5 1

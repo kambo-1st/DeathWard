@@ -98,8 +98,8 @@ int main() {
                       "canyon groups including the finale and companions respect the area budget");
                 for (size_t i = 0; i < a.enemies.size(); ++i) {
                     check(room==a.finalRoom()
-                              ? a.enemies[i].kind==EnemyKind::Boss&&a.enemies[i].bossKind==a.expedition.bossOnFloor(a.floor)
-                              : a.enemies[i].kind==EnemyKind::Monster&&a.enemies[i].monster!=0,
+                              ? a.enemies[i].kind==EnemyKind::Boss&&a.enemies[i].bossKind==a.arena.profile.boss
+                              : a.enemies[i].kind==EnemyKind::Monster&&bool(a.enemies[i].monster),
                           "canyon keeps Isaac ordinary enemies and its dedicated canyon boss");
                     check(a.enemies[i].kind == b.enemies[i].kind &&
                               a.enemies[i].monster == b.enemies[i].monster &&
@@ -124,7 +124,7 @@ int main() {
             check(a.roomClear && a.bossKilled && !a.boss(),
                   "clearing the canyon finale satisfies its objective without a Sheriff");
             a.startBoss();
-            check(!a.roomClear && !a.bossKilled && a.boss() && a.boss()->bossKind==a.expedition.bossOnFloor(a.floor) && a.roomThreats() == 1,
+            check(!a.roomClear && !a.bossKilled && a.boss() && a.boss()->bossKind==a.arena.profile.boss && a.roomThreats() == 1,
                   "replaying the canyon finale restores its dedicated guardian");
             a.clearRoomDebug();
             a.spawnEnemies(30);

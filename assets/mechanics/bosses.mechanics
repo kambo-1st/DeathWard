@@ -1,0 +1,31 @@
+DEATHWARD_MECHANICS 1
+# Source Peep: 68.0, 450 HP, collision radius 27. DW HP/radius/timings are explicit local conversions.
+monster 68.0.0 "Peep" Still None Blob 1440 0 1.25 2.4 .65 2 0 1 0 0 legacy
+# owner eye flight distance base-apex max-apex creep-radius lifetime shot-speed shot-damage contact-damage
+# followed by yellow size/speed, trail interval/radius, and creep/ring/jump choice weights.
+boss_peep 68.0.0 68.10.0 .85 6 3.5 6 2.8 6 7.5 10 20 .85 1.25 .3 .7 1 1 1
+# eye owner contact-damage bomb-direction-deflection; eyes never enter ordinary pools.
+component_bounce 68.10.0 68.0.0 10 1.5
+# Caves/Catacombs/Flooded Caves -> Broken Quarry. Weights and champion odds are DW tuning.
+boss_native 1 5
+boss_pool 1 68.0.0 normal 3
+boss_pool 1 68.0.0 cyan 1
+boss_pool 1 68.0.0 yellow 1
+
+# Bloat has its own fixed rings, short hops, instant cardinal lasers and green form.
+monster 68.1.0 "The Bloat" Still None Blob 1440 0 1.25 2.4 .5 3 0 1 0 0 legacy
+# owner eye charger flight distance apex max-apex short-flight short-apex creep-radius lifetime
+# landing-creep-radius shot-speed shot-damage contact-damage creep/short-hop/jump weights
+boss_bloat 68.1.0 68.11.0 23.0.0 .9 7 3.8 6 .35 .7 3 6 1 8 10 20 1 1 1
+# owner range radius duration recovery alignment-width damage (no warning delay)
+boss_lasers 68.1.0 32 .32 .7 1.5 .8 10
+# owner flight gravity spread blast-radius blast-damage live/pending-Charger-cap
+boss_ipecac 68.1.0 1.1 12 2 2.8 20 12
+component_bounce 68.11.0 68.1.0 10 1.5
+# Necropolis / Utero -> Abandoned Works / Storm Cut. Local distribution retains native bosses.
+boss_native 2 6
+boss_native 3 6
+boss_pool 2 68.1.0 normal 3
+boss_pool 2 68.1.0 green 1
+boss_pool 3 68.1.0 normal 3
+boss_pool 3 68.1.0 green 1

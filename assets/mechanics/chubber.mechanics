@@ -1,0 +1,13 @@
+DEATHWARD_MECHANICS 1
+# Repentance 1.7.9b Chubber and its owned attack, not a free-standing Charger.
+monster 39.2.0 "Chubber" Wander None Headless 80 1.3 .7 3.5 .6 3 0 1 0 1 legacy
+stage_health 39.2.0 25 0 3.2
+vis 39.2.0 .1 .7 .8 10 22 3 20 400 69 18 0 40 5 .6 10 11 10
+vis_returning_body 39.2.0 39.22.0
+# The native controller explicitly clears its nominal XML HP and maxHP to zero.
+# Its physical radius uses the source13 * .1; no independent loot or encounter.
+monster 39.22.0 "Chubber returning body" Still None Worm 0 0 1.3 1 0 3 0 1 1 0 legacy
+# owner scale launch horizontalMultiplier reversalFrame removeAfter returnOffset contact horizontalSpawnZ
+returning_body 39.22.0 39.2.0 .1 16 1.4 21 42 20 20 .1
+# Source Catacombs/Mines through Depths/Womb; one specialist per room.
+encounter 1 3 charge_lane specialist 39.2.0 1 4 1

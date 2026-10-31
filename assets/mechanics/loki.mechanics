@@ -1,0 +1,13 @@
+DEATHWARD_MECHANICS 1
+# Repentance 1.7.9b: Loki 350 HP; EACH Lokii half 350 HP. Local HP conversion x3.2.
+# Still motion is overridden by the dedicated teleport controller, never generic AI.
+monster 69.0.0 "Loki" Still None Blob 1120 0 1.05 1.6 .35 4 0 1 0 0 legacy
+monster 69.1.0 "Lokii" Still None Blob 1120 0 1.05 1.6 .35 4 0 1 0 0 legacy
+# id child bodies live-child-cap shot-speed shot-damage contact volley-interval
+# vanish reappear minimum-player-distance initial-delay then triple/ring/summon/teleport weights.
+# Distances/timings/weights and sharing Lokii's cap across both halves are explicit local policies.
+boss_loki 69.0.0 25.0.0 1 4 8 10 20 .25 .35 .3 6 1.2 3 2 1 2
+boss_loki 69.1.0 25.1.0 2 1 8 10 20 .25 .35 .3 6 1.2 3 2 1 2
+# Chapter 3 -> Abandoned Works; Chapter 4 -> Storm Cut. Weights retain native bosses.
+boss_pool 2 69.0.0 normal 3
+boss_pool 3 69.1.0 normal 2

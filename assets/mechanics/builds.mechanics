@@ -1,0 +1,50 @@
+DEATHWARD_MECHANICS 1
+# rule key priority owner stack-cap condition; 0 cap means all owned copies.
+# Requirements are ANDed. Modifiers run by (priority,key), never pickup order.
+# modify stat operation first-value per-extra-copy once|per_copy
+rule scatter 10 dw:collectible:5 3 always
+modify scatter set 1 0 once
+modify radius set 0.11 0 once
+modify pellets set 5 2 once
+modify cadence set 0.34 0 once
+end
+rule scatter_plain 11 dw:collectible:5 3 always
+requires dw:collectible:6 0 0
+modify damage multiply 0.38 0 once
+end
+rule scatter_rail 11 dw:collectible:5 3 always
+requires dw:collectible:6 1 -1
+modify damage multiply 0.48 0 once
+modify pellets set 3 1 once
+end
+rule rail 20 dw:collectible:6 5 always
+modify rail set 1 0 once
+modify damage multiply 1.65 0.15 once
+modify speed set 18 0 once
+modify pierce set 3 2 once
+modify radius set 0.17 0 once
+modify cadence set 0.50 0.04 once
+end
+rule lodestone 30 dw:collectible:7 4 always
+modify speed multiply 0.82 0 once
+modify homing set 1.5 0.35 once
+end
+rule scatter_range 35 dw:collectible:5 3 always
+modify life ratio speed 14 0 once
+end
+rule return 40 dw:collectible:8 4 always
+modify return_range set 8 1.5 once
+modify life set 2.2 0 once
+end
+rule cap 50 dw:collectible:9 4 always
+modify damage multiply 0.7 0 once
+modify cap_damage set 10 4 once
+modify cap_radius set 1.5 0.1 once
+modify cap_self_damage set 7 2 once
+end
+rule ricochet 60 dw:collectible:0 0 always
+modify bounces add 3 0 per_copy
+end
+rule judas 70 dw:collectible:2 0 sixth
+modify pierce add 6 0 per_copy
+end

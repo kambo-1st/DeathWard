@@ -37,7 +37,7 @@ void hudInputCheck(const std::filesystem::path &directory) {
         UnloadImage(image);EndDrawing();
     };
     // Former buttons must leave no invisible mouse blockers after they shrink.
-    for(const auto p:{Vector2{160,608},Vector2{850,711},Vector2{420,700}}) {
+    for(const auto p:{Vector2{160,608},Vector2{850,711},Vector2{420,700},Vector2{480,736}}) {
         mouseEvent(MousePosition,int(p.x),int(p.y));frame();
         check(!game.pointerOverControls(),"freed HUD space accepts world input");
         run.player.fireCooldown=0;const auto shots=run.stats.shots;
@@ -50,7 +50,8 @@ void hudInputCheck(const std::filesystem::path &directory) {
     check(game.expeditionNotice().find("landing point")!=std::string::npos,"armed throw shows aiming hint");
     click(248,640);check(!game.dynamiteThrowMode&&!game.dynamiteArmed,"mode switch cancels aiming");
     check(game.expeditionNotice().find("landing point")==std::string::npos,"cancelled throw leaves no stale aiming hint");
-    click(754,736);check(game.paused,"compact Pause button works");key(KEY_ESCAPE);
+    click(754,736);check(game.paused,"compact Pause button works");
+    capture("artifacts/expedition-mission-details.png");key(KEY_ESCAPE);
     check(!game.paused&&run.stats.shots==shots,"HUD clicks never fire into the world");
     for(int i=0;i<dw::ItemCount;++i)run.grant(dw::ItemId(i));
     run.messageTime=0;check(game.ownedItemTypes()==dw::ItemCount,"all unique items fit in the strip");
@@ -957,6 +958,67 @@ void economyInputCheck(const std::filesystem::path &directory) {
     check(run.stats.shots==0,"NPC, trade and reward clicks never fire");
     game.close();std::cout<<"PASS native service walking, mouse/keyboard trades, modal guards, health preview and boss reward dismissal\n";
 }
+void suppliedBombInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    Game game(directory/"supplied-bomb.save");game.seedText="1866";game.themeChoice=ThemeChoice::Mine;game.launch();
+    auto &run=*game.run;run.arena=Arena{};run.arena.bounds={{-25,-1,-25},{25,12,25}};
+    for(auto &r:run.arena.rooms){r.bounds=run.arena.bounds;r.center={0,0,0};r.kind=RoomKind::Combat;}
+    for(auto &r:run.rooms){r.residents.clear();r.cleared=false;r.plates.clear();}
+    run.enemies.clear();run.hazards.clear();run.projectiles.clear();run.suppliedBombs.clear();
+    run.debugScenario=true;run.godMode=true;run.roomClear=false;run.dynamite=0;
+    run.player.position={0,.85f,8};
+    const auto producer=run.spawnMonster(monsterId(809),{0,.85f,0});run.findEnemy(producer)->statueFacing={0,0,1};
+    auto frame=[&]{game.update(Tick);BeginDrawing();EndDrawing();check(game.error.empty(),"supplied bomb input has no game error");};
+    auto click=[&](Vector3 target) {
+        const auto pixel=GetWorldToScreen(target,game.camera);
+        mouseEvent(MousePosition,int(pixel.x),int(pixel.y));frame();
+        check(!game.pointerOverControls(),"bomb target is outside HUD");
+        mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+    };
+    game.updateCamera(10);frame();check(run.suppliedBombs.size()==1,"Input fixture uses actual supplier stock");
+    click(run.suppliedBombs[0].charge.position);
+    for(int i=0;i<240&&!run.carriedBomb();++i)frame();
+    check(run.carriedBomb()&&run.dynamite==0,"Mouse pickup click walks to stock and takes it with zero inventory");
+    const auto shots=run.stats.shots;
+    game.updateCamera(10);click(add(run.player.position,{5,0,0}));
+    check(!run.carriedBomb()&&run.suppliedBombs[0].state==SuppliedBombState::Thrown&&run.stats.shots==shots,
+          "Left click on empty ground throws held bomb without firing a gun");
+    auto takeStock=[&] {
+        run.suppliedBombs.clear();run.findEnemy(producer)->supplyCooldown=0;run.player.position={0,.85f,8};frame();
+        check(run.suppliedBombs.size()==1,"Supplier restocks control fixture");
+        run.player.position=run.suppliedBombs[0].charge.position;run.player.position.y=.85f;frame();
+        check(run.carriedBomb()!=nullptr,"Contact takes real stock for control check");
+    };
+    takeStock();mouseEvent(MousePosition,1100,200);frame();
+    mouseEvent(KeyDown,KEY_RIGHT);frame();mouseEvent(KeyUp,KEY_RIGHT);frame();
+    check(!run.carriedBomb()&&run.suppliedBombs[0].charge.velocity.x!=0&&run.stats.shots==shots,
+          "Arrow throws held bomb while cursor is over HUD");
+    takeStock();mouseEvent(KeyDown,KEY_B);frame();mouseEvent(KeyUp,KEY_B);frame();
+    check(!run.carriedBomb()&&run.suppliedBombs[0].charge.settled&&run.dynamite==0,"B places held bomb with zero ordinary inventory");
+    takeStock();game.dynamiteThrowMode=true;game.perform(Action::Dynamite);
+    check(game.dynamiteArmed,"HUD throw button accepts carried supply with zero ordinary inventory");
+    game.updateCamera(10);click(add(run.player.position,{5,0,0}));
+    check(!run.carriedBomb()&&!game.dynamiteArmed&&!run.suppliedBombs[0].charge.settled&&run.dynamite==0,
+          "Armed mouse throw consumes held supply and preserves inventory");
+    game.close();std::cout<<"PASS native supplied bomb mouse approach, empty-ground throw, arrows over HUD, B placement and zero-inventory HUD throw\n";
+}
+void flightInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    Game game(directory/"flight.save");game.seedText="1866";game.themeChoice=ThemeChoice::Canyon;game.launch();
+    auto &run=*game.run;run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.debugScenario=true;run.godMode=true;
+    auto at=run.arena.rooms.back().center;at.y=.85f;
+    run.arena.floorProps.push_back({StoryPropKind::Crate,{{at.x-1,0,at.z-1},{at.x+1,6,at.z+1}}});run.arena.rebuildWalls();
+    const auto fly=run.spawnMonster(monsterId(13),at);run.player.position=add(at,{0,0,8});
+    game.updateCamera(10);
+    auto frame=[&]{game.update(Tick);BeginDrawing();EndDrawing();check(game.error.empty(),"flight mouse input has no game error");};
+    const auto pixel=GetWorldToScreen(add(run.findEnemy(fly)->position,{0,.25f,0}),game.camera);
+    mouseEvent(MousePosition,int(pixel.x),int(pixel.y));frame();
+    check(!game.pointerOverControls()&&game.hoveredEnemy==fly,"mouse selects the elevated visible body, not its old ground rectangle");
+    mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+    check(run.stats.shots==1&&run.player.aim.y>6.8f,"click-locked firing preserves actual flying target elevation");
+    check(std::abs(run.player.facing.y)<.00001f,"aiming upward does not tilt character navigation/facing");
+    game.close();std::cout<<"PASS native mouse picking and click-locked firing at elevated flying body\n";
+}
 } // namespace
 int main(int argc, char **argv) {
     const auto directory =
@@ -970,6 +1032,14 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if(mode.empty()||mode=="--supplied-bomb-only") {
+            suppliedBombInputCheck(directory);
+            if(mode=="--supplied-bomb-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--flight-only") {
+            flightInputCheck(directory);
+            if(mode=="--flight-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
         if(mode.empty()||mode=="--hud-only") {
             hudInputCheck(directory);
             if(mode=="--hud-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
@@ -1647,8 +1717,11 @@ int main(int argc, char **argv) {
         pressKey(KEY_F3, true);
         pressKey(KEY_F6);
         pressKey(KEY_F6, true);
-        check(game.run->items.size() == dw::ItemCount && game.run->keys == 3,
-              "F6 grants all effects and Shift+F6 supplies testing keys");
+        check(game.run->items.size() == game.run->content->items().size() &&
+                  std::all_of(game.run->content->items().begin(),game.run->content->items().end(),
+                    [&](const auto &item){return std::find(game.run->items.begin(),game.run->items.end(),item.id)!=game.run->items.end();}) &&
+                  game.run->keys == 3,
+              "F6 grants every externally configured item and Shift+F6 supplies testing keys");
         pressKey(KEY_F12, true);
         check(game.run->room == 2 && !game.run->roomClear && game.run->livingEnemies() > 0,
               "Shift+F12 restarts the current room with its enemy group already present");

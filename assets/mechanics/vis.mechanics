@@ -1,0 +1,24 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance 1.7.9b ordinary beam bodies; Chubber's owned payload is in chubber.mechanics.
+monster 39.0.0 "Vis" Wander None Headless 80 1.3 .7 3.5 1 3 0 1 0 1 legacy
+monster 39.1.0 "Double Vis" Wander None Headless 80 1.3 .7 3.5 1 3 0 1 0 1 legacy
+monster 39.3.0 "Scarred Double Vis" Wander None Headless 70.4 1.3 .75 4 1.1 4 0 1 0 1 legacy
+stage_health 39.0.0 25 0 3.2
+stage_health 39.1.0 25 0 3.2
+stage_health 39.3.0 22 0 3.2
+# scale force damping contact walkFrames checkFrames sourceAlignment sourceRange
+# attackFrames ShootFrame beams grid arrival stuckSpeed retries maxCells stuckFrames
+vis 39.0.0 .1 .7 .8 10 22 3 20 400 79 28 1 40 5 .6 10 11 10
+vis 39.1.0 .1 .7 .8 10 22 3 20 400 82 30 2 40 5 .6 10 11 10
+vis 39.3.0 .1 .7 .8 10 22 3 20 400 82 30 4 40 5 .6 10 11 10
+# active/fade/hit frames; local range/radius/playerDamage/monsterDamage/xOffset/height; fade scale.
+# Native laser11 HP becomes35.2 against monsters; native player1 uses local10.
+# Range cap, .35 local width and height retain the readable canyon beam treatment. Fade is deliberately harmless;
+# native timeout-fade collision needs final verification. See vis/implementation-review.md.
+vis_beam 39.0.0 32 19 2 100 .35 10 35.2 .6 .85 .895
+vis_beam 39.1.0 32 19 2 100 .35 10 35.2 .6 .85 .895
+vis_beam 39.3.0 32 19 2 100 .35 10 35.2 .6 .85 .895
+# Depths-family evidence begins at band2; Scarred begins in Womb-family band3.
+# Sparse local threat costs are adaptations, not source template frequencies.
+encounter 2 3 crossfire specialist 39.1.0 1 4 1
+encounter 3 3 crossfire specialist 39.3.0 1 5 1

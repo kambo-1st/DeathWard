@@ -34,6 +34,75 @@ FetchContent_MakeAvailable(raylib)
 target_compile_definitions(raylib PRIVATE MA_NO_NULL)
 
 add_library(deathward_core
+    src/content/ContentId.cpp
+    src/content/Mechanics.cpp
+    src/content/EncounterVariants.cpp
+    src/combat/MonsterBoss.cpp
+    src/combat/LokiBoss.cpp
+    src/combat/HornfelBoss.cpp
+    src/combat/HornfelDecoys.cpp
+    src/combat/HornfelEscorts.cpp
+    src/combat/RailTraffic.cpp
+    src/combat/EnvironmentActors.cpp
+    src/combat/SegmentedBoss.cpp
+    src/combat/ShellBoss.cpp
+    src/combat/BoomFlies.cpp
+    src/combat/BloatBoss.cpp
+    src/combat/Charging.cpp
+    src/combat/Companions.cpp
+    src/combat/Statues.cpp
+    src/combat/OwnedComponents.cpp
+    src/combat/Behavior.cpp
+    src/combat/FireReactions.cpp
+    src/combat/Mortality.cpp
+    src/combat/LobWalkers.cpp
+    src/combat/HeadShooters.cpp
+    src/combat/MawFamily.cpp
+    src/combat/Spitties.cpp
+    src/combat/CardinalWalkers.cpp
+    src/combat/Brains.cpp
+    src/combat/LinkedHeads.cpp
+    src/combat/Babies.cpp
+    src/combat/Vis.cpp
+    src/combat/Guts.cpp
+    src/combat/Mirrors.cpp
+    src/combat/Leeches.cpp
+    src/combat/Lumps.cpp
+    src/combat/AdultLeeches.cpp
+    src/combat/Dips.cpp
+    src/combat/MemBrains.cpp
+    src/combat/MasksAndRemnants.cpp
+    src/combat/ReturningBodies.cpp
+    src/combat/Hosts.cpp
+    src/combat/Mushrooms.cpp
+    src/combat/TargetHops.cpp
+    src/combat/Leapers.cpp
+    src/combat/AdaptiveArmor.cpp
+    src/combat/Eggies.cpp
+    src/combat/BuzzFlies.cpp
+    src/combat/Evaders.cpp
+    src/combat/Swimmers.cpp
+    src/combat/Spiders.cpp
+    src/combat/Hardies.cpp
+    src/combat/Dannies.cpp
+    src/combat/Faceless.cpp
+    src/combat/Gapers.cpp
+    src/combat/GroundPursuit.cpp
+    src/combat/EnemyStatuses.cpp
+    src/combat/Charm.cpp
+    src/combat/BlackGlobin.cpp
+    src/combat/LeperFlesh.cpp
+    src/combat/Lepers.cpp
+    src/combat/RottenGapers.cpp
+    src/combat/SmallMaggots.cpp
+    src/combat/Headless.cpp
+    src/combat/RockSpiders.cpp
+    src/combat/SpiderVariants.cpp
+    src/combat/LongLegs.cpp
+    src/combat/Boils.cpp
+    src/combat/Willos.cpp
+    src/combat/FireWaves.cpp
+    src/combat/Hopping.cpp
     src/cinematic/Cinematic.cpp
     src/world/TownDocument.cpp
     src/world/TownWalkArea.cpp
@@ -49,6 +118,9 @@ add_library(deathward_core
     src/world/Campaign.cpp
     src/world/Expedition.cpp
     src/world/Dungeon.cpp
+    src/world/RailNetwork.cpp
+    src/world/RailArena.cpp
+    src/world/FlightNavigation.cpp
     src/world/Breakables.cpp
     src/world/FloorDressing.cpp
     src/combat/FloorEncounters.cpp
@@ -63,17 +135,31 @@ add_library(deathward_core
     src/combat/Shop.cpp
     src/combat/Services.cpp
     src/combat/Dynamite.cpp
+    src/combat/SuppliedBombs.cpp
+    src/combat/FlyBombs.cpp
+    src/combat/EnemyBombs.cpp
     src/combat/Destruction.cpp
     src/combat/ProjectileMotion.cpp
     src/combat/Enemies.cpp
     src/combat/Encounters.cpp
     src/combat/Monsters.cpp
+    src/combat/MonsterMovement.cpp
+    src/combat/Formations.cpp
     src/combat/Navigation.cpp
     src/items/Items.cpp
     src/items/ItemPools.cpp
 )
 target_include_directories(deathward_core PUBLIC src)
 target_include_directories(deathward_core SYSTEM PUBLIC ${raylib_SOURCE_DIR}/src)
+if(DEATHWARD_PACKAGED_ASSETS)
+    # sourceAssetDirectory uses raylib's executable-directory lookup in portable builds.
+    target_link_libraries(deathward_core PRIVATE raylib)
+endif()
+if(EMSCRIPTEN)
+    target_compile_definitions(deathward_core PRIVATE DEATHWARD_ASSET_DIR="/assets")
+else()
+    target_compile_definitions(deathward_core PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+endif()
 if(MSVC)
     target_compile_options(deathward_core PRIVATE /W4 /permissive-)
 else()
@@ -114,6 +200,9 @@ function(deathward_assets target)
     # per-executable copies race on Windows file locks (especially streamed audio).
     add_custom_target(deathward_runtime_assets)
     add_dependencies(${target} deathward_runtime_assets)
+    add_custom_command(TARGET deathward_runtime_assets POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/mechanics" "$<TARGET_FILE_DIR:deathward>/assets/mechanics"
+        VERBATIM)
     foreach(ui_file title.ttf body.ttf LICENSE.txt)
         set(ui_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/ui/${ui_file}")
         add_custom_command(TARGET deathward_runtime_assets POST_BUILD
@@ -192,6 +281,8 @@ if(EMSCRIPTEN)
     set(web_assets
         assets/ui/title.ttf assets/ui/body.ttf assets/ui/LICENSE.txt
         assets/bandit/bandit.glb assets/cowgirl/cowgirl.glb assets/western/western.glb assets/western/western.catalog)
+    file(GLOB mechanics_assets CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/mechanics/*.mechanics")
+    list(APPEND web_assets ${mechanics_assets})
     file(GLOB web_particles CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
         "assets/particles/*.glb" "assets/particles/*.png"
         "assets/particles/*.particles" "assets/particles/*.attachments")
@@ -229,11 +320,21 @@ if(DEATHWARD_ART_SAMPLE AND NOT EMSCRIPTEN)
     target_compile_definitions(deathward_art_sample PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
 endif()
 if(NOT EMSCRIPTEN)
+    add_executable(deathward_check_mechanics tools/check_mechanics.cpp)
+    target_link_libraries(deathward_check_mechanics PRIVATE deathward_core raylib)
     add_executable(deathward_bake_navigation tools/bake_navigation.cpp)
     target_link_libraries(deathward_bake_navigation PRIVATE deathward_core raylib)
 endif()
 
 if(BUILD_TESTING)
+    find_package(Python3 COMPONENTS Interpreter QUIET)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME enemy_port_coverage COMMAND ${Python3_EXECUTABLE}
+            ${CMAKE_CURRENT_SOURCE_DIR}/scripts/isaac-reference/track-enemies.py --check)
+    endif()
+    add_executable(deathward_mechanics_tests tests/mechanics_tests.cpp)
+    target_link_libraries(deathward_mechanics_tests PRIVATE deathward_core raylib)
+    add_test(NAME mechanics_content COMMAND deathward_mechanics_tests)
     add_executable(deathward_expedition_economy_tests tests/expedition_economy_tests.cpp)
     target_link_libraries(deathward_expedition_economy_tests PRIVATE deathward_core)
     add_test(NAME expedition_economy COMMAND deathward_expedition_economy_tests)
@@ -243,6 +344,8 @@ if(BUILD_TESTING)
     add_executable(deathward_floor_progression_tests tests/floor_progression_tests.cpp)
     target_link_libraries(deathward_floor_progression_tests PRIVATE deathward_core)
     add_test(NAME floor_progression COMMAND deathward_floor_progression_tests)
+    # A narrow river edge passed padded placement but blocked a Gaper's body.
+    add_test(NAME floor_resident_placement COMMAND deathward_floor_progression_tests --scan-placement 404 404)
     add_executable(deathward_item_build_tests tests/item_build_tests.cpp)
     target_link_libraries(deathward_item_build_tests PRIVATE deathward_core)
     add_test(NAME item_builds COMMAND deathward_item_build_tests)
@@ -363,6 +466,259 @@ if(BUILD_TESTING)
     add_executable(deathward_monster_tests tests/monster_tests.cpp)
     target_link_libraries(deathward_monster_tests PRIVATE deathward_core)
     add_test(NAME monster_behaviors COMMAND deathward_monster_tests)
+    add_executable(deathward_flight_tests tests/flight_tests.cpp)
+    target_link_libraries(deathward_flight_tests PRIVATE deathward_core)
+    add_test(NAME monster_flight COMMAND deathward_flight_tests)
+    add_executable(deathward_formation_tests tests/formation_tests.cpp)
+    target_link_libraries(deathward_formation_tests PRIVATE deathward_core)
+    add_test(NAME monster_formations COMMAND deathward_formation_tests)
+    add_executable(deathward_pattern_tests tests/pattern_tests.cpp)
+    target_link_libraries(deathward_pattern_tests PRIVATE deathward_core)
+    add_test(NAME monster_patterns COMMAND deathward_pattern_tests)
+    add_executable(deathward_source_projectile_tests tests/source_projectile_tests.cpp)
+    target_link_libraries(deathward_source_projectile_tests PRIVATE deathward_core)
+    add_test(NAME source_projectile_motion COMMAND deathward_source_projectile_tests)
+    add_executable(deathward_spitty_tests tests/spitty_tests.cpp)
+    target_link_libraries(deathward_spitty_tests PRIVATE deathward_core)
+    add_test(NAME spitty_family COMMAND deathward_spitty_tests)
+    add_executable(deathward_cardinal_walker_tests tests/cardinal_walker_tests.cpp)
+    target_link_libraries(deathward_cardinal_walker_tests PRIVATE deathward_core)
+    add_test(NAME cardinal_walkers COMMAND deathward_cardinal_walker_tests)
+    add_executable(deathward_brain_tests tests/brain_tests.cpp)
+    target_link_libraries(deathward_brain_tests PRIVATE deathward_core)
+    add_test(NAME brain COMMAND deathward_brain_tests)
+    add_executable(deathward_baby_tests tests/baby_tests.cpp)
+    target_link_libraries(deathward_baby_tests PRIVATE deathward_core)
+    add_test(NAME baby_family COMMAND deathward_baby_tests)
+    add_executable(deathward_vis_tests tests/vis_tests.cpp)
+    target_link_libraries(deathward_vis_tests PRIVATE deathward_core)
+    add_test(NAME vis_family COMMAND deathward_vis_tests)
+    add_executable(deathward_chubber_tests tests/chubber_tests.cpp)
+    target_link_libraries(deathward_chubber_tests PRIVATE deathward_core)
+    add_test(NAME chubber_family COMMAND deathward_chubber_tests)
+    add_executable(deathward_guts_tests tests/guts_tests.cpp)
+    target_link_libraries(deathward_guts_tests PRIVATE deathward_core)
+    add_test(NAME guts_family COMMAND deathward_guts_tests)
+    add_executable(deathward_knight_tests tests/knight_tests.cpp)
+    target_link_libraries(deathward_knight_tests PRIVATE deathward_core)
+    add_test(NAME knight_lifecycle COMMAND deathward_knight_tests)
+    add_executable(deathward_leech_tests tests/leech_tests.cpp)
+    target_link_libraries(deathward_leech_tests PRIVATE deathward_core)
+    add_test(NAME leech_behavior COMMAND deathward_leech_tests)
+    add_executable(deathward_lump_tests tests/lump_tests.cpp)
+    target_link_libraries(deathward_lump_tests PRIVATE deathward_core)
+    add_test(NAME lump_behavior COMMAND deathward_lump_tests)
+    add_executable(deathward_adult_leech_tests tests/adult_leech_tests.cpp)
+    target_link_libraries(deathward_adult_leech_tests PRIVATE deathward_core)
+    add_test(NAME adult_leech COMMAND deathward_adult_leech_tests)
+    add_executable(deathward_dip_variant_tests tests/dip_variant_tests.cpp)
+    target_link_libraries(deathward_dip_variant_tests PRIVATE deathward_core)
+    add_test(NAME dip_variants COMMAND deathward_dip_variant_tests)
+    add_executable(deathward_dinga_tests tests/dinga_tests.cpp)
+    target_link_libraries(deathward_dinga_tests PRIVATE deathward_core)
+    add_test(NAME dinga_family COMMAND deathward_dinga_tests)
+    add_executable(deathward_membrain_tests tests/membrain_tests.cpp)
+    target_link_libraries(deathward_membrain_tests PRIVATE deathward_core)
+    add_test(NAME membrain_family COMMAND deathward_membrain_tests)
+
+    add_executable(deathward_mirror_tests tests/mirror_tests.cpp)
+    target_link_libraries(deathward_mirror_tests PRIVATE deathward_core)
+    add_test(NAME mirror_behavior COMMAND deathward_mirror_tests)
+    add_executable(deathward_linked_head_tests tests/linked_head_tests.cpp)
+    target_link_libraries(deathward_linked_head_tests PRIVATE deathward_core)
+    add_test(NAME linked_head COMMAND deathward_linked_head_tests)
+    add_executable(deathward_fire_reaction_tests tests/fire_reaction_tests.cpp)
+    target_link_libraries(deathward_fire_reaction_tests PRIVATE deathward_core)
+    add_test(NAME monster_fire_reactions COMMAND deathward_fire_reaction_tests)
+    add_executable(deathward_hop_tests tests/hop_tests.cpp)
+    target_link_libraries(deathward_hop_tests PRIVATE deathward_core)
+    add_test(NAME monster_hopping COMMAND deathward_hop_tests)
+    add_executable(deathward_replacement_tests tests/replacement_tests.cpp)
+    target_link_libraries(deathward_replacement_tests PRIVATE deathward_core)
+    add_test(NAME monster_replacements COMMAND deathward_replacement_tests)
+    add_executable(deathward_monster_boss_tests tests/monster_boss_tests.cpp)
+    target_link_libraries(deathward_monster_boss_tests PRIVATE deathward_core)
+    add_test(NAME monster_boss_components COMMAND deathward_monster_boss_tests)
+    add_executable(deathward_bloat_tests tests/bloat_tests.cpp)
+    target_link_libraries(deathward_bloat_tests PRIVATE deathward_core)
+    add_test(NAME bloat_boss_and_chargers COMMAND deathward_bloat_tests)
+    add_executable(deathward_charger_tests tests/charger_variant_tests.cpp)
+    target_link_libraries(deathward_charger_tests PRIVATE deathward_core)
+    add_test(NAME charger_variants COMMAND deathward_charger_tests)
+    add_executable(deathward_companion_tests tests/companion_tests.cpp)
+    target_link_libraries(deathward_companion_tests PRIVATE deathward_core)
+    add_test(NAME companion_familiars COMMAND deathward_companion_tests)
+    add_executable(deathward_statue_tests tests/statue_tests.cpp)
+    target_link_libraries(deathward_statue_tests PRIVATE deathward_core)
+    add_test(NAME room_statues COMMAND deathward_statue_tests)
+    add_executable(deathward_maw_tests tests/maw_tests.cpp)
+    target_link_libraries(deathward_maw_tests PRIVATE deathward_core)
+    add_test(NAME maw_attraction COMMAND deathward_maw_tests)
+    add_executable(deathward_quake_tests tests/quake_tests.cpp)
+    target_link_libraries(deathward_quake_tests PRIVATE deathward_core)
+    add_test(NAME quake_waves COMMAND deathward_quake_tests)
+    add_executable(deathward_supplied_bomb_tests tests/supplied_bomb_tests.cpp)
+    target_link_libraries(deathward_supplied_bomb_tests PRIVATE deathward_core)
+    add_test(NAME supplied_bombs COMMAND deathward_supplied_bomb_tests)
+    add_executable(deathward_fly_bomb_tests tests/fly_bomb_tests.cpp)
+    target_link_libraries(deathward_fly_bomb_tests PRIVATE deathward_core)
+    add_test(NAME fly_bombs COMMAND deathward_fly_bomb_tests)
+    add_executable(deathward_enemy_bomb_tests tests/enemy_bomb_tests.cpp)
+    target_link_libraries(deathward_enemy_bomb_tests PRIVATE deathward_core)
+    add_test(NAME enemy_bomb_payloads COMMAND deathward_enemy_bomb_tests)
+    add_executable(deathward_rail_tests tests/rail_tests.cpp)
+    target_link_libraries(deathward_rail_tests PRIVATE deathward_core)
+    add_test(NAME authored_rails COMMAND deathward_rail_tests)
+    add_executable(deathward_boom_fly_tests tests/boom_fly_tests.cpp)
+    target_link_libraries(deathward_boom_fly_tests PRIVATE deathward_core)
+    add_test(NAME boom_flies COMMAND deathward_boom_fly_tests)
+    add_executable(deathward_loki_tests tests/loki_tests.cpp)
+    target_link_libraries(deathward_loki_tests PRIVATE deathward_core)
+    add_test(NAME loki_bosses COMMAND deathward_loki_tests)
+    add_executable(deathward_hornfel_tests tests/hornfel_tests.cpp)
+    target_link_libraries(deathward_hornfel_tests PRIVATE deathward_core)
+    add_test(NAME hornfel_boss COMMAND deathward_hornfel_tests)
+    add_executable(deathward_rail_passenger_tests tests/rail_passenger_tests.cpp)
+    target_link_libraries(deathward_rail_passenger_tests PRIVATE deathward_core)
+    add_test(NAME rail_passengers COMMAND deathward_rail_passenger_tests)
+    add_executable(deathward_bony_tests tests/bony_tests.cpp)
+    target_link_libraries(deathward_bony_tests PRIVATE deathward_core)
+    add_test(NAME bony_regular_enemy COMMAND deathward_bony_tests)
+    add_executable(deathward_black_bony_tests tests/black_bony_tests.cpp)
+    target_link_libraries(deathward_black_bony_tests PRIVATE deathward_core)
+    add_test(NAME black_bony_regular_enemy COMMAND deathward_black_bony_tests)
+    add_executable(deathward_mortality_tests tests/mortality_tests.cpp)
+    target_link_libraries(deathward_mortality_tests PRIVATE deathward_core)
+    add_test(NAME source_immunity_and_lethal_morph COMMAND deathward_mortality_tests)
+    add_executable(deathward_lob_walker_tests tests/lob_walker_tests.cpp)
+    target_link_libraries(deathward_lob_walker_tests PRIVATE deathward_core)
+    add_test(NAME gurgle_splasher_physical_lobs COMMAND deathward_lob_walker_tests)
+    add_executable(deathward_crackle_tests tests/crackle_tests.cpp)
+    target_link_libraries(deathward_crackle_tests PRIVATE deathward_core)
+    add_test(NAME crackle_discrete_fire_jets COMMAND deathward_crackle_tests)
+    add_executable(deathward_horf_tests tests/horf_tests.cpp)
+    target_link_libraries(deathward_horf_tests PRIVATE deathward_core)
+    add_test(NAME horf_stationary_shooting COMMAND deathward_horf_tests)
+    add_executable(deathward_buzz_fly_tests tests/buzz_fly_tests.cpp)
+    target_link_libraries(deathward_buzz_fly_tests PRIVATE deathward_core)
+    add_test(NAME buzzing_flies COMMAND deathward_buzz_fly_tests)
+    add_executable(deathward_tainted_pooter_tests tests/tainted_pooter_tests.cpp)
+    target_link_libraries(deathward_tainted_pooter_tests PRIVATE deathward_core)
+    add_test(NAME tainted_pooter_impacts COMMAND deathward_tainted_pooter_tests)
+    add_executable(deathward_evader_tests tests/evader_tests.cpp)
+    target_link_libraries(deathward_evader_tests PRIVATE deathward_core)
+    add_test(NAME hive_evaders COMMAND deathward_evader_tests)
+    add_executable(deathward_nest_tests tests/nest_tests.cpp)
+    target_link_libraries(deathward_nest_tests PRIVATE deathward_core)
+    add_test(NAME nest_family COMMAND deathward_nest_tests)
+    add_executable(deathward_black_globin_tests tests/black_globin_tests.cpp)
+    target_link_libraries(deathward_black_globin_tests PRIVATE deathward_core)
+    add_test(NAME black_globin_family COMMAND deathward_black_globin_tests)
+    add_executable(deathward_leper_flesh_tests tests/leper_flesh_tests.cpp)
+    target_link_libraries(deathward_leper_flesh_tests PRIVATE deathward_core)
+    add_test(NAME leper_flesh COMMAND deathward_leper_flesh_tests)
+    add_executable(deathward_leper_tests tests/leper_tests.cpp)
+    target_link_libraries(deathward_leper_tests PRIVATE deathward_core)
+    add_test(NAME leper_family COMMAND deathward_leper_tests)
+    add_executable(deathward_mulligan_tests tests/mulligan_tests.cpp)
+    target_link_libraries(deathward_mulligan_tests PRIVATE deathward_core)
+    add_test(NAME mulligan_family COMMAND deathward_mulligan_tests)
+    add_executable(deathward_spider_tests tests/spider_tests.cpp)
+    target_link_libraries(deathward_spider_tests PRIVATE deathward_core)
+    add_test(NAME spider_family COMMAND deathward_spider_tests)
+    add_executable(deathward_danny_tests tests/danny_tests.cpp)
+    target_link_libraries(deathward_danny_tests PRIVATE deathward_core)
+    add_test(NAME danny_family COMMAND deathward_danny_tests)
+    add_executable(deathward_faceless_tests tests/faceless_tests.cpp)
+    target_link_libraries(deathward_faceless_tests PRIVATE deathward_core)
+    add_test(NAME faceless_family COMMAND deathward_faceless_tests)
+    add_executable(deathward_gaper_tests tests/gaper_tests.cpp)
+    target_link_libraries(deathward_gaper_tests PRIVATE deathward_core)
+    add_test(NAME gaper_family COMMAND deathward_gaper_tests)
+    add_executable(deathward_rotten_gaper_tests tests/rotten_gaper_tests.cpp)
+    target_link_libraries(deathward_rotten_gaper_tests PRIVATE deathward_core)
+    add_test(NAME rotten_gaper_family COMMAND deathward_rotten_gaper_tests)
+    add_executable(deathward_small_maggot_tests tests/small_maggot_tests.cpp)
+    target_link_libraries(deathward_small_maggot_tests PRIVATE deathward_core)
+    add_test(NAME small_maggot_family COMMAND deathward_small_maggot_tests)
+    add_executable(deathward_headless_tests tests/headless_tests.cpp)
+    target_link_libraries(deathward_headless_tests PRIVATE deathward_core)
+    add_test(NAME headless_family COMMAND deathward_headless_tests)
+    add_executable(deathward_first_floor_cohort_tests tests/first_floor_cohort_tests.cpp)
+    target_link_libraries(deathward_first_floor_cohort_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_cohort COMMAND deathward_first_floor_cohort_tests)
+    add_executable(deathward_enemy_status_tests tests/enemy_status_tests.cpp)
+    target_link_libraries(deathward_enemy_status_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_status_effects COMMAND deathward_enemy_status_tests)
+    add_executable(deathward_enemy_freeze_tests tests/enemy_freeze_tests.cpp)
+    target_link_libraries(deathward_enemy_freeze_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_freeze_effect COMMAND deathward_enemy_freeze_tests)
+    add_executable(deathward_damage_status_tests tests/damage_status_tests.cpp)
+    target_link_libraries(deathward_damage_status_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_damage_statuses COMMAND deathward_damage_status_tests)
+    add_executable(deathward_enemy_slow_tests tests/enemy_slow_tests.cpp)
+    target_link_libraries(deathward_enemy_slow_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_slow_effect COMMAND deathward_enemy_slow_tests)
+    add_executable(deathward_enemy_shrink_tests tests/enemy_shrink_tests.cpp)
+    target_link_libraries(deathward_enemy_shrink_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_shrink_effect COMMAND deathward_enemy_shrink_tests)
+    add_executable(deathward_enemy_charm_tests tests/enemy_charm_tests.cpp)
+    target_link_libraries(deathward_enemy_charm_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_charm_effect COMMAND deathward_enemy_charm_tests)
+    add_executable(deathward_hardy_tests tests/hardy_tests.cpp)
+    target_link_libraries(deathward_hardy_tests PRIVATE deathward_core)
+    add_test(NAME hardy_family COMMAND deathward_hardy_tests)
+    add_executable(deathward_rock_spider_tests tests/rock_spider_tests.cpp)
+    target_link_libraries(deathward_rock_spider_tests PRIVATE deathward_core)
+    add_test(NAME rock_spider_family COMMAND deathward_rock_spider_tests)
+    add_executable(deathward_spider_variant_tests tests/spider_variant_tests.cpp)
+    target_link_libraries(deathward_spider_variant_tests PRIVATE deathward_core)
+    add_test(NAME spider_variants COMMAND deathward_spider_variant_tests)
+    add_executable(deathward_long_legs_tests tests/long_legs_tests.cpp)
+    target_link_libraries(deathward_long_legs_tests PRIVATE deathward_core)
+    add_test(NAME long_legs_and_sack COMMAND deathward_long_legs_tests)
+    add_executable(deathward_maw_family_tests tests/maw_family_tests.cpp)
+    target_link_libraries(deathward_maw_family_tests PRIVATE deathward_core)
+    add_test(NAME maw_family COMMAND deathward_maw_family_tests)
+    add_executable(deathward_host_tests tests/host_tests.cpp)
+    target_link_libraries(deathward_host_tests PRIVATE deathward_core)
+    add_test(NAME hosts COMMAND deathward_host_tests)
+    add_executable(deathward_hard_host_tests tests/hard_host_tests.cpp)
+    target_link_libraries(deathward_hard_host_tests PRIVATE deathward_core)
+    add_test(NAME hard_host COMMAND deathward_hard_host_tests)
+    add_executable(deathward_mushroom_tests tests/mushroom_tests.cpp)
+    target_link_libraries(deathward_mushroom_tests PRIVATE deathward_core)
+    add_test(NAME mushroom COMMAND deathward_mushroom_tests)
+    add_executable(deathward_trite_tests tests/trite_tests.cpp)
+    target_link_libraries(deathward_trite_tests PRIVATE deathward_core)
+    add_test(NAME trite COMMAND deathward_trite_tests)
+    add_executable(deathward_eggy_tests tests/eggy_tests.cpp)
+    target_link_libraries(deathward_eggy_tests PRIVATE deathward_core)
+    add_test(NAME eggy COMMAND deathward_eggy_tests)
+    add_executable(deathward_tainted_hopper_tests tests/tainted_hopper_tests.cpp)
+    target_link_libraries(deathward_tainted_hopper_tests PRIVATE deathward_core)
+    add_test(NAME tainted_hopper COMMAND deathward_tainted_hopper_tests)
+    add_executable(deathward_adaptive_armor_tests tests/adaptive_armor_tests.cpp)
+    target_link_libraries(deathward_adaptive_armor_tests PRIVATE deathward_core)
+    add_test(NAME adaptive_armor COMMAND deathward_adaptive_armor_tests)
+    add_executable(deathward_leaper_tests tests/leaper_tests.cpp)
+    target_link_libraries(deathward_leaper_tests PRIVATE deathward_core)
+    add_test(NAME leapers COMMAND deathward_leaper_tests)
+    add_executable(deathward_boil_tests tests/boil_tests.cpp)
+    target_link_libraries(deathward_boil_tests PRIVATE deathward_core)
+    add_test(NAME boil_family COMMAND deathward_boil_tests)
+    add_executable(deathward_mullighoul_tests tests/mullighoul_tests.cpp)
+    target_link_libraries(deathward_mullighoul_tests PRIVATE deathward_core)
+    add_test(NAME willo_and_mullighoul COMMAND deathward_mullighoul_tests)
+    add_executable(deathward_prey_tests tests/prey_tests.cpp)
+    target_link_libraries(deathward_prey_tests PRIVATE deathward_core)
+    add_test(NAME prey_and_small_leech COMMAND deathward_prey_tests)
+    add_executable(deathward_segmented_boss_tests tests/segmented_boss_tests.cpp)
+    target_link_libraries(deathward_segmented_boss_tests PRIVATE deathward_core raylib)
+    add_test(NAME segmented_bosses COMMAND deathward_segmented_boss_tests)
+    add_executable(deathward_shell_tests tests/shell_tests.cpp)
+    target_link_libraries(deathward_shell_tests PRIVATE deathward_core)
+    add_test(NAME shell_boss COMMAND deathward_shell_tests)
     add_executable(deathward_theme_tests tests/theme_tests.cpp)
     target_link_libraries(deathward_theme_tests PRIVATE deathward_core)
     add_test(NAME mission_themes COMMAND deathward_theme_tests)

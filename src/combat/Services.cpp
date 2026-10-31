@@ -14,7 +14,9 @@ float Simulation::bargainMaxHealth(int index) const {
     if(index<0||index>=2)return player.maxHp;
     const auto item=rooms[size_t(room)].offers[size_t(index)];
     const float after=player.maxHp-20;
-    return item==ItemId::Judas?std::max(10.f,after*.8f):after;
+    const auto &definition=itemDefinition(item,*content);
+    return definition.pickupHealthMultiplier!=1?
+        std::max(definition.pickupHealthFloor,after*definition.pickupHealthMultiplier):after;
 }
 ServiceOffer Simulation::serviceOffer(int index) const {
     if(index<0||index>=2)return {};
@@ -26,11 +28,11 @@ ServiceOffer Simulation::serviceOffer(int index) const {
         return index==0?ServiceOffer{"Treat wounds","Restore up to 60 health. Keep your maximum health. One treatment per floor.","20 COINS"}:
             ServiceOffer{"Strengthening tonic","Gain 15 maximum health and restore up to 15 health for this expedition. One tonic per floor.","35 COINS"};
     case RoomService::Smuggler: {
-        const auto &item=itemDefinition(rooms[size_t(room)].offers[size_t(index)]);
+        const auto &item=itemDefinition(rooms[size_t(room)].offers[size_t(index)],*content);
         const float after=bargainMaxHealth(index);
         const auto preview="Maximum HP "+hpText(player.maxHp)+" -> "+hpText(after)+". Current HP -> "+hpText(std::min(player.hp,after))+".";
         return {item.name,std::string(item.description)+" "+preview,
-            hpText(player.maxHp-after)+" MAX HP TOTAL"+(item.id==ItemId::Judas?" (INCLUDES JUDAS)":"")};
+            hpText(player.maxHp-after)+" MAX HP TOTAL"+(item.pickupHealthMultiplier!=1?" (INCLUDES ITEM COST)":"")};
     }
     default:return {};
     }
@@ -80,7 +82,7 @@ bool Simulation::buyService(int index) {
     case RoomService::Smuggler:
         progress.serviceSold={true,true}; // Mutually exclusive bargain, never two rerolls.
         player.maxHp-=20;player.hp=std::min(player.hp,player.maxHp);
-        grant(progress.offers[size_t(index)]); // Includes Judas's separate 20% cost.
+        grant(progress.offers[size_t(index)]); // Applies the item's additional health rule.
         break;
     default:return false;
     }

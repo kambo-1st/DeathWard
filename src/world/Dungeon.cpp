@@ -110,6 +110,14 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         rooms[size_t(edge[0])].passages.push_back(index);
         rooms[size_t(edge[1])].passages.push_back(index);
     }
+    if(profile.bossRails&&!rooms.back().passages.empty()) {
+        const auto &p=passages[size_t(rooms.back().passages.front())];
+        const int parent=p.rooms[0]==roomCount()-1?p.rooms[1]:p.rooms[0];
+        const auto a=graph.cells.back(),b=graph.cells[size_t(parent)];
+        const auto side=b.first<a.first?RailSide::West:b.first>a.first?RailSide::East:b.second<a.second?RailSide::North:RailSide::South;
+        if(profile.bossRails->closedEntrances&(1u<<unsigned(side)))
+            profile.bossRails=std::make_shared<RailLayout>(profile.bossRails->reversed());
+    }
     // Unequal row/column spacing changes corridor lengths while keeping crossings
     // impossible: a corridor only joins neighboring occupied cells of the graph.
     auto axis = [&](bool xAxis) {
@@ -150,11 +158,16 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             halfX = minimum + int(layout.bounded(uint32_t(maximum-minimum+1)));
             halfZ = minimum + int(layout.bounded(uint32_t(maximum-minimum+1)));
         } while (!usedSizes.insert({halfX, halfZ}).second);
+        if(boss&&profile.doubleBossRoom) {
+            if(seed&1)halfX*=2;else halfZ*=2;
+        }
+        if(boss&&profile.bossRails){halfX=profile.bossRails->width;halfZ=profile.bossRails->height;}
         room.bounds = {
             {room.center.x - float(halfX) * FloorTile, 0, room.center.z - float(halfZ) * FloorTile},
             {room.center.x + float(halfX) * FloorTile, 3, room.center.z + float(halfZ) * FloorTile}};
         // Cycle a seeded sequence of footprints so every expedition has visible shape variety.
         room.shape = profile.active() && boss ? 1 : (int(seed % 4) + i) % 4;
+        if(boss&&profile.bossRails)room.shape=0;
         const bool mirrorX = layout.bounded(2), mirrorZ = layout.bounded(2);
         std::set<FloorCell> local;
         for (int x = -halfX; x < halfX; ++x)
@@ -190,7 +203,7 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             room.objective = sites[layout.bounded(uint32_t(sites.size()))];
         room.bossSpawn = room.center;
     }
-    if(dimensions.shorterCorridors) {
+    if(dimensions.shorterCorridors||profile.doubleBossRoom||profile.bossRails) {
         // Repack whole rows/columns after choosing each room's footprint. This
         // preserves the graph and cardinal entrances without crossing trails.
         // A separate stream leaves sizes, shapes and objectives unchanged in the
@@ -389,8 +402,8 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         if (rooms[size_t(i)].kind == RoomKind::Combat && rooms[size_t(i)].depth > 1 && i != 2 && i != 3 && i != reservedShop)
             quietRooms.push_back(i);
     shuffle(quietRooms);
-    const int quietCount = 1 + int(layout.bounded(2));
-    // The entrance is always quiet and counts toward the one-to-two-room limit.
+    const int quietCount = 1 + int(layout.bounded(10) < 2);
+    // Always keep the safe entrance; only 20% of floors offer one extra quiet room.
     rooms.front().kind = RoomKind::Empty;
     for (int i = 1; !tutorial && i < quietCount && size_t(i - 1) < quietRooms.size(); ++i)
         rooms[size_t(quietRooms[size_t(i - 1)])].kind = RoomKind::Empty;
@@ -434,8 +447,15 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
         buildCanyon(*this, canyonRiver);
     dressStoryRoom();
     if(profile.active()) { dressFloor(); prepareBossArena(); }
+    if(profile.bossRails)prepareRailArena();
 }
 void Arena::rebuildWalls() {
+    flightCollisionPrepared = true;
+    flightWalls = boundaryWalls;
+    flightCover = obstacles;
+    for(const auto &prop:storyProps)flightCover.push_back(prop.bounds);
+    for(const auto &prop:floorProps)flightCover.push_back(prop.bounds);
+    for(const auto &prop:breakables)if(prop.solid())flightCover.push_back(prop.bounds);
     walls = boundaryWalls;
     walls.insert(walls.end(), obstacles.begin(), obstacles.end());
     for(const auto &prop:storyProps)if(prop.bounds.max.y>.45f)walls.push_back(prop.bounds);
@@ -443,8 +463,10 @@ void Arena::rebuildWalls() {
     for(const auto &prop:breakables)if(prop.solid())walls.push_back(prop.bounds);
     for (const auto &passage : passages)
         for (int side = 0; side < 2; ++side)
-            if (passage.closed(side))
+            if (passage.closed(side)) {
                 walls.push_back(passage.gates[size_t(side)]);
+                flightWalls.push_back(passage.gates[size_t(side)]);
+            }
 }
 void Arena::dressStoryRoom() {
     // Authored small clusters use the generated basin, never replace its room
@@ -550,6 +572,7 @@ int Arena::roomAt(Vector3 p) const {
     return -1;
 }
 bool Arena::contains(Vector3 p) const {
+    if(rails)for(const auto &pit:rails->pits)if(inside(p,pit))return false;
     if (canyon)
         return !canyon->blocked(p, 0);
     if (floorCells.empty())
@@ -557,6 +580,8 @@ bool Arena::contains(Vector3 p) const {
     return floorCells.contains({int(std::floor(p.x / FloorTile)), int(std::floor(p.z / FloorTile))});
 }
 bool Arena::blocked(Vector3 p, float radius) const {
+    if(rails)for(auto pit:rails->pits){pit.min.y=-100;pit.max.y=100;if(sphereBox(p,radius,pit))return true;}
+    for(const auto &body:movementBodies)if(sphereBox(p,radius,body))return true;
     if (canyon && canyon->blocked(p, radius))
         return true;
     if (!contains(p))
@@ -567,6 +592,9 @@ bool Arena::blocked(Vector3 p, float radius) const {
     return false;
 }
 bool Arena::clear(Vector3 from, Vector3 to, float radius) const {
+    if(radius>.25f&&rails)for(auto pit:rails->pits){pit.min.y=-100;pit.max.y=100;if(segmentBox(from,to,pit,radius).hit)return false;}
+    if(radius>.25f)for(const auto &body:movementBodies)
+        if(segmentBox(from,to,body,radius).hit)return false;
     if (canyon) {
         if (radius > .25f) {
             if (!canyon->waterClear(from, to, radius))

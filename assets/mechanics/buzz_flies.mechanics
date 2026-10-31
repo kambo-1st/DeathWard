@@ -1,0 +1,55 @@
+DEATHWARD_MECHANICS 1
+# Ordinary Fly/Pooter share native buzzing. Original 3D art and local .45 body
+# radius remain; HP uses the shared x3.2 conversion. Neither damages on contact.
+monster 13.0.0 "Fly" Wander None Fly 9.6 1 .45 1 0 1 1 0 0 1 legacy
+monster 14.0.0 "Pooter" Wander Shot Fly 25.6 1 .45 1.166666667 .2 1 1 0 0 1 legacy
+monster 14.1.0 "Super Pooter" Wander Shot Fly 25.6 1 .5 1.166666667 .2 2 1 0 0 1 legacy
+monster 14.2.0 "Tainted Pooter" Wander Shot Fly 240 1 .6 2.1 .2 4 1 0 0 1 legacy
+monster 18.0.0 "Attack Fly" Chase None Fly 16 1 .45 1 0 1 1 1 0 1 legacy
+stage_health 13.0.0 3 0 3.2
+stage_health 14.0.0 8 0 3.2
+stage_health 14.1.0 8 0 3.2
+stage_health 14.2.0 75 0 3.2
+stage_health 18.0.0 5 0 3.2
+# scale, one-in-N pursuit, pursuit impulse, jitter impulse/retention,
+# third-frame friction, edge force, local edge margin, local speed safety cap.
+buzz_fly 13.0.0 .1 5 .7 .6 .4 .6 .06 3 24
+buzz_fly 14.0.0 .1 5 .7 .6 .4 .6 .06 3 24
+buzz_fly 14.1.0 .1 5 .7 .6 .4 .6 .06 3 24
+buzz_fly 14.2.0 .1 5 .7 .6 .4 .6 .06 3 24
+buzz_fly 18.0.0 .1 5 0 .6 .4 .6 .06 3 24
+# Cached target/force periods, native second-axis scale, deadzone, gain/cap,
+# local contact damage. Native planar distances convert using buzz_fly scale.
+buzz_chase 18.0.0 3 2 .5 25 .08 1.2 10
+buzz_item_morph 18.0.0 isaac:collectible:9 13.0.0
+# A live Hive spit marks contact expiry and .9 chase friction. Death releases
+# and ordinary room spawns do not acquire this flag. Boss children are pending.
+buzz_contact_summon 18.0.0 22.0.0 .9
+# Normal-mode Pooter: 14-frame Attack, Shoot6; delay35 from acquisition.
+# check, delay, animation, Shoot, range, speed, damage, lifetime,
+# cooldown velocity friction and wander damping.
+buzz_shot 14.0.0 7 35 14 6 20 21 10 5 .8 .7
+buzz_shot 14.1.0 7 35 14 6 20 21 10 5 .8 .7
+buzz_shot 14.2.0 7 63 14 6 20 21 10 5 .8 .7
+# Source mode4: inner .990/+/-.139, outer .914/+/-.407 at .9speed,
+# Spread1.2 multiplies side coefficients. Keep actual unnormalized velocities.
+buzz_volley 14.2.0 4 .99 .1668 .99 -.1668 .8226 .43956 .8226 -.43956
+# Root radius, backward half-angle(degrees), child speed/damage/radius/offset/life.
+buzz_back_split 14.2.0 .308 24 30 10 .22 1 5
+# Native mode1: forward and sideways coefficients (approximately +/-16 degrees).
+buzz_pair 14.1.0 .961 .276
+buzz_suppress 14.0.0 isaac:collectible:9
+buzz_suppress 14.1.0 isaac:collectible:9
+buzz_suppress 14.2.0 isaac:collectible:9
+# Tainted Pooter is Ascent-only in the source. Its dedicated expedition route
+# remains pending; do not silently add it to ordinary early-stage pools.
+dung_morph 13.0.0 14.0.0 1000
+# Ordinary dung only: bands/count, local geometry, source damage steps and
+# two independent one-in-three bonus losses. Loot/item variants remain pending.
+dung_props 0 1 2 .7 1.1 4 3
+encounter 0 1 pursuit specialist 13.0.0 1 1 2
+encounter 0 1 supply_guard specialist 13.0.0 1 1 2
+# Source rooms span Basement/Caves/Necropolis/Utero. One pair shooter per room.
+# Source random Pooter replacement remains separate from these authored roles.
+encounter 0 3 crossfire specialist 14.1.0 1 3 1
+encounter 0 3 pursuit specialist 18.0.0 2 1 3

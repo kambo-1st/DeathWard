@@ -80,6 +80,10 @@ void verify(uint64_t seed, MissionTheme theme) {
                   enemy.state == EnemyState::Ready && enemy.partner == before[i].partner,
               "waiting preserves the actual enemies and their initial combat state");
         check(enemy.animationTime() > 19, "resident animations run before entry");
+        check(!enemy.strider && !enemy.swarmSpider,"dormant spider variants have no active controller");
+        check(!enemy.longLegs&&!enemy.sack,"dormant Long Legs and Sacks do not initialize combat");
+        if (run.content->spider(enemy.monster))
+            check(!enemy.spider, "dormant spiders do not initialize their combat controller");
     }
     // Use the real threshold check rather than explicitly switching rooms.
     run.player.position = run.arena.doorApproach(passage, side);
@@ -90,9 +94,36 @@ void verify(uint64_t seed, MissionTheme theme) {
     for (size_t i = 0; i < waiting.size(); ++i) {
         const auto &enemy = run.enemies[i];
         check(enemy.id == waiting[i].id && enemy.monster == waiting[i].monster &&
-                  enemy.partner == waiting[i].partner && enemy.age > 0 &&
-                  enemy.cooldown < waiting[i].cooldown,
+                  enemy.partner == waiting[i].partner && enemy.age > 0,
               "the same individuals and companions start normal combat on entry");
+        if (run.content->spider(enemy.monster))
+            check(enemy.spider && std::abs(enemy.spider->clock - Tick) < .001f &&
+                      !enemy.spider->initialized && !enemy.spider->targetReady,
+                  "spider source timer starts on entry without skipping its initial idle phase");
+        else if(run.content->longLegs(enemy.monster))
+            check(enemy.longLegs&&std::abs(enemy.longLegs->clock-Tick)<.001f&&!enemy.longLegs->initialized,
+                  "Long Legs source timer starts on room entry");
+        else if(run.content->sack(enemy.monster)||run.content->boil(enemy.monster))
+            check(enemy.sack&&std::abs(enemy.sack->clock-Tick)<.001f,"Boil/Sack timer starts on entry");
+        else if(run.content->strider(enemy.monster))
+            check(enemy.strider && std::abs(enemy.strider->clock-Tick)<.001f && !enemy.strider->initialized,
+                  "Strider starts its own source clock only on entry");
+        else if(run.content->swarmSpider(enemy.monster))
+            check(enemy.swarmSpider && std::abs(enemy.swarmSpider->clock-Tick)<.001f && !enemy.swarmSpider->initialized,
+                  "Swarm Spider starts its own source clock only on entry");
+        else if(run.content->targetHop(enemy.monster))
+            check(enemy.targetHop&&std::abs(enemy.targetHop->clock-Tick)<.001f&&
+                      !enemy.targetHop->initialized&&!enemy.targetHop->targetReady,
+                  "destination hopper starts its source clock on entry without acquiring early");
+        else if(run.content->slide(enemy.monster))
+            check(enemy.slide&&enemy.slide->ticks==1&&enemy.slide->initialized&&enemy.slide->phase==0,
+                  "Dip/Squirt source clock begins on entry without an immediate attack");
+        else if(run.content->memBrain(enemy.monster))
+            check(enemy.memBrain&&enemy.memBrain->ticks==1&&enemy.memBrain->initialized&&enemy.memBrain->attackFrame<0,
+                  "MemBrain/Dinga source clock begins on entry without an immediate hop");
+        else
+            check(enemy.cooldown < waiting[i].cooldown,
+                  "generic combat cooldown starts on entry");
         check(std::abs(enemy.animationTime() - waiting[i].animationTime() - Tick) < .001f &&
                   distance(enemy.position, waiting[i].position) < .3f,
               "entry continues animation and movement without a spawn jump");

@@ -4,11 +4,6 @@
 #include <string_view>
 
 namespace dw {
-// Keep variant and subtype separate: 25.3.1 is not a decimal number.
-constexpr int monsterId(int type, int variant = 0, int subtype = 0) {
-    return type * 10000 + variant * 100 + subtype;
-}
-std::string monsterIdText(int id);
 enum class MonsterMotion {
     Still,
     Chase,
@@ -43,8 +38,8 @@ enum class MonsterAttack {
 };
 enum class MonsterShape { Walker, Headless, Fly, Blob, Worm, Skull, Spider, Eye, Stone };
 struct MonsterDefinition {
-    int id;
-    const char *name;
+    MonsterId id;
+    std::string name;
     MonsterMotion motion;
     MonsterAttack attack;
     MonsterShape shape;
@@ -52,7 +47,8 @@ struct MonsterDefinition {
     float cooldown = 2.4f, windup = .55f;
     int depth = 1;
     bool flying = false, contact = true, roomHazard = false, natural = true;
+    std::string behavior = "legacy";
 };
 std::span<const MonsterDefinition> monsterCatalog();
-const MonsterDefinition *monsterDefinition(int id);
+const MonsterDefinition *monsterDefinition(MonsterId id);
 } // namespace dw

@@ -20,7 +20,8 @@ void Arena::allocateServices() {
     for(size_t i=0;i<sites.size();++i)std::swap(sites[i],sites[i+rng.bounded(uint32_t(sites.size()-i))]);
     // Prefer side branches, without moving any story site or adding graph nodes.
     std::stable_sort(sites.begin(),sites.end(),[&](int a,int b){return rooms[size_t(a)].passages.size()<rooms[size_t(b)].passages.size();});
-    std::array<RoomService,3> kinds{RoomService::Exchange,RoomService::Surgeon,RoomService::Smuggler};
+    std::vector<RoomService> kinds{RoomService::Exchange,RoomService::Smuggler};
+    if(profile.floor>=3)kinds.push_back(RoomService::Surgeon);
     for(size_t i=0;i<kinds.size();++i)std::swap(kinds[i],kinds[i+rng.bounded(uint32_t(kinds.size()-i))]);
     int count=0;
     for(int index:sites) {
@@ -31,7 +32,31 @@ void Arena::allocateServices() {
     }
 }
 void Arena::dressFloor() {
-    if(!profile.active()||profile.band<2)return;
+    if(!profile.active())return;
+    if((profile.variant==FloorVariant::Scorched||profile.variant==FloorVariant::Flooded)&&canyon) {
+        const bool wet=profile.variant==FloorVariant::Flooded;
+        auto &patches=wet?dampPatches:scorchPatches;
+        Random ash(visualSeed^(wet?0x464c4f4f444544ULL:0x53434f5243484544ULL));
+        for(int index=1;index<roomCount()-1;++index) {
+            auto &room=rooms[size_t(index)];
+            if(room.kind!=RoomKind::Combat||room.story!=StoryRoom::None)continue;
+            room.flooded=wet;
+            for(int n=0;n<(wet?7:4);++n)for(int attempt=0;attempt<80;++attempt) {
+                const Vector3 p{ash.real(room.bounds.min.x+3,room.bounds.max.x-3),.035f,
+                    ash.real(room.bounds.min.z+3,room.bounds.max.z-3)};
+                const float radius=ash.real(.8f,1.5f);bool safe=true;
+                for(int edge=0;edge<12;++edge) {
+                    const auto q=add(p,rotateY({radius,0,0},float(edge)*Pi/6));
+                    if(roomAt(q)!=index||blocked(q,.1f)||std::abs(canyon->height(q.x,q.z))>.02f||
+                       canyon->roadSample(q).distance<canyon->roadSample(q).width+.5f||
+                       canyon->riverSample(q).distance<canyon->riverSample(q).width+.5f)safe=false;
+                }
+                if(!safe||std::abs(canyon->height(p.x,p.z))>.02f)continue;
+                patches.push_back({p,radius,ash.real(0,2*Pi)});break;
+            }
+        }
+    }
+    if(profile.band<2)return;
     Random rng(visualSeed^0x464c4f4f52445253ULL);
     for(int index=1;index<roomCount()-1;++index) {
         const auto &room=rooms[size_t(index)];
@@ -66,6 +91,7 @@ void Arena::dressFloor() {
 }
 void Arena::prepareBossArena() {
     if(!profile.active()||theme!=MissionTheme::Canyon)return;
+    if(profile.bossRails){rooms.back().reward=rooms.back().center;return;}
     const int index=roomCount()-1;
     const auto &room=rooms.back();
     // Two low, fragile rocks offer a charge counter. They sit inside the outer

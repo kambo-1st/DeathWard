@@ -16,7 +16,7 @@ void Simulation::prepareShop() {
     }
     shopOffers[3] = {ItemId::Ricochet, 15, ShopOfferKind::Dynamite, false};
     if(arena.profile.active()) {
-        const auto offers=drawItemOffers(ItemPool::Shop,seed_);
+        const auto offers=drawItemOffers(ItemPool::Shop,seed_,*content);
         for(int i=0;i<2;++i)shopOffers[size_t(i+1)].item=offers[size_t(i)];
     }
 }

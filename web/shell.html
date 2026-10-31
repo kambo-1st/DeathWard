@@ -141,6 +141,39 @@
       // Optional scripted capture paths use temporary saves, exactly like native checks.
       if (query.has('smoke')) {
         args.push('--smoke', '--scene', query.get('scene') || 'hub', '--frames', query.get('frames') || '180');
+        if(query.has('enemy-terrain'))args.push('--enemy-terrain',query.get('enemy-terrain'));
+        if(query.has('enemy-count'))args.push('--enemy-count',query.get('enemy-count'));
+        for(const key of ['resident-seed','resident-floor','resident-from'])if(query.has(key))args.push('--'+key,query.get(key));
+        if(query.has('enemy-flooded'))args.push('--enemy-flooded');
+        if(query.has('enemy-camera-follow'))args.push('--enemy-camera-follow');
+        if(query.has('enemy-boss-form'))args.push('--enemy-boss-form',query.get('enemy-boss-form'));
+        if(query.has('enemy-player-side'))args.push('--enemy-player-side',query.get('enemy-player-side'));
+        if(query.has('enemy-bomb'))args.push('--enemy-bomb',query.get('enemy-bomb'));
+        if(query.has('enemy-segment'))args.push('--enemy-segment',query.get('enemy-segment'));
+        for(const move of query.getAll('enemy-player-at')) {
+          const values=move.split(':');
+          if(values.length!==3){showError('enemy-player-at needs FRAME:X:Z');return;}
+          args.push('--enemy-player-at',...values);
+        }
+        for(const attack of query.getAll('enemy-player-attack')) {
+          const values=attack.split(':');
+          if(values.length!==3){showError('enemy-player-attack needs FRAME:X:Z');return;}
+          args.push('--enemy-player-attack',...values);
+        }
+        for(const shot of query.getAll('enemy-shot')) {
+          const values=shot.split(':');
+          if(values.length!==6){showError('enemy-shot needs FRAME:player|hostile:X:Z:VX:VZ');return;}
+          args.push('--enemy-shot',...values);
+        }
+        for(const at of query.getAll('enemy-fire'))args.push('--enemy-fire',at);
+        for(const item of query.getAll('enemy-item'))args.push('--enemy-item',item);
+        for(const at of query.getAll('enemy-clear'))args.push('--enemy-clear',at);
+        for(const at of query.getAll('enemy-reenter'))args.push('--enemy-reenter',at);
+        for (const key of ['enemy-hit','enemy-flame-hit','enemy-burn-hit','enemy-execute','enemy-blast','enemy-decoy-hit','enemy-decoy-blast','enemy-partner-hit']) for (const hit of query.getAll(key)) {
+          const values=hit.split(':');
+          if (values.length !== 2) { showError('enemy-hit needs FRAME:DAMAGE'); return; }
+          args.push('--'+key, ...values);
+        }
         if (query.has('audio')) args.push('--audio');
       }
       try { Module.callMain(args); } catch (error) { showError(String(error)); }

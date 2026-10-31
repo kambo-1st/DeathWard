@@ -1,0 +1,44 @@
+DEATHWARD_MECHANICS 1
+# Ground lobbers share physical flight; Crackle replaces the blast with fire jets.
+# World movement speeds/navigation are explicit3D adaptations, not native force constants.
+monster 87.0.0 "Gurgle" Chase Lob Walker 128 3.6 .65 3 .8 3 0 1 0 1 legacy
+monster 87.1.0 "Crackle" Chase Lob Walker 128 3.6 .65 3.5 .9 3 0 1 0 1 legacy
+monster 238.0.0 "Splasher" Wander Lob Headless 38.4 1.6 .65 3 .7 3 0 1 0 1 legacy
+stage_health 87.0.0 40 0 3.2
+stage_health 87.1.0 40 0 3.2
+stage_health 238.0.0 10 2 3.2
+
+# chance denominator,range,total/Shoot frames,initial/repeat delay frames,
+# movement retention per30Hz update,and local wander turn bounds(seconds).
+lob_walker 87.0.0 60 13 30 5 20 39 60 89 .7 .7 1.8
+lob_walker 87.1.0 60 13 32 5 20 39 60 89 .7 .7 1.8
+lob_walker 238.0.0 1 13 0 0 20 39 60 89 .75 .7 1.8
+# horizontal speed/jitter,upward speed bounds,effective gravity,flight retention,
+# launch height,radius,monster/player blast damage,blast radius.
+# Native horizontal scale .1, vertical scale .05, source update30Hz.
+# Damped native flight: fallSpeed=.9*fallSpeed+.1+fallAccel.
+lob_projectile 87.0.0 11.55 5.775 9.75 34.95 36.9 .9 1.15 .352 160 20 6
+lob_projectile 87.1.0 11.55 5.775 9.75 34.95 36.9 .9 1.15 .352 160 20 6
+lob_projectile 238.0.0 15 0 12 12 22.5 .9 1.15 .22 160 20 6
+# FIRE_WAVE replaces the above blast fields. Source1000.148 emits1000.147:
+# every2frames advance30native units; shrink by.03*frame; stop afterframe28.
+# Jets live20frames, damage only onframes2/4. Sprite scale does not scale damage radius.
+# stepFrames,spacing,count,lifeFrames,pulseA,pulseB,radius,monster/player damage,scaleLossPerStep.
+lob_fire_wave 87.1.0 2 3 14 20 2 4 2 32 10 .06
+
+# Native FIRE and EXPLOSION channels, excluding friendly/player/familiar sources
+# and TNT. Burning status is a different channel; Splasher has no fire immunity.
+source_immunity 87.0.0 1 1
+source_immunity 87.1.0 1 1
+source_immunity 238.0.0 0 1
+# Morph same body,15%; only when residual HP > -25 (x3.2). Restore target's
+# full stage HP and20..39 native updates of attack delay. Crackle never morphs.
+lethal_morph 87.0.0 238.0.0 1500 80 .666666667 1.3
+
+# Regular Caves/Depths/later source-stage analogues; absent from opening/tutorial.
+# Limited specialist slots keep the large blast family out of basic crowd filler.
+encounter 1 3 pursuit specialist 87.0.0 1 4 1
+encounter 1 3 crossfire specialist 87.0.0 1 4 1
+encounter 1 3 crossfire specialist 238.0.0 1 3 1
+# Ashpit analogue only. Not the ordinary Gurgle replacement, not the opening floor.
+encounter 1 1 crossfire specialist 87.1.0 1 4 1 1 standard

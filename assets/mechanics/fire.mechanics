@@ -1,0 +1,11 @@
+DEATHWARD_MECHANICS 1
+# id environment flame-damage-scale burning-damage-scale transform|none trigger health-policy
+# Flame contact and burning status damage are distinct channels.
+# Clotty article: fire immunity/ignition except flooded rooms.
+# Red Candle notes: these flame transformations do not damage the monsters.
+# Fractional health retention and the current DW HP/radii are explicit conversion choices.
+fire_reaction 15.0.0 dry 0 0 15.3.0 both fraction
+fire_reaction 15.3.0 dry 0 0 none both fraction
+# Hopper article: Flaming Hopper still takes burning-status damage.
+fire_reaction 29.0.0 any 0 1 54.0.0 flame fraction
+fire_reaction 54.0.0 any 0 1 none flame fraction

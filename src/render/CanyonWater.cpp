@@ -78,7 +78,7 @@ void CanyonWater::unload() {
     shader_ = {};
     material_ = {};
 }
-void CanyonWater::prepare(const CanyonTerrain &field) {
+void CanyonWater::prepare(const CanyonTerrain &field,const Box *dryArea) {
     unload();
     if (field.river.empty())
         return;
@@ -97,6 +97,10 @@ void CanyonWater::prepare(const CanyonTerrain &field) {
         for (int x = 0; x + 1 < field.width; ++x) {
             const auto a = field.vertex(x, z), b = field.vertex(x + 1, z), c = field.vertex(x, z + 1),
                        d = field.vertex(x + 1, z + 1);
+            // Authored rail pits are dry excavations. A river elsewhere on the
+            // floor must not fill every below-zero depression with water.
+            if(dryArea&&d.x>=dryArea->min.x&&a.x<=dryArea->max.x&&
+                d.z>=dryArea->min.z&&a.z<=dryArea->max.z)continue;
             if (std::min({a.y, b.y, c.y, d.y}) >= CanyonTerrain::WaterLevel)
                 continue;
             for (auto tri : {std::array{a, d, b}, std::array{a, c, d}}) {

@@ -1,0 +1,24 @@
+DEATHWARD_MECHANICS 1
+# Installed1.7.9b type10 ordinary forms; Rotten uses a separate native controller.
+# HPx3.2, distancex.1, force-driven momentum at30Hz. Registry speed is descriptive;
+# the gaper controller consumes force/retention instead of a fixed chase speed.
+monster 10.0.0 "Frowning Gaper" Chase None Walker 32 12 .6 2.4 0 1 0 1 0 1 legacy
+monster 10.1.0 "Gaper" Chase None Walker 32 9.96 .6 2.4 0 1 0 1 0 1 legacy
+monster 10.2.0 "Flaming Gaper" Chase None Walker 28.8 10.956 .6 2.4 0 1 0 1 0 1 legacy
+stage_health 10.0.0 10 0 3.2
+stage_health 10.1.0 10 0 3.2
+stage_health 10.2.0 9 0 3.2
+# frowning scale force awakeForce retention blockedRetention arrivalRetention
+# distanceGain maxGain arrivalDistance stopSpeed contact headFrames walkFrames
+# Source float constants round to these float32 values.
+gaper 10.0.0 1 .1 .600000024 .720000029 .7 .85 .5 .1 2 1 .1 10 20 22
+gaper 10.1.0 0 .1 .497999996 .497999996 .7 .85 .5 .1 2 1 .1 10 1 22
+gaper 10.2.0 0 .1 .547800004 .547800004 .7 .85 .5 .1 2 1 .1 10 12 22
+# Basement/Cellar/Downpour/Dross templates -> opening Washes/Quarry bands.
+# Weights are authored DeathWard tuning; this does not claim source spawn odds.
+encounter 0 1 any basic 10.0.0 1 1 0
+encounter 0 1 any basic 10.1.0 2 1 0
+# Pinned Gaper oldid270042: Burning Basement replaces both with60% Flaming.
+# Scorched Washes is the explicit Burning Basement context adaptation.
+replace_monster 10.0.0 10.2.0 0 0 scorched 6000 1
+replace_monster 10.1.0 10.2.0 0 0 scorched 6000 1

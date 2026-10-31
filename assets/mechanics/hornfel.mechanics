@@ -1,0 +1,46 @@
+DEATHWARD_MECHANICS 1
+# Repentance1.7.9b cart phase240HP / flee phase100HP; local HP conversion x3.2.
+# Dedicated controller overrides Still. Source animation events use30FPS.
+monster 906.0.0 "Hornfel" Still None Blob 768 0 .85 1 .25 3 0 1 0 0 legacy
+# id rail-speed flee-speed flee-HP contact flee-contact outside door-time attack-delay
+# then single/double/mines weights and regular/Hot/Bloody-Sad weights.
+# World speeds, door animation, attack delay and damage conversion are local tuning.
+# Native helper selects single/double/mines with3:1:1 (mines have a150-count cooldown).
+boss_hornfel 906.0.0 12 4 320 20 10 1.5 .3 .5 3 1 1 6 3 1
+# chance/10000 cooldown-seconds repeat-min repeat-max world/native-scale drive-force retention
+# drive-start increment-per-30Hz-step drive-cap travel-cap bomb-interval scatter mine-cooldown
+# Native drive/counter values are sourced; 30Hz integration order and elapsed-time
+# cooldown/periodic phase are explicit local adaptations. Paired rail doors only.
+hornfel_charge 906.0.0 1250 10 6 8 .1 1.3 .8 .1 .08 30 40 .5 .1 5
+# entry-drive deceleration floor acceleration normal-drive reentry-delay flight gravity
+# target-prediction damage; then cardinal fire speed range radius trail-seconds damage.
+# Shoot event is source animation frame46. Ballistic/fire-wave values are local tuning.
+hornfel_recovery 906.0.0 6 .75 .8 .1 1.2 .033333334 1.1 12 .2 10 6 12 .45 2.5 10
+# Optional ordinary-entry pair. One-in-N (zero disables), count, combined819/4.14 cap,
+# player clearance, spawn radius, launch spread degrees, exit HP cap.
+# Source240/6 units use x.1 world conversion; source3.5HP uses x3.2.
+hornfel_escort 906.0.0 819.0.0 3 2 4 24 .6 20 11.2
+# Owned decoy: source HP is hit-count health, not the normal x3.2 HP conversion.
+monster 906.1.0 "Hornfel Decoy" Still None Blob 4 0 .85 1 .25 3 0 1 1 0 legacy
+# id owner chance/10000 small-count large-count cooldown start-delay speed contact damage-scale
+# direct-blast damage radius player-damage; bomb-count min-speed max-speed profile.
+# Native: 1/8 selection before charge, 2/3 attempts, 100-count cooldown, 4HP,
+# damage>10 uses two base hit points, plus a 1/3 extra hit point; explosions kill.
+# Damage /3.2, radius x.1 and radial velocity x.1*30 are explicit local conversions.
+# Active-time clocks, cart speed/contact, player blast damage and normal bomb
+# fuse/3D gravity/collision are DeathWard adaptations; native room clock unresolved.
+hornfel_decoy 906.1.0 906.0.0 1250 2 3 3.33333333 5 12 20 3.2 352 7.5 20 6 15 60 normal
+# Normal authored rooms only. Weights are a local application of stored STB weights;
+# Void and Double Trouble remain distinct source encounter categories.
+hornfel_layout 906.0.0 hornfel_special_5220 125
+hornfel_layout 906.0.0 hornfel_special_5221 125
+hornfel_layout 906.0.0 hornfel_special_5222 125
+hornfel_layout 906.0.0 hornfel_special_5223 125
+hornfel_layout 906.0.0 hornfel_special_5224 1000
+hornfel_layout 906.0.0 hornfel_special_5225 1000
+hornfel_layout 906.0.0 hornfel_special_5226 1000
+hornfel_layout 906.0.0 hornfel_special_5227 100
+hornfel_layout 906.0.0 hornfel_special_5228 1000
+hornfel_layout 906.0.0 hornfel_special_5229 1000
+# Chapter2/Mines source boss pool -> Standard Broken Quarry, never tutorial/Mine.
+boss_pool 1 906.0.0 normal 2 standard

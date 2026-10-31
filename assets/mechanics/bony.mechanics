@@ -1,0 +1,36 @@
+DEATHWARD_MECHANICS 1
+# Normal Bony227.0, never the Holy variant227.1 or Black Bony277.0.
+# Source HP8+2*stage, local x3.2; existing stage mapping supplies expedition depth.
+monster 227.0.0 "Bony" Wander Shot Skull 32 3.75 .65 .016666667 .133333333 3 0 1 0 1 bony_aligned
+stage_health 227.0.0 8 2 3.2
+
+# Source: axis-aligned wandering, acquisition every3updates,20-unit axis margin,
+# <200-unit range, sight check against a randomly predicted0..16-update position.
+# Attack animation13frames, Shoot at4,30FPS. Shot aims at current player position.
+# Local: native distances x.1; source shot10/frame ->30world/sec. Wander decisions,
+# body-relative rather than path-grid-centre alignment, collision and existing
+# +10% enemy movement tuning are explicit3D adaptations, not source physics parity.
+behavior bony_aligned ready 20
+projectiles 1 0 10 30
+projectile_kind bone
+projectile_aim player
+projectile_life 5
+aimed_alignment 2 .1 .533333333
+wander .7 1.8
+state ready ready axis_wander 0 1
+transition throw aligned_attack_ready 0
+endstate
+state throw windup still .133333333 1
+enter lock_target
+enter warning
+exit fire
+transition recover timer 0
+endstate
+state recover ready still .3 1
+transition ready timer 0
+endstate
+end
+
+# Caves/Mines onward: sparse ranged pressure. Not an opening-floor/tutorial foe.
+encounter 1 3 crossfire specialist 227.0.0 2 2 2
+encounter 1 3 supply_guard specialist 227.0.0 1 2 1

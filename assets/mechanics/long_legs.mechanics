@@ -1,0 +1,28 @@
+DEATHWARD_MECHANICS 1
+# Source normal-mode HPx3.2; ordinary source30Hz movement/attack events.
+monster 206.0.0 "Baby Long Legs" Flee Spawn Spider 64 2 .4 1 1 2 0 1 0 1 legacy
+monster 206.1.0 "Small Baby Long Legs" Flee Spawn Spider 51.2 2 .4 1 1 2 0 1 0 1 legacy
+monster 207.0.0 "Crazy Long Legs" Chase Ring Spider 64 2 .4 1 1 2 0 1 0 1 legacy
+monster 207.1.0 "Small Crazy Long Legs" Chase Ring Spider 51.2 2 .4 1 1 2 0 1 0 1 legacy
+monster 30.2.0 "Sack" Still Spawn Blob 64 0 .4 1 1 2 0 0 0 1 legacy
+stage_health 206.0.0 16 4 3.2
+stage_health 206.1.0 12 4 3.2
+stage_health 207.0.0 16 4 3.2
+stage_health 207.1.0 12 4 3.2
+stage_health 30.2.0 20 0 3.2
+# flee scale path-force retention attack-retention chance/quiet-chance population-limit
+# animation/event child twin-chance shots shot-min/max height/up/jitter/gravity contact creep-radius/duration
+long_legs 206.0.0 1 .1 1.079 .8 .5 100 50 6 45 26 85.0.0 20 0 8 10 .65 15 .15 27 10 1 6
+long_legs 206.1.0 1 .1 1.079 .8 .5 200 100 6 45 26 30.2.0 0 0 8 10 .65 15 .15 27 10 1 6
+long_legs 207.0.0 0 .1 .65 .8 .5 50 50 6 45 22 0.0.0 0 8 8 10 .65 15 .15 27 10 1 6
+long_legs 207.1.0 0 .1 .65 .8 .5 50 50 6 45 22 0.0.0 0 4 8 10 .65 15 .15 27 10 1 6
+# HPscale initialHP growth acceleration retention healing, chance/far-chance/population,
+# Shoot/event/Shake frames, near/aim/jitter/scatter distances, child.
+sack 30.2.0 3.2 7 .02 .64 1.2 50 4 8 24 12 26 23 25 2 7 10 85.0.0
+# Source chapter identity: big Baby through Depths; small Baby only first two chapters;
+# big Crazy first two and Womb; small Crazy also sparse Depths. No heavy opening swarms.
+encounter 0 2 pursuit specialist 206.0.0 1 3 1
+encounter 0 1 pursuit specialist 206.1.0 1 3 1
+encounter 0 1 crossfire specialist 207.0.0 1 3 1
+encounter 3 3 crossfire specialist 207.0.0 1 3 1
+encounter 0 3 crossfire specialist 207.1.0 1 2 1

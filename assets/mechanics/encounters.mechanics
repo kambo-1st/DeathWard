@@ -1,0 +1,64 @@
+DEATHWARD_MECHANICS 1
+# first-band last-band pattern role monster weight threat-cost maximum-actors [group-members]
+# Bands: 0 Outer Washes, 1 Broken Quarry, 2 Abandoned Works, 3 Storm Cut.
+# Initial migration of the 13 existing roles; these are NOT certified faithful ports.
+# Maggot/Charger move out of Washes: their ordinary source rooms begin in Caves.
+# 0 weight disables a selection; 0 maximum means budget-limited. Stable tuple order.
+encounter 0 3 any basic 11.1.0 1 1 0
+
+encounter 0 3 pursuit specialist 14.0.0 2 2 1
+encounter 1 1 pursuit specialist 15.0.0 1 3 1
+encounter 3 3 pursuit specialist 15.0.0 1 3 1
+encounter 3 3 pursuit specialist 60.0.0 1 4 1
+
+encounter 0 3 crossfire specialist 14.0.0 2 2 2
+encounter 1 1 crossfire specialist 15.0.0 2 3 2
+encounter 3 3 crossfire specialist 15.0.0 2 3 2
+encounter 3 3 crossfire specialist 60.0.0 2 4 1
+
+# Opening charge formations use Gapers and a ranged guard until Chargers unlock.
+encounter 0 3 charge_lane specialist 14.0.0 1 2 1
+# Ordinary Chargers belong to Caves and Womb/Sheol families; band 2 is summon-only (green Bloat).
+encounter 1 1 charge_lane specialist 23.0.0 3 3 2
+encounter 3 3 charge_lane specialist 23.0.0 3 3 2
+
+encounter 0 1 supply_guard specialist 14.0.0 1 2 2
+encounter 1 1 supply_guard specialist 15.0.0 1 3 1
+encounter 2 3 supply_guard specialist 39.0.0 2 4 1
+
+# Corpse-equivalent threats belong to Storm Cut. Keep each subtype sparse;
+# the spawner's higher cost includes its potential six surviving maggots.
+encounter 3 3 any specialist 10.3.1 1 3 1
+encounter 3 3 any specialist 10.3.2 1 3 1
+encounter 3 3 any specialist 10.3.3 1 5 1
+encounter 3 3 any specialist 10.3.4 1 2 1
+encounter 3 3 any specialist 10.3.5 1 4 1
+
+# Authored source rooms contain Ring Flies from Basement through Depths.
+# A four-fly group costs three threat points and leaves two ordinary-actor slots.
+# Numeric budget/size are DeathWard tuning; the controller supports up to ten.
+encounter 0 2 pursuit specialist 222.0.0 1 3 4 4
+
+# Dross equivalent: Broken Quarry only, one curved-volley specialist per room.
+encounter 1 1 crossfire specialist 872.0.0 1 3 1
+
+# Authored source rooms contain normal/flaming Hoppers in Basement through
+# Depths equivalents. Sparse pursuit groups; costs/caps are DeathWard tuning.
+# This is direct placement, not the separate Burning Basement 60% replacement.
+encounter 0 2 pursuit specialist 29.0.0 1 2 2
+encounter 0 2 pursuit specialist 54.0.0 1 3 1
+
+# Clot covers the Depths-equivalent band; ordinary Clotty has no authored
+# Depths route. Their introduction at Quarry is DW difficulty tuning.
+encounter 1 3 pursuit specialist 15.1.0 1 3 1
+encounter 1 3 crossfire specialist 15.1.0 1 3 2
+# Grilled Clotty is an ordinary Burning Basement inhabitant. Chest remains a
+# separate future dedicated route, not an excuse to put it in every late floor.
+encounter 0 0 pursuit specialist 15.3.0 1 3 1 1 scorched
+
+# Reviewed Charger variants: Flooded Caves/Necropolis, Dank Depths, Ashpit, Corpse.
+# Sparse charge-lane specialists. Costs/caps/weights are explicit DeathWard tuning.
+encounter 1 2 charge_lane specialist 23.1.0 1 4 1
+encounter 2 2 charge_lane specialist 23.2.0 2 4 1
+encounter 1 1 charge_lane specialist 23.3.0 1 4 1
+encounter 3 3 charge_lane specialist 855.0.0 1 4 1

@@ -1,0 +1,24 @@
+DEATHWARD_MECHANICS 1
+# Exact installed 1.7.9b identities; source-stage HP retained, local conversion 3.2.
+monster 217.0.0 "Dip" Wander None Blob 12.8 2 .4 1 0 1 0 1 0 1 legacy
+monster 220.0.0 "Squirt" Wander None Blob 67.2 3 .65 2 0 2 0 1 0 1 legacy
+monster 223.0.0 "Dinga" Wander None Blob 198.4 1.8 .95 3 0 4 0 1 0 1 legacy
+stage_health 217.0.0 3 1 3.2
+stage_health 220.0.0 15 6 3.2
+stage_health 223.0.0 62 0 3.2
+# scale/contact/idle retention/move retention/impulse min,max/stop speed;
+# chance divisor/check interval/Idle frames/Move frames.
+dip 217.0.0 .1 10 .8 .95 5 10 1 10 1 10 25
+# Squirt additionally: Attack01/Slide event; sustained force,frames;
+# slow threshold,retention; collision count,retention; death child,offset.
+squirt 220.0.0 .1 10 .7 .95 20 20 1 5 5 33 6 40 36 .5 10 3 .8 4 .85 217.0.0 1
+membrain 223.0.0 .1 .5 .8 40 3 .316227766 10 20 30 8 30 70 29 220.0.0 1
+membrain_shot 223.0.0 30 0 1.15 -.15 .15 4.5 .9 .308 20 8 0
+# Living child/cap/one-in-N ring chance/offset/push range,power/animation FPS.
+# A hop spawns a pair on 6/7 draws while population<6, otherwise an 8-shot ring.
+# Both outcomes push all nearby Dips away. Dinga ANM2 is 45FPS, not MemBrain's 30.
+dinga 223.0.0 217.0.0 6 7 3 150 .1 45
+# Authored encounter weights/costs/caps based on positive ordinary source habitats.
+encounter 0 3 pursuit basic 217.0.0 2 1 3
+encounter 0 3 charge_lane specialist 220.0.0 2 3 2
+encounter 2 3 crossfire specialist 223.0.0 1 6 1

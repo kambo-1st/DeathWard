@@ -323,12 +323,12 @@ void testAreaAndEncounters() {
             largest=std::max(largest,int(generated.livingEnemies()));
             minArea = std::min(minArea, layout.usableArea());
             maxArea = std::max(maxArea, layout.usableArea());
-            std::set<int> kinds;
+            std::set<std::string> kinds;
             for (const auto &enemy : generated.enemies) {
                 check(enemy.kind != EnemyKind::Monster,
                       "mine encounters keep the Western roster exclusively");
                 seen.insert(enemy.kind);
-                kinds.insert(enemy.kind == EnemyKind::Monster ? enemy.monster : -int(enemy.kind) - 1);
+                kinds.insert(enemy.kind == EnemyKind::Monster ? monsterIdText(enemy.monster) : "legacy:"+std::to_string(int(enemy.kind)));
                 check(generated.arena.roomAt(enemy.position) == index &&
                           !generated.arena.blocked(enemy.position, enemy.radius) &&
                           distance(enemy.position, generated.player.position) >= 6,

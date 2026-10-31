@@ -7,26 +7,34 @@ using namespace dw;
 namespace {
 void check(bool ok,const std::string &message){if(!ok)throw std::runtime_error(message);}
 void pools() {
-    std::set<ItemId> all;
+    std::set<ItemKey> all;
     for(auto pool:{ItemPool::Armory,ItemPool::Shop,ItemPool::Boss,ItemPool::Bargain}) {
-        std::set<ItemId> seen;
+        std::set<ItemKey> seen;
         for(uint64_t seed=0;seed<1024;++seed) {
             auto pair=drawItemOffers(pool,seed);check(pair==drawItemOffers(pool,seed),"offers are cached seeded choices");
             check(pair[0]!=pair[1],"two distinct choices within one offer");
-            for(auto item:pair){check(itemPoolWeights(pool)[size_t(item)]>0,"item belongs to destination pool");seen.insert(item);all.insert(item);}
+            for(auto item:pair){check(itemPoolWeight(pool,item)>0,"item belongs to destination pool");seen.insert(item);all.insert(item);}
         }
-        for(int i=0;i<ItemCount;++i)check(seen.contains(ItemId(i))==(itemPoolWeights(pool)[size_t(i)]>0),"all eligible items represented");
+        for(const auto &item:defaultMechanics()->items())
+            check(seen.contains(item.id)==(itemPoolWeight(pool,item.id)>0),"all eligible namespaced items represented");
     }
-    check(all.size()==ItemCount,"all eleven items obtainable across pools");
+    // Skatole currently supplies only the Pooter reaction contract. Keep it
+    // outside rewards until its other fly effects are ported, and reject any
+    // accidental pool leak. Every other registered item must remain obtainable.
+    const auto dependency=parseItemKey("isaac:collectible:9");
+    check(!all.contains(dependency),"unfinished Skatole dependency stays outside natural pools");
+    for(const auto &item:defaultMechanics()->items())
+        check(all.contains(item.id)==(item.id!=dependency),"all supported items obtainable across pools");
     check(itemPoolWeights(ItemPool::Armory)!=itemPoolWeights(ItemPool::Shop)&&
           itemPoolWeights(ItemPool::Boss)!=itemPoolWeights(ItemPool::Bargain),"destinations have distinct weights and membership");
 }
 void reachability() {
-    std::set<int> lengths;std::set<RoomService> services;int floors=0;
+    std::set<int> lengths;std::set<RoomService> services;int floors=0,surgeonsOnFourthFloor=0;
     for(uint64_t seed=0;seed<16;++seed) {
         ExpeditionPlan plan(seed,false,WitnessAccount::Rourke);lengths.insert(plan.floorCount);
         for(int floor=0;floor<plan.floorCount;++floor) {
             Simulation run(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::Rourke,floor);++floors;
+            check(run.arena.profile.floor==floor,"service unlocks retain the absolute floor number");
             // Zero keys and zero dynamite, after every optional purchase: traverse
             // only the free graph, treating combat clearance as the progression gate.
             std::vector<bool> reached(run.rooms.size());std::queue<int> pending;pending.push(0);reached[0]=true;
@@ -42,25 +50,34 @@ void reachability() {
             check(reached.back(),"boss reachable with all optional resources spent");
             if(run.storyRoomIndex()>=0)check(reached[size_t(run.storyRoomIndex())],"mandatory evidence never costs keys/bombs");
             int count=0,combat=0;
+            std::set<int> traderRooms;
             for(int i=0;i<run.arena.roomCount();++i) {
                 const auto &r=run.arena.rooms[size_t(i)];combat+=r.kind==RoomKind::Combat;
+                if(r.kind==RoomKind::Shop||r.kind==RoomKind::Service) {
+                    const int physicalRoom=run.arena.roomAt(r.objective);
+                    check(physicalRoom==i&&traderRooms.insert(physicalRoom).second,"each trader occupies its own room");
+                    check((i==run.arena.shopRoom)==(r.kind==RoomKind::Shop),"shop and specialist roles never share a room");
+                }
                 if(r.kind==RoomKind::Service) {
                     ++count;services.insert(r.service);
+                    check(floor>=3||r.service!=RoomService::Surgeon,"no doctor on floors one through three");
+                    if(floor==3&&r.service==RoomService::Surgeon)++surgeonsOnFourthFloor;
                     check(reached[size_t(i)]&&i!=0&&i!=2&&i!=3&&r.story==StoryRoom::None,"optional trade protects story/legacy sites");
                     check(run.roomEnemies(i).empty(),"peaceful service room");
                     check(!run.arena.path(r.center,r.objective,.48f).empty(),"trader physically approachable");
                 }
                 if(r.kind==RoomKind::Power)for(auto item:run.rooms[size_t(i)].offers)
-                    check(itemPoolWeights(ItemPool::Armory)[size_t(item)]>0,"armory uses armory pool");
+                    check(itemPoolWeight(ItemPool::Armory,item)>0,"armory uses armory pool");
             }
             check(count>=1&&count<=2&&combat>=3,"small optional subset within existing room budget");
-            for(int i=1;i<=2;++i)check(itemPoolWeights(ItemPool::Shop)[size_t(run.shopOffers[size_t(i)].item)]>0,"shop uses utility pool");
-            for(auto item:run.rooms.back().offers)check(itemPoolWeights(ItemPool::Boss)[size_t(item)]>0,"boss has its own rewards");
+            for(int i=1;i<=2;++i)check(itemPoolWeight(ItemPool::Shop,run.shopOffers[size_t(i)].item)>0,"shop uses utility pool");
+            for(auto item:run.rooms.back().offers)check(itemPoolWeight(ItemPool::Boss,item)>0,"boss has its own rewards");
             const auto pos=run.rewardPosition(run.finalRoom());
             check(!run.arena.blocked(pos,1.1f)&&distance(pos,run.arena.exit)>=4&&distance(pos,run.arena.rooms.back().objective)>=4,"boss reward separated from evidence/exit");
         }
     }
     check(lengths.size()==5&&services.size()==3,"all run lengths and optional functions occur");
+    check(surgeonsOnFourthFloor>0,"doctors can first appear on floor four");
     std::cout<<"Validated "<<floors<<" actual floors with zero-resource mandatory routes\n";
 }
 void enterService(Simulation &run,RoomService service) {

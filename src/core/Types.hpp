@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "content/ContentId.hpp"
 #include <algorithm>
 #include <array>
 #include <cmath>
@@ -13,6 +14,7 @@ inline constexpr const char *ContentVersion = "deathward-m1-61";
 inline constexpr int StartingDynamite = 3, MaxDynamite = 9;
 inline constexpr float DynamiteFuse = 2, DynamiteRange = 12, DynamiteRadius = 4.5f;
 inline constexpr float DynamiteDamage = 100, DynamiteSelfDamage = 25;
+inline constexpr float DynamiteGravity = 18;
 inline constexpr uint64_t MaxMoney = 999999999;
 inline constexpr float StartingHealth = 100;
 inline constexpr float RevolverDamage = 24;
@@ -39,6 +41,8 @@ inline float length(Vector3 a) {
 inline float distance(Vector3 a, Vector3 b) {
     return length(sub(a, b));
 }
+inline Vector3 horizontal(Vector3 v) { v.y = 0; return v; }
+inline float planarDistance(Vector3 a, Vector3 b) { return length(horizontal(sub(a,b))); }
 inline Vector3 unit(Vector3 a) {
     const float n = length(a);
     return n > 0.0001f ? mul(a, 1 / n) : Vector3{0, 0, -1};
@@ -74,14 +78,17 @@ struct Random {
 };
 
 using EntityId = uint64_t; // Monotonic per run; IDs are never reused.
-enum class ItemId : int { Ricochet, Split, Judas, Powder, Ghost, Scatter, Rail, Lodestone, Return, Cap, Braid, Count };
 inline constexpr int LegacyItemCount = 5;
 inline constexpr int ItemCount = int(ItemId::Count);
+// Snapshot the producer when an attack is queued: its body may be gone by impact.
+enum class DamageSource { Unspecified, Player, Ally, Enemy, Environment, Tnt };
 struct Context {
     uint64_t chainId = 0;
     int generation = 0;
     EntityId sourceEntity = 0;
     int sourceEffect = -1;
+    std::optional<ItemKey> sourceItem{};
+    DamageSource damageSource = DamageSource::Unspecified;
 };
 struct Stats {
     double duration = 0, bossDuration = 0;

@@ -1,0 +1,22 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b. HP x3.2, source distance x.1, speed x3.
+# Radius .6 matches the existing headless replacements during an in-place morph.
+monster 827.0.0 "Faceless" Wander None Walker 64 3 .6 2.4 .3 2 0 1 0 1 legacy
+monster 827.1.0 "Tainted Faceless" Wander None Walker 320 3 .6 2.4 .4 4 0 1 0 1 legacy
+stage_health 827.0.0 20 0 3.2
+stage_health 827.1.0 100 0 3.2
+adaptive_armor 827.1.0 20 120 .09 .18
+# tainted scale wanderForce retention radius arrival stuckSpeedSquared stuckChance
+# pathForce retention alertRange contact baseChance damageChance damageScale decay cost
+# attackFrames ShootFrame overkill morphChance pacerChance gusher pacer
+faceless 827.0.0 0 .1 .5 .8 40 3 .1 10 .6 .7 80 10 .008 .08 3.2 .11 7 19 9 25 2 3 11.0.0 11.1.0
+faceless 827.1.0 1 .1 .5 .8 40 3 .1 10 .6 .7 80 20 .008 .08 3.2 .11 7 19 12 25 2 3 11.0.0 11.1.0
+# count worldSpeed height up gravity retention radius damage life
+# blood-splat chance minRadius maxRadius life (bounded cosmetic adaptation)
+faceless_shot 827.0.0 6 21 1.15 4.5 4.5 .9 .22 10 8 6 .1 .35 8
+faceless_shot 827.1.0 6 24 1.15 4.5 1.8 .9 .286 10 8 6 .1 .35 8
+# Mines and Scarred Womb source templates map to Quarry and the late band.
+encounter 1 1 pursuit specialist 827.0.0 1 2 2
+encounter 3 3 pursuit specialist 827.0.0 1 2 2
+# Source Tainted is Ascent-only: explicit rare late-expedition adaptation.
+encounter 3 3 pursuit specialist 827.1.0 1 6 1

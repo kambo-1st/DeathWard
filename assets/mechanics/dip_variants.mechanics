@@ -1,0 +1,41 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b exact variants; source HP to local scale3.2.
+monster 217.1.0 "Corn" Wander None Blob 9.6 2 .4 1 0 1 0 1 0 1 legacy
+monster 217.2.0 "Brownie Corn" Wander None Blob 9.6 2 .4 1 0 1 0 1 0 1 legacy
+monster 217.3.0 "Big Corn" Wander None Blob 25.6 2 .46 1 0 1 0 1 0 1 legacy
+monster 220.1.0 "Dank Squirt" Wander None Blob 67.2 3 .65 2 0 2 0 1 0 1 legacy
+monster 870.0.0 "Drip" Wander None Blob 12.8 2 .4 1 0 1 0 1 0 1 legacy
+monster 871.0.0 "Splurt" Wander None Blob 67.2 3 .65 2 0 2 0 1 0 1 legacy
+stage_health 217.1.0 3 0 3.2
+stage_health 217.2.0 3 0 3.2
+stage_health 217.3.0 6 2 3.2
+stage_health 220.1.0 15 6 3.2
+stage_health 870.0.0 3 1 3.2
+stage_health 871.0.0 15 6 3.2
+# Only variant1 doubles the ordinary impulse in installed522553/522587.
+# Brownie Corn doubles on fear branch, not ordinary random wandering.
+dip 217.1.0 .1 10 .8 .95 10 20 1 10 1 10 25
+dip 217.2.0 .1 10 .8 .95 5 10 1 10 1 10 25
+dip 217.3.0 .1 10 .8 .95 5 10 1 10 1 10 25
+slide_swim 217.3.0
+# Prediction source factor/speed/height/up/gravity/retention/radius/damage/life.
+slide_death_shot 217.3.0 .1 30 1.15 0 4.5 .9 .22 20 8
+dip 870.0.0 .1 10 .9 .95 5 8 1 10 1 10 22
+slide_swim 870.0.0
+# Animation frame10 has1/3 chance of another burst, next update;1/3 aims at player.
+drip_chain 870.0.0 10 3 3
+squirt 220.1.0 .1 10 .7 .95 20 20 1 5 5 33 6 40 36 .5 10 3 .8 4 .85 15.1.0 1
+# Source patch interval3/lifetime60; local radius1, fade30 at.97 pending full effect audit.
+slide_creep 220.1.0 3 1 60 30 .97
+squirt 871.0.0 .1 10 .7 .95 20 20 1 5 5 33 6 40 36 .5 10 3 .8 4 .85 870.0.0 1
+slide_swim 871.0.0
+# Attack02 frames/event; first/second slide braking ages; offspring impulses4..6.
+splurt 871.0.0 12 8 8 40 4 6
+# Bands derive from positive ordinary source templates; weights/costs are local.
+encounter 1 1 pursuit basic 217.1.0 1 1 2
+encounter 0 0 pursuit basic 217.2.0 1 1 2
+encounter 2 2 pursuit basic 217.2.0 1 1 2
+encounter 1 1 pursuit specialist 217.3.0 1 2 2
+encounter 1 3 charge_lane specialist 220.1.0 1 4 1
+encounter 1 1 pursuit basic 870.0.0 1 1 2
+encounter 1 1 charge_lane specialist 871.0.0 1 4 1

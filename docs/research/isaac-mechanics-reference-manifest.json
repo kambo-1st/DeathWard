@@ -1,0 +1,50 @@
+{
+  "generated": "2026-10-25",
+  "files": [
+    {
+      "file": "docs/research/isaac-mechanics-reference.json",
+      "bytes": 15998781,
+      "sha256": "51a84e580d93a78f6cf220cc173ebd4abc0d32ad127ffb64cfd85efa8a5cc00e"
+    },
+    {
+      "file": "docs/reports/isaac-mechanics-reference-2026-10-25.html",
+      "bytes": 16025341,
+      "sha256": "6d815578cac78eda7a361dc0267eec311597995a41a628b528c08afb59fd80ea"
+    },
+    {
+      "file": "docs/research/isaac-implementation-backlog.csv",
+      "bytes": 806795,
+      "sha256": "94b9b2525fbceb997dc2008188ec57b7f13f1b0e00027e96b93c51cef576f40f"
+    }
+  ],
+  "records": 2443,
+  "articles": 1362,
+  "interaction_statements": 8434,
+  "coverage": {
+    "collectible_total": 721,
+    "collectible_with_infobox_match": 721,
+    "collectible_with_article_or_context": 721,
+    "trinket_total": 188,
+    "trinket_with_infobox_match": 188,
+    "trinket_with_article_or_context": 188,
+    "internal_total": 49,
+    "card_total": 98,
+    "card_with_infobox_match": 96,
+    "card_with_article_or_context": 97,
+    "pill_total": 50,
+    "pill_with_article_or_context": 50,
+    "other_total": 684,
+    "other_with_article_or_context": 171,
+    "other_with_infobox_match": 18,
+    "enemy_total": 468,
+    "enemy_with_infobox_match": 393,
+    "enemy_with_article_or_context": 465,
+    "enemy_with_deathward_adaptation": 151,
+    "boss_total": 185,
+    "boss_with_infobox_match": 125,
+    "boss_with_article_or_context": 185,
+    "boss_with_deathward_adaptation": 6
+  },
+  "raw_sources": "reference/isaac-mechanics-study (gitignored, preserved locally)",
+  "baseline_sources": "reference/isaac-repentance-1.7.9b (gitignored, preserved locally)"
+}

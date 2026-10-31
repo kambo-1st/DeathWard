@@ -4,20 +4,24 @@
 
 namespace dw {
 namespace {
-Vector3 center(FloorCell c, float y) {
-    return {(float(c.first) + 0.5f) * FloorTile, y, (float(c.second) + 0.5f) * FloorTile};
+Vector3 center(FloorCell c, float y, float step=FloorTile) {
+    return {(float(c.first) + 0.5f) * step, y, (float(c.second) + 0.5f) * step};
 }
-std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target, float radius) {
-    const bool targetWasBlocked = arena.blocked(target, radius);
+std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target, float radius,
+                             const std::set<FloorCell> &cells, int flightRoom=-1, float step=FloorTile,bool swimming=false) {
+    auto blocked=[&](Vector3 p){return swimming?arena.swimBlocked(p,radius,flightRoom):flightRoom<0?arena.blocked(p,radius):arena.flightBlocked(p,radius,flightRoom);};
+    auto clear=[&](Vector3 a,Vector3 b){return swimming?arena.swimClear(a,b,radius,flightRoom):flightRoom<0?arena.clear(a,b,radius):arena.flightClear(a,b,radius,flightRoom);};
+    auto atCell=[&](FloorCell c){return center(c,from.y,step);};
+    const bool targetWasBlocked = blocked(target);
     auto nearest = [&](Vector3 p, bool requireSight) -> std::optional<FloorCell> {
         std::optional<FloorCell> result;
         float best = std::numeric_limits<float>::infinity();
-        for (const auto &cell : arena.floorCells) {
-            Vector3 at = center(cell, from.y);
+        for (const auto &cell : cells) {
+            Vector3 at = atCell(cell);
             float d = distance(at, p);
             if (d >= best || (requireSight && d > 6))
                 continue;
-            if (!arena.blocked(at, radius) && (!requireSight || arena.clear(p, at, radius))) {
+            if (!blocked(at) && (!requireSight || clear(p, at))) {
                 result = cell;
                 best = d;
             }
@@ -28,8 +32,8 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
     if (!start || !goal)
         return {};
     if (targetWasBlocked)
-        target = center(*goal, from.y);
-    if (arena.clear(from, target, radius))
+        target = atCell(*goal);
+    if (clear(from, target))
         return {target};
     struct Node {
         float cost = std::numeric_limits<float>::infinity();
@@ -39,7 +43,7 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
     std::priority_queue<Entry, std::vector<Entry>, std::greater<Entry>> frontier;
     std::map<FloorCell, Node> nodes;
     auto heuristic = [&](FloorCell c) {
-        return float(std::abs(c.first - goal->first) + std::abs(c.second - goal->second)) * FloorTile;
+        return float(std::abs(c.first - goal->first) + std::abs(c.second - goal->second)) * step;
     };
     nodes[*start] = {0, *start};
     frontier.push({heuristic(*start), *start});
@@ -52,13 +56,13 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
             break;
         for (auto [dx, dz] : {FloorCell{0, -1}, FloorCell{1, 0}, FloorCell{0, 1}, FloorCell{-1, 0}}) {
             FloorCell next{current.first + dx, current.second + dz};
-            if (!arena.floorCells.contains(next))
+            if (!cells.contains(next))
                 continue;
-            float cost = nodes[current].cost + FloorTile;
+            float cost = nodes[current].cost + step;
             if (nodes.contains(next) && cost >= nodes[next].cost)
                 continue;
-            Vector3 p = center(next, from.y);
-            if (arena.blocked(p, radius) || !arena.clear(center(current, from.y), p, radius))
+            Vector3 p = atCell(next);
+            if (blocked(p) || !clear(atCell(current), p))
                 continue;
             nodes[next] = {cost, current};
             frontier.push({cost + heuristic(next), next});
@@ -68,7 +72,7 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
         return {};
     std::vector<Vector3> reverse{target};
     for (auto at = *goal;; at = nodes[at].previous) {
-        reverse.push_back(center(at, from.y));
+        reverse.push_back(atCell(at));
         if (at == *start)
             break;
     }
@@ -78,7 +82,7 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
     Vector3 anchor = from;
     for (size_t i = 0; i < reverse.size();) {
         size_t end = i;
-        while (end + 1 < reverse.size() && arena.clear(anchor, reverse[end + 1], radius))
+        while (end + 1 < reverse.size() && clear(anchor, reverse[end + 1]))
             ++end;
         path.push_back(reverse[end]);
         anchor = reverse[end];
@@ -87,19 +91,50 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
     return path;
 }
 } // namespace
+std::vector<Vector3> Arena::flightPath(Vector3 from,Vector3 target,float radius,int room) const {
+    target.y=from.y;
+    if(flightClear(from,target,radius,room))return {target};
+    std::set<FloorCell> cells;
+    const auto &area=rooms.at(size_t(room)).bounds;
+    for(int z=int(std::floor(area.min.z));z<int(std::ceil(area.max.z));++z)
+        for(int x=int(std::floor(area.min.x));x<int(std::ceil(area.max.x));++x)
+            cells.insert({x,z});
+    return floorPath(*this,from,target,radius,cells,room,1);
+}
+std::vector<Vector3> Arena::swimPath(Vector3 from,Vector3 target,float radius,int room) const {
+    target.y=from.y;if(swimClear(from,target,radius,room))return {target};
+    std::set<FloorCell> cells;const auto &area=rooms.at(size_t(room)).bounds;
+    for(int z=int(std::floor(area.min.z));z<int(std::ceil(area.max.z));++z)
+        for(int x=int(std::floor(area.min.x));x<int(std::ceil(area.max.x));++x)cells.insert({x,z});
+    return floorPath(*this,from,target,radius,cells,room,1,true);
+}
 std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) const {
     target.y = from.y;
-    if (!floorCells.empty())
-        return floorPath(*this, from, target, radius);
+    if (!floorCells.empty()) {
+        auto route=floorPath(*this,from,target,radius,floorCells);
+        auto inRails=[&](Vector3 p) {return rails&&p.x>=rails->bounds.min.x&&p.x<=rails->bounds.max.x&&
+            p.z>=rails->bounds.min.z&&p.z<=rails->bounds.max.z;};
+        if(!route.empty()||!inRails(from)||!inRails(target))return route;
+        // Authored rocks can leave a physically passable aisle between the
+        // ordinary two-unit navigation nodes. Refine only a failed local rail
+        // arena query; retain the same grounded collision and pit checks.
+        constexpr float precision=.5f;std::set<FloorCell> fine;
+        for(int x=int(std::floor(rails->bounds.min.x/precision));x<int(std::ceil(rails->bounds.max.x/precision));++x)
+            for(int z=int(std::floor(rails->bounds.min.z/precision));z<int(std::ceil(rails->bounds.max.z/precision));++z)
+                fine.insert({x,z});
+        return floorPath(*this,from,target,radius,fine,-1,precision);
+    }
     target.x = std::clamp(target.x, bounds.min.x + 0.7f, bounds.max.x - 0.7f);
     target.z = std::clamp(target.z, bounds.min.z + 0.7f, bounds.max.z - 0.7f);
     const float margin = radius + 0.08f;
+    auto navigationWalls=walls;
+    navigationWalls.insert(navigationWalls.end(),movementBodies.begin(),movementBodies.end());
     auto valid = [&](Vector3 p) { return contains(p) && !blocked(p, radius); };
     // A click on solid cover lands at its nearest walkable edge.
     if (blocked(target, radius)) {
         std::optional<Vector3> nearest;
         float best = std::numeric_limits<float>::infinity();
-        for (const auto &wall : walls) {
+        for (const auto &wall : navigationWalls) {
             const std::array<Vector3, 4> edges{
                 {{wall.min.x - margin, from.y,
                   std::clamp(target.z, wall.min.z - margin, wall.max.z + margin)},
@@ -122,7 +157,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
         target = *nearest;
     }
     auto clear = [&](Vector3 a, Vector3 b) {
-        for (const auto &wall : walls)
+        for (const auto &wall : navigationWalls)
             if (segmentBox(a, b, wall, radius).hit)
                 return false;
         return true;
@@ -133,7 +168,7 @@ std::vector<Vector3> Arena::path(Vector3 from, Vector3 target, float radius) con
     // The arena has a handful of rectangular obstacles. A small visibility graph
     // around their expanded corners provides exact routes without a terrain grid.
     std::vector<Vector3> nodes{from, target};
-    for (const auto &wall : walls) {
+    for (const auto &wall : navigationWalls) {
         for (float x : {wall.min.x - margin, wall.max.x + margin}) {
             for (float z : {wall.min.z - margin, wall.max.z + margin}) {
                 Vector3 p{x, from.y, z};
@@ -191,6 +226,11 @@ void Simulation::requestMove(Vector3 target, bool interactAtDestination) {
     if(!interactAtDestination) {
         movePath_=arena.path(player.position,target,.48f);
         return;
+    }
+    for(const auto &bomb:suppliedBombs)if(bomb.room==room&&bomb.state==SuppliedBombState::Pickup&&
+        planarDistance(target,bomb.charge.position)<.65f) {
+        target=bomb.charge.position;target.y=player.position.y;
+        movePath_=arena.path(player.position,target,.48f);return;
     }
     const auto &site=arena.rooms[size_t(room)];
     if(site.story!=StoryRoom::None&&roomClear&&distance(target,site.objective)<2.4f) {
@@ -261,6 +301,7 @@ std::string Simulation::demolitionHint() const {
         if (prop.kind == BreakableKind::PowderBarrel)
             return prop.fuse >= 0 ? "LIT POWDER / KEEP CLEAR" : "POWDER BARREL / GUNFIRE IGNITES IT";
         if (prop.kind == BreakableKind::OreSeam) return "MARKED SEAM / DYNAMITE REVEALS SUPPLIES";
+        if (prop.kind == BreakableKind::Dung) return "DUNG / BREAKABLE";
         return "CRACKED ROCK / DYNAMITE OPENS COVER";
     }
     return {};

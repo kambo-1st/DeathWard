@@ -1,0 +1,21 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b 278/279/280. HPx3.2, source distancesx.1.
+# These are independent threats; no regrowing Globin goo or owned-part cleanup.
+monster 278.0.0 "Black Globin" Chase Spawn Walker 105.6 12 .6 1 0 4 0 1 0 1 legacy
+monster 279.0.0 "Black Globin's Head" Chase None Blob 64 10 .6 1 0 4 0 1 0 0 legacy
+monster 280.0.0 "Black Globin's Body" Wander Spawn Headless 32 6 .6 1 0 4 0 1 0 0 legacy
+stage_health 278.0.0 33 0 3.2
+stage_health 279.0.0 20 0 3.2
+stage_health 280.0.0 10 0 3.2
+# scale force retention blockedRetention arrivalRetention gain maxGain arrival
+# stopSpeed contact WalkFrames; strict HP threshold targetFraction height headRadius children
+black_globin 278.0.0 .1 .6 .7 .85 .5 .1 2 1 .1 20 22 16 .75 -30 4 85.0.0 279.0.0 280.0.0
+# Head shares Brain trail, but uses direct ground pursuit instead of cardinal charge.
+brain 279.0.0 .1 .5 .7 .7 20 30 40 1 .1 10 11 10
+brain_pursuit 279.0.0 .1 .5 .7 .85 .5 .1 2 1 .1 20 30
+brain_creep 279.0.0 5 12 24 3 2.46 10 125 40 .98
+# Body shares Pacer wandering. Native initial20..39, then exactly90 OR180 frames.
+headless 280.0.0 0 .1 .5 .75 40 3 .1 10 10 20 39 90 180 10 .1 .25 8
+headless_brood 280.0.0 85.0.0 5 90 180 10 -30
+# Sheol/Dark Room source placement -> final Badlands band. Local sparse weight/cap.
+encounter 3 3 any specialist 278.0.0 1 4 1

@@ -11,7 +11,7 @@ class CanyonWater {
     CanyonWater() = default;
     CanyonWater(const CanyonWater &) = delete;
     CanyonWater &operator=(const CanyonWater &) = delete;
-    void prepare(const CanyonTerrain &field);
+    void prepare(const CanyonTerrain &field,const Box *dryArea=nullptr);
     void unload();
     void draw(Vector3 focus, const MissionLighting &lighting) const;
     bool ready() const {

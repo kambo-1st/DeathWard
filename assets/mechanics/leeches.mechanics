@@ -1,0 +1,23 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b type55: all variants HP25/contact2, flying walls-only.
+# HP x3.2, contact x10 and distance x.1 are DeathWard conversions.
+monster 55.0.0 "Leech" Charge None Worm 80 2 .55 2 0 2 1 1 0 1 legacy
+monster 55.1.0 "Kamikaze Leech" Charge None Worm 80 2 .55 2 0 3 1 1 0 1 legacy
+monster 55.2.0 "Holy Leech" Charge None Worm 80 2 .55 2 0 3 1 1 0 1 legacy
+stage_health 55.0.0 25 0 3.2
+stage_health 55.1.0 25 0 3.2
+stage_health 55.2.0 25 0 3.2
+# scale/walk force/friction/Z correction/contact; charge force/friction/grid pull;
+# alignment/prediction/check frames/walk frames/dash frames; shared grid wander;
+# charge stuck distance/frames; required orbiter. Source clocks run at30Hz.
+leech 55.0.0 .1 .85 .85 .964705825 20 1.55 .9 .3 20 16 4 8 6 40 5 .6 10 11 10 1.414213562 5 none
+leech 55.1.0 .1 .85 .85 .964705825 20 1.55 .9 .3 20 16 4 8 6 40 5 .6 10 11 10 1.414213562 5 none
+leech 55.2.0 .1 .85 .85 .964705825 20 1.55 .9 .3 20 16 4 8 6 40 5 .6 10 11 10 1.414213562 5 96.0.0
+# Immediate death BombDamage40/radius60, converted using existing blast rules.
+death_blast 55.1.0 128 20 6
+death_blast 55.2.0 128 20 6
+# Source ordinary habitats: Depths/Necropolis onward; Holy Utero/Cathedral.
+# Authored weights and costs, not native rarity replacement probabilities.
+encounter 2 3 charge_lane specialist 55.0.0 2 3 2
+encounter 2 3 charge_lane specialist 55.1.0 1 4 1
+encounter 3 3 charge_lane specialist 55.2.0 1 5 1

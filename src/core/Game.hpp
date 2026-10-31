@@ -156,7 +156,6 @@ class Game {
     Action keyboardFocus() const;
     // Logical 1280 x 800 coordinates, shared by rendering and mouse picking.
     std::optional<Vector2> floorExitMarker() const;
-    bool showExpeditionInteraction() const;
     int ownedItemTypes() const;
     std::string expeditionNotice() const;
 

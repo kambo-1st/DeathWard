@@ -186,7 +186,7 @@ void saveCompatibility(const std::filesystem::path &path) {
     write(4,old);CampaignStore legacy(path);
     check(legacy.data().pending->floorCount==1&&legacy.data().pending->account==WitnessAccount::None&&legacy.data().pending->pacing==ExpeditionPacing::Classic,"format-4 history retains its single-floor meaning and original layout");
     check(legacy.recover()&&ArrivalQuest::stage(legacy.data().world)==ArrivalStage::Report,"format-4 document recovery remains valid");
-    CampaignStore migrated(path);check(migrated.data().history.back().surveyRecovered&&migrated.data().world.money==105,"format-6 round trip retains old documents and money");
+    CampaignStore migrated(path);check(migrated.data().history.back().surveyRecovered&&migrated.data().world.money==105,"current-format round trip retains old documents and money");
     migrated.begin(42,RourkeExpeditionTitle);
     CampaignStore beforeFirstCheckpoint(path);
     check(beforeFirstCheckpoint.recover()&&beforeFirstCheckpoint.data().world.prosperity==50&&
@@ -200,14 +200,24 @@ void saveCompatibility(const std::filesystem::path &path) {
     const std::string valid=std::to_string(int(e.room))+" 1 "+std::to_string(e.floor)+" "+std::to_string(e.floorSeed)+"\n";
     const auto at=payload.find(valid);check(at!=std::string::npos,"saved provenance record is present");
     for(const auto &invalid:{"1 4 0 42\n","1 1 8 42\n","4 1 0 42\n","1 1 0 43\n"}) {
-        auto bad=payload;bad.replace(at,valid.size(),invalid);write(6,bad);
+        auto bad=payload;bad.replace(at,valid.size(),invalid);write(7,bad);
         bool rejected=false;try{CampaignStore corrupt(path);}catch(const std::exception &){rejected=true;}
         check(rejected,"invalid witness, floor, site or floor seed is rejected even with a valid checksum");
     }
-    write(6,payload);check(CampaignStore(path).data().pending->evidence==run.evidence,"valid provenance reloads");
+    write(7,payload);check(CampaignStore(path).data().pending->evidence==run.evidence,"valid provenance reloads");
+    // This fixture has no items. Format 6 lacks only the final fingerprint field;
+    // legacy numeric inventory migration is covered in mechanics_tests.
+    std::string v6=payload;size_t position=0;
+    while((position=v6.find("\"deathward-",position))!=std::string::npos) {
+        std::istringstream summary(v6.substr(position));std::string version,title,context;
+        summary>>std::quoted(version)>>std::quoted(title)>>std::quoted(context);
+        const size_t end=v6.find('\n',position+size_t(summary.tellg())),field=v6.rfind(' ',end);
+        v6.erase(field,end-field);position=field+1;
+    }
+    write(6,v6);check(CampaignStore(path).data().pending->evidence==run.evidence,"format-6 evidence survives migration");
     // Downgrade the fixture's summary lines to the previous format, preserving
     // stats/evidence. Real format-5 saves did not have a pacing field.
-    std::string v5=payload;size_t cursor=0;
+    std::string v5=v6;size_t cursor=0;
     while((cursor=v5.find("\"deathward-",cursor))!=std::string::npos) {
         std::istringstream summary(v5.substr(cursor));std::string version,title,context;
         summary>>std::quoted(version)>>std::quoted(title)>>std::quoted(context);
@@ -218,7 +228,7 @@ void saveCompatibility(const std::filesystem::path &path) {
     write(5,v5);CampaignStore previous(path);
     check(previous.data().pending->pacing==ExpeditionPacing::Classic&&previous.data().pending->evidence==run.evidence,"format-5 evidence survives and keeps original pacing");
     previous.recover();previous.begin(42,RourkeExpeditionTitle,ExpeditionPacing::Classic);
-    check(CampaignStore(path).data().pending->pacing==ExpeditionPacing::Classic,"explicit Classic preset survives format-6 save");
+    check(CampaignStore(path).data().pending->pacing==ExpeditionPacing::Classic,"explicit Classic preset survives current-format save");
     Simulation classic(42,1,{},MissionTheme::Mine,true,false,WitnessAccount::None,0,ExpeditionPacing::Classic);
     classic.jumpDebug(classic.finalRoom());classic.clearRoomDebug();
     classic.player.position=classic.arena.exit;classic.interact();

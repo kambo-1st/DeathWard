@@ -1,5 +1,7 @@
 #pragma once
 #include "core/Types.hpp"
+#include "world/RailNetwork.hpp"
+#include <memory>
 
 namespace dw {
 enum class WitnessAccount { None, Rourke, Eleanor, Mercer, Cole };
@@ -8,9 +10,11 @@ enum class ExpeditionPacing { Growing, Classic, ShortCorridors, SmallRooms, Comp
 const char *expeditionPacingName(ExpeditionPacing pacing);
 ExpeditionPacing nextExpeditionPacing(ExpeditionPacing pacing);
 enum class EncounterPattern { Pursuit, Crossfire, ChargeLane, SupplyGuard };
-enum class BossKind { None, Sheriff, Ridgeback, PowderForeman, StormMarshal };
+enum class FloorVariant { Standard, Scorched, Flooded, Dank, Scarred };
+enum class BossKind { None, Sheriff, Ridgeback, PowderForeman, StormMarshal, Isaac };
+enum class BossForm { Normal, Cyan, Yellow, Green };
 constexpr bool canyonBoss(BossKind kind) {
-    return kind==BossKind::Ridgeback||kind==BossKind::PowderForeman||kind==BossKind::StormMarshal;
+    return kind==BossKind::Ridgeback||kind==BossKind::PowderForeman||kind==BossKind::StormMarshal||kind==BossKind::Isaac;
 }
 struct FloorProfile {
     int band = -1; // Disabled for the tutorial and Classic comparison.
@@ -21,6 +25,13 @@ struct FloorProfile {
     int rocks = 2, seams = 1, barrels = 1, outcrops = 3;
     float dust = 1;
     BossKind boss = BossKind::Ridgeback;
+    int floor = 0; // Zero-based expedition floor; service unlocks use this, not the difficulty band.
+    FloorVariant variant = FloorVariant::Standard;
+    MonsterId bossMonster{};
+    BossForm bossForm=BossForm::Normal;
+    bool doubleBossRoom=false;
+    std::shared_ptr<const RailLayout> bossRails;
+    int stageStep=0,sourceStage=1; // Local progression mapping, distinct from source XML stageHP.
     bool active() const { return band >= 0; }
 };
 const char *encounterPatternName(EncounterPattern pattern);

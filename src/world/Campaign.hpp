@@ -38,7 +38,8 @@ struct RunSummary {
     Stats stats;
     uint64_t moneyCollected = 0;
     uint64_t moneySpent = 0;
-    std::vector<ItemId> items;
+    std::vector<ItemKey> items;
+    std::string mechanicsFingerprint;
     std::vector<std::string> consequences;
 };
 struct Campaign {

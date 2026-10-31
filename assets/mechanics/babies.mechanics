@@ -1,0 +1,35 @@
+DEATHWARD_MECHANICS 1
+# Repentance1.7.9b regular Baby family. Ultra Pride's boss component is separate.
+monster 38.0.0 "Baby" Chase None Walker 80 3.3 .55 1.1666667 .1666667 3 1 1 0 1 legacy
+monster 38.1.0 "Angelic Baby" Chase None Walker 80 3.3 .55 1.1666667 .1666667 4 1 1 0 1 legacy
+monster 38.1.1 "Angelic Baby (small)" Chase None Walker 51.2 3.3 .35 1.1666667 .1666667 3 1 1 0 0 legacy
+monster 38.3.0 "Wrinkly Baby" Chase None Walker 80 3.3 .55 1 .3666667 4 1 1 0 1 legacy
+stage_health 38.0.0 25 0 3.2
+stage_health 38.1.0 25 0 3.2
+stage_health 38.1.1 16 0 3.2
+stage_health 38.3.0 25 0 3.2
+# kind; source-to-world scale, ready force/retention, local contact, Move frames
+baby 38.0.0 normal .1 .33 .7 10 12
+baby 38.1.0 angelic .1 .33 .7 10 12
+baby 38.1.1 small .1 .33 .7 10 12
+baby 38.3.0 wrinkly .1 .33 .7 10 12
+# check/cooldown/Attack/Shoot frames; local range/speed/damage/lifetime;
+# height/up/gravity/vertical-retention/radius; final velocity multiplier, spread, origin offset.
+# Spread uses native mode2's unnormalized .9*(.961*forward +/- .276*spread*side),
+# then 1.2 velocity + .4 inherited velocity, then the final multiplier.
+baby_shot 38.0.0 7 35 32 5 20 24 10 8 1.15 4.5 6.75 .9 .22 1.07 1 0
+baby_shot 38.1.0 7 35 32 5 20 24 10 8 1.15 6 6.75 .9 .22 1.07 1 0
+baby_shot 38.1.1 7 35 32 5 20 24 10 8 1.15 4.5 6.75 .9 .22 1.07 1 0
+baby_shot 38.3.0 7 35 38 11 28 24 10 8 1.15 6 9 .9 .22 1 .6 .4
+# search/start charge, random increment, alignment/range, candidate radius min/extra,
+# target distance min/max (0 means unbounded), source grid, attempts, Vanish/Appear/Jump/Land.
+baby_teleport 38.0.0 20 40 .1 20 400 60 250 200 0 40 2 25 19 5 5
+baby_teleport 38.1.0 20 40 .1 20 400 60 250 50 120 40 2 25 19 5 5
+baby_teleport 38.1.1 20 40 .1 20 400 60 250 50 120 40 2 25 19 5 5
+# Initial/recovery delay ranges; attack chance denominator, dash windup, close Attack start;
+# source preferred distance, dash range, force, retention, stopping distance.
+baby_dash 38.3.0 5 14 15 44 4 7 3 120 280 3.75 .85 20
+# Source room-template habitats; authored local weight/cost/cap, not source template counts.
+encounter 2 3 crossfire specialist 38.0.0 1 3 2
+encounter 3 3 crossfire specialist 38.1.0 1 4 1
+encounter 3 3 pursuit specialist 38.3.0 1 4 1

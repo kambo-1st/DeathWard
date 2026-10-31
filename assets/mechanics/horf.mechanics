@@ -1,0 +1,21 @@
+DEATHWARD_MECHANICS 1
+# Installed normal-mode Horf. Native HP10 x3.2, grounded despite floating art.
+monster 12.0.0 "Horf" Still Shot Skull 32 0 .65 .933333333 .133333333 1 0 1 0 1 legacy
+stage_health 12.0.0 10 0 3.2
+# check interval, cooldown from acquisition, animation length, Shoot event,
+# range, shot speed, local damage and local projectile lifetime.
+# Native range200 x.1; speed7/frame x30 x.1. No invented initial target lock.
+head_shooter 12.0.0 7 28 20 4 20 21 10 5
+# Passive source friction; no autonomous locomotion or invented recoil.
+head_shooter_body 12.0.0 .7
+# height/up/gravity/retention/radius. Mode0: height-23, fallingSpeed-3,
+# fallingAccel.1 plus common base.1. Vertical scale .03 keeps this ordinary
+# aimed shot within the player's existing combat silhouette through its arc.
+# Horizontal scale remains .1; this compression is an explicit 3D adaptation.
+head_shooter_flight 12.0.0 .69 2.7 5.4 .9 .22
+
+# Basement analogue only; rare Sub Horf replacement remains disabled until
+# that independent enemy and its reactive shots are implemented.
+encounter 0 0 pursuit specialist 12.0.0 2 2 1
+encounter 0 0 crossfire specialist 12.0.0 2 2 2
+encounter 0 0 supply_guard specialist 12.0.0 1 2 2
