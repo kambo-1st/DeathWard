@@ -1,0 +1,2 @@
+HOP_RANGE normal=6 flaming=11 committed_endpoint=1 peak=2.24997 duration=0.636364
+FAIL: hopper launches within bounded preparation time

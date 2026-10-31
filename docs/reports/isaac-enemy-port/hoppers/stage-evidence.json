@@ -1,0 +1,217 @@
+[
+  {
+    "id": "29.0.0",
+    "source_name": "Hopper",
+    "source_base_hp": "10",
+    "source_stage_hp": "0",
+    "source_stage_evidence": [
+      {
+        "file": "rooms/01.basement.stb",
+        "source_stage": "basement",
+        "templates": 56,
+        "positive_weight_templates": 56,
+        "proposed_band": 0,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/02.cellar.stb",
+        "source_stage": "cellar",
+        "templates": 4,
+        "positive_weight_templates": 4,
+        "proposed_band": 0,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/03.burning basement.stb",
+        "source_stage": "burning basement",
+        "templates": 55,
+        "positive_weight_templates": 55,
+        "proposed_band": 0,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/04.caves.stb",
+        "source_stage": "caves",
+        "templates": 9,
+        "positive_weight_templates": 9,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/05.catacombs.stb",
+        "source_stage": "catacombs",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/06.flooded caves.stb",
+        "source_stage": "flooded caves",
+        "templates": 10,
+        "positive_weight_templates": 10,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/07.depths.stb",
+        "source_stage": "depths",
+        "templates": 2,
+        "positive_weight_templates": 2,
+        "proposed_band": 2,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/09.dank depths.stb",
+        "source_stage": "dank depths",
+        "templates": 3,
+        "positive_weight_templates": 3,
+        "proposed_band": 2,
+        "source_path": "main"
+      }
+    ],
+    "separate_mode_or_special_evidence": [
+      {
+        "file": "rooms/00.special rooms.stb",
+        "source_stage": "special rooms",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "reason": "Unmapped/special/unused library; needs eligibility review."
+      },
+      {
+        "file": "rooms/36.backwards.stb",
+        "source_stage": "backwards",
+        "templates": 3,
+        "positive_weight_templates": 3,
+        "reason": "Special encounter or mode library; requires dedicated encounter rules."
+      },
+      {
+        "file": "rooms/greed/00.special rooms.stb",
+        "source_stage": "special rooms",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      },
+      {
+        "file": "rooms/greed/01.basement.stb",
+        "source_stage": "basement",
+        "templates": 8,
+        "positive_weight_templates": 8,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      },
+      {
+        "file": "rooms/greed/02.cellar.stb",
+        "source_stage": "cellar",
+        "templates": 9,
+        "positive_weight_templates": 9,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      },
+      {
+        "file": "rooms/greed/03.burning basement.stb",
+        "source_stage": "burning basement",
+        "templates": 6,
+        "positive_weight_templates": 6,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      }
+    ],
+    "article_revisions": [
+      {
+        "title": "Hopper",
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267012"
+      }
+    ]
+  },
+  {
+    "id": "54.0.0",
+    "source_name": "Flaming Hopper",
+    "source_base_hp": "20",
+    "source_stage_hp": "0",
+    "source_stage_evidence": [
+      {
+        "file": "rooms/01.basement.stb",
+        "source_stage": "basement",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 0,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/03.burning basement.stb",
+        "source_stage": "burning basement",
+        "templates": 15,
+        "positive_weight_templates": 15,
+        "proposed_band": 0,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/04.caves.stb",
+        "source_stage": "caves",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/05.catacombs.stb",
+        "source_stage": "catacombs",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 1,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/07.depths.stb",
+        "source_stage": "depths",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 2,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/08.necropolis.stb",
+        "source_stage": "necropolis",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 2,
+        "source_path": "main"
+      },
+      {
+        "file": "rooms/09.dank depths.stb",
+        "source_stage": "dank depths",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 2,
+        "source_path": "main"
+      }
+    ],
+    "separate_mode_or_special_evidence": [
+      {
+        "file": "rooms/36.backwards.stb",
+        "source_stage": "backwards",
+        "templates": 3,
+        "positive_weight_templates": 3,
+        "reason": "Special encounter or mode library; requires dedicated encounter rules."
+      },
+      {
+        "file": "rooms/greed/03.burning basement.stb",
+        "source_stage": "burning basement",
+        "templates": 12,
+        "positive_weight_templates": 12,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      },
+      {
+        "file": "rooms/greed/24.the shop.stb",
+        "source_stage": "the shop",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      }
+    ],
+    "article_revisions": [
+      {
+        "title": "Hopper",
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267012"
+      }
+    ]
+  }
+]

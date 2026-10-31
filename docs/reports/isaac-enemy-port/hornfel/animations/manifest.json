@@ -1,0 +1,599 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "archive": "resources/packed/repentance.a",
+  "archive_sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+  "files": [
+    {
+      "source_path": "resources-dlc3/gfx/906.000_hornfel.anm2",
+      "bytes": 240450,
+      "checksum": "0xb862e69c",
+      "sha256": "a694e97c48044426c1cacdfb6ba587b7e30de8b2a9d656cd1b978c3986a9a191",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/animations/906.000_hornfel.anm2",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:57",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Explosion"
+        },
+        {
+          "Id": "1",
+          "Name": "Shoot"
+        },
+        {
+          "Id": "2",
+          "Name": "Sound"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "IdleDown",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleLeft",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleUp",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRight",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "ChargeDown",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "ChargeLeft",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "ChargeUp",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "ChargeRight",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "ChargeFinish",
+            "FrameNum": "87",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "22"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "46"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "DecoyIdle",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack1Left",
+            "FrameNum": "30",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack1Right",
+            "FrameNum": "30",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack1Double",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "27"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack1Left_Back",
+            "FrameNum": "30",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack1Right_Back",
+            "FrameNum": "30",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack1Double_Back",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "27"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Taunt",
+            "FrameNum": "29",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack2",
+            "FrameNum": "56",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "34"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Detonate",
+            "FrameNum": "46",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "26"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Sad",
+            "FrameNum": "32",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "RunDown",
+            "FrameNum": "18",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "RunUp",
+            "FrameNum": "18",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "RunHori",
+            "FrameNum": "18",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source_path": "resources-dlc3/gfx/965.000_minecart.anm2",
+      "bytes": 19334,
+      "checksum": "0xb442dc6",
+      "sha256": "c88210ccd0b6c885b2543fc8996278d31a9ce3cfd05a075d5bcb6903b3cdb7f9",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/animations/965.000_minecart.anm2",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:57",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Move1",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move2",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move3",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move4",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move5",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move6",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move7",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move8",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source_path": "resources-dlc3/gfx/965.001_hornfel minecart.anm2",
+      "bytes": 19332,
+      "checksum": "0x7aa344f2",
+      "sha256": "6fa2fca05ba746b4786bddd00d825c5fe2772fb7c48fb31681f6662e9901b005",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/animations/965.001_hornfel minecart.anm2",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:57",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Move1",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move2",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move3",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move4",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move5",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move6",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move7",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move8",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source_path": "resources-dlc3/gfx/grid/door_10_bossroomdoor_rails.anm2",
+      "bytes": 100212,
+      "checksum": "0x87b0ab5e",
+      "sha256": "f58822b5ff22ca659581b2901162ea14e28d4834ed20493e55927051ffc9ebb3",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/animations/door_10_bossroomdoor_rails.anm2",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:57",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Opened",
+            "FrameNum": "51",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Closed",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Open",
+            "FrameNum": "12",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Close",
+            "FrameNum": "11",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Break",
+            "FrameNum": "7",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "KeyOpen",
+            "FrameNum": "27",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "KeyClose",
+            "FrameNum": "11",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "BrokenOpen",
+            "FrameNum": "1",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "KeyClosed",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "KeyOpenNoKey",
+            "FrameNum": "27",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source_path": "resources-dlc3/gfx/grid/grid_rail.anm2",
+      "bytes": 13618,
+      "checksum": "0xd6d4f040",
+      "sha256": "9ba1d01a144675052651d516674738eb9b77d36a805ed8513144c553f547d2db",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/animations/grid_rail.anm2",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:57",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "rail",
+            "FrameNum": "64",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "pitrail",
+            "FrameNum": "11",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ],
+  "scope": "Source animation/event metadata only. Sprite artwork is not extracted or imported into DeathWard."
+}

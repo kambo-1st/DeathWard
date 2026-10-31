@@ -1,0 +1,72 @@
+{
+  "passed": 11,
+  "cases": [
+    {
+      "name": "hopper-pursuit",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 181
+    },
+    {
+      "name": "flaming-pursuit",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 182
+    },
+    {
+      "name": "hopper-cover",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 181
+    },
+    {
+      "name": "flaming-cover",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 181
+    },
+    {
+      "name": "hopper-cover-morph",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 150
+    },
+    {
+      "name": "hopper-river",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 182
+    },
+    {
+      "name": "resident-hopper",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 178
+    },
+    {
+      "name": "resident-flaming-hopper",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 180
+    },
+    {
+      "name": "hopper-death",
+      "report": "docs/reports/isaac-enemy-port/hoppers/web/results.json",
+      "pass": true,
+      "last_frame": 30
+    },
+    {
+      "name": "resident-flaming",
+      "report": "docs/reports/isaac-enemy-port/hoppers/broad-verified/results.json",
+      "pass": true
+    },
+    {
+      "name": "hopper-fire-burn",
+      "report": "docs/reports/isaac-enemy-port/hoppers/broad-verified/results.json",
+      "pass": true
+    }
+  ],
+  "browser": "149.0.7827.55",
+  "errors": [],
+  "note": "Nine focused cases and two compatibility cases pass on the same production WASM. Two earlier compatibility attempts are retained: obsolete source-slot witness98 (corrected to native witness116) and stopped local HTTP server. Neither counts as a pass. No runtime changes between browser runs."
+}

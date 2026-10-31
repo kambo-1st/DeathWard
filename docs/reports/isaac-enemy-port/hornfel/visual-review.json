@@ -1,0 +1,21 @@
+{
+  "result": "partial_dependency_only",
+  "style": "Original",
+  "linux": [
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel/linux-bloody-sad-100.png",
+      "observation": "Red radial projectiles are visible around the yellow detonation beside the barrel. Blast particles overlap the initial ring. This is an injected payload in a Loki fixture, not a Hornfel encounter."
+    }
+  ],
+  "wasm": [
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-hornfel_normal-45.png",
+      "observation": "Small dark armed bomb and yellow fuse marker are visible beside the barrel, inside the red hazard outline. Model details remain small at160% zoom."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-sad-100.png",
+      "observation": "Bloody Sad radial aftermath is visible in the browser. Some projectiles overlap blast/scene geometry. No rail or cart is rendered in this fixture."
+    }
+  ],
+  "scope": "Three captures visually inspected; no Hornfel/cart/door gameplay visual acceptance. Other focused captures are archived without claiming individual visual inspection."
+}

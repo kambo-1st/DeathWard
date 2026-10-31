@@ -1,0 +1,696 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "Source-only review of 17 hazard/support tuples; no behavior acceptance or new floor enablement.",
+  "sources": [
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270009",
+      "supports": "Revision-pinned family behaviors, room completion, item exceptions and edition boundaries."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Exact tuples, zero contact damage, shutdoors false, distinct always-on and directional animation identities."
+    },
+    {
+      "path": "docs/research/isaac-enemy-port-plan.json",
+      "supports": "Positive authored template evidence and candidate broad-band mapping, not approved runtime placement."
+    }
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; derived behavior summaries CC BY-SA 4.0. Runtime gaps and adaptation decisions are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "edition_exclusions": [
+    "Repentance+ Stone Eye initial full rotation before firing.",
+    "Repentance+ Hagalaz destroys all Grimace variations.",
+    "Pre-Afterbirth+ re-entry appearance-animation glitch."
+  ],
+  "records": [
+    {
+      "id": "42.0.0",
+      "name": "Stone Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Player position for aimed attacks; orientation-specific hazards retain authored facing.",
+        "attacks": "Occasional aimed single blood projectile.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Active until ordinary combat completion or all required pressure plates are pressed; then closes mouth/eyes and stops firing.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Room completion disables shooting without requiring its death; retain the inactive appearance on re-entry.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "042.000_Stone Grimace.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/00.special rooms.stb": 1,
+        "rooms/04.caves.stb": 8,
+        "rooms/05.catacombs.stb": 7,
+        "rooms/06.flooded caves.stb": 9,
+        "rooms/07.depths.stb": 30,
+        "rooms/08.necropolis.stb": 22,
+        "rooms/09.dank depths.stb": 31,
+        "rooms/10.womb.stb": 8,
+        "rooms/11.utero.stb": 13,
+        "rooms/12.scarred womb.stb": 9,
+        "rooms/14.sheol.stb": 1,
+        "rooms/15.cathedral.stb": 5,
+        "rooms/26.the void.stb": 2,
+        "rooms/29.mines.stb": 18,
+        "rooms/30.ashpit.stb": 16,
+        "rooms/31.mausoleum.stb": 5,
+        "rooms/32.gehenna.stb": 15,
+        "rooms/33.corpse.stb": 7,
+        "rooms/36.backwards.stb": 13
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "42.1.0",
+      "name": "Vomit Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Player position for aimed attacks; orientation-specific hazards retain authored facing.",
+        "attacks": "Occasional aimed explosive Ipecac-like projectile.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Active until ordinary combat completion or all required pressure plates are pressed; then closes mouth/eyes and stops firing.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Room completion disables shooting without requiring its death; retain the inactive appearance on re-entry.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "042.001_Vomit Grimace.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. The infobox reports a 5.71% replacement of Stone Grimace; exact allowed environments, selection conditions and probability precision require review before enabling that rule. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/05.catacombs.stb": 4,
+        "rooms/08.necropolis.stb": 11,
+        "rooms/09.dank depths.stb": 2,
+        "rooms/11.utero.stb": 3,
+        "rooms/29.mines.stb": 1,
+        "rooms/30.ashpit.stb": 4,
+        "rooms/32.gehenna.stb": 1,
+        "rooms/36.backwards.stb": 3
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "201.0.0",
+      "name": "Stone Eye",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Clockwise rotating beam heading rather than player pursuit.",
+        "attacks": "Continuously rotating, flickering Technology laser.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Active rotating laser until room clearance; do not import Repentance+ full-turn-before-first-shot behavior.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors; stops firing on clear and disappears after the cleared room is exited and re-entered.",
+        "source_numbers": {
+          "baseHP": "1",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "201.000_Stone Eye.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/10.womb.stb": 5,
+        "rooms/11.utero.stb": 5,
+        "rooms/12.scarred womb.stb": 5,
+        "rooms/14.sheol.stb": 7,
+        "rooms/26.the void.stb": 1
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "202.0.0",
+      "name": "Constant Stone Shooter",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Authored fixed direction.",
+        "attacks": "Continuous fixed-direction bullet stream.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Continues after ordinary combat clearance; all required pressure plates disable it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors and remains active in a cleared ordinary room. Pressure-plate completion disables it.",
+        "source_numbers": {
+          "baseHP": "1",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "202.000_Constant Stone Shooter.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/04.caves.stb": 11,
+        "rooms/05.catacombs.stb": 11,
+        "rooms/06.flooded caves.stb": 11,
+        "rooms/07.depths.stb": 1,
+        "rooms/08.necropolis.stb": 1,
+        "rooms/09.dank depths.stb": 3,
+        "rooms/11.utero.stb": 1,
+        "rooms/15.cathedral.stb": 2,
+        "rooms/29.mines.stb": 2,
+        "rooms/30.ashpit.stb": 2,
+        "rooms/31.mausoleum.stb": 1,
+        "rooms/36.backwards.stb": 1
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "202.10.0",
+      "name": "Cross Stone Shooter",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Alternating cardinal and diagonal four-way directions.",
+        "attacks": "Continuous four-way volleys alternating between cardinal and diagonal axes.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Ordinary Cross Grimaces stop after an available combat/plate objective completes; pure trap rooms without a completion objective stay active.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Keep trap-only persistence distinct from combat completion; the source also reports early deactivation after bombing out of an uncleared room and re-entering.",
+        "source_numbers": {
+          "baseHP": "1",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "202.010_cross stone shooter.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. XML distinguishes subtype 1 with the cross stone shooterx animation but does not establish the initial volley axis or phase; do not collapse both subtypes. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/06.flooded caves.stb": 10,
+        "rooms/07.depths.stb": 7,
+        "rooms/08.necropolis.stb": 29,
+        "rooms/09.dank depths.stb": 1,
+        "rooms/10.womb.stb": 8,
+        "rooms/11.utero.stb": 18,
+        "rooms/12.scarred womb.stb": 6,
+        "rooms/14.sheol.stb": 24,
+        "rooms/15.cathedral.stb": 23,
+        "rooms/26.the void.stb": 1,
+        "rooms/29.mines.stb": 4,
+        "rooms/32.gehenna.stb": 2,
+        "rooms/36.backwards.stb": 3
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "202.10.1",
+      "name": "Cross Stone Shooter",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Alternating cardinal and diagonal four-way directions.",
+        "attacks": "Continuous four-way volleys alternating between cardinal and diagonal axes.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Ordinary Cross Grimaces stop after an available combat/plate objective completes; pure trap rooms without a completion objective stay active.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Keep trap-only persistence distinct from combat completion; the source also reports early deactivation after bombing out of an uncleared room and re-entering.",
+        "source_numbers": {
+          "baseHP": "1",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "202.010_cross stone shooterx.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. XML distinguishes subtype 1 with the cross stone shooterx animation but does not establish the initial volley axis or phase; do not collapse both subtypes. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/06.flooded caves.stb": 3,
+        "rooms/07.depths.stb": 3,
+        "rooms/08.necropolis.stb": 6,
+        "rooms/10.womb.stb": 4,
+        "rooms/11.utero.stb": 7,
+        "rooms/12.scarred womb.stb": 1,
+        "rooms/14.sheol.stb": 1,
+        "rooms/15.cathedral.stb": 1,
+        "rooms/29.mines.stb": 1,
+        "rooms/30.ashpit.stb": 1
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "202.11.0",
+      "name": "Cross Stone Shooter (always on)",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Alternating cardinal and diagonal four-way directions.",
+        "attacks": "Continuous four-way volleys alternating between cardinal and diagonal axes.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Ordinary Cross Grimaces stop after an available combat/plate objective completes; pure trap rooms without a completion objective stay active. This exact variant is explicitly named always on in installed XML.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Installed variant 11 is an always-on configuration. Its precedence over pressure-plate completion and the documented Cross Grimace re-entry bug remains unverified; preserve this distinction from variant 10.",
+        "source_numbers": {
+          "baseHP": "1",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "202.010_cross stone shooter.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. XML distinguishes subtype 1 with the cross stone shooterx animation but does not establish the initial volley axis or phase; do not collapse both subtypes. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/07.depths.stb": 1,
+        "rooms/08.necropolis.stb": 2,
+        "rooms/10.womb.stb": 2,
+        "rooms/11.utero.stb": 1,
+        "rooms/14.sheol.stb": 1
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "202.11.1",
+      "name": "Cross Stone Shooter (always on)",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Alternating cardinal and diagonal four-way directions.",
+        "attacks": "Continuous four-way volleys alternating between cardinal and diagonal axes.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Ordinary Cross Grimaces stop after an available combat/plate objective completes; pure trap rooms without a completion objective stay active. This exact variant is explicitly named always on in installed XML.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Installed variant 11 is an always-on configuration. Its precedence over pressure-plate completion and the documented Cross Grimace re-entry bug remains unverified; preserve this distinction from variant 10.",
+        "source_numbers": {
+          "baseHP": "1",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "202.010_cross stone shooterx.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. XML distinguishes subtype 1 with the cross stone shooterx animation but does not establish the initial volley axis or phase; do not collapse both subtypes. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/08.necropolis.stb": 2,
+        "rooms/11.utero.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "203.0.0",
+      "name": "Brimstone Head",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Authored fixed laser direction.",
+        "attacks": "Periodic Brimstone beam.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Keeps firing after ordinary combat ends; all required pressure plates deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors; ordinary clear alone is insufficient to stop its beam.",
+        "source_numbers": {
+          "baseHP": "1",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "203.000_Brimstone Head.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/14.sheol.stb": 9,
+        "rooms/32.gehenna.stb": 14
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "235.0.0",
+      "name": "Gaping Maw",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Attracts player and both friendly and hostile projectiles toward its position.",
+        "attacks": "No shot emission; suction changes player movement and projectile trajectories.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Active suction; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors; pressure-plate deactivation is documented, automatic ordinary combat-clear deactivation is not established.",
+        "source_numbers": {
+          "baseHP": "100",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "235.000_GapingMaw.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. D10 is specifically documented to turn normal Gaping Maw into Broken Gaping Maw; other Grimaces have a reported invisible-solid reroll bug."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/00.special rooms.stb": 1,
+        "rooms/04.caves.stb": 3,
+        "rooms/05.catacombs.stb": 1,
+        "rooms/06.flooded caves.stb": 1,
+        "rooms/07.depths.stb": 22,
+        "rooms/08.necropolis.stb": 22,
+        "rooms/09.dank depths.stb": 23,
+        "rooms/10.womb.stb": 6,
+        "rooms/11.utero.stb": 3,
+        "rooms/12.scarred womb.stb": 6,
+        "rooms/14.sheol.stb": 3,
+        "rooms/31.mausoleum.stb": 1,
+        "rooms/32.gehenna.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "236.0.0",
+      "name": "Broken Gaping Maw",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Attracts player and both friendly and hostile projectiles toward its position.",
+        "attacks": "No shot emission; suction changes player movement and projectile trajectories.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Alternates active/inactive every four seconds, with stronger active suction than normal Gaping Maw; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors; pressure-plate deactivation is documented, automatic ordinary combat-clear deactivation is not established.",
+        "source_numbers": {
+          "baseHP": "100",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "236.000_Broken GapingMaw.anm2",
+          "active_inactive_interval_seconds": 4
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/07.depths.stb": 11,
+        "rooms/08.necropolis.stb": 21,
+        "rooms/09.dank depths.stb": 12,
+        "rooms/10.womb.stb": 12,
+        "rooms/11.utero.stb": 12,
+        "rooms/12.scarred womb.stb": 12,
+        "rooms/30.ashpit.stb": 1,
+        "rooms/31.mausoleum.stb": 2,
+        "rooms/32.gehenna.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "42.2.0",
+      "name": "Triple Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Player position for aimed attacks; orientation-specific hazards retain authored facing.",
+        "attacks": "Occasional aimed triple projectile volley.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Active until ordinary combat completion or all required pressure plates are pressed; then closes mouth/eyes and stops firing.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Room completion disables shooting without requiring its death; retain the inactive appearance on re-entry.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "042.002_Triple Grimace.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. Named Dead Eye and Fire Mind projectile-hit behavior must be preserved despite ordinary invulnerability."
+      },
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "positive_room_templates": {
+        "rooms/07.depths.stb": 2,
+        "rooms/08.necropolis.stb": 24,
+        "rooms/09.dank depths.stb": 7,
+        "rooms/10.womb.stb": 5,
+        "rooms/11.utero.stb": 26,
+        "rooms/12.scarred womb.stb": 4,
+        "rooms/14.sheol.stb": 1,
+        "rooms/15.cathedral.stb": 22,
+        "rooms/26.the void.stb": 1,
+        "rooms/30.ashpit.stb": 4,
+        "rooms/31.mausoleum.stb": 24,
+        "rooms/32.gehenna.stb": 28,
+        "rooms/33.corpse.stb": 5,
+        "rooms/36.backwards.stb": 8
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "804.0.0",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies left; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_left.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "left"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 5,
+        "rooms/30.ashpit.stb": 3,
+        "rooms/36.backwards.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "804.0.1",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies up; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_up.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "up"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 6,
+        "rooms/30.ashpit.stb": 8,
+        "rooms/36.backwards.stb": 1
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "804.0.2",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies right; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_right.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "right"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 7,
+        "rooms/30.ashpit.stb": 3,
+        "rooms/36.backwards.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "804.0.3",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies down; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_down.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "down"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 16,
+        "rooms/30.ashpit.stb": 18,
+        "rooms/36.backwards.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "809.0.0",
+      "name": "Bomb Grimace",
+      "disposition": "environment",
+      "contract": {
+        "movement": "Stationary, solid room hazard; no pursuit or ordinary body-contact damage.",
+        "targeting": "Tracks existence/taking of its supplied Throwable Bomb, not a target to shoot.",
+        "attacks": "Maintains one Throwable Bomb; a few seconds after the player takes it, supplies a replacement.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Bomb-supply cycle required by Tuff Twins, The Shell and the Mines/Ashpit II escape route.",
+        "offspring": "One supplied Throwable Bomb at a time; ten Throwable Bombs on an exceptional instant kill. These are interactive ordnance, not ordinary enemy children.",
+        "completion": "Does not seal doors. Required support object for dedicated encounters/escape routes; ordinary room-clear shutoff is not established.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "809.000_bomb grimace.anm2"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests. Exact supply ownership (global versus per producer), delay, throwable-pickup identity, reset rules and dedicated arena dependencies require separate validation."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/00.special rooms.stb": 12,
+        "rooms/26.the void.stb": 2,
+        "rooms/29.mines.stb": 59,
+        "rooms/30.ashpit.stb": 26,
+        "rooms/36.backwards.stb": 2,
+        "rooms/greed/29.mines.stb": 1,
+        "rooms/greed/30.ashpit.stb": 1
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    }
+  ]
+}

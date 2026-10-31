@@ -1,0 +1,14 @@
+START gusher-isolated
+PROGRESS gusher-isolated 228
+PROGRESS gusher-isolated 642
+PASS gusher-isolated {"shots":8,"movement":77.3051546688893,"observedProjectileIds":8}
+START pacer-isolated
+PROGRESS pacer-isolated 325
+PROGRESS pacer-isolated 855
+PASS pacer-isolated {"shots":0,"movement":78.10346381115784,"observedProjectileIds":0}
+START gusher-natural
+PROGRESS gusher-natural 604
+PASS gusher-natural {"shots":9,"movement":71.92697035586761,"observedProjectileIds":9}
+START pacer-natural
+PROGRESS pacer-natural 726
+PASS pacer-natural {"shots":0,"movement":71.61667308162374,"observedProjectileIds":0}

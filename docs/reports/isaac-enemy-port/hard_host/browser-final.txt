@@ -1,0 +1,6 @@
+START near browser 141.0.7390.37
+PASS near
+START far browser 141.0.7390.37
+PASS far
+START resident browser 141.0.7390.37
+PASS resident

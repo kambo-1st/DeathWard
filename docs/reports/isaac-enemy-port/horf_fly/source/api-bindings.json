@@ -1,0 +1,54 @@
+{
+  "baseline_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Independent installed API names verify current-target and virtual slots. NPC room-clear flag default and grid damage/lifetime semantics remain to inspect.",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/source_api_bindings.asm",
+      "start": "0x80536f",
+      "end": "0x805379",
+      "raw_sha256": "7b7721bd3dd3db82386fd69de8e764b25167a3c57a167396e0880aeaeecbb765",
+      "sha256": "93bce0f6714e85d698a777133684a770573d08635a66c006e421db88a2a6fbd4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/current_target_binding.asm",
+      "start": "0x807737",
+      "end": "0x807741",
+      "raw_sha256": "9d37bfa1b8e874f468a2ed5a7ee9027aa5b08434d766d3af9ca202cc014ce371",
+      "sha256": "00e7aeba0ed9913c0e33c1e3215223f32387e714744c21bd0161b678ddbc8217"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/can_shut_doors_thunk.asm",
+      "start": "0x860502",
+      "end": "0x860507",
+      "raw_sha256": "69dca4a7b47eb4d50d86f4bad40e9d3532bab897f00f8ada9b0b67616569a058",
+      "sha256": "cb7ed6ae948e7cbf2a196e190bfffaad23ae029b33ebdb3dfebe96a915182923"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/npc_can_shut_doors.asm",
+      "start": "0x68f550",
+      "end": "0x68f56f",
+      "raw_sha256": "5325b068e88629e933739cf0d54fd6492c62da5425aa6e6436d2be62e5cf6a28",
+      "sha256": "391605b07032568f5048557b41d66ea9fdebc19653f44ed2320c579bc7257ad4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/grid_destroy_thunk.asm",
+      "start": "0x8604f8",
+      "end": "0x8604fd",
+      "raw_sha256": "7df46f5f9733992c2e74afeefb77525d9a4519da841b6bbe291669e8b34f9f46",
+      "sha256": "2039c15ec9e6cf850f1d36757d5c5fd385ecb7b4803039c90357893367458ddc"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/grid_hurt_thunk.asm",
+      "start": "0x8604e4",
+      "end": "0x8604e9",
+      "raw_sha256": "2583df412e7df54ae54a5b27baf8262583a3e4de9ed4ddfd2fef4f3209c53670",
+      "sha256": "42446b76432ec1dc456fe67fc2868ca5f150a9f1e73536422a7f76f07a3993df"
+    }
+  ],
+  "grid_hurt_binding": {
+    "name": "Hurt",
+    "string": "0xb538fc",
+    "registration": "0x808014",
+    "function": "0x8604e4"
+  }
+}

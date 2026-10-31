@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "artifacts_verified": 1836,
+  "checkpoints": [
+    {
+      "report": "docs/reports/isaac-enemy-port/supply/checkpoint.json",
+      "artifacts_verified": 189
+    },
+    {
+      "report": "docs/reports/isaac-enemy-port/tuff/checkpoint.json",
+      "artifacts_verified": 216
+    },
+    {
+      "report": "docs/reports/isaac-enemy-port/fly_bombs/checkpoint.json",
+      "artifacts_verified": 221
+    },
+    {
+      "report": "docs/reports/isaac-enemy-port/shell/checkpoint.json",
+      "artifacts_verified": 232
+    },
+    {
+      "report": "docs/reports/isaac-enemy-port/boom_flies/checkpoint.json",
+      "artifacts_verified": 309
+    },
+    {
+      "report": "docs/reports/isaac-enemy-port/loki/checkpoint.json",
+      "artifacts_verified": 331
+    },
+    {
+      "report": "docs/reports/isaac-enemy-port/ordnance/checkpoint.json",
+      "artifacts_verified": 338
+    }
+  ],
+  "scope": "Historical artifact hashes only; runtime/build/reference hashes describe their historical snapshots and are not asserted current."
+}

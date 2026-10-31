@@ -1,0 +1,9 @@
+Browser errors: []
+Failure state: null
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8098/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-906.0.0
+Call log:
+[2m  - navigating to "http://127.0.0.1:8098/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-906.0.0", waiting until "load"[22m
+
+    at /home/kambo/workspace/DeathWard/web/enemy-port-test.cjs:32:18 {
+  name: 'Error'
+}

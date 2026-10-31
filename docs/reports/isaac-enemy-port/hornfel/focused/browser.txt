@@ -1,0 +1,5 @@
+PASS WASM ordnance-normal: typed component, fuse and aftermath
+PASS WASM ordnance-hornfel_normal: typed component, fuse and aftermath
+PASS WASM ordnance-hot: typed component, fuse and aftermath
+PASS WASM ordnance-sad: typed component, fuse and aftermath
+PASS WASM ordnance-brimstone: typed component, fuse and aftermath

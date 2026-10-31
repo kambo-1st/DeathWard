@@ -1,0 +1,25 @@
+PHASE seed=10 floor=2 frame=36 state=6 charges=1 route=5 passes=0 repeats=8 bombs=0 shots=0 waves=0
+PHASE seed=10 floor=2 frame=390 state=7 charges=1 route=5 passes=9 repeats=8 bombs=11 shots=0 waves=0
+PHASE seed=10 floor=2 frame=392 state=8 charges=1 route=5 passes=9 repeats=8 bombs=11 shots=0 waves=0
+FIRST_FIRE seed=10 floor=2 frame=545
+PHASE seed=10 floor=2 frame=556 state=0 charges=1 route=5 passes=9 repeats=8 bombs=11 shots=1 waves=1
+PHASE seed=953 floor=2 frame=1286 state=6 charges=1 route=3 passes=0 repeats=7 bombs=0 shots=0 waves=0
+PHASE seed=953 floor=2 frame=1654 state=7 charges=1 route=3 passes=8 repeats=7 bombs=11 shots=0 waves=0
+PHASE seed=953 floor=2 frame=1656 state=8 charges=1 route=3 passes=8 repeats=7 bombs=11 shots=0 waves=0
+FIRST_FIRE seed=953 floor=2 frame=1810
+PHASE seed=953 floor=2 frame=1856 state=0 charges=1 route=3 passes=8 repeats=7 bombs=11 shots=1 waves=1
+PHASE seed=1254 floor=3 frame=3881 state=6 charges=1 route=3 passes=0 repeats=7 bombs=0 shots=0 waves=0
+PHASE seed=1254 floor=3 frame=4320 state=7 charges=1 route=3 passes=8 repeats=7 bombs=14 shots=0 waves=0
+PHASE seed=1254 floor=3 frame=4322 state=8 charges=1 route=3 passes=8 repeats=7 bombs=14 shots=0 waves=0
+FIRST_FIRE seed=1254 floor=3 frame=4475
+PHASE seed=1254 floor=3 frame=4582 state=0 charges=1 route=3 passes=8 repeats=7 bombs=14 shots=1 waves=1
+PHASE seed=19 floor=2 frame=1294 state=6 charges=1 route=1 passes=0 repeats=7 bombs=0 shots=0 waves=0
+PHASE seed=19 floor=2 frame=1662 state=7 charges=1 route=1 passes=8 repeats=7 bombs=11 shots=0 waves=0
+PHASE seed=19 floor=2 frame=1664 state=8 charges=1 route=1 passes=8 repeats=7 bombs=11 shots=0 waves=0
+FIRST_FIRE seed=19 floor=2 frame=1816
+PHASE seed=19 floor=2 frame=1864 state=0 charges=1 route=1 passes=8 repeats=7 bombs=11 shots=1 waves=1
+PHASE seed=57 floor=2 frame=460 state=6 charges=1 route=5 passes=0 repeats=6 bombs=0 shots=0 waves=0
+PHASE seed=57 floor=2 frame=814 state=7 charges=1 route=5 passes=7 repeats=6 bombs=11 shots=0 waves=0
+PHASE seed=57 floor=2 frame=816 state=8 charges=1 route=5 passes=7 repeats=6 bombs=11 shots=0 waves=0
+FIRST_FIRE seed=57 floor=2 frame=968
+PHASE seed=57 floor=2 frame=1032 state=0 charges=1 route=5 passes=7 repeats=6 bombs=11 shots=1 waves=1

@@ -1,0 +1,2 @@
+PASS source health, Hop26 events, zero/random bonus, strict acquisition and five-frame prediction
+FAIL morph retains stun and grants no rewards

@@ -1,0 +1,10 @@
+{
+  "platform": "WASM/Chromium",
+  "partial": true,
+  "checks": [],
+  "errors": [],
+  "failure": "TimeoutError: page.waitForFunction: Timeout 90000ms exceeded.",
+  "failureState": {
+    "problem": "Requested natural resident/source does not occur in this seeded floor"
+  }
+}

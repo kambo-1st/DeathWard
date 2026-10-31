@@ -1,0 +1,2 @@
+HORNFEL_THROWS single=1 double=2 small_mines=3 large_mines=4 frames=17,27,34 separate_cart_doors=1 inactive_pause=1
+Hornfel test failed: recovery projectile actually lands and creates cardinal fire waves

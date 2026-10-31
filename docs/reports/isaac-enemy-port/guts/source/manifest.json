@@ -1,0 +1,115 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 40,
+      "index": 24,
+      "case": "0x69a26b",
+      "controller": "0x5031b0"
+    },
+    {
+      "type": 862,
+      "index": 24,
+      "case": "0x69a26b",
+      "controller": "0x5031b0"
+    }
+  ],
+  "constants": {
+    "grid": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "damping": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "force": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "scarred_force": {
+      "address": "0xb6a87c",
+      "value": 3.299999952316284
+    },
+    "slog_force": {
+      "address": "0xb6a81c",
+      "value": 2.450000047683716
+    },
+    "arrival": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "stuck_distance": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "stuck_seconds": {
+      "address": "0xb6a38c",
+      "value": 0.25
+    },
+    "cross_axis_pull": {
+      "address": "0xb6a434",
+      "value": 0.4000000059604645
+    },
+    "prediction_frames": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "charge_brake": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "recovery_acceleration": {
+      "address": "0xb6a274",
+      "value": 0.05000000074505806
+    }
+  },
+  "directions": [
+    0,
+    1,
+    1,
+    0,
+    0,
+    -1,
+    -1,
+    0
+  ],
+  "strings": {
+    "0xb41458": "Roll",
+    "0xb40520": "ChargeStart",
+    "0xb414b8": "ChargeLoop",
+    "0xb42f18": "HitVert",
+    "0xb42f48": "HitHori"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/guts/source/controller.asm",
+      "start": "0x5031b0",
+      "end": "0x5054da",
+      "raw_sha256": "a34e60a1bacd826df5068413fb1b4349620be74fcd13432756ee894f9cb1827c",
+      "sha256": "00f55297222607845db0707d4dabb1dadf3c76a16a59b802839eed830a5fa158"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/guts/source/grid_test.asm",
+      "start": "0x502e00",
+      "end": "0x502e97",
+      "raw_sha256": "c9bd348f7cbe1b07e4fa901bf72bb37bd32c2db06dd44b764dd4bed8642dae12",
+      "sha256": "a5b6e69a466d680c0d0663c86b0199cab4a84750c9134f78d4224516adc6aac5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/guts/source/alignment.asm",
+      "start": "0x502ea0",
+      "end": "0x503074",
+      "raw_sha256": "61c95da84b75c6d67975ad88919ebe3a7e3460b55be12b778e052cf29176c729",
+      "sha256": "bc213ac54fe104945feb2da28b546034bcc77e39c59a41c9431693d19270b920"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/guts/source/target_filter.asm",
+      "start": "0x503080",
+      "end": "0x50319a",
+      "raw_sha256": "4d2683ed97a314fa12b4a78306c18535c9795ac90c069f8fc55c06861e3282be",
+      "sha256": "cdcece0583a7ac85f6b9bab5c186e9af5d61313116868cebe215f995ed916000"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "gusher-90",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-11.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "90",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/headless/native/gusher-90.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "gusher-160",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-11.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "160",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/headless/native/gusher-160.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "pacer-160",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-11.1.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "160",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/headless/native/pacer-160.png"
+    ],
+    "exit": 0
+  }
+]

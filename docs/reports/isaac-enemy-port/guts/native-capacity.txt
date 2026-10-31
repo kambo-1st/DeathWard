@@ -1,0 +1,1 @@
+cross-axis pull also receives common friction

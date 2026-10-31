@@ -1,0 +1,71 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "status": "In progress: nine selected Linux suites and all three production WASM scenarios pass. Eleven final captures inspected, with explicit visual limitations. No full acceptance.",
+  "previous_goal_turn": "Status request: no implementation changes; terminal browser/native/package results verified. Objective revalidated before continued work.",
+  "source_manifest": "docs/reports/isaac-enemy-port/hardy/source/manifest.json",
+  "animation_metadata": "docs/reports/isaac-enemy-port/rock-spiders/animations/826.000_hardy.anm2",
+  "wiki": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270020",
+  "corrections": [
+    "The6a3420 helper integer6/8 is projectile COUNT. It targets the player position sampled before impact; not collision-normal aim.",
+    "Third-impact small rocks are live Rock Spider actors immediately, with falling state; not projectiles spawning enemies on landing.",
+    "BURST4 order is basis,-basis,clockwise perpendicular,opposite; birth offset subtracts parent planar velocity. Vector helper962ac0 is subtraction.",
+    "Death Dip is double its own stage HP, not a fixed1HP child; stage1 DeathWard value25.6."
+  ],
+  "contract": {
+    "movement": "Grounded source30Hz charge: .95 retention, idle extra.5.1/5 draw gated each5 frames and cooldown0. Aim sampled at ANM2 Slide frame36; add20/friction; committed heading thereafter. Sliding force.7, braking after nonproductive collisions, Hit26 and cooldown60.",
+    "targeting": "Current player at launch and at impact. Each cluster rock adds independent radius0..3.5 scatter to aimed speed7; source FireBossProjectiles integer is count, not pattern mode.",
+    "attacks": "Contact10. Impact1:8-cardinal/diagonal speed10 rock ring. Impact2:ring plus6 arcing rocks. Impact3:8 arcing larger BURST rocks and2..3 thrown live818 actors. BURST produces random-oriented perpendicular4-child cross with inherited speed/gravity, .6size and flag cleared.",
+    "vulnerability": "Normally vulnerable; explosion and crush damage multiplied2.5. Native champion eligible; full champion/status/control paths remain open.",
+    "phases": "Internal shell stage0..2 while preserving exact826.0.0 identity. Telegraph36, committed slide, head-on impact dot>.5, hit recovery26, cooldown60. Third productive wall/obstacle contact kills once.",
+    "offspring": "Every ordinary death creates217.0.0 with double source-stage HP, including impact death. Third impact independently throws2..3 actual818.0.0 actors with height-10, vertical[-5,-3], speed1..3, spread120degrees and offset20. Native factory initializes concrete subtype; no delayed projectile-to-spider substitute.",
+    "completion": "Retained whole volleys and retained offspring prevent lost bursts and premature room completion at capacity. Debug execution suppresses ordinary death child. Alive Dip and Rock Spiders remain required threats.",
+    "source_numbers": {
+      "anm2path": "826.000_hardy.anm2",
+      "baseHP": "42",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "100",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "826",
+      "name": "#HARDY",
+      "numGridCollisionPoints": "12",
+      "portrait": "252",
+      "shadowSize": "20",
+      "stageHP": "6",
+      "variant": "0"
+    },
+    "adaptations": "DeathWard planar scale.1; HPscale3.2; projectile verticalscale.05 and30Hz damped trajectory. Bodyradius.52, contact10 and projectile10 before shared damage multiplier. CacheGate is the secret-entrance analogue. Continuous swept collision maps source grid classes3/4; actual contacted breakable is destroyed, walls retained. Independent seeded RNG, no source-stream parity. Original-style stacked stone shell art replaces source sprites. Canyon impacts use the same12cm walkable footprint as grounded movement, including eight perimeter samples. Nonproductive collision counts advance at source30Hz, not render rate.",
+    "unknowns": "Native 90-unit impact knockback pulse and its duration/physics, fear/confusion/charm/control, champion modifiers, mass100 collision response, exact global collision callback and source status interactions remain open. Full saved-state, alternate creation paths, visual/readability approval, balance and performance remain open. Repentance+ Hagalaz behavior excluded. Shared player-body separation can reverse the charge; exact source mass100/player collision response is not yet established."
+  },
+  "runtime": [
+    "assets/mechanics/hardies.mechanics",
+    "src/combat/Hardies.cpp",
+    "src/combat/ProjectileMotion.cpp",
+    "src/combat/Simulation.hpp",
+    "src/combat/Simulation.cpp",
+    "src/combat/Monsters.cpp",
+    "src/combat/Enemies.cpp",
+    "src/content/Mechanics.hpp",
+    "src/content/Mechanics.cpp",
+    "src/content/EncounterVariants.cpp",
+    "src/render/MonsterVisuals.hpp",
+    "src/main.cpp"
+  ],
+  "validation_scope": "Scoped source, behavior, generated placement and visual evidence. Full six-gate acceptance remains open.",
+  "findings": [
+    {
+      "evidence": "docs/reports/isaac-enemy-port/hardy/web-before-canyon-fix/results.json",
+      "problem": "Body-height ray misses the12cm movement boundary on a canyon slope. Hardy stops or returns to idle without breaking a shell layer.",
+      "fix": "Trace the same center/eight perimeter samples at CanyonTerrain::WalkableHeight and use horizontal contact normal. Keep water/pit rejection separate from solid-rock impacts.",
+      "regression": "Triangulated canyon slope at 30 and 120 Hz; corrected native third impact emits 62 projectiles and four living children; all three corrected production WASM scenarios pass."
+    }
+  ],
+  "validation": {
+    "native": "docs/reports/isaac-enemy-port/hardy/native-summary.json",
+    "browser": "docs/reports/isaac-enemy-port/hardy/browser-summary.json",
+    "visuals": "docs/reports/isaac-enemy-port/hardy/visual-review.json",
+    "package": "docs/reports/isaac-enemy-port/hardy/validation/package-check.json"
+  }
+}

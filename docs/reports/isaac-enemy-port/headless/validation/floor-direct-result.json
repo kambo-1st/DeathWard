@@ -1,0 +1,12 @@
+{
+  "runner_pid": 869674,
+  "started_utc": "2026-10-28T10:23:44.388392+00:00",
+  "binary_sha256": "b183ac14ae5ce9c0c5f4bdc198fd23994fea32c544e714dcd5dcb342a8c8338d",
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+  ],
+  "state": "finished",
+  "child_pid": 869675,
+  "returncode": 0,
+  "finished_utc": "2026-10-28T10:37:36.453811+00:00"
+}

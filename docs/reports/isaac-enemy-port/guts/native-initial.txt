@@ -1,0 +1,1 @@
+/home/kambo/workspace/DeathWard/assets/mechanics/guts.mechanics:23: stoi

@@ -1,0 +1,384 @@
+{
+  "status": "Partial stationary shooting-hazard checkpoint; full 653-record goal remains active and no record is newly certified complete.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "mechanics_fingerprint": "f9b924cea5165609",
+  "runtime_definitions": 144,
+  "item_definitions": 12,
+  "ids": [
+    "42.0.0",
+    "42.1.0",
+    "42.2.0",
+    "201.0.0",
+    "202.0.0",
+    "202.10.0",
+    "202.10.1",
+    "202.11.0",
+    "202.11.1",
+    "203.0.0"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/hazards/source-review.json",
+  "implementation_review": "docs/reports/isaac-enemy-port/hazards/implementation-review.json",
+  "native": {
+    "passed": 46,
+    "failed": 0,
+    "seconds": 98.62,
+    "basis": "One complete final 46-suite run after clockwise rotation correction and the placement test distinction between scenery and a statue's own collider. Includes actual reachability of eight enabled identities. A later capture-only selector fix includes optional hazard residents; its native rebuild and actual seeded capture passed. No combat library changes followed the full native run.",
+    "tests": {
+      "enemy_port_coverage": {
+        "result": "pass",
+        "seconds": 0.403913
+      },
+      "mechanics_content": {
+        "result": "pass",
+        "seconds": 1.58473
+      },
+      "expedition_economy": {
+        "result": "pass",
+        "seconds": 46.9899
+      },
+      "canyon_bosses": {
+        "result": "pass",
+        "seconds": 9.22457
+      },
+      "floor_progression": {
+        "result": "pass",
+        "seconds": 94.582
+      },
+      "item_builds": {
+        "result": "pass",
+        "seconds": 12.1267
+      },
+      "expedition_destruction": {
+        "result": "pass",
+        "seconds": 78.7443
+      },
+      "walkable_areas": {
+        "result": "pass",
+        "seconds": 0.0513392
+      },
+      "expedition": {
+        "result": "pass",
+        "seconds": 17.6001
+      },
+      "expedition_pacing": {
+        "result": "pass",
+        "seconds": 14.182
+      },
+      "flag_cloth": {
+        "result": "pass",
+        "seconds": 0.312818
+      },
+      "save_slots": {
+        "result": "pass",
+        "seconds": 0.0966445
+      },
+      "arrival_quest": {
+        "result": "pass",
+        "seconds": 1.40891
+      },
+      "cinematic_timeline": {
+        "result": "pass",
+        "seconds": 0.108126
+      },
+      "canyon_roads": {
+        "result": "pass",
+        "seconds": 10.0886
+      },
+      "canyon_rivers": {
+        "result": "pass",
+        "seconds": 22.5129
+      },
+      "redstone_hub": {
+        "result": "pass",
+        "seconds": 0.703691
+      },
+      "building_navigation": {
+        "result": "pass",
+        "seconds": 0.0436175
+      },
+      "particle_emission": {
+        "result": "pass",
+        "seconds": 0.0366525
+      },
+      "town_characters": {
+        "result": "pass",
+        "seconds": 0.0320409
+      },
+      "ambient_animals": {
+        "result": "pass",
+        "seconds": 0.258188
+      },
+      "train_motion": {
+        "result": "pass",
+        "seconds": 0.854881
+      },
+      "object_animation": {
+        "result": "pass",
+        "seconds": 0.0737716
+      },
+      "player_dynamite": {
+        "result": "pass",
+        "seconds": 1.28252
+      },
+      "mission_shop": {
+        "result": "pass",
+        "seconds": 3.06475
+      },
+      "money_pickups": {
+        "result": "pass",
+        "seconds": 1.65581
+      },
+      "resident_enemies": {
+        "result": "pass",
+        "seconds": 1.28231
+      },
+      "audio_presentation": {
+        "result": "pass",
+        "seconds": 0.0885494
+      },
+      "monster_behaviors": {
+        "result": "pass",
+        "seconds": 4.75535
+      },
+      "monster_flight": {
+        "result": "pass",
+        "seconds": 4.97544
+      },
+      "monster_formations": {
+        "result": "pass",
+        "seconds": 0.214647
+      },
+      "monster_patterns": {
+        "result": "pass",
+        "seconds": 0.32855
+      },
+      "monster_fire_reactions": {
+        "result": "pass",
+        "seconds": 0.316766
+      },
+      "monster_hopping": {
+        "result": "pass",
+        "seconds": 0.389406
+      },
+      "monster_replacements": {
+        "result": "pass",
+        "seconds": 2.52125
+      },
+      "monster_boss_components": {
+        "result": "pass",
+        "seconds": 2.14861
+      },
+      "bloat_boss_and_chargers": {
+        "result": "pass",
+        "seconds": 2.87208
+      },
+      "charger_variants": {
+        "result": "pass",
+        "seconds": 0.255814
+      },
+      "companion_familiars": {
+        "result": "pass",
+        "seconds": 2.87529
+      },
+      "room_statues": {
+        "result": "pass",
+        "seconds": 1.05831
+      },
+      "mission_themes": {
+        "result": "pass",
+        "seconds": 5.66942
+      },
+      "imported_town_navigation": {
+        "result": "pass",
+        "seconds": 0.0949464
+      },
+      "core_contracts": {
+        "result": "pass",
+        "seconds": 0.770294
+      },
+      "enemy_behaviors": {
+        "result": "pass",
+        "seconds": 4.13697
+      },
+      "generated_dungeons": {
+        "result": "pass",
+        "seconds": 32.1934
+      },
+      "generated_room_graphs": {
+        "result": "pass",
+        "seconds": 0.931528
+      }
+    }
+  },
+  "browser": {
+    "passed": 81,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/hazards/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/hazards/full/browser-tests.txt",
+    "count_policy": "81 distinct cases in one complete final run: ten isolated hazard cases, two real seeded hazard rooms, and 69 earlier regressions. The interrupted preceding run and targeted runs are historical; they are not added to this count."
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/hazards/room_statues.txt",
+    "covered": "Aimed/triple/ballistic volleys; actual explosion; first-tick clockwise flickering laser; fixed stream and Brimstone attacks; cardinal/diagonal alternation and explicit always-on phase policy; ordinary immunity; last actual foe triggers clear; retained inactive solids; plate objectives and persistent optional turrets; all plates required; immediate beam shutdown; re-entry and exceptional respawn without ordinary kill rewards; walking/flight/swept dodge/mouse navigation and actual projectile collision.",
+    "limits": "Named instant-kill/on-hit/reroll items are not implemented by the generic execution flag. Source-exact cadence and some phase/re-entry exceptions remain open."
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/hazards/floor_progression.txt",
+    "actual_canyon_floors": 170,
+    "ordinary_conditional_ids": 29,
+    "hazard_ids": 8,
+    "stage_bands": {
+      "42.0.0": [
+        1,
+        2,
+        3
+      ],
+      "42.1.0": [
+        1,
+        2,
+        3
+      ],
+      "42.2.0": [
+        1,
+        2,
+        3
+      ],
+      "201.0.0": [
+        3
+      ],
+      "202.0.0": [
+        1,
+        2,
+        3
+      ],
+      "202.10.0": [
+        1,
+        2,
+        3
+      ],
+      "202.10.1": [
+        1,
+        2,
+        3
+      ],
+      "203.0.0": [
+        2,
+        3
+      ]
+    },
+    "actual_fixtures": [
+      {
+        "id": "202.0.0",
+        "seed": 0,
+        "floor_zero_based": 3,
+        "room": 8
+      },
+      {
+        "id": "42.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 1
+      },
+      {
+        "id": "42.1.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 3
+      },
+      {
+        "id": "201.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 5
+      },
+      {
+        "id": "202.10.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 7
+      },
+      {
+        "id": "42.2.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 12
+      },
+      {
+        "id": "203.0.0",
+        "seed": 5,
+        "floor_zero_based": 4,
+        "room": 9
+      },
+      {
+        "id": "202.10.1",
+        "seed": 8,
+        "floor_zero_based": 4,
+        "room": 1
+      }
+    ],
+    "scope": "Eight independent source-backed hazard identities occur in legal generated combat rooms; one optional hazard at most, separate from ordinary 4–14 actor budget. Persistent turrets get reachable optional plates; failed geometry placement is omitted. Both variant-11 always-on forms remain debug-only pending dedicated trap routing. No new hazards in band 0, the tutorial or Mine route."
+  },
+  "configuration": {
+    "result": "pass_for_tested_scope",
+    "files": [
+      "assets/mechanics/statues.mechanics",
+      "assets/mechanics/monsters.mechanics"
+    ],
+    "scope": "Bounded finite definitions and duplicate/unknown IDs rejected; only stationary noncontact independent hazards can use these controllers. External mode, clear policy, geometry, cadence, projectile and beam parameters, ballistic tuning, room chance and weighted band pools; immutable snapshots retained. Local tuning is distinguished from source numbers."
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/hazards/linux-stone-disabled.png",
+      "docs/reports/isaac-enemy-port/hazards/linux-vomit.png",
+      "docs/reports/isaac-enemy-port/hazards/linux-eye.png",
+      "docs/reports/isaac-enemy-port/hazards/linux-turret-plate.png",
+      "docs/reports/isaac-enemy-port/hazards/linux-resident-turret.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/hazards/full/wasm-statue-stone-90.png",
+      "docs/reports/isaac-enemy-port/hazards/full/wasm-statue-eye-45.png",
+      "docs/reports/isaac-enemy-port/hazards/full/wasm-statue-fixed-120.png",
+      "docs/reports/isaac-enemy-port/hazards/full/wasm-resident-statue-fixed.png",
+      "docs/reports/isaac-enemy-port/hazards/full/wasm-resident-statue-brimstone.png"
+    ],
+    "observation": "Original-style stone bodies retain closed inactive faces, green Vomit stone and a visible rotating laser. Pressed plates turn teal; emitted projectiles retain their ordinary lifetime after shutdown. The actual seed 0/floor 3/room 8 view shows a turret and plate alongside five ordinary threats. Foreground canyon walls still obstruct some isolated views; procedural faces depend on viewing direction and a floor grate overlaps the seeded turret footprint visually. These captures are partial presentation evidence, not all-camera readability or human difficulty acceptance.",
+    "capture_provenance": "Native/browser screenshots use actual game rendering. Screenshot FPS includes startup and other system activity; it is not a controlled performance measurement."
+  },
+  "balance": {
+    "result": "pending",
+    "scope": "Damage/cadence/chance and subtype phase are declared local tuning. Ordinary 100-HP/24-damage defaults are preserved. No human or varied-build mixed-room acceptance."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Structural bounds only: one optional hazard per combat room, 120 candidate placements and 32 plate candidates, shared actor/projectile/hazard limits. Collision-list reconstruction scans resident actors each tick; no controlled current-roster Linux/WASM frame-time signoff."
+  },
+  "failures_resolved": [
+    "Initial compile used the wrong parser helper; corrected to real(row).",
+    "Initial EM_ASM object-literal commas failed WASM preprocessing; parenthesized the object expression.",
+    "Initial pacing test treated the statue own navigation body as conflicting scenery; the corrected check excludes movement bodies only for the stationary-hazard scenery assertion.",
+    "Clockwise rotation sign corrected for the actual world axes; native check now asserts its direction.",
+    "Initial Stone Eye browser sample fell in the intended laser flicker-off interval; the probe now checks actual emitted volley count before one rotation, while native tests require a real beam on the first tick.",
+    "Natural resident captures formerly stopped at ordinary encounter slots; they now include actually generated optional hazards without spawning substitutes.",
+    "The preceding browser run ended with Chromium target/context closed and no reported JavaScript/WebGL error; failure log retained. Final rerun avoids simultaneous native GPU captures. Cause of that browser termination is not established."
+  ],
+  "limitations": [
+    "Chaos Card, Euthanasia, Little Horn, Infestation 2, Dead Eye, Fire Mind and D10-specific behavior need real item/effect producers; generic damage/death hooks are not those item implementations.",
+    "Cross Grimace bombed-door early-deactivation quirk and variant 11 plate precedence remain unverified/unimplemented. Variant 11 requires dedicated trap routing before gameplay reachability acceptance.",
+    "Vomit replacement probability/context, native random shot intervals, exact projectile/laser dimensions, hitbox and phase timings remain unmeasured.",
+    "Gaping Maws, Quake Grimaces and Bomb Grimace supply/dedicated encounter dependencies remain source-only.",
+    "Mixed-room balance, all-camera readability and controlled Linux/WASM performance acceptance remain open."
+  ],
+  "reproduction": {
+    "native": "./build/deathward_statue_tests",
+    "full_native": "ctest --test-dir build -j4 --output-on-failure",
+    "browser": "node web/enemy-port-test.cjs with Playwright, DEATHWARD_BROWSER and packaged server on port 8098",
+    "resident": "./build/deathward --smoke --scene resident-202.0.0 --resident-seed 0 --resident-floor 3 --theme canyon --style original --frames 120 --mute --screenshot /tmp/statue-resident.png",
+    "plate": "./build/deathward --smoke --scene enemy-202.0.0 --enemy-player-side below --enemy-clear 45 --enemy-player-at 100 -5 5 --theme canyon --style original --frames 120 --mute --screenshot /tmp/statue-plate.png"
+  },
+  "dependency_preflight": "docs/reports/isaac-enemy-port/hazards/dependency-preflight.json"
+}

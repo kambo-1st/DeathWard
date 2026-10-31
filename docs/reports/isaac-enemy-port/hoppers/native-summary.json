@@ -1,0 +1,14 @@
+{
+  "passed": 83,
+  "total": 83,
+  "final_failed": 0,
+  "full_run_passed": 81,
+  "corrected_rerun_passed": 2,
+  "reports": [
+    "docs/reports/isaac-enemy-port/hoppers/native-full.txt",
+    "docs/reports/isaac-enemy-port/hoppers/native-regressions.txt",
+    "docs/reports/isaac-enemy-port/hoppers/native-regressions-details.txt"
+  ],
+  "focused": "docs/reports/isaac-enemy-port/hoppers/native-focused-2.txt",
+  "note": "83 distinct suites pass on final runtime. Full run retained two stale test failures: old HopRuntime airborne flag and generic cooldown for new source controller. Only those test assertions changed, preserving legal landing and entry-timer requirements; both rebuilt suites pass. Production runtime remained unchanged."
+}

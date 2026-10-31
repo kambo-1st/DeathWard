@@ -1,0 +1,2 @@
+MOVEMENT no_target=1 retention_before_impulse=1 grounded_cover=1 pacer_no_shots=1
+FAIL tiny nonzero movement keeps its own shot direction instead of a generic normalization fallback

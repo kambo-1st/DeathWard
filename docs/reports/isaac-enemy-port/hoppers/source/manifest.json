@@ -1,0 +1,92 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "types": [
+      29,
+      54
+    ],
+    "index": 16,
+    "case": "0x69a19f",
+    "controller": "0x514450"
+  },
+  "constants": {
+    "flaming_bonus": {
+      "address": "0xb6aa60",
+      "value": 50.0
+    },
+    "flaming_target_lead_frames": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "target_range": {
+      "address": "0xb6ab34",
+      "value": 130.0
+    },
+    "range_bonus_factor": {
+      "address": "0xb6a690",
+      "value": 1.2999999523162842
+    },
+    "overshoot_divisor": {
+      "address": "0xb6aba8",
+      "value": 200.0
+    },
+    "wander": {
+      "address": "0xb6aaf0",
+      "value": 95.0
+    },
+    "far_force": {
+      "address": "0xb6a274",
+      "value": 0.05000000074505806
+    },
+    "ground_factor": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "grid_spacing": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "arrival": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "near_force_range": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    }
+  },
+  "strings": {
+    "0xb405cc": "Hop",
+    "0xb3fd8c": "Idle",
+    "0xb40338": "Jump",
+    "0xb4034c": "Land"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/source/controller.asm",
+      "start": "0x514450",
+      "end": "0x516dda",
+      "raw_sha256": "c3654c5889ad6cd265388dd724e956fbd6e6a7d9090ad35fccda0b4cfb3e1b45",
+      "sha256": "36b274c004b56a8a12c71ff0c02be30750a9d6684f1e9b85e661a48fc628ff3a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/source/normal_target_helper.asm",
+      "start": "0x695a30",
+      "end": "0x695c2e",
+      "raw_sha256": "600d76bba642781741fc8e1585cd14184fd586d979b00b3f9eafbdfd4f72dce9",
+      "sha256": "5fa37a34aac81e4ff33ddb31f28b041323525d95f594029167fd3e0857ed2ae2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/source/morph_entry.asm",
+      "start": "0x697c60",
+      "end": "0x697f80",
+      "raw_sha256": "9c638626938470baa6c49cc67d323dc116423ecbc2a26ff3f403da173b158046",
+      "sha256": "1c35001a283784d0ab613476fad9c8a1bae5ebcaab5fc9878aacbe8d0ea8a43d"
+    }
+  ]
+}

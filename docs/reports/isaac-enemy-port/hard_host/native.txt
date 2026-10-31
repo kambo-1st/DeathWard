@@ -1,0 +1,166 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  3: expedition_economy
+      Start 69: prey_and_small_leech
+ 1/77 Test #69: prey_and_small_leech ...............   Passed   11.74 sec
+      Start 68: willo_and_mullighoul
+ 2/77 Test #68: willo_and_mullighoul ...............   Passed   25.49 sec
+      Start 67: boil_family
+ 3/77 Test  #3: expedition_economy .................   Passed   38.93 sec
+      Start 64: maw_family
+ 4/77 Test #67: boil_family ........................   Passed   24.43 sec
+      Start 59: hive_evaders
+ 5/77 Test #64: maw_family .........................   Passed   26.40 sec
+      Start 57: buzzing_flies
+ 6/77 Test #59: hive_evaders .......................   Passed   24.55 sec
+      Start  7: expedition_destruction
+ 7/77 Test #57: buzzing_flies ......................   Passed   28.38 sec
+      Start 16: canyon_rivers
+ 8/77 Test #16: canyon_rivers ......................   Passed   18.25 sec
+      Start 65: hosts
+ 9/77 Test #65: hosts ..............................   Passed   16.26 sec
+      Start 60: mulligan_family
+10/77 Test #60: mulligan_family ....................   Passed   17.95 sec
+      Start  9: expedition
+11/77 Test  #7: expedition_destruction .............   Passed   60.94 sec
+      Start 76: generated_dungeons
+12/77 Test  #9: expedition .........................   Passed   12.50 sec
+      Start 44: fly_bombs
+13/77 Test #44: fly_bombs ..........................   Passed    5.41 sec
+      Start 10: expedition_pacing
+14/77 Test #76: generated_dungeons .................   Passed   20.25 sec
+      Start 55: crackle_discrete_fire_jets
+15/77 Test #10: expedition_pacing ..................   Passed    8.82 sec
+      Start  6: item_builds
+16/77 Test #55: crackle_discrete_fire_jets .........***Failed   10.32 sec
+FAIL Crackle reachable through actual ordinary floor generation
+
+      Start 61: spider_family
+17/77 Test  #6: item_builds ........................   Passed    7.37 sec
+      Start  4: canyon_bosses
+18/77 Test #61: spider_family ......................   Passed    2.84 sec
+      Start 15: canyon_roads
+19/77 Test  #4: canyon_bosses ......................   Passed    5.99 sec
+      Start  5: floor_progression
+20/77 Test #15: canyon_roads .......................   Passed    6.25 sec
+      Start 49: hornfel_boss
+21/77 Test #49: hornfel_boss .......................   Passed    3.86 sec
+      Start 54: gurgle_splasher_physical_lobs
+22/77 Test #54: gurgle_splasher_physical_lobs ......   Passed    2.72 sec
+      Start 63: long_legs_and_sack
+23/77 Test #63: long_legs_and_sack .................   Passed    2.05 sec
+      Start 62: spider_variants
+24/77 Test #62: spider_variants ....................   Passed    2.04 sec
+      Start 71: shell_boss
+25/77 Test #71: shell_boss .........................   Passed    2.31 sec
+      Start 47: boom_flies
+26/77 Test #47: boom_flies .........................   Passed   86.89 sec
+      Start 37: bloat_boss_and_chargers
+27/77 Test #37: bloat_boss_and_chargers ............   Passed    2.01 sec
+      Start 39: companion_familiars
+28/77 Test #39: companion_familiars ................   Passed    1.64 sec
+      Start 70: segmented_bosses
+29/77 Test #70: segmented_bosses ...................   Passed    2.93 sec
+      Start 72: mission_themes
+30/77 Test #72: mission_themes .....................   Passed    4.16 sec
+      Start 30: monster_flight
+31/77 Test #30: monster_flight .....................   Passed    3.77 sec
+      Start 25: mission_shop
+32/77 Test #25: mission_shop .......................   Passed    2.74 sec
+      Start 75: enemy_behaviors
+33/77 Test #75: enemy_behaviors ....................   Passed    3.06 sec
+      Start 52: black_bony_regular_enemy
+34/77 Test #52: black_bony_regular_enemy ...........   Passed    1.43 sec
+      Start 48: loki_bosses
+35/77 Test #48: loki_bosses ........................   Passed    1.27 sec
+      Start 41: maw_attraction
+36/77 Test #41: maw_attraction .....................   Passed    0.96 sec
+      Start 51: bony_regular_enemy
+37/77 Test #51: bony_regular_enemy .................   Passed    0.66 sec
+      Start 42: quake_waves
+38/77 Test #42: quake_waves ........................   Passed    0.76 sec
+      Start 35: monster_replacements
+39/77 Test #35: monster_replacements ...............   Passed    1.90 sec
+      Start 36: monster_boss_components
+40/77 Test #36: monster_boss_components ............   Passed    2.51 sec
+      Start 13: arrival_quest
+41/77 Test  #5: floor_progression ..................   Passed  130.51 sec
+      Start 40: room_statues
+42/77 Test #40: room_statues .......................   Passed    0.70 sec
+      Start 26: money_pickups
+43/77 Test #13: arrival_quest ......................   Passed    1.22 sec
+      Start 56: horf_stationary_shooting
+44/77 Test #56: horf_stationary_shooting ...........   Passed    0.38 sec
+      Start 43: supplied_bombs
+45/77 Test #43: supplied_bombs .....................   Passed    0.64 sec
+      Start 45: enemy_bomb_payloads
+46/77 Test #26: money_pickups ......................   Passed    1.37 sec
+      Start 24: player_dynamite
+47/77 Test #45: enemy_bomb_payloads ................   Passed    0.64 sec
+      Start 50: rail_passengers
+48/77 Test #50: rail_passengers ....................   Passed    0.44 sec
+      Start 58: tainted_pooter_impacts
+49/77 Test #24: player_dynamite ....................   Passed    1.06 sec
+      Start 17: redstone_hub
+50/77 Test #58: tainted_pooter_impacts .............   Passed    0.34 sec
+      Start 29: monster_behaviors
+51/77 Test #17: redstone_hub .......................   Passed    0.60 sec
+      Start  2: mechanics_content
+52/77 Test  #2: mechanics_content ..................   Passed    1.92 sec
+      Start 53: source_immunity_and_lethal_morph
+53/77 Test #53: source_immunity_and_lethal_morph ...   Passed    0.30 sec
+      Start 22: train_motion
+54/77 Test #22: train_motion .......................   Passed    0.56 sec
+      Start 77: generated_room_graphs
+55/77 Test #77: generated_room_graphs ..............   Passed    0.65 sec
+      Start 38: charger_variants
+56/77 Test #38: charger_variants ...................   Passed    0.22 sec
+      Start  1: enemy_port_coverage
+57/77 Test #29: monster_behaviors ..................   Passed    4.13 sec
+      Start 74: core_contracts
+58/77 Test  #1: enemy_port_coverage ................   Passed    0.31 sec
+      Start 31: monster_formations
+59/77 Test #74: core_contracts .....................   Passed    0.47 sec
+      Start 34: monster_hopping
+60/77 Test #34: monster_hopping ....................   Passed    0.28 sec
+      Start 11: flag_cloth
+61/77 Test #31: monster_formations .................   Passed    0.70 sec
+      Start 32: monster_patterns
+62/77 Test #11: flag_cloth .........................   Passed    0.19 sec
+      Start 33: monster_fire_reactions
+63/77 Test #32: monster_patterns ...................   Passed    0.28 sec
+      Start 21: ambient_animals
+64/77 Test #33: monster_fire_reactions .............   Passed    0.25 sec
+      Start 27: resident_enemies
+65/77 Test #21: ambient_animals ....................   Passed    0.16 sec
+      Start 12: save_slots
+66/77 Test #12: save_slots .........................   Passed    0.06 sec
+      Start 14: cinematic_timeline
+67/77 Test #14: cinematic_timeline .................   Passed    0.07 sec
+      Start 46: authored_rails
+68/77 Test #46: authored_rails .....................   Passed    0.03 sec
+      Start 28: audio_presentation
+69/77 Test #28: audio_presentation .................   Passed    0.06 sec
+      Start 73: imported_town_navigation
+70/77 Test #73: imported_town_navigation ...........   Passed    0.06 sec
+      Start 23: object_animation
+71/77 Test #23: object_animation ...................   Passed    0.05 sec
+      Start  8: walkable_areas
+72/77 Test  #8: walkable_areas .....................   Passed    0.04 sec
+      Start 18: building_navigation
+73/77 Test #18: building_navigation ................   Passed    0.03 sec
+      Start 19: particle_emission
+74/77 Test #19: particle_emission ..................   Passed    0.02 sec
+      Start 20: town_characters
+75/77 Test #20: town_characters ....................   Passed    0.02 sec
+      Start 66: hard_host
+76/77 Test #27: resident_enemies ...................   Passed    0.87 sec
+77/77 Test #66: hard_host ..........................   Passed    0.87 sec
+
+99% tests passed, 1 tests failed out of 77
+
+Total Test time (real) = 326.92 sec
+
+The following tests FAILED:
+	 55 - crackle_discrete_fire_jets (Failed)
+Errors while running CTest

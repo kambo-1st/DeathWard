@@ -1,0 +1,85 @@
+{
+  "status": "Implementation planning only. No additional record is certified reviewed, routed or complete by this preflight.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "sources": {
+    "identities": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+    "hazards": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270009",
+    "tuff_twins": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270021",
+    "shell": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022",
+    "mothers_shadow": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269573"
+  },
+  "next_reusable_primitives": [
+    {
+      "ids": [
+        "235.0.0",
+        "236.0.0"
+      ],
+      "need": "Configured attraction applied through swept player movement and projectile velocity for both teams; no firing. Broken Maw has a four-second active/inactive alternation and stronger attraction. Reuse physical statue body, plate shutdown and re-entry; source strength, attenuation and initial phase remain unknown.",
+      "tests": "Moving/dodging/mouse player paths, projectile deflection in both factions, multiple attractors, no terrain tunneling, cycle boundaries and plate shutdown. Declare 3D vertical/force behavior as adaptations."
+    },
+    {
+      "ids": [
+        "804.0.0",
+        "804.0.1",
+        "804.0.2",
+        "804.0.3"
+      ],
+      "need": "Anchored landing attack every three seconds with actual directional rock-wave propagation. Installed animations map left/up/right/down. Its attack must open supported secret/super-secret walls, with provenance separate from player-spent dynamite.",
+      "tests": "All four axes, collision and destruction along the actual wave, pressure plates, persistence after combat, valid secret-wall access without incorrectly awarding enemy kills."
+    },
+    {
+      "ids": [
+        "809.0.0"
+      ],
+      "external_dependency": "4.13.0",
+      "need": "Bomb Grimace produces a real supplied Throwable Bomb. XML identifies it as type 4 / variant 13, outside the 653 enemy/boss rows. The current player dynamite deploy/throw path is not this interactive supply. Track the outstanding bomb and delay replenishment until taking it; exceptional destruction emits ten supplied bombs. Exact global-versus-per-supplier ownership and delay remain open.",
+      "tests": "Taking, carrying/throwing, detonation, replacement, simultaneous suppliers, room changes and resource accounting; no decrement of ordinary inventory for supplied bombs. Required encounters must remain solvable."
+    }
+  ],
+  "dedicated_encounter_dependencies": [
+    {
+      "id": "19.2.0",
+      "name": "Tuff Twins",
+      "source_stage": "Mines",
+      "proposed_band": 1,
+      "approved": false,
+      "needs": [
+        "Two six-segment chains in a large arena; independent armor and segment HP.",
+        "15 armor and 35 segment HP in source units; non-explosive attacks do not damage armor. Explosive resistance persists after exposure; exact distance formula remains unknown.",
+        "At least two Bomb Grimaces and the real Throwable Bomb interaction.",
+        "Armored heads produce Ink (61.3.0), exposed heads Sucker (61.0.0). Shared room-count condition of four includes documented multi-spawn bursts; a hard global cap of four is not an established equivalent.",
+        "Exposed body shooting, speed change with armor loss, eligible split chains and correct group completion/rewards.",
+        "Named Terra/rock-wave/Plan C/Sulfuric Acid distinctions; exclude Repentance+ Hagalaz behavior."
+      ]
+    },
+    {
+      "id": "19.3.0",
+      "name": "The Shell",
+      "source_stage": "Ashpit",
+      "proposed_band": 1,
+      "approved": false,
+      "needs": [
+        "Two five-segment chains in a large arena; diagonal flying/wall reflection and nearby head steering.",
+        "15 armor per segment, body-grounding on exposure and body-count-dependent slowdown. The head stays invulnerable until detached from all segments.",
+        "One or two Bomb Grimaces; exposed tail produces Fly Bomb (819.0.0), exposed middle emits three aimed shots.",
+        "Detached flesh groups pursue slowly; one isolated flesh body stays still and produces Fly Bombs.",
+        "Detailed split/new-head eligibility needs direct clarification: the pinned article describes a conditional three-segment branch despite also saying the boss cannot split into smaller copies. Preserve this ambiguity instead of applying the Tuff split rule.",
+        "Named armor exceptions and final cleanup; exclude Repentance+ Hagalaz behavior."
+      ]
+    },
+    {
+      "id": "867.0.0",
+      "name": "Mother's Shadow",
+      "approved": false,
+      "needs": [
+        "Dedicated Mines/Ashpit escape sub-area; it is not a kill-required combat enemy or ordinary final boss.",
+        "Installed XML specifies variant 0; the pinned wiki box says variant 1 and is currently joined by name. Resolve that source disagreement explicitly; do not invent a variant-1 runtime identity.",
+        "Invulnerable pursuit, stopping/charging, charge-only contact damage and cross-room continuity.",
+        "Temporary item/resource suppression and restoration with source exceptions, a return route populated with obstacles, supplied throwable bombs and one-way escape completion."
+      ]
+    }
+  ],
+  "softlock_policy_to_resolve": "The source documents possible Tuff Twins softlocks after destroying every supplier and wasting its bombs. The port goal requires completable encounters; any recovery supply or protected producer must be declared a DeathWard adaptation, not source parity.",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Dependency design and implementation findings are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

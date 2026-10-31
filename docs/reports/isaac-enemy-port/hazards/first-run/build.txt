@@ -1,0 +1,29 @@
+Consolidate compiler generated dependencies of target glfw
+[ 28%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 35%] Built target raylib
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp: In static member function ‘static std::shared_ptr<const dw::MechanicsLibrary> dw::MechanicsLibrary::load(const std::filesystem::__cxx11::path&)’:
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp:169:32: error: ‘number’ was not declared in this scope
+  169 |                     s.interval=number(row);s.windup=number(row);s.damage=number(row);s.speed=number(row);s.spread=number(row);
+      |                                ^~~~~~
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp:180:33: error: ‘number’ was not declared in this scope
+  180 |                     s.lobFlight=number(row);s.gravity=number(row);s.blastRadius=number(row);s.blastDamage=number(row);
+      |                                 ^~~~~~
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:90: CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+/home/kambo/workspace/DeathWard/src/combat/Statues.cpp: In member function ‘void dw::Simulation::spawnFloorStatue(const dw::EncounterPlan&)’:
+/home/kambo/workspace/DeathWard/src/combat/Statues.cpp:105:19: error: inconsistent deduction for ‘auto’: ‘const dw::RoadSample’ and then ‘const dw::RiverSample’
+  105 |             const auto road=arena.canyon->roadSample(at),river=arena.canyon->riverSample(at);
+      |                   ^~~~
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:174: CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:321: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1285: CMakeFiles/deathward_check_mechanics.dir/rule] Error 2
+gmake: *** [Makefile:668: deathward_check_mechanics] Error 2

@@ -1,0 +1,40 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "scope": "Partial regular Horf 12.0 controller; Fly 13.0 source preflight only.",
+  "native_evidence": "docs/reports/isaac-enemy-port/horf_fly/source/manifest.json",
+  "independent_api_bindings": "docs/reports/isaac-enemy-port/horf_fly/source/api-bindings.json",
+  "animation_evidence": "docs/reports/isaac-enemy-port/horf_fly/animations/manifest.json",
+  "horf_findings": [
+    "Shared Horf12/PsychicHorf248 update calls acquisition with range200, prediction false, interval7. Shared helper checks target validity, status flags, strict distance<range, source global-frame+entity-index modulo7, and projectile-line collision.",
+    "On acquisition, source Attack is requested and delay is28updates in Normal/Greed or14 in Hard/Greedier. Normal shot speed7native/frame; hard speed10. Delay begins before Shoot, not after animation recovery.",
+    "At Shoot, ordinary non-controlled Horf fetches the current GetPlayerTarget position. PsychicHorf adds HOMING flag1; this script does not certify the shared homing integrator.",
+    "Preserved archive metadata:20-frame Attack at30FPS, Shoot4. Source idle overlay returns toShake after attack completion. Source also damps friction by.7 each update.",
+    "DeathWard normal-mode implementation uses20world range,21world/sec shot,32HP, local damage10 and fixed5second3D projectile lifetime. Source spawn/animation-update ordering, status/controlled-target quirks, hard-mode replay details and projectile vertical lifetime remain separate validation work."
+  ],
+  "fly_preflight": [
+    "Ordinary type13 uses shared fly AI, not a stationary controller. It has source collisionDamage0 and3HP, with wall-only grid collision.",
+    "At every active update, rng%1000==0 can transform a Fly currently over grid type14(dung) into14.0Pooter; it calls grid virtual slot0x10 with1 and restores maxHP. The named Destroy thunk uses slot0x14, so destroying the dung must not be assumed. This is a stochastic check, not a deterministic dwell-time timer.",
+    "Ordinary Fly/Pooter target-position is reset to zero except a specific boss-spawner subtype path. While targetless and uncontrolled, a1/5random check adds unit(player-position) *.7*timeScale to velocity.",
+    "Globalframe%4==1 adds random unit*.6 to the wander vector, then multiplies it by.4. Globalframe%3==2 adds twice the wander vector through the shared velocity helper and applies friction*.6. Source room-edge constants need mapping to generated3D room boundaries.",
+    "Dung search and Dip-target branches precede ordinary target reset. Do not infer a lasting dung homing target from those branches in isolation.",
+    "Fly implementation, exact shared velocity/friction integration, room-clear field initialization, dung props, source ordering and item/status/faction exceptions remain unfinished. Preserving this preflight is not a completed Fly port."
+  ],
+  "source_correction": "The initial preflight called the dung operation destruction. Installed API bindings identify virtual slot 0x10 as Hurt; Destroy uses 0x14. The original manifest is retained as manifest-initial.json, superseded by manifest.json. Do not infer destruction of the whole pile from Hurt(1).",
+  "adaptations": [
+    "Normal-mode source profile: HP 10 x 3.2 = 32; range 200 x .1 = 20 world units; speed 7 per source frame x 30 x .1 = 21 world units/second. Grounded radius .65 and original procedural head appearance remain local adaptations.",
+    "Acquisition checks every 7 source frames, strict range and solid line of sight. Attack lasts 20 frames at 30 Hz, Shoot at frame 4, with current player aim. Cooldown 28 starts on acquisition. Floor cooldown multipliers do not modify this source cadence.",
+    "Entity ID staggers checks. The actor clock starts from simulation time and pauses while its room is inactive, rather than reproducing native global-frame/index phase on every room visit. Existing room-entry grace is retained; the native 59-frame Appear animation is not reproduced.",
+    "Local shot damage 10 receives the existing hostile multiplier once (12.5). Flat 3D shots have a local 5-second lifetime and physical solid collision. Native height, falling and lifetime are not claimed as matched.",
+    "A full local event/projectile queue retains the Shoot event and stretches the cast until admission. Stun cancels the cast. These are explicit local policies, not recovered native scheduling or status behavior.",
+    "Opening-band ordinary specialists only, matching the Basement analogue. Pursuit/crossfire/supply-guard weights and caps remain local encounter design. Rare Sub Horf replacement stays disabled until that distinct enemy is implemented."
+  ],
+  "remaining": [
+    "Hard/Greedier source cooldown 14 and shot speed 10 are recovered but not enabled: DeathWard currently uses the normal-mode profile. Controlled/charmed targets, champion exceptions, fear/shrink and source status suppression are not fully ported.",
+    "Native friction .7 and shared knockback integration, exact animation update order, Appear timing and global acquisition phase across room changes remain unverified or explicitly adapted.",
+    "Source projectile vertical trajectory/lifetime and 3D corner, uneven-terrain and low-cover parity require further acceptance. The original local head and warning presentation are retained.",
+    "The reviewed rare Sub Horf replacement remains disabled pending its independent reactive attack controller.",
+    "Varied-build balance, broader readability and controlled rendered Linux/WASM performance are still open. Focused captures and queue-pressure checks do not certify these gates.",
+    "Fly remains existing_unverified: source preflight is preserved, but ordinary buzzing, dung Hurt/morph behavior and room-clear initialization still require implementation and verification.",
+    "All 653 records and six acceptance gates remain required. Zero records are certified complete. Regular enemies and required offspring retain priority over further boss/Hornfel work."
+  ]
+}

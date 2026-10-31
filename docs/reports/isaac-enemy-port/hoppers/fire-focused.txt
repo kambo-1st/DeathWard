@@ -1,0 +1,7 @@
+chain 0 depth 0 effect -1: hazard capacity
+FIRE_TRANSFORM fraction=1 identity=1 owner=1 team=1 stun=1 no_reward=1 reentry=1
+FLOODED disables_transform=1 enables_fire_damage=1 local_room=1 actual_clear=1
+HOPPER flame_transforms=1 burning_damages=1 no_flood_exception=1
+FIRE_PROJECTILE channel_preserved=1
+FIRE_HAZARDS real_contacts=1 cover=1 height=1 lifetime=1 overlap_bound=1 mine_unchanged=1
+PASS monster fire reactions

@@ -1,0 +1,6 @@
+PASS WASM hopper-fire-burn: 1 threats, 0 kills
+PASS WASM hopper-wander: airborne arc and grounded landing
+PASS WASM flaming-pursuit: airborne arc and grounded landing
+PASS WASM hopper-cover: airborne arc and grounded landing
+PASS WASM flaming-cover: airborne arc and grounded landing
+PASS WASM hopper-cover-morph: airborne arc and grounded landing

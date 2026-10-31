@@ -1,0 +1,3 @@
+PASS horf-current-shot
+PASS horf-solid-cover
+PASS natural-horf

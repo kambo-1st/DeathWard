@@ -1,0 +1,121 @@
+{
+  "status": "Eight scoped Linux suites and the direct broad floor regression pass at79025961123d4945. Production WASM build passes; browser validation in progress. Later Gaper mortality edits are separately validated.",
+  "mechanics_fingerprint": "79025961123d4945",
+  "monster_definitions": 207,
+  "suites": [
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "floor_resident_placement",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "resident_enemies",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "monster_replacements",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "faceless_family",
+      "result": "pass",
+      "log": "validation/faceless-regression.log"
+    }
+  ],
+  "focused": "validation/focused-final.log",
+  "natural_witnesses": [
+    {
+      "id": "11.1.0",
+      "seed": 0,
+      "floor": 0,
+      "room": 2
+    },
+    {
+      "id": "11.0.0",
+      "seed": 4,
+      "floor": 0,
+      "room": 6
+    }
+  ],
+  "faceless_witnesses_after_pool_change": [
+    {
+      "id": "827.0.0",
+      "seed": 51,
+      "floor": 2,
+      "room": 7
+    },
+    {
+      "id": "827.1.0",
+      "seed": 11,
+      "floor": 4,
+      "room": 2
+    }
+  ],
+  "corrected_test_assumption": "Initial child test assumed Gaper-as-summoner ownership. The reviewed parent source uses an in-place morph; the older DeathWard Gaper rule still creates a separate child. The child test checks actual new controller/HP; Faceless separately checks actual preserved identity/owner. Gaper parent morph remains explicitly unfinished.",
+  "checks": [
+    "Player-independent wandering; exact retention-before-impulse order and real obstacle collision.",
+    "Initial20..39 and reload40..59 counters, check-before-decrement boundary, movement-axis shots, zero-motion retry and no invented LOS gate.",
+    "Actual lob payload, preserved dead-owner shot and delayed room completion under capacity saturation.",
+    "Real Gaper offspring and both same-entity Faceless transformations use the new controllers.",
+    "30/120Hz source cadence/movement, immutable external reload consumed by runtime, six invalid contracts rejected."
+  ],
+  "not_claimed": [
+    "Full source status/champion/control/collision mass parity.",
+    "Full Gaper parent fidelity.",
+    "Final crowded readability, balance or controlled performance acceptance.",
+    "Completed current-production WASM validation."
+  ],
+  "visual_review": "visual-review.json",
+  "broad_floor_run": {
+    "log": "validation/floor-progression.log",
+    "session": 88034,
+    "wrapper_exit": 143,
+    "observed": "All assertions reached final PASS line;753canyon floors,133pool identities,14statue identities.",
+    "status": "Not recorded as a clean-exit pass: wrapper returned143. Test and wrapper exits were not captured separately; rerun with direct child exit recording.",
+    "rerun_result": "validation/floor-direct-result.json"
+  },
+  "tiny_velocity_regression": {
+    "red": "validation/tiny-red.log",
+    "cause": "Generic unit helper substitutes north at length<=.0001. Source Gusher preserves every nonzero direction.",
+    "fix": "Normalize explicitly when native momentum length is positive.",
+    "green_pending": false,
+    "green": "validation/tiny-green.log",
+    "integration": "validation/tiny-integration.log"
+  },
+  "source_hashes": {
+    "src/combat/Headless.cpp": "7eb2bb086560a7a8ca692a88144dfda9c1672270be0364eb03086b28cb19d747",
+    "assets/mechanics/headless.mechanics": "eccf8d44aa875f83de89f68f1456e3ad199ee3f0e64b4c79018ffe5c334e918b",
+    "tests/headless_tests.cpp": "77cf336d284d5655c607554eb28f42ee5f2197e0e4e6cfb9bde40c5601b254df",
+    "src/render/MonsterVisuals.hpp": "128f99542cccfc83d8a2e729b80b4a1f80a3a1fc40f5a4e2d849e262e172b33d"
+  },
+  "broad_floor_regression": {
+    "result": "pass",
+    "exit_code": 0,
+    "floors": 753,
+    "log": "validation/floor-direct.log",
+    "process_result": "validation/floor-direct-result.json",
+    "prior_wrapper": "Earlier wrapper returned143 despite final PASS text; direct run has authoritative child returncode0."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "scoped_suites_passed": 7,
+  "registered_suites": 92,
+  "scope": "Final Guts contracts plus6scoped regression suites; not all92native.",
+  "contracts": "native-contracts.txt",
+  "regression": "native-regression.txt",
+  "suites": [
+    "guts_family",
+    "mechanics_content",
+    "monster_behaviors",
+    "monster_replacements",
+    "floor_progression",
+    "vis_family",
+    "chubber_family"
+  ],
+  "build_exit": 0,
+  "corrections": [
+    "Loader test return type and encounter-member field.",
+    "Capacity release resumes same source frame.",
+    "Perpendicular grid pull receives common friction."
+  ],
+  "historical_failure": "native-capacity.txt used old-linked test binary after cross-axis correction; relinked final contracts pass."
+}

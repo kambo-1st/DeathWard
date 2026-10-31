@@ -1,0 +1,14 @@
+START guts
+PASS guts
+START scarred
+PASS scarred
+START slog
+PASS slog
+START slog-river
+PASS slog-river
+START resident-guts
+PASS resident-guts
+START resident-scarred
+PASS resident-scarred
+START resident-slog
+PASS resident-slog

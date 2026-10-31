@@ -1,0 +1,69 @@
+{
+  "inspected": 12,
+  "accepted_smoke": 10,
+  "limited": 2,
+  "full_gate": false,
+  "method": "Each listed image opened and inspected individually. Other archived images are not certified. FPS labels are not controlled performance measurements; native captures overlapped compilation/testing.",
+  "captures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/native-normal.png",
+      "result": "limited",
+      "notes": "First-flight camera has not settled; actor is clipped near the top edge. Not an accepted enemy readability view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/native-normal-settled.png",
+      "result": "accepted_smoke",
+      "notes": "Green headless body and red stump are readable above the crate; settled native Original camera."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/native-flaming-settled.png",
+      "result": "accepted_smoke",
+      "notes": "Orange body and pointed flame silhouette distinguish the Flaming form above cover."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/hopper-pursuit-air.png",
+      "result": "accepted_smoke",
+      "notes": "Ordinary airborne body is separated from its ground shadow beside the protagonist."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/flaming-pursuit-air.png",
+      "result": "accepted_smoke",
+      "notes": "Flaming form remains visible at height; overlap with the protagonist limits this to a smoke view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/hopper-cover-air.png",
+      "result": "accepted_smoke",
+      "notes": "Body clearly clears the crate in the settled browser camera."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/flaming-cover-air.png",
+      "result": "accepted_smoke",
+      "notes": "Flaming body clears the crate with a distinct silhouette and shadow."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/hopper-river-air.png",
+      "result": "accepted_smoke",
+      "notes": "Airborne body visible at the river bank, with water and shadow beneath. Traversal established separately by samples."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/hopper-cover-morph-morph.png",
+      "result": "limited",
+      "notes": "Transformation shows flaming shape and hit flash, but camera has not settled. Behavioral proof is the retained-flight probe, not this view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/resident-hopper-resident.png",
+      "result": "accepted_smoke",
+      "notes": "Ordinary Hopper visible among actual seeded spiders; foreground rock and player overlap remain mixed-room readability limitations."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/resident-flaming-hopper-resident.png",
+      "result": "accepted_smoke",
+      "notes": "Flaming form visible in an actual early-floor mixed room beside water."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hoppers/web/hopper-death-death.png",
+      "result": "accepted_smoke",
+      "notes": "Actor removed, small death particles and zero-hostile count visible; no claim of a full death-animation acceptance gate."
+    }
+  ]
+}

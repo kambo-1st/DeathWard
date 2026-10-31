@@ -1,0 +1,17 @@
+{
+  "initial_failure": "The unchanged production roster plus Hive no longer produced a Hopper substitution in the first128seeds examined by the existing fixture.",
+  "correction": "Expand fallback ceiling128to512; retain broad32-seed/four-band sweep, all chances and assertions.",
+  "witness": {
+    "seed": 140,
+    "floor": 0,
+    "room": 2,
+    "source": "29.0.0",
+    "target": "54.0.0"
+  },
+  "passing_coverage": {
+    "floors": 341,
+    "enabled_pool_identities": 46,
+    "statue_identities": 14
+  },
+  "report": "docs/reports/isaac-enemy-port/hive/floor-retry-full.txt"
+}

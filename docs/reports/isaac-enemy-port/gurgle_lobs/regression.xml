@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="1"
+	timestamp="2026-10-26T22:15:11"
+	>
+	<testcase name="monster_replacements" classname="monster_replacements" time="1.91228" status="run">
+		<system-out>REPLACEMENT_ODDS source=15.0 replaced=90 samples=10000
+REPLACEMENT_ODDS source=15.1 replaced=90 samples=10000
+REPLACEMENT_ODDS source=29.0 replaced=5965 samples=10000
+REPLACEMENT_ODDS source=23.0 replaced=5002 samples=10000
+REPLACEMENT_SNAPSHOT one_shot=1 budget_reserved=1 immutable=1 explicit_spawn=1
+FLOODED_QUARRY samples=600 flooded=192 patches=42 geometry_unchanged=1
+FLOOR_VARIANTS scorched=192 samples=600 patches=16 geometry_unchanged=1
+REPLACEMENT_RESIDENTS iblob=8 safe_placement=1 target_stats=1 reentry=1
+PASS conditional replacements and floor variants
+</system-out>
+	</testcase>
+</testsuite>

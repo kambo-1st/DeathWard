@@ -1,0 +1,85 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/011.000_Gusher.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/headless/animations/011.000_Gusher.anm2",
+      "sha256": "5009abfe6611edf9c2d189579f033980a95411bfbb7d89931203de8360c338e5",
+      "checksum": "0xaf3163d5",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "06.02.2019 11:57:14",
+        "Fps": "30",
+        "Version": "105"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Blood",
+            "FrameNum": "10",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/011.001_Pacer.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/headless/animations/011.001_Pacer.anm2",
+      "sha256": "37ebfbe59eb993cb4b873fc990014303f2c591da87290bcf5bf5400fafa0405a",
+      "checksum": "0x6dc08c04",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/19/2014 4:37:54 PM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

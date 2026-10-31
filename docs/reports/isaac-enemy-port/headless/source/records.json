@@ -1,0 +1,404 @@
+[
+  {
+    "key": "11.0.0",
+    "id": 11,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Gusher",
+    "xml": {
+      "anm2path": "011.000_Gusher.anm2",
+      "baseHP": "10",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "3",
+      "collisionRadius": "13",
+      "friction": "1",
+      "hasFloorAlts": "true",
+      "id": "11",
+      "name": "#GUSHER",
+      "numGridCollisionPoints": "12",
+      "portrait": "2",
+      "reroll": "true",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:11.0.0",
+    "wiki_matches": [
+      {
+        "page": "Pacer",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "name": "Gusher",
+          "variant": "0",
+          "image name": "* [Before Repentance] Rebirth",
+          "base hp": "10",
+          "environment": "Basement / Cellar / Burning Basement / \nDownpour / Dross /",
+          "behavior": "Walks aimlessly around the room, occasionally firing a short-ranged blood shot."
+        },
+        "section_indices": [
+          2,
+          3
+        ],
+        "name": "Gusher",
+        "variant": 0,
+        "subtype": 0,
+        "id": 11,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Pacer"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 10.0,
+      "2": 10.0,
+      "3": 10.0,
+      "4": 10.0,
+      "5": 10.0,
+      "6": 10.0,
+      "7": 10.0,
+      "8": 10.0,
+      "9": 10.0,
+      "10": 10.0,
+      "11": 10.0,
+      "12": 10.0,
+      "13": 10.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Gusher",
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 37,
+        "positive_weight_templates": 37
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 21,
+        "positive_weight_templates": 21
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 36,
+        "positive_weight_templates": 36
+      },
+      "rooms/27.downpour.stb": {
+        "templates": 15,
+        "positive_weight_templates": 15
+      },
+      "rooms/28.dross.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/00.special rooms.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/01.basement.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/02.cellar.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/27.downpour.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/28.dross.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Gusher",
+      "motion": "Wander",
+      "attack": "Shot",
+      "shape": "Headless",
+      "catalog_base_hp": 40.0,
+      "behavior": "wandering_gusher",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 15,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Pacer",
+        "section": 2
+      },
+      {
+        "page": "Pacer",
+        "section": 3
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "status-effects",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "11.1.0",
+    "id": 11,
+    "variant": 1,
+    "subtype": 0,
+    "name": "Pacer",
+    "xml": {
+      "anm2path": "011.001_Pacer.anm2",
+      "baseHP": "10",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "3",
+      "collisionRadius": "13",
+      "friction": "1",
+      "hasFloorAlts": "true",
+      "id": "11",
+      "name": "#PACER",
+      "numGridCollisionPoints": "12",
+      "portrait": "3",
+      "reroll": "true",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:11.1.0",
+    "wiki_matches": [
+      {
+        "page": "Pacer",
+        "box": 0,
+        "group": "entity",
+        "fields": {
+          "id": "11",
+          "variant": "1",
+          "base hp": "10",
+          "environment": "Basement / Cellar / Burning Basement / \nDownpour / Dross / \nMines / \nDepths / Dank Depths / \nWomb / Utero / Scarred Womb /",
+          "behavior": "Walks aimlessly around the room."
+        },
+        "section_indices": [
+          0
+        ],
+        "name": "Pacer",
+        "variant": 1,
+        "subtype": 0,
+        "id": 11,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Pacer"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 10.0,
+      "2": 10.0,
+      "3": 10.0,
+      "4": 10.0,
+      "5": 10.0,
+      "6": 10.0,
+      "7": 10.0,
+      "8": 10.0,
+      "9": 10.0,
+      "10": 10.0,
+      "11": 10.0,
+      "12": 10.0,
+      "13": 10.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Pacer",
+    "room_library_presence": {
+      "rooms/01.basement.stb": {
+        "templates": 31,
+        "positive_weight_templates": 31
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 16,
+        "positive_weight_templates": 16
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 31,
+        "positive_weight_templates": 31
+      },
+      "rooms/07.depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/10.womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/11.utero.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/27.downpour.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/28.dross.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/29.mines.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/00.special rooms.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/greed/01.basement.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/greed/02.cellar.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Pacer",
+      "motion": "Wander",
+      "attack": "None",
+      "shape": "Headless",
+      "catalog_base_hp": 32.0,
+      "behavior": "wandering_body",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 16,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Pacer",
+        "section": 0
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+]

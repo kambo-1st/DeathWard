@@ -1,0 +1,44 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 80: rock_spider_family
+    Start  5: floor_progression
+    Start 45: dip_variants
+1/8 Test #45: dip_variants .....................***Failed    1.16 sec
+CORN impulse=2 Brownie_ordinary=1 HP=1 BigCorn_predictive_death=1 capacity=1 clear=1 debug=1
+DRIP distinct_impulse=1 aimed_and_random=1 chain_frame10=1
+SPLURT launch36=1 second8=1 retarget=1 two_charges=1 two_Drips=1 capacity=1 partition=1
+DANK trail_after_launch=1 source_life60=1 slow_only=1 retained=1 two_Clots=1
+WATER wet_pits=1 dry_pits_block=1 walls_block=1 child_placement=1
+CONFIG immutable=1 invalid_profiles=6
+NATURAL_VARIANT 217.1.0 seed=2 floor=2 room=4
+NATURAL_VARIANT 217.2.0 seed=0 floor=0 room=5
+natural variant exists
+
+    Start 29: monster_behaviors
+2/8 Test #29: monster_behaviors ................   Passed    7.66 sec
+    Start  2: mechanics_content
+3/8 Test  #2: mechanics_content ................   Passed    2.33 sec
+    Start 27: resident_enemies
+4/8 Test #27: resident_enemies .................   Passed    1.13 sec
+    Start 50: monster_fire_reactions
+5/8 Test #50: monster_fire_reactions ...........   Passed    0.23 sec
+    Start 79: hardy_family
+6/8 Test #79: hardy_family .....................***Failed   38.13 sec
+MOTION natural_start=1 telegraph36=1 late_target=1 commitment=1 partition=1
+IMPACTS counts8_14_8=1 whole_burst=1 recovery=1 thrown_spiders=1 double_hp_dip=1
+TERRAIN breakable_and_cache=1 grazing=1
+LIFECYCLE damage_channels=1 retained_death=1 clear=1 debug=1
+BURST atomic4=1 perpendicular=1 source_retained=1 no_recursion=1
+FAIL actual seeded Hardy population reached
+
+7/8 Test #80: rock_spider_family ...............   Passed   71.14 sec
+8/8 Test  #5: floor_progression ................   Passed  183.69 sec
+
+75% tests passed, 2 tests failed out of 8
+
+Total Test time (real) = 183.69 sec
+
+The following tests FAILED:
+	 45 - dip_variants (Failed)
+	 79 - hardy_family (Failed)
+Errors while running CTest

@@ -1,0 +1,9 @@
+MOTION natural_start=1 telegraph36=1 late_target=1 commitment=1 partition=1
+IMPACTS counts8_14_8=1 whole_burst=1 recovery=1 thrown_spiders=1 double_hp_dip=1
+TERRAIN breakable_and_cache=1 grazing=1
+CANYON footprint12cm=1 slope_impact=1 partition=1
+LIFECYCLE damage_channels=1 retained_death=1 clear=1 debug=1
+BURST atomic4=1 perpendicular=1 source_retained=1 no_recursion=1
+NATURAL_HARDY seed=30 floor=2 room=7 hp=192
+CONFIG snapshots=1 invalid_contracts=4 placement=1
+PASS Hardy

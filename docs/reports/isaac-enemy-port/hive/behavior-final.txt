@@ -1,0 +1,8 @@
+PASS Hive/Drowned health, harmless contact, native attack event/timer, global population delay, live-child policy and bounded Shoot
+PASS independent death mixtures, population count, scaled overkill, live/death distinction, retained births and completion
+PASS flee/wander and validated immutable external profiles; Flooded-only replacement
+NATURAL_HIVE seed=9 floor=0 room=1 band=0
+NATURAL_HIVE seed=11 floor=2 room=2 band=1
+NATURAL_DROWNED_HIVE seed=66 floor=2 room=1
+NATURAL_HIVE seed=1 floor=4 room=3 band=2
+PASS Hive/Drowned evaders

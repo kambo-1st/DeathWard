@@ -1,0 +1,9 @@
+Browser errors: []
+Failure state: null
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8795/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-54.0.0&resident-seed=116&resident-floor=0&resident-from=29.0.0
+Call log:
+[2m  - navigating to "http://127.0.0.1:8795/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-54.0.0&resident-seed=116&resident-floor=0&resident-from=29.0.0", waiting until "load"[22m
+
+    at /home/kambo/workspace/DeathWard/web/enemy-port-test.cjs:808:18 {
+  name: 'Error'
+}

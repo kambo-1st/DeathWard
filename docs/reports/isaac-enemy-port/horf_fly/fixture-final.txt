@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 2: mechanics_content
+    Start 5: floor_progression
+1/2 Test #2: mechanics_content ................   Passed    1.43 sec
+2/2 Test #5: floor_progression ................   Passed   70.74 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  70.74 sec

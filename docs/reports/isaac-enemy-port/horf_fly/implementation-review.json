@@ -1,0 +1,55 @@
+{
+  "scope": "Partial regular Horf 12.0 controller; Fly 13.0 source preflight only.",
+  "mechanics_fingerprint": "9c60a5f38a727412",
+  "source_review": "docs/reports/isaac-enemy-port/horf_fly/source-review.json",
+  "changes": [
+    "Validated external head_shooter timing/range/projectile definition and reusable stationary controller replace Horf generic aimed_shooter behavior.",
+    "Source HP conversion and opening-stage placement replace the older 64 HP, slow generic timing and multi-band placement.",
+    "Generic transformations reset optional head-shooter state. Existing generic behavior graphs remain available for their other users.",
+    "Focused native/browser checks and generated-room captures; shared tests updated for the new health, cadence and independent encounter file.",
+    "Fly native movement, dung interaction and API/animation evidence are preserved for the next regular-enemy implementation; Fly runtime is unchanged."
+  ],
+  "adaptations": [
+    "Normal-mode source profile: HP 10 x 3.2 = 32; range 200 x .1 = 20 world units; speed 7 per source frame x 30 x .1 = 21 world units/second. Grounded radius .65 and original procedural head appearance remain local adaptations.",
+    "Acquisition checks every 7 source frames, strict range and solid line of sight. Attack lasts 20 frames at 30 Hz, Shoot at frame 4, with current player aim. Cooldown 28 starts on acquisition. Floor cooldown multipliers do not modify this source cadence.",
+    "Entity ID staggers checks. The actor clock starts from simulation time and pauses while its room is inactive, rather than reproducing native global-frame/index phase on every room visit. Existing room-entry grace is retained; the native 59-frame Appear animation is not reproduced.",
+    "Local shot damage 10 receives the existing hostile multiplier once (12.5). Flat 3D shots have a local 5-second lifetime and physical solid collision. Native height, falling and lifetime are not claimed as matched.",
+    "A full local event/projectile queue retains the Shoot event and stretches the cast until admission. Stun cancels the cast. These are explicit local policies, not recovered native scheduling or status behavior.",
+    "Opening-band ordinary specialists only, matching the Basement analogue. Pursuit/crossfire/supply-guard weights and caps remain local encounter design. Rare Sub Horf replacement stays disabled until that distinct enemy is implemented."
+  ],
+  "native": {
+    "covered_suites": 64,
+    "passed": 64,
+    "failed": 0,
+    "initial_report": "docs/reports/isaac-enemy-port/horf_fly/native.xml",
+    "final_affected_report": "docs/reports/isaac-enemy-port/horf_fly/fixture-final.xml",
+    "behavior": "docs/reports/isaac-enemy-port/horf_fly/behavior-final.txt",
+    "scope": "Initial run passed 62 of 64 suites. Both fixture corrections then passed without runtime changes: isolate invalid encounter configuration from the new Horf rows; include hazard identities in the existing bounded seeded-coverage search. Strict 14-hazard coverage is retained.",
+    "horf": "Health, source-frame cast/cadence/recovery, current aim after target leaves range, strict range/cover, physical bullet collision/damage, contact, death/stun, queue admission, rejected config, immutable snapshots and actual seeded opening-band placement."
+  },
+  "browser": {
+    "cases": 3,
+    "report": "docs/reports/isaac-enemy-port/horf_fly/web/results.json",
+    "errors": [],
+    "scope": "Final WASM build and unmodified production content: isolated Horf shots, solid cover blocking acquisition, and actual seed 1 / floor 0 / room 2 mixed resident. HP 32, stationary position and owned bullets at speed 21 are asserted.",
+    "note": "Isolated smoke mode resets initial cooldown. The natural case retains production placement and entry delay. Screenshot capture advances frames; sampled frames are not exact image timestamps. Historical browser cases are not counted as current-build coverage."
+  },
+  "visual": {
+    "inspected": [
+      "docs/reports/isaac-enemy-port/horf_fly/linux-natural-horf.png",
+      "docs/reports/isaac-enemy-port/horf_fly/web/natural-horf.png",
+      "docs/reports/isaac-enemy-port/horf_fly/web/horf-current-shot.png",
+      "docs/reports/isaac-enemy-port/horf_fly/web/horf-solid-cover.png"
+    ],
+    "result": "Original-style pale head and a separate red projectile are visible in native/browser natural-room captures. Isolated browser cover case shows the actual intervening crate and no shots. No Isaac sprite art was imported; broad readability remains unaccepted."
+  },
+  "remaining": [
+    "Hard/Greedier source cooldown 14 and shot speed 10 are recovered but not enabled: DeathWard currently uses the normal-mode profile. Controlled/charmed targets, champion exceptions, fear/shrink and source status suppression are not fully ported.",
+    "Native friction .7 and shared knockback integration, exact animation update order, Appear timing and global acquisition phase across room changes remain unverified or explicitly adapted.",
+    "Source projectile vertical trajectory/lifetime and 3D corner, uneven-terrain and low-cover parity require further acceptance. The original local head and warning presentation are retained.",
+    "The reviewed rare Sub Horf replacement remains disabled pending its independent reactive attack controller.",
+    "Varied-build balance, broader readability and controlled rendered Linux/WASM performance are still open. Focused captures and queue-pressure checks do not certify these gates.",
+    "Fly remains existing_unverified: source preflight is preserved, but ordinary buzzing, dung Hurt/morph behavior and room-clear initialization still require implementation and verification.",
+    "All 653 records and six acceptance gates remain required. Zero records are certified complete. Regular enemies and required offspring retain priority over further boss/Hornfel work."
+  ]
+}

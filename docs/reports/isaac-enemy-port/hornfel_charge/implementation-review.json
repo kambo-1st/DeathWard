@@ -1,0 +1,78 @@
+{
+  "status": "partial implementation; not source-exact or six-gate acceptance",
+  "baseline": "Repentance 1.7.9b",
+  "source_review": "docs/reports/isaac-enemy-port/hornfel_charge_review/source-review.json",
+  "previous_runtime": "docs/reports/isaac-enemy-port/hornfel_controller/checkpoint.json",
+  "mechanics_fingerprint": "28be346a260e0f07",
+  "records": [
+    "906.0.0",
+    "965.0.0",
+    "967.0.0"
+  ],
+  "selection": {
+    "rule": "Distinct paired rail endpoints, zero local cooldown, conditional 1/8 choice. Native decoy selection occurs before this choice and is still missing.",
+    "local_cooldown_seconds": 10
+  },
+  "charge": {
+    "passes": "Initial pass plus 6-8 repeats, then separate recovery traversal. Preserve route and entry across every pass.",
+    "drive": "Start 0.1, increase 0.08 each local 30 Hz drive step, cap30. Native constants: force1.3, retention0.8. Local integration applies force then retention, caps travel velocity40, maps native position units at0.1, multiplies velocity by30 for seconds.",
+    "boundary": "Repeat immediately from original entry without ordinary outside delay. Only real rail movement sweeps player contact; no teleport-chord damage.",
+    "bombs": "Regular bomb4.0; targets scattered within0.1 world units of cart, not player-aimed. Local interval0.5s and two-world-unit room inset. Retains one candidate under capacity pressure, clears it at pass boundary.",
+    "unverified": "Native global/actor periodic phase, suppression gates, precise target adjustment and drive integration order remain unrecovered."
+  },
+  "recovery": {
+    "entry": "Original door after local1/30s hidden transition; clamp drive to6 and reset native velocity1.",
+    "motion": "Drive subtracts0.75 to floor0.8 before Shoot; after Shoot adds0.1 to cap1.2 per local30Hz step.",
+    "shot": "One arcing scale2 carrier at animation frame46/30s. Event target and emission are retained under projectile/event capacity pressure.",
+    "termination": "Physical rail exit, after pending shot is admitted. Authored87-frame animation does not terminate state. Already emitted projectile can land after cart exit.",
+    "local_ballistics": {
+      "flight_seconds": 1.1,
+      "gravity": 12,
+      "prediction_seconds": 0.2,
+      "radius": 0.44,
+      "damage": 10
+    },
+    "unverified": "Native trajectoryModifier10 is not treated as speed10. Target prediction and returned raw projectile fields still need complete unit/accessor recovery."
+  },
+  "fire_wave": {
+    "implementation": "src/combat/FireWaves.cpp",
+    "rule": "One owner-attributed, room-tagged burst with four fixed cardinal rays. Front advances, bounded trailing segments expire. Separate capacity32 bursts, four rays each.",
+    "local_values": {
+      "speed": 6,
+      "range": 12,
+      "radius": 0.45,
+      "trail_seconds": 2.5,
+      "damage": 10
+    },
+    "collision": "Swept traces plus spatial steps <=0.2 stop at cover, pits and room boundaries. Player damage uses swept contact and nearest-point line of sight. Reactive monsters use segment contact, not only ray endpoint.",
+    "lifetime": "Paused in inactive rooms, survives producer death and ordinary room clear. Debug clear removes active-room bursts. Full burst capacity retains one impacted carrier rather than partial child emission. Ground impact without a legal nearby landing surface is absorbed.",
+    "team_policy": "Existing hostile fire policy: harms player and damageable companions, ignites explicit reactive bodies, does not invent damage against ordinary hostile monsters.",
+    "unverified": "Exact source fire propagation, durability, timing, extinguishing and item/character exceptions. Flat fire height0.85 fits current authored boss floor; general uneven-terrain placement is not validated."
+  },
+  "external_configuration": {
+    "file": "assets/mechanics/hornfel.mechanics",
+    "commands": [
+      "hornfel_charge",
+      "hornfel_recovery"
+    ],
+    "validation": "Finite bounded values, ordered repeats/drive bounds, mandatory distinct rows. Nine malformed-pack checks plus immutable running-content snapshot check.",
+    "reload": "New content snapshot can change future runs; existing encounters retain their loaded snapshot."
+  },
+  "presentation": {
+    "style": "Original",
+    "changes": "Charge lean; sick/greenish recovery head and no held bomb; individual orange/gold flames with faint ground heat marks.",
+    "limitation": "Procedural visuals remain partial. Far-side cart/body tells, small bombs, camera occlusion and screen-edge hazards need full readability acceptance."
+  },
+  "scope_preserved": [
+    "No new ordinary pool entry or boss band",
+    "Ten normal Hornfel rail arenas remain Standard Broken Quarry only",
+    "Tutorial, Mine, story gating, 4-8-floor expeditions, player100HP/24damage and Original style preserved"
+  ],
+  "remaining": [
+    "906.1 decoy spawning, special per-hit damage flags and six-bomb destruction.",
+    "Fly Bomb escorts, other cart passengers, source fireplace props.",
+    "Source-specific item reward and Horny Boys split/drop/escape rules; Void/Double Trouble encounters.",
+    "Source clock/physics parity and attack interruption, full projectile/fire-wave semantics and item interactions.",
+    "Full visuals, varied-build fight balance and controlled rendered Linux/WASM performance. No completed records."
+  ]
+}

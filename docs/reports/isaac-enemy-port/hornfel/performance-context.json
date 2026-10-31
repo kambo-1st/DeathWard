@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-26T04:18:58.497779+00:00",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "cpu_count": 12,
+  "load_average": [
+    8.375,
+    7.8212890625,
+    7.9248046875
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.2841089660068974,
+  "scope": "CPU content loading and curve traversal only. Baseline omits rails.mechanics in a temporary copy. Alternating measurements after four warmups. Component cursor stress is not rendered Hornfel performance or balance. Browser jobs finished before measurement."
+}

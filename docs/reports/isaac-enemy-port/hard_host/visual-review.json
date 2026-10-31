@@ -1,0 +1,82 @@
+{
+  "scope": "Eleven Original-style images individually inspected: four Linux and seven production WASM. Body, open/closed poses, wave crests and hop/landing visible. Static appearance only; full combat readability, balance and performance remain open. Rock crests use muted sand colors whose busy-combat contrast still needs acceptance.",
+  "final_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/native-open.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Stone cap raised above exposed red stem; body and protagonist visible against canyon floor."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/native-slam-hop.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed stone cap, multiple traveling rock crests and physically raised protagonist visible; separate ground ring/shadow conveys height."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/native-closed.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Stone cap lowered to ground, red stem hidden; protagonist has landed."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/native-resident.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Hard Host open in actual generated mixed room, beside other ordinary enemies; original road and terrain retained."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/web-final/near-open.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Raised cap and exposed red stem visible in production WASM; nearby player grounded before slam."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/web-final/near-wave.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed cap, traveling rock crests and airborne protagonist with displaced ground shadow visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/web-final/near-closed.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Cap lowered, exposed stem hidden, protagonist grounded after landing."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/web-final/far-open.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Raised cap and stem distinguish opening at a greater player distance; body remains visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/web-final/far-wave.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Traveling crests and closed cap visible; distant protagonist stays grounded."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/web-final/far-closed.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed stone cap visible and distant protagonist grounded; no stray red stem or legacy pedestal."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/web-final/resident-resident.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed Hard Host emitting a visible crest in its actual generated mixed room. Nearby other enemies are retained."
+    }
+  ]
+}

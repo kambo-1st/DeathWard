@@ -1,0 +1,7 @@
+PASS gurgle-player-bomb
+PASS gurgle-environment-fire
+PASS crackle-environment-fire
+PASS splasher-environment-fire
+PASS gurgle-overkill
+PASS crackle-no-morph
+PASS gurgle-in-place-morph

@@ -1,0 +1,6 @@
+Browser errors: []
+Failure state: {"problem":"Requested natural resident/source does not occur in this seeded floor"}
+page.waitForFunction: Timeout 90000ms exceeded.
+    at /home/kambo/workspace/DeathWard/web/enemy-port-test.cjs:813:20 {
+  name: 'TimeoutError'
+}

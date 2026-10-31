@@ -1,0 +1,2 @@
+NATURAL_HARD_HOST seed=1 floor=2 room=3
+PASS Hard Host source slam, crush generator, terrain, hop, lifecycle, limits and config

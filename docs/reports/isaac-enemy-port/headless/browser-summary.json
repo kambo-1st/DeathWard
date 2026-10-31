@@ -1,0 +1,51 @@
+{
+  "status": "Four production WASM scenarios passed",
+  "mechanics_fingerprint": "79025961123d4945",
+  "build": "validation/wasm-final-build.log",
+  "artifacts": "validation/wasm-artifacts.json",
+  "results": "web/results.json",
+  "log": "validation/browser-served.log",
+  "cases": [
+    {
+      "name": "gusher-isolated",
+      "pass": true,
+      "shots": 8,
+      "movement": 77.3051546688893,
+      "observedProjectileIds": 8,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "pacer-isolated",
+      "pass": true,
+      "shots": 0,
+      "movement": 78.10346381115784,
+      "observedProjectileIds": 0,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "gusher-natural",
+      "pass": true,
+      "shots": 9,
+      "movement": 71.92697035586761,
+      "observedProjectileIds": 9,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "pacer-natural",
+      "pass": true,
+      "shots": 0,
+      "movement": 71.61667308162374,
+      "observedProjectileIds": 0,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    }
+  ],
+  "initial_failure": {
+    "log": "validation/browser.log",
+    "cause": "Preview server was no longer running; navigation failed with connection refused. Confirmed original server terminal143, restarted and verified HTTP before rerun."
+  },
+  "limits": [
+    "Scoped normal movement/projectile/seeded reachability checks, not all six gates.",
+    "No Gaper mortality changes in this build; separate later fingerprint required.",
+    "Performance shown during concurrent compilation is not a controlled acceptance benchmark."
+  ]
+}

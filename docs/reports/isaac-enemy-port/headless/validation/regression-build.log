@@ -1,0 +1,32 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests
+[ 17%] Built target glfw
+[ 21%] Built target raylib
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[100%] Building CXX object CMakeFiles/deathward_mechanics_tests.dir/tests/mechanics_tests.cpp.o
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_resident_enemies_tests
+[100%] Building CXX object CMakeFiles/deathward_resident_enemies_tests.dir/tests/resident_enemies_tests.cpp.o
+[100%] Linking CXX executable deathward_resident_enemies_tests
+[100%] Built target deathward_resident_enemies_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[ 95%] Building CXX object CMakeFiles/deathward_floor_progression_tests.dir/tests/floor_progression_tests.cpp.o
+[100%] Linking CXX executable deathward_floor_progression_tests
+[100%] Built target deathward_floor_progression_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_replacement_tests
+[ 95%] Building CXX object CMakeFiles/deathward_replacement_tests.dir/tests/replacement_tests.cpp.o
+[100%] Linking CXX executable deathward_replacement_tests
+[100%] Built target deathward_replacement_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mortality_tests
+[100%] Building CXX object CMakeFiles/deathward_mortality_tests.dir/tests/mortality_tests.cpp.o
+[100%] Linking CXX executable deathward_mortality_tests
+[100%] Built target deathward_mortality_tests

@@ -1,0 +1,30 @@
+{
+  "status": "Source-only next-dependency preflight; runtime still provisional.",
+  "ids": [
+    "11.0.0",
+    "11.1.0"
+  ],
+  "source": "source/manifest.json",
+  "priority": "Regular enemies and the actual bodies created by Faceless/Gaper deaths.",
+  "reviewed_controller_findings": [
+    "Type11 dispatch resolves to4f8e40; complete756-instruction controller includes live cold tail ending4f9a6e.",
+    "The controller is shared with types210,211,238,280; their branches must not be assigned to Gusher/Pacer.",
+    "Initial cooldown is20+RNG%20; ordinary Gusher reload is40+RNG%20.",
+    "Gusher fires along normalized current movement, not an aimed player vector; zero movement does not fire or reset cooldown.",
+    "Source projectile speed is5.",
+    "Random movement retains75percent velocity before the random-walk helper applies its impulse.",
+    "Pacer skips the Gusher firing branch.",
+    "Gusher overlay is Blood; other branch Spiders is not a Gusher overlay.",
+    "Both installed animation files use30FPS and22-frame looping walks. Gusher has a10-frame looping Blood overlay. Neither has attack triggers; firing is controller-timed.",
+    "Source records are restricted to exact entity identities11.0.0 and11.1.0, excluding items and cards sharing numericID11."
+  ],
+  "pending": [
+    "Verify projectile parameter offsets, constructor defaults and final movement conversion.",
+    "Resolve cooldown integer delta fields+2f8/+2fc and control/status gates.",
+    "Review stage-dependent projectile presentation.",
+    "Replace provisional behavior graphs and inconsistent GusherHP40 with evidence-based configuration, preserving other provisional type11 variants until independently reviewed.",
+    "Meaningful Linux controller/morph tests and production WASM cases."
+  ],
+  "runtime_changes": false,
+  "animation_source": "animations/manifest.json"
+}

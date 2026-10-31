@@ -1,0 +1,55 @@
+{
+  "status": "Three final native and five production WASM captures inspected at79025961123d4945; full crowded-room/readability acceptance remains open.",
+  "style": "Original",
+  "images": [
+    {
+      "path": "native/final-gusher-90.png",
+      "sha256": "e7bf2b29a641e3be38e75e9cae79605cbcdfc41669663b3c77061208d62b6122",
+      "inspected": true
+    },
+    {
+      "path": "native/final-gusher-160.png",
+      "sha256": "c9160e9c9aa173716a088f587d6fe05c3fcf42abcdbebb61ff8be21586f10890",
+      "inspected": true
+    },
+    {
+      "path": "native/final-pacer-cap-160.png",
+      "sha256": "1d4ad0b729c54a2ae680171da97a5e422929a21ce041063cb9d3ba488fd750b9",
+      "inspected": true
+    },
+    {
+      "path": "web/gusher-isolated-lob.png",
+      "sha256": "62ce45172bf8de21508c0435b77bed90ce86f45259cac900ad7b967a1616bffb",
+      "inspected": true
+    },
+    {
+      "path": "web/gusher-isolated-walking.png",
+      "sha256": "7f122c9290d554898b26d8b55afefac7d51cbeb7ad94de9cea550f8cfb482360",
+      "inspected": true
+    },
+    {
+      "path": "web/pacer-isolated-walking.png",
+      "sha256": "451680be5c3094c9a9eb3ee5615c93d39e010c480dd7a05ade5faf0674a36d87",
+      "inspected": true
+    },
+    {
+      "path": "web/gusher-natural-lob.png",
+      "sha256": "8a50ca6cfa916a223100bb955ef8e5b33ad0f39447cbf87bea52298a99822218",
+      "inspected": true
+    },
+    {
+      "path": "web/pacer-natural-walking.png",
+      "sha256": "0ea006be5e6b8db307a05fc28d60e2c35b383a1a59e24c81d5acc76a6cdb68dc",
+      "inspected": true
+    }
+  ],
+  "observations": [
+    "Headless silhouettes have a muted flesh treatment; Gusher has a red open neck and a small continuous blood spurt, while Pacer has a dark central cavity and muted body.",
+    "Gusher90 shows an airborne red projectile separated from its ground shadow, traveling independently of player position.",
+    "Ground blood is cosmetic and bounded; the stationary still image cannot establish whether a mark causes damage.",
+    "The initial Pacer dark cap was below the neck rim and invisible. Raising it above the rim makes it visible in the final cap capture.",
+    "The differences remain subtle at the default zoom; crowded-room readability and color-vision accessibility are not accepted by these isolated images.",
+    "FPS in these screenshots is uncontrolled under concurrent builds and tests, not a performance benchmark.",
+    "Browser isolated and natural captures show airborne Gusher shots separated from their shadows, a blood trail, and grounded headless bodies in actual room geometry. Pacer has no airborne projectile. Natural Gusher screenshot includes a river/ford and other enemies; natural Pacer includes canyon-wall occlusion treatment. Subtle body differences still need crowded/readability acceptance."
+  ]
+}

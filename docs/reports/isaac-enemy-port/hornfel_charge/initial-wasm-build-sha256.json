@@ -1,0 +1,9 @@
+{
+  "build-web/index.html": "8733b99838fd71b52bb4555fb9339d21d988a0c33ee07cf7d20e2764b3e01efc",
+  "build-web/index.js": "81618335c2dde04951b2ada6308de3bf7f1cb878fb0c45a4a51a6e232c0d7753",
+  "build-web/index.wasm": "f042cfe47b39385f9ba1bdb1919a317a37a672cc52cb9e229d9f5534941c58d5",
+  "build-web/index.data": "977f5c7076a5840e0d6c0587a224535b45d82eb03f76d41a74717e28107de164",
+  "build-web/index.js.gz": "e10fdaa2b58a61b893ac39ef74e97dd88f3c050bb1319f813fa9d2da41de1fbe",
+  "build-web/index.wasm.gz": "d03c0d28668395282e3161bb2c640ac0c0fc0d457a99e70158a3ebb819bb2be4",
+  "build-web/index.data.gz": "ed4ef741c52b21d3e5dbd00a17f57a2671d79e9ede279d20af18f2e2b880c604"
+}

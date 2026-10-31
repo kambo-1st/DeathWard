@@ -1,0 +1,8 @@
+PASS source health, Hop26 events, zero/random bonus, strict acquisition and five-frame prediction
+PASS in-flight flame morph, health fraction, stun, fire/burning distinction, suspension and death
+PASS real cover, deep river, closed gates and elevated projectile collision
+NATURAL_HOPPER type=29 seed=0 floor=0 room=2
+NATURAL_HOPPER type=54 seed=5 floor=0 room=5
+HOPPER_STARTING_KIT type=29 seconds=1.26667 hp=100
+HOPPER_STARTING_KIT type=54 seconds=1.55 hp=100
+PASS source ordinary and Flaming Hopper

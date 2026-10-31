@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 80: rock_spider_family
+    Start 79: hardy_family
+    Start 75: tainted_pooter_impacts
+1/4 Test #75: tainted_pooter_impacts ...........   Passed    0.44 sec
+    Start 27: resident_enemies
+2/4 Test #79: hardy_family .....................   Passed    0.66 sec
+3/4 Test #27: resident_enemies .................   Passed    1.07 sec
+4/4 Test #80: rock_spider_family ...............   Passed   68.08 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =  68.09 sec

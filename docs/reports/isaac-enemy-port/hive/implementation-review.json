@@ -1,0 +1,57 @@
+{
+  "scope": "Regular Hive22.0.0 and Drowned Hive22.1.0 only; reusable evader controller, population-sensitive offspring and appropriate seeded placement. Holy/Tainted Hive, Nest, Prey and Mulligan variants are separate follow-up.",
+  "mechanics_fingerprint": "b6d232227ffffd87",
+  "changes": [
+    "Replace generic Hive/Drowned fleeing/spawning with reusable source-based proximity, attack-event and population-sensitive controller.",
+    "Independent population-scaled death draws, source mixture, half-health Drowned offspring and consistently scaled overkill.",
+    "Retain delayed offspring requests and captured contact policy until legal placement/capacity, including after summoner removal.",
+    "Enable sparse bands0..2Hive and conditional Flooded Drowned placement; preserve player, visuals and expedition structure."
+  ],
+  "adaptations": [
+    "Source health20/18 converts by3.2 to64/57.6. StageHP0; bodies harmless. Source overkill-20 converts consistently to-64localHP. Physical radius.7, Original low-poly geometry and player defaults remain unchanged.",
+    "Controller executes at30Hz. Visible/hidden proximity250/170 scales to25/17local units, checked every14staggered ticks with three sticky checks. Local entity IDs stagger checks instead of native entity seeds.",
+    "Ready motion uses retention.8/.76 and source-based wandering/path forces. Random flee candidates are mapped through physical canyon navigation and body avoidance. Candidate retries are bounded to16; local speed cap24 remains. Exact native initial1.5impulse, diagonal-axis bias, adaptive candidate budget and grid marker cache are not yet reproduced.",
+    "Attack18/Shoot4 uses source metadata. Ordinary attack state coasts. Cooldown75ticks advances only while evading; source ordering means reacquisition at76ticks in the unobstructed focused fixture. Distance30 and sight retry timers3/7 are exposed by behavior. Crowd threshold4..8 and delay20..69 operate on all hostile room threats plus reserved births, not owner-specific children.",
+    "Live Hive births Attack Fly18.0 with the recovered contact-expiry flag; Drowned births23.1 at half health35.2. The policy is captured in the request so delayed placement still works after owner removal. Death-born Attack Flies remain persistent.",
+    "Death count is ceil(4/(1+.2*N)); Drowned applies a uniform1or2cap. Each Hive child independently chooses13/18/14 with weights7/3/1. Random offsetmax(.2,U*.6) is then resolved by safe3Dplacement. The native signed wordNPC+bc6 is assumed zero for this ordinary case; its nonzero lifecycle still needs investigation.",
+    "Local active-body capacity pauses Shoot4 before reservation; reserved births retry placement/capacity and prevent premature room completion. Pending births count toward population suppression. Reset/debug kill clears pending work. Existing generation<=4bound remains; this is not a claim of exact native capacity behavior or a new hard limit on retained requests.",
+    "Hive has weight1,cost3,max1 in pursuit bands0..2. Drowned replaces50% of selected Hive entries only in band1Flooded. Weights/cost/max1 are local balance policy; source authored-room presence and pinned variant replacement establish stage eligibility. Tutorial, hubs, Mine and expedition structure are unchanged."
+  ],
+  "native": {
+    "covered_suites": 67,
+    "passed": 67,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/hive/native-coverage.json",
+    "initial_report": "docs/reports/isaac-enemy-port/hive/native.xml",
+    "retry_report": "docs/reports/isaac-enemy-port/hive/native-floor-retry.xml",
+    "behavior": "docs/reports/isaac-enemy-port/hive/behavior-final.txt",
+    "scope": "Full67-suite run passed66; only the bounded rare-replacement seed sample failed after pool expansion. Raising its fallback ceiling128to512 while retaining the32-seed broad sweep and all assertions passed the focused rerun. Production mechanics and chances were unchanged.",
+    "tests": "Source-scaled health, harmless contact, proximity/Shoot4/Attack18/cooldown ordering, room-wide population delay, child policy/halfHP, atomic Shoot under capacity pressure, placement retry after parent removal, independent7:3:1death draws, population-sensitive count, inclusive scaled overkill, reserved births and room completion, flee/wander, invalid config and immutable reloads, conditional odds and actual seeded residents."
+  },
+  "browser": {
+    "cases": 8,
+    "report": "docs/reports/isaac-enemy-port/hive/web/results.json",
+    "errors": [],
+    "scope": "Production Original-style Hive/Drowned live movement/spawning, death count and identity/health, overkill suppression, real seed9floor0Hive and seed66floor2Drowned residents. Native tests supply exact timing and retained-contact-policy checks.",
+    "note": "Initial Drowned death hit57.6left a positive float remainder against18*3.2health. The scripted normal-death hit was corrected to58without a runtime change. Initial test/log/results and numeric explanation are preserved."
+  },
+  "visual": {
+    "result": "Inspected Original low-poly Hive and Drowned bodies, offspring, ground contact/shadows and real resident room placement in native/browser captures. Natural Drowned eventually moves behind the top-right HUD in the later browser framing; no all-angle readability or controlled performance acceptance is claimed.",
+    "linux": [
+      "docs/reports/isaac-enemy-port/hive/native-hive.png",
+      "docs/reports/isaac-enemy-port/hive/native-drowned-resident.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/hive/web/hive-live.png",
+      "docs/reports/isaac-enemy-port/hive/web/drowned-live.png",
+      "docs/reports/isaac-enemy-port/hive/web/natural-drowned.png"
+    ]
+  },
+  "remaining": [
+    "Native pathfinder initial impulse, diagonal bias, adaptive cache/retry logic and full movement/status/time-scale equivalence remain incomplete.",
+    "Resolve nonzero signed offspring counterNPC+bc6 and full charm/friendly/champion/item/appear-event interactions. Current evidence establishes ordinary hostile zero-counter behavior only.",
+    "Holy/Tainted Hive, Mulligan variants, Nest and Prey still need their own regular-enemy/controller and dependency work. Do not treat this shared native function as proof those records are ported.",
+    "Broader encounter/build balance, all-angle threat readability and controlled rendered Linux/WASM performance remain unaccepted. All six gates and all653records remain required; zero complete ports certified.",
+    "Regular enemies remain the priority; further boss/Hornfel expansion is deferred."
+  ]
+}

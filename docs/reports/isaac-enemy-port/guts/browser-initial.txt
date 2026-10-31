@@ -1,0 +1,13 @@
+START guts
+PASS guts
+START scarred
+PASS scarred
+START slog
+AssertionError [ERR_ASSERTION]: Slog acquires and ends charge
+    at /home/kambo/workspace/DeathWard/web/guts-test.cjs:63:44 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

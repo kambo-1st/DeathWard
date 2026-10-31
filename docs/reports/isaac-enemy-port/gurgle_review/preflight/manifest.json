@@ -1,0 +1,31 @@
+{
+  "status": "bounded next-regular preflight only; no runtime or acceptance promotion",
+  "baseline_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "tuple": "87.0.0",
+      "case": "0x699a1c",
+      "start": "0x508ef0",
+      "end": "0x5099b6",
+      "path": "docs/reports/isaac-enemy-port/gurgle_review/preflight/gurgle_ai.asm",
+      "sha256": "8b076f92f527f72853d29181ced3c877685dabf56d907896615555474a18d432",
+      "raw_sha256": "b38dba2034541692e57bf160a883e66d311ff5befd785daed2a97b48a63818f8",
+      "boundary": "linear disassembly to first return; not whole-callgraph proof"
+    },
+    {
+      "tuple": "238.0.0",
+      "case": "0x699cfb",
+      "start": "0x4f8e40",
+      "end": "0x4f9a52",
+      "path": "docs/reports/isaac-enemy-port/gurgle_review/preflight/splasher_ai.asm",
+      "sha256": "0ae61997e3afccb2096742a959aa2174819e892ac7d01731a43a0e5040a629ca",
+      "raw_sha256": "d1614b389da3fe5802cf4f3aacc1f5a6c5406c272a961d8120956ae5388d75a2",
+      "boundary": "linear disassembly to first return; not whole-callgraph proof"
+    }
+  ],
+  "lead_findings": [
+    "Gurgle dead-state branch requires post-hit HP strictly above-25, variant0 and rng%100<15 before calling transform helper with238.0. Source helper/remaining state still require review.",
+    "Ordinary acquisition excludes SpawnerType906, has1/60 random gate and squared distance<16900 (130native units). Do not reuse an invented periodic cooldown or enable mounted attack.",
+    "Splasher238 is a required ordinary-death dependency; review both actors and explosion/fire immunity together before enabling Gurgle in ordinary floor pools."
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "platform": "WASM/Chromium",
+  "partial": true,
+  "checks": [],
+  "errors": [],
+  "failure": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8098/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-906.0.0\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8098/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-906.0.0\", waiting until \"load\"\u001b[22m\n",
+  "failureState": null
+}

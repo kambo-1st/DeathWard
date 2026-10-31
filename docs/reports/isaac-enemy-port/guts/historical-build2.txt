@@ -1,0 +1,81 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hosts.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Guts.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mushrooms.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/TargetHops.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Leapers.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/AdaptiveArmor.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Eggies.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BuzzFlies.cpp.o
+[  9%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Evaders.cpp.o
+[  9%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Swimmers.cpp.o
+[  9%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spiders.cpp.o
+[  9%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SpiderVariants.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LongLegs.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Boils.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Willos.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireWaves.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Campaign.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Expedition.cpp.o
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp: In member function ‘dw::FloorProfile dw::ExpeditionPlan::profileOnFloor(int) const’:
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:84:6: warning: missing initializer for member ‘dw::FloorProfile::bossRails’ [-Wmissing-field-initializers]
+   84 |     }};
+      |      ^
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:84:6: warning: missing initializer for member ‘dw::FloorProfile::bossRails’ [-Wmissing-field-initializers]
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:84:6: warning: missing initializer for member ‘dw::FloorProfile::bossRails’ [-Wmissing-field-initializers]
+/home/kambo/workspace/DeathWard/src/world/Expedition.cpp:84:6: warning: missing initializer for member ‘dw::FloorProfile::bossRails’ [-Wmissing-field-initializers]
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Dungeon.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RailArena.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FlightNavigation.cpp.o
+[ 27%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Breakables.cpp.o
+[ 27%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FloorDressing.cpp.o
+[ 27%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 27%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonTerrain.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRiver.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRoad.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomGraph.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SuppliedBombs.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FlyBombs.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyBombs.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 54%] Linking CXX static library libdeathward_core.a
+[ 95%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_guts_tests.dir/tests/guts_tests.cpp.o
+/home/kambo/workspace/DeathWard/tests/guts_tests.cpp: In function ‘void {anonymous}::configuration()’:
+/home/kambo/workspace/DeathWard/tests/guts_tests.cpp:94:65: error: ‘class std::shared_ptr<const dw::MechanicsLibrary>’ has no member named ‘library’
+   94 |     auto changed=edit(".1 3 .6 40", ".1 4 .6 40");check(changed.library&&near(changed.library->guts(monsterId(40))->force,4),"external force reloads");
+      |                                                                 ^~~~~~~
+/home/kambo/workspace/DeathWard/tests/guts_tests.cpp:94:87: error: ‘class std::shared_ptr<const dw::MechanicsLibrary>’ has no member named ‘library’
+   94 |     auto changed=edit(".1 3 .6 40", ".1 4 .6 40");check(changed.library&&near(changed.library->guts(monsterId(40))->force,4),"external force reloads");
+      |                                                                                       ^~~~~~~
+/home/kambo/workspace/DeathWard/tests/guts_tests.cpp:100:30: error: ‘class std::shared_ptr<const dw::MechanicsLibrary>’ has no member named ‘library’
+  100 |         check(!edit(from,to).library,"invalid or incomplete controller rejected");
+      |                              ^~~~~~~
+gmake[3]: *** [CMakeFiles/deathward_guts_tests.dir/build.make:76: CMakeFiles/deathward_guts_tests.dir/tests/guts_tests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:2814: CMakeFiles/deathward_guts_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2821: CMakeFiles/deathward_guts_tests.dir/rule] Error 2
+gmake: *** [Makefile:1344: deathward_guts_tests] Error 2

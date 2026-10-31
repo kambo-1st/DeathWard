@@ -1,0 +1,10 @@
+{
+  "goal": "Full 653-record scope active; zero accepted ports.",
+  "current": "Hardy scoped checkpoint complete; continue regular enemies and required dependencies.",
+  "next_regular": "Danny 820.0.0: review installed charge/spit controller and thrown Rock Spider ownership before implementing ordinary Quarry placement.",
+  "remaining": [
+    "Hardy native impact knockback, mass-100 collision response, control/status/champions and saved-state remain open.",
+    "Tinted Rock Spider still requires actual Soul Heart and tinted-rock production.",
+    "Complete all per-record behavior, reachability, Linux/WASM visual, balance and performance gates across the full roster."
+  ]
+}

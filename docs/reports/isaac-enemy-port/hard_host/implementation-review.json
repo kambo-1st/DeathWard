@@ -1,0 +1,198 @@
+{
+  "scope": "Partial normal-hostile Hard Host27.3 physical slam, crush wave, terrain and player hop.",
+  "source": "docs/reports/isaac-enemy-port/hard_host/source-review.md",
+  "adaptations": [
+    "Source30Hz, distance x.1, velocity x3, HP x3.2. Rock pulse10sourceHP becomes32NPC damage; player base10 uses the established hostile damage scale.",
+    "Swept3D ground tracing prevents thin-prop tunnelling. Cracks/dung/cache entrances break and powder barrels can ignite; local ore/resource gates and structural cache sides remain protected.",
+    "Per-wave seeded RNG and whole-pulse/cast retry under capacity pressure; emitted generator survives owner death/room clear but clears on room change.",
+    "Physical hop with upward27world/sec and gravity99world/sec2; horizontal impulse9 with authored .8 retention and grounded collision.",
+    "Original stone-cap body, exposed stem, rock crests and particles; no source artwork imported. Authored Mines/Ashpit analogue placement in band1."
+  ],
+  "remaining": [
+    "Native special status/champion/control branches, item transformations and all special grid/NPC immunity exceptions remain open.",
+    "Native RNG sequence, age-zero generator ordering, source grid parity and full crush knockback/mass physics remain open.",
+    "Source player friction/control/flying exceptions are not fully reproduced; local grounded horizontal collision and normal controls remain active during the hop.",
+    "Exact alternate-stage placement and replacement probabilities remain open; authored band1 specialist weight1/cost4/cap1 is an adaptation.",
+    "Full combat readability, balance and controlled Linux/WASM performance acceptance remain open; no complete port is claimed."
+  ],
+  "native": {
+    "passed": 77,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/hard_host/native.xml",
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "boil_family",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hard_host",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "hosts",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "maw_family",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "corrected_reports": [
+      "docs/reports/isaac-enemy-port/hard_host/crackle-corrected.xml"
+    ],
+    "behavior": "docs/reports/isaac-enemy-port/hard_host/native-targeted.txt",
+    "corrections": "Full run passed76/77. The Crackle witness search expands from30 to256 seeds; actual seed61/floor1/room4 passes. Pool additions changed weighted draws; no Crackle runtime or weight changes. Initial Hard Host pit fixture changed visible floor strips but not collision cells; the corrected fixture and full suite pass."
+  },
+  "browser": {
+    "cases": 3,
+    "report": "docs/reports/isaac-enemy-port/hard_host/web-final/results.json",
+    "scope": "Production WASM Hard Host isolated near/far and actual seeded resident: armor events, physical crush generator, absent bullets, hop/landing and Original appearance. Partial acceptance.",
+    "errors": [],
+    "build": "docs/reports/isaac-enemy-port/hard_host/build-wasm-fixed.txt",
+    "corrections": "Initial WASM build rejected unparenthesized object literals in EM_ASM probes. Parenthesized literals compile; final production build and all3cases pass."
+  },
+  "visual": {
+    "scope": "Eleven Original-style images individually inspected: four Linux and seven production WASM. Body, open/closed poses, wave crests and hop/landing visible. Static appearance only; full combat readability, balance and performance remain open. Rock crests use muted sand colors whose busy-combat contrast still needs acceptance.",
+    "final_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/native-open.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Stone cap raised above exposed red stem; body and protagonist visible against canyon floor."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/native-slam-hop.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed stone cap, multiple traveling rock crests and physically raised protagonist visible; separate ground ring/shadow conveys height."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/native-closed.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Stone cap lowered to ground, red stem hidden; protagonist has landed."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/native-resident.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Hard Host open in actual generated mixed room, beside other ordinary enemies; original road and terrain retained."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/web-final/near-open.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Raised cap and exposed red stem visible in production WASM; nearby player grounded before slam."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/web-final/near-wave.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed cap, traveling rock crests and airborne protagonist with displaced ground shadow visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/web-final/near-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Cap lowered, exposed stem hidden, protagonist grounded after landing."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/web-final/far-open.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Raised cap and stem distinguish opening at a greater player distance; body remains visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/web-final/far-wave.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Traveling crests and closed cap visible; distant protagonist stays grounded."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/web-final/far-closed.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed stone cap visible and distant protagonist grounded; no stray red stem or legacy pedestal."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/hard_host/web-final/resident-resident.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Closed Hard Host emitting a visible crest in its actual generated mixed room. Nearby other enemies are retained."
+      }
+    ]
+  },
+  "complete": false
+}

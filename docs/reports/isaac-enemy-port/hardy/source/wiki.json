@@ -1,0 +1,14 @@
+{
+  "title": "Squirt",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Squirt",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270020",
+  "revision": 270020,
+  "timestamp": "2026-10-02T11:30:48Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "section": {
+    "heading": "Hardy",
+    "level": 3,
+    "text": "Hardies are a rocky variant of Squirts. Upon death, it spawns a Dip.\n\nThey charge at Isaac, and if they run into an obstacle/wall, a piece of them breaks off and rock projectiles are fired outwards. A Hardy will destroy most breakable obstacles on collision and is also able to reveal secret rooms if it hits the entrance of one. After running into rocks/walls three times, a Hardy will die.\n\n\u2022 First collision: 8 rock projectiles are fired out in a radius.\n\n\u2022 Second collision: 8 rock projectiles are fired out in a radius and a cluster of rock projectiles is launched in Isaac's direction.\n\n\u2022 Third collision: A cluster of small and large rock projectiles is launched in Isaac's direction. The small rock projectiles have shorter range and will spawn 2-3 Rock Spiders and the large rock projectiles each shoot out a small cross of 4 smaller rock projectiles upon landing.\n\nIn the uncommon event that it charges but doesn't hit a wall or obstacle, it will slow down like a normal Squirt without sustaining damage.\n\n[Repentance+] Destroyed by Hagalaz on use, leaving behind a Dip. [end edition note]"
+  }
+}

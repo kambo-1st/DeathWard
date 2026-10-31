@@ -1,0 +1,8 @@
+{
+  "case": "drowned-death",
+  "cause": "Source-scaled float32 HP is slightly larger than decimal57.6 parsed into float32. The scripted hit left a positive float residual.",
+  "health": 57.60000228881836,
+  "initial_hit": 57.599998474121094,
+  "remaining": 3.814697265625e-06,
+  "correction": "Use58damage for a normal death, far below the scaled64overkill margin. Exact inclusive overkill is tested natively against actual actor health. No runtime change."
+}

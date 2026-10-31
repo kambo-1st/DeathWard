@@ -1,0 +1,6 @@
+{
+  "artifacts_checked": 2232,
+  "conflicts": [],
+  "mismatches": [],
+  "scope": "Historical artifact hashes from earlier checkpoints; runtime/build hashes are intentionally historical and are not checked against current builds."
+}

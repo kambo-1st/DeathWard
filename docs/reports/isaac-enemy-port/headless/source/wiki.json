@@ -1,0 +1,161 @@
+{
+  "title": "Pacer",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Pacer",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269180",
+  "revision": 269180,
+  "timestamp": "2026-09-09T10:17:27Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "Pacers wander around the room aimlessly and can be spawned when a Gaper, a Flaming Gaper or a Frowning Gaper is killed."
+    },
+    {
+      "heading": "Variations",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Gusher",
+      "level": 3,
+      "text": "Gushers wander around a room aimlessly, similar to Pacers, but will occasionally shoot a short ranged slow-moving, blood shot in whichever direction they happen to be moving in. They can be spawned from all the same sources as the Pacer with the addition of Lepers which will always spawn a grey-colored Gusher upon death."
+    },
+    {
+      "heading": "Notes",
+      "level": 4,
+      "text": "\u2022 Pure Magenta Champion Gushers will spit two blood shots at different intervals."
+    },
+    {
+      "heading": "Splasher",
+      "level": 3,
+      "text": "Splashers wander around a room and randomly shoot Ipecac shots.\nThey can be spawned when a Gurgle is killed."
+    },
+    {
+      "heading": "Notes",
+      "level": 3,
+      "text": "\u2022 [Before Repentance] Splashers that are spawned from Champion Gurgles appear as Champions but Splashers that spawn naturally in layouts are never seen in champion form, even if using the \"CHAM P1ON\" special seed."
+    },
+    {
+      "heading": "Black Globin's Body",
+      "level": 3,
+      "text": "Black Globin's Bodies walk around aimlessly, occasionally spawning a Spider. They can be spawned alongside a Black Globin's Head when a Black Globin is killed."
+    },
+    {
+      "heading": "Level 2 Gusher",
+      "level": 3,
+      "text": "Level 2 Gushers run around a room blindly, occasionally spitting up Small Maggots."
+    },
+    {
+      "heading": "Gallery",
+      "level": 2,
+      "text": ""
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "id": "11",
+        "variant": "1",
+        "base hp": "10",
+        "environment": "Basement / Cellar / Burning Basement / \nDownpour / Dross / \nMines / \nDepths / Dank Depths / \nWomb / Utero / Scarred Womb /",
+        "behavior": "Walks aimlessly around the room."
+      },
+      "group": "entity",
+      "id": 11,
+      "name": "Pacer",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "name": "Gusher",
+        "variant": "0",
+        "image name": "* [Before Repentance] Rebirth",
+        "base hp": "10",
+        "environment": "Basement / Cellar / Burning Basement / \nDownpour / Dross /",
+        "behavior": "Walks aimlessly around the room, occasionally firing a short-ranged blood shot."
+      },
+      "group": "entity",
+      "id": 11,
+      "name": "Gusher",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        2,
+        3
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 4,
+      "fields": {
+        "name": "Splasher",
+        "id": "238",
+        "image name": "* [Before Repentance] Rebirth",
+        "base hp": "10",
+        "stage hp": "2",
+        "environment": "Caves / Catacombs / Flooded Caves / \nMines / Ashpit / \nNecropolis / \nCathedral / \nmini-boss / challenge /",
+        "behavior": "Walks aimlessly around the room, firing Ipecac shots in random directions."
+      },
+      "group": "entity",
+      "id": 238,
+      "name": "Splasher",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        4
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 6,
+      "fields": {
+        "dlc": "a",
+        "name": "Black Globin's Body",
+        "image name": "* [Before Repentance] Afterbirth",
+        "id": "280",
+        "base hp": "10",
+        "environment": "Cellar / \nDepths / Necropolis / Dank Depths / \nSheol / \nSpawned after killing a Black Globin.",
+        "behavior": "Walks aimlessly around the room, occasionally spawning spiders."
+      },
+      "group": "entity",
+      "id": 280,
+      "name": "Black Globin's Body",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        6
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 7,
+      "fields": {
+        "dlc": "r",
+        "name": "Level 2 Gusher",
+        "id": "850",
+        "variant": "2",
+        "base hp": "20",
+        "environment": "Corpse / \nSpawned after killing a Level 2 Gaper.",
+        "behavior": "Runs aimlessly around the room, spitting up Small Maggots."
+      },
+      "group": "entity",
+      "id": 850,
+      "name": "Level 2 Gusher",
+      "variant": 2,
+      "subtype": 0,
+      "section_indices": [
+        7
+      ]
+    }
+  ]
+}

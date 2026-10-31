@@ -1,0 +1,17 @@
+{
+  "build-web/index.js": {
+    "sha256": "73dfbf7784d1991a6f21e3bdc92b71ba569da5ba7806b6fe142ae234b91cb682",
+    "gzip_sha256": "3848c364662480ad6b6d57eba58573bee683e91aac51c8da28adad854203f953",
+    "matches": true
+  },
+  "build-web/index.data": {
+    "sha256": "7591f05bfd5a24fb2459ab3f076d02db275a7dc32cb371045e00d49c7d5c6b32",
+    "gzip_sha256": "4166b70d0bc7d229a7ffe21d125836729b4462980cbea42649f5dc122f4e93a8",
+    "matches": true
+  },
+  "build-web/index.wasm": {
+    "sha256": "31b2b2bc2d432a1ed518e2eb7ca80ba3228edd7b79881df152bc4d7aba16cff9",
+    "gzip_sha256": "bceaeb2968a2fbb4f4104a87549ede7a5bb8fc80f6f56aa3df87095a1a029065",
+    "matches": true
+  }
+}

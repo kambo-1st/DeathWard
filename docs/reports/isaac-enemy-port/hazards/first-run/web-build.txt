@@ -1,0 +1,224 @@
+configure: cmake -S /home/kambo/workspace/DeathWard -B /home/kambo/workspace/DeathWard/build-web -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DCMAKE_TOOLCHAIN_FILE=/tmp/deathward-emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_CROSSCOMPILING_EMULATOR=/tmp/deathward-emsdk/node/24.19.0_64bit/bin/node
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_WEB
+--   GRAPHICS=GRAPHICS_API_OPENGL_ES3
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build-web
+Consolidate compiler generated dependencies of target raylib
+[  8%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[  9%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 11%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[ 14%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 19%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 23%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 27%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 28%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Dungeon.cpp.o
+[ 29%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FlightNavigation.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Breakables.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FloorDressing.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 33%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 34%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonTerrain.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRiver.cpp.o
+[ 38%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRoad.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomGraph.cpp.o
+[ 40%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 41%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 44%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 48%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 51%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 53%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 54%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 55%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 56%] Linking CXX static library libdeathward_core.a
+[ 66%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 68%] Built target deathward_cloth
+[ 71%] Built target deathward_skinning
+[ 72%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 73%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/GroundSurface.cpp.o
+[ 75%] Linking CXX static library libdeathward_mission_lighting.a
+[ 77%] Built target deathward_mission_lighting
+[ 78%] Linking CXX static library libdeathward_particles.a
+[ 79%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 80%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 82%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 82%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 84%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+/home/kambo/workspace/DeathWard/src/main.cpp:867:83: error: use of undeclared identifier 'volleys'; did you mean 'dw::BehaviorRuntime::volleys'?
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                   ^~~~~~~
+      |                                                                                   dw::BehaviorRuntime::volleys
+/tmp/deathward-emsdk/upstream/emscripten/cache/sysroot/include/emscripten/em_asm.h:221:94: note: expanded from macro 'EM_ASM'
+  221 | #define EM_ASM(code, ...) ((void)emscripten_asm_const_int(CODE_EXPR(#code) _EM_ASM_PREP_ARGS(__VA_ARGS__)))
+      |                                                                                              ^~~~~~~~~~~
+/tmp/deathward-emsdk/upstream/emscripten/cache/sysroot/include/emscripten/em_asm.h:206:64: note: expanded from macro '_EM_ASM_PREP_ARGS'
+  206 |     , __em_asm_sig_builder<__typeof__(__em_asm_make_type_tuple(__VA_ARGS__))>::buffer, ##__VA_ARGS__
+      |                                                                ^~~~~~~~~~~
+/home/kambo/workspace/DeathWard/src/content/Mechanics.hpp:211:14: note: 'dw::BehaviorRuntime::volleys' declared here
+  211 |     uint64_t volleys=0;
+      |              ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:90: error: expected ')'
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                          ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:17: note: to match this '('
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                 ^
+/tmp/deathward-emsdk/upstream/emscripten/cache/sysroot/include/emscripten/em_asm.h:221:76: note: expanded from macro 'EM_ASM'
+  221 | #define EM_ASM(code, ...) ((void)emscripten_asm_const_int(CODE_EXPR(#code) _EM_ASM_PREP_ARGS(__VA_ARGS__)))
+      |                                                                            ^
+/tmp/deathward-emsdk/upstream/emscripten/cache/sysroot/include/emscripten/em_asm.h:206:63: note: expanded from macro '_EM_ASM_PREP_ARGS'
+  206 |     , __em_asm_sig_builder<__typeof__(__em_asm_make_type_tuple(__VA_ARGS__))>::buffer, ##__VA_ARGS__
+      |                                                               ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:131: error: expected '>'
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                   ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:17: note: to match this '<'
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                 ^
+/tmp/deathward-emsdk/upstream/emscripten/cache/sysroot/include/emscripten/em_asm.h:221:76: note: expanded from macro 'EM_ASM'
+  221 | #define EM_ASM(code, ...) ((void)emscripten_asm_const_int(CODE_EXPR(#code) _EM_ASM_PREP_ARGS(__VA_ARGS__)))
+      |                                                                            ^
+/tmp/deathward-emsdk/upstream/emscripten/cache/sysroot/include/emscripten/em_asm.h:206:27: note: expanded from macro '_EM_ASM_PREP_ARGS'
+  206 |     , __em_asm_sig_builder<__typeof__(__em_asm_make_type_tuple(__VA_ARGS__))>::buffer, ##__VA_ARGS__
+      |                           ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:131: error: expected ')'
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                   ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:17: note: to match this '('
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                 ^
+/tmp/deathward-emsdk/upstream/emscripten/cache/sysroot/include/emscripten/em_asm.h:221:27: note: expanded from macro 'EM_ASM'
+  221 | #define EM_ASM(code, ...) ((void)emscripten_asm_const_int(CODE_EXPR(#code) _EM_ASM_PREP_ARGS(__VA_ARGS__)))
+      |                           ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:132: error: use of undeclared identifier 'Module'
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                    ^~~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:867:159: error: expected body of lambda expression
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                                               ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:162: error: expected expression
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                                                  ^
+/home/kambo/workspace/DeathWard/src/main.cpp:868:21: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                     ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:868:28: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                            ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:868:50: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                                                  ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:868:56: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                                                        ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:868:78: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                                                                              ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:868:84: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                                                                                    ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:868:102: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                                                                                                      ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:868:108: error: use of undeclared identifier 'enemy'
+  868 |                     enemy&&enemy->statueDisabled,enemy?enemy->statueVolley:0,enemy?enemy->facing.x:0,enemy?enemy->facing.z:0,game.run->roomClear,double(game.run->stats.explosions));
+      |                                                                                                            ^~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:867:131: error: expected catch
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                   ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:132: error: use of undeclared identifier 'Module'
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                    ^~~~~~
+/home/kambo/workspace/DeathWard/src/main.cpp:867:159: error: expected body of lambda expression
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                                               ^
+/home/kambo/workspace/DeathWard/src/main.cpp:867:161: error: extraneous closing brace ('}')
+  867 |                 EM_ASM({if(Module.verify){Module.enemyProbe.statue={disabled:!!$0,volleys:$1,fx:$2,fz:$3,clear:!!$4,explosions:$5};Module.enemyProbe.plates=[];}},
+      |                                                                                                                                                                 ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+gmake[2]: *** [CMakeFiles/deathward.dir/build.make:77: CMakeFiles/deathward.dir/src/main.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:265: CMakeFiles/deathward.dir/all] Error 2
+gmake: *** [Makefile:156: all] Error 2

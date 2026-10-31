@@ -1,0 +1,2 @@
+PASS WASM resident-flaming: actual seed 116, floor 0, source 29.0.0
+PASS WASM hopper-fire-burn: 1 threats, 0 kills

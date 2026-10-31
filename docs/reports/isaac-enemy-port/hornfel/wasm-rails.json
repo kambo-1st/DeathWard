@@ -1,0 +1,15 @@
+{
+  "platform": "WASM/Chromium",
+  "browser": "141.0.7390.37",
+  "passed": true,
+  "lines": [
+    "RAIL_GEOMETRY cross_straight=1 stop_reverse=1 curved_motion=1 swept_segments=1 pits_retained=1 step_partition=1",
+    "RAIL_INSTALLED layouts=15 cells=928 doors=121 routes=121 pit_cells=30 fitted_footprints=120 ordinary_pool_entries=0",
+    "RAIL_VALIDATION duplicates=reject disconnected=reject invalid_variant=reject dimensions=bounded nonfinite=reject",
+    "RAIL_CONTENT immutable_snapshot=1 external_geometry=1 rejected_reload_keeps_previous=1"
+  ],
+  "errors": [],
+  "status": 0,
+  "pageErrors": [],
+  "scope": "Same C++ authored-rail behavior, topology and immutable content tests as native. No boss AI or game-rendering acceptance."
+}

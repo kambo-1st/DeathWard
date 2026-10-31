@@ -1,0 +1,19 @@
+[
+  {
+    "name": "three-impacts",
+    "frames": 1800
+  },
+  {
+    "name": "ordinary-death",
+    "death": true,
+    "frames": 240
+  },
+  {
+    "name": "natural-quarry",
+    "natural": true,
+    "seed": 30,
+    "floor": 2,
+    "room": 7,
+    "frames": 900
+  }
+]

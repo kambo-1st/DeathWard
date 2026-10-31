@@ -1,0 +1,6 @@
+CONTENT_WITHOUT_RAILS samples=40 mean_us=1799.58 p95_us=2596.98 max_us=2613.88
+CONTENT_WITH_15_RAIL_LAYOUTS samples=40 mean_us=3436.74 p95_us=4974.41 max_us=5221.94
+RAIL_TRAVERSAL cursors=1 CPU_ONLY samples=2340 mean_us=0.126584 p95_us=0.14 max_us=32.39
+RAIL_TRAVERSAL cursors=16 CPU_ONLY samples=2340 mean_us=1.60756 p95_us=1.77 max_us=77.039
+RAIL_TRAVERSAL cursors=128 CPU_ONLY samples=2340 mean_us=12.9813 p95_us=19.88 max_us=156.148
+checksum=1.22435e+07 render=0 npc_ai=0 wall_door_animation=0

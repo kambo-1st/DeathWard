@@ -1,0 +1,332 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "exe": "/mnt/c/Program Files (x86)/Steam/steamapps/common/The Binding of Isaac Rebirth/isaac-ng.exe",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "image_base": "0x400000",
+  "signature_source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+  "anchors": {
+    "Hornfel_UpdateAI": {
+      "va": "0x4a6280",
+      "signature": "538bdc83ec0883e4f883c404558b6b??896c24??8bec6aff68????????64a1????????505381ec38010000a1????????33c58945??5657508d45??64a3????????8bf989bd????????a1",
+      "file_offset": 677504,
+      "declaration": "Entity_NPC::Hornfel_UpdateAI",
+      "source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+      "source_sha256": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462"
+    },
+    "Hornfel_UpdateFrame": {
+      "va": "0x4a8000",
+      "signature": "558bec83e4f85153568bf15783be????????0a",
+      "file_offset": 685056,
+      "declaration": "Entity_NPC::Hornfel_UpdateFrame",
+      "source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+      "source_sha256": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462"
+    },
+    "FireProjectiles": {
+      "va": "0x6a1a20",
+      "signature": "538bdc83ec0883e4f883c404558b6b??896c24??8bec6aff68????????64a1????????505383ec405657a1????????33c5508d45??64a3????????894d??33f6",
+      "file_offset": 2756128,
+      "declaration": "Entity_NPC::FireProjectiles",
+      "source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+      "source_sha256": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462"
+    },
+    "PlaySound": {
+      "va": "0x6ad720",
+      "signature": "558bec8b81????????f30f1045",
+      "file_offset": 2804512,
+      "declaration": "Entity_NPC::PlaySound",
+      "source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+      "source_sha256": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462"
+    },
+    "PickOutcome": {
+      "va": "0x489420",
+      "signature": "558bec83ec0c8bc15356",
+      "file_offset": 559136,
+      "declaration": "WeightedOutcomePicker::PickOutcome",
+      "source": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/WeightedOutcomePicker.zhl",
+      "source_sha256": "cb04eafe84e04cff5a7dbae6f6a40c54efd7c2cd5d6c99388ebe236cdb39cfcd"
+    }
+  },
+  "unmatched_optional_signatures": {
+    "GetPlayerTarget": {
+      "matches": 0,
+      "signature": "558bec6aff68????????64a1????????5083ec64535657a1????????33c5508d45??64a3????????8bf1"
+    },
+    "Spawn": {
+      "matches": 0,
+      "signature": "558bec83e4f883ec448b45??53"
+    }
+  },
+  "windows": [
+    {
+      "name": "helper_4a4dc0",
+      "start": "0x4a4dc0",
+      "end_exclusive": "0x4a4e6f",
+      "raw_sha256": "f1545e4a7bb62a18acba0faa44c464f6df64ebb010d907a2883d7547635c2eb6",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/helper_4a4dc0.asm",
+      "artifact_sha256": "1edce20a58cc7e1d7aaac7e73ec570a6c81948a4464e1febcc65e2b873b4341b",
+      "calls": [
+        "0x4054f0"
+      ]
+    },
+    {
+      "name": "helper_4a4e70",
+      "start": "0x4a4e70",
+      "end_exclusive": "0x4a5113",
+      "raw_sha256": "cad04723eb3b18ca4fd93115beec6eb6c250338192c0011e49fc416b4bcc9241",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/helper_4a4e70.asm",
+      "artifact_sha256": "18021cda9c5c1ee914ac31db8ccb29305455bb9556969dba73ece179ebb9c6be",
+      "calls": [
+        "0x422e20",
+        "0x489420",
+        "0x48d900",
+        "0x4bae70",
+        "0x4bc3c0",
+        "0x6c3d90",
+        "0x9eacd7",
+        "0x9eb08e"
+      ]
+    },
+    {
+      "name": "helper_4a5120",
+      "start": "0x4a5120",
+      "end_exclusive": "0x4a5a04",
+      "raw_sha256": "93a732dc900420e0e418f1abf1e62f334712906c6a49e6b5426714b6c810f487",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5120.asm",
+      "artifact_sha256": "d281cee2e570d3425dff5733ca26d32f3c82894ea405c9cfcaaf5fc9663faff2",
+      "calls": [
+        "0x407160",
+        "0x407de0",
+        "0x411fe0",
+        "0x412010",
+        "0x412750",
+        "0x422e20",
+        "0x4a8150",
+        "0x4a8340",
+        "0x4bae70",
+        "0x4bc1e0",
+        "0x4bc2a0",
+        "0x4bc3c0",
+        "0x68eff0",
+        "0x6c3d90",
+        "0x95e330",
+        "0x9eacd7",
+        "0x9eb08e"
+      ]
+    },
+    {
+      "name": "helper_4a5a10",
+      "start": "0x4a5a10",
+      "end_exclusive": "0x4a5c40",
+      "raw_sha256": "8552f5e8047c90be565b57fa26261b2b534f56076bd4cb4380991a3183e8fbde",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5a10.asm",
+      "artifact_sha256": "0544c9f8c904b415b541ced0c217bdd5c696e410197601f7afc680fd61ccdcdd",
+      "calls": [
+        "0x415ed0",
+        "0x4a8340",
+        "0x4bc1e0",
+        "0x4bc3c0",
+        "0x9eace5"
+      ]
+    },
+    {
+      "name": "helper_4a5c40",
+      "start": "0x4a5c40",
+      "end_exclusive": "0x4a6080",
+      "raw_sha256": "6aa9b8ffe6e7b7de41b768969b06b2946af7de0e6bd0944ef77d9d4c7df760ba",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5c40.asm",
+      "artifact_sha256": "e32182572c161bf212aed8d121904271d9a7249827b08b13bb6c68037061852c",
+      "calls": [
+        "0x4054f0",
+        "0x4228c0",
+        "0x489420",
+        "0x48d900",
+        "0x4a4e70",
+        "0x4bae70",
+        "0x4bc3c0",
+        "0x695680",
+        "0x6c3d90",
+        "0x9eacd7",
+        "0x9eb08e"
+      ]
+    },
+    {
+      "name": "helper_4a6080",
+      "start": "0x4a6080",
+      "end_exclusive": "0x4a6280",
+      "raw_sha256": "2b4ff2a771dc228bcabb023e08cbb03eecb0bf22fe8e80c1e03df32e54b94f9b",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/helper_4a6080.asm",
+      "artifact_sha256": "8c8f9352d432e25677dba73c06a470cc0e26d3cf78b36944c786eb378aab8b59",
+      "calls": [
+        "0x4228c0",
+        "0x4bae70",
+        "0x4bc3c0"
+      ]
+    },
+    {
+      "name": "hornfel_update_ai",
+      "start": "0x4a6280",
+      "end_exclusive": "0x4a7fb3",
+      "raw_sha256": "95ac45634aae22d197d950cf5dde4f667f2371247d68a1ea557bb2a8094bf242",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/hornfel_update_ai.asm",
+      "artifact_sha256": "02a95eefcc992479fd180ee36a31ee626b583e983ab2e924e057f422eb81fa4d",
+      "calls": [
+        "0x4021a0",
+        "0x4054f0",
+        "0x4060f0",
+        "0x406150",
+        "0x407160",
+        "0x407de0",
+        "0x411fe0",
+        "0x412010",
+        "0x421f90",
+        "0x422130",
+        "0x4228c0",
+        "0x422e20",
+        "0x430d70",
+        "0x43da10",
+        "0x447a80",
+        "0x4a4dc0",
+        "0x4a5120",
+        "0x4a5a10",
+        "0x4a5c40",
+        "0x4a6080",
+        "0x4a8340",
+        "0x4a84a0",
+        "0x4a8620",
+        "0x4bae70",
+        "0x4bc040",
+        "0x4bc3c0",
+        "0x659290",
+        "0x65a950",
+        "0x684790",
+        "0x6847e0",
+        "0x68eff0",
+        "0x695680",
+        "0x6a3420",
+        "0x6a6db0",
+        "0x6ad720",
+        "0x6c3d90",
+        "0x6d1750",
+        "0x7a3650",
+        "0x7a6ea0",
+        "0x7bb930",
+        "0x7ce950",
+        "0x7cebc0",
+        "0x7cf0a0",
+        "0x7cf240",
+        "0x7d9b50",
+        "0x95e330",
+        "0x9eacd7",
+        "0x9eace5",
+        "0x9eb08e"
+      ]
+    },
+    {
+      "name": "hornfel_update_frame",
+      "start": "0x4a8000",
+      "end_exclusive": "0x4a8142",
+      "raw_sha256": "541cb7f6ecef5e999a09c0f1b3d58ac768c31d1a32cb3ec965d008c1a078a670",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/hornfel_update_frame.asm",
+      "artifact_sha256": "6660d67658d5c765965a1eac80fdcf484a1cf29b890b1a53a364d2043e64d66f",
+      "calls": [
+        "0x4a5a10",
+        "0x4a8620",
+        "0x4bba40"
+      ]
+    },
+    {
+      "name": "spawn_wrapper",
+      "start": "0x422e20",
+      "end_exclusive": "0x422e48",
+      "raw_sha256": "bb2b407f599919f7e7ed7936aa639416034361575d0ffc7407e22e23d4497217",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/spawn_wrapper.asm",
+      "artifact_sha256": "e715b0e4fdd8b230519ca35e9126242fc6d4c700e5cdbd68228f63ec5249fd44",
+      "calls": [
+        "0x6d0ca0"
+      ]
+    },
+    {
+      "name": "spawn_target_prefix",
+      "start": "0x6d0ca0",
+      "end_exclusive": "0x6d0d20",
+      "raw_sha256": "f0e3fb6f76dfee69fb1f3115b5e435bb0242b50de8d6d121ce1be4c4e6540239",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/spawn_target_prefix.asm",
+      "artifact_sha256": "36cae3f3ec494863e29420692a309e06da82f2a9e04df7d2df2898272b88b339",
+      "calls": [
+        "0x800fb0"
+      ]
+    },
+    {
+      "name": "lua_health_properties",
+      "start": "0x8054c3",
+      "end_exclusive": "0x8054e1",
+      "raw_sha256": "4215a9d4a521104f5940cd00ef97c0c0dab7b957b674b293060303f800e77632",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/lua_health_properties.asm",
+      "artifact_sha256": "f277413505f86d0b9f89b762923eaf8ba5a758596587e7a330599c997738b4b2",
+      "calls": []
+    },
+    {
+      "name": "entity_get_hit_points",
+      "start": "0x412220",
+      "end_exclusive": "0x412227",
+      "raw_sha256": "5c5ae9af116cf2fe785b448246ddc23267100e6f00e36b53e1a704c2533e967e",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/entity_get_hit_points.asm",
+      "artifact_sha256": "b014bbe951636c349e9712196ba1efb49f73823014c2fe9ade37f5167795b3e1",
+      "calls": []
+    },
+    {
+      "name": "entity_set_hit_points",
+      "start": "0x427350",
+      "end_exclusive": "0x427364",
+      "raw_sha256": "b37c2a9e54657a9f43b352e2e7b928f1750b2e464194a1537a52791328714bf1",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/entity_set_hit_points.asm",
+      "artifact_sha256": "0a1b5d07cbac8a12cb7484635b931d26425095a8be2d220bc5269dcd30840083",
+      "calls": []
+    },
+    {
+      "name": "entity_get_max_hit_points",
+      "start": "0x412210",
+      "end_exclusive": "0x412217",
+      "raw_sha256": "25fd1e06a947c1e41add9d6873a8b2a2c5b680d212b65e88934ae18440b17d0e",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/entity_get_max_hit_points.asm",
+      "artifact_sha256": "fe0423e9ea6151be6b804d1119dc14d5288d449105d90c8812d50e582e0aac8f",
+      "calls": []
+    },
+    {
+      "name": "entity_set_max_hit_points",
+      "start": "0x427370",
+      "end_exclusive": "0x427384",
+      "raw_sha256": "6e6e5572e99ac9b3f9f988900f9a33455093e82b405335ea6390a836f57ce45f",
+      "artifact": "docs/reports/isaac-enemy-port/hornfel/native/entity_set_max_hit_points.asm",
+      "artifact_sha256": "b27e503f718cfa3e4b0325571db84aa8948e9e7daaa8ff4fa57bd8714685b6fc",
+      "calls": []
+    }
+  ],
+  "ai_state_jump_table_va": "0x4a7fb4",
+  "ai_states": {
+    "0": "0x4a62ff",
+    "1": "0x4a79e8",
+    "2": "0x4a79e8",
+    "3": "0x4a672b",
+    "4": "0x4a728c",
+    "5": "0x4a79e8",
+    "6": "0x4a66da",
+    "7": "0x4a66da",
+    "8": "0x4a6b0c",
+    "9": "0x4a6df2",
+    "10": "0x4a67b6",
+    "11": "0x4a68ff",
+    "12": "0x4a7190",
+    "13": "0x4a720a",
+    "14": "0x4a672b",
+    "15": "0x4a79e8",
+    "16": "0x4a65c1"
+  },
+  "caveats": [
+    "The matched signatures identify methods, not the field offsets in newer API headers.",
+    "Installed state offset is 0xab4 and the cart reference is 0x32c in these methods; newer saved headers use 0xb64 and 0x3d4.",
+    "Helper windows are call-target/prologue-bounded candidates; semantic names need separate review. spawn_target_prefix is deliberately not a full function.",
+    "Timing values are native ticks or animation frames, not directly DeathWard seconds.",
+    "AI jump table is stored separately and is not decoded as executable instructions."
+  ]
+}

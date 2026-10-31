@@ -1,0 +1,46 @@
+{
+  "scope": "Regular Gurgle/Crackle/Splasher damage/death slice only",
+  "mechanics_fingerprint": "b6613abd43d1890b",
+  "source_review": "docs/reports/isaac-enemy-port/gurgle_mortality/source-review.json",
+  "changes": [
+    "External source_immunity and lethal_morph rows with atomic content validation. Scoped fire/explosion resistance preserves player/ally/TNT exceptions.",
+    "Producer category retained in Context through projectile/hazard lifetime and new root chains. Unowned environmental fire stays environmental; scenery powder barrels use the TNT analogue.",
+    "Gurgle/Crackle source40HP become128local; Splasher10+2stage uses existing3.2conversion. Both bodies use compatible.65radius.",
+    "Gurgle eligible lethal hits morph15% in place only above-80posthitHP, restore target stage health and preserve ID/owner/placement/threat. No extra kill, coin drop or enemy slot. Crackle never morphs.",
+    "Source damage scale and preserved champion HP ratio are separate: overkill cutoff stays80 even on scaled bodies. Seeded1000trial sample yields147morphs reproducibly."
+  ],
+  "adaptations": [
+    "Existing execution/debug-execution bypasses morph; exact source kill-method ordering is unresolved.",
+    "Chance uses DeathWard seeded basis-point RNG; not the original global RNG sequence. Delay initializes at integral20..39/30seconds, but legacy cooldown updates still apply until the attack controller is replaced.",
+    "HP x3.2 and compatible collision radius.65; source type/spawner/friendly checks mapped to local damage-source categories. General charm/familiar mechanics remain incomplete."
+  ],
+  "native": {
+    "covered_suites": 61,
+    "initial_pass": 60,
+    "initial_fail": 1,
+    "initial": "docs/reports/isaac-enemy-port/gurgle_mortality/native.xml",
+    "rerun": "docs/reports/isaac-enemy-port/gurgle_mortality/regression.xml",
+    "rerun_pass": 1,
+    "finding": "Legacy Gurgle bomb regression hard-coded old104HP. Its no-self-damage assertion now compares actual maxHP; target-damage assertion unchanged. Full original failure is retained; focused rerun passes3.84s."
+  },
+  "browser": {
+    "cases": 7,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/gurgle_mortality/web/results.json",
+    "scope": "Six default-content damage/death cases and one disposable pre-load100% probability fixture to exercise/render in-place morph. Default15% seed sampling is tested natively; no movement/attack acceptance."
+  },
+  "visual": {
+    "inspected": [
+      "docs/reports/isaac-enemy-port/gurgle_mortality/linux-environment-fire.png",
+      "docs/reports/isaac-enemy-port/gurgle_mortality/web/gurgle-in-place-morph.png"
+    ],
+    "result": "Original scene and ground shadows remain; body switches visibly without a new actor/kill. Existing purple/orange family art is provisional and is not approved source readability."
+  },
+  "remaining": [
+    "Movement, stochastic30Hz attack acquisition, actual lobs and Crackle fire-wave landing remain legacy placeholders; no new ordinary pool or Hornfel passenger approval.",
+    "Common native projectile flight integration, shared pathfinder acceleration, exact damage-batch/kill-method ordering and status/item/faction exceptions remain unresolved.",
+    "Default models are still provisional: observed purple Gurgle/orange headless Splasher do not yet communicate the source green explosive family. No full visual acceptance.",
+    "No new seeded ordinary reachability, human/varied-build balance or controlled rendered-performance acceptance. Prior boss/browser results remain historical.",
+    "All653 records and allsix acceptance gates remain required; zero certified complete. Regular enemies and required offspring retain priority."
+  ]
+}

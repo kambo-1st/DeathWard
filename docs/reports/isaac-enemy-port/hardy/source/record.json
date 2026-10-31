@@ -1,0 +1,158 @@
+{
+  "key": "826.0.0",
+  "id": 826,
+  "variant": 0,
+  "subtype": 0,
+  "name": "hardy",
+  "xml": {
+    "anm2path": "826.000_hardy.anm2",
+    "baseHP": "42",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "1",
+    "collisionMass": "100",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "826",
+    "name": "#HARDY",
+    "numGridCollisionPoints": "12",
+    "portrait": "252",
+    "shadowSize": "20",
+    "stageHP": "6",
+    "variant": "0"
+  },
+  "source_file": "entities2.xml",
+  "group": "enemy",
+  "record_key": "entity:826.0.0",
+  "wiki_matches": [
+    {
+      "page": "Squirt",
+      "box": 3,
+      "group": "entity",
+      "fields": {
+        "dlc": "r",
+        "name": "Hardy",
+        "id": "826",
+        "base hp": "42",
+        "stage hp": "6",
+        "environment": "Mines / Ashpit / \nchallenge /",
+        "behavior": "Dashes toward Isaac and deals contact damage creating rock projectiles when it hits a wall/obstacle. It spawns more rock projectiles the more times it crashes into obstacles, dying after doing so a third time."
+      },
+      "section_indices": [
+        4
+      ],
+      "name": "Hardy",
+      "variant": 0,
+      "subtype": 0,
+      "id": 826,
+      "template": "infobox monster"
+    }
+  ],
+  "wiki_match_method": "entity/item ID",
+  "wiki_pages": [
+    "Squirt"
+  ],
+  "evidence": {
+    "numeric": "installed Repentance 1.7.9b XML",
+    "behavior": "current wiki revision; edition notes must be respected",
+    "native_ai_timers": "not established by XML or API declarations",
+    "implementation": "research only; no behavior ported by this report"
+  },
+  "hp_by_stage": {
+    "1": 48.0,
+    "2": 54.0,
+    "3": 60.0,
+    "4": 66.0,
+    "5": 66.0,
+    "6": 70.8,
+    "7": 75.6,
+    "8": 80.4,
+    "9": 85.2,
+    "10": 90.0,
+    "11": 90.0,
+    "12": 90.0,
+    "13": 90.0
+  },
+  "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+  "hp_formula_source": "Stage HP",
+  "display_name": "Hardy",
+  "room_library_presence": {
+    "rooms/29.mines.stb": {
+      "templates": 39,
+      "positive_weight_templates": 39
+    },
+    "rooms/30.ashpit.stb": {
+      "templates": 29,
+      "positive_weight_templates": 29
+    },
+    "rooms/36.backwards.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/29.mines.stb": {
+      "templates": 4,
+      "positive_weight_templates": 4
+    },
+    "rooms/greed/30.ashpit.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    }
+  },
+  "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+  "port_contract": {
+    "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+    "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+    "state_requirements": [
+      "spawn/activation",
+      "idle and target acquisition",
+      "movement and path selection",
+      "attack selection and telegraph",
+      "attack emission",
+      "recovery",
+      "damage/vulnerability",
+      "phase transitions",
+      "death/children",
+      "room-clear participation"
+    ],
+    "parameters_not_established": {
+      "walk_speed_world_units_per_second": null,
+      "acceleration": null,
+      "attack_cooldown_seconds": null,
+      "telegraph_seconds": null,
+      "projectile_speed": null,
+      "attack_selection_weights": null,
+      "animation_event_ticks": null
+    },
+    "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+    "required_checks": [
+      "fixed seed and RNG calls",
+      "line of sight versus alignment",
+      "pit/wall/flying navigation",
+      "contact and projectile damage",
+      "vulnerability during each state",
+      "slow/freeze/charm effects",
+      "overkill and offspring",
+      "phase HP ownership",
+      "despawn versus room clear",
+      "save/load and re-entry"
+    ],
+    "implementation_status": "not ported by this research"
+  },
+  "behavior_section_refs": [
+    {
+      "page": "Squirt",
+      "section": 4
+    }
+  ],
+  "feature_triage": [
+    "damage-modifiers",
+    "fire-rate-and-charge",
+    "projectile-transform",
+    "child-spawns-and-ownership",
+    "grid-and-explosions",
+    "status-effects",
+    "room-floor-run-events",
+    "locomotion-and-navigation"
+  ],
+  "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+}

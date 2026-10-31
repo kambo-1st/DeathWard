@@ -1,0 +1,3 @@
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,9 new=1,9
+range edit changes committed target versus wander destination

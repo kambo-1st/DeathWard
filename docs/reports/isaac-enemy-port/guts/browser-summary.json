@@ -1,0 +1,13 @@
+{
+  "isolated_cases": 4,
+  "natural_population_cases": 3,
+  "all_pass": true,
+  "headful": true,
+  "production_build": true,
+  "results": "web/results.json",
+  "historical_results": "web-initial/results.json",
+  "renderers": [
+    "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+  ],
+  "scope": "Movement, source state, hazards, floor context, ground clearance and GL checks. Spectator moved after windup; player-body collision parity remains open."
+}

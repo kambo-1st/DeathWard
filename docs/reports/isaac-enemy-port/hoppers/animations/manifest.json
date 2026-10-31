@@ -1,0 +1,145 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/029.000_hopper.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/hoppers/animations/029.000_hopper.anm2",
+      "sha256": "31ecb6d2925ab0967c6ad0e7b632ce6b8ac8a05232aa9d5fcbb4f6c01e3d2421",
+      "checksum": "0x29890b22",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 4:18:00 PM",
+        "Version": "105",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Jump",
+          "Id": "0"
+        },
+        {
+          "Name": "Land",
+          "Id": "1"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Hop",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "2",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "BigJumpUp",
+            "FrameNum": "12",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "BigJumpDown",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/054.000_flaming hopper.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/hoppers/animations/054.000_flaming hopper.anm2",
+      "sha256": "3bb448efca1009a79beaf684bdf1f8d2c791ec23da271bb6e589d300f5d4a2be",
+      "checksum": "0x73c55cef",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 5:17:14 PM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Jump",
+          "Id": "0"
+        },
+        {
+          "Name": "Land",
+          "Id": "1"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Hop",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "5"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+Consolidate compiler generated dependencies of target glfw
+[ 21%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 25%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[ 28%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp: In static member function ‘static std::shared_ptr<const dw::MechanicsLibrary> dw::MechanicsLibrary::load(const std::filesystem::__cxx11::path&)’:
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp:1691:33: warning: suggest parentheses around ‘&&’ within ‘||’ [-Wparentheses]
+ 1691 |         require(!p.charge||p.tar&&p.creepInterval>0,"Slog charge needs slowing trail");
+      |                            ~~~~~^~~~~~~~~~~~~~~~~~~
+[ 28%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[ 28%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RailTraffic.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnvironmentActors.cpp.o
+[ 32%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 39%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mortality.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LobWalkers.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HeadShooters.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MawFamily.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spitties.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CardinalWalkers.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Brains.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LinkedHeads.cpp.o
+[ 46%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Babies.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Vis.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Guts.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ReturningBodies.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/Guts.cpp: In member function ‘void dw::Simulation::updateGuts(dw::Enemy&, float)’:
+/home/kambo/workspace/DeathWard/src/combat/Guts.cpp:11:12: error: ‘flatDirection’ was not declared in this scope; did you mean ‘railDirection’?
+   11 |     r.gaze=flatDirection(e.position,player.position);
+      |            ^~~~~~~~~~~~~
+      |            railDirection
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:496: CMakeFiles/deathward_core.dir/src/combat/Guts.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:413: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1377: CMakeFiles/deathward_check_mechanics.dir/rule] Error 2
+gmake: *** [Makefile:668: deathward_check_mechanics] Error 2

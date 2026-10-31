@@ -1,0 +1,44 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 11,
+    "index": 1,
+    "case": "0x699cfb",
+    "controller": "0x4f8e40"
+  },
+  "window": {
+    "start": "0x4f8e40",
+    "end_exclusive": "0x4f9a6e",
+    "raw_sha256": "bc408b2f5a36e5e2a1db9bc51194934b30b8dde1a2d9cf4a50407d380b6b9877",
+    "path": "docs/reports/isaac-enemy-port/headless/source/controller.asm",
+    "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+  },
+  "scope": "Source-only preflight. Includes shared types210,211,238,280; those branches are not automatically Gusher/Pacer behavior.",
+  "constants": {
+    "projectile_speed": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "retention_before_random_walk": {
+      "address": "0xb6a53c",
+      "value": 0.75
+    },
+    "cosmetic_period": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "blood_scale_min": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "blood_scale_range": {
+      "address": "0xb6a3b0",
+      "value": 0.30000001192092896
+    }
+  },
+  "strings": {
+    "0xb41240": "Blood",
+    "0xb42efc": "Spiders"
+  }
+}

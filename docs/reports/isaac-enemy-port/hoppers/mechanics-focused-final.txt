@@ -1,0 +1,2 @@
+chain 0 depth 0 effect -1: monster offspring capacity
+range edit changes committed target versus wander destination

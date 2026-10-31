@@ -1,0 +1,142 @@
+[
+  {
+    "source": "resources/gfx/012.000_Horf.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/horf_fly/animations/012.000_Horf.anm2",
+    "sha256": "fce9f4b58967cf0bb94a8778cff42b77799ddbfdd83c2eaf6173bb4481912d78",
+    "checksum": "0x213bd417",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 3:40:30 PM",
+      "Version": "104",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Shake",
+          "FrameNum": "3",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "59",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Attack",
+          "FrameNum": "20",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/013.000_Fly.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/horf_fly/animations/013.000_Fly.anm2",
+    "sha256": "6690b4ccd44fc732e520eec4c72261b9fafbb17971343904aa254ec57fdbacbb",
+    "checksum": "0x7479581b",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "12/05/2014 4:28:17 PM",
+      "Version": "104",
+      "Fps": "30"
+    },
+    "events": [],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Fly",
+          "FrameNum": "2",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Die",
+          "FrameNum": "11",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "13",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/248.000_Psychic Horf.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/horf_fly/animations/248.000_Psychic Horf.anm2",
+    "sha256": "b19c47bbdf951a63c47e40e2de4746d49ba625ce6dd86f88196214ba60de6447",
+    "checksum": "0xf75d14e1",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "06.02.2019 23:01:15",
+      "Fps": "30",
+      "Version": "108"
+    },
+    "events": [
+      {
+        "Id": "0",
+        "Name": "Shoot"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Shake",
+          "FrameNum": "21",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "59",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Attack",
+          "FrameNum": "20",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      }
+    ]
+  }
+]

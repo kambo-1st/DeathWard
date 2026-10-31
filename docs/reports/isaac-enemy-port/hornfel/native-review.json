@@ -1,0 +1,276 @@
+{
+  "status": "Verified source refinements plus reusable rail traversal. Hornfel, decoy, cart and door NPC implementations are still missing.",
+  "baseline": "Repentance 1.7.9b",
+  "previous_goal_turn": "Progress: shared hostile ordnance was implemented, built and verified in 55 native suites and 136 browser cases; preserved checkpoint inspected before this work.",
+  "native_manifest": "docs/reports/isaac-enemy-port/hornfel/native/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/hornfel/animations/manifest.json",
+  "rail_source": "docs/reports/isaac-enemy-port/hornfel/rail-source.json",
+  "findings": [
+    {
+      "claim": "Installed Hornfel AI has 17 dispatch entries, with decoy state 16 and the cart-loss Sad animation in state 13 before fleeing state 4.",
+      "evidence": [
+        "0x4a62e3-0x4a62f8",
+        "jump table 0x4a7fb4",
+        "0x4a64a2-0x4a64c9",
+        "0x4a65c1 DecoyIdle",
+        "0x4a7f23-0x4a7f53",
+        "0x4a7222-0x4a7246"
+      ],
+      "confidence": "Direct native control flow and named animation strings; no runtime implementation yet."
+    },
+    {
+      "claim": "The held-bomb selection constructs outcomes 0, 8 and 16 with weights 6, 3 and 1, and calls the uniquely signature-matched WeightedOutcomePicker::PickOutcome.",
+      "evidence": [
+        "helper_4a4e70:0x4a4ed8-0x4a4ee6",
+        "0x4a4f0b-0x4a4f24",
+        "0x4a4f6f-0x4a4f8f",
+        "0x4a4fe4",
+        "0x4a5049-0x4a504c"
+      ],
+      "confidence": "Outcome values/weights and pick method are verified. The creation wrapper forwards these as the variant with entity type 4. Ordinary 4.0, Hot 4.8 and Bloody Sad 4.16 are distinct from decoy Troll Bombs 4.3.",
+      "runtime_change": "Added hornfel_normal (4.0); changed hostile sad from the previous candidate 4.7 to 4.16. Existing normal profile remains Troll Bomb 4.3."
+    },
+    {
+      "claim": "The mine attack explicitly creates 4.15 and loops three times, or four when the native room grid width times height exceeds 135.",
+      "evidence": [
+        "0x4a6e42-0x4a6e62",
+        "0x4a70e0-0x4a70e4",
+        "0x4a714e-0x4a715b"
+      ],
+      "confidence": "Direct count/identity constants. Native room grid includes boundary cells; do not substitute DeathWard world-area thresholds.",
+      "next_action": "Controller must derive count from authored source room dimensions and preserve all selected targets; wiki three-only summary is incomplete."
+    },
+    {
+      "claim": "The common launch helper sets speed to 10 + 18 * clamp((distance - 100) / 200, 0, 1), then multiplies it by 0.75 for variant 8.",
+      "evidence": [
+        "helper_4a6080:0x4a60bf-0x4a6141",
+        "0x4a6179-0x4a6190",
+        "0x4a6250-0x4a625d"
+      ],
+      "confidence": "Direct scalar/vector arithmetic in native units. Global tick/units conversion and exact bomb flight integration still need review.",
+      "next_action": "Current constant .7-second DeathWard lob remains explicitly local; do not claim this native launch law is implemented."
+    },
+    {
+      "claim": "The held-bomb creator initializes fields at offsets 0x360 and 0x364 to 35 and sets bit 0x20 before release; the launch helper clears that bit.",
+      "evidence": [
+        "0x4a507a-0x4a5084",
+        "0x4a50de-0x4a50eb",
+        "0x4a6235"
+      ],
+      "confidence": "Writes of 35 and bit 0x20 are direct evidence. Exact bomb field/fuse semantics and native tick rate are not inferred from newer header offsets."
+    },
+    {
+      "claim": "Cart loss resets HitPoints to 100, clears the death byte, selects Sad, and later enters flee state 4 with a 90-count initial timer.",
+      "evidence": [
+        "0x4a7ae1-0x4a7af2",
+        "0x4a7c86-0x4a7c9a",
+        "0x4a7f18-0x4a7f53",
+        "0x4a7235-0x4a7246",
+        "lua_health_properties.asm",
+        "entity_get_hit_points.asm",
+        "entity_get_max_hit_points.asm"
+      ],
+      "confidence": "The native property registration and actual getters verify HP offset 0x2d8 and max HP offset 0x2dc; those meanings are not borrowed from incompatible headers.",
+      "next_action": "Model cart destruction and fleeing as separate lifecycle states. Do not replace this with an arbitrary remaining-HP fraction."
+    },
+    {
+      "claim": "Fleeing seeks the nearest eligible entity of type 967 after its initial timer; the current spatial/path checks must be preserved in the port.",
+      "evidence": [
+        "0x4a7422-0x4a7479",
+        "0x4a7482-0x4a74ec",
+        "0x4a760f-0x4a7639"
+      ],
+      "confidence": "Type filter and distance comparison are direct. Path helper internals and the exact successful-exit callback still require deeper review."
+    },
+    {
+      "claim": "The high-speed entrance initializes a repeat counter to RNG % 3 + 6, starts cart speed at 0.1 and later adds 0.08 up to a cap of 30.",
+      "evidence": [
+        "helper_4a5120:0x4a56cc-0x4a5726",
+        "hornfel_update_ai:0x4a67d9-0x4a67fd",
+        "helper_4a5a10:0x4a5a5b-0x4a5b1c"
+      ],
+      "confidence": "Native values verified; repeat counter is not presented as total passes, because the initial and recovery traversals must be counted separately."
+    },
+    {
+      "claim": "Decoy state 16 has special damage-queue handling, including per-hit reductions chosen from 1/2/3 and a health/death clamp. A plain 4-HP generic enemy is not faithful.",
+      "evidence": [
+        "0x4a65d0-0x4a66d5",
+        "0x4a7aee-0x4a7b94"
+      ],
+      "confidence": "Direct state-specific arithmetic. Damage-flag conditions and native damage normalization must be mapped before implementation."
+    }
+  ],
+  "animation_timing": {
+    "fps": 30,
+    "single_throw": {
+      "frames": 30,
+      "shoot": [
+        17
+      ],
+      "sound": [
+        6
+      ]
+    },
+    "double_throw": {
+      "frames": 40,
+      "shoot": [
+        17,
+        27
+      ],
+      "sound": [
+        6
+      ]
+    },
+    "brimstone_mines": {
+      "frames": 56,
+      "shoot": [
+        34
+      ]
+    },
+    "charge_recovery": {
+      "frames": 87,
+      "shoot": [
+        46
+      ],
+      "sound": [
+        22
+      ]
+    },
+    "detonate": {
+      "frames": 46,
+      "shoot": [
+        26
+      ],
+      "sound": [
+        6
+      ]
+    },
+    "cart_loss_sad": {
+      "frames": 32
+    },
+    "taunt": {
+      "frames": 29,
+      "sound": [
+        6
+      ]
+    },
+    "scope": "Authored ANM2 event frames, extracted with archive and entry checksums. These do not by themselves prove every engine timer runs at 30 Hz."
+  },
+  "implementation": {
+    "rail_layouts": 15,
+    "rail_cells": 928,
+    "pit_rail_cells": 30,
+    "wall_ports": 121,
+    "directed_door_routes": 121,
+    "capabilities": [
+      "External, immutable rail layout snapshots and rejected invalid reloads.",
+      "Validated reciprocal ports, deterministic wall-door ordering and bounded traversal.",
+      "Shared curved geometry for future vehicle rendering/motion.",
+      "Swept path segments for high-speed collision; no shortcut chords through corners.",
+      "Corrected vertical caps 9=S and 10=N."
+    ],
+    "routing_policy": "Continue straight through crossings and reverse at end stops. These are explicit local policies pending native minecart controller review.",
+    "not_implemented": [
+      "Hornfel boss AI and seeded stage placement",
+      "Minecart actors and rider attachment",
+      "Door opening/closing and actual escape completion",
+      "Pit terrain rendering, movement blocking and rail bridges",
+      "Optional passengers, decoy lifecycle, rewards and Horny Boys split rules"
+    ]
+  },
+  "source_limitations": [
+    "Current REPENTOGON GetPlayerTarget and Game::Spawn signatures do not match this baseline. They are retained as unmatched, not silently relabeled.",
+    "The 0x422e20 creation wrapper was followed to 0x6d0ca0 and preserves the argument order; the newer Spawn prologue signature is not used as a unique identifier.",
+    "No game binary or installed asset was modified. Extracted animation metadata is retained only as reference; no Isaac sprite artwork is imported into game assets."
+  ],
+  "next_actions": [
+    "Implement the Hornfel arena using the source template category and dimensions before terrain/dressing generation; keep Void/Double Trouble distinct.",
+    "Review native minecart/door controller functions before finalizing crossings, stops and rider lifetime.",
+    "Use the verified animation events and bomb choices when writing the boss state machine.",
+    "Implement phase2 HP reset, delayed exit search and separate killed/escaped completion; verify source reward and Horny Boys restrictions."
+  ],
+  "xml_source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+  "xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "ordnance_xml": {
+    "4.0.0": {
+      "anm2path": "004.000_Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "4.3.0": {
+      "anm2path": "004.003_Troll Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Troll Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "3"
+    },
+    "4.8.0": {
+      "anm2path": "004.008_Hot Troll Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Hot Troll Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "8"
+    },
+    "4.15.0": {
+      "anm2path": "004.015_Brimstone Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Brimstone Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "15"
+    },
+    "4.16.0": {
+      "anm2path": "004.016_Bloody Sad Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Bloody Sad Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "16"
+    }
+  }
+}

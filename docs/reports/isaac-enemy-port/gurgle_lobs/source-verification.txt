@@ -1,0 +1,1 @@
+{"result": "pass", "mode": "check", "windows": 3}

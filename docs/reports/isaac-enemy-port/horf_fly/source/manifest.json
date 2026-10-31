@@ -1,0 +1,157 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 12,
+      "case": "0x699784",
+      "function": "0x500fa0"
+    },
+    {
+      "type": 248,
+      "case": "0x699784",
+      "function": "0x500fa0"
+    },
+    {
+      "type": 13,
+      "case": "0x69a0c7",
+      "function": "0x4f4e30"
+    }
+  ],
+  "constants": [
+    {
+      "name": "horf_range",
+      "address": "0xb6aba8",
+      "float32": 200.0
+    },
+    {
+      "name": "horf_normal_speed",
+      "address": "0xb6a928",
+      "float32": 7.0
+    },
+    {
+      "name": "horf_hard_speed",
+      "address": "0xb6a974",
+      "float32": 10.0
+    },
+    {
+      "name": "horf_friction",
+      "address": "0xb6a50c",
+      "float32": 0.699999988079071
+    },
+    {
+      "name": "fly_jitter",
+      "address": "0xb6a4c4",
+      "float32": 0.6000000238418579
+    },
+    {
+      "name": "fly_jitter_retention",
+      "address": "0xb6a434",
+      "float32": 0.4000000059604645
+    },
+    {
+      "name": "fly_dung_search",
+      "address": "0xb6abe4",
+      "float32": 240.0
+    },
+    {
+      "name": "fly_edge_bias",
+      "address": "0xb6a278",
+      "float32": 0.05999999865889549
+    }
+  ],
+  "horf_findings": [
+    "Shared Horf12/PsychicHorf248 update calls acquisition with range200, prediction false, interval7. Shared helper checks target validity, status flags, strict distance<range, source global-frame+entity-index modulo7, and projectile-line collision.",
+    "On acquisition, source Attack is requested and delay is28updates in Normal/Greed or14 in Hard/Greedier. Normal shot speed7native/frame; hard speed10. Delay begins before Shoot, not after animation recovery.",
+    "At Shoot, ordinary non-controlled Horf fetches the current GetPlayerTarget position. PsychicHorf adds HOMING flag1; this script does not certify the shared homing integrator.",
+    "Preserved archive metadata:20-frame Attack at30FPS, Shoot4. Source idle overlay returns toShake after attack completion. Source also damps friction by.7 each update.",
+    "DeathWard normal-mode implementation uses20world range,21world/sec shot,32HP, local damage10 and fixed5second3D projectile lifetime. Source spawn/animation-update ordering, status/controlled-target quirks, hard-mode replay details and projectile vertical lifetime remain separate validation work."
+  ],
+  "fly_preflight": [
+    "Ordinary type13 uses shared fly AI, not a stationary controller. It has source collisionDamage0 and3HP, with wall-only grid collision.",
+    "At every active update, rng%1000==0 can transform a Fly currently over grid type14(dung) into14.0Pooter; it calls grid virtual slot0x10 with1 and restores maxHP. The named Destroy thunk uses slot0x14, so destroying the dung must not be assumed. This is a stochastic check, not a deterministic dwell-time timer.",
+    "Ordinary Fly/Pooter target-position is reset to zero except a specific boss-spawner subtype path. While targetless and uncontrolled, a1/5random check adds unit(player-position) *.7*timeScale to velocity.",
+    "Globalframe%4==1 adds random unit*.6 to the wander vector, then multiplies it by.4. Globalframe%3==2 adds twice the wander vector through the shared velocity helper and applies friction*.6. Source room-edge constants need mapping to generated3D room boundaries.",
+    "Dung search and Dip-target branches precede ordinary target reset. Do not infer a lasting dung homing target from those branches in isolation.",
+    "Fly implementation, exact shared velocity/friction integration, room-clear field initialization, dung props, source ordering and item/status/faction exceptions remain unfinished. Preserving this preflight is not a completed Fly port."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/horf_acquisition_and_delay.asm",
+      "start": "0x500fbf",
+      "end": "0x501125",
+      "raw_sha256": "656d119e4f5b38b239938a046b507aa37217163fc0b900b58b309d75a585ec30",
+      "sha256": "3398b3f9b5db7aeaa2e62b6732d911a771be0699a254802be8cbf52e4d582867"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/horf_current_aim_and_speed.asm",
+      "start": "0x501125",
+      "end": "0x50124e",
+      "raw_sha256": "e8e3ad1e388324801459b82ac7df2b8eafa480abd717b4fccacf29716c0753f8",
+      "sha256": "bd05f6f086b73e4efcc0e2362c0203cf35677b6aaa7128273c30c868690bce4d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/horf_projectile_flags_and_fire.asm",
+      "start": "0x501369",
+      "end": "0x5013ec",
+      "raw_sha256": "d1beaa6b028e2a2669b3696cb113c27378b3bccff3f725934ca6a03dd47989a0",
+      "sha256": "2e14c8bb892d8d5e6ca4ac6d85616bd71b687f47200eb38c950cdb88f0410ca6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/horf_animation_recovery.asm",
+      "start": "0x50145c",
+      "end": "0x5014ee",
+      "raw_sha256": "cfc347b8b7bade3354fcfa195fa293e3bc31173e7034da47fb5276501a434609",
+      "sha256": "b26517caa6e083cd998f6d09bc2588e3fce060e72a176147fce9b2f4a42fa8b0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/shared_acquisition.asm",
+      "start": "0x6a15a0",
+      "end": "0x6a174c",
+      "raw_sha256": "956a97cf9f32325c50e893e6cae07e58a26229d52fb8a0deaf50efb813ca9cc6",
+      "sha256": "3aa17539fcfcdf31c68bfbb09d92224e2cc49d93447f98a903706e2475cfea5c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/shared_interval.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/fly_dung_transform.asm",
+      "start": "0x4f5ab2",
+      "end": "0x4f5b1e",
+      "raw_sha256": "f95c7a2744229618f1803a50b4638ce92f32003d027f77b9043bafb6ae8f8b74",
+      "sha256": "9915b146da5196b1eafd50750777573ec8dee4718b355c91292e236b145a1625"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/fly_dung_search.asm",
+      "start": "0x4f6383",
+      "end": "0x4f651a",
+      "raw_sha256": "1e63b7e9c85926ea5c7dfdf8acf97031fb917a1c49aef63c28448089eaddb877",
+      "sha256": "9776a1a9ae8ea6bf48ea0e3d5a4faf1995330063a3341ca28ebc595cb716bf59"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/fly_ordinary_target_reset.asm",
+      "start": "0x4f651a",
+      "end": "0x4f6553",
+      "raw_sha256": "dfe791883d6302a7df3fa6c01c14a00e48c980d83f1c09193b63a70951b73bf9",
+      "sha256": "819e2c595fb7c81d01d865a17f85596cf3fffe9a211e4d0bf79cb24d23b53736"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/fly_player_drift.asm",
+      "start": "0x4f6bb9",
+      "end": "0x4f6d0e",
+      "raw_sha256": "4332a68ac7d4e4d1b92faa69edf9e372142a697553ff744d014c083b1a047a41",
+      "sha256": "91cbaf9d68a6081cc547b66594d7be2c9a6313f17f8097bb93a20dee097c798e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/fly_buzz_and_edge_forces.asm",
+      "start": "0x4f6d0e",
+      "end": "0x4f6e78",
+      "raw_sha256": "e4c148633bd39fed46b8acf2850add550c47b1cad085cda0aab4cd220ef8016d",
+      "sha256": "d83a25a8f17ca129d2c2c4a1bcc456b63b11b655736fea4f7eb69eda3b6797d9"
+    }
+  ]
+}

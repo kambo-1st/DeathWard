@@ -1,0 +1,134 @@
+[
+  {
+    "source": "resources/gfx/022.000_Hive.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/hive/animations/022.000_Hive.anm2",
+    "sha256": "bc50fd9c99b72e6c98486d0e9e48145c18687d22206c770e4881c28cb38bc31b",
+    "checksum": "0x23e80acc",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 4:11:18 PM",
+      "Version": "105",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "WalkHori",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "WalkVert",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadWalk",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "21",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadAttack",
+          "FrameNum": "18",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "resources/gfx/022.001_Drowned Hive.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/hive/animations/022.001_Drowned Hive.anm2",
+    "sha256": "0b51e280c958e052e3f2b9f21c239ce83e03d424ac9e3c05dd7b83e57183ed01",
+    "checksum": "0xc6ce5372",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 4:11:06 PM",
+      "Version": "104",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "WalkHori",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "WalkVert",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadWalk",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "21",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadAttack",
+          "FrameNum": "18",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      }
+    ]
+  }
+]

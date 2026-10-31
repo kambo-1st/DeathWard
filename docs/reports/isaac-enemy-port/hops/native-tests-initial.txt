@@ -1,0 +1,100 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  1: enemy_port_coverage
+ 1/40 Test  #1: enemy_port_coverage ..............   Passed    0.49 sec
+      Start  2: mechanics_content
+ 2/40 Test  #2: mechanics_content ................   Passed    1.21 sec
+      Start  3: expedition_economy
+ 3/40 Test  #3: expedition_economy ...............   Passed   43.58 sec
+      Start  4: canyon_bosses
+ 4/40 Test  #4: canyon_bosses ....................   Passed    8.06 sec
+      Start  5: floor_progression
+ 5/40 Test  #5: floor_progression ................***Failed   56.23 sec
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+FAIL Ring Fly encounters activate in every approved band
+
+      Start  6: item_builds
+ 6/40 Test  #6: item_builds ......................   Passed    9.68 sec
+      Start  7: expedition_destruction
+ 7/40 Test  #7: expedition_destruction ...........   Passed   57.27 sec
+      Start  8: walkable_areas
+ 8/40 Test  #8: walkable_areas ...................   Passed    0.04 sec
+      Start  9: expedition
+ 9/40 Test  #9: expedition .......................   Passed   17.02 sec
+      Start 10: expedition_pacing
+10/40 Test #10: expedition_pacing ................   Passed   11.68 sec
+      Start 11: flag_cloth
+11/40 Test #11: flag_cloth .......................   Passed    0.37 sec
+      Start 12: save_slots
+12/40 Test #12: save_slots .......................   Passed    0.07 sec
+      Start 13: arrival_quest
+13/40 Test #13: arrival_quest ....................   Passed    1.24 sec
+      Start 14: cinematic_timeline
+14/40 Test #14: cinematic_timeline ...............   Passed    0.07 sec
+      Start 15: canyon_roads
+15/40 Test #15: canyon_roads .....................   Passed    7.37 sec
+      Start 16: canyon_rivers
+16/40 Test #16: canyon_rivers ....................   Passed   17.07 sec
+      Start 17: redstone_hub
+17/40 Test #17: redstone_hub .....................   Passed    0.62 sec
+      Start 18: building_navigation
+18/40 Test #18: building_navigation ..............   Passed    0.03 sec
+      Start 19: particle_emission
+19/40 Test #19: particle_emission ................   Passed    0.02 sec
+      Start 20: town_characters
+20/40 Test #20: town_characters ..................   Passed    0.03 sec
+      Start 21: ambient_animals
+21/40 Test #21: ambient_animals ..................   Passed    0.20 sec
+      Start 22: train_motion
+22/40 Test #22: train_motion .....................   Passed    0.55 sec
+      Start 23: object_animation
+23/40 Test #23: object_animation .................   Passed    0.05 sec
+      Start 24: player_dynamite
+24/40 Test #24: player_dynamite ..................   Passed    1.17 sec
+      Start 25: mission_shop
+25/40 Test #25: mission_shop .....................   Passed    2.47 sec
+      Start 26: money_pickups
+26/40 Test #26: money_pickups ....................   Passed    1.46 sec
+      Start 27: resident_enemies
+27/40 Test #27: resident_enemies .................   Passed    0.96 sec
+      Start 28: audio_presentation
+28/40 Test #28: audio_presentation ...............   Passed    0.07 sec
+      Start 29: monster_behaviors
+29/40 Test #29: monster_behaviors ................   Passed    3.33 sec
+      Start 30: monster_flight
+30/40 Test #30: monster_flight ...................   Passed    3.10 sec
+      Start 31: monster_formations
+31/40 Test #31: monster_formations ...............   Passed    0.18 sec
+      Start 32: monster_patterns
+32/40 Test #32: monster_patterns .................   Passed    0.26 sec
+      Start 33: monster_fire_reactions
+33/40 Test #33: monster_fire_reactions ...........   Passed    0.23 sec
+      Start 34: monster_hopping
+34/40 Test #34: monster_hopping ..................   Passed    0.28 sec
+      Start 35: mission_themes
+35/40 Test #35: mission_themes ...................   Passed    4.32 sec
+      Start 36: imported_town_navigation
+36/40 Test #36: imported_town_navigation .........   Passed    0.06 sec
+      Start 37: core_contracts
+37/40 Test #37: core_contracts ...................   Passed    0.45 sec
+      Start 38: enemy_behaviors
+38/40 Test #38: enemy_behaviors ..................   Passed    2.92 sec
+      Start 39: generated_dungeons
+39/40 Test #39: generated_dungeons ...............   Passed   24.40 sec
+      Start 40: generated_room_graphs
+40/40 Test #40: generated_room_graphs ............   Passed    0.77 sec
+
+98% tests passed, 1 tests failed out of 40
+
+Total Test time (real) = 279.41 sec
+
+The following tests FAILED:
+	  5 - floor_progression (Failed)
+Errors while running CTest

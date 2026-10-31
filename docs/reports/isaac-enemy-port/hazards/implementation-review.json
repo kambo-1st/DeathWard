@@ -1,0 +1,43 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "Partial stationary shooting-hazard implementation; no full acceptance claimed.",
+  "source_review": "docs/reports/isaac-enemy-port/hazards/source-review.json",
+  "ids": [
+    "42.0.0",
+    "42.1.0",
+    "42.2.0",
+    "201.0.0",
+    "202.0.0",
+    "202.10.0",
+    "202.10.1",
+    "202.11.0",
+    "202.11.1",
+    "203.0.0"
+  ],
+  "source": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270009",
+  "implemented": [
+    "Dedicated aimed/triple blood volleys, real ballistic explosive vomit, fixed streams, alternating cardinal/diagonal crosses, fixed Brimstone beams and continuously rotating flickering Stone Eye beams.",
+    "Explicit ordinary-combat/pressure-plate/always-on shutdown policy; actual player contact presses plates; ordinary foes still gate combat rooms; plate-only and objective-free runtime contexts are distinct.",
+    "Source stationary hazards remain physically solid and inactive after combat. Cleared Stone Eyes disappear on re-entry. Exceptional destruction removes collision and respawns ordinary statues on re-entry without ordinary kill/loot rewards.",
+    "Separate navigation-only footprints prevent walking/dodge/flight through statues while actual projectile collision reaches the rendered stone body. Mouse paths route around them.",
+    "A separate seeded pool supplies at most one optional legal hazard in combat rooms in bands 1–3. Existing ordinary enemy choices are unchanged. Persistent turrets receive an optional reachable plate; no ordinary pool entries for always-on variant 11."
+  ],
+  "adaptations": {
+    "timings": "Cadence/windup/speed/damage/laser widths/turn rate and ballistic gravity are explicit local tuning in statues.mechanics, not extracted native AI constants.",
+    "hp": "20 source HP becomes 64 local HP; 1 source HP becomes 3.2. Ordinary invulnerability makes these bookkeeping values, not standard weapon durability.",
+    "subtypes": "Cross subtype 1 uses an initial diagonal phase as a declared interpretation of the alternate animation name; exact native startup is unverified. Variant 11 never disables in this debug controller; source pressure-plate precedence remains unresolved.",
+    "placement": "Local room chances are 25/30/35 percent in bands 1/2/3. One added hazard is separate from the existing ordinary threat budget. Every proposed footprint must preserve door/objective navigation and avoid roads/river banks; failed proposals are omitted. Generated statues currently receive a hard-coded 1.4-second initial grace before their configured attack cadence; isolated timing fixtures explicitly start with zero cooldown.",
+    "pressure_plates": "Persistent turrets in ordinary combat rooms have an optional deactivation plate. The runtime supports plate-only objectives and objective-free traps, but full new trap-room generation is not enabled here.",
+    "visuals": "Original-style procedural stone bodies, green Vomit stone, triple apertures, fixed-shooter crack and closed inactive face. Body hit boxes and movement footprints use the displayed cube dimensions; these are not source sprites."
+  },
+  "unresolved": [
+    "Chaos Card, Euthanasia, Little Horn, Infestation 2, Dead Eye, Fire Mind and D10-specific behavior need real item/effect producers; generic damage/death hooks are not those item implementations.",
+    "Cross Grimace bombed-door early-deactivation quirk and variant 11 plate precedence remain unverified/unimplemented. Variant 11 requires dedicated trap routing before gameplay reachability acceptance.",
+    "Vomit replacement probability/context, native random shot intervals, exact projectile/laser dimensions, hitbox and phase timings remain unmeasured.",
+    "Gaping Maws, Quake Grimaces and Bomb Grimace supply/dedicated encounter dependencies remain source-only.",
+    "Mixed-room balance, all-camera readability and controlled Linux/WASM performance acceptance remain open."
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived behavior summaries CC BY-SA 4.0. Implementation details and local adaptations are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "next_dependency_preflight": "docs/reports/isaac-enemy-port/hazards/dependency-preflight.json"
+}

@@ -1,0 +1,2 @@
+NATURAL_HORF seed=1 floor=0 room=2 hp=32
+PASS Horf: source cast/cadence/current aim, strict range/cover, pressure, health, config and natural stage

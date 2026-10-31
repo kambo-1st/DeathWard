@@ -1,0 +1,5 @@
+HORNFEL_CONFIG rejects=9 snapshots=1
+HORNFEL_THROWS single=1 double=2 small_mines=3 large_mines=4 frames=17,27,34 separate_cart_doors=1 inactive_pause=1
+HORNFEL_CHARGE layout=hornfel_special_5220 repeats=6 passes=7 bombs=8 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=0
+HORNFEL_CHARGE layout=hornfel_special_5228 repeats=6 passes=7 bombs=10 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=1
+Hornfel test failed: hostile fire hurts a player ally while preserving ordinary monster friendly-fire policy

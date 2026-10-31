@@ -1,0 +1,21 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "previous_family_review": "docs/reports/isaac-enemy-port/gurgle_mortality/source-review.json",
+  "new_flight_evidence": "docs/reports/isaac-enemy-port/gurgle_lobs/source/manifest.json",
+  "scope": "Gurgle87.0 and Splasher238.0 ordinary physical lob slice. Crackle87.1 attack and mounted routing are not certified.",
+  "adaptations": [
+    "Native planar units x.1 and height units x.05. Projectile30Hz ordinary-time endpoints match the source damped recurrence; smooth60Hz fractional interpolation is a local adaptation, not the native rational time-scale helper.",
+    "Swept spherical terrain/body collision and actual ground replace native2D grid-height collision thresholds. Airborne world-space blasts use local cover checks and EnemyBomb demolition.",
+    "Local Gurgle speed3.6 and Splasher1.6 before retained+10% movement tuning; smoothed ground navigation/body steering. Wander turn bounds.7..1.8seconds are not recovered MoveRandomly parameters.",
+    "Gurgle1/60 acquisition runs at30Hz after the local room-entry grace period; it has no added sight requirement and shoots at the current target onframe5. Recovery completes atframe30. Splasher uses movement heading with20..39initial/60..89repeat ticks, independent of floor cooldown scaling.",
+    "Native explosion50damage/60radius maps to160monster damage/6world radius; player damage20 before existing hostile multiplier. Source category survives owner death. Pending physical impacts gate local room completion and retry admission under queue pressure.",
+    "Original procedural walker/headless silhouettes remain, recolored green; bright green physical lobs have ground shadows. No imported Isaac sprite art or map-wide visual filter."
+  ],
+  "remaining": [
+    "Gurgle pathfinder force/friction, Splasher MoveRandomly details, fear/shrink and charm/familiar/item interactions are not fully source-matched. Current movement uses documented local navigation, speed and steering.",
+    "Crackle remains a legacy attack. Port its32-frame/Shoot5 physical fire-wave lob separately; mounted Hornfel routing remains pending and is not enabled.",
+    "Exact queued-damage/kill-method ordering and source status exceptions remain open. Execution bypass of lethal morph is an existing local policy.",
+    "Natural placement and actual native/WASM shots are verified, but varied-build balance, broader room/layout readability and controlled rendered performance remain unaccepted.",
+    "All653 records and six acceptance gates remain required. Zero records are certified complete; regular enemies and required offspring retain priority."
+  ]
+}

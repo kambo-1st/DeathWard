@@ -1,0 +1,52 @@
+{
+  "selected_suites": {
+    "monster_behaviors": {
+      "result": "Passed",
+      "seconds": 7.66,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-native-tests.log"
+    },
+    "mechanics_content": {
+      "result": "Passed",
+      "seconds": 2.33,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-native-tests.log"
+    },
+    "resident_enemies": {
+      "result": "Passed",
+      "seconds": 1.07,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-canyon-regressions.log"
+    },
+    "monster_fire_reactions": {
+      "result": "Passed",
+      "seconds": 0.23,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-native-tests.log"
+    },
+    "rock_spider_family": {
+      "result": "Passed",
+      "seconds": 68.08,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-canyon-regressions.log"
+    },
+    "floor_progression": {
+      "result": "Passed",
+      "seconds": 183.69,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-native-tests.log"
+    },
+    "tainted_pooter_impacts": {
+      "result": "Passed",
+      "seconds": 0.44,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-canyon-regressions.log"
+    },
+    "hardy_family": {
+      "result": "Passed",
+      "seconds": 0.66,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-canyon-regressions.log"
+    },
+    "dip_variants": {
+      "result": "Passed",
+      "seconds": 2.18,
+      "log": "docs/reports/isaac-enemy-port/hardy/validation/dw-hardy-native-recheck.log"
+    }
+  },
+  "unique_passed": 9,
+  "registered_suites": 102,
+  "scope": "Nine unique selected suites passed across initial/recheck runs. After canyon-footprint correction, Hardy, Rock Spider, resident and Tainted Pooter suites all re-passed. Not full102-suite or six-gate acceptance."
+}

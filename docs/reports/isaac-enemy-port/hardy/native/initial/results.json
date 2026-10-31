@@ -1,0 +1,86 @@
+[
+  {
+    "name": "intact",
+    "frames": 45,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "45",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/intact.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "charge",
+    "frames": 180,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/charge.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "cracked",
+    "frames": 430,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "430",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/cracked.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "offspring",
+    "frames": 1000,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "1000",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/offspring.png"
+    ],
+    "returncode": 0
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": [
+    {
+      "name": "retention",
+      "address": "0xb6a5a4",
+      "float32": 0.8999999761581421
+    },
+    {
+      "name": "base_accel",
+      "address": "0xb6a2cc",
+      "float32": 0.10000000149011612
+    },
+    {
+      "name": "ground_threshold",
+      "address": "0xb6ae98",
+      "float32": -5.0
+    },
+    {
+      "name": "collision_height",
+      "address": "0xb6af28",
+      "float32": -50.0
+    },
+    {
+      "name": "unit_time",
+      "address": "0xb6a614",
+      "float32": 1.0
+    }
+  ],
+  "dependencies": [
+    "docs/reports/isaac-enemy-port/gurgle_mortality/source/manifest.json",
+    "docs/reports/isaac-enemy-port/gurgle_review/animations"
+  ],
+  "findings": [
+    "At ordinary timeScale1: fallingSpeed=.9*fallingSpeed+.1+fallingAccel; height+=fallingSpeed. Projectile flight is damped, not conventional constant-gravity ballistic motion.",
+    "Native time-scale helper returns q/(q+t-q*t), with exact q at t=1. DeathWard fractional-tick interpolation is deliberately separate; its full30Hz endpoints match the ordinary source recurrence.",
+    "Gurgle FireBossProjectiles trajectory10 followed by source modifiers gives horizontal3.85 + uniform-radial jitter0..1.925, fallingSpeed-6.5..-23.3 and fallingAccel.72.",
+    "Splasher mode0 defaults plus modifiers give horizontal5, fallingSpeed-8, fallingAccel.4. Both start at height-23.",
+    "Projectile EXPLODE payload remains source50damage/60radius with line check, documented in the preceding mortality source windows.",
+    "DeathWard horizontal scaling.1 and vertical scaling.05 are explicit3D adaptations. Geometry uses swept spheres and the actual floor, rather than source grid collision flags and height thresholds."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_lobs/source/flight_integrator.asm",
+      "start": "0x636567",
+      "end": "0x6365d5",
+      "raw_sha256": "e36d0d4128d9429273b807db099763ca63eae641b49ffaf016bafbeec05a697b",
+      "sha256": "6d4276f523c6bb04773dcddb94d31a06ec64c31db9b9c131fcc1eef42cdd082f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_lobs/source/time_scale_retention.asm",
+      "start": "0x65c960",
+      "end": "0x65c98a",
+      "raw_sha256": "1e437a595421fcef0cb21856fb649db4f94646cfc06b7b72c0028fb1892e53b8",
+      "sha256": "ee77d50d106e676e5643eb8b8abc50bf0b22ba07a134311b058007c0266a1ca8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_lobs/source/floor_and_collision_death.asm",
+      "start": "0x636de5",
+      "end": "0x636e0f",
+      "raw_sha256": "9224930639935777f25083e5729fdbba126b3b9fade598fc54530dcda2a3c116",
+      "sha256": "aed0a12f9bee413ea84596bbc8f2eac28374c57005af307c6b8cca4b7699dcdb"
+    }
+  ]
+}

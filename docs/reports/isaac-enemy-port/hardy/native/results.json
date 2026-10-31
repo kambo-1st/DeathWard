@@ -1,0 +1,101 @@
+[
+  {
+    "frames": 180,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/180.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "frames": 430,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "430",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/430.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "frames": 1000,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "1000",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/1000.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "frames": 1800,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "1800",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/1800.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "frames": 1800,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-826.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--frames",
+      "1800",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hardy/native/offspring-player-view.png"
+    ],
+    "returncode": 0
+  }
+]

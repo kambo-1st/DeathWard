@@ -1,0 +1,22 @@
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+Activated Ring Fly groups band=2 count=2
+Activated Hopper forms band=0 count=2
+Activated Hopper forms band=1 count=2
+Activated Hopper forms band=2 count=2
+Reachable pool identities=22
+band=0 meanThreat=4.5
+band=1 meanThreat=6.32597
+band=2 meanThreat=8.24587
+band=3 meanThreat=11.094
+Validated 168 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss
+real 68.69
+user 68.64
+sys 0.03

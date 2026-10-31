@@ -1,0 +1,234 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": {
+    "walk_retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "drowned_retention_multiplier": {
+      "address": "0xb6a5d8",
+      "value": 0.949999988079071
+    },
+    "sight_flee_range": {
+      "address": "0xb6abec",
+      "value": 250.0
+    },
+    "hidden_flee_range": {
+      "address": "0xb6ab7c",
+      "value": 170.0
+    },
+    "attack_range": {
+      "address": "0xb6ac14",
+      "value": 300.0
+    },
+    "attack_delay": {
+      "address": "0xb6aac4",
+      "value": 75.0
+    },
+    "overkill": {
+      "address": "0xb6aee4",
+      "value": -20.0
+    },
+    "death_budget": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "population_scale": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "death_radius_max": {
+      "address": "0xb6a910",
+      "value": 6.0
+    },
+    "death_radius_min": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "wander_distance": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "wander_force": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "path_friction": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "wander_friction": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "evade_initial_impulse": {
+      "address": "0xb6a6f0",
+      "value": 1.5
+    },
+    "evade_origin_distance": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "evade_scatter_distance": {
+      "address": "0xb6ac80",
+      "value": 450.0
+    }
+  },
+  "findings": [
+    "Shared controller4fa1e0 covers Hive22, Nest205 and Prey817; this slice configures only22.0/22.1. Ordinary hostile targets pass the target-team helper and call EvadeTarget7a4830. Far bodies fall back to MoveRandomly7a6180.",
+    "EvadeTarget proximity checks every14 staggered frames: visible distance250 or blocked distance170 sets evade countdown3; far checks decrement it. It uses random destination candidates, then physical source grid pathfinding. State4 movement adds.8friction; Drowned adds another.95.",
+    "Source random movement target is40units away, clears at distance3 or collision, and adds normalized.5impulse with.9friction outside evasion. FindGridPath uses speed1.079, impulse min(distance*.1,2)*speed and.7friction. Source evasion also uses diagonal-axis bias, initial1.5impulse, adaptive grid-search retries/cache and status logic; local terrain navigation is an explicit adaptation, not full grid equivalence.",
+    "Live attack count6ad7a0 uses room alive-enemy counts for ordinary hostile owners, not summoner-specific children. At timer<=oneupdate, population >= random integer4..8 adds random20..69frames. Timer decrements while evade countdown is positive. Distance>=300 retries after3; blocked sight retries after7; successful attack sets75frames and HeadAttack.",
+    "HeadAttack metadata is18frames with Shoot at4 for both22.0/22.1. Native state8 coasts for these variants rather than calling evasion. Hive spits18.0 and latches child byte16c contact expiry; Drowned spits23.1 and halves both current/max health. Holy/Tainted branches remain separate follow-up.",
+    "Death requires HP>-20. Count is ceil(4/(1+.2*room enemy count)); native thunk9ec3ac resolves imported ceil, not floor. Drowned caps this by a uniform1or2. A signed native word atNPC+bc6 is subtracted afterward; its nonzero lifecycle semantics remain unverified, so this slice models the ordinary zero-initialized case.",
+    "Ordinary Hive makes an independent RNG%11 choice for every death child:0..6type13,7type14,8..10type18. Positions use random angle and max(2,U*6)radius. Drowned overrides identity23.1 and halves childHP. Death children do not receive the live-spit contact-expiry flag.",
+    "The source range/floors/weights are distinct from3D adaptation: retained birthplace retries and pending-birth population accounting prevent dropped children or premature room completion under local capacity/placement pressure."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hive/source/shared_controller.asm",
+      "start": "0x4fa1e0",
+      "end": "0x4fb1c5",
+      "raw_sha256": "cba189a1ddaa94f4dbb4b459c96901b74c989befb53739a5a27c4c820f2d0a83",
+      "sha256": "851b4568cd9a784e571d169e12e6cce6b58377cca6c26dbf0429e36cbfa65854"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hive/source/target_team.asm",
+      "start": "0x6aeb40",
+      "end": "0x6aebcc",
+      "raw_sha256": "dfacf17a3a08273b9ea58a0348bf3715babf9b2c749a03998b6f31ed76ae7816",
+      "sha256": "905c2ec5064e7c0e84c708360d39cb0bb3a625e696a73c2032569c67768f8110"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hive/source/room_enemy_count.asm",
+      "start": "0x6ad7a0",
+      "end": "0x6ad86d",
+      "raw_sha256": "652b9ee0f9132ad43a41b76ff0dbce3ba3144d7d6915b7b7aa1660d2dc3aa9ac",
+      "sha256": "94610750707bacb9ab0456948e73fb9079c6c2552a4ad16979543bfaf173b3d6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hive/source/evade_pathfinder.asm",
+      "start": "0x7a4830",
+      "end": "0x7a51d0",
+      "raw_sha256": "928c7dcd6f265b243198e57fb650f6bbf23035281a162db027b82f44374a63a0",
+      "sha256": "b5ea2647374262aeaf879c33f4237d9a49d1356069aaca0ed5bace99d60cb288"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hive/source/wander_pathfinder.asm",
+      "start": "0x7a6180",
+      "end": "0x7a64a7",
+      "raw_sha256": "e6f3714d6570ce1327f988b0a0d7cd92964d64b7e06153100bd4954eb5749fc0",
+      "sha256": "d06844873d824fa2ef2d0202c1c40942b6fbc55aba09be32ea3624067f5e4917"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hive/source/grid_path_final_force.asm",
+      "start": "0x7a46bc",
+      "end": "0x7a47f5",
+      "raw_sha256": "028e751bb262de8bb2b40b2253d762e6510d2fcb52e1c5dee419f8f4dacfa6ca",
+      "sha256": "437e93a1cce16b6443b80441d8783ee45c4b8eaf52e916e971cd8df008432187"
+    }
+  ],
+  "records": {
+    "22.0.0": {
+      "xml": {
+        "anm2path": "022.000_Hive.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "0",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "22",
+        "name": "#HIVE",
+        "numGridCollisionPoints": "12",
+        "portrait": "15",
+        "reroll": "true",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/01.basement.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/03.burning basement.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/04.caves.stb": {
+          "templates": 58,
+          "positive_weight_templates": 58
+        },
+        "rooms/05.catacombs.stb": {
+          "templates": 24,
+          "positive_weight_templates": 24
+        },
+        "rooms/06.flooded caves.stb": {
+          "templates": 52,
+          "positive_weight_templates": 52
+        },
+        "rooms/07.depths.stb": {
+          "templates": 9,
+          "positive_weight_templates": 9
+        },
+        "rooms/08.necropolis.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/09.dank depths.stb": {
+          "templates": 9,
+          "positive_weight_templates": 9
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/04.caves.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        },
+        "rooms/greed/05.catacombs.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/greed/06.flooded caves.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        }
+      }
+    },
+    "22.1.0": {
+      "xml": {
+        "anm2path": "022.001_Drowned Hive.anm2",
+        "baseHP": "18",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "0",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "22",
+        "name": "#DROWNED_HIVE",
+        "numGridCollisionPoints": "12",
+        "portrait": "139",
+        "reroll": "true",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "room_library_presence": {
+        "rooms/06.flooded caves.stb": {
+          "templates": 27,
+          "positive_weight_templates": 27
+        },
+        "rooms/greed/06.flooded caves.stb": {
+          "templates": 8,
+          "positive_weight_templates": 8
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,357 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "scope": "Regular enemy damage/death implementation slice. Source review also records attack requirements, not completed attacks or approved placement.",
+  "native_manifest": "docs/reports/isaac-enemy-port/gurgle_mortality/source/manifest.json",
+  "ai_manifest": "docs/reports/isaac-enemy-port/gurgle_review/preflight/manifest.json",
+  "animations": "docs/reports/isaac-enemy-port/gurgle_review/animations/manifest.json",
+  "records": [
+    {
+      "id": "87.0.0",
+      "name": "Gurgle",
+      "xml": {
+        "anm2path": "087.000_Gurgle.anm2",
+        "baseHP": "40",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "87",
+        "name": "#GURGLE",
+        "numGridCollisionPoints": "12",
+        "portrait": "185",
+        "reroll": "true",
+        "shadowSize": "16",
+        "stageHP": "0",
+        "tags": "explosive_soul",
+        "variant": "0"
+      },
+      "article_revisions": [
+        {
+          "title": "Gaper",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270042"
+        }
+      ],
+      "positive_ordinary_room_evidence": [
+        {
+          "file": "rooms/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 55,
+          "positive_weight_templates": 55,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 16,
+          "positive_weight_templates": 16,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 23,
+          "positive_weight_templates": 23,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        },
+        {
+          "file": "rooms/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 37,
+          "positive_weight_templates": 37,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_modes": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 12,
+          "positive_weight_templates": 12,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 12,
+          "positive_weight_templates": 12,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "placement_approved": false,
+      "contract": {
+        "movement": "FindGridPath target at speed.6; fear/shrink uses EvadeTarget; local equivalent pending.",
+        "targeting": "Ready-state1/60per native-update roll, squared target range<16900; skips native SpawnerType906.",
+        "attack": "30-frame Attack animation at30FPS, Shootframe5; FireBossProjectiles count1/trajectory10 at current target, scale1.6 and EXPLODE. Velocity*.55, falling acceleration-.6, falling speed*.7-3.",
+        "vulnerability": "FIRE and EXPLOSION filtering with source exceptions; BURNING is not FIRE.",
+        "morph": "Dead, residual HP>-25, rng%100<15,variant0 =>Morph238.0.0/champion-1,clearDead,restore fullMaxHP,delay20..39.",
+        "offspring": "No separate creature allocation or kill reward on successful morph."
+      }
+    },
+    {
+      "id": "87.1.0",
+      "name": "Crackle",
+      "xml": {
+        "anm2path": "087.001_crackle.anm2",
+        "baseHP": "40",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "87",
+        "name": "#CRACKLE",
+        "numGridCollisionPoints": "12",
+        "portrait": "345",
+        "reroll": "true",
+        "shadowSize": "16",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "article_revisions": [
+        {
+          "title": "Gaper",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270042"
+        }
+      ],
+      "positive_ordinary_room_evidence": [
+        {
+          "file": "rooms/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 78,
+          "positive_weight_templates": 78,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_modes": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        }
+      ],
+      "placement_approved": false,
+      "contract": {
+        "movement": "Shared Gurgle pursuit and fear/shrink branches.",
+        "targeting": "Shared Gurgle acquisition and current-target firing.",
+        "attack": "32-frame Attack at30FPS, Shootframe5; FireBossProjectiles with common Gurgle modifiers and FIRE_WAVE bit35 instead of EXPLODE. Walking Shootframe16 metadata is not an attack-state trigger.",
+        "vulnerability": "Same scoped FIRE/EXPLOSION filtering as Gurgle.",
+        "morph": "Variant1 explicitly fails Gurgle morph gate; no Splasher transformation.",
+        "offspring": "None established by shared AI."
+      }
+    },
+    {
+      "id": "238.0.0",
+      "name": "Splasher",
+      "xml": {
+        "anm2path": "238.000_Splasher.anm2",
+        "baseHP": "10",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "14",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "238",
+        "name": "#SPLASHER",
+        "numGridCollisionPoints": "12",
+        "portrait": "101",
+        "reroll": "true",
+        "shadowSize": "11",
+        "stageHP": "2",
+        "tags": "explosive_soul",
+        "variant": "0"
+      },
+      "article_revisions": [
+        {
+          "title": "Pacer",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269180"
+        }
+      ],
+      "positive_ordinary_room_evidence": [
+        {
+          "file": "rooms/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 9,
+          "positive_weight_templates": 9,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/15.cathedral.stb",
+          "source_stage": "cathedral",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        },
+        {
+          "file": "rooms/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 9,
+          "positive_weight_templates": 9,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_modes": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        }
+      ],
+      "placement_approved": false,
+      "contract": {
+        "movement": "MoveRandomly(false); fear/shrink EvadeTarget; native movement scale*.75.",
+        "targeting": "Normalized movement velocity, not player position or a fresh uniform firing angle. Zero movement yields no shot and no cooldown reset.",
+        "attack": "Initial20..39update delay; successful shot resets60..89. FireProjectiles mode0,speed5,EXPLODE,green color. Falling speed-3-5=-8,accel.1+.3=.4 before common integration. No ANM2 Shoot event.",
+        "vulnerability": "Scoped EXPLOSION filtering only; enemy fire still damages.",
+        "morph": "Stage HP10+2*stage and collision radius13.",
+        "offspring": "No Splasher death child. Shared210-to211 branch belongs to another identity."
+      }
+    }
+  ],
+  "shared_findings": [
+    "Independent EntityRef constructor signature and named Morph/FireBossProjectiles/FindGridPath/EvadeTarget API bindings verify the meaning of source fields. A projectile RTTI locator verifies installed Init/Update addresses; later-version Update/Constructor signatures did not match and were not used.",
+    "Immunity applies to FIRE and/or EXPLOSION but exempts friendly source, direct player, player/familiar spawner, and TNT. A wiki shorthand about bomb immunity cannot override these native exceptions.",
+    "EXPLODE projectile death calls BombDamage50/radius60/lineChecktrue with producer pointer if still present; otherwise the projectile. Shared flight integration and all item/status alterations still need source verification."
+  ],
+  "adaptations": [
+    "HP and the overkill threshold use existing3.2 damage conversion. Collision radius13 maps to local.65; Gurgle and Splasher retain compatible body radius during morph.",
+    "Context snapshots Player/Ally/Enemy/Environment/Tnt at event/hazard creation so immunity does not change when a source body is removed. Player/familiar ancestry is represented by the Player/Ally categories.",
+    "Morph probability uses seeded basis points, not the original global RNG stream. Initial delay is an integral20..39updates converted at30Hz. Legacy attack cooldown scaling remains until the separate controller port.",
+    "Successful morph is an in-place identity change before the DeathWard kill/reward path, preserves stage/champion HP scale, restores target HP and keeps the same room threat. Native queued-hit batch ordering is not certified."
+  ],
+  "open": [
+    "Replace legacy stationary delayed bomb markers with source-based physical explosive lobs; add Crackle landing fire waves.",
+    "Gurgle target acquisition1/60per native update within130native units; acquisition skips Hornfel spawner906. Keep mounted routing disabled.",
+    "Verify common projectile integration, navigation physics, fear/shrink/charm/status and source item interactions.",
+    "Full movement/attack controller, seeded ordinary placements, complete Linux/WASM visuals, varied-build balance and rendered performance remain unaccepted."
+  ]
+}

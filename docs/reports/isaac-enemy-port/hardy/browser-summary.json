@@ -1,0 +1,62 @@
+{
+  "cases": [
+    {
+      "name": "three-impacts",
+      "frames": 1800,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "impacts": 3,
+      "launches": 5,
+      "thrown": 3,
+      "dips": 1,
+      "shots": 21,
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "ordinary-death",
+      "death": true,
+      "frames": 240,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "impacts": 0,
+      "launches": 0,
+      "thrown": 0,
+      "dips": 1,
+      "shots": 0,
+      "phases": [
+        0
+      ]
+    },
+    {
+      "name": "natural-quarry",
+      "natural": true,
+      "seed": 30,
+      "floor": 2,
+      "room": 7,
+      "frames": 900,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "impacts": 2,
+      "launches": 2,
+      "thrown": 0,
+      "dips": 1,
+      "shots": 14,
+      "phases": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "passed": 3,
+  "errors": [],
+  "scope": "Scoped Original-style production WASM Hardy controller, impacts and offspring. Not full acceptance.",
+  "trace": "docs/reports/isaac-enemy-port/hardy/web/results.json",
+  "note": "shots in case summaries is peak concurrent projectile count, not total emitted. Native third-impact run recorded 62 emitted projectiles including four-way splits."
+}

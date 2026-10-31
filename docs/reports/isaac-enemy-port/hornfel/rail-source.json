@@ -1,0 +1,286 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "source": "docs/reports/isaac-enemy-port/ordnance/hornfel-room-templates.json",
+  "source_sha256": "a97440163d55cf26a02408d829b020f853f5c6fbcfe6fd6e7c6a846acbd52199",
+  "output": "assets/mechanics/rails.mechanics",
+  "output_sha256": "1de889da1a6e0f60a25226b6830e9377c26c9ad66d28631b366d85ef974f1592",
+  "templates": [
+    {
+      "key": "hornfel_void_105",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/26.the void.stb",
+      "source_sha256": "5c077e0f349a0627addd1f6b236f9669051938a75b4a193730caf9c5a1280e87",
+      "source_index": 107,
+      "variant": 105,
+      "shape": 4,
+      "size": [
+        13,
+        14
+      ],
+      "name": "",
+      "tiles": 70,
+      "pit_tiles": 18,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "void"
+    },
+    {
+      "key": "hornfel_void_131",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/26.the void.stb",
+      "source_sha256": "5c077e0f349a0627addd1f6b236f9669051938a75b4a193730caf9c5a1280e87",
+      "source_index": 132,
+      "variant": 131,
+      "shape": 3,
+      "size": [
+        13,
+        7
+      ],
+      "name": "",
+      "tiles": 16,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "void"
+    },
+    {
+      "key": "hornfel_special_5220",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 591,
+      "variant": 5220,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 52,
+      "pit_tiles": 0,
+      "source_room_weight": 0.125,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5221",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 592,
+      "variant": 5221,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 58,
+      "pit_tiles": 0,
+      "source_room_weight": 0.125,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5222",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 593,
+      "variant": 5222,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 66,
+      "pit_tiles": 0,
+      "source_room_weight": 0.125,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5223",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 594,
+      "variant": 5223,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 55,
+      "pit_tiles": 5,
+      "source_room_weight": 0.125,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5224",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 595,
+      "variant": 5224,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 52,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5225",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 596,
+      "variant": 5225,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 52,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5226",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 597,
+      "variant": 5226,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 55,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5227",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 598,
+      "variant": 5227,
+      "shape": 4,
+      "size": [
+        13,
+        14
+      ],
+      "name": "Hornfel",
+      "tiles": 114,
+      "pit_tiles": 0,
+      "source_room_weight": 0.10000000149011612,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5228",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 599,
+      "variant": 5228,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 65,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_5229",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 600,
+      "variant": 5229,
+      "shape": 1,
+      "size": [
+        13,
+        7
+      ],
+      "name": "Hornfel",
+      "tiles": 75,
+      "pit_tiles": 7,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "normal"
+    },
+    {
+      "key": "hornfel_special_6050",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 601,
+      "variant": 6050,
+      "shape": 6,
+      "size": [
+        26,
+        7
+      ],
+      "name": "Hornfel (Double Trouble)",
+      "tiles": 88,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "double_trouble"
+    },
+    {
+      "key": "hornfel_special_6051",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 602,
+      "variant": 6051,
+      "shape": 6,
+      "size": [
+        26,
+        7
+      ],
+      "name": "Hornfel (Double Trouble)",
+      "tiles": 60,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "double_trouble"
+    },
+    {
+      "key": "hornfel_special_6052",
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "source_sha256": "a8f7bd23a0362703ffe6ad4a6b80756a2894b01ba710266cc80f1d40e93eb432",
+      "source_index": 603,
+      "variant": 6052,
+      "shape": 6,
+      "size": [
+        26,
+        7
+      ],
+      "name": "Hornfel (Double Trouble)",
+      "tiles": 50,
+      "pit_tiles": 0,
+      "source_room_weight": 1.0,
+      "ordinary_pool_enabled": false,
+      "category": "double_trouble"
+    }
+  ],
+  "limits": [
+    "This exports tracks and pit-rail flags only. Other room objects remain in the preserved STB extraction.",
+    "The Mines placeholder contains no tracks and is not fabricated into a layout.",
+    "Source room weights are recorded, not interpreted as native runtime selection probabilities.",
+    "The old preflight's vertical end-stop mapping is corrected: 9 has S, 10 has N. All installed tile ports now have reciprocal neighbors.",
+    "Straight crossings and reversing at a stop are local traversal policies, not recovered native control flow."
+  ]
+}

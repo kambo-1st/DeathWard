@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 55: crackle_discrete_fire_jets
+1/1 Test #55: crackle_discrete_fire_jets .......   Passed   24.14 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =  24.14 sec

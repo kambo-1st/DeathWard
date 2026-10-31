@@ -1,0 +1,3 @@
+build-web/index.wasm: 4985636 bytes, gzip 1659640; sha256 2a0d927b83d6aabc12017b7ad56187d31fe9d5ac9cc6492daa61ebe90f9bdb3a
+build-web/index.js: 239480 bytes, gzip 58075; sha256 ec6dc84b14fdb78a8436539a905e125767a453b2ac7a1c35b704a21790c9c394
+build-web/index.data: 213423060 bytes, gzip 92849064; sha256 19b1aa004772da5963cd89da7fd2497ca2d0626e674322c75d54ac4bb5517d21

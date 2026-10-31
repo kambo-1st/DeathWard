@@ -1,0 +1,29 @@
+{
+  "status": "Partial visual review, Original style at 160% zoom; no full art/readability acceptance.",
+  "native_inspected": [
+    "docs/reports/isaac-enemy-port/hardy/native/180.png",
+    "docs/reports/isaac-enemy-port/hardy/native/430.png",
+    "docs/reports/isaac-enemy-port/hardy/native/1000.png",
+    "docs/reports/isaac-enemy-port/hardy/native/1800.png",
+    "docs/reports/isaac-enemy-port/hardy/native/offspring-player-view.png"
+  ],
+  "browser_inspected": [
+    "docs/reports/isaac-enemy-port/hardy/web/three-impacts-windup.png",
+    "docs/reports/isaac-enemy-port/hardy/web/three-impacts-first-impact.png",
+    "docs/reports/isaac-enemy-port/hardy/web/three-impacts-second-impact.png",
+    "docs/reports/isaac-enemy-port/hardy/web/three-impacts-thrown-spiders.png",
+    "docs/reports/isaac-enemy-port/hardy/web/ordinary-death-death-dip.png",
+    "docs/reports/isaac-enemy-port/hardy/web/natural-quarry-charge.png"
+  ],
+  "observations": [
+    "Native intact/impact views show the stacked shell and reduced stages. The three browser impact captures show the shrinking body and the third-stage airborne Rock Spiders with separated ground shadows.",
+    "The native player-centered offspring capture shows three surviving Rock Spiders and a Dip; the earlier native/1800.png followed the dead parent and is NOT offspring visual proof.",
+    "Natural Quarry browser view confirms the body among mixed enemies and river terrain. Its trace establishes seeded identity and impacts.",
+    "ordinary-death-death-dip.png catches a damage flash over the child; the native offspring capture supplies an unflashed Dip view."
+  ],
+  "limitations": [
+    "Shell-stage differences remain subtle at gameplay zoom. Full mixed-room, camera, occlusion and visual-readability acceptance remains open.",
+    "Instrumented screenshot FPS is not a controlled performance benchmark.",
+    "Initial failed canyon captures are retained in native/initial and web-before-canyon-fix and do not support corrected behavior acceptance."
+  ]
+}

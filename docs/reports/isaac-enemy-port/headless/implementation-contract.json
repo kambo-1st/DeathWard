@@ -1,0 +1,66 @@
+{
+  "status": "Dedicated Gusher/Pacer controllers implemented; eight scoped Linux suites pass. Broad floor scan, final visual and production WASM checks remain open.",
+  "ids": [
+    "11.0.0",
+    "11.1.0"
+  ],
+  "baseline": "Installed Repentance1.7.9b",
+  "source": [
+    "source/manifest.json",
+    "source/records.json",
+    "source/wiki.json",
+    "animations/manifest.json"
+  ],
+  "shared_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/random_walk.asm",
+      "sha256": "dafb89014a790a46b0c19f22baf59eefe4e040f3075d3953df11d788c2ebc7fb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/helpers-manifest.json",
+      "sha256": "49b6207c3171a6e279ffbc683de46ea7522d564ebe718b921ca942687f6820de"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/fire_projectiles.asm",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/projectile_params.asm",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/loose/resources/scripts/enums.lua",
+      "sha256": "dce1892f51e4e645d66ac8ffb31d217e8c36a32457c1005dd128978141103dc5"
+    }
+  ],
+  "source_contract": {
+    "movement": "Ordinary random-walk helper7a6180. Radius40, arrival3, blocked/stuck reroll; one candidate per source tick. Source friction multiplied.75 before helper; helper force.5 divided by friction gives effective ordinary momentum.75*previous+.5*direction after shared friction. No player pursuit.",
+    "timing": "First tick initializes state4 and cooldown20+RNG%20. Gusher checks cooldown before decrementing. After a shot reset40+RNG%20; ordinary successful shot-to-shot interval is41..60 source ticks. Zero movement at due time neither fires nor resets delay.",
+    "shot": "At4f92df ProjectileParams base is ebp-118. Fields+8=-5,+c=.3. Mode0 postpass6a3090 sets fallingSpeed-3 and acceleration.1, then6a318e/+6a31a3 add modifiers: final-8/.4. Horizontal speed5 along normalized current velocity; no aiming at player or inherited shooter velocity. Every positive velocity length is explicitly normalized, avoiding the shared tiny-vector fallback.",
+    "pacer": "Skips Gusher attack branch. Same ordinary random movement and cosmetic trail.",
+    "animation": "30FPS,22-frame looping walks for both. Gusher Blood overlay10-frame loop, no animation events. No invented shot windup.",
+    "health": "Both baseHP10,stageHP0,contact1,source radius13,mass3.",
+    "presentation": "Controller changes projectile variant to4 at backdrop6 or27, variant3 at28. Mapping of backdrop helper and custom DeathWard floor presentation still requires review."
+  },
+  "adaptations": [
+    "Both32HP at3.2scale; body radius.6 retained for compatibility with existing Gaper/Faceless offspring. Contact10 before common multiplier.",
+    "Distancex.1 and speedx3. Shot speed15, world launch up12, gravity18, damping.9, height1.15,radius.22,damage10,life8.",
+    "Source continuous clock fields+2f8/+2fc use the existing normal30Hz conversion. Full native slowdown/champion/status timing remains open.",
+    "Shared DeathWard movement, body steering, collision and stun handling; native mass3 response not claimed.",
+    "Bounded cosmetic trail every10ticks, radius.1..25/life8, and continuous cosmetic neck droplets for Gusher.",
+    "Selected shot is retained under event/projectile saturation; its owner pauses until admission, including true death.",
+    "Gusher natural pools bands0/1 from Basement/Downpour/Dross; Pacer keeps its all-band basic pool from its wider source templates."
+  ],
+  "open": [
+    "Fear/shrink fleeing, confusion suppression and player-control aiming/constant40 reload branches.",
+    "Source slowed clock, champions, collision mass and serialized state parity.",
+    "Exact source backdrop-dependent projectile appearance and floor-alternate bodies.",
+    "Gaper parent death probabilities/overkill/same-entity fidelity are a separate existing gap; child behavior alone does not close it.",
+    "Linux/WASM, final readability, balance and controlled performance validation."
+  ],
+  "validation": "native-summary.json",
+  "current_correction": {
+    "report": "docs/reports/isaac-enemy-port/first-floor-batch1/native-summary.json",
+    "detail": "Historical gravity18 below omitted shared native base acceleration. Current Gusher profile uses22.5, proved against the native .9*v+.1+.4 recurrence at30/60/120Hz. Earlier captured checkpoints remain historical."
+  }
+}

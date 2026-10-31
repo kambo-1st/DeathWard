@@ -1,0 +1,25 @@
+{
+  "inspected": [
+    "native-captures/variant-0.png",
+    "native-captures/variant-1.png",
+    "native-captures/variant-2.png",
+    "web/slog-windup.png",
+    "web/slog-charge.png",
+    "web/slog-impact.png",
+    "web/resident-guts-roll.png",
+    "web/resident-scarred-trail.png",
+    "web/resident-slog-charge.png",
+    "web/slog-river-charge.png",
+    "web/resident-slog-windup.png"
+  ],
+  "count": 11,
+  "style": "Original",
+  "findings": [
+    "Distinct body colors and trails on open ground.",
+    "Initial isolated charge pinned at spectator; subsequent wall impact and natural charge show traversal.",
+    "Guts follows rock beside river; river Slog stays on bank.",
+    "Slog loses contrast in cliff shadow; short warning needs broader readability review.",
+    "Impact lacks distinct squash pose; foreground cliffs can obscure actors."
+  ],
+  "performance_scope": "FPS labels are not controlled benchmarks."
+}

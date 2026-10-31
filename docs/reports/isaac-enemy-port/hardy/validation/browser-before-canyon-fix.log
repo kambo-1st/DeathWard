@@ -1,0 +1,12 @@
+START three-impacts
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(impacts>=2)
+
+    at /home/kambo/workspace/DeathWard/web/hardy-test.cjs:46:81 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

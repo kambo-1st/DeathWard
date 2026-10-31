@@ -1,0 +1,171 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    },
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/087.001_crackle.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/gurgle_review/animations/087.001_crackle.anm2",
+      "sha256": "76440405fee515fb87bf21aa3e20a15f9d34eb9c1956cd431b7a0c53f9238113",
+      "checksum": "0x717f3116",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "3/31/2021 7:38:23 AM",
+        "Version": "19",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "16"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "32",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/087.000_gurgle.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/gurgle_review/animations/087.000_gurgle.anm2",
+      "sha256": "2374ae8b61f6411dd5319bcf1e4234e0aa1337f2d8de7f2998804fd87c9d1781",
+      "checksum": "0x2fbbe963",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "08.15.2019 17:07:35",
+        "Fps": "30",
+        "Version": "107"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "30",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/238.000_splasher.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/gurgle_review/animations/238.000_splasher.anm2",
+      "sha256": "376d41aab8d0fd5535709e792988417d71b5abd8aa45993061147dba6915ac52",
+      "checksum": "0x8c83b61",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "06.02.2019 12:14:37",
+        "Fps": "30",
+        "Version": "105"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Blood",
+            "FrameNum": "10",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

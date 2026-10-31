@@ -1,0 +1,68 @@
+{
+  "updated_utc": "2026-10-28T10:57:02.438611+00:00",
+  "previous_goal_turn_classification": "Progress: completed774-floor regression, validated two isolated Faceless browser cases and preserved Gusher/Pacer source/animation evidence.",
+  "this_goal_turn_classification": "Progress: dedicated Gusher/Pacer controllers and config, meaningful Linux tests, tiny-velocity regression/fix, native visuals, completed four Faceless browser cases and pinned next Gaper corrections.",
+  "wasm_build": {
+    "session": 17891,
+    "state": "completed exit0",
+    "log": "wasm-final-build.log",
+    "scope": "Final tiny-vector and Pacer cap corrections included; all four browser scenarios passed.",
+    "previous_session": 80947,
+    "previous_exit": 0
+  },
+  "floor_sweep": {
+    "runner_pid": 869674,
+    "child_pid": 869675,
+    "state": "direct child completed returncode0;753floors pass",
+    "result": "floor-direct-result.json",
+    "log": "floor-direct.log",
+    "reason": "Previous wrapper returned143 despite final753-floor PASS output; direct child exit is now recorded independently."
+  },
+  "preview_server": {
+    "session": 17474,
+    "url": "http://127.0.0.1:8767/",
+    "previous_session_exit": 143
+  },
+  "next_browser": {
+    "script": "web/headless-test.cjs",
+    "executable": "/home/kambo/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome",
+    "output": "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/headless/web",
+    "entries": [
+      {
+        "name": "gusher-isolated",
+        "variant": 0,
+        "frames": 900
+      },
+      {
+        "name": "pacer-isolated",
+        "variant": 1,
+        "frames": 900
+      },
+      {
+        "name": "gusher-natural",
+        "variant": 0,
+        "natural": true,
+        "seed": 4,
+        "floor": 0,
+        "room": 6,
+        "frames": 900
+      },
+      {
+        "name": "pacer-natural",
+        "variant": 1,
+        "natural": true,
+        "seed": 0,
+        "floor": 0,
+        "room": 2,
+        "frames": 900
+      }
+    ]
+  },
+  "next_regular_family": "../gaper/morph-contract.json: mortality implemented and Linux-validated; Gaper WASM build25411 and native game build27885 running. Dedicated movement/HP remains next.",
+  "complete_ports": 0,
+  "browser_result": {
+    "session": 81272,
+    "exit_code": 0,
+    "summary": "../browser-summary.json"
+  }
+}

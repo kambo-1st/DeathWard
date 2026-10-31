@@ -1,0 +1,214 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 826,
+    "case": "0x69a10f",
+    "controller": "0x4ee860"
+  },
+  "ring_mode8": "0x6a2a49",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/controller.asm",
+      "start": "0x4ee860",
+      "end": "0x4efacf",
+      "raw_sha256": "012d067a06ceb1686ba13c1a4e1992da2708ba7942c2fd5a83febe75bba896d6",
+      "sha256": "c4815db32fe32eb40802523872f183a7c4ef27120e82f2f56e526dbe2ea2daef"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/aimed_cluster.asm",
+      "start": "0x6a3420",
+      "end": "0x6a395a",
+      "raw_sha256": "c2240abb35ba83153346fd3d8ee2979f4509a56707055ff397e8a295b3549348",
+      "sha256": "ddfae7350e140b99e5c93bedd65ebe0ce81e35e8cd3476911f9c2dd4692146a3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/fire_projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a33ec",
+      "raw_sha256": "450521a19558deb4c799a9999bef9f2cdd43c1e6080cc03d13fe72cd4fcbaec9",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "raw_sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/burst_flag_gate.asm",
+      "start": "0x632d79",
+      "end": "0x632d99",
+      "raw_sha256": "449289abb48c04a407969e5397292e4bcb1180257523e3ba84b422c4c73583d8",
+      "sha256": "698955e5df4b764f03e6d6cd05fe4631b970439b1924f3a929fbaf5b99d4f641"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/burst_four_children.asm",
+      "start": "0x63315b",
+      "end": "0x63334c",
+      "raw_sha256": "0d94ffeb4319f6dfa596f9946460ce59fcb197c737d1ecc1649cb0cce8d92322",
+      "sha256": "03db1173d8f00a240788d28417762e6ec1ab563bdbad113838c36d6e72e2399c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/thrown_rock_actor.asm",
+      "start": "0x4e70a0",
+      "end": "0x4e7250",
+      "raw_sha256": "6cefe69afb9a9d99b1b282e38aa3da694e0730a58444ad37cbf98d68a824d978",
+      "sha256": "8ca0921cb301f7f4c281603ff08881f4ac3e5816bb760b6aa6189c19f7c43c8e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/vector_length.asm",
+      "start": "0x962a00",
+      "end": "0x962a2c",
+      "raw_sha256": "393bb948659d6c267a5f1f1194835c6d31a40987e1225f60a82cbe3106bf5cba",
+      "sha256": "71b87f2a5bf45ac8d9df1396de5f5b33acedbbb78131544c6d73234420af0e53"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/vector_scale.asm",
+      "start": "0x962bb0",
+      "end": "0x962bd6",
+      "raw_sha256": "a892709c8bee41555ab670a62b416102e7ab2dd8cf9edbe28dcc6a10aba438ea",
+      "sha256": "db9383cbdcf366104b491999026a76dee96c1f1a75e7c8aca2cf5659aea9074d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/vector_negate.asm",
+      "start": "0x962b20",
+      "end": "0x962b4a",
+      "raw_sha256": "ab75a420888bca7ae83fcd91dd1c1f5257207b88ce98b536833e57e3129255cc",
+      "sha256": "bb11effdc8f82de1766ffbe2088bc2325f0a4d7ae3683b78c9781068a70c269b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/vector_construct.asm",
+      "start": "0x9624e0",
+      "end": "0x9624ec",
+      "raw_sha256": "76e38175882f6b805b3e2d55707aea69c697116741aabee81c070dd8e8d8b525",
+      "sha256": "49624d61bce3849bae877813765d258436f32178ac000ce0f62ca0b54679e162"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/vector_subtract.asm",
+      "start": "0x962ac0",
+      "end": "0x962ae8",
+      "raw_sha256": "08a3f84ee43cb4637ee1727e1f1deb550ee21651873304598f487b1b5568e001",
+      "sha256": "48340c997d574362a31be9bc4cabcf84a22a5aa9029911a7b9f7713ec97c4ef7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/random_unit.asm",
+      "start": "0x659290",
+      "end": "0x6592ef",
+      "raw_sha256": "d692c335c6eb08e51ecd9a1de076cea055dc56d03b47126c5913845e1fb314b1",
+      "sha256": "f21260f8e00d1daf4b6000b55c60d456c1dc13dc39efa5680d13b276bf373091"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/set_height.asm",
+      "start": "0x4424c0",
+      "end": "0x4424d4",
+      "raw_sha256": "03a13bda1e2948bdf457cf39deb8554dd25d3982079cbe0808b759e459105cfd",
+      "sha256": "6c5b4ba05a12374d8e6547a329b6060bc3e81827caacfc7cfa9513d230eb79ab"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/set_falling_speed.asm",
+      "start": "0x436b70",
+      "end": "0x436b84",
+      "raw_sha256": "a332a7a0866b718db8ca70da1538be41b2317c3c0a45c9d36d0f31363ab2e5e7",
+      "sha256": "b5d26ec3e684ab7b3ae62a7148f5b86730ad26165bf1cd5ebd3d3f45cabd08a1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/set_size.asm",
+      "start": "0x4424e0",
+      "end": "0x4424f4",
+      "raw_sha256": "867d36c334da536f7c6c8ede5cd027ab68406b291c08da59568416373345253d",
+      "sha256": "a55a7a477f91198c68628b4442e02241bb7f05c8f9a6f0d39719bb52e697f842"
+    }
+  ],
+  "constants": {
+    "retention": {
+      "address": "0xb6a5d8",
+      "value": 0.949999988079071
+    },
+    "idle_retention": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "force": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "launch": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "slow_speed": {
+      "address": "0xb6a95c",
+      "value": 9.0
+    },
+    "stop_speed": {
+      "address": "0xb6a614",
+      "value": 1.0
+    },
+    "hit_brake": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "slow_brake": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "shock_range": {
+      "address": "0xb6aae4",
+      "value": 90.0
+    },
+    "blast_multiplier": {
+      "address": "0xb6a820",
+      "value": 2.5
+    },
+    "child_height": {
+      "address": "0xb6aeb8",
+      "value": -10.0
+    },
+    "child_spread": {
+      "address": "0xb6ab20",
+      "value": 120.0
+    },
+    "third_shot_size": {
+      "address": "0xb6a670",
+      "value": 1.2000000476837158
+    },
+    "cluster_gravity": {
+      "address": "0xb6a3c4",
+      "value": 0.3199999928474426
+    },
+    "cluster_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "cluster_scatter": {
+      "address": "0xb6a8a0",
+      "value": 3.5
+    },
+    "cluster_falling_base": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "size_low": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "size_choice": {
+      "address": "0xb6a434",
+      "value": 0.4000000059604645
+    },
+    "size_jitter": {
+      "address": "0xb6a274",
+      "value": 0.05000000074505806
+    },
+    "burst_falling_width": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "burst_falling_subtract": {
+      "address": "0xb6a27c",
+      "value": 0.06000000238418579
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "bindings": {
+    "effect72_dispatch": "0x5dfb35",
+    "player_vtable": "0xb4d4f0",
+    "launch_virtual_50": "0x794280"
+  },
+  "constants": {
+    "spawn_offset": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "slam_range": {
+      "address": "0xb6ab20",
+      "value": 120.0
+    },
+    "push": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "step_distance": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "angle_span": {
+      "address": "0xb6ab58",
+      "value": 150.0
+    },
+    "pulse_damage": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "hop_gravity": {
+      "address": "0xb6a64c",
+      "value": 1.100000023841858
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/source/slam.asm",
+      "start": "0x4ff944",
+      "end": "0x4ffd40",
+      "raw_sha256": "019576f9cb24ad02a9193750bdf8235d91d5855b603b39e58aac125424d77b70",
+      "sha256": "343ce159a001f8ad5350f17a2876aa8da08f8814f31360fa7834d0da144cf4f0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/source/wave_init.asm",
+      "start": "0x5b8f80",
+      "end": "0x5b8fba",
+      "raw_sha256": "0226411ed4f823212aba332536f8328b325583f82abfd3de91180f1c3be3b146",
+      "sha256": "387e11d5aca66e49c512de53da81f53067ade481c65b2bcdb8e23ccf664161f5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/source/wave_update.asm",
+      "start": "0x5dfb35",
+      "end": "0x5e05be",
+      "raw_sha256": "142c6b07679f6efae00484cc2eded3b695030d9cb7fa0c5b90ede2b5ac4e85f6",
+      "sha256": "846837e1b7fe5349d79f36126875b5435c60da01cdc6e4107dc9aaedf9d9cdb6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/source/crush_pulse.asm",
+      "start": "0x6d1750",
+      "end": "0x6d26e0",
+      "raw_sha256": "3831eb783f9ab93b23d31b799d0e54d41ba07ccb629fdf90e8e8e35dbce946fb",
+      "sha256": "35d035c1a3f5891777e1abafe4c13a63253e3ea295b313068dc3595a53570687"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/source/player_launch.asm",
+      "start": "0x794280",
+      "end": "0x79433f",
+      "raw_sha256": "342001b12923569df505c95f396b8c0541436fe86fbc9f3691f93e56973e14d8",
+      "sha256": "4b5bd91723c7c0fe7709d154001dfa32fe0eb00c2028d35061515a47987780d6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hard_host/source/player_hop.asm",
+      "start": "0x74c275",
+      "end": "0x74c3ef",
+      "raw_sha256": "e548a41a9c42812425e1a0bf040fe46947932995b1bd0e81d13b483a6797e824",
+      "sha256": "29ccb5b5ae1ae7b70d8f6058e00a9a3a1343f5be375b6e81c0ed8c3e45e4e850"
+    }
+  ]
+}

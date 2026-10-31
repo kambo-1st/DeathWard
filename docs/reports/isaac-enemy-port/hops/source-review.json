@@ -1,0 +1,27 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; paraphrased pinned Hopper article.",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267012",
+  "source_behavior": [
+    "Normal Hopper hops randomly until the player is nearby, then pursues. It can cross rocks and gaps.",
+    "Flaming Hopper also wanders outside detection range; its detection radius, hop length and hop speed are greater.",
+    "The source describes a 60% normal-to-Flaming replacement in Burning Basement; this distinct stage-variant rule remains unfinished."
+  ],
+  "stage_evidence": "docs/research/isaac-enemy-port-plan.json: positive-weight authored room occurrences for both forms in Basement/Caves/Depths-equivalent bands 0–2.",
+  "adaptations": [
+    "Normal range 6, wander/chase distances 2/4, flight .7s, base/max apex 1.4/5; Flaming range 11, distances 3/6, flight .5s, apex 1.8/6. All dimensions/timing are local DeathWard tuning.",
+    "Existing 2.4/.55 and 1.6/.45 recovery/windup values retained. Hostile flight duration includes the existing 1.1 movement multiplier.",
+    "Swept 3D arc uses actual hitbox height, raises the arc only as needed within its cap, and requires legal ground at the destination. Interior cover/water is traversable; enclosing cliffs/gates/room bounds remain solid.",
+    "Bounded shorter/lateral candidates handle unavailable landings. Target position is committed before takeoff and revalidated at launch.",
+    "Stun and compatible fire transformation finish committed flight; the new form uses its own parameters on its next jump. Room re-entry preserves progress.",
+    "Normal pursuit specialist cost 2/cap 2; Flaming cost 3/cap 1; both weight 1 in bands 0–2. These are local budgets, not source spawn probabilities."
+  ],
+  "limitations": [
+    "Exact native timing, hop physics, damage conversion and champion/item/status interactions are not fully verified.",
+    "Real solid geometry is checked before takeoff. Runtime insertion of new solid obstacles during flight is not supported by this controller; ordinary expedition demolition removes obstacles.",
+    "Burning Basement 60% replacement and complete fire item producers/status system remain unfinished.",
+    "Ground-gap fixture proves collision behavior, not a claim that every generated river is jumpable. Complete mixed-room/floor balance, all-angle visuals and controlled performance remain open."
+  ]
+}

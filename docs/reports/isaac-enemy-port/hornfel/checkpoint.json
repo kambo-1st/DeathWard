@@ -1,0 +1,570 @@
+{
+  "status": "partial_dependency_geometry_and_source_corrections; full goal active",
+  "baseline": "Repentance1.7.9b",
+  "created_utc": "2026-10-26T04:25:50.654910+00:00",
+  "mechanics_fingerprint": "ebae5e0738972c1",
+  "runtime_definitions": 157,
+  "item_definitions": 12,
+  "enemy_bomb_profiles": 5,
+  "new_npc_definitions": 0,
+  "dependency_for": [
+    "906.0.0",
+    "906.1.0",
+    "965.0.0",
+    "967.0.0"
+  ],
+  "ordnance_identities": {
+    "normal": "4.3.0",
+    "hornfel_normal": "4.0.0",
+    "hot": "4.8.0",
+    "sad": "4.16.0",
+    "brimstone": "4.15.0"
+  },
+  "checklist": {
+    "records": 653,
+    "reviewed": 128,
+    "in_progress": 78,
+    "existing_unverified": 79,
+    "missing": 484,
+    "excluded": 12,
+    "complete": 0,
+    "remaining": 641
+  },
+  "source_review": "docs/reports/isaac-enemy-port/hornfel/native-review.json",
+  "native_manifest": "docs/reports/isaac-enemy-port/hornfel/native/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/hornfel/animations/manifest.json",
+  "rails": {
+    "layouts": 15,
+    "cells": 928,
+    "wall_ports": 121,
+    "directed_routes": 121,
+    "pit_rail_cells": 30,
+    "fitted_footprints_tested": 120,
+    "manifest": "docs/reports/isaac-enemy-port/hornfel/rail-source.json",
+    "ordinary_pool_enabled": false,
+    "routing_policy": "Straight crossings and end-stop reversal remain declared local policies pending native minecart review."
+  },
+  "native": {
+    "build": "passed",
+    "log": "docs/reports/isaac-enemy-port/hornfel/native-final-build.txt",
+    "full_regression": {
+      "passed": 56,
+      "failed": 0,
+      "tests": {
+        "enemy_port_coverage": {
+          "result": "pass",
+          "seconds": 0.292138
+        },
+        "mechanics_content": {
+          "result": "pass",
+          "seconds": 1.23419
+        },
+        "expedition_economy": {
+          "result": "pass",
+          "seconds": 42.7407
+        },
+        "canyon_bosses": {
+          "result": "pass",
+          "seconds": 6.92269
+        },
+        "floor_progression": {
+          "result": "pass",
+          "seconds": 79.4813
+        },
+        "item_builds": {
+          "result": "pass",
+          "seconds": 8.24776
+        },
+        "expedition_destruction": {
+          "result": "pass",
+          "seconds": 67.7759
+        },
+        "walkable_areas": {
+          "result": "pass",
+          "seconds": 0.0273852
+        },
+        "expedition": {
+          "result": "pass",
+          "seconds": 14.0796
+        },
+        "expedition_pacing": {
+          "result": "pass",
+          "seconds": 9.83026
+        },
+        "flag_cloth": {
+          "result": "pass",
+          "seconds": 0.18924
+        },
+        "save_slots": {
+          "result": "pass",
+          "seconds": 0.0585007
+        },
+        "arrival_quest": {
+          "result": "pass",
+          "seconds": 1.06787
+        },
+        "cinematic_timeline": {
+          "result": "pass",
+          "seconds": 0.0636869
+        },
+        "canyon_roads": {
+          "result": "pass",
+          "seconds": 7.16987
+        },
+        "canyon_rivers": {
+          "result": "pass",
+          "seconds": 18.3601
+        },
+        "redstone_hub": {
+          "result": "pass",
+          "seconds": 0.527313
+        },
+        "building_navigation": {
+          "result": "pass",
+          "seconds": 0.0353011
+        },
+        "particle_emission": {
+          "result": "pass",
+          "seconds": 0.0239341
+        },
+        "town_characters": {
+          "result": "pass",
+          "seconds": 0.0168859
+        },
+        "ambient_animals": {
+          "result": "pass",
+          "seconds": 0.148761
+        },
+        "train_motion": {
+          "result": "pass",
+          "seconds": 0.463294
+        },
+        "object_animation": {
+          "result": "pass",
+          "seconds": 0.0408083
+        },
+        "player_dynamite": {
+          "result": "pass",
+          "seconds": 0.932314
+        },
+        "mission_shop": {
+          "result": "pass",
+          "seconds": 2.29052
+        },
+        "money_pickups": {
+          "result": "pass",
+          "seconds": 1.21466
+        },
+        "resident_enemies": {
+          "result": "pass",
+          "seconds": 0.798966
+        },
+        "audio_presentation": {
+          "result": "pass",
+          "seconds": 0.0560132
+        },
+        "monster_behaviors": {
+          "result": "pass",
+          "seconds": 3.20482
+        },
+        "monster_flight": {
+          "result": "pass",
+          "seconds": 3.20356
+        },
+        "monster_formations": {
+          "result": "pass",
+          "seconds": 0.137062
+        },
+        "monster_patterns": {
+          "result": "pass",
+          "seconds": 0.263418
+        },
+        "monster_fire_reactions": {
+          "result": "pass",
+          "seconds": 0.207385
+        },
+        "monster_hopping": {
+          "result": "pass",
+          "seconds": 0.254633
+        },
+        "monster_replacements": {
+          "result": "pass",
+          "seconds": 1.73778
+        },
+        "monster_boss_components": {
+          "result": "pass",
+          "seconds": 1.49176
+        },
+        "bloat_boss_and_chargers": {
+          "result": "pass",
+          "seconds": 2.05195
+        },
+        "charger_variants": {
+          "result": "pass",
+          "seconds": 0.187573
+        },
+        "companion_familiars": {
+          "result": "pass",
+          "seconds": 1.71226
+        },
+        "room_statues": {
+          "result": "pass",
+          "seconds": 0.653389
+        },
+        "maw_attraction": {
+          "result": "pass",
+          "seconds": 0.832226
+        },
+        "quake_waves": {
+          "result": "pass",
+          "seconds": 0.663234
+        },
+        "supplied_bombs": {
+          "result": "pass",
+          "seconds": 0.575786
+        },
+        "fly_bombs": {
+          "result": "pass",
+          "seconds": 12.2998
+        },
+        "enemy_bomb_payloads": {
+          "result": "pass",
+          "seconds": 0.503797
+        },
+        "authored_rails": {
+          "result": "pass",
+          "seconds": 0.019874
+        },
+        "boom_flies": {
+          "result": "pass",
+          "seconds": 52.1107
+        },
+        "loki_bosses": {
+          "result": "pass",
+          "seconds": 1.07919
+        },
+        "segmented_bosses": {
+          "result": "pass",
+          "seconds": 1.92024
+        },
+        "shell_boss": {
+          "result": "pass",
+          "seconds": 2.94935
+        },
+        "mission_themes": {
+          "result": "pass",
+          "seconds": 4.10217
+        },
+        "imported_town_navigation": {
+          "result": "pass",
+          "seconds": 0.067117
+        },
+        "core_contracts": {
+          "result": "pass",
+          "seconds": 0.462147
+        },
+        "enemy_behaviors": {
+          "result": "pass",
+          "seconds": 2.69946
+        },
+        "generated_dungeons": {
+          "result": "pass",
+          "seconds": 22.7137
+        },
+        "generated_room_graphs": {
+          "result": "pass",
+          "seconds": 0.572837
+        }
+      },
+      "junit": "docs/reports/isaac-enemy-port/hornfel/native-tests.xml",
+      "log": "docs/reports/isaac-enemy-port/hornfel/native-tests.txt",
+      "note": "Complete 56-suite run after rail integration, before final addition of hornfel_normal4.0 and sad4.16 correction. Three affected suites rerun afterward."
+    },
+    "after_final_identity_correction": {
+      "passed": 3,
+      "failed": 0,
+      "tests": {
+        "mechanics_content": {
+          "result": "pass",
+          "seconds": 2.23271
+        },
+        "enemy_bomb_payloads": {
+          "result": "pass",
+          "seconds": 0.51735
+        },
+        "authored_rails": {
+          "result": "pass",
+          "seconds": 0.0300557
+        }
+      },
+      "junit": "docs/reports/isaac-enemy-port/hornfel/native-focused.xml",
+      "log": "docs/reports/isaac-enemy-port/hornfel/native-focused.txt",
+      "note": "Current fingerprint; mechanics content, enemy bomb payloads and authored rails after final identity corrections."
+    }
+  },
+  "browser": {
+    "build": "passed",
+    "build_log": "docs/reports/isaac-enemy-port/hornfel/wasm-build.txt",
+    "focused_passed": 5,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/hornfel/focused/wasm-bombs.json",
+    "log": "docs/reports/isaac-enemy-port/hornfel/focused/browser.txt",
+    "rail_cpp_suite": {
+      "passed": true,
+      "report": "docs/reports/isaac-enemy-port/hornfel/wasm-rails.json",
+      "log": "docs/reports/isaac-enemy-port/hornfel/wasm-rails.txt",
+      "build_log": "docs/reports/isaac-enemy-port/hornfel/wasm-rail-build.txt"
+    },
+    "scope": "Five rendered component cases plus same C++ rail suite in actual Chromium WASM; full game suite not rerun.",
+    "previous_full": {
+      "passed": 136,
+      "fingerprint": "2801c8cd382db5bd",
+      "report": "docs/reports/isaac-enemy-port/ordnance/checkpoint.json"
+    }
+  },
+  "reachability": {
+    "result": "no_new_npc_route",
+    "existing_ordinary_conditional_ids": 36,
+    "existing_dedicated_boss_root_ids": [
+      "68.0.0",
+      "68.1.0",
+      "19.2.0",
+      "19.3.0",
+      "69.0.0",
+      "69.1.0"
+    ],
+    "scope": "Compiled routes are spatial geometry, not seeded Hornfel encounter reachability. No eligibility or completion gate is promoted."
+  },
+  "visuals": {
+    "result": "partial_dependency_only",
+    "review": "docs/reports/isaac-enemy-port/hornfel/visual-review.json"
+  },
+  "balance": {
+    "result": "missing_producer_fights",
+    "scope": "No new actor or seeded Hornfel fight exists. No acceptance claimed."
+  },
+  "performance": {
+    "result": "partial_cpu_only",
+    "report": "docs/reports/isaac-enemy-port/hornfel/performance.txt",
+    "context": "docs/reports/isaac-enemy-port/hornfel/performance-context.json",
+    "probe": "docs/reports/isaac-enemy-port/hornfel/rail-performance.cpp",
+    "content_mean_us": {
+      "without_rails": 1799.58,
+      "with_15_layouts": 3436.74
+    },
+    "traversal_p95_us": {
+      "one_cursor": 0.14,
+      "sixteen_cursors": 1.77,
+      "128_cursors": 19.88
+    },
+    "scope": "40 alternating content loads after4 warmups;2340 measured traversal updates per case. No rendering, cart AI, door animation, browser timing or fight acceptance."
+  },
+  "limitations": [
+    "No Hornfel, decoy, minecart, rail-door actor or seeded encounter has been implemented by this geometry checkpoint.",
+    "Pit flags provide boxes only; actual terrain holes, movement blocking, rail bridges and arena dressing remain missing.",
+    "Straight crossings and end-stop reversal are explicit local policies pending native minecart-controller review.",
+    "Native held-bomb identities/weights, launch law, mine counts, phase2 HP reset and authored animation events are recovered; only payload identity corrections are connected to current combat. Native fuse fields, timer units and full attack choices remain unresolved.",
+    "Decoy special damage flags, carrier passengers, room controller lifecycle, escape/reward and Horny Boys split rules still require implementation and source review.",
+    "Existing hostile payload flight, fuse, damage, source immunity, field lifetime and shared hurt windows remain local adaptations. Bomb pushing, exact hostile flame durability and named item/character exceptions are unfinished.",
+    "The five rendered browser cases and dedicated browser rail suite are focused checks. The full137-case game browser suite has not been rerun at the current fingerprint.",
+    "CPU traversal/loading measurements are not rendered Linux/WASM boss performance; no varied-build fight balance or complete readability acceptance exists."
+  ],
+  "failures_resolved": [
+    {
+      "issue": "First rail-target build ran before CMake knew about the newly added target.",
+      "resolution": "Reconfigured CMake, built the target, then passed standalone and full native tests."
+    },
+    {
+      "issue": "Current REPENTOGON GetPlayerTarget and Game::Spawn patterns do not uniquely match the installed baseline.",
+      "resolution": "Retained as unmatched. Followed actual native call targets/wrapper argument flow; did not label unverified patterns as exact matches."
+    }
+  ],
+  "previous_checkpoint": "docs/reports/isaac-enemy-port/ordnance/checkpoint.json",
+  "next_work": [
+    "Review native minecart/door controller and damage-flag/bomb-field semantics.",
+    "Fit source dimensions/categories into a dedicated arena before terrain/dressing generation.",
+    "Implement actor ownership, animation-event scheduling, native choices, cart loss and killed/escaped completion; then seeded routing and six acceptance gates."
+  ],
+  "runtime_sha256": {
+    "CMakeLists.txt": "fb4fb4d161f17a5267000c76484b77c830d495b8cf7f5884f7e63ad58ed4121e",
+    "assets/mechanics/behaviors.mechanics": "49c45b03a2005fe597edea753520760bf42a15a6d5ab3d1ed60e6533fad2a3b8",
+    "assets/mechanics/boom_flies.mechanics": "859f167c7ff71782d2e413e96b0b9c201d9464b0801dd72f114ba2586fe83943",
+    "assets/mechanics/bosses.mechanics": "404394fdbfdf561e287a16870ed28ad26deebb90ef1acd6b10252c1b810b18a3",
+    "assets/mechanics/builds.mechanics": "0bcf33eba3828c05bcf713256ef15a31c3968425d1cb6dfb1eed888a138c1514",
+    "assets/mechanics/chargers.mechanics": "5a8cb81b52180875ab49528f0e4c630611e1ad89e1ba8fc8ee9a6ebddc66cd29",
+    "assets/mechanics/companions.mechanics": "22ddb472b8d292e1ccccc689ef6ec31568355c437ccc3d4d87841f407ae95dca",
+    "assets/mechanics/deaths.mechanics": "2301cbd02f5459983f5c506a8c928ef569929e8b8263435a6fad8c14789172d5",
+    "assets/mechanics/encounters.mechanics": "6d66c8578d8b1238164c181582f26856c9713df4e3a3237f65b53d3353d56651",
+    "assets/mechanics/enemy_bombs.mechanics": "8210eb0136c6f964489510d53800306dbc85dfaf3d86b9223d233df9ccae9a2f",
+    "assets/mechanics/fire.mechanics": "ca66fab40ece6e1bd196182fd834590df0da94a0c77223169747f9fa3f9e8502",
+    "assets/mechanics/fly_bombs.mechanics": "c325126411b64e4e946a0a178bdbbdcd6bc4f9b1c53041f55e227dcf7ac46061",
+    "assets/mechanics/formations.mechanics": "a465f037bb9d3722019fb49bd39e5f99d9e7b732bc05c61d747244f0ea037acc",
+    "assets/mechanics/hops.mechanics": "8850939c80eabd9b40354de81f98542f13371ab677eba102ea7bd8e504c1c47d",
+    "assets/mechanics/items.mechanics": "ad33532c0b4456cd01838feefb4de58f4752478f62250a9818d3a2dcfbe66b7e",
+    "assets/mechanics/loki.mechanics": "4ca0897d15b6f3bcef2ca70c6d5c517871d8d9e41d41d8b80c4718d3211db38f",
+    "assets/mechanics/monsters.mechanics": "4a70dbdc68eddc03db08705c25cee955247bc1f41e92ae9efa07aca74703dd00",
+    "assets/mechanics/pools.mechanics": "dbfbf853ead0cf3b94c3aae315fb941d499fb639f956846961aa2be66431006b",
+    "assets/mechanics/rails.mechanics": "1de889da1a6e0f60a25226b6830e9377c26c9ad66d28631b366d85ef974f1592",
+    "assets/mechanics/replacements.mechanics": "5f79c6441fb062f5e8410b0674909559252d8ebe58b197c7cc48001e90099a9e",
+    "assets/mechanics/segmented.mechanics": "fa7bb1a9f80e5bf678de4e0ddf2675431f03b6cf72c8aa4f82a94783078f36a1",
+    "assets/mechanics/shell.mechanics": "8d529ab7bd17c25ade650ef0df964530c405f1f5840b8ec21c97b4d91f4d6730",
+    "assets/mechanics/stages.mechanics": "ecb01977180ab3cc17fd5b55efa69e0ecbe58d5b9c7ca6635a3580af45751d76",
+    "assets/mechanics/statues.mechanics": "080a9c86d2bec364bfbeea65894425df6cc502f1051221b3a03c09864c396ff5",
+    "scripts/isaac-reference/analyze-hornfel-native.py": "379d458bec0e849568182b7adf71c1fe493bf16e0f6339f58514077389c216a9",
+    "scripts/isaac-reference/export-hornfel-rails.py": "90cd385ea8af9e9b129c4df9d44225447f1ab1012b4f9cc49985eec5d45d8c8c",
+    "scripts/isaac-reference/extract-hornfel-animations.py": "fdf07cc7342bb634dd77c852563dd83f2e740b4b93aae06f213eb42d2dc553ce",
+    "scripts/isaac-reference/plan-enemies.py": "50e727fefdf7807e9acd80755caf568caac91cfffad9f4fee64ba384bdd542fb",
+    "scripts/isaac-reference/track-enemies.py": "6fb588a6d5a882ff2c00892ce8a4031b12d6983f66346aab4aa64f948d434962",
+    "src/combat/BloatBoss.cpp": "47c37be2acf282cb0ba6478218e8baced89f00a2d376e57fdca092c57d947770",
+    "src/combat/BoomFlies.cpp": "5afff95d89b7679d6a0ae0e0fb2515d988c064c0e3a8bcc4166638837f88e9ad",
+    "src/combat/CanyonBoss.cpp": "143383616708b9fb2ef1312c9efa4ee44520195da6f5cdb71cd7853d1e499c9e",
+    "src/combat/Charging.cpp": "9f955b8c2d88839e7eecb675771337dc9208411f71addcfbae638e3d1f6dc10c",
+    "src/combat/Companions.cpp": "c7b323c82ce8374e383d4ce1c1cdae36b052afb69ad8410f4274774921737623",
+    "src/combat/Destruction.cpp": "207c466f2be01104e8242329f0b30173ef8ef5d4145c96d48a923706eac72da2",
+    "src/combat/Dynamite.cpp": "84c918800d521d86ca31985d475414c8ceaceaf8869358c6d49ed2f69e2ed0fa",
+    "src/combat/Encounters.cpp": "c3d63ae423bdd727d283370918bc736e42b9245f39bcb8a6a885590fac28cc67",
+    "src/combat/Enemies.cpp": "65d9e584d49e3ae29bcc1055debe4eaa69eea403fa15b00e6815f6ffc75c3960",
+    "src/combat/EnemyBombs.cpp": "396431fd117e2e8a015e1478f04f2624e65f06df6862042762c7dc4ac828992d",
+    "src/combat/FireReactions.cpp": "c683628cf24049ddadb101a7efb3c5cda1504067fdcc120520c2767e732a6aca",
+    "src/combat/FlyBombs.cpp": "ed14034430f4b87cd8c479a77b3084b08081c268a77ef112fdce3ad665efed75",
+    "src/combat/Hopping.cpp": "f101721200e94b1074b0b355f21bfef26a2c0aebc1ca307e00697f5959daef53",
+    "src/combat/LokiBoss.cpp": "d0f2d4257d613d428e332d810155ff70b55b3014f12f8f9368494d2a5d4470e6",
+    "src/combat/MonsterBoss.cpp": "987c4cb42197a74b4233c0e8cd7a40870615eb00df1436653f929611ae7fb17a",
+    "src/combat/Monsters.cpp": "37273dbf9e3db237dc60cdbd0da9beabe0ae25ba30c3d89b7a5adc6259243b74",
+    "src/combat/Navigation.cpp": "8ace7d1fa863ca92ebab0f3173592f99e8cc72e28f21ef4ef0f651167efa706b",
+    "src/combat/OwnedComponents.cpp": "830754ef50812f1cedff3d9252c08d699388543ba43401544f233dea95ea7a9b",
+    "src/combat/SegmentedBoss.cpp": "00784b7ee4805c1c83d26fee588685a24748d41cdf493549b6384c26e7662fe4",
+    "src/combat/ShellBoss.cpp": "25aaa2ba95797a8ed3ac96169a5dbf5c9cd05701e326ae970d9681704618ef57",
+    "src/combat/Simulation.cpp": "909d6c3a90af60d95eba36bc526421a6ca0d985c96692fa660733042202ad703",
+    "src/combat/Simulation.hpp": "99fd32720ee1cdf39d3bc1423ee0f7181eb87034c564ef60e844932f017f66b6",
+    "src/combat/Statues.cpp": "dfc6ae0e41f22bafc0c3595eb682eb9da475bea4f08ce787658a074315438b8e",
+    "src/combat/SuppliedBombs.cpp": "545a9ef197d7e8ae6004762be0afd2587803c2e63f1407d8b3a058b61a9d5775",
+    "src/content/EncounterVariants.cpp": "273cd6e2b6367bb88c197cef10ef446a11cac1d15478a70ec3c0ed396a5e1d0b",
+    "src/content/Mechanics.cpp": "9f4349f905d6332503acacec5f00567b9d2ef0aea66d3aa6ec0957cde3d3aced",
+    "src/content/Mechanics.hpp": "84da5602d68817f56620b88ba0fcdbf95c730c20db79f1f3f6d1bf4c6b45acdf",
+    "src/core/Game.cpp": "af202cbabf667eb08113e4678b7be181e9b208037865e7aad2e5506a91acf732",
+    "src/core/Types.hpp": "08ac9c07c578b6e8937c21c81ffed35c52ee1c5a1125b84ffa859a24721c7789",
+    "src/main.cpp": "93c7a2b7f2b36388af3edfb8a3fc7f835e8e9a6cd524024f8af6f45e5bc1df01",
+    "src/render/MissionLighting.cpp": "d10c7da15ee554338a0ee08b8bc1fa2396889d5aa9a611f52b6b16af261cef75",
+    "src/render/MonsterVisuals.hpp": "72a5f7e5116c3e90c61e3eb8ced81185c0c9912766fbcfa202ae296a1c8fa64e",
+    "src/render/Renderer.cpp": "9ba2b55df38e1d2c3520546e1b90bda1535dc728ef41de05620e6af390730951",
+    "src/world/Dungeon.cpp": "3b6dea21f88e5ea88f242402ac0cff96a22af7c8786be2f5b19936a9236fe53b",
+    "src/world/Dungeon.hpp": "7bfddfffc4d7ada8f664cf98d2591b89964e229cc73c0254b0c2a77e5459b287",
+    "src/world/Expedition.hpp": "6dbc13c2f49c986b2bc22377c74f72f355a471b02187cb13a48e06cfe3c153f0",
+    "src/world/FlightNavigation.cpp": "0a4203d24214c88a8f23c0d7bcd0fd5e24dea150f4b8dac476d0ff845bf4f845",
+    "src/world/FloorDressing.cpp": "e02f8938625205b5b69824d17a33f7a6e2fda7862c040ebfe79b6af7a548ae20",
+    "src/world/RailNetwork.cpp": "f26d23d76d1fbf315dd872d0edc08abe578a08c06853a95635c5705e0baa48bb",
+    "src/world/RailNetwork.hpp": "8046f5d17db4e1c96ef84730ee91dffdef950e0ddcdd0b3e2d0947c366948d34",
+    "tests/bloat_tests.cpp": "ca93e01493cab789314a078298e1dd98c323e57af5c44d84281862d618212560",
+    "tests/boom_fly_tests.cpp": "e1326010ace0a99afa66360a60a33d7a1014106ef71607211e53f849ecbfe359",
+    "tests/charger_variant_tests.cpp": "4351307ff5584985e51665e82c28ef1a3940a0f309193e44818f6e45b2926adf",
+    "tests/companion_tests.cpp": "d81494db50b92f214d01a664345a9bb6a9ca3dfe4a06102cea494f8087b4877a",
+    "tests/enemy_bomb_tests.cpp": "6169dd406cbf3169db937f5f8082ad24e686639508f4770f6bf94e38cd6c21e6",
+    "tests/expedition_economy_tests.cpp": "0622d34726e5445eb35b7fe8f13d04e9a03d176d3be4f4e1ec48f22bc9ed39f9",
+    "tests/floor_progression_tests.cpp": "f67cc231ea2c117d9b46cb271b0f79dadac47517b01e422e988e47c15dfccbb8",
+    "tests/fly_bomb_tests.cpp": "2dcdf71708830d4e290b4b2528949916bcd1a1e15232a3b00cf10fc1832a2b60",
+    "tests/input_tests.cpp": "574edccb86fb2895bb723f8911fed14d3597c4eb6c84eb1000780c710cda45cb",
+    "tests/loki_tests.cpp": "6f0721e6780a425802b8fdd3f24465bc3655ca723452541766e2c0721a8d5ea0",
+    "tests/maw_tests.cpp": "e34b0c3ddf04aa15204fdf4d8889ffef13243642a89dc7fd7564f1ae00e86b73",
+    "tests/mechanics_tests.cpp": "ef3c50e91bd13baccb9c5c271a2ed1d94624a9659b510044e03d07e6cd94aa89",
+    "tests/monster_boss_tests.cpp": "37c1f90a84ef435445d3895e3e5dbb64064586f6545b5439bddd200ce9ba0298",
+    "tests/monster_tests.cpp": "3822c37ce9eb7ee3623be59dddf54598dc00bff20090b6fc728ebaa4879b04f9",
+    "tests/pacing_tests.cpp": "af40a45c9ed3ecd3337f6ff84ed68b6c2ec9bbe61966f87716b75e4626160253",
+    "tests/quake_tests.cpp": "ab0478a79ceeec74ddbb9735c465465518278a490d31cfea4cc9ae53fd067073",
+    "tests/rail_tests.cpp": "3231aae585fbeea61ccd653fd245ef5d89d2d12a26c7b2c0bd5dd7cccf15bee0",
+    "tests/replacement_tests.cpp": "b0c865d853afed057afc501717988a0a3f57e4b6d105e4e8dd4a22718f1bd4b9",
+    "tests/segmented_boss_tests.cpp": "9fa14a50349e998a12ce694a5cded88057b5086496dfeee43bc3d672af7746d7",
+    "tests/shell_tests.cpp": "17064e1dd055d2034aa8247209699b57751b99a3cf6c59dff8f491f4d379e982",
+    "tests/statue_tests.cpp": "13aec90151c86c489b84cd2812c54ebfc8117b2472ce3d0c031d13de190f29c0",
+    "tests/supplied_bomb_tests.cpp": "cea404f62ee05af2a59ce585a2be33f997fa3302d90e327a3336897c9739723e",
+    "web/enemy-port-test.cjs": "20bbf70d35d7e9a26182c905934c908a255e36ce8af0243aadaf4cf5a139850e",
+    "web/rail-test.cjs": "472d7ea580e5be949052b99ecb08b1b6f770ca578a4569e9696ddb0f26912499",
+    "web/shell.html": "6283fddf2c2e6902a78fdc49e6af875fd5ae6410360313bd0f2fab596f406e48"
+  },
+  "build_sha256": {
+    "build-web/index.data": "c64d3df39f13367756d23417b4a47d2fe7e6861477c9d3f3b7d3c2e22e2dde71",
+    "build-web/index.data.gz": "779c94734c4b9eef650c900d4f145323f92dfe1bdd920842b7416fb6c9003e7e",
+    "build-web/index.html": "8733b99838fd71b52bb4555fb9339d21d988a0c33ee07cf7d20e2764b3e01efc",
+    "build-web/index.js": "207ff8b18f993d0bf80244a95e5fc77dc9bedcd8acbedb242cd5618da31ef8f7",
+    "build-web/index.js.gz": "f75f4bb7caf4f1734f4d7dd61e963f066f0bfb63042527081f8d658117ac899d",
+    "build-web/index.wasm": "83e2e1931dbacf0a337a01a62e7297b10cad854af39e933daed1dca0066c786b",
+    "build-web/index.wasm.gz": "6bf884dbc350b8f87558829ac7171479331768b53eee6c8cd31e617241193bd3",
+    "build/deathward": "e40cea17099b3a1f858de2790fac1c60011d165b08b894a20628ccd4602ec205"
+  },
+  "rail_test_build_sha256": {
+    "/tmp/deathward-rail-wasm/index.data": "eb7aa6502c98bfdc0adb6aa3c9ae46c16375304235b2fc5fa94c4a4d1c1cddeb",
+    "/tmp/deathward-rail-wasm/index.js": "e7e47a86404013f189539bd9fdb6ab1b827773ff9238fc085097574f7141f858",
+    "/tmp/deathward-rail-wasm/index.wasm": "6e3cad2de64ac3ad0290f78e2f1572d0818f1a3052ce7fecdeaf4bc10c77d21e"
+  },
+  "reference_sha256": {
+    "README.md": "e4c943828964c1558ff762490ec9659ca4a2efb9ac6072f8856463389155cb42",
+    "docs/isaac_monsters.md": "28dba2654d2817e88ccb7d55cc471503c1a38d22c7b9b5d69fff2b9527ba603f",
+    "docs/research/isaac-enemy-port-plan.json": "eb1f287cb7613ef031360c12bd9148c01f5a9fee3a5735e023eed85c2a1761aa",
+    "docs/research/isaac-enemy-port-status.csv": "9e127ea7d3e836b2fedeb76a1a1f79864174eebbbb27a3a3d19bb4020a67520a",
+    "docs/research/isaac-enemy-port-status.json": "5a99e658fd5f6787cf300e0364040d328b2ea69af42b296db134a4a7eed3774d",
+    "docs/research/isaac-enemy-port-validation.json": "220930e6a29abe9943599c07b1743d5b7b77b0a13f63cc9cd85d5884df3ba818",
+    "docs/research/isaac-mechanics-reference.json": "51a84e580d93a78f6cf220cc173ebd4abc0d32ad127ffb64cfd85efa8a5cc00e"
+  },
+  "artifacts_sha256": {
+    "docs/reports/isaac-enemy-port/hornfel/animations/906.000_hornfel.anm2": "a694e97c48044426c1cacdfb6ba587b7e30de8b2a9d656cd1b978c3986a9a191",
+    "docs/reports/isaac-enemy-port/hornfel/animations/965.000_minecart.anm2": "c88210ccd0b6c885b2543fc8996278d31a9ce3cfd05a075d5bcb6903b3cdb7f9",
+    "docs/reports/isaac-enemy-port/hornfel/animations/965.001_hornfel minecart.anm2": "6fa2fca05ba746b4786bddd00d825c5fe2772fb7c48fb31681f6662e9901b005",
+    "docs/reports/isaac-enemy-port/hornfel/animations/door_10_bossroomdoor_rails.anm2": "f58822b5ff22ca659581b2901162ea14e28d4834ed20493e55927051ffc9ebb3",
+    "docs/reports/isaac-enemy-port/hornfel/animations/grid_rail.anm2": "9ba1d01a144675052651d516674738eb9b77d36a805ed8513144c553f547d2db",
+    "docs/reports/isaac-enemy-port/hornfel/animations/manifest.json": "b397e7062b385e7e06bd3b99ad90193b09e6aa0831e163137751184189664e85",
+    "docs/reports/isaac-enemy-port/hornfel/checklist.txt": "12fc04882c6d244b7d65cd224fefee5e99100dad668adfbd19d303fac31562ed",
+    "docs/reports/isaac-enemy-port/hornfel/focused/browser.txt": "48ff29745d1d3db7889354c71f9d731253b42c44a2ec7125af7af4c5a9ce3510",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-bombs.json": "552dd3673d7ec777ca602b0add06e96105b9ffbd8d913be114ccdcb50e4d1130",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-brimstone-100.png": "6983c20b133f91753cc17cc7c16d94c38ee9507b9bcb41495e9be68e2fa9288b",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-brimstone-200.png": "e5ddfecb6de6aabb9b875c7db8e24da790fdf836c959bfe9bbf408cbe479fb05",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-brimstone-45.png": "22daa49cb477e998c4e33234760b5b374aa474b5f5418171a18d57f34cb28bbe",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-hornfel_normal-100.png": "e171bd7eef7b18dc2952d6a0f91f0bee8c1e98b3410471b826c70a2da242eeb1",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-hornfel_normal-200.png": "926af20d010b0d5e109a0a9ebb498334c9fadfb3639613784657d0c67d37eb5b",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-hornfel_normal-45.png": "65afafbc450f569bfc6941addfbf48fd7cfdd8b1fd0ce29841d9b013354a216e",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-hot-100.png": "fd8d50041f8feaba91979094dbb7452120c0b074e1ededf0ec793422c8082328",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-hot-200.png": "f38ebc5e9150ba0889010e3e9d4d2e9a2b9b776feda95ce76ed1ee831059834f",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-hot-45.png": "c4e35f4d98e43139b1f5339f1bfd711087d4d071b247b76f8fe3b1d91d5a2509",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-normal-100.png": "5d5ac211fe6aeca4fea6cd4e7e330bb6ffe3c305b505c1e2262315024b41a165",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-normal-200.png": "0b03d8f1728c0e09d3a24f920fed6edb3234207bce2c6108efff15e50cc355e3",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-normal-45.png": "170b04848ccd3745923015c76de0dac7d728536ef7bbc7f8d4bd8babfaabc78c",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-sad-100.png": "bb2779f362ec50cec42ee7d18d473c205775cb9f593297a815e44337efa14e58",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-sad-200.png": "54f40eb27161d3d2ecf3b8f999d40cccfb7f93e91ebb47f2ff8e285688386ba2",
+    "docs/reports/isaac-enemy-port/hornfel/focused/wasm-ordnance-sad-45.png": "2541539783f54766e631af5bae9c5be114df624abda5646d27c1d5d6538472f2",
+    "docs/reports/isaac-enemy-port/hornfel/historical-integrity.json": "e4229adddb337c48063b1abba39b4fd8789736a3e2c1f9d8e34a9ad63b05540f",
+    "docs/reports/isaac-enemy-port/hornfel/linux-bloody-sad-100.png": "2045eaeb547e84391b81026e759aaadaed61ebb5854a0b7d7a11b11a941be41d",
+    "docs/reports/isaac-enemy-port/hornfel/linux-bloody-sad-100.txt": "bd75712ed4a7f48d0c18b5a61758e8bff009693a9be14a63cec405e5aa1a6ed1",
+    "docs/reports/isaac-enemy-port/hornfel/native/entity_get_hit_points.asm": "b014bbe951636c349e9712196ba1efb49f73823014c2fe9ade37f5167795b3e1",
+    "docs/reports/isaac-enemy-port/hornfel/native/entity_get_max_hit_points.asm": "fe0423e9ea6151be6b804d1119dc14d5288d449105d90c8812d50e582e0aac8f",
+    "docs/reports/isaac-enemy-port/hornfel/native/entity_set_hit_points.asm": "0a1b5d07cbac8a12cb7484635b931d26425095a8be2d220bc5269dcd30840083",
+    "docs/reports/isaac-enemy-port/hornfel/native/entity_set_max_hit_points.asm": "b27e503f718cfa3e4b0325571db84aa8948e9e7daaa8ff4fa57bd8714685b6fc",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a4dc0.asm": "1edce20a58cc7e1d7aaac7e73ec570a6c81948a4464e1febcc65e2b873b4341b",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a4e70.asm": "18021cda9c5c1ee914ac31db8ccb29305455bb9556969dba73ece179ebb9c6be",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5120.asm": "d281cee2e570d3425dff5733ca26d32f3c82894ea405c9cfcaaf5fc9663faff2",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5a10.asm": "0544c9f8c904b415b541ced0c217bdd5c696e410197601f7afc680fd61ccdcdd",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a5c40.asm": "e32182572c161bf212aed8d121904271d9a7249827b08b13bb6c68037061852c",
+    "docs/reports/isaac-enemy-port/hornfel/native/helper_4a6080.asm": "8c8f9352d432e25677dba73c06a470cc0e26d3cf78b36944c786eb378aab8b59",
+    "docs/reports/isaac-enemy-port/hornfel/native/hornfel_update_ai.asm": "02a95eefcc992479fd180ee36a31ee626b583e983ab2e924e057f422eb81fa4d",
+    "docs/reports/isaac-enemy-port/hornfel/native/hornfel_update_frame.asm": "6660d67658d5c765965a1eac80fdcf484a1cf29b890b1a53a364d2043e64d66f",
+    "docs/reports/isaac-enemy-port/hornfel/native/lua_health_properties.asm": "f277413505f86d0b9f89b762923eaf8ba5a758596587e7a330599c997738b4b2",
+    "docs/reports/isaac-enemy-port/hornfel/native/manifest.json": "5b9484b5ea29f9b1b503f61406ead7bb7e9d21fb47befd4a366400aa01a83245",
+    "docs/reports/isaac-enemy-port/hornfel/native/spawn_target_prefix.asm": "36cae3f3ec494863e29420692a309e06da82f2a9e04df7d2df2898272b88b339",
+    "docs/reports/isaac-enemy-port/hornfel/native/spawn_wrapper.asm": "e715b0e4fdd8b230519ca35e9126242fc6d4c700e5cdbd68228f63ec5249fd44",
+    "docs/reports/isaac-enemy-port/hornfel/native-build.txt": "d470d5c4b142f9681c2855f1730ed0d19e61978a0b2b45180935aa0c39a0ade6",
+    "docs/reports/isaac-enemy-port/hornfel/native-final-build.txt": "e493fff3a2537875fdf4c756b52330dbf0e39f9d60c1432c905aa4c8bf0099b1",
+    "docs/reports/isaac-enemy-port/hornfel/native-focused.txt": "5e1ae4feb36ecf95bcfa574791a743a58c103bfd1e9d41e2617f5cc4aeb8a9c1",
+    "docs/reports/isaac-enemy-port/hornfel/native-focused.xml": "e49ceb79ea3a39463340235bd4e6cdfb857b601e31f73c74814a6c1d945bebf1",
+    "docs/reports/isaac-enemy-port/hornfel/native-review.json": "ed4dc2d45834b9dc936b7980c6918c2e8ab27cc03221b5f8a0181bc425991c93",
+    "docs/reports/isaac-enemy-port/hornfel/native-tests.txt": "16eff97bbc43117be0901660a6b70b712ee0f5c7ed273b600defed82a0329b1f",
+    "docs/reports/isaac-enemy-port/hornfel/native-tests.xml": "7a655610a600acc74f100f8d697a05ebd0c7d67c20ad22a3281c361cdd3f8906",
+    "docs/reports/isaac-enemy-port/hornfel/performance-context.json": "4729c8116eb8798e5af8d093181eb45ff9615aa1c8a87253e8891f5b6e06f48e",
+    "docs/reports/isaac-enemy-port/hornfel/performance.txt": "a748afa25020fb8b9cff03cdce7a9150052696050d513ec75cfda20a11a41641",
+    "docs/reports/isaac-enemy-port/hornfel/rail-performance.cpp": "0c8a7ffc65d0457d50f9e6a5c40705643f9744dbe8d5ed7bce5da40d409eb1ae",
+    "docs/reports/isaac-enemy-port/hornfel/rail-source.json": "c49772459ab6981d78788fb22f12e29cb96d9d61b2351fe1120ab8e8e6c838a9",
+    "docs/reports/isaac-enemy-port/hornfel/visual-review.json": "7147eae13969f55e3c38cb991a038d3e443b913d922d33f125752af037201c09",
+    "docs/reports/isaac-enemy-port/hornfel/wasm-build.txt": "5419527e39ccc6dd160293964f88fcd6c4b6a44fe1c9f27ed117f0abf1b2b663",
+    "docs/reports/isaac-enemy-port/hornfel/wasm-rail-build.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/reports/isaac-enemy-port/hornfel/wasm-rails.json": "c8b56c7f05b697a9414155854cccc08a455e6717734d8aa3b8c0788efef8011f",
+    "docs/reports/isaac-enemy-port/hornfel/wasm-rails.txt": "b8b3299c2b3f7b5063c5fb778b3b950acfb860cd65cb8f5a09ef7dabe20c51cf"
+  },
+  "hash_snapshot_utc": "2026-10-26T04:26:52.299448+00:00"
+}

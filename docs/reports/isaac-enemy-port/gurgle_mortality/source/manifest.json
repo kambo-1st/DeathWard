@@ -1,0 +1,153 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Ordinary Gurgle87.0, Crackle87.1 and Splasher238.0 damage/death slice, plus bounded attack preflight. No runtime attack/placement approval.",
+  "signatures": [
+    {
+      "declaration": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityRef.zhl",
+      "method": "EntityRef::constructor",
+      "signature": "558bec83e4f88b55??83ec0c53",
+      "address": "0x4229a0"
+    },
+    {
+      "declaration": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+      "method": "Entity_NPC::Morph",
+      "signature": "558bec83e4f883ec30a1????????33c4894424??8b45",
+      "address": "0x697c60"
+    }
+  ],
+  "named_bindings": [
+    {
+      "name": "FireBossProjectiles",
+      "registration": "0x8076a6",
+      "function": "0x6a3420",
+      "bytes": "6820346a00680035b500"
+    },
+    {
+      "name": "FindGridPath",
+      "registration": "0x8044c2",
+      "function": "0x7a3650",
+      "bytes": "6850367a0068d011b500"
+    },
+    {
+      "name": "EvadeTarget",
+      "registration": "0x8044a4",
+      "function": "0x7a4830",
+      "bytes": "6830487a0068c411b500"
+    }
+  ],
+  "projectile_rtti": {
+    "descriptor": "0xbeabf4",
+    "locator": "0xb6d514",
+    "vtable": "0xb46790",
+    "init": "0x62f1b0",
+    "update": "0x62f6f0"
+  },
+  "findings": [
+    "Gurgle: dead flag, residualHP strictly>-25, rng%100<15, variant0; Morph238.0.0/champion-1, clearDead and restore maxHP;20..39update delay.",
+    "Damage entry source starts+0x10: EntityRef Type/SpawnerType/Flags at+0/+8/+0x20. EntityRef constructor independently verifies NPC fields and maps FLAG_FRIENDLY0x20000000 to bit2.",
+    "Gurgle/Crackle filter FIRE|EXPLOSION; Splasher EXPLOSION only. Exempt source friendly, direct type1, spawner1/3, and DAMAGE_TNT0x1000. These are not blanket player bomb immunities.",
+    "Source projectile EXPLODE bit2 invokes named BombDamage with50damage,60radius,lineCheck=true and producer pointer if available.",
+    "Projectile default height-23. FireProjectiles mode0 overrides falling speed-3,accel.1; Splasher adds-5/.3 =>-8/.4 before common flight update. Gurgle uses FireBossProjectiles count1/trajectory10 then velocity*.55,accel-.6,speed*.7-3. Common flight integration remains unresolved."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/gurgle_mortality.asm",
+      "start": "0x509002",
+      "end": "0x5090ee",
+      "raw_sha256": "7391ddcb88cf5a06cb941da1840ee0639c63996c015fa38bf4ec5760c8292996",
+      "sha256": "87dc6ef6a30ace75350ffcdecf9201eee0d6bf6c76feb77a61426e68ad8545b2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/splasher_immunity.asm",
+      "start": "0x4f8f99",
+      "end": "0x4f9008",
+      "raw_sha256": "2c1d8a96e25dfd66ba64c12799c75310dcff508215888688f377fd2e49942a3a",
+      "sha256": "6cc9ed955c95eaab525d17d16e70657e5b7c3e0a28df170e41c1e59dd1bb68c1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/entity_ref.asm",
+      "start": "0x4229a0",
+      "end": "0x422abb",
+      "raw_sha256": "a0938574cfe7e51a2add97241e21e6911ca31f2513410b4d045410897592b5c7",
+      "sha256": "61f4ab302c7f86e58e3223a513013b139c0a79d578c41a5fba44ad927c429ccd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/gurgle_acquisition.asm",
+      "start": "0x509479",
+      "end": "0x509581",
+      "raw_sha256": "3d0cca2433ea2a78bdcb31cba6ad104bff5bff49e187c80458b85ccee34c8a01",
+      "sha256": "59a24afde8bfcb5409fd0e7a087f1bcec164776908f5b92ed81e6fadfb53590a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/gurgle_shot.asm",
+      "start": "0x5096c5",
+      "end": "0x509725",
+      "raw_sha256": "6b6c4cdf2fb1921aa4d6714d7818620601a5234bdffeb56062a809d924714edb",
+      "sha256": "c9be8624d63a0298b708ab4e856f84db5a220e322fc23b0c0c4aa34d94a9ac82"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/gurgle_ballistic_modifiers.asm",
+      "start": "0x50987f",
+      "end": "0x5098ee",
+      "raw_sha256": "6c34b0710d3b33cadbb42f5b798dcfbf517119f54b170ee883c6ff62d113fad8",
+      "sha256": "1a9b8234c3da823021ba0f83decc1915bf139e3293d6394331c9f35a5fc92b60"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/splasher_shot.asm",
+      "start": "0x4f9194",
+      "end": "0x4f9408",
+      "raw_sha256": "551f9ed10717e071ee56c773715580a96e34cd58936bf43aa0dbe419aa540004",
+      "sha256": "919f5d540dec680a81fc64684a63d4de0e175bef0a843ca2c52ac4e0c76d9716"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/projectile_defaults.asm",
+      "start": "0x62f1ef",
+      "end": "0x62f2d0",
+      "raw_sha256": "9e4fa495b866108d9027dbd320e3b46a557bcd63d521affce743a9ecc4cbfdb2",
+      "sha256": "7c63ab8d86672d6aa14403dd3762584f8ead6d1d6e28946b6b60483c6ea20b52"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/ordinary_shot_defaults.asm",
+      "start": "0x6a3059",
+      "end": "0x6a30c2",
+      "raw_sha256": "34c38fa4a26cb2d47a8bf53dfcd66449d31fe056f76cbfb76ba668163762fb6b",
+      "sha256": "bc14a9c2d657bd1e883111db03f2fe55e3232cd28b71f1ff718d3badb5dac432"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/ordinary_shot_modifiers.asm",
+      "start": "0x6a3170",
+      "end": "0x6a31c1",
+      "raw_sha256": "68cf0256fc0da142005d54b3308a370d5b67b87f912359f41422acd750fd9838",
+      "sha256": "9fae3b8b9bdd95895cdd8ebecc3ef1144a79d64c42ab59a0d71f6469e03bd881"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/boss_shot_trajectory.asm",
+      "start": "0x6a3466",
+      "end": "0x6a3494",
+      "raw_sha256": "0bdd7f253aef76c71ac97e6e96e25c42c8faa8acdae240897ab6f42f380540d8",
+      "sha256": "0fe7eae487ca205cf57ca20e2ec4c9fa42e685607f21d12960ebecef6ee3c299"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/boss_shot_velocity.asm",
+      "start": "0x6a35e8",
+      "end": "0x6a3655",
+      "raw_sha256": "1dff60d596c627f5c8286ed598f2e79dd7c0d25df3d5b43c5f07bc0bb58ba2a8",
+      "sha256": "cef5d79f83c9e706939863a6f5badc56863d7607b7af4785015f7821b0895dff"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/boss_shot_falling.asm",
+      "start": "0x6a36b7",
+      "end": "0x6a3718",
+      "raw_sha256": "288ae105ccde09e38eb692f847b277a409b46c77fb8c64f43dcdb69add84b4df",
+      "sha256": "64eb39a882ce5f20e659c646a3ed9fe02b12d0c8bb59704133762034da3f20f4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_mortality/source/explosive_projectile_blast.asm",
+      "start": "0x631ca4",
+      "end": "0x631d44",
+      "raw_sha256": "b83100c6f03edba3c4991c31bc7cae8945d4edcd388647018701a4bbb0c413a5",
+      "sha256": "91719d8c91d0a4e922bc12623bce9ed2231b9ded7addd6fb3689777820eb81d5"
+    }
+  ]
+}

@@ -1,0 +1,972 @@
+{
+  "status": "Preliminary source collection only; eligibility, behavior and runtime still unreviewed.",
+  "records": [
+    {
+      "key": "40.0.0",
+      "id": 40,
+      "variant": 0,
+      "subtype": 0,
+      "name": "Guts",
+      "xml": {
+        "anm2path": "040.000_Guts.anm2",
+        "baseHP": "25",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "40",
+        "name": "#GUTS",
+        "numGridCollisionPoints": "12",
+        "portrait": "36",
+        "reroll": "true",
+        "shadowSize": "22",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:40.0.0",
+      "wiki_matches": [
+        {
+          "page": "Guts",
+          "box": 0,
+          "group": "entity",
+          "fields": {
+            "id": "40",
+            "base hp": "25",
+            "environment": "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nboss /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it."
+          },
+          "section_indices": [
+            0
+          ],
+          "name": "Guts",
+          "variant": 0,
+          "subtype": 0,
+          "id": 40,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Guts"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 25.0,
+        "2": 25.0,
+        "3": 25.0,
+        "4": 25.0,
+        "5": 25.0,
+        "6": 25.0,
+        "7": 25.0,
+        "8": 25.0,
+        "9": 25.0,
+        "10": 25.0,
+        "11": 25.0,
+        "12": 25.0,
+        "13": 25.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Guts",
+      "room_library_presence": {
+        "rooms/00.special rooms.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/07.depths.stb": {
+          "templates": 21,
+          "positive_weight_templates": 21
+        },
+        "rooms/08.necropolis.stb": {
+          "templates": 5,
+          "positive_weight_templates": 5
+        },
+        "rooms/09.dank depths.stb": {
+          "templates": 20,
+          "positive_weight_templates": 20
+        },
+        "rooms/10.womb.stb": {
+          "templates": 46,
+          "positive_weight_templates": 46
+        },
+        "rooms/11.utero.stb": {
+          "templates": 41,
+          "positive_weight_templates": 41
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 26,
+          "positive_weight_templates": 26
+        },
+        "rooms/26.the void.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/10.womb.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/greed/11.utero.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Guts",
+        "motion": "Wall",
+        "attack": "None",
+        "shape": "Blob",
+        "catalog_base_hp": 64.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 74,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Guts",
+          "section": 0
+        }
+      ],
+      "feature_triage": [
+        "child-spawns-and-ownership",
+        "grid-and-explosions",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "40.1.0",
+      "id": 40,
+      "variant": 1,
+      "subtype": 0,
+      "name": "Scarred Guts",
+      "xml": {
+        "anm2path": "040.001_Scarred Guts.anm2",
+        "baseHP": "28",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "40",
+        "name": "#SCARRED_GUTS",
+        "numGridCollisionPoints": "12",
+        "portrait": "143",
+        "reroll": "true",
+        "shadowSize": "22",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:40.1.0",
+      "wiki_matches": [
+        {
+          "page": "Guts",
+          "box": 1,
+          "group": "entity",
+          "fields": {
+            "dlc": "a",
+            "name": "Scarred Guts",
+            "image name": "* [Before Repentance] Afterbirth",
+            "variant": "1",
+            "base hp": "28",
+            "environment": "Womb / Scarred Womb / \nchallenge /",
+            "replace": "Guts",
+            "replace chance": "50%",
+            "replace notes": "in Scarred Womb",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, leaving a trail of damaging Red Creep."
+          },
+          "section_indices": [
+            2
+          ],
+          "name": "Scarred Guts",
+          "variant": 1,
+          "subtype": 0,
+          "id": 40,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Guts"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 28.0,
+        "2": 28.0,
+        "3": 28.0,
+        "4": 28.0,
+        "5": 28.0,
+        "6": 28.0,
+        "7": 28.0,
+        "8": 28.0,
+        "9": 28.0,
+        "10": 28.0,
+        "11": 28.0,
+        "12": 28.0,
+        "13": 28.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Scarred Guts",
+      "room_library_presence": {
+        "rooms/10.womb.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 18,
+          "positive_weight_templates": 18
+        },
+        "rooms/greed/12.scarred womb.stb": {
+          "templates": 8,
+          "positive_weight_templates": 8
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Scarred Guts",
+        "motion": "Wall",
+        "attack": "None",
+        "shape": "Blob",
+        "catalog_base_hp": 72.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 75,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Guts",
+          "section": 2
+        }
+      ],
+      "feature_triage": [
+        "locomotion-and-navigation",
+        "randomness"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    },
+    {
+      "key": "40.2.0",
+      "id": 40,
+      "variant": 2,
+      "subtype": 0,
+      "name": "Slog",
+      "xml": {
+        "anm2path": "040.002_Slog.anm2",
+        "baseHP": "28",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "40",
+        "name": "#SLOG",
+        "numGridCollisionPoints": "12",
+        "portrait": "325",
+        "reroll": "true",
+        "shadowSize": "22",
+        "stageHP": "0",
+        "variant": "2"
+      },
+      "source_file": "entities2.xml",
+      "group": "enemy",
+      "record_key": "entity:40.2.0",
+      "wiki_matches": [
+        {
+          "page": "Guts",
+          "box": 2,
+          "group": "entity",
+          "fields": {
+            "dlc": "r",
+            "name": "Slog",
+            "variant": "2",
+            "base hp": "28",
+            "environment": "Dank Depths / \nchallenge /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, charging at Isaac when he is in sight."
+          },
+          "section_indices": [
+            3
+          ],
+          "name": "Slog",
+          "variant": 2,
+          "subtype": 0,
+          "id": 40,
+          "template": "infobox monster"
+        }
+      ],
+      "wiki_match_method": "entity/item ID",
+      "wiki_pages": [
+        "Guts"
+      ],
+      "evidence": {
+        "numeric": "installed Repentance 1.7.9b XML",
+        "behavior": "current wiki revision; edition notes must be respected",
+        "native_ai_timers": "not established by XML or API declarations",
+        "implementation": "research only; no behavior ported by this report"
+      },
+      "hp_by_stage": {
+        "1": 28.0,
+        "2": 28.0,
+        "3": 28.0,
+        "4": 28.0,
+        "5": 28.0,
+        "6": 28.0,
+        "7": 28.0,
+        "8": 28.0,
+        "9": 28.0,
+        "10": 28.0,
+        "11": 28.0,
+        "12": 28.0,
+        "13": 28.0
+      },
+      "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+      "hp_formula_source": "Stage HP",
+      "display_name": "Slog",
+      "room_library_presence": {
+        "rooms/09.dank depths.stb": {
+          "templates": 36,
+          "positive_weight_templates": 36
+        }
+      },
+      "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+      "deathward": {
+        "name": "Slog",
+        "motion": "Wall",
+        "attack": "None",
+        "shape": "Blob",
+        "catalog_base_hp": 88.0,
+        "behavior": "legacy",
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 76,
+        "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+      },
+      "port_contract": {
+        "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+        "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+        "state_requirements": [
+          "spawn/activation",
+          "idle and target acquisition",
+          "movement and path selection",
+          "attack selection and telegraph",
+          "attack emission",
+          "recovery",
+          "damage/vulnerability",
+          "phase transitions",
+          "death/children",
+          "room-clear participation"
+        ],
+        "parameters_not_established": {
+          "walk_speed_world_units_per_second": null,
+          "acceleration": null,
+          "attack_cooldown_seconds": null,
+          "telegraph_seconds": null,
+          "projectile_speed": null,
+          "attack_selection_weights": null,
+          "animation_event_ticks": null
+        },
+        "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+        "required_checks": [
+          "fixed seed and RNG calls",
+          "line of sight versus alignment",
+          "pit/wall/flying navigation",
+          "contact and projectile damage",
+          "vulnerability during each state",
+          "slow/freeze/charm effects",
+          "overkill and offspring",
+          "phase HP ownership",
+          "despawn versus room clear",
+          "save/load and re-entry"
+        ],
+        "implementation_status": "not ported by this research"
+      },
+      "behavior_section_refs": [
+        {
+          "page": "Guts",
+          "section": 3
+        }
+      ],
+      "feature_triage": [
+        "fire-rate-and-charge",
+        "grid-and-explosions",
+        "status-effects",
+        "locomotion-and-navigation"
+      ],
+      "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+    }
+  ],
+  "plan_rows": [
+    {
+      "record_key": "entity:40.0.0",
+      "id": "40.0.0",
+      "source_name": "Guts",
+      "display_name": "Guts",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Guts",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 74
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 21,
+          "positive_weight_templates": 21,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 20,
+          "positive_weight_templates": 20,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 46,
+          "positive_weight_templates": 46,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 41,
+          "positive_weight_templates": 41,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 26,
+          "positive_weight_templates": 26,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        2,
+        3
+      ],
+      "proposed_first_band": 2,
+      "proposed_first_band_name": "Abandoned Works",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nboss /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Guts",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266739"
+        }
+      ],
+      "feature_review_hints": [
+        "child-spawns-and-ownership",
+        "grid-and-explosions",
+        "locomotion-and-navigation"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:40.1.0",
+      "id": "40.1.0",
+      "source_name": "Scarred Guts",
+      "display_name": "Scarred Guts",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "28",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Scarred Guts",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 75
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        3
+      ],
+      "proposed_first_band": 3,
+      "proposed_first_band_name": "Storm Cut",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Womb / Scarred Womb / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Guts",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266739"
+        }
+      ],
+      "feature_review_hints": [
+        "locomotion-and-navigation",
+        "randomness"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:40.2.0",
+      "id": "40.2.0",
+      "source_name": "Slog",
+      "display_name": "Slog",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "28",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Slog",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 76
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 36,
+          "positive_weight_templates": 36,
+          "proposed_band": 2,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        2
+      ],
+      "proposed_first_band": 2,
+      "proposed_first_band_name": "Abandoned Works",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Dank Depths / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Guts",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266739"
+        }
+      ],
+      "feature_review_hints": [
+        "fire-rate-and-charge",
+        "grid-and-explosions",
+        "status-effects",
+        "locomotion-and-navigation"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    }
+  ],
+  "articles": {
+    "Guts": {
+      "title": "Guts",
+      "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Guts",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266739",
+      "revision": 266739,
+      "timestamp": "2026-07-27T05:31:51Z",
+      "license": "CC BY-SA 4.0",
+      "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "level": 0,
+          "text": "Guts is a monster that attaches itself to a wall or obstacle, such as a rock, rolling around the contour of the terrain.\nIf the obstacle it is attached to is destroyed, then it will continue rolling in the direction it was previously traveling until it meets another wall or obstacle.\n\nThey make up for their limited movement by being very fast, and in numbers they can tighten movement space (especially in layouts containing narrow passages). Two of them are spawned by Mama Guts upon death."
+        },
+        {
+          "heading": "Variations",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Scarred Guts",
+          "level": 3,
+          "text": "Scarred Guts are paler versions of the regular Guts. They have a 50% chance of replacing normal Guts in the Scarred Womb. They behave identically to regular Guts but leave behind a trail of damaging Red Creep and move slightly faster than their regular counterparts."
+        },
+        {
+          "heading": "Slog",
+          "level": 3,
+          "text": "Slogs are much darker than Guts and bear a yellow eye in their center that follows Isaac's position. Initially, they behave identically to Guts while moving slightly slower and leaving behind a trail of slowing Black Creep. However, when Isaac cardinally aligns with them, they charge at him until colliding with a wall or obstacle, where they will then resume their previous behavior. Slogs are exclusive to the Dank Depths."
+        },
+        {
+          "heading": "Cyst",
+          "level": 3,
+          "text": "Cysts behave like normal Guts but they will occasionally shoot 1 blood shot towards Isaac if he is close enough.\n\nTwo of them will be spawned if a Dead Meat is killed."
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "text": "\u2022 Guts and their variants are immune to Strange Attractor's effect."
+        },
+        {
+          "heading": "Gallery",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Trivia",
+          "level": 2,
+          "text": "\u2022 [Repentance] The Cyst first appeared in the Antibirth mod.\n\n\u2022 Cysts in real life are abnormal growths, usually non-cancerous, filled with fluid or other semi-solid substances. Some even develop in organs or contain pores."
+        }
+      ],
+      "boxes": [
+        {
+          "template": "infobox monster",
+          "section": 0,
+          "fields": {
+            "id": "40",
+            "base hp": "25",
+            "environment": "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nboss /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it."
+          },
+          "group": "entity",
+          "id": 40,
+          "name": "Guts",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            0
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 2,
+          "fields": {
+            "dlc": "a",
+            "name": "Scarred Guts",
+            "image name": "* [Before Repentance] Afterbirth",
+            "variant": "1",
+            "base hp": "28",
+            "environment": "Womb / Scarred Womb / \nchallenge /",
+            "replace": "Guts",
+            "replace chance": "50%",
+            "replace notes": "in Scarred Womb",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, leaving a trail of damaging Red Creep."
+          },
+          "group": "entity",
+          "id": 40,
+          "name": "Scarred Guts",
+          "variant": 1,
+          "subtype": 0,
+          "section_indices": [
+            2
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 3,
+          "fields": {
+            "dlc": "r",
+            "name": "Slog",
+            "variant": "2",
+            "base hp": "28",
+            "environment": "Dank Depths / \nchallenge /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, charging at Isaac when he is in sight."
+          },
+          "group": "entity",
+          "id": 40,
+          "name": "Slog",
+          "variant": 2,
+          "subtype": 0,
+          "section_indices": [
+            3
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 4,
+          "fields": {
+            "dlc": "r",
+            "name": "Cyst",
+            "id": "862",
+            "base hp": "25",
+            "environment": "Corpse / \nchallenge /",
+            "behavior": "Attaches itself to a wall or obstacle and rolls around it, regularly firing blood shots at Isaac."
+          },
+          "group": "entity",
+          "id": 862,
+          "name": "Cyst",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            4
+          ]
+        }
+      ]
+    }
+  }
+}

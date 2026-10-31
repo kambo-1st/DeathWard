@@ -1,0 +1,13 @@
+DeathWard: http://127.0.0.1:8098
+127.0.0.1 - - [26/Oct/2026 23:06:00] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-12.0.0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:00] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:00] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:00] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:11] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-12.0.0&enemy-terrain=cover HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:11] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:11] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:11] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:21] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-12.0.0&resident-seed=1&resident-floor=0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:21] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:21] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:06:21] "GET /index.wasm HTTP/1.1" 200 -

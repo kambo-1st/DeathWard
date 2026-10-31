@@ -1,0 +1,9 @@
+CONTOUR sides=1111 turns=20 position=-7.48896,-1.6335
+MOVEMENT source_forces=3/3.3/2.45 retention=.6 partition=1 rock_contour=1 removed_obstacle=1
+SLOG windup6=1 committed=1 impact=1 recovery60=1 cover=1 cardinal=1
+TRAIL red20=1 tar150=1 damage12.5=1 tar_no_damage=1 owner_death=1 fade=1 capacity=1
+CONFIG external_reload=1 immutable=1 invalid5=1
+NATURAL_GUTS variant=0 seed=7 floor=3 room=3 context=3
+NATURAL_GUTS variant=1 seed=9 floor=6 room=5 context=0
+NATURAL_GUTS variant=2 seed=19 floor=3 room=3 context=3
+PASS Guts contracts

@@ -1,0 +1,90 @@
+[
+  {
+    "name": "open",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-27.3.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hard_host/native-open.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/hard_host/native-open.png",
+    "log": "docs/reports/isaac-enemy-port/hard_host/native-open.txt"
+  },
+  {
+    "name": "slam-hop",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-27.3.0",
+      "--frames",
+      "135",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hard_host/native-slam-hop.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/hard_host/native-slam-hop.png",
+    "log": "docs/reports/isaac-enemy-port/hard_host/native-slam-hop.txt"
+  },
+  {
+    "name": "closed",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-27.3.0",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hard_host/native-closed.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/hard_host/native-closed.png",
+    "log": "docs/reports/isaac-enemy-port/hard_host/native-closed.txt"
+  },
+  {
+    "name": "resident",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-27.3.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/hard_host/native-resident.png",
+      "--resident-seed",
+      "1",
+      "--resident-floor",
+      "2"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/hard_host/native-resident.png",
+    "log": "docs/reports/isaac-enemy-port/hard_host/native-resident.txt"
+  }
+]

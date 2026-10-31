@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="5"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="120"
+	timestamp="2026-10-26T22:16:47"
+	>
+	<testcase name="floor_progression" classname="floor_progression" time="120.548" status="run">
+		<system-out>Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_CHARGER id=855.0 seed=0 floor=5 room=12 variant=0
+NATURAL_GRILLED seed=1 floor=0 room=4
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_REPLACEMENT seed=3 floor=1 room=1 source=23.0 target=23.1
+NATURAL_CHARGER id=23.3 seed=5 floor=2 room=8 variant=2
+NA...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+	<testcase name="monster_behaviors" classname="monster_behaviors" time="4.0705" status="run">
+		<system-out>chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 163 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.1 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.1 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.1 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.1 entity=48 x=0.486997 z=7.04164
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.0642 z=8.15202
+GROUN...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+	<testcase name="monster_replacements" classname="monster_replacements" time="2.12241" status="run">
+		<system-out>REPLACEMENT_ODDS source=15.0 replaced=90 samples=10000
+REPLACEMENT_ODDS source=15.1 replaced=90 samples=10000
+REPLACEMENT_ODDS source=29.0 replaced=5965 samples=10000
+REPLACEMENT_ODDS source=23.0 replaced=5002 samples=10000
+REPLACEMENT_SNAPSHOT one_shot=1 budget_reserved=1 immutable=1 explicit_spawn=1
+FLOODED_QUARRY samples=600 flooded=192 patches=42 geometry_unchanged=1
+FLOOR_VARIANTS scorched=192 samples=600 patches=16 geometry_unchanged=1
+REPLACEMENT_RESIDENTS iblob=8 safe_placement=1 target_stats=1 reentry=1
+PASS conditional replacements and floor variants
+</system-out>
+	</testcase>
+	<testcase name="source_immunity_and_lethal_morph" classname="source_immunity_and_lethal_morph" time="0.318304" status="run">
+		<system-out>SOURCE_IMMUNITY channels=1 exceptions=1 execution=1
+SOURCE_LIFETIME dead_producer=1 allied_source=1 tnt=1
+LETHAL_MORPH same_id=1 stage_hp=1 capacity=1 no_reward=1 reentry=1 overkill=1
+LETHAL_CHANCE transformed=147 trials=1000 seeded=1 config=1
+MORTALITY_PASS
+</system-out>
+	</testcase>
+	<testcase name="gurgle_splasher_physical_lobs" classname="gurgle_splasher_physical_lobs" time="6.50575" status="run">
+		<system-out>chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+LOB_FLIGHT source_ticks=240 endpoint_match=1
+NATURAL_LOBBER type=238 seed=0 floor=5 room=3 hp=67.84
+NATURAL_LOBBER type=238 seed=1 floor=3 room=2 hp=57.6
+NATURAL_LOBBER type=238 seed=1 floor=5 room=8 hp=62.72
+NATURAL_LOBBER type=87 seed=2 floor=3 room=3 hp=128
+NATURAL_LOBBER type=238 seed=2 floor=3 room=4 hp=57.6
+NATURAL_LOBBER type=238 seed=2 floor=3 room=7 hp=57.6
+PASS regular lobbers: timing, current aim, movement aim, physical flight, source blast, queue pressure, validation, seeded routing
+</system-out>
+	</testcase>
+</testsuite>

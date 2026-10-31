@@ -1,0 +1,276 @@
+{
+  "covered_suites": 67,
+  "passed": 67,
+  "failed": 0,
+  "suites": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "floor_progression": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native-floor-retry.xml"
+    },
+    "item_builds": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "expedition": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "save_slots": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "building_navigation": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "particle_emission": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "town_characters": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "train_motion": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "object_animation": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "mission_shop": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "money_pickups": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_flight": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_formations": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "bloat_boss_and_chargers": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "charger_variants": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "companion_familiars": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "room_statues": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "maw_attraction": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "quake_waves": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "supplied_bombs": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "fly_bombs": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "enemy_bomb_payloads": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "authored_rails": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "boom_flies": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "loki_bosses": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "hornfel_boss": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "rail_passengers": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "bony_regular_enemy": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "black_bony_regular_enemy": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "source_immunity_and_lethal_morph": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "gurgle_splasher_physical_lobs": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "crackle_discrete_fire_jets": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "horf_stationary_shooting": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "buzzing_flies": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "tainted_pooter_impacts": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "hive_evaders": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "segmented_bosses": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "shell_boss": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "mission_themes": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "core_contracts": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "report": "docs/reports/isaac-enemy-port/hive/native.xml"
+    }
+  },
+  "note": "Initial full run66/67; only floor_progression failed. The expanded fallback seed search then passed unchanged production mechanics. No failed original report was overwritten."
+}

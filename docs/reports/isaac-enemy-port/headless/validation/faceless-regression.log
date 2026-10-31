@@ -1,0 +1,6 @@
+AGGRESSION passive=1 proximity=1 damage=1 propagation=1 latch=1 through_cover=1
+SHOTS frames9_12=1 fixed_ring6=1 tainted_gravity=1 retained=1 movement_during_attack=1 cadence19=1 damage_chance_cost=1
+MORTALITY trials450=220 gusher=149 pacer=71 strict_overkill=1 same_entity=1 retained_payload=1
+PARTITION passive_active=1 source_cadence=1 spawner_lifetime=1 adaptive_armor=1
+CONFIG immutable_reload=1 rejected_contracts=5
+PASS Faceless family

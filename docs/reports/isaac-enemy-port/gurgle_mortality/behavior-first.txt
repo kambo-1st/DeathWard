@@ -1,0 +1,2 @@
+SOURCE_IMMUNITY channels=1 exceptions=1 execution=1
+live TNT detonation bypasses immunity

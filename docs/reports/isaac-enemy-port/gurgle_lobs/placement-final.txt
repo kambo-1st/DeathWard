@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  5: floor_progression
+    Start 54: gurgle_splasher_physical_lobs
+1/5 Test #54: gurgle_splasher_physical_lobs ......   Passed    6.51 sec
+    Start 53: source_immunity_and_lethal_morph
+2/5 Test #53: source_immunity_and_lethal_morph ...   Passed    0.32 sec
+    Start 29: monster_behaviors
+3/5 Test #29: monster_behaviors ..................   Passed    4.07 sec
+    Start 35: monster_replacements
+4/5 Test #35: monster_replacements ...............   Passed    2.12 sec
+5/5 Test  #5: floor_progression ..................   Passed  120.55 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) = 120.55 sec
