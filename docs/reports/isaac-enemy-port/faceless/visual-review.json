@@ -1,0 +1,67 @@
+{
+  "status": "Four final native captures inspected; scoped image evidence, not complete readability or performance acceptance.",
+  "style": "Original",
+  "images": [
+    {
+      "path": "native/final-0-90.png",
+      "sha256": "db1bcc7a4b7183acfdd04553ab58245ae8f95c352bd81282bd1d6ef2efd61064",
+      "inspected": true,
+      "variant": 0,
+      "frame": 90
+    },
+    {
+      "path": "native/final-0-300.png",
+      "sha256": "c9bf0335732bd0354a39c5d4ea3b70fc689672dab876d645124bba894a188d7f",
+      "inspected": true,
+      "variant": 0,
+      "frame": 300
+    },
+    {
+      "path": "native/final-1-90.png",
+      "sha256": "cd9781b265dbba5c1ccd3e5fbf777bf558e6cb3a2dff1401094ce7927ea58337",
+      "inspected": true,
+      "variant": 1,
+      "frame": 90
+    },
+    {
+      "path": "native/final-1-300.png",
+      "sha256": "3fbcd07a7c519415d14ba34dbf4df013d3744f67a51e0fc5913bfedf33c36a72",
+      "inspected": true,
+      "variant": 1,
+      "frame": 300
+    },
+    {
+      "path": "web/faceless-isolated-ring.png",
+      "sha256": "103ae257b2e9c9c212c10e7a0fa98ffbbca67e88271c15588796f4abb6a05326",
+      "inspected": true
+    },
+    {
+      "path": "web/tainted-faceless-isolated-windup.png",
+      "sha256": "7dcf100aecd948cba02cb4cdcd39bb1e52632ff0c267aa1d76545ec9ed380c3c",
+      "inspected": true
+    },
+    {
+      "path": "web-natural-final/faceless-natural-ring.png",
+      "sha256": "54b892d6921ab517c9e28a35eab84a243cc3d621e813d483c22dcd1f4af8b6b6",
+      "inspected": true
+    },
+    {
+      "path": "web-natural-final/tainted-faceless-natural-ring.png",
+      "sha256": "f9901cfe72ccffe45f480857b5b97ed5e415bb540f15de253db5124413267efe",
+      "inspected": true
+    }
+  ],
+  "observations": [
+    "Both variants retain low-poly bodies; Tainted has a larger dark head and ordinary a lighter head.",
+    "Red radial projectiles, their shadows and cosmetic blood marks are visible on canyon ground.",
+    "The incorrect aimed warning line is absent.",
+    "An early-frame background lamp visually intersects the enemy silhouette; it is scenery, not part of the model.",
+    "At close contact the player and enemy overlap, obscuring facial detail and weakening silhouette readability.",
+    "These captures do not establish crowded encounter readability, color-vision accessibility or complete attack telegraph quality.",
+    "Displayed 9\u201312 FPS was captured during concurrent compilation and is not controlled performance evidence.",
+    "Browser captures preserve ordinary light and Tainted dark silhouettes; the Tainted isolated windup capture occurs during a white damage flash.",
+    "Automatic ring capture selects the first emission frame, when projectiles are still at the body. Trace evidence establishes the volley; these images alone do not demonstrate its spread.",
+    "Actual generated canyon rooms include nearby actors, walls, river and cover. Actor overlap and scenery still obscure some details; no complete crowded readability claim."
+  ],
+  "browser_pending": false
+}

@@ -1,0 +1,42 @@
+Start testing: Oct 28 20:19 CET
+----------------------------------------------------------
+2/118 Testing: mechanics_content
+2/118 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 28 20:19 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,-7 new=1,9
+Mechanics contracts passed
+<end of output>
+Test time =   2.42 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 28 20:19 CET
+"mechanics_content" time elapsed: 00:00:02
+----------------------------------------------------------
+
+93/118 Testing: first_floor_damage_statuses
+93/118 Test: first_floor_damage_statuses
+Command: "/home/kambo/workspace/DeathWard/build/deathward_damage_status_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_damage_statuses" start time: Oct 28 20:19 CET
+Output:
+----------------------------------------------------------
+DOT_TIMING all_five=1 poison_and_burn=1 rates_30_60_120=1 expiry_before_tick=1 six_ticks=1
+DOT_REAPPLY cap=1 extended=1 phase=1 strongest_damage=1 source_floor=1 source_snapshot=1
+DOT_COMBINATIONS independent=1 freeze=1 slow=1 modal=1 long_step=1 movement=1 inactive_room=1
+DOT_MORTALITY all_five=1 one_reward=1 morph=1 due_tick_backpressure=1 payload_snapshot=1 independent_retry=1
+DOT_CONFIG external=1 immutable_reload=1 opt_in=1 rejected_profiles=8 invalid_api=1
+First-floor Poison/Burn contracts passed
+<end of output>
+Test time =   1.36 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_damage_statuses" end time: Oct 28 20:19 CET
+"first_floor_damage_statuses" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Oct 28 20:19 CET

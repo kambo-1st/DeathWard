@@ -1,0 +1,38 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  2: mechanics_content
+ 1/13 Test  #2: mechanics_content ..................***Failed    0.01 sec
+/home/kambo/workspace/DeathWard/assets/mechanics/first_floor_statuses.mechanics:11: Unknown command 'damage_status'
+
+      Start 30: monster_behaviors
+ 2/13 Test #30: monster_behaviors ..................   Passed    4.87 sec
+      Start 34: source_projectile_motion
+ 3/13 Test #34: source_projectile_motion ...........   Passed    0.35 sec
+      Start 51: monster_fire_reactions
+ 4/13 Test #51: monster_fire_reactions .............   Passed    0.28 sec
+      Start 71: source_immunity_and_lethal_morph
+ 5/13 Test #71: source_immunity_and_lethal_morph ...   Passed    0.84 sec
+      Start 74: horf_stationary_shooting
+ 6/13 Test #74: horf_stationary_shooting ...........   Passed    1.09 sec
+      Start 86: gaper_family
+ 7/13 Test #86: gaper_family .......................   Passed    0.46 sec
+      Start 89: headless_family
+ 8/13 Test #89: headless_family ....................   Passed    0.60 sec
+      Start 90: first_floor_cohort
+ 9/13 Test #90: first_floor_cohort .................   Passed    5.83 sec
+      Start 91: first_floor_status_effects
+10/13 Test #91: first_floor_status_effects .........   Passed    0.97 sec
+      Start 92: first_floor_freeze_effect
+11/13 Test #92: first_floor_freeze_effect ..........   Passed    1.02 sec
+      Start 93: first_floor_damage_statuses
+12/13 Test #93: first_floor_damage_statuses ........   Passed    1.42 sec
+      Start 94: first_floor_slow_effect
+13/13 Test #94: first_floor_slow_effect ............   Passed    1.33 sec
+
+92% tests passed, 1 tests failed out of 13
+
+Total Test time (real) =  19.06 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+Errors while running CTest

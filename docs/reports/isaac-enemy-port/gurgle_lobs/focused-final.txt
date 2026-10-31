@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 54: gurgle_splasher_physical_lobs
+1/1 Test #54: gurgle_splasher_physical_lobs ....   Passed    4.15 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   4.15 sec

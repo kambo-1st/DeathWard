@@ -1,0 +1,74 @@
+[ 15%] Built target glfw
+[ 18%] Built target raylib
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyStatuses.cpp.o
+[ 18%] Built target deathward_runtime_assets
+[ 18%] Linking CXX static library libdeathward_core.a
+[ 84%] Built target deathward_core
+[ 87%] Built target deathward_cloth
+[ 87%] Built target deathward_skinning
+[ 87%] Built target deathward_particles
+[ 90%] Built target deathward_mission_lighting
+Consolidate compiler generated dependencies of target deathward
+[ 90%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 17%] Built target glfw
+[ 21%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics
+[ 17%] Built target glfw
+[ 21%] Built target raylib
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_damage_status_tests
+[ 95%] Linking CXX executable deathward_damage_status_tests
+[100%] Built target deathward_damage_status_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_slow_tests
+[100%] Linking CXX executable deathward_enemy_slow_tests
+[100%] Built target deathward_enemy_slow_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_freeze_tests
+[ 95%] Linking CXX executable deathward_enemy_freeze_tests
+[100%] Built target deathward_enemy_freeze_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_status_tests
+[100%] Linking CXX executable deathward_enemy_status_tests
+[100%] Built target deathward_enemy_status_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_first_floor_cohort_tests
+[100%] Linking CXX executable deathward_first_floor_cohort_tests
+[100%] Built target deathward_first_floor_cohort_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_headless_tests
+[ 95%] Linking CXX executable deathward_headless_tests
+[100%] Built target deathward_headless_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_gaper_tests
+[100%] Linking CXX executable deathward_gaper_tests
+[100%] Built target deathward_gaper_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_horf_tests
+[100%] Linking CXX executable deathward_horf_tests
+[100%] Built target deathward_horf_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mortality_tests
+[100%] Linking CXX executable deathward_mortality_tests
+[100%] Built target deathward_mortality_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_fire_reaction_tests
+[ 95%] Linking CXX executable deathward_fire_reaction_tests
+[100%] Built target deathward_fire_reaction_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_source_projectile_tests
+[100%] Linking CXX executable deathward_source_projectile_tests
+[100%] Built target deathward_source_projectile_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests

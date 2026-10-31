@@ -1,0 +1,68 @@
+{
+  "verified_utc": "2026-10-28T19:03:13.274469+00:00",
+  "result": "partial_pass",
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "zoom_percent": 160,
+  "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+  "captures": [
+    {
+      "name": "frowning-slow",
+      "image": "native/frowning-slow.png",
+      "sha256": "625b47132fcf597420693fabd84d75b2832da428f4a4fbe5d584422df7ca70c9",
+      "inspected": true,
+      "findings": "Ochre body and small gold hourglass visible; close protagonist overlap partly hides the lower body. This isolated angle does not establish crowded-room readability."
+    },
+    {
+      "name": "gaper-slow",
+      "image": "native/gaper-slow.png",
+      "sha256": "efc12cc4fa5a5468a551a3f7e3b68b4951946d798ff56801fd32af2e776cc577",
+      "inspected": true,
+      "findings": "Slow hourglass visible above the head, foreshortened by the camera; lower body partly overlaps the protagonist. Warm body tint has limited contrast against the canyon ground."
+    },
+    {
+      "name": "gusher-slow",
+      "image": "native/gusher-slow.png",
+      "sha256": "5b94248d58d42180ef26e0255c6604c6f02528cb98b45ca61e6b2a3a0bf39404",
+      "inspected": true,
+      "findings": "Headless silhouette, blood column and airborne shot remain distinct; Slow cue visible. Probe records independent projectile time_scale=0.5."
+    },
+    {
+      "name": "pacer-slow",
+      "image": "native/pacer-slow.png",
+      "sha256": "2b8d05fb1ba98bd964eee00bc7ac9e3139cd99250f201e140bd17c90d06dc0a2",
+      "inspected": true,
+      "findings": "Headless silhouette and Slow cue visible; no airborne shot in this frame, consistent with its contact-only controller."
+    },
+    {
+      "name": "horf-slow",
+      "image": "native/horf-slow.png",
+      "sha256": "fb7b6397b40313743b37a668303710aacb34dc62d6c415344b3d06b501296977",
+      "inspected": true,
+      "findings": "Stationary head, ochre tint and hourglass visible. Warm terrain reduces tint contrast, so the raised glyph provides the clearer status cue."
+    },
+    {
+      "name": "horf-recovered",
+      "image": "native/horf-recovered.png",
+      "sha256": "ea229f901a2f8b25cf1289c33ab4e0bac0b3b0dc05388908967048ba11ca0100",
+      "inspected": true,
+      "findings": "Hourglass and Slow tint are removed; pale head and attack windup cue/aim line are visible. Probe reports slow_frames=0."
+    },
+    {
+      "name": "gaper-slow-freeze",
+      "image": "native/gaper-slow-freeze.png",
+      "sha256": "e6b68832aaf43171b47cd8a976dd535bc2fd1b98089dfcf0445c1ee1b3904830",
+      "inspected": true,
+      "findings": "Pale blue body and frost glyph take visual priority over Slow; no stacked hourglass clutter. The capture probe retains both timers. A still image alone cannot prove frozen motion."
+    }
+  ],
+  "limitations": [
+    "Isolated native fixtures only; broader mixed-room, occlusion and camera-angle acceptance remains open.",
+    "Slow ochre is close to warm canyon ground and its small hourglass can be foreshortened. Freeze has stronger contrast.",
+    "Timing and projectile claims are supported by automated tests and probes, not by still screenshots.",
+    "Capture FPS is not a controlled performance benchmark."
+  ]
+}

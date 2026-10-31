@@ -1,0 +1,230 @@
+[
+  {
+    "name": "frowning-slow",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "180",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native/frowning-slow.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+    "image_sha256": "625b47132fcf597420693fabd84d75b2832da428f4a4fbe5d584422df7ca70c9",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=slow duration=180",
+      "ENEMY_PROBE id=10.0 frames=100 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-119.075 radius=0.6 speed=0.430298 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=130"
+    ]
+  },
+  {
+    "name": "gaper-slow",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "180",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native/gaper-slow.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+    "image_sha256": "efc12cc4fa5a5468a551a3f7e3b68b4951946d798ff56801fd32af2e776cc577",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=slow duration=180",
+      "ENEMY_PROBE id=10.1 frames=100 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-119.075 radius=0.6 speed=0.311279 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=130"
+    ]
+  },
+  {
+    "name": "gusher-slow",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.0.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "180",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native/gusher-slow.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+    "image_sha256": "5b94248d58d42180ef26e0255c6604c6f02528cb98b45ca61e6b2a3a0bf39404",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=slow duration=180",
+      "ENEMY_PROBE id=11.0 frames=180 alive=1 hp=32 shots=1 threats=1",
+      "ENEMY_ACTOR id=11.0 hp=32 max_hp=32 state=0 owner=0 x=-87.0493 y=0.85 z=-129.596 radius=0.6 speed=5.5905 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=90",
+      "ENEMY_BULLET kind=0 x=-88.8849 z=-130.04 vx=-14.6414 vz=-3.26027 curve=0 life=7.79167 y=2.48429 vy=2.60444 time_scale=0.5"
+    ]
+  },
+  {
+    "name": "pacer-slow",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.1.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "180",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native/pacer-slow.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+    "image_sha256": "2b8d05fb1ba98bd964eee00bc7ac9e3139cd99250f201e140bd17c90d06dc0a2",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=slow duration=180",
+      "ENEMY_PROBE id=11.1 frames=100 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.1 hp=32 max_hp=32 state=0 owner=0 x=-83.2956 y=0.85 z=-128.644 radius=0.6 speed=5.47955 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=130"
+    ]
+  },
+  {
+    "name": "horf-slow",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "180",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native/horf-slow.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+    "image_sha256": "fb7b6397b40313743b37a668303710aacb34dc62d6c415344b3d06b501296977",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=slow duration=180",
+      "ENEMY_PROBE id=12.0 frames=100 alive=1 hp=32 shots=1 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=130"
+    ]
+  },
+  {
+    "name": "horf-recovered",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "180",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native/horf-recovered.png",
+      "--enemy-status",
+      "100",
+      "slow",
+      "0"
+    ],
+    "exit": 0,
+    "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+    "image_sha256": "ea229f901a2f8b25cf1289c33ab4e0bac0b3b0dc05388908967048ba11ca0100",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=slow duration=180",
+      "ENEMY_STATUS frame=100 kind=slow duration=0",
+      "ENEMY_PROBE id=12.0 frames=180 alive=1 hp=32 shots=2 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0"
+    ]
+  },
+  {
+    "name": "gaper-slow-freeze",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "180",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native/gaper-slow-freeze.png",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+    "image_sha256": "e6b68832aaf43171b47cd8a976dd535bc2fd1b98089dfcf0445c1ee1b3904830",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=slow duration=180",
+      "ENEMY_STATUS frame=45 kind=freeze duration=90",
+      "ENEMY_PROBE id=10.1 frames=100 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-122.887 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=62 slow_frames=130"
+    ]
+  }
+]

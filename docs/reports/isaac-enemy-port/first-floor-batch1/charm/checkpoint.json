@@ -1,0 +1,54 @@
+{
+  "verified_utc": "2026-10-28 20:07:50 UTC",
+  "result": "partial_progress",
+  "goal_turn_classification": "Progress: preserved and verified the first-five Charm contract, including newly traced native NPC-projectile damage and contact cadence. No runtime implementation in this slice.",
+  "scope": [
+    "10.0.0 Frowning Gaper",
+    "10.1.0 Gaper",
+    "11.0.0 Gusher",
+    "11.1.0 Pacer",
+    "12.0.0 Horf"
+  ],
+  "mechanics_fingerprint": "9722794efbc282f3",
+  "runtime_changed": false,
+  "newly_completed_records": 0,
+  "report": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/manifest.json",
+  "plan": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/implementation-plan.json",
+  "next_work": "Implement the reviewed Charm contract for the same first five, resolving the explicitly listed native lifetime/damage questions as needed. Preserve temporary/permanent distinction and source projectile/contact semantics. Then complete remaining cohort acceptance before batch2. No roster expansion; skip WASM.",
+  "live_jobs": "None. Source/checklist checks complete; no game/build/capture sessions started.",
+  "validation": [
+    {
+      "name": "pinned-source-check",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "3741b1",
+        "wall_time_seconds": 1.721520897,
+        "exit_code": 0,
+        "original_token_count": 28,
+        "output": "{\"result\": \"pass\", \"mode\": \"check\", \"windows\": 18, \"runtime_implemented\": false, \"newly_completed_records\": 0}\n"
+      }
+    },
+    {
+      "name": "checklist-integrity",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "e53d25",
+        "wall_time_seconds": 0.227896757,
+        "exit_code": 0,
+        "original_token_count": 286,
+        "output": "{\n  \"total\": 653,\n  \"identity_verified\": 653,\n  \"source_archive_available\": true,\n  \"reviewed\": 229,\n  \"dispositions\": {\n    \"ordinary\": 154,\n    \"dedicated\": 7,\n    \"environment\": 16,\n    \"pending\": 424,\n    \"boss\": 8,\n    \"item_dependency\": 2,\n    \"component\": 14,\n    \"hazard\": 16,\n    \"excluded\": 12\n  },\n  \"implementations\": {\n    \"in_progress\": 200,\n    \"missing\": 423,\n    \"existing_unverified\": 18,\n    \"excluded\": 12\n  },\n  \"complete\": 0,\n  \"remaining\": 641,\n  \"required_validation_gates\": [\n    \"behavior\",\n    \"reachability\",\n    \"visual_linux\",\n    \"balance\",\n    \"performance\"\n  ],\n  \"waived_validation_gates\": {\n    \"visual_wasm\": {\n      \"authority\": \"user\",\n      \"instruction\": \"pursure goal - Skip WASM check!\",\n      \"date\": \"2026-10-28\"\n    }\n  },\n  \"milestones\": [\n    {\n      \"number\": 1,\n      \"status\": \"in_progress\"\n    },\n    {\n      \"number\": 2,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 3,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 4,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 5,\n      \"status\": \"pending\"\n    },\n    {\n      \"number\": 6,\n      \"status\": \"pending\"\n    }\n  ]\n}\n"
+      }
+    },
+    {
+      "name": "plan-syntax-and-whitespace",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "dcd1fc",
+        "wall_time_seconds": 0.00002457,
+        "exit_code": 0,
+        "original_token_count": 20,
+        "output": "Plan consistency,18 preserved windows, Python syntax and diff whitespace passed\n"
+      }
+    }
+  ]
+}

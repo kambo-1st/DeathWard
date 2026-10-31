@@ -1,0 +1,7 @@
+FREEZE_DURATION all_five=1 source_cap=1 negative_refresh=1 partition=1 modal=1
+FREEZE_PHYSICS partition=1 passive_friction=1 held_pose=1 no_animation_catchup=1 impulse=1 cover=1
+FREEZE_ATTACKS paused_horf_cast=1 current_aim=1 reload=1 pending_payload=1
+FREEZE_BOUNDARIES long_step_poll_phase=1 partial_frame=1 reapply_pose=1 explicit_thaw=1
+FREEZE_INTERACTIONS contact=1 ordinary_damage=1 other_statuses=1 same_id_morph=1 inactive_room=1
+FREEZE_CONTENT cap_and_motion=1 immutable_reload=1 opt_in=1 rejected_contracts=6
+First-floor freeze contracts passed

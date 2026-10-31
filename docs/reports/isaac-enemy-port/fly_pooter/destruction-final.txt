@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 7: expedition_destruction
+1/1 Test #7: expedition_destruction ...........***Failed   21.58 sec
+FAIL cache approachable from outside for first blast seed 24 theme 1 floor 0
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =  21.58 sec
+
+The following tests FAILED:
+	  7 - expedition_destruction (Failed)
+Errors while running CTest

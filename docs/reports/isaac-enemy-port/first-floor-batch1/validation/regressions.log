@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/5 Test  #2: mechanics_content ..................   Passed    1.60 sec
+    Start 13: save_slots
+2/5 Test #13: save_slots .........................   Passed    0.05 sec
+    Start 30: monster_behaviors
+3/5 Test #30: monster_behaviors ..................***Failed    2.84 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 216 entries including offspring
+FAIL: Gusher uses native speed5 and falling modifiers along movement, not player aim
+
+    Start 51: monster_fire_reactions
+4/5 Test #51: monster_fire_reactions .............   Passed    0.17 sec
+    Start 71: source_immunity_and_lethal_morph
+5/5 Test #71: source_immunity_and_lethal_morph ...   Passed    0.54 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =   5.21 sec
+
+The following tests FAILED:
+	 30 - monster_behaviors (Failed)
+Errors while running CTest

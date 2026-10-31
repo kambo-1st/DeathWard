@@ -1,0 +1,18 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  6: floor_resident_placement
+    Start 93: adaptive_armor
+1/6 Test #93: adaptive_armor .....................   Passed    0.40 sec
+    Start  2: mechanics_content
+2/6 Test  #6: floor_resident_placement ...........   Passed    4.14 sec
+    Start 28: resident_enemies
+3/6 Test  #2: mechanics_content ..................   Passed    6.20 sec
+    Start 68: rail_passengers
+4/6 Test #28: resident_enemies ...................   Passed    2.53 sec
+    Start 71: source_immunity_and_lethal_morph
+5/6 Test #71: source_immunity_and_lethal_morph ...   Passed    1.00 sec
+6/6 Test #68: rail_passengers ....................   Passed    2.26 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   8.90 sec

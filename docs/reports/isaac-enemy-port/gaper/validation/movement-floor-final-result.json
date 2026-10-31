@@ -1,0 +1,14 @@
+{
+  "runner_pid": 1102169,
+  "started_utc": "2026-10-28T11:48:09.352544+00:00",
+  "binary_sha256": "bb9c3ea2869b9b70a4de88bdf1072acbf36c650dcf846a0b1159529ec91c7a16",
+  "mechanics_fingerprint": "ec8492eb3ee9db9",
+  "command": [
+    "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+  ],
+  "state": "interrupted",
+  "previous_failure": "movement-floor-result.json; discovered support budget defect, now fixed in FloorEncounters.cpp and covered by1600 small-room cases",
+  "child_pid": 1102172,
+  "verified_utc": "2026-10-28T12:00:22.815624+00:00",
+  "interruption_evidence": "Tool handle88940 unknown; runner1102169 and child1102172 absent from process table. No successful exit recorded."
+}

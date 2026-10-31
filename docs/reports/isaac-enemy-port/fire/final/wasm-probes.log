@@ -1,0 +1,7 @@
+PASS WASM clotty-flame: 1 threats, 0 kills
+PASS WASM clotty-burning: 1 threats, 0 kills
+PASS WASM clotty-live-fire: 1 threats, 0 kills
+PASS WASM fire-above-cover: 1 threats, 0 kills
+PASS WASM clotty-flooded: 1 threats, 0 kills
+PASS WASM clotty-flooded-death: 0 threats, 1 kills
+PASS WASM hopper-fire-burn: 1 threats, 0 kills

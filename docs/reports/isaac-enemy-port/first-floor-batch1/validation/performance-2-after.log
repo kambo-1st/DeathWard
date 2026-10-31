@@ -1,0 +1,3 @@
+COHORT_PERF trial=0 samples=1800 mean_us=20.5368 p95_us=29.04 max_us=148.634 actors=20 peak_bullets=5 suppressed=0 render=0
+COHORT_PERF trial=1 samples=1800 mean_us=20.3342 p95_us=28.88 max_us=176.249 actors=20 peak_bullets=5 suppressed=0 render=0
+COHORT_PERF trial=2 samples=1800 mean_us=20.5937 p95_us=29.57 max_us=135.049 actors=20 peak_bullets=5 suppressed=0 render=0

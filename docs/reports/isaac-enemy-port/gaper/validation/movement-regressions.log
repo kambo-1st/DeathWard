@@ -1,0 +1,44 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/6 Test  #2: mechanics_content ..................***Failed    1.91 sec
+Encounter pool needs an unlimited positive-weight cost-1 single-actor basic in band 0
+
+    Start 30: monster_behaviors
+2/6 Test #30: monster_behaviors ..................***Failed    6.89 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 207 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.96989 z=7.52732
+GROUND_PASSAGE type=10.1 entity=45 x=-0.942119 z=1.4
+GROUND_PASSAGE type=10.1 entity=46 x=-1.01704 z=7.65166
+GROUND_PASSAGE type=10.1 entity=47 x=0.943654 z=1.38922
+GROUND_PASSAGE type=10.1 entity=48 x=0.126532 z=9.07116
+FAIL: ground steering allows every pursuer through a narrow opening
+
+    Start 51: monster_fire_reactions
+3/6 Test #51: monster_fire_reactions .............   Passed    0.37 sec
+    Start 53: monster_replacements
+4/6 Test #53: monster_replacements ...............***Failed    0.06 sec
+FAIL: Encounter pool needs an unlimited positive-weight cost-1 single-actor basic in band 0
+
+    Start 71: source_immunity_and_lethal_morph
+5/6 Test #71: source_immunity_and_lethal_morph ...   Passed    1.21 sec
+    Start 83: headless_family
+6/6 Test #83: headless_family ....................   Passed    0.67 sec
+
+50% tests passed, 3 tests failed out of 6
+
+Total Test time (real) =  11.11 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+	 30 - monster_behaviors (Failed)
+	 53 - monster_replacements (Failed)
+Errors while running CTest

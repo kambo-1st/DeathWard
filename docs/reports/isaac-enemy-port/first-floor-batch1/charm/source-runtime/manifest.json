@@ -1,0 +1,77 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-runtime/projectile_default_damage.asm",
+      "start": "0x62f249",
+      "end": "0x62f27a",
+      "raw_sha256": "55f22eefae29b5cf6ca7e44d6eca41067f3ae1e00fc7fdaa1321e1e54ee1407d",
+      "sha256": "5aceb9dd835628c4d364072afb55c365438098d86a8e746b08dd3ed366e06f72"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-runtime/first_charm_vectors.asm",
+      "start": "0x680df0",
+      "end": "0x680e31",
+      "raw_sha256": "01f75dbe5a429c051ee3fe8539097a8594c595eac8116567497656c385c73c98",
+      "sha256": "e4a8c123824e60ec0a0f0e234f4d02cca7e98acc111fc61b05940c19c52ea358"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-runtime/retaliation_item_gate.asm",
+      "start": "0x6ac3e0",
+      "end": "0x6ac4b5",
+      "raw_sha256": "eb89802423ef2a5b6a176c52324236a697fbf4ec96e748b9e64667fceca34526",
+      "sha256": "dadd8305f683b50f2410e60b37d05dc6557fc4af60aa3ae9b563c250a220b2a9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-runtime/retaliation_target.asm",
+      "start": "0x6909f0",
+      "end": "0x690ac6",
+      "raw_sha256": "4f517d7069f8eabe6f5b69e0f7ad737f7fe38e81f2bee5fa58c9b346a5f2966b",
+      "sha256": "1d53223561819d4638e6690fcb4a7b04f78fab744966ec0fc59102e404fcf7fa"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-runtime/target_affiliation.asm",
+      "start": "0x6aeb40",
+      "end": "0x6aebce",
+      "raw_sha256": "976a5823b917a1ccd461e3a9382b501d7ce998e222f572934d56142a1689d63b",
+      "sha256": "f9796c4c8d57f94dfdfd5a090e7645b555b44457c7c81632a53957c9a86c40d1"
+    }
+  ],
+  "references": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/manifest.json",
+      "sha256": "f1fb14e6fdf382aabdca0052499d4f4285c7182de11a22b19ca2b670408fee46"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/shared_acquisition.asm",
+      "sha256": "3aa17539fcfcdf31c68bfbb09d92224e2cc49d93447f98a903706e2475cfea5c"
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/items.xml",
+      "sha256": "ee567ed920b1bcada61f2a2d65e48563286fe7e8bf00363ad763ac2aa3ae64b7"
+    }
+  ],
+  "findings": [
+    "Projectile constructor62f270 writes CollisionDamage2e0=float1. Combined with the ordinary NPC collision+5 branch already preserved, native6HP maps to19.2 DeathWard enemy HP at3.2 scale. Player-target damage remains the existing local10HP, before the existing player damage multiplier.",
+    "First temporary Charm calls680df0, which clears two cached vector pairs368/36c and370/374; it does not grant FRIENDLY or zero the actual velocity2b8/2bc.",
+    "NPC damage retaliation6ac3e0 is gated by item0x187 (391, Betrayal in preserved items.xml). Do not invent unconditional retaliation as part of ordinary Charm. The helper6909f0 prefers nearer targets and stores duration150 from this call, but full item production remains separate work.",
+    "Native target-affiliation predicate6aeb40 immediately permits a temporary CHARM actor (CHARM without FRIENDLY), including player fallback. The retained shared acquisition path calls this predicate. Permanent conversion has a different branch and is explicitly unsupported by this runtime slice."
+  ],
+  "adaptations": [
+    "Positive temporary Charm only. Negative permanent conversion returns false and CLI rejects it; permanent followers and persistence remain unfinished, not simulated by abs(duration).",
+    "The existing 3D actor representation maps candidate collision/visibility exclusions to existing room-hazard, buried, teleport, thrown and returning-body states. Isaac-specific room flag7185 and external decoy/item targeting remain unported.",
+    "Gaper pursuit, Horf acquisition/current Shoot aim and Fear/Shrink evasion use the resolved target. Headless random movement remains unchanged. Confusion retains its own random target/suppression rules.",
+    "Temporary shots retain NPC flight and player damage, with independent enemy-hit flag and enemy-target damage. Selected Gusher payloads retain policy through capacity retry; already emitted projectiles retain policy after owner expiry/death.",
+    "Physical NPC contact is sampled on the real30Hz clock with swept relative 3D spheres and terrain sight. The per-source touched set follows staggered3-update cache cycles, held by Freeze. Queue saturation retains one selected hit per source; selected damage is not recalculated on retry.",
+    "The core game uses fixed simulation steps. A caller passing a whole long physics step receives one swept contact sample, not a reconstructed inter-actor simulation of every missing native frame. Long-step contact equivalence is not claimed.",
+    "Existing hostile damage/death event attribution and local loot/item hooks remain in use. Native generic friendly/companion incoming damage is not claimed by this temporary-only slice.",
+    "Pink body tint, a small heart marker and pink NPC projectiles are original procedural presentation. No Isaac sprites, new player item, roster expansion or WASM checks are introduced."
+  ]
+}

@@ -1,0 +1,585 @@
+{
+  "status": "Partial Fly Bomb checkpoint; full 653-record goal remains active. No newly completed ports.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "mechanics_fingerprint": "399a66917e81589c",
+  "runtime_definitions": 154,
+  "item_definitions": 12,
+  "ids": [
+    "819.0.0",
+    "819.1.0"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/fly_bombs/source-review.json",
+  "native": {
+    "passed": 51,
+    "failed": 0,
+    "tests": {
+      "enemy_port_coverage": {
+        "result": "pass",
+        "seconds": 0.311073
+      },
+      "mechanics_content": {
+        "result": "pass",
+        "seconds": 1.16301
+      },
+      "expedition_economy": {
+        "result": "pass",
+        "seconds": 34.0886
+      },
+      "canyon_bosses": {
+        "result": "pass",
+        "seconds": 6.71065
+      },
+      "floor_progression": {
+        "result": "pass",
+        "seconds": 67.4713
+      },
+      "item_builds": {
+        "result": "pass",
+        "seconds": 8.09401
+      },
+      "expedition_destruction": {
+        "result": "pass",
+        "seconds": 56.105
+      },
+      "walkable_areas": {
+        "result": "pass",
+        "seconds": 0.0316707
+      },
+      "expedition": {
+        "result": "pass",
+        "seconds": 14.3437
+      },
+      "expedition_pacing": {
+        "result": "pass",
+        "seconds": 9.90789
+      },
+      "flag_cloth": {
+        "result": "pass",
+        "seconds": 0.219218
+      },
+      "save_slots": {
+        "result": "pass",
+        "seconds": 0.0633659
+      },
+      "arrival_quest": {
+        "result": "pass",
+        "seconds": 1.11827
+      },
+      "cinematic_timeline": {
+        "result": "pass",
+        "seconds": 0.059086
+      },
+      "canyon_roads": {
+        "result": "pass",
+        "seconds": 7.05307
+      },
+      "canyon_rivers": {
+        "result": "pass",
+        "seconds": 16.2684
+      },
+      "redstone_hub": {
+        "result": "pass",
+        "seconds": 0.578468
+      },
+      "building_navigation": {
+        "result": "pass",
+        "seconds": 0.0303433
+      },
+      "particle_emission": {
+        "result": "pass",
+        "seconds": 0.0189797
+      },
+      "town_characters": {
+        "result": "pass",
+        "seconds": 0.0185984
+      },
+      "ambient_animals": {
+        "result": "pass",
+        "seconds": 0.171037
+      },
+      "train_motion": {
+        "result": "pass",
+        "seconds": 0.503495
+      },
+      "object_animation": {
+        "result": "pass",
+        "seconds": 0.0467163
+      },
+      "player_dynamite": {
+        "result": "pass",
+        "seconds": 1.00169
+      },
+      "mission_shop": {
+        "result": "pass",
+        "seconds": 2.31406
+      },
+      "money_pickups": {
+        "result": "pass",
+        "seconds": 1.26319
+      },
+      "resident_enemies": {
+        "result": "pass",
+        "seconds": 0.803987
+      },
+      "audio_presentation": {
+        "result": "pass",
+        "seconds": 0.0538442
+      },
+      "monster_behaviors": {
+        "result": "pass",
+        "seconds": 3.03879
+      },
+      "monster_flight": {
+        "result": "pass",
+        "seconds": 3.18994
+      },
+      "monster_formations": {
+        "result": "pass",
+        "seconds": 0.14412
+      },
+      "monster_patterns": {
+        "result": "pass",
+        "seconds": 0.261157
+      },
+      "monster_fire_reactions": {
+        "result": "pass",
+        "seconds": 0.211034
+      },
+      "monster_hopping": {
+        "result": "pass",
+        "seconds": 0.298457
+      },
+      "monster_replacements": {
+        "result": "pass",
+        "seconds": 1.58423
+      },
+      "monster_boss_components": {
+        "result": "pass",
+        "seconds": 1.51059
+      },
+      "bloat_boss_and_chargers": {
+        "result": "pass",
+        "seconds": 2.17892
+      },
+      "charger_variants": {
+        "result": "pass",
+        "seconds": 0.183052
+      },
+      "companion_familiars": {
+        "result": "pass",
+        "seconds": 1.72649
+      },
+      "room_statues": {
+        "result": "pass",
+        "seconds": 0.669999
+      },
+      "maw_attraction": {
+        "result": "pass",
+        "seconds": 0.843699
+      },
+      "quake_waves": {
+        "result": "pass",
+        "seconds": 0.706592
+      },
+      "supplied_bombs": {
+        "result": "pass",
+        "seconds": 0.629026
+      },
+      "fly_bombs": {
+        "result": "pass",
+        "seconds": 3.45006
+      },
+      "segmented_bosses": {
+        "result": "pass",
+        "seconds": 1.53703
+      },
+      "mission_themes": {
+        "result": "pass",
+        "seconds": 4.07257
+      },
+      "imported_town_navigation": {
+        "result": "pass",
+        "seconds": 0.0649738
+      },
+      "core_contracts": {
+        "result": "pass",
+        "seconds": 0.530644
+      },
+      "enemy_behaviors": {
+        "result": "pass",
+        "seconds": 2.9518
+      },
+      "generated_dungeons": {
+        "result": "pass",
+        "seconds": 22.7334
+      },
+      "generated_room_graphs": {
+        "result": "pass",
+        "seconds": 0.668046
+      }
+    },
+    "final_focused_extension": "The fly_bombs suite was extended with actual rock-demolition coverage after the 51-suite run; final standalone behavior.txt passed. Runtime remained unchanged."
+  },
+  "browser": {
+    "passed": 108,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/fly_bombs/full/browser-tests.txt",
+    "count_policy": "108 distinct cases, including 4 new; all in one final run."
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "report": "docs/reports/isaac-enemy-port/fly_bombs/behavior.txt"
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "ordinary": "Standard Broken Quarry, three actual fixtures.",
+    "owned": "Real Boom Fly trio fixture only. Horny Boys is missing.",
+    "seeded_floors": 170,
+    "ordinary_pool_ids": 30
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "linux": [
+      "docs/reports/isaac-enemy-port/fly_bombs/linux-eternal-group.png",
+      "docs/reports/isaac-enemy-port/fly_bombs/linux-death-bomb.png"
+    ],
+    "wasm": "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-probes.json",
+    "scope": "Inspected actual Original renders; full camera/readability gate still open."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "report": "docs/reports/isaac-enemy-port/fly_bombs/starting-kit-probe.txt",
+    "source": "docs/reports/isaac-enemy-port/fly_bombs/starting-kit-probe.cpp",
+    "scope": "Three actual four-actor rooms, 100 HP/24 damage, zero items/bomb use, all cleared at 100 HP; no balance claim for owned trio."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Cap/queue recovery tested; no controlled current-roster performance acceptance."
+  },
+  "failures_resolved": [
+    "Line halo under derivative-based primitive lighting caused black render artifacts; replaced with actual solid ring geometry.",
+    "Whole-pool test fixture now clears encounter commands across all mechanics packages.",
+    "Catalog smoke creates a valid Boom Fly owner for Eternal Fly Bomb.",
+    "Pool change moved natural I.Blob fixture from seed 46 to 92; normal odds and reachability assertion retained.",
+    "Owner-chain test counts the existing Boom Fly death explosion as well as one contact and two surviving orbiter bombs."
+  ],
+  "limitations": [
+    "120 reviewed / 653; 67 partial, 87 existing-unverified, 487 missing, 12 excluded, zero complete.",
+    "Horny Boys producer and Shell dependency route missing.",
+    "Native tuning and exact Small Bomb AI mapping unconfirmed; Skatole and named fly-item interactions pending.",
+    "Human/varied-build balance, all-camera readability and controlled performance remain open."
+  ],
+  "next_dependency_review": "docs/reports/isaac-enemy-port/fly_bombs/next-dependency-review.json",
+  "runtime_sha256": {
+    "CMakeLists.txt": "252431ae5ef5b1710800d02ed518d1a440fe72c64a066d65916dc353fc33491a",
+    "assets/mechanics/behaviors.mechanics": "49c45b03a2005fe597edea753520760bf42a15a6d5ab3d1ed60e6533fad2a3b8",
+    "assets/mechanics/bosses.mechanics": "404394fdbfdf561e287a16870ed28ad26deebb90ef1acd6b10252c1b810b18a3",
+    "assets/mechanics/builds.mechanics": "0bcf33eba3828c05bcf713256ef15a31c3968425d1cb6dfb1eed888a138c1514",
+    "assets/mechanics/chargers.mechanics": "5a8cb81b52180875ab49528f0e4c630611e1ad89e1ba8fc8ee9a6ebddc66cd29",
+    "assets/mechanics/companions.mechanics": "22ddb472b8d292e1ccccc689ef6ec31568355c437ccc3d4d87841f407ae95dca",
+    "assets/mechanics/deaths.mechanics": "2301cbd02f5459983f5c506a8c928ef569929e8b8263435a6fad8c14789172d5",
+    "assets/mechanics/encounters.mechanics": "169bca765a8b76bbfc3d0b90f2627ea78722c668bd2101109dfb120b422d6bb6",
+    "assets/mechanics/fire.mechanics": "ca66fab40ece6e1bd196182fd834590df0da94a0c77223169747f9fa3f9e8502",
+    "assets/mechanics/fly_bombs.mechanics": "c325126411b64e4e946a0a178bdbbdcd6bc4f9b1c53041f55e227dcf7ac46061",
+    "assets/mechanics/formations.mechanics": "a465f037bb9d3722019fb49bd39e5f99d9e7b732bc05c61d747244f0ea037acc",
+    "assets/mechanics/hops.mechanics": "8850939c80eabd9b40354de81f98542f13371ab677eba102ea7bd8e504c1c47d",
+    "assets/mechanics/items.mechanics": "ad33532c0b4456cd01838feefb4de58f4752478f62250a9818d3a2dcfbe66b7e",
+    "assets/mechanics/monsters.mechanics": "ef3aba28cf42eed52abed94fd8d12825784e91f6da4989e7a8b7d1b30a2b4c73",
+    "assets/mechanics/pools.mechanics": "dbfbf853ead0cf3b94c3aae315fb941d499fb639f956846961aa2be66431006b",
+    "assets/mechanics/replacements.mechanics": "5f79c6441fb062f5e8410b0674909559252d8ebe58b197c7cc48001e90099a9e",
+    "assets/mechanics/segmented.mechanics": "fa7bb1a9f80e5bf678de4e0ddf2675431f03b6cf72c8aa4f82a94783078f36a1",
+    "assets/mechanics/statues.mechanics": "080a9c86d2bec364bfbeea65894425df6cc502f1051221b3a03c09864c396ff5",
+    "scripts/isaac-reference/plan-enemies.py": "c9bf1306c338aa104f0ee31482a0f87de4c822751d10585ca7b3bd6226e4ce84",
+    "src/combat/BloatBoss.cpp": "47c37be2acf282cb0ba6478218e8baced89f00a2d376e57fdca092c57d947770",
+    "src/combat/CanyonBoss.cpp": "9ea7648f959875706d66a3acdb7d5b6289d815ae0f6e9b6149cb912aba6f9609",
+    "src/combat/Charging.cpp": "9f955b8c2d88839e7eecb675771337dc9208411f71addcfbae638e3d1f6dc10c",
+    "src/combat/Companions.cpp": "c7b323c82ce8374e383d4ce1c1cdae36b052afb69ad8410f4274774921737623",
+    "src/combat/Destruction.cpp": "0eb6a569cc8fcd115d2a39b40241d8151d4685d62a635c2ec6f5aaee996e06a5",
+    "src/combat/Dynamite.cpp": "84c918800d521d86ca31985d475414c8ceaceaf8869358c6d49ed2f69e2ed0fa",
+    "src/combat/Encounters.cpp": "c3d63ae423bdd727d283370918bc736e42b9245f39bcb8a6a885590fac28cc67",
+    "src/combat/Enemies.cpp": "416ed9ce75042d768ee04eb629c8a20e184ae35e8a56413fb2edb62a6b817e7a",
+    "src/combat/FireReactions.cpp": "c683628cf24049ddadb101a7efb3c5cda1504067fdcc120520c2767e732a6aca",
+    "src/combat/FlyBombs.cpp": "a416f9e7c8a382e5eb001762e32bd2cb14f6f6747e93475c06de55696e0c0c28",
+    "src/combat/Hopping.cpp": "f101721200e94b1074b0b355f21bfef26a2c0aebc1ca307e00697f5959daef53",
+    "src/combat/MonsterBoss.cpp": "0a0054554ff9c2ddc7f4af5412247c2ba5426717ebfba11e68babd590354b834",
+    "src/combat/Monsters.cpp": "1002f0eeff44d762dfedaac75b84cac04a64ae59aeb3194ec4bde59aa664ea23",
+    "src/combat/Navigation.cpp": "8ace7d1fa863ca92ebab0f3173592f99e8cc72e28f21ef4ef0f651167efa706b",
+    "src/combat/OwnedComponents.cpp": "830754ef50812f1cedff3d9252c08d699388543ba43401544f233dea95ea7a9b",
+    "src/combat/SegmentedBoss.cpp": "fdef51e6a3728591580ab4ce512c5ce31dd17f037b6dc523961e32df5e56dd39",
+    "src/combat/Simulation.cpp": "7e30a842221f1f1194a4b013efa23cbbb23b64810355be932ccf362fbd763d77",
+    "src/combat/Simulation.hpp": "5012be66d2c09afe71df2a66a9cf247bc9a67d4b6e5585311a60414c634b846f",
+    "src/combat/Statues.cpp": "dfc6ae0e41f22bafc0c3595eb682eb9da475bea4f08ce787658a074315438b8e",
+    "src/combat/SuppliedBombs.cpp": "545a9ef197d7e8ae6004762be0afd2587803c2e63f1407d8b3a058b61a9d5775",
+    "src/content/EncounterVariants.cpp": "96629e9d023a328d6974c538eaf733395c0f8dbd7965880cd43601f568bf110f",
+    "src/content/Mechanics.cpp": "e51833b38a0db26f01f10b07a5898e93ebc4a1dba4960ffe25cd084239849036",
+    "src/content/Mechanics.hpp": "4d24d0c35c8bc0c9a6980ce043ab285ce496ed8f160490f3066f708e6876d22c",
+    "src/core/Game.cpp": "af202cbabf667eb08113e4678b7be181e9b208037865e7aad2e5506a91acf732",
+    "src/core/Types.hpp": "08ac9c07c578b6e8937c21c81ffed35c52ee1c5a1125b84ffa859a24721c7789",
+    "src/main.cpp": "8b590299af9354fcae5874f0387dfd092ac302d02fefa7115fa420ef51e0a230",
+    "src/render/MonsterVisuals.hpp": "7ac520f4975ff880879e428088bcd285c6479a987045f1f2409b5fb1d2baeceb",
+    "src/render/Renderer.cpp": "c7093436abc022d088520d1b7590f0fca8e3312f4cb759bca545c5baa3cc541f",
+    "src/world/Dungeon.cpp": "967abfe652a1349451140c764b778f6ec2e4a5baf6bfbdf9334a340d46df3441",
+    "src/world/Dungeon.hpp": "7bfddfffc4d7ada8f664cf98d2591b89964e229cc73c0254b0c2a77e5459b287",
+    "src/world/Expedition.hpp": "b9b89139f4e0f0e7dae20369a3ba8d972e804b6b7a1287f3e1460e4836938dc6",
+    "src/world/FlightNavigation.cpp": "0a4203d24214c88a8f23c0d7bcd0fd5e24dea150f4b8dac476d0ff845bf4f845",
+    "src/world/FloorDressing.cpp": "e02f8938625205b5b69824d17a33f7a6e2fda7862c040ebfe79b6af7a548ae20",
+    "tests/bloat_tests.cpp": "ca93e01493cab789314a078298e1dd98c323e57af5c44d84281862d618212560",
+    "tests/charger_variant_tests.cpp": "4351307ff5584985e51665e82c28ef1a3940a0f309193e44818f6e45b2926adf",
+    "tests/companion_tests.cpp": "d81494db50b92f214d01a664345a9bb6a9ca3dfe4a06102cea494f8087b4877a",
+    "tests/expedition_economy_tests.cpp": "0622d34726e5445eb35b7fe8f13d04e9a03d176d3be4f4e1ec48f22bc9ed39f9",
+    "tests/floor_progression_tests.cpp": "b59bb0e8a8c059c41d15fe0ca2fff7490c51a5ecaad1fe88c824437b446696f6",
+    "tests/fly_bomb_tests.cpp": "6de28128ad016634098f8cca3f1a1a4a2542d3293b6a6fefeb57eeafc5855877",
+    "tests/input_tests.cpp": "574edccb86fb2895bb723f8911fed14d3597c4eb6c84eb1000780c710cda45cb",
+    "tests/maw_tests.cpp": "e34b0c3ddf04aa15204fdf4d8889ffef13243642a89dc7fd7564f1ae00e86b73",
+    "tests/mechanics_tests.cpp": "ef3c50e91bd13baccb9c5c271a2ed1d94624a9659b510044e03d07e6cd94aa89",
+    "tests/monster_boss_tests.cpp": "37c1f90a84ef435445d3895e3e5dbb64064586f6545b5439bddd200ce9ba0298",
+    "tests/monster_tests.cpp": "3822c37ce9eb7ee3623be59dddf54598dc00bff20090b6fc728ebaa4879b04f9",
+    "tests/pacing_tests.cpp": "af40a45c9ed3ecd3337f6ff84ed68b6c2ec9bbe61966f87716b75e4626160253",
+    "tests/quake_tests.cpp": "ab0478a79ceeec74ddbb9735c465465518278a490d31cfea4cc9ae53fd067073",
+    "tests/replacement_tests.cpp": "b0c865d853afed057afc501717988a0a3f57e4b6d105e4e8dd4a22718f1bd4b9",
+    "tests/segmented_boss_tests.cpp": "9fa14a50349e998a12ce694a5cded88057b5086496dfeee43bc3d672af7746d7",
+    "tests/statue_tests.cpp": "13aec90151c86c489b84cd2812c54ebfc8117b2472ce3d0c031d13de190f29c0",
+    "tests/supplied_bomb_tests.cpp": "cea404f62ee05af2a59ce585a2be33f997fa3302d90e327a3336897c9739723e",
+    "web/enemy-port-test.cjs": "f34fab3edd5a4cf58ef9edc21fcd9cd12d5365f3c7de26ee58ec30b63edab74e",
+    "web/shell.html": "c6ef53264102b8dc24e481369bc4f339a46a7fe11a219fbeb468a592415e79c1"
+  },
+  "build_sha256": {
+    "build/deathward": "f2f4302346cb0c9cf7226f9bc4447cc83aa4cad7e46cb15324670edfb166646f",
+    "build-web/index.wasm": "731f4851531d583ed320b74231fe3f51003350d6fb6e939f6ab59a4547ab3f67",
+    "build-web/index.js": "b750687c380833f3d8de2ee5d5ffd8db662e824804f6d7167a64de183eed75d3",
+    "build-web/index.data": "39605f8263e8a8508031a2bf5f10f05a0790059577da129b65b407ced4e443aa"
+  },
+  "artifacts_sha256": {
+    "docs/reports/isaac-enemy-port/fly_bombs/behavior.txt": "c3da376b3f4004e6a2c25e91f70540f15fb0aa97d091a077482bfbf55823d838",
+    "docs/reports/isaac-enemy-port/fly_bombs/checklist.txt": "5fde256ce97293175bd19d2ea80d9d6eff29a529bf5718a40240af8a72418034",
+    "docs/reports/isaac-enemy-port/fly_bombs/find-iblob-fixture.cpp": "6d8d93e03a9bad77e29fb679ff1c8b3621149f7248174c3ccf7f920f1f9f018a",
+    "docs/reports/isaac-enemy-port/fly_bombs/first-run/degenerate-line-halo.png": "d78512d4190ae5ee149a6d78e89c2cf2c4a6995573d982a89068256374ff1da8",
+    "docs/reports/isaac-enemy-port/fly_bombs/first-run/degenerate-line-halo.txt": "a716a6fc47165dd6e8e239d078d0f151640668bcde885d547e722bd29cc962b9",
+    "docs/reports/isaac-enemy-port/fly_bombs/first-run/native-tests.txt": "afcc6bff8f834f131a969a5a43fa9a1fa079ac84f592c2d4fc5382ee016786b4",
+    "docs/reports/isaac-enemy-port/fly_bombs/first-run/native-tests.xml": "8a2ad22cfb5650b77cc85caef8c5eadc0bdd2d5b478d146689d1e15d436c9340",
+    "docs/reports/isaac-enemy-port/fly_bombs/fixture-tests.txt": "1b902c62f9c05ed16d77d3495c98e6679f557c27f8bf7694e2487068746456ab",
+    "docs/reports/isaac-enemy-port/fly_bombs/focused/browser-tests.txt": "231b1c3ce3bb4fb7633fbf157cdfac5621ec56e71f87e5973f6c4ec0c318207e",
+    "docs/reports/isaac-enemy-port/fly_bombs/focused/state-probes.json": "a1f8035b4319411ed559b531e12e068be7ac5358befb8a6a140a9c9a24a0066f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/browser-tests.txt": "7e4ba859f235993cd9b48ad8ed22cfc914b900df3ffee4046947f92d9e781776",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-10.3.1.png": "eda1b71de9aefd00b00a274dda6ef54e2a081b9c552ce07c0b793bc099ca17d9",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-10.3.2.png": "0b4ed22e8f4f8e7d2756648a48007b4e6c78ecef5e4812aaf1e4047defe42646",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-10.3.3.png": "5e98181f686b7700d0d13d762288dbf71bf496f944f1ac5fcdce4b027f8157d1",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-10.3.4.png": "cdb9cd21333c3f7567b0defd11a0fa685eaa6f191fca5a08e69394d12d4c5e0f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-10.3.5.png": "61a30862bb39fe5400bc098c00cfacc2a40797d10088fa28669e12aa022ef744",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-11.0.0.png": "769b90c43347b392894833b11a46b13ecfdcd78bfd8e48d551a96c4c177b77ad",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-11.1.0.png": "e9e15384cd8af2ce594dfb3d0b9aac2d1658d21612bfbaa3e969f1da2e9a951c",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-12.0.0.png": "2820a2355e4ba91639568ee20c7748be0b7b3eaa6c372a2da6bdb583d6af80c8",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-14.0.0.png": "0084c821d456765c51fb3eb9c3cb2850926af54b3543d2b9fa1231b38099e438",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-14.1.0.png": "d08583a168ed9495ce07d35de1e05a4ac50b310b49f6c0fd03a42b8dcc7994db",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-15.0.0.png": "1f72ae7e102c0193bd0103f5610da44c7997c2af378d17c6a65c164c4926d109",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-15.1.0.png": "c6cd88f9c6bce2273ebdc98dcb7eecaaf5921a57041bd117fa791db23ad7fc13",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-15.2.0.png": "8f061bef2e416204359c187d2c64411386159f2cf806a751b50dc22ad2a15ed4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-15.3.0.png": "54f65cc6c225cf27f71fe14f71548f008f6654e0c3a4bf0800ec06531bfb2ae9",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-853.0.0.png": "d94e132f44c271c86d9ed3e81bbd0424033fab58c650a275e692c4f431d0625e",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-872.0.0.png": "a62f1dd99688e98325307431799632838208cf76e31ac1bd177ed6d798110988",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-bloat-above.png": "f08c6fec7192dd0f5b394dfad9fb5ef437d25b8871292fc2220b36f2793b522b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-bloat-down.png": "c134ae0f9b96631f5598b416e470274df52cf6c04187f8fb903daaeb3eb0fdf6",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-bloat-green-creep.png": "6a004343090221996f16451276350b8a9ecdb3cdfd877588abc18913453ad466",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-bloat-green.png": "f804096bb9da2770ed8646bade496bd071d5939c03d0e57ae7a69c33fe9b2e7d",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-bloat-sides.png": "23a5bcc98e3d4f18dfc448cd122aa897c9888636861d43745c0107e058458525",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-charger-cardinal.png": "1200a6ecc86fd23a187e56e7d0ab30502023f220e77f5f1e064b81fc610b945a",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-cloggy-curves.png": "07dfee649d7af6109ecd762d25c735edd18a0c41f9d1875de5b85e33fc9a894c",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-clotty-burning.png": "59e1400e047ea6a5a6c98c15714d86b6cc904c8f6402113e49f66855e6eabbc8",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-clotty-flame.png": "6a42359a71de0dc720bb5b0e7c22aaab0f0f82dc79928a404a17fb02210f2901",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-clotty-flooded-death.png": "6d13adf2ffa7ae199d7fa60cad3a94f011f8647d678b23072c408d4df6fb6727",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-clotty-flooded.png": "30589e2acc113bcc7c341c6f6806a857900d777565c528e90cd6d383b7b1a9cf",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-clotty-live-fire.png": "f24df2b1865c20f281484ea4d008d3653eeb1e501a8410a52669f3292529d571",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-cursed-goo.png": "6e01b037dca98955755b541943fdd5c4e3c95d30f19bb0af564d007d7c31e120",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-cursed-regrown.png": "bd7a22fd3d62907eb9dacdaa35f2fbd21fbc07d23e3d9c592c74ba66fee08a83",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-dank-reflection-110.png": "6ff02cd15d4fb5aa17c85f43c757fc51dc65ba54e927c677e20323515c89cad2",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-dank-reflection-30.png": "1985bce5559e49147f5023275adb62841d0cd1b79ced1b4165bf2602610de129",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-dank-reflection-70.png": "3c421fad5ffa39eeb4b17d6d6973f95a122d09b562b9079a3e616c711b73d673",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-drowned-death-volley-15.png": "bb0949912c0b623ec428b347c692a4853c551d788e5199132d7b0ce7daf4c326",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-drowned-death-volley-48.png": "2256e02f1df96157540d29504aa84ac16d2b404de51a91b64f5e800e98aa3822",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-drowned-hive-overkill.png": "27b1ff19ac5c11dde45783d44ed35371ecb78b7c56fc58f09d06685c4c7316f6",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-drowned-hive-split.png": "49012fbe248ac9bb0f9529fa442c67f9e47135b16ef4ffb8d2fe85d26cf2c54e",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-drowned-repeat-fire-15.png": "9169c028cb39754fcea96f8471513523b5a3c8b20a0b42cc1e87502235eb9553",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-drowned-repeat-fire-45.png": "ffbba2ad1eb291e0f4ff09d7170d77ae39116bc0c0fe39c711b6ad407e997a2c",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-eternal-fly-bombs-15.png": "c05c5b634a88ef1bb3b9510046e88eec8092b527b32eb1fc15f1b37a12f2e1a5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-eternal-fly-bombs-155.png": "1d15e281a130c1b1d25872f842a9f159ada84187139087c4e952eabbe5748b50",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-eternal-fly-bombs-65.png": "ab2985dbde244ad1ff84b0cd20d264cf846db6cd69cdb7815b4f856697975653",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-eternal-fly-bombs-95.png": "634ac325d404b40e4d7193aa5465fd15c29fda74f7ed825b3b1299b81d67cb5d",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-fire-above-cover.png": "4efc90cedb0794417e257a35ef917346281a8c9551b0081214c1ea6f722de742",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-flaming-cover.png": "36b0a8cb4ffd0a20d2e98c58e5bfbb731f0936165e9071d0368cd593deaf4efa",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-flaming-pursuit.png": "9cbd18f017e6e96c57bd1d6e1472ff976c4f01251eab3809cb51b818334a63cb",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-flight-cover-pursuit.png": "6f10d5ed6f15d9c99816ee3be488b48e2b2ec026bb53f0562c0d8645ef2b7b2b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-flight-cover-shooter.png": "47664aa8532675fbbaac223ec5384c79b0f740f0c4afc40bd995e151acecb988",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-flight-river.png": "8054eebb2c3f3d3b7b09d435eb5a75d533911dc4c902e4bf6756fb16d5c364d4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-fly-bomb-death-125.png": "f107bca958932dac2f053bfce77624af0bf063a2bbca659b59da3f0e277bead5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-fly-bomb-death-15.png": "893012e47a6d3ba5b4a3751822c40a495b3545206a1b2891976fac3e2a702b7b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-fly-bomb-death-65.png": "893815cbf9942a82a5c0dafeafdbaf3afed8dc539a4c03e7b22048c21cadd41d",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-fly-bomb-pursuit-15.png": "893012e47a6d3ba5b4a3751822c40a495b3545206a1b2891976fac3e2a702b7b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-fly-bomb-pursuit-280.png": "25ceed1a11e576be4f5082aa7a36faf7bc4130b85fe88183e3d7c479d072738f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-fly-bomb-pursuit-80.png": "fcbb9265ed46e2860bc1eb9f0487baac5b8969e1c0a017b59d445a82b7758e4f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-globin-finished.png": "d6c8c9e332c7c73e20509adbb82d670188eaf53276d842a5ade2572e5db969d9",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-globin-goo.png": "85c6231d86083b17d5168dc99722cc694b4fc2f6ace833fbcee5e5ca95e44af9",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-globin-regrown.png": "cb6176dded6525b5a2d8e9ec4ad435d64094d4b7aa10e62b9d119fe9c8aff4f6",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-hopper-cover-morph.png": "6bdce1a32e36f3ea5cad523eb62acde941a62d9dc5d61a0050597044340e99f5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-hopper-cover.png": "22d2f9aa8ede556b5b22b4211c5ef9eebccac079a5e595a9e26b9e7e087f3364",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-hopper-fire-burn.png": "a1cd5c86f913a092c2942d028ddcad5ff27b5b10876813020d56574a375042d5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-hopper-wander.png": "a193f6a6396774ab9b16b149cad4eec9471d463aba9546eb148a632e300127b4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-ink-death-125.png": "f3a04cd5d2034158ebcafc2fe760a48be46b48e953388e2df08c141b0dc63aef",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-ink-death-15.png": "9a94fddfae1f88da0477e4bd27a88a523539569a86698776cdc6d3e1346691d4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-level2-steering-10.png": "8b3e391097330f5bdc244b8ba279619923fe920dbb887ed272896399000ff375",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-level2-steering-40.png": "2d52d31ca2f5609a612e256397285f61a80f3f6dd436fce9f80d91e4fdaad77d",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-broken-cycle-245.png": "8521a7d8e935b3524ec4260ebdbee792cad75b87cc8f106199ff92e73c612db8",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-broken-cycle-400.png": "e17603cc10dd5b8aff4e3c2d7055736343243f34e883b3d6f4fa6f917b755fce",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-broken-cycle-490.png": "ed3faed97cea7a00cf6261ee320d024646265c93ee88cf172b6d44d68478c8a7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-broken-cycle-60.png": "91773424c679d7bbaf3953cd9837e26eeb24e8ba50502a50e05c3b1feb5ae3c0",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-normal-30.png": "8528f27bf89a9dfda3b71bb8853cbb236c919ed810e5dbf2c416b3ab3b60be01",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-normal-90.png": "f58b4d3077a51f30a06f5c299a4ef9619e5480944ac9de05d43862fba27d6ee4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-plate-120.png": "87f83ac3b5788a2d40706ccd32dceb24f9e5fb80cd38157cf8932dde4f1e3b5f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-plate-30.png": "50f53f43946e15154f51bcd159fc73f5b8468895a658f93a20225c28452fb309",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-plate-300.png": "17c3f842ddb643a3baa49516ae958a458fd3dea3c5330ba555222cfee58983d6",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-projectiles-30.png": "cf48a0e052758e17cbe3b7df087e616949aff0b3d5320ecb3cf512d500bd16e8",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-maw-projectiles-60.png": "cd28e804ec82a29472c8820150a3815886d4967cc67c0d4c1a829d79809c3ac4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-moter-overkill.png": "21600292a8b95a6a8b845bf8cdee30acf0b79e77f5a0fe22ca7719e488c23649",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-moter-split.png": "1cb4d7ecc48833c8d78b46710b8db71b97a30808da864a1f25cecfdfb8771fe8",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-peep-cyan.png": "1e935a5a2f814d940fa5c1ee53ab92adae794ce3ad42a55d460b7f6f608e4e1b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-peep-thresholds.png": "45de0421d7f783af63cd74ba583e9c1355ef252d24625dd3ba681a51cee25257",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-peep-yellow.png": "43321524d73e0994fa5df58131bc33ab4ac12aca159225f77e10648ca40e3ea4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-princess-diagonal-12.png": "4de08123a4fa9c4cabc4b8765f5d42ee99769749a4b4287d528c31c1b608144d",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-princess-diagonal-45.png": "bc5ad0aaabf3b07bad149584ee63937406e396f0cf5c1b5b52946ee4d7b123a0",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-princess-repeat-fire-15.png": "23acfc593330e59e25931bd4e8fc6f337b488657ef8edb3ac76489b0af904e5d",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-princess-repeat-fire-45.png": "db3c3d0b166038dd8d9b1ee1e0a548b2cdfc3b42c4042a39ec3f7e3b49f85bf2",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-probes.json": "542c3b1fe0b278f1d09a17a974828aef297c6ca1a31edbedf668b52ebb43974a",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-down-plate-165.png": "38cb34f52395ff33f8ce30aea2d22cf625f300a1ee723dc6b507c57353c16f87",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-down-plate-195.png": "3d77386b1c16d30e4aa1444e8980ad094fdc9a9a960a88fb0b00b103bcc23835",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-down-plate-225.png": "2ffa28f84e59e63347d2b677bcc4e3adba5c9ef880f070a83611098fab01083e",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-down-plate-375.png": "eb768b4e189b2cfb1d77f0014e457464a6a7ac46d464a3881755df2063797d98",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-left-165.png": "ab1d2eb76d9790e1ba73421b32a4a886ab7514459485505e95b12f7a51944758",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-left-195.png": "5eed324624e4961593a303a79688941ad76989605e0623303adabfe4906228b7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-left-225.png": "592cb00ecf0575a7530b0a40ab9e450d86dd596eb420e19c387ba6b438e06819",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-left-375.png": "409f529de6709e516038034b24967f1c883909c7752bed3ff56db843a8b5e75b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-right-165.png": "21517eb21a050d6a28be3bfba08377f92bc858f7259997d6db219b5e30f0d841",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-right-195.png": "6ec3e7e1a79af6c77a49abaa4c2dc380295ccb79b6504de593e298daed731411",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-right-225.png": "9d8b632a11a8460ac88e040b3b3f71b7e069fb3d0f788a87f7673cfbeb47fe56",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-right-375.png": "d699f0f24efc4220313726f678eefc23b251b85104cce743a2acee913c7a69e2",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-up-165.png": "6d28330221c966419070ee994b00794ef92d3fd7ad4e9fbc00570bb388743a1f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-up-195.png": "5b058bed5831f2c05416bcbb2a47b497c7b504e228dba08e2ad5b47e50b7f509",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-up-225.png": "06edd70224f6656cd0dc12f4e1593872ef307a74ccf1acf9d69e58dd3fd49bc1",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-quake-up-375.png": "c1ec4a755ce26f75256a798584b276b3dab99ec3d8969d3a55d0105e05b94a5e",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-bloat.png": "3a3753a0f2c02d6d3ed3aa9a40c5ef2234a3b7e835a2f1ff72e9c70f0deb664f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-broken-maw.png": "bb687d1e479cfb6a994fa382e3e724d5086b9628f777a9152cf547488be7a559",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-drowned-charger-60.png": "a44eab28dd676938b175fe89c9a3aaef3f4d66cc7232ee317a5a22bca89dcb20",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-flaming.png": "21e82ff3f021a4a25fb92b398861f81a63373672f0da36ee9c0f6f728a904ff5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-fly-bomb-15.png": "2e7ba84cdd95e2557bf89380f1ea53bcaf0a62729354f1546a554be528cd4e79",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-fly-bomb-80.png": "137471bf06f113e788eb73b8447b779475579090776cb57b77eb9f89f4be525a",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-grilled.png": "d301c412e7279a71801533732afb89a05c33685b3d79d3702637571badd26619",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-iblob.png": "9f267e134d3b0971659a151af2a304ec7cee2a2941814f1e203faca727327809",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-level2-charger-60.png": "46e14f8edfbc64117efcf108486480daddd33c71cf22644a25f1fb16eb929ddd",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-maw.png": "eaa88286437549296025d5b3dcc319e7476cdeb34baaae5815ac33233f837a3f",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-peep.png": "15508585f634dc7279507482760f511cc5e32d6e3e0607e710bc435ed391e2bf",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-quake-down.png": "f609dcdcc22681d84d952fda18c5c80c4682b4a1819a5a2b3a7ce763c4cc6438",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-quake-left.png": "0a21304229c53aa5bebc30d9a8951d07153ada085bf0b2d6c887e3625fac05fa",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-quake-right.png": "3ef90ffda20822ad3fc044c95d63f80634cddfe5180535411378b7f103b491a7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-quake-up.png": "0379c380dad9285f3c698f036e16c6dd1c7fcc95fe228f7bcbfaa4403b86cf0b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-statue-brimstone.png": "7b47cc45091ba96fe3041994e6e9dcc35ff3f1eae97eff720ffcb3f93110a076",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-statue-fixed.png": "7283a64adca6b136b827c7926618cac3b9786921aaad27d326c403ca4164b538",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-tuff-15.png": "43fd8df848ecfb7d80977f6326cb211135140f96d7eefea04b0f64b49f7443ce",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-tuff-190.png": "8039e997c32975244badd9163f057636379454292e8f4c95a35026eb864f6af4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-resident-tuff-350.png": "4159616bdbac8c4acc48be01f8c549dd0d9de9a845b0003bad34cab28830b5af",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-ring-formation.png": "aab2aefa5c53148295d399845389d9caff042dec5412908397d479cacf429d2a",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-rotten-brood-cycle.png": "72cd089bfba1655225b3a896582265acfe2422d7d1d1d1797e1ad06bfeab336a",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-rotten-orbit-cycle.png": "5034ed9632dd682b7eb4815e6d56bbe36baed2f6270632107749a7cfcadf8928",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-contact-12.png": "bc9ae294a939cda3a510e040fa789595a5bf9e3905278e9df827fb42ac8f765c",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-contact-300.png": "847a9d12c53ea63f28e0d0719af0053c0ec6d0eff5fddb7779e843a3d3083af7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-contact-90.png": "0109af8e39cf2429b2aa77bd7c5f57644c1a46e4ec87f1a00619b1c7f2da3f80",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-copies-12.png": "bf00b17ad01b00f926b16d8625197047ef25e8db29042f210d0176b81c7238b7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-copies-90.png": "28230fcb40e16e3a949f8d23d0a836c9a4309fc33bf44fcd42b68b17495b30e4",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-fire-15.png": "9253cd1366a62c9e0a95e42d4e511273340a7f919d597eaa0f0625cf1413fad7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-fire-45.png": "225d7b8af0874324ca2aa936bd5ba16adf708f69526b8ee2509dba4507ea2544",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-path-32.png": "f50496a84cdef6d6cce8a603829ddae67514d6ee06ca9eecf14468dea1266bce",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-shadow-path-45.png": "80abdaa49234d5b13babc0b03d2d6ec30401aa598b4c372d0213818b8c604b3b",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-120.png": "3c77f05347cfc35063d9e6ed0015c5103216bb7ea41ff7890ade284fd35ca38c",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-45.png": "0ba7a0f4856b95b6d92249fa9a9fbe80c722f9e2736b6976b9bd765f6ee4fc37",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-90.png": "4cbef70c9ac2edb509cd31a126453a8e07d8501e8b80dd9b570a4a1f63610f08",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-alt-120.png": "4ddfe446ad04d4c60ab2379392f93f26da5f9bafa153b3259159059c33d47152",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-alt-45.png": "851cbb96d180ead5d40989917a82bfc6dc38fb05b04c27f86c5e3e40c5b443ae",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-alt-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-always-alt-90.png": "3ff160410ed9ea5525f8a0140be8e9d9311dd95820cd78a2eadff1a208d3271c",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-brimstone-120.png": "ea5da14f572bac206391e85403569506f626c943f6166640f48e0befe6f5995e",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-brimstone-200.png": "c928e36a60acdf444c315e4d18764b1b495f2004a3d1a0abc0690996f12a5a33",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-brimstone-32.png": "02e41f2e51e82dd9376d6e03c0fbdec892b2179b51043b98c74e4934a12a50e2",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-brimstone-60.png": "855e1a1dc48ab43b8cf1caf6f8e682bc12bb3212218c68ec4ad272b7a0499340",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-cross-45.png": "02a68fd6a326eba698545d85fdd1a88a85b028bcb91880de9075839cb96fa673",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-cross-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-cross-90.png": "42ef57a42be9af35a921c53a1cb69ec5822d518009fd8ab5a8d1e3fcb6e3a7b5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-cross-alt-45.png": "8aed5cc4cd917def690604509a51c3cf925ff438ec94000e9bb164e684a05d16",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-cross-alt-5.png": "a2841d65950348cae234d29ae0eb5801cb5d0b6f530b54d6e4823ef90af9461c",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-cross-alt-90.png": "128e1f035afbbf22beba373421a1d3d6392d604509bbc36fdfa42b6255d767c9",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-eye-45.png": "13783485033ae92fc330c394a5142fd4f6d824fb73cde60bd3a77ad7dad82657",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-eye-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-eye-70.png": "9917c1d89b9b95cbe7c0bca038a79d49e9b55a716c17befd2293733bd31772c7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-eye-90.png": "c80553588e179addde022f41e6a11021b22c02edf08fbae41e95cd2a75ffe382",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-fixed-120.png": "3427861ed22899ed8cf225a5619da0fb36e2daf60dd32a115ee9d7e50b08e6b5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-fixed-160.png": "5abab006194f138233d3f50b482b75bed70204a48488b9c5c8b31d98509c9c9e",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-fixed-30.png": "32ba69af92f40129d9ebb4b89778345f62ea0cf146e2bbd685808f4bc7173f48",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-fixed-90.png": "6136543a1742308d4ae69a6d6999cc60827a0645b34b0ea62b272306d91bf6b5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-stone-30.png": "f4eef7e1ddfbc5711a4ef211d66111fd90dead18891fcd2a5c1c1a589fc6d4ce",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-stone-90.png": "58fc9e15c7585b125baeb1686e49d44cda2d17d8e07549ea648a7ca1eeac6a89",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-triple-30.png": "1bb988d9a901abc356c887d70dee4d226da678de196822314c291bd9c08c66cc",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-triple-90.png": "11cf766e921e096a614f11b1175ae5f7638b636ef1f64ed73d532caa2002a8d0",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-vomit-30.png": "0ceca460fcacaf369d1a4c7bbf86ced6325fb5bbc41226957d3dcb978913df25",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-statue-vomit-90.png": "98bed17ebb35f8a98b8e40d840c91cbd7f74c1c8ade29ad72c27af8b30cb155d",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-sucker-death-125.png": "854a6b4f6d432561cdc1f4a00a931f13c0b9f74f4ddf103f4776ae5141cd5c71",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-sucker-death-15.png": "476ab4368681037b9918d8b7824af15ef9902bde36ded123d7e4507b22a3b60a",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-carry-185.png": "91d484f4508e26b0e4b92faf325f7748f875898b137eba0188b6d381c583d307",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-carry-220.png": "4c844cdb511a8aa59420b0b4669446f2db716b049800e99c42d9b058ce3f9f94",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-carry-40.png": "f0fdb8b2682fe53963c5e90f1f88826a53d903519509293b4098138cd4c04364",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-death-15.png": "a18f894d43fd97dc4439f2458ff8d63c9ac517e0e64fc326c0f2508a54d79e58",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-death-150.png": "df8f78cd75e14483080ab92b63e1ef592754d98f1ffd10b2860061c7dd0971b5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-death-45.png": "2bc19893169d4d68d37e201a6f3f89d3e8e4929fc13b6a0d2ab0bd257b6a7b53",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-stock-15.png": "9076cf6e0976bffbba693597ceb374cdd6376fae7cd35b8fff74ca50ddb21c54",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-stock-400.png": "af7860558426caf52f844b667f1ff9d40232cb37fbc2f3ced5cfb060f27092db",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-throw-130.png": "5804a6503932c07a2692682b5a67aca1b923a77c28eab1c4fc11bd58b09e65b2",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-throw-220.png": "7aca3bfec0fa1feba7c05eec09763291e833ce83a8e11d849416d4ccb6884601",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-throw-40.png": "0486c1fada71156f7aa49a4ff1fc1961787e92471c74e13fd4b25f06939834c5",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-supply-throw-65.png": "d458ba208a5a8a4956ddbc606284ccfee518269f665f6b4c8e487052b25dc6f9",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-armor-120.png": "1d6bd6bcf42cc35a77be8d1c3dbc8385a76dee1c813648e991c7932117da82ec",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-armor-25.png": "ff3ee2370a8cea4a955082301598b983043bb80365c3a7964e6f88acc8f8c2c2",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-armor-350.png": "09e973817f659ef2d0208cd26929112d018d1a1e993ebdb8055d2714a5a173a7",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-armor-415.png": "31e0415c95d10f8ab142032fdd34ec09910159db1c175770b4659c522f9d92ba",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-armor-530.png": "7b39875b0a899e3d4539501e5bcdfd43ec87172bf9dee5a27cd512dc5f6bf5d3",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-armor-65.png": "98766107598d870372e41a65e93d8250dd1b5e721eaf77e65bf5c619179813eb",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-pair-15.png": "d117af419bcd261a562716a64a5119b00bb46b2761787d98df1be226081923ca",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-pair-190.png": "b8e9cb7f05093e16f9b79277a0025aaeef90371ff9d24f6600d2b5e3e6395471",
+    "docs/reports/isaac-enemy-port/fly_bombs/full/wasm-tuff-pair-350.png": "e5f4e8b76b2053eb8586686977596415930be80eadd9552f3952dfeda668a835",
+    "docs/reports/isaac-enemy-port/fly_bombs/historical-artifact-check.json": "e6c29386f21613c6973142018dd5ae4bc4bc9b56c9aceac0d8dd71a50c3340ed",
+    "docs/reports/isaac-enemy-port/fly_bombs/linux-death-bomb.png": "99a17702e77a25f22cf421d73632330a056158f6416c781ea77b955ce1b8d2e9",
+    "docs/reports/isaac-enemy-port/fly_bombs/linux-death-bomb.txt": "b419a9b44ef6d418eab1c70828c35adaa54e591ed6d0c4042b04ed3f1a2c5d3b",
+    "docs/reports/isaac-enemy-port/fly_bombs/linux-eternal-group.png": "dc0a38e680786ec38aafc9cc33bb8c0716ac25700065520634abe70495a9bb6a",
+    "docs/reports/isaac-enemy-port/fly_bombs/linux-eternal-group.txt": "8dd90d6153189c68efc7978618f64960079f5269fa9cc3fb7a3f2a5f546dc50e",
+    "docs/reports/isaac-enemy-port/fly_bombs/native-build.txt": "12dae02b338d202e72ae37acf30e6bebab39b982247b969b3be25211522d9b7d",
+    "docs/reports/isaac-enemy-port/fly_bombs/native-demolition-test-build.txt": "0d190b8ff22d65849661a22066f91a6e5a3b7ae1835f74604e58dc37d42162a9",
+    "docs/reports/isaac-enemy-port/fly_bombs/native-details.txt": "0c9de227c4bdd63da2cda9fba33b8c48dcc5d77c185cc0f970758e78ca28a03c",
+    "docs/reports/isaac-enemy-port/fly_bombs/native-render-build.txt": "377213539a88832fd27844bd67cb318d48cb65f267399ab0837d8af632f5cf59",
+    "docs/reports/isaac-enemy-port/fly_bombs/native-results.json": "787100b4e75452b6a52214a177cd3b4bb2e8ff4aa17da42d8a7b96d4f1f8243e",
+    "docs/reports/isaac-enemy-port/fly_bombs/native-tests.txt": "acf64d22cce006e65481df7737fae92ecc0bbc492d471d4511458e9f2a12ed0b",
+    "docs/reports/isaac-enemy-port/fly_bombs/native-tests.xml": "fe6d097e31ce7660bd301f378213a5136faf56d746c8f0c128484ab4960479f6",
+    "docs/reports/isaac-enemy-port/fly_bombs/next-dependency-review.json": "db62de40799397e9c9759fb3efa8f3f2ade64bc9f294a404e175c67421cc4a56",
+    "docs/reports/isaac-enemy-port/fly_bombs/reference-validation.txt": "4ecad08eaed6af825f41fb0a39978b34ac80397f3151a6f68c0ce1887760361c",
+    "docs/reports/isaac-enemy-port/fly_bombs/remaining-scope.json": "a1c0f5cb0b6101b7ecf3d0dfdeaa66a11b7ee36fd07af2d68ff65095d1b4f357",
+    "docs/reports/isaac-enemy-port/fly_bombs/source-review.json": "140579a719a8c2db66afd3b4db7f65ad0cd50b3763635aed599f810e580c1c73",
+    "docs/reports/isaac-enemy-port/fly_bombs/starting-kit-probe.cpp": "ce0f53c85fa65993dfaa4895294d984205029521cea4cbcda08e3f872c9e7a4c",
+    "docs/reports/isaac-enemy-port/fly_bombs/starting-kit-probe.txt": "152649e68b20b557a4150d21ff2351af900662b25b4cc8456747ae356bcd6607",
+    "docs/reports/isaac-enemy-port/fly_bombs/updated-iblob-fixture.txt": "9e88c400729dfde2f8360fefc8d97d6ba29deb6b98c472b8037d6c73be519494",
+    "docs/reports/isaac-enemy-port/fly_bombs/wasm-build.txt": "4c451ea7c725f9abea66fc7e39d9547a6babe3632f2fae52eb7019d3dbe25f16"
+  },
+  "reference_sha256": {
+    "README.md": "77e8767e652d4645e84f9d24778ef4c9b9d3d1d7c9b9b21359ecf0e2db9cb468",
+    "docs/isaac_monsters.md": "f7974e01103d791538f81c8ad1d12c0c5a55536ff5110d74d1366ca48f073871",
+    "docs/research/isaac-enemy-port-plan.json": "36752dba7cad51e2583a1a24d5a9a7039256c027894bdf8a14940d1deb1023df",
+    "docs/research/isaac-enemy-port-status.csv": "b7dda6fadbad273c4c120237a8fbeab9ca229ba39be9305c218a91df644784e6",
+    "docs/research/isaac-enemy-port-status.json": "b26bf78ec45b7685561b737ff033266d6a506c64842eb57dea0b2f43e2d2bf07",
+    "docs/research/isaac-mechanics-reference.json": "8f24a449a81f4767968b98d030fcbfa17a615abbed03ef9265f73411f7d32864"
+  }
+}

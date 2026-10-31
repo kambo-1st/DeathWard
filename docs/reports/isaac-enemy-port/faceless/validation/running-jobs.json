@@ -1,0 +1,29 @@
+{
+  "status": "Faceless browser validation terminal; all four scoped scenarios pass after correcting natural-capture arguments.",
+  "browser": {
+    "session": 7001,
+    "exit": 0,
+    "results": "../web-natural-final/results.json"
+  },
+  "preview_server": {
+    "session": 51940,
+    "url": "http://127.0.0.1:8767/"
+  },
+  "completed": {
+    "wasm_build": 53778,
+    "floor_progression": 10172,
+    "gzip_integrity": 31830,
+    "headless_animation_extraction_and_check": 94889
+  },
+  "scope": "Latest status request answered; full goal remains active. No enemy accepted as complete.",
+  "failed_harness_jobs": [
+    {
+      "session": 28792,
+      "exit": 1
+    },
+    {
+      "session": 98357,
+      "exit": 1
+    }
+  ]
+}

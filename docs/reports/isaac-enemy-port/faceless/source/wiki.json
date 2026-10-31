@@ -1,0 +1,73 @@
+{
+  "title": "Faceless",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Faceless",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=265024",
+  "revision": 265024,
+  "timestamp": "2026-06-21T23:08:43Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "The Faceless is a monster added in The Binding of Isaac: Repentance. It takes on the appearance of a Gaper with most of its head cut off, but with its entire spine still intact. Initially, it wanders around the room aimlessly, occasionally firing out 6 blood shots in a hexagonal shape. Once it takes damage or if Isaac gets close to it, it starts to chase him and fires shots much more frequently. Upon death, it may turn into a Pacer or Gusher but more often the latter."
+    },
+    {
+      "heading": "Variations",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Tainted Faceless",
+      "level": 3,
+      "text": "The Tainted Faceless appears to be a Fatty version of the Faceless, with its lower jaw including teeth still intact.\n\nThe Tainted Faceless walks towards Isaac while rapidly releasing volleys of 6 blood shots in a hexagonal shape. It essentially behaves like the Faceless with higher health and faster attack rate."
+    },
+    {
+      "heading": "Trivia",
+      "level": 2,
+      "text": "\u2022 Faceless originate from the Antibirth mod."
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "dlc": "r",
+        "name": "Faceless",
+        "id": "827",
+        "base hp": "20",
+        "environment": "Caves / Flooded Caves / \nMines / \nScarred Womb / \nchallenge /",
+        "behavior": "Wanders around the room, rarely firing a radial burst of six shots. Chases Isaac and fires shots more frequently after taking damage."
+      },
+      "group": "entity",
+      "id": 827,
+      "name": "Faceless",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "dlc": "r",
+        "name": "Tainted Faceless",
+        "variant": "1",
+        "base hp": "100",
+        "environment": "Mines / \nFound on the Ascent to Home",
+        "behavior": "Wanders around the room, rarely firing a radial burst of six shots. Chases Isaac and fires shots very frequently after taking damage."
+      },
+      "group": "entity",
+      "id": 827,
+      "name": "Tainted Faceless",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    }
+  ]
+}

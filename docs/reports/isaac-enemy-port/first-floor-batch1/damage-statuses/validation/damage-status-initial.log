@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 93: first_floor_damage_statuses
+1/1 Test #93: first_floor_damage_statuses ......   Passed    1.54 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   1.54 sec

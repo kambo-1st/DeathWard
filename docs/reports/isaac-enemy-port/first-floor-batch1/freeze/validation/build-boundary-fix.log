@@ -1,0 +1,6 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyStatuses.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_freeze_tests
+[ 95%] Linking CXX executable deathward_enemy_freeze_tests
+[100%] Built target deathward_enemy_freeze_tests

@@ -1,0 +1,169 @@
+{
+  "verified_utc": "2026-10-28T19:28:13.114600+00:00",
+  "result": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "mechanics_fingerprint": "694232c4e57bfc17",
+  "monster_definitions": 216,
+  "new_enemy_records": 0,
+  "completed_records": 0,
+  "source": "source/manifest.json",
+  "damage_channel_review": "source/damage-channel-review.json",
+  "checks": [
+    {
+      "name": "native_source",
+      "command": [
+        "python3",
+        "scripts/isaac-reference/analyze-first-floor-damage-statuses.py",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "validation/source.log"
+    },
+    {
+      "name": "mechanics",
+      "command": [
+        "./build/deathward_check_mechanics",
+        "assets/mechanics"
+      ],
+      "exit": 0,
+      "log": "validation/mechanics.log"
+    },
+    {
+      "name": "cli_rejections",
+      "cases": 3,
+      "report": "validation/cli-rejections.json"
+    }
+  ],
+  "native_tests": [
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "source_projectile_motion",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "monster_fire_reactions",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "gaper_family",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_cohort",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_status_effects",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_freeze_effect",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_damage_statuses",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_slow_effect",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    }
+  ],
+  "coverage": [
+    "Both Poison and Burn on all five identities at30/60/120Hz: first hit on update2 with minimum duration3, recurring20update cadence, expiry before tick and exactly6hits for120duration. Short boundary durations1/2/3/22/23/42/43 are checked independently.",
+    "Positive capped addition, negative minimum-duration refresh and positive-after-extended cap; reapplication preserves tick phase and stronger damage. Expiry/new application restores6.4local minimum. Nonpositive power uses resolved player build damage or environmental floor; producer affiliation remains snapshotted after its body dies.",
+    "Independent Poison/Burn stack through ordinary Freeze and Slow without changing damage cadence. Held body pose, ordinary movement, contact and incoming24damage remain intact. Modal and inactive-room suspension retain timers/phase.",
+    "Long-step versus partitioned damage counts and durations pass. A new Horf regression exposed global acquisition initialization from the short status slice; initialization now captures the whole physics-step start before subdivision. First cast phase matches split updates.",
+    "Periodic lethal overkill removes each identity once and counts one reward/threat removal. Gaper same-entity headless transformations retain duration, phase and damage; the next periodic tick finishes the body without an intermediate clear or duplicate reward.",
+    "A full event queue retains one selected damage tick per effect, suspending only that effect clock. Retried damage keeps its original payload despite stronger reapplication; independent effects both reach a one-slot queue exactly once.",
+    "External cap/period/first-tick/minimum damage change actual behavior. Immutable reload/fingerprint and independent opt-in pass. Eight malformed profiles and invalid API values reject. An isolated fire-reaction profile verifies that both effects use Burning damage, separately from flame contact.",
+    "Existing content, source projectile, monster, fire, mortality, Horf, Gaper, headless, first-floor starting-kit/reachability, Fear/Confusion, Freeze and Slow suites all pass against the final rebuilt core."
+  ],
+  "adaptations": [
+    "Explicit damage uses DeathWard HP units; native2HP minimum maps to6.4 under existing3.2enemyHP scaling.",
+    "DeathWard retains producer attribution for its item/event pipeline; native periodic damage creates an empty EntityRef. Each selected tick uses a new bounded event chain.",
+    "Events resolve at the normal end-of-physics-step drain. Queue backpressure retains one selected tick and holds that effect clock until admission. Native arbitrary source ancestry/item duration modifiers and exact intra-step callback ordering remain outside this slice.",
+    "Only the selected five opt in. No player item, encounter pool, hub, tutorial, Mine roster or protagonist100HP/24damage default changed."
+  ],
+  "runtime_api": "applyEnemyStatus(id, EnemyStatus::Poison|Burn, sourceFrames, damage=0, Context={}); removeEnemyStatus; --enemy-status FRAME poison|burn DURATION in isolated native smoke scenes.",
+  "visual_review": "visual-review.json",
+  "native_captures": "native/verified/captures.json",
+  "performance": "No controlled rendered-performance acceptance in this slice; thirty-frame native captures are not a benchmark.",
+  "failure_history": [
+    {
+      "log": "validation/build.log",
+      "finding": "New test declared Vector3 and float in one auto declaration.",
+      "resolution": "Separated the test declarations; subsequent builds pass."
+    },
+    {
+      "log": "validation/native-tests.log",
+      "finding": "12/13pass; mechanics_content executable was stale and rejected the new damage_status directive.",
+      "resolution": "Rebuilt its linked test target. Both targeted retry and final complete13-suite selection pass."
+    },
+    {
+      "log": "validation/phase-regression-before.log",
+      "finding": "New long-frame Horf regression failed because status subdivision shifted its initial global acquisition phase.",
+      "resolution": "Initialize reviewed stationary-shooter source phase at the whole step boundary before splitting. Final13/13pass; verified captures use this rebuilt binary."
+    }
+  ],
+  "remaining": [
+    "Continue the same first-five cohort. Finish applicable Shrink/Charm/control and remaining damaging statuses, plus item duration/source integration. Poison/Burn, Fear/Confusion, ordinary Freeze and Slow have scoped passing evidence; no new player item was added.",
+    "Resolve applicable champion and knockback production/mass interactions, preserving explicit DeathWard adaptations. Boss/linked status rules and unrelated enemy controllers are not certified by this work.",
+    "Complete mixed-room readability/occlusion, varied-build/terrain balance and controlled rendered-performance acceptance before batch2. Keep existing ports, park roster expansion and skip WASM."
+  ],
+  "validation_waivers": {
+    "WASM": "Explicit user instruction: skip WASM builds and checks."
+  },
+  "live_jobs": "All builds, tests and native captures completed.",
+  "binary_sha256": "9e47f5ab9b70988596cd581fc6d069f83127da21353aaa8c28da2d3d2f7b468f",
+  "runtime_hashes": {
+    "CMakeLists.txt": "3e5822bfcfbdc8f3f8df04170c5863bce09c3249e0a15df232c9ba6c9cd36558",
+    "src/combat/EnemyStatuses.cpp": "50938b93bcb470721a7c8848c206f5156646f96d83f918a8e9e597f6bfa6e700",
+    "src/combat/Simulation.hpp": "8784db77ef26fac8d70ef00f463a1de623719ad3028e1b1f06c4cf4067fa19c4",
+    "src/content/Mechanics.hpp": "adf8ed4fa291c2eee647ebc6b122441d2aee0dc6a6e05a0cf74749cc61e81e62",
+    "src/content/Mechanics.cpp": "7054e9dffe51dcb0619b3dd9f075af7094cc9e292fc2f85fcaf434ecf86d0a5f",
+    "src/render/MonsterVisuals.hpp": "2c63a104f50577621b9a972311e13b5b5aabd012eacd50e683f0f0f63f41b12f",
+    "src/main.cpp": "490016c8d5c12878014cbafcfb2f4253e8138b403a2ca1944e1eceb44aeecdd5",
+    "assets/mechanics/first_floor_statuses.mechanics": "9cea155ffd4423cd477ab8895b9e1807736c37214740e86fd82e8ea74b51ddf4",
+    "tests/damage_status_tests.cpp": "98f22a6b8a536f70068c4b252fe72864b619010755617665fe631f5710148dda",
+    "scripts/isaac-reference/analyze-first-floor-damage-statuses.py": "94299aa41733ec4a846d50f77fec3cb7acea073e7b6826e16b22e4eb2ba187fd"
+  }
+}

@@ -1,0 +1,147 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  5: floor_progression
+      Start  7: expedition_destruction
+      Start  3: expedition_economy
+ 1/51 Test  #3: expedition_economy ...............   Passed   31.11 sec
+      Start 16: canyon_rivers
+ 2/51 Test #16: canyon_rivers ....................   Passed   15.28 sec
+      Start  9: expedition
+ 3/51 Test  #7: expedition_destruction ...........   Passed   51.15 sec
+      Start 10: expedition_pacing
+ 4/51 Test  #9: expedition .......................   Passed   12.45 sec
+      Start  6: item_builds
+ 5/51 Test #10: expedition_pacing ................   Passed    8.73 sec
+      Start  4: canyon_bosses
+ 6/51 Test  #5: floor_progression ................***Failed   60.45 sec
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_CHARGER id=855.0 seed=0 floor=5 room=12 variant=0
+NATURAL_GRILLED seed=1 floor=0 room=4
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_REPLACEMENT seed=3 floor=1 room=1 source=23.0 target=23.1
+NATURAL_CHARGER id=23.3 seed=5 floor=2 room=8 variant=2
+NATURAL_STATUE id=202.10.1 seed=5 floor=4 room=11
+NATURAL_STATUE id=804.0 seed=9 floor=2 room=2
+NATURAL_STATUE id=804.0.2 seed=10 floor=2 room=7
+NATURAL_STATUE id=804.0.3 seed=23 floor=2 room=6
+NATURAL_STATUE id=804.0.1 seed=31 floor=2 room=3
+NATURAL_REPLACEMENT seed=98 floor=0 room=2 source=29.0 target=54.0
+FAIL natural default-chance I.Blob, Grilled and Hopper substitutions are reachable
+
+      Start 50: generated_dungeons
+ 7/51 Test  #4: canyon_bosses ....................   Passed    6.05 sec
+      Start 37: bloat_boss_and_chargers
+ 8/51 Test  #6: item_builds ......................   Passed    7.14 sec
+      Start 15: canyon_roads
+ 9/51 Test #37: bloat_boss_and_chargers ..........   Passed    1.97 sec
+      Start 30: monster_flight
+10/51 Test #30: monster_flight ...................   Passed    2.75 sec
+      Start 39: companion_familiars
+11/51 Test #39: companion_familiars ..............   Passed    1.55 sec
+      Start 36: monster_boss_components
+12/51 Test #15: canyon_roads .....................   Passed    6.24 sec
+      Start 35: monster_replacements
+13/51 Test #36: monster_boss_components ..........   Passed    1.39 sec
+      Start 42: quake_waves
+14/51 Test #35: monster_replacements .............   Passed    1.42 sec
+      Start 45: segmented_bosses
+15/51 Test #42: quake_waves ......................   Passed    0.66 sec
+      Start 41: maw_attraction
+16/51 Test #41: maw_attraction ...................   Passed    0.74 sec
+      Start 40: room_statues
+17/51 Test #45: segmented_bosses .................   Passed    1.38 sec
+      Start 46: mission_themes
+18/51 Test #40: room_statues .....................   Passed    0.58 sec
+      Start 43: supplied_bombs
+19/51 Test #43: supplied_bombs ...................   Passed    0.51 sec
+      Start 25: mission_shop
+20/51 Test #25: mission_shop .....................   Passed    2.10 sec
+      Start 29: monster_behaviors
+21/51 Test #29: monster_behaviors ................***Failed    0.07 sec
+FAIL: test actor must have a valid owning encounter when required
+
+      Start  2: mechanics_content
+22/51 Test  #2: mechanics_content ................***Failed    0.20 sec
+file-defined costs reach actual floor plans
+
+      Start 49: enemy_behaviors
+23/51 Test #46: mission_themes ...................   Passed    3.65 sec
+      Start 13: arrival_quest
+24/51 Test #13: arrival_quest ....................   Passed    1.01 sec
+      Start 34: monster_hopping
+25/51 Test #34: monster_hopping ..................   Passed    0.25 sec
+      Start 26: money_pickups
+26/51 Test #50: generated_dungeons ...............   Passed   20.24 sec
+      Start 32: monster_patterns
+27/51 Test #32: monster_patterns .................   Passed    0.24 sec
+      Start 24: player_dynamite
+28/51 Test #26: money_pickups ....................   Passed    1.23 sec
+      Start 33: monster_fire_reactions
+29/51 Test #49: enemy_behaviors ..................   Passed    2.82 sec
+      Start 38: charger_variants
+30/51 Test #33: monster_fire_reactions ...........   Passed    0.21 sec
+      Start 27: resident_enemies
+31/51 Test #38: charger_variants .................   Passed    0.17 sec
+      Start 17: redstone_hub
+32/51 Test #24: player_dynamite ..................   Passed    0.91 sec
+      Start 31: monster_formations
+33/51 Test #31: monster_formations ...............   Passed    0.13 sec
+      Start 22: train_motion
+34/51 Test #17: redstone_hub .....................   Passed    0.53 sec
+      Start 51: generated_room_graphs
+35/51 Test #27: resident_enemies .................   Passed    0.82 sec
+      Start 48: core_contracts
+36/51 Test #22: train_motion .....................   Passed    0.47 sec
+      Start 11: flag_cloth
+37/51 Test #51: generated_room_graphs ............   Passed    0.56 sec
+      Start 21: ambient_animals
+38/51 Test #11: flag_cloth .......................   Passed    0.16 sec
+      Start 12: save_slots
+39/51 Test #12: save_slots .......................   Passed    0.06 sec
+      Start 14: cinematic_timeline
+40/51 Test #48: core_contracts ...................   Passed    0.44 sec
+      Start  8: walkable_areas
+41/51 Test  #8: walkable_areas ...................   Passed    0.03 sec
+      Start 23: object_animation
+42/51 Test #21: ambient_animals ..................   Passed    0.15 sec
+      Start 28: audio_presentation
+43/51 Test #14: cinematic_timeline ...............   Passed    0.08 sec
+      Start 47: imported_town_navigation
+44/51 Test #23: object_animation .................   Passed    0.05 sec
+      Start  1: enemy_port_coverage
+45/51 Test #28: audio_presentation ...............   Passed    0.05 sec
+      Start 18: building_navigation
+46/51 Test #18: building_navigation ..............   Passed    0.03 sec
+      Start 19: particle_emission
+47/51 Test #47: imported_town_navigation .........   Passed    0.06 sec
+      Start 20: town_characters
+48/51 Test #19: particle_emission ................   Passed    0.02 sec
+      Start 44: fly_bombs
+49/51 Test #20: town_characters ..................   Passed    0.02 sec
+50/51 Test  #1: enemy_port_coverage ..............   Passed    0.27 sec
+51/51 Test #44: fly_bombs ........................   Passed    3.03 sec
+
+94% tests passed, 3 tests failed out of 51
+
+Total Test time (real) =  85.83 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+	  5 - floor_progression (Failed)
+	 29 - monster_behaviors (Failed)
+Errors while running CTest

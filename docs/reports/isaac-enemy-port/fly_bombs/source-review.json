@@ -1,0 +1,94 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "status": "Partial controller implementation; neither record is a completed port.",
+  "sources": {
+    "Fly Bomb": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266992",
+    "The Horny Boys": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268743",
+    "Skatole": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270171"
+  },
+  "small_bomb_xml": {
+    "anm2path": "004.014_Small Bomb.anm2",
+    "baseHP": "0",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionMass": "6",
+    "collisionRadius": "12",
+    "friction": "1",
+    "id": "4",
+    "name": "Small Bomb",
+    "numGridCollisionPoints": "12",
+    "shadowSize": "10",
+    "stageHP": "0",
+    "variant": "14"
+  },
+  "small_bomb_identity": "Inferred mapping from the installed Small Bomb component; not a recovered native AI call.",
+  "contracts": {
+    "819.0.0": {
+      "movement": "Flying pursuit with a circling tendency; local smoothing and obstacle-aware flight routes.",
+      "targeting": "Pursues player; relative swept collision detects contact including dodge crossings.",
+      "attacks": "Player contact immediately explodes: source half-heart player / 40 enemy damage. Normal death becomes a delayed tiny bomb: full-heart player / 100 enemy damage.",
+      "vulnerability": "Source base HP 7; ordinary damage kills; contact takes a separate explosion branch.",
+      "phases": "Pursuing flyer -> contact explosion OR shot death -> delayed ordnance; exactly one branch.",
+      "offspring": "Real delayed Small Bomb ordnance, carried outside the NPC registry; 4.14.0 identity mapping is an inference.",
+      "completion": "Dead flyer releases its room threat; bomb persists after clear and can still harm player, companions and enemies.",
+      "adaptations": {
+        "health": "7 * 3.2 = 22.4 HP; player remains 100 HP / 24 damage.",
+        "movement": "Local speed 3 before existing 1.1 hostile multiplier, circle range 6, strength .7, turn 4 rad/s; alternate circling direction from entity ID. Orbital radius 2, speed 1.8 rad/s. Real 3D flight and altitude/cover collision; border compression is local.",
+        "bombs": "Local fuse 1 second/radius 3; base player damage 10/20 uses existing 1.25 hostile multiplier -> 12.5/25. Enemy values remain 40/100. Vertical fall from death altitude, radius .18 bomb physics and gravity 18; no inherited player bomb items/inventory.",
+        "lifetime": "Floor-persistent ordnance pauses in inactive rooms, survives ordinary clear. Active cap 128 and pending cap 256; pending fuse starts on materialization. Beyond both limits suppression is logged. Explicit debug clear discards it.",
+        "provenance": "Hostile, companion-affecting real explosion with hard demolition; independent event source, not a fabricated area-damage hit. Generic event limits remain effective.",
+        "ownership": "Atomic full trio preflight. Body damage is rejected; owner-group helper is not a Horny Boys implementation. Orbiters do not pay independent loot/counters.",
+        "presentation": "Original rendering with procedural bomb body, wings, fuse; pink body/halo for owned variant; ground ordnance has lit fuse and radius warning. No Isaac art copied."
+      },
+      "unknowns": [
+        "Native steering speed/curve, turn rate, orbit geometry, explosion radius and fuse are not measured; configured values are local.",
+        "The tiny-bomb mapping to installed Small Bomb 4.14.0 is inferred from naming; native AI linkage has not been recovered.",
+        "Skatole/Beelzebub and other fly-item/status interactions remain unimplemented; the flattened Skatole dossier mixes edition-dependent lists and needs source-markup review.",
+        "Human play, all-camera readability, mixed-build balance and controlled Linux/WASM performance acceptance remain open.",
+        "The Shell 19.3.0 offspring route is still missing."
+      ]
+    },
+    "819.1.0": {
+      "movement": "Three orbiters follow their moving Boom Fly host.",
+      "targeting": "Owned slot and host position; player collision may detonate an orbiter.",
+      "attacks": "Player contact immediately explodes: source half-heart player / 40 enemy damage. Normal death becomes a delayed tiny bomb: full-heart player / 100 enemy damage.",
+      "vulnerability": "Invulnerable to ordinary damage and generic execution while attached; player contact still detonates. Explicit debug deletion is separate.",
+      "phases": "Live owned orbiter -> contact explosion OR host death -> delayed ordnance; no independent loot.",
+      "offspring": "Real delayed Small Bomb ordnance, carried outside the NPC registry; 4.14.0 identity mapping is an inference.",
+      "completion": "Host governs room threat; surviving orbiters become bombs on host death. Contact-killed children cannot create duplicate owner-death bombs.",
+      "adaptations": {
+        "health": "7 * 3.2 = 22.4 HP; player remains 100 HP / 24 damage.",
+        "movement": "Local speed 3 before existing 1.1 hostile multiplier, circle range 6, strength .7, turn 4 rad/s; alternate circling direction from entity ID. Orbital radius 2, speed 1.8 rad/s. Real 3D flight and altitude/cover collision; border compression is local.",
+        "bombs": "Local fuse 1 second/radius 3; base player damage 10/20 uses existing 1.25 hostile multiplier -> 12.5/25. Enemy values remain 40/100. Vertical fall from death altitude, radius .18 bomb physics and gravity 18; no inherited player bomb items/inventory.",
+        "lifetime": "Floor-persistent ordnance pauses in inactive rooms, survives ordinary clear. Active cap 128 and pending cap 256; pending fuse starts on materialization. Beyond both limits suppression is logged. Explicit debug clear discards it.",
+        "provenance": "Hostile, companion-affecting real explosion with hard demolition; independent event source, not a fabricated area-damage hit. Generic event limits remain effective.",
+        "ownership": "Atomic full trio preflight. Body damage is rejected; owner-group helper is not a Horny Boys implementation. Orbiters do not pay independent loot/counters.",
+        "presentation": "Original rendering with procedural bomb body, wings, fuse; pink body/halo for owned variant; ground ordnance has lit fuse and radius warning. No Isaac art copied."
+      },
+      "unknowns": [
+        "Native steering speed/curve, turn rate, orbit geometry, explosion radius and fuse are not measured; configured values are local.",
+        "The tiny-bomb mapping to installed Small Bomb 4.14.0 is inferred from naming; native AI linkage has not been recovered.",
+        "Skatole/Beelzebub and other fly-item/status interactions remain unimplemented; the flattened Skatole dossier mixes edition-dependent lists and needs source-markup review.",
+        "Human play, all-camera readability, mixed-build balance and controlled Linux/WASM performance acceptance remain open.",
+        "The Horny Boys 920.0.0 producer is missing. An owner-group fixture is not gameplay reachability.",
+        "Existing Boom Fly controller remains unverified, including its generic death-hazard behavior."
+      ]
+    }
+  },
+  "stage_evidence": {
+    "819.0.0": {
+      "mines_positive_templates": 28,
+      "ashpit_positive_templates": 23,
+      "ordinary_route": "standard Broken Quarry"
+    },
+    "819.1.0": {
+      "ordinary_route": null,
+      "required_producer": "920.0.0",
+      "owner": "25.0.0",
+      "producer_implemented": false
+    }
+  },
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Local adaptations/tests are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

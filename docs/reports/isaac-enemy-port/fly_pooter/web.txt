@@ -1,0 +1,5 @@
+PASS fly-buzz
+PASS pooter-buzz-shot
+PASS fly-dung-morph
+PASS natural-fly-dung
+PASS natural-pooter

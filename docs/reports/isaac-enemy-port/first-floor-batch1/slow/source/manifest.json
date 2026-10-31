@@ -1,0 +1,162 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/add_slowing.asm",
+      "start": "0x685400",
+      "end": "0x685508",
+      "raw_sha256": "28ff488427e43a9c7314f706ede4a3e450a54c2ef577947bd857a2ed61b12409",
+      "sha256": "f0fffa4a488545e501672fb2054e7402a885867cef50bd4baa97fa930c4ddfa0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/expire_slow.asm",
+      "start": "0x6867cb",
+      "end": "0x68680f",
+      "raw_sha256": "a39e60723d38fbbcf70ce51ec2ffd998dc1b1acbed2537fe2862accf9888f671",
+      "sha256": "2b3a88f0c299f79d7b026d17ddd0f581568a864ac19adc15cdd2441e070b5d54"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/npc_time_scale.asm",
+      "start": "0x690ad0",
+      "end": "0x690cb7",
+      "raw_sha256": "9cffe99a2d53095862d927261b0a4f77ffc9c35bb727fd23ded7d93eff9a214b",
+      "sha256": "85dcc7bbb6b499fe417190d757ac474bef14b869ee4199c0b2db367bb1cc1dd7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/projectile_time_scale.asm",
+      "start": "0x62f440",
+      "end": "0x62f5d3",
+      "raw_sha256": "bd9c3c8c65df3cacb88d4c584970e6f3d4f72c52d0bbf296bad2b4f6536902d9",
+      "sha256": "dc14e788f392c6fffd0fa283e4d6d263a830adb39522770a954919a79461399d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/inherit_projectile_flag.asm",
+      "start": "0x6a1750",
+      "end": "0x6a179a",
+      "raw_sha256": "b2d2d89c35d9944a123e3992f180e2fb914b008cced64b11b853cdc171ae64a6",
+      "sha256": "66183daf8f90086cfa7504499b11fc7d47a1a413c1b82e9481bb8a44093ae0b3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/factory_owner_flags.asm",
+      "start": "0x6a38f1",
+      "end": "0x6a3907",
+      "raw_sha256": "55f83e3d584345f6fc05088016b843268d041ac0761de42e71f0d37f7a4c81e6",
+      "sha256": "3503a730bd08cf59add6cc4f87f49cbb99cec83a097deba01f7420f36ab930fe"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/rational_retention.asm",
+      "start": "0x65c960",
+      "end": "0x65c98a",
+      "raw_sha256": "1e437a595421fcef0cb21856fb649db4f94646cfc06b7b72c0028fb1892e53b8",
+      "sha256": "ee77d50d106e676e5643eb8b8abc50bf0b22ba07a134311b058007c0266a1ca8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/add_velocity.asm",
+      "start": "0x422b60",
+      "end": "0x422bcf",
+      "raw_sha256": "544f78f82e6fae2f3ee69e46b0ddb409eb0e74b88b5f31b1d55f4bb75e6cad33",
+      "sha256": "0bec19041e8143ee7c450dec124580b5a7a219a3303ebad5bda885bc02b715a1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/base_velocity.asm",
+      "start": "0x686406",
+      "end": "0x686492",
+      "raw_sha256": "cb3a84966c37e02404e6a2c37db60f259070923095d0bd6bff3df037cd6c1004",
+      "sha256": "169fb4e8fd88bed2086f21aa831a74d5ff7f5b49ef3ac81d5d71fcddfd665615"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/animation_clock.asm",
+      "start": "0x6860e7",
+      "end": "0x68618c",
+      "raw_sha256": "24de3fd0aee3196d85f7bce5e9dcf7c119cddb6608ee9b281a2db7bbed79e22e",
+      "sha256": "06fc7ccdd62092959ce8f2660a609d381c4d251fcf8e0b977d57f91428dcc8e4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/horf_cooldown.asm",
+      "start": "0x500fdd",
+      "end": "0x501006",
+      "raw_sha256": "98905cc0eeb0b592598845628aa4ecd7ced015c8f3d62dfae4f5081ba7d86eb5",
+      "sha256": "62629a42e2532e9cf4b53c438651692ce8b4582a4bb7ffe35893c9b215586c55"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/source/gusher_cooldown.asm",
+      "start": "0x4f93e9",
+      "end": "0x4f9403",
+      "raw_sha256": "2415a3dd22854397f0ffe50a3c90d1479399e63296882732e77fbe2a29ce8f74",
+      "sha256": "4df2467e39b2c001b98c732cd692aa22fd8145c74f146b2a07c861151554a6e4"
+    }
+  ],
+  "constants": [
+    {
+      "name": "slow_time_scale",
+      "address": "0xb6a480",
+      "bytes": "0000003f",
+      "value": 0.5
+    },
+    {
+      "name": "falling_retention",
+      "address": "0xb6a5a4",
+      "bytes": "6666663f",
+      "value": 0.8999999761581421
+    }
+  ],
+  "referenced_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/flight_integrator.asm",
+      "sha256": "6d4276f523c6bb04773dcddb94d31a06ec64c31db9b9c131fcc1eef42cdd082f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/mode0_defaults.asm",
+      "sha256": "e7569cd49b1f58cbfaa8f3b12d62f5827f8e00b95d3176985b86706f72870c5d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/grid-path.asm",
+      "sha256": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/headless/source/controller.asm",
+      "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/horf_acquisition_and_delay.asm",
+      "sha256": "3398b3f9b5db7aeaa2e62b6732d911a771be0699a254802be8cbf52e4d582867"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/shared_acquisition.asm",
+      "sha256": "3aa17539fcfcdf31c68bfbb09d92224e2cc49d93447f98a903706e2475cfea5c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/base-config.asm",
+      "sha256": "d44b00677e9bc0a0ceaadf926e1008e02e7bc1591054266c92202fabdb2ded9f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/npc-config.asm",
+      "sha256": "47a82eb4b11f7accff02b9a79f16f1c9fbbb1d8564dee26acb7c0436e15c5c48"
+    }
+  ],
+  "findings": [
+    "AddSlowing685400 adds positive duration to218 without the120 cap used by Freeze/Fear/Confusion. Negative duration assigns2, including shortening an existing duration. Zero does not add status. Low Entity flag80 indicates Slow. Shared update decrements218 once per source update and clears80 at zero.",
+    "AddSlowing stores caller strength at304, but ordinary NPC time-scale690ad0 does not read it. After room modifiers it tests low flag80 and multiplies by b6a480=.5. The selected normal expedition profile does not simulate unrelated global stopwatch/room/item modes.",
+    "Native sprite playback and float FrameCount are scaled, while AI/global acquisition polls still run each real30Hz update. Horf/Gusher integer cooldowns subtract trunc(currentFrameCount)-trunc(previousFrameCount); a due Gusher may fire on an AI update with zero logical-frame increment.",
+    "AddVelocity422b60 multiplies force by timeScale and divides by accumulated friction. Base Entity movement transforms retention q into q/(q+t-q*t), multiplies stored velocity by that value and multiplies displacement by t. Helper65c960 uses this same rational formula, not exponentiation.",
+    "For an existing normal controller result q*old+impulse, the slowed carried velocity is (q*old+impulse*t)/(q+t-q*t), with displacement multiplied separately by t. Family friction order, path-arrival friction and combined fear friction all matter.",
+    "Projectile factory6a38f1 passes owner flags to6a1750. Owner low flag80 adds projectile SLOWED1<<24 at388. Projectile time-scale62f440 tests that retained flag and applies.5 independently of the owner thereafter.",
+    "Vertical projectile update636567 uses65c960 to adjust.9 falling-speed retention, multiplies both gravity terms by t and then advances height by fallingSpeed*t. Ordinary Horf/Gusher speeds and damage are otherwise unchanged. Earlier projectiles do not gain SLOWED retroactively.",
+    "Freeze skips AI and animation but still advances scaled base FrameCount. Consequently logical cooldown fraction may advance while frozen even though the cooldown itself is held; the sprite fraction remains held."
+  ],
+  "adaptations": [
+    "Only10.0.0,10.1.0,11.0.0,11.1.0,12.0.0 opt into Slow. slow_effect ID actorScale shotScale negativeRefresh exposes separate tuning values; defaults.5/.5/2 match this baseline. These scales are not a claim that native AddSlowing strength304 controls ordinary NPC speed.",
+    "Existing fixed-source-step controllers retain independent real AI ticks, logical cooldown fractions and animation fractions. Global staggered polls use retained local source phase in inactive rooms. Modal pauses stop simulation; room storage retains durations without catch-up.",
+    "Continuous3D integration uses the established recurrence interpolation between exact30Hz endpoints. Stored body/projectile velocity remains unscaled, while actual displacement includes time scale. Physical canyon cover, body steering and damage conversion remain unchanged.",
+    "Positive applications saturate only atINT_MAX to avoid signed overflow; individual API durations remain bounded to18000 source frames. This is not a120-frame cap. Negative duration assigns the externally configured refresh count.",
+    "Queued Gusher shots capture slowed projectile state at selection and keep it across capacity retry. Horf captures it when its Shoot payload is admitted. Already emitted shots retain independent time scale after owner removal or death.",
+    "The local projectile lifetime budget consumes logical time; source airborne trajectories still determine ground impact. Tested Slow projectile support is the ordinary Horf/Gusher lob path, not an assertion of unrelated accelerated/homing/splitting projectile parity.",
+    "Ochre body treatment and a small hourglass marker are original DeathWard cues. Freeze visually takes precedence. Tint lasts for the status duration instead of reproducing the native caller-color stacking API. No player item or ordinary input binding is added.",
+    "Boss immunity cooldowns, linked-entity propagation, item duration/source modifiers and other Slow sources remain open. Headless cosmetic trail remains the existing bounded10-real-tick adaptation."
+  ]
+}

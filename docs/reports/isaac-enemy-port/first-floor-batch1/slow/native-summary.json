@@ -1,0 +1,159 @@
+{
+  "verified_utc": "2026-10-28T19:03:13.274469+00:00",
+  "result": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "mechanics_fingerprint": "4196dc02ae1cd555",
+  "monster_definitions": 216,
+  "new_enemy_records": 0,
+  "completed_records": 0,
+  "source": "source/manifest.json",
+  "checks": [
+    {
+      "name": "source",
+      "command": [
+        "python3",
+        "scripts/isaac-reference/analyze-first-floor-slow.py",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "validation/source.log"
+    },
+    {
+      "name": "mechanics",
+      "command": [
+        "./build/deathward_check_mechanics",
+        "assets/mechanics"
+      ],
+      "exit": 0,
+      "log": "validation/mechanics.log"
+    },
+    {
+      "name": "cli_rejections",
+      "cases": 3,
+      "report": "validation/cli-rejections.json"
+    }
+  ],
+  "native_tests": [
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "source_projectile_motion",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_fire_reactions",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "gaper_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_cohort",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_status_effects",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_freeze_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_slow_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    }
+  ],
+  "coverage": [
+    "All five opt in through slow_effect profiles. Positive durations add without the Fear/Freeze 120-update cap; negative applications assign the configured two-frame refresh even when shortening an old duration. Expiry uses real source updates. Modal pauses preserve duration.",
+    "Native rational retention q/(q+t-q*t), scaled force and separately scaled displacement are reproduced for pursuit, wandering, passive Horf momentum, Fear and Freeze combinations. Independent endpoint checks and 30/60/120 Hz partitions pass.",
+    "AI acquisition polls continue in real source time. Animation, Horf casts and integer reload counters use logical time. Frowning awakening has its own animation phase; a due Gusher can shoot on a real update with zero logical-frame increment.",
+    "New Horf/Gusher projectiles inherit slowdown at selection/spawn. Their horizontal displacement, damped vertical flight and safety lifetime follow the retained projectile scale; existing shots are not retroactively changed. Owner recovery/death does not change retained shots. Delayed Gusher admission preserves selection.",
+    "Slowed Horf shots still hit the standing player for 12.5 damage. Contact damage and incoming 24 damage remain unchanged; same-entity Gaper/headless transformations retain Slow/Freeze. Status clocks remain independent and inactive rooms retain durations.",
+    "External actor/shot scales and negative refresh are separately configurable. Reloaded immutable snapshots differ, unsupported identities reject Slow, six malformed profiles reject and CLI validation rejects invalid contexts/durations.",
+    "Existing projectile, fire, mortality, Horf/Gaper/headless, first-floor cohort, Fear/Confusion and ordinary Freeze regressions pass with the rebuilt core."
+  ],
+  "adaptations": [
+    "Normal source time scale is 0.5. The external actor/projectile scales are DeathWard tuning fields, not a reinterpretation of native AddSlowing strength304.",
+    "Existing 3D collision, projectile-height scale, queue retry, room lifecycle and interpolation policies remain explicit local adaptations.",
+    "Only this five-enemy cohort and ordinary Horf/Gusher lobs are opted in. Other controller/projectile families and global/boss/item time modifiers are not certified."
+  ],
+  "visual_review": "visual-review.json",
+  "native_captures": "native/captures.json",
+  "runtime_api": "applyEnemyStatus(id, EnemyStatus::Slow, sourceFrames), removeEnemyStatus; isolated native --smoke --enemy-status FRAME slow DURATION. No player perk added.",
+  "performance": "No new controlled rendered benchmark. Current capture FPS is not performance acceptance.",
+  "failure_history": {
+    "log": "validation/slow-initial.log",
+    "finding": "Initial shot-inheritance fixture allowed only 50 updates, which at 120 Hz was shorter than the first slowed Horf cast.",
+    "resolution": "Expanded the test observation horizon to two seconds at each update rate. No runtime fix was needed for this test-horizon failure; final 12/12 suites pass."
+  },
+  "remaining": [
+    "Continue only the first-five cohort. Finish applicable Shrink/Charm/control and damaging statuses plus item-source/duration interfaces; ordinary Freeze is not Midas or Ice. No new player perk was added in this slice.",
+    "Resolve applicable champion and knockback production/mass interactions with explicit 3D adaptations. Global stopwatch modes, boss/linked status rules and unrelated projectile families are not covered by this Slow slice.",
+    "Finish mixed-room readability/occlusion, varied-build/terrain balance and controlled rendered performance before batch2. Preserve existing work, park roster expansion and skip WASM."
+  ],
+  "validation_waivers": {
+    "WASM": "Explicit user instruction: skip WASM builds and checks."
+  },
+  "live_jobs": "All builds, tests and native captures completed.",
+  "binary_sha256": "7f94dca5b6826ef4ef6b65f9fde7cbd25249faf239ce8220990b89cc3f69f459",
+  "runtime_hashes": {
+    "CMakeLists.txt": "d9cb80bbc7b7cc9e3109489e924f0328ba5f6ebbdeb4e4fecc750e1ecf4f8f44",
+    "src/combat/SourceTime.hpp": "f82444f7634f7d41175f7035ee66a11913ae37099956c0b57326f0d500605bc3",
+    "src/combat/EnemyStatuses.cpp": "024c16c1b5cc6755d4c06b127e8246dbb7302957a037a4a49497b7f364493e24",
+    "src/combat/Simulation.hpp": "8c313e18ef2d4c1348f07f0a5ed12495db7390d97cab3103ebd3a97221939232",
+    "src/combat/Simulation.cpp": "899324e92734958c56b471e30354762440cc5ece4cea65e70ba81a667192c7af",
+    "src/combat/Gapers.cpp": "594d96620dc4584ba4137a38be955e173ed7d38d243a8fc452a4d1930870abd5",
+    "src/combat/Headless.cpp": "d960b44fd00fc352fbd6229efaf4b8ebb5af700fd151685c52a33910c3eef2e6",
+    "src/combat/HeadShooters.cpp": "17248d0cd414f702dde9c7c85a1a1f5cd0307acac946a8ae54d2e73e499b04ec",
+    "src/combat/LobFlight.hpp": "713b8540948b1afa7b71a553ef91d8048d6b2715383cf835b9e667d4976b3e78",
+    "src/content/Mechanics.hpp": "4f83c46ccd664e5e7cddfa92e7ced4411b26992d45e8e9ffe5645a960d6f55cf",
+    "src/content/Mechanics.cpp": "6042b76f121bd5ff4d5787af92dab56e1d04aadfcc580ecefe19a25612ee6935",
+    "src/render/MonsterVisuals.hpp": "83c4121eb2a14ad70b70cde1944f04a2349d46c220172c027a9ad05e21f10c40",
+    "src/main.cpp": "e73a41383b760d5417b4d5932fa84f5b15d77259815a45e554e607bd79bdcfc6",
+    "assets/mechanics/first_floor_statuses.mechanics": "4fbf9332962ed64b6bc2e54d35e65b45510cd44c606966e81b410248ad9299f5",
+    "tests/enemy_slow_tests.cpp": "933cf99f8887f25768af3b2152881f0566a5a626dc0aeab7c0474a70d816ed05",
+    "tests/enemy_freeze_tests.cpp": "55ceb168d7ded547fced20c656d7cc978a14c8b98f790670e4d573849151d4a0",
+    "tests/enemy_status_tests.cpp": "ee4167f16a0c93cc74e332649c7b7c61cc8e2ce29e3e79a20eab9d6b286a507c",
+    "tests/first_floor_cohort_tests.cpp": "1b47cc22a13be7043911975fa6ec5a49468decd7fdf124b7b372d875afe82643",
+    "tests/source_projectile_tests.cpp": "454439d81e9bdcff40c6f3828717c3c4504b986a500df298067dbebaaf703a87",
+    "scripts/isaac-reference/analyze-first-floor-slow.py": "78ae806b0a8725c3f127fb4edaaa3f93beec7076df7678d7e1d76661e93fba9f"
+  }
+}

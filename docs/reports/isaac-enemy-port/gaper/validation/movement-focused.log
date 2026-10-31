@@ -1,0 +1,3 @@
+MOVEMENT hp32_32_28_8=1 first_tick=1 source_acceleration=1 analytic30ticks=1 arrival=1 no_route=1 walk22=1
+AWARENESS closed_chase=1 delayed_open=1 permanent_wake=1 animation20=1 reentry=1 cover=1
+FAIL source-adapted contact deals10HP

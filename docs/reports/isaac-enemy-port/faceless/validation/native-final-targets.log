@@ -1,0 +1,12 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_faceless_tests
+[100%] Building CXX object CMakeFiles/deathward_faceless_tests.dir/tests/faceless_tests.cpp.o
+[100%] Linking CXX executable deathward_faceless_tests
+[100%] Built target deathward_faceless_tests
+[ 17%] Built target glfw
+[ 96%] Built target deathward_core
+[100%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+[100%] Building CXX object CMakeFiles/deathward_check_mechanics.dir/tools/check_mechanics.cpp.o
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

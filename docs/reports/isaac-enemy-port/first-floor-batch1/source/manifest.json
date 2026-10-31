@@ -1,0 +1,86 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": [
+    {
+      "name": "body_retention",
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    {
+      "name": "flight_retention",
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    {
+      "name": "common_acceleration",
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    }
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/horf_controller.asm",
+      "start": "0x500fa0",
+      "end": "0x5014ee",
+      "raw_sha256": "bdd7b255bcd00a878ce7917132c0653e961b5ecb452f402de0f58804c5ad4210",
+      "sha256": "7d8501e4b4f6fbeb44b84c12266cb9739204ef3df2012f6789697bcc2ee67b95"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/projectile_parameters.asm",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "raw_sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/mode0_defaults.asm",
+      "start": "0x6a3059",
+      "end": "0x6a30b8",
+      "raw_sha256": "2dece6fcc09e58eb6216221eec22f07bff121a1a149997b9869ef932503273bc",
+      "sha256": "e7569cd49b1f58cbfaa8f3b12d62f5827f8e00b95d3176985b86706f72870c5d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/parameter_addition.asm",
+      "start": "0x6a3159",
+      "end": "0x6a31b8",
+      "raw_sha256": "7315daba59b7f552d74878bf24f5142393bbecffa39f66e0c39c8b64c14f1bf8",
+      "sha256": "2a8575ee0b498017766210bf7243e28f56032fdedc58fa193eb1fd0747dd22d3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/gusher_parameters.asm",
+      "start": "0x4f92df",
+      "end": "0x4f93c4",
+      "raw_sha256": "8155493266393e0a6b0288da3dead772a3a138bcc8e4e09a73295939a6567311",
+      "sha256": "2a58dbeec3a7d5170a541f90c8e75e7a66d814ab3ab3011dc27fdad3b73b9a70"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/initial_height.asm",
+      "start": "0x62f1ef",
+      "end": "0x62f1f9",
+      "raw_sha256": "ed93132d654b1855979833f44e4a0ffc330ab930ef09d17a506cb6e7f427b13c",
+      "sha256": "ac077fb3e9daa3a9957d0239b96f09989bb5ff27645e7b9703334f20a8f06c0f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/source/flight_integrator.asm",
+      "start": "0x636567",
+      "end": "0x6365d5",
+      "raw_sha256": "e36d0d4128d9429273b807db099763ca63eae641b49ffaf016bafbeec05a697b",
+      "sha256": "6d4276f523c6bb04773dcddb94d31a06ec64c31db9b9c131fcc1eef42cdd082f"
+    }
+  ],
+  "findings": [
+    "Ordinary Horf initializes ProjectileParams and calls FireProjectiles mode0 without falling modifiers. The distinct Psychic Horf branch only adds its own flags/color.",
+    "Mode0 overwrites fallingSpeed with -3 and fallingAccel with .1. The parameter pass then adds the caller modifiers. Initial height is -23.",
+    "Gusher sets fallingSpeedModifier=-5 and fallingAccelModifier=.3: initial speed=-8 and acceleration field=.4.",
+    "The shared flight update also adds common acceleration .1. At source timeScale1 the recurrence is v=.9*v+.1+fallingAccel; height+=v. Thus Horf adds .2 per update and Gusher adds .5.",
+    "The previous Gusher world gravity18 used only the .4 field. At vertical scale .05 and30Hz it must be(.1+.4)*.05*900=22.5.",
+    "Horf applies friction*.7 each update despite having no pursuit movement. DeathWard retains incoming horizontal momentum with .7 damping; fractional-step interpolation and physical canyon collision remain explicit adaptations."
+  ],
+  "adaptations": [
+    "Horf horizontal scale.1 gives speed21. Vertical scale.03 gives launch height.69, upward speed2.7 and gravity5.4. This narrower arc keeps ordinary aimed shots within the existing standing-player combat silhouette; it does not change the player hitbox.",
+    "Gusher retains vertical scale.05, launch height1.15 and upward speed12; gravity22.5 now includes the shared base acceleration.",
+    "Swept spheres collide with actual3D scenery and ground. Native collision-height thresholds and sprite layering are not reproduced. Existing local shot radius.22 and lifetime caps are retained.",
+    "Passive Horf damping consumes external velocity but does not invent a new hit impulse. Exact native mass/knockback production remains part of the shared acceptance work."
+  ]
+}

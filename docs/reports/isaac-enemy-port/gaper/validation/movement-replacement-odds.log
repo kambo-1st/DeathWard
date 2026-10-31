@@ -1,0 +1,11 @@
+REPLACEMENT_ODDS source=15.0 replaced=90 samples=10000
+REPLACEMENT_ODDS source=15.1 replaced=90 samples=10000
+REPLACEMENT_ODDS source=29.0 replaced=5965 samples=10000
+REPLACEMENT_ODDS source=23.0 replaced=5002 samples=10000
+REPLACEMENT_ODDS source=10.0 replaced=5965 samples=10000
+REPLACEMENT_ODDS source=10.1 replaced=5965 samples=10000
+REPLACEMENT_SNAPSHOT one_shot=1 budget_reserved=1 immutable=1 explicit_spawn=1
+FLOODED_QUARRY samples=600 flooded=192 patches=42 geometry_unchanged=1
+FLOOR_VARIANTS scorched=192 samples=600 patches=16 geometry_unchanged=1
+REPLACEMENT_RESIDENTS iblob=8 safe_placement=1 target_stats=1 reentry=1
+PASS conditional replacements and floor variants

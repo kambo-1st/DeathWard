@@ -1,0 +1,80 @@
+Start testing: Oct 28 18:12 CET
+----------------------------------------------------------
+34/113 Testing: source_projectile_motion
+34/113 Test: source_projectile_motion
+Command: "/home/kambo/workspace/DeathWard/build/deathward_source_projectile_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_projectile_motion" start time: Oct 28 18:12 CET
+Output:
+----------------------------------------------------------
+ORBIT source_endpoint=1 opposite_handedness=1 cadence=1 radial_drift=1
+ACCELERATION deceleration=1 growth=1 independent_height=1
+EXTENDED_ACCELERATION native_ramp20=1 first_age1=1 saturation=1 cadence=1 vertical=1 scenery=1 owner_death=1
+PHYSICAL walls=1 ground=1 player=1 survives_owner=1
+PASS source projectile motion
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"source_projectile_motion" end time: Oct 28 18:12 CET
+"source_projectile_motion" time elapsed: 00:00:00
+----------------------------------------------------------
+
+74/113 Testing: horf_stationary_shooting
+74/113 Test: horf_stationary_shooting
+Command: "/home/kambo/workspace/DeathWard/build/deathward_horf_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"horf_stationary_shooting" start time: Oct 28 18:12 CET
+Output:
+----------------------------------------------------------
+FLIGHT native_recurrence=12 standing_hits=3 passive_partitions=3 physical_cover=1
+NATURAL_HORF seed=3 floor=0 room=3 hp=32
+PASS Horf: source cast/cadence/current aim, strict range/cover, pressure, health, flight/passive motion, config and natural stage
+<end of output>
+Test time =   0.80 sec
+----------------------------------------------------------
+Test Passed.
+"horf_stationary_shooting" end time: Oct 28 18:12 CET
+"horf_stationary_shooting" time elapsed: 00:00:00
+----------------------------------------------------------
+
+86/113 Testing: gaper_family
+86/113 Test: gaper_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_gaper_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"gaper_family" start time: Oct 28 18:12 CET
+Output:
+----------------------------------------------------------
+MOVEMENT hp32_32_28_8=1 first_tick=1 source_acceleration=1 analytic30ticks=1 arrival=1 no_route=1 walk22=1
+AWARENESS closed_chase=1 delayed_open=1 permanent_wake=1 animation20=1 reentry=1 cover=1
+DAMAGE fire_vulnerable=3 no_ignition=1 no_trail=1 contact_base10_global_multiplier=1 partition30_120=1
+EXTERNAL immutable_reload=1 runtime_force=1 rejected_contracts=11
+PLACEMENT bands0_1=1 scorched0_only=1 replacement60percent=1 support_reserve=1600
+PASS Gaper family
+<end of output>
+Test time =   0.34 sec
+----------------------------------------------------------
+Test Passed.
+"gaper_family" end time: Oct 28 18:12 CET
+"gaper_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+89/113 Testing: headless_family
+89/113 Test: headless_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_headless_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"headless_family" start time: Oct 28 18:12 CET
+Output:
+----------------------------------------------------------
+MOVEMENT no_target=1 retention_before_impulse=1 grounded_cover=1 pacer_no_shots=1
+SHOTS initial20_39=1 reload40_59=1 decrement_branch=1 velocity_aim=1 zero_aim=1 lob_physics=1 no_los_gate=1
+FAIL retained shot preserves payload and dead-owner attribution
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Failed.
+"headless_family" end time: Oct 28 18:12 CET
+"headless_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 28 18:12 CET

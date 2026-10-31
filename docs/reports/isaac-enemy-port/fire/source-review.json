@@ -1,0 +1,53 @@
+{
+  "baseline": "Repentance 1.7.9b; later Repentance+ notes excluded",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; paraphrased from pinned articles retained in the mechanics reference.",
+  "sources": [
+    {
+      "article": "Clotty",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266727",
+      "supports": "Ordinary Clotty fire immunity and Grilled transformation have a flooded-room exception, which permits normal killing rather than only suppressing the transformation."
+    },
+    {
+      "article": "Hopper",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267012",
+      "supports": "Random hopping and close-range pursuit; flaming form has greater acquisition range and longer/faster hops. Eligible flame contact transforms a normal Hopper. Flaming Hopper still takes burning-status damage. Source Burning Basement replacement is 60%, not implemented here."
+    },
+    {
+      "article": "Red Candle",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267070",
+      "supports": "Repentance flames transform and strengthen Hoppers/Clotties, without damaging those reactive monsters. This motivates a flame-contact channel distinct from burning damage."
+    },
+    {
+      "article": "Hot Bombs",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=264728",
+      "supports": "Hopper contact with a Hot Bomb transforms it into Flaming Hopper. The corresponding item producer is not implemented by this fire batch."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Exact tuples 15.0.0,15.3.0,29.0.0,54.0.0. All four source collisionRadius values are 13; Clotty/Grilled baseHP 15/20 and Hopper/Flaming baseHP 10/20 are reference values, not DeathWard HP."
+    }
+  ],
+  "implemented": [
+    "External flame/burning multipliers, dry-only condition, target/trigger and health policy.",
+    "In-place identity/team/owner/stun-preserving transformation without rewards; triggering hit uses original rule once.",
+    "Real bounded fire exposure, typed projectile hits, cover/height checks, lifecycle and shared per-target contact cooldown.",
+    "Flooded room gameplay flag disables dry-only transformation/immunity; flag persists during room re-entry.",
+    "Flame visuals follow the fire combat plane, including above cover."
+  ],
+  "adaptations": [
+    "Fractional HP retention and scaled maxHP are explicit local policy; exact native transformation HP retention is unverified.",
+    "Grilled DW collision radius changed from .65 to .6 to match equal source radius and permit a compatible in-place body.",
+    "Existing DW HP 80/96 for Clotty/Grilled and 48/64 for Hopper/Flaming retained; no source HP/stageHP conversion acceptance.",
+    "Shared .5-second fire contact cooldown and vertical reach are DeathWard tuning.",
+    "Grilled burning immunity and flooded inheritance use a provisional family interpretation; direct verification remains required."
+  ],
+  "not_implemented": [
+    "Timed burning status, Fire Mind/Red Candle/Hot Bombs item producers and Flush.",
+    "Flooded room art/generation and complete ordinary environment routes; rivers retain dry banks and do not imply a room-wide flooded flag.",
+    "Faithful Hopper hop acquisition/range/airborne rock/pit behavior and 60% Burning Basement replacement.",
+    "I.Blob rare replacement and complete family stage approval.",
+    "Full item/champion/status/team parity, native numeric conversions and all acceptance gates."
+  ]
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="4"
+	timestamp="2026-10-26T22:13:50"
+	>
+	<testcase name="gurgle_splasher_physical_lobs" classname="gurgle_splasher_physical_lobs" time="4.15014" status="run">
+		<system-out>chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+LOB_FLIGHT source_ticks=240 endpoint_match=1
+NATURAL_LOBBER type=238 seed=0 floor=5 room=3 hp=67.84
+NATURAL_LOBBER type=238 seed=1 floor=3 room=2 hp=57.6
+NATURAL_LOBBER type=238 seed=1 floor=5 room=8 hp=62.72
+NATURAL_LOBBER type=87 seed=2 floor=3 room=3 hp=128
+NATURAL_LOBBER type=238 seed=2 floor=3 room=4 hp=57.6
+NATURAL_LOBBER type=238 seed=2 floor=3 room=7 hp=57.6
+PASS regular lobbers: timing, current aim, movement aim, physical flight, source blast, queue pressure, validation, seeded routing
+</system-out>
+	</testcase>
+</testsuite>

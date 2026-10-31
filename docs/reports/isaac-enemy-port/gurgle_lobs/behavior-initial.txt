@@ -1,0 +1,4 @@
+chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+LOB_FLIGHT source_ticks=240 endpoint_match=1
+PASS regular lobbers: timing, current aim, movement aim, physical flight, source blast, queue pressure, validation

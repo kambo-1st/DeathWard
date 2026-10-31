@@ -1,0 +1,20 @@
+{
+  "verified_utc": "2026-10-28T19:28:13.114600+00:00",
+  "result": "partial_progress",
+  "previous_goal_turn_classification": "progress: completed Slow evidence review, persisted runtime/capture reports and updated the maintained checklist. This turn implemented and validated Poison/Burn and corrected Horf initial source phase.",
+  "mechanics_fingerprint": "694232c4e57bfc17",
+  "counts": {
+    "in_progress": 200,
+    "missing": 423,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native-summary.json",
+  "next_work": [
+    "Continue the same first-five cohort. Finish applicable Shrink/Charm/control and remaining damaging statuses, plus item duration/source integration. Poison/Burn, Fear/Confusion, ordinary Freeze and Slow have scoped passing evidence; no new player item was added.",
+    "Resolve applicable champion and knockback production/mass interactions, preserving explicit DeathWard adaptations. Boss/linked status rules and unrelated enemy controllers are not certified by this work.",
+    "Complete mixed-room readability/occlusion, varied-build/terrain balance and controlled rendered-performance acceptance before batch2. Keep existing ports, park roster expansion and skip WASM."
+  ],
+  "live_jobs": "All builds, tests and native captures completed."
+}

@@ -1,0 +1,68 @@
+{
+  "status": "Remaining-scope analysis, not approved spawn pools. A candidate source band is not gameplay reachability.",
+  "total": 653,
+  "reviewed": 120,
+  "implementation_counts": {
+    "in_progress": 67,
+    "existing_unverified": 87,
+    "missing": 487,
+    "excluded": 12
+  },
+  "pending_review_roles": {
+    "boss_encounter_or_component_review": 157,
+    "enemy_or_component_review": 337,
+    "environment_npc_item_dependency_review": 5,
+    "existing_support_or_hazard_review": 12,
+    "miniboss_or_component_review": 22
+  },
+  "pending_review_candidate_first_bands": {
+    "Outer Washes": 74,
+    "Broken Quarry": 133,
+    "requires_dedicated_or_parent_review": 159,
+    "Abandoned Works": 75,
+    "Storm Cut": 92
+  },
+  "floor_band_sequences": {
+    "4": [
+      "Outer Washes",
+      "Broken Quarry",
+      "Abandoned Works",
+      "Storm Cut"
+    ],
+    "5": [
+      "Outer Washes",
+      "Outer Washes",
+      "Broken Quarry",
+      "Abandoned Works",
+      "Storm Cut"
+    ],
+    "6": [
+      "Outer Washes",
+      "Outer Washes",
+      "Broken Quarry",
+      "Abandoned Works",
+      "Abandoned Works",
+      "Storm Cut"
+    ],
+    "7": [
+      "Outer Washes",
+      "Outer Washes",
+      "Broken Quarry",
+      "Broken Quarry",
+      "Abandoned Works",
+      "Abandoned Works",
+      "Storm Cut"
+    ],
+    "8": [
+      "Outer Washes",
+      "Outer Washes",
+      "Broken Quarry",
+      "Broken Quarry",
+      "Abandoned Works",
+      "Abandoned Works",
+      "Storm Cut",
+      "Storm Cut"
+    ]
+  },
+  "completion_policy": "Each eligible record needs reviewed source-edition behavior, an actual ordinary/dedicated/owned producer route, and evidence across behavior, reachability, native visuals, WASM visuals, balance and performance. Names or generic AI are insufficient."
+}

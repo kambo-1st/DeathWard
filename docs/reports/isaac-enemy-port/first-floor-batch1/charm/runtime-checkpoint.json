@@ -1,0 +1,14 @@
+{
+  "verified_utc": "2026-10-28T20:34:15.104131+00:00",
+  "result": "partial_progress",
+  "previous_goal_turn_classification": "Progress: previous turn preserved Charm source contracts; this turn implemented and validated temporary Charm for the same first five.",
+  "mechanics_fingerprint": "c8006956361ec3bb",
+  "report": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native-summary.json",
+  "newly_completed_records": 0,
+  "next_work": [
+    "Finish permanent negative-duration Charm/friendly conversion, native incoming damage and room/floor follower lifetime for the same first five. Temporary-only support is explicitly rejected for negative duration, not a substitute for completion.",
+    "Finish remaining applicable control/damaging statuses, item duration/producer interfaces and champion/knockback interactions. Native Betrayal-gated retaliation remains an item dependency, not unconditional Charm aggro.",
+    "Finish mixed-room Original-style readability/occlusion, varied-build/terrain balance and controlled rendered performance before batch2. Preserve existing implementations, park expansion, skip WASM."
+  ],
+  "live_jobs": "All builds,16Linux suites and8native captures completed; no WASM."
+}

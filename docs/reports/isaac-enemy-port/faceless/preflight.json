@@ -1,0 +1,87 @@
+{
+  "status": "Source/helper interpretation in progress; neither Faceless identity has a runtime port or newly approved placement.",
+  "baseline": "Repentance1.7.9b, same pinned executable as source/manifest.json",
+  "ids": [
+    "827.0.0",
+    "827.1.0"
+  ],
+  "evidence": [
+    "source/manifest.json",
+    "source/controller.asm",
+    "source/records.json",
+    "source/wiki.json",
+    "animations/manifest.json",
+    "source/helpers-manifest.json",
+    "implementation-contract.json"
+  ],
+  "findings": [
+    {
+      "claim": "Type827 dispatches to4e82e0. Its function ends at4e9470 RET; following bytes are state tables, not instructions. The function contains type832 branches requiring separate attribution.",
+      "evidence": "source/manifest.json"
+    },
+    {
+      "claim": "Both Attack animations have19frames at30FPS; ordinary Shoot isframe9 and Tainted Shoot isframe12.",
+      "evidence": "animations/manifest.json"
+    },
+    {
+      "claim": "Aggression field+360 is latched from0to1 when controlled(+e6c differs from-1), currentHP<maxHP, an eligible target within80, or another already-aggressive type827 within80. Neighbor activation is present in addition to direct damage/proximity.",
+      "evidence": "controller:4e8888..4e89b0",
+      "limit": "Ordinary target helper checks player eligibility; charm, control, fear/confusion and player-state parity remain open."
+    },
+    {
+      "claim": "Ordinary attack selection uses0.008+0.08*sqrt(recentDamage), with additional shared-type/status modifiers. Tainted827.1 overrides the chance to1 when aggressive. SpawnerType906 blocks this uncontrolled attack acquisition.",
+      "evidence": "controller:4e8d9a..4e8e41",
+      "limit": "The modifier at+32c and controlled firing path remain unresolved; do not claim full status parity."
+    },
+    {
+      "claim": "Shoot subtracts7from recentDamage down to0. Controller epilogue adds incoming damage and decays by0.11.",
+      "evidence": "controller:4e8821..4e8839;4e93b1..4e93e9"
+    },
+    {
+      "claim": "Ordinary death morph requires dying flag, post-hit HP strictly greater than -25 native HP and an even RNG result (50%). Tainted never morphs. A second RNG draw selects Pacer11.1 for modulo3==0, otherwise Gusher11.0. Morph uses the same entity, resets HP to maximum and clears the dying flag.",
+      "evidence": "controller:4e9349..4e93aa; helpers-manifest overkill constant",
+      "limit": "Runtime must preserve identity/ownership and avoid premature kill rewards or room completion; required Gusher/Pacer behavior remains unverified."
+    },
+    {
+      "claim": "Ordinary positive templates include Caves1,FloodedCaves1,ScarredWomb36,Mines94. Tainted appears only in four backwards/Ascent templates.",
+      "evidence": "source/records.json",
+      "limit": "Template presence is not a spawn probability. Tainted needs an explicit late/dedicated adaptation, not an unsupported early Quarry pool."
+    },
+    {
+      "claim": "Uncontrolled normal-health Faceless uses radial random wandering; aggressive Faceless pathfinds with force0.6. Movement runs during Attack as well. Passive controller retention is0.8, pathfinder retention0.7. Wander radius40, arrival3, impulse0.5, stuck speed squared below0.1 with1/10 reset.",
+      "evidence": "controller:4e8a0e..4e8d5b; random_walk.asm; random_walk_special_gate.asm; adult-leech/source/falling_pathfinder.asm",
+      "limit": "Native movement/status multiplier+2f4, field+32c, fear/charm/control and collision fidelity remain open."
+    },
+    {
+      "claim": "Mode9 emits six fixed radial directions with first angle60degrees and successive60degree steps. Ordinary speed7; Tainted speed8, scale1.3 and falling-acceleration modifier-0.06. Neither uncontrolled volley aims its ring at the player.",
+      "evidence": "controller:4e86fd..4e87bc; radial_mode9.asm; helpers-manifest.json; adult-leech/source/projectile_params.asm",
+      "limit": "DeathWard world-unit conversion, collision radius, birth height and projectile lifetime are explicit adaptations; do not confuse lower falling acceleration with planar acceleration."
+    },
+    {
+      "claim": "The1/6 random update at4e89bb calls helper68d7b0, which creates cosmetic type1000 variant7 Blood Splat scaled0.2..0.7; this is not an audio or attack event.",
+      "evidence": "controller:4e89bb..4e8a09; blood_splat.asm; pinned enums.lua BLOOD_SPLAT=7 and entities2.xml1000.7"
+    },
+    {
+      "claim": "The shared vector-normalization helper preserves exactly zero input. Danny uses it before both projectile and offspring direction calculations.",
+      "evidence": "normalize_vector.asm:96259c..9625d2; danny/source/controller.asm:4e9624..4e9648",
+      "limit": "Danny coincident-target regression is addressed separately in danny-overlap-review.json; no additional completed ports."
+    }
+  ],
+  "float_constants": {
+    "0xb6a210": 0.00800000037997961,
+    "0xb6a2ac": 0.07999999821186066,
+    "0xb6a2dc": 0.10999999940395355,
+    "0xb6a560": 0.800000011920929,
+    "0xb6a928": 7.0,
+    "0xb6aad4": 80.0,
+    "0xb6a4dc": 0.6499999761581421
+  },
+  "next": [
+    "Implement dedicated external Faceless profiles and30Hz controllers for both identities, including aggression propagation and ongoing movement during Attack.",
+    "Preserve native source Shoot timing, six-shot fixed rings, damage-dependent selection, death/overkill/probability gates and real same-entity Gusher/Pacer replacements.",
+    "Resolve persistent SpawnerType906 handling independently from a live parent or physical carrier; do not enable unverified rail passenger variants.",
+    "Keep Tainted source Ascent restriction explicit in any late-floor adaptation; verify natural seeded reachability.",
+    "Add source-resolved cosmetic blood trails. Retain unknown control/status/mass/champion behavior as explicit gaps.",
+    "Run Linux/WASM behavior, placement, visual/readability, balance and performance gates; current source work is not a completed port."
+  ]
+}

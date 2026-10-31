@@ -1,0 +1,168 @@
+{
+  "status": "temporary_runtime_validated_permanent_open",
+  "runtime_implemented": true,
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "names": [
+    "Frowning Gaper",
+    "Gaper",
+    "Gusher",
+    "Pacer",
+    "Horf"
+  ],
+  "batch2_queued": [
+    "13.0.0 Fly",
+    "14.0.0 Pooter",
+    "18.0.0 Attack Fly",
+    "85.0.0 Spider",
+    "16.0.0 Mulligan"
+  ],
+  "roster_expansion": "parked",
+  "evidence": "source/manifest.json",
+  "runtime_gaps": [
+    {
+      "area": "Status duration and affiliation",
+      "files": [
+        "src/combat/EnemyStatuses.cpp",
+        "src/combat/Simulation.hpp",
+        "src/content/Mechanics.hpp",
+        "src/content/Mechanics.cpp",
+        "assets/mechanics/first_floor_statuses.mechanics"
+      ],
+      "change": "Add opt-in Charm configuration and separate temporary timer from permanent affiliation. Positive reapplication takes max; negative conversion is permanent, not absolute duration. Never set Enemy.friendly for temporary Charm. Preserve status clocks and invalidate resolved targets on expiry/removal.",
+      "acceptance": [
+        "All five identities; no implicit opt-in for other controllers",
+        "Positive reapplication and expiration at30/60/120Hz",
+        "Permanent conversion followed by positive application",
+        "Freeze/Slow/stun and inactive room storage",
+        "Gaper-to-headless morph retains correct timers/affiliation",
+        "Invalid external values and immutable mechanics reload"
+      ]
+    },
+    {
+      "area": "Target resolution",
+      "files": [
+        "src/combat/Gapers.cpp",
+        "src/combat/HeadShooters.cpp",
+        "src/combat/Headless.cpp",
+        "src/combat/EnemyStatuses.cpp",
+        "src/combat/Evaders.cpp"
+      ],
+      "change": "Use one cached target policy with the source15-update poll, age/collision/ancestry eligibility and weighted distance. Route Gaper pursuit, Horf acquisition/Shoot and applicable evasion through the resolved target. Preserve Gusher/Pacer wandering and Confusion precedence.",
+      "acceptance": [
+        "Nearest ordinary target versus penalized charmed target",
+        "Null target, dead target, recent birth, owner and friendly exclusions",
+        "No hidden LOS restriction in selection; movement and firing still respect physical cover",
+        "Horf aims on Shoot rather than acquisition",
+        "Fear/Shrink and Confusion combinations",
+        "Target updates respect native poll Freeze gate"
+      ]
+    },
+    {
+      "area": "NPC projectile policy",
+      "files": [
+        "src/combat/Simulation.hpp",
+        "src/combat/Simulation.cpp",
+        "src/combat/HeadShooters.cpp",
+        "src/combat/Headless.cpp"
+      ],
+      "change": "Separate NPC projectile identity from independent HIT_ENEMIES and CANT_HIT_PLAYER rules. Snapshot selected/emitted policy. Add native NPC-target damage conversion independently from player-target damage. Preserve native flight and Slow; do not apply player AttackSpec/item rules.",
+      "acceptance": [
+        "Timed versus permanent collision masks",
+        "Owner/parent exclusion",
+        "Ordinary NPC damage uses native CollisionDamage+5 before HP conversion",
+        "Emitted shots survive owner expiry/death without changing policy",
+        "Capacity-delayed Gusher payload retains selected policy",
+        "Horf windup uses affiliation at shot production",
+        "Terrain interception and existing player projectile behavior"
+      ]
+    },
+    {
+      "area": "NPC contact and damage",
+      "files": [
+        "src/combat/EnemyStatuses.cpp",
+        "src/combat/Companions.cpp",
+        "src/combat/Enemies.cpp",
+        "src/combat/Mortality.cpp",
+        "src/combat/Simulation.cpp"
+      ],
+      "change": "Implement the logarithmic max-HP contact curve and per-source deduplication on the native3-update poll. Keep existing companion rules separate. Preserve normal damage/death/morph events and bounded admission; determine permanent friendly incoming damage and retaliation from native code before implementation.",
+      "acceptance": [
+        "Both directions of ordinary-versus-charmed contact",
+        "Same-affiliation target exception",
+        "No duplicate contact per poll interval",
+        "Freeze/Slow/contact phase combinations",
+        "Queue capacity and one mortality/reward result",
+        "Physical cover and swept collision",
+        "No invented blanket immunity for temporary Charm"
+      ]
+    },
+    {
+      "area": "Room and expedition lifecycle",
+      "files": [
+        "src/combat/Simulation.cpp",
+        "src/combat/Monsters.cpp",
+        "src/core/Game.cpp"
+      ],
+      "change": "Temporary Charm remains a room threat; permanent friendly conversion does not. Preserve permanent followers through room changes with legal placement. Review native floor transfer and persistence/removal before defining expedition-floor behavior. Do not reuse room-limited companion cleanup.",
+      "acceptance": [
+        "Last timed-charmed enemy keeps room uncleared",
+        "Last permanently converted enemy permits normal room completion",
+        "Timed status remains with its resident room",
+        "Permanent ally follows without duplication or illegal placement",
+        "Door and floor transitions preserve existing story/tutorial/boss flow"
+      ]
+    },
+    {
+      "area": "Presentation and completion",
+      "files": [
+        "src/main.cpp",
+        "src/render/MonsterVisuals.hpp",
+        "tests",
+        "docs/research/isaac-enemy-port-status.json"
+      ],
+      "change": "Add isolated native probes and readable status cues, then validate mixed rooms, starting kit and varied builds. Keep all five in_progress until their remaining acceptance gates pass.",
+      "acceptance": [
+        "Original style and160% zoom",
+        "All five, recovery, combined effects and friendly threat distinction",
+        "Visual/occlusion readability in actual expedition rooms",
+        "Measured balance and rendered performance",
+        "Linux only; WASM skipped by user instruction"
+      ]
+    }
+  ],
+  "unresolved_source_questions": [
+    "Permanent ally room/floor transfer, save persistence and removal semantics",
+    "Generic friendly incoming damage beyond the confirmed contact-specific cap",
+    "Source item duration modifiers and item production hooks",
+    "Item-gated Betrayal retaliation lifetime and producer attribution when that item is integrated"
+  ],
+  "validation_scope": "Temporary Charm has scoped16-suite Linux and8-capture evidence in native-summary.json. Permanent conversion and full cohort acceptance remain open.",
+  "permanent_conversion_implemented": false,
+  "source_review_fingerprint": "9722794efbc282f3",
+  "mechanics_fingerprint": "c8006956361ec3bb",
+  "runtime_report": "native-summary.json",
+  "resolved_source_questions": [
+    {
+      "question": "NPC projectile base damage",
+      "evidence": "source-runtime/manifest.json",
+      "result": "Pinned constructor initializes CollisionDamage to 1; ordinary NPC collision adds 5, producing 19.2 at the local HP conversion."
+    },
+    {
+      "question": "Unconditional retaliation on damage",
+      "evidence": "source-runtime/manifest.json",
+      "result": "Reviewed native caller requires Betrayal item 391. No unconditional retaliation introduced as part of temporary Charm."
+    },
+    {
+      "question": "Permanent conversion registration and player-source immunity entry",
+      "evidence": "source-permanent/manifest.json",
+      "result": "Confirmed explicit persistent registration, already-friendly no-op and FRIENDLY source-affiliation immunity. Registry consumption, effect classification and complete damage/death integration remain open."
+    }
+  ],
+  "latest_source_review": "source-permanent/manifest.json"
+}

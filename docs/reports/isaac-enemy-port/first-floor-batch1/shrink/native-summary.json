@@ -1,0 +1,199 @@
+{
+  "verified_utc": "2026-10-28T19:49:08.769338+00:00",
+  "result": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "mechanics_fingerprint": "9722794efbc282f3",
+  "monster_definitions": 216,
+  "new_enemy_records": 0,
+  "completed_records": 0,
+  "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+  "source": "source/manifest.json",
+  "checks": [
+    {
+      "name": "native_source",
+      "command": [
+        "python3",
+        "scripts/isaac-reference/analyze-first-floor-shrink.py",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "validation/source.log"
+    },
+    {
+      "name": "mechanics",
+      "command": [
+        "./build/deathward_check_mechanics",
+        "assets/mechanics"
+      ],
+      "exit": 0,
+      "log": "validation/mechanics.log"
+    },
+    {
+      "name": "cli_rejections",
+      "cases": 3,
+      "report": "validation/cli-rejections.json"
+    }
+  ],
+  "native_tests": [
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "source_projectile_motion",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_fire_reactions",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "gaper_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_cohort",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_status_effects",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_freeze_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_damage_statuses",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_slow_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_shrink_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    }
+  ],
+  "tests_command": "ctest --test-dir build --output-on-failure -R '^(mechanics_content|monster_behaviors|source_projectile_motion|monster_fire_reactions|source_immunity_and_lethal_morph|horf_stationary_shooting|gaper_family|headless_family|first_floor_cohort|first_floor_status_effects|first_floor_freeze_effect|first_floor_damage_statuses|first_floor_slow_effect|first_floor_shrink_effect)$'",
+  "test_details": "validation/LastTest.log",
+  "build_logs": [
+    "validation/configure.log",
+    "validation/build.log",
+    "validation/build-final.log"
+  ],
+  "initial_findings": [
+    "Source extractor end offset for SetSize was corrected to an instruction boundary before creating its final manifest.",
+    "Initial Shrink test expected10 unscaled contact damage after removal. Production correctly uses the existing1.25 enemy multiplier. Corrected test to StartingHealth-10*EnemyDamageMultiplier; retained initial failure in validation/shrink-initial.log. No production damage change.",
+    "Normal-size actors skip the new matrix transform; only active visual size changes enter it. This avoids adding transform calls to unchanged models."
+  ],
+  "behavior": [
+    "Positive durations add up to150source updates; negative durations keep the larger requested duration. Active refresh keeps transition and collision sample.",
+    "Visual scale approaches.333 by1/6each real30Hz update, including during Freeze/Slow. Recovery approaches1. Collision samples current scale only on initial activation, and restores immediately at removal.",
+    "Moving first-five members share Fear evasion; Horf suppresses new acquisition. Committed Horf attacks and capacity-selected Gusher shots survive.",
+    "Player contact kills without damaging the player, headless morph or duplicated reward. Frozen/stunned contacts, swept crossings, cover and retained queue pressure pass.",
+    "Ordinary incoming damage remains unchanged. Damage-triggered headless morph keeps the same ID and Shrink. Inactive-room and modal pause preserve state. Poison continues during combined Freeze/Slow/Shrink.",
+    "External cap/scale/approach affect runtime; immutable snapshot reload, independent opt-in and seven malformed configurations pass."
+  ],
+  "runtime_api": "applyEnemyStatus(id, EnemyStatus::Shrink, sourceFrames); removeEnemyStatus; --enemy-status FRAME shrink DURATION in isolated native smoke scenes.",
+  "native_captures": "native/captures.json",
+  "visual_review": "visual-review.json",
+  "remaining": [
+    "Continue first-five applicable Charm/control/other damaging statuses and source item duration/application integration. Shrink direct-death event attribution and3D collision are explicit adaptations.",
+    "Finish applicable champion/knockback production and mass interactions.",
+    "Finish mixed-room Original-style readability/occlusion, varied-build/terrain balance and controlled rendered-performance acceptance before batch2."
+  ],
+  "wasm": "Skipped under user instruction. No WASM build/check.",
+  "scope": "Same first-five cohort only. Existing broader ports preserved; no roster expansion and no completion promotion.",
+  "runtime_files": [
+    {
+      "path": "src/combat/EnemyStatuses.cpp",
+      "sha256": "8247fb9d51eb8edf2e9ccf96a63aed3b9a4e3bafd0ffca1e3616fd1581244d00"
+    },
+    {
+      "path": "src/combat/Simulation.hpp",
+      "sha256": "8b8f4af15731e1d1e1a66033c1263894be14952b55a13876aa6576a3ee2868a4"
+    },
+    {
+      "path": "src/combat/Gapers.cpp",
+      "sha256": "e5ab37bec9c57fc6d49fa15121958510fde78142bd62193e82c2c6b2ce02b016"
+    },
+    {
+      "path": "src/combat/Headless.cpp",
+      "sha256": "2ac32c5a2526a010160e31c2910cad099349baaa51896074e1d2c1557484beaa"
+    },
+    {
+      "path": "src/combat/HeadShooters.cpp",
+      "sha256": "11996d6a8c32756fddc1f955f3a820400b8124d82a1d1783c21ccc0f111507cb"
+    },
+    {
+      "path": "src/content/Mechanics.hpp",
+      "sha256": "123bbb386ee71420f198b54491caba0b60b45edc32b8e2eccae2540d68143a7c"
+    },
+    {
+      "path": "src/content/Mechanics.cpp",
+      "sha256": "7943394fe78fe7c065400f8cfffbbc8e696a8bb95b5dcab96c204b0c63b22435"
+    },
+    {
+      "path": "src/render/Renderer.cpp",
+      "sha256": "cc3454ddc82b2190773cf2491039fdab89c285b7b9243a25aa1dfa0086494c9a"
+    },
+    {
+      "path": "src/render/MonsterVisuals.hpp",
+      "sha256": "6dcdabd682632674cebc78a8f7c6f20fafd3b51b8ceb6e47d35a7bcd99c478b5"
+    },
+    {
+      "path": "src/main.cpp",
+      "sha256": "1587ddde112c2d9190ffb9f663e70399074e07639a1276b5bd56e7f2ee939a50"
+    },
+    {
+      "path": "assets/mechanics/first_floor_statuses.mechanics",
+      "sha256": "ae5577ab8cf900d7d5a6059b8859919322989e9e489656277c5bf4e5f463607b"
+    },
+    {
+      "path": "tests/enemy_shrink_tests.cpp",
+      "sha256": "e0447265f1c432ab50ff1e663918f3cbebb04c97c9aa78c283f1e3569698b4eb"
+    },
+    {
+      "path": "scripts/isaac-reference/analyze-first-floor-shrink.py",
+      "sha256": "4a875ad26082417c065198327c14dad21640c6f5cfac09fd04ed556f4bf79fe8"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "status": "Five scoped Linux suites and six scoped WASM mortality cases pass at25efabc006603172. Separate movement/HP update now in progress; this checkpoint does not certify it.",
+  "baseline": "Installed Repentance1.7.9b",
+  "records": [
+    "10.0.0",
+    "10.1.0",
+    "10.2.0"
+  ],
+  "source": [
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/manifest.json",
+      "sha256": "7788f1af2804fc8812aed8635af5e03c8c9e3fb4a8f98d09e3cf90f294d70d6d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/controller.asm",
+      "sha256": "bdf1f571dc08674539b5459d704328a24aea87d7c1991165c5fb29308bfe000f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph-initialization.json",
+      "sha256": "94b5cfec874e6f5a3addfb41d50753d70187bd787f2d601cb4775c9037eb0a41"
+    }
+  ],
+  "behavior": {
+    "overkill": "Strict residual HP > -80DW, converting source -25 at3.2. Fixed cutoff, independent of health multipliers.",
+    "ordinary_frowning": "1/2 true death;1/6 same-entity Pacer;1/3 same-entity Gusher.",
+    "flaming": "1/2 true death;1/2 same-entity Gusher; never Pacer. Successful roll still consumes modulo3 choice.",
+    "state": "ID, ownership, position, velocity and health multiplier survive. Full child health restored. Initialized headless controller receives integral20..39 source ticks; next update does not redraw initialization. No kill reward or replacement slot.",
+    "completion": "Entity remains a room threat across transformation and room re-entry. Final headless death pays the kill. Execution bypasses transformation."
+  },
+  "external_format": {
+    "base": "lethal_morph <id> <default-target> <basis-point-chance> <overkill-DWHP> <delay-min-seconds> <delay-max-seconds>",
+    "rational_override": "lethal_morph_roll <id> <numerator> <denominator>",
+    "weighted_child": "lethal_morph_choice <id> <target> <weight>",
+    "rules": "Ordered choices override default selection. Default must occur among choices. One weighted child still consumes its selection draw. Up to8 distinct targets, each weight1..8000. Bodies must be compatible; missing targets, cycles, duplicate declarations and conflicting death controllers are rejected."
+  },
+  "adaptations": [
+    "DeathWard seeded PRNG preserves probability and draw ordering, not Isaac RNG stream equivalence.",
+    "Existing radius.6 and health multiplier preservation remain DW compatibility decisions.",
+    "Ordinary normal-clock20..39 delay; full native slow-clock/status/champion behavior remains open.",
+    "Morph occurs during DW damage-event handling rather than deferred native NPC-update scheduling."
+  ],
+  "open": [
+    "Parent source HP conversion32/32/28.8 and force-based movement remain unfinished; current parent HP/speeds are provisional.",
+    "Frowning first-sight animation progression, Flaming status/fire interactions, champions, collision mass and save-state parity.",
+    "Full stage placement, Linux/WASM presentation, balance and controlled performance acceptance."
+  ],
+  "validation": "validation/morph-native-summary.json",
+  "mechanics_fingerprint": "25efabc006603172",
+  "browser_validation": "morph-browser-summary.json"
+}

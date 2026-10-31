@@ -1,0 +1,294 @@
+[
+  {
+    "key": "827.0.0",
+    "id": 827,
+    "variant": 0,
+    "subtype": 0,
+    "name": "faceless",
+    "xml": {
+      "anm2path": "827.000_faceless.anm2",
+      "baseHP": "20",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "827",
+      "name": "#FACELESS",
+      "numGridCollisionPoints": "12",
+      "portrait": "246",
+      "shadowSize": "15",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:827.0.0",
+    "wiki_matches": [
+      {
+        "page": "Faceless",
+        "box": 0,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Faceless",
+          "id": "827",
+          "base hp": "20",
+          "environment": "Caves / Flooded Caves / \nMines / \nScarred Womb / \nchallenge /",
+          "behavior": "Wanders around the room, rarely firing a radial burst of six shots. Chases Isaac and fires shots more frequently after taking damage."
+        },
+        "section_indices": [
+          0
+        ],
+        "name": "Faceless",
+        "variant": 0,
+        "subtype": 0,
+        "id": 827,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Faceless"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 20.0,
+      "3": 20.0,
+      "4": 20.0,
+      "5": 20.0,
+      "6": 20.0,
+      "7": 20.0,
+      "8": 20.0,
+      "9": 20.0,
+      "10": 20.0,
+      "11": 20.0,
+      "12": 20.0,
+      "13": 20.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Faceless",
+    "room_library_presence": {
+      "rooms/04.caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/06.flooded caves.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/12.scarred womb.stb": {
+        "templates": 36,
+        "positive_weight_templates": 36
+      },
+      "rooms/29.mines.stb": {
+        "templates": 94,
+        "positive_weight_templates": 94
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      },
+      "rooms/greed/29.mines.stb": {
+        "templates": 14,
+        "positive_weight_templates": 14
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Faceless",
+        "section": 0
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "827.1.0",
+    "id": 827,
+    "variant": 1,
+    "subtype": 0,
+    "name": "ultra faceless",
+    "xml": {
+      "anm2path": "827.001_ultra faceless.anm2",
+      "baseHP": "100",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "18",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "827",
+      "name": "#TAINTED_FACELESS",
+      "numGridCollisionPoints": "12",
+      "portrait": "367",
+      "shadowSize": "16",
+      "shieldStrength": "20",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:827.1.0",
+    "wiki_matches": [
+      {
+        "page": "Faceless",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Tainted Faceless",
+          "variant": "1",
+          "base hp": "100",
+          "environment": "Mines / \nFound on the Ascent to Home",
+          "behavior": "Wanders around the room, rarely firing a radial burst of six shots. Chases Isaac and fires shots very frequently after taking damage."
+        },
+        "section_indices": [
+          2
+        ],
+        "name": "Tainted Faceless",
+        "variant": 1,
+        "subtype": 0,
+        "id": 827,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Faceless"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 100.0,
+      "2": 100.0,
+      "3": 100.0,
+      "4": 100.0,
+      "5": 100.0,
+      "6": 100.0,
+      "7": 100.0,
+      "8": 100.0,
+      "9": 100.0,
+      "10": 100.0,
+      "11": 100.0,
+      "12": 100.0,
+      "13": 100.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Tainted Faceless",
+    "room_library_presence": {
+      "rooms/36.backwards.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Faceless",
+        "section": 2
+      }
+    ],
+    "feature_triage": [
+      "health-and-defenses",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+]

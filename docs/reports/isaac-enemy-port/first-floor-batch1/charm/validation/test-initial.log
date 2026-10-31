@@ -1,0 +1,2 @@
+CHARM_TIME max_refresh=1 no_cap=1 expiry_partition=1 permanent_rejected=1 freeze_slow=1 room_threat=1 pause=1
+player fallback used by controller

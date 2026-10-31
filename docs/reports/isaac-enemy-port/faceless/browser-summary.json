@@ -1,0 +1,76 @@
+{
+  "status": "Four scoped production WASM scenarios passed; full acceptance remains open.",
+  "mechanics_fingerprint": "de4d3f2edf6a893c",
+  "runtime_definitions": 207,
+  "checks": [
+    {
+      "name": "faceless-isolated",
+      "variant": 0,
+      "frames": 900,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 3,
+      "aggressiveFrames": 722,
+      "movingAttackFrames": 76,
+      "headlessFrames": 0,
+      "observedProjectileIds": 18
+    },
+    {
+      "name": "tainted-faceless-isolated",
+      "variant": 1,
+      "frames": 900,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 20,
+      "aggressiveFrames": 720,
+      "movingAttackFrames": 196,
+      "headlessFrames": 0,
+      "observedProjectileIds": 120
+    },
+    {
+      "name": "faceless-natural",
+      "variant": 0,
+      "natural": true,
+      "seed": 50,
+      "floor": 2,
+      "room": 3,
+      "frames": 900,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 2,
+      "aggressiveFrames": 900,
+      "movingAttackFrames": 76,
+      "headlessFrames": 0,
+      "observedProjectileIds": 12
+    },
+    {
+      "name": "tainted-faceless-natural",
+      "variant": 1,
+      "natural": true,
+      "seed": 11,
+      "floor": 4,
+      "room": 2,
+      "frames": 900,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 24,
+      "aggressiveFrames": 900,
+      "movingAttackFrames": 578,
+      "headlessFrames": 0,
+      "observedProjectileIds": 144
+    }
+  ],
+  "evidence": [
+    "web/results.json",
+    "web-natural-final/results.json",
+    "validation/wasm-artifacts.json"
+  ],
+  "corrected_harness_failure": {
+    "initial_log": "validation/browser.log",
+    "diagnostic_log": "validation/browser-natural.log",
+    "cause": "Harness supplied --enemy-hit to natural resident captures; argument validation correctly returned before the game loop. Diagnostic observations recorded zero trace frames.",
+    "correction": "Only isolated fixtures receive scripted damage. Natural populations and terrain remain unchanged. Same900-frame behavior assertions retained.",
+    "final_log": "validation/browser-natural-final.log"
+  },
+  "scope": "Behavior and encounter evidence only. Rendering throughput under concurrent compilation is not controlled performance evidence."
+}

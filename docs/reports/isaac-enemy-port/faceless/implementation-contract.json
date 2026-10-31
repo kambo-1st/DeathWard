@@ -1,0 +1,135 @@
+{
+  "status": "Implementation design grounded in the extracted native controller; not implemented.",
+  "baseline": "Repentance1.7.9b",
+  "identities": {
+    "827.0.0": {
+      "name": "Faceless",
+      "baseHP": 20,
+      "stageHP": 0,
+      "mass": 5,
+      "radius": 13,
+      "champion": true,
+      "contactDamage": 1,
+      "AttackFrames": 19,
+      "ShootFrame": 9,
+      "FPS": 30
+    },
+    "827.1.0": {
+      "name": "Tainted Faceless",
+      "baseHP": 100,
+      "stageHP": 0,
+      "mass": 18,
+      "radius": 13,
+      "champion": false,
+      "contactDamage": 2,
+      "shieldStrength": 20,
+      "AttackFrames": 19,
+      "ShootFrame": 12,
+      "FPS": 30
+    }
+  },
+  "source_boundaries": [
+    "Shared function includes type832 Exorcist/Fanatic behavior; its charge/phase branches are not Faceless behavior.",
+    "Following4e9470 RET is a jump table; no interpretation of that table as instructions."
+  ],
+  "aggression": {
+    "initial": false,
+    "latches_on": [
+      "controlled field+e6c differs from-1",
+      "currentHP<maxHP",
+      "eligible target within80nativeunits",
+      "already-aggressive type827 neighbor within80nativeunits"
+    ],
+    "requires_line_of_sight": false,
+    "resets_on_distance": false
+  },
+  "attack": {
+    "normal_chance_per_idle_source_tick": "0.008+0.08*sqrt(recentDamage)",
+    "tainted_aggressive_chance": 1,
+    "native_spawner906_suppresses_uncontrolled_acquisition": true,
+    "range_gate": false,
+    "line_of_sight_gate": false,
+    "movement_continues": true,
+    "recent_damage_epilogue": "max(0,recentDamage+incomingDamage-0.11)",
+    "shoot_damage_cost": 7,
+    "radial_count": 6,
+    "angle_origin_degrees": 0,
+    "increment_before_first_shot_degrees": 60,
+    "speed_native": [
+      7,
+      8
+    ],
+    "tainted_scale": 1.3,
+    "tainted_falling_acceleration_modifier": -0.06,
+    "unresolved_status_multiplier": {
+      "field": "+32c",
+      "factor": 0.65
+    }
+  },
+  "ordinary_death": {
+    "post_hit_HP_strictly_greater_than": -25,
+    "replacement_probability": 0.5,
+    "conditional_replacements": {
+      "11.0.0": 0.6666666666666666,
+      "11.1.0": 0.3333333333333333
+    },
+    "same_entity": true,
+    "restore_full_health": true,
+    "clear_dying_flag": true,
+    "tainted_excluded": true,
+    "required_runtime_rules": [
+      "No ordinary kill event, reward or clear-room transition on successful morph.",
+      "Preserve original owner/spawner identity through morph.",
+      "Do not discard already-selected retained projectile payloads.",
+      "Required offspring controllers are dependencies, not implicit completed ports."
+    ]
+  },
+  "local_adaptations_proposed_not_applied": {
+    "HP_scale": 3.2,
+    "ordinary_HP": 64,
+    "tainted_HP": 320,
+    "contact_damage_scale": 10,
+    "world_distance_scale": 0.1,
+    "projectile_speed_world": [
+      21,
+      24
+    ],
+    "projectile_up_velocity": 4.5,
+    "projectile_gravity_world": [
+      4.5,
+      1.8
+    ],
+    "projectile_height": 1.15,
+    "projectile_radius_world": [
+      0.22,
+      0.286
+    ],
+    "projectile_lifetime": 8,
+    "body_radius": 0.6,
+    "body_radius_reason": "Match the existing Gusher/Pacer footprint so a same-position morph cannot grow into scenery.",
+    "capacity": "Retain exact selected volley atomically; pause only its producer until capacity exists."
+  },
+  "placement": {
+    "ordinary_source": "Positive templates in Caves,FloodedCaves,Mines,ScarredWomb,greedMines andbackwards.",
+    "tainted_source": "Four backwards/Ascent templates only.",
+    "proposal": "Ordinary Quarry and late band; explicit rare late-floor Ascent adaptation for Tainted. Never infer early Tainted eligibility from shared controller."
+  },
+  "remaining_source_questions": [
+    "Field+32c status meaning.",
+    "Eligibility helper786be0 player-state exclusions.",
+    "Native movement multiplier+2f4 and mass/crowd response.",
+    "Fear/confusion/charm/control/champion interactions.",
+    "Full morph helper state reset and child-controller fidelity."
+  ],
+  "required_validation": [
+    "Data parser validation and immutable reload.",
+    "Aggression propagation and no invented LOS/cooldown gates.",
+    "Both exact Shoot frames and six-shot radial geometry.",
+    "Tainted falling acceleration and adaptive armor.",
+    "Death probability, conditional offspring weights, strict overkill boundary and no premature completion.",
+    "Bounded retained payloads surviving death/morph.",
+    "30/120Hz movement partition.",
+    "Seeded placement and source-stage guardrails.",
+    "Production Linux/WASM scenarios, images, readability, balance and controlled performance."
+  ]
+}

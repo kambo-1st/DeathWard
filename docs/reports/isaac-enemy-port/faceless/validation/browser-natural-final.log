@@ -1,0 +1,6 @@
+START faceless-natural
+PROGRESS faceless-natural 554
+PASS faceless-natural {"attacks":2,"headlessFrames":0,"observedProjectileIds":12}
+START tainted-faceless-natural
+PROGRESS tainted-faceless-natural 410
+PASS tainted-faceless-natural {"attacks":24,"headlessFrames":0,"observedProjectileIds":144}

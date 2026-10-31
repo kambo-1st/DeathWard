@@ -1,0 +1,16 @@
+{
+  "verified_utc": "2026-10-31T11:54:36.439770+00:00",
+  "result": "partial_progress",
+  "previous_goal_turn_classification": "Progress: previous turn implemented and validated temporary Charm and updated the authoritative checklist. This turn traced and preserved four additional native contracts for permanent conversion.",
+  "source": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-permanent/manifest.json",
+  "mechanics_fingerprint": "c8006956361ec3bb",
+  "runtime_changed": false,
+  "permanent_conversion_implemented": false,
+  "newly_completed_records": 0,
+  "next_work": [
+    "Trace consumption of the persistent entity registry during room/floor transitions; registration and source-affiliation rules now have preserved evidence.",
+    "Implement permanent conversion and follower lifecycle for the same five, then validate their actual targeting, damage, room completion and travel.",
+    "Preserve all existing work, park expansion and skip WASM."
+  ],
+  "live_jobs": "No builds, tests or captures are running."
+}

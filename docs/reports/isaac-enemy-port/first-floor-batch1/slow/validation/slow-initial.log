@@ -1,0 +1,4 @@
+SLOW_DURATION additive_uncapped=1 negative_assigns2=1 partition=1 animation_rate=1 pause=1
+SLOW_MOTION source_force_friction=1 displacement=1 partition=1 fear=1 freeze=1 cover=1
+SLOW_ATTACKS real_poll=1 logical_cooldown=1 logical_animation=1 due_check=1 wake_phase=1 expiry=1
+new shot inherits persistent slowed flag

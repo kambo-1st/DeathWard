@@ -1,0 +1,154 @@
+{
+  "verified_utc": "2026-10-28T11:50:40.116261+00:00",
+  "mechanics_fingerprint": "ec8492eb3ee9db9",
+  "definitions": 207,
+  "session": 34782,
+  "exit": 0,
+  "scope": "Seven selected Linux suites for dedicated Gaper movement/HP/activation, shared mortality, content validation, fire, replacement odds and general monster behavior. Not full roster acceptance.",
+  "tests": {
+    "path": "docs/reports/isaac-enemy-port/gaper/validation/movement-acceptance-tests.log",
+    "bytes": 954,
+    "sha256": "6d6e2ecb7e3316f658d1928861674d4d9504f911bdc8baebd01e691ac779e28c"
+  },
+  "suite_names": [
+    "mechanics_content",
+    "monster_behaviors",
+    "monster_fire_reactions",
+    "monster_replacements",
+    "source_immunity_and_lethal_morph",
+    "gaper_family",
+    "headless_family"
+  ],
+  "binaries": [
+    {
+      "path": "build/deathward_gaper_tests",
+      "bytes": 2677728,
+      "sha256": "1566c58914ba779b446ddf328eb63e3df0915d12bfeb1ad68df1e98cbcea3ed3"
+    },
+    {
+      "path": "build/deathward_monster_tests",
+      "bytes": 2660728,
+      "sha256": "93bf2c27964a556a0b7474cde997401d1b8189bf02135169367b20d285d2922f"
+    },
+    {
+      "path": "build/deathward_mechanics_tests",
+      "bytes": 2698472,
+      "sha256": "97fa7837345a34b0399c1a177c14bf9b3c02f3d1c58d2564008cdc6da6956977"
+    },
+    {
+      "path": "build/deathward_replacement_tests",
+      "bytes": 2622784,
+      "sha256": "9e100602e4077acef54b73e3683fa98d5bd155983d15cb5c2c7f0d9004cb399f"
+    },
+    {
+      "path": "build/deathward_mortality_tests",
+      "bytes": 2702440,
+      "sha256": "e404d6e828e7e4fbc0c574c767226044dcefd1a7ab8f124f64bf2272344c3a50"
+    },
+    {
+      "path": "build/deathward_headless_tests",
+      "bytes": 2695816,
+      "sha256": "82f79f2c14e4b5070f6b3facf133ef680ea9a7dca8326d0c03daa448f79ea032"
+    },
+    {
+      "path": "build/deathward_fire_reaction_tests",
+      "bytes": 2667504,
+      "sha256": "a00155a3d0cfe0800ccdfa67383a3bd9022cb5bbf102881f89d810cd8e6d11ac"
+    }
+  ],
+  "runtime": [
+    {
+      "path": "src/combat/Gapers.cpp",
+      "bytes": 4054,
+      "sha256": "4d7ff0cb1bc16a2a21ff1a1bcdbd91aefe57a63b925bee7b67b45de8fdc427ae"
+    },
+    {
+      "path": "src/combat/FloorEncounters.cpp",
+      "bytes": 7683,
+      "sha256": "8b1fba1447724bb53e2d4291a7ce3168a6058030aec73c394be80c75be58110e"
+    },
+    {
+      "path": "src/render/MonsterVisuals.hpp",
+      "bytes": 67780,
+      "sha256": "93fe0dc466bec8cd5569d788fb7f9774fe745ee64759689c276d88152e0910df"
+    },
+    {
+      "path": "assets/mechanics/gapers.mechanics",
+      "bytes": 1494,
+      "sha256": "ba8152209d0c7acb8344c508f76fe8a2ff2dab6580cd3624ecf729b798833fbb"
+    },
+    {
+      "path": "assets/mechanics/deaths.mechanics",
+      "bytes": 3245,
+      "sha256": "2d287f57fa7a427be60120ebe1083a9595de93fb385daf3e8c1c36a6ad419821"
+    }
+  ],
+  "witnesses": {
+    "indexing": "zero-based",
+    "rows": [
+      {
+        "variant": 1,
+        "seed": 0,
+        "floor": 0,
+        "room": 3
+      },
+      {
+        "variant": 2,
+        "seed": 1,
+        "floor": 0,
+        "room": 2
+      },
+      {
+        "variant": 0,
+        "seed": 2,
+        "floor": 0,
+        "room": 2
+      }
+    ],
+    "log": {
+      "path": "docs/reports/isaac-enemy-port/gaper/validation/movement-natural-final.log",
+      "bytes": 138,
+      "sha256": "b5439718a6196958152bed0f57db76e4a6ed7577db2cffbc5625c90db2bcf382"
+    }
+  },
+  "replacement_odds": {
+    "frowning": 5965,
+    "ordinary": 5965,
+    "samples_per_parent": 10000,
+    "note": "Same deterministic slot stream; these are separate source-policy cases, not independent statistical experiments.",
+    "log": {
+      "path": "docs/reports/isaac-enemy-port/gaper/validation/movement-replacement-odds.log",
+      "bytes": 681,
+      "sha256": "d28761c7dcf83df877db8c284683148cdabe9781940ffc06a89a0682df25ed98"
+    }
+  },
+  "fixed_failures": [
+    "Initial contact test omitted existing global1.25 damage multiplier; fixed test, retained damage setting.",
+    "New acceleration exposed stale/cut navigation corners after crowd displacement. Periodic/immediate route refresh plus full-body next-segment clearance fixes actual five-body doorway regression.",
+    "Pool test fixtures used Gaper as an always-cost1 fallback; updated fixtures to a non-replaced fallback.",
+    "Full floor regression found stronger basic replacements consumed the budget for second support actor. Composer now reserves remaining support cost;1600 small-room tests cover it. The resumed 753-floor regression passes."
+  ],
+  "floor_regression": {
+    "result": {
+      "path": "docs/reports/isaac-enemy-port/gaper/validation/movement-floor-resumed-result.json",
+      "bytes": 579,
+      "sha256": "07bc19ba16aabba414a6a8a1aee2a7bc3109d376b89164095769dc703833a738"
+    },
+    "log": {
+      "path": "docs/reports/isaac-enemy-port/gaper/validation/movement-floor-resumed.log",
+      "bytes": 2416,
+      "sha256": "8a098a71e05be21ffdf05c94177692ddc2537b8da43979cad47ae2958f73c773"
+    },
+    "exit": 0,
+    "floors": 753,
+    "scope": "All four canyon progression bands; 135 pool identities and 14 statues. Prior failed and interrupted logs retained separately."
+  },
+  "wasm": "movement-browser-summary.json: seven movement and six current mortality cases pass; exact bundle hashes and overrides recorded.",
+  "remaining": [
+    "full status/control/champion/slow-clock and save fidelity",
+    "all source production contexts",
+    "crowded/color-independent readability",
+    "balance and controlled performance"
+  ],
+  "validation_updated_utc": "2026-10-28T12:15:16.360788+00:00"
+}

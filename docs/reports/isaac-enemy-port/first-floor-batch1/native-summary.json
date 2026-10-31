@@ -1,0 +1,224 @@
+{
+  "verified_utc": "2026-10-28T17:27:41.784015+00:00",
+  "result": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "mechanics_fingerprint": "80f52693ea14c415",
+  "monster_definitions": 216,
+  "new_enemy_records": 0,
+  "completed_records": 0,
+  "source": "source/manifest.json",
+  "changes": [
+    "Horf now uses source-derived mode0 falling motion, compressed to vertical scale.03 for the existing3D player silhouette. Normal source aim, speed and cadence stay intact.",
+    "Horf retains externally supplied momentum with source.7 friction instead of immediately deleting it. Physical cover blocks translation. No autonomous locomotion or new damage knockback is introduced.",
+    "Gusher gravity corrected18 ->22.5: shared engine base acceleration.1 was missing from the converted fallingAccel.4. Tests independently evaluate native recurrence and30/60/120Hz actual projectiles.",
+    "Gusher/Pacer Original-style neck/arm/continuous-blood differences made clearer after inspecting native captures.",
+    "New cohort integration test checks unchanged100HP/24damage, eight mixed starting-kit fights with five final root rewards,32generated opening floors across4-8floor lengths,202legal resident placements and inactivity before entry."
+  ],
+  "native_tests": [
+    {
+      "name": "source_projectile_motion",
+      "result": "pass",
+      "log": "validation/focused-tests.log"
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "result": "pass",
+      "log": "validation/focused-tests.log"
+    },
+    {
+      "name": "gaper_family",
+      "result": "pass",
+      "log": "validation/focused-tests.log"
+    },
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/headless-corrected.log"
+    },
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "save_slots",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/monster-corrected.log"
+    },
+    {
+      "name": "monster_fire_reactions",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "first_floor_cohort",
+      "result": "pass",
+      "log": "validation/cohort-tests.log"
+    }
+  ],
+  "starting_kit": [
+    {
+      "seed": 0.0,
+      "seconds": 6.68333,
+      "hp": 100.0,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    },
+    {
+      "seed": 1.0,
+      "seconds": 5.11667,
+      "hp": 62.5,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    },
+    {
+      "seed": 2.0,
+      "seconds": 5.08333,
+      "hp": 87.5,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    },
+    {
+      "seed": 3.0,
+      "seconds": 5.05,
+      "hp": 75.0,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    },
+    {
+      "seed": 4.0,
+      "seconds": 4.33333,
+      "hp": 75.0,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    },
+    {
+      "seed": 5.0,
+      "seconds": 5.35,
+      "hp": 87.5,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    },
+    {
+      "seed": 6.0,
+      "seconds": 7.6,
+      "hp": 87.5,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    },
+    {
+      "seed": 7.0,
+      "seconds": 6.96667,
+      "hp": 100.0,
+      "kills": 5.0,
+      "clear": 1.0,
+      "suppressed": 0.0
+    }
+  ],
+  "placement": {
+    "seeds": 32,
+    "first_floors": 32,
+    "expedition_lengths": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "legal_idle_residents": 202,
+    "witnesses": [
+      {
+        "id": "10.0.0",
+        "seed": 2,
+        "room": 2
+      },
+      {
+        "id": "10.1.0",
+        "seed": 0,
+        "room": 3
+      },
+      {
+        "id": "11.0.0",
+        "seed": 4,
+        "room": 6
+      },
+      {
+        "id": "11.1.0",
+        "seed": 0,
+        "room": 3
+      },
+      {
+        "id": "12.0.0",
+        "seed": 3,
+        "room": 3
+      }
+    ],
+    "scope": "First floors only. Later-band and upstream production routes retain their earlier scoped evidence."
+  },
+  "performance": {
+    "before": {
+      "trials": 9,
+      "median_mean_us": 19.8931,
+      "median_p95_us": 27.7,
+      "suppressed": 0.0
+    },
+    "after": {
+      "trials": 9,
+      "median_mean_us": 20.6045,
+      "median_p95_us": 29.57,
+      "suppressed": 0.0
+    }
+  },
+  "performance_scope": "Matched CPU-only cost of the Horf/Gusher physics correction in a20-actor mixed cohort. Same current code; before profile disables Horf flight/passive damping and restores Gusher gravity18. This is not a pre-port executable or rendered-canyon baseline.",
+  "visual_review": "visual-review.json",
+  "preserved_failures": [
+    "Old gravity18 expectations failed in two tests; corrected to assert the recovered total acceleration/retained payload. Initial red logs are preserved.",
+    "The old seed1 Horf screenshot fixture no longer contained Horf. Current native scan supplied seed3; successful actual-room capture is separate."
+  ],
+  "remaining": [
+    "Implement and validate required shared status/control and champion behavior for the five selected records. Existing ordinary hostile movement tests do not prove these interactions.",
+    "Review source knockback production/mass and applicable item-status dependencies; distinguish required behavior from explicitly adapted3D collision/clock details.",
+    "Finish representative mixed-cohort visual/occlusion checks, varied-build/terrain balance and controlled rendered-canyon performance against the appropriate recorded baseline. CPU incremental cost above is only this patch comparison.",
+    "Preserve journal compatibility; full live-enemy snapshot serialization is not a newly imposed requirement. Save-slot regression passed.",
+    "Do not expand to batch2 or new roster records while batch1 acceptance remains unfinished. WASM remains waived by the user."
+  ],
+  "file_sha256": {
+    "src/combat/HeadShooters.cpp": "1cb03158dfd4c0a5a7ccfc62893655cd89f146c393da2cb28b0e7a30270fcb39",
+    "src/content/Mechanics.hpp": "6fe4d737b0ed895000654e9dc516fdd17e9d2f9a44a425b19daeeb5d97463e95",
+    "src/content/Mechanics.cpp": "8fdfc72ec50dc038e1183e6d922717933d7d634732e31a57375ca266360e7f36",
+    "assets/mechanics/horf.mechanics": "39a38f7b744432bfd8dc3d3ff65848ea5adc2713a387d3dafd95957aadaeef3f",
+    "assets/mechanics/headless.mechanics": "50600a1036415a5f307f479bc74dc053a7f56b9c89f0e3a37fade041d48937da",
+    "src/render/MonsterVisuals.hpp": "bb45078273bc0f3712db0b26453a6af7969a3fd2a69c1556ddd9c65fbea74a9b",
+    "tests/horf_tests.cpp": "8c48264173c6998f516ed0eb11fa24d27c837028bce3b665274dffef3001df56",
+    "tests/headless_tests.cpp": "903e39f123d0e37b28255cd2155cc4c8d9d4a1060d2e40b963498aa0f64090a7",
+    "tests/monster_tests.cpp": "70d3bf80670a9b302dde49f51c50b244fdd5a980cec8d9eb38b56cf0bf5d2d4c",
+    "tests/first_floor_cohort_tests.cpp": "1b47cc22a13be7043911975fa6ec5a49468decd7fdf124b7b372d875afe82643",
+    "CMakeLists.txt": "94e5bad7ee1e117acf2c34ce61282ebec5dfc97e35e6511f28a79262f7c0ad4b",
+    "scripts/isaac-reference/analyze-first-floor-flight.py": "e1028818a732b4fbdfe3bc2d72d5b255907ae72f4f9082a63774e8fb986cf865"
+  },
+  "binary_sha256": "96fa989a4d666b9ff43681856269c0dad46149f0448ec0a8d86a5dcf8415da46",
+  "probe_sha256": "4e539c7b7fb07ee42aceed02f0304d0cd15e83c621b045ed2c801fc6a7fc13fb"
+}

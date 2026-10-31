@@ -1,0 +1,6 @@
+BUZZ path=21.8698 side=1.36487
+DUNG_MORPHS trials=1000 updates=30 transformed=34
+NATURAL_POOTER seed=0 floor=0 room=3
+NATURAL_FLY seed=0 floor=0 room=5
+NATURAL_FLY_DUNG seed=1 floor=0 room=1
+PASS ordinary Fly/Pooter buzz, source shot timing, dung damage/morph, collision, health and seeded placement

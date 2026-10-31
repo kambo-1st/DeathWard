@@ -1,0 +1,53 @@
+{
+  "scope": "Regular Gurgle/Splasher physical lobs and ordinary placement",
+  "mechanics_fingerprint": "47a8963e629feeec",
+  "source_review": "docs/reports/isaac-enemy-port/gurgle_lobs/source-review.json",
+  "changes": [
+    "Reusable validated external lob_walker/lob_projectile profiles and source30Hz attack clocks.",
+    "Gurgle current-target Shoot5/30, movement deceleration/recovery; Splasher movement-heading attack with no invented player targeting at rest.",
+    "Damped physical flight, actual collision, explicit projectile radius, distinct monster/player blast damage and persistent impact admission.",
+    "Ordinary specialist pools in bands1..3: Gurgle pursuit/crossfire cost4; Splasher crossfire cost3; weight1 and cap1peridentity. No opening/tutorial placement, no Crackle or mounted approval.",
+    "In-place lethal morph resets the new controller while retaining its integral initial delay. Existing source immunity, identity, ownership and rewards remain covered by native/WASM regressions."
+  ],
+  "adaptations": [
+    "Native planar units x.1 and height units x.05. Projectile30Hz ordinary-time endpoints match the source damped recurrence; smooth60Hz fractional interpolation is a local adaptation, not the native rational time-scale helper.",
+    "Swept spherical terrain/body collision and actual ground replace native2D grid-height collision thresholds. Airborne world-space blasts use local cover checks and EnemyBomb demolition.",
+    "Local Gurgle speed3.6 and Splasher1.6 before retained+10% movement tuning; smoothed ground navigation/body steering. Wander turn bounds.7..1.8seconds are not recovered MoveRandomly parameters.",
+    "Gurgle1/60 acquisition runs at30Hz after the local room-entry grace period; it has no added sight requirement and shoots at the current target onframe5. Recovery completes atframe30. Splasher uses movement heading with20..39initial/60..89repeat ticks, independent of floor cooldown scaling.",
+    "Native explosion50damage/60radius maps to160monster damage/6world radius; player damage20 before existing hostile multiplier. Source category survives owner death. Pending physical impacts gate local room completion and retry admission under queue pressure.",
+    "Original procedural walker/headless silhouettes remain, recolored green; bright green physical lobs have ground shadows. No imported Isaac sprite art or map-wide visual filter."
+  ],
+  "native": {
+    "covered_suites": 62,
+    "initial_pass": 61,
+    "initial_fail": 1,
+    "initial": "docs/reports/isaac-enemy-port/gurgle_lobs/native.xml",
+    "final_targeted": "docs/reports/isaac-enemy-port/gurgle_lobs/placement-final.xml",
+    "final_targeted_pass": 5,
+    "finding": "Replacement probability fixture overrode only encounters.mechanics; new family-local pursuit entries entered its supposedly isolated sample. Fixture now strips encounter rows from every copied file; game replacement logic is unchanged. Later floor-delay fix preserves source Splasher20..39ticks and is tested in actual residents. Initial failure and all intermediate results retained."
+  },
+  "browser": {
+    "cases": 11,
+    "attack_and_natural": "docs/reports/isaac-enemy-port/gurgle_lobs/web-final/results.json",
+    "mortality": "docs/reports/isaac-enemy-port/gurgle_lobs/mortality-web-final/results.json",
+    "errors": [],
+    "scope": "Four default-content attack/resident cases plus seven mortality regressions on final WASM build. One mortality morph case uses explicit test-only100% chance. Isolated debug probes reset cooldown; real resident cases retain actual seeded state.",
+    "earlier_attempts": "web/ and mortality-web/ precede the floor-delay fix. web-interrupted/ was stopped during the final rebuild and is not acceptance evidence."
+  },
+  "visual": {
+    "inspected": [
+      "docs/reports/isaac-enemy-port/gurgle_lobs/linux-gurgle.png",
+      "docs/reports/isaac-enemy-port/gurgle_lobs/linux-splasher.png",
+      "docs/reports/isaac-enemy-port/gurgle_lobs/web-final/gurgle-physical-lob.png",
+      "docs/reports/isaac-enemy-port/gurgle_lobs/web-final/natural-splasher.png"
+    ],
+    "result": "Green walker/headless distinction and bright physical shots with ground shadows are visible in Original canyon scenes. Native captures precede the floor-delay-only fix; final browser captures use final build. Broader layout/readability/performance approval remains open."
+  },
+  "remaining": [
+    "Gurgle pathfinder force/friction, Splasher MoveRandomly details, fear/shrink and charm/familiar/item interactions are not fully source-matched. Current movement uses documented local navigation, speed and steering.",
+    "Crackle remains a legacy attack. Port its32-frame/Shoot5 physical fire-wave lob separately; mounted Hornfel routing remains pending and is not enabled.",
+    "Exact queued-damage/kill-method ordering and source status exceptions remain open. Execution bypass of lethal morph is an existing local policy.",
+    "Natural placement and actual native/WASM shots are verified, but varied-build balance, broader room/layout readability and controlled rendered performance remain unaccepted.",
+    "All653 records and six acceptance gates remain required. Zero records are certified complete; regular enemies and required offspring retain priority."
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "result": "partial_pass",
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "zoom_percent": 160,
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/frowning-closed.png",
+      "sha256": "9d406bd91f5145ad7ba505db83120b1cba32a98e1f68a9ec658f0ae6b37bdacc",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/frowning-open.png",
+      "sha256": "404fb41cd48fc8a66c1cf58fc686320c74fe7ac373be2c55cc2cad2670be3d97",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/gaper.png",
+      "sha256": "5cea660b012a43629a7d7102637bb5ca2040ecfe911fd9238241cf42148c007b",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/gusher.png",
+      "sha256": "46bcbbff933f4757963a159a1986a7387fe6a80e75e4f3b3f2a5e5ef18f9d7e3",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/pacer.png",
+      "sha256": "a7add7ed7b55d9b85ba7662ff5859b58a6f027c4f33a32df1799aab4874103fa",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/horf-flight.png",
+      "sha256": "36244d4fbe34cbe8b5bb1bd0ae4ab10f1cceb16e53be6ce57a695e2b47eef2b3",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/horf-cover.png",
+      "sha256": "873df3e1bb5333f5aee0e3c7236fc6c993b83461603ef67a1d820a03464ac9a2",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/horf-first-floor-seed3.png",
+      "sha256": "a5026fc6aef5ca4e1bb8f146d5b879f3e3b19a28c6237bfa2d894569f72e7449",
+      "binary_sha256": "5ef538cb90ea83519ed0048e7994e73598bf31573d90b07734db385ac901cfcc",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/final-gusher.png",
+      "sha256": "d6431d972cbea4817f2964dcb9790bc63d879791da71344d3151faad575d5812",
+      "binary_sha256": "96fa989a4d666b9ff43681856269c0dad46149f0448ec0a8d86a5dcf8415da46",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/final-pacer.png",
+      "sha256": "0849a65a5594e4b9fd5ccb562105fe0a14e41825354f3502afa4ae9b92595053",
+      "binary_sha256": "96fa989a4d666b9ff43681856269c0dad46149f0448ec0a8d86a5dcf8415da46",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/final-frowning-open.png",
+      "sha256": "e594827b85231f3e6ae077fd5cab3502450dc68adaee15d0ae3b074ae7d51360",
+      "binary_sha256": "96fa989a4d666b9ff43681856269c0dad46149f0448ec0a8d86a5dcf8415da46",
+      "inspected": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/native/final-gaper.png",
+      "sha256": "61cbd97879da9ccd2edae0a1ef9687ec6852017628275901a2f76a0b1c6c764f",
+      "binary_sha256": "96fa989a4d666b9ff43681856269c0dad46149f0448ec0a8d86a5dcf8415da46",
+      "inspected": true
+    }
+  ],
+  "observations": [
+    "Horf pale skull and orange-red aimed projectile are distinct from the ground; shot and its ground shadow separate visibly. Solid cover prevents attack acquisition in the cover scenario.",
+    "Actual seed3/floor0/room3 shows Horf partly obscured by foreground cliff geometry, with the existing hostile outline. Other populated residents and an interior water edge remain visible. Old seed1 witness no longer contained Horf; its failed capture log is retained instead of being treated as placement proof.",
+    "Gusher/Pacer initially differed mainly by tiny neck details. The final renderer adds raised versus dangling arms, a stronger continuous Gusher blood jet, and a dark Pacer neck rim. Both retain existing palette, hitbox and movement; the cosmetic jet is not a firing windup.",
+    "Closed Frowning eyes differ from open eyes. The early open/Gaper captures overlap the player; later captures place the player farther away and show unobscured bodies. Awake Frowning and ordinary Gaper intentionally share their family silhouette.",
+    "Final isolated headless roles are easier to distinguish. A simultaneous crowded cohort and multiple relevant occlusion situations still need review before closing the batch visual gate."
+  ],
+  "limitations": [
+    "Static captures do not establish motion timing; behavior tests cover those contracts.",
+    "Screenshot FPS includes startup/capture effects and is not performance evidence.",
+    "Horf captures precede the headless-only silhouette change; each image retains its actual binary hash."
+  ]
+}

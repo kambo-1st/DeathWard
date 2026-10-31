@@ -1,0 +1,37 @@
+[ 14%] Built target glfw
+[ 17%] Built target raylib
+[ 80%] Built target deathward_core
+[ 82%] Built target deathward_cloth
+[ 85%] Built target deathward_particles
+[ 88%] Built target deathward_skinning
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Built target deathward_runtime_assets
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_headless_tests
+[100%] Linking CXX executable deathward_headless_tests
+[100%] Built target deathward_headless_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mortality_tests
+[100%] Linking CXX executable deathward_mortality_tests
+[100%] Built target deathward_mortality_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_replacement_tests
+[100%] Linking CXX executable deathward_replacement_tests
+[100%] Built target deathward_replacement_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_fire_reaction_tests
+[100%] Linking CXX executable deathward_fire_reaction_tests
+[100%] Built target deathward_fire_reaction_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[100%] Linking CXX executable deathward_floor_progression_tests
+[100%] Built target deathward_floor_progression_tests
+[ 17%] Built target glfw
+[ 20%] Built target raylib
+[ 96%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+[ 96%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

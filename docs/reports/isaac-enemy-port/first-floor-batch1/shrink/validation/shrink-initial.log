@@ -1,0 +1,3 @@
+SHRINK_TIME cap150=1 negative_max=1 partition=1 visual_recurrence=1 collision_sample=1 expiry=1 pause=1
+SHRINK_AI fear_motion=1 shared_target=1 acquisition=1 committed_shots=1 recovery=1
+removed Shrink restores ordinary contact immediately

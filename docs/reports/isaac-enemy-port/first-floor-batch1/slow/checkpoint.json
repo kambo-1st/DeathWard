@@ -1,0 +1,20 @@
+{
+  "verified_utc": "2026-10-28T19:03:13.274469+00:00",
+  "result": "partial_progress",
+  "previous_goal_turn_classification": "progress: implemented and validated ordinary Freeze; this turn implemented and validated Slow for the same five identities.",
+  "mechanics_fingerprint": "4196dc02ae1cd555",
+  "counts": {
+    "in_progress": 200,
+    "missing": 423,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/first-floor-batch1/slow/native-summary.json",
+  "next_work": [
+    "Continue only the first-five cohort. Finish applicable Shrink/Charm/control and damaging statuses plus item-source/duration interfaces; ordinary Freeze is not Midas or Ice. No new player perk was added in this slice.",
+    "Resolve applicable champion and knockback production/mass interactions with explicit 3D adaptations. Global stopwatch modes, boss/linked status rules and unrelated projectile families are not covered by this Slow slice.",
+    "Finish mixed-room readability/occlusion, varied-build/terrain balance and controlled rendered performance before batch2. Preserve existing work, park roster expansion and skip WASM."
+  ],
+  "live_jobs": "All builds, tests and native captures completed."
+}

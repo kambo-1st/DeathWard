@@ -1,0 +1,25 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 10,
+    "index": 0,
+    "case": "0x699ffb",
+    "controller": "0x4f6ee0"
+  },
+  "window": {
+    "start": "0x4f6ee0",
+    "end_exclusive": "0x4f8668",
+    "raw_sha256": "024da876e0556c338a6ef1b926bf32107967a6cb3cf8027e90199c3bf274d374",
+    "path": "docs/reports/isaac-enemy-port/gaper/source/controller.asm",
+    "sha256": "bdf1f571dc08674539b5459d704328a24aea87d7c1991165c5fb29308bfe000f"
+  },
+  "scope": "Source-only preflight. Type10 variant3 delegates to4c70e0. Other shared-type branches are not automatically ordinary Gaper behavior.",
+  "constants": {
+    "overkill": {
+      "address": "0xb6aef8",
+      "value": -25.0
+    }
+  },
+  "strings": {}
+}

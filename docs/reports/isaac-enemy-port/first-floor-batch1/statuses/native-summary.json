@@ -1,0 +1,125 @@
+{
+  "verified_utc": "2026-10-28T18:03:18.966308+00:00",
+  "result": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "mechanics_fingerprint": "15f0be51f04a2a48",
+  "monster_definitions": 216,
+  "new_enemy_records": 0,
+  "completed_records": 0,
+  "source": "source/manifest.json",
+  "checks": [
+    {
+      "name": "source",
+      "command": [
+        "python3",
+        "scripts/isaac-reference/analyze-first-floor-statuses.py",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "validation/source.log"
+    },
+    {
+      "name": "mechanics",
+      "command": [
+        "./build/deathward_check_mechanics",
+        "assets/mechanics"
+      ],
+      "exit": 0,
+      "log": "validation/mechanics.log"
+    }
+  ],
+  "native_tests": [
+    {
+      "name": "first_floor_status_effects",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "gaper_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_cohort",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_fire_reactions",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    }
+  ],
+  "coverage": [
+    "Native additive cap120, negative-duration refresh, distinct positive-on-extended Fear/Confusion behavior, independent expiration at30/60/120Hz, stun and modal pause.",
+    "Horf blocks new acquisition but finishes a committed current-aim shot; Gusher suppresses new shots while its cooldown continues below zero; selected capacity-delayed payloads survive.",
+    "Both Gapers and both headless forms evade with reviewed force/friction ordering and physical cover collision; fear leaves contact damage intact. A direct escape path can open Frowning Gaper eyes.",
+    "Confused Gapers follow a cached random point independent of player position, with15-update refresh. The cache survives status reapplication until the next poll. Fear takes precedence when both effects are active. Confusion leaves Pacer wandering unchanged.",
+    "Gaper decapitation retains both effects and independent timers on the same entity, without a premature clear, kill or payout. Final death rejects new statuses. Stored-room re-entry retains durations.",
+    "External cap/radius/refresh values affect real simulation; immutable snapshots and fingerprints remain distinct; seven invalid/unsupported configuration cases reject. Three CLI misuse cases reject before a scene starts.",
+    "Existing movement, projectile, mortality, content, fire-reaction, mixed starting-kit fight and seeded-floor cohort suites pass with unchanged216 definitions."
+  ],
+  "visual_review": "visual-review.json",
+  "native_captures": "native/final/captures.json",
+  "runtime_api": "Simulation::applyEnemyStatus/removeEnemyStatus; no new player perk or input binding is introduced. Isolated smoke scenes use --enemy-status FRAME fear|confusion DURATION.",
+  "performance": "Not newly benchmarked in this slice. Earlier CPU-only measurements refer to the previous checkpoint; rendered performance acceptance remains open.",
+  "remaining": [
+    "Finish required Freeze/Slow/Shrink/Charm and applicable damaging-status behavior plus item-source/duration interfaces for this same five-enemy cohort. Existing local stun/fire/burning support is not silently counted as full native status acceptance.",
+    "Resolve applicable champion/control and knockback interactions; document explicit DeathWard adaptations without treating unrelated unimplemented game modes as arbitrary new acceptance gates.",
+    "Finish mixed-room visual/occlusion, balance and rendered performance acceptance before moving to the second five. Keep all roster expansion parked."
+  ],
+  "validation_waivers": {
+    "visual_wasm": "User explicitly requested skipping WASM checks."
+  },
+  "live_jobs": "All builds, tests and12 native captures have completed.",
+  "binary_sha256": "298771eb3e5d8ad26b47b7bf001aa6403d8f4812e68189cb036b49d62144dd0d",
+  "runtime_hashes": {
+    "src/combat/EnemyStatuses.cpp": "d37e6478015801a1721e34cc7438a821689c9fc98923519d53d78f9ae71fc347",
+    "src/combat/Simulation.hpp": "16ed21e8c5005dfa828fa6e8d431a116ea04190e76a767e51c04a62a58e2df12",
+    "src/combat/Enemies.cpp": "150427e32ccab4b6db11ac9240d235ca9a2b42decb106423397423d45949b9a0",
+    "src/combat/Gapers.cpp": "f1028535b82cd02da413eb84c3e2323a47bfc08065cf197567cd320991f0ce39",
+    "src/combat/GroundPursuit.cpp": "18d8121f1411b0d8b1ec6c321b69357ee83ea6937c838c08819098a7dfdb82a5",
+    "src/combat/Headless.cpp": "9891d9c86eb1afedb2e6b5f6e162425ba3c3026b1af818e307858ee885bd96bf",
+    "src/combat/HeadShooters.cpp": "e07901edcd16127758481ec3d6cdb91fdcc47f8aa872e4284ef016e7c8d572be",
+    "src/content/Mechanics.hpp": "6a49e5142f72c32cc8ee118bf0e987ea293c35dd5e7546f674b6dd08e197e3d1",
+    "src/content/Mechanics.cpp": "822894ba833ff48930bbd92042d4a29d680b217eac6dd17bdb148920c88694af",
+    "src/content/EncounterVariants.cpp": "66e883d9c177156e68f77195fbb0fa3574e355dc7680fa0679a2b878011c32aa",
+    "src/main.cpp": "1c9385d4b7a599a7dc986a2ce0747c34d718c717b67ed52124bee9dc1fb70e8e",
+    "src/render/MonsterVisuals.hpp": "336eed361cb62975caab18d25db85da42eabf79a8a9808ff94114f89abdb0ae7",
+    "assets/mechanics/first_floor_statuses.mechanics": "b3a9ca76883da8d1e4699c8dd3c4b7ed731b8737c406497d3255acb64e164fba",
+    "tests/enemy_status_tests.cpp": "ee4167f16a0c93cc74e332649c7b7c61cc8e2ce29e3e79a20eab9d6b286a507c",
+    "scripts/isaac-reference/analyze-first-floor-statuses.py": "bd3e8e69cc7b9d2f2f3f9cb982c2c353a0a23e450f56deb3c42839d85cb911bd",
+    "CMakeLists.txt": "2913407bf1cc1f9798ffc8496139564f217bb641e1a62e694261d062099c2f76"
+  }
+}

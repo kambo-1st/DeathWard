@@ -1,0 +1,24 @@
+{
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "zoom_percent": 160,
+  "reviewed_by": "agent visual inspection",
+  "final": {
+    "manifest": "native/final/captures.json",
+    "inspected": 8,
+    "findings": [
+      "All five show a static pale-blue frost mark and cold body tint against the warm canyon floor. Horf skull tint is visible; silhouettes, shadows and ground contact remain intact.",
+      "The early/late Gusher pair shows the same held body and blood-column pose; underlying source lifetime continues without animating the overlay.",
+      "Thawed Horf returns to its bone palette and loses the frost cue. The initial-frame freeze scenario resumes shooting after expiration.",
+      "Existing Horf windup line/yellow marker remains while its cast is paused. Gaper proximity to the protagonist partially overlaps its lower silhouette; frost remains above the head."
+    ]
+  },
+  "limits": [
+    "Isolated open-floor captures do not prove crowded/occluded-room acceptance.",
+    "Short captures ran alongside tests; HUD FPS is not controlled rendered-performance evidence."
+  ],
+  "draft_manifest": "native/captures.json"
+}

@@ -1,0 +1,83 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "status": "source_review_in_progress",
+  "runtime_implemented": false,
+  "scope": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-permanent/friendly_source_immunity.asm",
+      "start": "0x684b00",
+      "end": "0x684bae",
+      "raw_sha256": "b2d205d3979b8d6c646d837dd6489da98e09e8173428312fb075fa9d9148ed62",
+      "sha256": "f0602981d6243bd7bdbdadd015347d8eef34dfd1631aff78a06f684d63aa5f28"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-permanent/active_enemy_predicate.asm",
+      "start": "0x68cf40",
+      "end": "0x68cfa3",
+      "raw_sha256": "cb479ac31e7aae6f7d00526c0c1db1f478297568dd4a1c0ca8ace7c34a96b7ac",
+      "sha256": "44755df7864feb92a2e84d9d2c4a93674961838a7b15fa8ce3e23d748ab93a08"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-permanent/persistent_registration.asm",
+      "start": "0x416340",
+      "end": "0x4163b7",
+      "raw_sha256": "560c6aa665b7ffc5e144ea23002b830eaf341b0cdd90f8eba91acc490a38339c",
+      "sha256": "ee7321bb25a1fa213f9055e60bf3cfe7b453e38033565b41731e817ff98d98cb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-permanent/entity_list_remove.asm",
+      "start": "0x412500",
+      "end": "0x41257f",
+      "raw_sha256": "4b0ee0845eff95a73473f8cbe859493e4f62c6781d29665e4bc774926b3677f2",
+      "sha256": "12501ef84568217945d5d66c337b11cec6629021820073cc94b17278611b4bf5"
+    }
+  ],
+  "strings": [
+    {
+      "address": "0xb3f568",
+      "text": "[warn] Can't add more persistent entities, persistent list is full!\n",
+      "sha256": "55875b34a7171d82648bcada5d96f2215c315a9b1e29b8088c0db03416a2e271"
+    }
+  ],
+  "references": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/add_charmed.asm",
+      "sha256": "fc2ba85ac62780a4b826ede6caa3dbae25c71b05c038cacfb5ec377dbd6ca72d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/npc_contact_damage.asm",
+      "sha256": "daa51545be0ec13475caaa85045517da540b4254722a44ff2c0260a372343e8d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source-runtime/target_affiliation.asm",
+      "sha256": "f9796c4c8d57f94dfdfd5a090e7645b555b44457c7c81632a53957c9a86c40d1"
+    }
+  ],
+  "findings": [
+    "AddCharmed685510 first checks FRIENDLY and returns without changing an already-friendly actor. Its negative-duration branch sets CHARM|FRIENDLY and clears the temporary counter. Positive reapplication must not turn a permanent ally back into a timed hostile.",
+    "Negative conversion checks boss status and active-enemy eligibility before calling416340 on Room+1218. These five ordinary identities pass the reviewed type filter; the dead-state byte16b is rejected when include-dead is false.",
+    "416340 is confirmed as persistent registration by its referenced diagnostic string. It removes the actor from the list at+20 using412500, then deduplicates/appends it to the persistent list at+34/count+3c. Registration is capacity-limited; persistence is not implied by the FRIENDLY bit alone.",
+    "684b00 is a source-affiliation immunity predicate used at the entry of TakeDamage684bb0. A FRIENDLY NPC rejects player/familiar sources, sources spawned by player/familiar, source type8, EntityRef FRIENDLY bit2 and effect variants accepted by5ed040. Temporary CHARM alone does not enter this immunity branch.",
+    "The preserved target-affiliation predicate rejects the player fallback as an attack target for permanent FRIENDLY NPCs, although the position resolver may still return the player. Horf acquisition therefore needs an affiliation check separate from position resolution.",
+    "Previously preserved contact logic caps damage received by a FRIENDLY target at min(raw*.25,3.5) native HP. This is contact-specific evidence; it does not establish a blanket incoming-damage reduction for all attacks."
+  ],
+  "implementation_consequences": [
+    "Represent permanent conversion independently of a positive countdown; keep CHARM active for target/projectile policies and FRIENDLY active for room/player/source-affiliation rules.",
+    "Do not route converted ordinary enemies through room-limited familiar profiles or their generic invulnerability fallback.",
+    "Keep projectile faction snapshots and contact recipient reduction distinct; preserve player immunity even after projectile owners leave or die.",
+    "Implement explicit follower retention/transfer only after tracing registry consumption; preserve source-specific attack acquisition and mortality."
+  ],
+  "unresolved": [
+    "Trace persistent-list consumption during ordinary room and floor transitions, removal, capacity and placement. Registration alone does not prove exact transfer or save semantics.",
+    "Resolve applicable effect-source classification5ed040 and permanent-ally damage/death hooks beyond the entry immunity check.",
+    "Integrate and test conversion, positive reapplication, player/NPC attacks, contact caps, Horf fallback suppression, room completion and follower lifecycle for the same five.",
+    "No permanent runtime implementation, new enemy, completed record, player item or WASM validation is claimed by this source checkpoint."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 827,
+      "index": 162,
+      "case": "0x69a0bb",
+      "controller": "0x4e82e0"
+    }
+  ],
+  "strings": {
+    "0xb400ac": "Shoot",
+    "0xb404ec": "WalkVert",
+    "0xb40504": "WalkHori",
+    "0xb41e78": "Head"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/controller.asm",
+      "start": "0x4e82e0",
+      "end": "0x4e9471",
+      "raw_sha256": "7b94f409ab8ea7317d45325696f3e7403b81db832840921a39ac251f74aea77b",
+      "sha256": "c38f059ffac1045e9302bcddcc9d699fdbac7689257bb839c33fe0cc45c28627"
+    }
+  ],
+  "status": "Evidence extraction only. Behavior interpretation and runtime port remain pending.",
+  "state_dispatch": {
+    "table_address": "0x4e9474",
+    "targets": [
+      "0x4e837b",
+      "0x4e840d",
+      "0x4e8f8c",
+      "0x4e8ecc",
+      "0x4e9349"
+    ],
+    "indices_address": "0x4e9488",
+    "state_indices": [
+      0,
+      4,
+      4,
+      1,
+      4,
+      2,
+      4,
+      4,
+      1,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      3
+    ],
+    "raw_sha256": "aeef3e4793ac99d031181e5c4aed0319feb67bee6e9b25bf8b828e627929b018"
+  }
+}

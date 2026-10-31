@@ -1,0 +1,143 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/add_freeze.asm",
+      "start": "0x685080",
+      "end": "0x6851b3",
+      "raw_sha256": "7be9755b90a11cfc706437e99654245e39ee053cdaf6a37b07fa845e1ae01bbd",
+      "sha256": "95d09717904440a0d6fa0c37ae9812946e6ed8cd5b8b95a1ff6fbe1b4f2356ab"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/expire_freeze.asm",
+      "start": "0x686757",
+      "end": "0x68678d",
+      "raw_sha256": "07956b38d26acfb17c3af020b169abbc7f71b36d6901936c79502c35aadfb320",
+      "sha256": "424fb46afb631fa6e457e661c7fc3dff2a3f7b416b21e866b1d9fe0dbb3527c8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/animation_gate.asm",
+      "start": "0x6860e7",
+      "end": "0x68618c",
+      "raw_sha256": "24de3fd0aee3196d85f7bce5e9dcf7c119cddb6608ee9b281a2db7bbed79e22e",
+      "sha256": "06fc7ccdd62092959ce8f2660a609d381c4d251fcf8e0b977d57f91428dcc8e4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/is_frozen.asm",
+      "start": "0x69b0b0",
+      "end": "0x69b0d6",
+      "raw_sha256": "4c7b41783be365a43c5a07a032885aed606bc6178e8aeb884e53fa2ffda7aec8",
+      "sha256": "fc5422da1047c901bbd59e893307172469a71c3e0891f1d98f341746c1884a08"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/ai_gate.asm",
+      "start": "0x69cda8",
+      "end": "0x69ce99",
+      "raw_sha256": "269fafc5e1421328a3a4722687aefdbfafb1539efb989647ce287e033aa327f7",
+      "sha256": "6d7ff36adc5d7c43fe9647c9a5b5bdf3aa22c7e02efc2306e009860b6425d1c7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/freeze_friction.asm",
+      "start": "0x69eb35",
+      "end": "0x69eb90",
+      "raw_sha256": "0d1fe299a2e17de75e94758582be390face4a6b94ecee0831333acdbcc2569d1",
+      "sha256": "8cd5eac85bd37e0abcb36474a97aec475eab8da188545658975c8888076424e3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/velocity_retention.asm",
+      "start": "0x686406",
+      "end": "0x686492",
+      "raw_sha256": "cb3a84966c37e02404e6a2c37db60f259070923095d0bd6bff3df037cd6c1004",
+      "sha256": "169fb4e8fd88bed2086f21aa831a74d5ff7f5b49ef3ac81d5d71fcddfd665615"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/half_step_motion.asm",
+      "start": "0x68827a",
+      "end": "0x6882f1",
+      "raw_sha256": "4aa8b0fa2439cd3ea1227838b55bfb46ec64cfe345bd7cf63f1198a00185e9e7",
+      "sha256": "0296cab775167bec85d298d26b6ac25bfbaa8454a98a4710ac6a1a7883764260"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/player_contact.asm",
+      "start": "0x6a5129",
+      "end": "0x6a5327",
+      "raw_sha256": "64794ec0469d1674f961fafe5e5bac287258dbbb18db5980f544a23543b33c80",
+      "sha256": "1124a90d0c7f6a50a785343e03bdb1eddf8e92050cb5ffe9f2b6f560aebaeb9f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/add_slowing_research.asm",
+      "start": "0x685400",
+      "end": "0x685508",
+      "raw_sha256": "28ff488427e43a9c7314f706ede4a3e450a54c2ef577947bd857a2ed61b12409",
+      "sha256": "f0fffa4a488545e501672fb2054e7402a885867cef50bd4baa97fa930c4ddfa0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/source/npc_slow_clock_research.asm",
+      "start": "0x690c21",
+      "end": "0x690c39",
+      "raw_sha256": "06a4bd60b49a0160aacc1eddd511e5abe397bbcc14e49b803aaeb4401caf002d",
+      "sha256": "36e46d29c33c3b3cb3f00e8484cdf3fb40e9c0e8aeb4b00bb02c5003b1df12df"
+    }
+  ],
+  "constants": [
+    {
+      "name": "freeze_retention",
+      "address": "0xb6a214",
+      "bytes": "0ad7233c",
+      "value": 0.009999999776482582
+    },
+    {
+      "name": "slow_time_scale",
+      "address": "0xb6a480",
+      "bytes": "0000003f",
+      "value": 0.5
+    }
+  ],
+  "referenced_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/base-config.asm",
+      "sha256": "d44b00677e9bc0a0ceaadf926e1008e02e7bc1591054266c92202fabdb2ded9f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/npc-config.asm",
+      "sha256": "47a82eb4b11f7accff02b9a79f16f1c9fbbb1d8564dee26acb7c0436e15c5c48"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/headless/source/controller.asm",
+      "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/horf_current_aim_and_speed.asm",
+      "sha256": "bd05f6f086b73e4efcc0e2362c0203cf35677b6aaa7128273c30c868690bce4d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/npc_collision.asm",
+      "sha256": "422ee691e5a72d26aa1809a462b9b57e27f532b6fd6bf17d03f1b4f11c80dba7"
+    }
+  ],
+  "findings": [
+    "Entity AddFreeze binding calls685080. Ordinary positive duration adds to210 and caps120; negative duration keeps max(old,abs(duration)). Positive reapplication can shorten an extended duration to120. Zero does not apply. Low Entity flag20 marks Freeze.",
+    "Common expiration decrements210 at30Hz and clears20 at zero. Base float FrameCount2fc advances even while frozen, but the animation gate skips sprite updates. Native interpolation and local capture60Hz are distinct from the source30Hz clock.",
+    "Ordinary NPC AI gate69cdc2 invokes69b0b0 and jumps past699730 when frozen. Committed attack frames and controller-owned cooldowns therefore hold; freeze is not an attack cancel. Special states/flag exceptions exist outside this five-enemy cohort.",
+    "Freeze skips ordinary family movement AI and multiplies friction2c4 by b6a214=.01. Base update multiplies carried velocity by friction and advances position. External momentum remains possible. At normal timeScale1 the recurrence is vNext=.01*v, positionNext=position+vNext/30 after conversion.",
+    "Player contact branch6a5129 retains NPC collision damage and ordinary player damage dispatch; this branch has no Freeze gate for types10/11/12. Freeze does not grant invulnerability, a damage multiplier, an ice corpse or a room-clear exemption.",
+    "Same-entity Gaper Morph/config helpers do not clear flags160/164 or timers210. Ordinary headless transformations therefore retain Freeze; final death remains the normal mortality path."
+  ],
+  "adaptations": [
+    "Only10.0.0,10.1.0,11.0.0,11.1.0,12.0.0 opt into freeze_effect. Boss immunity240, linked-entity propagation, player item duration modifiers, Midas and Ice remain separate open work.",
+    "Fractional motion uses the existing exact30Hz recurrence interpolation for DeathWard3D and physical canyon collision. The source.01 endpoint is preserved at30/60/120Hz. Swept player contact is retained. Normal crowd collision can still move the body.",
+    "Local frozen body animation and gait amplitude are held; source polling ticks continue. Fear/confusion durations continue independently. Local controller state, including DeathWard stun, waits until thaw. Inactive rooms and modal pauses preserve durations and pose without catch-up.",
+    "A capacity-delayed shot is held until thaw, not discarded. Its selected projectile stays intact, while retry movement uses the damped body velocity. A shot already emitted into the world continues moving normally.",
+    "A pale blue material tint and static six-spoke overhead mark are original DeathWard readability cues, not copied artwork. No player perk or input binding is introduced; API and isolated capture CLI expose the status."
+  ],
+  "next_slow_research": [
+    "685400 adds positive duration to218 without120cap. Negative application stores2, not abs(duration); zero still writes strength304. These rules differ from Freeze/Fear/Confusion.",
+    "Ordinary NPC clock690c21 tests low flag80 and multiplies time scale by.5; this path does not read strength304. Current API prose alone is insufficient to infer arbitrary NPC slowdown strength.",
+    "Base velocity686406 transforms retention q to q/(q+t-q*t) when timeScale t differs from1. Slow also affects movement and force, so simply halving controller dt would not reproduce this recurrence. Complete Slow implementation and validation remain open."
+  ]
+}

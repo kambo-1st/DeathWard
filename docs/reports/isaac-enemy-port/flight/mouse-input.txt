@@ -1,0 +1,1 @@
+PASS native mouse picking and click-locked firing at elevated flying body

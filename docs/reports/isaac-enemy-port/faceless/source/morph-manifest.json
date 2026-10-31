@@ -1,0 +1,19 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "start": "0x697c60",
+  "end_exclusive": "0x697e21",
+  "raw_sha256": "811937034eaac8ea8aefdf30ca2ba54dd4c4b9adffeb4f6bdd5ac279fa9e19a6",
+  "path": "docs/reports/isaac-enemy-port/faceless/source/morph.asm",
+  "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b",
+  "findings": [
+    "Changes exact type/variant/subtype on the existing entity.",
+    "Resets several champion/status and appearance fields and rebuilds pathfinder via7a34f0.",
+    "Calls two virtual initialization methods and rescales maxHP by field+e94. Faceless explicitly restores currentHP to maxHP after this returns.",
+    "No direct write to creator type+34 or position/velocity in this helper; virtual initializer side effects still require review."
+  ],
+  "limits": [
+    "Virtual functions+5c/+60 and native status/champion state are not fully reconstructed.",
+    "This is source evidence only, not additional accepted runtime coverage."
+  ]
+}

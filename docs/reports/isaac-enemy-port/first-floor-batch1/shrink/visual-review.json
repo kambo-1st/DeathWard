@@ -1,0 +1,74 @@
+{
+  "verified_utc": "2026-10-28T19:49:08.769338+00:00",
+  "result": "partial_pass",
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "zoom_percent": 160,
+  "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+  "captures": [
+    {
+      "name": "gaper-normal",
+      "image": "native/gaper-normal.png",
+      "image_sha256": "c83bf9b067adc6a8c48b4e0ffe48db4c17503d1d84faa7e0649dd6a6ae5ba4cb",
+      "inspected": true,
+      "findings": "Normal-sized upright body and full shadow visible; baseline for relative size, with camera following its different position."
+    },
+    {
+      "name": "frowning-shrink",
+      "image": "native/frowning-shrink.png",
+      "image_sha256": "3edfe346cf4adcad99e8aadd1609ec74a6eff9f5e32773b1f1b0e82f2da092f2",
+      "inspected": true,
+      "findings": "Small upright silhouette grounded with a reduced shadow; facial/wake detail is difficult to distinguish at this size."
+    },
+    {
+      "name": "gaper-shrink",
+      "image": "native/gaper-shrink.png",
+      "image_sha256": "128791dcbb3af7b422c4bf70c1014125317412a5e3459dba913a6e32a4888bd7",
+      "inspected": true,
+      "findings": "Entire upright model is reduced, with no full-sized detached head or shadow. This isolated actor remains visible against open sand."
+    },
+    {
+      "name": "gusher-shrink",
+      "image": "native/gusher-shrink.png",
+      "image_sha256": "7ebbf43cc80477e13a96d9e9fb0c5bc87f3d6d6930c16547ca46bde8fd18ffbf",
+      "inspected": true,
+      "findings": "Small headless body and red neck spray remain visible. Existing ground blood trail remains separate and is not retroactively scaled."
+    },
+    {
+      "name": "pacer-shrink",
+      "image": "native/pacer-shrink.png",
+      "image_sha256": "36d014ba7c5aeae439ce61bf6f6722acca678787e876bb5325e593e02a443d5d",
+      "inspected": true,
+      "findings": "Small headless body and arms remain visible with no Gusher neck spray. Fine detail is weak at this size."
+    },
+    {
+      "name": "horf-shrink",
+      "image": "native/horf-shrink.png",
+      "image_sha256": "f796fe227ecac65825715d9754522b7069eec78a300186e129b500ce2e77b1d0",
+      "inspected": true,
+      "findings": "Small pale skull sits at ground level with a reduced shadow; no new aimed shot is visible or reported."
+    },
+    {
+      "name": "horf-recovered",
+      "image": "native/horf-recovered.png",
+      "image_sha256": "d396fa75d7cc46455cc94783328081a3d15a4c51caa5291aa829a3e36830a948",
+      "inspected": true,
+      "findings": "Skull is approaching normal size again; aimed projectile, its shadow and warning line are visible. Probe reports zero Shrink and scale0.935568."
+    },
+    {
+      "name": "horf-squashed",
+      "image": "native/horf-squashed.png",
+      "image_sha256": "e97134864b8f6694e2174d2c496be9ac314aa31b7734763fda85eb614b2c967f",
+      "inspected": true,
+      "findings": "Actor removed at player contact; HUD/probe show zero threats and player remains at100HP. This still is not an animation-quality certification."
+    }
+  ],
+  "limitations": [
+    "Single open-room fixtures at one zoom/angle; crowded, occluded and varied-zoom acceptance remains open. Tiny facial details are intentionally reduced and hard to distinguish.",
+    "Thirty-frame native smoke captures establish appearance and probe state, not controlled rendered performance. The9FPS readout is not a benchmark.",
+    "Status clocks/transition and contact death are tested separately. Still images do not certify animation quality or full encounter balance. No player item granting Shrink was added."
+  ]
+}

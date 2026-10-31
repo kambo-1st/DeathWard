@@ -1,0 +1,99 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/api_binding.asm",
+      "start": "0x8053b5",
+      "end": "0x805405",
+      "raw_sha256": "a52a1f49c92ec2beeb2e14b84841b0e6732e8c32fa4bdfccee6c6b791c6c50c5",
+      "sha256": "97338f05ac2575dbe1ba410d8dbbebf9be975f7a902cf8f6e760a1e76d8a1680"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/add_poison.asm",
+      "start": "0x6851c0",
+      "end": "0x6853f2",
+      "raw_sha256": "e8c6b5f7bc34684113f12c1b48a8cb4e270ad1853e66ebfa2f2d9d0850f6783f",
+      "sha256": "47636cf695365a562d42c2e251107d976a34d060739161d384240e6ac71591f9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/add_burn.asm",
+      "start": "0x685ca0",
+      "end": "0x685e1a",
+      "raw_sha256": "13a8b567d9f9c1d8affebb09b3297372ba4a75d32d25dd090d92d15c37546ced",
+      "sha256": "84e30a4cf5add29ed0ca86dd8b4e67c4cb0e1edd8b1076ab72ba9bf2f5f3685c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/source_duration.asm",
+      "start": "0x685020",
+      "end": "0x68507d",
+      "raw_sha256": "3b2b7e63ced23397fc450e4fc7313097d465c72f036a38475f232ff3f56a8bc9",
+      "sha256": "375305f2ee2d35c758895368815d6c59e24e71d0a68c3e0f80e5076b801a99f7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/poison_expiry.asm",
+      "start": "0x68678d",
+      "end": "0x6867cb",
+      "raw_sha256": "c96b3b544dfbed7e42c31503872daf8e55f2011fb64a4b166a2ab7a2ba317499",
+      "sha256": "07510c6bf64aaff020e053d5ea9c3d6ad7431505c1f57ef7c28be05c4a455abf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/burn_expiry.asm",
+      "start": "0x68694d",
+      "end": "0x686982",
+      "raw_sha256": "049ee3adff614e44f6ba4d76aa42c271a47deee35ffe47eeb467ee08188aa2df",
+      "sha256": "63fe2bd91ed4aa1ec8a242f9911a552d0d37de37c8a365fdd2fd23d9b9a7d146"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/periodic_damage.asm",
+      "start": "0x687038",
+      "end": "0x687201",
+      "raw_sha256": "d170bbd16d23cde42ca8eaa9cd3d8ac67e55dc7583538e4337bf6aa0f3673464",
+      "sha256": "ff7f89d7c3497b688e699e86d5ef46c71878b27f16997b74ed7859201b4d7d14"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/empty_entity_ref.asm",
+      "start": "0x427290",
+      "end": "0x4272f0",
+      "raw_sha256": "20c2b63ad12fc6c53f0f7f315a64da4b30e9d3fb74d4cce036774d2fce46f0ee",
+      "sha256": "3efa3f94d4e79d19e1e7636fc116970e3eae44609ea50743531ed93c19018bbd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/source/initial_damage.asm",
+      "start": "0x681c5f",
+      "end": "0x681c73",
+      "raw_sha256": "71bd12c832931633203bc6814201aea2bd0ae1947b0851b67cb0c275a5a7197b",
+      "sha256": "ada9be5cba026a30ac630c7a1e2d29ce5eacd9604521855c1b555c506454bac2"
+    }
+  ],
+  "constants": [
+    {
+      "name": "fallback_damage",
+      "address": "0xb6a7b0",
+      "bytes": "00000040",
+      "value": 2.0
+    }
+  ],
+  "findings": [
+    "Entity API registration binds AddPoison to6851c0 and AddBurn to685ca0. Ordinary timers214/22c use positive additive cap120 and negative max(old,abs(duration)). Reapplying positive duration can shorten an extended effect. No-status and boss-immunity/linked routing branches are visible but outside this cohort.",
+    "Both applications keep max(oldDamage,newDamage). Fresh native fields278/27c start at2 and expiry resets them to2. Nonpositive supplied damage uses the source ancestor player Damage when available, otherwise2. The caller source is not stored by these native application functions.",
+    "New Poison resets238; new Burn resets23c. Active reapplications do not reset those tick phases. Duration decrements and clears the status before the periodic-damage branch. Active phase starts0; oldPhase%20==1 deals damage, then phase increments. Thus hits occur on real updates2,22,42,62,82,102; duration must exceed the hit update.",
+    "The periodic branch runs for ordinary NPC types10..999 and is not gated by Freeze or Slow. Poison and Burn have independent duration, phase and damage fields and can both tick on one update.",
+    "Both periodic damage calls use DAMAGE_POISON_BURN0x8000, an empty EntityRef constructed by427290, and countdown30. They are not physical flame-contact damage. The existing DeathWard Burning channel is the corresponding shared damage kind.",
+    "Duration helper685020 checks a source-player effect78 and multiplies input duration by twice its count. That item-source duration modifier is preserved as evidence but not implemented by this slice."
+  ],
+  "adaptations": [
+    "Only10.0.0,10.1.0,11.0.0,11.1.0,12.0.0 opt in. damage_status ID poison|burn cap period firstTick minimumDamage exposes120/20/2/6.4; source2HP times existing enemyHP scale3.2 gives6.4. API explicit power is already in DeathWard HP units.",
+    "A nonpositive API power snapshots the current resolved player build damage for Player/Ally producers, otherwise the configured floor. No new item is added. Native arbitrary source-ancestor traversal and effect78 duration multiplication remain pending item-system integration.",
+    "DeathWard retains explicit producer attribution for item hooks and diagnostics instead of replacing it with native empty EntityRef. The stronger application owns that snapshot; reapplication with weaker/equal power preserves it. Each periodic tick starts an independent bounded event chain; ownership survives producer removal.",
+    "Damage enters the existing event pipeline and resolves at the end of the physics step. Same-entity lethal morph, ordinary rewards, fire reactions and room completion use the existing damage path. This does not claim native intra-step callback ordering on unusually long steps.",
+    "Queue backpressure retains at most one selected tick per effect and pauses only that effect clock until admission. Selected power/source/position survive reapplication. This is a local bounded-queue policy; ordinary cadence has no delay. Explicit removal stops future ticks but does not cancel already selected damage.",
+    "Modal and inactive-room suspension retain durations/phases. Green bubbles and small side flames are original DeathWard cues; Freeze retains body-tint priority while damage-effect side cues continue. No source sprites or full native color-stack API are copied.",
+    "Other enemies, linked entities, boss status cooldowns, bleeding, charm/shrink and item-source duration interfaces remain separate work. Player100HP/24damage, expedition structure, Mine and hubs remain unchanged."
+  ],
+  "api_reference": {
+    "url": "https://wofsauge.github.io/IsaacDocs/rep/Entity.html#addpoison",
+    "consulted": "2026-10-28",
+    "summary": "Public API documentation independently describes duration3 for the first hit and20-frame intervals. Installed1.7.9b disassembly above is the baseline authority; later Repentance+ overloads are not applied."
+  }
+}

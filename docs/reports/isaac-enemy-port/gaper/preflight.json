@@ -1,0 +1,33 @@
+{
+  "status": "Historical source preflight. Mortality contradictions resolved and Linux-tested in morph-contract.json; dedicated parent movement/HP still provisional.",
+  "baseline": "Installed Repentance1.7.9b",
+  "controller": "source/manifest.json",
+  "scope": [
+    "Type10 variants0,1,2 share this controller.",
+    "Rotten Gaper variant3 delegates immediately to4c70e0; this extraction does not establish its behavior.",
+    "Shared non-type10 branches must be reviewed separately."
+  ],
+  "confirmed_death_branch": {
+    "window": "4f726c..4f72f9",
+    "overkill": "Post-hitHP strictly greater than native-25.",
+    "probability": "First RNG low bit must be zero:50percent transform,50percent ordinary death.",
+    "normal_and_frowning": "Next RNG modulo3==0 selects Pacer11.1; otherwise Gusher11.0. Thus total probabilities are Pacer1/6 and Gusher1/3.",
+    "flaming": "Variant2 always selects Gusher when the first50percent roll succeeds, though the modulo3 draw is still consumed.",
+    "identity": "Calls same-entity Morph697c60. Clears mortal flag, restores full child health and writes cooldown20+RNG%20. No separate child entity is created in this branch."
+  },
+  "next": [
+    "Finish mortality WASM rebuild and browser slice.",
+    "Implement dedicated Gaper source movement/HP and Frowning clear-path/head-animation transition, using movement-preflight.json.",
+    "Review Flaming status/fire behavior and full acceptance requirements."
+  ],
+  "validation_effect": "No new runtime identity or completed port added. This evidence changes the next implementation priority.",
+  "animation_source": "animations/manifest.json",
+  "animation_metadata_preserved": 3,
+  "identified_runtime_contradictions": [
+    "Existing generic gaper death rule reverses ordinary Pacer/Gusher weights.",
+    "Generic death spawns a separate body and pays the original kill, instead of keeping the same live entity.",
+    "Old overkill threshold uses25DeathWardHP rather than source25converted by the selected health scale.",
+    "Flaming shares ordinary child choices rather than its source Gusher-only transformation."
+  ],
+  "resolved_by": "morph-contract.json"
+}

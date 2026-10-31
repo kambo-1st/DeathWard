@@ -1,0 +1,84 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/grid-path.asm",
+      "start": "0x7a3650",
+      "end_exclusive": "0x7a4813",
+      "raw_sha256": "a63c08242d9973fb51fb3c0c7c595c0f83b95889d1d8f05d7271009b7b2a2191",
+      "sha256": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/grid-line.asm",
+      "start": "0x7af4b0",
+      "end_exclusive": "0x7afa37",
+      "raw_sha256": "a14faca63cd003562f7641b258a607d5932a9b84f6c3f0fec9c1a5e44cfab5a5",
+      "sha256": "551cfa0dfb9e76540787403e23e88ab8bbd7f86aff6e8376099bcfc62591e5a0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/walk-selector.asm",
+      "start": "0x6980a0",
+      "end_exclusive": "0x698323",
+      "raw_sha256": "82d15569268e574a2748d8aa38c4c24ce1f644b60e8196455e740c190d91b54b",
+      "sha256": "c02e770636488ba1bd67450dfb8b87290f53b72cc8986b804b253c3762110bd1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/overlay-play.asm",
+      "start": "0x405a00",
+      "end_exclusive": "0x405a76",
+      "raw_sha256": "61f42c1ac727c04b323dbbcad0118f17d60d147bfe8c3280bafaa90b7cbb4dd5",
+      "sha256": "983fb720ade3a8cac5fd10160f38e76d790c368014185e981c10adfdf0c0294f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/overlay-frame.asm",
+      "start": "0x405d10",
+      "end_exclusive": "0x405d20",
+      "raw_sha256": "7d004527ad85883c8d8a404bfb5428d559f40d25dc34aac5f8b225967344eabb",
+      "sha256": "12ca00981afa07766c9345dbf79bab232b190b9797a4583d2e51d81cc90fd6e8"
+    }
+  ],
+  "constants": {
+    "path-retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "blocked-retention": {
+      "address": "0xb6a588",
+      "value": 0.8500000238418579
+    },
+    "arrived-retention": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "distance-gain": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "maximum-gain": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "arrival-distance": {
+      "address": "0xb6a614",
+      "value": 1.0
+    }
+  },
+  "forces": {
+    "frowning-closed": 0.6000000238418579,
+    "frowning-open": 0.7200000286102295,
+    "ordinary": 0.49799999594688416,
+    "flaming": 0.5478000044822693
+  },
+  "findings": [
+    "4f7f93..4f7fd7: targetPosition helper(output,0), then FindGridPath(targetPosition,force,900,true).900 is PathMarker, not a range or attack timer.",
+    "Normal moving path applies .7 retention and normalized impulse force*min(sourceDistance*.1,2). Arrived distance<=1 applies.5; absent/zero route applies.85.",
+    "Frowning starts with Head overlay frame0 paused. After direct-path flag+a90, PlayOverlay(Head,true) starts it. Force increases only once overlay frame>0, independent of later obstruction.",
+    "NPC+a90 equals pathfinder+72c. Ordinary path writes grid-line result at7a3df6; direct collision3/control exceptions set true. DeathWard will adapt native cell tests to physical ground navigation.",
+    "Walk-selector threshold.1 is a speed threshold, not animation rate. Below it vertical walk is held at frame0; above it22-frame loops play at source30FPS. Frowning Head has20 nonlooping frames; ordinary Head1; Flaming Head12looping."
+  ],
+  "limits": [
+    "Native grid marker/cell routing and status/control/champion branches are not exact DeathWard geometry equivalents.",
+    "Stored wiki Gaper revision270042 section5 establishes Flaming fire vulnerability and no ordinary-to-Flaming fire conversion. Full global native damage dispatch has not been pinned here."
+  ]
+}

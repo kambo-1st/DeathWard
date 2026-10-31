@@ -1,0 +1,317 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "status": "source_review_only",
+  "runtime_implemented": false,
+  "windows": [
+    {
+      "name": "add_charmed",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/add_charmed.asm",
+      "start": "0x685510",
+      "end": "0x6857c2",
+      "raw_sha256": "927ed27e05b8979ae633e947a0f335c00155d651bd65fc037861ff3a3b37275a",
+      "sha256": "fc2ba85ac62780a4b826ede6caa3dbae25c71b05c038cacfb5ec377dbd6ca72d"
+    },
+    {
+      "name": "lua_registration",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/lua_registration.asm",
+      "start": "0x8053dd",
+      "end": "0x8053e7",
+      "raw_sha256": "368291a1ed6f78d22b5f18dcea49f5569f8da02a3678457be46d56a1e0882946",
+      "sha256": "16be5ec80818fb391fe2ebf247bd27ee90e356fd0eb9bf8db590689bdff317cc"
+    },
+    {
+      "name": "expiry",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/expiry.asm",
+      "start": "0x686815",
+      "end": "0x686882",
+      "raw_sha256": "1d73cbc0188f82811a0ba9441f28e64757bf71351aee312fd24df46dfa2f5e01",
+      "sha256": "470208995d9b6b4d371292a5202197abbb3a362c2ae94aca6307b9b1515b6175"
+    },
+    {
+      "name": "get_player_target",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/get_player_target.asm",
+      "start": "0x695680",
+      "end": "0x695a26",
+      "raw_sha256": "3e137d46fce59a1bf80cc103f3f36d2bc15a4820c92b5a4b78f0d20480b6753b",
+      "sha256": "fff3c20b544538035785b1eceb04235d916bde3fbc255c1511197a43be53e0b6"
+    },
+    {
+      "name": "target_candidates",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/target_candidates.asm",
+      "start": "0x6d90b0",
+      "end": "0x6d92a3",
+      "raw_sha256": "433843324a685ffd4a3daecebac891eee555dc8e092debef1c7d4c15cc30a150",
+      "sha256": "e7d2cf8ee43098fe67ce2d4fc0931b9889094d5b3b516a552238181a1ed0e7fa"
+    },
+    {
+      "name": "can_target",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/can_target.asm",
+      "start": "0x681840",
+      "end": "0x68187a",
+      "raw_sha256": "e445cb2cb5fd59f82923d984bbccd063e1f087023651b6d7ba3fb784646a6372",
+      "sha256": "0a5d11ae3d7780f36afc4c3e96ea55f9563e2d469ce48f1c7d38d6eec74ab82c"
+    },
+    {
+      "name": "source_poll",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/source_poll.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    },
+    {
+      "name": "can_shut_doors",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/can_shut_doors.asm",
+      "start": "0x68f550",
+      "end": "0x68f56f",
+      "raw_sha256": "5325b068e88629e933739cf0d54fd6492c62da5425aa6e6436d2be62e5cf6a28",
+      "sha256": "391605b07032568f5048557b41d66ea9fdebc19653f44ed2320c579bc7257ad4"
+    },
+    {
+      "name": "projectile_owner_flags",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/projectile_owner_flags.asm",
+      "start": "0x6a179a",
+      "end": "0x6a17dd",
+      "raw_sha256": "19de6fe3cea441f159a57e4beadfb1fe02519c0e9141fafffb3514214607893f",
+      "sha256": "9810a6b5ec0c84f467a7eb6e6cfd20cb52df240baa25cfd25b5c295ecbe158d1"
+    },
+    {
+      "name": "projectile_collision",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/projectile_collision.asm",
+      "start": "0x6375e0",
+      "end": "0x6385dc",
+      "raw_sha256": "865eef3b3671cef6b1518a35198dc7e05b2b99761bd20d4e1112ba3fb7ac6c55",
+      "sha256": "c2a2519a3a48bf770122af0fd6a1d2750c723d2a636315d5b48ce0908eb0c12e"
+    },
+    {
+      "name": "npc_friendly_contact_gate",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/npc_friendly_contact_gate.asm",
+      "start": "0x6a4e1e",
+      "end": "0x6a4e71",
+      "raw_sha256": "1316f9ac485db02f5738fb05aa8501e01ef28515baaf6ed919ee016f6f5ae537",
+      "sha256": "9a5e37b83688d95dbba8873fd69731907b4aa71bfafae6e3faa722ed8a7d421d"
+    },
+    {
+      "name": "npc_contact_damage",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/npc_contact_damage.asm",
+      "start": "0x6a606f",
+      "end": "0x6a6200",
+      "raw_sha256": "3e373a44993a721a4d5c64328a5ed7b2e89290cc296f06f9b67be11eb2204a45",
+      "sha256": "daa51545be0ec13475caaa85045517da540b4254722a44ff2c0260a372343e8d"
+    },
+    {
+      "name": "contact_cache_reset",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/contact_cache_reset.asm",
+      "start": "0x6a02d5",
+      "end": "0x6a02f2",
+      "raw_sha256": "99d265cc54a77366e6ef33ba5e9a8e6431e4ba1e8245c109aba4d067396bc9d5",
+      "sha256": "68eecea53edda1ea1628a2a4c05ca32057c9daab928e813205e0efcdaa6b3a4e"
+    },
+    {
+      "name": "contact_cache_clear",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/contact_cache_clear.asm",
+      "start": "0x4d1fd0",
+      "end": "0x4d2040",
+      "raw_sha256": "a7cd13bdb7ab1a0ac87482b22312d2e1c1a7500b34121a726c8b7225dd908360",
+      "sha256": "8409c8c5e5ffae2b41dd31e2a841f78927b96ed426bcea5a9eae7a5ce87af8ef"
+    },
+    {
+      "name": "contact_log",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/contact_log.asm",
+      "start": "0x68f440",
+      "end": "0x68f457",
+      "raw_sha256": "0007f6d2752a76dc1d549ea2ba48a816a2f35e3df1b0f1c76b1a93c3041401a6",
+      "sha256": "cf96f5fb43e07ab98bd3f3b783094de27775e0b55e96754d5017fc6136c36bca"
+    },
+    {
+      "name": "contact_log_thunk",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/contact_log_thunk.asm",
+      "start": "0x9ec394",
+      "end": "0x9ec39a",
+      "raw_sha256": "8e769d1b860b2ad87e796bc0f5b7f66982bce907fc8c418a4ff7fb1c576048b6",
+      "sha256": "59284f72ffbcaf09424950f1bb69cd06283b8d6575a9ef79d28ec59a995d29b1"
+    },
+    {
+      "name": "entity_ref",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/entity_ref.asm",
+      "start": "0x4229a0",
+      "end": "0x422abb",
+      "raw_sha256": "a0938574cfe7e51a2add97241e21e6911ca31f2513410b4d045410897592b5c7",
+      "sha256": "61f4ab302c7f86e58e3223a513013b139c0a79d578c41a5fba44ad927c429ccd"
+    },
+    {
+      "name": "player_damage_friendly_gate",
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/charm/source/player_damage_friendly_gate.asm",
+      "start": "0x73cb0d",
+      "end": "0x73cb4e",
+      "raw_sha256": "d540a66067585522ea9edf126794d3c8398e09d9d7744e0e202d5c1740e66ffd",
+      "sha256": "af6b1b35c33a3e23913a84dd67fd8017c2850329a52eefac486a3868a7c7d99b"
+    }
+  ],
+  "constants": [
+    {
+      "name": "target_range",
+      "address": "0xb6ad20",
+      "bytes": "00409c45",
+      "value": 5000.0
+    },
+    {
+      "name": "charmed_target_squared_penalty",
+      "address": "0xb6ad88",
+      "bytes": "00401c48",
+      "value": 160000.0
+    },
+    {
+      "name": "contact_hp_offset",
+      "address": "0xb6ab10",
+      "bytes": "0000dc42",
+      "value": 110.0
+    },
+    {
+      "name": "contact_hp_divisor",
+      "address": "0xb6aafc",
+      "bytes": "0000c842",
+      "value": 100.0
+    },
+    {
+      "name": "contact_log_gain",
+      "address": "0xb6aa1c",
+      "bytes": "00000442",
+      "value": 33.0
+    },
+    {
+      "name": "friendly_contact_scale",
+      "address": "0xb6a38c",
+      "bytes": "0000803e",
+      "value": 0.25
+    },
+    {
+      "name": "friendly_contact_cap",
+      "address": "0xb6a8a0",
+      "bytes": "00006040",
+      "value": 3.5
+    },
+    {
+      "name": "ordinary_projectile_npc_bonus",
+      "address": "0xb6a8f4",
+      "bytes": "0000a040",
+      "value": 5.0
+    }
+  ],
+  "imports": [
+    {
+      "address": "0xa06548",
+      "name": "_libm_sse2_log_precise",
+      "dll": "api-ms-win-crt-math-l1-1-0.dll"
+    }
+  ],
+  "referenced_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/source/manifest.json",
+      "sha256": "77f5046ad3b193e9af08e7174f2848673b73c51435aac49a9c8ad514e914f7e1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/manifest.json",
+      "sha256": "d0ec43dd8bc1413c9cfb9203920ee345e38b0603b3de2a7673ed8fcd1738be7a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/headless/source/controller.asm",
+      "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/npc_collision.asm",
+      "sha256": "422ee691e5a72d26aa1809a462b9b57e27f532b6fd6bf17d03f1b4f11c80dba7"
+    }
+  ],
+  "findings": [
+    {
+      "id": "duration",
+      "evidence": [
+        "add_charmed",
+        "lua_registration",
+        "expiry"
+      ],
+      "contract": "The registered AddCharmed function is 685510. Positive adjusted duration assigns max(old timer21c, new duration), without the additive120/150-frame status cap. It sets CHARM0x100. Expiry decrements21c, clears CHARM and clears cached target31c. Existing FRIENDLY0x20000000 makes application return immediately."
+    },
+    {
+      "id": "permanent",
+      "evidence": [
+        "add_charmed",
+        "can_shut_doors"
+      ],
+      "contract": "Negative adjusted duration sets CHARM|FRIENDLY0x20000100 and zeroes timer21c; it does not use abs(duration). Eligible NPCs are registered in the room persistent entity collection. CanShutDoors tests the ordinary door predicate and excludes FRIENDLY, not temporary CHARM. Transfer serialization and floor lifetime still need separate review."
+    },
+    {
+      "id": "targeting",
+      "evidence": [
+        "get_player_target",
+        "target_candidates",
+        "can_target",
+        "source_poll"
+      ],
+      "contract": "For ordinary CHARM actors, GetPlayerTarget polls every15 global updates staggered by entity index, or whenever cached target31c is null. It searches within5000 native units. Candidate selection excludes self/common-parent bodies, very recent births (age<=1), dead/removed or unsuitable collision classes, FRIENDLY and NO_TARGET, plus explicit type exceptions. It minimizes planar distance squared plus160000 for a CHARM candidate; another temporarily charmed NPC is penalized, not categorically excluded. No LOS test occurs in this selector. Without a candidate it uses the existing player/decoy/retaliation fallback, ultimately the first player. Source poll684790 itself respects Freeze and the global stopping condition; do not replace it with an unconditional timer."
+    },
+    {
+      "id": "projectile_flags",
+      "evidence": [
+        "projectile_owner_flags",
+        "projectile_collision"
+      ],
+      "contract": "Factory6a179a maps owner CHARM to HIT_ENEMIES0x80 and independently maps FRIENDLY to CANT_HIT_PLAYER0x80000000. Projectile6378a0 skips the player for CANT_HIT_PLAYER. The NPC branch skips FRIENDLY targets when CANT_HIT_PLAYER is set; HIT_ENEMIES permits ordinary NPC targets. The parent identity check63800b prevents hitting the shooter. Other native special types/flags have additional branches."
+    },
+    {
+      "id": "projectile_npc_damage",
+      "evidence": [
+        "projectile_collision"
+      ],
+      "contract": "For ordinary projectile variants,63848c loads projectile CollisionDamage2e0 and adds5 native HP before NPC TakeDamage, with damage flags0 and countdown30. Variant8 has a separate fixed35-HP branch. This is distinct from player damage. Do not reuse DeathWard player-target shot damage or convert an NPC shot into a player AttackSpec. Exact factory defaults, unit conversion, owner-death ancestry lifetime and companion incoming scaling remain integration work."
+    },
+    {
+      "id": "contact",
+      "evidence": [
+        "npc_contact_damage",
+        "contact_cache_reset",
+        "contact_cache_clear",
+        "contact_log",
+        "contact_log_thunk"
+      ],
+      "contract": "Ordinary active NPC contact can damage when CHARM differs, or when the other body is the cached target31c/retaliation targete88. Positive source contact damage is required. A per-source entity set deduplicates hits and is cleared by the staggered3-update source poll. Damage is ln((sourceMaxHP+110)/100)*33 in native HP. For a FRIENDLY recipient it becomes min(damage*.25,3.5). The native log wrapper resolves to _libm_sse2_log_precise. Existing DeathWard companion damage/cadence must not be assumed to implement this formula."
+    },
+    {
+      "id": "player_contact",
+      "evidence": [
+        "npc_friendly_contact_gate",
+        "entity_ref",
+        "player_damage_friendly_gate"
+      ],
+      "contract": "The reviewed NPC collision gate exempts FRIENDLY bodies from player/familiar contact. EntityRef snapshots CHARM as bit1 and FRIENDLY as bit2. Player TakeDamage73cb34 rejects bit2, not bit1. These paths do not establish blanket player safety for temporary CHARM. Ordinary player collision, item-specific protection and producer attribution require integration tests; static inspection here is not an Isaac gameplay recording."
+    }
+  ],
+  "supplementary_api": [
+    {
+      "url": "https://wofsauge.github.io/IsaacDocs/rep/Entity.html#addcharmed",
+      "note": "Documents duration in frames and -1 permanent room-following. Current API documentation is supplementary; installed binary defines this baseline. Its general friendly wording is not a substitute for collision/flag review."
+    },
+    {
+      "url": "https://wofsauge.github.io/IsaacDocs/rep/enums/ProjectileFlags.html",
+      "note": "Names HIT_ENEMIES as1<<7 and CANT_HIT_PLAYER as1<<31; independently checked in native factory and collision paths."
+    }
+  ],
+  "open_work": [
+    "Implement temporary Charm and permanent conversion as distinct states for these five only. No new roster entries or blanket friendly toggle.",
+    "Review permanent room/floor transfer, restoration/removal and native retaliation ownership before claiming full Charm support.",
+    "Resolve target-aware Gaper pursuit, Horf acquisition/Shoot aim, Fear/Shrink evasion and Confusion precedence. Headless wandering must remain wandering.",
+    "Preserve shot affiliation when emitted/selected, native NPC projectile damage and parent exclusions. Keep player item builds out of NPC projectiles.",
+    "Review NPC damage/retaliation and implement source contact cadence with bounded queue admission, correct HP conversion and recipient scaling.",
+    "Test expiry/reapplication, Freeze/Slow, null/dead targets, morphs, room clear/storage/transfer, projectile lifetime and simultaneous status changes at30/60/120Hz.",
+    "Validate external configuration, native Original-style cues, mixed-room readability, balance and rendered performance. WASM remains skipped."
+  ]
+}

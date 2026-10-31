@@ -1,0 +1,37 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Gapers.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_gaper_tests
+[100%] Building CXX object CMakeFiles/deathward_gaper_tests.dir/tests/gaper_tests.cpp.o
+[100%] Linking CXX executable deathward_gaper_tests
+[100%] Built target deathward_gaper_tests
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests
+[ 17%] Built target glfw
+[ 20%] Built target raylib
+[ 96%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[ 96%] Building CXX object CMakeFiles/deathward_mechanics_tests.dir/tests/mechanics_tests.cpp.o
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_replacement_tests
+[ 95%] Building CXX object CMakeFiles/deathward_replacement_tests.dir/tests/replacement_tests.cpp.o
+[100%] Linking CXX executable deathward_replacement_tests
+[100%] Built target deathward_replacement_tests
+[ 14%] Built target glfw
+[ 17%] Built target raylib
+[ 80%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_particles
+[ 82%] Built target deathward_cloth
+[ 88%] Built target deathward_skinning
+[ 88%] Built target deathward_particles
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward

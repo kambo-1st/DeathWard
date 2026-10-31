@@ -1,0 +1,3 @@
+NATURAL_GAPER variant=1 seed=0 floor=0 room=3
+NATURAL_GAPER variant=2 seed=1 floor=0 room=2
+NATURAL_GAPER variant=0 seed=2 floor=0 room=2

@@ -1,0 +1,21 @@
+DeathWard: http://127.0.0.1:8098
+127.0.0.1 - - [26/Oct/2026 23:40:53] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-13.0.0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:40:53] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:40:53] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:40:53] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:04] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-14.0.0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:04] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:04] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:04] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:14] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-13.0.0&enemy-terrain=dung&enemy-hit=220%3A100 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:14] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:14] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:14] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:24] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-13.0.0&resident-seed=1&resident-floor=0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:24] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:24] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:24] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:33] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-14.0.0&resident-seed=0&resident-floor=0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:34] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:34] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 23:41:34] "GET /index.wasm HTTP/1.1" 200 -

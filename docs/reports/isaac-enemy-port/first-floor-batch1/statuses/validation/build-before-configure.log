@@ -1,0 +1,17 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp: In static member function ‘static std::shared_ptr<const dw::MechanicsLibrary> dw::MechanicsLibrary::load(const std::filesystem::__cxx11::path&)’:
+/home/kambo/workspace/DeathWard/src/content/Mechanics.cpp:2447:32: error: ‘class std::vector<dw::MonsterDefinition>’ has no member named ‘contains’
+ 2447 |         require(lib->monsters_.contains(id)&&
+      |                                ^~~~~~~~
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:90: CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:459: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:4165: CMakeFiles/deathward_enemy_status_tests.dir/rule] Error 2
+gmake: *** [Makefile:1994: deathward_enemy_status_tests] Error 2

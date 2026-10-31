@@ -1,0 +1,41 @@
+{
+  "status": "Scoped Linux fix verified; does not supersede the frozen Danny checkpoint or complete any port.",
+  "problem": "Danny used unit() for target normalization; zero input returned{0,0,-1}, inventing a forward direction at exact overlap.",
+  "fix": "Normalize a nonzero planar delta and preserve a zero delta. Both projectiles and real thrown offspring share the corrected aim.",
+  "source": [
+    "source/normalize_vector.asm",
+    "../danny/source/controller.asm:4e9624..4e9648"
+  ],
+  "verification": {
+    "command": "cmake --build build --target deathward_danny_tests -j4 && ./build/deathward_danny_tests",
+    "before_fix_exit_code": 1,
+    "before_fix_failure": "FAIL coincident target adds scatter only, without an invented aim direction",
+    "after_fix_exit_code": 0,
+    "after_fix_output": [
+      "COINCIDENT_TARGET scatter_only=1 vertical_children=1 both_variants=1",
+      "TIMING natural=1 Shoot12=1 Attack38=1 delay150=1 live_children=2 rocks=4 late_aim=1",
+      "OWNERSHIP morph_keeps_slot=1 replacement=1 independent_parents=1",
+      "COAL live1_hot3=1 capped_hot4=1 replenish=1",
+      "LIMITS source_room9=1 damage_response=1 retained=1 completion=1 partition=1",
+      "CONFIG snapshots=1 invalid_contracts=4",
+      "PASS Danny family"
+    ],
+    "fixture": "Enter the firing source tick at exact overlap before collision separation. Retain projectile payloads using zero projectile capacity; inspect real offspring velocities. Existing generic offspring clearance may still displace their birth positions."
+  },
+  "scope_limits": [
+    "Only Danny/Coal Boy aim normalization changed; shared unit() semantics unchanged.",
+    "WASM binary and browser validation were not refreshed for this incremental fix.",
+    "Native generic offspring-clearance displacement remains an explicit fidelity gap.",
+    "Persistent SpawnerType906 lifetime handling remains open."
+  ],
+  "files": [
+    {
+      "path": "src/combat/Dannies.cpp",
+      "sha256": "b8e46d0aceeb456fb47f940f77994ae6107196739706b8e1e4e0606afc020160"
+    },
+    {
+      "path": "tests/danny_tests.cpp",
+      "sha256": "5357fa259a2af2f52fd4ff42b34f8033a84ff09a5eb0e5e99ab48a14d9718dd9"
+    }
+  ]
+}

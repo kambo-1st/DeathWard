@@ -1,0 +1,3 @@
+DOT_TIMING all_five=1 poison_and_burn=1 rates_30_60_120=1 expiry_before_tick=1 six_ticks=1
+DOT_REAPPLY cap=1 extended=1 phase=1 strongest_damage=1 source_floor=1 source_snapshot=1
+damage-status subdivision cannot shift initial Horf global acquisition phase

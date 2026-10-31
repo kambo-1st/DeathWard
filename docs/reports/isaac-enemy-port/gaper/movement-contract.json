@@ -1,0 +1,58 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "status": "Seven selected Linux suites, a 753-floor regression, seven current WASM movement scenarios and six current WASM mortality scenarios pass. Visual review remains partial; no complete-port claim.",
+  "records": [
+    "10.0.0",
+    "10.1.0",
+    "10.2.0"
+  ],
+  "source": [
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/movement-manifest.json",
+      "sha256": "ef0a48d900a7e55c273925234c54ff7411831852137de62cd33f288f2689e379"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/animations/manifest.json",
+      "sha256": "2f5c024af60202825c8c5bab4818b3612dfad0f27e67cdca853bb810c1d01b1b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/manifest.json",
+      "sha256": "7788f1af2804fc8812aed8635af5e03c8c9e3fb4a8f98d09e3cf90f294d70d6d"
+    }
+  ],
+  "behavior": {
+    "health": "Source10/10/9, zero stage increment; DeathWard3.2 conversion gives32/32/28.8HP.",
+    "movement": "Source30Hz impulse plus retained momentum. Ordinary force.498, Flaming.5478, Frowning.6 then.72. Moving path retains.7, impulse gains min(nativeDistance*.1,2). Within1native unit retain.5; zero/no-route retains.85. First update moves. World routing refreshes at1.1seconds and when its next segment becomes blocked; corner advancement requires full-body clearance to the following segment.",
+    "targeting": "Player position routed through actual DeathWard ground navigation and body avoidance. Direct traversable ground path supplies the native pathfinder flag analogue.",
+    "frowning": "Starts Head frame0 paused. First direct path starts Head, next positive overlay frame increases force. Head20frames nonlooping; never closes on renewed occlusion. Runtime persists across room re-entry.",
+    "animation": "WalkHori/Vert22-frame30FPS loop; speed below native.1 holds frame0. Ordinary Head1frame, Flaming12loop. Existing Original geometry retained; Frowning eye opening drawn from actual runtime.",
+    "damage": "Contact base10, then existing global EnemyDamageMultiplier1.25 ->12.5actual playerHP. Player100HP/24shot damage unchanged. All three take Flame/Burning damage; no ignition morph, invented fire trail or ranged attack.",
+    "mortality": "Existing same-entity weighted source mortality retained; morph clears Gaper animation/controller before initialized Gusher/Pacer controller starts."
+  },
+  "external_profile": "gaper <id> <frowning> <scale> <force> <awake-force> <retention> <blocked-retention> <arrival-retention> <distance-gain> <max-gain> <arrival-distance> <stop-speed> <contact-base-damage> <head-frames> <walk-frames>",
+  "configuration": "assets/mechanics/gapers.mechanics; immutable validated content snapshots, existing simulations retain old snapshot.",
+  "placement": {
+    "ordinary_frowning": "Opening Washes/Quarry bands 0..1; authored weights 2 for ordinary and 1 for Frowning, derived from Basement/Cellar/Downpour/Dross template presence, not source spawn probabilities.",
+    "flaming": "Both parents replace with60percent Flaming only in Scorched Washes, the explicit Burning Basement analogue. Pinned Gaper wiki revision270042 infobox supplies conditional odds.",
+    "limits": "Special Chest/Void/Greed/Ascent contexts and dedicated production paths are not granted unrestricted late-floor pools; full placement coverage remains open."
+  },
+  "adaptations": [
+    "Native40pixel cells and PathMarker900 adapt to DeathWard navigation, waypoint advancement and physical collision. No exact Isaac route or PRNG identity claim.",
+    "Existing .6 body radius and shared crowd separation retained. Native mass5/contact collision is not yet exact.",
+    "Stun uses existing DeathWard interruption rules. Full native fear, confusion, shrink, charm/control, champions and slow-clock effects remain open.",
+    "Original low-poly meshes adapt sprite-based head/walk animation; no copied source sprite artwork.",
+    "Force conversion gives higher maximum pursuit speeds than provisional fixed-speed actors; full balance acceptance is open.",
+    "Stronger basic replacement costs preserve at least two ordinary support actors by reserving their remaining cost in the room composer."
+  ],
+  "validation": {
+    "source": "validation/movement-source-check.log; source bytes/constant evidence only",
+    "linux": "movement-native-summary.json",
+    "wasm": "movement-browser-summary.json",
+    "earlier_mortality": "morph-browser-summary.json validates old25efabc006603172, not this update",
+    "native_visuals": "movement-visual-review.json"
+  },
+  "remaining": [
+    "Full status/control/champion/slow-clock and save-state fidelity.",
+    "Complete source placement coverage, crowded readability, balance and controlled performance."
+  ]
+}

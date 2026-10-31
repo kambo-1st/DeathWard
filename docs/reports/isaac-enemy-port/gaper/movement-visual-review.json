@@ -1,0 +1,38 @@
+{
+  "result": "partial_pass",
+  "mechanics_fingerprint": "ec8492eb3ee9db9",
+  "captured_binary_sha256": "68cd2369508bfca5621a0241c35a25d081eb7c73465a41dba3f90403b55d27af",
+  "scope": "Four native Original-style captures; taken after final movement corner correction and visual treatment, before independent encounter support-budget fix. This is presentation evidence, not floor-composer validation.",
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/native-final/frowning-closed.png",
+      "bytes": 1641347,
+      "sha256": "fdfaad9819b220c8b7e59362772d734c9dcf246cc2ddaf2e314f84b746984cc9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/native-final/frowning-open.png",
+      "bytes": 1568706,
+      "sha256": "8db9f53fc49798ab57f2420fd359f5ce068c0815da7f66ab70fecada4db72fce"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/native-final/ordinary-walking.png",
+      "bytes": 1670620,
+      "sha256": "dc99bceff863dc9b331aba75d14a94180eeb7e369456114741855c1dd7a01806"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/native-final/flaming-walking.png",
+      "bytes": 1670488,
+      "sha256": "ae4cf0c4f48b866d64184b482d4f51864efeb47321af1d742658bbe90d2ee972"
+    }
+  ],
+  "observations": [
+    "Closed and opened Frowning facial states are visible, but eye details are small at gameplay zoom. Closed capture partly overlaps a decorative post and needs a clearer later comparison.",
+    "Ordinary/Frowning share flesh material; Flaming uses a charred material and visible animated orange/yellow flame crown outside the head silhouette.",
+    "All use existing Original low-poly geometry and shadows. Source sprite shape/animation is adapted, not pixel-identical."
+  ],
+  "not_accepted": [
+    "crowded combat and color-vision readability",
+    "exact source audiovisual parity",
+    "controlled performance; displayed short-capture FPS under concurrent compilation is not a benchmark"
+  ]
+}

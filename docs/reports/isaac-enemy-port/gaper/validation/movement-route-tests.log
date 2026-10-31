@@ -1,0 +1,38 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/4 Test  #2: mechanics_content ................***Failed   11.11 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+invalid definition not diagnosed: single-actor basic
+
+    Start 30: monster_behaviors
+2/4 Test #30: monster_behaviors ................***Failed    6.12 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 207 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=-0.567965 z=1.10507 waypoints=2 waypoint=-0.32,1.32
+GROUND_PASSAGE type=10.1 entity=45 x=-0.988745 z=8.43311 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=46 x=1.00398 z=8.38435 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=47 x=0.90137 z=1.14501 waypoints=2 waypoint=0.32,1.32
+GROUND_PASSAGE type=10.1 entity=48 x=-0.0880309 z=6.92491 waypoints=1 waypoint=0,8
+FAIL: ground steering allows every pursuer through a narrow opening
+
+    Start 53: monster_replacements
+3/4 Test #53: monster_replacements .............   Passed    3.01 sec
+    Start 82: gaper_family
+4/4 Test #82: gaper_family .....................   Passed    0.59 sec
+
+50% tests passed, 2 tests failed out of 4
+
+Total Test time (real) =  20.84 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+	 30 - monster_behaviors (Failed)
+Errors while running CTest

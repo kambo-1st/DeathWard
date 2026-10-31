@@ -1,0 +1,188 @@
+[
+  {
+    "name": "frowning-fear",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-status",
+      "1",
+      "fear",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "65",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/native/final/frowning-fear.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "298771eb3e5d8ad26b47b7bf001aa6403d8f4812e68189cb036b49d62144dd0d",
+    "image_sha256": "c5aa12bb06ef571b18d519b182780157214d34e463d83380c276b45835ac0807",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=fear duration=120",
+      "ENEMY_PROBE id=10.0 frames=65 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.0 hp=32 max_hp=32 state=0 owner=0 x=-88.4265 y=0.85 z=-123.459 radius=0.6 speed=11.7709 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=88 confusion_frames=0"
+    ]
+  },
+  {
+    "name": "gaper-confusion",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-status",
+      "1",
+      "confusion",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "65",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/native/final/gaper-confusion.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "298771eb3e5d8ad26b47b7bf001aa6403d8f4812e68189cb036b49d62144dd0d",
+    "image_sha256": "598b1e62583d2c45b02a8fddb117f85fa2ae02558368d56f4f274114cd9629ae",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=confusion duration=120",
+      "ENEMY_PROBE id=10.1 frames=65 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-82.318 y=0.85 z=-125.636 radius=0.6 speed=7.85272 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=88"
+    ]
+  },
+  {
+    "name": "gusher-fear",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.0.0",
+      "--enemy-status",
+      "1",
+      "fear",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "65",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/native/final/gusher-fear.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "298771eb3e5d8ad26b47b7bf001aa6403d8f4812e68189cb036b49d62144dd0d",
+    "image_sha256": "d85237c29df5abb7de204e9a2a3c517e424aaa6e87e7c52a34c2037b418c91d2",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=fear duration=120",
+      "ENEMY_PROBE id=11.0 frames=65 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.0 hp=32 max_hp=32 state=0 owner=0 x=-87.4046 y=0.85 z=-128.081 radius=0.6 speed=8.05799 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=88 confusion_frames=0"
+    ]
+  },
+  {
+    "name": "pacer-confusion",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.1.0",
+      "--enemy-status",
+      "1",
+      "confusion",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "65",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/native/final/pacer-confusion.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "298771eb3e5d8ad26b47b7bf001aa6403d8f4812e68189cb036b49d62144dd0d",
+    "image_sha256": "f68308f5b9e6628a2a6daccaf3935c67477f04db0edc474d8046268598c3dcf6",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=confusion duration=120",
+      "ENEMY_PROBE id=11.1 frames=65 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.1 hp=32 max_hp=32 state=0 owner=0 x=-83.6659 y=0.85 z=-127.677 radius=0.6 speed=5.40971 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=88"
+    ]
+  },
+  {
+    "name": "horf-confusion",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "confusion",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "65",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/native/final/horf-confusion.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "298771eb3e5d8ad26b47b7bf001aa6403d8f4812e68189cb036b49d62144dd0d",
+    "image_sha256": "0aaed921d48c13500dda5166ad096017ddd7c07def3f36f8c767c1031d9c94e5",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=confusion duration=120",
+      "ENEMY_PROBE id=12.0 frames=65 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=88"
+    ]
+  },
+  {
+    "name": "horf-fear",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "fear",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "65",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/native/final/horf-fear.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "298771eb3e5d8ad26b47b7bf001aa6403d8f4812e68189cb036b49d62144dd0d",
+    "image_sha256": "94f66bf0110836977b8e5bd4fbc9a3af5946c21bebcb75425f5d8b8bcaf5db4b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=fear duration=120",
+      "ENEMY_PROBE id=12.0 frames=65 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=88 confusion_frames=0"
+    ]
+  }
+]

@@ -1,0 +1,156 @@
+{
+  "passed": 37,
+  "failed": 0,
+  "basis": "36/37 passed the full run. The remaining floor-progression case passed after expanding to 32 seeds/128 floors; current content-validation and expanded formation fixtures also pass. Logs retain initial failures.",
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "mechanics_content": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-content-tests.txt"
+    },
+    "expedition_economy": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "canyon_bosses": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "item_builds": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "expedition_destruction": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "walkable_areas": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "expedition": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "expedition_pacing": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "flag_cloth": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "save_slots": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "arrival_quest": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "cinematic_timeline": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "canyon_roads": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "canyon_rivers": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "redstone_hub": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "building_navigation": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "particle_emission": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "town_characters": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "ambient_animals": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "train_motion": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "object_animation": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "player_dynamite": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "mission_shop": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "money_pickups": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "resident_enemies": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "audio_presentation": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "monster_behaviors": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "monster_flight": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "monster_formations": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "mission_themes": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "imported_town_navigation": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "core_contracts": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "enemy_behaviors": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "generated_dungeons": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "generated_room_graphs": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-tests.txt"
+    },
+    "floor_progression": {
+      "result": "passed",
+      "log": "docs/reports/isaac-enemy-port/formations/native-targeted-tests.txt"
+    }
+  },
+  "formation_fixture": "docs/reports/isaac-enemy-port/formations/formation-behavior.txt"
+}

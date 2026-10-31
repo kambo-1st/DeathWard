@@ -1,0 +1,76 @@
+{
+  "verified_utc": "2026-10-28T19:28:13.114600+00:00",
+  "result": "partial_pass",
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "zoom_percent": 160,
+  "binary_sha256": "9e47f5ab9b70988596cd581fc6d069f83127da21353aaa8c28da2d3d2f7b468f",
+  "captures": [
+    {
+      "name": "frowning-poison",
+      "image": "native/verified/frowning-poison.png",
+      "image_sha256": "4782dc5be3f9e9e12a25d5a829526ad9336aa9b2555bce402270ebf1f4d05117",
+      "inspected": true,
+      "findings": "Green tint and two separated bubbles visible; face and upright silhouette remain recognizable beside the player."
+    },
+    {
+      "name": "gaper-burn",
+      "image": "native/verified/gaper-burn.png",
+      "image_sha256": "b09efdc447ea3285c24339b68c6d75cab5457471ab96e9897a6315526bf34924",
+      "inspected": true,
+      "findings": "Orange tint and two flame-shaped side cues visible outside the head/body. Warm-ground contrast is weaker than the poison green."
+    },
+    {
+      "name": "gusher-poison",
+      "image": "native/verified/gusher-poison.png",
+      "image_sha256": "cde17b0d335940f4d1f0c26cce89a52b6598747f272968dc758b38f09b933b72",
+      "inspected": true,
+      "findings": "Green bubbles remain separate from the central red blood spray and headless silhouette; no airborne attack was emitted by this capture frame."
+    },
+    {
+      "name": "pacer-burn",
+      "image": "native/verified/pacer-burn.png",
+      "image_sha256": "28a92935f4dd30f177039ffa43c67468d6cedb26674bb284f62ee089d0ba442e",
+      "inspected": true,
+      "findings": "Headless body and side flames visible without hiding the neck or arms. Flame shapes are deliberately simple at this scale."
+    },
+    {
+      "name": "horf-poison",
+      "image": "native/verified/horf-poison.png",
+      "image_sha256": "61baf66890433eee4c8ae629cef2042f82c28f05ef5c499bcc253f29e01295a9",
+      "inspected": true,
+      "findings": "Green skull and separated poison bubbles visible; aimed red projectile, projectile shadow and aim line remain distinct."
+    },
+    {
+      "name": "horf-burn",
+      "image": "native/verified/horf-burn.png",
+      "image_sha256": "ad80ed7630113cc563d3a61d6ebec1a53c926cfd5b7b1661d53e360aee16d1ea",
+      "inspected": true,
+      "findings": "Orange skull and enlarged side flames visible; the separate aimed projectile remains readable."
+    },
+    {
+      "name": "gaper-freeze-burn",
+      "image": "native/verified/gaper-freeze-burn.png",
+      "image_sha256": "2d9cd350a7d53d0197c1ac691c5cffd0ae3e68493f55d924a1fff02004cd0149",
+      "inspected": true,
+      "findings": "Blue body and central frost glyph retain Freeze priority; orange side flames remain visible outside the held silhouette. Probe records both durations and reducedHP."
+    },
+    {
+      "name": "horf-recovered",
+      "image": "native/verified/horf-recovered.png",
+      "image_sha256": "3fba01b33d284ecccc9a7110492a301d31e5a1d13af9f48a50f9f63b31d2caf2",
+      "inspected": true,
+      "findings": "Poison tint/bubbles removed; original pale skull, current shot and windup cue remain visible. Probe records poison_frames=0."
+    }
+  ],
+  "iteration": "Eight initial native captures showed side cues merging with Gaper/Horf bodies, especially under Freeze. Enlarged and moved cues outward. Intermediate cue-review captures are retained; all eight verified captures use the final build after the Horf timing fix.",
+  "limitations": [
+    "Isolated fixtures at one camera angle; mixed-room, occlusion, color-vision and varied-zoom acceptance remain open.",
+    "Burn uses small stylized cone flames; warm ground still reduces contrast. These are original status cues, not a full particle-art acceptance pass.",
+    "Thirty-frame smoke captures demonstrate appearance and probes, not controlled rendered performance. Their FPS display is not a benchmark.",
+    "Still images cannot establish animation cadence, frozen movement or full fight balance; automated tests provide the scoped behavior evidence."
+  ]
+}

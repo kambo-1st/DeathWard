@@ -1,0 +1,20 @@
+{
+  "verified_utc": "2026-10-28T18:36:48.853745+00:00",
+  "result": "partial_progress",
+  "previous_goal_turn_classification": "no_progress: answered the user’s quick roster question and restated the existing priority; this turn implemented and validated ordinary Freeze.",
+  "mechanics_fingerprint": "fdb13e137f49c8c6",
+  "counts": {
+    "in_progress": 200,
+    "missing": 423,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native-summary.json",
+  "next_work": [
+    "Continue only this first-five cohort. Implement Slow with separate source clock, movement/force/friction and animation behavior; source evidence is preserved in source/manifest.json. Do not treat AddSlowing strength304 as an arbitrary ordinary-NPC time scale or just halve controller dt.",
+    "Finish other applicable Shrink/Charm/control and damaging statuses plus item-source/duration interfaces. Ordinary Freeze is not Midas or Ice; boss and linked-entity status rules are not claimed here.",
+    "Resolve applicable champion and knockback production/mass interactions, then finish mixed-room readability/occlusion, varied-build/terrain balance and controlled rendered performance before batch2. Preserve existing work, park roster expansion and skip WASM."
+  ],
+  "live_jobs": "All builds, tests and native captures completed."
+}

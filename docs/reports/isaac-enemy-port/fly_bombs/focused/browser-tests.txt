@@ -1,0 +1,4 @@
+PASS WASM fly-bomb-pursuit: contact/death ordnance and owner lifecycle
+PASS WASM fly-bomb-death: contact/death ordnance and owner lifecycle
+PASS WASM eternal-fly-bombs: contact/death ordnance and owner lifecycle
+PASS WASM resident-fly-bomb: contact/death ordnance and owner lifecycle

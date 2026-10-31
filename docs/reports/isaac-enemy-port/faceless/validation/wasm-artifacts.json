@@ -1,0 +1,14 @@
+{
+  "index.js": {
+    "sha256": "9c8f2f8d6f95818db3e8e0bd996d5c9bf709d11aad7a1f6a510126f70996a461",
+    "gzip_matches": true
+  },
+  "index.wasm": {
+    "sha256": "a8028e3c952b1e7b9a2e85a9416a7013c0e84c8144a5a64b8f1e23d27d53f9c4",
+    "gzip_matches": true
+  },
+  "index.data": {
+    "sha256": "b9f60a239df419cae313d68add43e85f37522a18667f8d138ad34d4ca55af733",
+    "gzip_matches": true
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "status": "Dedicated controllers and nine scoped Linux suites, four production WASM scenarios and eight inspected native/browser images; full six-gate acceptance remains open.",
+  "ids": [
+    "827.0.0",
+    "827.1.0"
+  ],
+  "source": [
+    "source/manifest.json",
+    "source/helpers-manifest.json",
+    "source/morph-manifest.json",
+    "source/records.json",
+    "source/wiki.json",
+    "animations/manifest.json"
+  ],
+  "implemented": [
+    "External movement/attack/death profiles and validated immutable content snapshots.",
+    "30Hz passive wander, damage/proximity/neighbor aggression latch and path pursuit continuing during Attack.",
+    "Ordinary damage-dependent chance; Tainted continuous attacks when aggressive. No invented range or LOS firing gate.",
+    "Fixed radial six-shot pattern at source Shoot9/12, with Tainted scale1.3 and falling-acceleration modifier-0.06.",
+    "Ordinary50percent same-entity Gusher/Pacer replacement,2:1conditional weighting, strict native-25HP overkill cutoff. Tainted and debug execution excluded.",
+    "Exact selected projectiles retained through capacity saturation, death and morph.",
+    "Tainted shared adaptive armor strength20; original creator type preserved separately from live parent and carrier.",
+    "Distinct eyeless facial cavity, Tainted color/head-size difference, cosmetic ground blood marks and no misleading aimed-attack warning line."
+  ],
+  "adaptations": [
+    "SourceHPx3.2:64/320; source contactx10:10/20 before shared game multiplier.",
+    "Planar unitsx.1 and speedx3; local body radius.6 matches both existing headless replacement footprints.",
+    "Projectile speed21/24, birth height1.15, radius.22/.286, damage10, life8, up4.5, gravity4.5/1.8 and vertical retention.9.",
+    "Bounded cosmetic blood marks use radius.1..35 and8second lifetime; no collision/damage.",
+    "DeathWard pathfinding, crowd separation and stun handling remain shared adaptations.",
+    "Ordinary Quarry/late pursuit pools; source Ascent-only Tainted deliberately mapped to rare late-band specialist.",
+    "Existing Gusher/Pacer behavior/HP initialization remains provisional; it is an explicit dependency gap, not a parity claim."
+  ],
+  "corrections_to_old_review": [
+    "Ordinary aggression alone does not override firing chance; recent damage drives the increased probability. Tainted aggression does override it to1.",
+    "The random helper68d7b0 is cosmetic blood, not sound.",
+    "Native SpawnerType906 is persistent creator attribution.",
+    "The same-entity morph helper directly preserves creator type and position, but virtual initializer status effects remain unreviewed."
+  ],
+  "open": [
+    "Fear/confusion/charm/control/champion/status/item interactions and native field+32c/+2f4 semantics.",
+    "Native mass/crowd response and serialized state fidelity.",
+    "Full Gusher/Pacer source controllers and morph initialization side effects.",
+    "Mounted Faceless passenger routing remains disabled pending full encounter-specific tests.",
+    "Linux/WASM final readability, balance and controlled performance acceptance."
+  ],
+  "validation": [
+    "native-summary.json",
+    "visual-review.json",
+    "browser-summary.json"
+  ],
+  "next": "Source-faithful Gusher/Pacer dependency implementation is underway; see ../headless/implementation-contract.json. New headless configuration changes future seeded pool witnesses."
+}

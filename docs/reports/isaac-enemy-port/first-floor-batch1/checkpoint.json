@@ -1,0 +1,23 @@
+{
+  "verified_utc": "2026-10-28T17:27:41.784015+00:00",
+  "result": "partial_progress",
+  "mechanics_fingerprint": "80f52693ea14c415",
+  "monster_definitions": 216,
+  "counts": {
+    "in_progress": 200,
+    "missing": 423,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/first-floor-batch1/native-summary.json",
+  "next_work": "Continue first-floor batch1 only: Frowning Gaper, Gaper, Gusher, Pacer and Horf. Horf/Gusher physics, source-based tests,32floor placement and eight mixed fights now pass; finish required shared status/champion interactions and remaining cohort visual/balance/rendered-performance acceptance before batch2. Keep new roster expansion parked and skip WASM.",
+  "live_jobs": "All builds, tests, source checks,12successful native captures and18CPU comparison trials completed.",
+  "validation_waivers": {
+    "visual_wasm": {
+      "authority": "user",
+      "instruction": "pursure goal - Skip WASM check!",
+      "date": "2026-10-28"
+    }
+  }
+}

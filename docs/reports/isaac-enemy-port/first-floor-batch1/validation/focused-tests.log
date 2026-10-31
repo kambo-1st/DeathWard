@@ -1,0 +1,22 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 34: source_projectile_motion
+1/4 Test #34: source_projectile_motion .........   Passed    0.25 sec
+    Start 74: horf_stationary_shooting
+2/4 Test #74: horf_stationary_shooting .........   Passed    0.80 sec
+    Start 86: gaper_family
+3/4 Test #86: gaper_family .....................   Passed    0.34 sec
+    Start 89: headless_family
+4/4 Test #89: headless_family ..................***Failed    0.08 sec
+MOVEMENT no_target=1 retention_before_impulse=1 grounded_cover=1 pacer_no_shots=1
+SHOTS initial20_39=1 reload40_59=1 decrement_branch=1 velocity_aim=1 zero_aim=1 lob_physics=1 no_los_gate=1
+FAIL retained shot preserves payload and dead-owner attribution
+
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =   1.47 sec
+
+The following tests FAILED:
+	 89 - headless_family (Failed)
+Errors while running CTest

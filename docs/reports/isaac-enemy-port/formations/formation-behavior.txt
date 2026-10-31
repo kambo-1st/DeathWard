@@ -1,0 +1,4 @@
+FORMATION slots=10 surviving_after_two_deaths=8 founder_independent=1 reentry=1
+FORMATION_TERRAIN cover_peak=2.85 contact_damage=12.5
+FORMATION_STARTING_KIT seconds=5.18333 health=100 kills=4
+PASS translating formations, stable slots, ownership, terrain, budgets and basic starting-kit encounter

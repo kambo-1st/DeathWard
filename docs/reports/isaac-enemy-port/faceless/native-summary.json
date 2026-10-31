@@ -1,0 +1,98 @@
+{
+  "status": "Nine scoped Linux suites pass and four final native captures inspected. Four production WASM scenarios subsequently passed at this207-definition fingerprint; see browser-summary.json.",
+  "mechanics_fingerprint": "de4d3f2edf6a893c",
+  "monster_definitions": 207,
+  "selected_suites": [
+    {
+      "name": "faceless_family",
+      "result": "pass",
+      "scope": "Focused Linux controller, morphology, saturation, source cadence, adaptive armor, immutable reload and invalid data contracts.",
+      "observations": [
+        "Aggression: passive, proximity, damage, neighbor spread, latched state and occluded target.",
+        "Shots: frame9/12, fixed six-way ring, distinct falling acceleration/radius, recent-damage probability and cost, no attack movement stop.",
+        "450 death seeds:220 replacements,149Gusher,71Pacer; exact overkill boundary and execution/Tainted exclusions.",
+        "Same entity, source creator and owner preserved; no premature kills, loot or room completion.",
+        "Retained volley survives death/morph and releases once; passive and active30/120Hz behavior agrees.",
+        "Original creator906 suppresses Danny/Faceless attacks after creator/carrier removal.",
+        "Tainted adaptive armor resolves damage before aggression; initialization tick is respected."
+      ]
+    },
+    {
+      "name": "danny_family",
+      "result": "pass",
+      "scope": "Full focused family suite including exact-overlap aim and real offspring creator attribution."
+    },
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "floor_resident_placement",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "resident_enemies",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "adaptive_armor",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "rail_passengers",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/regressions.log"
+    },
+    {
+      "name": "floor_progression",
+      "result": "pass",
+      "floors": 774,
+      "reachable_pool_identities": 132,
+      "reachable_statue_identities": 14,
+      "log": "validation/floor-progression.log",
+      "scope": "Seeded floor identities, threat grammar, safe resident geometry and canyon boss regression."
+    }
+  ],
+  "natural_witnesses": [
+    {
+      "id": "827.0.0",
+      "seed": 50,
+      "floor": 2,
+      "room": 3
+    },
+    {
+      "id": "827.1.0",
+      "seed": 11,
+      "floor": 4,
+      "room": 2
+    }
+  ],
+  "natural_log": "validation/natural-final.log",
+  "corrected_test_fixtures": [
+    "Tainted death-rule fixture isolates morphology from adaptive armor, which has its own real pending-batch test.",
+    "Armor-driven aggression is checked after the initial state setup tick.",
+    "Natural scan selects floor index by each seeded expedition length and band; it does not assume a sixth floor exists."
+  ],
+  "not_claimed": [
+    "Full source-status, charm/control/champion and native mass parity.",
+    "Completed child-controller fidelity.",
+    "Final visual/readability, balance or controlled performance acceptance.",
+    "Completed WASM validation at this checkpoint."
+  ],
+  "visual_review": "visual-review.json",
+  "wasm_build": {
+    "result": "pass",
+    "log": "validation/wasm-build.log",
+    "artifacts": "validation/wasm-artifacts.json"
+  },
+  "browser_summary": "browser-summary.json"
+}

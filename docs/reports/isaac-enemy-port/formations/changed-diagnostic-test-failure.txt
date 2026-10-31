@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 2: mechanics_content
+1/1 Test #2: mechanics_content ................***Failed    0.67 sec
+invalid definition not diagnosed: Encounter pool needs an unlimited positive-weight cost-1 basic
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.68 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+Errors while running CTest

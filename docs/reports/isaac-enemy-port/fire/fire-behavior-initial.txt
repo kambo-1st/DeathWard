@@ -1,0 +1,5 @@
+FIRE_TRANSFORM fraction=1 identity=1 owner=1 team=1 stun=1 no_reward=1 reentry=1
+FLOODED disables_transform=1 enables_fire_damage=1 local_room=1 actual_clear=1
+HOPPER flame_transforms=1 burning_damages=1 no_flood_exception=1
+FIRE_PROJECTILE channel_preserved=1
+ground fire does not ignite bodies above its vertical reach

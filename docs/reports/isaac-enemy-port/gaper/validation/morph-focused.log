@@ -1,0 +1,10 @@
+SOURCE_IMMUNITY channels=1 exceptions=1 execution=1
+SOURCE_LIFETIME dead_producer=1 allied_source=1 tnt=1
+LETHAL_MORPH same_id=1 stage_hp=1 capacity=1 no_reward=1 reentry=1 overkill=1
+LETHAL_CHANCE transformed=147 trials=1000 seeded=1 config=1
+GAPER_DISTRIBUTION variant=0 dead=583 pacer=186 gusher=431 trials=1200
+GAPER_DISTRIBUTION variant=1 dead=583 pacer=186 gusher=431 trials=1200
+GAPER_DISTRIBUTION variant=2 dead=583 pacer=0 gusher=617 trials=1200
+GAPER_MORPH same_entity=1 ownership=1 capacity=1 momentum=1 timer=1 source_draws=1 no_reward=1 reentry=1 overkill=1 execution=1
+GAPER_CONFIG invalid_contracts=9 immutable_reload=1
+MORTALITY_PASS

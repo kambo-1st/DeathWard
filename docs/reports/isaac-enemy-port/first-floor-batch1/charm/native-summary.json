@@ -1,0 +1,228 @@
+{
+  "verified_utc": "2026-10-28T20:34:15.104131+00:00",
+  "result": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "mechanics_fingerprint": "c8006956361ec3bb",
+  "monster_definitions": 216,
+  "new_enemy_records": 0,
+  "completed_records": 0,
+  "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+  "source": [
+    "source/manifest.json",
+    "source-runtime/manifest.json"
+  ],
+  "checks": [
+    {
+      "name": "source",
+      "command": [
+        "python3",
+        "scripts/isaac-reference/analyze-first-floor-charm.py",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "validation/source.log"
+    },
+    {
+      "name": "runtime-source",
+      "command": [
+        "python3",
+        "scripts/isaac-reference/analyze-first-floor-charm-runtime.py",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "validation/runtime-source.log"
+    },
+    {
+      "name": "mechanics",
+      "command": [
+        "./build/deathward_check_mechanics",
+        "assets/mechanics"
+      ],
+      "exit": 0,
+      "log": "validation/mechanics.log"
+    },
+    {
+      "name": "cli_rejections",
+      "cases": 3,
+      "report": "validation/cli-rejections.json"
+    }
+  ],
+  "native_tests": [
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "source_projectile_motion",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "monster_fire_reactions",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "companion_familiars",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "gaper_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_cohort",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_status_effects",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_freeze_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_damage_statuses",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_slow_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_shrink_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    },
+    {
+      "name": "first_floor_charm_effect",
+      "result": "pass",
+      "log": "validation/native-tests.log"
+    }
+  ],
+  "tests_scope": [
+    "All five: max-duration refresh, uncapped positive durations, exact expiry at30/60/120Hz, negative conversion rejection, retained room threat and modal pause.",
+    "Weighted target selection, dead/no-target fallback, native-age and common-parent exclusions,15-frame poll, physical cover and Gaper NPC pursuit.",
+    "Horf aim/NPC damage/player danger, independent projectile policy and player build, owner expiry/death, capacity-delayed Gusher snapshots, unchanged Pacer wandering.",
+    "Reciprocal max-HP contact curve,3-frame hit cache,30/60/120Hz cadence, retained pending damage, physical cover, player contact, swept crossing and Freeze cache behavior.",
+    "Fear target, Confusion suppression, Slow projectile inheritance, same-entity headless morph, inactive room storage, immutable external reload and nine rejected configuration contracts."
+  ],
+  "visual_report": "visual-review.json",
+  "captures": "native/captures.json",
+  "starting_kit": "Existing eight mixed fights pass with100HP/24damage;62.5-100HP remaining. No new Charm-granting player item was introduced.",
+  "placement": "Existing32seeded opening-floor checks pass across4-8floor run lengths;202legal residents cover the five identities.",
+  "initial_failure": {
+    "log": "validation/test-initial.log",
+    "cause": "Test asserted that an idle Horf updates its displayed aim to an out-of-range fallback player. Horf only updates that aim during acquisition/windup.",
+    "resolution": "Restricted that display assertion to Gapers; separate Horf projectile fixture verifies actual fallback targeting and player damage. No runtime behavior weakened."
+  },
+  "limitations": [
+    "Permanent conversion/followers unsupported; no record promoted.",
+    "No new item producer or related Betrayal integration.",
+    "Native special decoys/room flags and generic friendly incoming damage remain unported.",
+    "Long whole physics steps provide one swept contact sample, not all missing native inter-actor frames.",
+    "Broader visual/balance/rendered-performance and remaining interaction gates stay open."
+  ],
+  "runtime_files": [
+    {
+      "path": "src/combat/Charm.cpp",
+      "sha256": "6ce478e997fb54d739e846e3340a09eb2aefaf53e03687c1e667345bbbbcec60"
+    },
+    {
+      "path": "src/combat/EnemyStatuses.cpp",
+      "sha256": "fee69cec916601b6eb24aaa3ee769124b041522567c1863e41cbf9b3d1889970"
+    },
+    {
+      "path": "src/combat/Simulation.hpp",
+      "sha256": "e74e54acdd97e022c292521443bb15c1381863e0998ca56615c9264705a714c2"
+    },
+    {
+      "path": "src/combat/Simulation.cpp",
+      "sha256": "ab21c53e35a6999500cd52dc582d75fd95588d3f658461cb3774bea7fbec3f41"
+    },
+    {
+      "path": "src/combat/Gapers.cpp",
+      "sha256": "13006857654db9612f6744dbaaef0292e60621eec42554531c2d75b6eb0c27b4"
+    },
+    {
+      "path": "src/combat/HeadShooters.cpp",
+      "sha256": "d8a385ec74fd56d3ff1d40335083ae33f78c1118a0fa47ed8a3ec3872d4edba5"
+    },
+    {
+      "path": "src/combat/Headless.cpp",
+      "sha256": "17754bea94a812b8be3286918f73f04a0e226a16d173eccdf439f8560fc15337"
+    },
+    {
+      "path": "src/combat/Evaders.cpp",
+      "sha256": "767c6e9b24a6f31b44a1dc8a1e1de14e3350e778a3f694f6502bafb27641294c"
+    },
+    {
+      "path": "src/content/Mechanics.hpp",
+      "sha256": "a57cde15912796a86ee289ddb0532d6e505979c229327fe0107ad282a2be2578"
+    },
+    {
+      "path": "src/content/Mechanics.cpp",
+      "sha256": "fee901ca93ba9e17dd097759c5916c6ee1b77c0443f05646d0061abf4254ca81"
+    },
+    {
+      "path": "assets/mechanics/first_floor_statuses.mechanics",
+      "sha256": "53b6319beef0e1a4b84740e13240086e96a04a56ea8fc16aa6b9d57235730db3"
+    },
+    {
+      "path": "src/render/MonsterVisuals.hpp",
+      "sha256": "c4e94f2808a18c99c772e2e2d61fd77fe1c81a54d854c906e501b774e1dd4746"
+    },
+    {
+      "path": "src/main.cpp",
+      "sha256": "0426bf38a115b558c2a5fb597daaafe7b6ded5d34b4d23fa8ac07d108cb78fc6"
+    },
+    {
+      "path": "tests/enemy_charm_tests.cpp",
+      "sha256": "32dd3386da48320016f49466f577da63022e14b254eb1877ab71a9bd1d7b223b"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "5f6d52e25c6b7ac859f34730319a6fbf5d94882156ba53dcfe35adad99307a5e"
+    }
+  ],
+  "next_work": [
+    "Finish permanent negative-duration Charm/friendly conversion, native incoming damage and room/floor follower lifetime for the same first five. Temporary-only support is explicitly rejected for negative duration, not a substitute for completion.",
+    "Finish remaining applicable control/damaging statuses, item duration/producer interfaces and champion/knockback interactions. Native Betrayal-gated retaliation remains an item dependency, not unconditional Charm aggro.",
+    "Finish mixed-room Original-style readability/occlusion, varied-build/terrain balance and controlled rendered performance before batch2. Preserve existing implementations, park expansion, skip WASM."
+  ]
+}

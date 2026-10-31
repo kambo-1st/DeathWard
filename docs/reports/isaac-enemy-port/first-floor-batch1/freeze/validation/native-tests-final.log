@@ -1,0 +1,26 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  2: mechanics_content
+ 1/10 Test  #2: mechanics_content ..................   Passed    3.95 sec
+      Start 30: monster_behaviors
+ 2/10 Test #30: monster_behaviors ..................   Passed    7.95 sec
+      Start 51: monster_fire_reactions
+ 3/10 Test #51: monster_fire_reactions .............   Passed    0.39 sec
+      Start 71: source_immunity_and_lethal_morph
+ 4/10 Test #71: source_immunity_and_lethal_morph ...   Passed    1.38 sec
+      Start 74: horf_stationary_shooting
+ 5/10 Test #74: horf_stationary_shooting ...........   Passed    1.94 sec
+      Start 86: gaper_family
+ 6/10 Test #86: gaper_family .......................   Passed    0.75 sec
+      Start 89: headless_family
+ 7/10 Test #89: headless_family ....................   Passed    0.86 sec
+      Start 90: first_floor_cohort
+ 8/10 Test #90: first_floor_cohort .................   Passed    8.50 sec
+      Start 91: first_floor_status_effects
+ 9/10 Test #91: first_floor_status_effects .........   Passed    1.57 sec
+      Start 92: first_floor_freeze_effect
+10/10 Test #92: first_floor_freeze_effect ..........   Passed    1.70 sec
+
+100% tests passed, 0 tests failed out of 10
+
+Total Test time (real) =  29.00 sec

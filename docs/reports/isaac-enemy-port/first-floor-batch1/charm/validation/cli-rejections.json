@@ -1,0 +1,50 @@
+[
+  {
+    "name": "permanent-unsupported",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "charm",
+      "-1"
+    ],
+    "exit": 2,
+    "output": "--enemy-status needs FRAME fear|confusion|freeze|slow|poison|burn|shrink|charm DURATION (-18000..18000 source frames; Charm requires >=0; 0 removes); at most 64 events\n"
+  },
+  {
+    "name": "too-long",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "charm",
+      "18001"
+    ],
+    "exit": 2,
+    "output": "--enemy-status needs FRAME fear|confusion|freeze|slow|poison|burn|shrink|charm DURATION (-18000..18000 source frames; Charm requires >=0; 0 removes); at most 64 events\n"
+  },
+  {
+    "name": "wrong-scene",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--scene",
+      "combat",
+      "--enemy-status",
+      "1",
+      "charm",
+      "30"
+    ],
+    "exit": 2,
+    "output": "--enemy-status requires an isolated --smoke --scene enemy-ID capture\n"
+  }
+]

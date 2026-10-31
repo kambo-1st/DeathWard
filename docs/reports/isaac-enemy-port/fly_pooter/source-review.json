@@ -1,0 +1,35 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Ordinary Fly13.0 and normal-mode Pooter14.0; normal dung as a required interaction component.",
+  "native_evidence": "docs/reports/isaac-enemy-port/fly_pooter/source/manifest.json",
+  "animation_evidence": "docs/reports/isaac-enemy-port/fly_pooter/animations/manifest.json",
+  "previous_preflight": "docs/reports/isaac-enemy-port/horf_fly/source-review.json",
+  "findings": [
+    "Ordinary Pooter uses the shared fly update. Acquisition calls the same strict range200, interval7, non-predictive helper as Horf. On acquisition delay35 is set; variant2 uses63. Shoot fetches the current target, firing mode0 for ordinary Pooter.",
+    "Normal shot speed is7native/frame. Predicate6af030 explicitly checks game modes1/3; hard ordinary speed10 and Super Pooter speed8 are separate from normal mode. Only ordinary normal-mode Pooter is implemented in this batch.",
+    "Preserved Pooter animation is14frames at30FPS, Shoot6. While its source delay is positive, friction is multiplied by.8 and wandering vector by.7 each update. Recovery returns the actor to flying state after Attack finishes.",
+    "AddVelocity at422b60 adds vector*timeScale/currentFriction before the shared movement update. The existing Fly preflight supplies the1/5player impulse, fourth-frame jitter and third-frame wander/friction. Exact common movement-update ordering and time-dilation/knockback parity remain unaccepted.",
+    "Entity config constructor sets shutDoors at+58 totrue; NPC initialization copies it to+b8c. CanShutDoors reads this flag unless friendly. Fly XML has no override and its shared AI has no observed clear-flag rewrite, supporting normal room-threat participation.",
+    "Normal dung Hurt starts from supplied integer damage, adds one with probability1/3, and for variant0 independently adds another with probability1/3. It increases grid state by250times that result, capped at1000. Thus Hurt1 removes1,2or3of four ordinary damage steps; it need not destroy a fresh pile.",
+    "Fly transformation checks grid type14 without checking damage state. It calls Hurt1 but does not branch on that return before Morph14.0 and restoring maxHP. A destroyed dung remnant can still permit the transformation while the grid remains present.",
+    "Local3D adaptations: independent seeded dung placement, low-poly mesh, four health steps, no dung loot/item/special variants yet; bombs destroy the pile and regular projectiles request Hurt1. Exact native projectile-to-grid damage conversion remains separate work."
+  ],
+  "adaptations": [
+    "Source HP x3.2 gives Fly9.6 and ordinary Pooter25.6, with zero contact damage. Both remain normal room threats. Original procedural green/orange flying bodies, local.45radius and terrain-dependent flight elevation are retained.",
+    "Shared normal-mode movement uses1/5player impulses of.7, fourth-frame jitter(.6impulse,.4retention) and third-frame wander/friction(.6). Native planar scale.1 and30Hz impulses map to smooth60Hz3D motion. A local24world-unit/second safety cap and realized collision momentum prevent wall acceleration.",
+    "Native fixed screen-edge thresholds are preserved in source evidence but mapped to a configurable3world-unit margin inside generated room bounds. Actor clocks initialize from simulation time and pause in inactive rooms. RNG sequences do not match native Isaac bit-for-bit; seeded DeathWard replay remains deterministic.",
+    "Ordinary Pooter checks range20and sight every7source frames. Attack14/Shoot6 uses current target, including after leaving acquisition range. Cooldown35starts on acquisition; positive cooldown damps velocity by.8and wander by.7. The projectile travels21world units/second; localdamage10receives the existing1.25multiplier once, with local5-second lifetime and3D elevation aim.",
+    "Queue pressure retains a single Shoot event and stretches recovery until admission. Stun cancels the cast. Controlled/charmed targeting and native status handling are not replicated by those local policies.",
+    "Fly checks a1/1000chance per active30Hzupdate over a retained dung footprint. Hurt1 removes1,2or3of4normal dung steps using two independent1/3bonuses. Morph preserves actor/summoner and room threat, restores Pooter HP and awards no kill. The new shooter begins updating on the next local fixed tick.",
+    "Normal dung remains as a nonblocking remnant when destroyed; source grid-type testing permits morphing over that remnant too. Regular physical projectiles request Hurt1; qualifying bombs destroy the pile. Native projectile-to-grid conversion, dung loot and special/item variants are not fully implemented.",
+    "Up to2independently seeded piles dress flat ordinary combat rooms in bands0–1. They avoid roads/rivers, exits, objectives, keys, cache interiors and cache approaches. This placement and its low-poly geometry are DeathWard design. Mine, tutorial and Classic receive no new dung.",
+    "Fly gains sparse pursuit/supply-guard roles in bands0–1; other appearances remain existing offspring routes. Pooter retains its reviewed multi-band specialist roles. Super/Tainted Pooter runtime remains unchanged in this batch."
+  ],
+  "remaining": [
+    "Skatole and other item/status/charm/controller interactions, special boss-parent branches, exact shared friction/time-scale/knockback integration and spawn-animation ordering remain unfinished.",
+    "Hard-mode Pooter speed10and Super Pooter speed8are recovered but not enabled. Ordinary normal-mode Pooter is the attack scope; Super/Tainted variants retain their older controllers and need separate source-backed passes.",
+    "Projectile vertical motion/lifetime and native grid damage conversion are3D adaptations. Normal dung loot and special dung variants/item reactions are pending; this component currently supports the ordinary Fly transformation and physical destruction.",
+    "Broader varied-build balance, occlusion/readability and controlled rendered Linux/WASM performance are unaccepted. Determinism, probability sampling, collision and capacity checks are not full acceptance.",
+    "All653records and six gates remain required. Zero records are certified complete. Regular enemies and required dependencies retain priority over further boss/Hornfel work."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "zoom_percent": 160,
+  "reviewed_by": "agent visual inspection",
+  "draft": {
+    "manifest": "native/captures.json",
+    "inspected": 6,
+    "finding": "Status marks were too small, especially alongside Gusher blood/arms. Draft images retained."
+  },
+  "final": {
+    "manifest": "native/final/captures.json",
+    "inspected": 6,
+    "finding": "Larger and higher cyan fear strokes and purple confusion dots are distinct above all five bodies. Gusher blood remains a separate red column. Horf retains its bone palette and uses overhead cues. Body silhouettes, ground contact/shadows and Original scene treatment remain intact."
+  },
+  "limits": [
+    "These are isolated open-floor captures; crowded-room and scenery-occlusion acceptance remain open.",
+    "HUD FPS during short startup captures is not a benchmark; no performance claim follows from it."
+  ]
+}

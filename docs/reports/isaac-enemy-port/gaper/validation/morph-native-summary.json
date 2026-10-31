@@ -1,0 +1,92 @@
+{
+  "status": "Five scoped Linux suites pass; production WASM rebuild running. Full Gaper parent controller not accepted.",
+  "mechanics_fingerprint": "25efabc006603172",
+  "build": "morph-build.log",
+  "focused": {
+    "suite": "source_immunity_and_lethal_morph",
+    "result": "pass",
+    "exit_code": 0,
+    "log": "morph-focused.log"
+  },
+  "regressions": [
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "morph-regressions.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "morph-regressions.log"
+    },
+    {
+      "name": "faceless_family",
+      "result": "pass",
+      "log": "morph-regressions.log"
+    },
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "exit_code": 0,
+      "log": "content-final.log"
+    }
+  ],
+  "initial_regression_failure": {
+    "log": "morph-regressions.log",
+    "reason": "Duplicate-death-binding test still named the removed generic Gaper rule. Moved duplicate assertion to an existing Mulligan binding and added a conflicting Gaper death-controller rejection. Rebuilt and reran the full content suite successfully."
+  },
+  "distribution_trials": [
+    {
+      "variant": 0,
+      "trials": 1200,
+      "death": 583,
+      "pacer": 186,
+      "gusher": 431
+    },
+    {
+      "variant": 1,
+      "trials": 1200,
+      "death": 583,
+      "pacer": 186,
+      "gusher": 431
+    },
+    {
+      "variant": 2,
+      "trials": 1200,
+      "death": 583,
+      "pacer": 0,
+      "gusher": 617
+    }
+  ],
+  "verified": [
+    "Same ID, source ownership, momentum and health multiplier retained at full enemy capacity.",
+    "No early kill/loot or room-threat gap; final body pays once.",
+    "Strict fixed overkill80 boundary across all three variants.",
+    "Success draws chance, modulo-three choice (even Flaming), then integral20..39 delay once.",
+    "Headless next update does not redraw initialization; room re-entry retains transformed body.",
+    "Execution bypass, nine invalid external contracts, immutable content snapshot behavior."
+  ],
+  "limits": [
+    "No complete Gaper movement/HP/visual/balance/performance acceptance.",
+    "Headless WASM/floor evidence at79025961123d4945 predates this mortality change; do not treat it as Gaper validation."
+  ],
+  "artifacts": {
+    "deathward": "716ef315fe89aa2c02ab757e96d6389ab8b7708b4b3305fef8eaa59d6a09a181",
+    "deathward_mortality_tests": "19f85abccc4852412aa022f77c042b9dd185987e9e312869231608957bf9a511",
+    "deathward_headless_tests": "cb692d60ae8870a5f25d334c43e2b4577cd01c6ecfc4a0af2b39c5be1b21b92d",
+    "deathward_monster_tests": "eb6fcbc13be44cffde328414e05fa5c24dc42d3e3006508e012f34dde9438e12",
+    "deathward_mechanics_tests": "891ce24eb10fd54eda3552ebb760e58a5e1bd2fd9215088581406976c7356f22",
+    "deathward_faceless_tests": "0374cd95c28fee1f1b5ec9a692208d88486b01296d4cda6b873cc2437efbb96f"
+  },
+  "native_game": {
+    "build_exit": 0,
+    "build_log": "morph-game-build.log",
+    "capture_exit": 0,
+    "log": "morph-native-capture.log",
+    "image": "../native/ordinary-after-hit.png",
+    "image_sha256": "bb27212c5b609ba16fd7a136a6ce46b56ed9207d28298ec9391465d95558680b",
+    "inspected": true,
+    "observed": "Production ordinary Gaper10.1 hit with64 atframe20 becomes liveGusher11.0,32HP atframe100,one room threat andone emitted projectile. Image shows a red airborne lob separated from ground shadow; body partly overlaps protagonist. No forced probability or content override.",
+    "limits": "One isolated screenshot/trace does not establish full visual acceptance; ownership/identity verified in focused tests."
+  }
+}

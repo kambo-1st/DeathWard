@@ -1,0 +1,2 @@
+Valid mechanics: 11 items, 134 monster definitions; fingerprint 11bdfde3d6b5e846
+Loaded from "assets/mechanics"

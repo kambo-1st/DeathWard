@@ -1,0 +1,141 @@
+{
+  "verified_utc": "2026-10-28T18:36:48.853745+00:00",
+  "result": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "mechanics_fingerprint": "fdb13e137f49c8c6",
+  "monster_definitions": 216,
+  "new_enemy_records": 0,
+  "completed_records": 0,
+  "source": "source/manifest.json",
+  "checks": [
+    {
+      "name": "source",
+      "command": [
+        "python3",
+        "scripts/isaac-reference/analyze-first-floor-freeze.py",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "validation/source.log"
+    },
+    {
+      "name": "mechanics",
+      "command": [
+        "./build/deathward_check_mechanics",
+        "assets/mechanics"
+      ],
+      "exit": 0,
+      "log": "validation/mechanics.log"
+    },
+    {
+      "name": "cli_rejections",
+      "cases": 3,
+      "report": "validation/cli-rejections.json"
+    }
+  ],
+  "native_tests": [
+    {
+      "name": "mechanics_content",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "monster_behaviors",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "monster_fire_reactions",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "gaper_family",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "headless_family",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_cohort",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_status_effects",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    },
+    {
+      "name": "first_floor_freeze_effect",
+      "result": "pass",
+      "log": "validation/native-tests-final.log"
+    }
+  ],
+  "coverage": [
+    "All five support positive additive cap120, negative minimum-duration refresh, positive-on-extended cap behavior, explicit removal and rejection of invalid enum/duration. Timers tested at30/60/120Hz; modal pauses preserve state.",
+    "AI, windup/reload, Frowning eyes, Gaper gait and headless blood overlay hold. Source polling/lifetime and independent Fear/Confusion timers continue. Thaw has no animation catch-up, including inactive-room storage.",
+    "Source.01 passive friction reproduces30Hz endpoints across three timestep partitions, with externally supplied impulses and cover collision. Ordinary contact damage, incoming24damage, room threats and one final reward remain intact.",
+    "Horf resumes exact committed frame and current-player aim; Gusher reload resumes. Selected capacity-delayed shots persist and retry once after thaw without restoring old body momentum. Already-emitted projectiles continue.",
+    "Initial-frame freezing and a long thawing step exposed an uninitialized Horf poll phase; fixed by capturing global phase before first AI call. Dedicated regression plus partial-frame reapplication/removal passes.",
+    "Gaper lethal same-entity headless morph retains Freeze and duration; final death rejects new applications. External cap/friction/opt-in configuration works, immutable snapshots and fingerprints remain distinct, and six invalid contracts reject.",
+    "Existing Fear/Confusion, first-floor starting-kit fights, seeded reachability, controller, content, mortality, monster and fire regressions pass against the rebuilt core."
+  ],
+  "visual_review": "visual-review.json",
+  "native_captures": "native/final/captures.json",
+  "runtime_api": "applyEnemyStatus(id,EnemyStatus::Freeze,sourceFrames), removeEnemyStatus; --enemy-status FRAME freeze DURATION for isolated native smoke captures. No player perk added.",
+  "performance": "No rendered-performance acceptance claimed. Runtime uses the existing status clock and skips frozen AI. Final capture FPS is not a benchmark.",
+  "failure_history": {
+    "log": "validation/native-tests.log",
+    "finding": "Initial9/10pass; long thawing step shifted Horf poll phase when headShooter runtime did not yet exist.",
+    "resolution": "Allocate only the reviewed stationary-shooter runtime at first Freeze application and initialize its global source poll phase. Final10/10pass; eight captures use rebuilt binary."
+  },
+  "remaining": [
+    "Continue only this first-five cohort. Implement Slow with separate source clock, movement/force/friction and animation behavior; source evidence is preserved in source/manifest.json. Do not treat AddSlowing strength304 as an arbitrary ordinary-NPC time scale or just halve controller dt.",
+    "Finish other applicable Shrink/Charm/control and damaging statuses plus item-source/duration interfaces. Ordinary Freeze is not Midas or Ice; boss and linked-entity status rules are not claimed here.",
+    "Resolve applicable champion and knockback production/mass interactions, then finish mixed-room readability/occlusion, varied-build/terrain balance and controlled rendered performance before batch2. Preserve existing work, park roster expansion and skip WASM."
+  ],
+  "validation_waivers": {
+    "WASM": "Explicit user instruction: skip WASM checks."
+  },
+  "live_jobs": "All builds, tests and native captures completed.",
+  "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+  "runtime_hashes": {
+    "CMakeLists.txt": "d1f2c32c2db56dcfa24d9b98b1b4e298a5fdbbfd600e0cd8b81393ad0da741a4",
+    "src/combat/EnemyStatuses.cpp": "9f55f749fc8f2cf6f4d64e9e44840dee554919e4f3576ccc8bf9fa348a3dac30",
+    "src/combat/Simulation.hpp": "88c2ee9f0a44df37e32198f2b33aad62ab135546851914ff2e7910f312c8a23e",
+    "src/combat/Simulation.cpp": "11987b123ecf54685ddda61e8096b62d4a1c68eb78acfb256321158ae68f6b2e",
+    "src/combat/Gapers.cpp": "f1028535b82cd02da413eb84c3e2323a47bfc08065cf197567cd320991f0ce39",
+    "src/combat/Headless.cpp": "ed140f6b9bc8cc67c9166dfcd62724c447f48ce5b0f0c112be82ff539d9c40ac",
+    "src/combat/HeadShooters.cpp": "e07901edcd16127758481ec3d6cdb91fdcc47f8aa872e4284ef016e7c8d572be",
+    "src/combat/LobFlight.hpp": "713b8540948b1afa7b71a553ef91d8048d6b2715383cf835b9e667d4976b3e78",
+    "src/content/Mechanics.hpp": "f020c884745c3c3684172840e6bfbb8079a0f728733454b0096cdca13aba9e24",
+    "src/content/Mechanics.cpp": "bcf76449e640d480d21e870a30edd2ffd3b79c78b4a22022b2b033414620fb7e",
+    "src/render/MonsterVisuals.hpp": "3fe5562fc6cee94e05d53785e06692c69ee33c27643d8b527bcd0346d24162f7",
+    "src/main.cpp": "808fe2e1d3d2eee14926fcf23a363ed9dfb8d3f75ebbae5a70b9ca4ddca34085",
+    "assets/mechanics/first_floor_statuses.mechanics": "9f04e2bb1f8b4433edb942b4b3edb6548d69b931f35579733163e70844c5a615",
+    "tests/enemy_freeze_tests.cpp": "55ceb168d7ded547fced20c656d7cc978a14c8b98f790670e4d573849151d4a0",
+    "tests/enemy_status_tests.cpp": "ee4167f16a0c93cc74e332649c7b7c61cc8e2ce29e3e79a20eab9d6b286a507c",
+    "tests/first_floor_cohort_tests.cpp": "1b47cc22a13be7043911975fa6ec5a49468decd7fdf124b7b372d875afe82643",
+    "scripts/isaac-reference/analyze-first-floor-freeze.py": "0cb7ef44c19acf1c722d33ea2e9f8f7836f62bc4171244c6b0041f603a6d320b"
+  }
+}

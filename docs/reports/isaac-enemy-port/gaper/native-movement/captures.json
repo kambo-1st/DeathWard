@@ -1,0 +1,84 @@
+[
+  {
+    "name": "frowning-closed",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "2",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-movement/frowning-closed.png",
+      "--enemy-terrain",
+      "cover"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "frowning-open",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "40",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-movement/frowning-open.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "ordinary-walking",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "20",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-movement/ordinary-walking.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "flaming-walking",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.2.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "20",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-movement/flaming-walking.png"
+    ],
+    "exit": 0
+  }
+]

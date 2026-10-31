@@ -1,0 +1,22 @@
+[ 20%] Built target glfw
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 31%] Built target raylib
+[ 31%] Built target deathward_runtime_assets
+[ 31%] Linking CXX static library libdeathward_core.a
+[ 71%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_particles
+[ 77%] Built target deathward_mission_lighting
+[ 77%] Built target deathward_skinning
+[ 80%] Built target deathward_cloth
+[ 82%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 82%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 26%] Built target glfw
+[ 38%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 96%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[ 96%] Building CXX object CMakeFiles/deathward_mechanics_tests.dir/tests/mechanics_tests.cpp.o
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests

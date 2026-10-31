@@ -1,0 +1,271 @@
+{
+  "scope": "Matched CPU-only cost of the Horf/Gusher physics correction in a20-actor mixed cohort. Same current code; before profile disables Horf flight/passive damping and restores Gusher gravity18. This is not a pre-port executable or rendered-canyon baseline.",
+  "executable_sha256": "4e539c7b7fb07ee42aceed02f0304d0cd15e83c621b045ed2c801fc6a7fc13fb",
+  "machine": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "warmup_steps": 60,
+  "measured_steps": 1800,
+  "dt": 0.016666666666666666,
+  "concurrent_agent_builds_tests_captures": false,
+  "runs": [
+    {
+      "order": 0,
+      "mode": "before",
+      "exit": 0,
+      "log": "docs/reports/isaac-enemy-port/first-floor-batch1/validation/performance-0-before.log",
+      "trials": [
+        {
+          "trial": 0.0,
+          "samples": 1800.0,
+          "mean_us": 19.5738,
+          "p95_us": 28.49,
+          "max_us": 168.558,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 1.0,
+          "samples": 1800.0,
+          "mean_us": 20.0171,
+          "p95_us": 27.7,
+          "max_us": 223.928,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 2.0,
+          "samples": 1800.0,
+          "mean_us": 19.4675,
+          "p95_us": 25.519,
+          "max_us": 78.16,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        }
+      ]
+    },
+    {
+      "order": 1,
+      "mode": "after",
+      "exit": 0,
+      "log": "docs/reports/isaac-enemy-port/first-floor-batch1/validation/performance-1-after.log",
+      "trials": [
+        {
+          "trial": 0.0,
+          "samples": 1800.0,
+          "mean_us": 23.0265,
+          "p95_us": 42.679,
+          "max_us": 153.168,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 1.0,
+          "samples": 1800.0,
+          "mean_us": 22.7388,
+          "p95_us": 44.869,
+          "max_us": 136.534,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 2.0,
+          "samples": 1800.0,
+          "mean_us": 25.302,
+          "p95_us": 48.01,
+          "max_us": 76.619,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "mode": "after",
+      "exit": 0,
+      "log": "docs/reports/isaac-enemy-port/first-floor-batch1/validation/performance-2-after.log",
+      "trials": [
+        {
+          "trial": 0.0,
+          "samples": 1800.0,
+          "mean_us": 20.5368,
+          "p95_us": 29.04,
+          "max_us": 148.634,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 1.0,
+          "samples": 1800.0,
+          "mean_us": 20.3342,
+          "p95_us": 28.88,
+          "max_us": 176.249,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 2.0,
+          "samples": 1800.0,
+          "mean_us": 20.5937,
+          "p95_us": 29.57,
+          "max_us": 135.049,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "mode": "before",
+      "exit": 0,
+      "log": "docs/reports/isaac-enemy-port/first-floor-batch1/validation/performance-3-before.log",
+      "trials": [
+        {
+          "trial": 0.0,
+          "samples": 1800.0,
+          "mean_us": 19.4503,
+          "p95_us": 29.0,
+          "max_us": 66.87,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 1.0,
+          "samples": 1800.0,
+          "mean_us": 19.3873,
+          "p95_us": 27.0,
+          "max_us": 97.364,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 2.0,
+          "samples": 1800.0,
+          "mean_us": 20.6656,
+          "p95_us": 31.169,
+          "max_us": 127.223,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "mode": "before",
+      "exit": 0,
+      "log": "docs/reports/isaac-enemy-port/first-floor-batch1/validation/performance-4-before.log",
+      "trials": [
+        {
+          "trial": 0.0,
+          "samples": 1800.0,
+          "mean_us": 20.6804,
+          "p95_us": 32.79,
+          "max_us": 118.164,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 1.0,
+          "samples": 1800.0,
+          "mean_us": 19.8931,
+          "p95_us": 26.919,
+          "max_us": 106.959,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 2.0,
+          "samples": 1800.0,
+          "mean_us": 20.1378,
+          "p95_us": 26.959,
+          "max_us": 177.203,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "mode": "after",
+      "exit": 0,
+      "log": "docs/reports/isaac-enemy-port/first-floor-batch1/validation/performance-5-after.log",
+      "trials": [
+        {
+          "trial": 0.0,
+          "samples": 1800.0,
+          "mean_us": 20.4581,
+          "p95_us": 28.91,
+          "max_us": 121.948,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 1.0,
+          "samples": 1800.0,
+          "mean_us": 20.9213,
+          "p95_us": 30.59,
+          "max_us": 127.924,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        },
+        {
+          "trial": 2.0,
+          "samples": 1800.0,
+          "mean_us": 20.6045,
+          "p95_us": 26.2,
+          "max_us": 91.499,
+          "actors": 20.0,
+          "peak_bullets": 5.0,
+          "suppressed": 0.0,
+          "render": 0.0
+        }
+      ]
+    }
+  ]
+}

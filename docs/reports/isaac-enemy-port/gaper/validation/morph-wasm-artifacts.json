@@ -1,0 +1,26 @@
+{
+  "verified_utc": "2026-10-28T11:19:52.825988+00:00",
+  "build_session": 83342,
+  "build_exit": 0,
+  "mechanics_fingerprint": "25efabc006603172",
+  "artifacts": [
+    {
+      "file": "build-web/index.js",
+      "bytes": 247969,
+      "sha256": "b4bedeea9d6758577c36e516e2b8ca4225726ab7e29fbe0709b52c313c176b30",
+      "gzip_equal": true
+    },
+    {
+      "file": "build-web/index.wasm",
+      "bytes": 5660413,
+      "sha256": "56410bc05f0f546425f6123b4892335a2142e9beb071285124658a5031844367",
+      "gzip_equal": true
+    },
+    {
+      "file": "build-web/index.data",
+      "bytes": 213456909,
+      "sha256": "171a81c097146b3b8da0a01b261a30ecc5a74f411e7ea1e5671b848d5a376d57",
+      "gzip_equal": true
+    }
+  ]
+}

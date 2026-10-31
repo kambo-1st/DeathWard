@@ -1,0 +1,52 @@
+[
+  {
+    "source": "resources/gfx/014.000_Pooter.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/fly_pooter/animations/014.000_Pooter.anm2",
+    "sha256": "1eb26735dc47ce65407032014f8d3208c349dee965f990c6550f2eddb0501ea1",
+    "checksum": "0xd4a9dd9d",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 3:51:42 PM",
+      "Version": "104",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Fly",
+          "FrameNum": "2",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Attack",
+          "FrameNum": "14",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "25",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  }
+]

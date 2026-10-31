@@ -1,0 +1,55 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "rtti": {
+    "type_descriptor": "0xbeab70",
+    "complete_object_locator": "0xb6d958",
+    "vtable": "0xb49398",
+    "plus_5c": "0x697e30",
+    "plus_60": "0x692960"
+  },
+  "windows": [
+    {
+      "name": "morph",
+      "start": "0x697c60",
+      "end_exclusive": "0x697e21",
+      "raw_sha256": "811937034eaac8ea8aefdf30ca2ba54dd4c4b9adffeb4f6bdd5ac279fa9e19a6",
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "name": "npc-appearance",
+      "start": "0x697e30",
+      "end_exclusive": "0x698093",
+      "raw_sha256": "15fd13994807333da2b181f328d207b2b26542ba188e68a5bf3b303b6c5c46d3",
+      "path": "docs/reports/isaac-enemy-port/gaper/source/npc-appearance.asm",
+      "sha256": "fed8fcdbf16bc02f73413fc89bdc787b37aedad709fa3d6cdc4e5bca1708b771"
+    },
+    {
+      "name": "npc-config",
+      "start": "0x692960",
+      "end_exclusive": "0x692f73",
+      "raw_sha256": "85b3a443de304b0aebefd4158df936b2c6bd5c84d182ccef8a52dfda27aa49f9",
+      "path": "docs/reports/isaac-enemy-port/gaper/source/npc-config.asm",
+      "sha256": "47a82eb4b11f7accff02b9a79f16f1c9fbbb1d8564dee26acb7c0436e15c5c48"
+    },
+    {
+      "name": "base-config",
+      "start": "0x681ea0",
+      "end_exclusive": "0x682190",
+      "raw_sha256": "36a26ba5aaa9b23d8e96f4a8eb9110f8348b30fb1aeb180ecc9f8da7c07b2857",
+      "path": "docs/reports/isaac-enemy-port/gaper/source/base-config.asm",
+      "sha256": "d44b00677e9bc0a0ceaadf926e1008e02e7bc1591054266c92202fabdb2ded9f"
+    },
+    {
+      "name": "npc-sprite",
+      "start": "0x692080",
+      "end_exclusive": "0x692954",
+      "raw_sha256": "eeaa152241a8574a1c0ed59a83e2282ab0df23aa488262f9fac03b4345325578",
+      "path": "docs/reports/isaac-enemy-port/gaper/source/npc-sprite.asm",
+      "sha256": "1399f60c32616a68a7b96098769b8808e42a48e5c41aea036c6785e5c8a12a5b"
+    }
+  ],
+  "finding": "Morph and the resolved configuration/sprite helpers do not reset AI State+ab4 or ProjectileCooldown+af0. The Gaper caller retains State4 and explicitly writes20+RNG%20 after morph; headless spawn initialization must not redraw it.",
+  "limits": "Ordinary non-champion path. Champion/status helpers and mod callbacks are not claimed as ported; DeathWard retains its seeded PRNG rather than reproducing Isaac RNG streams."
+}

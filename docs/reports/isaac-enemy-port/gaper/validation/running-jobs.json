@@ -1,0 +1,140 @@
+{
+  "updated_utc": "2026-10-28T12:15:16.360788+00:00",
+  "previous_goal_turn_classification": "Progress: integrated source-based ordinary Gaper family, seven selected native suites and seeded witnesses pass; fixed real corner navigation and support-budget defects; source/visual evidence and checklist updated.",
+  "this_goal_turn_classification": "Progress: recovered missing processes after confirming they were absent; resumed WASM package and 753-floor regression passed. Seven current browser movement scenarios and six current mortality scenarios passed, with nine browser images reviewed across the two slices. Extracted separate Rotten Gaper and Small Maggot controllers/animations; source review continues, no new runtime or completion credit.",
+  "mechanics_fingerprint": "ec8492eb3ee9db9",
+  "wasm_build": {
+    "original_session": 25411,
+    "original_exit": 143,
+    "original_log": "morph-wasm-build.log",
+    "recovery_session": 83342,
+    "recovery_exit": 0,
+    "recovery_log": "morph-wasm-package.log",
+    "artifact_integrity": "morph-wasm-artifacts.json",
+    "state": "complete; raw and gzip payloads match"
+  },
+  "native_game_build": {
+    "session": 27885,
+    "exit": 0,
+    "log": "morph-game-build.log"
+  },
+  "native_capture": {
+    "session": 12041,
+    "exit": 0,
+    "log": "morph-native-capture.log"
+  },
+  "native_tests": {
+    "focused_session": 73105,
+    "focused_exit": 0,
+    "regression_session": 29200,
+    "regression_exit": 8,
+    "content_fix_session": 69016,
+    "content_fix_exit": 0,
+    "summary": "morph-native-summary.json",
+    "note": "Initial regression aggregate failed on removed old Gaper test binding; three other suites passed. Corrected test and final full content suite passed."
+  },
+  "preview_server": {
+    "session": 76948,
+    "url": "http://127.0.0.1:8767/",
+    "note": "Replacement started only after prior listener absent; HTTP200 verified before browser runs. Revalidate on continuation."
+  },
+  "next_browser": {
+    "script": "web/gaper-morph-test.cjs",
+    "syntax_check": "passed",
+    "output": "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/gaper/web",
+    "executable": "/home/kambo/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome",
+    "environment": "DEATHWARD_GAPER_OUTPUT; DEATHWARD_BROWSER; DEATHWARD_WEB_URL",
+    "scope": "Three explicit disposable morph-probability/child overrides plus production overkill cases. Linux validates unmodified outcome probabilities."
+  },
+  "next_family_work": "Rotten Gaper variants10.3.0..5 delegate source controller4c70e0 and have native24HP (76.8DW). They remain provisional; do a separate source review with required Small Maggot offspring. Do not infer behavior from ordinary Gaper controller.",
+  "complete_ports": 0,
+  "browser_validation": {
+    "session": 73406,
+    "state": "complete",
+    "script": "web/gaper-morph-test.cjs",
+    "log": "morph-browser.log",
+    "result": "../web/results.json",
+    "exit": 0
+  },
+  "movement_native_build": {
+    "session": 26408,
+    "exit": 0,
+    "log": "movement-build.log",
+    "final_build": "movement-acceptance-build.log",
+    "final_session": 34782,
+    "final_exit": 0,
+    "seven_suite_log": "movement-acceptance-tests.log",
+    "summary": "../movement-native-summary.json"
+  },
+  "movement_wasm_build": {
+    "session": 71574,
+    "state": "interrupted; tool handle unknown and original OS processes absent, verified on continuation",
+    "log": "movement-wasm-build.log",
+    "live_verified": {
+      "optimizer_pid": 1100600,
+      "observation": "Specific tool handle live; wasm-opt observed Sl at226percentCPU, elapsed5m25s. Do not restart for observation timeout."
+    },
+    "mandatory_next": "Superseded by successful resumed session97222 including FloorEncounters fix; original unknown exit remains unknown.",
+    "exit": "unknown",
+    "verified_utc": "2026-10-28T12:00:22.815624+00:00"
+  },
+  "movement_floor_regression": {
+    "session": 88940,
+    "state": "interrupted; tool handle unknown and original OS processes absent, verified on continuation",
+    "runner_pid": 1102169,
+    "child_pid": 1102172,
+    "live_verified": "Tool handle live; direct child R at99.3percentCPU, elapsed4m36s. stdout may be buffered.",
+    "log": "movement-floor-final.log",
+    "result": "movement-floor-final-result.json",
+    "previous_failure": "movement-floor-result.json exit1 exposed support reserve bug, fixed and1600-room regression added. Preserve original evidence.",
+    "exit": "unknown",
+    "verified_utc": "2026-10-28T12:00:22.815624+00:00"
+  },
+  "movement_browser_next": {
+    "script": "web/gaper-test.cjs",
+    "syntax": "passed",
+    "entries": "movement-browser-entries.json",
+    "environment": [
+      "DEATHWARD_GAPER_OUTPUT",
+      "DEATHWARD_GAPER_ENTRIES (JSON contents of entries file)",
+      "DEATHWARD_BROWSER=/home/kambo/.cache/ms-playwright/chromium-1223/chrome-linux64/chrome",
+      "DEATHWARD_WEB_URL=http://127.0.0.1:8767/"
+    ],
+    "suggested_output": "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/gaper/web-movement",
+    "additional": "After seven movement cases, run web/gaper-morph-test.cjs into NEW web-morph-current directory to retain old25ef mortality evidence. Inspect captures and record exact artifact hashes.",
+    "state": "Completed as movement_browser and current_mortality_browser; retained here as original invocation instructions."
+  },
+  "movement_wasm_resumed": {
+    "session": 97222,
+    "exit": 0,
+    "state": "complete",
+    "log": "movement-wasm-resumed.log",
+    "artifacts": "movement-wasm-artifacts.json",
+    "includes": "FloorEncounters support-budget fix"
+  },
+  "movement_floor_resumed": {
+    "session": 75079,
+    "exit": 0,
+    "state": "complete",
+    "floors": 753,
+    "result": "movement-floor-resumed-result.json",
+    "log": "movement-floor-resumed.log"
+  },
+  "movement_browser": {
+    "session": 13300,
+    "exit": 0,
+    "state": "complete",
+    "cases": 7,
+    "log": "movement-browser.log",
+    "result": "../web-movement/results.json"
+  },
+  "current_mortality_browser": {
+    "session": 6035,
+    "exit": 0,
+    "state": "complete",
+    "cases": 6,
+    "log": "movement-morph-browser.log",
+    "result": "../web-morph-current/results.json"
+  },
+  "next_work": "Continue Rotten Gaper source/controller and Small Maggot dependency review; preserve current Gaper evidence. Full six-gate acceptance remains open."
+}

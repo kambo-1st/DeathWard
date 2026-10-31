@@ -1,0 +1,11 @@
+START faceless-natural
+PROGRESS faceless-natural undefined
+PROGRESS faceless-natural undefined
+AssertionError [ERR_ASSERTION]: browser simulation stopped advancing across two observation windows
+    at /home/kambo/workspace/DeathWard/web/faceless-test.cjs:40:6 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

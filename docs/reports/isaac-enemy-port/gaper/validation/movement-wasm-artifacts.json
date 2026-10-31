@@ -1,0 +1,28 @@
+{
+  "verified_utc": "2026-10-28T12:04:54.569147+00:00",
+  "session": 97222,
+  "exit": 0,
+  "mechanics_fingerprint": "ec8492eb3ee9db9",
+  "artifacts": [
+    {
+      "path": "build-web/index.js",
+      "bytes": 248230,
+      "sha256": "67e22b01ed7659c17484e9d33c5f133ba3c6bd001241b427928310ecf00e2c97",
+      "gzip_equal": true
+    },
+    {
+      "path": "build-web/index.wasm",
+      "bytes": 5682129,
+      "sha256": "17e07a4ca9e39afceb99d9e06fdd1784f1616e6550508d6a9233eadee741b79d",
+      "gzip_equal": true
+    },
+    {
+      "path": "build-web/index.data",
+      "bytes": 213458121,
+      "sha256": "eec55d086beade686a5bb6662c8a1a7d985d6bfec33d539df72bfb3bf24032e7",
+      "gzip_equal": true
+    }
+  ],
+  "note": "Resumed after missing prior process; includes support-budget FloorEncounters rebuild.",
+  "source_sha256": "8b1fba1447724bb53e2d4291a7ce3168a6058030aec73c394be80c75be58110e"
+}

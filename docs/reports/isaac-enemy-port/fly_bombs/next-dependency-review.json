@@ -1,0 +1,41 @@
+{
+  "status": "Analysis only; Shell and Horny Boys remain unimplemented.",
+  "baseline": "Repentance 1.7.9b",
+  "sources": [
+    "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022",
+    "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268743"
+  ],
+  "ready_dependencies": [
+    "Bomb Grimace supplier",
+    "Two-chain encounter lifetime and aggregate reward infrastructure",
+    "Real Fly Bomb death ordnance and owner-bound trio"
+  ],
+  "shell": {
+    "id": "19.3.0",
+    "route": "Ashpit boss ID 96; positive ordinary Ashpit template and boss-pool weight 1. Local standard Broken Quarry candidate only; no route enabled yet.",
+    "anatomy": "Two five-part chains: invulnerable head plus four armored/flesh parts. Initial head HP excluded from killable aggregate. One or two Bomb Grimaces.",
+    "movement": "Separate diagonal flying/reflection controller with weak nearby-player steering. Exposed flesh becomes grounded and slows attached chain. Detached flesh groups pursue slowly; isolated flesh is stationary.",
+    "attacks": "Grounded tail/end flesh spawns real 819.0.0; middle flesh aims triples. Timers, speeds, source child cap and exact end classification require explicit measurement or local policy.",
+    "armor": "15 independent armor; source flesh HP 35. No source support for inheriting Tuff blast resistance or exposed acceleration. Head cannot be damaged; remove it only after all attached body parts are gone.",
+    "topology_ambiguity": "Pinned prose first denies smaller copies, then describes a three-part side with an armored endpoint promoting that endpoint to a new head. Shorter-side armored parts disappear while flesh remains. Exact role of original head, tie cases, two-part groups and successive cuts needs documented examples; do not silently apply Tuff reattachment.",
+    "cases_to_resolve": [
+      "H A A A A, destroy middle A after stripping: what remains attached and which endpoint promotes?",
+      "H F A F A versus H A F F F after a center kill; preserve detached flesh HP and grounded positions.",
+      "Consecutive simultaneous blast deaths: decide topology after the whole event batch, no phantom HP/reward.",
+      "Armor loss above cover/water: place grounded flesh without tunneling, deleting it or blocking mandatory completion.",
+      "Tail-to-middle role changes must update spawn/triple behavior; invulnerable empty head must die without duplicate reward."
+    ]
+  },
+  "horny_boys": {
+    "id": "920.0.0",
+    "route": "Dedicated Gehenna analogue in Abandoned Works; not implemented.",
+    "required": "Actual ordered controller: Boom Fly plus three Eternal Fly Bombs; three juggled thrown bombs with Hot/Sad effects; ordered 19-pattern accelerating barrage and three spreading fireballs; branching three Brimstone Bomb teleports or five Sad Bomb smokescreen teleports.",
+    "additional_dependencies": [
+      "Hot/Sad/Brimstone hostile bomb effects",
+      "Meat Cleaver splitting into Loki and second-phase Hornfel, including reward ordering",
+      "Per-attack native timing/weights or declared tuning"
+    ]
+  },
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Proposed tests and adaptations are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

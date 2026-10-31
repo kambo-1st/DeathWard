@@ -1,0 +1,281 @@
+{
+  "verified_utc": "2026-10-28T12:15:16.360788+00:00",
+  "result": "partial_pass",
+  "mechanics_fingerprint": "ec8492eb3ee9db9",
+  "artifacts": {
+    "verified_utc": "2026-10-28T12:04:54.569147+00:00",
+    "session": 97222,
+    "exit": 0,
+    "mechanics_fingerprint": "ec8492eb3ee9db9",
+    "artifacts": [
+      {
+        "path": "build-web/index.js",
+        "bytes": 248230,
+        "sha256": "67e22b01ed7659c17484e9d33c5f133ba3c6bd001241b427928310ecf00e2c97",
+        "gzip_equal": true
+      },
+      {
+        "path": "build-web/index.wasm",
+        "bytes": 5682129,
+        "sha256": "17e07a4ca9e39afceb99d9e06fdd1784f1616e6550508d6a9233eadee741b79d",
+        "gzip_equal": true
+      },
+      {
+        "path": "build-web/index.data",
+        "bytes": 213458121,
+        "sha256": "eec55d086beade686a5bb6662c8a1a7d985d6bfec33d539df72bfb3bf24032e7",
+        "gzip_equal": true
+      }
+    ],
+    "note": "Resumed after missing prior process; includes support-budget FloorEncounters rebuild.",
+    "source_sha256": "8b1fba1447724bb53e2d4291a7ce3168a6058030aec73c394be80c75be58110e"
+  },
+  "scope": "Current Original-style WASM bundle: seven unmodified movement/reachability scenarios, three disposable in-browser forced-child mortality cases, three unmodified overkill cases. No full roster, production probability, balance or performance acceptance.",
+  "movement": {
+    "session": 13300,
+    "exit": 0,
+    "results": {
+      "path": "docs/reports/isaac-enemy-port/gaper/web-movement/results.json",
+      "bytes": 14116471,
+      "sha256": "6f4f1474783cae8182445c307973fa87091a1a54af11caef85cbdc4137ccadb9"
+    },
+    "script": {
+      "path": "web/gaper-test.cjs",
+      "bytes": 5349,
+      "sha256": "c59f457320b61cf4f10c4f3426ba42c4f87f2d6af05526f893b7866e3dc8fa90"
+    },
+    "checks": [
+      {
+        "name": "frowning",
+        "variant": 0,
+        "frames": 180,
+        "pass": true,
+        "error": "",
+        "style": "Original",
+        "gl": 0,
+        "movement": 6.8650054931640625,
+        "closedCover": false,
+        "awake": true
+      },
+      {
+        "name": "ordinary",
+        "variant": 1,
+        "frames": 180,
+        "pass": true,
+        "error": "",
+        "style": "Original",
+        "gl": 0,
+        "movement": 6.875205993652344,
+        "closedCover": false,
+        "awake": false
+      },
+      {
+        "name": "flaming",
+        "variant": 2,
+        "frames": 180,
+        "pass": true,
+        "error": "",
+        "style": "Original",
+        "gl": 0,
+        "movement": 6.8702239990234375,
+        "closedCover": false,
+        "awake": false
+      },
+      {
+        "name": "frowning-cover",
+        "variant": 0,
+        "cover": true,
+        "frames": 480,
+        "pass": true,
+        "error": "",
+        "style": "Original",
+        "gl": 0,
+        "movement": 13.203287075836498,
+        "closedCover": true,
+        "awake": true
+      },
+      {
+        "name": "natural-frowning",
+        "variant": 0,
+        "natural": true,
+        "seed": 2,
+        "floor": 0,
+        "room": 2,
+        "frames": 360,
+        "pass": true,
+        "error": "",
+        "style": "Original",
+        "gl": 0,
+        "movement": 9.493142825242105,
+        "closedCover": false,
+        "awake": true
+      },
+      {
+        "name": "natural-ordinary",
+        "variant": 1,
+        "natural": true,
+        "seed": 0,
+        "floor": 0,
+        "room": 3,
+        "frames": 360,
+        "pass": true,
+        "error": "",
+        "style": "Original",
+        "gl": 0,
+        "movement": 10.920624367357977,
+        "closedCover": false,
+        "awake": false
+      },
+      {
+        "name": "natural-flaming",
+        "variant": 2,
+        "natural": true,
+        "seed": 1,
+        "floor": 0,
+        "room": 2,
+        "frames": 360,
+        "pass": true,
+        "error": "",
+        "style": "Original",
+        "gl": 0,
+        "movement": 5.870220184326172,
+        "closedCover": false,
+        "awake": false
+      }
+    ]
+  },
+  "mortality": {
+    "session": 6035,
+    "exit": 0,
+    "results": {
+      "path": "docs/reports/isaac-enemy-port/gaper/web-morph-current/results.json",
+      "bytes": 89943,
+      "sha256": "63bb54c90695cbf4721603a373d9ed1fb9320f6f7104915bc17089b91fea5f1f"
+    },
+    "script": {
+      "path": "web/gaper-morph-test.cjs",
+      "bytes": 4914,
+      "sha256": "b3cd7d696c27f78e4ca0381bd0519cd5447166e1448ada06d6e01b10eb382fe4"
+    },
+    "checks": [
+      {
+        "name": "frowning-pacer",
+        "variant": 0,
+        "child": 1,
+        "pass": true,
+        "override": [
+          "lethal_morph 10.0.0 11.1.0 10000 80 .666666667 1.3",
+          "lethal_morph_roll 10.0.0 1 1",
+          "lethal_morph_choice 10.0.0 11.1.0 3"
+        ]
+      },
+      {
+        "name": "gaper-gusher",
+        "variant": 1,
+        "child": 0,
+        "pass": true,
+        "override": [
+          "lethal_morph 10.1.0 11.0.0 10000 80 .666666667 1.3",
+          "lethal_morph_roll 10.1.0 1 1",
+          "lethal_morph_choice 10.1.0 11.0.0 3"
+        ]
+      },
+      {
+        "name": "flaming-gusher",
+        "variant": 2,
+        "child": 0,
+        "pass": true,
+        "override": [
+          "lethal_morph 10.2.0 11.0.0 10000 80 .666666667 1.3",
+          "lethal_morph_roll 10.2.0 1 1",
+          "lethal_morph_choice 10.2.0 11.0.0 3"
+        ]
+      },
+      {
+        "name": "overkill-0",
+        "variant": 0,
+        "overkill": true,
+        "pass": true
+      },
+      {
+        "name": "overkill-1",
+        "variant": 1,
+        "overkill": true,
+        "pass": true
+      },
+      {
+        "name": "overkill-2",
+        "variant": 2,
+        "overkill": true,
+        "pass": true
+      }
+    ],
+    "override_scope": "Only page-local virtual filesystem probabilities/child choices change for the three morph cases. The packaged files stay unchanged. Native tests validate production probabilities."
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "inspected": [
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-movement/frowning-closed.png",
+        "bytes": 1215028,
+        "sha256": "0e3b0348ecba7722d2176d9236b1b77f1bbb7b33152e4ed04443ad190d7edf1e"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-movement/frowning-open.png",
+        "bytes": 1180447,
+        "sha256": "5dd4ce6047733d4ce5056b6c53c4372ecbe40720060a98c22b4d4125df3dab70"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-movement/frowning-cover-open.png",
+        "bytes": 1193174,
+        "sha256": "b830be1599e7a825e79fc9a4f0480eebbd959bf5cff8c7054e1c3664653a70b2"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-movement/flaming-walking.png",
+        "bytes": 1202730,
+        "sha256": "647db307d48153de462777d8da692b4a8869e228d11f7720e0828e5c8a0e83f2"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-movement/natural-frowning-open.png",
+        "bytes": 925970,
+        "sha256": "4b1f8fcbb1012c54bd12932e3af0627f8668b145e8e259755454283742653dbe"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-movement/natural-flaming-walking.png",
+        "bytes": 998914,
+        "sha256": "48697a398f28c6ed7f81c309e5e2ee65a00a399b94b6e5b83265d6216e1f9709"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-morph-current/frowning-pacer.png",
+        "bytes": 1074926,
+        "sha256": "a431144375cafd812670e63769750ebb91093e55e71a203a46a424fb836f020f"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-morph-current/gaper-gusher.png",
+        "bytes": 1116586,
+        "sha256": "f1d8d3f695d2e825a48fd080006be2f0ae16db4a2b02529c0900b8d7a872a9a2"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/gaper/web-morph-current/flaming-gusher.png",
+        "bytes": 1105377,
+        "sha256": "bbfb30567bd79d3d59280fef68addf378fe4d83ded9636e7a8ca0c6c7483ab4e"
+      }
+    ],
+    "observations": [
+      "Frowning slit/open states are visible in the isolated pair; the opened actor approaches and overlaps the protagonist. Cover scenario shows routing around the crate before opening.",
+      "Flaming head has a visible orange/yellow crown around a charred body. Natural Flaming capture includes other bodies and projectiles.",
+      "Natural Frowning capture overlaps the player and other actors near the entrance. This does not establish crowded readability.",
+      "Current mortality captures show the headless Pacer body and Gusher projectiles with one surviving room threat. Flaming-to-Gusher no longer has the parent flame crown."
+    ],
+    "not_accepted": [
+      "crowded and color-independent readability",
+      "exact source sprite appearance",
+      "controlled frame-time performance; screenshot FPS is not a benchmark"
+    ]
+  },
+  "remaining": [
+    "Full native statuses/control/champions/slow clock and collision mass/save fidelity.",
+    "Special source production contexts and complete placement coverage.",
+    "Full readability, balance and controlled performance."
+  ]
+}

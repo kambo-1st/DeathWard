@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 82: headless_family
+    Start 30: monster_behaviors
+1/4 Test #82: headless_family ..................   Passed    2.16 sec
+    Start  2: mechanics_content
+2/4 Test  #2: mechanics_content ................***Failed    4.69 sec
+invalid definition not diagnosed: Duplicate death binding
+
+    Start 81: faceless_family
+3/4 Test #81: faceless_family ..................   Passed    1.99 sec
+4/4 Test #30: monster_behaviors ................   Passed   21.79 sec
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =  21.79 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+Errors while running CTest

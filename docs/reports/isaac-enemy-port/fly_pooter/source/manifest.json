@@ -1,0 +1,139 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "shared_fly_preflight": "docs/reports/isaac-enemy-port/horf_fly/source/manifest.json",
+  "api_binding_evidence": "docs/reports/isaac-enemy-port/horf_fly/source/api-bindings.json",
+  "pooter_dispatch": {
+    "case": "0x69a0c7",
+    "function": "0x4f4e30"
+  },
+  "dung_vtable": "0xb49fb4",
+  "dung_hurt": "0x6e6400",
+  "constants": [
+    {
+      "name": "cooldown_friction",
+      "address": "0xb6a560",
+      "float32": 0.800000011920929
+    },
+    {
+      "name": "wander_cooldown",
+      "address": "0xb6a50c",
+      "float32": 0.699999988079071
+    },
+    {
+      "name": "ordinary_speed",
+      "address": "0xb6a928",
+      "float32": 7.0
+    },
+    {
+      "name": "hard_speed",
+      "address": "0xb6a974",
+      "float32": 10.0
+    },
+    {
+      "name": "super_hard_speed",
+      "address": "0xb6a940",
+      "float32": 8.0
+    },
+    {
+      "name": "range",
+      "address": "0xb6aba8",
+      "float32": 200.0
+    },
+    {
+      "name": "edge_top",
+      "address": "0xb6abd0",
+      "float32": 230.0
+    },
+    {
+      "name": "edge_bottom",
+      "address": "0xb6ac6c",
+      "float32": 420.0
+    },
+    {
+      "name": "edge_right",
+      "address": "0xb6ac94",
+      "float32": 540.0
+    },
+    {
+      "name": "edge_left",
+      "address": "0xb6aad4",
+      "float32": 80.0
+    }
+  ],
+  "findings": [
+    "Ordinary Pooter uses the shared fly update. Acquisition calls the same strict range200, interval7, non-predictive helper as Horf. On acquisition delay35 is set; variant2 uses63. Shoot fetches the current target, firing mode0 for ordinary Pooter.",
+    "Normal shot speed is7native/frame. Predicate6af030 explicitly checks game modes1/3; hard ordinary speed10 and Super Pooter speed8 are separate from normal mode. Only ordinary normal-mode Pooter is implemented in this batch.",
+    "Preserved Pooter animation is14frames at30FPS, Shoot6. While its source delay is positive, friction is multiplied by.8 and wandering vector by.7 each update. Recovery returns the actor to flying state after Attack finishes.",
+    "AddVelocity at422b60 adds vector*timeScale/currentFriction before the shared movement update. The existing Fly preflight supplies the1/5player impulse, fourth-frame jitter and third-frame wander/friction. Exact common movement-update ordering and time-dilation/knockback parity remain unaccepted.",
+    "Entity config constructor sets shutDoors at+58 totrue; NPC initialization copies it to+b8c. CanShutDoors reads this flag unless friendly. Fly XML has no override and its shared AI has no observed clear-flag rewrite, supporting normal room-threat participation.",
+    "Normal dung Hurt starts from supplied integer damage, adds one with probability1/3, and for variant0 independently adds another with probability1/3. It increases grid state by250times that result, capped at1000. Thus Hurt1 removes1,2or3of four ordinary damage steps; it need not destroy a fresh pile.",
+    "Fly transformation checks grid type14 without checking damage state. It calls Hurt1 but does not branch on that return before Morph14.0 and restoring maxHP. A destroyed dung remnant can still permit the transformation while the grid remains present.",
+    "Local3D adaptations: independent seeded dung placement, low-poly mesh, four health steps, no dung loot/item/special variants yet; bombs destroy the pile and regular projectiles request Hurt1. Exact native projectile-to-grid damage conversion remains separate work."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/pooter_attack.asm",
+      "start": "0x4f5b1e",
+      "end": "0x4f5dc5",
+      "raw_sha256": "7088a6ec45b37f2725eaf6741bfce30ac63a594ffc7cafce5de125720e410b9c",
+      "sha256": "df6f430db826f3d8f89a9d86f67bdf7990732cf39231737b8315d2c7896d15e7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/pooter_recovery.asm",
+      "start": "0x4f5a1d",
+      "end": "0x4f5a5b",
+      "raw_sha256": "e5c7c0efc1d9aab6080a17608bada5fe4fa13bcc66c82600983da8769f920422",
+      "sha256": "069292cee9239322af76f18fec5ff36288a331b137b96630a732f3daa5a3f997"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/hard_mode_predicate.asm",
+      "start": "0x6af030",
+      "end": "0x6af04e",
+      "raw_sha256": "301ac37e8f3c9aaab92166bf529ad61271672d392eadfa51f9a1ea04ca7a9e9a",
+      "sha256": "384908937f256c57a55be6d7fa19e70bf6a49c9c64089890196db21473ab4675"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/add_velocity.asm",
+      "start": "0x422b60",
+      "end": "0x422bcf",
+      "raw_sha256": "544f78f82e6fae2f3ee69e46b0ddb409eb0e74b88b5f31b1d55f4bb75e6cad33",
+      "sha256": "0bec19041e8143ee7c450dec124580b5a7a219a3303ebad5bda885bc02b715a1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/normal_dung_damage.asm",
+      "start": "0x6e646a",
+      "end": "0x6e64d8",
+      "raw_sha256": "25693ed6059b61765df8b6336b8136c9753f01dfa5d753a3d38349fa0c04fecb",
+      "sha256": "4c58917fd999f225b4cc3f16a575344a51626d566c40c1e67d8648f1fd744854"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/dung_damage_state.asm",
+      "start": "0x6e6596",
+      "end": "0x6e65e8",
+      "raw_sha256": "92ec4b68282b4ca94ba2f9eaafba5297138255abbd659b3ae41d3456546ab4b9",
+      "sha256": "35d8aea14f8d05cc4eac4a8ed198c671f33e7586c384ffa64815b21a0c827a0b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/entity_config_default.asm",
+      "start": "0x66cc09",
+      "end": "0x66cc30",
+      "raw_sha256": "e3307549222cf4a7d410978b4ecd2625f4484c6ac57e1f0cb250de6abbfaa50b",
+      "sha256": "fcda13b465635abb566b507ba16e7590ba6e7d5241a292219546e3f9f23e7876"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/npc_clear_flag_load.asm",
+      "start": "0x692a34",
+      "end": "0x692a55",
+      "raw_sha256": "8791ac176ba1075023d1f4b50c9ff7d069082bbaf578befa58c1302135fcd425",
+      "sha256": "d66b93bc30bbc2f68f98cd3f2ed339e8fcc11a90f53aacbbc635f427feca8aa5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/fly_pooter/source/npc_can_shut_doors.asm",
+      "start": "0x68f550",
+      "end": "0x68f56f",
+      "raw_sha256": "5325b068e88629e933739cf0d54fd6492c62da5425aa6e6436d2be62e5cf6a28",
+      "sha256": "391605b07032568f5048557b41d66ea9fdebc19653f44ed2320c579bc7257ad4"
+    }
+  ]
+}

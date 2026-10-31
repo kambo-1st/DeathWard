@@ -1,0 +1,72 @@
+{
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "zoom_percent": 160,
+  "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+  "images": [
+    {
+      "name": "gaper-normal",
+      "image": "native/gaper-normal.png",
+      "image_sha256": "c83bf9b067adc6a8c48b4e0ffe48db4c17503d1d84faa7e0649dd6a6ae5ba4cb",
+      "inspected": true,
+      "findings": "Unchanged tan Gaper and shadow; no pink marker. Image hash matches the prior normal baseline."
+    },
+    {
+      "name": "frowning-charm",
+      "image": "native/frowning-charm.png",
+      "image_sha256": "1bc67b2e72c8cf3a4a7de41fd5c4cc27cd6304ce31cc27f9e7d02b9a565e19c5",
+      "inspected": true,
+      "findings": "Pink body and raised two-lobed marker are visible; awakened facial details remain small. HUD still counts one hostile."
+    },
+    {
+      "name": "gaper-charm",
+      "image": "native/gaper-charm.png",
+      "image_sha256": "62913b30cc5e30f4b85d9435f53a5448fdfc1364793b420ae0c8621292fbe93e",
+      "inspected": true,
+      "findings": "Body tint and overhead marker distinguish the active effect from the matched normal Gaper without changing silhouette."
+    },
+    {
+      "name": "gusher-charm",
+      "image": "native/gusher-charm.png",
+      "image_sha256": "47dc6da30a7941492714d6e8c4064e21186e8aea03dcb4353164b9c92779df32",
+      "inspected": true,
+      "findings": "Pink headless body and marker remain separate from the red neck spray and floor trail."
+    },
+    {
+      "name": "pacer-charm",
+      "image": "native/pacer-charm.png",
+      "image_sha256": "0d5b1afb1aa5e51bd0d76d0f15aa15b1ebb9f1b6bfafcb274997f1702a3d732f",
+      "inspected": true,
+      "findings": "Pink headless body and marker are visible; no Gusher spray or invented projectile."
+    },
+    {
+      "name": "horf-charm-pair",
+      "image": "native/horf-charm-pair.png",
+      "image_sha256": "d110c7e53e760d0e44565f3c37dd8a64291b71b8bef8305bdd30f79cd5f89d22",
+      "inspected": true,
+      "findings": "The selected Horf has a pink marker and pink shot toward the other Horf. The other has a red shot toward the player. Both remain counted as hostiles. Skull material stays bone-colored; effect identity relies on its overhead cue."
+    },
+    {
+      "name": "horf-recovered",
+      "image": "native/horf-recovered.png",
+      "image_sha256": "103a51ffa6129ec1bfcb15542f3b22640da0c443aab69922c5c993cc31a7a275",
+      "inspected": true,
+      "findings": "Pink marker is gone and a normal red projectile is visible; probe reports zero Charm and one room threat."
+    },
+    {
+      "name": "horf-freeze-charm",
+      "image": "native/horf-freeze-charm.png",
+      "image_sha256": "48259c981a0161684662ad6f434f64a98c3a13c86e87be2c4f59510f25dd463b",
+      "inspected": true,
+      "findings": "Blue frozen skull, frost spokes and pink marker coexist. Overhead cues are close together; mixed-room/readability acceptance remains open."
+    }
+  ],
+  "limitations": [
+    "Mostly isolated open-room fixtures, plus one two-Horf scene. Crowded/occluded and varied-angle/zoom acceptance remains open.",
+    "The small heart marker reads primarily as a pink overhead shape at this scale; Horf keeps its existing bone material.",
+    "Still captures do not certify animation quality, full balance or rendered performance. Startup FPS readouts are not a benchmark."
+  ]
+}

@@ -1,0 +1,237 @@
+Start testing: Oct 28 19:33 CET
+----------------------------------------------------------
+2/116 Testing: mechanics_content
+2/116 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 28 19:33 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,-7 new=1,9
+Mechanics contracts passed
+<end of output>
+Test time =   3.95 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 28 19:34 CET
+"mechanics_content" time elapsed: 00:00:03
+----------------------------------------------------------
+
+30/116 Testing: monster_behaviors
+30/116 Test: monster_behaviors
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_behaviors" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 216 entries including offspring
+ROTTEN_STARTING_KIT subtype=1 seconds=0.966667 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=0.933333 hp=87.5 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=7.66667 hp=25 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=0.95 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=1.48333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249074 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=1.0688 z=7.88158 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=45 x=-0.132168 z=6.93303 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=46 x=-1.06714 z=8.13257 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=47 x=-1.70836 z=6.36956 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=48 x=0.119447 z=9.06868 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=44 x=-0.867695 z=7.36507 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.861982 z=8.64267 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=46 x=0.347355 z=6.98246 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=47 x=0.344904 z=9.01838 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=48 x=1.07519 z=8.00314 waypoints=1 waypoint=0,8
+PASS monster roster, armor, regeneration, summons, linked deaths, room hazards, beams, collision and projectiles
+<end of output>
+Test time =   7.95 sec
+----------------------------------------------------------
+Test Passed.
+"monster_behaviors" end time: Oct 28 19:34 CET
+"monster_behaviors" time elapsed: 00:00:07
+----------------------------------------------------------
+
+51/116 Testing: monster_fire_reactions
+51/116 Test: monster_fire_reactions
+Command: "/home/kambo/workspace/DeathWard/build/deathward_fire_reaction_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_fire_reactions" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: hazard capacity
+FIRE_TRANSFORM fraction=1 identity=1 owner=1 team=1 stun=1 no_reward=1 reentry=1
+FLOODED disables_transform=1 enables_fire_damage=1 local_room=1 actual_clear=1
+HOPPER flame_transforms=1 burning_damages=1 no_flood_exception=1
+FIRE_PROJECTILE channel_preserved=1
+FIRE_HAZARDS real_contacts=1 cover=1 height=1 lifetime=1 overlap_bound=1 mine_unchanged=1
+PASS monster fire reactions
+<end of output>
+Test time =   0.39 sec
+----------------------------------------------------------
+Test Passed.
+"monster_fire_reactions" end time: Oct 28 19:34 CET
+"monster_fire_reactions" time elapsed: 00:00:00
+----------------------------------------------------------
+
+71/116 Testing: source_immunity_and_lethal_morph
+71/116 Test: source_immunity_and_lethal_morph
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mortality_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_immunity_and_lethal_morph" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+SOURCE_IMMUNITY channels=1 exceptions=1 execution=1
+SOURCE_LIFETIME dead_producer=1 allied_source=1 tnt=1
+LETHAL_MORPH same_id=1 stage_hp=1 capacity=1 no_reward=1 reentry=1 overkill=1
+LETHAL_CHANCE transformed=147 trials=1000 seeded=1 config=1
+GAPER_DISTRIBUTION variant=0 dead=583 pacer=186 gusher=431 trials=1200
+GAPER_DISTRIBUTION variant=1 dead=583 pacer=186 gusher=431 trials=1200
+GAPER_DISTRIBUTION variant=2 dead=583 pacer=0 gusher=617 trials=1200
+GAPER_MORPH same_entity=1 ownership=1 capacity=1 momentum=1 timer=1 source_draws=1 no_reward=1 reentry=1 overkill=1 execution=1
+GAPER_CONFIG invalid_contracts=9 immutable_reload=1
+MORTALITY_PASS
+<end of output>
+Test time =   1.38 sec
+----------------------------------------------------------
+Test Passed.
+"source_immunity_and_lethal_morph" end time: Oct 28 19:34 CET
+"source_immunity_and_lethal_morph" time elapsed: 00:00:01
+----------------------------------------------------------
+
+74/116 Testing: horf_stationary_shooting
+74/116 Test: horf_stationary_shooting
+Command: "/home/kambo/workspace/DeathWard/build/deathward_horf_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"horf_stationary_shooting" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+FLIGHT native_recurrence=12 standing_hits=3 passive_partitions=3 physical_cover=1
+NATURAL_HORF seed=3 floor=0 room=3 hp=32
+PASS Horf: source cast/cadence/current aim, strict range/cover, pressure, health, flight/passive motion, config and natural stage
+<end of output>
+Test time =   1.94 sec
+----------------------------------------------------------
+Test Passed.
+"horf_stationary_shooting" end time: Oct 28 19:34 CET
+"horf_stationary_shooting" time elapsed: 00:00:01
+----------------------------------------------------------
+
+86/116 Testing: gaper_family
+86/116 Test: gaper_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_gaper_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"gaper_family" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+MOVEMENT hp32_32_28_8=1 first_tick=1 source_acceleration=1 analytic30ticks=1 arrival=1 no_route=1 walk22=1
+AWARENESS closed_chase=1 delayed_open=1 permanent_wake=1 animation20=1 reentry=1 cover=1
+DAMAGE fire_vulnerable=3 no_ignition=1 no_trail=1 contact_base10_global_multiplier=1 partition30_120=1
+EXTERNAL immutable_reload=1 runtime_force=1 rejected_contracts=11
+PLACEMENT bands0_1=1 scorched0_only=1 replacement60percent=1 support_reserve=1600
+PASS Gaper family
+<end of output>
+Test time =   0.75 sec
+----------------------------------------------------------
+Test Passed.
+"gaper_family" end time: Oct 28 19:34 CET
+"gaper_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+89/116 Testing: headless_family
+89/116 Test: headless_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_headless_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"headless_family" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+MOVEMENT no_target=1 retention_before_impulse=1 grounded_cover=1 pacer_no_shots=1
+SHOTS initial20_39=1 reload40_59=1 decrement_branch=1 velocity_aim=1 zero_aim=1 lob_physics=1 no_los_gate=1
+MORTALITY retained_payload=1 no_early_clear=1 gaper_offspring=2 faceless_morphs=2
+PARTITION source30Hz=1 immutable_reload=1 runtime_reload=1 rejected_contracts=6
+FLIGHT independent_native_recurrence=20 partitions30_60_120=1 common_base_acceleration=1
+PASS Headless family
+<end of output>
+Test time =   0.86 sec
+----------------------------------------------------------
+Test Passed.
+"headless_family" end time: Oct 28 19:34 CET
+"headless_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+90/116 Testing: first_floor_cohort
+90/116 Test: first_floor_cohort
+Command: "/home/kambo/workspace/DeathWard/build/deathward_first_floor_cohort_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_cohort" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+COHORT_STARTING_KIT seed=0 seconds=6.68333 hp=100 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=1 seconds=5.11667 hp=62.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=2 seconds=5.08333 hp=87.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=3 seconds=5.05 hp=75 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=4 seconds=4.33333 hp=75 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=5 seconds=5.35 hp=87.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=6 seconds=7.6 hp=87.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=7 seconds=6.96667 hp=100 kills=5 clear=1 suppressed=0
+COHORT_NATURAL id=11.1 seed=0 floor=0 room=3
+COHORT_NATURAL id=10.1 seed=0 floor=0 room=3
+COHORT_NATURAL id=10.0 seed=2 floor=0 room=2
+COHORT_NATURAL id=12.0 seed=3 floor=0 room=3
+COHORT_NATURAL id=11.0 seed=4 floor=0 room=6
+COHORT_PLACEMENT seeds=32 floors=32 lengths=4,5,6,7,8 residents=202 identities=5
+PASS first-floor cohort
+<end of output>
+Test time =   8.50 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_cohort" end time: Oct 28 19:34 CET
+"first_floor_cohort" time elapsed: 00:00:08
+----------------------------------------------------------
+
+91/116 Testing: first_floor_status_effects
+91/116 Test: first_floor_status_effects
+Command: "/home/kambo/workspace/DeathWard/build/deathward_enemy_status_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_status_effects" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+LIFETIME cap120=1 additive=1 extended_refresh=1 partition=1 stun=1 pause=1
+HORF acquisition_block=1 committed_shot_preserved=1 current_aim=1
+HEADLESS suppression=1 timer_continues=1 pacer_unchanged=1 selected_payload_retained=1
+MOVEMENT all_four_evade=1 partition=1 cached_random_target=1 player_independent=1 fear_precedence=1
+PHYSICS source_impulse_friction=1 cover=1 contact_retained=1
+CONTENT external_runtime_values=1 immutable_reload=1 rejected_contracts=7
+MORTALITY same_id_morph=1 independent_expiry=1 final_kill=1 inactive_room_pause=1
+First-floor status contracts passed
+<end of output>
+Test time =   1.57 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_status_effects" end time: Oct 28 19:34 CET
+"first_floor_status_effects" time elapsed: 00:00:01
+----------------------------------------------------------
+
+92/116 Testing: first_floor_freeze_effect
+92/116 Test: first_floor_freeze_effect
+Command: "/home/kambo/workspace/DeathWard/build/deathward_enemy_freeze_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_freeze_effect" start time: Oct 28 19:34 CET
+Output:
+----------------------------------------------------------
+FREEZE_DURATION all_five=1 source_cap=1 negative_refresh=1 partition=1 modal=1
+FREEZE_PHYSICS partition=1 passive_friction=1 held_pose=1 no_animation_catchup=1 impulse=1 cover=1
+FREEZE_ATTACKS paused_horf_cast=1 current_aim=1 reload=1 pending_payload=1
+FREEZE_BOUNDARIES long_step_poll_phase=1 partial_frame=1 reapply_pose=1 explicit_thaw=1
+FREEZE_INTERACTIONS contact=1 ordinary_damage=1 other_statuses=1 same_id_morph=1 inactive_room=1
+FREEZE_CONTENT cap_and_motion=1 immutable_reload=1 opt_in=1 rejected_contracts=6
+First-floor freeze contracts passed
+<end of output>
+Test time =   1.70 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_freeze_effect" end time: Oct 28 19:34 CET
+"first_floor_freeze_effect" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Oct 28 19:34 CET

@@ -1,0 +1,33 @@
+Start testing: Oct 28 18:21 CET
+----------------------------------------------------------
+90/114 Testing: first_floor_cohort
+90/114 Test: first_floor_cohort
+Command: "/home/kambo/workspace/DeathWard/build/deathward_first_floor_cohort_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_cohort" start time: Oct 28 18:21 CET
+Output:
+----------------------------------------------------------
+COHORT_STARTING_KIT seed=0 seconds=6.68333 hp=100 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=1 seconds=5.11667 hp=62.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=2 seconds=5.08333 hp=87.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=3 seconds=5.05 hp=75 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=4 seconds=4.33333 hp=75 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=5 seconds=5.35 hp=87.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=6 seconds=7.6 hp=87.5 kills=5 clear=1 suppressed=0
+COHORT_STARTING_KIT seed=7 seconds=6.96667 hp=100 kills=5 clear=1 suppressed=0
+COHORT_NATURAL id=11.1 seed=0 floor=0 room=3
+COHORT_NATURAL id=10.1 seed=0 floor=0 room=3
+COHORT_NATURAL id=10.0 seed=2 floor=0 room=2
+COHORT_NATURAL id=12.0 seed=3 floor=0 room=3
+COHORT_NATURAL id=11.0 seed=4 floor=0 room=6
+COHORT_PLACEMENT seeds=32 floors=32 lengths=4,5,6,7,8 residents=202 identities=5
+PASS first-floor cohort
+<end of output>
+Test time =   4.06 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_cohort" end time: Oct 28 18:21 CET
+"first_floor_cohort" time elapsed: 00:00:04
+----------------------------------------------------------
+
+End testing: Oct 28 18:21 CET

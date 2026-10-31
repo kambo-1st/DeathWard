@@ -1,0 +1,30 @@
+{
+  "status": "Reviewed source branches; no dedicated Gaper movement implementation yet",
+  "controller": "source/controller.asm",
+  "source_force": {
+    "frowning_idle": 0.6000000238418579,
+    "frowning_alert": 0.7200000286102295,
+    "ordinary": 0.49799999594688416,
+    "flaming": 0.5478000044822693
+  },
+  "force_window": "4f7e48..4f7f0c",
+  "movement": "Normal path4f7f93..4f7fd7 first calls target helper695a30(output,0), then FindGridPath7a3650(targetPosition,force,900,true). Stack tracing matters: force/900/true remain for the second call, not the first. Ordinary target helper returns current target position; FindGridPath adds distance-dependent impulse and friction rather than assigning constant chase speed.",
+  "frowning": "Variant0 starts with Head overlay paused at frame0. 4f80ed..4f812a resumes Head once entity+a90 is set; next positive overlay frame increases force from.6 to.72. +a90 is embedded pathfinder+72c (entity+364): ordinary7a3df1 calls line-check7af4b0 and stores its boolean at7a3df6. GridCollision3 and player-controlled branches set it unconditionally. Exact line-check obstacle flags still need review.",
+  "flaming": "Variant2 keeps Head overlay running and uses force0.5478. Controller has no type10 projectile branch; do not attribute type284/302 fire/shots to it. Any burning/status behavior must be reviewed outside this shared controller.",
+  "source_animation": "animations/manifest.json",
+  "shared_helper_evidence": [
+    "../faceless/source/target_position.asm",
+    "../adult-leech/source/falling_pathfinder.asm"
+  ],
+  "next": [
+    "Pin/review native line-check flags and status exceptions for Frowning activation.",
+    "Review FindGridPath terminal force/friction and contact/status/fire effects.",
+    "Correct source HP to32/32/28.8 only with the remaining Gaper controller and dependent fixture changes."
+  ],
+  "source_pathfinder_evidence": {
+    "path": "../adult-leech/source/falling_pathfinder.asm",
+    "awareness_write": "7a3dd8..7a3df6",
+    "force_and_friction": "7a472a..7a47dd",
+    "ordinary_adaptation": "Use existing DeathWard geometry pathfinding, explicitly distinguish it from exact Isaac cell routing."
+  }
+}

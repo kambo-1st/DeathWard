@@ -1,0 +1,20 @@
+{
+  "references": [
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/direct_damage.asm",
+      "sha256": "da56e6dcb1287d5672156ab2c421dd43a6cb32752d8d524b9f41e26d7a603870"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/npc_damage_forward.asm",
+      "sha256": "7a1acf2d1703bd9d20e2e927334b39cc0693b8fc666ef5435275071d36da3377"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    }
+  ],
+  "findings": [
+    "Native ordinary NPC damage forwards to684bb0. The flame contact cooldown at208 is gated by damage flag2; the countdown cooldown at20c is gated by flag40. Periodic poison/burn flag8000 sets neither, so the two effects are not mutually suppressed by those cooldowns.",
+    "The existing same-entity Gaper/headless morph retains base status fields and does not create a new actor. Tests exercise inherited Poison/Burn duration and next tick after this transition."
+  ]
+}

@@ -1,0 +1,255 @@
+[
+  {
+    "name": "frowning-frozen",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "110",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/frowning-frozen.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "0a94dba23ab22d53a7dcad1c29831a368ea47e0b4cd2fed80fa1567d4cfed96a",
+    "probe": [
+      "ENEMY_STATUS frame=45 kind=freeze duration=120",
+      "ENEMY_PROBE id=10.0 frames=110 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-119.075 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=87"
+    ]
+  },
+  {
+    "name": "gaper-frozen",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "110",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/gaper-frozen.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "ff160c6b80b61c4323ef794728fb1b4c99a6018c1ac2e88449af7b8e42ba1a3d",
+    "probe": [
+      "ENEMY_STATUS frame=45 kind=freeze duration=120",
+      "ENEMY_PROBE id=10.1 frames=110 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-119.328 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=87"
+    ]
+  },
+  {
+    "name": "gusher-frozen",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.0.0",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "110",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/gusher-frozen.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "4168da8fb55b55bc1995b4377942a857d7e958e6a1a8741c85a1b6f8104e8681",
+    "probe": [
+      "ENEMY_STATUS frame=45 kind=freeze duration=120",
+      "ENEMY_PROBE id=11.0 frames=110 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.0 hp=32 max_hp=32 state=0 owner=0 x=-82.8487 y=0.85 z=-128.366 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=87"
+    ]
+  },
+  {
+    "name": "pacer-frozen",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.1.0",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "110",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/pacer-frozen.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "64aa419b2fdc83bf67dbfb50c7b569b0f4e3961ebcd7ce76d5a511f4fe73a16e",
+    "probe": [
+      "ENEMY_STATUS frame=45 kind=freeze duration=120",
+      "ENEMY_PROBE id=11.1 frames=110 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.1 hp=32 max_hp=32 state=0 owner=0 x=-82.8487 y=0.85 z=-128.366 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=87"
+    ]
+  },
+  {
+    "name": "horf-frozen",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "110",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/horf-frozen.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "6f6b23f5d546e17a2dfa7e33bd13e4fb63c577166414f34f0fe33ef1f9e5909a",
+    "probe": [
+      "ENEMY_STATUS frame=45 kind=freeze duration=120",
+      "ENEMY_PROBE id=12.0 frames=110 alive=1 hp=32 shots=1 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=87"
+    ]
+  },
+  {
+    "name": "gusher-frozen-early",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.0.0",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "70",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/gusher-frozen-early.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "1bbbc895fac0386f9f91fecc7ae67b8fcb18f4b75fa5e1386aeaeaa415c06c06",
+    "probe": [
+      "ENEMY_STATUS frame=45 kind=freeze duration=120",
+      "ENEMY_PROBE id=11.0 frames=70 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.0 hp=32 max_hp=32 state=0 owner=0 x=-82.8487 y=0.85 z=-128.366 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=107"
+    ]
+  },
+  {
+    "name": "horf-thawed",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "45",
+      "freeze",
+      "120",
+      "--enemy-camera-follow",
+      "--frames",
+      "110",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/horf-thawed.png",
+      "--enemy-status",
+      "90",
+      "freeze",
+      "0"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "2d6c08bc5f1493bfaea8ec5eadd8b586db298f050fc608bd1ec9a34f36e9af3d",
+    "probe": [
+      "ENEMY_STATUS frame=45 kind=freeze duration=120",
+      "ENEMY_STATUS frame=90 kind=freeze duration=0",
+      "ENEMY_PROBE id=12.0 frames=110 alive=1 hp=32 shots=1 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0"
+    ]
+  },
+  {
+    "name": "horf-frozen-before-first-update",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "freeze",
+      "30",
+      "--frames",
+      "130",
+      "--mute",
+      "--enemy-camera-follow",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/freeze/native/final/horf-frozen-before-first-update.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "9021ab5015259cc27ae95bc0e7a1b9fa2c55b558347162b01db2b1710c8eb1e9",
+    "image_sha256": "5d4c32704200ab1aa20b41223f6febc9eecc1db9bc6ab47f96e0136a8ddb77da",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=freeze duration=30",
+      "ENEMY_PROBE id=12.0 frames=130 alive=1 hp=32 shots=2 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0"
+    ]
+  }
+]

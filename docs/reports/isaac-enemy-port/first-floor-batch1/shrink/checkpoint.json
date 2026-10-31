@@ -1,0 +1,20 @@
+{
+  "verified_utc": "2026-10-28T19:49:08.769338+00:00",
+  "result": "partial_progress",
+  "previous_goal_turn_classification": "Progress: previous turn implemented and validated Poison/Burn and Horf phase correction. This turn implemented and validated Shrink for the same first five.",
+  "mechanics_fingerprint": "9722794efbc282f3",
+  "counts": {
+    "in_progress": 200,
+    "missing": 423,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native-summary.json",
+  "next_work": [
+    "Continue first-five applicable Charm/control/other damaging statuses and source item duration/application integration. Shrink direct-death event attribution and3D collision are explicit adaptations.",
+    "Finish applicable champion/knockback production and mass interactions.",
+    "Finish mixed-room Original-style readability/occlusion, varied-build/terrain balance and controlled rendered-performance acceptance before batch2."
+  ],
+  "live_jobs": "All Linux builds, tests and eight native captures completed. No WASM."
+}

@@ -1,0 +1,16 @@
+{
+  "runner_pid": 21319,
+  "started_utc": "2026-10-28T12:00:22.934900+00:00",
+  "binary_sha256": "bb9c3ea2869b9b70a4de88bdf1072acbf36c650dcf846a0b1159529ec91c7a16",
+  "mechanics_fingerprint": "ec8492eb3ee9db9",
+  "command": [
+    "stdbuf",
+    "-oL",
+    "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+  ],
+  "state": "finished",
+  "previous_interruption": "movement-floor-final-result.json; original sessions and OS processes absent, no success claimed",
+  "child_pid": 21347,
+  "returncode": 0,
+  "finished_utc": "2026-10-28T12:04:24.744037+00:00"
+}

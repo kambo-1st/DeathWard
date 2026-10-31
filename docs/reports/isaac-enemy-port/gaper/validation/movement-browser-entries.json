@@ -1,0 +1,50 @@
+[
+  {
+    "name": "frowning",
+    "variant": 0,
+    "frames": 180
+  },
+  {
+    "name": "ordinary",
+    "variant": 1,
+    "frames": 180
+  },
+  {
+    "name": "flaming",
+    "variant": 2,
+    "frames": 180
+  },
+  {
+    "name": "frowning-cover",
+    "variant": 0,
+    "cover": true,
+    "frames": 480
+  },
+  {
+    "name": "natural-frowning",
+    "variant": 0,
+    "natural": true,
+    "seed": 2,
+    "floor": 0,
+    "room": 2,
+    "frames": 360
+  },
+  {
+    "name": "natural-ordinary",
+    "variant": 1,
+    "natural": true,
+    "seed": 0,
+    "floor": 0,
+    "room": 3,
+    "frames": 360
+  },
+  {
+    "name": "natural-flaming",
+    "variant": 2,
+    "natural": true,
+    "seed": 1,
+    "floor": 0,
+    "room": 2,
+    "frames": 360
+  }
+]

@@ -1,0 +1,24 @@
+Start testing: Oct 28 18:13 CET
+----------------------------------------------------------
+89/113 Testing: headless_family
+89/113 Test: headless_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_headless_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"headless_family" start time: Oct 28 18:13 CET
+Output:
+----------------------------------------------------------
+MOVEMENT no_target=1 retention_before_impulse=1 grounded_cover=1 pacer_no_shots=1
+SHOTS initial20_39=1 reload40_59=1 decrement_branch=1 velocity_aim=1 zero_aim=1 lob_physics=1 no_los_gate=1
+MORTALITY retained_payload=1 no_early_clear=1 gaper_offspring=2 faceless_morphs=2
+PARTITION source30Hz=1 immutable_reload=1 runtime_reload=1 rejected_contracts=6
+FLIGHT independent_native_recurrence=20 partitions30_60_120=1 common_base_acceleration=1
+PASS Headless family
+<end of output>
+Test time =   0.46 sec
+----------------------------------------------------------
+Test Passed.
+"headless_family" end time: Oct 28 18:13 CET
+"headless_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 28 18:13 CET

@@ -1,0 +1,24 @@
+{
+  "checks": [
+    {
+      "name": "faceless-natural",
+      "variant": 0,
+      "natural": true,
+      "seed": 50,
+      "floor": 2,
+      "room": 3,
+      "frames": 900,
+      "pass": false,
+      "observations": [
+        {
+          "traceFrames": 0
+        },
+        {
+          "traceFrames": 0
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "scope": "Scoped Original-style production WASM Faceless tests. Scripted nonlethal hit activates aggression; no full acceptance claim."
+}

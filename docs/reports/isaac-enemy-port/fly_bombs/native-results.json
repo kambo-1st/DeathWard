@@ -1,0 +1,211 @@
+{
+  "passed": 51,
+  "failed": 0,
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.311073
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "seconds": 1.16301
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "seconds": 34.0886
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "seconds": 6.71065
+    },
+    "floor_progression": {
+      "result": "pass",
+      "seconds": 67.4713
+    },
+    "item_builds": {
+      "result": "pass",
+      "seconds": 8.09401
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "seconds": 56.105
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "seconds": 0.0316707
+    },
+    "expedition": {
+      "result": "pass",
+      "seconds": 14.3437
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "seconds": 9.90789
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "seconds": 0.219218
+    },
+    "save_slots": {
+      "result": "pass",
+      "seconds": 0.0633659
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "seconds": 1.11827
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "seconds": 0.059086
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "seconds": 7.05307
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "seconds": 16.2684
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "seconds": 0.578468
+    },
+    "building_navigation": {
+      "result": "pass",
+      "seconds": 0.0303433
+    },
+    "particle_emission": {
+      "result": "pass",
+      "seconds": 0.0189797
+    },
+    "town_characters": {
+      "result": "pass",
+      "seconds": 0.0185984
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "seconds": 0.171037
+    },
+    "train_motion": {
+      "result": "pass",
+      "seconds": 0.503495
+    },
+    "object_animation": {
+      "result": "pass",
+      "seconds": 0.0467163
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "seconds": 1.00169
+    },
+    "mission_shop": {
+      "result": "pass",
+      "seconds": 2.31406
+    },
+    "money_pickups": {
+      "result": "pass",
+      "seconds": 1.26319
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "seconds": 0.803987
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "seconds": 0.0538442
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "seconds": 3.03879
+    },
+    "monster_flight": {
+      "result": "pass",
+      "seconds": 3.18994
+    },
+    "monster_formations": {
+      "result": "pass",
+      "seconds": 0.14412
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "seconds": 0.261157
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "seconds": 0.211034
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "seconds": 0.298457
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "seconds": 1.58423
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "seconds": 1.51059
+    },
+    "bloat_boss_and_chargers": {
+      "result": "pass",
+      "seconds": 2.17892
+    },
+    "charger_variants": {
+      "result": "pass",
+      "seconds": 0.183052
+    },
+    "companion_familiars": {
+      "result": "pass",
+      "seconds": 1.72649
+    },
+    "room_statues": {
+      "result": "pass",
+      "seconds": 0.669999
+    },
+    "maw_attraction": {
+      "result": "pass",
+      "seconds": 0.843699
+    },
+    "quake_waves": {
+      "result": "pass",
+      "seconds": 0.706592
+    },
+    "supplied_bombs": {
+      "result": "pass",
+      "seconds": 0.629026
+    },
+    "fly_bombs": {
+      "result": "pass",
+      "seconds": 3.45006
+    },
+    "segmented_bosses": {
+      "result": "pass",
+      "seconds": 1.53703
+    },
+    "mission_themes": {
+      "result": "pass",
+      "seconds": 4.07257
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "seconds": 0.0649738
+    },
+    "core_contracts": {
+      "result": "pass",
+      "seconds": 0.530644
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "seconds": 2.9518
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "seconds": 22.7334
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "seconds": 0.668046
+    }
+  },
+  "final_focused_extension": "The fly_bombs suite was extended with actual rock-demolition coverage after the 51-suite run; final standalone behavior.txt passed. Runtime remained unchanged."
+}

@@ -1,0 +1,5 @@
+FLIGHT_COVER peak=2.85 safe_path_points=3
+FLIGHT_OFFSPRING water_births=0 land_births=8 samples=16
+FLIGHT_COMBAT shooter_damage=12.5 mouse_arrow_hits=2
+FLIGHT_SEEDED rocks=160 water_cells=120 cliffs=2185
+PASS flight collision, elevation, combat and seeded terrain

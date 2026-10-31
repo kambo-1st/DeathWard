@@ -1,0 +1,86 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/source/add_confusion.asm",
+      "start": "0x6857d0",
+      "end": "0x68598a",
+      "raw_sha256": "171892b7a1404a8c6ec4dbd5395902747ffc204f6907b30c52ac475c102d7c00",
+      "sha256": "88e4f9e0c4634bb7fb7efb5c9655bb8043d600862e6214be3a0fd291ad5b7b3a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/source/add_fear.asm",
+      "start": "0x685ae0",
+      "end": "0x685c9d",
+      "raw_sha256": "81ccd7bf87d3f368bbf2eb7a0f25b36b5b2646292aa24145f7c12bb534451eed",
+      "sha256": "fdfcdfc89aae5bd5b2dfae2e5020fe90c0786e22e2ba445d7db60c6aeb50e196"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/source/expire_timers.asm",
+      "start": "0x686882",
+      "end": "0x6868f5",
+      "raw_sha256": "7d96ca64f3316da7938b1cf7c6aaf580300350db6bd9f9cc022705a1a1c5acdb",
+      "sha256": "feca329d05bd326a26f06610b308d081f71ab724c960c401a5904f9163ca570e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/source/invalidate_target_cache.asm",
+      "start": "0x680df0",
+      "end": "0x680e31",
+      "raw_sha256": "01f75dbe5a429c051ee3fe8539097a8594c595eac8116567497656c385c73c98",
+      "sha256": "e4a8c123824e60ec0a0f0e234f4d02cca7e98acc111fc61b05940c19c52ea358"
+    }
+  ],
+  "referenced_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/source/shared_acquisition.asm",
+      "sha256": "3aa17539fcfcdf31c68bfbb09d92224e2cc49d93447f98a903706e2475cfea5c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/headless/source/controller.asm",
+      "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/controller.asm",
+      "sha256": "bdf1f571dc08674539b5459d704328a24aea87d7c1991165c5fb29308bfe000f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/base-config.asm",
+      "sha256": "d44b00677e9bc0a0ceaadf926e1008e02e7bc1591054266c92202fabdb2ded9f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/npc-config.asm",
+      "sha256": "47a82eb4b11f7accff02b9a79f16f1c9fbbb1d8564dee26acb7c0436e15c5c48"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/parent-evade.asm",
+      "sha256": "614544eaa7ac8518ce1cab9234aacb252ac68bf87bfd820fa472ee260ae3f4d1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/target_position.asm",
+      "sha256": "621bf17eb466bee6bc231cd75fa97724355148b8c83cd3c108e7a2da0b869caf"
+    }
+  ],
+  "findings": [
+    "AddConfusion=6857d0 and AddFear=685ae0 are bound by Entity API registration at8053d3/8053bf. Both reject NO_STATUS_EFFECTS and use source-adjusted duration. This cohort does not implement player item duration multipliers or boss immunity cooldowns.",
+    "Ordinary positive duration adds to the remaining counter with cap0x78=120 source updates, four seconds at30Hz. Confusion takes max(old,cappedSum); Fear assigns cappedSum. Negative duration means max(old,-duration), not permanent.",
+    "Common update decrements220(confusion)/228(fear) and clears flag200/800 at zero. Status acquisition invalidates cached path targets through680df0 on first activation.",
+    "Horf shared acquisition6a15a0 rejects confusion200 and fear/shrink1000800. Its committed Shoot callback does not repeat that check.",
+    "Gaper fear/shrink branch calls EvadeTarget7a4830 then applies friction*.8. Ordinary pursuit uses695a30, whose confusion branch caches a random point and refreshes every15 global updates.",
+    "Confused target radius is uniform1*uniform2*240native units, with a separate random angle and room/radius clamping. Fear branch takes precedence over confused targeting.",
+    "Headless shooting tests1000a00(confusion|fear|shrink); the suppressed path still decrements its timer below zero. Fear movement uses EvadeTarget; base friction*.75 precedes its force, and*.8 follows when NPC+aa0(pathfinder+73c)evade memory is positive.",
+    "Morph and resolved base/NPC configuration contain no writes clearing flags160/164 or timers220/228. Gaper decapitation keeps the same entity and these timers. Rendering/path initialization does not create a fresh entity."
+  ],
+  "adaptations": [
+    "Only10.0.0,10.1.0,11.0.0,11.1.0,12.0.0 opt into timed Fear and Confusion. Shrink, Charm, Freeze, Slow, damaging statuses, bosses/champions and player item application remain separate open work.",
+    "Durations use active-room30Hz time. Inactive residents and modal game pauses retain their state; no off-room catch-up. Status decrements after each local controller step. Cached target refresh uses retained actor source phase instead of native global frame.",
+    "Fear reuses the existing grounded EvadeTarget adaptation with actual canyon navigation,16candidate bound and source force/friction. Confused destinations are clamped to room bounds and shortened along the same ray if they land on blocked floor.",
+    "Capacity-delayed payloads already selected before status application are retained. Fear/confusion block new attacks, not already-selected queue work. Negative countdown saturates at-18000 to bound stored integers.",
+    "applyEnemyStatus is a reusable simulation API; --enemy-status supplies native smoke-test access without adding player items or changing the starting build. Positive duration caps and motion values are external mechanics content.",
+    "Original-style body tints and small overhead marks are DeathWard readability cues, not copied Isaac artwork."
+  ]
+}

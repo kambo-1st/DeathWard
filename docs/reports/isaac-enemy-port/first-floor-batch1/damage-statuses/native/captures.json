@@ -1,0 +1,263 @@
+[
+  {
+    "name": "frowning-poison",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-status",
+      "1",
+      "poison",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/frowning-poison.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=poison duration=90",
+      "ENEMY_PROBE id=10.0 frames=30 alive=1 hp=8 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.0 hp=8 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-119.994 radius=0.6 speed=14.3266 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=75 burn_frames=0"
+    ],
+    "image_sha256": "6a4579e4752d45812d4810ab7cc1a62111c4b1d7122e0762a592b5b032c5b917"
+  },
+  {
+    "name": "gaper-burn",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-status",
+      "1",
+      "burn",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/gaper-burn.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=burn duration=90",
+      "ENEMY_PROBE id=10.1 frames=30 alive=1 hp=8 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=8 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-121.791 radius=0.6 speed=9.91241 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=75"
+    ],
+    "image_sha256": "dfee45d49ade07f124b436c16baa7c45d6b0bdc8328860757fc025b0ec76d3ad"
+  },
+  {
+    "name": "gusher-poison",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.0.0",
+      "--enemy-status",
+      "1",
+      "poison",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/gusher-poison.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=poison duration=90",
+      "ENEMY_PROBE id=11.0 frames=30 alive=1 hp=8 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.0 hp=8 max_hp=32 state=0 owner=0 x=-81.7005 y=0.85 z=-127.412 radius=0.6 speed=5.8929 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=75 burn_frames=0"
+    ],
+    "image_sha256": "f3cfba5e55d7533653d5c5b6fab65999add95a3eeed65098dee3bf571d97ab3b"
+  },
+  {
+    "name": "pacer-burn",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.1.0",
+      "--enemy-status",
+      "1",
+      "burn",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/pacer-burn.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=burn duration=90",
+      "ENEMY_PROBE id=11.1 frames=30 alive=1 hp=8 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.1 hp=8 max_hp=32 state=0 owner=0 x=-81.7005 y=0.85 z=-127.412 radius=0.6 speed=5.8929 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=75"
+    ],
+    "image_sha256": "c65169d0f379bcbc56f0a038be887d5e998ff83042d967788bb6ba29f3fda745"
+  },
+  {
+    "name": "horf-poison",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "poison",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/horf-poison.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=poison duration=90",
+      "ENEMY_PROBE id=12.0 frames=30 alive=1 hp=8 shots=1 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=8 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=75 burn_frames=0",
+      "ENEMY_BULLET kind=0 x=-80 z=-120.4 vx=0 vz=21 curve=0 life=4.73333 y=0.978869 vy=0.137102 time_scale=1"
+    ],
+    "image_sha256": "dfba9645e1348797667b038c2b00894bb27842010430f56ecdd2603f17093846"
+  },
+  {
+    "name": "horf-burn",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "burn",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/horf-burn.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=burn duration=90",
+      "ENEMY_PROBE id=12.0 frames=30 alive=1 hp=8 shots=1 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=8 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=75",
+      "ENEMY_BULLET kind=0 x=-80 z=-120.4 vx=0 vz=21 curve=0 life=4.73333 y=0.978869 vy=0.137102 time_scale=1"
+    ],
+    "image_sha256": "f4f81cd22a5ed237dc40c50a3240503f7c2ea74da13330814d94d1538fe2cd64"
+  },
+  {
+    "name": "gaper-freeze-burn",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-status",
+      "1",
+      "burn",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/gaper-freeze-burn.png",
+      "--enemy-status",
+      "1",
+      "freeze",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=burn duration=90",
+      "ENEMY_STATUS frame=1 kind=freeze duration=90",
+      "ENEMY_PROBE id=10.1 frames=30 alive=1 hp=8 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=8 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-125.949 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=75 slow_frames=0 poison_frames=0 burn_frames=75"
+    ],
+    "image_sha256": "a6075281790855abe72a846da5548edde05c8148ec6621ecd239c795bdf6ad9c"
+  },
+  {
+    "name": "horf-recovered",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "poison",
+      "90",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/damage-statuses/native/horf-recovered.png",
+      "--enemy-status",
+      "20",
+      "poison",
+      "0"
+    ],
+    "exit": 0,
+    "binary_sha256": "bf0e2c36c95660912ba3a9938d6035ae3de4e7bafde6a185801a6d8eaeee5c19",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=poison duration=90",
+      "ENEMY_STATUS frame=20 kind=poison duration=0",
+      "ENEMY_PROBE id=12.0 frames=30 alive=1 hp=8 shots=1 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=8 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0",
+      "ENEMY_BULLET kind=0 x=-80 z=-120.4 vx=0 vz=21 curve=0 life=4.73333 y=0.978869 vy=0.137102 time_scale=1"
+    ],
+    "image_sha256": "3fba01b33d284ecccc9a7110492a301d31e5a1d13af9f48a50f9f63b31d2caf2"
+  }
+]

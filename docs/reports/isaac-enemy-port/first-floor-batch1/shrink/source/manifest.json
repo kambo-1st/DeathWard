@@ -1,0 +1,112 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/add_shrink.asm",
+      "start": "0x68cfb0",
+      "end": "0x68d160",
+      "raw_sha256": "6c8c76e37eb675a1bb05a6220731270dfb772b24dcd3a70a5078341b81cd092d",
+      "sha256": "afecb0002fdb5a01ccce54582cd78e8a0ffbd0321e92bcabdb030a9cc6ffdded"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/remove_shrink.asm",
+      "start": "0x68d260",
+      "end": "0x68d2ea",
+      "raw_sha256": "aab209bc89b9ce8600366ae5139b683fb8428bbddbaddbf2c2a014030e78d2d0",
+      "sha256": "8a9ffe43daa209999c40cf20ae189ab430737913978e24df85be57695e5e6e5f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/scale_and_expiry.asm",
+      "start": "0x6868f5",
+      "end": "0x68694d",
+      "raw_sha256": "0a0522d62358f8696a5e21f9852bb4957415a61d805ec3a2843efd1f6d72f664",
+      "sha256": "f24430020403f08d796eb80bfa347057dd076e6be4f4eb1cfa00d3bfa155ffa9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/set_size.asm",
+      "start": "0x6843a0",
+      "end": "0x68451d",
+      "raw_sha256": "7d3dfaf04b261b1c7805477add3f9b3a63a325a5816b84a8623db2c6f8010bca",
+      "sha256": "7cd838a69fb3fa48c7dba4ab415c86447d25d3cb5615afb57e6ceb9d7ad988e2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/shrunken_player_collision.asm",
+      "start": "0x6a4df2",
+      "end": "0x6a4e1e",
+      "raw_sha256": "e602abd566abdddd8b246458447002ece33ed13958fa1c117f43f003f1a12aac",
+      "sha256": "857ccb99bfcb8bcc54c2cd726e950e106b4f7d6089f60acad31a33c8bf7a0fa2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/collision_death.asm",
+      "start": "0x6a4d73",
+      "end": "0x6a4d85",
+      "raw_sha256": "fe4f2245a3059ba64cd6c41b03edd6b2dd4aa21b7859b079f342fb4542fc97de",
+      "sha256": "ff336eae9a5678e86b6499522bb12d5595a2a1998eca247a0cd25896a32fa4ff"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/visual_scale.asm",
+      "start": "0x697d3f",
+      "end": "0x697d76",
+      "raw_sha256": "d226b7788d8037dfb6f5457a00275aedbfadda102c9ec66952122b6bd3d2c56a",
+      "sha256": "2cee4af79a9758f12b92ba940c83e5e73f03ae1cf1a13184f3c76e6950cf5d4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/lua_registration.asm",
+      "start": "0x8053ab",
+      "end": "0x8053b5",
+      "raw_sha256": "37c2b1091d48c3321cc80605014d5069ada1c2a3f98f1c3d0217ed4006ba9474",
+      "sha256": "97a719bc18d1dd5201781e2d8205e632e89db59f439b257df85cbc421bb28325"
+    }
+  ],
+  "constants": [
+    {
+      "name": "transition_gain",
+      "address": "0xb6a8f4",
+      "bytes": "0000a040",
+      "value": 5.0
+    },
+    {
+      "name": "source_dt",
+      "address": "0xb6a25c",
+      "bytes": "8988083d",
+      "value": 0.03333333507180214
+    }
+  ],
+  "referenced_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/first-floor-batch1/statuses/source/manifest.json",
+      "sha256": "77f5046ad3b193e9af08e7174f2848673b73c51435aac49a9c8ad514e914f7e1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/headless/source/controller.asm",
+      "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/morph.asm",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gaper/source/base-config.asm",
+      "sha256": "d44b00677e9bc0a0ceaadf926e1008e02e7bc1591054266c92202fabdb2ded9f"
+    }
+  ],
+  "api_reference": "https://wofsauge.github.io/IsaacDocs/rep/Entity.html#addshrink",
+  "findings": [
+    "AddShrink68cfb0 rejects bosses and common status immunity, routes linked parents, and uses shared source-duration modifier685020. Cohort scope is ordinary types10/11/12, not linked/boss/item integration.",
+    "Timer234 positive duration adds then caps150; negative duration keeps max(old,abs(duration)). Zero is rejected. Reapplying a positive duration can shorten a longer negative-duration application. Entity low flag1000000 marks Shrink.",
+    "On first activation, target visual scale310 becomes float bits3eaa7efa (.333). Current scale30c is not reset. SetSize receives configuration radius multiplied by CURRENT scale, not target scale. Active reapplication skips SetSize. Removal restores configuration radius immediately and target visual scale1.",
+    "Base update6868f5 approaches target: scale += (target-scale)*5*(1/30), then decrements Shrink duration and removes at zero. This update is not gated by ordinary Freeze or Slow. Collision size2c8 is separate from visual scale30c; inspected ordinary base update does not continually resize the hitbox. A first application at scale1 therefore retains ordinary collision radius; reactivation during visual recovery samples that intermediate scale.",
+    "NPC sprite-scale assignment697d3f uses current30c. Shrink does not imply damage amplification or a lower maxHP in these reviewed paths.",
+    "Ordinary NPC collision6a4df2 tests Shrink, other entity type1(player), and non-boss; then calls virtual+24 directly at6a4d73 before ordinary player-contact damage. This is a direct death path, not the unrelated DAMAGE_CRUSH amount35 or80 seen elsewhere.",
+    "Existing pinned Fear evidence contains shared Fear|Shrink1000800 evasion and Horf acquisition gates, and Confusion|Fear|Shrink1000a00 Gusher shot gate. Moving cohort members flee; stationary Horf keeps passive motion. Committed Horf attacks and selected Gusher payloads are retained."
+  ],
+  "adaptations": [
+    "shrink_effect ID cap targetScale approach opts in only10.0.0,10.1.0,11.0.0,11.1.0,12.0.0. Durations and interpolation use the retained30Hz source phase; modal/inactive-room storage pauses both without catch-up.",
+    "3D visual scaling is anchored at the ground, applies to the complete procedural model and its shadow/occlusion pass, and keeps the unshrunk render radius separate from collision radius. Visual scale snaps only within1e-6 of target.",
+    "The current cohort uses the same physical body radius through its Gaper-to-headless morph. Native first-activation collision sampling and immediate restoration are retained; generic actor resize/champion integration remains open.",
+    "Player contact uses DeathWard swept sphere and line-of-sight/physical cover. Stunned/frozen or capacity-waiting bodies can still be squashed. A queued execution uses the existing damage/death pipeline, suppresses headless morph, and pays one normal kill. Local damage/kill item hooks and player attribution are an explicit adaptation of the native direct Die call.",
+    "Under full event capacity, one squash intent per actor is retained and its AI stops until admission. It never hurts the player or silently loses the kill. Already emitted projectiles keep their existing lifetime. No new player item or input binding is added.",
+    "Ordinary projectile origin remains the existing collision/actor center. Scaling arbitrary shot offsets, all other status types, champions, source item duration modifiers and full cohort acceptance are not certified by this slice."
+  ]
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "command": [
+      "./build/deathward",
+      "--enemy-status",
+      "1",
+      "slow",
+      "0"
+    ],
+    "exit": 2,
+    "output": "--enemy-status requires an isolated --smoke --scene enemy-ID capture\n"
+  },
+  {
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "0",
+      "slow",
+      "30"
+    ],
+    "exit": 2,
+    "output": "--enemy-status needs FRAME fear|confusion|freeze|slow DURATION (-18000..18000 source frames; 0 removes); at most 64 events\n"
+  },
+  {
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-status",
+      "1",
+      "slow",
+      "-18001"
+    ],
+    "exit": 2,
+    "output": "--enemy-status needs FRAME fear|confusion|freeze|slow DURATION (-18000..18000 source frames; 0 removes); at most 64 events\n"
+  }
+]

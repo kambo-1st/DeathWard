@@ -1,0 +1,8 @@
+CHARM_TIME max_refresh=1 no_cap=1 expiry_partition=1 permanent_rejected=1 freeze_slow=1 room_threat=1 pause=1
+CHARM_TARGET weighted=1 dead_fallback=1 cover=1 ancestry=1 birth_age=1 pursuit=1
+CHARM_SHOTS independent_masks=1 npc_hp=1 player_hp=1 owner_lifetime=1 selected_payload=1 pacer=1
+CHARM_CONTACT reciprocal=1 native_curve=1 poll_cadence=1 queue_retry=1 cover=1 player_contact=1
+CHARM_COMBINATIONS fear_target=1 confusion=1 slow_shot=1 frozen_contact=1 swept_contact=1 poll15=1
+CHARM_LIFECYCLE morph=1 room_storage=1
+CHARM_CONTENT tuning=1 immutable_reload=1 opt_in=1 rejected_contracts=9
+First-floor temporary Charm contracts passed

@@ -1,0 +1,10 @@
+chain 1 depth 0 effect -1: queue capacity
+FLY_BOMB_DAMAGE contact_40=1 death_100=1 player_12_5_25=1 delayed_after_clear=1 exactly_once=1
+FLY_BOMB_MOVEMENT curved_pursuit=1 reaches_player=1 flies_over_cover=1 swept_dodge=1
+FLY_BOMB_OWNERSHIP trio=1 invulnerable=1 real_orbit=1 owner_death=1 contact_chain=1 atomic_group=1
+FLY_BOMB_LIFECYCLE inactive_pause=1 pending_retry=1 actual_tuff_armor=1 rock_demolition=1 debug_clear=1
+FLY_BOMB_STAGE seed=0 floor=2 room=2 variant=standard
+FLY_BOMB_STAGE seed=4 floor=2 room=1 variant=standard
+FLY_BOMB_STAGE seed=10 floor=2 room=8 variant=standard
+FLY_BOMB_EXTERNAL immutable_snapshot=1 fuse_damage=1 duplicate_rejected=1 actual_seeded_route=1 eternal_producer_pending=1
+PASS Fly Bomb pursuit, explosions, ordnance, ownership, external configuration and stage routing

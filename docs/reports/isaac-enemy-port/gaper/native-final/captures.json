@@ -1,0 +1,92 @@
+[
+  {
+    "name": "frowning-closed",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "10",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-final/frowning-closed.png",
+      "--enemy-terrain",
+      "cover"
+    ],
+    "exit": 0,
+    "binary_sha256": "68cd2369508bfca5621a0241c35a25d081eb7c73465a41dba3f90403b55d27af"
+  },
+  {
+    "name": "frowning-open",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "40",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-final/frowning-open.png",
+      "--enemy-player-at",
+      "1",
+      "0",
+      "12"
+    ],
+    "exit": 0,
+    "binary_sha256": "68cd2369508bfca5621a0241c35a25d081eb7c73465a41dba3f90403b55d27af"
+  },
+  {
+    "name": "ordinary-walking",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "20",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-final/ordinary-walking.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "68cd2369508bfca5621a0241c35a25d081eb7c73465a41dba3f90403b55d27af"
+  },
+  {
+    "name": "flaming-walking",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.2.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "20",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/gaper/native-final/flaming-walking.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "68cd2369508bfca5621a0241c35a25d081eb7c73465a41dba3f90403b55d27af"
+  }
+]

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="1"
+	failures="1"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="21"
+	timestamp="2026-10-26T23:35:27"
+	>
+	<testcase name="expedition_destruction" classname="expedition_destruction" time="21.5799" status="fail">
+		<failure message=""/>
+		<system-out>FAIL cache approachable from outside for first blast seed 24 theme 1 floor 0
+</system-out>
+	</testcase>
+</testsuite>

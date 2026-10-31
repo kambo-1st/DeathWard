@@ -1,0 +1,253 @@
+[
+  {
+    "name": "gaper-normal",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/gaper-normal.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_PROBE id=10.1 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-121.791 radius=0.6 speed=9.91241 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=0 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "c83bf9b067adc6a8c48b4e0ffe48db4c17503d1d84faa7e0649dd6a6ae5ba4cb"
+  },
+  {
+    "name": "frowning-charm",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/frowning-charm.png",
+      "--enemy-status",
+      "1",
+      "charm",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=charm duration=90",
+      "ENEMY_PROBE id=10.0 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-119.994 radius=0.6 speed=14.3266 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=75 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "1bc67b2e72c8cf3a4a7de41fd5c4cc27cd6304ce31cc27f9e7d02b9a565e19c5"
+  },
+  {
+    "name": "gaper-charm",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/gaper-charm.png",
+      "--enemy-status",
+      "1",
+      "charm",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=charm duration=90",
+      "ENEMY_PROBE id=10.1 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-121.791 radius=0.6 speed=9.91241 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=75 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "62913b30cc5e30f4b85d9435f53a5448fdfc1364793b420ae0c8621292fbe93e"
+  },
+  {
+    "name": "gusher-charm",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/gusher-charm.png",
+      "--enemy-status",
+      "1",
+      "charm",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=charm duration=90",
+      "ENEMY_PROBE id=11.0 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.0 hp=32 max_hp=32 state=0 owner=0 x=-81.7005 y=0.85 z=-127.412 radius=0.6 speed=5.8929 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=75 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "47dc6da30a7941492714d6e8c4064e21186e8aea03dcb4353164b9c92779df32"
+  },
+  {
+    "name": "pacer-charm",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/pacer-charm.png",
+      "--enemy-status",
+      "1",
+      "charm",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=charm duration=90",
+      "ENEMY_PROBE id=11.1 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.1 hp=32 max_hp=32 state=0 owner=0 x=-81.7005 y=0.85 z=-127.412 radius=0.6 speed=5.8929 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=75 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "0d5b1afb1aa5e51bd0d76d0f15aa15b1ebb9f1b6bfafcb274997f1702a3d732f"
+  },
+  {
+    "name": "horf-charm-pair",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/horf-charm-pair.png",
+      "--enemy-count",
+      "2",
+      "--enemy-status",
+      "1",
+      "charm",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=charm duration=90",
+      "ENEMY_PROBE id=12.0 frames=30 alive=1 hp=32 shots=2 threats=2",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=1 owner=0 x=-76 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=75 charm_target=19 visual_scale=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=1 owner=0 x=-84 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=0 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "d110c7e53e760d0e44565f3c37dd8a64291b71b8bef8305bdd30f79cd5f89d22"
+  },
+  {
+    "name": "horf-recovered",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "90",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/horf-recovered.png",
+      "--enemy-status",
+      "1",
+      "charm",
+      "15"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=charm duration=15",
+      "ENEMY_PROBE id=12.0 frames=90 alive=1 hp=32 shots=2 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=0 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "103a51ffa6129ec1bfcb15542f3b22640da0c443aab69922c5c993cc31a7a275"
+  },
+  {
+    "name": "horf-freeze-charm",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/charm/native/horf-freeze-charm.png",
+      "--enemy-status",
+      "1",
+      "charm",
+      "90",
+      "--enemy-status",
+      "1",
+      "freeze",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "d912afdba6ebd377d130e5ea12c8cdcbb7da11eb5ac9de3061ec7e4c647b5f02",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=charm duration=90",
+      "ENEMY_STATUS frame=1 kind=freeze duration=90",
+      "ENEMY_PROBE id=12.0 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=75 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=75 charm_target=0 visual_scale=1"
+    ],
+    "image_sha256": "48259c981a0161684662ad6f434f64a98c3a13c86e87be2c4f59510f25dd463b"
+  }
+]

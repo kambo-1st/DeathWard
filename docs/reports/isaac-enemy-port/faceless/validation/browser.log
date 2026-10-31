@@ -1,0 +1,9 @@
+START faceless-isolated
+PASS faceless-isolated {"attacks":3,"headlessFrames":0,"observedProjectileIds":18}
+START tainted-faceless-isolated
+PASS tainted-faceless-isolated {"attacks":20,"headlessFrames":0,"observedProjectileIds":120}
+START faceless-natural
+page.waitForFunction: Timeout 180000ms exceeded.
+    at /home/kambo/workspace/DeathWard/web/faceless-test.cjs:30:15 {
+  name: 'TimeoutError'
+}

@@ -1,0 +1,133 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/010.000_Frowning Gaper.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/gaper/animations/010.000_Frowning Gaper.anm2",
+      "sha256": "18f1029f102add01b756e8adb8fe44368d3298df343913ff6023cc158082bf81",
+      "checksum": "0x7dffb7c4",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 10:48:31 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/010.001_Gaper.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/gaper/animations/010.001_Gaper.anm2",
+      "sha256": "e85106d0a4201fdc193190d954f76c9c41b347d82f214ab9b3b0645bccae79bc",
+      "checksum": "0xaa0956c5",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 10:49:08 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/010.002_FlamingGaper.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/gaper/animations/010.002_FlamingGaper.anm2",
+      "sha256": "3568650e0ad9682d9726cdf7d10049ce716d88f7a8f260996dda0954dc8dc3da",
+      "checksum": "0x6d1c0499",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "10.20.2019 20:05:36",
+        "Fps": "30",
+        "Version": "104"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

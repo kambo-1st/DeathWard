@@ -1,0 +1,253 @@
+[
+  {
+    "name": "gaper-normal",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/gaper-normal.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_PROBE id=10.1 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-121.791 radius=0.6 speed=9.91241 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 visual_scale=1"
+    ],
+    "image_sha256": "c83bf9b067adc6a8c48b4e0ffe48db4c17503d1d84faa7e0649dd6a6ae5ba4cb"
+  },
+  {
+    "name": "frowning-shrink",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/frowning-shrink.png",
+      "--enemy-status",
+      "1",
+      "shrink",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=shrink duration=90",
+      "ENEMY_PROBE id=10.0 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.0 hp=32 max_hp=32 state=0 owner=0 x=-81.638 y=0.85 z=-124.378 radius=0.6 speed=11.3984 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=75 visual_scale=0.376292"
+    ],
+    "image_sha256": "3edfe346cf4adcad99e8aadd1609ec74a6eff9f5e32773b1f1b0e82f2da092f2"
+  },
+  {
+    "name": "gaper-shrink",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/gaper-shrink.png",
+      "--enemy-status",
+      "1",
+      "shrink",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=shrink duration=90",
+      "ENEMY_PROBE id=10.1 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=10.1 hp=32 max_hp=32 state=0 owner=0 x=-81.6397 y=0.85 z=-124.449 radius=0.6 speed=11.3988 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=75 visual_scale=0.376292"
+    ],
+    "image_sha256": "128791dcbb3af7b422c4bf70c1014125317412a5e3459dba913a6e32a4888bd7"
+  },
+  {
+    "name": "gusher-shrink",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/gusher-shrink.png",
+      "--enemy-status",
+      "1",
+      "shrink",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=shrink duration=90",
+      "ENEMY_PROBE id=11.0 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.0 hp=32 max_hp=32 state=0 owner=0 x=-82.329 y=0.85 z=-126.992 radius=0.6 speed=8.90235 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=75 visual_scale=0.376292"
+    ],
+    "image_sha256": "7ebbf43cc80477e13a96d9e9fb0c5bc87f3d6d6930c16547ca46bde8fd18ffbf"
+  },
+  {
+    "name": "pacer-shrink",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-11.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/pacer-shrink.png",
+      "--enemy-status",
+      "1",
+      "shrink",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=shrink duration=90",
+      "ENEMY_PROBE id=11.1 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=11.1 hp=32 max_hp=32 state=0 owner=0 x=-82.329 y=0.85 z=-126.992 radius=0.6 speed=8.90235 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=75 visual_scale=0.376292"
+    ],
+    "image_sha256": "36d014ba7c5aeae439ce61bf6f6722acca678787e876bb5325e593e02a443d5d"
+  },
+  {
+    "name": "horf-shrink",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/horf-shrink.png",
+      "--enemy-status",
+      "1",
+      "shrink",
+      "90"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=shrink duration=90",
+      "ENEMY_PROBE id=12.0 frames=30 alive=1 hp=32 shots=0 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=0 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=75 visual_scale=0.376292"
+    ],
+    "image_sha256": "f796fe227ecac65825715d9754522b7069eec78a300186e129b500ce2e77b1d0"
+  },
+  {
+    "name": "horf-recovered",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/horf-recovered.png",
+      "--enemy-status",
+      "1",
+      "shrink",
+      "90",
+      "--enemy-status",
+      "10",
+      "shrink",
+      "0"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=shrink duration=90",
+      "ENEMY_STATUS frame=10 kind=shrink duration=0",
+      "ENEMY_PROBE id=12.0 frames=30 alive=1 hp=32 shots=1 threats=1",
+      "ENEMY_ACTOR id=12.0 hp=32 max_hp=32 state=1 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 visual_scale=0.935568"
+    ],
+    "image_sha256": "d396fa75d7cc46455cc94783328081a3d15a4c51caa5291aa829a3e36830a948"
+  },
+  {
+    "name": "horf-squashed",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-12.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "30",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/first-floor-batch1/shrink/native/horf-squashed.png",
+      "--enemy-status",
+      "1",
+      "shrink",
+      "90",
+      "--enemy-player-at",
+      "20",
+      "0",
+      "0"
+    ],
+    "exit": 0,
+    "binary_sha256": "3f8b14260bcd183bb53e82f0ea48360f1ed1f08a4b458eeb0b309b2a4fcd1b2b",
+    "probe": [
+      "ENEMY_STATUS frame=1 kind=shrink duration=90",
+      "ENEMY_PROBE id=12.0 frames=30 alive=0 hp=0 shots=0 threats=0"
+    ],
+    "image_sha256": "e97134864b8f6694e2174d2c496be9ac314aa31b7734763fda85eb614b2c967f"
+  }
+]

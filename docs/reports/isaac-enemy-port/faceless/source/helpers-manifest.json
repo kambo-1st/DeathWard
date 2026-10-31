@@ -1,0 +1,167 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Evidence only; helper extraction does not imply implementation or full status/control parity.",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/eligible_target.asm",
+      "start": "0x695620",
+      "end_exclusive": "0x695674",
+      "whole_function": true,
+      "raw_sha256": "3a235689505c6c4dec845cb427b4ba9637d2ee96a422242dd1884ca21038c6b5",
+      "sha256": "69b920d51d0f7098aa89900ca4b435b9d957b5a6f77e95a36f50f41184fa4878"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/target_position.asm",
+      "start": "0x695a30",
+      "end_exclusive": "0x695ec6",
+      "whole_function": true,
+      "raw_sha256": "48753db4c9f86f38fafb0feffb9b885ccb584db7a2c0e5e1622a1fab26b7745f",
+      "sha256": "621bf17eb466bee6bc231cd75fa97724355148b8c83cd3c108e7a2da0b869caf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/random_walk.asm",
+      "start": "0x7a6180",
+      "end_exclusive": "0x7a64a9",
+      "whole_function": true,
+      "raw_sha256": "c9fbefa689af02e86b31d7ac66a303c72fa2e02304dd8054c74de070bb0fb258",
+      "sha256": "dafb89014a790a46b0c19f22baf59eefe4e040f3075d3953df11d788c2ebc7fb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/random_walk_special_gate.asm",
+      "start": "0x7a35d0",
+      "end_exclusive": "0x7a3641",
+      "whole_function": true,
+      "raw_sha256": "0846946b69a3d8983079411076208564dc7572a52e34d68cc7856247c45c59a2",
+      "sha256": "9a312a52f1926dc2bf5c6d0156638ddd7d588e1d53984abbb111f33185c5a296"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/radial_mode9.asm",
+      "start": "0x6a2e74",
+      "end_exclusive": "0x6a301c",
+      "whole_function": false,
+      "raw_sha256": "fd54f2746d81fa0ad3c59beeb979b6f5d6b3b910a25da6f9693ed252e65fdcd3",
+      "sha256": "b20940f8d05daaf93e230eceeeea94f7f562d3369abd429cd715d68d854ae48e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/blood_splat.asm",
+      "start": "0x68d7b0",
+      "end_exclusive": "0x68d821",
+      "whole_function": true,
+      "raw_sha256": "a563a14c6587dfe5f9ecad652fa9f3bdb8db1d8c60c1889bf970cea830a17e24",
+      "sha256": "d176b4e6ce28f783cf38ae7cdf0025f8833e3471c2279cbe352c59ffe9f83e47"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/faceless/source/normalize_vector.asm",
+      "start": "0x962560",
+      "end_exclusive": "0x9625d5",
+      "whole_function": true,
+      "raw_sha256": "28a94e7d714dbc5a68e9f437ede7357ebf2c95e0a581efdf4396e463836b6ffc",
+      "sha256": "8208b7c8ec753cf41808217e14f0cc9b5cdb919ee54061be47e00dcfd1b66534"
+    }
+  ],
+  "projectile_mode_table": {
+    "address": "0x6a33ec",
+    "targets": [
+      "0x6a1a83",
+      "0x6a1afb",
+      "0x6a1c91",
+      "0x6a1ead",
+      "0x6a2099",
+      "0x6a2360",
+      "0x6a269d",
+      "0x6a286f",
+      "0x6a2a49",
+      "0x6a2e74"
+    ],
+    "raw_sha256": "afb34aad61231db426d2a292e220616684e3261f2809575f9203ce7d5dbe5635"
+  },
+  "float_constants": {
+    "zero": {
+      "address": "0xb6a18c",
+      "value": 0.0
+    },
+    "one": {
+      "address": "0xb6a614",
+      "value": 1.0
+    },
+    "attack_base": {
+      "address": "0xb6a210",
+      "value": 0.00800000037997961
+    },
+    "damage_chance": {
+      "address": "0xb6a2ac",
+      "value": 0.07999999821186066
+    },
+    "damage_decay": {
+      "address": "0xb6a2dc",
+      "value": 0.10999999940395355
+    },
+    "passive_retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "shot_damage_accumulator_cost": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "alert_distance": {
+      "address": "0xb6aad4",
+      "value": 80.0
+    },
+    "unresolved_status_multiplier": {
+      "address": "0xb6a4dc",
+      "value": 0.6499999761581421
+    },
+    "wander_radius": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "wander_arrival": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "wander_force": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "wander_stuck_speed_squared": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "path_retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "overkill_boundary": {
+      "address": "0xb6aef8",
+      "value": -25.0
+    },
+    "full_circle": {
+      "address": "0xb6a914",
+      "value": 6.2831854820251465
+    }
+  },
+  "shared_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/fire_projectiles.asm",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/projectile_params.asm",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/falling_pathfinder.asm",
+      "sha256": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af"
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/loose/resources/scripts/enums.lua",
+      "sha256": "dce1892f51e4e645d66ac8ffb31d217e8c36a32457c1005dd128978141103dc5"
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75"
+    }
+  ]
+}
