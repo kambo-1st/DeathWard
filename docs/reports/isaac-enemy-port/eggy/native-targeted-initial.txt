@@ -1,0 +1,3 @@
+PASS Eggy source health/range/idle/Jump/Land, white creep and immediate re-hops
+PASS70-frame deferred death,14 timed children, harmless body, no duplicate loot/kill and room completion
+FAIL suspended release phase survives room re-entry

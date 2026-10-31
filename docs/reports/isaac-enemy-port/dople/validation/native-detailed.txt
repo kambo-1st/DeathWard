@@ -1,0 +1,8 @@
+MOVEMENT center_reflection=1 room_bounds=1 equal_hp=1 zero_contact=1 one_target=1
+SHOTS trigger_delay=1 cardinal=1 twin_cooldown=1 spread=1 ballistics=1 capacity=1 stun=1 aliasing=1
+TERRAIN ground_correction=1 flying_cover=1 bounded_search=1
+CONFIG immutable_reload=1 invalid_profiles=4
+NATURAL_MIRROR id=53.1 seed=13 floor=4 room=6
+NATURAL_MIRROR id=53.0 seed=14 floor=6 room=3
+PLACEMENT floors=90 rooms=910 late_band=1 shared_cap=1
+mirror behavior passed

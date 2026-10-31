@@ -1,0 +1,2 @@
+enemy=106.247,5.16383 target=111.197,0.214081 snapped=112,2 targetBlocked=0 snappedBlocked=1
+hops=0 patches=0

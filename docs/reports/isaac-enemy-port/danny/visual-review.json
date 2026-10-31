@@ -1,0 +1,33 @@
+{
+  "status": "Partial pass: four final native and six final browser images inspected. Full mixed-room readability approval remains open.",
+  "native_inspected": [
+    "docs/reports/isaac-enemy-port/danny/native/final-0-90.png",
+    "docs/reports/isaac-enemy-port/danny/native/final-0-480.png",
+    "docs/reports/isaac-enemy-port/danny/native/final-1-90.png",
+    "docs/reports/isaac-enemy-port/danny/native/final-1-480.png"
+  ],
+  "browser_inspected": [
+    "docs/reports/isaac-enemy-port/danny/web/danny-isolated-windup.png",
+    "docs/reports/isaac-enemy-port/danny/web/danny-isolated-first-volley.png",
+    "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-first-volley.png",
+    "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-repeat-volley.png",
+    "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-first-volley.png",
+    "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-living-offspring.png"
+  ],
+  "observations": [
+    "Danny has a two-part grey rocky body; the windup capture shows its open mouth and a warning marker. Falling Rock Spiders initially have tucked legs, then distinct legs after landing.",
+    "Coal Boy is dark with orange flame accents. First-volley browser capture shows four airborne bodies; the repeat-volley image shows the living Coal Spider with legs and separate legless burning coals.",
+    "Natural Danny and Coal Boy encounters retain the Original canyon style, other seeded residents and the story room. No missing textures or broken geometry were observed in these selected captures.",
+    "The player overlaps the parent in close contact. The natural Danny is against the canyon edge and the natural Coal Boy is among several actors. Their attack silhouette and child-versus-coal readability remain limited in a crowd. These views do not establish full visual acceptance."
+  ],
+  "limitations": [
+    "Frame counters were captured with tracing and concurrent work; these images are not controlled performance evidence.",
+    "Native contact separation, crowded combat readability, balance and performance remain open."
+  ],
+  "initial_native_inspected": [
+    "docs/reports/isaac-enemy-port/danny/native/0-90.png",
+    "docs/reports/isaac-enemy-port/danny/native/0-480.png",
+    "docs/reports/isaac-enemy-port/danny/native/1-90.png",
+    "docs/reports/isaac-enemy-port/danny/native/1-480.png"
+  ]
+}

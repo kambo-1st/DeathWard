@@ -1,0 +1,114 @@
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Using raylib's GLFW
+-- Including X11 support
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_DESKTOP
+--   GRAPHICS=GRAPHICS_API_OPENGL_33
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build
+Consolidate compiler generated dependencies of target glfw
+[ 15%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 18%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 21%] Built target deathward_runtime_assets
+[ 21%] Linking CXX static library libdeathward_core.a
+[ 84%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 87%] Built target deathward_skinning
+[ 87%] Built target deathward_cloth
+[ 87%] Built target deathward_particles
+[ 90%] Built target deathward_mission_lighting
+Consolidate compiler generated dependencies of target deathward
+[ 90%] Linking CXX executable deathward
+[100%] Built target deathward
+Consolidate compiler generated dependencies of target deathward_core
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[100%] Linking CXX executable deathward_floor_progression_tests
+[100%] Built target deathward_floor_progression_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_danny_tests
+[ 95%] Linking CXX executable deathward_danny_tests
+[100%] Built target deathward_danny_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_hardy_tests
+[100%] Linking CXX executable deathward_hardy_tests
+[100%] Built target deathward_hardy_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_dip_variant_tests
+[100%] Linking CXX executable deathward_dip_variant_tests
+[100%] Built target deathward_dip_variant_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_resident_enemies_tests
+[ 95%] Linking CXX executable deathward_resident_enemies_tests
+[100%] Built target deathward_resident_enemies_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_rock_spider_tests
+[100%] Linking CXX executable deathward_rock_spider_tests
+[100%] Built target deathward_rock_spider_tests
+[ 17%] Built target glfw
+[ 92%] Built target deathward_core
+[ 96%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[ 96%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests

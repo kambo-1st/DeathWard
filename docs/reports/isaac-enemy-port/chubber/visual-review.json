@@ -1,0 +1,87 @@
+{
+  "inspected": 16,
+  "style": "Original",
+  "views": [
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/native/chubber-outbound.png",
+      "result": "limited",
+      "observation": "Body mostly behind HUD/edge; not a clear attack view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/native/chubber-return.png",
+      "result": "limited",
+      "observation": "Body at lower frame edge; not a clear attack view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/native/chubber-launch-readable.png",
+      "result": "partial_pass",
+      "observation": "Segmented body clearly visible between parent and player."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/native/chubber-return-readable.png",
+      "result": "partial_pass",
+      "observation": "Returning heading visible; tail partly behind HUD."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web/horizontal-outbound.png",
+      "result": "partial_pass",
+      "observation": "Large segmented body distinguishable from parent; overlap with player is visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web/river-outbound.png",
+      "result": "partial_pass",
+      "observation": "Attack visible traversing water; dedicated body not constrained by ground navigation."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web/cover-return.png",
+      "result": "limited",
+      "observation": "Parent hidden by crate with outline; returning body partly behind HUD."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web/vertical-windup.png",
+      "result": "limited",
+      "observation": "Early mouth warning small; this frame predates clearly extended snout."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-residents/resident-0-attack.png",
+      "result": "partial_pass",
+      "observation": "Real population and single beam visible; beam extends behind HUD."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-residents/resident-2-attack.png",
+      "result": "partial_pass",
+      "observation": "Chubber and released body visible with actual mixed residents and river."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-residents/resident-3-attack.png",
+      "result": "limited",
+      "observation": "Four-beam source partly hidden by foreground cliff; outline visible but not all lanes readable."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-residents/resident-1-attack.png",
+      "result": "limited",
+      "observation": "Parent obscured by foreground cliff; outgoing beam and outline visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-counter-boundary/vertical-windup.png",
+      "result": "partial_pass",
+      "observation": "Later windup capture shows a small emerging snout; all-angle warning readability remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-counter-boundary/vertical-return.png",
+      "result": "limited",
+      "observation": "Return heading visible but tail partly obscured by HUD."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-residents-counter-boundary/resident-2-attack.png",
+      "result": "partial_pass",
+      "observation": "Current Chubber body visible crossing water with real mixed residents."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/web-residents-counter-boundary/resident-3-attack.png",
+      "result": "limited",
+      "observation": "Current Scarred body and some lanes hidden by foreground cliff; outline visible."
+    }
+  ],
+  "scope": "Manual inspection of16unaltered captures across this batch, including4from the corrected final build. FPS labels are not controlled benchmarks. Full all-angle/occlusion gate remains open."
+}

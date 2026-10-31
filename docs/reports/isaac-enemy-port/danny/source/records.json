@@ -1,0 +1,304 @@
+[
+  {
+    "key": "820.0.0",
+    "id": 820,
+    "variant": 0,
+    "subtype": 0,
+    "name": "danny",
+    "xml": {
+      "anm2path": "820.000_danny.anm2",
+      "baseHP": "40",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "30",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "820",
+      "name": "#DANNY",
+      "numGridCollisionPoints": "12",
+      "portrait": "243",
+      "shadowSize": "15",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:820.0.0",
+    "wiki_matches": [
+      {
+        "page": "Danny",
+        "box": 0,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Danny",
+          "id": "820",
+          "base hp": "40",
+          "environment": "Mines / Ashpit / \nchallenge /",
+          "behavior": "Walks toward Isaac and spits chaotic bursts of rocks at him, some of which may be Rock Spiders."
+        },
+        "section_indices": [
+          0
+        ],
+        "name": "Danny",
+        "variant": 0,
+        "subtype": 0,
+        "id": 820,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Danny"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 40.0,
+      "2": 40.0,
+      "3": 40.0,
+      "4": 40.0,
+      "5": 40.0,
+      "6": 40.0,
+      "7": 40.0,
+      "8": 40.0,
+      "9": 40.0,
+      "10": 40.0,
+      "11": 40.0,
+      "12": 40.0,
+      "13": 40.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Danny",
+    "room_library_presence": {
+      "rooms/29.mines.stb": {
+        "templates": 64,
+        "positive_weight_templates": 64
+      },
+      "rooms/30.ashpit.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 7,
+        "positive_weight_templates": 7
+      },
+      "rooms/greed/29.mines.stb": {
+        "templates": 9,
+        "positive_weight_templates": 9
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Danny",
+        "section": 0
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "grid-and-explosions",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "820.1.0",
+    "id": 820,
+    "variant": 1,
+    "subtype": 0,
+    "name": "coal boy",
+    "xml": {
+      "anm2path": "820.001_coal boy.anm2",
+      "baseHP": "40",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "30",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "820",
+      "name": "#COAL_BOY",
+      "numGridCollisionPoints": "12",
+      "portrait": "259",
+      "shadowSize": "15",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:820.1.0",
+    "wiki_matches": [
+      {
+        "page": "Danny",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Coal Boy",
+          "variant": "1",
+          "base hp": "40",
+          "environment": "Mines / Ashpit /",
+          "behavior": "Walks toward Isaac and spits hot coals at him, some of which may be Coal Spiders."
+        },
+        "section_indices": [
+          2
+        ],
+        "name": "Coal Boy",
+        "variant": 1,
+        "subtype": 0,
+        "id": 820,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Danny"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 40.0,
+      "2": 40.0,
+      "3": 40.0,
+      "4": 40.0,
+      "5": 40.0,
+      "6": 40.0,
+      "7": 40.0,
+      "8": 40.0,
+      "9": 40.0,
+      "10": 40.0,
+      "11": 40.0,
+      "12": 40.0,
+      "13": 40.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Coal Boy",
+    "room_library_presence": {
+      "rooms/29.mines.stb": {
+        "templates": 33,
+        "positive_weight_templates": 33
+      },
+      "rooms/30.ashpit.stb": {
+        "templates": 22,
+        "positive_weight_templates": 22
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/greed/29.mines.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/30.ashpit.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Danny",
+        "section": 2
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "child-spawns-and-ownership",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+]

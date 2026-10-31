@@ -1,0 +1,11 @@
+COLLISION terrain=1 padded=0
+SAMPLE -1 height=-0.110121 water=0
+SAMPLE 0 height=-0.076592 water=0
+SAMPLE 1 height=-0.065 water=0
+SAMPLE 2 height=-0.0765914 water=0
+SAMPLE 3 height=-0.0936013 water=0
+SAMPLE 4 height=-0.116148 water=0
+SAMPLE 5 height=-0.126793 water=1
+SAMPLE 6 height=-0.117732 water=0
+SAMPLE 7 height=-0.10263 water=0
+FAIL resident on reachable floor: seed=404 floor=2 room=7 id=10.1 entity=17 position=-51.121357,0.850000,4.686072 radius=0.600000 blocked=1 actualRoom=7

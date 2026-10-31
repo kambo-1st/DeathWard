@@ -1,0 +1,44 @@
+[
+  {
+    "id": "217.1.0",
+    "name": "corn",
+    "frames": 90,
+    "exit": 0,
+    "image": "docs/reports/isaac-enemy-port/dip-variants/native/corn.png"
+  },
+  {
+    "id": "217.2.0",
+    "name": "brownie-corn",
+    "frames": 90,
+    "exit": 0,
+    "image": "docs/reports/isaac-enemy-port/dip-variants/native/brownie-corn.png"
+  },
+  {
+    "id": "217.3.0",
+    "name": "big-corn",
+    "frames": 90,
+    "exit": 0,
+    "image": "docs/reports/isaac-enemy-port/dip-variants/native/big-corn.png"
+  },
+  {
+    "id": "220.1.0",
+    "name": "dank-squirt",
+    "frames": 130,
+    "exit": 0,
+    "image": "docs/reports/isaac-enemy-port/dip-variants/native/dank-squirt.png"
+  },
+  {
+    "id": "870.0.0",
+    "name": "drip",
+    "frames": 90,
+    "exit": 0,
+    "image": "docs/reports/isaac-enemy-port/dip-variants/native/drip.png"
+  },
+  {
+    "id": "871.0.0",
+    "name": "splurt",
+    "frames": 150,
+    "exit": 0,
+    "image": "docs/reports/isaac-enemy-port/dip-variants/native/splurt.png"
+  }
+]

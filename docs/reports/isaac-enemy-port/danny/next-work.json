@@ -1,0 +1,13 @@
+{
+  "goal": "Active: all653 exact Repentance1.7.9b records; regular enemies and required offspring first.",
+  "next_regular_family": "Faceless827.0.0 and Tainted Faceless827.1.0",
+  "source_preflight": "docs/reports/isaac-enemy-port/faceless/preflight.json",
+  "source_extracted": "Verified controller, two animation metadata files, exact records and attributed pinned wiki; source-only, no runtime added.",
+  "remaining_danny_gaps": "Full native mass30/crowd, fear/confusion/charm/control/champion/item/status and saved-state fidelity remain open. Native SpawnType906 suppression is guarded for attached/live-parent Hornfel passengers; alternate mounted creation/lifetime routes are not accepted. Coal Boy native room cap counts Red Fireplace33.2, whose production port is still missing; predicate can be tested with an explicitly marked test actor only. Scoped Linux/WASM images are reviewed; full visual/readability acceptance, balance and controlled performance remain open.",
+  "next_actions": [
+    "Finish Faceless movement, projectile helper, death/overkill and control/status interpretation.",
+    "Implement dedicated external profiles and real offspring with correct stage placement, keeping Tainted source Ascent restrictions explicit.",
+    "Validate Linux/WASM behavior, reachability, visual/readability, balance and performance.",
+    "Return to shared status/champion/collision/save and ordinary-enemy acceptance gaps; do not count scoped tests as complete ports."
+  ]
+}

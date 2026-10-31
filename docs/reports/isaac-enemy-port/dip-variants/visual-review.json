@@ -1,0 +1,77 @@
+{
+  "status": "Six native and ten browser images manually inspected; partial visual acceptance only.",
+  "style": "Original",
+  "native_reviewed": [
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/native/corn.png",
+      "note": "Gold body visible beside shadowed wall; darker cliff shadow reduces contrast."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/native/brownie-corn.png",
+      "note": "Small brown mound separated from sand; kernel subtle at game zoom."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/native/big-corn.png",
+      "note": "Raised yellow kernel clearly distinguishes larger mound from Brownie."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/native/dank-squirt.png",
+      "note": "Dark body and separate black/purple slowing patch visible against sand."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/native/drip.png",
+      "note": "Small green-grey body with lateral lobes visible beside protagonist."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/native/splurt.png",
+      "note": "Larger green-grey mound/side lobes visible; selected frame is not full double-charge telegraph review."
+    }
+  ],
+  "browser_reviewed": [
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/big-corn-death-shot.png",
+      "note": "Yellow projectile visible at edge of death flash; flash partly obscures release origin."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/dank-squirt-creep.png",
+      "note": "Dark slowing patches stand apart from sand; body near player remains visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/dank-squirt-children.png",
+      "note": "Two larger Clots visible after parent death, alongside persistent black trail."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/drip-chain.png",
+      "note": "Small green-grey body identifiable; still image alone does not demonstrate burst timing."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/splurt-second-windup.png",
+      "note": "Second-windup frame visible; squash cue remains subtle at gameplay zoom, so full telegraph readability stays open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/splurt-children.png",
+      "note": "Two smaller green Drips visible beneath parent death flash."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/resident-big-corn-slide.png",
+      "note": "Yellow head kernel distinguishes Big Corn among other natural-room enemies and cover. Captured atframe2;HUD9FPS reflects startup and is not performance acceptance."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/corn-slide.png",
+      "note": "Small gold body distinguishable from sand in this lit view."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/brownie-corn-slide.png",
+      "note": "Brown mound visible; small head kernel remains subtle."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/web/resident-dank-squirt-creep.png",
+      "note": "Dark body/trail visible among natural room actors and cover; occlusion treatment remains active."
+    }
+  ],
+  "limits": [
+    "Six native and selected browser images reviewed. No all-angle or full telegraph/balance/performance acceptance.",
+    "Native captures occurred during compilation; HUD FPS values are not controlled performance evidence.",
+    "Small Corn/Brownie bodies and facial details remain subtle at160% zoom; Corn at a shadowed canyon edge has weaker contrast."
+  ]
+}

@@ -1,0 +1,2 @@
+NATURAL_CRACKLE seed=20 floor=2 room=5 hp=128
+PASS Crackle: physical lob,32-frame cycle, discrete cardinal jets, pulses, immunity, pit/cover, retained pressure, seeded stage

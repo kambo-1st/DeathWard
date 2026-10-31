@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/7 Test  #2: mechanics_content ................   Passed    7.24 sec
+    Start 27: resident_enemies
+2/7 Test #27: resident_enemies .................   Passed    3.65 sec
+    Start 45: dip_variants
+3/7 Test #45: dip_variants .....................   Passed    4.80 sec
+    Start 50: monster_fire_reactions
+4/7 Test #50: monster_fire_reactions ...........   Passed    0.44 sec
+    Start 79: danny_family
+5/7 Test #79: danny_family .....................   Passed    0.47 sec
+    Start 80: hardy_family
+6/7 Test #80: hardy_family .....................   Passed    1.10 sec
+    Start 81: rock_spider_family
+7/7 Test #81: rock_spider_family ...............   Passed  151.38 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) = 169.10 sec

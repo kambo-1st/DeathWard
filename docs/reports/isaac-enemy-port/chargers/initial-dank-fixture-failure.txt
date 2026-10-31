@@ -1,0 +1,2 @@
+DROWNED hp=70.4 immediate=1 diagonal_death_shots=4 execution_cleanup=1
+FAIL Dank reflects from wall while preserving active dash

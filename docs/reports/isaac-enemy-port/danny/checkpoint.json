@@ -1,0 +1,248 @@
+{
+  "status": "Danny820.0.0 and Coal Boy820.1.0 implemented in progress; full653-record objective remains active, zero complete ports.",
+  "created_utc": "2026-10-28T08:31:21.484093+00:00",
+  "previous_goal_turn_classification": "No implementation progress: status response only; terminal jobs verified.",
+  "this_goal_turn_classification": "Progress: physical river-edge placement fixed,1087-floor regression and scoped Linux/WASM/visual validation completed; next regular family source extracted.",
+  "previous_frozen_checkpoint": {
+    "path": "docs/reports/isaac-enemy-port/hardy/checkpoint.json",
+    "sha256": "844d49d5d61512b1673db38486c037271002470967d39bdea5ab0ae427e0b621",
+    "artifact_files_unchanged": 93
+  },
+  "checklist": {
+    "total": 653,
+    "identity_verified": 653,
+    "source_archive_available": true,
+    "reviewed": 226,
+    "dispositions": {
+      "ordinary": 152,
+      "dedicated": 7,
+      "environment": 16,
+      "pending": 427,
+      "boss": 8,
+      "item_dependency": 2,
+      "component": 13,
+      "hazard": 16,
+      "excluded": 12
+    },
+    "implementations": {
+      "in_progress": 189,
+      "missing": 434,
+      "existing_unverified": 18,
+      "excluded": 12
+    },
+    "complete": 0,
+    "remaining": 641,
+    "milestones": [
+      {
+        "number": 1,
+        "status": "in_progress"
+      },
+      {
+        "number": 2,
+        "status": "pending"
+      },
+      {
+        "number": 3,
+        "status": "pending"
+      },
+      {
+        "number": 4,
+        "status": "pending"
+      },
+      {
+        "number": 5,
+        "status": "pending"
+      },
+      {
+        "number": 6,
+        "status": "pending"
+      }
+    ]
+  },
+  "regular_enemy_implementations_in_progress": 141,
+  "mechanics_fingerprint": "b03995d0d23f9409",
+  "runtime_definitions": 205,
+  "item_definitions": 13,
+  "enemy_bomb_profiles": 6,
+  "native_scoped_suites_passed": 8,
+  "registered_ctest_suites": 104,
+  "generated_floors_checked": 1087,
+  "wasm_isolated_cases": 2,
+  "wasm_natural_population_cases": 2,
+  "images_inspected": {
+    "final_native": 4,
+    "browser": 6,
+    "earlier_native": 4
+  },
+  "scope": "Scoped source-controller, actual offspring, native/browser encounter and image evidence only. Full status/champion/collision/save fidelity, readability, balance and controlled performance remain open. No generic placeholder or completed-port claim.",
+  "native_summary": "docs/reports/isaac-enemy-port/danny/native-summary.json",
+  "browser_summary": "docs/reports/isaac-enemy-port/danny/browser-summary.json",
+  "visual_review": "docs/reports/isaac-enemy-port/danny/visual-review.json",
+  "gzip_matches_uncompressed": {
+    "build-web/index.js": true,
+    "build-web/index.wasm": true,
+    "build-web/index.data": true
+  },
+  "owned_jobs": {
+    "native_build_and_ctest": {
+      "session": 94386,
+      "state": "terminal",
+      "exit": 0
+    },
+    "wasm_build": {
+      "session": 12728,
+      "state": "terminal",
+      "exit": 0
+    },
+    "native_captures": {
+      "session": 24545,
+      "state": "terminal",
+      "exit": 0
+    },
+    "initial_browser": {
+      "session": 26466,
+      "state": "terminal",
+      "exit": 143,
+      "note": "Two completed isolated cases preserved; no remaining child processes. Cause of external signal not established."
+    },
+    "remaining_browser_cases": {
+      "session": 88410,
+      "state": "terminal",
+      "exit": 0
+    },
+    "preview": {
+      "session": 67755,
+      "state": "stopped",
+      "exit": 0
+    }
+  },
+  "next": "docs/reports/isaac-enemy-port/danny/next-work.json",
+  "runtime_files_sha256": {
+    "CMakeLists.txt": "017ee7c7c3b962869cdb8751e6f8d2d2c034a55f0d92a930faf77d9483bb58ae",
+    "assets/mechanics/dannies.mechanics": "8bc9b3be35d3558e87d130f75d1a206ce3255c0ca1a1923aaa7cf03e0d4cf77a",
+    "src/combat/Dannies.cpp": "256c23e877f791d851ac4b9f7c68e6d9ab0aa909ef83d032a2e89ab3cc5f0c05",
+    "src/combat/Encounters.cpp": "1ac1f17ba37a324f5a27fce52af8f0caf239abb07a1230c114cb170dfe0e497c",
+    "src/combat/Enemies.cpp": "bd2190e08ff8a741dc48bf0c115296325729a9eec3fa16b33ff51d376c237ad2",
+    "src/combat/FloorEncounters.cpp": "8969075a73aa0f6bdd38f7c4b4f9a9efb8580d4720c36f5a34749cd623bc5e4d",
+    "src/combat/Monsters.cpp": "078c760c59a283306d7cd7d274fb9f00bfcba5dabb88e81d664922a54a474def",
+    "src/combat/Simulation.cpp": "0ce14557d6ff6972d6c6b66cf874820291aa712c507235c2720950f64f436b81",
+    "src/combat/Simulation.hpp": "90a73a88bc4a854c48cc725e73b07034fec84be5c4ed15e4ca62e6b9aa692fb0",
+    "src/content/EncounterVariants.cpp": "87ffc54bc5b44729b10a3d673655e096cd60db817ab51d3949ea39c615fa1c9b",
+    "src/content/Mechanics.cpp": "77275e618dc6e6fca5c29b386e4adcd7c36585ec8fc7b8d6ae0722276579e88c",
+    "src/content/Mechanics.hpp": "b970d2f3b17fcbb899cddbdd7a8b00c51c034807bfba932fd5e3a8804d638b88",
+    "src/main.cpp": "a2e1e6d952eb386ec36c27e4fd3e71c97f0808be7ac51030b013c10bb7a77248",
+    "src/render/MonsterVisuals.hpp": "884a2113e00b0bd5e7b2f3004987b4be5297c027065eabd891a406b8ff79fc3e",
+    "tests/danny_tests.cpp": "f8c29228fb09a28d50e5fb3a357bcde8e5fe0e21a8d5284072ba8732def017ff",
+    "tests/dip_variant_tests.cpp": "1e0fecc73f32433d6e3e766c4bd861f2836875544f478a8b5a5ed4f651f87c0b",
+    "tests/floor_progression_tests.cpp": "3f68fc0eae127f840daebfa6e891b681a49c7734242e20a0d7bf08701a3510c7",
+    "tests/hardy_tests.cpp": "a9027a8a3646dc2bf84bd5a97feeb4403aa2d299b00e29de0ad8aca1ac72b277",
+    "web/danny-test.cjs": "4492d3ff4b3b1032fbe85138133f8c0dc6a7dbabfee43e282abfddf2cd1fbb0e"
+  },
+  "build_files_sha256": {
+    "build/deathward": "e25eb5048253359bb876d457a446e48f5cdf67e9dfd0028b436bf7c5aef33168",
+    "build-web/index.html": "c3fb1cb54df2095770cffc4d721a2c561f735bc6222b3cf0c5870128ee888031",
+    "build-web/index.js": "1938b547d7321ee8eb8414802bf06b19128036e3c597e4c219283f75bd7b3be4",
+    "build-web/index.wasm": "402d24804ff938960958dfe89785fede9dde5659fb0e97b137fd1f13723d3ba2",
+    "build-web/index.data": "5f119cf0a443f3b6d5588c74bc2731570cb6d210643166929a1970917c0b9d73"
+  },
+  "artifact_files_sha256": {
+    "docs/reports/isaac-enemy-port/danny/animations/820.000_danny.anm2": "5b6c49fff5800a5cbd6cd135f800ef23725b3656c70fa95f979a6a653309c459",
+    "docs/reports/isaac-enemy-port/danny/animations/820.001_coal boy.anm2": "ecf1822350b32406ea7f3eb8613b9416130045daa02ae43533da6eed7235c369",
+    "docs/reports/isaac-enemy-port/danny/animations/manifest.json": "eb96c119de764c4d3a31f9d9bb75a12e2a27df6650cd7f42e6d2fcbe24a3aa45",
+    "docs/reports/isaac-enemy-port/danny/browser-summary.json": "defa10231f5b5597d3d1e544db748f32d678c93280cdb8b784c84a0692e324ff",
+    "docs/reports/isaac-enemy-port/danny/implementation-review.json": "76dd326793bb59166f2bef577bc67adcd09cab6b6a29754c217c1d64d98b0801",
+    "docs/reports/isaac-enemy-port/danny/native/0-480.log": "aa3561a8babe4eaa652ddfd8ccb9d3a341e5fe8d3b6fd44334dda5200e816742",
+    "docs/reports/isaac-enemy-port/danny/native/0-480.png": "ff93c42eab4e4d646b260a15e757e2d07bae744e0a0f8729cf56bf732204c8f3",
+    "docs/reports/isaac-enemy-port/danny/native/0-90.log": "fd22243da58f2401f19a609b8aadcafbf6199217101ba4f9a22d09b0d8e8bb99",
+    "docs/reports/isaac-enemy-port/danny/native/0-90.png": "d0f2b826b95eba71a245edbed4f9186bfe6848dec7c2f092702cf7265a18a593",
+    "docs/reports/isaac-enemy-port/danny/native/1-480.log": "d9df824ed183ba2761525775d1b454bc0825d359e0b93500af14b757746e008c",
+    "docs/reports/isaac-enemy-port/danny/native/1-480.png": "47aedbeb933ee10780c7ac5fca124f3310e6b86eb89a3cbe8d7e555a8a105ad7",
+    "docs/reports/isaac-enemy-port/danny/native/1-90.log": "e71cd4b95e49d7d9ebb41faabbf4b466521fb4ed9ce6ac846ea1a8ad5bd4fdaf",
+    "docs/reports/isaac-enemy-port/danny/native/1-90.png": "5046ea24000175950dfb1fa0ec33757b6301a711d57acce016fabdfc126d1e5d",
+    "docs/reports/isaac-enemy-port/danny/native/final-0-480.log": "13ef87bfcf8eecd480fa178a8790d7e72994aa9cb24ca14cf0f2f54595cb13f5",
+    "docs/reports/isaac-enemy-port/danny/native/final-0-480.png": "007309055edb6ed4ef8b6a19ef243f0bed8a31fdda05c5a0b0f21b7f1939b39b",
+    "docs/reports/isaac-enemy-port/danny/native/final-0-90.log": "d2c8daff7906e05f29c12f6c6793a700e077bd2fad8241406e8b47b7f789d469",
+    "docs/reports/isaac-enemy-port/danny/native/final-0-90.png": "42973133d92cbe4533fe209f9051299a993b1aed612790041e1c21c4de451f98",
+    "docs/reports/isaac-enemy-port/danny/native/final-1-480.log": "5b0a7780f7d58f2c6332d0fce12b098e318568428ff96c5125fd6581a3e86f48",
+    "docs/reports/isaac-enemy-port/danny/native/final-1-480.png": "3e45fb39eb1498366c58c28ed7b06ef1db32b5a5678901ee7347f67a0662eb17",
+    "docs/reports/isaac-enemy-port/danny/native/final-1-90.log": "b44f60bbdb224c7db90c7f127e9f9e5aa1dcad34249d0a873d58e361edbf1cbc",
+    "docs/reports/isaac-enemy-port/danny/native/final-1-90.png": "cb02ce0b89274e0f41f0c3c5f97b6521e91e55cb05dcae520aea0dc0e761e37a",
+    "docs/reports/isaac-enemy-port/danny/native/final-results.json": "6f869d050955a230fedbdc654ea2607a36c2cfdad9b1fb8e591fc6bd41d85540",
+    "docs/reports/isaac-enemy-port/danny/native/results.json": "cc958952230eb00d701ddaa13655f5328945a4df0a302b73ca4f3c89bc973922",
+    "docs/reports/isaac-enemy-port/danny/native-summary.json": "d4bc73471e8419753486b237d596dc8261b27ec1517153ed524d1c4ef72d9699",
+    "docs/reports/isaac-enemy-port/danny/next-work.json": "5837682ee446d0a58c97944749a34d17b1502dc88a621faeca5b3caadd583577",
+    "docs/reports/isaac-enemy-port/danny/source/aimed_cluster.asm": "ddfae7350e140b99e5c93bedd65ebe0ce81e35e8cd3476911f9c2dd4692146a3",
+    "docs/reports/isaac-enemy-port/danny/source/controller.asm": "4da417fbd6007c6a55f6f7486876933efb20adac0266542184ddc1016f028051",
+    "docs/reports/isaac-enemy-port/danny/source/manifest.json": "b0b4b292baa7b409310ba9710685bef7a691041ea055609d575ff8cd30b9ba34",
+    "docs/reports/isaac-enemy-port/danny/source/owned_children.asm": "f9b2697a6d39b0f8162679e8d63a41fd0eda61a4e996a9b7154b8f9650756aaf",
+    "docs/reports/isaac-enemy-port/danny/source/records.json": "f266b34a29466f2a3b4852e65fbe535ceb81d666f6759b4a53cb8ce1700e659d",
+    "docs/reports/isaac-enemy-port/danny/source/rock_actor_factory.asm": "0932d223f706d5921da525f42f50cd816ee26f10fec81613a27699c89c6370f6",
+    "docs/reports/isaac-enemy-port/danny/source/target_plain.asm": "d91920f277766370e2b16e286e7dc7da098b463f42a9d4dc977abe88f5350da6",
+    "docs/reports/isaac-enemy-port/danny/source/wiki.json": "94285e7fc270ec732de1a53562813cb47f23dbc0fa42fc35ad15db35438203ab",
+    "docs/reports/isaac-enemy-port/danny/status-final.csv": "941486dbf6ddc8a14dce34e389e0389a4e90d6e8283719d45d84d99cd8ddf0a1",
+    "docs/reports/isaac-enemy-port/danny/status-final.json": "8ff22aa58aacd7c5ab65b7dc03a75e7d22b6c302fe76d488d2721b7b90b105fe",
+    "docs/reports/isaac-enemy-port/danny/validation/browser-entries.json": "9aa94fb7557416563b9fe892d47401f7963f65000c33843bdf1624a8bf5d74ee",
+    "docs/reports/isaac-enemy-port/danny/validation/browser-interruption.json": "5fe34dc43e48a8069fbab48bb51da8b50854369ef2d4a41dde5c4c6077e75c06",
+    "docs/reports/isaac-enemy-port/danny/validation/browser-natural.log": "b411635f5ae78902a6efacfdf277628aeeaf653b923ec4092b7dbcb052d40a8c",
+    "docs/reports/isaac-enemy-port/danny/validation/browser.log": "60c8bc58a24e6817541849b46ec950439db0d6c355f7eb677aef261ae76f609d",
+    "docs/reports/isaac-enemy-port/danny/validation/build-artifacts.json": "7f55762edd5aaf8f18bd9adec9c4e6255aa845a22e48f2a15f115807d0fbe52c",
+    "docs/reports/isaac-enemy-port/danny/validation/checklist-final.json": "23798f0efeb2325fc44b31d356b107904c25efd22b5d3d774541bf7a715d49da",
+    "docs/reports/isaac-enemy-port/danny/validation/continuation.json": "bbb2edf5565cc554badd00d6be80771a875d6f571f22e8f41febaee74a35cb5a",
+    "docs/reports/isaac-enemy-port/danny/validation/ctest-last.log": "8638c7422fde9a37b0c3a86aa43c3583a00e936b4d6a252fe2cb5fc88233f262",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-build.log": "6445b198593d9b073862ef73ccbd56c1e1510c03e5517e9a8e11f71fa38ee170",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-current-native-build.log": "33dc172c9905dc1515898e031d35def03f1b324cdc612eeba2e9de47996868e6",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-current-native.log": "6c09a3bb26cb28e91f132eeae6c0080e0503d29605e7b8cdba90c14fa9b4b423",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-current-wasm.log": "5f2b976337763dfa26737608415eb8c174152356ebc95b0955dfaf5b92aa71fd",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-final-native-build.log": "4bff0f4101bfe8136298ee1461534b4a03fd8af4018caa01bc4fb884465f4658",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-final-native.log": "a2b7cd206ee751571d7c7872cbdc6f415d3b24b8151ba798fcbddb45e3da6d4d",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-final-wasm.log": "2df6335510897948623eb53f3be23dc110c7a95f1dc8d8edf0813f4038f3cdaa",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-gdb.log": "d99a18472b1e8c74f6fd0fb5d1c2ba03729b65c5b7b92757a0862902b840731f",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-natural.log": "75c4a8af5a6af1a9799998027c5000086eb648ecaf6e980300eeee2417962814",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-placement-detail.log": "7728848421b6a1d8d89dd0a91c8ca9ab8be2321088df77ec2d3da4db45651201",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-placement-fixed.log": "32057d0dd616406a4c8c805cf1735325008d585514c27c228974da494286f5ff",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-placement-scan.log": "9680a4289501219926c3989d64f0a3ade3ab4efd748d5afe14daee984f30a8e3",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-recheck.log": "64c76026ea711c0589912bbcd58abc1ce934e28ee052b6c4b8f80bb573cd104a",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-regression-build.log": "c313b5eaef744b986f64242b3869f58c2ab0427aac6ffc25e72f648b65c20a8f",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-regressions.log": "bb18f8a790eb8ea1121414b3fa94e89b124d9ec53b8ae2f3ae3b5bb7b2846df7",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-tests.log": "146ab74b26891d1a97234ff52fde53eb45dfd96c5cb96326613c8893784cd5c5",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-tracker-check.log": "23798f0efeb2325fc44b31d356b107904c25efd22b5d3d774541bf7a715d49da",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-wasm.log": "ca084cee74ad9ce260a768fea480b818b0291a9031801530f2addedf1f4c3c23",
+    "docs/reports/isaac-enemy-port/danny/validation/dw-danny-witnesses.log": "d8794446c5d7f28f97bbbec0861108b9a154342a51bf3d5a7fdbc2a6a43347e8",
+    "docs/reports/isaac-enemy-port/danny/validation/previous-checkpoint.json": "4ba3453b2d07ebb861212b535ea19ea647ba6008e987b4f5d8b58269f8569a18",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/CMakeLists.txt": "017ee7c7c3b962869cdb8751e6f8d2d2c034a55f0d92a930faf77d9483bb58ae",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/assets/mechanics/dannies.mechanics": "8bc9b3be35d3558e87d130f75d1a206ce3255c0ca1a1923aaa7cf03e0d4cf77a",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/scripts/isaac-reference/analyze-danny.py": "6e1566bd51c39431269961e94f70ba4d17bd7145d3ff5e31871aed1b7bf350d1",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/src/combat/Dannies.cpp": "256c23e877f791d851ac4b9f7c68e6d9ab0aa909ef83d032a2e89ab3cc5f0c05",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/src/combat/Encounters.cpp": "1ac1f17ba37a324f5a27fce52af8f0caf239abb07a1230c114cb170dfe0e497c",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/src/combat/FloorEncounters.cpp": "8969075a73aa0f6bdd38f7c4b4f9a9efb8580d4720c36f5a34749cd623bc5e4d",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/tests/danny_tests.cpp": "f8c29228fb09a28d50e5fb3a357bcde8e5fe0e21a8d5284072ba8732def017ff",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/tests/floor_progression_tests.cpp": "3f68fc0eae127f840daebfa6e891b681a49c7734242e20a0d7bf08701a3510c7",
+    "docs/reports/isaac-enemy-port/danny/validation/snapshots/web/danny-test.cjs": "4492d3ff4b3b1032fbe85138133f8c0dc6a7dbabfee43e282abfddf2cd1fbb0e",
+    "docs/reports/isaac-enemy-port/danny/validation/source-check.json": "18debe4e9ad02d1bff23109c3f4ee29fe988a19d6226daf4374199727362001d",
+    "docs/reports/isaac-enemy-port/danny/validation-final.json": "23798f0efeb2325fc44b31d356b107904c25efd22b5d3d774541bf7a715d49da",
+    "docs/reports/isaac-enemy-port/danny/visual-review.json": "f75e1934ae27badb9abab268110119e28a521b108864a9a2cdf058ad3fced700",
+    "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-first-volley.png": "e9e919609c0c96e1cb80297ac2ded0dc82a57bdfe4c9827878c39cf77b3dcab0",
+    "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-living-offspring.png": "5e9a181ee9c3f1e5a9c80ae73b504caea5cd8bb84139c01e21a399924b3ea200",
+    "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-repeat-volley.png": "8e13d2092909daf2d7a7f446b9193a207bf98995e52dfea8fbc5634363083b7d",
+    "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-walking.png": "3c685fa55469b4cce0e63e3df23e9c4c36440dd7ac5e2760c879ebef9141f0a9",
+    "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-windup.png": "72e943c90202ab65d45db6c8189b85a0b22596840ec7e848067e40e5ac5e6426",
+    "docs/reports/isaac-enemy-port/danny/web/danny-isolated-first-volley.png": "950697eb1ece77f512c6839a95abc3202cb6f3c672d762a2d59988e7bf42363f",
+    "docs/reports/isaac-enemy-port/danny/web/danny-isolated-living-offspring.png": "7915eb1d4a5c927cd9d78dcc7000b6bdf32391a0e4ce0acba1c46b740f1b32a5",
+    "docs/reports/isaac-enemy-port/danny/web/danny-isolated-repeat-volley.png": "49c0fb8fd92997938b7d9eae4584f100d603c793f8eb428c5abf9fc6ee5cf7cb",
+    "docs/reports/isaac-enemy-port/danny/web/danny-isolated-walking.png": "4a8df56f6273aff994367174d3c6cb31235dd9eeea4183ecb38b2f76394657ef",
+    "docs/reports/isaac-enemy-port/danny/web/danny-isolated-windup.png": "f087e97ecddfd12c17f402e83b9ab6726156f31296472ea102dd08e86f58ba0f",
+    "docs/reports/isaac-enemy-port/danny/web/results.json": "feaa2b6b8b13696b2f1bf42432203008e34d7ac083528f3bb2ef4010b9288e77",
+    "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-first-volley.png": "ef19e40fb496746fe9218594b9655edaa7c7c4c472199b00e1b6ad1e111a5e08",
+    "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-living-offspring.png": "16da140e4475e31a4f2dd919a964cddfebea2f552d4974e5da2566a5c2baed85",
+    "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-repeat-volley.png": "559e059032b3a6e81ba7be63330389339fd677a79ab27291e6ab57d900c3c116",
+    "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-walking.png": "401e9b0be6a0bdce39bfb0cf9702919994dade77ecf6be18af8c4e14e57ff97e",
+    "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-windup.png": "63335ee31d377381cd1b6f61690f76355185d70f4f68c7d498e932c8d1258eb0",
+    "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-first-volley.png": "3ad59236267df0f506d38f6976e68eed5767ccb7aa8d64c2b48b5e7ac0aeb381",
+    "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-living-offspring.png": "c44f2599321b9c8bcf244e8620c0b9befc4a3e31cd4e19703d131cf7fc713139",
+    "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-repeat-volley.png": "e8d86a9136cd8bb33763b2ac601c61d3942bd8cb97516d6b7631e37741a8fc61",
+    "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-walking.png": "200d9a551e1c8bba0fc8aa35a57cd804a2b54caa4d29f66204f294e46828a80d",
+    "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-windup.png": "f83b55143cbb992d750cbe0d1afbb75688e5d70369e637a22ab2e8d9c3638223",
+    "docs/reports/isaac-enemy-port/danny/web-natural/results.json": "5857a90fdc665bd53bccca51d4a584eb181f1f89685a275c28c002d617bc979e"
+  }
+}

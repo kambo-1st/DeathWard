@@ -1,0 +1,96 @@
+[
+  {
+    "name": "creep",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.2.0",
+      "--frames",
+      "115",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/eggy/native-creep.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/eggy/native-creep.png",
+    "log": "docs/reports/isaac-enemy-port/eggy/native-creep.txt"
+  },
+  {
+    "name": "release",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.2.0",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/eggy/native-release.png",
+      "--enemy-hit",
+      "100",
+      "1000"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/eggy/native-release.png",
+    "log": "docs/reports/isaac-enemy-port/eggy/native-release.txt"
+  },
+  {
+    "name": "children",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.2.0",
+      "--frames",
+      "260",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/eggy/native-children.png",
+      "--enemy-hit",
+      "100",
+      "1000"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/eggy/native-children.png",
+    "log": "docs/reports/isaac-enemy-port/eggy/native-children.txt"
+  },
+  {
+    "name": "resident",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-29.2.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/eggy/native-resident.png",
+      "--resident-seed",
+      "8",
+      "--resident-floor",
+      "4"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/eggy/native-resident.png",
+    "log": "docs/reports/isaac-enemy-port/eggy/native-resident.txt"
+  }
+]

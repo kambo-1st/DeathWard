@@ -1,0 +1,184 @@
+{
+  "passed": 44,
+  "failed": 0,
+  "seconds": 149.65,
+  "basis": "All 44 suites passed in one complete run. The Charger fixture was subsequently extended with post-death room-completion and starting-kit trials, rebuilt and passed separately. Production runtime/configuration did not change between these runs.",
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.561194
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "seconds": 2.11638
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "seconds": 84.4926
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "seconds": 11.2173
+    },
+    "floor_progression": {
+      "result": "pass",
+      "seconds": 146.188
+    },
+    "item_builds": {
+      "result": "pass",
+      "seconds": 16.2272
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "seconds": 125.622
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "seconds": 0.0468022
+    },
+    "expedition": {
+      "result": "pass",
+      "seconds": 23.1891
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "seconds": 18.704
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "seconds": 0.314665
+    },
+    "save_slots": {
+      "result": "pass",
+      "seconds": 0.0762771
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "seconds": 2.11685
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "seconds": 0.110406
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "seconds": 14.8055
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "seconds": 48.9241
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "seconds": 1.19538
+    },
+    "building_navigation": {
+      "result": "pass",
+      "seconds": 0.042808
+    },
+    "particle_emission": {
+      "result": "pass",
+      "seconds": 0.0293403
+    },
+    "town_characters": {
+      "result": "pass",
+      "seconds": 0.0301354
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "seconds": 0.300906
+    },
+    "train_motion": {
+      "result": "pass",
+      "seconds": 1.08201
+    },
+    "object_animation": {
+      "result": "pass",
+      "seconds": 0.0744573
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "seconds": 1.73111
+    },
+    "mission_shop": {
+      "result": "pass",
+      "seconds": 4.43667
+    },
+    "money_pickups": {
+      "result": "pass",
+      "seconds": 2.37145
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "seconds": 1.69024
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "seconds": 0.0836068
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "seconds": 6.15207
+    },
+    "monster_flight": {
+      "result": "pass",
+      "seconds": 4.77589
+    },
+    "monster_formations": {
+      "result": "pass",
+      "seconds": 0.236891
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "seconds": 0.527029
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "seconds": 0.529566
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "seconds": 0.584176
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "seconds": 3.10258
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "seconds": 2.61077
+    },
+    "bloat_boss_and_chargers": {
+      "result": "pass",
+      "seconds": 6.26169
+    },
+    "charger_variants": {
+      "result": "pass",
+      "seconds": 0.15563
+    },
+    "mission_themes": {
+      "result": "pass",
+      "seconds": 8.68942
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "seconds": 0.0952689
+    },
+    "core_contracts": {
+      "result": "pass",
+      "seconds": 0.721624
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "seconds": 5.73692
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "seconds": 46.0521
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "seconds": 1.00634
+    }
+  }
+}

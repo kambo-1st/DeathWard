@@ -1,0 +1,25 @@
+{
+  "scoped_suites_passed": 11,
+  "registered_suites": 91,
+  "scope": "Eleven distinct scoped suites passed in this batch, four rerun after moving-interceptor indexing and two after source expiry-boundary correction. Not a new all91-native claim.",
+  "source_check": "source-check.json",
+  "contracts": "chubber-counter-boundary-contracts.txt",
+  "suites": {
+    "mechanics_content": "native-placement.txt",
+    "monster_behaviors": "native-counter-boundary.txt",
+    "vis_family": "native-placement.txt",
+    "chubber_family": "native-counter-boundary.txt",
+    "floor_progression": "native-regression.txt",
+    "item_builds": "native-interceptor-index.txt",
+    "source_projectile_motion": "native-interceptor-index.txt",
+    "spitty_family": "native-regression.txt",
+    "cardinal_walkers": "native-regression.txt",
+    "brain": "native-regression.txt",
+    "baby_family": "native-regression.txt"
+  },
+  "initial_failure": "native-initial.txt",
+  "correction": "Catalog smoke now constructs the required parent for the new component. No failed assertion was suppressed.",
+  "native_build_exit": 0,
+  "wasm_build_exit": 0,
+  "counter_correction": "519b75 compares old counter before increment; new assertion keeps counter42 active. Initial passing receipts do not certify this boundary."
+}

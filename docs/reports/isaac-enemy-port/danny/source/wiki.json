@@ -1,0 +1,73 @@
+{
+  "title": "Danny",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Danny",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=265025",
+  "revision": 265025,
+  "timestamp": "2026-06-21T23:09:09Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "[disambig msg: the monster found in Mines] \nDannies are an enemy added in The Binding of Isaac: Repentance. They are exclusive to Mines and Ashpit.\n\nThey walk towards Isaac, periodically spitting a burst of rocks towards him, up to two of which may be Rock Spiders. Their rock bursts cannot spawn Rock Spiders if the two it spawned are still alive. Dannies have a long cooldown between rock bursts, but are more likely to use it soon after Isaac enters the room."
+    },
+    {
+      "heading": "Variants",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Coal Boy",
+      "level": 3,
+      "text": "Coal Boys appear in the Mines and Ashpit. They walk towards Isaac, periodically spitting four hot coals towards him, one of which may be a Coal Spider. Hot coals linger and can hurt Isaac, but disappear after ~15 seconds, and disappear faster if they take damage. Coal Boys cannot summon coal spiders if the one it spawned is still alive. Coal Boys have a six second cooldown between coal spits, but are more likely to use it soon after Isaac enters the room."
+    },
+    {
+      "heading": "Trivia",
+      "level": 2,
+      "text": "\u2022 Dannies and Coal Boys originate from the Antibirth mod."
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "dlc": "r",
+        "name": "Danny",
+        "id": "820",
+        "base hp": "40",
+        "environment": "Mines / Ashpit / \nchallenge /",
+        "behavior": "Walks toward Isaac and spits chaotic bursts of rocks at him, some of which may be Rock Spiders."
+      },
+      "group": "entity",
+      "id": 820,
+      "name": "Danny",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "dlc": "r",
+        "name": "Coal Boy",
+        "variant": "1",
+        "base hp": "40",
+        "environment": "Mines / Ashpit /",
+        "behavior": "Walks toward Isaac and spits hot coals at him, some of which may be Coal Spiders."
+      },
+      "group": "entity",
+      "id": 820,
+      "name": "Coal Boy",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    }
+  ]
+}

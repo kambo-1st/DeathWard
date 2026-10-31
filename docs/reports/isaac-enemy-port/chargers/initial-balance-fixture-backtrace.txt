@@ -1,0 +1,7 @@
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555555696e7 in (anonymous namespace)::startingKit() ()
+#0  0x00005555555696e7 in (anonymous namespace)::startingKit() ()
+#1  0x0000555555563965 in main ()

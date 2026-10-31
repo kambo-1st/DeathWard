@@ -1,0 +1,19 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 46: membrain_family
+1/1 Test #46: membrain_family ..................***Failed    0.88 sec
+ATTACK variants3=1 HP198.4=1 Shoot29=1 Attack70=1 hop_vulnerable=1 ring8=1 cap8=1 no_LOS_gate=1
+MOVEMENT render_partition=1 whole_packet_backpressure=1 contact25=1
+CYST init=1 interval31=1 current_aim=1 rolling=1 no_creep=1 capacity=1
+LIFECYCLE repeated_wall_bounce=1 ground_terminal=1 exact_children=1 execution=1 debug_clear=1 capacity=1 completion=1
+CONFIG immutable_reload=1 invalid_profiles=5
+discovered natural witness still contains exact identity
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.88 sec
+
+The following tests FAILED:
+	 46 - membrain_family (Failed)
+Errors while running CTest

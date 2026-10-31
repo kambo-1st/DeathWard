@@ -1,0 +1,4 @@
+MOVEMENT center_reflection=1 room_bounds=1 equal_hp=1 zero_contact=1 one_target=1
+SHOTS trigger_delay=1 cardinal=1 twin_cooldown=1 spread=1 ballistics=1 capacity=1 stun=1 aliasing=1
+TERRAIN ground_correction=1 flying_cover=1 bounded_search=1
+mirror behavior passed

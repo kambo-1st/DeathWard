@@ -1,0 +1,54 @@
+{
+  "pass": true,
+  "scope": "Nine selected suites, not all100 registered CTest tests. Final extra flooded-offspring case passed in the same variant suite. Full six-gate acceptance remains open.",
+  "suites": [
+    "mechanics_content",
+    "floor_progression",
+    "resident_enemies",
+    "monster_behaviors",
+    "adult_leech",
+    "dip_variants",
+    "dinga_family",
+    "membrain_family",
+    "gurgle_splasher_physical_lobs"
+  ],
+  "final_ctest_log": "docs/reports/isaac-enemy-port/dip-variants/validation/native-final.txt",
+  "extended_variant_log": "docs/reports/isaac-enemy-port/dip-variants/validation/variants-final.txt",
+  "initial_findings": [
+    "Big Corn test exposed non-finite undamped-lob positions; shared retention1 limit fixed and tested at30/120Hz. Default corn profile uses established.9 source vertical retention.",
+    "Expanded pools changed natural Dip/Squirt/AdultLeech witnesses; updated tests from new real seeded search. Existing controllers passed scoped regressions."
+  ],
+  "current_natural_witnesses": {
+    "217.1.0": {
+      "seed": 0,
+      "floor": 2,
+      "room": 1
+    },
+    "217.2.0": {
+      "seed": 0,
+      "floor": 0,
+      "room": 5
+    },
+    "217.3.0": {
+      "seed": 31,
+      "floor": 3,
+      "room": 5
+    },
+    "220.1.0": {
+      "seed": 1,
+      "floor": 6,
+      "room": 7
+    },
+    "870.0.0": {
+      "seed": 0,
+      "floor": 2,
+      "room": 1
+    },
+    "871.0.0": {
+      "seed": 4,
+      "floor": 3,
+      "room": 3
+    }
+  },
+  "source_verified": "docs/reports/isaac-enemy-port/dip-variants/validation/source-check.txt"
+}

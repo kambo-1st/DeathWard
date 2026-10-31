@@ -1,0 +1,51 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  3: expedition_economy
+      Start 71: willo_and_mullighoul
+ 1/80 Test #71: willo_and_mullighoul ...............   Passed   21.22 sec
+      Start 72: prey_and_small_leech
+ 2/80 Test  #3: expedition_economy .................   Passed   33.47 sec
+      Start 64: maw_family
+ 3/80 Test #64: maw_family .........................   Passed   14.63 sec
+      Start 70: boil_family
+ 4/80 Test #70: boil_family ........................   Passed    8.41 sec
+      Start 57: buzzing_flies
+ 5/80 Test #72: prey_and_small_leech ...............***Failed   64.89 sec
+PASS swimming acceleration and source Hop10/Land6 timing
+PASS real river crossing, solid obstacles and room boundaries
+PASS Prey health, live/death offspring, population, retained births, overkill and contacts
+PASS airborne projectile/contact policy, blast vulnerability, landing and obstacle arcs
+NATURAL_PREY_FAMILY id=810.0 seed=5 floor=2 room=3
+FAIL both regular identities have actual natural floor residents
+
+      Start  7: expedition_destruction
+ 6/80 Test #57: buzzing_flies ......................   Passed   39.29 sec
+      Start 47: boom_flies
+ 7/80 Test  #7: expedition_destruction .............   Passed   55.99 sec
+      Start 60: mulligan_family
+ 8/80 Test #60: mulligan_family ....................   Passed   21.75 sec
+      Start 16: canyon_rivers
+ 9/80 Test #16: canyon_rivers ......................   Passed   16.51 sec
+      Start  5: floor_progression
+10/80 Test #47: boom_flies .........................   Passed  148.40 sec
+      Start 65: hosts
+11/80 Test #65: hosts ..............................   Passed   11.41 sec
+      Start  9: expedition
+12/80 Test  #9: expedition .........................   Passed   14.06 sec
+      Start 79: generated_dungeons
+13/80 Test #79: generated_dungeons .................   Passed   22.88 sec
+      Start 10: expedition_pacing
+14/80 Test #10: expedition_pacing ..................   Passed   11.05 sec
+      Start 44: fly_bombs
+15/80 Test #44: fly_bombs ..........................   Passed    5.92 sec
+      Start  6: item_builds
+16/80 Test  #6: item_builds ........................   Passed    8.04 sec
+      Start  4: canyon_bosses
+17/80 Test  #4: canyon_bosses ......................   Passed    6.94 sec
+      Start 61: spider_family
+18/80 Test #61: spider_family ......................   Passed    8.27 sec
+      Start 15: canyon_roads
+19/80 Test #15: canyon_roads .......................   Passed    6.47 sec
+      Start 49: hornfel_boss
+20/80 Test #49: hornfel_boss .......................   Passed    4.09 sec
+      Start 63: long_legs_and_sack

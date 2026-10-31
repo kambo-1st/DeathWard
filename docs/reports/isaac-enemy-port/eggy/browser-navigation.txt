@@ -1,0 +1,10 @@
+START isolated browser 141.0.7390.37
+PASS isolated
+START cover browser 141.0.7390.37
+PASS cover
+START death browser 141.0.7390.37
+PASS death
+START blast browser 141.0.7390.37
+PASS blast
+START resident browser 141.0.7390.37
+PASS resident

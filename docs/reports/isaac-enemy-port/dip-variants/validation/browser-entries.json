@@ -1,0 +1,74 @@
+[
+  {
+    "id": "217.1.0",
+    "name": "corn"
+  },
+  {
+    "id": "217.2.0",
+    "name": "brownie-corn"
+  },
+  {
+    "id": "217.3.0",
+    "name": "big-corn"
+  },
+  {
+    "id": "220.1.0",
+    "name": "dank-squirt"
+  },
+  {
+    "id": "870.0.0",
+    "name": "drip"
+  },
+  {
+    "id": "871.0.0",
+    "name": "splurt"
+  },
+  {
+    "id": "217.1.0",
+    "name": "resident-corn",
+    "seed": 0,
+    "floor": 2,
+    "room": 1,
+    "natural": true
+  },
+  {
+    "id": "217.2.0",
+    "name": "resident-brownie-corn",
+    "seed": 0,
+    "floor": 0,
+    "room": 5,
+    "natural": true
+  },
+  {
+    "id": "217.3.0",
+    "name": "resident-big-corn",
+    "seed": 31,
+    "floor": 3,
+    "room": 5,
+    "natural": true
+  },
+  {
+    "id": "220.1.0",
+    "name": "resident-dank-squirt",
+    "seed": 1,
+    "floor": 6,
+    "room": 7,
+    "natural": true
+  },
+  {
+    "id": "870.0.0",
+    "name": "resident-drip",
+    "seed": 0,
+    "floor": 2,
+    "room": 1,
+    "natural": true
+  },
+  {
+    "id": "871.0.0",
+    "name": "resident-splurt",
+    "seed": 4,
+    "floor": 3,
+    "room": 3,
+    "natural": true
+  }
+]

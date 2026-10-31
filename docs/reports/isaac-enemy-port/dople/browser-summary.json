@@ -1,0 +1,10 @@
+{
+  "cases": 4,
+  "passed": 4,
+  "errors": [],
+  "isolated": 2,
+  "natural": 2,
+  "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+  "evidence": "docs/reports/isaac-enemy-port/dople/web/results.json",
+  "scope": "Scoped Original-style production WASM mirror controllers, actual trigger input and natural seeded placement. Full parity, all-camera visuals, balance and performance remain open."
+}

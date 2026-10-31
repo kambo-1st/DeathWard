@@ -1,0 +1,3 @@
+PASS crackle-physical-fire-jets
+PASS crackle-jets-survive-owner
+PASS natural-crackle

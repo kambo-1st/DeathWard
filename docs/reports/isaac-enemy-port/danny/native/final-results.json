@@ -1,0 +1,90 @@
+[
+  {
+    "variant": 0,
+    "frames": 90,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-820.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "90",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/danny/native/final-0-90.png"
+    ],
+    "returncode": 0,
+    "wall_seconds": 30.875381710997317
+  },
+  {
+    "variant": 0,
+    "frames": 480,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-820.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "480",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/danny/native/final-0-480.png"
+    ],
+    "returncode": 0,
+    "wall_seconds": 40.716513223997026
+  },
+  {
+    "variant": 1,
+    "frames": 90,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-820.1.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "90",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/danny/native/final-1-90.png"
+    ],
+    "returncode": 0,
+    "wall_seconds": 18.324577241000952
+  },
+  {
+    "variant": 1,
+    "frames": 480,
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-820.1.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "480",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/danny/native/final-1-480.png"
+    ],
+    "returncode": 0,
+    "wall_seconds": 38.94984953299718
+  }
+]

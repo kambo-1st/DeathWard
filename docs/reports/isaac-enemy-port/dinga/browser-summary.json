@@ -1,0 +1,91 @@
+{
+  "pass": true,
+  "scope": "Six production WASM scenarios on the final parser build: three isolated identities and three natural seeded residents. Original style, actual controllers/projectiles/offspring; not full acceptance.",
+  "cases": [
+    {
+      "name": "dip",
+      "id": "217.0.0",
+      "pass": true,
+      "volleys": 0,
+      "births": 0,
+      "dashes": 11,
+      "launchFrameSamples": 0,
+      "childFrames": 0,
+      "actualShots": 0,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "squirt",
+      "id": "220.0.0",
+      "pass": true,
+      "volleys": 0,
+      "births": 0,
+      "dashes": 4,
+      "launchFrameSamples": 8,
+      "childFrames": 61,
+      "actualShots": 0,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "dinga",
+      "id": "223.0.0",
+      "pass": true,
+      "volleys": 2,
+      "births": 4,
+      "dashes": 0,
+      "launchFrameSamples": 0,
+      "childFrames": 61,
+      "actualShots": 16,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "resident-dip",
+      "id": "217.0.0",
+      "natural": true,
+      "seed": 0,
+      "floor": 0,
+      "room": 5,
+      "pass": true,
+      "volleys": 0,
+      "births": 0,
+      "dashes": 14,
+      "launchFrameSamples": 0,
+      "childFrames": 0,
+      "actualShots": 0,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "resident-squirt",
+      "id": "220.0.0",
+      "natural": true,
+      "seed": 0,
+      "floor": 2,
+      "room": 7,
+      "pass": true,
+      "volleys": 0,
+      "births": 0,
+      "dashes": 4,
+      "launchFrameSamples": 6,
+      "childFrames": 0,
+      "actualShots": 0,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    },
+    {
+      "name": "resident-dinga",
+      "id": "223.0.0",
+      "natural": true,
+      "seed": 4,
+      "floor": 5,
+      "room": 10,
+      "pass": true,
+      "volleys": 4,
+      "births": 2,
+      "dashes": 0,
+      "launchFrameSamples": 0,
+      "childFrames": 0,
+      "actualShots": 32,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    }
+  ],
+  "evidence": "web/results.json"
+}

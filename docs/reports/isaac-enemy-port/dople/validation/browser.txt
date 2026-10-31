@@ -1,0 +1,8 @@
+START dople
+PASS dople
+START evil-twin
+PASS evil-twin
+START resident-dople
+PASS resident-dople
+START resident-evil-twin
+PASS resident-evil-twin

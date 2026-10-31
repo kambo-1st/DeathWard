@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/9 Test  #2: mechanics_content ................   Passed    1.83 sec
+    Start  5: floor_progression
+2/9 Test  #5: floor_progression ................   Passed  176.97 sec
+    Start 27: resident_enemies
+3/9 Test #27: resident_enemies .................   Passed    0.69 sec
+    Start 29: monster_behaviors
+4/9 Test #29: monster_behaviors ................   Passed    3.30 sec
+    Start 44: adult_leech
+5/9 Test #44: adult_leech ......................   Passed    0.54 sec
+    Start 45: dip_variants
+6/9 Test #45: dip_variants .....................   Passed    2.02 sec
+    Start 46: dinga_family
+7/9 Test #46: dinga_family .....................   Passed    1.04 sec
+    Start 47: membrain_family
+8/9 Test #47: membrain_family ..................   Passed    1.92 sec
+    Start 71: gurgle_splasher_physical_lobs
+9/9 Test #71: gurgle_splasher_physical_lobs ....   Passed    9.35 sec
+
+100% tests passed, 0 tests failed out of 9
+
+Total Test time (real) = 197.66 sec

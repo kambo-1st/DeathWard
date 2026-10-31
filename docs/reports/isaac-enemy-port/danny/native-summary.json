@@ -1,0 +1,54 @@
+{
+  "selected_suites": {
+    "mechanics_content": {
+      "result": "Passed",
+      "seconds": 9.39
+    },
+    "floor_progression": {
+      "result": "Passed",
+      "seconds": 899.21
+    },
+    "floor_resident_placement": {
+      "result": "Passed",
+      "seconds": 4.63
+    },
+    "resident_enemies": {
+      "result": "Passed",
+      "seconds": 2.3
+    },
+    "dip_variants": {
+      "result": "Passed",
+      "seconds": 10.38
+    },
+    "danny_family": {
+      "result": "Passed",
+      "seconds": 0.69
+    },
+    "hardy_family": {
+      "result": "Passed",
+      "seconds": 1.5
+    },
+    "rock_spider_family": {
+      "result": "Passed",
+      "seconds": 216.24
+    }
+  },
+  "unique_passed": 8,
+  "registered_suites": 104,
+  "logs": [
+    "validation/dw-danny-current-native.log",
+    "validation/ctest-last.log"
+  ],
+  "floor_scope": {
+    "floors": 1087,
+    "bands": 4,
+    "enabled_statue_identities": 14,
+    "all_positive_ordinary_pool_entries_observed": true,
+    "specific_river_edge_regression_seed": 404
+  },
+  "scope": "Eight selected final Linux suites passed after actual-radius placement correction. Not all registered suites or full six-gate acceptance.",
+  "historical_failures": [
+    "validation/dw-danny-recheck.log",
+    "validation/dw-danny-placement-detail.log"
+  ]
+}

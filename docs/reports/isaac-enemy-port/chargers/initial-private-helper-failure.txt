@@ -1,0 +1,66 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  6%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Campaign.cpp.o
+[ 37%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Expedition.cpp.o
+[ 37%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Dungeon.cpp.o
+[ 37%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FlightNavigation.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Breakables.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/world/FloorDressing.cpp.o
+[ 43%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 50%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonTerrain.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRiver.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonRoad.cpp.o
+[ 56%] Building CXX object CMakeFiles/deathward_core.dir/src/world/RoomGraph.cpp.o
+[ 62%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 62%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 62%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 68%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 68%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 68%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 68%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 75%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 75%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 75%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 81%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+[ 81%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 81%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 87%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 87%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 87%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_charger_tests.dir/tests/charger_variant_tests.cpp.o
+/home/kambo/workspace/DeathWard/tests/charger_variant_tests.cpp: In function ‘void {anonymous}::princess()’:
+/home/kambo/workspace/DeathWard/tests/charger_variant_tests.cpp:62:42: error: ‘float dw::Simulation::enemyProjectileHit(const dw::Enemy&, Vector3, Vector3, float, bool&) const’ is private within this context
+   62 |     const float side=s.enemyProjectileHit(*e,{-4,.85f,0},{4,.85f,0},.05f,weak);
+      |                      ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/tests/charger_variant_tests.cpp:1:
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:453:11: note: declared private here
+  453 |     float enemyProjectileHit(const Enemy &enemy,Vector3 from,Vector3 to,float radius,bool &weakPoint) const;
+      |           ^~~~~~~~~~~~~~~~~~
+/home/kambo/workspace/DeathWard/tests/charger_variant_tests.cpp:67:40: error: ‘Vector3 dw::Simulation::chargeTailPosition(const dw::Enemy&) const’ is private within this context
+   67 |     blast.position=s.chargeTailPosition(*s.findEnemy(id));s.queueRoot(blast);s.drainEvents();check(near(s.findEnemy(id)->hp,before-12),"explosion overlapping real tail damages once");
+      |                    ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/tests/charger_variant_tests.cpp:1:
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:452:13: note: declared private here
+  452 |     Vector3 chargeTailPosition(const Enemy &enemy) const;
+      |             ^~~~~~~~~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/deathward_charger_tests.dir/build.make:76: CMakeFiles/deathward_charger_tests.dir/tests/charger_variant_tests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:2666: CMakeFiles/deathward_charger_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2673: CMakeFiles/deathward_charger_tests.dir/rule] Error 2
+gmake: *** [Makefile:1318: deathward_charger_tests] Error 2

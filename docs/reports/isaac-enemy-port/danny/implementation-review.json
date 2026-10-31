@@ -1,0 +1,138 @@
+{
+  "status": "Implemented in progress: eight final Linux suites, four production WASM scenarios and ten final visual inspections pass within the documented scope. Full six-gate acceptance remains open.",
+  "baseline": "Installed Repentance1.7.9b",
+  "source_manifest": "docs/reports/isaac-enemy-port/danny/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/danny/animations/manifest.json",
+  "contracts": {
+    "820.0.0": {
+      "movement": "Grounded pursuit using source FindGridPath force0.6, friction0.7; attack animation damps momentum by0.7. Source decisions run at30Hz; DeathWard uses its physical pathfinder and world geometry.",
+      "targeting": "Ordinary player target at Shoot event, not at windup start. Attack acquisition below200 native units;200..400 requires an additional1/10 draw. No additional LOS requirement invented. Native control/fear/confusion branches remain incomplete.",
+      "attacks": "Six combined payloads: up to two owned actual Rock Spiders; remaining slots are aimed scatter rock projectiles. Rock Spider spread30degrees/speed1..4; source FireBossProjectiles strength1 gives falling[-20,4] and gravity0.42.",
+      "vulnerability": "Normally damageable. Received damage accumulates in a decaying source-HP counter; above6 it doubles idle cooldown decrement and adds a1/20 attack chance after the ordinary1/60 fails. Decay0.11 per source tick.",
+      "phases": "Initial cooldown10..19; idle until countdown and random gates permit; Attack38frames, Shoot12. Set cooldown150 at attack start, decrement only during pursuit. Damage is added at controller epilogue and affects subsequent tick.",
+      "offspring": "Rock Spider818.0 default factory resolves1..3. Count own surviving NPCs, including the same entity after morph to Spider85.0. Refill vacant slots to two on next attack. No death offspring for Danny itself.",
+      "completion": "Real children remain independent threats after parent death. Retain exact selected payload at capacity without reroll; room clear waits for admitted living children and queued attacks. Hot Coal uses its existing nonblocking/environment lifecycle.",
+      "source_numbers": {
+        "anm2path": "820.000_danny.anm2",
+        "baseHP": "40",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "820",
+        "name": "#DANNY",
+        "numGridCollisionPoints": "12",
+        "portrait": "243",
+        "shadowSize": "15",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "adaptations": "Planar scale0.1, HPscale3.2 (128HP), radius0.52, contact10 before shared multiplier. Projectiles use world height1.15/radius0.22/damage10, damped verticalscale0.05, source-strength1 gravity23.4 and retention0.9. Acyclic children bypass unrelated generation cap. Pending births count toward local cap to prevent capacity-dependent overproduction. Cosmetic dust replaces native debris sprites. Original style retained; no imported sprites.",
+      "unknowns": "Full native mass30/crowd, fear/confusion/charm/control/champion/item/status and saved-state fidelity remain open. Native SpawnType906 suppression is guarded for attached/live-parent Hornfel passengers; alternate mounted creation/lifetime routes are not accepted. Coal Boy native room cap counts Red Fireplace33.2, whose production port is still missing; predicate can be tested with an explicitly marked test actor only. Scoped Linux/WASM images are reviewed; full visual/readability acceptance, balance and controlled performance remain open."
+    },
+    "820.1.0": {
+      "movement": "Grounded pursuit using source FindGridPath force0.6, friction0.7; attack animation damps momentum by0.7. Source decisions run at30Hz; DeathWard uses its physical pathfinder and world geometry.",
+      "targeting": "Ordinary player target at Shoot event, not at windup start. Attack acquisition below200 native units;200..400 requires an additional1/10 draw. No additional LOS requirement invented. Native control/fear/confusion branches remain incomplete.",
+      "attacks": "Four actual falling actors: up to one owned Coal Spider and remaining Hot Coals. All have independent30-degree spread and source planar speed1..10; no ordinary rock-projectile substitute.",
+      "vulnerability": "Normally damageable. Received damage accumulates in a decaying source-HP counter; above6 it doubles idle cooldown decrement and adds a1/20 attack chance after the ordinary1/60 fails. Decay0.11 per source tick.",
+      "phases": "Initial cooldown10..19; idle until countdown and random gates permit; Attack38frames, Shoot12. Set cooldown150 at attack start, decrement only during pursuit. Damage is added at controller epilogue and affects subsequent tick.",
+      "offspring": "Coal Spider818.2 default subtype factory resolves1..3. Hot Coal33.11 default likewise. Only the living spider receives the native ownership marker; coals do not consume its one-child quota.",
+      "completion": "Real children remain independent threats after parent death. Retain exact selected payload at capacity without reroll; room clear waits for admitted living children and queued attacks. Hot Coal uses its existing nonblocking/environment lifecycle.",
+      "source_numbers": {
+        "anm2path": "820.001_coal boy.anm2",
+        "baseHP": "40",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "820",
+        "name": "#COAL_BOY",
+        "numGridCollisionPoints": "12",
+        "portrait": "259",
+        "shadowSize": "15",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "adaptations": "Planar scale0.1, HPscale3.2 (128HP), radius0.52, contact10 before shared multiplier. Projectiles use world height1.15/radius0.22/damage10, damped verticalscale0.05, source-strength1 gravity23.4 and retention0.9. Acyclic children bypass unrelated generation cap. Pending births count toward local cap to prevent capacity-dependent overproduction. Cosmetic dust replaces native debris sprites. Original style retained; no imported sprites.",
+      "unknowns": "Full native mass30/crowd, fear/confusion/charm/control/champion/item/status and saved-state fidelity remain open. Native SpawnType906 suppression is guarded for attached/live-parent Hornfel passengers; alternate mounted creation/lifetime routes are not accepted. Coal Boy native room cap counts Red Fireplace33.2, whose production port is still missing; predicate can be tested with an explicitly marked test actor only. Scoped Linux/WASM images are reviewed; full visual/readability acceptance, balance and controlled performance remain open."
+    }
+  },
+  "source_findings": [
+    {
+      "claim": "Cooldown starts10..19 and becomes150 at attack start. Shoot event12/Attack38 are animation metadata, not inferred wiki durations.",
+      "evidence": "controller:4ea199,4ea2c4..4ea2d4;animations/manifest.json"
+    },
+    {
+      "claim": "Recent-damage accumulator threshold6/decay0.11, extra1/20 chance and two decrements; ordinary chance1/60.",
+      "evidence": "controller:4e9f79..4ea034,4ea2da..4ea325"
+    },
+    {
+      "claim": "Danny attack blocked at nine total ordinary Spiders85.0 or Rock Spiders818 of any variant. Coal Boy instead counts33.2 Red Fireplaces; do not silently replace this unusual source predicate with a Coal Spider cap.",
+      "evidence": "controller:4ea0d6..4ea136"
+    },
+    {
+      "claim": "FindSpawnedEntities scans NPCs for the stored owner seed marker, not only the original child type.",
+      "evidence": "owned_children:6a6fa0..6a7013"
+    },
+    {
+      "claim": "Native SpawnerType906 explicitly blocks attack acquisition. Earlier passenger review expectation of ordinary mounted attacks is superseded for this family.",
+      "evidence": "controller:4ea050..4ea057"
+    }
+  ],
+  "validation_scope": "Eight selected final Linux suites including1087 generated floors, all enabled ordinary pools and14statue identities; two isolated plus two natural production WASM scenarios; four final native and six browser images inspected. Full balance, controlled performance and fidelity/readability acceptance remain open.",
+  "known_gaps": "Full native mass30/crowd, fear/confusion/charm/control/champion/item/status and saved-state fidelity remain open. Native SpawnType906 suppression is guarded for attached/live-parent Hornfel passengers; alternate mounted creation/lifetime routes are not accepted. Coal Boy native room cap counts Red Fireplace33.2, whose production port is still missing; predicate can be tested with an explicitly marked test actor only. Scoped Linux/WASM images are reviewed; full visual/readability acceptance, balance and controlled performance remain open.",
+  "capacity_correction": "Hot Coal has no owned-child marker. A separate pending-spawn producer tag pauses the producer while an already selected volley cannot be admitted, bounding its retained queue to one volley without replacing the source population rule. Regression held Coal Boy at one admitted parent for1000ticks, then admitted exactly one retained four-body volley when capacity returned.",
+  "natural_witnesses": [
+    {
+      "id": "820.0.0",
+      "seed": 4,
+      "floor": 2,
+      "room": 4
+    },
+    {
+      "id": "820.1.0",
+      "seed": 9,
+      "floor": 2,
+      "room": 2
+    }
+  ],
+  "fixture_corrections": [
+    "Initial late-aim test incorrectly compared children to world north after natural pursuit had moved the parent. It now compares to the actual parent-to-player direction at Shoot.",
+    "Red Fireplace33.2 is not ported; the original test attempted to spawn an unavailable actor. The cap test now explicitly injects a nonupdating identity marker and does not claim production Fireplace support.",
+    "New Quarry pool changes selected residents: Hardy witness now5/2/3, Big Corn11/2/2. Existing behavioral assertions remain unchanged."
+  ],
+  "placement_regression": {
+    "failure": {
+      "seed": 404,
+      "floor": 2,
+      "room": 7,
+      "id": "10.1.0",
+      "entity": 17,
+      "position": [
+        -51.121357,
+        0.85,
+        4.686072
+      ],
+      "radius": 0.6
+    },
+    "cause": "Perimeter sampling at the padded radius0.8 missed a narrow water edge touched at actual radius0.6. Canyon sampling is not monotonic with radius; checking a larger ring does not prove the actual footprint clear.",
+    "correction": "Both the authored anchor search and fallback placement now test actual body radius as well as the padded clearance ring.",
+    "regression": "floor_resident_placement scans all four bands of seed404; broad floor_progression assertion retained and enhanced with exact seed/position diagnostics.",
+    "evidence": [
+      "validation/dw-danny-recheck.log",
+      "validation/dw-danny-placement-scan.log",
+      "validation/dw-danny-placement-detail.log"
+    ],
+    "state": "Confirmed fixed by dedicated seed404 regression and broad1087-floor pass."
+  },
+  "validation_results": {
+    "native": "native-summary.json",
+    "browser": "browser-summary.json",
+    "visual": "visual-review.json",
+    "build": "validation/build-artifacts.json"
+  }
+}

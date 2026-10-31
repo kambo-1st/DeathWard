@@ -1,0 +1,10 @@
+TRAJECTORY Shoot18 attack69 vertical48 horizontal67.2 reversal21 last_active_counter42 remove_on_counter43 moving_parent=1 cover_pass=1
+COLLISION swept_crossing=1 spectral_block=1 piercing_pass=1 spent_return_block=1 contact25=1 invulnerable=1 execution_no_loot=1 partition=1
+LIFECYCLE owner_validation=1 capacity_retry=1 parent_death=1 room_exit=1 room_clear=1 orphan=1
+CONFIG immutable=1 invalid_profiles8
+STARTING_KIT seconds=1.25 hp=100
+NATURAL_VIS variant=0 seed=0 floor=4 room=1 band=2
+NATURAL_VIS variant=2 seed=0 floor=5 room=7 band=3
+NATURAL_VIS variant=3 seed=1 floor=6 room=2 band=3
+NATURAL_VIS variant=1 seed=4 floor=5 room=3 band=2
+PASS Chubber contracts

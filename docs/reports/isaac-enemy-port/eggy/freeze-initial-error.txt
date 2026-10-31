@@ -1,0 +1,5 @@
+Initial checkpoint freeze rejected before any report/status mutation:
+freeze-checkpoint.py line39 expected only prey_and_small_leech failure.
+Completed full native run actually passed78/80; monster_behaviors also failed
+because its old Eggy assertion expected five immediate children.
+Final freeze must require both corrected suites, preserving the full-run failures.

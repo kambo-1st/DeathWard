@@ -1,0 +1,37 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/1000.147_fire jet.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/crackle/animations/1000.147_fire jet.anm2",
+      "sha256": "571e6253b6889920400bda2acc28a36bba986d9ca743215ad983ce8a69472c13",
+      "checksum": "0xb1c9e5e",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

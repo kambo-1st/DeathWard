@@ -1,0 +1,218 @@
+Start testing: Oct 28 09:05 CET
+----------------------------------------------------------
+2/104 Testing: mechanics_content
+2/104 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 28 09:05 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,-7 new=1,9
+Mechanics contracts passed
+<end of output>
+Test time =   9.39 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 28 09:05 CET
+"mechanics_content" time elapsed: 00:00:09
+----------------------------------------------------------
+
+5/104 Testing: floor_progression
+5/104 Test: floor_progression
+Command: "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"floor_progression" start time: Oct 28 09:05 CET
+Output:
+----------------------------------------------------------
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_REPLACEMENT seed=2 floor=2 room=4 source=22.0 target=22.1
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_CHARGER id=855.0 seed=2 floor=5 room=8 variant=0
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_REPLACEMENT seed=3 floor=1 room=1 source=23.0 target=23.1
+NATURAL_REPLACEMENT seed=3 floor=1 room=7 source=85.0 target=814.0
+NATURAL_REPLACEMENT seed=3 floor=1 room=7 source=85.0 target=814.0
+NATURAL_CHARGER id=23.2 seed=3 floor=2 room=5 variant=0
+NATURAL_CHARGER id=23.3 seed=5 floor=2 room=8 variant=2
+NATURAL_STATUE id=202.10.1 seed=5 floor=4 room=11
+NATURAL_STATUE id=804.0 seed=9 floor=2 room=2
+NATURAL_STATUE id=804.0.2 seed=10 floor=2 room=7
+NATURAL_GRILLED seed=22 floor=0 room=3
+NATURAL_STATUE id=804.0.3 seed=23 floor=2 room=6
+NATURAL_STATUE id=804.0.1 seed=52 floor=1 room=6
+NATURAL_REPLACEMENT seed=52 floor=3 room=4 source=15.0 target=15.2
+NATURAL_REPLACEMENT seed=274 floor=0 room=4 source=16.0 target=16.1
+NATURAL_REPLACEMENT seed=390 floor=0 room=3 source=29.0 target=54.0
+Replacement coverage: I.Blob=1 Grilled=1 Hopper substitutions=1 Drowned substitutions=30
+Scorched floors=122 Hopper substitutions=1 Drowned substitutions=30
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+Activated Ring Fly groups band=2 count=2
+Activated Hopper forms band=0 count=2
+Activated Hopper forms band=1 count=2
+Activated Hopper forms band=2 count=2
+Reachable pool identities=130
+band=0 meanThreat=4.47424
+band=1 meanThreat=6.31161
+band=2 meanThreat=8.2208
+band=3 meanThreat=11.2237
+Reachable statue identities=14
+Validated 1087 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss
+<end of output>
+Test time = 899.21 sec
+----------------------------------------------------------
+Test Passed.
+"floor_progression" end time: Oct 28 09:20 CET
+"floor_progression" time elapsed: 00:14:59
+----------------------------------------------------------
+
+6/104 Testing: floor_resident_placement
+6/104 Test: floor_resident_placement
+Command: "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests" "--scan-placement" "404" "404"
+Directory: /home/kambo/workspace/DeathWard/build
+"floor_resident_placement" start time: Oct 28 09:20 CET
+Output:
+----------------------------------------------------------
+PASS placement scan seeds 404..404
+<end of output>
+Test time =   4.63 sec
+----------------------------------------------------------
+Test Passed.
+"floor_resident_placement" end time: Oct 28 09:20 CET
+"floor_resident_placement" time elapsed: 00:00:04
+----------------------------------------------------------
+
+28/104 Testing: resident_enemies
+28/104 Test: resident_enemies
+Command: "/home/kambo/workspace/DeathWard/build/deathward_resident_enemies_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"resident_enemies" start time: Oct 28 09:20 CET
+Output:
+----------------------------------------------------------
+PASS resident groups, corridor inactivity, ambient animation, entry continuity, doorway clearance, companions, cleared revisits and debug replay in both themes
+<end of output>
+Test time =   2.30 sec
+----------------------------------------------------------
+Test Passed.
+"resident_enemies" end time: Oct 28 09:21 CET
+"resident_enemies" time elapsed: 00:00:02
+----------------------------------------------------------
+
+46/104 Testing: dip_variants
+46/104 Test: dip_variants
+Command: "/home/kambo/workspace/DeathWard/build/deathward_dip_variant_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"dip_variants" start time: Oct 28 09:21 CET
+Output:
+----------------------------------------------------------
+CORN impulse=2 Brownie_ordinary=1 HP=1 BigCorn_predictive_death=1 capacity=1 clear=1 debug=1
+DRIP distinct_impulse=1 aimed_and_random=1 chain_frame10=1
+SPLURT launch36=1 second8=1 retarget=1 two_charges=1 two_Drips=1 capacity=1 partition=1
+DANK trail_after_launch=1 source_life60=1 slow_only=1 retained=1 two_Clots=1
+WATER wet_pits=1 dry_pits_block=1 walls_block=1 child_placement=1
+CONFIG immutable=1 invalid_profiles=6
+NATURAL_VARIANT 217.1.0 seed=2 floor=2 room=4
+NATURAL_VARIANT 217.2.0 seed=0 floor=0 room=5
+NATURAL_VARIANT 217.3.0 seed=11 floor=2 room=2
+NATURAL_VARIANT 220.1.0 seed=1 floor=6 room=7
+NATURAL_VARIANT 870.0.0 seed=1 floor=3 room=8
+NATURAL_VARIANT 871.0.0 seed=4 floor=3 room=3
+PASS Dip variants
+<end of output>
+Test time =  10.38 sec
+----------------------------------------------------------
+Test Passed.
+"dip_variants" end time: Oct 28 09:21 CET
+"dip_variants" time elapsed: 00:00:10
+----------------------------------------------------------
+
+80/104 Testing: danny_family
+80/104 Test: danny_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_danny_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"danny_family" start time: Oct 28 09:21 CET
+Output:
+----------------------------------------------------------
+CHILD type=818 variant=0 lift=1.5 vx=-4.21558 vz=5.99584 hp=38.4
+CHILD type=818 variant=0 lift=1.5 vx=-2.60598 vz=4.73049 hp=38.4
+TIMING natural=1 Shoot12=1 Attack38=1 delay150=1 live_children=2 rocks=4 late_aim=1
+OWNERSHIP morph_keeps_slot=1 replacement=1 independent_parents=1
+COAL live1_hot3=1 capped_hot4=1 replenish=1
+LIMITS source_room9=1 damage_response=1 retained=1 completion=1 partition=1
+CONFIG snapshots=1 invalid_contracts=4
+PASS Danny family
+<end of output>
+Test time =   0.69 sec
+----------------------------------------------------------
+Test Passed.
+"danny_family" end time: Oct 28 09:21 CET
+"danny_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+81/104 Testing: hardy_family
+81/104 Test: hardy_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_hardy_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"hardy_family" start time: Oct 28 09:21 CET
+Output:
+----------------------------------------------------------
+MOTION natural_start=1 telegraph36=1 late_target=1 commitment=1 partition=1
+IMPACTS counts8_14_8=1 whole_burst=1 recovery=1 thrown_spiders=1 double_hp_dip=1
+TERRAIN breakable_and_cache=1 grazing=1
+CANYON footprint12cm=1 slope_impact=1 partition=1
+LIFECYCLE damage_channels=1 retained_death=1 clear=1 debug=1
+BURST atomic4=1 perpendicular=1 source_retained=1 no_recursion=1
+NATURAL_HARDY seed=5 floor=2 room=3 hp=192
+CONFIG snapshots=1 invalid_contracts=4 placement=1
+PASS Hardy
+<end of output>
+Test time =   1.50 sec
+----------------------------------------------------------
+Test Passed.
+"hardy_family" end time: Oct 28 09:21 CET
+"hardy_family" time elapsed: 00:00:01
+----------------------------------------------------------
+
+82/104 Testing: rock_spider_family
+82/104 Test: rock_spider_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_rock_spider_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"rock_spider_family" start time: Oct 28 09:21 CET
+Output:
+----------------------------------------------------------
+MOTION reveal20=1 native_force=1 committed_heading=1 cycle48=1 partition=1 chase_wander=1
+DEATH four_subtypes=1 same_entity=1 no_extra_reward=1 overkill=1 fire_morph=1 burning=1 debug=1
+COAL retained_birth=1 matching_shape=1 bounce=1 per_hit_wear=1 explosive=1 flame=1 timed_decay=1 clear=1
+COLLISION walls=1 contact=1 height_classes=1
+CONFIG immutable=1 rejects_invalid=5
+NATURAL_ROCK 818.0.3 seed=0 floor=2 room=1
+NATURAL_ROCK 818.0.1 seed=0 floor=2 room=1
+NATURAL_ROCK 818.2.2 seed=1 floor=3 room=6
+NATURAL_ROCK 818.2.1 seed=2 floor=0 room=3
+NATURAL_ROCK 818.2.3 seed=28 floor=1 room=3
+NATURAL_ROCK 818.0.2 seed=31 floor=3 room=5
+PASS Rock Spider and Coal Spider
+<end of output>
+Test time = 216.24 sec
+----------------------------------------------------------
+Test Passed.
+"rock_spider_family" end time: Oct 28 09:24 CET
+"rock_spider_family" time elapsed: 00:03:36
+----------------------------------------------------------
+
+End testing: Oct 28 09:24 CET

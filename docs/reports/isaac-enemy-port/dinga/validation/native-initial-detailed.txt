@@ -1,0 +1,205 @@
+Start testing: Oct 28 05:55 CET
+----------------------------------------------------------
+44/99 Testing: adult_leech
+44/99 Test: adult_leech
+Command: "/home/kambo/workspace/DeathWard/build/deathward_adult_leech_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"adult_leech" start time: Oct 28 05:55 CET
+Output:
+----------------------------------------------------------
+CHARGE hp288=1 steering=1 committed_x=1 strong12=1 weak_no_ring=1 no_LOS_gate=1
+BURROW health_gate=1 Hit22=1 area_vs_direct=1 hidden30=1 tracking=1 Hit18_ring10=1 Sound31=1 once=1
+PARTITION distance=1.52597e-05 ticks=70,70 impacts=1,1
+SYSTEM render_partition=1 knockback=1 ring_capacity=1 contact25=1 death_completion=1
+CONFIG immutable_reload=1 invalid_profiles=4
+ordinary seeded Adult Leech must be reachable
+<end of output>
+Test time =   0.67 sec
+----------------------------------------------------------
+Test Failed.
+"adult_leech" end time: Oct 28 05:55 CET
+"adult_leech" time elapsed: 00:00:00
+----------------------------------------------------------
+
+46/99 Testing: membrain_family
+46/99 Test: membrain_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_membrain_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"membrain_family" start time: Oct 28 05:55 CET
+Output:
+----------------------------------------------------------
+ATTACK variants3=1 HP198.4=1 Shoot29=1 Attack70=1 hop_vulnerable=1 ring8=1 cap8=1 no_LOS_gate=1
+MOVEMENT render_partition=1 whole_packet_backpressure=1 contact25=1
+CYST init=1 interval31=1 current_aim=1 rolling=1 no_creep=1 capacity=1
+LIFECYCLE repeated_wall_bounce=1 ground_terminal=1 exact_children=1 execution=1 debug_clear=1 capacity=1 completion=1
+CONFIG immutable_reload=1 invalid_profiles=5
+NATURAL_MEMBRAIN id=57.0.0 seed=0 floor=5 room=2
+NATURAL_MEMBRAIN id=57.1.0 seed=1 floor=5 room=7
+NATURAL_MEMBRAIN id=57.2.0 seed=16 floor=3 room=10
+NATURAL_MEMBRAIN id=862.0.0 seed=22 floor=7 room=1
+PLACEMENT four_natural_records=1 active_controllers=1
+PASS MemBrain family and Cyst
+<end of output>
+Test time =   2.27 sec
+----------------------------------------------------------
+Test Passed.
+"membrain_family" end time: Oct 28 05:55 CET
+"membrain_family" time elapsed: 00:00:02
+----------------------------------------------------------
+
+2/99 Testing: mechanics_content
+2/99 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 28 05:55 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,-7 new=1,9
+Mechanics contracts passed
+<end of output>
+Test time =   2.11 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 28 05:55 CET
+"mechanics_content" time elapsed: 00:00:02
+----------------------------------------------------------
+
+29/99 Testing: monster_behaviors
+29/99 Test: monster_behaviors
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_behaviors" start time: Oct 28 05:55 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 184 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.1 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.1 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.1 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.1 entity=48 x=0.486997 z=7.04164
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.3.4 entity=48 x=0.486997 z=7.04164
+PASS monster roster, armor, regeneration, summons, linked deaths, room hazards, beams, collision and projectiles
+<end of output>
+Test time =   3.98 sec
+----------------------------------------------------------
+Test Passed.
+"monster_behaviors" end time: Oct 28 05:55 CET
+"monster_behaviors" time elapsed: 00:00:03
+----------------------------------------------------------
+
+27/99 Testing: resident_enemies
+27/99 Test: resident_enemies
+Command: "/home/kambo/workspace/DeathWard/build/deathward_resident_enemies_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"resident_enemies" start time: Oct 28 05:55 CET
+Output:
+----------------------------------------------------------
+FAIL: generic combat cooldown starts on entry
+<end of output>
+Test time =   0.52 sec
+----------------------------------------------------------
+Test Failed.
+"resident_enemies" end time: Oct 28 05:55 CET
+"resident_enemies" time elapsed: 00:00:00
+----------------------------------------------------------
+
+45/99 Testing: dinga_family
+45/99 Test: dinga_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_dinga_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"dinga_family" start time: Oct 28 05:55 CET
+Output:
+----------------------------------------------------------
+DIP random_dash=1 friction=1 rest=1 push=1 stage_HP=1 contact12.5=1
+SQUIRT stage_HP=1 telegraph36=1 launch60=1 aim_at_release=1 committed=1 recovery=1
+DINGA FPS45=1 live_Dips=2 ring8=1 cap6=1 cap8=1 push_existing=1 retained_ring=1
+LIFECYCLE two_Squirts_four_Dips=1 completion=1 capacity=1 execution=1 debug_clear=1 frame_partition=1
+CONFIG reload=1 invalid_profiles=5
+NATURAL_DINGA id=217 seed=0 floor=0 room=5
+NATURAL_DINGA id=220 seed=0 floor=2 room=7
+NATURAL_DINGA id=223 seed=4 floor=5 room=10
+PASS Dinga family
+<end of output>
+Test time =   1.20 sec
+----------------------------------------------------------
+Test Passed.
+"dinga_family" end time: Oct 28 05:55 CET
+"dinga_family" time elapsed: 00:00:01
+----------------------------------------------------------
+
+5/99 Testing: floor_progression
+5/99 Test: floor_progression
+Command: "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"floor_progression" start time: Oct 28 05:55 CET
+Output:
+----------------------------------------------------------
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_REPLACEMENT seed=3 floor=1 room=1 source=23.0 target=23.1
+NATURAL_CHARGER id=23.1 seed=3 floor=1 room=1 variant=2
+NATURAL_REPLACEMENT seed=3 floor=1 room=5 source=85.0 target=814.0
+NATURAL_REPLACEMENT seed=3 floor=1 room=5 source=85.0 target=814.0
+NATURAL_CHARGER id=23.3 seed=5 floor=2 room=2 variant=2
+NATURAL_STATUE id=202.10.1 seed=5 floor=4 room=11
+NATURAL_STATUE id=804.0 seed=9 floor=2 room=2
+NATURAL_STATUE id=804.0.2 seed=10 floor=2 room=7
+NATURAL_CHARGER id=855.0 seed=11 floor=4 room=5 variant=0
+NATURAL_GRILLED seed=44 floor=0 room=2
+NATURAL_STATUE id=804.0.3 seed=44 floor=2 room=6
+NATURAL_STATUE id=804.0.1 seed=52 floor=1 room=6
+NATURAL_REPLACEMENT seed=52 floor=3 room=4 source=15.0 target=15.2
+NATURAL_REPLACEMENT seed=114 floor=0 room=2 source=16.0 target=16.1
+NATURAL_REPLACEMENT seed=116 floor=0 room=1 source=29.0 target=54.0
+Replacement coverage: I.Blob=1 Grilled=1 Hopper substitutions=1 Drowned substitutions=13
+Scorched floors=38 Hopper substitutions=1 Drowned substitutions=13
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+Activated Ring Fly groups band=2 count=2
+Activated Hopper forms band=0 count=2
+Activated Hopper forms band=1 count=2
+Activated Hopper forms band=2 count=2
+Reachable pool identities=112
+band=0 meanThreat=4.48673
+band=1 meanThreat=6.27255
+band=2 meanThreat=8.22669
+band=3 meanThreat=11.2237
+Reachable statue identities=14
+Validated 411 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss
+<end of output>
+Test time = 137.60 sec
+----------------------------------------------------------
+Test Passed.
+"floor_progression" end time: Oct 28 05:57 CET
+"floor_progression" time elapsed: 00:02:17
+----------------------------------------------------------
+
+End testing: Oct 28 05:57 CET

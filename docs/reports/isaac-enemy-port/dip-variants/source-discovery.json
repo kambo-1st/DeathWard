@@ -1,0 +1,1043 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "reference_sha256": "51a84e580d93a78f6cf220cc173ebd4abc0d32ad127ffb64cfd85efa8a5cc00e",
+  "records": [
+    {
+      "id": "217.1.0",
+      "xml": {
+        "anm2path": "216.001_Corn.anm2",
+        "baseHP": "3",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "6",
+        "collisionRadius": "9",
+        "friction": "1",
+        "id": "217",
+        "name": "#CORN",
+        "numGridCollisionPoints": "12",
+        "portrait": "183",
+        "reroll": "true",
+        "shadowSize": "12",
+        "stageHP": "0",
+        "variant": "1"
+      },
+      "plan": {
+        "record_key": "entity:217.1.0",
+        "id": "217.1.0",
+        "source_name": "Corn",
+        "display_name": "Corn",
+        "source_group": "enemy",
+        "boss_pool_id": null,
+        "source_base_hp": "3",
+        "source_stage_hp": "0",
+        "current_runtime": null,
+        "identity_conflict": false,
+        "naming_alias_review": false,
+        "current_floor_pools": [],
+        "current_replacement_routes": [],
+        "current_boss_pools": [],
+        "current_component_routes": [],
+        "suggested_identity_for_current_name": null,
+        "review_role": "enemy_or_component_review",
+        "review_approved": false,
+        "implementation_status": "not_implemented",
+        "source_stage_evidence": [
+          {
+            "file": "rooms/04.caves.stb",
+            "source_stage": "caves",
+            "templates": 15,
+            "positive_weight_templates": 15,
+            "proposed_band": 1,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/05.catacombs.stb",
+            "source_stage": "catacombs",
+            "templates": 6,
+            "positive_weight_templates": 6,
+            "proposed_band": 1,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/06.flooded caves.stb",
+            "source_stage": "flooded caves",
+            "templates": 14,
+            "positive_weight_templates": 14,
+            "proposed_band": 1,
+            "source_path": "main"
+          }
+        ],
+        "separate_mode_or_special_evidence": [
+          {
+            "file": "rooms/00.special rooms.stb",
+            "source_stage": "special rooms",
+            "templates": 2,
+            "positive_weight_templates": 2,
+            "reason": "Unmapped/special/unused library; needs eligibility review."
+          },
+          {
+            "file": "rooms/greed/09.dank depths.stb",
+            "source_stage": "dank depths",
+            "templates": 2,
+            "positive_weight_templates": 2,
+            "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+          }
+        ],
+        "boss_pool_evidence": [],
+        "source_band_candidates": [
+          1
+        ],
+        "proposed_first_band": 1,
+        "proposed_first_band_name": "Broken Quarry",
+        "proposal_basis": "positive_room_template_review",
+        "ordinary_spawn_approved": false,
+        "has_any_room_templates": true,
+        "has_article": true,
+        "wiki_environment_review": [
+          "Caves / Catacombs / Flooded Caves / \nboss /"
+        ],
+        "article_revisions": [
+          {
+            "title": "Dip",
+            "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268963"
+          }
+        ],
+        "feature_review_hints": [
+          "health-and-defenses",
+          "randomness"
+        ],
+        "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+        "unresolved_native_parameters": [
+          "walk_speed_world_units_per_second",
+          "acceleration",
+          "attack_cooldown_seconds",
+          "telegraph_seconds",
+          "projectile_speed",
+          "attack_selection_weights",
+          "animation_event_ticks"
+        ],
+        "required_review": [
+          "root/component/hazard/unused classification",
+          "parent and child dependencies",
+          "source-edition behavior contract",
+          "terrain and arena requirements",
+          "threat cost and exclusive combinations",
+          "visual and damage-window contract",
+          "source numbers versus DeathWard conversion",
+          "stage eligibility and deterministic reachability",
+          "behavior tests and render capture"
+        ]
+      }
+    },
+    {
+      "id": "217.2.0",
+      "xml": {
+        "anm2path": "216.002_BrownieCorn.anm2",
+        "baseHP": "3",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "6",
+        "collisionRadius": "9",
+        "friction": "1",
+        "id": "217",
+        "name": "#BROWNIE_CORN",
+        "numGridCollisionPoints": "12",
+        "portrait": "184",
+        "reroll": "true",
+        "shadowSize": "12",
+        "stageHP": "0",
+        "variant": "2"
+      },
+      "plan": {
+        "record_key": "entity:217.2.0",
+        "id": "217.2.0",
+        "source_name": "BrownieCorn",
+        "display_name": "Brownie Corn",
+        "source_group": "enemy",
+        "boss_pool_id": null,
+        "source_base_hp": "3",
+        "source_stage_hp": "0",
+        "current_runtime": null,
+        "identity_conflict": false,
+        "naming_alias_review": false,
+        "current_floor_pools": [],
+        "current_replacement_routes": [],
+        "current_boss_pools": [],
+        "current_component_routes": [],
+        "suggested_identity_for_current_name": null,
+        "review_role": "enemy_or_component_review",
+        "review_approved": false,
+        "implementation_status": "not_implemented",
+        "source_stage_evidence": [
+          {
+            "file": "rooms/01.basement.stb",
+            "source_stage": "basement",
+            "templates": 2,
+            "positive_weight_templates": 2,
+            "proposed_band": 0,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/02.cellar.stb",
+            "source_stage": "cellar",
+            "templates": 2,
+            "positive_weight_templates": 2,
+            "proposed_band": 0,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/03.burning basement.stb",
+            "source_stage": "burning basement",
+            "templates": 2,
+            "positive_weight_templates": 2,
+            "proposed_band": 0,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/07.depths.stb",
+            "source_stage": "depths",
+            "templates": 1,
+            "positive_weight_templates": 1,
+            "proposed_band": 2,
+            "source_path": "main"
+          }
+        ],
+        "separate_mode_or_special_evidence": [
+          {
+            "file": "rooms/00.special rooms.stb",
+            "source_stage": "special rooms",
+            "templates": 2,
+            "positive_weight_templates": 2,
+            "reason": "Unmapped/special/unused library; needs eligibility review."
+          }
+        ],
+        "boss_pool_evidence": [],
+        "source_band_candidates": [
+          0,
+          2
+        ],
+        "proposed_first_band": 0,
+        "proposed_first_band_name": "Outer Washes",
+        "proposal_basis": "positive_room_template_review",
+        "ordinary_spawn_approved": false,
+        "has_any_room_templates": true,
+        "has_article": true,
+        "wiki_environment_review": [
+          "Basement / Cellar / Burning Basement / \nDepths / \nboss /"
+        ],
+        "article_revisions": [
+          {
+            "title": "Dip",
+            "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268963"
+          }
+        ],
+        "feature_review_hints": [
+          "child-spawns-and-ownership",
+          "room-floor-run-events"
+        ],
+        "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+        "unresolved_native_parameters": [
+          "walk_speed_world_units_per_second",
+          "acceleration",
+          "attack_cooldown_seconds",
+          "telegraph_seconds",
+          "projectile_speed",
+          "attack_selection_weights",
+          "animation_event_ticks"
+        ],
+        "required_review": [
+          "root/component/hazard/unused classification",
+          "parent and child dependencies",
+          "source-edition behavior contract",
+          "terrain and arena requirements",
+          "threat cost and exclusive combinations",
+          "visual and damage-window contract",
+          "source numbers versus DeathWard conversion",
+          "stage eligibility and deterministic reachability",
+          "behavior tests and render capture"
+        ]
+      }
+    },
+    {
+      "id": "217.3.0",
+      "xml": {
+        "anm2path": "216.003_Big Corn.anm2",
+        "baseHP": "6",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "10",
+        "collisionRadius": "9",
+        "friction": "1",
+        "id": "217",
+        "name": "#BIG_CORN",
+        "numGridCollisionPoints": "12",
+        "portrait": "297",
+        "reroll": "true",
+        "shadowSize": "12",
+        "stageHP": "2",
+        "variant": "3"
+      },
+      "plan": {
+        "record_key": "entity:217.3.0",
+        "id": "217.3.0",
+        "source_name": "Big Corn",
+        "display_name": "Big Corn",
+        "source_group": "enemy",
+        "boss_pool_id": null,
+        "source_base_hp": "6",
+        "source_stage_hp": "2",
+        "current_runtime": null,
+        "identity_conflict": false,
+        "naming_alias_review": false,
+        "current_floor_pools": [],
+        "current_replacement_routes": [],
+        "current_boss_pools": [],
+        "current_component_routes": [],
+        "suggested_identity_for_current_name": null,
+        "review_role": "enemy_or_component_review",
+        "review_approved": false,
+        "implementation_status": "not_implemented",
+        "source_stage_evidence": [
+          {
+            "file": "rooms/28.dross.stb",
+            "source_stage": "dross",
+            "templates": 54,
+            "positive_weight_templates": 54,
+            "proposed_band": 1,
+            "source_path": "alternate"
+          }
+        ],
+        "separate_mode_or_special_evidence": [
+          {
+            "file": "rooms/greed/28.dross.stb",
+            "source_stage": "dross",
+            "templates": 10,
+            "positive_weight_templates": 10,
+            "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+          }
+        ],
+        "boss_pool_evidence": [],
+        "source_band_candidates": [
+          1
+        ],
+        "proposed_first_band": 1,
+        "proposed_first_band_name": "Broken Quarry",
+        "proposal_basis": "positive_room_template_review",
+        "ordinary_spawn_approved": false,
+        "has_any_room_templates": true,
+        "has_article": true,
+        "wiki_environment_review": [
+          "Dross / \nchallenge /"
+        ],
+        "article_revisions": [
+          {
+            "title": "Dip",
+            "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268963"
+          }
+        ],
+        "feature_review_hints": [
+          "locomotion-and-navigation"
+        ],
+        "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+        "unresolved_native_parameters": [
+          "walk_speed_world_units_per_second",
+          "acceleration",
+          "attack_cooldown_seconds",
+          "telegraph_seconds",
+          "projectile_speed",
+          "attack_selection_weights",
+          "animation_event_ticks"
+        ],
+        "required_review": [
+          "root/component/hazard/unused classification",
+          "parent and child dependencies",
+          "source-edition behavior contract",
+          "terrain and arena requirements",
+          "threat cost and exclusive combinations",
+          "visual and damage-window contract",
+          "source numbers versus DeathWard conversion",
+          "stage eligibility and deterministic reachability",
+          "behavior tests and render capture"
+        ]
+      }
+    },
+    {
+      "id": "220.1.0",
+      "xml": {
+        "anm2path": "220.001_Dank Squirt.anm2",
+        "baseHP": "15",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "220",
+        "name": "#DANK_SQUIRT",
+        "numGridCollisionPoints": "12",
+        "portrait": "140",
+        "reroll": "true",
+        "shadowSize": "21",
+        "stageHP": "6",
+        "variant": "1"
+      },
+      "plan": {
+        "record_key": "entity:220.1.0",
+        "id": "220.1.0",
+        "source_name": "Dank Squirt",
+        "display_name": "Dank Squirt",
+        "source_group": "enemy",
+        "boss_pool_id": null,
+        "source_base_hp": "15",
+        "source_stage_hp": "6",
+        "current_runtime": null,
+        "identity_conflict": false,
+        "naming_alias_review": false,
+        "current_floor_pools": [],
+        "current_replacement_routes": [],
+        "current_boss_pools": [],
+        "current_component_routes": [],
+        "suggested_identity_for_current_name": null,
+        "review_role": "enemy_or_component_review",
+        "review_approved": false,
+        "implementation_status": "not_implemented",
+        "source_stage_evidence": [
+          {
+            "file": "rooms/04.caves.stb",
+            "source_stage": "caves",
+            "templates": 3,
+            "positive_weight_templates": 3,
+            "proposed_band": 1,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/05.catacombs.stb",
+            "source_stage": "catacombs",
+            "templates": 3,
+            "positive_weight_templates": 3,
+            "proposed_band": 1,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/06.flooded caves.stb",
+            "source_stage": "flooded caves",
+            "templates": 3,
+            "positive_weight_templates": 3,
+            "proposed_band": 1,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/09.dank depths.stb",
+            "source_stage": "dank depths",
+            "templates": 53,
+            "positive_weight_templates": 53,
+            "proposed_band": 2,
+            "source_path": "main"
+          },
+          {
+            "file": "rooms/14.sheol.stb",
+            "source_stage": "sheol",
+            "templates": 3,
+            "positive_weight_templates": 3,
+            "proposed_band": 3,
+            "source_path": "main"
+          }
+        ],
+        "separate_mode_or_special_evidence": [
+          {
+            "file": "rooms/26.the void.stb",
+            "source_stage": "the void",
+            "templates": 1,
+            "positive_weight_templates": 1,
+            "reason": "Special encounter or mode library; requires dedicated encounter rules."
+          },
+          {
+            "file": "rooms/greed/09.dank depths.stb",
+            "source_stage": "dank depths",
+            "templates": 8,
+            "positive_weight_templates": 8,
+            "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+          },
+          {
+            "file": "rooms/greed/14.sheol.stb",
+            "source_stage": "sheol",
+            "templates": 9,
+            "positive_weight_templates": 9,
+            "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+          }
+        ],
+        "boss_pool_evidence": [],
+        "source_band_candidates": [
+          1,
+          2,
+          3
+        ],
+        "proposed_first_band": 1,
+        "proposed_first_band_name": "Broken Quarry",
+        "proposal_basis": "positive_room_template_review",
+        "ordinary_spawn_approved": false,
+        "has_any_room_templates": true,
+        "has_article": true,
+        "wiki_environment_review": [
+          "Caves / Catacombs / Flooded Caves / \nDank Depths / \nSheol / \nchallenge /"
+        ],
+        "article_revisions": [
+          {
+            "title": "Squirt",
+            "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270020"
+          }
+        ],
+        "feature_review_hints": [
+          "child-spawns-and-ownership",
+          "status-effects"
+        ],
+        "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+        "unresolved_native_parameters": [
+          "walk_speed_world_units_per_second",
+          "acceleration",
+          "attack_cooldown_seconds",
+          "telegraph_seconds",
+          "projectile_speed",
+          "attack_selection_weights",
+          "animation_event_ticks"
+        ],
+        "required_review": [
+          "root/component/hazard/unused classification",
+          "parent and child dependencies",
+          "source-edition behavior contract",
+          "terrain and arena requirements",
+          "threat cost and exclusive combinations",
+          "visual and damage-window contract",
+          "source numbers versus DeathWard conversion",
+          "stage eligibility and deterministic reachability",
+          "behavior tests and render capture"
+        ]
+      }
+    },
+    {
+      "id": "870.0.0",
+      "xml": {
+        "anm2path": "870.000_floater.anm2",
+        "baseHP": "3",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "6",
+        "collisionRadius": "9",
+        "friction": "1",
+        "gridCollision": "nopits",
+        "id": "870",
+        "name": "#DRIP",
+        "numGridCollisionPoints": "12",
+        "portrait": "291",
+        "shadowSize": "12",
+        "stageHP": "1",
+        "variant": "0"
+      },
+      "plan": {
+        "record_key": "entity:870.0.0",
+        "id": "870.0.0",
+        "source_name": "floater",
+        "display_name": "Drip",
+        "source_group": "enemy",
+        "boss_pool_id": null,
+        "source_base_hp": "3",
+        "source_stage_hp": "1",
+        "current_runtime": null,
+        "identity_conflict": false,
+        "naming_alias_review": false,
+        "current_floor_pools": [],
+        "current_replacement_routes": [],
+        "current_boss_pools": [],
+        "current_component_routes": [],
+        "suggested_identity_for_current_name": null,
+        "review_role": "enemy_or_component_review",
+        "review_approved": false,
+        "implementation_status": "not_implemented",
+        "source_stage_evidence": [
+          {
+            "file": "rooms/28.dross.stb",
+            "source_stage": "dross",
+            "templates": 126,
+            "positive_weight_templates": 126,
+            "proposed_band": 1,
+            "source_path": "alternate"
+          }
+        ],
+        "separate_mode_or_special_evidence": [
+          {
+            "file": "rooms/36.backwards.stb",
+            "source_stage": "backwards",
+            "templates": 1,
+            "positive_weight_templates": 1,
+            "reason": "Special encounter or mode library; requires dedicated encounter rules."
+          },
+          {
+            "file": "rooms/greed/28.dross.stb",
+            "source_stage": "dross",
+            "templates": 13,
+            "positive_weight_templates": 13,
+            "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+          }
+        ],
+        "boss_pool_evidence": [],
+        "source_band_candidates": [
+          1
+        ],
+        "proposed_first_band": 1,
+        "proposed_first_band_name": "Broken Quarry",
+        "proposal_basis": "positive_room_template_review",
+        "ordinary_spawn_approved": false,
+        "has_any_room_templates": true,
+        "has_article": true,
+        "wiki_environment_review": [
+          "Dross / \nchallenge / \nsecret / treasure / (Dross only)"
+        ],
+        "article_revisions": [
+          {
+            "title": "Dip",
+            "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268963"
+          }
+        ],
+        "feature_review_hints": [
+          "child-spawns-and-ownership"
+        ],
+        "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+        "unresolved_native_parameters": [
+          "walk_speed_world_units_per_second",
+          "acceleration",
+          "attack_cooldown_seconds",
+          "telegraph_seconds",
+          "projectile_speed",
+          "attack_selection_weights",
+          "animation_event_ticks"
+        ],
+        "required_review": [
+          "root/component/hazard/unused classification",
+          "parent and child dependencies",
+          "source-edition behavior contract",
+          "terrain and arena requirements",
+          "threat cost and exclusive combinations",
+          "visual and damage-window contract",
+          "source numbers versus DeathWard conversion",
+          "stage eligibility and deterministic reachability",
+          "behavior tests and render capture"
+        ]
+      }
+    },
+    {
+      "id": "871.0.0",
+      "xml": {
+        "anm2path": "871.000_water buoy.anm2",
+        "baseHP": "15",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "nopits",
+        "id": "871",
+        "name": "#SPLURT",
+        "numGridCollisionPoints": "12",
+        "portrait": "292",
+        "shadowSize": "21",
+        "stageHP": "6",
+        "variant": "0"
+      },
+      "plan": {
+        "record_key": "entity:871.0.0",
+        "id": "871.0.0",
+        "source_name": "water buoy",
+        "display_name": "Splurt",
+        "source_group": "enemy",
+        "boss_pool_id": null,
+        "source_base_hp": "15",
+        "source_stage_hp": "6",
+        "current_runtime": null,
+        "identity_conflict": false,
+        "naming_alias_review": false,
+        "current_floor_pools": [],
+        "current_replacement_routes": [],
+        "current_boss_pools": [],
+        "current_component_routes": [],
+        "suggested_identity_for_current_name": null,
+        "review_role": "enemy_or_component_review",
+        "review_approved": false,
+        "implementation_status": "not_implemented",
+        "source_stage_evidence": [
+          {
+            "file": "rooms/28.dross.stb",
+            "source_stage": "dross",
+            "templates": 108,
+            "positive_weight_templates": 108,
+            "proposed_band": 1,
+            "source_path": "alternate"
+          }
+        ],
+        "separate_mode_or_special_evidence": [
+          {
+            "file": "rooms/36.backwards.stb",
+            "source_stage": "backwards",
+            "templates": 1,
+            "positive_weight_templates": 1,
+            "reason": "Special encounter or mode library; requires dedicated encounter rules."
+          },
+          {
+            "file": "rooms/greed/28.dross.stb",
+            "source_stage": "dross",
+            "templates": 6,
+            "positive_weight_templates": 6,
+            "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+          }
+        ],
+        "boss_pool_evidence": [],
+        "source_band_candidates": [
+          1
+        ],
+        "proposed_first_band": 1,
+        "proposed_first_band_name": "Broken Quarry",
+        "proposal_basis": "positive_room_template_review",
+        "ordinary_spawn_approved": false,
+        "has_any_room_templates": true,
+        "has_article": true,
+        "wiki_environment_review": [
+          "Dross / \nchallenge /"
+        ],
+        "article_revisions": [
+          {
+            "title": "Squirt",
+            "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270020"
+          }
+        ],
+        "feature_review_hints": [
+          "child-spawns-and-ownership"
+        ],
+        "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+        "unresolved_native_parameters": [
+          "walk_speed_world_units_per_second",
+          "acceleration",
+          "attack_cooldown_seconds",
+          "telegraph_seconds",
+          "projectile_speed",
+          "attack_selection_weights",
+          "animation_event_ticks"
+        ],
+        "required_review": [
+          "root/component/hazard/unused classification",
+          "parent and child dependencies",
+          "source-edition behavior contract",
+          "terrain and arena requirements",
+          "threat cost and exclusive combinations",
+          "visual and damage-window contract",
+          "source numbers versus DeathWard conversion",
+          "stage eligibility and deterministic reachability",
+          "behavior tests and render capture"
+        ]
+      }
+    }
+  ],
+  "wiki_license": "CC BY-SA 4.0",
+  "wiki_license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "wiki_attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "articles": {
+    "Dip": {
+      "title": "Dip",
+      "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Dip",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268963",
+      "revision": 268963,
+      "timestamp": "2026-08-30T14:01:34Z",
+      "license": "CC BY-SA 4.0",
+      "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "level": 0,
+          "text": "Dips move by making small dashes in random directions and are commonly found on most floors. They can also be spawned by some bosses, like Dingle and Mega Fatty, as well as enemies like Squirts and Dingas."
+        },
+        {
+          "heading": "Variants",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Corn",
+          "level": 3,
+          "text": "Like Dips, Corns dash in random directions. Their dashes are faster and longer, but they have less health."
+        },
+        {
+          "heading": "Brownie Corn",
+          "level": 3,
+          "text": "A Brownie Corn is an alternate version of the Corn mainly spawned by the Turdlings, Dangle and Brownie, though they can also rarely be found in some rooms. Despite the different appearance, they behave exactly like normal Corns."
+        },
+        {
+          "heading": "Big Corn",
+          "level": 3,
+          "text": "A Big Corn is an alternate version of the Dip with twice as much HP that can also travel over flooded pits. When it dies, it launches the corn lodged in its head toward Isaac, predicting his movements and aiming for where he is moving."
+        },
+        {
+          "heading": "Drip",
+          "level": 3,
+          "text": "A Drip is an alternate version of the Dip that rolls around in diagonal directions and can travel over flooded pits. They are also spawned by Splurts upon death and by Clog during battle."
+        },
+        {
+          "heading": "Notes",
+          "level": 2,
+          "text": "\u2022 Dirty Mind will convert all Dips to Dip Familiars. Dips, Corns and Brownie Corns are turned into their respective familiar counterparts while Drips are converted into regular Dip familiars and Big Corns into Corny Dip familiars."
+        },
+        {
+          "heading": "Gallery",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Trivia",
+          "level": 2,
+          "text": "\u2022 [Afterbirth onward] The Corn has the lowest health of any enemy in the game, tied with the Fly.\n\n\u2022 Dips are likely a reference to Gels, enemies from The Legend of Zelda: A Link to the Past, as they have nearly the same movement patterns.\n\n\u2022 The name of the Dips is a pun on the term \"dipshit\", due to their names (Dips) and the fact that they are living fecal matter."
+        }
+      ],
+      "boxes": [
+        {
+          "template": "infobox monster",
+          "section": 0,
+          "fields": {
+            "id": "217",
+            "base hp": "3",
+            "stage hp": "1",
+            "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nMines / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nChest / \nboss / challenge / clean bedroom /",
+            "behavior": "Slowly dashes in random directions, dealing contact damage."
+          },
+          "group": "entity",
+          "id": 217,
+          "name": "Dip",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            0
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 2,
+          "fields": {
+            "dlc": "a",
+            "name": "Corn",
+            "image name": "* [Before Repentance] Afterbirth",
+            "variant": "1",
+            "base hp": "3",
+            "environment": "Caves / Catacombs / Flooded Caves / \nboss /",
+            "behavior": "Quickly dashes in random directions, dealing contact damage."
+          },
+          "group": "entity",
+          "id": 217,
+          "name": "Corn",
+          "variant": 1,
+          "subtype": 0,
+          "section_indices": [
+            2
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 3,
+          "fields": {
+            "dlc": "a",
+            "name": "Brownie Corn",
+            "image name": "* [Before Repentance] Afterbirth",
+            "variant": "2",
+            "base hp": "3",
+            "environment": "Basement / Cellar / Burning Basement / \nDepths / \nboss /",
+            "behavior": "Quickly dashes in random directions, dealing contact damage."
+          },
+          "group": "entity",
+          "id": 217,
+          "name": "Brownie Corn",
+          "variant": 2,
+          "subtype": 0,
+          "section_indices": [
+            3
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 4,
+          "fields": {
+            "dlc": "r",
+            "name": "Big Corn",
+            "variant": "3",
+            "base hp": "6",
+            "stage hp": "2",
+            "environment": "Dross / \nchallenge /",
+            "behavior": "Quickly dashes in random directions, dealing contact damage. Shoots one piece of corn upon death."
+          },
+          "group": "entity",
+          "id": 217,
+          "name": "Big Corn",
+          "variant": 3,
+          "subtype": 0,
+          "section_indices": [
+            4
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 5,
+          "fields": {
+            "dlc": "r",
+            "name": "Drip",
+            "id": "870",
+            "base hp": "3",
+            "stage hp": "1",
+            "environment": "Dross / \nchallenge / \nsecret / treasure / (Dross only)",
+            "behavior": "Quickly rolls around in diagonal directions, dealing contact damage."
+          },
+          "group": "entity",
+          "id": 870,
+          "name": "Drip",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            5
+          ]
+        }
+      ]
+    },
+    "Squirt": {
+      "title": "Squirt",
+      "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Squirt",
+      "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270020",
+      "revision": 270020,
+      "timestamp": "2026-10-02T11:30:48Z",
+      "license": "CC BY-SA 4.0",
+      "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+      "sections": [
+        {
+          "heading": "Introduction",
+          "level": 0,
+          "text": "The Squirt is a medium-sized poop enemy that does contact damage to Isaac by periodically dashing to him. Two Squirts spawn from Dingas when killed. It splits into two Dips when killed."
+        },
+        {
+          "heading": "Variants",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Dank Squirt",
+          "level": 3,
+          "text": "Dank Squirts dash towards Isaac, leaving a trail of slowing Black Creep. Upon death, they spawn two Clots."
+        },
+        {
+          "heading": "Splurt",
+          "level": 3,
+          "text": "Splurts are a variant of Squirts that dash twice towards Isaac rather than just once and can travel over flooded pits. Upon death, they spawn two Drips."
+        },
+        {
+          "heading": "Hardy",
+          "level": 3,
+          "text": "Hardies are a rocky variant of Squirts. Upon death, it spawns a Dip.\n\nThey charge at Isaac, and if they run into an obstacle/wall, a piece of them breaks off and rock projectiles are fired outwards. A Hardy will destroy most breakable obstacles on collision and is also able to reveal secret rooms if it hits the entrance of one. After running into rocks/walls three times, a Hardy will die.\n\n\u2022 First collision: 8 rock projectiles are fired out in a radius.\n\n\u2022 Second collision: 8 rock projectiles are fired out in a radius and a cluster of rock projectiles is launched in Isaac's direction.\n\n\u2022 Third collision: A cluster of small and large rock projectiles is launched in Isaac's direction. The small rock projectiles have shorter range and will spawn 2-3 Rock Spiders and the large rock projectiles each shoot out a small cross of 4 smaller rock projectiles upon landing.\n\nIn the uncommon event that it charges but doesn't hit a wall or obstacle, it will slow down like a normal Squirt without sustaining damage.\n\n[Repentance+] Destroyed by Hagalaz on use, leaving behind a Dip. [end edition note]"
+        },
+        {
+          "heading": "Gallery",
+          "level": 2,
+          "text": ""
+        },
+        {
+          "heading": "Trivia",
+          "level": 2,
+          "text": "\u2022 [Repentance] The Hardy first appeared in the Antibirth mod where its third impact with an obstacle would cause the same effects as its first and second impact but also create rocks to fall from the ceiling.\n\n\u2022 Squirts are likely a reference to Zols, big Gels that split into two Gels upon death."
+        }
+      ],
+      "boxes": [
+        {
+          "template": "infobox monster",
+          "section": 0,
+          "fields": {
+            "name": "Squirt",
+            "id": "220",
+            "base hp": "15",
+            "stage hp": "6",
+            "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nboss / challenge /",
+            "behavior": "Dashes towards Isaac and deals contact damage. Spawns 2 Dips upon death."
+          },
+          "group": "entity",
+          "id": 220,
+          "name": "Squirt",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            0
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 2,
+          "fields": {
+            "dlc": "a",
+            "name": "Dank Squirt",
+            "variant": "1",
+            "base hp": "15",
+            "stage hp": "6",
+            "environment": "Caves / Catacombs / Flooded Caves / \nDank Depths / \nSheol / \nchallenge /",
+            "replace": "Squirt",
+            "replace chance": "50%",
+            "replace notes": "in Dank Depths",
+            "behavior": "Dashes towards Isaac and deals contact damage, creating slowing black creep. Spawns 2 Clots upon death."
+          },
+          "group": "entity",
+          "id": 220,
+          "name": "Dank Squirt",
+          "variant": 1,
+          "subtype": 0,
+          "section_indices": [
+            2
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 3,
+          "fields": {
+            "dlc": "r",
+            "name": "Splurt",
+            "id": "871",
+            "base hp": "15",
+            "stage hp": "6",
+            "environment": "Dross / \nchallenge /",
+            "behavior": "Dashes towards Isaac twice and deals contact damage. Spawns 2 Drips upon death."
+          },
+          "group": "entity",
+          "id": 871,
+          "name": "Splurt",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            3
+          ]
+        },
+        {
+          "template": "infobox monster",
+          "section": 4,
+          "fields": {
+            "dlc": "r",
+            "name": "Hardy",
+            "id": "826",
+            "base hp": "42",
+            "stage hp": "6",
+            "environment": "Mines / Ashpit / \nchallenge /",
+            "behavior": "Dashes toward Isaac and deals contact damage creating rock projectiles when it hits a wall/obstacle. It spawns more rock projectiles the more times it crashes into obstacles, dying after doing so a third time."
+          },
+          "group": "entity",
+          "id": 826,
+          "name": "Hardy",
+          "variant": 0,
+          "subtype": 0,
+          "section_indices": [
+            4
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/053.000_Dople.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/dople/animations/053.000_Dople.anm2",
+      "sha256": "a40a2fee861aa680b8c785aa2a7960193ca0cf12ba0793fd35f298f258956f0b",
+      "checksum": "0x47ce5959",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 11:06:30 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadIdle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadDown",
+            "FrameNum": "4",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadUp",
+            "FrameNum": "4",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadHori",
+            "FrameNum": "4",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/053.001_Evil Twin.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/dople/animations/053.001_Evil Twin.anm2",
+      "sha256": "481c89bae60a3c98a337911d6f2620822038837493836febeb52e2f788802460",
+      "checksum": "0x16b22188",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "7/18/2014 4:32:14 PM",
+        "Version": "13",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "HeadIdle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadDown",
+            "FrameNum": "4",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadHori",
+            "FrameNum": "4",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadUp",
+            "FrameNum": "4",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkDown",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkUp",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

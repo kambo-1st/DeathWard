@@ -1,0 +1,167 @@
+{
+  "key": "29.2.0",
+  "id": 29,
+  "variant": 2,
+  "subtype": 0,
+  "name": "Eggy",
+  "xml": {
+    "anm2path": "029.002_Eggy.anm2",
+    "baseHP": "20",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "1",
+    "collisionMass": "10",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "29",
+    "name": "#EGGY",
+    "numGridCollisionPoints": "12",
+    "portrait": "346",
+    "reroll": "true",
+    "shadowSize": "14",
+    "stageHP": "2",
+    "variant": "2"
+  },
+  "source_file": "entities2.xml",
+  "group": "enemy",
+  "record_key": "entity:29.2.0",
+  "wiki_matches": [
+    {
+      "page": "Hopper",
+      "box": 4,
+      "group": "entity",
+      "fields": {
+        "dlc": "r",
+        "name": "Eggy",
+        "id": "29",
+        "variant": "2",
+        "base hp": "20",
+        "stage hp": "2",
+        "environment": "Catacombs / \nNecropolis / \nUtero / \nCorpse / \nchallenge /",
+        "behavior": "Hops aimlessly around the room, spawning slowing white creep wherever it hops. Spawns a group of Swarm Spiders upon death."
+      },
+      "section_indices": [
+        5
+      ],
+      "name": "Eggy",
+      "variant": 2,
+      "subtype": 0,
+      "id": 29,
+      "template": "infobox monster"
+    }
+  ],
+  "wiki_match_method": "entity/item ID",
+  "wiki_pages": [
+    "Hopper"
+  ],
+  "evidence": {
+    "numeric": "installed Repentance 1.7.9b XML",
+    "behavior": "current wiki revision; edition notes must be respected",
+    "native_ai_timers": "not established by XML or API declarations",
+    "implementation": "research only; no behavior ported by this report"
+  },
+  "hp_by_stage": {
+    "1": 22.0,
+    "2": 24.0,
+    "3": 26.0,
+    "4": 28.0,
+    "5": 28.0,
+    "6": 29.6,
+    "7": 31.2,
+    "8": 32.8,
+    "9": 34.4,
+    "10": 36.0,
+    "11": 36.0,
+    "12": 36.0,
+    "13": 36.0
+  },
+  "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+  "hp_formula_source": "Stage HP",
+  "display_name": "Eggy",
+  "room_library_presence": {
+    "rooms/05.catacombs.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/08.necropolis.stb": {
+      "templates": 49,
+      "positive_weight_templates": 49
+    },
+    "rooms/11.utero.stb": {
+      "templates": 41,
+      "positive_weight_templates": 41
+    },
+    "rooms/33.corpse.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/36.backwards.stb": {
+      "templates": 4,
+      "positive_weight_templates": 4
+    }
+  },
+  "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+  "deathward": {
+    "name": "Eggy",
+    "motion": "Hop",
+    "attack": "None",
+    "shape": "Spider",
+    "catalog_base_hp": 96.0,
+    "behavior": "legacy",
+    "source": "assets/mechanics/monsters.mechanics",
+    "line": 52,
+    "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+  },
+  "port_contract": {
+    "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+    "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+    "state_requirements": [
+      "spawn/activation",
+      "idle and target acquisition",
+      "movement and path selection",
+      "attack selection and telegraph",
+      "attack emission",
+      "recovery",
+      "damage/vulnerability",
+      "phase transitions",
+      "death/children",
+      "room-clear participation"
+    ],
+    "parameters_not_established": {
+      "walk_speed_world_units_per_second": null,
+      "acceleration": null,
+      "attack_cooldown_seconds": null,
+      "telegraph_seconds": null,
+      "projectile_speed": null,
+      "attack_selection_weights": null,
+      "animation_event_ticks": null
+    },
+    "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+    "required_checks": [
+      "fixed seed and RNG calls",
+      "line of sight versus alignment",
+      "pit/wall/flying navigation",
+      "contact and projectile damage",
+      "vulnerability during each state",
+      "slow/freeze/charm effects",
+      "overkill and offspring",
+      "phase HP ownership",
+      "despawn versus room clear",
+      "save/load and re-entry"
+    ],
+    "implementation_status": "not ported by this research"
+  },
+  "behavior_section_refs": [
+    {
+      "page": "Hopper",
+      "section": 5
+    }
+  ],
+  "feature_triage": [
+    "damage-modifiers",
+    "child-spawns-and-ownership",
+    "room-floor-run-events",
+    "locomotion-and-navigation"
+  ],
+  "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+}

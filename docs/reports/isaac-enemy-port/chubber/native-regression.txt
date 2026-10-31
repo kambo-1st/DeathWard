@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  5: floor_progression
+1/7 Test  #5: floor_progression ................   Passed  171.16 sec
+    Start  6: item_builds
+2/7 Test  #6: item_builds ......................   Passed    9.09 sec
+    Start 33: source_projectile_motion
+3/7 Test #33: source_projectile_motion .........   Passed    0.28 sec
+    Start 34: spitty_family
+4/7 Test #34: spitty_family ....................   Passed   35.86 sec
+    Start 35: cardinal_walkers
+5/7 Test #35: cardinal_walkers .................   Passed    1.90 sec
+    Start 36: brain
+6/7 Test #36: brain ............................   Passed    1.20 sec
+    Start 37: baby_family
+7/7 Test #37: baby_family ......................   Passed    0.36 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) = 219.86 sec

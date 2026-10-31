@@ -1,0 +1,30 @@
+[
+  {
+    "name": "danny-isolated",
+    "variant": 0,
+    "frames": 1100
+  },
+  {
+    "name": "coal-boy-isolated",
+    "variant": 1,
+    "frames": 1100
+  },
+  {
+    "name": "danny-quarry",
+    "variant": 0,
+    "natural": true,
+    "seed": 4,
+    "floor": 2,
+    "room": 4,
+    "frames": 1000
+  },
+  {
+    "name": "coal-boy-quarry",
+    "variant": 1,
+    "natural": true,
+    "seed": 9,
+    "floor": 2,
+    "room": 2,
+    "frames": 1000
+  }
+]

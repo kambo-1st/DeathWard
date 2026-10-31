@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 27: resident_enemies
+    Start 44: adult_leech
+1/2 Test #44: adult_leech ......................   Passed    0.78 sec
+2/2 Test #27: resident_enemies .................   Passed    0.96 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.96 sec

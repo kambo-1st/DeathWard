@@ -1,0 +1,215 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+In file included from /usr/include/c++/11/concepts:44,
+                 from /usr/include/c++/11/compare:39,
+                 from /home/kambo/workspace/DeathWard/src/content/ContentId.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/core/Types.hpp:3,
+                 from /home/kambo/workspace/DeathWard/src/audio/AudioState.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/MonsterBoss.cpp:1:
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::__is_trivially_copy_constructible_impl<dw::Event, true>’:
+/usr/include/c++/11/type_traits:1254:12:   required from ‘struct std::is_trivially_copy_constructible<dw::Event>’
+/usr/include/c++/11/type_traits:3200:43:   required from ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1249:25: error: invalid use of incomplete type ‘struct dw::Event’
+ 1249 |                         __is_trivially_constructible(_Tp, const _Tp&)>>
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/src/combat/MonsterBoss.cpp:1:
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:56:8: note: forward declaration of ‘struct dw::Event’
+   56 | struct Event;
+      |        ^~~~~
+In file included from /usr/include/c++/11/concepts:44,
+                 from /usr/include/c++/11/compare:39,
+                 from /home/kambo/workspace/DeathWard/src/content/ContentId.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/core/Types.hpp:3,
+                 from /home/kambo/workspace/DeathWard/src/audio/AudioState.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/MonsterBoss.cpp:1:
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_trivially_copy_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3200:43:   required from ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1257:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+ 1257 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:1257:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::Event>’:
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:3200:43: error: ‘value’ is not a member of ‘std::is_trivially_copy_constructible<dw::Event>’
+ 3200 |     is_trivially_copy_constructible<_Tp>::value;
+      |                                           ^~~~~
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::__is_trivially_move_constructible_impl<dw::Event, true>’:
+/usr/include/c++/11/type_traits:1277:12:   required from ‘struct std::is_trivially_move_constructible<dw::Event>’
+/usr/include/c++/11/type_traits:3203:43:   required from ‘constexpr const bool std::is_trivially_move_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1272:25: error: invalid use of incomplete type ‘struct dw::Event’
+ 1272 |                         __is_trivially_constructible(_Tp, _Tp&&)>>
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/src/combat/MonsterBoss.cpp:1:
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:56:8: note: forward declaration of ‘struct dw::Event’
+   56 | struct Event;
+      |        ^~~~~
+In file included from /usr/include/c++/11/concepts:44,
+                 from /usr/include/c++/11/compare:39,
+                 from /home/kambo/workspace/DeathWard/src/content/ContentId.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/core/Types.hpp:3,
+                 from /home/kambo/workspace/DeathWard/src/audio/AudioState.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/MonsterBoss.cpp:1:
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_trivially_move_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3203:43:   required from ‘constexpr const bool std::is_trivially_move_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1280:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+ 1280 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:1280:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘constexpr const bool std::is_trivially_move_constructible_v<dw::Event>’:
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:3203:43: error: ‘value’ is not a member of ‘std::is_trivially_move_constructible<dw::Event>’
+ 3203 |     is_trivially_move_constructible<_Tp>::value;
+      |                                           ^~~~~
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_copy_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3180:33:   required from ‘constexpr const bool std::is_copy_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:666:2:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:987:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+  987 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:987:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_move_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3183:33:   required from ‘constexpr const bool std::is_move_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:670:2:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1010:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+ 1010 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:1010:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:147:12:   required from ‘struct std::__and_<std::is_constructible<dw::Event> >’
+/usr/include/c++/11/type_traits:173:53:   required from ‘constexpr const bool std::__and_v<std::is_constructible<dw::Event> >’
+/usr/include/c++/11/optional:770:54:   required by substitution of ‘template<class ... _Args, typename std::enable_if<__and_v<std::is_constructible<dw::Event, _Args ...> >, bool>::type <anonymous> > constexpr std::optional<dw::Event>::optional(std::in_place_t, _Args&& ...) [with _Args = {}; typename std::enable_if<__and_v<std::is_constructible<dw::Event, _Args ...> >, bool>::type <anonymous> = <missing>]’
+/usr/include/c++/11/type_traits:1249:4:   required from ‘struct std::__is_trivially_copy_constructible_impl<dw::SlideRuntime, true>’
+/usr/include/c++/11/type_traits:1254:12:   required from ‘struct std::is_trivially_copy_constructible<dw::SlideRuntime>’
+/usr/include/c++/11/type_traits:3200:43:   required from ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::SlideRuntime>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::SlideRuntime>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:375:33:   required from here
+/usr/include/c++/11/type_traits:955:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+  955 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:955:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+In file included from /usr/include/c++/11/concepts:44,
+                 from /usr/include/c++/11/compare:39,
+                 from /home/kambo/workspace/DeathWard/src/content/ContentId.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/core/Types.hpp:3,
+                 from /home/kambo/workspace/DeathWard/src/audio/AudioState.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/LokiBoss.cpp:1:
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::__is_trivially_copy_constructible_impl<dw::Event, true>’:
+/usr/include/c++/11/type_traits:1254:12:   required from ‘struct std::is_trivially_copy_constructible<dw::Event>’
+/usr/include/c++/11/type_traits:3200:43:   required from ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1249:25: error: invalid use of incomplete type ‘struct dw::Event’
+ 1249 |                         __is_trivially_constructible(_Tp, const _Tp&)>>
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/src/combat/LokiBoss.cpp:1:
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:56:8: note: forward declaration of ‘struct dw::Event’
+   56 | struct Event;
+      |        ^~~~~
+In file included from /usr/include/c++/11/concepts:44,
+                 from /usr/include/c++/11/compare:39,
+                 from /home/kambo/workspace/DeathWard/src/content/ContentId.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/core/Types.hpp:3,
+                 from /home/kambo/workspace/DeathWard/src/audio/AudioState.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/LokiBoss.cpp:1:
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_trivially_copy_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3200:43:   required from ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1257:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+ 1257 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:1257:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::Event>’:
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:3200:43: error: ‘value’ is not a member of ‘std::is_trivially_copy_constructible<dw::Event>’
+ 3200 |     is_trivially_copy_constructible<_Tp>::value;
+      |                                           ^~~~~
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::__is_trivially_move_constructible_impl<dw::Event, true>’:
+/usr/include/c++/11/type_traits:1277:12:   required from ‘struct std::is_trivially_move_constructible<dw::Event>’
+/usr/include/c++/11/type_traits:3203:43:   required from ‘constexpr const bool std::is_trivially_move_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1272:25: error: invalid use of incomplete type ‘struct dw::Event’
+ 1272 |                         __is_trivially_constructible(_Tp, _Tp&&)>>
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kambo/workspace/DeathWard/src/combat/LokiBoss.cpp:1:
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:56:8: note: forward declaration of ‘struct dw::Event’
+   56 | struct Event;
+      |        ^~~~~
+In file included from /usr/include/c++/11/concepts:44,
+                 from /usr/include/c++/11/compare:39,
+                 from /home/kambo/workspace/DeathWard/src/content/ContentId.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/core/Types.hpp:3,
+                 from /home/kambo/workspace/DeathWard/src/audio/AudioState.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:2,
+                 from /home/kambo/workspace/DeathWard/src/combat/LokiBoss.cpp:1:
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_trivially_move_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3203:43:   required from ‘constexpr const bool std::is_trivially_move_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1280:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+ 1280 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:1280:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘constexpr const bool std::is_trivially_move_constructible_v<dw::Event>’:
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:3203:43: error: ‘value’ is not a member of ‘std::is_trivially_move_constructible<dw::Event>’
+ 3203 |     is_trivially_move_constructible<_Tp>::value;
+      |                                           ^~~~~
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_copy_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3180:33:   required from ‘constexpr const bool std::is_copy_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:666:2:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:987:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+  987 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:987:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_move_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:3183:33:   required from ‘constexpr const bool std::is_move_constructible_v<dw::Event>’
+/usr/include/c++/11/optional:670:2:   required from ‘class std::optional<dw::Event>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:153:26:   required from here
+/usr/include/c++/11/type_traits:1010:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+ 1010 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:1010:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+/usr/include/c++/11/type_traits: In instantiation of ‘struct std::is_constructible<dw::Event>’:
+/usr/include/c++/11/type_traits:147:12:   required from ‘struct std::__and_<std::is_constructible<dw::Event> >’
+/usr/include/c++/11/type_traits:173:53:   required from ‘constexpr const bool std::__and_v<std::is_constructible<dw::Event> >’
+/usr/include/c++/11/optional:770:54:   required by substitution of ‘template<class ... _Args, typename std::enable_if<__and_v<std::is_constructible<dw::Event, _Args ...> >, bool>::type <anonymous> > constexpr std::optional<dw::Event>::optional(std::in_place_t, _Args&& ...) [with _Args = {}; typename std::enable_if<__and_v<std::is_constructible<dw::Event, _Args ...> >, bool>::type <anonymous> = <missing>]’
+/usr/include/c++/11/type_traits:1249:4:   required from ‘struct std::__is_trivially_copy_constructible_impl<dw::SlideRuntime, true>’
+/usr/include/c++/11/type_traits:1254:12:   required from ‘struct std::is_trivially_copy_constructible<dw::SlideRuntime>’
+/usr/include/c++/11/type_traits:3200:43:   required from ‘constexpr const bool std::is_trivially_copy_constructible_v<dw::SlideRuntime>’
+/usr/include/c++/11/optional:662:11:   required from ‘class std::optional<dw::SlideRuntime>’
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:375:33:   required from here
+/usr/include/c++/11/type_traits:955:52: error: static assertion failed: template argument must be a complete class or an unbounded array
+  955 |       static_assert(std::__is_complete_or_unbounded(__type_identity<_Tp>{}),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/type_traits:955:52: note: ‘std::__is_complete_or_unbounded<std::__type_identity<dw::Event> >((std::__type_identity<dw::Event>{}, std::__type_identity<dw::Event>()))’ evaluates to false
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:118: CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:132: CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:431: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2967: CMakeFiles/deathward_dip_variant_tests.dir/rule] Error 2
+gmake: *** [Makefile:1409: deathward_dip_variant_tests] Error 2

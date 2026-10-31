@@ -1,0 +1,2 @@
+PASS WASM princess-diagonal: variant behavior and presentation
+PASS WASM level2-steering: variant behavior and presentation

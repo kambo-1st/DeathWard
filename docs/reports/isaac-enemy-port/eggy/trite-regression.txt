@@ -1,0 +1,4 @@
+TRITE_STARTING_KIT seconds=1.11667 hp=100
+NATURAL_TRITE seed=0 floor=1 room=2
+NATURAL_TRITE seed=0 floor=1 room=4
+PASS Trite destination law, source timing/inertia, terrain, lifecycle, config, starting kit and placement

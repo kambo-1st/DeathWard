@@ -1,0 +1,16 @@
+[  6%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  6%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[  6%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  6%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/Charging.cpp: In member function ‘void dw::Simulation::updateCharge(dw::Enemy&, float)’:
+/home/kambo/workspace/DeathWard/src/combat/Charging.cpp:63:31: error: ‘flatDirection’ was not declared in this scope
+   63 |             const auto target=flatDirection(e.position,player.position);
+      |                               ^~~~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:146: CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:317: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2645: CMakeFiles/deathward_bloat_tests.dir/rule] Error 2
+gmake: *** [Makefile:1305: deathward_bloat_tests] Error 2

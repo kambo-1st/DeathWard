@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/analyze-crackle-fire.py", line 59, in <module>
+    if __name__=='__main__':main()
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/analyze-crackle-fire.py", line 19, in main
+    assert read(0xbeaaf4,34).startswith(b'.?AVEntity_Effect@IsaacRepentance@@')
+AssertionError

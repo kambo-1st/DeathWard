@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/4 Test  #2: mechanics_content ................   Passed    1.70 sec
+    Start 29: monster_behaviors
+2/4 Test #29: monster_behaviors ................***Failed    0.45 sec
+FAIL: test actor must have a valid owning encounter when required
+
+    Start 38: vis_family
+3/4 Test #38: vis_family .......................   Passed    0.30 sec
+    Start 39: chubber_family
+4/4 Test #39: chubber_family ...................   Passed    0.26 sec
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =   2.72 sec
+
+The following tests FAILED:
+	 29 - monster_behaviors (Failed)
+Errors while running CTest

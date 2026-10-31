@@ -1,0 +1,113 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 820,
+      "index": 155,
+      "case": "0x69a0d3",
+      "controller": "0x4e94a0"
+    }
+  ],
+  "constants": {
+    "path_force": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "attack_retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "shot_spread": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "child_offset": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "child_height": {
+      "address": "0xb6aed0",
+      "value": -15.0
+    },
+    "normal_child_speed_width": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "coal_child_speed_width": {
+      "address": "0xb6a95c",
+      "value": 9.0
+    },
+    "child_speed_base": {
+      "address": "0xb6a614",
+      "value": 1.0
+    },
+    "damage_threshold": {
+      "address": "0xb6a910",
+      "value": 6.0
+    },
+    "damage_decay": {
+      "address": "0xb6a2dc",
+      "value": 0.10999999940395355
+    },
+    "near_range": {
+      "address": "0xb6aba8",
+      "value": 200.0
+    },
+    "far_range": {
+      "address": "0xb6ac60",
+      "value": 400.0
+    },
+    "cluster_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "cluster_scatter": {
+      "address": "0xb6a8a0",
+      "value": 3.5
+    }
+  },
+  "strings": {
+    "0xb400ac": "Shoot",
+    "0xb404ec": "WalkVert",
+    "0xb40504": "WalkHori",
+    "0xb40510": "Attack"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/danny/source/controller.asm",
+      "start": "0x4e94a0",
+      "end": "0x4ea343",
+      "raw_sha256": "3f2d94316a27d529bbc582e12114e14aeb7fcf9848bfed4ad7457ceab8173f38",
+      "sha256": "4da417fbd6007c6a55f6f7486876933efb20adac0266542184ddc1016f028051"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/danny/source/owned_children.asm",
+      "start": "0x6a6f60",
+      "end": "0x6a708b",
+      "raw_sha256": "20c5fb717d43c76ba8787809ad43ab493e6242a3fb45bfb17628ce1122a2f3d1",
+      "sha256": "f9b2697a6d39b0f8162679e8d63a41fd0eda61a4e996a9b7154b8f9650756aaf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/danny/source/rock_actor_factory.asm",
+      "start": "0x4e70a0",
+      "end": "0x4e724b",
+      "raw_sha256": "3f836e7bbd5aaf51d883ac2183327dcbd558a3f5c23b3d3a696ce9c7a052293f",
+      "sha256": "0932d223f706d5921da525f42f50cd816ee26f10fec81613a27699c89c6370f6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/danny/source/aimed_cluster.asm",
+      "start": "0x6a3420",
+      "end": "0x6a395a",
+      "raw_sha256": "c2240abb35ba83153346fd3d8ee2979f4509a56707055ff397e8a295b3549348",
+      "sha256": "ddfae7350e140b99e5c93bedd65ebe0ce81e35e8cd3476911f9c2dd4692146a3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/danny/source/target_plain.asm",
+      "start": "0x695c0c",
+      "end": "0x695c30",
+      "raw_sha256": "0aba6ec4c0da5b5620f25ad8f2d35bee9751a833ca986fcb9809b5c8e17e5386",
+      "sha256": "d91920f277766370e2b16e286e7dc7da098b463f42a9d4dc977abe88f5350da6"
+    }
+  ]
+}

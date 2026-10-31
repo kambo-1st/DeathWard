@@ -1,0 +1,184 @@
+{
+  "passed": 44,
+  "failed": 0,
+  "seconds": 98.43,
+  "basis": "All 44 suites passed in one complete run after the repeated-fire cooldown correction, including last-enemy Drowned death volley and four starting-kit trials. My Shadow/Elleech source-only review was subsequently added and the checklist validator passed separately.",
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.309202
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "seconds": 1.39015
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "seconds": 53.6664
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "seconds": 10.0643
+    },
+    "floor_progression": {
+      "result": "pass",
+      "seconds": 95.149
+    },
+    "item_builds": {
+      "result": "pass",
+      "seconds": 10.6262
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "seconds": 81.5177
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "seconds": 0.0415746
+    },
+    "expedition": {
+      "result": "pass",
+      "seconds": 21.2249
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "seconds": 14.7105
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "seconds": 0.195891
+    },
+    "save_slots": {
+      "result": "pass",
+      "seconds": 0.058095
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "seconds": 1.10851
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "seconds": 0.0745721
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "seconds": 8.02232
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "seconds": 28.1069
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "seconds": 0.604881
+    },
+    "building_navigation": {
+      "result": "pass",
+      "seconds": 0.0290407
+    },
+    "particle_emission": {
+      "result": "pass",
+      "seconds": 0.0215325
+    },
+    "town_characters": {
+      "result": "pass",
+      "seconds": 0.0237637
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "seconds": 0.163816
+    },
+    "train_motion": {
+      "result": "pass",
+      "seconds": 0.529892
+    },
+    "object_animation": {
+      "result": "pass",
+      "seconds": 0.0482779
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "seconds": 1.08307
+    },
+    "mission_shop": {
+      "result": "pass",
+      "seconds": 2.64447
+    },
+    "money_pickups": {
+      "result": "pass",
+      "seconds": 1.41043
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "seconds": 0.887845
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "seconds": 0.0553753
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "seconds": 3.47568
+    },
+    "monster_flight": {
+      "result": "pass",
+      "seconds": 4.12913
+    },
+    "monster_formations": {
+      "result": "pass",
+      "seconds": 0.148729
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "seconds": 0.295706
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "seconds": 0.236986
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "seconds": 0.323051
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "seconds": 2.16489
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "seconds": 2.77144
+    },
+    "bloat_boss_and_chargers": {
+      "result": "pass",
+      "seconds": 3.06158
+    },
+    "charger_variants": {
+      "result": "pass",
+      "seconds": 0.20868
+    },
+    "mission_themes": {
+      "result": "pass",
+      "seconds": 4.95387
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "seconds": 0.0671137
+    },
+    "core_contracts": {
+      "result": "pass",
+      "seconds": 0.450657
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "seconds": 3.04832
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "seconds": 25.0192
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "seconds": 0.625953
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "Six dedicated regular variants implemented in progress;9selectedLinuxsuites,12productionWASMscenarios and16inspectedimages. No full acceptance.",
+  "previous_goal_turn_classification": "No progress: status-only request. Objective re-read and concrete implementation resumed.",
+  "contracts": {
+    "217.1.0": {
+      "vulnerability": "Grounded, damageable during every dash and windup. Flooded-pit variants retain solid-wall and rock collision. All six XML records have champion0.",
+      "adaptations": "Source30Hz decisions; continuous swept XZ collision, scale.1/velocity conversion3; source-stage HP times3.2; contact10 before existing1.25 multiplier. Original authored mound visuals. Required births/shots wait at capacity. Shared stun pauses movement. Player100HP/24damage, standard4–8-floor expeditions/tutorial and hubs unchanged.",
+      "unknowns": "Full fear/confusion/charm/control/Dirty Mind/item163 behavior, native shared mass/physics, cosmetic trail/audio/RNG ordering, bc6 death suppression meaning, alternate production, save persistence, full balance/performance and other acceptance gates. Native room-current counterforce8 has no canyon current-field equivalent.",
+      "movement": "Idle.8 retention;1/10 random dash draw per source update; moving.95 until pre-retention speed<1. Impulse10..20, double Dip.",
+      "targeting": "Ordinary dash direction independent of player.",
+      "attacks": "Contact only.",
+      "phases": "Idle10/Move25-loop,30FPS.",
+      "offspring": "None.",
+      "completion": "Death removes one threat; Big Corn retains its death shot until emitted, then awaits landing."
+    },
+    "217.2.0": {
+      "vulnerability": "Grounded, damageable during every dash and windup. Flooded-pit variants retain solid-wall and rock collision. All six XML records have champion0.",
+      "adaptations": "Source30Hz decisions; continuous swept XZ collision, scale.1/velocity conversion3; source-stage HP times3.2; contact10 before existing1.25 multiplier. Original authored mound visuals. Required births/shots wait at capacity. Shared stun pauses movement. Player100HP/24damage, standard4–8-floor expeditions/tutorial and hubs unchanged.",
+      "unknowns": "Full fear/confusion/charm/control/Dirty Mind/item163 behavior, native shared mass/physics, cosmetic trail/audio/RNG ordering, bc6 death suppression meaning, alternate production, save persistence, full balance/performance and other acceptance gates. Native room-current counterforce8 has no canyon current-field equivalent. Wiki says identical to Corn, but installed522553/522587 doubles only variant1 ordinary impulse. XML mass/friction match. Fear branch separately doubles1or2. Discrepancy preserved.",
+      "movement": "Idle.8 retention;1/10 random dash draw per source update; moving.95 until pre-retention speed<1. Impulse5..10, same as Dip.",
+      "targeting": "Ordinary dash direction independent of player.",
+      "attacks": "Contact only.",
+      "phases": "Idle10/Move25-loop,30FPS.",
+      "offspring": "None.",
+      "completion": "Death removes one threat; Big Corn retains its death shot until emitted, then awaits landing."
+    },
+    "217.3.0": {
+      "vulnerability": "Grounded, damageable during every dash and windup. Flooded-pit variants retain solid-wall and rock collision. All six XML records have champion0.",
+      "adaptations": "Source30Hz decisions; continuous swept XZ collision, scale.1/velocity conversion3; source-stage HP times3.2; contact10 before existing1.25 multiplier. Original authored mound visuals. Required births/shots wait at capacity. Shared stun pauses movement. Player100HP/24damage, standard4–8-floor expeditions/tutorial and hubs unchanged.",
+      "unknowns": "Full fear/confusion/charm/control/Dirty Mind/item163 behavior, native shared mass/physics, cosmetic trail/audio/RNG ordering, bc6 death suppression meaning, alternate production, save persistence, full balance/performance and other acceptance gates. Native room-current counterforce8 has no canyon current-field equivalent.",
+      "movement": "Idle.8 retention;1/10 random dash draw per source update; moving.95 until pre-retention speed<1. Impulse5..10, same as Dip. Crosses flooded pits.",
+      "targeting": "Ordinary dash direction independent of player.",
+      "attacks": "Predictive yellow corn death shot: target position plus velocity times source distance*.1; source speed10 converted30. Snapshot retained at capacity.",
+      "phases": "Idle10/Move25-loop,30FPS.",
+      "offspring": "None.",
+      "completion": "Death removes one threat; Big Corn retains its death shot until emitted, then awaits landing."
+    },
+    "220.1.0": {
+      "vulnerability": "Grounded, damageable during every dash and windup. Flooded-pit variants retain solid-wall and rock collision. All six XML records have champion0.",
+      "adaptations": "Source30Hz decisions; continuous swept XZ collision, scale.1/velocity conversion3; source-stage HP times3.2; contact10 before existing1.25 multiplier. Original authored mound visuals. Required births/shots wait at capacity. Shared stun pauses movement. Player100HP/24damage, standard4–8-floor expeditions/tutorial and hubs unchanged.",
+      "unknowns": "Full fear/confusion/charm/control/Dirty Mind/item163 behavior, native shared mass/physics, cosmetic trail/audio/RNG ordering, bc6 death suppression meaning, alternate production, save persistence, full balance/performance and other acceptance gates. Native room-current counterforce8 has no canyon current-field equivalent. Clot numeric/timing fidelity still provisional from prior batch. Black-creep native radius/fade/interactions pending; local radius1,fade30*.97.50%DankDepths replacement remains open pending corresponding local environmental route.",
+      "movement": "Squirt: global.95/idle.7 retention;1/5 acquisition plus5-tick frame gate; first9slide ticks add.5; speed<1 idle,speed<3 extra.8; >4collisions extra.85.",
+      "targeting": "Current player at Slide36; commits afterwards.",
+      "attacks": "Contact and black slowing creep every3globalframes during slide/after Slide event. Effect1000.26 lifetime60 written at523a65/523a6f.",
+      "phases": "Idle33/Attack01 40/Slide36/Slide6,30FPS.",
+      "offspring": "Two15.1.0Clots at fixed horizontal source offsets±10, existing real attacking Clot behavior.",
+      "completion": "Both Clots and deferred births gate completion."
+    },
+    "870.0.0": {
+      "vulnerability": "Grounded, damageable during every dash and windup. Flooded-pit variants retain solid-wall and rock collision. All six XML records have champion0.",
+      "adaptations": "Source30Hz decisions; continuous swept XZ collision, scale.1/velocity conversion3; source-stage HP times3.2; contact10 before existing1.25 multiplier. Original authored mound visuals. Required births/shots wait at capacity. Shared stun pauses movement. Player100HP/24damage, standard4–8-floor expeditions/tutorial and hubs unchanged.",
+      "unknowns": "Full fear/confusion/charm/control/Dirty Mind/item163 behavior, native shared mass/physics, cosmetic trail/audio/RNG ordering, bc6 death suppression meaning, alternate production, save persistence, full balance/performance and other acceptance gates. Native room-current counterforce8 has no canyon current-field equivalent.",
+      "movement": "Impulse5..8;idle.9/moving.95 retention. Non-looping22-frame Move returns idle. At frame10,1/3 chance schedules unconditional next-update burst. Crosses flooded pits.",
+      "targeting": "Each burst chooses player direction with1/3 chance, otherwise uniform direction; no native diagonal quantization found.",
+      "attacks": "Contact only.",
+      "phases": "Idle10/Move22,30FPS. Native state16 schedules another burst.",
+      "offspring": "None; launched child of Splurt.",
+      "completion": "Live Drips and retained birth requests block room completion."
+    },
+    "871.0.0": {
+      "vulnerability": "Grounded, damageable during every dash and windup. Flooded-pit variants retain solid-wall and rock collision. All six XML records have champion0.",
+      "adaptations": "Source30Hz decisions; continuous swept XZ collision, scale.1/velocity conversion3; source-stage HP times3.2; contact10 before existing1.25 multiplier. Original authored mound visuals. Required births/shots wait at capacity. Shared stun pauses movement. Player100HP/24damage, standard4–8-floor expeditions/tutorial and hubs unchanged.",
+      "unknowns": "Full fear/confusion/charm/control/Dirty Mind/item163 behavior, native shared mass/physics, cosmetic trail/audio/RNG ordering, bc6 death suppression meaning, alternate production, save persistence, full balance/performance and other acceptance gates. Native room-current counterforce8 has no canyon current-field equivalent.",
+      "movement": "First9slide ticks add.5; fromtick10 speed<3 starts secondwindup(firstslide) or idle(secondslide). Extra.85 retention afterage8(firstslide),40(secondslide). Crosses flooded pits.",
+      "targeting": "Firstlaunch36 and secondlaunch8 independently sample player, adding source20 impulse while retaining residual velocity.",
+      "attacks": "Two committed contact charges; no trail/projectiles.",
+      "phases": "Attack01 40/Slide36;Attack02 12/Slide8;Slide6-loop;30FPS.",
+      "offspring": "Two870Drips on independent random axes atsource10offset,force4..6. Native state4 and immediate update captured in retained spawn state.",
+      "completion": "Both Drips and pending births block completion. Ordinary execution preserves births; debugclear suppresses."
+    }
+  },
+  "source_notes": [
+    "Dispatch870shares521e10with217;871shares522840with220,verified from pinned executable.",
+    "Highest-DLC ANM2 metadata extracted from verified archives; no artwork imported.",
+    "Splurt first brake threshold8,Drip retention.9,Splurt child impulse4..6 verified from constants.",
+    "Blackcreep lifetime60 confirmed; local radius/fade explicitly provisional.",
+    "Big Corn reuses established default lob vertical recurrence(.9), local radius.22 at source default scale1. These world-space projectile values are adaptations, not direct XML literals.",
+    "A valid external retention1 exposed division by zero in the shared lob interpolation. Added the exact undamped recurrence limit and30/120Hz regression.",
+    "Source drowning/current, Dirty Mind and control branches remain explicitly open. This batch does not promote any record to complete."
+  ],
+  "runtime": [
+    "assets/mechanics/dip_variants.mechanics",
+    "src/combat/Dips.cpp",
+    "src/content/Mechanics.hpp",
+    "src/content/Mechanics.cpp",
+    "src/combat/Simulation.hpp",
+    "src/combat/Simulation.cpp",
+    "src/combat/Enemies.cpp",
+    "src/combat/Monsters.cpp",
+    "src/render/MonsterVisuals.hpp",
+    "src/main.cpp",
+    "src/combat/MonsterMovement.cpp",
+    "src/combat/LobFlight.hpp"
+  ],
+  "placement": {
+    "217.1.0": {
+      "seed": 0,
+      "floor": 2,
+      "room": 1
+    },
+    "217.2.0": {
+      "seed": 0,
+      "floor": 0,
+      "room": 5
+    },
+    "217.3.0": {
+      "seed": 31,
+      "floor": 3,
+      "room": 5
+    },
+    "220.1.0": {
+      "seed": 1,
+      "floor": 6,
+      "room": 7
+    },
+    "870.0.0": {
+      "seed": 0,
+      "floor": 2,
+      "room": 1
+    },
+    "871.0.0": {
+      "seed": 4,
+      "floor": 3,
+      "room": 3
+    }
+  },
+  "validation": {
+    "native": "native-summary.json",
+    "wasm": "browser-summary.json",
+    "visual": "visual-review.json"
+  }
+}

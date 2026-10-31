@@ -1,0 +1,8 @@
+START resident-0
+PASS resident-0
+START resident-2
+PASS resident-2
+START resident-3
+PASS resident-3
+START resident-1
+PASS resident-1

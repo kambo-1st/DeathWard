@@ -1,0 +1,6 @@
+PASS Eggy source health/range/idle/Jump/Land, white creep and immediate re-hops
+PASS70-frame deferred death,14 timed children, harmless body, no duplicate loot/kill and room completion
+PASS retained child launch/health, capacity, room suspension and stun handling
+NATURAL_EGGY seed=8 floor=4 room=10
+PASS config and natural Eggy placement
+PASS Eggy

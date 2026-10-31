@@ -1,0 +1,4 @@
+[100%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests

@@ -1,0 +1,23 @@
+{
+  "regular_first": true,
+  "candidate_records": [
+    "217.1.0 Corn",
+    "217.2.0 Brownie Corn",
+    "217.3.0 Big Corn",
+    "220.1.0 Dank Squirt",
+    "870.0.0 Drip",
+    "871.0.0 Splurt"
+  ],
+  "existing_dependency": "15.1.0 Clot is reviewed/in_progress; verify its current controller and suitability before using it for Dank Squirt deaths.",
+  "evidence_available": [
+    "Dinga source/dip_controller.asm includes217 variants and870 branches.",
+    "source/squirt_controller.asm includes220 variants and871 branches.",
+    "Preserved Dip/Squirt articles cover these variants; extract their own highest-DLC ANM2 metadata before implementation."
+  ],
+  "pitfalls": [
+    "Ordinary Brownie Corn branch differs from Corn in this installed controller: do not assume wiki prose means identical impulses without tracing remaining shared physics.",
+    "Big Corn/Drip/Splurt flood-pit collision and Big Corn predictive death shot need explicit review.",
+    "Dank Squirt slowing creep is not ordinary Squirt visual trail; verify native lifetime and interactions."
+  ],
+  "full_goal_open": "653 exact identities;641 eligible remaining; zero full acceptance. Continue ordinary enemies and required components, then complete status/item/control/balance/performance and other gates."
+}

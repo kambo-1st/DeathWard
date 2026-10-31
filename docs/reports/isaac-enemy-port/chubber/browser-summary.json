@@ -1,0 +1,17 @@
+{
+  "isolated_cases": 5,
+  "natural_population_cases": 4,
+  "all_pass": true,
+  "isolated_results": "web-counter-boundary/results.json",
+  "natural_results": "web-residents-counter-boundary/results.json",
+  "production_build": true,
+  "headful": true,
+  "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+  "scope": "Latest production build after interceptor indexing and source expiry-boundary correction. Actual source-clock/ownership/movement/GL and rendering checks; not full visual, balance or performance acceptance.",
+  "historical_runs": [
+    "web/results.json",
+    "web-residents/results.json",
+    "web-final/results.json",
+    "web-residents-final/results.json"
+  ]
+}

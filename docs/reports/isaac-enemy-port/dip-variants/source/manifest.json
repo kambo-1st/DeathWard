@@ -1,0 +1,141 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 217,
+      "index": 79,
+      "case": "0x69a02b",
+      "controller": "0x521e10"
+    },
+    {
+      "type": 870,
+      "index": 79,
+      "case": "0x69a02b",
+      "controller": "0x521e10"
+    },
+    {
+      "type": 220,
+      "index": 81,
+      "case": "0x69a037",
+      "controller": "0x522840"
+    },
+    {
+      "type": 871,
+      "index": 81,
+      "case": "0x69a037",
+      "controller": "0x522840"
+    }
+  ],
+  "constants": {
+    "wander_retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "wander_force": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "wander_radius": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "wander_arrival": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "stuck_speed_squared": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "dip_move_retention": {
+      "address": "0xb6a5d8",
+      "value": 0.949999988079071
+    },
+    "dip_stop_squared": {
+      "address": "0xb6a614",
+      "value": 1.0
+    },
+    "dip_impulse_min_and_range": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "dinga_birth_offset": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "dinga_push_range": {
+      "address": "0xb6ab58",
+      "value": 150.0
+    },
+    "death_offset": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "squirt_impulse": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "squirt_idle_retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "drip_retention": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "splurt_first_brake": {
+      "address": "0xb6a940",
+      "value": 8.0
+    },
+    "splurt_child_impulse": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    }
+  },
+  "strings": {},
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/dinga_controller.asm",
+      "start": "0x50a450",
+      "end": "0x50adae",
+      "raw_sha256": "b5e1340a5b84c8a29cd55d64132334590ca7a4f92761522ad3b592ea1be6b5d3",
+      "sha256": "88d60bf4a9ec3909a4a8be9948b8bef94c7aaa17c9db06d8973e3adc25b1d336"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/dip_controller.asm",
+      "start": "0x521e10",
+      "end": "0x52283c",
+      "raw_sha256": "29d64cf469538fe1108287c4c400d25b207f9f58e83402425d07764e1f6f9395",
+      "sha256": "1370a8b4d5475d1ed3bf739848c41d6806db2acc9209a56032f98ac9bfd3af9b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/squirt_controller.asm",
+      "start": "0x522840",
+      "end": "0x523a83",
+      "raw_sha256": "e9d3aef903c2f19aa370ae2c267a9de39ae39d1a1428ae3d837f5f447924b762",
+      "sha256": "8ffea7b61ae064b4ae43d00f1d25c28f9b10c45abbbae9a9679e561404fbdeca"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/random_walk.asm",
+      "start": "0x7a6180",
+      "end": "0x7a64a9",
+      "raw_sha256": "c9fbefa689af02e86b31d7ac66a303c72fa2e02304dd8054c74de070bb0fb258",
+      "sha256": "dafb89014a790a46b0c19f22baf59eefe4e040f3075d3953df11d788c2ebc7fb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/population.asm",
+      "start": "0x6ad7a0",
+      "end": "0x6ad86d",
+      "raw_sha256": "652b9ee0f9132ad43a41b76ff0dbce3ba3144d7d6915b7b7aa1660d2dc3aa9ac",
+      "sha256": "94610750707bacb9ab0456948e73fb9079c6c2552a4ad16979543bfaf173b3d6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "raw_sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    }
+  ]
+}

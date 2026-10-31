@@ -1,0 +1,139 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "effect_rtti": {
+    "descriptor": "0xbeaaec",
+    "locator": "0xb6d320",
+    "vtable": "0xb459f0",
+    "update": "0x5bdf00"
+  },
+  "bindings": [
+    {
+      "name": "GetGridCollisionAtPos",
+      "registration": "0x809000",
+      "function": "0x7aee40"
+    },
+    {
+      "name": "GetClampedPosition",
+      "registration": "0x808eca",
+      "function": "0x427710"
+    },
+    {
+      "name": "FrameCount",
+      "registration": "0x8052f7",
+      "function": "0x682200"
+    }
+  ],
+  "constants": [
+    {
+      "name": "step",
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    {
+      "name": "scale_per_frame",
+      "address": "0xb6a248",
+      "value": 0.029999999329447746
+    },
+    {
+      "name": "stop_scale",
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    {
+      "name": "cardinal_rotation",
+      "address": "0xb6aae4",
+      "value": 90.0
+    },
+    {
+      "name": "damage_radius",
+      "address": "0xb6a9c8",
+      "value": 20.0
+    }
+  ],
+  "enum_reference": {
+    "url": "https://wofsauge.github.io/IsaacDocs/rep/enums/GridCollisionClass.html",
+    "path": "docs/reports/isaac-enemy-port/crackle/source/grid-collision.html",
+    "sha256": "3be92c9bda9e0ed2712c67d0d1ed956505ae0c1ec20e556d5cf64cadb00247e6"
+  },
+  "findings": [
+    "FIRE_WAVE bit35 spawns four1000.148 effects at impact with rotations0/90/180/270, original spawner and projectile parent. Friendly flags are propagated. This is distinct from EXPLODE.",
+    "The invisible generator advances30native units on even FrameCount, rejects room-clamped positions and grid collision>1; grid class1 is pit. Each accepted point spawns1000.147 Fire Jet.",
+    "Jet SpriteScale is1-.03*generatorFrameCount. Generator removes itself after emitting a jet with scale<.2: frame28. Local first-after-spawn scheduling uses ages2..28 (14jets); whether native age0 participates in the spawn frame remains unverified.",
+    "Fire Jet damages only at its ages2 and4; source radius20, collisionDamage10 and FIRE damage flag2. It disappears when Idle animation finishes. Extracted Idle metadata is20frames at30FPS.",
+    "The radial helper receives original EntityRef; hostile jet allows NPC damage and one player half-heart (damage10 is below the30threshold). Friendly source suppresses player damage. Damage call carries countdown30; exact NPC countdown arbitration remains open.",
+    "SpriteScale changes appearance only in this branch; the explicit radius20 damage call is not scaled. Native shared movement/status and source ordering remain separate acceptance work."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/projectile_fire_wave_impact.asm",
+      "start": "0x63334c",
+      "end": "0x633433",
+      "raw_sha256": "7ded69dfba6cd2678e4ddb67009aa1ebff086ed52f62f5caf571a2ffb1539d28",
+      "sha256": "d60f76050e69a22d3dc069c988d69de782c49b7d23fcaa011d9746547aca76f1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/effect_dispatch.asm",
+      "start": "0x5be281",
+      "end": "0x5be2b8",
+      "raw_sha256": "1d0ea96b8c2907393c1e699e5f89541dbb94694e0ab4d979012e7acff9da6f02",
+      "sha256": "ac56aa9d844920abb28eb5b807537afa3e7f680a62553bc0519eb4a249a671cb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/wave_init.asm",
+      "start": "0x5bab67",
+      "end": "0x5bab9d",
+      "raw_sha256": "e9b227cb32ee172019feb37969a098e3b1300053e5a3e75f006bb7ad0d72335e",
+      "sha256": "c679eeeab75a47f488cbe034156e7861ee00dd786cf6d96efeb2737ef7b5332f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/wave_propagation.asm",
+      "start": "0x5c2176",
+      "end": "0x5c244d",
+      "raw_sha256": "2c0a3ab5eed7c2a10b16c5951a5f698e1376dd5cbc484cf9855d6ef911a8b476",
+      "sha256": "383d962ed2c3f61d65c273346ee5efff33ddfd16a1776c0482955610e7715d2c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/jet_pulses_and_lifetime.asm",
+      "start": "0x5c1fdc",
+      "end": "0x5c2176",
+      "raw_sha256": "1fa4ac2ba78cb8071822266cd2f181b9d37859f2cd345d8eec5931d291a71395",
+      "sha256": "c0da891d07ab8ea81d51f9f16a5eac9e87ec01c6609d88751d9c0edf7e8babda"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/radial_damage_factions.asm",
+      "start": "0x6d1280",
+      "end": "0x6d1446",
+      "raw_sha256": "437f9dde8a69f8b7c4d4422935530e1229123493e39891d89b01104bf5ab5bf8",
+      "sha256": "d47f69e6266578a908ce2c52bf8f7e3f28d27d7d83d684464af87240a5fb0997"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/frame_count.asm",
+      "start": "0x682200",
+      "end": "0x682212",
+      "raw_sha256": "7b0cbf52fd890cccbe90b5e872f9ffbbc5b0765d1a834e1b7cc2c75c23ab75c3",
+      "sha256": "995fb6098e1cd3e153cadc76b1c10890de72ba21140a3b4c79eaf39a91a38ab0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/rotation_setter.asm",
+      "start": "0x427510",
+      "end": "0x427524",
+      "raw_sha256": "92451e8c1cd48b79c45f28004697942d9c4f5ff11f35e3fcb92d0c247508cfe0",
+      "sha256": "75e20238d666662a02acbe42ea1db4587752a71fd2d91573111f1341628edd2c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/sprite_scale_setter.asm",
+      "start": "0x427330",
+      "end": "0x42734b",
+      "raw_sha256": "6d5a4a5e0947e544105b0845ac3ed3ce050e9b2bf56b4ce569cffc038e8542c7",
+      "sha256": "f59d2db04eb0f88a90f296f8960b57f25b427fb17b3598385a53828be51a8526"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/crackle/source/clamped_position_wrapper.asm",
+      "start": "0x427710",
+      "end": "0x42773e",
+      "raw_sha256": "14db3dc4e68c74faf7e32354b2bcc160929c4a99cce3f4efbbe933c997d4982c",
+      "sha256": "2881db21f562cbcce4ddf5613c3e47f4c1187b93a29af3e6d500c8caea4fbb2c"
+    }
+  ]
+}

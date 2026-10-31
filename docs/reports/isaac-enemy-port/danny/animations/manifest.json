@@ -1,0 +1,129 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/820.000_danny.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/danny/animations/820.000_danny.anm2",
+      "sha256": "5b6c49fff5800a5cbd6cd135f800ef23725b3656c70fa95f979a6a653309c459",
+      "checksum": "0x212e8c5",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "38",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/820.001_coal boy.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/danny/animations/820.001_coal boy.anm2",
+      "sha256": "ecf1822350b32406ea7f3eb8613b9416130045daa02ae43533da6eed7235c369",
+      "checksum": "0xb1206eb9",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "38",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

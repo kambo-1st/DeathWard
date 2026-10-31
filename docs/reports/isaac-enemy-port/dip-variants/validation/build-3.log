@@ -1,0 +1,14 @@
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dips.cpp.o
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[  4%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_dip_variant_tests
+[100%] Building CXX object CMakeFiles/deathward_dip_variant_tests.dir/tests/dip_variant_tests.cpp.o
+[100%] Linking CXX executable deathward_dip_variant_tests
+[100%] Built target deathward_dip_variant_tests
+Consolidate compiler generated dependencies of target deathward_core
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_dinga_tests
+[ 95%] Building CXX object CMakeFiles/deathward_dinga_tests.dir/tests/dinga_tests.cpp.o
+[100%] Linking CXX executable deathward_dinga_tests
+[100%] Built target deathward_dinga_tests

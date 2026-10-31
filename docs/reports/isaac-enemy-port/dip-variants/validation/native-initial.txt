@@ -1,0 +1,26 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/3 Test  #2: mechanics_content ................   Passed    1.77 sec
+    Start 45: dip_variants
+2/3 Test #45: dip_variants .....................***Failed    0.06 sec
+room clears after death shot lands
+
+    Start 46: dinga_family
+3/3 Test #46: dinga_family .....................***Failed    0.44 sec
+DIP random_dash=1 friction=1 rest=1 push=1 stage_HP=1 contact12.5=1
+SQUIRT stage_HP=1 telegraph36=1 launch60=1 aim_at_release=1 committed=1 recovery=1
+DINGA FPS45=1 live_Dips=2 ring8=1 cap6=1 cap8=1 push_existing=1 retained_ring=1
+LIFECYCLE two_Squirts_four_Dips=1 completion=1 capacity=1 execution=1 debug_clear=1 frame_partition=1
+CONFIG reload=1 invalid_profiles=7
+natural witness still contains exact identity
+
+
+33% tests passed, 2 tests failed out of 3
+
+Total Test time (real) =   2.27 sec
+
+The following tests FAILED:
+	 45 - dip_variants (Failed)
+	 46 - dinga_family (Failed)
+Errors while running CTest

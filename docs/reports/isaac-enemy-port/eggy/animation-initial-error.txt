@@ -1,0 +1,1 @@
+Initial search mistakenly used resources/gfx/029.002_Eggy.anm2. No match in DLC2/3 archives; reached ARCH000 version1 base archive and rejected its unsupported header. Corrected to resources-dlc3/gfx/029.002_Eggy.anm2 from Repentance asset context. No version1 archive guessed or decoded.

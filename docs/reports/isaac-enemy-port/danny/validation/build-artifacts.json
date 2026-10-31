@@ -1,0 +1,15 @@
+{
+  "files_sha256": {
+    "build/deathward": "e25eb5048253359bb876d457a446e48f5cdf67e9dfd0028b436bf7c5aef33168",
+    "build-web/index.html": "c3fb1cb54df2095770cffc4d721a2c561f735bc6222b3cf0c5870128ee888031",
+    "build-web/index.js": "1938b547d7321ee8eb8414802bf06b19128036e3c597e4c219283f75bd7b3be4",
+    "build-web/index.wasm": "402d24804ff938960958dfe89785fede9dde5659fb0e97b137fd1f13723d3ba2",
+    "build-web/index.data": "5f119cf0a443f3b6d5588c74bc2731570cb6d210643166929a1970917c0b9d73"
+  },
+  "gzip_matches_uncompressed": {
+    "build-web/index.js": true,
+    "build-web/index.wasm": true,
+    "build-web/index.data": true
+  },
+  "mechanics": "Valid mechanics: 13 items, 205 monster definitions; fingerprint b03995d0d23f9409\nLoaded from \"/home/kambo/workspace/DeathWard/assets/mechanics\""
+}

@@ -1,0 +1,99 @@
+{
+  "scope": "Twelve individually inspected final Original-style images: four Linux and eight production WASM. Hopping, white creep, real cover height, harmless death husk, surviving children and a natural mixed encounter are visible. These are static presentation checks; broad combat readability, balance and controlled performance remain open.",
+  "final_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/native-final-creep.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale spotted Eggy with dark legs is airborne beside the protagonist; white slow patch has a thin warning perimeter and is distinct from the sand."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/native-final-release.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Lowered pale husk remains while smaller yellow/purple Swarms disperse. Misleading zero-health bar is removed; patches remain visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/native-final-children.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Parent husk has disappeared, leaving loot and fourteen counted threats. Small Swarms remain visible across the room; some approach HUD edges, so this is not all-angle readability acceptance."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/native-final-resident.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Large pale Eggy and its white creep are visible in the naturally selected mixed canyon encounter. It is distinct from smaller yellow/green spiders; cliff occlusion still warrants broad combat review."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/isolated-air.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale spotted Eggy and dark legs are visibly raised beside a white patch, with a separated shadow. Original style retained."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/isolated-creep.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Grounded Eggy sits on a newly deposited white patch beside an earlier patch. Distinct patch boundaries and body legs remain visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/cover-cover.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Eggy is clearly elevated above solid crate cover, with legs visible and a widely separated shadow. Physical elevation and absence of embedded geometry are also checked by browser probes."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/death-release.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Small Swarms disperse from a lowered pale husk with no health bar. Some overlap at birth is intentional for their non-peer collision policy; broad crowd readability remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/death-children.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Gun-death parent has disappeared; loot remains and fourteen threats are counted. Swarms disperse toward walls and HUD edges; this validates presentation of the sequence, not full visibility of every child in every camera angle."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/blast-release.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Explosion-triggered death retains the same lowered, barless husk and visible Swarm release; blast markings do not obscure the parent."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/blast-children.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Explosion-death husk is removed, leaving loot and fourteen counted Swarms. Existing occlusion outlines help wall-adjacent actors; full crowd readability is not certified."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-navigation/resident-resident.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Natural Eggy is visibly airborne beside its white creep and the player in the original previously stalled encounter. Pale large body contrasts with smaller purple/yellow/green spiders."
+    }
+  ],
+  "rejected_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/native-release.png",
+      "reason": "Superseded: initial dying husk retained a misleading zero-health bar. Final images omit it."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/eggy/web-final/resident-resident.png",
+      "reason": "Retained failed behavioral run: the actor was visible but its snapped target was blocked, so it never hopped. Final navigation run preserves the seed and demonstrates motion and creep."
+    }
+  ]
+}

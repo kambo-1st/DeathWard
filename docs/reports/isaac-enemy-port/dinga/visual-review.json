@@ -1,0 +1,32 @@
+{
+  "result": "partial_pass",
+  "style": "Original",
+  "native_images": [
+    "native/dinga.png",
+    "native/squirt.png",
+    "native/dip.png"
+  ],
+  "browser_images": [
+    "web/dinga-ring.png",
+    "web/dinga-dips.png",
+    "web/squirt-windup.png",
+    "web/dinga-hop.png",
+    "web/dinga-children.png",
+    "web/squirt-children.png",
+    "web/resident-dinga-ring.png"
+  ],
+  "manually_inspected": 10,
+  "observations": [
+    "Distinct large Dinga, medium Squirt and small Dip mound bodies with eyes; no missing geometry/materials in these captures.",
+    "Dinga visual hop separates body from ground shadow; ring contains eight clearly separated brown shots.",
+    "Living Dip pair and death Squirt pair remain visible with independent positions. Squirt death shows two small Dips.",
+    "Natural Dinga ring and Dips visible among real canyon scenery and other enemies."
+  ],
+  "limits": [
+    "Squirt windup deformation is subtle at default gameplay zoom; complete telegraph/readability acceptance remains open.",
+    "Screenshots do not prove all-angle occlusion or mixed-room balance.",
+    "Short capture FPS overlays, including native Dip10FPS while builds ran, are not controlled performance evidence.",
+    "Full native audiovisual fidelity, status visuals and damage-window readability still need review."
+  ],
+  "final_browser_images_reinspected": true
+}

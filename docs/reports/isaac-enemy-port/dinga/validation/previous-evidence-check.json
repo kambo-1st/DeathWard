@@ -1,0 +1,6 @@
+{
+  "pass": true,
+  "previous_checkpoint": "docs/reports/isaac-enemy-port/adult-leech/checkpoint.json",
+  "unchanged_artifacts": 64,
+  "scope": "Preserved previous evidence, not old runtime-source hashes."
+}

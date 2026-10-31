@@ -1,0 +1,13 @@
+CORN impulse=2 Brownie_ordinary=1 HP=1 BigCorn_predictive_death=1 capacity=1 clear=1 debug=1
+DRIP distinct_impulse=1 aimed_and_random=1 chain_frame10=1
+SPLURT launch36=1 second8=1 retarget=1 two_charges=1 two_Drips=1 capacity=1 partition=1
+DANK trail_after_launch=1 source_life60=1 slow_only=1 retained=1 two_Clots=1
+WATER wet_pits=1 dry_pits_block=1 walls_block=1 child_placement=1
+CONFIG immutable=1 invalid_profiles=6
+NATURAL_VARIANT 217.1.0 seed=0 floor=2 room=1
+NATURAL_VARIANT 217.2.0 seed=0 floor=0 room=5
+NATURAL_VARIANT 217.3.0 seed=31 floor=3 room=5
+NATURAL_VARIANT 220.1.0 seed=1 floor=6 room=7
+NATURAL_VARIANT 870.0.0 seed=0 floor=2 room=1
+NATURAL_VARIANT 871.0.0 seed=4 floor=3 room=3
+PASS Dip variants

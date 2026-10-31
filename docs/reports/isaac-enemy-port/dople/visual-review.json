@@ -1,0 +1,36 @@
+{
+  "inspected_utc": "2026-10-28T02:13:00.932336+00:00",
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/native/dople.png",
+      "inspected": true,
+      "finding": "Single red shot and grounded red body readable; rear view does not establish face animation parity."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/native/twin.png",
+      "inspected": true,
+      "finding": "Three spread shots visibly separate; charcoal body and shadows render in Original style."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/web/dople-shot.png",
+      "inspected": true,
+      "finding": "Single shot is readable beside body; camera follows enemy so player is partly outside capture."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/web/evil-twin-shot.png",
+      "inspected": true,
+      "finding": "Three newly born shots overlap at this early frame; later native capture verifies spread separation. Not all-camera acceptance."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/web/resident-dople-idle.png",
+      "inspected": true,
+      "finding": "Natural mixed population includes grounded Dople with clear footprint; nearby actors can overlap player."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/web/resident-evil-twin-idle.png",
+      "inspected": true,
+      "finding": "Natural Evil Twin visible beside cliffs; third-eye cue is small. Camera follows enemy, so off-screen player is not a normal-camera assessment."
+    }
+  ],
+  "scope": "Six manually inspected Original-style images; no broad visual, balance or performance acceptance. Incidental FPS overlays were captured during other build work and are not controlled benchmarks."
+}

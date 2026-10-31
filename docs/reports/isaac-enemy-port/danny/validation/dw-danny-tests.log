@@ -1,0 +1,8 @@
+CHILD type=818 variant=0 lift=1.5 vx=-4.21558 vz=5.99584 hp=38.4
+CHILD type=818 variant=0 lift=1.5 vx=-2.60598 vz=4.73049 hp=38.4
+TIMING natural=1 Shoot12=1 Attack38=1 delay150=1 live_children=2 rocks=4 late_aim=1
+OWNERSHIP morph_keeps_slot=1 replacement=1 independent_parents=1
+COAL live1_hot3=1 capped_hot4=1 replenish=1
+LIMITS source_room9=1 damage_response=1 retained=1 completion=1 partition=1
+CONFIG snapshots=1 invalid_contracts=4
+PASS Danny family

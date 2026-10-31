@@ -1,0 +1,9 @@
+DIP random_dash=1 friction=1 rest=1 push=1 stage_HP=1 contact12.5=1
+SQUIRT stage_HP=1 telegraph36=1 launch60=1 aim_at_release=1 committed=1 recovery=1
+DINGA FPS45=1 live_Dips=2 ring8=1 cap6=1 cap8=1 push_existing=1 retained_ring=1
+LIFECYCLE two_Squirts_four_Dips=1 completion=1 capacity=1 execution=1 debug_clear=1 frame_partition=1
+CONFIG reload=1 invalid_profiles=5
+NATURAL_DINGA id=217 seed=0 floor=0 room=5
+NATURAL_DINGA id=220 seed=0 floor=2 room=7
+NATURAL_DINGA id=223 seed=4 floor=5 room=10
+PASS Dinga family

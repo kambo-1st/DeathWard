@@ -1,0 +1,12 @@
+START dip
+PASS dip {"volleys":0,"births":0,"dashes":11,"launches":0,"childFrames":0}
+START squirt
+PASS squirt {"volleys":0,"births":0,"dashes":4,"launches":8,"childFrames":61}
+START dinga
+PASS dinga {"volleys":2,"births":4,"dashes":0,"launches":0,"childFrames":61}
+START resident-dip
+PASS resident-dip {"volleys":0,"births":0,"dashes":14,"launches":0,"childFrames":0}
+START resident-squirt
+PASS resident-squirt {"volleys":0,"births":0,"dashes":4,"launches":6,"childFrames":0}
+START resident-dinga
+PASS resident-dinga {"volleys":4,"births":2,"dashes":0,"launches":0,"childFrames":0}

@@ -1,0 +1,15 @@
+{
+  "session": 26466,
+  "exit_code": 143,
+  "state": "terminal; no browser or harness processes remain",
+  "cause": "External termination signal; cause not established. No assertion error recorded.",
+  "completed": [
+    "danny-isolated",
+    "coal-boy-isolated"
+  ],
+  "unfinished": [
+    "danny-quarry",
+    "coal-boy-quarry"
+  ],
+  "action": "Keep completed traces; run only unfinished scenarios in a separate output directory."
+}

@@ -1,0 +1,30 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/6 Test  #2: mechanics_content ................   Passed    2.48 sec
+    Start 27: resident_enemies
+2/6 Test #27: resident_enemies .................   Passed    0.95 sec
+    Start 50: monster_fire_reactions
+3/6 Test #50: monster_fire_reactions ...........   Passed    0.24 sec
+    Start 79: danny_family
+4/6 Test #79: danny_family .....................   Passed    0.22 sec
+    Start 80: hardy_family
+5/6 Test #80: hardy_family .....................***Failed    0.77 sec
+MOTION natural_start=1 telegraph36=1 late_target=1 commitment=1 partition=1
+IMPACTS counts8_14_8=1 whole_burst=1 recovery=1 thrown_spiders=1 double_hp_dip=1
+TERRAIN breakable_and_cache=1 grazing=1
+CANYON footprint12cm=1 slope_impact=1 partition=1
+LIFECYCLE damage_channels=1 retained_death=1 clear=1 debug=1
+BURST atomic4=1 perpendicular=1 source_retained=1 no_recursion=1
+FAIL actual seeded Hardy population reached
+
+    Start 81: rock_spider_family
+6/6 Test #81: rock_spider_family ...............   Passed   71.84 sec
+
+83% tests passed, 1 tests failed out of 6
+
+Total Test time (real) =  76.51 sec
+
+The following tests FAILED:
+	 80 - hardy_family (Failed)
+Errors while running CTest

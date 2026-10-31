@@ -1,0 +1,214 @@
+{
+  "cases": [
+    {
+      "name": "danny-isolated",
+      "variant": 0,
+      "frames": 1100,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 2,
+      "maxOwned": 2,
+      "thrown": 2,
+      "coals": 0,
+      "peakProjectiles": 6,
+      "firstVolley": {
+        "frame": 334,
+        "owned": [
+          [
+            818,
+            0,
+            2
+          ],
+          [
+            818,
+            0,
+            2
+          ]
+        ],
+        "coals": 0
+      },
+      "trace": "docs/reports/isaac-enemy-port/danny/web/results.json",
+      "captures": {
+        "walking": {
+          "frame": 0,
+          "path": "docs/reports/isaac-enemy-port/danny/web/danny-isolated-walking.png"
+        },
+        "windup": {
+          "frame": 322,
+          "path": "docs/reports/isaac-enemy-port/danny/web/danny-isolated-windup.png"
+        },
+        "first-volley": {
+          "frame": 334,
+          "path": "docs/reports/isaac-enemy-port/danny/web/danny-isolated-first-volley.png"
+        },
+        "living-offspring": {
+          "frame": 600,
+          "path": "docs/reports/isaac-enemy-port/danny/web/danny-isolated-living-offspring.png"
+        },
+        "repeat-volley": {
+          "frame": 710,
+          "path": "docs/reports/isaac-enemy-port/danny/web/danny-isolated-repeat-volley.png"
+        }
+      }
+    },
+    {
+      "name": "coal-boy-isolated",
+      "variant": 1,
+      "frames": 1100,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 2,
+      "maxOwned": 1,
+      "thrown": 4,
+      "coals": 7,
+      "peakProjectiles": 0,
+      "firstVolley": {
+        "frame": 334,
+        "owned": [
+          [
+            818,
+            2,
+            2
+          ]
+        ],
+        "coals": 3
+      },
+      "trace": "docs/reports/isaac-enemy-port/danny/web/results.json",
+      "captures": {
+        "walking": {
+          "frame": 0,
+          "path": "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-walking.png"
+        },
+        "windup": {
+          "frame": 322,
+          "path": "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-windup.png"
+        },
+        "first-volley": {
+          "frame": 334,
+          "path": "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-first-volley.png"
+        },
+        "living-offspring": {
+          "frame": 600,
+          "path": "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-living-offspring.png"
+        },
+        "repeat-volley": {
+          "frame": 848,
+          "path": "docs/reports/isaac-enemy-port/danny/web/coal-boy-isolated-repeat-volley.png"
+        }
+      }
+    },
+    {
+      "name": "danny-quarry",
+      "variant": 0,
+      "natural": true,
+      "seed": 4,
+      "floor": 2,
+      "room": 4,
+      "frames": 1000,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 2,
+      "maxOwned": 2,
+      "thrown": 2,
+      "coals": 0,
+      "peakProjectiles": 6,
+      "firstVolley": {
+        "frame": 82,
+        "owned": [
+          [
+            818,
+            0,
+            2
+          ],
+          [
+            818,
+            0,
+            1
+          ]
+        ],
+        "coals": 0
+      },
+      "trace": "docs/reports/isaac-enemy-port/danny/web-natural/results.json",
+      "captures": {
+        "walking": {
+          "frame": 0,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-walking.png"
+        },
+        "windup": {
+          "frame": 70,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-windup.png"
+        },
+        "first-volley": {
+          "frame": 82,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-first-volley.png"
+        },
+        "repeat-volley": {
+          "frame": 580,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-repeat-volley.png"
+        },
+        "living-offspring": {
+          "frame": 600,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/danny-quarry-living-offspring.png"
+        }
+      }
+    },
+    {
+      "name": "coal-boy-quarry",
+      "variant": 1,
+      "natural": true,
+      "seed": 9,
+      "floor": 2,
+      "room": 2,
+      "frames": 1000,
+      "pass": true,
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)",
+      "attacks": 3,
+      "maxOwned": 1,
+      "thrown": 4,
+      "coals": 9,
+      "peakProjectiles": 0,
+      "firstVolley": {
+        "frame": 82,
+        "owned": [
+          [
+            818,
+            2,
+            1
+          ]
+        ],
+        "coals": 3
+      },
+      "trace": "docs/reports/isaac-enemy-port/danny/web-natural/results.json",
+      "captures": {
+        "walking": {
+          "frame": 0,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-walking.png"
+        },
+        "windup": {
+          "frame": 70,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-windup.png"
+        },
+        "first-volley": {
+          "frame": 82,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-first-volley.png"
+        },
+        "repeat-volley": {
+          "frame": 476,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-repeat-volley.png"
+        },
+        "living-offspring": {
+          "frame": 600,
+          "path": "docs/reports/isaac-enemy-port/danny/web-natural/coal-boy-quarry-living-offspring.png"
+        }
+      }
+    }
+  ],
+  "passed": 4,
+  "errors": [],
+  "scope": "Production WASM, Original style: isolated and actual generated Quarry encounter for each family member. Two isolated cases passed before process termination143; only the two unfinished natural cases were then run and passed.",
+  "interrupted_run": "validation/browser-interruption.json",
+  "notes": [
+    "peakProjectiles is peak concurrent count, not total emitted.",
+    "Scoped source-controller and population evidence; not full visual/readability, balance or controlled performance acceptance."
+  ]
+}

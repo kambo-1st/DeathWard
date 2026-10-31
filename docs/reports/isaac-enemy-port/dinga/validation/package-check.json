@@ -1,0 +1,14 @@
+{
+  "data": {
+    "matches": true,
+    "uncompressed_sha256": "269b1f54ca47db97f8561263ba3d6c12c00a2ceee99dd2f4444ca4ad98e3c19d"
+  },
+  "js": {
+    "matches": true,
+    "uncompressed_sha256": "995b6ebc9238137dd4ecfb2790798aeb7dbf023c44ae95ed17dc16eba896c10d"
+  },
+  "wasm": {
+    "matches": true,
+    "uncompressed_sha256": "e9f784b0b406cf5edad2adb71d75c7e7d3244c2909ef569606b4e97ccd9123ea"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "source_executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/frame_gate.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dip-variants/source/target_marker.asm",
+      "start": "0x6af8d0",
+      "end": "0x6afa77",
+      "raw_sha256": "c35f55aebd6bcff8e30631a4055556509da8a0b7e68d72598861ec6f693817c5",
+      "sha256": "0f83a479ebec721729edc65fdf0f910efa6f26525a0e12355a3c1fd870c6d966"
+    }
+  ],
+  "constants": {
+    "0xb6a95c": 9.0,
+    "0xb6a588": 0.8500000238418579
+  }
+}

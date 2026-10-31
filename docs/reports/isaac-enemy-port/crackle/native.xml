@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="63"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="238"
+	timestamp="2026-10-26T22:40:07"
+	>
+	<testcase name="enemy_port_coverage" classname="enemy_port_coverage" time="0.282691" status="run">
+		<system-out>{
+  "total": 653,
+  "identity_verified": 653,
+  "source_archive_available": true,
+  "reviewed": 136,
+  "dispositions": {
+    "ordinary": 69,
+    "dedicated": 7,
+    "environment": 12,
+    "pending": 517,
+    "boss": 8,
+    "item_dependency": 2,
+    "component": 10,
+    "hazard": 16,
+    "excluded": 12
+  },
+  "implementations": {
+    "in_progress": 89,
+    "existing_unverified": 76,
+    "missing": 476,
+    "excluded": 12
+  },
+  "complete": 0,
+  "remaining": 641,
+  "milestones": [
+    {
+      "number": 1,
+      "status": "in_progress"
+    },
+    {
+      "number": 2,
+      "status": "pending"
+    },
+    {
+      "number": 3,
+      "status": "pending"
+    },
+    {
+      "number": 4,
+      "status": "pending"
+    },
+    {
+      "number": 5,
+      "status": "pending"
+    },
+    {
+      "number": 6,
+      "status": "pending"
+    }
+  ]
+}
+</system-out>
+	</testcase>
+	<testcase name="mechanics_content" classname="mechanics_content" time="1.38297" status="run">
+		<system-out>chain 0 depth 0 effect -1: monster offspring capacity
+Mechanics contracts passed
+</system-out>
+	</testcase>
+	<testcase name="expedition_economy" classname="expedition_economy" time="36.6206" status="run">
+		<system-out>Validated 98 actual floors with zero-resource mandatory routes
+PASS optional rooms, resource reachability, finite economy and distinct pools
+</system-out>
+	</testcase>
+	<testcase name="canyon_bosses" classname="canyon_bosses" time="6.10436" status="run">
+		<system-out>RIDGEBACK seed=7 floor=0 time=11.75 HP=100
+RIDGEBACK seed=7 floor=4 time=17.9333 HP=100
+RIDGEBACK seed=42 floor=0 time=11.75 HP=100
+RIDGEBACK seed=42 floor=6 time=19.6833 HP=100
+RIDGEBACK seed=1866 floor=0 time=11.4167 HP=100
+RIDGEBACK seed=1866 floor=5 time=19.6 HP=100
+POWDER FOREMAN seed=7 floor=0 time=6.93333 HP=100
+POWDER FOREMAN seed=7 floor=4 time=10.4833 HP=80
+POWDER FOREMAN seed=42 floor=0 time=7.51667 HP=80
+POWDER FOREMAN seed=42 floor=6 time=10.4833 HP=100
+POWDER FOREMAN seed=1866 floor=0 time=6.93333 HP=100
+POWDER FOREMAN seed=1866 floor=5 time=10.4833 HP=80
+STORM MARSHAL seed=7 floor=0 time=7.51667 HP=100
+STORM MARSHAL seed=7 floor=4 time=11.1 HP=100
+STORM MARSHAL seed=42 floor=0 time=8.1 HP=100
+STORM MARSHAL seed=42 floor=6 time=11.1 HP=100
+STORM MARSHAL seed=1866 floor=0 time=7.51667 HP=100
+STORM MARSHAL seed=1866 floor=5 time=11.1 HP=100
+PASS canyon boss pool, phases, counterplay, cleanup and weak builds
+</system-out>
+	</testcase>
+	<testcase name="floor_progression" classname="floor_progression" time="97.6448" status="run">
+		<system-out>Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_CHARGER id=855.0 seed=0 floor=5 room=12 variant=0
+NATURAL_GRILLED seed=1 floor=0 room=4
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_REPLACEMENT seed=3 floor=1 room=1 source=23.0 target=23.1
+NATURAL_CHARGER id=23.3 seed=5 floor=2 room=8 variant=2
+NA...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+	<testcase name="item_builds" classname="item_builds" time="7.28241" status="run">
+		<system-out>chain 2 depth 1 effect -1: hazard capacity
+chain 15 depth 2 effect 1: chain event limit
+Pair matrix: 66 unordered pairs including duplicates; both orders and mouse/arrow inputs
+PASS six weapon mechanics, explicit interactions, duplicates, provenance, resource rules, input parity and saves
+</system-out>
+	</testcase>
+	<testcase name="expedition_destruction" classname="expedition_destruction" time="61.1738" status="run">
+		<system-out>Placement: 256 floors, 249 complete single-room clusters
+PASS destruction, cover snapshot, permissions, fuses, seeded loot and optional-cache reachability
+</system-out>
+	</testcase>
+	<testcase name="walkable_areas" classname="walkable_areas" time="0.03788" status="run">
+		<system-out>PASS walk-area geometry, union, exclusions, clearance, WASD/mouse boundaries, guarded markers and scene/navigation persistence
+</system-out>
+	</testcase>
+	<testcase name="expedition" classname="expedition" time="16.282" status="run">
+		<system-out>PASS multi-floor plans, full room networks, embedded sites, build carry-over, evidence provenance, save migration/validation and witness approaches
+</system-out>
+	</testcase>
+	<testcase name="expedition_pacing" classname="expedition_pacing" time="12.0002" status="run">
+		<system-out>PASS separate pacing trials, room/corridor collision, objectives, spawns, boss space, tutorial and size exhaustion
+</system-out>
+	</testcase>
+	<testcase name="flag_cloth" classname="flag_cloth" time="0.172403" status="run">
+		<system-out>PASS redstone: 2 textured flags, pinned seams, gusts, bounds, length and deterministic preview
+PASS frontier: 2 textured flags, pinned seams, gusts, bounds, length and deterministic preview
+PASS town: 0 textured flags, pinned seams, gusts, bounds, length and deterministic preview
+</system-out>
+	</testcase>
+	<testcase name="save_slots" classname="save_slots" time="0.0653947" status="run">
+		<system-out>PASS three-slot isolation, story resume, read-only browsing, corruption and write failure
+</system-out>
+	</testcase>
+	<testcase name="arrival_quest" classname="arrival_quest" time="0.968657" status="run">
+		<system-out>PASS arrival quest ordering, persistence, physical approaches, scene anchors and tutorial navigation, documents, interruption recovery and mine isolation
+</system-out>
+	</testcase>
+	<testcase name="cinematic_timeline" classname="cinematic_timeline" time="0.0577069" status="run">
+		<system-out>PASS cinematic persistence, validation, camera anchors, deterministic seeking, emergency stop and timed sound delivery
+</system-out>
+	</testcase>
+	<testcase name="canyon_roads" classname="canyon_roads" time="6.31716" status="run">
+		<system-out>PASS road seed 0 river 2: 130m, rooms 6 13 14
+PASS road seed 1 river 1: 128m, rooms 12 1 11
+PASS road seed 2 river 1: 121m, rooms 1 10 3
+PASS road seed 3 river 1: 120m, rooms 8 1 9
+PASS road seed 4 river 2: 113m, rooms 5 7 15
+PASS road seed 5 river 1: 141m, rooms 8 1 3
+PASS road seed 6 river 2: 121m, rooms 12 10 14
+PASS road seed 7 river 2: 119m, rooms 3 2 4
+PASS road seed 42 river 2: 109m, rooms 8 13 14
+PASS road seed 1866 river 1: 110m, rooms 3 1 2
+PASS road seed 69175541 river 2: 109m, rooms 3 9 12
+PASS road seed 42 river 0: 137m, rooms 1 7 4
+PASS road seed 1866 river 0: 110m, rooms 3 1 2
+</system-out>
+	</testcase>
+	<testcase name="canyon_rivers" classname="canyon_rivers" time="21.3354" status="run">
+		<system-out>PASS river seed 0: interior, 205 deep samples
+PASS river seed 1: boundary, 2769 deep samples
+PASS river seed 2: boundary, 2391 deep samples
+PASS river seed 3: boundary, 2217 deep samples
+PASS river seed 4: interior, 55 deep samples
+PASS river seed 5: boundary, 2824 deep samples
+PASS river seed 6: interior, 70 deep samples
+PASS river seed 7: interior, 152 deep samples
+PASS river seed 42: interior, 118 deep samples
+PASS river seed 1866: boundary, 2414 deep samples
+PASS river seed 69175541: interior, 72 deep samples
+</system-out>
+	</testcase>
+	<testcase name="redstone_hub" classname="redstone_hub" time="0.498767" status="run">
+		<system-out>PASS story hub routes, residents, original fort, expanded camp, parked train and retained departure animation
+</system-out>
+	</testcase>
+	<testcase name="building_navigation" classname="building_navigation" time="0.0225052" status="run">
+		<system-out>PASS hollow building meshes, doorway clearance, solid walls, headroom, keyboard entry and mouse exit
+</system-out>
+	</testcase>
+	<testcase name="particle_emission" classname="particle_emission" time="0.019448" status="run">
+		<system-out>PASS imported curves, burst timing, collision materials, dynamite triggers, pause, isolated RNG and budgets
+</system-out>
+	</testcase>
+	<testcase name="town_characters" classname="town_characters" time="0.017245" status="run">
+		<system-out>Demo visits=17 blocked=0 at=-3.56,0.999997 target=2
+PASS character routes, obstacle navigation, pauses, deterministic timing, persistence and town demo
+</system-out>
+	</testcase>
+	<testcase name="ambient_animals" classname="ambient_animals" time="0.134172" status="run">
+		<system-out>PASS animals: seeded roaming, clearance, trains, frame rates and reset
+</system-out>
+	</testcase>
+	<testcase name="train_motion" classname="train_motion" time="0.429006" status="run">
+		<system-out>PASS train routes, wheel axles, groups, station stops, player clearance, dynamic navigation and persistence
+</system-out>
+	</testcase>
+	<testcase name="object_animation" classname="object_animation" time="0.0541341" status="run">
+		<system-out>PASS object motion, ground collisions, pivots, stable IDs, scene versions and imported tumbleweeds
+</system-out>
+	</testcase>
+	<testcase name="player_dynamite" classname="player_dynamite" time="0.939055" status="run">
+		<system-out>PASS dynamite placement, kicking, fuse, collisions, damage, guards, chains and shop refill
+</system-out>
+	</testcase>
+	<testcase name="mission_shop" classname="mission_shop" time="2.21279" status="run">
+		<system-out>PASS peaceful seeded shops, stock, purchases, menu freeze, spending and save migration
+</system-out>
+	</testcase>
+	<testcase name="money_pickups" classname="money_pickups" time="1.16161" status="run">
+		<system-out>PASS seeded/reachable money, random drops, collection, collision, wallet and legacy saves
+</system-out>
+	</testcase>
+	<testcase name="resident_enemies" classname="resident_enemies" time="0.769054" status="run">
+		<system-out>PASS resident groups, corridor inactivity, ambient animation, entry continuity, doorway clearance, companions, cleared revisits and debug replay in both themes
+</system-out>
+	</testcase>
+	<testcase name="audio_presentation" classname="audio_presentation" time="0.0476041" status="run">
+		<system-out>PASS bounded/prioritized audio cues, confirmed actions, cleanup and determinism
+</system-out>
+	</testcase>
+	<testcase name="monster_behaviors" classname="monster_behaviors" time="3.14416" status="run">
+		<system-out>chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 163 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.1 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.1 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.1 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.1 entity=48 x=0.486997 z=7.04164
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.0642 z=8.15202
+GROUN...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+	<testcase name="monster_flight" classname="monster_flight" time="2.73616" status="run">
+		<system-out>FLIGHT_COVER peak=2.85 safe_path_points=3
+FLIGHT_OFFSPRING water_births=0 land_births=8 samples=16
+FLIGHT_COMBAT shooter_damage=12.5 mouse_arrow_hits=2
+FLIGHT_SEEDED rocks=160 water_cells=120 cliffs=2185
+PASS flight collision, elevation, combat and seeded terrain
+</system-out>
+	</testcase>
+	<testcase name="monster_formations" classname="monster_formations" time="0.141255" status="run">
+		<system-out>FORMATION slots=10 surviving_after_two_deaths=8 founder_independent=1 reentry=1
+FORMATION_TERRAIN cover_peak=2.85 contact_damage=12.5
+FORMATION_STARTING_KIT seconds=5.18333 health=100 kills=4
+PASS translating formations, stable slots, ownership, terrain, budgets and basic starting-kit encounter
+</system-out>
+	</testcase>
+	<testcase name="monster_patterns" classname="monster_patterns" time="0.227811" status="run">
+		<system-out>PATTERN id=15.0 count=4 axes_repeat=1 windup_moving=1
+PATTERN id=15.1 count=4 axes_repeat=1 windup_moving=1
+PATTERN id=15.2 count=8 axes_repeat=1 windup_moving=1
+PATTERN id=15.3 count=4 axes_repeat=1 windup_moving=1
+CURVE alternating=1 stun_parity=1 reentry_parity=1 survives_owner=1
+SURFACES tar_slow_only=1 ember_no_fire_patch=1 curved_cover_collision=1
+PATTERN_STARTING_KIT id=15.0 seconds=1.35 health=100
+PATTERN_STARTING_KIT id=15.1 seconds=1.35 health=100
+PATTERN_STARTING_KIT id=15.2 seconds=1.33333 health=100
+PATTERN_STARTING_KIT id=15.3 seconds=1.38333 health=100
+PATTERN_STARTING_KIT id=872.0 seconds=1.35 health=100
+PASS monster patterns
+</system-out>
+	</testcase>
+	<testcase name="monster_fire_reactions" classname="monster_fire_reactions" time="0.20757" status="run">
+		<system-out>chain 0 depth 0 effect -1: hazard capacity
+FIRE_TRANSFORM fraction=1 identity=1 owner=1 team=1 stun=1 no_reward=1 reentry=1
+FLOODED disables_transform=1 enables_fire_damage=1 local_room=1 actual_clear=1
+HOPPER flame_transforms=1 burning_damages=1 no_flood_exception=1
+FIRE_PROJECTILE channel_preserved=1
+FIRE_HAZARDS real_contacts=1 cover=1 height=1 lifetime=1 overlap_bound=1 mine_unchanged=1
+PASS monster fire reactions
+</system-out>
+	</testcase>
+	<testcase name="monster_hopping" classname="monster_hopping" time="0.232873" status="run">
+		<system-out>HOP_RANGE normal=6 flaming=11 committed_endpoint=1 peak=2.24997 duration=0.636364
+HOP_TERRAIN rock_crossing=1 peak=3.59994 river_crossing=1 legal_landings=1
+HOP_BOUNDARY closed_gate=1 active_room=1 launch_recheck=1
+HOP_INTERRUPTS stun=1 morph=1 flame_height=1 elevated_projectile=1
+HOP_STARTING_KIT type=29 seconds=0.766667 hp=100
+HOP_STARTING_KIT type=54 seconds=0.716667 hp=100
+PASS configured Hopper movement and collision
+</system-out>
+	</testcase>
+	<testcase name="monster_replacements" classname="monster_replacements" time="1.6491" status="run">
+		<system-out>REPLACEMENT_ODDS source=15.0 replaced=90 samples=10000
+REPLACEMENT_ODDS source=15.1 replaced=90 samples=10000
+REPLACEMENT_ODDS source=29.0 replaced=5965 samples=10000
+REPLACEMENT_ODDS source=23.0 replaced=5002 samples=10000
+REPLACEMENT_SNAPSHOT one_shot=1 budget_reserved=1 immutable=1 explicit_spawn=1
+FLOODED_QUARRY samples=600 flooded=192 patches=42 geometry_unchanged=1
+FLOOR_VARIANTS scorched=192 samples=600 patches=16 geometry_unchanged=1
+REPLACEMENT_RESIDENTS iblob=8 safe_placement=1 target_stats=1 reentry=1
+PASS conditional replacements and floor variants
+</system-out>
+	</testcase>
+	<testcase name="monster_boss_components" classname="monster_boss_components" time="1.31648" status="run">
+		<system-out>chain 0 depth 0 effect -1: monster offspring capacity
+PEEP_OWNERSHIP thresholds=2/3,1/3 cyan_start=2 capacity_retry=1 no_respawn=1 no_orphans=1
+PEEP_ATTACKS creep=1 ring=8 landing=12 locked_arc=1 yellow_size=.85 whole_contact=25
+PEEP_EYES wall_and_body_bounce=1 rocks=1 projectile_block=1 bomb_direction=1 contact=12.5
+PEEP_STAGE seed=0 floor=2 form=0 components=2 completion=1
+PEEP_STAGE seed=3 floor=1 form=2 components=2 completion=1
+PEEP_STAGE seed=9 floor=2 form=1 components=2 completion=1
+PEEP_CONFIG immutable=1 geometry_unchanged=1 ordinary_pools_unchanged=1 tutorial_unchanged=1
+PEEP_STARTING_KIT form=0 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=1 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=2 seconds=20.1333 hp=87.5 kills=1
+PASS Peep multipart encounter, owned eyes and stage routing
+</system-out>
+	</testcase>
+	<testcase name="bloat_boss_and_chargers" classname="bloat_boss_and_chargers" time="1.78331" status="run">
+		<system-out>BLOAT_LASERS down_pair=1 side_pair=1 no_up=1 immediate=1 owner_cleanup=1 cover=1
+BLOAT_ATTACK form=0 action=0 shots=0 summons=0 peak=1.3
+BLOAT_ATTACK form=0 action=1 shots=8 summons=0 peak=1.99841
+BLOAT_ATTACK form=0 action=2 shots=8 summons=0 peak=5.0987
+BLOAT_ATTACK form=3 action=0 shots=0 summons=2 peak=1.3
+BLOAT_ATTACK form=3 action=1 shots=2 summons=0 peak=1.99841
+BLOAT_ATTACK form=3 action=2 shots=3 summons=0 peak=5.0987
+CHARGER immediate_cardinal=1 locked_heading=1 untargeted_wander=1 los=1 collision_recovery=1
+BLOAT_STAGE seed=0 floor=5 band=3 form=0 completion=1
+BLOAT_STAGE seed=1 floor=5 band=2 form=0 completion=1
+BLOAT_STAGE seed=4 floor=4 band=2 form=3 completion=1
+BLOAT_STAGE seed=6 floor=3 band=3 form=3 completion=1
+BLOAT_STARTING_KIT form=0 hp=100 seconds=18.9333 kills=1
+BLOAT_STARTING_KIT form=3 hp=12.5 seconds=24.8833 kills=3
+PASS Bloat forms, real lasers/ballistics, owned eyes and Chargers
+</system-out>
+	</testcase>
+	<testcase name="charger_variants" classname="charger_variants" time="0.171553" status="run">
+		<system-out>DROWNED hp=70.4 immediate=1 diagonal_death_shots=4 execution_cleanup=1
+DANK fast_dash=1 swept_wall_reflection=1 stationary_recovery=1 slowing_nondamaging_trail=1
+PRINCESS diagonal=1 real_tail_projectile=1 head_piercing_blocked=1 spatial_explosions=1
+LEVEL2 hp=128 cardinal_start=1 steering=1 slower=1 contact_damage=25
+CHARGER_STARTING_KIT id=23.1 seconds=2.16667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.2 seconds=3.15 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.3 seconds=6.01667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=855.0 seconds=3.26667 post_death_seconds=1.5 hp=100 kills=1
+PASS Charger variants and weak-point collision
+</system-out>
+	</testcase>
+	<testcase name="companion_familiars" classname="companion_familiars" time="1.56965" status="run">
+		<system-out>SHADOW_PRODUCER duplicate_once=1 max_live=16 item_owner=1 removal_stops_only_producer=1
+SHADOW_PATH lag=1 catch_up=1 bounded_history=1
+SHADOW_CONTACT enemy_damage=27.84 ally_damage=3.2 player_damage=0 cardinal_target=1
+SHADOW_DAMAGE player_bomb_immune=1 hostile_blast=1 repeated_fire=1 beam=1 no_death_rewards=1
+SHADOW_PROJECTILES hostile_interception=1 player_pass_through=1 kill_hook_isolation=1
+SHADOW_LIFETIME transition_expiry=1 no_resurrection=1 room_clear=1
+SHADOW_BARGAIN seed=3 floor=0 room=6 slot=1 hp=80
+SHADOW_PERSISTENCE floor_carry=1 expired_allies=1 fresh_producer=1 journal_item=1
+PASS My Shadow producer, allied combat and room lifetime
+</system-out>
+	</testcase>
+	<testcase name="room_statues" classname="room_statues" time="0.590391" status="run">
+		<system-out>STATUE_AIMED single=1 triple=3 ballistic=1 ordinary_immune=1 cleared_body_retained=1
+STATUE_LIFETIME last_enemy_clear=1 inactive_reentry=1 exceptional_respawn=1 eye_removal=1
+STATUE_PLATES persistent_combat_fire=1 all_plates=1 immediate_beam_stop=1 saved_plate_state=1 plate_objective=1
+STATUE_CROSS alternating_axes=1 subtype_phase=1 always_on=1 objective_free_trap=1
+STATUE_PHYSICS walking=1 flight=1 swept_dodge=1 mouse_path=1 ray_aim=1 exceptional_collider_removal=1
+PASS configurable Grimace attacks, completion, plate state, re-entry and collision
+</system-out>
+	</testcase>
+	<testcase name="maw_attraction" classname="maw_attraction" time="0.810863" status="run">
+		<system-out>MAW_INPUT normal_z=6.61054 broken_z=5.1026 keyboard=1 dodge=1 mouse=1 stationary=1 no_shots=1
+MAW_LIFECYCLE four_seconds=1 inactive_phase=1 active_resume=1 clear_persistence=1 plate=1 exceptional_respawn=1
+MAW_PROJECTILES both_teams=1 current_velocity=1 height=1 gravity=1 terrain=1 corridor=1 opposing_fields=1 aggregate_limit=1
+MAW_CONFIG actual_force=1 snapshot_isolation=1
+PASS Maw suction, alternating cycle, both projectile teams, collision and configured snapshots
+</system-out>
+	</testcase>
+	<testcase name="quake_waves" classname="quake_waves" time="0.63971" status="run">
+		<system-out>chain 0 depth 0 effect -1: hazard capacity
+QUAKE_AXES left_up_right_down=1 anchored_hop=1 first_landing_3s=1 period_3s=1 real_wave_speed=10
+QUAKE_CONTACT base_player_damage=10 multiplied_at_impact=1 one_front_hit=1 vertical_clearance=1 wall_cover=1 corridor_stop=1
+QUAKE_DEMOLITION first_surface_only=1 cache_analogue=1 no_spent_bomb=1 no_kill_credit=1 persistent_loot_once=1 protected_ore=1
+QUAKE_LIFETIME combat_persistence=1 plate=1 emitted_wave_finishes=1 reentry=1 bounded_hazards=1
+QUAKE_CONFIG actual_speed=1 immutable_snapshot=1
+PASS Quake directions, landing cadence, swept waves, cover, cache adaptation, plates and external rules
+</system-out>
+	</testcase>
+	<testcase name="supplied_bombs" classname="supplied_bombs" time="0.543872" status="run">
+		<system-out>chain 0 depth 0 effect -1: supplied bomb capacity
+SUPPLY_STOCK unlit_wait=1 pickup_5_41=1 armed_4_13=1 replenish_before_explosion=1 held_fuse=1 zero_inventory=1
+SUPPLY_CONTROLS arrows=1 place=1 no_inventory=1 no_shot_cycle=1 no_invented_braid=1 fuse_preserved=1 swept_throw=1
+SUPPLY_DEATH independent_stock=1 ten_unlit_drops=1 retained_stock=1 no_kill_credit=1 no_reentry_duplicate=1 bounded_pending=1
+SUPPLY_PERSISTENCE held_across_rooms=1 thrown_pause_resume=1 own_demolition_permission=1 actual_enemy_damage=1 dedicated_only=1
+SUPPLY_CONFIG actual_fuse=1 immutable_snapshot=1
+SUPPLY_ROUTING blocked_retry=1 real_floor_travel=1 preserved_fuse=1
+PASS supplied bomb stock, taking, controls, flight, fuse, death drops, room persistence and external rules
+</system-out>
+	</testcase>
+	<testcase name="fly_bombs" classname="fly_bombs" time="3.99796" status="run">
+		<system-out>chain 1 depth 0 effect -1: queue capacity
+FLY_BOMB_DAMAGE contact_40=1 death_100=1 player_12_5_25=1 delayed_after_clear=1 exactly_once=1
+FLY_BOMB_MOVEMENT curved_pursuit=1 reaches_player=1 flies_over_cover=1 swept_dodge=1
+FLY_BOMB_OWNERSHIP trio=1 invulnerable=1 real_orbit=1 owner_death=1 contact_chain=1 atomic_group=1
+FLY_BOMB_LIFECYCLE inactive_pause=1 pending_retry=1 actual_tuff_armor=1 rock_demolition=1 debug_clear=1
+FLY_BOMB_STAGE seed=0 floor=2 room=2 variant=standard
+FLY_BOMB_STAGE seed=4 floor=2 room=5 variant=standard
+FLY_BOMB_STAGE seed=11 floor=2 room=7 variant=standard
+FLY_BOMB_EXTERNAL immutable_snapshot=1 fuse_damage=1 duplicate_rejected=1 actual_seeded_route=1 eternal_producer_pending=1
+PASS Fly Bomb pursuit, explosions, ordnance, ownership, external configuration and stage routing
+</system-out>
+	</testcase>
+	<testcase name="enemy_bomb_payloads" classname="enemy_bomb_payloads" time="0.519089" status="run">
+		<system-out>chain 0 depth 0 effect -1: enemy bomb capacity
+ENEMY_BOMB_BLAST source=1 collateral=100 exactly_once=1 ballistic_cover=1
+ORDNANCE_IDENTITIES troll=4.3 hornfel_normal=4.0 hot=4.8 bloody_sad=4.16 brimstone=4.15
+ENEMY_BOMB_SAD ring=10 independent_damage=1 bounded_queues=1 atomic_backpressure=1
+ENEMY_BOMB_HOT contact=1 lingering_fire=1 owner_independent=1 clear_survival=1 dormant_pause=1
+ENEMY_BOMB_BRIMSTONE cardinal=4 clipped_by_cover=1 shared_hurt_cooldown=1 finite_lifetime=1
+ENEMY_BOMB_ALLIES hostile_fire=1 hostile_beam=1 shared_hurt_window=1 no_player_credit=1
+ENEMY_BOMB_CONTENT snapshot=1 configurable_damage_fuse_faction=1 missing_effect_rejected=1 invalid_producer_rejected=1
+PASS hostile bomb payload foundation; boss producers remain missing
+</system-out>
+	</testcase>
+	<testcase name="authored_rails" classname="authored_rails" time="0.0240615" status="run">
+		<system-out>RAIL_GEOMETRY cross_straight=1 stop_reverse=1 curved_motion=1 swept_segments=1 pits_retained=1 step_partition=1
+RAIL_INSTALLED layouts=15 cells=928 doors=121 routes=121 pit_cells=30 fitted_footprints=120 ordinary_pool_entries=0
+RAIL_VALIDATION duplicates=reject disconnected=reject invalid_variant=reject dimensions=bounded nonfinite=reject
+RAIL_CONTENT immutable_snapshot=1 external_geometry=1 rejected_reload_keeps_previous=1
+</system-out>
+	</testcase>
+	<testcase name="boom_flies" classname="boom_flies" time="125.764" status="run">
+		<system-out>BOOM_HEALTH source_stages_1_to_13=1 floor_lengths=5 diagonal_axis_reflection=1 contact=1 cover=1
+BOOM_DEATH seven_patterns=1 bone_alignment=1 green_not_ipecac=1 actual_blast=1 execution_policy=1
+BOOM_LIFECYCLE aligned_live_bones=1 gas_trail=1 gas_clear=1 tainted_cross=49 clear_persistence=1 bounded_pending=1
+BOOM_EXTERNAL stage_scaled_child=1 illegal_birth_suppressed=1 immutable_blast_config=1 validation=1
+BOOM_REPLACEMENT flooded=0 normal=9068 red=932 drowned=0 samples=10000
+BOOM_REPLACEMENT flooded=1 normal=4486 red=433 drowned=5081 samples=10000
+BOOM_RESIDENT id=25.0 seed=0 floor=3 room=1 stage=5 hp=64
+BOOM_RESIDENT id=25.2 seed=0 floor=3 room=6 stage=5 hp=64
+BOOM_RESIDENT id=25.1 seed=1 floor=4 room=2 stage=5 hp=64
+BOOM_RESIDENT id=25.5 seed=4 floor=6 room=8 stage=7 hp=79.36
+BOOM_RESIDENT id=25.3 seed=16 floor=1 room=3 stage=3 hp=54.4
+BOOM_RESIDENT id=25.4 seed=42 floor=3 room=2 stage=4 hp=64
+BOOM_RESIDENT id=25.3.1 seed=53 floor=1 room=1 stage=3 hp=54.4
+BOOM_ROUTING identities=7 generated_floors=325 tain...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+	<testcase name="loki_bosses" classname="loki_bosses" time="1.00998" status="run">
+		<system-out>chain 0 depth 0 effect -1: Loki encounter capacity
+chain 0 depth 0 effect -1: Loki encounter placement
+LOKI_VOLLEYS ordered=4,4,4 axes=cardinal,diagonal,cardinal ring=8 independent_halves=1
+LOKI_TELEPORT absent_immunity=1 grounded_vulnerability=1 landing_revalidation=1 inactive_pause=1 contact=25
+LOKI_GROUPS normal_children=4 red_children=1 atomic_spawn=1 per_half_hp=1120 aggregate_health=1 single_payout=1 child_clear=1
+LOKI_ROUTE seed=2 floor=3 band=2 id=69.0 bodies=1
+LOKI_ROUTE seed=3 floor=3 band=3 id=69.1 bodies=2
+PASS Loki and Lokii partial controllers
+</system-out>
+	</testcase>
+	<testcase name="hornfel_boss" classname="hornfel_boss" time="3.86956" status="run">
+		<system-out>chain 0 depth 0 effect -1: enemy bomb capacity
+HORNFEL_CONFIG rejects=18 snapshots=2
+HORNFEL_ESCORTS combined_cap=3 distance_gate=1 atomic_pair=1 physical_entry=1 exit_hp=1 owner_lifecycle=1 death_bomb=1 inactive_pause=1
+HORNFEL_DECOYS reservations=2 lifecycle=2 hit_rules=4 projectile_hit=1 contact_death=1 atomic_payload=1 retained_death_cap=1 cover_bypass=1
+HORNFEL_THROWS single=1 double=2 small_mines=3 large_mines=4 frames=17,27,34 separate_cart_doors=1 inactive_pause=1
+HORNFEL_CHARGE layout=hornfel_special_5220 repeats=6 passes=7 bombs=8 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=0
+HORNFEL_CHARGE layout=hornfel_special_5228 repeats=6 passes=7 bombs=10 shoot_frame=46 fire_wave=1 exit_recovery=1 longer_than_animation=1
+FIRE_WAVES cardinal=4 atomic_capacity=1 player_damage=1 wall_stop=1 pit_stop=1 reactions=1 ally_damage=1 clear_survival=1 inactive_pause=1 expiry=1
+HORNFEL_LIFECYCLE cart_hp=768 flee_hp=320 killed_bonus=3 escaped_bonus=0 no_escape_kill=1 atomic_mines=1
+HORNFEL_ISOLATED_ES...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+	<testcase name="rail_passengers" classname="rail_passengers" time="0.339125" status="run">
+		<system-out>chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+PASS rail passengers/environmental durability, transport, lifecycle and admission
+</system-out>
+	</testcase>
+	<testcase name="bony_regular_enemy" classname="bony_regular_enemy" time="0.725375" status="run">
+		<system-out>NATURAL_BONY seed=1 floor=2 room=2 hp=44.8
+NATURAL_BONY seed=1 floor=2 room=2 hp=44.8
+PASS Bony alignment,13-frame throw, bone hits, interruption, navigation and stage routing
+</system-out>
+	</testcase>
+	<testcase name="black_bony_regular_enemy" classname="black_bony_regular_enemy" time="0.734559" status="run">
+		<system-out>chain 1 depth 1 effect -1: queue capacity
+chain 2 depth 0 effect -1: queue capacity
+chain 1 depth 1 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+chain 4 depth 0 effect -1: queue capacity
+NATURAL_BLACK_BONY seed=0 floor=3 room=3 hp=51.2
+NATURAL_BLACK_BONY seed=0 floor=3 room=9 hp=51.2
+PASS Black Bony three-cycle aim, death blast, pressure retention and ordinary routing
+</system-out>
+	</testcase>
+	<testcase name="source_immunity_and_lethal_morph" classname="source_immunity_and_lethal_morph" time="0.235569" status="run">
+		<system-out>SOURCE_IMMUNITY channels=1 exceptions=1 execution=1
+SOURCE_LIFETIME dead_producer=1 allied_source=1 tnt=1
+LETHAL_MORPH same_id=1 stage_hp=1 capacity=1 no_reward=1 reentry=1 overkill=1
+LETHAL_CHANCE transformed=147 trials=1000 seeded=1 config=1
+MORTALITY_PASS
+</system-out>
+	</testcase>
+	<testcase name="gurgle_splasher_physical_lobs" classname="gurgle_splasher_physical_lobs" time="3.90447" status="run">
+		<system-out>chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+LOB_FLIGHT source_ticks=240 endpoint_match=1
+NATURAL_LOBBER type=238 seed=0 floor=5 room=3 hp=67.84
+NATURAL_LOBBER type=238 seed=1 floor=3 room=2 hp=57.6
+NATURAL_LOBBER type=238 seed=1 floor=5 room=8 hp=62.72
+NATURAL_LOBBER type=87 seed=2 floor=3 room=3 hp=128
+NATURAL_LOBBER type=238 seed=2 floor=3 room=4 hp=57.6
+NATURAL_LOBBER type=238 seed=2 floor=3 room=7 hp=57.6
+PASS regular lobbers: timing, current aim, movement aim, physical flight, source blast, queue pressure, validation, seeded routing
+</system-out>
+	</testcase>
+	<testcase name="crackle_discrete_fire_jets" classname="crackle_discrete_fire_jets" time="6.39068" status="run">
+		<system-out>NATURAL_CRACKLE seed=20 floor=2 room=5 hp=128
+PASS Crackle: physical lob,32-frame cycle, discrete cardinal jets, pulses, immunity, pit/cover, retained pressure, seeded stage
+</system-out>
+	</testcase>
+	<testcase name="segmented_bosses" classname="segmented_bosses" time="1.62052" status="run">
+		<system-out>TUFF_MOVEMENT paired_six=1 suppliers=2 cardinal_roaming=1 path_following=1 bounded_trail=1 atomic_spawn=1
+TUFF_ARMOR separate_hp=1 bullets_blocked=1 real_explosion=1 near_25=1 far_14=1 no_spillover_policy=1
+TUFF_TOPOLOGY head_promotion=1 rear_split=1 short_fragment_policy=1 aggregate_reward_once=1 inactive_persistence=1
+TUFF_ATTACKS armored_ink=1 exposed_sucker=1 body_spray=1 cardinal_ordinal_deaths=1 slowing_black_creep=1
+TUFF_SUPPLY actual_pickup_fuse_explosion=1 inventory_unchanged=1 shared_child_cap=1 burst_overshoot=1
+TUFF_STAGE seed=1 floor=2 room=10 stock_reachable=1 complete=1
+TUFF_STAGE seed=14 floor=2 room=10 stock_reachable=1 complete=1
+TUFF_STAGE seed=18 floor=2 room=10 stock_reachable=1 complete=1
+TUFF_EXTERNAL immutable_snapshot=1 armor_speed=1 variant_filter=1
+PASS segmented Tuff encounter, armor, topology, movement, children and aggregate reward
+</system-out>
+	</testcase>
+	<testcase name="shell_boss" classname="shell_boss" time="2.30304" status="run">
+		<system-out>SHELL_ARMOR pair_5=1 head_invulnerability=1 body_hp=112 armor=15 full_explosive_damage=1 atomic_spawn=1
+SHELL_MOTION diagonal=1 reflection=1 flesh_slowdown=1 aimed_triple=1 tail_fly_bomb=1
+SHELL_SPLIT promotion=1 reversed_endpoint=1 short_armor_retirement=1 detached_group=1 stationary_single=1 simultaneous_masks=15
+SHELL_LIFECYCLE cover_landing=1 water_landing=1 aggregate_reward_once=1 children_gate_clear=1 inactive_persistence=1
+SHELL_STAGE_FIXTURE seed=33 floor=2 room=10 width=32 depth=72
+SHELL_STAGE_FIXTURE seed=42 floor=2 room=10 width=72 depth=40
+SHELL_STAGE_FIXTURE seed=53 floor=1 room=10 width=32 depth=80
+SHELL_STAGE seeded_profiles=7 band=1 standard_only=1 double_arena=1
+SHELL_EXTERNAL immutable_snapshot=1 armor_speed=1 invalid_duplicate_rejected=1
+PASS Shell armor, movement, topology, attacks, landing, lifecycle and route
+</system-out>
+	</testcase>
+	<testcase name="mission_themes" classname="mission_themes" time="3.72849" status="run">
+		<system-out>Checking canyon seed 0
+Checking canyon seed 1
+Checking canyon seed 42
+Checking canyon seed 1866
+Checking canyon seed 69175541
+PASS seeded/explicit themes, organic terrain, connected routes, seals, reproducible encounters, named locations and saved theme recovery
+</system-out>
+	</testcase>
+	<testcase name="imported_town_navigation" classname="imported_town_navigation" time="0.0557864" status="run">
+		<system-out>PASS all three hub navigation packs, mission round trips, height following, barriers and missing assets; precise mouse picking, direct/smoothed routes and held steering
+</system-out>
+	</testcase>
+	<testcase name="core_contracts" classname="core_contracts" time="0.41843" status="run">
+		<system-out>chain 12 depth 3 effect -1: chain event limit
+chain 2 depth 1 effect -1: generation limit
+PASS 3D swept collisions
+PASS five items and composed effects
+PASS continuous fire and sixth-shot effects
+PASS player health, damage and item tuning
+PASS mouse routes, interactions and keyboard override
+PASS bounded chains and cleanup
+PASS independent seeded RNG streams
+PASS persistence, recovery, consequences and revisits
+PASS full expedition progression
+PASS cheat clears, stress cleanup, room restart and repeatable boss
+</system-out>
+	</testcase>
+	<testcase name="enemy_behaviors" classname="enemy_behaviors" time="2.57839" status="run">
+		<system-out>chain 2 depth 0 effect -1: hazard capacity
+chain 3 depth 0 effect -1: hazard capacity
+POPULATION seeds=32 opening/final floors area=331.689..1556.28 enemies=5..23 types=15 populations=19
+PASS fifteen enemy behaviors, tells, counters, hazards and seeded area-based groups
+</system-out>
+	</testcase>
+	<testcase name="generated_dungeons" classname="generated_dungeons" time="22.4932" status="run">
+		<system-out>Extra quiet rooms: 9 / 64 seeded floors
+PASS 64 seeds: deterministic varied geometry, connected floor, doors, objectives and boss clearance
+PASS branches, reachable keys, locks, combat seals, unique pickups and revisits
+</system-out>
+	</testcase>
+	<testcase name="generated_room_graphs" classname="generated_room_graphs" time="0.509758" status="run">
+		<system-out>PASS 7,168 variable-size graphs and 10,004 Classic seeds: deterministic connected graphs, safe passage topology, junctions and locked leaves
+PASS 256-seed diversity: 232 distinct footprints, 256 distinct structural profiles, 4 loop counts, 7 dead-end counts, 7 boss depths, 6 path diameters
+</system-out>
+	</testcase>
+</testsuite>

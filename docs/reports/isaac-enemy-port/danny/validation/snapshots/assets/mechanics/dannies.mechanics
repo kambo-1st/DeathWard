@@ -1,0 +1,18 @@
+DEATHWARD_MECHANICS 1
+# Repentance 1.7.9b: common controller, different actual payloads.
+monster 820.0.0 "Danny" Chase None Stone 128 3 .52 2.4 .4 1 0 1 0 1 legacy
+stage_health 820.0.0 40 0 3.2
+monster 820.1.0 "Coal Boy" Chase None Stone 128 3 .52 2.4 .4 1 0 1 0 1 legacy
+stage_health 820.1.0 40 0 3.2
+# coal scale pathForce retention attackRetention contact initialMin initialMax cooldown
+# chance hurtChance farChance animationFrames ShootFrame roomCap ownedCap totalPayload
+# near far damageScale hurtThreshold hurtDecay child coalBody
+danny 820.0.0 0 .1 .6 .7 .7 10 10 19 150 60 20 10 38 12 9 2 6 200 400 3.2 6 .11 818.0.0 33.11.0
+danny 820.1.0 1 .1 .6 .7 .7 10 10 19 150 60 20 10 38 12 9 1 4 200 400 3.2 6 .11 818.2.0 33.11.0
+# child offset height spread minSpeed maxSpeed minVertical maxVertical
+# projectile height radius damage life speed scatter fallingMin fallingMax gravity retention
+danny_payload 820.0.0 4 -15 30 1 4 -5 -3 1.15 .22 10 8 7 3.5 -20 4 23.4 .9
+danny_payload 820.1.0 4 -15 30 1 10 -5 -3 1.15 .22 10 8 7 3.5 -20 4 23.4 .9
+# Mines/Ashpit ordinary templates map to Quarry. Both remain specialist encounters.
+encounter 1 1 pursuit specialist 820.0.0 1 3 1
+encounter 1 1 pursuit specialist 820.1.0 1 3 1

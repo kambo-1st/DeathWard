@@ -1,0 +1,34 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 46: membrain_family
+    Start  5: floor_progression
+    Start 44: adult_leech
+1/7 Test #44: adult_leech ......................***Failed    0.67 sec
+CHARGE hp288=1 steering=1 committed_x=1 strong12=1 weak_no_ring=1 no_LOS_gate=1
+BURROW health_gate=1 Hit22=1 area_vs_direct=1 hidden30=1 tracking=1 Hit18_ring10=1 Sound31=1 once=1
+PARTITION distance=1.52597e-05 ticks=70,70 impacts=1,1
+SYSTEM render_partition=1 knockback=1 ring_capacity=1 contact25=1 death_completion=1
+CONFIG immutable_reload=1 invalid_profiles=4
+ordinary seeded Adult Leech must be reachable
+
+    Start 29: monster_behaviors
+2/7 Test #46: membrain_family ..................   Passed    2.27 sec
+    Start  2: mechanics_content
+3/7 Test  #2: mechanics_content ................   Passed    2.11 sec
+    Start 27: resident_enemies
+4/7 Test #29: monster_behaviors ................   Passed    3.98 sec
+    Start 45: dinga_family
+5/7 Test #27: resident_enemies .................***Failed    0.52 sec
+FAIL: generic combat cooldown starts on entry
+
+6/7 Test #45: dinga_family .....................   Passed    1.20 sec
+7/7 Test  #5: floor_progression ................   Passed  137.60 sec
+
+71% tests passed, 2 tests failed out of 7
+
+Total Test time (real) = 137.60 sec
+
+The following tests FAILED:
+	 27 - resident_enemies (Failed)
+	 44 - adult_leech (Failed)
+Errors while running CTest

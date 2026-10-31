@@ -1,0 +1,77 @@
+[
+  {
+    "source": "resources-dlc3/gfx/029.002_Eggy.anm2",
+    "archive": "resources/packed/repentance.a",
+    "path": "docs/reports/isaac-enemy-port/eggy/animations/029.002_Eggy.anm2",
+    "sha256": "ba705772c14eaddd623ec8dc1b5ad473a02ee0a0e153b0e27de2d262a6251194",
+    "checksum": "0x1734938",
+    "info": {
+      "CreatedBy": "trtv",
+      "CreatedOn": "08.26.2020 04:11:32",
+      "Fps": "30",
+      "Version": "4"
+    },
+    "events": [
+      {
+        "Id": "0",
+        "Name": "Jump"
+      },
+      {
+        "Id": "1",
+        "Name": "Land"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Hop",
+          "FrameNum": "26",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "17"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "11",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Die",
+          "FrameNum": "70",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "7"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "52"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "20",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  }
+]

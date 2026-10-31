@@ -1,0 +1,10 @@
+[  7%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 75%] Built target deathward_core
+[ 77%] Built target deathward_skinning
+[ 79%] Built target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_particles
+[ 82%] Built target deathward_mission_lighting
+[ 85%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[100%] Built target deathward

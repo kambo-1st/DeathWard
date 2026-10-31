@@ -1,0 +1,24 @@
+START corn
+PASS corn {"dashes":12,"launches":0,"chains":0,"creep":0,"childFrames":0,"shots":0}
+START brownie-corn
+PASS brownie-corn {"dashes":11,"launches":0,"chains":0,"creep":0,"childFrames":0,"shots":0}
+START big-corn
+PASS big-corn {"dashes":9,"launches":0,"chains":0,"creep":0,"childFrames":0,"shots":1}
+START dank-squirt
+PASS dank-squirt {"dashes":4,"launches":3,"chains":0,"creep":23,"childFrames":61,"shots":0}
+START drip
+PASS drip {"dashes":13,"launches":0,"chains":4,"creep":0,"childFrames":0,"shots":0}
+START splurt
+PASS splurt {"dashes":6,"launches":6,"chains":0,"creep":0,"childFrames":61,"shots":0}
+START resident-corn
+PASS resident-corn {"dashes":11,"launches":0,"chains":0,"creep":0,"childFrames":0,"shots":0}
+START resident-brownie-corn
+PASS resident-brownie-corn {"dashes":14,"launches":0,"chains":0,"creep":0,"childFrames":0,"shots":0}
+START resident-big-corn
+PASS resident-big-corn {"dashes":13,"launches":0,"chains":0,"creep":0,"childFrames":0,"shots":0}
+START resident-dank-squirt
+PASS resident-dank-squirt {"dashes":5,"launches":5,"chains":0,"creep":28,"childFrames":0,"shots":0}
+START resident-drip
+PASS resident-drip {"dashes":18,"launches":0,"chains":9,"creep":0,"childFrames":0,"shots":0}
+START resident-splurt
+PASS resident-splurt {"dashes":7,"launches":6,"chains":0,"creep":0,"childFrames":0,"shots":0}

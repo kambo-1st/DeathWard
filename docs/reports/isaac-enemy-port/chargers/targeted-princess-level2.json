@@ -1,0 +1,303 @@
+{
+  "platform": "WASM/Chromium",
+  "browser": "141.0.7390.37",
+  "checks": [
+    {
+      "id": "23.3.0",
+      "case": "princess-diagonal",
+      "samples": [
+        {
+          "frame": 13,
+          "probe": {
+            "type": 23,
+            "variant": 3,
+            "subtype": 0,
+            "alive": true,
+            "hp": 83.19999694824219,
+            "state": 2,
+            "graphState": 0,
+            "x": -81.8263168334961,
+            "z": -127.85381317138672,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 1,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -88,
+            "playerZ": -134,
+            "actors": [
+              {
+                "type": 23,
+                "variant": 3,
+                "subtype": 0,
+                "hp": 83.19999694824219,
+                "maxHp": 83.19999694824219,
+                "state": 2,
+                "x": -81.8263168334961,
+                "z": -127.85381317138672,
+                "entity": 18,
+                "summoner": 0,
+                "vx": -8.556059837341309,
+                "vz": -8.556059837341309,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": false,
+            "waterBlocked": false,
+            "groundBlocked": false,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": -0.7071067690849304,
+              "fz": -0.7071067690849304,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "artifacts/enemy-port/wasm-princess-diagonal-12.png"
+        }
+      ],
+      "scope": "Real variant controller/source stage route in Original WASM; partial fidelity evidence."
+    },
+    {
+      "id": "855.0.0",
+      "case": "level2-steering",
+      "samples": [
+        {
+          "frame": 11,
+          "probe": {
+            "type": 855,
+            "variant": 0,
+            "subtype": 0,
+            "alive": true,
+            "hp": 128,
+            "state": 2,
+            "graphState": 0,
+            "x": -80,
+            "z": -123.9100341796875,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 1,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 855,
+                "variant": 0,
+                "subtype": 0,
+                "hp": 128,
+                "maxHp": 128,
+                "state": 2,
+                "x": -80,
+                "z": -123.9100341796875,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 10.449828147888184,
+                "radius": 0.75,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": false,
+            "waterBlocked": false,
+            "groundBlocked": false,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": 1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "artifacts/enemy-port/wasm-level2-steering-10.png"
+        },
+        {
+          "frame": 41,
+          "probe": {
+            "type": 855,
+            "variant": 0,
+            "subtype": 0,
+            "alive": true,
+            "hp": 128,
+            "state": 2,
+            "graphState": 0,
+            "x": -78.818359375,
+            "z": -118.88530731201172,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 1,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -72,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 855,
+                "variant": 0,
+                "subtype": 0,
+                "hp": 128,
+                "maxHp": 128,
+                "state": 2,
+                "x": -78.818359375,
+                "z": -118.88530731201172,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 4.963988780975342,
+                "vz": 9.195555686950684,
+                "radius": 0.75,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": false,
+            "waterBlocked": false,
+            "groundBlocked": false,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0.47503194212913513,
+              "fz": 0.8799691200256348,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "artifacts/enemy-port/wasm-level2-steering-40.png"
+        }
+      ],
+      "scope": "Real variant controller/source stage route in Original WASM; partial fidelity evidence."
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,90 @@
+{
+  "status": "Dedicated ordinary runtime implemented in progress, with seven scoped Linux suites and six WASM cases passing; ten images inspected. No six-gate acceptance.",
+  "baseline": "Installed Repentance1.7.9b",
+  "previous_goal_turn_classification": "No progress: status-only user request. Revalidated active objective and took next safe implementation action.",
+  "scope": [
+    "217.0.0 Dip",
+    "220.0.0 Squirt",
+    "223.0.0 Dinga"
+  ],
+  "source_evidence": {
+    "dispatch": "source/manifest.json",
+    "frame_gate": "source/additional-manifest.json",
+    "animations": "animations/manifest.json",
+    "xml_rooms_wiki": "source-discovery.json"
+  },
+  "contracts": {
+    "217.0.0": {
+      "movement": "Initialization consumes one30Hz update; idle retains .8 momentum. Each idle decision has1/10 random dash draw; uniformly angled impulse5..10 is added before .8 retention. Moving state retains .95; returns idle when pre-retention speed<1. No homing in ordinary state.",
+      "targeting": "Ordinary dash direction independent of player. External momentum, including Dinga push, is retained.",
+      "attacks": "Contact1, no ordinary projectiles or offspring; local contact10 before shared1.25 multiplier.",
+      "vulnerability": "Ordinary grounded damageable actor; no dash invulnerability. Source champion0, mass6, radius9, grid points12.",
+      "phases": "State0 initializes state3; state3 idle, state4 Move. ANM2 Idle10/Move25 at30FPS.",
+      "offspring": "None. Required child of Dinga and Squirt; other parents remain for later review.",
+      "completion": "Ordinary death removes one threat. Source HP3+stageHP1, local scale3.2.",
+      "adaptations": "Actual canyon collision hull. Swept axis contacts replace source grid; local render body radius. Authored mound visual and cues. Shared stun pauses controller.",
+      "unknowns": "Full status/charm/control, Dirty Mind and item163 conversion, other parent routes, native RNG/visual trail/sound event ordering, source mass effects, broad balance/performance."
+    },
+    "220.0.0": {
+      "movement": "Initialize state3. Global .95 retention; idle adds .7 retention. Idle1/5 random draw additionally requires native IsFrame(5, InitSeed). State8 Attack01 samples player at Slide36, adds20/friction impulse. Animation ends40 into state4 sliding. First9 slide ticks add normalized .5 force. From tick10, speed<1 returns idle; speed<3 adds .8 friction. More than4 accumulated grid-collision updates add .85 friction.",
+      "targeting": "Samples current player at Slide36, then commits existing momentum. No ordinary range/LOS gate found. Separate fear/confusion/control branches remain open.",
+      "attacks": "Contact1, no ordinary projectile or damaging creep. Local launch speed60.",
+      "vulnerability": "Grounded damageable during telegraph and slide; no invulnerability transition. Source champion0,mass30,radius13.",
+      "phases": "Idle33, Attack01 40 with Slide event36, Slide6-loop at30FPS. Targeting marker helper6af8d0 is separately preserved by prior source inspection; not required to steer ordinary fixed slide.",
+      "offspring": "Exactly two217.0.0 at fixed horizontal +/-10 source units, zero initial velocity. Dead-byte branch gated by bc6==0; full meaning/callers ofbc6 open.",
+      "completion": "Both Dips and retained births gate room clear. Source HP15+stageHP6; local scale3.2.",
+      "adaptations": "IsFrame cadence uses actor source ticks and stable local entityID offset, not Isaac global frame/InitSeed. Continuous swept solid collision replaces grid. Required births queue at capacity; ordinary execution preserves them, debug clear suppresses.",
+      "unknowns": "Full source status/control and mass response, bc6 suppression routes, global timing/RNG identity, all alternate producers, persistence, visual/audio fidelity, full balance/performance."
+    },
+    "223.0.0": {
+      "movement": "Shared MemBrain ordinary random walker: .8v+.5 heading, destination40 units, arrival3, stuck1/10 while speed squared<.1. No propulsive jump or invulnerability.",
+      "targeting": "Ordinary1/30 hop draw requires population<8, no player range/LOS. At Shoot, population<6 and random modulo7!=0 selects two living Dips; otherwise ring.",
+      "attacks": "Mode8 eight cardinal/diagonal brown projectiles, source speed10/scale1.4. World speed30,height1.15,up[-.15,.15],gravity4.5,retention.9,radius.308,damage20. Both outcomes push every type217 actor outward by max(150-distance,0)*.1 source force, including new children.",
+      "vulnerability": "Grounded damageable throughout hop/recovery. Source HP62/stage0/contact2,mass3,radius17,champion0. World HP198.4/contact25 after shared multiplier.",
+      "phases": "Shared state4 wander/state8 Attack; ANM2 is45FPS, Wiggle30/Attack70/Shoot29. Local30Hz decisions advance1.5 animation frames; Shoot at20 decisions, finish47.",
+      "offspring": "Living pair217.0.0 at opposite random30-unit offsets, source zero spawn velocity followed by radial push. Death pair220.0.0 at opposite random10-unit offsets, zero velocity; children later split into four Dips.",
+      "completion": "All living/death offspring and retained births gate completion; emitted hostile projectiles survive parent death.",
+      "adaptations": "Shared MemBrain roomThreats+pending count replaces native cached population helper. Birth queues include initial push snapshot before placement correction; source spawn-update and actor order not identical. Whole ring waits at capacity without rerolling. Local authored brown mound body/cues; current source mass response not exact.",
+      "unknowns": "Full statuses/charm/control, champion/items, exact population exclusions, bc6 death suppression, source RNG/frame/grid and birth order, source gore/visual trail/sounds, alternate production/persistence and full balance/performance."
+    }
+  },
+  "placement": {
+    "217.0.0": {
+      "bands": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seed": 0,
+      "floor": 0,
+      "room": 5
+    },
+    "220.0.0": {
+      "bands": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "seed": 0,
+      "floor": 2,
+      "room": 7
+    },
+    "223.0.0": {
+      "bands": [
+        2,
+        3
+      ],
+      "seed": 4,
+      "floor": 5,
+      "room": 10
+    }
+  },
+  "source_notes": [
+    "Squirt acquisition helper684790 is a frame/status gate, not line of sight.",
+    "Dinga push source50a990..50aa6b applies to all type217 identities; future variants are not silently substituted for Dip.",
+    "Reference articles retain revision URLs and CC BY-SA4.0 attribution. Later Squirt article Repentance+ Hardy note is not part of these ordinary1.7.9b contracts."
+  ],
+  "progression_preserved": "4\u20138-floor standard expeditions, one-floor tutorial, player100HP/24damage, Fort Mercy/hubs/Mine and Original style unchanged."
+}

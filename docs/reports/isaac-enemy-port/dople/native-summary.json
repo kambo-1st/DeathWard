@@ -1,0 +1,43 @@
+{
+  "passed": 7,
+  "suites": [
+    "mechanics_content",
+    "monster_behaviors",
+    "knight_lifecycle",
+    "mirror_behavior",
+    "floor_progression",
+    "resident_enemies",
+    "monster_flight"
+  ],
+  "commands": [
+    "cmake --build build --target deathward deathward_check_mechanics deathward_mirror_tests deathward_mechanics_tests deathward_monster_tests deathward_knight_tests deathward_floor_progression_tests deathward_resident_enemies_tests deathward_flight_tests -j6",
+    "ctest --test-dir build -R '^(mechanics_content|monster_behaviors|knight_lifecycle|mirror_behavior)$' --output-on-failure",
+    "ctest --test-dir build -R '^(floor_progression|resident_enemies|monster_flight)$' --output-on-failure",
+    "./build/deathward_mirror_tests"
+  ],
+  "evidence": [
+    "docs/reports/isaac-enemy-port/dople/validation/suites.txt",
+    "docs/reports/isaac-enemy-port/dople/validation/integration.txt",
+    "docs/reports/isaac-enemy-port/dople/validation/native-detailed.txt"
+  ],
+  "scope": "Seven scoped Linux suites, not the full94suite suite or all six acceptance gates.",
+  "detail_log_note": "Direct mirror contracts repeated to preserve detailed evidence after CTest -N replaced its temporary detail log. Original four-suite pass summary retained.",
+  "placement": {
+    "floors": 90,
+    "rooms": 910,
+    "witnesses": [
+      {
+        "id": "53.0.0",
+        "seed": 14,
+        "floor": 6,
+        "room": 3
+      },
+      {
+        "id": "53.1.0",
+        "seed": 13,
+        "floor": 4,
+        "room": 6
+      }
+    ]
+  }
+}

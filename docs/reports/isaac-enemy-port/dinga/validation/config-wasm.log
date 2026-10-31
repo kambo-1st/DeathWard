@@ -1,0 +1,79 @@
+configure: cmake -S /home/kambo/workspace/DeathWard -B /home/kambo/workspace/DeathWard/build-web -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DCMAKE_TOOLCHAIN_FILE=/tmp/deathward-emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_CROSSCOMPILING_EMULATOR=/tmp/deathward-emsdk/node/24.19.0_64bit/bin/node
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_WEB
+--   GRAPHICS=GRAPHICS_API_OPENGL_ES3
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build-web
+Consolidate compiler generated dependencies of target raylib
+[  6%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[  7%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  8%] Linking CXX static library libdeathward_core.a
+[ 78%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 80%] Built target deathward_cloth
+[ 84%] Built target deathward_particles
+[ 84%] Built target deathward_skinning
+[ 87%] Built target deathward_mission_lighting
+Consolidate compiler generated dependencies of target deathward
+[ 88%] Linking CXX executable index.html
+[100%] Built target deathward
+Browser build ready. Run: python3 scripts/serve-web.py

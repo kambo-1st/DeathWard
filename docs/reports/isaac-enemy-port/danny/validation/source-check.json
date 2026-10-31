@@ -1,0 +1,6 @@
+{
+  "pass": true,
+  "command": "python3 scripts/isaac-reference/analyze-danny.py --check",
+  "pinned_windows": 5,
+  "animation_files": 2
+}

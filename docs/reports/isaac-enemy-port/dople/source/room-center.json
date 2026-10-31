@@ -1,0 +1,9 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "path": "docs/reports/isaac-enemy-port/dople/source/room_center.asm",
+  "start": "0x7ce9c0",
+  "end": "0x7cea86",
+  "raw_sha256": "df162b155d743abffb3e5e5c756bd327911c2aa1adfaffa9f4e060c28460ef03",
+  "sha256": "5ae75ee01bd68d37632f8f3c435cceb78a70bffa1326456b71833e6da35dfcec",
+  "interpretation": "Default bounds midpoint; room-shape9..12 use selected grid anchors. Canyon rooms use their own center."
+}

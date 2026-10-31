@@ -1,0 +1,17 @@
+{
+  "index.data": {
+    "bytes": 213448966,
+    "sha256": "6de6b1a9b74b259d29036a68fd144c063e67c8ea7a8ccfe41261244aa16ae62d",
+    "gzip_matches": true
+  },
+  "index.js": {
+    "bytes": 246754,
+    "sha256": "b82322d8380c3a0f7870e4d1a73466f0350eb0442339e3a42d4575b6ffe93443",
+    "gzip_matches": true
+  },
+  "index.wasm": {
+    "bytes": 5512063,
+    "sha256": "308c133a7911c28604ee3d77b9be78e6c1df52baee3e4b958e43a0873243c32b",
+    "gzip_matches": true
+  }
+}

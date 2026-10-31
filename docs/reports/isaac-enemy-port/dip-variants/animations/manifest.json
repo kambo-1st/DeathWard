@@ -1,0 +1,315 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    },
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/216.003_Big Corn.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/dip-variants/animations/216.003_Big Corn.anm2",
+      "sha256": "a15c5b3f54e6a3cfeeaa042436aa36aafb4cf101957520c25786e833acf09b8a",
+      "checksum": "0x678048a1",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "",
+        "Fps": "30",
+        "Version": "3"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "10",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "25",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Flush",
+            "FrameNum": "27",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/870.000_floater.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/dip-variants/animations/870.000_floater.anm2",
+      "sha256": "b43f039f56aa145548613f4333e528f2e404a693c5c38a476a7d46029801537c",
+      "checksum": "0x26a838f2",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "",
+        "Fps": "30",
+        "Version": "3"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "10",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "22",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Flush",
+            "FrameNum": "27",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/871.000_water buoy.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/dip-variants/animations/871.000_water buoy.anm2",
+      "sha256": "427aeca64af1d1291116b06ae7f94974841f0425e74ce0a48c4faeac79d6b83a",
+      "checksum": "0x6406ce9b",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "",
+        "Fps": "30",
+        "Version": "109"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Slide"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "33",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack01",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "36"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02",
+            "FrameNum": "12",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "8"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Slide",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Flush",
+            "FrameNum": "28",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/216.001_Corn.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/dip-variants/animations/216.001_Corn.anm2",
+      "sha256": "ae3f9f9df30aa98df46e907ba490d04f1e30917cc35b7b158297880d26c095a4",
+      "checksum": "0xcf0d242a",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "10/1/2015 4:42:11 PM",
+        "Version": "2",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "10",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "25",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Flush",
+            "FrameNum": "27",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/216.002_BrownieCorn.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/dip-variants/animations/216.002_BrownieCorn.anm2",
+      "sha256": "0d5ee5826be7ced689c69b2d4994704b92e77f5d51ba16a499c2909f2fb6639d",
+      "checksum": "0x89940238",
+      "info": {
+        "CreatedBy": "Unknown",
+        "CreatedOn": "10/1/2015 4:43:25 PM",
+        "Version": "5",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "10",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "25",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Flush",
+            "FrameNum": "27",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/220.001_Dank Squirt.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/dip-variants/animations/220.001_Dank Squirt.anm2",
+      "sha256": "c302faa7ee18dc813ea8c961ab91abc149f5f8a512254b5bdaa246c821ecf878",
+      "checksum": "0x31beffed",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "7/11/2021 12:28:13 AM",
+        "Version": "110",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Slide",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "33",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack01",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "36"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Slide",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

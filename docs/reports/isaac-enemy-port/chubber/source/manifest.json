@@ -1,0 +1,94 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Chubber supplementary evidence; prior Vis checkpoints remain untouched.",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/returning_controller.asm",
+      "start": "0x519980",
+      "end": "0x519da4",
+      "raw_sha256": "9409455bdbb7dd903335c132de55c483735e035d20b5456d4eafa485c36182ed",
+      "sha256": "445b0df458608940368994945eca288041ce26f5b173f95fcd07d761bef47ced"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/parent_controller.asm",
+      "start": "0x519dd0",
+      "end": "0x51af94",
+      "raw_sha256": "37d4b95927af7cb70f47df2db1a7eb27ffbc10eb47d709ee98154431d8adbb26",
+      "sha256": "939231ffa3c2f49a93ecd4b2a9ad0b0bf848e92cfd4830abe5e3d680ad5f246c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/npc_collision.asm",
+      "start": "0x6a3970",
+      "end": "0x6a648b",
+      "raw_sha256": "67ab24d06f45d81db4777e966cf79e21da0a56354c466604e673781fa934fbd9",
+      "sha256": "422ee691e5a72d26aa1809a462b9b57e27f532b6fd6bf17d03f1b4f11c80dba7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/tear_collision.asm",
+      "start": "0x64dcd0",
+      "end": "0x6500d0",
+      "raw_sha256": "01eea5e0ae3d3f175f50fcbadd614f7731195188191eadec6bd12e9b766e1cef",
+      "sha256": "a220713b754300174d7e19a832e86190396d807f2db9814bc556b2dfd393c449"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/piercing_obstruction_check.asm",
+      "start": "0x6846e0",
+      "end": "0x684733",
+      "raw_sha256": "91d9a5c6f8bcd7fca0e5452d2ae71bef2ae99251b4eadc33a0a24aa0896cd9e6",
+      "sha256": "887a9bd69825c34a1d0d0b8b68ec5157e9cf27a4149f16371aba3eb581cb05fd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/enemy_check.asm",
+      "start": "0x68cf40",
+      "end": "0x68cfa3",
+      "raw_sha256": "cb479ac31e7aae6f7d00526c0c1db1f478297568dd4a1c0ca8ace7c34a96b7ac",
+      "sha256": "44755df7864feb92a2e84d9d2c4a93674961838a7b15fa8ce3e23d748ab93a08"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/base_damage_window.asm",
+      "start": "0x684bb0",
+      "end": "0x685bff",
+      "raw_sha256": "9a333bf36a738cd3eafb2455e08e8119907f0fb57631b2fd32e85794ff2d18a5",
+      "sha256": "4438175e76749697e4108cd6c104dd67d663e555f3954bf37f548613c020774e"
+    }
+  ],
+  "flags": {
+    "piercing": {
+      "address": "0xbc4be0",
+      "value": 2
+    },
+    "spectral": {
+      "address": "0xbc4cc0",
+      "value": 1
+    }
+  },
+  "vtables": {
+    "npc": {
+      "address": "0xb49398",
+      "entries": {
+        "0x8": "0x69b0e0",
+        "0xc": "0x69b140",
+        "0x20": "0x6ac370",
+        "0x24": "0x695560",
+        "0x28": "0x68ff80",
+        "0x58": "0x6a3970"
+      }
+    },
+    "tear": {
+      "address": "0xb46a88",
+      "entries": {
+        "0x8": "0x686060",
+        "0xc": "0x642990",
+        "0x20": "0x684bb0",
+        "0x24": "0x6848b0",
+        "0x28": "0x6848f0",
+        "0x58": "0x64dcd0"
+      }
+    }
+  },
+  "flag_enum_source": {
+    "path": "reference/isaac-repentance-1.7.9b/loose/resources/scripts/enums.lua",
+    "sha256": "dce1892f51e4e645d66ac8ffb31d217e8c36a32457c1005dd128978141103dc5"
+  }
+}

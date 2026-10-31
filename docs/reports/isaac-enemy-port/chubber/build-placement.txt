@@ -1,0 +1,21 @@
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_chubber_tests
+[100%] Building CXX object CMakeFiles/deathward_chubber_tests.dir/tests/chubber_tests.cpp.o
+[100%] Linking CXX executable deathward_chubber_tests
+[100%] Built target deathward_chubber_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests
+[ 16%] Built target glfw
+[ 19%] Built target raylib
+[ 77%] Built target deathward_core
+[ 83%] Built target deathward_skinning
+[ 83%] Built target deathward_cloth
+[ 86%] Built target deathward_particles
+[ 88%] Built target deathward_mission_lighting
+[ 88%] Built target deathward_runtime_assets
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 88%] Linking CXX executable deathward
+[100%] Built target deathward

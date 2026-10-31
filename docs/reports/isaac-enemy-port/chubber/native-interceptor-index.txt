@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  6: item_builds
+1/4 Test  #6: item_builds ......................   Passed    7.37 sec
+    Start 29: monster_behaviors
+2/4 Test #29: monster_behaviors ................   Passed    3.68 sec
+    Start 33: source_projectile_motion
+3/4 Test #33: source_projectile_motion .........   Passed    0.20 sec
+    Start 39: chubber_family
+4/4 Test #39: chubber_family ...................   Passed   10.46 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =  21.72 sec

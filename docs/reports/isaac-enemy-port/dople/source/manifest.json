@@ -1,0 +1,78 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 53,
+      "index": 35,
+      "case": "0x699b90",
+      "controller": "0x5135e0"
+    }
+  ],
+  "constants": {
+    "center_multiplier": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "movement_inheritance": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "shot_speed": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "eye_offset_min": {
+      "address": "0xb6a3b0",
+      "value": 0.30000001192092896
+    },
+    "eye_offset_extra": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "side_forward": {
+      "address": "0xb6a5ec",
+      "value": 0.9610000252723694
+    },
+    "side_cross": {
+      "address": "0xb6a39c",
+      "value": 0.2759999930858612
+    },
+    "side_multiplier": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "mode2_velocity": {
+      "address": "0xb6a670",
+      "value": 1.2000000476837158
+    },
+    "mode2_inheritance": {
+      "address": "0xb6a434",
+      "value": 0.4000000059604645
+    }
+  },
+  "strings": {},
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/source/dople_controller.asm",
+      "start": "0x5135e0",
+      "end": "0x51444a",
+      "raw_sha256": "18a49138f5776a6a377f8a14372a378a89106e1efcd262775f463f971421de29",
+      "sha256": "ba3de1795e9d26b58a7bcd1ee03b7ed45ba244374eeb26d5f6e24ee4827b185d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/source/unique_player_target.asm",
+      "start": "0x695680",
+      "end": "0x695a26",
+      "raw_sha256": "3e137d46fce59a1bf80cc103f3f36d2bc15a4820c92b5a4b78f0d20480b6753b",
+      "sha256": "fff3c20b544538035785b1eceb04235d916bde3fbc255c1511197a43be53e0b6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/dople/source/fire_projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a33ec",
+      "raw_sha256": "450521a19558deb4c799a9999bef9f2cdd43c1e6080cc03d13fe72cd4fcbaec9",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    }
+  ]
+}

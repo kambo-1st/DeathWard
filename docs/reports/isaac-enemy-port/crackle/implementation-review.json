@@ -1,0 +1,55 @@
+{
+  "scope": "Regular Crackle physical lob, discrete fire jets and ordinary placement",
+  "mechanics_fingerprint": "79cef7b6589ae5d1",
+  "source_review": "docs/reports/isaac-enemy-port/crackle/source-review.json",
+  "changes": [
+    "Validated external lob_fire_wave profile layers discrete fire jets onto shared physical lobs without explosive damage.",
+    "Persistent per-burst source context, cardinal stepping, two damage pulses, immunity and queued-pulse retry; continuous fire mode remains separately supported.",
+    "Generic fire transformation now resets the optional lob controller, preventing stale state when externally configured transformations change families.",
+    "Crackle ordinary dry-quarry specialist placement, orange presentation, native behavior coverage and actual native/browser resident captures."
+  ],
+  "adaptations": [
+    "Common source lob conversion is retained: native planar units x.1, height x.05, damped30Hz endpoints with smooth60Hz integration. Local movement speed3.6 receives the existing1.1multiplier.",
+    "Crackle uses32source frames for its attack, Shoot5, current target and stochastic1/60acquisition at30Hz; shared3D room-entry grace remains. FIRE_WAVE replaces explosive damage entirely.",
+    "Source generator30-unit steps map to3world units every2source frames. Four independent cardinal rays stop at solid cover or room edges and cross pits. Jet scales .94 through .16 are visual only; damage radius remains2world units.",
+    "Source jet damage10 maps to32NPC HP and10player damage before the existing1.25hostile multiplier. Pulses occur at jet ages2/4, visual lifetime20frames. Player invulnerability and local1second NPC fire contact cooldown arbitrate repeats.",
+    "Source producer/faction identity is snapshotted at projectile creation and survives death. Full queues retain impacts or whole fire pulses; retry admission is a local bounded-capacity policy.",
+    "Original procedural walker geometry is retained with an orange family palette. Individual bright low-poly jets and radius markers turn subdued after their damage window; imported Isaac sprite art is not used.",
+    "Sparse ordinary crossfire specialist only in band1 standard Broken Quarry, a dry Ashpit analogue: weight1, cost4, cap1. No opening/tutorial, later-band or mounted Hornfel approval."
+  ],
+  "native": {
+    "covered_suites": 63,
+    "passed": 63,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/crackle/native.xml",
+    "behavior": "docs/reports/isaac-enemy-port/crackle/behavior-final.txt",
+    "scope": "32-frame cast/Shoot5/current aim; discrete cardinal steps/lifetime/pulses, source immunity after producer removal, pit and thin-cover traversal, retained burst/event capacity, config rejection and actual seeded stage reachability."
+  },
+  "browser": {
+    "cases": 14,
+    "crackle": "docs/reports/isaac-enemy-port/crackle/web-initial/results.json",
+    "shared_lobs": "docs/reports/isaac-enemy-port/crackle/lob-web/results.json",
+    "mortality": "docs/reports/isaac-enemy-port/crackle/mortality-web/results.json",
+    "errors": [],
+    "scope": "Final WASM build:3Crackle cases,4Gurgle/Splasher attack/resident regressions,7mortality regressions. The owner-death case forces only acquisition chance; one mortality morph case forces probability. Both overrides are disposable test-only content. Natural residents retain production data.",
+    "note": "The directory named web-initial passed on its first run and is the final-build evidence; no replacement result was needed. Browser screenshots advance frames, so their sampled frame is not an exact image timestamp."
+  },
+  "visual": {
+    "inspected": [
+      "docs/reports/isaac-enemy-port/crackle/linux-crackle.png",
+      "docs/reports/isaac-enemy-port/crackle/linux-crackle-jets.png",
+      "docs/reports/isaac-enemy-port/crackle/linux-natural-crackle.png",
+      "docs/reports/isaac-enemy-port/crackle/web-initial/crackle-physical-fire-jets.png",
+      "docs/reports/isaac-enemy-port/crackle/web-initial/natural-crackle.png"
+    ],
+    "result": "Original style orange Crackle and separate fire jets are visible in the actual mixed generated room in native and WASM captures. Initial isolated native captures show the actor but no visible jets; they are retained and do not count as jet-rendering evidence. Broad readability is not certified."
+  },
+  "remaining": [
+    "Native generator age0 participation in its spawn frame is unverified. The local next-tick scheduler emits at ages2..28, fourteen jets per unobstructed ray; do not claim exact spawn-frame parity.",
+    "Native radial damage passes TakeDamage countdown30. Exact NPC countdown arbitration is unverified; local fireContactCooldown1second is an explicit adaptation.",
+    "Shared Gurgle pathfinder force/friction, fear/shrink, charm/familiar/item interactions and damage-batch ordering remain unfinished. Local navigation and retained speed tuning are not source-exact movement.",
+    "Native grid collision and radial queries are adapted to swept3D solids at y.85, room bounds, body radii and line-of-sight. Uneven terrain, low cover and broader layout readability need further acceptance.",
+    "Varied-build/human balance and controlled rendered performance remain unaccepted. The source finite-life and queue-pressure tests are not performance certification.",
+    "All653 records and six acceptance gates remain required. Zero records are certified complete. Regular enemies and required offspring remain prioritized over further boss/Hornfel implementation."
+  ]
+}

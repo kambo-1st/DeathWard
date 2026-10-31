@@ -1,0 +1,35 @@
+{
+  "pass": true,
+  "scope": "Seven unique scoped Linux suites, across initial and corrected regression runs; not all99 suites or full acceptance.",
+  "suites": [
+    "dinga_family",
+    "membrain_family",
+    "adult_leech",
+    "mechanics_content",
+    "monster_behaviors",
+    "floor_progression",
+    "resident_enemies"
+  ],
+  "evidence": [
+    "validation/native-initial.txt",
+    "validation/native-initial-detailed.txt",
+    "validation/native-recheck.txt",
+    "validation/native-recheck-detailed.txt",
+    "validation/native-final.txt"
+  ],
+  "corrections": [
+    "MemBrain normal and Dead Meat seeded witnesses changed after pool expansion; all behavior assertions passed before fixture correction.",
+    "Adult Leech seeded witness changed to3/floor3/room7; behavior assertions unchanged.",
+    "Resident entry test now verifies dedicated Dip/Squirt and MemBrain/Dinga source-clock initialization instead of generic cooldown."
+  ],
+  "dinga_checks": [
+    "random Dip dash, momentum retention and HP stage growth",
+    "Squirt Slide36 current-target impulse, committed coasting and 30/120Hz actual wall contact",
+    "Dinga45FPS Shoot29/Attack70 timing, both seeded attacks, population6/8 gates and existing/new Dip push",
+    "retained atomic ring at capacity",
+    "two Squirts then four Dips gate completion even at one-enemy capacity; gameplay execution vs debug clear",
+    "external immutable reload and seven invalid configuration rejections",
+    "three actual seeded residents, dormant and active phases"
+  ],
+  "final_config_check": "The final parser-only change rejects unsupported Squirt impulse ranges and Dip cadence values. Dinga suite and mechanics load rerun successfully; accepted runtime values unchanged."
+}

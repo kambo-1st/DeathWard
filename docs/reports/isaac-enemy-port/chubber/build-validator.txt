@@ -1,0 +1,7 @@
+[ 21%] Built target glfw
+[ 25%] Built target raylib
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+[100%] Building CXX object CMakeFiles/deathward_check_mechanics.dir/tools/check_mechanics.cpp.o
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

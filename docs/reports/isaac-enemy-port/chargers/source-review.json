@@ -1,0 +1,103 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "Partial Charger-family implementation; six-gate acceptance remains open.",
+  "ids": [
+    "23.0.0",
+    "23.1.0",
+    "23.2.0",
+    "23.3.0",
+    "855.0.0"
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; behavior summaries derived from the pinned article are CC BY-SA 4.0. Local tuning, geometry and test interpretation are separately identified.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "sources": [
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270010",
+      "supports": "Variant movement, Drowned diagonal death volley and 50% Flooded Caves replacement, Dank speed/reflection/slowing trail/recovery, Princess diagonal acquisition and vulnerable pink tail, Level 2 slower cardinal acquisition with curved pursuit. Repentance+ Hagalaz detail explicitly excluded."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Exact IDs; base HP 20/22/26/26/40, contact1/1/1/1/2 for normal/Drowned/Dank/Princess/Level 2."
+    },
+    {
+      "path": "docs/research/isaac-enemy-port-plan.json",
+      "supports": "Positive room evidence: Drowned Flooded Caves/Necropolis -> bands 1/2; Dank Dank Depths -> band 2; Princess Ashpit -> band 1; Level 2 Corpse -> band 3. Separate Greed/Ascent routes are not ordinary standard pools."
+    },
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268819",
+      "supports": "Repentance My Shadow item producer, allied Charger damage/lifetime/cap and edition-specific interactions; source review only."
+    }
+  ],
+  "implemented": [
+    "External shared charge extension rows select cardinal/diagonal acquisition, wall stop/reflection, bounded continuous steering, stationary recovery, contact damage, tar trail, compact tail hit volume and death volleys.",
+    "Drowned keeps normal cardinal motion and 10% more HP; real four fixed-diagonal death shots. Drowned Hive half-health summons now 35.2, derived from 70.4 parent definition.",
+    "Dank moves faster, reflects swept wall-normal components without tunnelling, leaves nondamaging slowing tar only while moving during a dash, and stops during recovery.",
+    "Princess uses diagonal acquisition/locked dash; compact armored head/midsection and pink tail share collision/render geometry. Actual nearest projectile shape selects armor/tail; piercing alone does not bypass head. Explosions/fire must reach the tail; explicit debug execution still works.",
+    "Level 2 has its own 128 HP definition, double source-contact conversion, slower dash and bounded in-dash steering toward the moving player.",
+    "Drowned 50% room replacement runs only in seeded Flooded Quarry. Local sediment decals, expedition name and combat-room flooded state identify the context; topology/heights/roads/rivers/story placement are not rerolled.",
+    "All four direct pool entries are sparse charge-lane specialists with threat 4/cap 1. Drowned replacements retain normal Charger source slots and their source cap, with one extra reserved threat point. Native generated-floor regression checks their real presence and source-band constraints.",
+    "Shared charge dispatch now advances fire-contact cooldown, including while stunned; repeated physical flame exposure no longer becomes permanently immune after the first tick. Native tests distinguish armored-front fire from repeated tail exposure."
+  ],
+  "deathward_adaptations": {
+    "hp": "Base HP multiplied by 3.2: normal 64, Drowned 70.4, Dank 83.2, Princess 83.2, Level 2 128. Starting player remains 100 HP/24 damage.",
+    "movement": "Normal/Drowned/Princess dash 11; Dank 17; Level 2 9.5, each before 1.1 movement multiplier. Duration 1.5/1.7/1.8, acquisition width .8, local wander .7..1.8. Native exact timers, acceleration and dash-end criteria are unmeasured.",
+    "steering": "Level 2 turn rate 1.1 rad/sec. Dank uses actual 3D swept collision normals with at most 4 impacts/tick; navigation/water edges have an explicit fallback reflection.",
+    "recovery": "Dank pauses .65 s within .8 s reacquisition delay. Others retain .7 s reacquisition delay with wandering.",
+    "trail": "Tar deposits every .12 s with radius .7/lifetime 2.5; slows via existing player slow state and never deals damage. Existing hazard cap applies.",
+    "damage": "Normal family contact 10, Level 2 contact 20 before existing hostile 1.25 multiplier. Drowned death shots 10/speed 7.",
+    "armor": "Tail center .65 and radius .35 of navigation radius; armored head/midsection also fit that hull. Bullet weak-point and blast/fire overlap policy is a 3D adaptation, not measured native hitbox/item-exception parity.",
+    "stage_context": "Four broad bands remain the approved mapping. Flooded Quarry is a local Flooded Caves analogue selected 2:1 Standard:Flooded in band 1; this frequency is not an Isaac probability. Sparse flat sediment art, not full shallow-water rendering. Only combat rooms without story sites receive flooded environment rules.",
+    "variants": "My Shadow 23.0.1 and Elleech 855.1.0 remain separate unfinished item/special-route behaviors. Neither inherits a complete-port claim from these controllers.",
+    "density": "Direct variant pool entries have cost 4 and cap 1. Conditional Drowned replacements are applied once per selected normal Charger source slot (source cap 2), with one additional threat point reserved per slot; stage specialist/actor/budget limits still apply. The direct-entry cap is not a global Drowned identity cap."
+  },
+  "unresolved": [
+    "Exact native acceleration, acquisition width, steering speed, recovery and dash termination values need measurement or final accepted adaptation review.",
+    "Generic champions, full item/status/team exceptions and mode-specific/Ascent routing are not completed by these normal variants.",
+    "Princess item-specific armor exceptions and exact source explosion/fire behavior remain unverified; current spatial-tail policy is documented local behavior.",
+    "Flooded Quarry context is functional and visible but does not reproduce full source water-floor art or native environment interactions.",
+    "All-camera mixed-threat readability, human/mixed-build floor balance and controlled Linux/WASM performance acceptance remain open."
+  ],
+  "dependencies_reviewed": {
+    "23.0.1": {
+      "name": "My Shadow",
+      "status": "Source contract reviewed; legacy implementation remains unverified and unported.",
+      "source": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268819",
+      "source_contract": {
+        "producer": "Repentance collectible 433 creates a delayed movement-following shadow familiar; enemy contact with that familiar spawns a friendly black Charger.",
+        "numbers": {
+          "hp": 20,
+          "enemy_contact_damage": 8.7,
+          "live_limit": 16
+        },
+        "movement": "Untargeted wandering followed by cardinal charges toward enemies.",
+        "lifetime": "Only the current room; takes enemy contact and damaging hazards.",
+        "explosions": "Ordinary player explosions are exempt in the baseline; named ghost explosion sources can kill them.",
+        "interactions": "Athame death rings, Jumper Cables death counter, Ace conversion, Broken Modem/Stop Watch slowdown, Eraser normal-Charger precursor and Blood Puppy faction exception require explicit support. BFFS and Box of Friends have no effect."
+      },
+      "excluded_edition_rules": [
+        "Before Repentance: damage-triggered fear/spawn, 5 damage and 5-Charger cap.",
+        "Afterbirth only: Flooded Caves Drowned substitution and Punching Bag targeting.",
+        "Repentance+: character-size-dependent shadow hitbox."
+      ],
+      "runtime_gap": "Legacy friendly flag prevents all damage, movement is not the reviewed shared charge controller, and collectible 433/familiar contact producer is missing. Do not enable in hostile floor pools or count as a completed port.",
+      "unknowns": "Native follow delay, shadow hitbox dimensions, contact cooldown, damage conversion and complete status/item exceptions remain unresolved."
+    },
+    "855.1.0": {
+      "name": "Elleech",
+      "status": "Reviewed disposition corrected to dedicated Ascent encounter; implementation remains missing.",
+      "sources": [
+        "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270010",
+        "docs/research/isaac-enemy-port-plan.json"
+      ],
+      "placement": "Twelve positive-weight templates in rooms/36.backwards.stb; no ordinary stage-band evidence. Ascent wording must not be read as ordinary Downpour availability.",
+      "behavior_gap": "Cardinal activation followed by indefinite pursuit, unlike Level 2 Charger. Native obstacle handling and discrepancy between article pursuit wording and infobox closest-cardinal wording require measurement or an explicit documented adaptation.",
+      "source_numbers": {
+        "baseHP": 60,
+        "stageHP": 0,
+        "contactDamage": 2,
+        "shieldStrength": 5
+      },
+      "unknowns": "Native shieldStrength damage-resistance semantics and pursuit/obstacle rules need explicit verification; source field 5 is not converted to a guessed damage multiplier."
+    }
+  }
+}

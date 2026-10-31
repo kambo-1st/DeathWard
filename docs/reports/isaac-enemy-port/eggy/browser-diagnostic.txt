@@ -1,0 +1,9 @@
+START resident browser 141.0.7390.37
+AssertionError [ERR_ASSERTION]: source hopping and landing patch observed
+    at /home/kambo/workspace/DeathWard/web/eggy-test.cjs:51:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}
