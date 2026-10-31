@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/spiders/extract-metadata.py", line 13, in <module>
+    header=f.read(14);assert header[:8]==b'ARCH000\x02';index,count=struct.unpack_from('<IH',header,8);f.seek(index)
+AssertionError

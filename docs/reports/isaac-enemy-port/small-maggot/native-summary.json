@@ -1,0 +1,106 @@
+{
+  "verified_utc": "2026-10-28T12:34:29.023849+00:00",
+  "result": "partial_pass",
+  "mechanics_fingerprint": "96d4ddaff380d3af",
+  "definitions": 207,
+  "session": 43663,
+  "exit": 0,
+  "suites": [
+    "mechanics_content",
+    "monster_behaviors",
+    "small_maggot_family"
+  ],
+  "tests": {
+    "path": "docs/reports/isaac-enemy-port/small-maggot/validation/native-tests.log",
+    "bytes": 518,
+    "sha256": "817fbe0ce19fcf65aae837e5aa957eea57304c0a20497de9fa7ef5de3964dd66"
+  },
+  "detail": {
+    "path": "docs/reports/isaac-enemy-port/small-maggot/validation/native-test-detail.log",
+    "bytes": 3791,
+    "sha256": "2503717b75b4e28e5e400335f02917d17e2a8ed2aac2d982fa08d74fcac43824"
+  },
+  "binaries": [
+    {
+      "path": "build/deathward_small_maggot_tests",
+      "bytes": 2686616,
+      "sha256": "5ac39f1804c8b2530d4b6efb8ac04655607e26baf2848f1de114078efc1e5b24"
+    },
+    {
+      "path": "build/deathward_monster_tests",
+      "bytes": 2673672,
+      "sha256": "9d303f82b771df1b19dc851e95c9e7d1ee8940e99ce3fccad4657bf43616f48b"
+    },
+    {
+      "path": "build/deathward_mechanics_tests",
+      "bytes": 2711416,
+      "sha256": "82585f38ed8b28c6539a9080d9d275bbf29c00d25f362f78d7d055af60068738"
+    },
+    {
+      "path": "build/deathward",
+      "bytes": 6849216,
+      "sha256": "efa8a698696f40b8d9fdac749b91a754fc75371f7f147c1ae24749af7ce8e88a"
+    }
+  ],
+  "runtime": [
+    {
+      "path": "src/combat/SmallMaggots.cpp",
+      "bytes": 4940,
+      "sha256": "1000bc6a878172a96c7d174f94d8fb1921bdde3f02f51d9849766ae1b8342e18"
+    },
+    {
+      "path": "assets/mechanics/small_maggots.mechanics",
+      "bytes": 753,
+      "sha256": "3efddd0ca786d9d240f4b45e7108786f75e12a8e128d8454465f9963b73ac3fb"
+    },
+    {
+      "path": "src/content/Mechanics.hpp",
+      "bytes": 52223,
+      "sha256": "fc06568bb8e91a9cefd37519472737a7146d7564dc24c5ace3250b7c8013d512"
+    },
+    {
+      "path": "src/content/Mechanics.cpp",
+      "bytes": 260500,
+      "sha256": "d4848cfcd75276844df1768d6f0fffaa8e1af4878e12e57b25f8c04c7dc322ae"
+    },
+    {
+      "path": "src/content/EncounterVariants.cpp",
+      "bytes": 15196,
+      "sha256": "f6922a9b28194d6670e1ccd943eae0b3295e106aec99b57759e7c56a44631d6c"
+    },
+    {
+      "path": "src/combat/Simulation.hpp",
+      "bytes": 52537,
+      "sha256": "6393beaf3ccbe249e8e9441fb1e5b76eafea19051d659c2d5d5bf94b74f8a6fc"
+    },
+    {
+      "path": "src/combat/Monsters.cpp",
+      "bytes": 51633,
+      "sha256": "efe22e770defd0c653b1168af029f9ba006c6b9750639e3292c16f09880abec4"
+    },
+    {
+      "path": "src/render/MonsterVisuals.hpp",
+      "bytes": 68400,
+      "sha256": "9a79555946e7a60d374a6784aab5174e0e47279d678ba58b906d5c8e7ca4a15c"
+    }
+  ],
+  "source_checks": "scripts/isaac-reference/analyze-small-maggot.py and --check both passed, pinning four helpers, ten constants and animation jump table/strings.",
+  "natural": {
+    "seed": 0,
+    "floor": 5,
+    "room": 1,
+    "log": {
+      "path": "docs/reports/isaac-enemy-port/small-maggot/validation/natural.log",
+      "bytes": 43,
+      "sha256": "2290090857226d27d1c0ce573b3c99b6b8ef2de7261e7ded8f1ec1539635d399"
+    }
+  },
+  "floor_regression": {
+    "path": "docs/reports/isaac-enemy-port/small-maggot/validation/floor-result.json",
+    "exit": 0,
+    "floors": 753,
+    "scope": "Current pool change; all four canyon bands, complete boss and room grammar checks."
+  },
+  "wasm": "browser-summary.json: four scenario types pass on same current bundle; earlier failed aggregate runs and diagnostic preserved.",
+  "scope": "Startup ranges across96seeds, analytic30tick acceleration, alert/cover/spread rules, collision retarget,30/120Hzpartition, contact/fire/stun/reentry, parent/child completion and12invalidconfiguration cases; general monster and content suites. Not full roster acceptance."
+}

@@ -1,0 +1,25 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "helpers": [
+    {
+      "start": "0x9628d0",
+      "end_exclusive": "0x962933",
+      "raw_sha256": "ce3e0cdfd32218c2f1b25ae76d90ffeca53cbd791deaf26ad7907a50f9f4456a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/orbit-resize.asm",
+      "sha256": "23f0b4c30110bb89fe0ece571bed156c5f53b4e86441e8693315520aefdca476"
+    },
+    {
+      "start": "0x962560",
+      "end_exclusive": "0x9625d5",
+      "raw_sha256": "28a94e7d714dbc5a68e9f437ede7357ebf2c95e0a581efdf4396e463836b6ffc",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/orbit-normalize.asm",
+      "sha256": "8208b7c8ec753cf41808217e14f0cc9b5cdb919ee54061be47e00dcfd1b66534"
+    }
+  ],
+  "finding": "Orbit resize and normalization preserve a vector below native epsilon, including zero; no invented fallback tangent. Brood target retention expires before reacquisition, and its owner cap is checked after a successful chance resets the spawn counter.",
+  "epsilon": {
+    "address": "0xb6a18c",
+    "value": 0.0
+  }
+}

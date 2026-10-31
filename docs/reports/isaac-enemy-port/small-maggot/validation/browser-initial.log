@@ -1,0 +1,16 @@
+START isolated
+PASS isolated
+START cover
+PASS cover
+START natural
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 1
+
+    at /home/kambo/workspace/DeathWard/web/small-maggot-test.cjs:39:51 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual'
+}

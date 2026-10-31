@@ -1,0 +1,9 @@
+{
+  "pass_": true,
+  "decompressed_sha256": {
+    "index.wasm": "107309554ac1f981dc3ab252319122c3fb2b5300cff78aa3f1ce12b0f6af9f57",
+    "index.js": "c76729ef8435a8f87514607065048011de6c7f58a3f38192ad7f3def5c636b0f",
+    "index.data": "864cacbe1f0afeb15842e6f4472fc76ff9e1ac23c1b484ee46a9d78ce4704aeb"
+  },
+  "note": "The development server serves these gzip files; each decompresses byte-for-byte to the pinned final raw artifact."
+}

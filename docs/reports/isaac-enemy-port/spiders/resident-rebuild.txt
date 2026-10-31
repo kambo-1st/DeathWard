@@ -1,0 +1,5 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_resident_enemies_tests
+[100%] Building CXX object CMakeFiles/deathward_resident_enemies_tests.dir/tests/resident_enemies_tests.cpp.o
+[100%] Linking CXX executable deathward_resident_enemies_tests
+[100%] Built target deathward_resident_enemies_tests

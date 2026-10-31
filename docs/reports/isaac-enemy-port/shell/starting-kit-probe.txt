@@ -1,0 +1,3 @@
+SHELL_STARTING_KIT_PROBE seed=7 floor=2 seconds=22.5667 player_hp=100 dead=0 boss_killed=1 room_clear=1 remaining_threats=0 remaining_parts=0 remaining_hp=0 remaining_armor=0 explosions=11 inventory=1 god=0 teleports=0 max_hp=100 shot_damage=24 items=0
+SHELL_STARTING_KIT_PROBE seed=23 floor=2 seconds=19.5667 player_hp=37.5 dead=0 boss_killed=1 room_clear=1 remaining_threats=0 remaining_parts=0 remaining_hp=0 remaining_armor=0 explosions=9 inventory=1 god=0 teleports=0 max_hp=100 shot_damage=24 items=0
+SHELL_STARTING_KIT_PROBE seed=28 floor=3 seconds=33.8833 player_hp=50 dead=0 boss_killed=1 room_clear=1 remaining_threats=0 remaining_parts=0 remaining_hp=0 remaining_armor=0 explosions=16 inventory=1 god=0 teleports=0 max_hp=100 shot_damage=24 items=0

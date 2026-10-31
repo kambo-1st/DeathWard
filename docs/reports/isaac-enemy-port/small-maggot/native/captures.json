@@ -1,0 +1,96 @@
+[
+  {
+    "name": "initial",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-853.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "10",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/small-maggot/native/initial.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "efa8a698696f40b8d9fdac749b91a754fc75371f7f147c1ae24749af7ce8e88a"
+  },
+  {
+    "name": "crawl",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-853.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "140",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/small-maggot/native/crawl.png",
+      "--enemy-player-at",
+      "1",
+      "0",
+      "4"
+    ],
+    "exit": 0,
+    "binary_sha256": "efa8a698696f40b8d9fdac749b91a754fc75371f7f147c1ae24749af7ce8e88a"
+  },
+  {
+    "name": "cover",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-853.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/small-maggot/native/cover.png",
+      "--enemy-terrain",
+      "cover"
+    ],
+    "exit": 0,
+    "binary_sha256": "efa8a698696f40b8d9fdac749b91a754fc75371f7f147c1ae24749af7ce8e88a"
+  },
+  {
+    "name": "natural",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-853.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "90",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/small-maggot/native/natural.png",
+      "--resident-seed",
+      "0",
+      "--resident-floor",
+      "5"
+    ],
+    "exit": 0,
+    "binary_sha256": "efa8a698696f40b8d9fdac749b91a754fc75371f7f147c1ae24749af7ce8e88a"
+  }
+]

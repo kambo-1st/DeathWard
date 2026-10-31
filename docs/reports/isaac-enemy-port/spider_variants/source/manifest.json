@@ -1,0 +1,134 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "814": {
+      "index": 151,
+      "address": "0x699fcb",
+      "controller": "0x54a0c0"
+    },
+    "884": {
+      "index": 202,
+      "address": "0x699f2f",
+      "controller": "0x53d4c0"
+    }
+  },
+  "constants": {
+    "ground_retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "strider_retention": {
+      "address": "0xb6a5d8",
+      "value": 0.949999988079071
+    },
+    "strider_force": {
+      "address": "0xb6a910",
+      "value": 6.0
+    },
+    "strider_force_span": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "strider_turn": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "strider_height": {
+      "address": "0xb6aeac",
+      "value": -8.0
+    },
+    "near_range": {
+      "address": "0xb6aafc",
+      "value": 100.0
+    },
+    "far_range": {
+      "address": "0xb6aba8",
+      "value": 200.0
+    },
+    "short_speed": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "medium_speed": {
+      "address": "0xb6a940",
+      "value": 8.0
+    },
+    "long_speed": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "short_spread": {
+      "address": "0xb6aa4c",
+      "value": 45.0
+    },
+    "medium_spread": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    }
+  },
+  "strings": {
+    "0xb43610": "Row",
+    "0xb40338": "Jump",
+    "0xb4034c": "Land",
+    "0xb43110": "HopLong",
+    "0xb405cc": "Hop",
+    "0xb43124": "HopShort"
+  },
+  "strider_states": [
+    "0x54a104",
+    "0x54a74f",
+    "0x54a74f",
+    "0x54a1fb",
+    "0x54a361",
+    "0x54a74f",
+    "0x54a127"
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/source/strider_dispatch.asm",
+      "start": "0x699fcb",
+      "end": "0x699fd7",
+      "raw_sha256": "87ac7933a3e7d5b6ca62fa4489119a0c111374223ce3073559d37d1ac4b12b60",
+      "sha256": "d9e3cbbdd28b722f6b24592ba3793bf35034f14e53d29e5825cf9758629c4622"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/source/swarm_dispatch.asm",
+      "start": "0x699f2f",
+      "end": "0x699f3b",
+      "raw_sha256": "8c3276859f67894f5480a879e7b11dff991bf17f3197cd0f9b58a80f79ae1c8f",
+      "sha256": "249c32ae907baf1a25193e75f5c53aba11f395c314e983b422681e03dcc3af99"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/source/strider_controller.asm",
+      "start": "0x54a0c0",
+      "end": "0x54a77a",
+      "raw_sha256": "6c8caa6c59a2c614319a3c20d053f15262911b4541833cbad0184a09935b6b2f",
+      "sha256": "9bdd37d2c743691161613c249ed41fdfdeda6a93c0c9ec6e1de3be92b63b2c4f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/source/strider_facing.asm",
+      "start": "0x549f50",
+      "end": "0x54a0b1",
+      "raw_sha256": "6e380c98ebdfa254c0cee52596b79fccf92e358a14a2595b02469d086b1e4f64",
+      "sha256": "fc4b1b2acaab568c9c9ec03753676076bd433803d83123998c65e0d075c13a6a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/source/swarm_controller.asm",
+      "start": "0x53d4c0",
+      "end": "0x53e272",
+      "raw_sha256": "d83fa66958cdcefd5446e60066b758f74cdad7dc750ba50c341ab4120838fa8d",
+      "sha256": "fd522095bffd0520a4cbaf543878c57d4f0c89c4ed15acfd762f41e4c8b2b35c"
+    }
+  ],
+  "findings": [
+    "Strider init: grid collision6 NOPITS, height-8, angle90, ready state3. Idle1/4check; then1/2chance of chase if CheckLine mode3 to current target passes; otherwise1/3chance random unit wander. No normal acquisition distance limit. Player control/confusion paths are separate.",
+    "Strider state4 preserves walk animation frame while facing changes. Stored zero direction means aim at current target each update; nonzero direction means wander. Angle follows20%of wrapped angular error each source update. Row event adds6+3*U velocity along current direction; end controller friction retention0.95. Walk20frames with Row6; returns ready when animation ends. State6 handles thrown arrival and is not ordinary rowing.",
+    "Swarm init sets ready3 and ENTCOLL_PLAYEROBJECTS2. Native enum says player/tears/familiars, excluding ordinary enemy-body collision. Nonzero subtype expands into extra same-type actors scattered +/-20source units and then clears subtype; only installed884.0.0 is covered here.",
+    "Swarm ready gets player target (normal helper). Zero distance does nothing. Direction turns if rng modulo4 is0, or modulo20 when distance>200; distance<100 always turns. A turn is half reverse180degrees, half randomly+90/-90degrees. Otherwise direction points toward target.",
+    "Swarm weighted hop choices short/medium/long: distance<100 weights5/3/0;100..200 weights2/3/2;>200 weights2/3/9. Short speed5+U, spread+/-45degrees; medium8+2U,+/-20; long10+3U,+/-10. Selected launch vector is committed before the animation.",
+    "Swarm Jump assigns committed velocity and sets FLAG_NO_PHYSICS_KNOCKBACK bit30; Land clears it. While not carrying that flag, friction retention0.7. Native controller changes no grid collision or physical world height during ordinary hops; sprite carries visual hop. After Land,1/4chance ends animation early per update, otherwise wait for its end.",
+    "Animation metadata at30FPS: HopShort10/Jump2/Land8; Hop12/Jump3/Land9; HopLong18/Jump4/Land14. Jump also emits source sound258 with randomized pitch1.8..2.0. Item377Bursting Sack loads inert visuals and changes target selection; not ordinary hostile behavior.",
+    "Installed XML StriderHP6.5/stage0 and SwarmHP4.5/stage.2, contact1, radius13. Pinned Spider wiki establishes Strider replacement of all Spider spawns in Downpour/Dross, and Swarm immunity to fireplace damage. Current web fetch403; pinned revision268921 retained. Local fireplace exception is scoped to source actor contact, not arbitrary Flame/Burning damage."
+  ]
+}

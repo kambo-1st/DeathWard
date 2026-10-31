@@ -1,0 +1,151 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "Partial Shell implementation; not a completed port.",
+  "sources": {
+    "The Shell": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022",
+    "Fly Bomb": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266992"
+  },
+  "contracts": {
+    "19.3.0": {
+      "movement": "Two five-part chains fly diagonally and reflect off walls; nearby heads steer slightly toward the player. Exposed attached flesh slows the chain and loses flight. Detached flesh groups chase slowly; single flesh pieces are stationary.",
+      "targeting": "Head proximity steering; exposed middle pieces aim a three-shot volley at player, end pieces spawn Fly Bombs.",
+      "attacks": "Contact damage, aimed triples from exposed middle sections, independent Fly Bomb offspring from exposed ends. Armor and heads do not shoot.",
+      "vulnerability": "Invulnerable head; body has 15 independent explosive armor, then source base 35 flesh HP. No documented Tuff explosive resistance. Terra and rock waves are named armor exceptions; Sulfuric Acid is not. Repentance+ Hagalaz excluded.",
+      "phases": "Armor to grounded flesh; destroyed bodies partition contiguous chains. A sufficiently long headless piece with an armored endpoint promotes it; short armored fragments retire, flesh survives independently. A head with no attached body dies.",
+      "offspring": "Two heads plus eight body segments, one or two Bomb Grimaces, normal Fly Bombs from exposed ends. Same 19.3.0 source identity represents all parts.",
+      "completion": "Both original chains and detached flesh must be gone; ordinary offspring still gate room clearance.",
+      "adaptations": {
+        "health": "35 * 3.2 = 112 per body; 15 armor stays literal. Invulnerable heads excluded from initial 896 aggregate health. Promoted heads cease contributing killable HP; no hidden healing or new body is created.",
+        "damage": "Actual explosion provenance; no spillover into flesh on stripping hit. No Tuff reduction or speed bonus. Base contact/shot 10 uses existing hostile multiplier. Debug deletion is distinct from ordinary execution.",
+        "motion": "Local 3.5 units/s diagonal flight; proximity range 6, turn rate .35 rad/s constrained within .3 radians of the current diagonal; up to 60% exposed slowdown. Detached flesh .8 units/s. Spacing 1.55, followers up to 1.5x leader speed, cached routes .6 seconds, bounded 1024-point trail.",
+        "landing": "Vulnerable flesh slides to connected safe floor before descending at local 5 units/s. Bounded 24-radius/16-spoke search cached for 1 second; falls back to its safe spawn home. No teleport, deletion, or attack while settling. No rigid physical tether is imposed on mixed flying/grounded chains.",
+        "topology": "Reconcile only after entire queued damage batch. Original-headed contiguous branch retained unless its head is alone. Headless >=3 piece with armored endpoint promotes that endpoint (reverse order when only rear eligible); remaining armored pieces auto-retire, flesh remains in contiguous groups. Auto-retire does not emit kill/loot events; all ordinary body deaths retain existing kill accounting. Newly promoted heads snap to the inherited diagonal quadrant, so a follower cardinal route cannot turn the new head into a cardinal flyer.",
+        "attacks": "Local end spawn 5 seconds, room child cap 4 including queued Fly Bombs, middle triple 2.8 seconds, speed8, spread .22 radians. Detached group uses last member as spawning end; first headless member still fires triples. Exact native endpoint selection unconfirmed.",
+        "arena": "Standard Broken Quarry, boss pool weight1 based on Ashpit pool identity96. One room axis doubled; actual room extents repacked to keep roads/passages separated, room counts unchanged. Two mandatory opposite suppliers preflight atomically. No ordinary/tutorial/Mine/hub additions.",
+        "completion": "One aggregate boss reward, original-part projectiles cancelled, offspring stay alive until killed. Chains pause in inactive rooms and survive re-entry.",
+        "presentation": "Original rendering, procedural ivory skull/rib armor and red grounded flesh; no imported Isaac artwork."
+      },
+      "unknowns": [
+        "Exact native speed, steering, timings, spacing, projectile tuning, child cap and armor spillover are unmeasured.",
+        "Contiguous split interpretation, endpoint reversal, retained old-head branch and automatic retirement accounting need native edge-case comparison.",
+        "Terra and item-created rock-wave armor stripping are source-supported but their item producers remain missing; generic piercing/area/execution must not impersonate them.",
+        "3D cover/water landing and follower routing are local policies; real double arenas are flat, but stress geometry still needs acceptance.",
+        "Greed, Void, special boss-challenge routes and named status/item interactions remain open.",
+        "Human/varied-build balance, all-camera readability and controlled Linux/WASM performance acceptance remain open."
+      ]
+    }
+  },
+  "stage_evidence": {
+    "record_key": "entity:19.3.0",
+    "id": "19.3.0",
+    "source_name": "the shell",
+    "display_name": "The Shell",
+    "source_group": "boss",
+    "boss_pool_id": 96,
+    "source_base_hp": "35",
+    "source_stage_hp": "0",
+    "current_runtime": null,
+    "identity_conflict": false,
+    "naming_alias_review": false,
+    "current_floor_pools": [],
+    "current_replacement_routes": [],
+    "current_boss_pools": [],
+    "current_component_routes": [],
+    "suggested_identity_for_current_name": null,
+    "review_role": "boss_encounter_or_component_review",
+    "review_approved": false,
+    "implementation_status": "not_implemented",
+    "source_stage_evidence": [
+      {
+        "file": "rooms/30.ashpit.stb",
+        "source_stage": "ashpit",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "proposed_band": 1,
+        "source_path": "alternate"
+      }
+    ],
+    "separate_mode_or_special_evidence": [
+      {
+        "file": "rooms/00.special rooms.stb",
+        "source_stage": "special rooms",
+        "templates": 4,
+        "positive_weight_templates": 4,
+        "reason": "Unmapped/special/unused library; needs eligibility review."
+      },
+      {
+        "file": "rooms/26.the void.stb",
+        "source_stage": "the void",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "reason": "Special encounter or mode library; requires dedicated encounter rules."
+      },
+      {
+        "file": "rooms/greed/30.ashpit.stb",
+        "source_stage": "ashpit",
+        "templates": 1,
+        "positive_weight_templates": 1,
+        "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+      }
+    ],
+    "boss_pool_evidence": [
+      {
+        "pool": "ashpit",
+        "weight": 1.0,
+        "proposed_band": 1
+      }
+    ],
+    "source_band_candidates": [
+      1
+    ],
+    "proposed_first_band": 1,
+    "proposed_first_band_name": "Broken Quarry",
+    "proposal_basis": "boss_pool_family_review",
+    "ordinary_spawn_approved": false,
+    "has_any_room_templates": true,
+    "has_article": true,
+    "wiki_environment_review": [
+      "Boss\nAshpit / \nboss challenge /"
+    ],
+    "article_revisions": [
+      {
+        "title": "The Shell",
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022"
+      }
+    ],
+    "feature_review_hints": [
+      "damage-modifiers",
+      "projectile-transform",
+      "child-spawns-and-ownership",
+      "grid-and-explosions",
+      "health-and-defenses",
+      "status-effects",
+      "room-floor-run-events",
+      "locomotion-and-navigation",
+      "conditional-vulnerability"
+    ],
+    "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+    "unresolved_native_parameters": [
+      "walk_speed_world_units_per_second",
+      "acceleration",
+      "attack_cooldown_seconds",
+      "telegraph_seconds",
+      "projectile_speed",
+      "attack_selection_weights",
+      "animation_event_ticks"
+    ],
+    "required_review": [
+      "root/component/hazard/unused classification",
+      "parent and child dependencies",
+      "source-edition behavior contract",
+      "terrain and arena requirements",
+      "threat cost and exclusive combinations",
+      "visual and damage-window contract",
+      "source numbers versus DeathWard conversion",
+      "stage eligibility and deterministic reachability",
+      "behavior tests and render capture"
+    ]
+  },
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Local adaptations/tests are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

@@ -1,0 +1,75 @@
+{
+  "scope": [
+    "85.0.0 Spider",
+    "94.0.0 Big Spider"
+  ],
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "source_manifest": "docs/reports/isaac-enemy-port/spiders/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/spiders/animations/manifest.json",
+  "findings": [
+    "Types85 and94 share controller5175b0. Initial state0 becomes4 and resets counter+360 to0. Ordinary ready movement uses Idle while no target, Walk while a target exists; source animation metadata is30FPS Idle4/Walk5 loops. No attack projectile event exists.",
+    "The idle counter increments by entity-time integer delta. Selection requires its previous value>13: with normal delta1, the first selection occurs on the15th ready update. Moving decrements the same counter. Ordinary state6 is thrown-airborne behavior, separate from this ground controller.",
+    "Normal target helper695a30 returns the target entity position. Passed60 affects fear/shrink branches, not ordinary lead. Ordinary chase selection compares target distance against100+100*U and checks line of sight (unless gridcollision3). It then adds target velocity*10 and clamps the destination to room bounds using body-size margins. Native+e88 can override the range condition.",
+    "If chase selection fails, choose a random direction and distance70+40*U. Clamp with source left60/top70/right40/bottom60 margins. Destination grid must be clear, then line check mode0 must pass. If it fails,1/20chance tests mode1 between10%-trimmed endpoints. Accepted wandering destination sets counter15. Exact source grid/line semantics are separate from physical3D sweeps.",
+    "Ordinary movement adds normalized destination delta*6 divided by current friction. End-of-controller multiplies friction by0.6. Stop/clear target if within14sourceunits, or if speed<3 and the decremented counter is negative. The last impulse is still applied on that stopping update. There is no continuous homing or A* pursuit in this ordinary branch.",
+    "Type94 death with post-hitHP>-20 creates exactly two type85variant0subtype0 children. Perpendicular to the player-target delta, each is offset by10sourceunits on opposite sides and gets the same outward10unit velocity. Degenerate target delta uses a random unit direction. Both children have APPEAR bit4 cleared. Overkill at or below-20 suppresses both.",
+    "Controller also implements other spider types, Bursting Sack(item377) neutral handling, player control, special thrown state6 and status-aware target helper. Those are not inferred from the ordinary85/94 branch. Baseline XML HP6.5/20, stage0 and contact1 are preserved.",
+    "Ordinary Spider XML has HP6.5 and Big Spider HP20, both stageHP0/contact1/collisionRadius13. Big Spider is not assigned a larger collision radius merely because its abdomen is larger.",
+    "Both animation records use30FPS, Idle4loop and Walk5loop with no event triggers. Appear is16frames; Death is11for Spider and16for Big Spider. These metadata do not imply the current procedural rendering reproduces those animations.",
+    "The pinned Spider wiki describes erratic movement, near-player line-of-sight pursuit, the two-child Big Spider death and extreme-overkill suppression. It distinguishes swimming Strider814 and SwarmSpider884. Their installed dispatch targets differ; neither is claimed by this85/94controller.",
+    "Installed room files put ordinary spiders heavily in Cellar and Catacombs, with additional early/middle and later habitats. Big Spider has53positive Cellar templates versus204for Spider. Local0..2band pools are deliberate sparse early/middle adaptations, not conversions of raw template counts into probability."
+  ],
+  "wiki": {
+    "articles": [
+      {
+        "title": "Spider",
+        "revision": 268921,
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268921"
+      }
+    ],
+    "preserved": "docs/reports/isaac-enemy-port/spiders/wiki-source.json",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "access": "Current fetch returned403. Previously preserved full revision268921 was used; installed code and metadata establish numerical behavior."
+  },
+  "adaptations": [
+    "Source HPx3.2 gives20.8/64local HP. XZ distancex0.1 and source velocityx3 preserve existing conversion conventions. Source contact1 maps to local10before the existing1.25enemy-damage multiplier. Player defaults remain unchanged.",
+    "Source30Hz decisions and acceleration run inside the60Hz simulation. At normal friction1, the post-retention recurrence is(v+6*direction)*0.6, giving local10.8then17.28velocity on the first two moving updates. Movement integrates at60Hz and uses existing physical collision and body separation, not exact native half-frame/friction/time-scale/RNG machinery.",
+    "Chase commits to current player position plus10source updates of velocity, within body-radius room margins. Wander clamps using source left60/top70/right40/bottom60 margins; an axis too narrow for those margins collapses to the local room centre. Canyon rectangles and physical sweeps approximate native grid/CheckLine modes.",
+    "The rare1/20trimmed-endpoint selection uses a radius-zero local segment; actual movement always sweeps the full collider. Ordinary spiders cannot cross impassable river water or solid obstacles; existing shallow walkable fords remain traversable. Native mode-specific grid/cache semantics remain open.",
+    "The inherited local collision radius0.4 is retained for both records, consistent with their equal source radii. Distance conversion and collision-size conversion are separate conventions; body shape is not a pixel-exact source sprite match.",
+    "Big Spider death offsets children by opposite perpendicular1local-unit vectors and imparts opposite30local-unit/s grounded velocities. The source clears FLAG_APPEAR on both. Local births are immediate, full-health and independent with no summoner ownership; capacity/legal placement may delay or reposition them while preserving the impulse and room seal.",
+    "Post-hitHP<=-64suppresses Big Spider offspring. Local death rules also apply to ordinary gunfire/fire/bombs under the existing damage pipeline. Grounded offspring_impulse is reusable and cannot be combined with airborne offspring_launch.",
+    "Stun interrupts a burst and resets its local clock/counter. Complete native status/item/champion interactions are not implied. Fire vulnerability uses the existing ordinary enemy damage pipeline.",
+    "Original procedural Spider body and legs remain; leg movement now scales with speed and Big Spider gains an enlarged rear abdomen. Source Idle/Walk/Death/Appear sprites are not imported or recreated exactly.",
+    "Bands0..2gain Spider pursuit pairs, weight2/cost2/max4, and Big Spider pursuit specialist weight1/cost3/max1. Local weights/costs reflect encounter pressure and are not recovered source floor probabilities."
+  ],
+  "remaining": [
+    "Native Appear lifecycle, thrown spider state6, Bursting Sack377neutral handling, friendly/player-control paths, fear/confusion/shrink, special range-override NPC+e88 and full status/item/champion interactions remain unfinished.",
+    "Exact native RNG, entity-time/friction integration, CheckLine/grid/cache semantics and nonrectangular source-room margins are not certified. Physical canyon navigation, legal birth placement and retained capacity are documented adaptations.",
+    "Strider814and SwarmSpider884use distinct controllers and are not implemented by this slice. Other shared-controller spider types, parent-specific thrown spawning and related spawner dependencies require separate reviews.",
+    "Original procedural visuals remain approximations. Full all-angle/crowd readability, broad balance, controlled native/WASM performance and all six acceptance gates remain open. Both exact IDs stay in_progress, not complete."
+  ],
+  "natural_witnesses": [
+    {
+      "id": "85.0.0",
+      "seed": 0,
+      "floor": 0,
+      "room": 3
+    },
+    {
+      "id": "94.0.0",
+      "seed": 71,
+      "floor": 0,
+      "room": 1
+    }
+  ],
+  "evidence_corrections": [
+    "The initial animation request omitted resources/ from archive keys, fell through to an older archive and failed a header assertion. Corrected keys retrieve the pinned afterbirthp.a metadata. Both extraction logs are preserved.",
+    "The room-clamp disassembly window initially extended into the following function. Its end was trimmed to0x7cef13 before checkpoint freeze; exporter, manifest and preserved bytes were checked together.",
+    "The original Spider row was an unverified generic Wander controller. It is replaced by the dedicated shared burst controller, not counted as a previously complete port.",
+    "Full native run found the Mulligan placement fixture used pre-Spider fixed seeds2and105. An independent production scan found current seed1/floor0/room4 Mulligan and seed6/floor0/room2 Mulligoon. Only those two seed constants changed; the all-three-variants requirement and production spawning remain. The band1search independently finds Mulliboom at seed14/floor2/room3. Original failed log and scan evidence are retained.",
+    "The final native summary also exposed an older resident-entry fixture requiring every controller to reduce generic cooldown. Spider has no generic attack cooldown. The fixture now verifies its dedicated clock advances exactly one local tick after entry, with initial idle state preserved, and verifies dormant spiders never initialize combat runtime. Existing identity, no-spawn-jump, corridor inactivity, entry and replay assertions remain. No runtime change was made for either regression-fixture correction."
+  ]
+}

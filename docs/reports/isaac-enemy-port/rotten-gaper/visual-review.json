@@ -1,0 +1,290 @@
+{
+  "result": "partial_pass",
+  "captures": [
+    {
+      "name": "swift",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "enemy-10.3.1",
+        "--enemy-camera-follow",
+        "--frames",
+        "60",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/swift.png"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    },
+    {
+      "name": "frantic",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "enemy-10.3.2",
+        "--enemy-camera-follow",
+        "--frames",
+        "60",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/frantic.png"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    },
+    {
+      "name": "brood",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "enemy-10.3.3",
+        "--enemy-camera-follow",
+        "--frames",
+        "420",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/brood.png"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    },
+    {
+      "name": "slow",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "enemy-10.3.4",
+        "--enemy-camera-follow",
+        "--frames",
+        "60",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/slow.png"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    },
+    {
+      "name": "orbit",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "enemy-10.3.5",
+        "--enemy-camera-follow",
+        "--frames",
+        "140",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/orbit.png"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    },
+    {
+      "name": "orbit-cover",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "enemy-10.3.5",
+        "--enemy-camera-follow",
+        "--frames",
+        "180",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/orbit-cover.png",
+        "--enemy-terrain",
+        "cover"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    },
+    {
+      "name": "natural-frantic",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "resident-10.3.2",
+        "--enemy-camera-follow",
+        "--frames",
+        "60",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/natural-frantic.png",
+        "--resident-seed",
+        "0",
+        "--resident-floor",
+        "5"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    },
+    {
+      "name": "natural-brood",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "resident-10.3.3",
+        "--enemy-camera-follow",
+        "--frames",
+        "180",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native/natural-brood.png",
+        "--resident-seed",
+        "1",
+        "--resident-floor",
+        "6"
+      ],
+      "exit": 0,
+      "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+    }
+  ],
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/brood.png",
+      "sha256": "b690c57812feabf2df0454048809ed730fa646a09395cc22156a8dd9320fbcbc"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/frantic.png",
+      "sha256": "1bf13580441e830d8b86e017ae711dbf2a1c9c6dc9d2b39bd70c93f8319672be"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/natural-brood.png",
+      "sha256": "90ef3508f7c456b16d88aaf372c610059bf1ea3351dacf1a4e7cffcdc3fa7f95"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/natural-frantic.png",
+      "sha256": "e206665bbcc9aedadf405ecb50fea2576cc832876933410f39abf89ce350e90d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/orbit-cover.png",
+      "sha256": "48ce1ccc60e06059ebf1cabca39f31b829a64f1e4db4c09bd25dde1833a52b50"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/orbit.png",
+      "sha256": "be857ea337e9a45733918228f7d44b1189a848b9b6907de4a8d31d7fe167f3c9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/slow.png",
+      "sha256": "ca8c5dc26fd9444c9a36f5a1b145728aa5a03453e0140284645bbbdbec2c5547"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native/swift.png",
+      "sha256": "8add726ca6fd65b1a654f5702f7732fbdf313a7657dd12338d1a175e7c111cd1"
+    }
+  ],
+  "observations": [
+    "Swift,frantic,slow bodies visible beside protagonist; differences rely heavily on color and small face features.",
+    "Brood isolated shows parent and three offspring; pale maggots have low contrast against ground.",
+    "Orbit and orbit-cover bodies stay grounded and visible in inspected frames.",
+    "Natural frantic appears among taller and smaller resident actors. Natural brood mixes two Rotten silhouettes, a live maggot and an outlined partially occluded actor.",
+    "Two final-binary captures inspected: isolated brood with three children; natural brood and another Rotten beside protagonist, a pale child behind them and a headless actor crossing open ground."
+  ],
+  "limits": [
+    "Eight initial captures precede doorway fix; two additional final-binary captures confirm current brood presentation. Full camera/readability gate remains open.",
+    "Not all camera angles, color-vision conditions or dense combat combinations covered.",
+    "FPS overlays during concurrent testing are not a controlled performance benchmark.",
+    "No WASM checks; explicitly skipped by user."
+  ],
+  "current_captures": [
+    {
+      "name": "brood",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "enemy-10.3.3",
+        "--enemy-camera-follow",
+        "--frames",
+        "420",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native-current/brood.png"
+      ],
+      "exit": 0,
+      "binary_sha256": "e94436900697f0535b7882d797e9f54d9f811ef09576e6093286c1f8bfd8f344"
+    },
+    {
+      "name": "natural-brood",
+      "command": [
+        "./build/deathward",
+        "--smoke",
+        "--theme",
+        "canyon",
+        "--style",
+        "original",
+        "--scene",
+        "resident-10.3.3",
+        "--enemy-camera-follow",
+        "--frames",
+        "180",
+        "--mute",
+        "--screenshot",
+        "docs/reports/isaac-enemy-port/rotten-gaper/native-current/natural-brood.png",
+        "--resident-seed",
+        "1",
+        "--resident-floor",
+        "6"
+      ],
+      "exit": 0,
+      "binary_sha256": "e94436900697f0535b7882d797e9f54d9f811ef09576e6093286c1f8bfd8f344"
+    }
+  ],
+  "current_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native-current/brood.png",
+      "bytes": 1505751,
+      "sha256": "8a48a918312afa6617130f3340e83b7a5df2202d115cd01f7e2c76aee182611a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/native-current/natural-brood.png",
+      "bytes": 1370233,
+      "sha256": "1f9bddbc02fbe648dca00ea46babe4d08127d8f2c450ccfd2ef43b15ca4c93c5"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": {
+    "retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "normal_force_multiplier": {
+      "address": "0xb6a614",
+      "value": 1.0
+    },
+    "targeted_force_multiplier": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "lookahead": {
+      "address": "0xb6a910",
+      "value": 6.0
+    },
+    "obstacle_turn_max": {
+      "address": "0xb6aae4",
+      "value": 90.0
+    },
+    "obstacle_turn_range": {
+      "address": "0xb6ab88",
+      "value": 180.0
+    },
+    "curve_range": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "force_minimum": {
+      "address": "0xb6a304",
+      "value": 0.15000000596046448
+    },
+    "force_range": {
+      "address": "0xb6a3b0",
+      "value": 0.30000001192092896
+    },
+    "alert_range": {
+      "address": "0xb6aad4",
+      "value": 80.0
+    }
+  },
+  "helpers": [
+    {
+      "start": "0x684790",
+      "end_exclusive": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-global-interval.asm",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    },
+    {
+      "start": "0x786be0",
+      "end_exclusive": "0x786c39",
+      "raw_sha256": "a9418260eca8e4ffe420321efdabedd0993bc725d5e05259535651c1de99531d",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-player-undetectable.asm",
+      "sha256": "49e4d5c6a3dd5d6811f3eff0dcfaed1113f3f63054bdac0cabaf904ec0144daf"
+    },
+    {
+      "start": "0x695680",
+      "end_exclusive": "0x695a26",
+      "raw_sha256": "3e137d46fce59a1bf80cc103f3f36d2bc15a4820c92b5a4b78f0d20480b6753b",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-target.asm",
+      "sha256": "fff3c20b544538035785b1eceb04235d916bde3fbc255c1511197a43be53e0b6"
+    },
+    {
+      "start": "0x686406",
+      "end_exclusive": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-base-movement.asm",
+      "sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    }
+  ],
+  "scope": "Normal Small Maggot853.0.0 ground behavior. Shared thrown, variant10, special room and status branches require their own validation.",
+  "animation_table": {
+    "address": "0x4c50a0",
+    "targets": [
+      "0x4c4dc9",
+      "0x4c4e3c",
+      "0x4c4eae",
+      "0x4c4f20"
+    ]
+  },
+  "strings": {
+    "0xb42410": "Bullet",
+    "0xb42418": "MoveUp",
+    "0xb423f4": "MoveDiagonalUp",
+    "0xb42404": "MoveHori",
+    "0xb42438": "MoveDiagonalDown",
+    "0xb4244c": "MoveDown",
+    "0xb4034c": "Land"
+  }
+}

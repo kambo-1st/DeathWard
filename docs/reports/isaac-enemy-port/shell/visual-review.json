@@ -1,0 +1,22 @@
+{
+  "style": "Original",
+  "native": [
+    "linux-intact.png",
+    "linux-flesh.png",
+    "linux-resident.png"
+  ],
+  "wasm": [
+    "full/wasm-shell-middle-110.png",
+    "full/wasm-resident-shell-190.png"
+  ],
+  "observed": [
+    "Procedural ivory skull/rib armor is distinct from Tuff stone blocks; exposed red flesh is visibly grounded.",
+    "Middle triples, bomb supplies, aggregate health bar and bone-armor hint render in actual game captures.",
+    "Native and WASM captures show the actual generated doubled arena; no global art/filter change."
+  ],
+  "limitations": [
+    "Existing160percent zoom and HUD can crop/cover parts of either chain. These captures do not establish all-camera threat readability.",
+    "Synthetic CPU timings and screenshot FPS overlays are not controlled whole-game rendering/performance acceptance.",
+    "Native flesh capture uses an above-side spectator for visibility; WASM baseline keeps normal fixture camera. Neither is a player-input balance test."
+  ]
+}

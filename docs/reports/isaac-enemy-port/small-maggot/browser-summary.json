@@ -1,0 +1,192 @@
+{
+  "verified_utc": "2026-10-28T12:54:38.231895+00:00",
+  "result": "partial_pass",
+  "mechanics_fingerprint": "96d4ddaff380d3af",
+  "artifacts": {
+    "verified_utc": "2026-10-28T12:39:04.460327+00:00",
+    "session": 29755,
+    "exit": 0,
+    "mechanics_fingerprint": "96d4ddaff380d3af",
+    "artifacts": [
+      {
+        "path": "build-web/index.js",
+        "bytes": 248498,
+        "sha256": "e110c9a3e2d4d0f358414927ee2920b248f30449fef8a6fc5f7338df1af31cfc",
+        "gzip_equal": true
+      },
+      {
+        "path": "build-web/index.wasm",
+        "bytes": 5689908,
+        "sha256": "b086a932883b61fabf7f522ead4acb822635cccd1bc4e5d95704f3984c6494a2",
+        "gzip_equal": true
+      },
+      {
+        "path": "build-web/index.data",
+        "bytes": 213458626,
+        "sha256": "9f8e89083f72aa357a5dc19a242864b14a1459fba0eae8a2b2a0ab6f8ba54f25",
+        "gzip_equal": true
+      }
+    ]
+  },
+  "scope": "Four scenario types passed on the same production WASM bundle. Isolated, cover and natural successes retained from session75509, whose aggregate failed on a brood birth-frame test assumption. Only brood reran in session73873 and passed. No runtime/content overrides or source changes between browser attempts.",
+  "runs": [
+    {
+      "session": 75509,
+      "exit": 1,
+      "accepted_cases": [
+        "isolated",
+        "cover",
+        "natural"
+      ],
+      "results": {
+        "path": "docs/reports/isaac-enemy-port/small-maggot/web-parent-initial/results.json",
+        "bytes": 10425629,
+        "sha256": "a6462bed661c70f9d3fd4da79a3e2fcde762a60233ea4faaaf35491084c574f4"
+      },
+      "script": {
+        "path": "docs/reports/isaac-enemy-port/small-maggot/validation/browser-parent-initial.cjs",
+        "bytes": 6540,
+        "sha256": "9878e35ba1ac9dd51a1154758a8102ee9c196098d0b527309cc7e5b6e7dca398"
+      }
+    },
+    {
+      "session": 73873,
+      "exit": 0,
+      "accepted_cases": [
+        "brood"
+      ],
+      "results": {
+        "path": "docs/reports/isaac-enemy-port/small-maggot/web/results.json",
+        "bytes": 2751602,
+        "sha256": "62984fc66dcf38168dc9c267dd2dbfa1a0fbe4d76a1c41609cc17c39af99f955"
+      },
+      "script": {
+        "path": "web/small-maggot-test.cjs",
+        "bytes": 6972,
+        "sha256": "d56c5fa52572ba7b65f0b38ea398e112e0fadc851293411163c9fe895e8f4ec2"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "isolated",
+      "frames": 360,
+      "death": 330,
+      "pass": true,
+      "error": "",
+      "style": "Original",
+      "gl": 0,
+      "movement": 12.826305291695098,
+      "alerted": true,
+      "turns": 6,
+      "children": 0,
+      "naturalDeath": null
+    },
+    {
+      "name": "cover",
+      "frames": 480,
+      "cover": true,
+      "pass": true,
+      "error": "",
+      "style": "Original",
+      "gl": 0,
+      "movement": 24.520453908998928,
+      "alerted": false,
+      "turns": 9,
+      "children": 0,
+      "naturalDeath": null
+    },
+    {
+      "name": "natural",
+      "frames": 300,
+      "natural": true,
+      "seed": 0,
+      "floor": 5,
+      "room": 1,
+      "pass": true,
+      "error": "",
+      "style": "Original",
+      "gl": 0,
+      "movement": 5.8506159641989415,
+      "alerted": true,
+      "turns": 2,
+      "children": 0,
+      "naturalDeath": {
+        "frame": 120,
+        "source": 3,
+        "cause": "Black Knight fire jet,32Flame damage; reproduced in native diagnostic"
+      }
+    },
+    {
+      "name": "brood",
+      "frames": 420,
+      "brood": true,
+      "pass": true,
+      "error": "",
+      "style": "Original",
+      "gl": 0,
+      "movement": 0,
+      "alerted": true,
+      "turns": 4,
+      "children": 3,
+      "naturalDeath": null
+    }
+  ],
+  "birth_frame_audit": {
+    "owned_children": 3,
+    "result": "pass",
+    "scope": "Every child observed more than two rendered frames after birth has entered its source controller. Zero-tick birth bodies have zero force/timer/turns."
+  },
+  "resolved_test_failures": [
+    {
+      "attempt": 34453,
+      "issue": "Assumed natural resident stays alive. Black Knight fire jet killed it atframe120. Native diagnostic identified32Flame damage fromowner3; browser assertion now proves actual overlapping pulse, owner and threat/kill transition.",
+      "evidence": "docs/reports/isaac-enemy-port/small-maggot/natural-fire-diagnostic.json"
+    },
+    {
+      "attempt": 75509,
+      "issue": "Required positive timer before a queued offspring received its first source update. Updated assertion to require zero timer/force/turns only atzero ticks, and normal ranges thereafter. Parent graph unchanged."
+    }
+  ],
+  "visual_review": {
+    "result": "partial_pass",
+    "images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/small-maggot/web-parent-initial/isolated-140.png",
+        "bytes": 1200499,
+        "sha256": "7212664f1576fb36d2b37b6775f71ec3677b15afe17c7ecd870c2f4bb83c40a7"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/small-maggot/web-parent-initial/cover-140.png",
+        "bytes": 1217799,
+        "sha256": "7c2910fe65926cede7768e3d23c8231a3a3caede24c257899aae9b3e844f5a8b"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/small-maggot/web-parent-initial/natural-0.png",
+        "bytes": 1104505,
+        "sha256": "c3b973e28e982c42dec2d137d558b5046cff2e646650285b439d323ecac76445"
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/small-maggot/web/brood-280.png",
+        "bytes": 1184654,
+        "sha256": "9aa5559bc39eb7ac20fb279317f11adb8375427647111a975d5ca01f5ed0c4f6"
+      }
+    ],
+    "observations": [
+      "Isolated crawl silhouette visible beside protagonist.",
+      "Cover140capture shows the body beside the crate; native180capture separately shows occlusion outline.",
+      "Natural capture shows a small pale body among larger actors; contrast remains weak against sand.",
+      "Brood capture shows two live offspring near parent/player; one overlaps the parent shadow."
+    ],
+    "not_accepted": [
+      "Crowded/color-independent readability and full camera/zoom coverage.",
+      "Controlled performance; displayed FPS is not a benchmark.",
+      "Complete source audiovisual parity."
+    ]
+  },
+  "remaining": [
+    "Rotten parent source-timed controller replacement.",
+    "Small Maggot native status/control/camouflage/thrown states and alternative producers.",
+    "Full production coverage, collision-mass/save fidelity, readability, balance and performance."
+  ]
+}

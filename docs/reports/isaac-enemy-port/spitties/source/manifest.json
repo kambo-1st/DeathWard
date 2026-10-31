@@ -1,0 +1,193 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 31,
+      "index": 9,
+      "case": "0x699968",
+      "controller": "0x51afa0"
+    },
+    {
+      "type": 243,
+      "index": 9,
+      "case": "0x699968",
+      "controller": "0x51afa0"
+    }
+  ],
+  "constants": {
+    "walk_force": {
+      "address": "0xb6a534",
+      "value": 0.7200000286102295
+    },
+    "retention": {
+      "address": "0xb6a588",
+      "value": 0.8500000238418579
+    },
+    "vertical_axis_retention": {
+      "address": "0xb6a5f0",
+      "value": 0.9647058248519897
+    },
+    "shot_speed": {
+      "address": "0xb6a940",
+      "value": 8.0
+    },
+    "stream_speed": {
+      "address": "0xb6a9bc",
+      "value": 18.0
+    },
+    "burst_lob_parameter": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "burst_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "burst_accel_base": {
+      "address": "0xb6a3c4",
+      "value": 0.3199999928474426
+    },
+    "stream_accel_step": {
+      "address": "0xb6a1fc",
+      "value": 0.004999999888241291
+    },
+    "stream_accel_offset": {
+      "address": "0xb6a2ac",
+      "value": 0.07999999821186066
+    },
+    "stream_decel_step": {
+      "address": "0xb6a248",
+      "value": 0.029999999329447746
+    },
+    "stream_size": {
+      "address": "0xb6a730",
+      "value": 1.7000000476837158
+    },
+    "stream_size_step": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "radians": {
+      "address": "0xb6a230",
+      "value": 0.01745329238474369
+    },
+    "orbit_drift": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "pi": {
+      "address": "0xb6a874",
+      "value": 3.1415927410125732
+    },
+    "two_pi": {
+      "address": "0xb6a914",
+      "value": 6.2831854820251465
+    },
+    "grid_spacing": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "arrival": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "stuck_speed": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "blocked_speed": {
+      "address": "0xb6a864",
+      "value": 3.0
+    }
+  },
+  "strings": {
+    "0xb400ac": "Shoot",
+    "0xb425a8": "Move Hori",
+    "0xb425a0": "Move Up",
+    "0xb425c4": "Move Down",
+    "0xb43214": "Attack Hori",
+    "0xb42574": "Attack Up",
+    "0xb42540": "Attack Down",
+    "0xb43250": "Move Vert"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/controller.asm",
+      "start": "0x51afa0",
+      "end": "0x51ddf3",
+      "raw_sha256": "9887d9825601d2930cbdf588c5c030257b4539037a79a4d0566af8c674463daa",
+      "sha256": "775a958f736b3c88ff4e70ac4ba504df58e2f1386f3ed8f713e647919121bc88"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/axis_random_walk.asm",
+      "start": "0x7a51e0",
+      "end": "0x7a617d",
+      "raw_sha256": "ef71ccb69cba5c9049682eaa58ee22518c8c116b8243e5f6825dcd56d0b6fa97",
+      "sha256": "9b4fea12a9e0f9ed56cd562307d1b6a8d6b4789069742e0229c555ef5a771fd6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/boss_projectiles.asm",
+      "start": "0x6a3420",
+      "end": "0x6a3970",
+      "raw_sha256": "2c9458a658e2b64e29ac724a8655ee2b5a62c9ad9753cce4673ad898c74e0037",
+      "sha256": "219ef0ba1d01904fe78f3eb9452eb4b03dd2562f793797bd7e6619baa7836fe3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/orbit.asm",
+      "start": "0x634eb5",
+      "end": "0x6351e1",
+      "raw_sha256": "cd0c86a7e6281edf23357039b76c943da9cfb51a4f1ce9b0ec12997fa58b122c",
+      "sha256": "4eeea318f080ff726f45e2dc0a34e58dfc3dcb4ffc552ce5547d64138afd8580"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/acceleration.asm",
+      "start": "0x635d8d",
+      "end": "0x635e50",
+      "raw_sha256": "91f119997b5dc51b69eb5327fa5c2fb3d6d5f05d72bcd92dc7c5ee96c742f289",
+      "sha256": "04934250439d814418b9fe179d932616092d2fe6302aa34434d9a928e97da29b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/projectile_init.asm",
+      "start": "0x62f1b0",
+      "end": "0x62f300",
+      "raw_sha256": "08f59750e0fd82c89f0d1a77ae8a1b3efdd264a7354bcfa91c0487513539215b",
+      "sha256": "074f795aece0883b18f3d37cf644621de9ec7ef0f85460790c218be698df47ae"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/projectile_update_entry.asm",
+      "start": "0x62f6f0",
+      "end": "0x62f81b",
+      "raw_sha256": "9bb26d9be63712a2bbf117cd8eabede05eaddf0395862fe5a888342a52b25686",
+      "sha256": "27651a2df82c2360d613cf3e59d42333a364ab870b3888fee9c25782cce9e50d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "raw_sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/vector_helpers.asm",
+      "start": "0x9624e0",
+      "end": "0x962cf0",
+      "raw_sha256": "5a286f1582634000948b8e01db8cae6b93b7994828c106fff5cbf3b905cf0dff",
+      "sha256": "8cb91a8e798336f5dce01fb0e6e674d262a2d28342ac0d1b5c14243be944af28"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/base_movement.asm",
+      "start": "0x686406",
+      "end": "0x68649a",
+      "raw_sha256": "6daabb77c51e24eb1403508ae788ecc0d7fef96070fa5db8ab4c4f2ab2a64378",
+      "sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/fire_projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a33ec",
+      "raw_sha256": "450521a19558deb4c799a9999bef9f2cdd43c1e6080cc03d13fe72cd4fcbaec9",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    }
+  ]
+}

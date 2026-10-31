@@ -1,0 +1,89 @@
+[
+  {
+    "name": "isolated-818-0-3",
+    "id": "818.0.3",
+    "death": true
+  },
+  {
+    "name": "isolated-818-0-1",
+    "id": "818.0.1",
+    "death": true
+  },
+  {
+    "name": "isolated-818-0-2",
+    "id": "818.0.2",
+    "death": true
+  },
+  {
+    "name": "isolated-818-2-1",
+    "id": "818.2.1",
+    "death": true
+  },
+  {
+    "name": "isolated-818-2-3",
+    "id": "818.2.3",
+    "death": true
+  },
+  {
+    "name": "isolated-818-2-2",
+    "id": "818.2.2",
+    "death": true
+  },
+  {
+    "name": "resident-818-0-3",
+    "id": "818.0.3",
+    "natural": true,
+    "seed": 0,
+    "floor": 2,
+    "room": 1
+  },
+  {
+    "name": "resident-818-0-1",
+    "id": "818.0.1",
+    "natural": true,
+    "seed": 0,
+    "floor": 2,
+    "room": 1
+  },
+  {
+    "name": "resident-818-0-2",
+    "id": "818.0.2",
+    "natural": true,
+    "seed": 14,
+    "floor": 2,
+    "room": 6
+  },
+  {
+    "name": "resident-818-2-1",
+    "id": "818.2.1",
+    "natural": true,
+    "seed": 2,
+    "floor": 0,
+    "room": 3
+  },
+  {
+    "name": "resident-818-2-3",
+    "id": "818.2.3",
+    "natural": true,
+    "seed": 23,
+    "floor": 2,
+    "room": 6
+  },
+  {
+    "name": "resident-818-2-2",
+    "id": "818.2.2",
+    "natural": true,
+    "seed": 30,
+    "floor": 0,
+    "room": 1
+  },
+  {
+    "name": "flame-morph",
+    "id": "818.0.1",
+    "flame": true
+  },
+  {
+    "name": "default-shape",
+    "id": "818.0.0"
+  }
+]

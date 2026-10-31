@@ -1,0 +1,10 @@
+SHELL_ARMOR pair_5=1 head_invulnerability=1 body_hp=112 armor=15 full_explosive_damage=1 atomic_spawn=1
+SHELL_MOTION diagonal=1 reflection=1 flesh_slowdown=1 aimed_triple=1 tail_fly_bomb=1
+SHELL_SPLIT promotion=1 reversed_endpoint=1 short_armor_retirement=1 detached_group=1 stationary_single=1 simultaneous_masks=15
+SHELL_LIFECYCLE cover_landing=1 water_landing=1 aggregate_reward_once=1 children_gate_clear=1 inactive_persistence=1
+SHELL_STAGE_FIXTURE seed=7 floor=2 room=11 width=32 depth=80
+SHELL_STAGE_FIXTURE seed=23 floor=2 room=11 width=80 depth=36
+SHELL_STAGE_FIXTURE seed=28 floor=3 room=11 width=72 depth=36
+SHELL_STAGE seeded_profiles=10 band=1 standard_only=1 double_arena=1
+SHELL_EXTERNAL immutable_snapshot=1 armor_speed=1 invalid_duplicate_rejected=1
+PASS Shell armor, movement, topology, attacks, landing, lifecycle and route

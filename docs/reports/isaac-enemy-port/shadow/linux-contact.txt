@@ -1,0 +1,572 @@
+INFO: Initializing raylib 5.5
+INFO: Platform backend: DESKTOP (GLFW)
+INFO: Supported raylib modules:
+INFO:     > rcore:..... loaded (mandatory)
+INFO:     > rlgl:...... loaded (mandatory)
+INFO:     > rshapes:... loaded (optional)
+INFO:     > rtextures:. loaded (optional)
+INFO:     > rtext:..... loaded (optional)
+INFO:     > rmodels:... loaded (optional)
+INFO:     > raudio:.... loaded (optional)
+INFO: DISPLAY: Trying to enable MSAA x4
+INFO: DISPLAY: Device initialized successfully
+INFO:     > Display size: 1920 x 1200
+INFO:     > Screen size:  1440 x 900
+INFO:     > Render size:  1440 x 900
+INFO:     > Viewport offsets: 0, 0
+INFO: GLAD: OpenGL extensions loaded successfully
+INFO: GL: Supported extensions count: 179
+INFO: GL: OpenGL device information:
+INFO:     > Vendor:   Microsoft Corporation
+INFO:     > Renderer: D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER)
+INFO:     > Version:  4.2 (Core Profile) Mesa 23.2.1-1ubuntu3.1~22.04.4
+INFO:     > GLSL:     4.20
+INFO: GL: VAO extension detected, VAO functions loaded successfully
+INFO: GL: NPOT textures extension detected, full NPOT textures supported
+INFO: GL: DXT compressed textures supported
+INFO: GL: ETC2/EAC compressed textures supported
+INFO: PLATFORM: DESKTOP (GLFW - X11): Initialized successfully
+INFO: TEXTURE: [ID 1] Texture loaded successfully (1x1 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 1] Default texture loaded successfully
+INFO: SHADER: [ID 1] Vertex shader compiled successfully
+INFO: SHADER: [ID 2] Fragment shader compiled successfully
+INFO: SHADER: [ID 3] Program shader loaded successfully
+INFO: SHADER: [ID 3] Default shader loaded successfully
+INFO: RLGL: Render batch vertex buffers loaded successfully in RAM (CPU)
+INFO: RLGL: Render batch vertex buffers loaded successfully in VRAM (GPU)
+INFO: RLGL: Default OpenGL state initialized successfully
+INFO: TEXTURE: [ID 2] Texture loaded successfully (128x128 | GRAY_ALPHA | 1 mipmaps)
+INFO: FONT: Default font loaded successfully (224 glyphs)
+INFO: SYSTEM: Working Directory: /home/kambo/workspace/DeathWard
+INFO: TIMER: Target time per frame: 16.667 milliseconds
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Model basic data (glb) loaded successfully
+INFO:     > Meshes count: 1
+INFO:     > Materials count: 1 (+1 default)
+INFO: IMAGE: Data loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: TEXTURE: [ID 3] Texture loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: VAO: [ID 2] Mesh uploaded successfully to VRAM (GPU)
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: Death (179 frames, 3.033333s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: DeathRifle (224 frames, 3.800000s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: DodgeForward (53 frames, 0.900000s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: DodgeSlide (91 frames, 1.533333s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: DodgeStanding (169 frames, 2.866667s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: Fire (81 frames, 1.366667s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: Idle (585 frames, 9.933333s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: Run (30 frames, 0.500000s)
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/bandit/bandit.glb] Loaded animation: Walk (61 frames, 1.033333s)
+INFO: BANDIT: Ready, 48 bones and 9 animation clips
+INFO: SHADER: [ID 4] Vertex shader compiled successfully
+INFO: SHADER: [ID 5] Fragment shader compiled successfully
+INFO: SHADER: [ID 6] Program shader loaded successfully
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/flame.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/assets/particles/flame.glb] Model basic data (glb) loaded successfully
+INFO:     > Meshes count: 1
+INFO:     > Materials count: 1 (+1 default)
+INFO: VAO: [ID 3] Mesh uploaded successfully to VRAM (GPU)
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/ember.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 4] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 4] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 5] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 5] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/ember.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 6] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 6] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 7] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 7] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/rock.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/assets/particles/rock.glb] Model basic data (glb) loaded successfully
+INFO:     > Meshes count: 1
+INFO:     > Materials count: 1 (+1 default)
+INFO: VAO: [ID 4] Mesh uploaded successfully to VRAM (GPU)
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 8] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 8] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/woodchip.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/assets/particles/woodchip.glb] Model basic data (glb) loaded successfully
+INFO:     > Meshes count: 1
+INFO:     > Materials count: 1 (+1 default)
+INFO: IMAGE: Data loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: TEXTURE: [ID 9] Texture loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: VAO: [ID 5] Mesh uploaded successfully to VRAM (GPU)
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 10] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 10] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/ember.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 11] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 11] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/rock.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/assets/particles/rock.glb] Model basic data (glb) loaded successfully
+INFO:     > Meshes count: 1
+INFO:     > Materials count: 1 (+1 default)
+INFO: VAO: [ID 6] Mesh uploaded successfully to VRAM (GPU)
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 12] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 12] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 13] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 13] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 14] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 14] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/rock.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/assets/particles/rock.glb] Model basic data (glb) loaded successfully
+INFO:     > Meshes count: 1
+INFO:     > Materials count: 1 (+1 default)
+INFO: VAO: [ID 7] Mesh uploaded successfully to VRAM (GPU)
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/ember.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 15] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 15] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 16] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 16] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 17] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 17] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 18] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 18] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/assets/particles/smoke.png] File loaded successfully
+INFO: IMAGE: Data loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 19] Texture loaded successfully (200x200 | R8G8B8A8 | 1 mipmaps)
+INFO: TEXTURE: [ID 19] Mipmaps generated automatically, total: 8
+INFO: FILEIO: [/home/kambo/workspace/DeathWard/build/assets/western/western.glb] File loaded successfully
+INFO: MODEL: [/home/kambo/workspace/DeathWard/build/assets/western/western.glb] Model basic data (glb) loaded successfully
+INFO:     > Meshes count: 31
+INFO:     > Materials count: 2 (+1 default)
+INFO: IMAGE: Data loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: TEXTURE: [ID 20] Texture loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: IMAGE: Data loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: TEXTURE: [ID 21] Texture loaded successfully (2048x2048 | R8G8B8 | 1 mipmaps)
+INFO: VAO: [ID 8] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 9] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 10] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 11] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 12] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 13] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 14] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 15] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 16] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 17] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 18] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 19] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 20] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 21] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 22] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 23] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 24] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 25] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 26] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 27] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 28] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 29] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 30] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 31] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 32] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 33] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 34] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 35] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 36] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 37] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 38] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 39] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 40] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 41] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 42] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 43] Mesh uploaded successfully to VRAM (GPU)
+INFO: SHADER: [ID 7] Vertex shader compiled successfully
+INFO: SHADER: [ID 8] Fragment shader compiled successfully
+INFO: SHADER: [ID 9] Program shader loaded successfully
+INFO: TEXTURE: [ID 20] Mipmaps generated automatically, total: 12
+INFO: TEXTURE: [ID 21] Mipmaps generated automatically, total: 12
+INFO: WESTERN: Ready, 31 textured assets in 36 mesh batches
+INFO: SHADER: [ID 10] Vertex shader compiled successfully
+INFO: SHADER: [ID 11] Fragment shader compiled successfully
+INFO: SHADER: [ID 12] Program shader loaded successfully
+INFO: VAO: [ID 44] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 45] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 46] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 47] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 48] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 49] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 50] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 51] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 52] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 53] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 54] Mesh uploaded successfully to VRAM (GPU)
+INFO: SHADER: [ID 13] Vertex shader compiled successfully
+INFO: SHADER: [ID 14] Fragment shader compiled successfully
+INFO: SHADER: [ID 15] Program shader loaded successfully
+INFO: VAO: [ID 55] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 56] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 57] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 58] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 59] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 60] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 61] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 62] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 63] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 64] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 65] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 66] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 67] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 68] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 69] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 70] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 71] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 72] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 73] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 74] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 75] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 76] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 77] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 78] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 79] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 80] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 81] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 82] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 83] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 84] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 85] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 86] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 87] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 88] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 89] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 90] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 91] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 92] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 93] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 94] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 95] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 96] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 97] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 98] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 99] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 100] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 101] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 102] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 103] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 104] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 105] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 106] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 107] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 108] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 109] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 110] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 111] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 112] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 113] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 114] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 115] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 116] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 117] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 118] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 119] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 120] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 121] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 122] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 123] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 124] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 125] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 126] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 127] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 128] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 129] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 130] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 131] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 132] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 133] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 134] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 135] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 136] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 137] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 138] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 139] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 140] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 141] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 142] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 143] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 144] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 145] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 146] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 147] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 148] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 149] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 150] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 151] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 152] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 153] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 154] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 155] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 156] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 157] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 158] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 159] Mesh uploaded successfully to VRAM (GPU)
+INFO: VAO: [ID 160] Mesh uploaded successfully to VRAM (GPU)
+INFO: TEXTURE: [ID 22] Texture loaded successfully (641x849 | R8G8B8A8 | 1 mipmaps)
+INFO: SHADER: [ID 16] Vertex shader compiled successfully
+INFO: SHADER: [ID 17] Fragment shader compiled successfully
+INFO: SHADER: [ID 18] Program shader loaded successfully
+INFO: SHADER: [ID 19] Vertex shader compiled successfully
+INFO: SHADER: [ID 20] Fragment shader compiled successfully
+INFO: SHADER: [ID 21] Program shader loaded successfully
+INFO: SHADER: [ID 22] Vertex shader compiled successfully
+INFO: SHADER: [ID 23] Fragment shader compiled successfully
+INFO: SHADER: [ID 24] Program shader loaded successfully
+INFO: SHADER: [ID 25] Vertex shader compiled successfully
+INFO: SHADER: [ID 26] Fragment shader compiled successfully
+INFO: SHADER: [ID 27] Program shader loaded successfully
+INFO: SHADER: [ID 28] Vertex shader compiled successfully
+INFO: SHADER: [ID 29] Fragment shader compiled successfully
+INFO: SHADER: [ID 30] Program shader loaded successfully
+INFO: TEXTURE: Depth texture loaded successfully
+INFO: TEXTURE: Depth texture loaded successfully
+INFO: SHADER: [ID 31] Fragment shader compiled successfully
+INFO: SHADER: [ID 32] Program shader loaded successfully
+INFO: SHADER: [ID 33] Fragment shader compiled successfully
+INFO: SHADER: [ID 34] Program shader loaded successfully
+INFO: TEXTURE: [ID 25] Texture loaded successfully (1440x900 | R16G16B16A16 | 1 mipmaps)
+INFO: TEXTURE: Depth texture loaded successfully
+INFO: TEXTURE: [ID 27] Texture loaded successfully (360x225 | R16G16B16A16 | 1 mipmaps)
+INFO: TEXTURE: [ID 28] Texture loaded successfully (360x225 | R16G16B16A16 | 1 mipmaps)
+INFO: SHADER: [ID 35] Fragment shader compiled successfully
+INFO: SHADER: [ID 36] Program shader loaded successfully
+INFO: SHADER: [ID 37] Fragment shader compiled successfully
+INFO: SHADER: [ID 38] Program shader loaded successfully
+INFO: TEXTURE: [ID 29] Texture loaded successfully (1440x900 | R16G16B16A16 | 1 mipmaps)
+INFO: TEXTURE: Depth texture loaded successfully
+INFO: FILEIO: [docs/reports/isaac-enemy-port/shadow/linux-contact.png] File saved successfully
+INFO: FILEIO: [docs/reports/isaac-enemy-port/shadow/linux-contact.png] Image exported successfully
+ENEMY_PROBE id=11.0 frames=90 alive=1 hp=40 shots=1 threats=1
+ENEMY_ACTOR id=11.0 hp=40 max_hp=40 state=0 owner=0 x=-79.9088 y=0.85 z=-125.629 radius=0.6 speed=1.0515 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0
+ENEMY_ACTOR id=23.0.1 hp=64 max_hp=64 state=0 owner=19 x=-78.9531 y=0.85 z=-128.147 radius=0.5 speed=1.37118 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0
+ENEMY_ACTOR id=23.0.1 hp=64 max_hp=64 state=0 owner=19 x=-78.7928 y=0.85 z=-123.629 radius=0.5 speed=1.49991 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0
+ENEMY_ACTOR id=23.0.1 hp=64 max_hp=64 state=0 owner=19 x=-77.489 y=0.85 z=-127.164 radius=0.5 speed=1.50005 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0
+ENEMY_ACTOR id=23.0.1 hp=64 max_hp=64 state=0 owner=19 x=-78.4793 y=0.85 z=-126.196 radius=0.5 speed=1.50002 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0
+ENEMY_ACTOR id=23.0.1 hp=64 max_hp=64 state=0 owner=19 x=-79.0668 y=0.85 z=-127.129 radius=0.5 speed=1.14057 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0
+INFO: TEXTURE: [ID 3] Unloaded texture data from VRAM (GPU)
+INFO: VAO: [ID 2] Unloaded vertex array data from VRAM (GPU)
+INFO: MODEL: Unloaded model (and meshes) from RAM and VRAM
+INFO: VAO: [ID 44] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 45] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 46] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 47] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 48] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 49] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 50] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 51] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 52] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 53] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 54] Unloaded vertex array data from VRAM (GPU)
+INFO: SHADER: [ID 12] Unloaded shader program data from VRAM (GPU)
+INFO: VAO: [ID 55] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 56] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 57] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 58] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 59] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 60] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 61] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 62] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 63] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 64] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 65] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 66] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 67] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 68] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 69] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 70] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 71] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 72] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 73] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 74] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 75] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 76] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 77] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 78] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 79] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 80] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 81] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 82] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 83] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 84] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 85] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 86] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 87] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 88] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 89] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 90] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 91] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 92] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 93] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 94] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 95] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 96] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 97] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 98] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 99] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 100] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 101] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 102] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 103] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 104] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 105] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 106] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 107] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 108] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 109] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 110] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 111] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 112] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 113] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 114] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 115] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 116] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 117] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 118] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 119] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 120] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 121] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 122] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 123] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 124] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 125] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 126] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 127] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 128] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 129] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 130] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 131] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 132] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 133] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 134] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 135] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 136] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 137] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 138] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 139] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 140] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 141] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 142] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 143] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 144] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 145] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 146] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 147] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 148] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 149] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 150] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 151] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 152] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 153] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 154] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 155] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 156] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 157] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 158] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 159] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 160] Unloaded vertex array data from VRAM (GPU)
+INFO: SHADER: [ID 15] Unloaded shader program data from VRAM (GPU)
+INFO: TEXTURE: [ID 22] Unloaded texture data from VRAM (GPU)
+INFO: FBO: [ID 1] Unloaded framebuffer from VRAM (GPU)
+INFO: FBO: [ID 2] Unloaded framebuffer from VRAM (GPU)
+INFO: SHADER: [ID 18] Unloaded shader program data from VRAM (GPU)
+INFO: SHADER: [ID 21] Unloaded shader program data from VRAM (GPU)
+INFO: SHADER: [ID 24] Unloaded shader program data from VRAM (GPU)
+INFO: SHADER: [ID 27] Unloaded shader program data from VRAM (GPU)
+INFO: SHADER: [ID 30] Unloaded shader program data from VRAM (GPU)
+INFO: TEXTURE: [ID 20] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 21] Unloaded texture data from VRAM (GPU)
+INFO: VAO: [ID 8] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 9] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 10] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 11] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 12] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 13] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 14] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 15] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 16] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 17] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 18] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 19] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 20] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 21] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 22] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 23] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 24] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 25] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 26] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 27] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 28] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 29] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 30] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 31] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 32] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 33] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 34] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 35] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 36] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 37] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 38] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 39] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 40] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 41] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 42] Unloaded vertex array data from VRAM (GPU)
+INFO: VAO: [ID 43] Unloaded vertex array data from VRAM (GPU)
+INFO: MODEL: Unloaded model (and meshes) from RAM and VRAM
+INFO: SHADER: [ID 9] Unloaded shader program data from VRAM (GPU)
+INFO: FBO: [ID 3] Unloaded framebuffer from VRAM (GPU)
+INFO: FBO: [ID 4] Unloaded framebuffer from VRAM (GPU)
+INFO: FBO: [ID 5] Unloaded framebuffer from VRAM (GPU)
+INFO: FBO: [ID 6] Unloaded framebuffer from VRAM (GPU)
+INFO: SHADER: [ID 32] Unloaded shader program data from VRAM (GPU)
+INFO: SHADER: [ID 34] Unloaded shader program data from VRAM (GPU)
+INFO: SHADER: [ID 36] Unloaded shader program data from VRAM (GPU)
+INFO: SHADER: [ID 38] Unloaded shader program data from VRAM (GPU)
+INFO: VAO: [ID 3] Unloaded vertex array data from VRAM (GPU)
+INFO: MODEL: Unloaded model (and meshes) from RAM and VRAM
+INFO: TEXTURE: [ID 4] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 5] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 6] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 7] Unloaded texture data from VRAM (GPU)
+INFO: VAO: [ID 4] Unloaded vertex array data from VRAM (GPU)
+INFO: MODEL: Unloaded model (and meshes) from RAM and VRAM
+INFO: TEXTURE: [ID 8] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 9] Unloaded texture data from VRAM (GPU)
+INFO: VAO: [ID 5] Unloaded vertex array data from VRAM (GPU)
+INFO: MODEL: Unloaded model (and meshes) from RAM and VRAM
+INFO: TEXTURE: [ID 10] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 11] Unloaded texture data from VRAM (GPU)
+INFO: VAO: [ID 6] Unloaded vertex array data from VRAM (GPU)
+INFO: MODEL: Unloaded model (and meshes) from RAM and VRAM
+INFO: TEXTURE: [ID 12] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 13] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 14] Unloaded texture data from VRAM (GPU)
+INFO: VAO: [ID 7] Unloaded vertex array data from VRAM (GPU)
+INFO: MODEL: Unloaded model (and meshes) from RAM and VRAM
+INFO: TEXTURE: [ID 15] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 16] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 17] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 18] Unloaded texture data from VRAM (GPU)
+INFO: TEXTURE: [ID 19] Unloaded texture data from VRAM (GPU)
+INFO: SHADER: [ID 6] Unloaded shader program data from VRAM (GPU)
+INFO: TEXTURE: [ID 2] Unloaded texture data from VRAM (GPU)
+INFO: SHADER: [ID 3] Default shader unloaded successfully
+INFO: TEXTURE: [ID 1] Default texture unloaded successfully
+INFO: Window closed successfully

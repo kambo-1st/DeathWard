@@ -1,0 +1,54 @@
+{
+  "updated_utc": "2026-10-28T12:54:38.231895+00:00",
+  "previous_goal_turn": "progress: current Gaper evidence recorded and source preflight preserved",
+  "this_goal_turn": "progress: dedicated Small Maggot external controller,32HP,natural placement; three native suites,753-floor regression and four WASM scenario types pass; four native and four browser captures inspected. Natural Black Knight fire death diagnosed and captured as an interaction regression. Parent source vector helpers pinned.",
+  "mechanics_fingerprint": "96d4ddaff380d3af",
+  "native_tests": {
+    "session": 43663,
+    "exit": 0
+  },
+  "game_build": {
+    "session": 55710,
+    "exit": 0
+  },
+  "native_captures": {
+    "session": 10403,
+    "exit": 0
+  },
+  "floor": {
+    "session": 4341,
+    "state": "complete",
+    "result": "floor-result.json",
+    "exit": 0,
+    "floors": 753
+  },
+  "wasm": {
+    "session": 29755,
+    "state": "complete",
+    "log": "wasm-build.log",
+    "exit": 0,
+    "artifacts": "wasm-artifacts.json"
+  },
+  "browser": {
+    "state": "complete",
+    "script": "web/small-maggot-test.cjs",
+    "syntax_check": "passed",
+    "requires": "Finish current build and verify compressed artifacts before tests.",
+    "session": 73873,
+    "log": "browser.log",
+    "output": "../web/results.json",
+    "previous_session": 75509,
+    "previous_exit": 1,
+    "previous_results": "../web-initial/results.json",
+    "failure": "Natural selected actor killed by actual Black Knight32damage fire jet; diagnostic and strengthened interaction assertion recorded.",
+    "exit": 0,
+    "cases": 4,
+    "summary": "../browser-summary.json"
+  },
+  "next": "Continue Rotten Gaper parent implementation from ../rotten-gaper/preflight.json: source subtype dispatch, forces, brood avoidance/summoning and inertia orbit. Small Maggot current validation complete within scoped normal-ground behavior; full six-gate acceptance remains open.",
+  "preview_server": {
+    "session": 76948,
+    "url": "http://127.0.0.1:8767/",
+    "verification": "HTTP200 before browser launch"
+  }
+}

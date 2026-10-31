@@ -1,0 +1,12 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_spider_variant_tests
+[100%] Linking CXX executable deathward_spider_variant_tests
+[100%] Built target deathward_spider_variant_tests
+[ 21%] Built target glfw
+[ 28%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 96%] Built target deathward_core
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

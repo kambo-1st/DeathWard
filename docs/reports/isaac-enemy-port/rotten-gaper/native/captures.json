@@ -1,0 +1,180 @@
+[
+  {
+    "name": "swift",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.3.1",
+      "--enemy-camera-follow",
+      "--frames",
+      "60",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/swift.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  },
+  {
+    "name": "frantic",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.3.2",
+      "--enemy-camera-follow",
+      "--frames",
+      "60",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/frantic.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  },
+  {
+    "name": "brood",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.3.3",
+      "--enemy-camera-follow",
+      "--frames",
+      "420",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/brood.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  },
+  {
+    "name": "slow",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.3.4",
+      "--enemy-camera-follow",
+      "--frames",
+      "60",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/slow.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  },
+  {
+    "name": "orbit",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.3.5",
+      "--enemy-camera-follow",
+      "--frames",
+      "140",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/orbit.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  },
+  {
+    "name": "orbit-cover",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.3.5",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/orbit-cover.png",
+      "--enemy-terrain",
+      "cover"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  },
+  {
+    "name": "natural-frantic",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-10.3.2",
+      "--enemy-camera-follow",
+      "--frames",
+      "60",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/natural-frantic.png",
+      "--resident-seed",
+      "0",
+      "--resident-floor",
+      "5"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  },
+  {
+    "name": "natural-brood",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-10.3.3",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native/natural-brood.png",
+      "--resident-seed",
+      "1",
+      "--resident-floor",
+      "6"
+    ],
+    "exit": 0,
+    "binary_sha256": "5cf8df6629abe662029ebb8482972b7a1d4291fb898d0a13d5a5ee5179acf726"
+  }
+]

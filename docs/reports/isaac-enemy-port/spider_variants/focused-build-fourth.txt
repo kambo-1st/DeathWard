@@ -1,0 +1,6 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnvironmentActors.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_spider_variant_tests
+[100%] Linking CXX executable deathward_spider_variant_tests
+[100%] Built target deathward_spider_variant_tests

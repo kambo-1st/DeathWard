@@ -1,0 +1,98 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "dedicated_parent_controller_scoped_native_checks_pass",
+  "records": [
+    "10.3.0",
+    "10.3.1",
+    "10.3.2",
+    "10.3.3",
+    "10.3.4",
+    "10.3.5",
+    "853.0.0"
+  ],
+  "evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/manifest.json",
+      "sha256": "b5fa0a5a54043dd1d4a85f7caf81d84cfacb3f2356ff05506f4c9d179ccc58d2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-manifest.json",
+      "sha256": "363a43f2ed8a15e9b72f10977966a1cd10f4ae2ab762036201cbdd1358083ada"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/manifest.json",
+      "sha256": "9470e814f83648f6e98c5a9778e7fe7a41f27fb08ff7cb984d708dca14ad9797"
+    }
+  ],
+  "credit": "Source-timed parent controller now implemented; see implementation-contract.json. Full behavior/status/readability/balance/performance acceptance remains open.",
+  "confirmed_parent_findings": [
+    {
+      "field": "health",
+      "source": "source/records.json; installed entities2.xml",
+      "finding": "All six Rotten Gaper subtypes have source baseHP24, stageHP0 and mass5. Existing HP conversion3.2 implies76.8, versus provisional88."
+    },
+    {
+      "field": "controller",
+      "source": "source/controller.asm at4c70e0; ordinary Gaper delegate4f6f2f",
+      "finding": "Separate controller from ordinary/Frowning/Flaming Gapers. Shared branches also cover Dead Isaac912; do not inherit those projectiles into Rotten Gaper."
+    },
+    {
+      "field": "subtype0",
+      "source": "4c7a75..4c7aeb",
+      "finding": "Initialization uses seeded bounded modulo5+1 and Morph to select one of five nonzero subtypes; enters state4. It does not run the ordinary movement branch in that same state0 update."
+    },
+    {
+      "field": "force",
+      "source": "4c72ae;4c7367..4c737d;packed tableb6bcd0",
+      "finding": "Baseforce.6 times subtype multipliers1.2,1.5,.8,.9,1.9 gives.72,.9,.48,.54,1.14 for1..5. These are acceleration forces, not fixed chase speeds."
+    },
+    {
+      "field": "animation",
+      "source": "4c7243..4c72ae;animations/manifest.json",
+      "finding": "Head follows walk frame. All five source visual variants have22-frame30FPS looping walk/head animations. No Frowning activation overlay."
+    },
+    {
+      "field": "brood_target",
+      "source": "controller subtype3 target and evade branches; shared evade helper7a4830",
+      "finding": "When player is farther than80 native units, search within60 for another same-type/variant Rotten Gaper with a different subtype and matching friendliness, excluding flag0x10. Remember the target for30..44 frames and use evade movement. Fear/shrink branch instead evades the player. Exact global status semantics remain open."
+    },
+    {
+      "field": "brood_spawn",
+      "source": "controller subtype3 counter+b14;spawn853.0.0;owned_children6a6f60",
+      "finding": "Counter must exceed60 native frames; then1/8 chance per eligible update. On chance success reset counter before checking owner-specific childcount<6. Spawn Small Maggot with zero velocity, init its controller, retain parent unique ID in+bcc. This is not a strict two-second summon interval."
+    },
+    {
+      "field": "orbit",
+      "source": "controller subtype5 direct-line branch",
+      "finding": "Force scales by.75+.25*clamp((distance-80)/100,0,1). Direct-path branch rotates velocity by uniform+-20degrees, resizes to player distance, constructs a radius60 target around the player and applies force with.9friction. Blocked branch uses ground pathfinder. Pinned helpers in source/parent-helpers.json preserve exactly zero vectors; positive-length vectors normalize/resize. No fallback tangent should be invented."
+    },
+    {
+      "field": "routing",
+      "source": "controller path calls",
+      "finding": "Subtype2 and blocked subtype5 pass marker-1; other ordinary subtypes pass900. This is not evidence of flying or obstacle bypass."
+    }
+  ],
+  "child_review": {
+    "dispatch": "Type853 maps case69a253 to4c3fd0; raw function ends4c509c ret. Controller is shared; each branch must be filtered by exact type/variant.",
+    "animation": "MoveDown/Up/Hori/DiagonalUp/DiagonalDown13-frame loops; Bullet8-loop; Land16 nonloop at30FPS. No one-second emergence clip in the extracted Small Maggot animation.",
+    "initialization_observation": "At4c4c28 state3 is set, a random unit direction is constructed and a local seed sets10..39 frames. Confirm applicable type/variant flow and source physics before coding.",
+    "partial_movement_observation": "State3 decrements its timer; native flags and a+b14 decision flag alter direction targeting. Calls695680 and nearby-NPC checks need full interpretation. Do not substitute a generic slow chase.",
+    "remaining": [
+      "Native thrown/control/status/camouflage branches and all alternate producers.",
+      "Full collision-mass/save fidelity, readability, balance and controlled performance.",
+      "No new WASM checks requested by user2026-10-28; previous child browser evidence remains historical."
+    ],
+    "normal_ground_contract": "../small-maggot/implementation-contract.json; dedicated runtime replaces provisional emergence/fixed-speed chase."
+  },
+  "provisional_mismatches": [],
+  "next_implementation_order": [
+    "Retain documented native status/grid-cache/visual/balance/performance gaps.",
+    "Continue missing regular Nest205.0.0 source review and required offspring.",
+    "No new WASM checks, as explicitly requested."
+  ],
+  "limits": [
+    "No exact PRNG/geometry parity claim.",
+    "No source sprite artwork imported.",
+    "No full status, balance, performance or six-gate acceptance."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 853,
+    "case": "0x69a253",
+    "controller": "0x4c3fd0"
+  },
+  "window": {
+    "start": "0x4c3fd0",
+    "end_exclusive": "0x4c509d",
+    "raw_sha256": "e44c2c67b07fbd6b6299c11e8768cdcbcabb49b32c908c1d10544893946917f8",
+    "sha256": "0787d5aa0bff7b5a96afdf5d517d92d4e7ddb5281e432ca0e9e862a62b3a013a",
+    "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-controller.asm"
+  },
+  "scope": "Shared controller, not every branch is853.0.0. Child behavior and external jump-table data require review.",
+  "existing_shared_evidence": [
+    "docs/reports/isaac-enemy-port/danny/source/owned_children.asm",
+    "docs/reports/isaac-enemy-port/long_legs/source/evade_pathfinder.asm"
+  ]
+}

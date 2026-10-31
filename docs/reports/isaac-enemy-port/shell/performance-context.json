@@ -1,0 +1,12 @@
+{
+  "kernel": "Linux 6.18.33.2-microsoft-standard-WSL2",
+  "compiler": "c++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "cmake": [
+    "CMAKE_BUILD_TYPE:STRING=Release",
+    "CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++",
+    "CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG"
+  ],
+  "scope": "Native fixed-step simulation only, synthetic50x50arena,12actors; no rendering, no baseline comparison and no performance acceptance.",
+  "protocol": "60warmup steps then1800measured steps per intact/exposed fixture. Measured after native/browser builds and CTest/captures finished, before final browser run.",
+  "core_library_sha256": "8121240a0ac993c3c9da68b176205f89270e40fb9cd86215998b63f48a067afe"
+}

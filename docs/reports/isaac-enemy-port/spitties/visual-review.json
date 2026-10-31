@@ -1,0 +1,109 @@
+{
+  "inspected": 20,
+  "accepted_smoke": 16,
+  "limited": 4,
+  "full_gate": false,
+  "method": "Each listed image opened and inspected individually. Capture-only camera follows the actor/death position without changing gameplay. Earlier diagnostics and limited views are explicitly identified; other archived images are not certified. FPS overlays are not controlled performance evidence.",
+  "captures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/native-spitty-final.png",
+      "result": "limited",
+      "notes": "Actor reaches the foreground cliff; visible head/body and red occlusion outline identify it, but the cliff hides part of the silhouette."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/native-conjoined-final.png",
+      "result": "limited",
+      "notes": "Both ends are partly visible near the cliff boundary, but foreground terrain limits full silhouette inspection."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/native-spitty-early.png",
+      "result": "accepted_smoke",
+      "notes": "Single-mouth low-poly body is unobstructed on open floor; facing shot visible toward the right cliff."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/native-conjoined-early.png",
+      "result": "accepted_smoke",
+      "notes": "Unobstructed two-ended body; simultaneous opposite projectiles visible to either side."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/native-tainted-final.png",
+      "result": "accepted_smoke",
+      "notes": "Larger purple body and red growths distinguish the Tainted variant; several airborne shots and ground shadows are visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/native-tainted-death-final.png",
+      "result": "accepted_smoke",
+      "notes": "Removed actor with a visible ring of physical shots and shadows around its death position; motion/handedness proven separately by telemetry and native tests."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web/spitty-cover-scene.png",
+      "result": "limited",
+      "notes": "Failed diagnostic fixture spawned the actor inside a crate. Red hidden-enemy outline is visible; this does not validate enemy movement or unobstructed appearance. The capture setup is corrected for the next build."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web/spitty-attack.png",
+      "result": "accepted_smoke",
+      "notes": "Ordinary body and facing shot visible beside the cliff; boundary occlusion remains a limitation outside this frame."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web/conjoined-attack.png",
+      "result": "limited",
+      "notes": "Foreground cliff partly hides the Conjoined body; red outline locates it but cannot establish full silhouette readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web/tainted-spitty-stream.png",
+      "result": "accepted_smoke",
+      "notes": "Purple body and red growths are clearly visible with airborne shots. Historical capture used a cumulative stream flag, so this image alone does not establish which volley is currently visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/native-cover-corrected.png",
+      "result": "accepted_smoke",
+      "notes": "Corrected capture starts the grounded actor beside the crate; body is visible on open ground and the crate remains intact. Full movement/collision behavior is checked by browser samples and native tests."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/spitty-open.png",
+      "result": "accepted_smoke",
+      "notes": "Unobstructed single-mouth body and facing shot on open ground."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/conjoined-open.png",
+      "result": "accepted_smoke",
+      "notes": "Two-ended body and projectiles on opposite sides are visible on open ground."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/tainted-spitty-open.png",
+      "result": "accepted_smoke",
+      "notes": "Distinct larger purple body, red growths and spread-out slowing projectile stream visible beside the cliff; earlier shots remain in flight."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/spitty-cover-attack.png",
+      "result": "accepted_smoke",
+      "notes": "Grounded body has moved beyond the crate and remains visible beside a barrel. Corrected setup keeps the crate as real cover."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/spitty-river-open.png",
+      "result": "accepted_smoke",
+      "notes": "Body is clearly visible on the river bank. Telemetry separately verifies it never enters blocked deep water or solid ground."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/tainted-death-death.png",
+      "result": "accepted_smoke",
+      "notes": "Body has disappeared; dense ring of physical shots and ground shadows remains. Opposite handedness and sixteen-shot count are verified by behavior checks."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/resident-spitty-open.png",
+      "result": "accepted_smoke",
+      "notes": "Actual seeded mixed room beside a river; Spitty body remains visible next to the protagonist. Player overlap is a limitation for full readability acceptance."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/resident-conjoined-open.png",
+      "result": "accepted_smoke",
+      "notes": "Actual seeded mixed room; two-ended actor visible near the passage, with the existing red occlusion outline. Full-camera occlusion acceptance remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/web-final/resident-tainted-open.png",
+      "result": "accepted_smoke",
+      "notes": "Actual late-floor mixed room; enlarged purple body and trailing projectile stream are distinct from the other residents."
+    }
+  ]
+}

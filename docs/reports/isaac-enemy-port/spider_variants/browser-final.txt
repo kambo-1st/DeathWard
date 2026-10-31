@@ -1,0 +1,8 @@
+PASS strider-stroke
+PASS strider-river
+PASS strider-cover
+PASS swarm-hops
+PASS swarm-group
+PASS swarm-player-flame
+PASS natural-strider
+PASS natural-swarm

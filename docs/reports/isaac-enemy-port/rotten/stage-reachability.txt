@@ -1,0 +1,28 @@
+5/35 Test: floor_progression
+Command: "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"floor_progression" start time: Oct 25 09:13 CET
+Output:
+----------------------------------------------------------
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+Reachable pool identities=18
+band=0 meanThreat=4.53968
+band=1 meanThreat=6.41758
+band=2 meanThreat=8.26168
+band=3 meanThreat=10.9398
+Validated 64 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss
+<end of output>
+Test time =  23.93 sec
+----------------------------------------------------------
+Test Passed.
+"floor_progression" end time: Oct 25 09:14 CET
+"floor_progression" time elapsed: 00:00:23
+----------------------------------------------------------
+
+6/35 Testing: item_builds

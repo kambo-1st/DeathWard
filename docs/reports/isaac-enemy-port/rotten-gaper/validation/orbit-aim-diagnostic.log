@@ -1,0 +1,22 @@
+mode=0 frame=599 enemyHP=28.8 shots=34 playerHP=100 pos=6.76103,4.71346
+mode=0 frame=1199 enemyHP=28.8 shots=67 playerHP=100 pos=7.22754,10.3112
+mode=0 frame=1799 enemyHP=28.8 shots=100 playerHP=100 pos=3.62344,14.6359
+mode=0 frame=2399 enemyHP=28.8 shots=134 playerHP=100 pos=-1.94007,15.2892
+mode=0 frame=2999 enemyHP=28.8 shots=167 playerHP=100 pos=-6.35416,11.8788
+mode=0 frame=3599 enemyHP=28.8 shots=200 playerHP=100 pos=-7.23114,6.2861
+mode=0 frames=3600 clear=0 playerHP=100
+mode=1 frame=599 enemyHP=76.8 shots=34 playerHP=100 pos=6.76103,4.71346
+mode=1 frame=1199 enemyHP=76.8 shots=67 playerHP=100 pos=7.22754,10.3112
+mode=1 frame=1799 enemyHP=76.8 shots=100 playerHP=100 pos=3.62344,14.6359
+mode=1 frame=2399 enemyHP=76.8 shots=134 playerHP=100 pos=-1.94007,15.2892
+mode=1 frame=2999 enemyHP=76.8 shots=167 playerHP=100 pos=-6.35416,11.8788
+mode=1 frame=3599 enemyHP=76.8 shots=200 playerHP=100 pos=-7.23114,6.2861
+mode=1 frames=3600 clear=0 playerHP=100
+mode=2 frame=599 enemyHP=76.8 shots=34 playerHP=100 pos=6.76103,4.71346
+mode=2 frame=1199 enemyHP=76.8 shots=67 playerHP=100 pos=7.22754,10.3112
+mode=2 frame=1799 enemyHP=76.8 shots=100 playerHP=100 pos=3.62344,14.6359
+mode=2 frame=2399 enemyHP=76.8 shots=134 playerHP=100 pos=-1.94007,15.2892
+mode=2 frame=2999 enemyHP=76.8 shots=167 playerHP=100 pos=-6.35416,11.8788
+mode=2 frame=3599 enemyHP=76.8 shots=200 playerHP=100 pos=-7.23114,6.2861
+mode=2 frames=3600 clear=0 playerHP=100
+mode=3 frames=106 clear=1 playerHP=100

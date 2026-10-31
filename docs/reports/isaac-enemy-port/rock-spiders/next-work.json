@@ -1,0 +1,22 @@
+{
+  "priority": "Regular enemies and required offspring first. Full653-record scope remains active.",
+  "next": [
+    "Hardy826.0.0 controller, its thrown Rock Spider offspring and impact projectile patterns.",
+    "Tinted Rock Spider818.1.0..3 needs actual Soul Heart resource and tinted-rock breakable production; do not add a generic pickup or ordinary floor weight."
+  ],
+  "source_findings": [
+    "Hardy installed controller4ee860, actualret4eface. Jump index4efae8, table4efad0. State0init4ee8c6;state3idle4ee924;states4and6slide4eeacb;state8attack4ef609;state16hit4ef72e.",
+    "Idle.95*.5 retention,1/5 roll gatedIsFrame5 and cooldown0. Attack1..3 all40frames withSlide event36;launchadds20/friction. Slide6loop,Hit26; hit completion sets60 cooldown.",
+    "Productive grid impact requiresstate!=6, gridkind3or4, normalized collisiondot>.5. Grid object destroyed via447f80 virtual14. Thirdimpactcallsdeath.",
+    "At4ef464 thirdimpact selects2or3 real Rock Spider actors. Native4e70a0 is a THROWN ACTOR factory, despite the provisional source filename rock_projectile_factory.asm. It directly creates818(normal/tinted/coal) or33.11 according tokind0/1/2/3, forcesstate16, initializes animation/subtype, then assignsheight andplanarvelocity. Vertical impulseU*2-5 =>[-5,-3]. This is not a projectile that waits for impact to spawn a spider.",
+    "Hardy child positions: opposite impactnormal rotated by (U-.5)*constantb6ab20 degrees, then20offset. XYimpulse1..3. Heightconstantb6aeb8 needsread. Nativecall4ef5b4 passeskind0 andparentHardy.",
+    "Complete the first/second/thirdimpact shot parameter review4ef32e..4ef464, sharedfire helpers6a1a20/6a3420, deathDip anddamagefilters4ef795 onward beforeimplementing. Fear/confusion/control and proper flags requireseparate review.",
+    "Additional verified constants: b6aeb8=-10 (Hardy thrown-child height); b6ab20=120 (child angular scatter width); b6a670=1.2 (third-impact projectile scale multiplier); b6a820=2.5 (Hardy damage multiplier for flags0x1000004: explosion/crush).",
+    "Hardy ordinary death explicitly creates type217 variant0 subtype0, then doubles its max/currentHP at4efa83. Do not reuse an ordinary1HP Dip without this health multiplier.",
+    "First impact sets subtype1, uses rock projectile variant9 and fire helper6a1a20 mode8 with velocity(10,0). Second sets subtype2, repeats ring then calls6a3420 mode6 with collision-related vector. Third calls death, scales ProjectileParams size1.2, flags0x10000, variant9, then6a3420 mode8 before the2\u20133 thrown live spiders. Helpers must still be decoded to prove shot count/distribution and split landing flags."
+  ],
+  "open_current_batch": [
+    "Fullstatus/item/control/stomp/championphysics, Singe-specific coalforce, nativebefore-controllerdamage filtering, moreprecisegrid/cleartimer behavior, savedstate, broad balance/performance and fullvisual acceptance."
+  ],
+  "acceptance": "No record in this batch is complete. Full six-gate objective remains unchanged."
+}

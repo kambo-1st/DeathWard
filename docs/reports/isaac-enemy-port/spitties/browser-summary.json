@@ -1,0 +1,81 @@
+{
+  "passed": 9,
+  "total": 9,
+  "cases": [
+    {
+      "name": "spitty",
+      "id": "31.0.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 240,
+      "movement": 17.67281802153797,
+      "pass": true
+    },
+    {
+      "name": "conjoined",
+      "id": "243.0.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 242,
+      "movement": 18.483225990994182,
+      "pass": true
+    },
+    {
+      "name": "tainted-spitty",
+      "id": "31.1.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 241,
+      "movement": 23.728805541992188,
+      "pass": true
+    },
+    {
+      "name": "spitty-cover",
+      "id": "31.0.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 242,
+      "movement": 19.61635766783798,
+      "pass": true
+    },
+    {
+      "name": "spitty-river",
+      "id": "31.0.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 240,
+      "movement": 22.81045850856317,
+      "pass": true
+    },
+    {
+      "name": "tainted-death",
+      "id": "31.1.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 243,
+      "movement": 23.436973571777344,
+      "pass": true
+    },
+    {
+      "name": "resident-spitty",
+      "id": "31.0.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 240,
+      "movement": 14.460490708136481,
+      "pass": true
+    },
+    {
+      "name": "resident-conjoined",
+      "id": "243.0.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 241,
+      "movement": 23.84126137053488,
+      "pass": true
+    },
+    {
+      "name": "resident-tainted",
+      "id": "31.1.0",
+      "report": "docs/reports/isaac-enemy-port/spitties/web-final/results.json",
+      "last_frame": 241,
+      "movement": 26.698802947998047,
+      "pass": true
+    }
+  ],
+  "browser": "149.0.7827.55",
+  "errors": [],
+  "note": "All nine cases pass on the final production WASM, with ground legality assertions, source health, dedicated controller activity and physical projectile checks. Earlier run failed a grounded-actor-inside-crate capture setup; preserved logs and images document its correction. No six-gate acceptance inferred."
+}

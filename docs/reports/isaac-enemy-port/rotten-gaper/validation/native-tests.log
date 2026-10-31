@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/5 Test  #2: mechanics_content ................   Passed    1.83 sec
+    Start 30: monster_behaviors
+2/5 Test #30: monster_behaviors ................   Passed    3.69 sec
+    Start 82: gaper_family
+3/5 Test #82: gaper_family .....................   Passed    0.36 sec
+    Start 83: rotten_gaper_family
+4/5 Test #83: rotten_gaper_family ..............   Passed    4.56 sec
+    Start 84: small_maggot_family
+5/5 Test #84: small_maggot_family ..............   Passed    1.57 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  12.01 sec

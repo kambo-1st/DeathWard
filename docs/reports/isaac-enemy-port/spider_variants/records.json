@@ -1,0 +1,80 @@
+{
+  "814.0.0": {
+    "xml": {
+      "anm2path": "814.000_strider.anm2",
+      "baseHP": "6.5",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "gridCollision": "nopits",
+      "id": "814",
+      "name": "#STRIDER",
+      "numGridCollisionPoints": "8",
+      "portrait": "215",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "tags": "spider",
+      "variant": "0"
+    },
+    "room_library_presence": {
+      "rooms/27.downpour.stb": {
+        "templates": 92,
+        "positive_weight_templates": 92
+      },
+      "rooms/36.backwards.stb": {
+        "templates": 6,
+        "positive_weight_templates": 6
+      },
+      "rooms/greed/27.downpour.stb": {
+        "templates": 18,
+        "positive_weight_templates": 18
+      }
+    }
+  },
+  "884.0.0": {
+    "xml": {
+      "anm2path": "884.000_swarm spider.anm2",
+      "baseHP": "4.5",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "884",
+      "name": "#SWARM_SPIDER",
+      "numGridCollisionPoints": "12",
+      "portrait": "318",
+      "reroll": "true",
+      "shadowSize": "11",
+      "stageHP": "0.2",
+      "tags": "spider",
+      "variant": "0"
+    },
+    "room_library_presence": {
+      "rooms/02.cellar.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/03.burning basement.stb": {
+        "templates": 11,
+        "positive_weight_templates": 11
+      },
+      "rooms/05.catacombs.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/greed/03.burning basement.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      }
+    }
+  }
+}

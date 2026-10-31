@@ -1,0 +1,117 @@
+Start testing: Oct 28 14:21 CET
+----------------------------------------------------------
+2/109 Testing: mechanics_content
+2/109 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 28 14:21 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,-7 new=1,9
+Mechanics contracts passed
+<end of output>
+Test time =   2.00 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 28 14:21 CET
+"mechanics_content" time elapsed: 00:00:02
+----------------------------------------------------------
+
+30/109 Testing: monster_behaviors
+30/109 Test: monster_behaviors
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_behaviors" start time: Oct 28 14:21 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 207 entries including offspring
+ROTTEN_STARTING_KIT subtype=1 seconds=0.966667 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=0.933333 hp=87.5 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=7.66667 hp=25 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=0.95 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=1.48333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249074 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=1.0688 z=7.88158 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=45 x=-0.132168 z=6.93303 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=46 x=-1.06714 z=8.13257 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=47 x=-1.70836 z=6.36956 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=48 x=0.119447 z=9.06868 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=44 x=-0.44027 z=1.36485 waypoints=2 waypoint=-0.32,1.32
+GROUND_PASSAGE type=10.3.4 entity=45 x=0.999305 z=8.39697 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.248328 z=6.94995 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.03485 z=1.29761 waypoints=2 waypoint=0.32,1.32
+GROUND_PASSAGE type=10.3.4 entity=48 x=-0.891281 z=8.60912 waypoints=1 waypoint=0,8
+FAIL: ground steering allows every pursuer through a narrow opening
+<end of output>
+Test time =   3.49 sec
+----------------------------------------------------------
+Test Failed.
+"monster_behaviors" end time: Oct 28 14:21 CET
+"monster_behaviors" time elapsed: 00:00:03
+----------------------------------------------------------
+
+82/109 Testing: gaper_family
+82/109 Test: gaper_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_gaper_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"gaper_family" start time: Oct 28 14:21 CET
+Output:
+----------------------------------------------------------
+MOVEMENT hp32_32_28_8=1 first_tick=1 source_acceleration=1 analytic30ticks=1 arrival=1 no_route=1 walk22=1
+AWARENESS closed_chase=1 delayed_open=1 permanent_wake=1 animation20=1 reentry=1 cover=1
+DAMAGE fire_vulnerable=3 no_ignition=1 no_trail=1 contact_base10_global_multiplier=1 partition30_120=1
+EXTERNAL immutable_reload=1 runtime_force=1 rejected_contracts=11
+PLACEMENT bands0_1=1 scorched0_only=1 replacement60percent=1 support_reserve=1600
+PASS Gaper family
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"gaper_family" end time: Oct 28 14:21 CET
+"gaper_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+83/109 Testing: rotten_gaper_family
+83/109 Test: rotten_gaper_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_rotten_gaper_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"rotten_gaper_family" start time: Oct 28 14:21 CET
+Output:
+----------------------------------------------------------
+IDENTITY seeded128=1 all_five=1 exact=1 health76.8=1 PHYSICS analytic30=1 initialization=1
+ORBIT zero_vector=1 source_force=1 radius6=1 cover=1 partition30_120=1
+BROOD births=62..91 owner_cap=1 cap_reset=1 refill=1 two_parents=1 completion=1
+AVOIDANCE selection=1 retention=1 flee=1 death=1 filters=1 INTEGRATION contact=1 fire=1 stun=1 reentry=1
+EXTERNAL reload=1 immutable=1 invalid_contracts=12
+Rotten Gaper checks passed
+<end of output>
+Test time =   4.70 sec
+----------------------------------------------------------
+Test Passed.
+"rotten_gaper_family" end time: Oct 28 14:21 CET
+"rotten_gaper_family" time elapsed: 00:00:04
+----------------------------------------------------------
+
+84/109 Testing: small_maggot_family
+84/109 Test: small_maggot_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_small_maggot_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"small_maggot_family" start time: Oct 28 14:21 CET
+Output:
+----------------------------------------------------------
+PHYSICS source_hp=32 initial_delay=10..39 first_force=1 analytic30=1
+AWARENESS cover_independent=1 damage=1 spread=1 clear_sight_force=1 ground_collision=1 collision_retarget=1
+INTEGRATION partition30_120=1 no_shots=1 stun=1 reentry=1 fire=1 contact=1 ownership_completion=1
+EXTERNAL runtime_reload=1 immutable=1 invalid_contracts=12
+Small Maggot checks passed
+<end of output>
+Test time =   1.59 sec
+----------------------------------------------------------
+Test Passed.
+"small_maggot_family" end time: Oct 28 14:21 CET
+"small_maggot_family" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: Oct 28 14:21 CET

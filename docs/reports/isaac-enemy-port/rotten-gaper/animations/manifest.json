@@ -1,0 +1,285 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/010.003_rotten gaper.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/010.003_rotten gaper.anm2",
+      "sha256": "7949503d8480ffce086365fcf29ddb67c193018a9cf49dc98ada0cf388bde8cd",
+      "checksum": "0xaab04a68",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/010.003_rotten gaper01.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/010.003_rotten gaper01.anm2",
+      "sha256": "ad36d4c0276cddd6f32c29923bfcbad2af79cfc5b9d5924850d3e668dc328e91",
+      "checksum": "0x4ed0887d",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/010.003_rotten gaper02.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/010.003_rotten gaper02.anm2",
+      "sha256": "d4f02b8a30a7a15076925af21ffffbf275f61592477c5b230027f084f7ae58b8",
+      "checksum": "0x93f5e22",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/010.003_rotten gaper03.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/010.003_rotten gaper03.anm2",
+      "sha256": "bf3cccc98777778aebf2b75177ca19b1a23d9774ca93c2a8ccb43d9569c35fce",
+      "checksum": "0xa5acfc6b",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/010.003_rotten gaper04.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/010.003_rotten gaper04.anm2",
+      "sha256": "fe15d865da89bcd1b365a3a642d33a2abb6b53b4196aa5fa42a179706d78caf1",
+      "checksum": "0xca015b5e",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Head",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/853.000_small maggot.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/853.000_small maggot.anm2",
+      "sha256": "5ed9f330bef7d3f7d8d84bb4f2e2878e9fe0917e8da7dca816956bd618d53126",
+      "checksum": "0xcc42f7d7",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "MoveDown",
+            "FrameNum": "13",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "MoveUp",
+            "FrameNum": "13",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "MoveHori",
+            "FrameNum": "13",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "MoveDiagonalUp",
+            "FrameNum": "13",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "MoveDiagonalDown",
+            "FrameNum": "13",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Bullet",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Land",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

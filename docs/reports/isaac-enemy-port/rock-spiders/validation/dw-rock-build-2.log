@@ -1,0 +1,56 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RockSpiders.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_rock_spider_tests
+[100%] Building CXX object CMakeFiles/deathward_rock_spider_tests.dir/tests/rock_spider_tests.cpp.o
+[100%] Linking CXX executable deathward_rock_spider_tests
+[100%] Built target deathward_rock_spider_tests
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[100%] Building CXX object CMakeFiles/deathward_floor_progression_tests.dir/tests/floor_progression_tests.cpp.o
+[100%] Linking CXX executable deathward_floor_progression_tests
+[100%] Built target deathward_floor_progression_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_spider_tests
+[100%] Building CXX object CMakeFiles/deathward_spider_tests.dir/tests/spider_tests.cpp.o
+[100%] Linking CXX executable deathward_spider_tests
+[100%] Built target deathward_spider_tests
+Consolidate compiler generated dependencies of target glfw
+[ 18%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 88%] Built target raylib
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[100%] Building CXX object CMakeFiles/deathward_mechanics_tests.dir/tests/mechanics_tests.cpp.o
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[ 14%] Built target glfw
+[ 17%] Built target raylib
+[ 79%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+[ 82%] Built target deathward_cloth
+[ 85%] Built target deathward_skinning
+[ 85%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 88%] Built target deathward_mission_lighting
+[ 88%] Built target deathward_runtime_assets
+[ 88%] Linking CXX static library libdeathward_particles.a
+[ 91%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorNavigation.cpp.o
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/render/PlayerModel.cpp.o
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/render/AnimalModels.cpp.o
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/core/Game.cpp.o
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/core/GameQuest.cpp.o
+[ 94%] Linking CXX executable deathward
+[100%] Built target deathward

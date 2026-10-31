@@ -1,0 +1,9 @@
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_spitty_tests.dir/tests/spitty_tests.cpp.o
+[100%] Linking CXX executable deathward_spitty_tests
+[100%] Built target deathward_spitty_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_source_projectile_tests
+[ 95%] Linking CXX executable deathward_source_projectile_tests
+[100%] Built target deathward_source_projectile_tests

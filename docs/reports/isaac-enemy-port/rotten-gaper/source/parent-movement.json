@@ -1,0 +1,152 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": {
+    "visible_evade_range": {
+      "address": "0xb6abec",
+      "value": 250.0
+    },
+    "hidden_evade_range": {
+      "address": "0xb6ab7c",
+      "value": 170.0
+    },
+    "escape_impulse": {
+      "address": "0xb6a6f0",
+      "value": 1.5
+    },
+    "candidate_center": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "candidate_extra_radius": {
+      "address": "0xb6ac80",
+      "value": 450.0
+    },
+    "candidate_divisor": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "candidate_attempts": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "candidate_pressure_scale": {
+      "address": "0xb6a3b0",
+      "value": 0.30000001192092896
+    },
+    "candidate_slack_step": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "candidate_target_distance_squared": {
+      "address": "0xb6ad60",
+      "value": 40000.0
+    },
+    "orbit_radius": {
+      "address": "0xb6aa8c",
+      "value": 60.0
+    },
+    "brood_player_distance_squared": {
+      "address": "0xb6ad28",
+      "value": 6400.0
+    },
+    "evade_retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "orbit_near": {
+      "address": "0xb6aad4",
+      "value": 80.0
+    },
+    "orbit_span": {
+      "address": "0xb6aafc",
+      "value": 100.0
+    },
+    "orbit_gain": {
+      "address": "0xb6a38c",
+      "value": 0.25
+    },
+    "orbit_minimum": {
+      "address": "0xb6a53c",
+      "value": 0.75
+    },
+    "orbit_retention": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "orbit_turn_span": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "orbit_turn_halfspan": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "diagonal_bias": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "evade_path_force": {
+      "instruction": "7a5165 immediate0x3f8a1cac",
+      "value": 1.0789999961853027
+    }
+  },
+  "evade": {
+    "start": "0x7a4830",
+    "end_exclusive": "0x7a51d1",
+    "raw_sha256": "c3ddbd2f42a72f9b122982ced38dc81776910582ba4f06556211eaa67b84028b",
+    "listing_sha256": "614544eaa7ac8518ce1cab9234aacb252ac68bf87bfd820fa472ee260ae3f4d1",
+    "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/parent-evade.asm"
+  },
+  "room_templates": {
+    "10.3.0": {
+      "rooms/33.corpse.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      }
+    },
+    "10.3.1": {
+      "rooms/33.corpse.stb": {
+        "templates": 32,
+        "positive_weight_templates": 32
+      }
+    },
+    "10.3.2": {
+      "rooms/33.corpse.stb": {
+        "templates": 17,
+        "positive_weight_templates": 17
+      }
+    },
+    "10.3.3": {
+      "rooms/33.corpse.stb": {
+        "templates": 17,
+        "positive_weight_templates": 17
+      }
+    },
+    "10.3.4": {
+      "rooms/33.corpse.stb": {
+        "templates": 33,
+        "positive_weight_templates": 33
+      }
+    },
+    "10.3.5": {
+      "rooms/33.corpse.stb": {
+        "templates": 20,
+        "positive_weight_templates": 20
+      }
+    }
+  },
+  "source_interpretation": [
+    "Brood only acquires different-subtype Rotten neighbor within60 when player distance>80. Retention30..44source frames.",
+    "Evade uses globalFrame+entityIndex modulo14, visible250/hidden170, three sticky checks; otherwise wander.",
+    "Native evade candidate search has tile-cache pressure, visibility and distance scoring. DeathWard uses physical body clearance and irregular room routes; exact grid-cache parity remains open.",
+    "Parent multiplies resulting evade friction by.8; direct orbit multiplies by.9. Neither value is a fixed walking speed.",
+    "Brood chance is1/8 only aftercounter>60; reset before owner-cap6; child spawns at parent position with zero velocity.",
+    "Default subtype0 chooses uniformly1..5; state0 does not run the active movement branch in the same update."
+  ],
+  "limits": [
+    "Native status/charm/control branches not yet ported.",
+    "Exact native PRNG, collision mass and tile-cache behavior not claimed.",
+    "Stored template presence is not spawn probability."
+  ]
+}

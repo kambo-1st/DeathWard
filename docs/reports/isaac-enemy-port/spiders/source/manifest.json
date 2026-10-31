@@ -1,0 +1,423 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "85": {
+      "index": 57,
+      "address": "0x699f0b",
+      "controller": "0x5175b0"
+    },
+    "94": {
+      "index": 57,
+      "address": "0x699f0b",
+      "controller": "0x5175b0"
+    }
+  },
+  "constants": {
+    "force": {
+      "address": "0xb6a910",
+      "value": 6.0
+    },
+    "range_minimum_and_span": {
+      "address": "0xb6aafc",
+      "value": 100.0
+    },
+    "wander_span": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "wander_minimum": {
+      "address": "0xb6aab4",
+      "value": 70.0
+    },
+    "retention": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "arrival": {
+      "address": "0xb6a9a0",
+      "value": 14.0
+    },
+    "stuck_speed": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "prediction_and_death_split": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "overkill": {
+      "address": "0xb6aee4",
+      "value": -20.0
+    },
+    "gap_trim": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/spiders/source/shared_dispatch.asm",
+      "start": "0x699f0b",
+      "end": "0x699f17",
+      "raw_sha256": "71a7082e67252af2bfae5396a64cf035b8c5b0c5af112f44e4ba39114a271a8e",
+      "sha256": "367e8e824b09ef46082b7dc19e5040325f76efed9e3775ac46a2a6df18d02193"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spiders/source/shared_controller.asm",
+      "start": "0x5175b0",
+      "end": "0x5185d7",
+      "raw_sha256": "0545f0cdf14139dfd954fa9efa8d91fb9859f7cd1298591e7dddf78d7ac72700",
+      "sha256": "85cd9197a8b222762dd4682e821f627f691ae08df4b9ec6ae717232e94db2472"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spiders/source/ordinary_target.asm",
+      "start": "0x695bf3",
+      "end": "0x695c30",
+      "raw_sha256": "8b11343ff2143b61258778a5f56a906d951bb872a27bed3a878fb63ea0a539aa",
+      "sha256": "ca2080f98960a7672003e25bdd0589ae3f1f8d9431d9885637f5200058c0e126"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spiders/source/room_clamp.asm",
+      "start": "0x7cec10",
+      "end": "0x7cef13",
+      "raw_sha256": "ad04dc63010ae76abdf7077b9cc31b91f2c36757e00e93f64f0fe3d3ffbb2efd",
+      "sha256": "345315aff0810fe6653eacd7c94b6b5ef253d6beacfefd81edc7b296d65da624"
+    }
+  ],
+  "findings": [
+    "Types85 and94 share controller5175b0. Initial state0 becomes4 and resets counter+360 to0. Ordinary ready movement uses Idle while no target, Walk while a target exists; source animation metadata is30FPS Idle4/Walk5 loops. No attack projectile event exists.",
+    "The idle counter increments by entity-time integer delta. Selection requires its previous value>13: with normal delta1, the first selection occurs on the15th ready update. Moving decrements the same counter. Ordinary state6 is thrown-airborne behavior, separate from this ground controller.",
+    "Normal target helper695a30 returns the target entity position. Passed60 affects fear/shrink branches, not ordinary lead. Ordinary chase selection compares target distance against100+100*U and checks line of sight (unless gridcollision3). It then adds target velocity*10 and clamps the destination to room bounds using body-size margins. Native+e88 can override the range condition.",
+    "If chase selection fails, choose a random direction and distance70+40*U. Clamp with source left60/top70/right40/bottom60 margins. Destination grid must be clear, then line check mode0 must pass. If it fails,1/20chance tests mode1 between10%-trimmed endpoints. Accepted wandering destination sets counter15. Exact source grid/line semantics are separate from physical3D sweeps.",
+    "Ordinary movement adds normalized destination delta*6 divided by current friction. End-of-controller multiplies friction by0.6. Stop/clear target if within14sourceunits, or if speed<3 and the decremented counter is negative. The last impulse is still applied on that stopping update. There is no continuous homing or A* pursuit in this ordinary branch.",
+    "Type94 death with post-hitHP>-20 creates exactly two type85variant0subtype0 children. Perpendicular to the player-target delta, each is offset by10sourceunits on opposite sides and gets the same outward10unit velocity. Degenerate target delta uses a random unit direction. Both children have APPEAR bit4 cleared. Overkill at or below-20 suppresses both.",
+    "Controller also implements other spider types, Bursting Sack(item377) neutral handling, player control, special thrown state6 and status-aware target helper. Those are not inferred from the ordinary85/94 branch. Baseline XML HP6.5/20, stage0 and contact1 are preserved."
+  ],
+  "records": {
+    "85.0.0": {
+      "xml": {
+        "anm2path": "085.000_Spider.anm2",
+        "baseHP": "6.5",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "5",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "85",
+        "name": "#SPIDER",
+        "numGridCollisionPoints": "12",
+        "portrait": "53",
+        "reroll": "true",
+        "shadowSize": "11",
+        "stageHP": "0",
+        "tags": "spider",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/00.special rooms.stb": {
+          "templates": 13,
+          "positive_weight_templates": 13
+        },
+        "rooms/01.basement.stb": {
+          "templates": 10,
+          "positive_weight_templates": 10
+        },
+        "rooms/02.cellar.stb": {
+          "templates": 204,
+          "positive_weight_templates": 204
+        },
+        "rooms/03.burning basement.stb": {
+          "templates": 20,
+          "positive_weight_templates": 20
+        },
+        "rooms/04.caves.stb": {
+          "templates": 21,
+          "positive_weight_templates": 21
+        },
+        "rooms/05.catacombs.stb": {
+          "templates": 55,
+          "positive_weight_templates": 55
+        },
+        "rooms/06.flooded caves.stb": {
+          "templates": 21,
+          "positive_weight_templates": 21
+        },
+        "rooms/07.depths.stb": {
+          "templates": 7,
+          "positive_weight_templates": 7
+        },
+        "rooms/08.necropolis.stb": {
+          "templates": 20,
+          "positive_weight_templates": 20
+        },
+        "rooms/09.dank depths.stb": {
+          "templates": 9,
+          "positive_weight_templates": 9
+        },
+        "rooms/10.womb.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/11.utero.stb": {
+          "templates": 14,
+          "positive_weight_templates": 14
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/14.sheol.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/15.cathedral.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/17.chest.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/26.the void.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/00.special rooms.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/greed/02.cellar.stb": {
+          "templates": 20,
+          "positive_weight_templates": 20
+        },
+        "rooms/greed/03.burning basement.stb": {
+          "templates": 17,
+          "positive_weight_templates": 17
+        },
+        "rooms/greed/04.caves.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/05.catacombs.stb": {
+          "templates": 11,
+          "positive_weight_templates": 11
+        },
+        "rooms/greed/06.flooded caves.stb": {
+          "templates": 11,
+          "positive_weight_templates": 11
+        },
+        "rooms/greed/08.necropolis.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        },
+        "rooms/greed/09.dank depths.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        },
+        "rooms/greed/14.sheol.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        }
+      }
+    },
+    "94.0.0": {
+      "xml": {
+        "anm2path": "094.000_Big Spider.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "30",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "94",
+        "name": "#BIG_SPIDER",
+        "numGridCollisionPoints": "12",
+        "portrait": "60",
+        "reroll": "true",
+        "shadowSize": "17",
+        "stageHP": "0",
+        "tags": "spider",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/00.special rooms.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/02.cellar.stb": {
+          "templates": 53,
+          "positive_weight_templates": 53
+        },
+        "rooms/03.burning basement.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/04.caves.stb": {
+          "templates": 7,
+          "positive_weight_templates": 7
+        },
+        "rooms/05.catacombs.stb": {
+          "templates": 25,
+          "positive_weight_templates": 25
+        },
+        "rooms/06.flooded caves.stb": {
+          "templates": 8,
+          "positive_weight_templates": 8
+        },
+        "rooms/07.depths.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        },
+        "rooms/08.necropolis.stb": {
+          "templates": 20,
+          "positive_weight_templates": 20
+        },
+        "rooms/09.dank depths.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/11.utero.stb": {
+          "templates": 20,
+          "positive_weight_templates": 20
+        },
+        "rooms/12.scarred womb.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/14.sheol.stb": {
+          "templates": 7,
+          "positive_weight_templates": 7
+        },
+        "rooms/15.cathedral.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/26.the void.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/32.gehenna.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/00.special rooms.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/greed/02.cellar.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/03.burning basement.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/05.catacombs.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/06.flooded caves.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/08.necropolis.stb": {
+          "templates": 5,
+          "positive_weight_templates": 5
+        },
+        "rooms/greed/09.dank depths.stb": {
+          "templates": 5,
+          "positive_weight_templates": 5
+        },
+        "rooms/greed/14.sheol.stb": {
+          "templates": 7,
+          "positive_weight_templates": 7
+        }
+      }
+    },
+    "814.0.0": {
+      "xml": {
+        "anm2path": "814.000_strider.anm2",
+        "baseHP": "6.5",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "5",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "nopits",
+        "id": "814",
+        "name": "#STRIDER",
+        "numGridCollisionPoints": "8",
+        "portrait": "215",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "tags": "spider",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/27.downpour.stb": {
+          "templates": 92,
+          "positive_weight_templates": 92
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 6,
+          "positive_weight_templates": 6
+        },
+        "rooms/greed/27.downpour.stb": {
+          "templates": 18,
+          "positive_weight_templates": 18
+        }
+      }
+    },
+    "884.0.0": {
+      "xml": {
+        "anm2path": "884.000_swarm spider.anm2",
+        "baseHP": "4.5",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "5",
+        "collisionRadius": "13",
+        "friction": "1",
+        "id": "884",
+        "name": "#SWARM_SPIDER",
+        "numGridCollisionPoints": "12",
+        "portrait": "318",
+        "reroll": "true",
+        "shadowSize": "11",
+        "stageHP": "0.2",
+        "tags": "spider",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/02.cellar.stb": {
+          "templates": 8,
+          "positive_weight_templates": 8
+        },
+        "rooms/03.burning basement.stb": {
+          "templates": 11,
+          "positive_weight_templates": 11
+        },
+        "rooms/05.catacombs.stb": {
+          "templates": 8,
+          "positive_weight_templates": 8
+        },
+        "rooms/08.necropolis.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        },
+        "rooms/greed/03.burning basement.stb": {
+          "templates": 2,
+          "positive_weight_templates": 2
+        }
+      }
+    }
+  }
+}

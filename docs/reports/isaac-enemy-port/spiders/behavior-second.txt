@@ -1,0 +1,7 @@
+PASS source idle/acquisition, acceleration, committed bursts, wandering and shared movement
+PASS sight/solid collision, blocked-target recovery, contact, fire and interruption
+PASS two outward death children, extreme-overkill suppression and retained completion
+NATURAL_SPIDER id=85.0 seed=0 floor=0 room=3
+NATURAL_SPIDER id=94.0 seed=71 floor=0 room=1
+PASS validated configuration and actual seeded stage placement
+PASS Spider and Big Spider

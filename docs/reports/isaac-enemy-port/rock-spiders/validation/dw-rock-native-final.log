@@ -1,0 +1,53 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  2: mechanics_content
+ 1/13 Test  #2: mechanics_content ................   Passed    2.36 sec
+      Start  5: floor_progression
+ 2/13 Test  #5: floor_progression ................***Failed    3.66 sec
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+FAIL resident identity exactly matches seeded substitution plan
+
+      Start 27: resident_enemies
+ 3/13 Test #27: resident_enemies .................   Passed    0.76 sec
+      Start 29: monster_behaviors
+ 4/13 Test #29: monster_behaviors ................   Passed    3.89 sec
+      Start 44: adult_leech
+ 5/13 Test #44: adult_leech ......................   Passed    0.60 sec
+      Start 45: dip_variants
+ 6/13 Test #45: dip_variants .....................***Failed    0.87 sec
+CORN impulse=2 Brownie_ordinary=1 HP=1 BigCorn_predictive_death=1 capacity=1 clear=1 debug=1
+DRIP distinct_impulse=1 aimed_and_random=1 chain_frame10=1
+SPLURT launch36=1 second8=1 retarget=1 two_charges=1 two_Drips=1 capacity=1 partition=1
+DANK trail_after_launch=1 source_life60=1 slow_only=1 retained=1 two_Clots=1
+WATER wet_pits=1 dry_pits_block=1 walls_block=1 child_placement=1
+CONFIG immutable=1 invalid_profiles=6
+natural variant exists
+
+      Start 46: dinga_family
+ 7/13 Test #46: dinga_family .....................   Passed    1.38 sec
+      Start 47: membrain_family
+ 8/13 Test #47: membrain_family ..................   Passed    1.96 sec
+      Start 67: rail_passengers
+ 9/13 Test #67: rail_passengers ..................   Passed    0.39 sec
+      Start 71: gurgle_splasher_physical_lobs
+10/13 Test #71: gurgle_splasher_physical_lobs ....   Passed   10.71 sec
+      Start 78: spider_family
+11/13 Test #78: spider_family ....................   Passed    1.37 sec
+      Start 79: rock_spider_family
+12/13 Test #79: rock_spider_family ...............   Passed   53.07 sec
+      Start 80: spider_variants
+13/13 Test #80: spider_variants ..................   Passed    4.13 sec
+
+85% tests passed, 2 tests failed out of 13
+
+Total Test time (real) =  85.16 sec
+
+The following tests FAILED:
+	  5 - floor_progression (Failed)
+	 45 - dip_variants (Failed)
+Errors while running CTest

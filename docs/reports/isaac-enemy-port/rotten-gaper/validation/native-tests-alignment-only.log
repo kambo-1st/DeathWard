@@ -1,0 +1,40 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/5 Test  #2: mechanics_content ................   Passed    2.05 sec
+    Start 30: monster_behaviors
+2/5 Test #30: monster_behaviors ................***Failed    3.50 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 207 entries including offspring
+ROTTEN_STARTING_KIT subtype=1 seconds=0.966667 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=0.933333 hp=87.5 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=7.66667 hp=25 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=0.95 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=1.48333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249074 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=1.0688 z=7.88158 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=45 x=-0.132168 z=6.93303 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=46 x=-1.06714 z=8.13257 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=47 x=-1.70836 z=6.36956 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=48 x=0.119447 z=9.06868 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.626542 z=1.35035 waypoints=2 waypoint=0.32,1.32
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.598383 z=1.33674 waypoints=2 waypoint=-0.32,1.32
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.294383 z=6.96609 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=47 x=0.730018 z=8.78911 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=48 x=0.48846 z=0.122528 waypoints=2 waypoint=0.32,1.32
+FAIL: ground steering allows every pursuer through a narrow opening
+
+    Start 82: gaper_family
+3/5 Test #82: gaper_family .....................   Passed    0.36 sec
+    Start 83: rotten_gaper_family
+4/5 Test #83: rotten_gaper_family ..............   Passed    4.75 sec
+    Start 84: small_maggot_family
+5/5 Test #84: small_maggot_family ..............   Passed    1.60 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =  12.27 sec
+
+The following tests FAILED:
+	 30 - monster_behaviors (Failed)
+Errors while running CTest

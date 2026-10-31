@@ -1,0 +1,177 @@
+{
+  "scope": [
+    "814.0.0 Strider",
+    "884.0.0 Swarm Spider"
+  ],
+  "mechanics_fingerprint": "834662978ecb9391",
+  "native": {
+    "covered_suites": 72,
+    "passed": 72,
+    "failed": 0,
+    "initial_full_run": {
+      "report": "docs/reports/isaac-enemy-port/spider_variants/native.xml",
+      "passed": 69,
+      "failed": [
+        "floor_progression",
+        "expedition_pacing",
+        "monster_behaviors"
+      ]
+    },
+    "corrected_runs": [
+      "docs/reports/isaac-enemy-port/spider_variants/native-corrected.xml"
+    ],
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "maw_attraction",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "scope": "72 unique native suites pass across the full run and three focused reruns. Corrections cover legal replacement phases, source-equal Spider/Swarm colliders and flying offspring collision masks. Runtime simulation code did not change after the full run; only a debug cover placement and Strider leg rendering changed. Original failures are preserved.",
+    "behavior": "docs/reports/isaac-enemy-port/spider_variants/behavior-final.txt",
+    "behavior_scope": "Strider Row6/20frames, forces, current-target tracking, glide, solid/deep-water collision; all Swarm hop events/launch ranges/weights/commitment/friction, pit collision and peer overlap; fireplace-specific immunity and ordinary Flame/Burning/contact/stun; wet direct and retained Big Spider death children; strict immutable config; real seeded placement."
+  },
+  "browser": {
+    "cases": 8,
+    "report": "docs/reports/isaac-enemy-port/spider_variants/web-final/results.json",
+    "errors": [],
+    "scope": "Eight Original-style production WASM cases: Strider strokes/deep water/cover, Swarm single/group hops and player-flame vulnerability, plus both real seeded residents. Native fixtures additionally verify exact events/forces/weights, true fireplace-specific immunity, wet Big Spider children and capacity, configuration, collision and contact. Full item/status/readability/balance/performance acceptance remains open."
+  },
+  "visual": {
+    "style": "Original",
+    "inspected_final_captures": 10,
+    "captures": [
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/native-strider-final.png",
+        "observation": "Long ground-reaching legs support the lifted blue body. Original geometry, material palette, shadows and player remain intact. Earlier native-strider.png showed generic short floating legs; final capture corrects them."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/native-strider-river-final.png",
+        "observation": "Strider visible beside the generated water channel with ground-reaching legs. Deep-water entry is established by focused native tests and browser telemetry, not this bank-side screenshot alone."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/native-swarm-group-final.png",
+        "observation": "Six smaller Swarm bodies with yellow hop tint, separate leg shapes and shadows. Group remains legible in the open clearing."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/native-natural-strider-final.png",
+        "observation": "Four long-legged Striders are visible in the actual wet seeded resident room alongside other ordinary enemies and original terrain/occlusion outlines."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/native-natural-swarm-final.png",
+        "observation": "Four small Swarms appear in an actual opening-floor room with another actor; protagonist, road and cover remain visible."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/strider-cover.png",
+        "observation": "Corrected fixture starts Strider outside the crate. Its intact elevated body and long legs are visible; telemetry confirms movement and no solid collision penetration."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/strider-river.png",
+        "observation": "Original-style river scene renders without corruption. Screenshot is bank-side; frame samples separately establish impassable-water occupancy."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/swarm-group.png",
+        "observation": "All six small spiders render, including dark grounded and yellow hopping states, with leg shadows and unchanged player."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/natural-strider.png",
+        "observation": "Seeded wet-room Striders match native silhouettes and mixed ordinary roster; no new style/filter applied."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/natural-swarm.png",
+        "observation": "Opening-floor Swarms render with yellow hop states and leg silhouettes alongside another resident; original room/player preserved."
+      }
+    ],
+    "result": "Partial visual pass: inspected10final Linux/WASM captures. Strider floating-leg issue corrected; grounded long-legged silhouette and smaller Swarm forms render in isolated, cover, river and actual seeded rooms. No shader/GL errors in8browser cases. Full combat/crowd readability and performance acceptance remain open.",
+    "limitations": [
+      "These are procedural DeathWard silhouettes, not imported Isaac sprite art.",
+      "A screenshot cannot establish animation timing or deep-water collision; recorded fixtures and frame telemetry provide those checks.",
+      "Frame counters and incidental FPS overlays are not controlled performance measurements.",
+      "Longer combat sessions, camera distances, heavy crowds, status/item combinations and broad balance remain unreviewed."
+    ]
+  },
+  "adaptations": [
+    "SourceHPx3.2, source XZ distancesx0.1 and source velocityx3. Strider20.8local HP; Swarm(4.5+.2*sourceStageMultiplier)*3.2. Both retain local collider0.4, reflecting equal source radius13. Player defaults and global enemy damage multiplier are unchanged.",
+    "Source30Hz decisions and animation events are integrated within the60Hz simulation, using existing physical canyon collision. This is not bit-identical native interpolation, friction/time-scale or RNG sequencing.",
+    "Strider gridNOPITS uses reusable swim collision on all surfaces, crossing deep river water but respecting solid rocks, gates and room bounds. Source height-8 becomes visual lift0.8; body collision remains on the combat plane. Orientation uses a wrapped20%angular correction, while the Row impulse uses the current actual chase direction. Strider leg tips reach the ground below that lifted body; this is an Original-style procedural silhouette adaptation.",
+    "Swarm Jump/Land does not change native grid collision or world height. Local ground collision remains throughout the hop; visual sinusoidal lift0.35 and yellow airborne tint adapt the source sprite to Original procedural3D. The body is drawn at65%ordinary Spider radius while the source-equal physical collider remains0.4.",
+    "Swarm playerObjectsOnly preserves sourceENTCOLL_PLAYEROBJECTS by bypassing enemy crowd steering/separation and fireplace-body hazard contact. Ordinary Flame/Burning events, bullets and explosions remain damaging. Generic enemy fire-patch friendly-fire policy remains unchanged; native collision masks beyond this integrated scope are not claimed.",
+    "External replace_spawn applies a deterministic final identity rule to both encounter plans and all direct/queued births, before stats and placement. Cyclic/chained spawn rewrites are rejected. The wet band1variant maps source Downpour/Dross replacement of85to814, including Big Spider offspring and their retained impulses.",
+    "Swarm pursuit groups of4cost2, weight1/max8 across bands0..2 are local encounter-budget choices based on early/middle source habitats, not source template probabilities. Strider uses conditional wet replacement rather than a generic dry-floor pool.",
+    "Stun cancels the current stroke/hop and resets its local timer and movement. Capacity/placement retains mandatory children under existing room completion policy. These are integration policies rather than complete native status parity."
+  ],
+  "remaining": [
+    "Strider thrown state6, player-controlled rowing, confusion/fear/shrink branches and full native time-scale/grid/CheckLine semantics are not implemented by this normal hostile slice.",
+    "Swarm Bursting Sack inert behavior, nonzero-subtype group expansion, friendly/status/champion branches, complete native entity-collision/knockback equivalence and Jump sound258 adaptation remain open. Installed884.0.0 is the exact covered tuple.",
+    "Exact animation-frame integration/RNG parity, broad visual/crowd readability, balance and controlled native/WASM performance acceptance remain open. Both IDs remain in_progress, not complete."
+  ],
+  "complete": false,
+  "historical_artifacts_preserved": 5721
+}

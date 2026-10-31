@@ -1,0 +1,213 @@
+{
+  "verified_utc": "2026-10-28T13:42:21.461814+00:00",
+  "result": "partial_pass",
+  "mechanics_fingerprint": "44afc2d79a64a284",
+  "definitions": 207,
+  "native_tests": {
+    "session": 91122,
+    "exit": 0,
+    "suites": [
+      "mechanics_content",
+      "monster_behaviors",
+      "gaper_family",
+      "rotten_gaper_family",
+      "small_maggot_family"
+    ],
+    "log": {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/validation/native-tests.log",
+      "bytes": 719,
+      "sha256": "6fa40818dafa50bfb392b8db71eb2302dcfb2093d317bd2fddbabb99db9b6e6b"
+    },
+    "detail": {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/validation/native-test-detail.log",
+      "bytes": 5713,
+      "sha256": "ea465c38e0324005f2123e5541287f40c32395b8e37fe26a0a7d2014cc315949"
+    }
+  },
+  "floor_regression": {
+    "state": "finished",
+    "runner_pid": 311457,
+    "started_utc": "2026-10-28T13:33:05.841144+00:00",
+    "binary_sha256": "3cbf0f8d6069945bdce7fcd594b71e87cae85d39ca85afa203dc880ae37c09f4",
+    "mechanics_fingerprint": "44afc2d79a64a284",
+    "child_pid": 311458,
+    "returncode": 0,
+    "finished_utc": "2026-10-28T13:37:36.673911+00:00",
+    "floors": 966,
+    "log": {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/validation/floor.log",
+      "bytes": 2421,
+      "sha256": "2e73d2fe357566fc480be887cf94020395e0075e2174baafa3fcb98e7bf8d794"
+    },
+    "scope": "Final content, pool and selector accounting; before final local wall-clearance steering guard. That guard is covered by five subsequent native suites, including the five-body doorway test. Floor composition and boss behavior unchanged by guard."
+  },
+  "natural": {
+    "log": {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/validation/natural.log",
+      "bytes": 284,
+      "sha256": "30e48a42fdea74f88e2719d0e65a5ab35bde25e3ea9430ba7b04a9017bad2861"
+    },
+    "witnesses": [
+      {
+        "subtype": 2,
+        "seed": 0,
+        "floor": 5,
+        "room": 1
+      },
+      {
+        "subtype": 1,
+        "seed": 0,
+        "floor": 5,
+        "room": 12
+      },
+      {
+        "default": true,
+        "subtype": 1,
+        "seed": 1,
+        "floor": 6,
+        "room": 1
+      },
+      {
+        "subtype": 5,
+        "seed": 1,
+        "floor": 6,
+        "room": 2
+      },
+      {
+        "subtype": 4,
+        "seed": 1,
+        "floor": 6,
+        "room": 3
+      },
+      {
+        "subtype": 3,
+        "seed": 1,
+        "floor": 6,
+        "room": 4
+      }
+    ]
+  },
+  "binaries": [
+    {
+      "path": "build/deathward",
+      "bytes": 6870632,
+      "sha256": "e94436900697f0535b7882d797e9f54d9f811ef09576e6093286c1f8bfd8f344"
+    },
+    {
+      "path": "build/deathward_rotten_gaper_tests",
+      "bytes": 2720192,
+      "sha256": "f8219ad4a6df9349fca7b804a989b2adcf9421069c6884cee8fd2a663e993c0d"
+    },
+    {
+      "path": "build/deathward_monster_tests",
+      "bytes": 2691016,
+      "sha256": "0eca61176ee62a7162dbbe6eb4d9e448f38408fb7d21aacc277b3b4003740ff2"
+    },
+    {
+      "path": "build/deathward_gaper_tests",
+      "bytes": 2716184,
+      "sha256": "944eb83faa8cbc436212cbd658390382962478777fce944b2afd664acabc0672"
+    },
+    {
+      "path": "build/deathward_small_maggot_tests",
+      "bytes": 2716224,
+      "sha256": "531fccbeda51cdbd04808ea5bf00e5b1aac1030ed4c0e4f4c26fde5b0fe27e45"
+    },
+    {
+      "path": "build/deathward_mechanics_tests",
+      "bytes": 2732832,
+      "sha256": "60017bebb6cd4c498302a920b6fa87d8d6996e140eeed599d99c43b21a3030c3"
+    },
+    {
+      "path": "build/deathward_check_mechanics",
+      "bytes": 844424,
+      "sha256": "c74cac5d072333e4ca00ba69a94534f99c85509f0ca99a4a94220f671dbbbf1f"
+    }
+  ],
+  "runtime": [
+    {
+      "path": "assets/mechanics/rotten_gapers.mechanics",
+      "bytes": 1674,
+      "sha256": "935e726c5fd1b946cf83e923e54294e101a5c900035559351ecdcbfac424d52c"
+    },
+    {
+      "path": "src/combat/RottenGapers.cpp",
+      "bytes": 10048,
+      "sha256": "9509916ac147519cd3728015ef6843f6e1d60ff9f54bb0bddc9906c5358cb2f9"
+    },
+    {
+      "path": "src/combat/MonsterMovement.cpp",
+      "bytes": 9129,
+      "sha256": "eb8c092954dbc0c6ecbe53bd07f25a51ad86b771e22f4aa4eacc7f1b5f6f64e8"
+    },
+    {
+      "path": "src/combat/Monsters.cpp",
+      "bytes": 52467,
+      "sha256": "b116ef0c4f42e6f1cba7b33c426880847677ae8c7c2c616c3872ea32eb52ef8b"
+    },
+    {
+      "path": "src/combat/Simulation.hpp",
+      "bytes": 52991,
+      "sha256": "a82a6e3810f1c7ad9d40c397e280d913cb2e52e99fdccb2c5cb37ec1dacddacf"
+    },
+    {
+      "path": "src/content/Mechanics.hpp",
+      "bytes": 52899,
+      "sha256": "8a09018601fa745cad069065512b2dea018a1f26ed305e5688fc4c12b6562c84"
+    },
+    {
+      "path": "src/content/Mechanics.cpp",
+      "bytes": 265371,
+      "sha256": "6362171da87b28e78afa0295d6ada0e963bed3cc1dbe00c8d75d248e2d0ed146"
+    },
+    {
+      "path": "src/content/EncounterVariants.cpp",
+      "bytes": 15372,
+      "sha256": "ca6c23d8b34be6bbb3cbef951f7675f4c62de4ec5155d808b80fea774edd7180"
+    },
+    {
+      "path": "src/render/MonsterVisuals.hpp",
+      "bytes": 68444,
+      "sha256": "8bfab1710dd0a243bea9be7d13eff903f698e46196357308cdb48474b3b8c4f3"
+    }
+  ],
+  "visual": "visual-review.json; eight initial and two final-binary native images inspected.",
+  "wasm": {
+    "status": "skipped_by_user",
+    "instruction": "pursue goal - Skip WASM check!",
+    "scope": "No WASM build or checks for this controller."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "source": "validation/native-test-detail.log",
+    "conditions": "Starting revolver, no items/bombs/god mode; active shooting and dodge. Brood waits for two actual children with farther starting distance. Test bot now solves intercept using actual projectile speed. This is not full mixed-room/item balance.",
+    "seconds": [
+      0.966667,
+      0.933333,
+      7.66667,
+      0.95,
+      1.48333
+    ],
+    "remaining_health": [
+      100,
+      87.5,
+      25,
+      100,
+      100
+    ]
+  },
+  "resolved_failures": [
+    "Birth test originally compared offspring with parent position after parent had moved; corrected to the recorded source-update position. Final rebuilt test executable verified.",
+    "Reload fixture used .72 while authored text uses0.72; corrected fixture selector.",
+    "Old starting-kit script waitedfour seconds without firing; active source pursuers killed it. Use active starting-kit shooting/dodge, preserve actual brood activation before firing.",
+    "Old distance/30 aiming estimate repeatedly missed fast orbit. Saved diagnostic establishes actual26-speed intercept clears it without changing enemy/player tuning.",
+    "Floor verifier expected concrete planned identity and later failed to count selected default. It now verifies allowed concrete subtype, then credits the actually selected default slot. Final966floors pass.",
+    "Real doorway stall: lateral passing pulls body out of a clear opening after corner waypoint removal. Preserve yielding while aligning and reject terrain-blocked avoidance vectors. Original five-body narrow opening test now passes."
+  ],
+  "remaining": [
+    "Native charm/fear/confusion/shrink/control/camouflage and champion interactions.",
+    "Exact evade/grid-cache and collision-mass/save fidelity.",
+    "Source cosmetic brood effect63 and vocal triggers.",
+    "Full mixed-room playability, color-independent readability, complete camera coverage and controlled performance."
+  ]
+}

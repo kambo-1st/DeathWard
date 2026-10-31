@@ -1,0 +1,12 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  5: floor_progression
+    Start 10: expedition_pacing
+1/3 Test #10: expedition_pacing ................   Passed   11.59 sec
+    Start 29: monster_behaviors
+2/3 Test #29: monster_behaviors ................   Passed    4.22 sec
+3/3 Test  #5: floor_progression ................   Passed  110.27 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) = 110.27 sec

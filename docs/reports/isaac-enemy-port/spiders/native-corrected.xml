@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="4"
+	timestamp="2026-10-27T04:04:12"
+	>
+	<testcase name="mulligan_family" classname="mulligan_family" time="4.11707" status="run">
+		<system-out>PASS grid-triggered detonation,29-frame windup, ordinary death interruption and no fixed-age trigger
+PASS four independent death draws, scaled overkill, persistent flies and crowd-independent count
+PAYLOAD voluntary=0 bombs=1 shots=4 explosions=0
+PAYLOAD voluntary=1 bombs=1 shots=8 explosions=1
+PASS Mulligoon4/8shot rings, real randomized Troll Bomb and atomic capacity retry
+PASS source5-frame proximity, immediate blast, half-heart conversion and fast pursuit
+PASS real death blast affects neighboring enemy and destructible terrain once
+NATURAL_MULLIGAN id=16.0 seed=1 floor=0 room=4
+NATURAL_MULLIGAN id=16.1 seed=6 floor=0 room=2
+NATURAL_MULLIGAN id=16.2 seed=14 floor=2 room=3
+PASS validated snapshots and seeded Mulligan family
+PASS Mulligan family
+</system-out>
+	</testcase>
+</testsuite>

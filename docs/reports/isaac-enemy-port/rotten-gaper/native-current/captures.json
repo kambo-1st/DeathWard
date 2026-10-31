@@ -1,0 +1,48 @@
+[
+  {
+    "name": "brood",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-10.3.3",
+      "--enemy-camera-follow",
+      "--frames",
+      "420",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native-current/brood.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "e94436900697f0535b7882d797e9f54d9f811ef09576e6093286c1f8bfd8f344"
+  },
+  {
+    "name": "natural-brood",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-10.3.3",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/rotten-gaper/native-current/natural-brood.png",
+      "--resident-seed",
+      "1",
+      "--resident-floor",
+      "6"
+    ],
+    "exit": 0,
+    "binary_sha256": "e94436900697f0535b7882d797e9f54d9f811ef09576e6093286c1f8bfd8f344"
+  }
+]

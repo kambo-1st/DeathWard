@@ -1,0 +1,59 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "Partial My Shadow item/companion implementation; full acceptance remains open.",
+  "ids": [
+    "23.0.1"
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; wiki-derived behavior summary CC BY-SA 4.0. Local tuning and implementation evidence are identified separately.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "sources": [
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268819",
+      "supports": "Repentance contact familiar, friendly Chargers, source 20 HP/8.7 damage/16 cap, room lifetime, vulnerability and named interactions."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Exact tuple 23.0.1, baseHP 20/stageHP 0 and generic collisionDamage 1. Allied damage is the documented item override, not this generic field."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/itempools.xml",
+      "supports": "Collectible 433 appears in devil and greedDevil pools with weight 1, decrease 1 and removal threshold 0.1."
+    }
+  ],
+  "source_contract": {
+    "producer": "One movement-following shadow with a short delay; enemy contact produces friendly black Chargers. Source familiar radius is slightly larger than the baseline player body.",
+    "allies": "Wander until cardinal enemy alignment, then straight dash; 20 source HP and 8.7 contact damage. At most 16 alive, lasting only for the room.",
+    "damage": "Contact and damaging hazards can exhaust their HP. Ordinary player explosions are exempt; named ghost explosions are exceptions.",
+    "interactions": "Athame death rings and Jumper Cables death counter, Duct Tape attachment, Eraser normal-Charger precursor, Ace conversion, Broken Modem/Stop Watch slowing and Blood Puppy team exception are separate requirements. BFFS and Box of Friends have no effect."
+  },
+  "excluded_editions": [
+    "Pre-Repentance hurt-triggered fear/spawn, 5 damage and 5-Charger cap.",
+    "Afterbirth-only Drowned substitution and Punching Bag targeting.",
+    "Repentance+ player-size-dependent shadow radius."
+  ],
+  "implemented": [
+    "External companion/contact_familiar rows and exact stable item key isaac:collectible:433. Local bargain pool is the Devil analogue; no hostile floor pool or Mine roster additions.",
+    "One producer regardless of copies, bounded delayed path history, per-enemy contact interval, live plus pending 16-child cap and item/producer provenance. Removing the item removes its producer without deleting living room allies.",
+    "Shared Charger controller now selects aligned enemies for friends, including a farther aligned hostile when a nearer enemy is unaligned; it never acquires the player.",
+    "Separate allied outgoing/incoming contact damage and independent cooldowns; real hostile projectile interception before player, harmless passage of player bullets, friendly bomb immunity, hostile/neutral explosion and damaging flame/beam/ring/creep exposure. Explicitly harmless hazards remain harmless.",
+    "Companion damage/death events are distinct from ordinary enemy events; no friendly death loot, hostile kill counter, chain reward or native Powder/Ghost kill effects. Ordinary hostile kills caused by allies still receive existing player-side kill hooks.",
+    "Room transition expires allies and path history without death effects; they are never stored for re-entry. Living allies are not room threats.",
+    "Dark Original-style bodies with teal ally rings and a separate ground shadow familiar; allied actors no longer draw hostile attack warnings.",
+    "Actual item key survives floor advancement and the existing summary-journal round trip; room-limited allies expire and the new floor builds a fresh producer/path. Live combat is not resumable."
+  ],
+  "deathward_adaptations": {
+    "units": "Allied HP 64 = source 20 times 3.2; contact damage 27.84 = source 8.7 times 3.2. Existing hostile damage is converted by .32 for these allies (ordinary 10-point contact becomes 3.2); this is explicit local unit conversion, not an extracted native coefficient.",
+    "timers": "Shadow lag .15 seconds, radius .6 versus player .48, per-enemy spawn interval .25; outgoing contact interval .7 and incoming shared hurt interval .45. Exact native values are not established.",
+    "movement": "Base wander 1.5 and dash 11 with existing normal charge duration/alignment/recovery. Allies do not receive hostile movement aggression scaling. Real 3D height/LOS/navigation apply.",
+    "damage_policy": "Hostile projectiles may intercept companions; beams, rings and damaging floor hazards share their hurt window. Neutral barrel/powder blasts explicitly hurt allies; ordinary player dynamite does not. These 3D/faction policies need source-measurement acceptance.",
+    "economy": "Smuggler bargain weight 2, existing maximum-health trade and seeded offers are the local Devil-pool analogue. Exact source pool depletion/Greed mode are not implemented here. Tutorial and Mine offers retain existing paths.",
+    "visuals": "Procedural black body, teal allegiance marker and charcoal ground familiar fit Original rendering. Existing world-space protagonist shadows remain; this is not a copied Isaac sprite or exact sprite-shadow removal."
+  },
+  "unresolved": [
+    "Athame, Jumper Cables, Duct Tape, Eraser, Ace cards, Broken Modem/Stop Watch and Blood Puppy exceptions still need concrete content support; distinct event/provenance plumbing alone is not those implementations.",
+    "Exact native contact/spawn/hurt timings, familiar hitbox and source damage-resistance behavior remain unmeasured; current values are declared local tuning.",
+    "3D contact against elevated/airborne targets and broader status/charm/faction behavior need source and gameplay validation.",
+    "Source item pool depletion, unlock conditions and Greed-specific routing remain separate unfinished systems.",
+    "All-camera mixed-threat readability, varied-build/human balance and controlled native/WASM performance acceptance remain open."
+  ]
+}

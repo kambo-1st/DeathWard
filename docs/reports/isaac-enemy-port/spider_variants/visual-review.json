@@ -1,0 +1,53 @@
+{
+  "style": "Original",
+  "inspected_final_captures": 10,
+  "captures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/native-strider-final.png",
+      "observation": "Long ground-reaching legs support the lifted blue body. Original geometry, material palette, shadows and player remain intact. Earlier native-strider.png showed generic short floating legs; final capture corrects them."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/native-strider-river-final.png",
+      "observation": "Strider visible beside the generated water channel with ground-reaching legs. Deep-water entry is established by focused native tests and browser telemetry, not this bank-side screenshot alone."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/native-swarm-group-final.png",
+      "observation": "Six smaller Swarm bodies with yellow hop tint, separate leg shapes and shadows. Group remains legible in the open clearing."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/native-natural-strider-final.png",
+      "observation": "Four long-legged Striders are visible in the actual wet seeded resident room alongside other ordinary enemies and original terrain/occlusion outlines."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/native-natural-swarm-final.png",
+      "observation": "Four small Swarms appear in an actual opening-floor room with another actor; protagonist, road and cover remain visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/strider-cover.png",
+      "observation": "Corrected fixture starts Strider outside the crate. Its intact elevated body and long legs are visible; telemetry confirms movement and no solid collision penetration."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/strider-river.png",
+      "observation": "Original-style river scene renders without corruption. Screenshot is bank-side; frame samples separately establish impassable-water occupancy."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/swarm-group.png",
+      "observation": "All six small spiders render, including dark grounded and yellow hopping states, with leg shadows and unchanged player."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/natural-strider.png",
+      "observation": "Seeded wet-room Striders match native silhouettes and mixed ordinary roster; no new style/filter applied."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spider_variants/web-final/natural-swarm.png",
+      "observation": "Opening-floor Swarms render with yellow hop states and leg silhouettes alongside another resident; original room/player preserved."
+    }
+  ],
+  "result": "Partial visual pass: inspected10final Linux/WASM captures. Strider floating-leg issue corrected; grounded long-legged silhouette and smaller Swarm forms render in isolated, cover, river and actual seeded rooms. No shader/GL errors in8browser cases. Full combat/crowd readability and performance acceptance remain open.",
+  "limitations": [
+    "These are procedural DeathWard silhouettes, not imported Isaac sprite art.",
+    "A screenshot cannot establish animation timing or deep-water collision; recorded fixtures and frame telemetry provide those checks.",
+    "Frame counters and incidental FPS overlays are not controlled performance measurements.",
+    "Longer combat sessions, camera distances, heavy crowds, status/item combinations and broad balance remain unreviewed."
+  ]
+}

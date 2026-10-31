@@ -1,0 +1,35 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "controller": {
+    "start": "0x4c70e0",
+    "end_exclusive": "0x4c7ebd",
+    "raw_sha256": "c57cc2e048cae74d3d508232bb7b93299d2b2c7b9632fcb5036c4503f9b1cfcd",
+    "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/controller.asm",
+    "sha256": "5ed46d7ea49b7b7e80a37b4a03973d771aeb12fb30d7ff6075698c3938051772",
+    "instructions": 835
+  },
+  "dispatch": "Ordinary Gaper controller4f6ee0 delegates type10 variant3 at4f6f2f to this separate controller.",
+  "stack_constants": {
+    "packed_address": "0xb6bcd0",
+    "values": [
+      1.0,
+      1.2000000476837158,
+      1.5,
+      0.800000011920929,
+      0.8999999761581421,
+      1.899999976158142
+    ],
+    "interpretation": "Pending subtype/control-flow review; do not assume every number is a speed."
+  },
+  "records": [
+    "10.3.0",
+    "10.3.1",
+    "10.3.2",
+    "10.3.3",
+    "10.3.4",
+    "10.3.5",
+    "853.0.0"
+  ],
+  "scope": "Source-only extraction. No new runtime, placement or completion credit. All six parent subtypes and Small Maggot dependency require reviewed behavior."
+}

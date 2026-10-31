@@ -1,0 +1,96 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "records": [
+    "10.3.0",
+    "10.3.1",
+    "10.3.2",
+    "10.3.3",
+    "10.3.4",
+    "10.3.5"
+  ],
+  "status": "Dedicated parent controller implemented; five scoped Linux suites and966floor regression pass. Ten native captures inspected with explicit limits. No complete-port credit.",
+  "source": [
+    "source/controller.asm",
+    "source/records.json",
+    "source/parent-helpers.json",
+    "source/parent-movement.json",
+    "animations/manifest.json"
+  ],
+  "behavior": {
+    "health": "24 sourceHP, stage0;76.8 at existing3.2 conversion.",
+    "initialization": "Default0 uniformly selects1..5 from seeded encounter stream. Explicit subtype unchanged. First30Hz update initializes without movement or summoning.",
+    "movement": "Base.6 times1.2/1.5/.8/.9/1.9 => .72/.9/.48/.54/1.14 acceleration. Ground path force and retention; no fixed speed or global aggression multiplier.",
+    "brood": "Strictcounter>60 then1/8 roll each eligible source update; success resets counter even at six live+pending owned children. Small Maggot853.0.0 birth at parent source-update position, zero velocity,32HP, independent controller.",
+    "avoidance": "Brood with player distance>80 searches60 native units for different-subtype Rotten with matching friendliness; remembers30..44updates. Shared evade14-frame global stagger, visible250/hidden170, three sticky checks; physical candidate/path adaptation.",
+    "orbit": "Force scaled by.75+.25*clamp((distance-80)/100). Rotate actual momentum±20deg, resize to player distance, project radius60 target, add force, apply.9retention. Zero remainszero, including stable exactlyradius6world. Ground route when blocked.",
+    "animation": "22source frames at30Hz; retained original low-poly silhouettes/palette; walk cycle follows source clock.",
+    "contact": "Base10 times unchanged global1.25. Fire vulnerable. No invented ranged shots or damaging trail.",
+    "ownership": "Each parent cap independent; children survive parent and block room completion; room reentry preserves runtime."
+  },
+  "external": "assets/mechanics/rotten_gapers.mechanics: rotten_gaper common movement, rotten_brood spawn/avoidance, rotten_orbit steering profiles.",
+  "adaptations": [
+    "DeathWard deterministic encounter/combat streams; not byte-identical native PRNG.",
+    "Default subtype resolved at allocation rather than first active native update so dormant residents already have concrete identities. No extra active movement update.",
+    "Native rectangular tile navigation and marker900/-1 use actual canyon body clearance; neither marker makes a flyer.",
+    "Evade target candidate selection adapts native cache/pressure and grid snapping; exact native cache, pressure progression, wander renewal and status branches remain open.",
+    "Retain.6world body radius versus native13, and existing body spacing rather than native mass5. Tight corners temporarily suppress lateral steering while retaining physical separation.",
+    "Existing global capacity/generation bounds and immutable per-run content snapshots.",
+    "Contact/stun/room activation follow existing DeathWard policies."
+  ],
+  "placement": {
+    "source": "Positive Corpse room templates:0=2,1=32,2=17,3=17,4=33,5=20; counts are not spawn probabilities.",
+    "local": "Storm Cut band3 only; existing exact-subtype specialist pools retained. New default selector weight1/cost5/cap1 reserves possible brood budget.",
+    "witnesses": [
+      {
+        "subtype": 2,
+        "seed": 0,
+        "floor": 5,
+        "room": 1
+      },
+      {
+        "subtype": 1,
+        "seed": 0,
+        "floor": 5,
+        "room": 12
+      },
+      {
+        "default": true,
+        "subtype": 1,
+        "seed": 1,
+        "floor": 6,
+        "room": 1
+      },
+      {
+        "subtype": 5,
+        "seed": 1,
+        "floor": 6,
+        "room": 2
+      },
+      {
+        "subtype": 4,
+        "seed": 1,
+        "floor": 6,
+        "room": 3
+      },
+      {
+        "subtype": 3,
+        "seed": 1,
+        "floor": 6,
+        "room": 4
+      }
+    ],
+    "indexing": "zero-based"
+  },
+  "validation_override": "User requested skip WASM checks2026-10-28. No WASM build/check for this controller; previous maggot/browser records are historical.",
+  "remaining": [
+    "Native charm/fear/confusion/shrink/control/camouflage and champion interactions.",
+    "Exact evade/grid-cache and collision-mass/save fidelity.",
+    "Source cosmetic brood effect63 and vocal triggers.",
+    "Full mixed-room playability, color-independent readability, complete camera coverage and controlled performance."
+  ],
+  "validation": {
+    "native": "native-summary.json",
+    "visual": "visual-review.json",
+    "wasm": "Skipped at explicit user request2026-10-28."
+  }
+}

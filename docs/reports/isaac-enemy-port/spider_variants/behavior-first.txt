@@ -1,0 +1,3 @@
+PASS Strider Row6/20frames, current targeting, glide retention, true water traversal and rock collision
+PASS all three Swarm hop event schedules, launch ranges, commitment, friction, pit collision and peer overlap
+FAIL real fireplace hurts ordinary Spider but not Swarm

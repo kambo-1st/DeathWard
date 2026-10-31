@@ -1,0 +1,193 @@
+{
+  "passed": 45,
+  "failed": 0,
+  "seconds": 88.62,
+  "basis": "One complete 45-suite native run. A subsequent presentation-only change colors friendly health bars teal; it does not change combat behavior. Final binary/captures are recorded separately. Later companion persistence assertions and source-only hazard review/checklist changes were checked separately; no further combat runtime edits.",
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.513397
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "seconds": 1.69988
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "seconds": 39.3253
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "seconds": 7.84719
+    },
+    "floor_progression": {
+      "result": "pass",
+      "seconds": 83.9966
+    },
+    "item_builds": {
+      "result": "pass",
+      "seconds": 9.05806
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "seconds": 66.9701
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "seconds": 0.0451377
+    },
+    "expedition": {
+      "result": "pass",
+      "seconds": 16.1053
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "seconds": 11.3711
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "seconds": 0.219176
+    },
+    "save_slots": {
+      "result": "pass",
+      "seconds": 0.0998869
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "seconds": 1.73166
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "seconds": 0.0916931
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "seconds": 12.1088
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "seconds": 19.3709
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "seconds": 0.846716
+    },
+    "building_navigation": {
+      "result": "pass",
+      "seconds": 0.0314445
+    },
+    "particle_emission": {
+      "result": "pass",
+      "seconds": 0.0258098
+    },
+    "town_characters": {
+      "result": "pass",
+      "seconds": 0.0224819
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "seconds": 0.196144
+    },
+    "train_motion": {
+      "result": "pass",
+      "seconds": 0.719053
+    },
+    "object_animation": {
+      "result": "pass",
+      "seconds": 0.0626737
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "seconds": 1.79709
+    },
+    "mission_shop": {
+      "result": "pass",
+      "seconds": 3.06182
+    },
+    "money_pickups": {
+      "result": "pass",
+      "seconds": 2.10658
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "seconds": 1.29626
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "seconds": 0.0679019
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "seconds": 4.09608
+    },
+    "monster_flight": {
+      "result": "pass",
+      "seconds": 3.43334
+    },
+    "monster_formations": {
+      "result": "pass",
+      "seconds": 0.21045
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "seconds": 0.417094
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "seconds": 0.350983
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "seconds": 0.385764
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "seconds": 1.81007
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "seconds": 2.26413
+    },
+    "bloat_boss_and_chargers": {
+      "result": "pass",
+      "seconds": 2.66295
+    },
+    "charger_variants": {
+      "result": "pass",
+      "seconds": 0.242467
+    },
+    "companion_familiars": {
+      "result": "pass",
+      "seconds": 2.00596
+    },
+    "mission_themes": {
+      "result": "pass",
+      "seconds": 6.22208
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "seconds": 0.0775442
+    },
+    "core_contracts": {
+      "result": "pass",
+      "seconds": 0.591945
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "seconds": 4.1781
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "seconds": 33.8584
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "seconds": 0.752457
+    }
+  },
+  "follow_up": {
+    "result": "pass",
+    "scope": "Targeted companion suite additionally verifies actual item floor carry, room ally expiry, fresh next-floor producer and stable key/fingerprint in the existing campaign summary journal. No live-combat save claim.",
+    "report": "docs/reports/isaac-enemy-port/shadow/persistence.txt"
+  }
+}

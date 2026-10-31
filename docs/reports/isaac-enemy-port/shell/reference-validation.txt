@@ -1,0 +1,208 @@
+{
+  "collectible_total": 721,
+  "collectible_with_infobox_match": 721,
+  "collectible_with_article_or_context": 721,
+  "trinket_total": 188,
+  "trinket_with_infobox_match": 188,
+  "trinket_with_article_or_context": 188,
+  "internal_total": 49,
+  "card_total": 98,
+  "card_with_infobox_match": 96,
+  "card_with_article_or_context": 97,
+  "pill_total": 50,
+  "pill_with_article_or_context": 50,
+  "other_total": 684,
+  "other_with_article_or_context": 171,
+  "other_with_infobox_match": 18,
+  "enemy_total": 468,
+  "enemy_with_infobox_match": 393,
+  "enemy_with_article_or_context": 465,
+  "enemy_with_deathward_adaptation": 151,
+  "boss_total": 185,
+  "boss_with_infobox_match": 125,
+  "boss_with_article_or_context": 185,
+  "boss_with_deathward_adaptation": 4
+}
+pill table rows 50 room libraries 53 DeathWard entries 155
+Unlinked NPC records [('entity:277.0.0', 'Black Boney'), ('entity:963.0.0', 'Frozen Enemy'), ('entity:965.0.0', 'Minecart')]
+{
+  "generated": "2026-10-25",
+  "files": [
+    {
+      "file": "docs/research/isaac-mechanics-reference.json",
+      "bytes": 15997633,
+      "sha256": "2a659cf2e4f4f89f8016861000b725d9d042162c4c7a50fe0828c8cbb1d8a843"
+    },
+    {
+      "file": "docs/reports/isaac-mechanics-reference-2026-10-25.html",
+      "bytes": 16024193,
+      "sha256": "6b23f34cf8c132f4d3eedad685c863d13341471127dba44b8e425bd8c555e39c"
+    },
+    {
+      "file": "docs/research/isaac-implementation-backlog.csv",
+      "bytes": 806783,
+      "sha256": "142b4fb54e8adb440e1329b27ebe85b7fcf3fe6ea83e5bc41c1ec34fd6af543b"
+    }
+  ],
+  "records": 2443,
+  "articles": 1362,
+  "interaction_statements": 8434,
+  "coverage": {
+    "collectible_total": 721,
+    "collectible_with_infobox_match": 721,
+    "collectible_with_article_or_context": 721,
+    "trinket_total": 188,
+    "trinket_with_infobox_match": 188,
+    "trinket_with_article_or_context": 188,
+    "internal_total": 49,
+    "card_total": 98,
+    "card_with_infobox_match": 96,
+    "card_with_article_or_context": 97,
+    "pill_total": 50,
+    "pill_with_article_or_context": 50,
+    "other_total": 684,
+    "other_with_article_or_context": 171,
+    "other_with_infobox_match": 18,
+    "enemy_total": 468,
+    "enemy_with_infobox_match": 393,
+    "enemy_with_article_or_context": 465,
+    "enemy_with_deathward_adaptation": 151,
+    "boss_total": 185,
+    "boss_with_infobox_match": 125,
+    "boss_with_article_or_context": 185,
+    "boss_with_deathward_adaptation": 4
+  },
+  "raw_sources": "reference/isaac-mechanics-study (gitignored, preserved locally)",
+  "baseline_sources": "reference/isaac-repentance-1.7.9b (gitignored, preserved locally)"
+}
+{
+  "total_records": 653,
+  "source_groups": {
+    "enemy": 468,
+    "boss": 185
+  },
+  "unique_type_ids": 329,
+  "runtime_definitions": 155,
+  "raw_runtime_id_matches": 155,
+  "missing_runtime_ids": 498,
+  "identity_conflicts": [],
+  "naming_alias_reviews": [],
+  "current_progression_selected_ids": [
+    "10.1.0",
+    "10.3.1",
+    "10.3.2",
+    "10.3.3",
+    "10.3.4",
+    "10.3.5",
+    "11.1.0",
+    "12.0.0",
+    "14.0.0",
+    "15.0.0",
+    "15.1.0",
+    "15.2.0",
+    "15.3.0",
+    "21.0.0",
+    "23.0.0",
+    "23.1.0",
+    "23.2.0",
+    "23.3.0",
+    "25.0.0",
+    "29.0.0",
+    "30.1.0",
+    "34.0.0",
+    "39.0.0",
+    "41.2.0",
+    "54.0.0",
+    "60.0.0",
+    "222.0.0",
+    "819.0.0",
+    "855.0.0",
+    "872.0.0"
+  ],
+  "current_dedicated_boss_ids": [
+    "19.2.0",
+    "19.3.0",
+    "68.0.0",
+    "68.1.0"
+  ],
+  "current_owned_component_ids": [
+    "68.10.0",
+    "68.11.0"
+  ],
+  "with_stage_hp": 104,
+  "without_room_templates": 153,
+  "without_articles": [
+    "277.0.0",
+    "963.0.0",
+    "965.0.0"
+  ],
+  "review_roles": {
+    "enemy_or_component_review": 402,
+    "existing_support_or_hazard_review": 35,
+    "environment_npc_item_dependency_review": 22,
+    "boss_encounter_or_component_review": 160,
+    "miniboss_or_component_review": 22,
+    "cut_or_unused_review": 12
+  },
+  "proposed_first_bands": {
+    "Outer Washes": 98,
+    "Storm Cut": 109,
+    "review_required": 196,
+    "Broken Quarry": 168,
+    "Abandoned Works": 82
+  },
+  "accepted_behavior_ports": 0,
+  "note": "Zero verified ports is an audit status, not a claim that existing enemies do nothing."
+}
+{
+  "total": 653,
+  "identity_verified": 653,
+  "source_archive_available": true,
+  "reviewed": 121,
+  "dispositions": {
+    "ordinary": 61,
+    "dedicated": 7,
+    "environment": 11,
+    "pending": 532,
+    "boss": 4,
+    "item_dependency": 2,
+    "component": 8,
+    "hazard": 16,
+    "excluded": 12
+  },
+  "implementations": {
+    "in_progress": 68,
+    "existing_unverified": 87,
+    "missing": 486,
+    "excluded": 12
+  },
+  "complete": 0,
+  "remaining": 641,
+  "milestones": [
+    {
+      "number": 1,
+      "status": "in_progress"
+    },
+    {
+      "number": 2,
+      "status": "pending"
+    },
+    {
+      "number": 3,
+      "status": "pending"
+    },
+    {
+      "number": 4,
+      "status": "pending"
+    },
+    {
+      "number": 5,
+      "status": "pending"
+    },
+    {
+      "number": 6,
+      "status": "pending"
+    }
+  ]
+}
+PASS: 166 data/source integrity assertions; 2443 definitions; 1710 implementation-review rows.

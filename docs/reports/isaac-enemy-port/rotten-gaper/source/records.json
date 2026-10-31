@@ -1,0 +1,1049 @@
+[
+  {
+    "key": "10.3.0",
+    "id": 10,
+    "variant": 3,
+    "subtype": 0,
+    "name": "rotten gaper",
+    "xml": {
+      "anm2path": "010.003_rotten gaper.anm2",
+      "baseHP": "24",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "10",
+      "name": "#ROTTEN_GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "270",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "3"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:10.3.0",
+    "wiki_matches": [
+      {
+        "page": "Gaper",
+        "box": 12,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Rotten Gaper",
+          "id": "10",
+          "variant": "3",
+          "base hp": "24",
+          "stage hp": "0",
+          "environment": "Corpse /",
+          "behavior": "Walks toward Isaac, dealing contact damage. Its behavior varies slightly depending on its facial expression."
+        },
+        "section_indices": [
+          20
+        ],
+        "name": "Rotten Gaper",
+        "variant": 3,
+        "subtype": 0,
+        "id": 10,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Gaper"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 24.0,
+      "2": 24.0,
+      "3": 24.0,
+      "4": 24.0,
+      "5": 24.0,
+      "6": 24.0,
+      "7": 24.0,
+      "8": 24.0,
+      "9": 24.0,
+      "10": 24.0,
+      "11": 24.0,
+      "12": 24.0,
+      "13": 24.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Rotten Gaper",
+    "room_library_presence": {
+      "rooms/33.corpse.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Rotten Gaper",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Walker",
+      "catalog_base_hp": 88.0,
+      "behavior": "pursuing_body",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 9,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Gaper",
+        "section": 20
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "10.3.1",
+    "id": 10,
+    "variant": 3,
+    "subtype": 1,
+    "name": "rotten gaper",
+    "xml": {
+      "anm2path": "010.003_rotten gaper.anm2",
+      "baseHP": "24",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "10",
+      "name": "#ROTTEN_GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "270",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "subtype": "1",
+      "variant": "3"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:10.3.1",
+    "wiki_matches": [
+      {
+        "page": "Gaper",
+        "box": 12,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Rotten Gaper",
+          "id": "10",
+          "variant": "3",
+          "base hp": "24",
+          "stage hp": "0",
+          "environment": "Corpse /",
+          "behavior": "Walks toward Isaac, dealing contact damage. Its behavior varies slightly depending on its facial expression."
+        },
+        "section_indices": [
+          20
+        ],
+        "name": "Rotten Gaper",
+        "variant": 3,
+        "subtype": 0,
+        "id": 10,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Gaper"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 24.0,
+      "2": 24.0,
+      "3": 24.0,
+      "4": 24.0,
+      "5": 24.0,
+      "6": 24.0,
+      "7": 24.0,
+      "8": 24.0,
+      "9": 24.0,
+      "10": 24.0,
+      "11": 24.0,
+      "12": 24.0,
+      "13": 24.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Rotten Gaper",
+    "room_library_presence": {
+      "rooms/33.corpse.stb": {
+        "templates": 32,
+        "positive_weight_templates": 32
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Rotten Gaper",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Walker",
+      "catalog_base_hp": 88.0,
+      "behavior": "pursuing_body",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 10,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Gaper",
+        "section": 20
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "10.3.2",
+    "id": 10,
+    "variant": 3,
+    "subtype": 2,
+    "name": "rotten gaper01",
+    "xml": {
+      "anm2path": "010.003_rotten gaper01.anm2",
+      "baseHP": "24",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "10",
+      "name": "#ROTTEN_GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "270",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "subtype": "2",
+      "variant": "3"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:10.3.2",
+    "wiki_matches": [
+      {
+        "page": "Gaper",
+        "box": 12,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Rotten Gaper",
+          "id": "10",
+          "variant": "3",
+          "base hp": "24",
+          "stage hp": "0",
+          "environment": "Corpse /",
+          "behavior": "Walks toward Isaac, dealing contact damage. Its behavior varies slightly depending on its facial expression."
+        },
+        "section_indices": [
+          20
+        ],
+        "name": "Rotten Gaper",
+        "variant": 3,
+        "subtype": 0,
+        "id": 10,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Gaper"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 24.0,
+      "2": 24.0,
+      "3": 24.0,
+      "4": 24.0,
+      "5": 24.0,
+      "6": 24.0,
+      "7": 24.0,
+      "8": 24.0,
+      "9": 24.0,
+      "10": 24.0,
+      "11": 24.0,
+      "12": 24.0,
+      "13": 24.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Rotten Gaper",
+    "room_library_presence": {
+      "rooms/33.corpse.stb": {
+        "templates": 17,
+        "positive_weight_templates": 17
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Rotten Gaper",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Walker",
+      "catalog_base_hp": 88.0,
+      "behavior": "pursuing_body",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 11,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Gaper",
+        "section": 20
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "10.3.3",
+    "id": 10,
+    "variant": 3,
+    "subtype": 3,
+    "name": "rotten gaper02",
+    "xml": {
+      "anm2path": "010.003_rotten gaper02.anm2",
+      "baseHP": "24",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "10",
+      "name": "#ROTTEN_GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "270",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "subtype": "3",
+      "variant": "3"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:10.3.3",
+    "wiki_matches": [
+      {
+        "page": "Gaper",
+        "box": 12,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Rotten Gaper",
+          "id": "10",
+          "variant": "3",
+          "base hp": "24",
+          "stage hp": "0",
+          "environment": "Corpse /",
+          "behavior": "Walks toward Isaac, dealing contact damage. Its behavior varies slightly depending on its facial expression."
+        },
+        "section_indices": [
+          20
+        ],
+        "name": "Rotten Gaper",
+        "variant": 3,
+        "subtype": 0,
+        "id": 10,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Gaper"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 24.0,
+      "2": 24.0,
+      "3": 24.0,
+      "4": 24.0,
+      "5": 24.0,
+      "6": 24.0,
+      "7": 24.0,
+      "8": 24.0,
+      "9": 24.0,
+      "10": 24.0,
+      "11": 24.0,
+      "12": 24.0,
+      "13": 24.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Rotten Gaper",
+    "room_library_presence": {
+      "rooms/33.corpse.stb": {
+        "templates": 17,
+        "positive_weight_templates": 17
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Rotten Gaper",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Walker",
+      "catalog_base_hp": 88.0,
+      "behavior": "rotten_brood",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 12,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Gaper",
+        "section": 20
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "10.3.4",
+    "id": 10,
+    "variant": 3,
+    "subtype": 4,
+    "name": "rotten gaper03",
+    "xml": {
+      "anm2path": "010.003_rotten gaper03.anm2",
+      "baseHP": "24",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "10",
+      "name": "#ROTTEN_GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "270",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "subtype": "4",
+      "variant": "3"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:10.3.4",
+    "wiki_matches": [
+      {
+        "page": "Gaper",
+        "box": 12,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Rotten Gaper",
+          "id": "10",
+          "variant": "3",
+          "base hp": "24",
+          "stage hp": "0",
+          "environment": "Corpse /",
+          "behavior": "Walks toward Isaac, dealing contact damage. Its behavior varies slightly depending on its facial expression."
+        },
+        "section_indices": [
+          20
+        ],
+        "name": "Rotten Gaper",
+        "variant": 3,
+        "subtype": 0,
+        "id": 10,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Gaper"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 24.0,
+      "2": 24.0,
+      "3": 24.0,
+      "4": 24.0,
+      "5": 24.0,
+      "6": 24.0,
+      "7": 24.0,
+      "8": 24.0,
+      "9": 24.0,
+      "10": 24.0,
+      "11": 24.0,
+      "12": 24.0,
+      "13": 24.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Rotten Gaper",
+    "room_library_presence": {
+      "rooms/33.corpse.stb": {
+        "templates": 33,
+        "positive_weight_templates": 33
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Rotten Gaper",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Walker",
+      "catalog_base_hp": 88.0,
+      "behavior": "pursuing_body",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 13,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Gaper",
+        "section": 20
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "10.3.5",
+    "id": 10,
+    "variant": 3,
+    "subtype": 5,
+    "name": "rotten gaper04",
+    "xml": {
+      "anm2path": "010.003_rotten gaper04.anm2",
+      "baseHP": "24",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "10",
+      "name": "#ROTTEN_GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "270",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "subtype": "5",
+      "variant": "3"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:10.3.5",
+    "wiki_matches": [
+      {
+        "page": "Gaper",
+        "box": 12,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Rotten Gaper",
+          "id": "10",
+          "variant": "3",
+          "base hp": "24",
+          "stage hp": "0",
+          "environment": "Corpse /",
+          "behavior": "Walks toward Isaac, dealing contact damage. Its behavior varies slightly depending on its facial expression."
+        },
+        "section_indices": [
+          20
+        ],
+        "name": "Rotten Gaper",
+        "variant": 3,
+        "subtype": 0,
+        "id": 10,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "variant family; subtype not documented",
+    "wiki_pages": [
+      "Gaper"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 24.0,
+      "2": 24.0,
+      "3": 24.0,
+      "4": 24.0,
+      "5": 24.0,
+      "6": 24.0,
+      "7": 24.0,
+      "8": 24.0,
+      "9": 24.0,
+      "10": 24.0,
+      "11": 24.0,
+      "12": 24.0,
+      "13": 24.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Rotten Gaper",
+    "room_library_presence": {
+      "rooms/33.corpse.stb": {
+        "templates": 20,
+        "positive_weight_templates": 20
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Rotten Gaper",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Walker",
+      "catalog_base_hp": 88.0,
+      "behavior": "rotten_orbit",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 14,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Gaper",
+        "section": 20
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "room-floor-run-events",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "853.0.0",
+    "id": 853,
+    "variant": 0,
+    "subtype": 0,
+    "name": "small maggot",
+    "xml": {
+      "anm2path": "853.000_small maggot.anm2",
+      "baseHP": "10",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "3",
+      "collisionRadius": "17",
+      "friction": "1",
+      "gridCollision": "ground",
+      "id": "853",
+      "name": "#SMALL_MAGGOT",
+      "numGridCollisionPoints": "8",
+      "portrait": "271",
+      "shadowSize": "10",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:853.0.0",
+    "wiki_matches": [
+      {
+        "page": "Maggot",
+        "box": 1,
+        "group": "entity",
+        "fields": {
+          "dlc": "r",
+          "name": "Small Maggot",
+          "id": "853",
+          "image scale": "1/2",
+          "base hp": "10",
+          "environment": "Corpse / \nchallenge / \nsecret / (Corpse only)",
+          "behavior": "Slowly crawls toward Isaac, dealing contact damage."
+        },
+        "section_indices": [
+          2
+        ],
+        "name": "Small Maggot",
+        "variant": 0,
+        "subtype": 0,
+        "id": 853,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Maggot"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 10.0,
+      "2": 10.0,
+      "3": 10.0,
+      "4": 10.0,
+      "5": 10.0,
+      "6": 10.0,
+      "7": 10.0,
+      "8": 10.0,
+      "9": 10.0,
+      "10": 10.0,
+      "11": 10.0,
+      "12": 10.0,
+      "13": 10.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Small Maggot",
+    "room_library_presence": {
+      "rooms/33.corpse.stb": {
+        "templates": 25,
+        "positive_weight_templates": 25
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "deathward": {
+      "name": "Small Maggot",
+      "motion": "Chase",
+      "attack": "None",
+      "shape": "Worm",
+      "catalog_base_hp": 24.0,
+      "behavior": "emerging_maggot",
+      "source": "assets/mechanics/monsters.mechanics",
+      "line": 138,
+      "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+    },
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Maggot",
+        "section": 2
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "status-effects"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+]

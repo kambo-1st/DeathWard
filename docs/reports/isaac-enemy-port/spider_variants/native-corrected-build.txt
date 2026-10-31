@@ -1,0 +1,29 @@
+[ 17%] Built target glfw
+[ 73%] Built target deathward_core
+[ 79%] Built target raylib
+[ 82%] Built target deathward_skinning
+[ 82%] Built target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_particles
+[ 85%] Built target deathward_particles
+[ 88%] Built target deathward_mission_lighting
+[ 88%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 88%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 88%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[ 95%] Building CXX object CMakeFiles/deathward_floor_progression_tests.dir/tests/floor_progression_tests.cpp.o
+[100%] Linking CXX executable deathward_floor_progression_tests
+[100%] Built target deathward_floor_progression_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_pacing_tests
+[ 95%] Building CXX object CMakeFiles/deathward_pacing_tests.dir/tests/pacing_tests.cpp.o
+[100%] Linking CXX executable deathward_pacing_tests
+[100%] Built target deathward_pacing_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests

@@ -1,0 +1,11 @@
+{
+  "passed": 85,
+  "total": 85,
+  "final_failed": 0,
+  "reports": [
+    "docs/reports/isaac-enemy-port/spitties/native-full.txt"
+  ],
+  "focused": "docs/reports/isaac-enemy-port/spitties/native-focused-4.txt",
+  "projectiles": "docs/reports/isaac-enemy-port/spitties/projectile-tests-1.txt",
+  "note": "All 85 suites passed in the complete run. Subsequent changes only affect rendered silhouettes and capture framing; final native game rebuilt successfully. Earlier focused failures remain preserved and explained in README.md."
+}

@@ -1,0 +1,17 @@
+2/35 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 25 09:13 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+Mechanics contracts passed
+<end of output>
+Test time =   0.72 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 25 09:13 CET
+"mechanics_content" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/35 Testing: expedition_economy

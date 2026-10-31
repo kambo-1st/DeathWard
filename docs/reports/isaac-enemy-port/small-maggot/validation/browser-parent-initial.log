@@ -1,0 +1,18 @@
+START isolated
+PASS isolated
+START cover
+PASS cover
+START natural
+PASS natural
+START brood
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(a.smallMaggot.cooldown>=1&&a.smallMaggot.cooldown<=39)
+
+    at /home/kambo/workspace/DeathWard/web/small-maggot-test.cjs:56:6 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

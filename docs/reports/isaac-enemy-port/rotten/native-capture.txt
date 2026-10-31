@@ -1,0 +1,10 @@
+INFO:     > Vendor:   Microsoft Corporation
+INFO:     > Renderer: D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER)
+ENEMY_PROBE id=10.3.3 frames=760 alive=1 hp=88 shots=0 threats=7
+ENEMY_ACTOR id=10.3.3 hp=88 max_hp=88 state=0 owner=0 x=-80 z=-118.013 speed=2.4202
+ENEMY_ACTOR id=853.0 hp=24 max_hp=24 state=0 owner=18 x=-80 z=-117.993 speed=0.715027
+ENEMY_ACTOR id=853.0 hp=24 max_hp=24 state=0 owner=18 x=-80 z=-118.01 speed=0.715027
+ENEMY_ACTOR id=853.0 hp=24 max_hp=24 state=0 owner=18 x=-80 z=-118.01 speed=0.715027
+ENEMY_ACTOR id=853.0 hp=24 max_hp=24 state=0 owner=18 x=-80 z=-118.01 speed=0.715027
+ENEMY_ACTOR id=853.0 hp=24 max_hp=24 state=0 owner=18 x=-80 z=-117.963 speed=0.715027
+ENEMY_ACTOR id=853.0 hp=24 max_hp=24 state=0 owner=18 x=-80 z=-116.533 speed=0.715027

@@ -1,0 +1,17 @@
+{
+  "build-web/index.js.gz": {
+    "sha256": "94bcb76f4bea7af65f8fb2afe9677c1c255bf49a1b5d9a7ffed69ae5a46eef99",
+    "uncompressed_sha256": "9e59f65dd51e1f8312d3fb3143e62b22d334d75e03f3b01e9d1c9a24530e120a",
+    "matches": true
+  },
+  "build-web/index.data.gz": {
+    "sha256": "6e87b8f5d692524ff4a81be158273bbdd340efaa08cdf631b21af4fe37af4899",
+    "uncompressed_sha256": "96537fccc3bfdd61970891b9a2f5651d2fd844fb1e9f24e111b4668aecb859a2",
+    "matches": true
+  },
+  "build-web/index.wasm.gz": {
+    "sha256": "80dbcc4383e93117e4ae57cf2b961c604bbe891bdda8a249f1270658cd47877c",
+    "uncompressed_sha256": "b16172043249196822ef8d76db539ef0dbdbd3f7da5db5e031276fb6c2ac2bda",
+    "matches": true
+  }
+}

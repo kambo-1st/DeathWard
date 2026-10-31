@@ -1,0 +1,4 @@
+ORBIT source_endpoint=1 opposite_handedness=1 cadence=1 radial_drift=1
+ACCELERATION deceleration=1 growth=1 independent_height=1
+PHYSICAL walls=1 ground=1 player=1 survives_owner=1
+PASS source projectile motion

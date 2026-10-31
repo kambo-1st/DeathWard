@@ -1,0 +1,109 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/085.000_Spider.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/spiders/animations/085.000_Spider.anm2",
+      "sha256": "853783bf2102d0a3e7f54ba89f7bf1b29c5b39526af784eb71c54ab6a315ff26",
+      "checksum": "0x2bd1ebce",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/15/2014 3:21:54 PM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "5",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Death",
+            "FrameNum": "11",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/094.000_Big Spider.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/spiders/animations/094.000_Big Spider.anm2",
+      "sha256": "82a8a2a59f7d5aa21a01cc353f6aea96d9106edb7f6c36d35219516c340dcc35",
+      "checksum": "0x3f25dc30",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 12:01:11 PM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "5",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Death",
+            "FrameNum": "16",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

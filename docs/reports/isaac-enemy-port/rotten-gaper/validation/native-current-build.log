@@ -1,0 +1,17 @@
+[ 95%] Built target deathward_core
+[ 95%] Building CXX object CMakeFiles/deathward_rotten_gaper_tests.dir/tests/rotten_gaper_tests.cpp.o
+[100%] Linking CXX executable deathward_rotten_gaper_tests
+[100%] Built target deathward_rotten_gaper_tests
+[ 14%] Built target glfw
+[ 17%] Built target raylib
+[ 82%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_particles
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Built target deathward_cloth
+[ 91%] Built target deathward_skinning
+[ 91%] Built target deathward_particles
+[ 91%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward

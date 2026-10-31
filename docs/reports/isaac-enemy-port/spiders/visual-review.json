@@ -1,0 +1,27 @@
+{
+  "style": "Original",
+  "result": "Partial visual pass: nine selected Linux and WASM frames inspected. Ordinary ground spiders, the larger rear abdomen, two independent death children and actual seeded residents are visible. Full all-angle/crowd readability and sprite equivalence remain open.",
+  "inspected": [
+    "docs/reports/isaac-enemy-port/spiders/native-spider-group.png",
+    "docs/reports/isaac-enemy-port/spiders/native-big-spider.png",
+    "docs/reports/isaac-enemy-port/spiders/native-big-spider-death.png",
+    "docs/reports/isaac-enemy-port/spiders/native-spider-river.png",
+    "docs/reports/isaac-enemy-port/spiders/web/spider-group.png",
+    "docs/reports/isaac-enemy-port/spiders/web/big-spider-bursts.png",
+    "docs/reports/isaac-enemy-port/spiders/web/big-spider-death.png",
+    "docs/reports/isaac-enemy-port/spiders/web/natural-spider.png",
+    "docs/reports/isaac-enemy-port/spiders/web/natural-big-spider.png"
+  ],
+  "observations": [
+    "The four-spider scenes show distinct bodies around the player and the existing hidden-enemy outline where a leg/body overlaps the character. Ground contact shadows are present.",
+    "Big Spider has a dark enlarged rear abdomen and the existing orange body tint, visibly different from ordinary green Spider. Its physical collider remains equal to Spider, following equal source collisionRadius values.",
+    "The Linux and browser death frames show exactly two smaller spiders spread to opposite sides of the deceased parent. The HUD reports two remaining threats. Exact initial offsets and velocities are established by native fixtures, not inferred from a later screenshot.",
+    "The river scene shows a spider partly over the rendered river surface. Rendered water includes shallow walkable fords; this frame alone cannot establish deep-water collision. Browser telemetry rejects blocked-water occupancy, and the synthetic native river fixture verifies the impassable-water barrier.",
+    "The natural Spider screenshot shows one actor near the player and another partly hidden by scenery with the existing outline. The natural Big Spider screenshot shows the abdomen alongside rocks and two other production residents.",
+    "No new whole-scene treatment or source sprite import was used. Existing Original colors, scenery and player are retained."
+  ],
+  "limits": [
+    "Selected frames and cameras only. Procedural meshes do not reproduce source Idle/Walk/Appear/Death sprites. Broader terrain/crowd readability acceptance remains open.",
+    "Screenshot FPS values during concurrent tests are not controlled performance measurements."
+  ]
+}

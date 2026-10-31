@@ -1,0 +1,8 @@
+PASS spider-bursts
+PASS spider-group
+PASS spider-river
+PASS big-spider-bursts
+PASS big-spider-death
+PASS big-spider-overkill
+PASS natural-spider
+PASS natural-big-spider

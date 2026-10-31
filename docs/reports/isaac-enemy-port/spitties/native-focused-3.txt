@@ -1,0 +1,11 @@
+PRIMARY 31.0 count=1 source_frames=16 shoot=6
+PRIMARY 243.0 count=2 source_frames=16 shoot=6
+PRIMARY 31.1 count=10 source_frames=16 shoot=6
+WALK burst_event=1 no_pursuit=1 stun=1 room_suspend=1
+CAPACITY packet_atomicity=1 death_retention=1 owner_lifetime=1 completion=1
+GEOMETRY cover=1 CONFIG immutable_reload=1 invalid_profiles=5
+STARTING_KIT 31.0 seconds=1.58333 health=100
+STARTING_KIT 243.0 seconds=1.88333 health=100
+STARTING_KIT 31.1 seconds=40 health=100
+REMAINING hp=34.4195 dead=0
+default revolver defeats isolated source variant

@@ -1,0 +1,10 @@
+PASS strider-stroke
+PASS strider-river
+AssertionError [ERR_ASSERTION]: actor moves
+    at /home/kambo/workspace/DeathWard/web/spider-variant-test.cjs:48:4 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

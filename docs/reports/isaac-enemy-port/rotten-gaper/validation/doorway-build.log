@@ -1,0 +1,40 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RottenGapers.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[ 95%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests
+Consolidate compiler generated dependencies of target deathward_core
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_rotten_gaper_tests
+[100%] Linking CXX executable deathward_rotten_gaper_tests
+[100%] Built target deathward_rotten_gaper_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_small_maggot_tests
+[100%] Linking CXX executable deathward_small_maggot_tests
+[100%] Built target deathward_small_maggot_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_gaper_tests
+[100%] Linking CXX executable deathward_gaper_tests
+[100%] Built target deathward_gaper_tests
+[ 17%] Built target glfw
+[ 21%] Built target raylib
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[100%] Linking CXX executable deathward_floor_progression_tests
+[100%] Built target deathward_floor_progression_tests
+[ 14%] Built target glfw
+[ 17%] Built target raylib
+[ 82%] Built target deathward_core
+[ 88%] Built target deathward_skinning
+[ 88%] Built target deathward_cloth
+[ 88%] Built target deathward_particles
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward

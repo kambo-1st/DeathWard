@@ -1,0 +1,10 @@
+START spitty-river
+PASS spitty-river
+START tainted-death
+PASS tainted-death
+START resident-spitty
+PASS resident-spitty
+START resident-conjoined
+PASS resident-conjoined
+START resident-tainted
+PASS resident-tainted

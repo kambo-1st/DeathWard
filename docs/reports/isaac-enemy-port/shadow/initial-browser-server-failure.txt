@@ -1,0 +1,9 @@
+Browser errors: []
+Failure state: null
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8098/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-11.0.0&enemy-player-side=below&enemy-item=isaac%3Acollectible%3A433&enemy-player-at=1%3A1.1%3A0
+Call log:
+[2m  - navigating to "http://127.0.0.1:8098/?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-11.0.0&enemy-player-side=below&enemy-item=isaac%3Acollectible%3A433&enemy-player-at=1%3A1.1%3A0", waiting until "load"[22m
+
+    at /home/kambo/workspace/DeathWard/web/enemy-port-test.cjs:27:18 {
+  name: 'Error'
+}

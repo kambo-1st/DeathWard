@@ -1,0 +1,17 @@
+{
+  "verified_utc": "2026-10-28T13:27:16.527601+00:00",
+  "source_enemy_records": 468,
+  "source_boss_records": 185,
+  "nonboss_missing": 257,
+  "confirmed_ordinary": {
+    "in_progress": 143,
+    "missing": 10
+  },
+  "unclassified_nonboss_missing": 235,
+  "meaning": "Record counts include exact subtypes. Unclassified non-boss records are not all confirmed standalone enemies. In progress does not mean fully accepted.",
+  "validation_override": {
+    "date": "2026-10-28",
+    "instruction": "User: pursue goal, skip WASM check.",
+    "policy": "Do not run new WASM builds or checks. Continue Linux behavior, reachability, visuals, balance and performance verification. Existing browser evidence remains historical, not proof for later runtime changes."
+  }
+}

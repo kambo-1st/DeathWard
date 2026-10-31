@@ -1,0 +1,85 @@
+[
+  {
+    "name": "spitty",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-31.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "240",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/spitties/native-spitty-final.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "conjoined",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-243.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "240",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/spitties/native-conjoined-final.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "tainted",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-31.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "240",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/spitties/native-tainted-final.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "tainted-death",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-31.1.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "248",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/spitties/native-tainted-death-final.png",
+      "--enemy-hit",
+      "240",
+      "10000"
+    ],
+    "exit": 0
+  }
+]

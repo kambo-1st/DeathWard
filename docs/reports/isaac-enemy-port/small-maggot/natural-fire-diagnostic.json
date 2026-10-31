@@ -1,0 +1,50 @@
+{
+  "finding": "Initial natural browser assertion incorrectly assumed selected resident remains alive for300frames. It dies from Black Knight41.4.0 fire jet atframe120; this is existing source-adapted friendly fire, not disappearance or Small Maggot controller failure.",
+  "evidence": {
+    "initial_trace": "docs/reports/isaac-enemy-port/small-maggot/web-initial/results.json",
+    "native_diagnostic": "docs/reports/isaac-enemy-port/small-maggot/validation/natural-damage-diagnostic.log",
+    "production_source": "src/combat/FireWaves.cpp pulseFireJet",
+    "configuration": "assets/mechanics/knights.mechanics knight_fire_wave41.4.0:jetMonsterDamage32"
+  },
+  "native_events": [
+    {
+      "time": 2.01667,
+      "target": 1,
+      "damage": 32,
+      "source": 3,
+      "kind": "Flame",
+      "area": true
+    },
+    {
+      "time": 2.01667,
+      "target": 4,
+      "damage": 32,
+      "source": 3,
+      "kind": "Flame",
+      "area": true
+    }
+  ],
+  "scope": "Diagnostic executable links the current core with a temporary instrumented copy of Simulation.cpp, logging process Damage events. Production sources and native/WASM game binaries were not modified.",
+  "reproduction": {
+    "sources": [
+      "docs/reports/isaac-enemy-port/small-maggot/diagnostic/Simulation.instrumented.cpp",
+      "docs/reports/isaac-enemy-port/small-maggot/diagnostic/natural-damage.cpp"
+    ],
+    "compile_argv": [
+      "c++",
+      "-O1",
+      "-DNDEBUG",
+      "-std=c++20",
+      "-I/home/kambo/workspace/DeathWard/src",
+      "-isystem",
+      "/home/kambo/workspace/DeathWard/build/_deps/raylib-src/src",
+      "docs/reports/isaac-enemy-port/small-maggot/diagnostic/Simulation.instrumented.cpp",
+      "docs/reports/isaac-enemy-port/small-maggot/diagnostic/natural-damage.cpp",
+      "build/libdeathward_core.a",
+      "-o",
+      "/tmp/deathward-maggot-diagnostic"
+    ],
+    "production_simulation_sha256": "7b6109e479e2f8ea625356ef4e27b33c57eec82e0e229889a353b76eab147f27"
+  },
+  "test_change": "Keep original natural seed, floor and room, all actors and full300frames. Require observed Black Knight owner, new overlapping fire-jet pulse, previousHP<=32, exactlyone additional kill and exactlyone fewer threat when selected actor disappears. Keep the death as a regression. Other normal-motion assertions continue while alive."
+}

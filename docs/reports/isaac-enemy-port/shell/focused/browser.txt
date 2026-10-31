@@ -1,0 +1,6 @@
+PASS WASM shell-head: invulnerable head, flesh attacks and arena
+PASS WASM shell-middle: invulnerable head, flesh attacks and arena
+PASS WASM shell-tail: invulnerable head, flesh attacks and arena
+PASS WASM resident-shell: invulnerable head, flesh attacks and arena
+PASS WASM resident-tuff: segmented armor/ownership or flyer death
+PASS WASM resident-peep: boss form, owned eyes, attacks in generated stage

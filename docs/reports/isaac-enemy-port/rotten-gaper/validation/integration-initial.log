@@ -1,0 +1,23 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/4 Test  #2: mechanics_content ................   Passed    2.21 sec
+    Start 30: monster_behaviors
+2/4 Test #30: monster_behaviors ................***Failed    3.61 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 207 entries including offspring
+ROTTEN_STARTING_KIT subtype=1 seconds=3.98333 hp=0 peak=1
+FAIL: starting revolver clears activated Rotten encounter and children without items/bombs/god mode
+
+    Start 82: gaper_family
+3/4 Test #82: gaper_family .....................   Passed    0.41 sec
+    Start 84: small_maggot_family
+4/4 Test #84: small_maggot_family ..............   Passed    1.70 sec
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =   7.92 sec
+
+The following tests FAILED:
+	 30 - monster_behaviors (Failed)
+Errors while running CTest

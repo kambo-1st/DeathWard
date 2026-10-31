@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="3"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="110"
+	timestamp="2026-10-27T04:39:43"
+	>
+	<testcase name="floor_progression" classname="floor_progression" time="110.268" status="run">
+		<system-out>Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_CHARGER id=855.0 seed=0 floor=5 room=12 variant=0
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_REPLACEMENT seed=2 floor=2 room=4 source=85.0 target=814.0
+NATURAL_REPLACEMENT seed=2 floor=2 room=4 source=85.0 target=814.0
+NATURAL_REPLACEMENT seed=2 floor=2 room=4 source=85.0 target=814.0
+NATURAL_REPLACEMENT seed=2 floor=2 room=4 source=85.0...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+	<testcase name="expedition_pacing" classname="expedition_pacing" time="11.5858" status="run">
+		<system-out>PASS separate pacing trials, room/corridor collision, objectives, spawns, boss space, tutorial and size exhaustion
+</system-out>
+	</testcase>
+	<testcase name="monster_behaviors" classname="monster_behaviors" time="4.22104" status="run">
+		<system-out>chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 169 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.1 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.1 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.1 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.1 entity=48 x=0.486997 z=7.04164
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.0642 z=8.15202
+GROUN...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</system-out>
+	</testcase>
+</testsuite>

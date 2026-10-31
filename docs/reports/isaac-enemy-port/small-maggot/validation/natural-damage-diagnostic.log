@@ -1,0 +1,4 @@
+target=4 player=58.6477,-55.8515
+DAMAGE t=2.01667 target=1 amount=32 owner=3 hostile=0 area=1 source=3 kind=1
+DAMAGE t=2.01667 target=4 amount=32 owner=3 hostile=0 area=1 source=3 kind=1
+gone frame=120

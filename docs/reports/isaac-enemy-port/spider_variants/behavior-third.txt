@@ -1,0 +1,8 @@
+PASS Strider Row6/20frames, current targeting, glide retention, true water traversal and rock collision
+PASS all three Swarm hop event schedules, launch ranges, commitment, friction, pit collision and peer overlap
+FIREPLACE swarm=15.04 ordinary=10.8 fire=5 spent=0
+PASS fireplace-specific immunity, ordinary damage/contact/stun and wet direct/retained death replacements
+NATURAL_VARIANT id=884.0 seed=0 floor=0 room=2
+NATURAL_VARIANT id=814.0 seed=2 floor=2 room=4
+PASS validated config and real seeded variant placement
+PASS Strider and Swarm Spider

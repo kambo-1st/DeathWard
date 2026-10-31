@@ -1,0 +1,297 @@
+{
+  "status": "Partial My Shadow companion checkpoint; full 653-record goal remains active and no record is newly certified complete.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "mechanics_fingerprint": "c52e6c762c1f93d7",
+  "runtime_definitions": 137,
+  "item_definitions": 12,
+  "scope": [
+    "23.0.1 My Shadow allied Charger",
+    "isaac:collectible:433 contact familiar and seeded bargain acquisition",
+    "Reusable configured companion damage, delayed path producer, room lifetime and provenance"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/shadow/source-review.json",
+  "additional_source_review": {
+    "path": "docs/reports/isaac-enemy-port/hazards/source-review.json",
+    "records": 17,
+    "scope": "Source-only Grimace hazard/support contracts; no new runtime or floor entries."
+  },
+  "native": {
+    "passed": 45,
+    "failed": 0,
+    "seconds": 88.62,
+    "basis": "One complete 45-suite native run. A subsequent presentation-only change colors friendly health bars teal; it does not change combat behavior. Final binary/captures are recorded separately. Later companion persistence assertions and source-only hazard review/checklist changes were checked separately; no further combat runtime edits.",
+    "tests": {
+      "enemy_port_coverage": {
+        "result": "pass",
+        "seconds": 0.513397
+      },
+      "mechanics_content": {
+        "result": "pass",
+        "seconds": 1.69988
+      },
+      "expedition_economy": {
+        "result": "pass",
+        "seconds": 39.3253
+      },
+      "canyon_bosses": {
+        "result": "pass",
+        "seconds": 7.84719
+      },
+      "floor_progression": {
+        "result": "pass",
+        "seconds": 83.9966
+      },
+      "item_builds": {
+        "result": "pass",
+        "seconds": 9.05806
+      },
+      "expedition_destruction": {
+        "result": "pass",
+        "seconds": 66.9701
+      },
+      "walkable_areas": {
+        "result": "pass",
+        "seconds": 0.0451377
+      },
+      "expedition": {
+        "result": "pass",
+        "seconds": 16.1053
+      },
+      "expedition_pacing": {
+        "result": "pass",
+        "seconds": 11.3711
+      },
+      "flag_cloth": {
+        "result": "pass",
+        "seconds": 0.219176
+      },
+      "save_slots": {
+        "result": "pass",
+        "seconds": 0.0998869
+      },
+      "arrival_quest": {
+        "result": "pass",
+        "seconds": 1.73166
+      },
+      "cinematic_timeline": {
+        "result": "pass",
+        "seconds": 0.0916931
+      },
+      "canyon_roads": {
+        "result": "pass",
+        "seconds": 12.1088
+      },
+      "canyon_rivers": {
+        "result": "pass",
+        "seconds": 19.3709
+      },
+      "redstone_hub": {
+        "result": "pass",
+        "seconds": 0.846716
+      },
+      "building_navigation": {
+        "result": "pass",
+        "seconds": 0.0314445
+      },
+      "particle_emission": {
+        "result": "pass",
+        "seconds": 0.0258098
+      },
+      "town_characters": {
+        "result": "pass",
+        "seconds": 0.0224819
+      },
+      "ambient_animals": {
+        "result": "pass",
+        "seconds": 0.196144
+      },
+      "train_motion": {
+        "result": "pass",
+        "seconds": 0.719053
+      },
+      "object_animation": {
+        "result": "pass",
+        "seconds": 0.0626737
+      },
+      "player_dynamite": {
+        "result": "pass",
+        "seconds": 1.79709
+      },
+      "mission_shop": {
+        "result": "pass",
+        "seconds": 3.06182
+      },
+      "money_pickups": {
+        "result": "pass",
+        "seconds": 2.10658
+      },
+      "resident_enemies": {
+        "result": "pass",
+        "seconds": 1.29626
+      },
+      "audio_presentation": {
+        "result": "pass",
+        "seconds": 0.0679019
+      },
+      "monster_behaviors": {
+        "result": "pass",
+        "seconds": 4.09608
+      },
+      "monster_flight": {
+        "result": "pass",
+        "seconds": 3.43334
+      },
+      "monster_formations": {
+        "result": "pass",
+        "seconds": 0.21045
+      },
+      "monster_patterns": {
+        "result": "pass",
+        "seconds": 0.417094
+      },
+      "monster_fire_reactions": {
+        "result": "pass",
+        "seconds": 0.350983
+      },
+      "monster_hopping": {
+        "result": "pass",
+        "seconds": 0.385764
+      },
+      "monster_replacements": {
+        "result": "pass",
+        "seconds": 1.81007
+      },
+      "monster_boss_components": {
+        "result": "pass",
+        "seconds": 2.26413
+      },
+      "bloat_boss_and_chargers": {
+        "result": "pass",
+        "seconds": 2.66295
+      },
+      "charger_variants": {
+        "result": "pass",
+        "seconds": 0.242467
+      },
+      "companion_familiars": {
+        "result": "pass",
+        "seconds": 2.00596
+      },
+      "mission_themes": {
+        "result": "pass",
+        "seconds": 6.22208
+      },
+      "imported_town_navigation": {
+        "result": "pass",
+        "seconds": 0.0775442
+      },
+      "core_contracts": {
+        "result": "pass",
+        "seconds": 0.591945
+      },
+      "enemy_behaviors": {
+        "result": "pass",
+        "seconds": 4.1781
+      },
+      "generated_dungeons": {
+        "result": "pass",
+        "seconds": 33.8584
+      },
+      "generated_room_graphs": {
+        "result": "pass",
+        "seconds": 0.752457
+      }
+    },
+    "follow_up": {
+      "result": "pass",
+      "scope": "Targeted companion suite additionally verifies actual item floor carry, room ally expiry, fresh next-floor producer and stable key/fingerprint in the existing campaign summary journal. No live-combat save claim.",
+      "report": "docs/reports/isaac-enemy-port/shadow/persistence.txt"
+    }
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/shadow/persistence.txt",
+    "covered": "One producer regardless of copies; bounded timed path/catch-up; live+pending source cap 16; item/producer ownership; aligned hostile acquisition ignoring player; independent contact damage/hurt windows; hostile shot interception and player-shot pass-through; one explosive impact without double direct damage; friendly dynamite immunity; hostile explosions, repeated fire and beams; harmless hazard opt-out; companion deaths without hostile reward hooks; expiry/no resurrection/door clearing; floor carry and actual stable-key journal round trip.",
+    "limits": "Named source-item/status/team exceptions, exact native timing/hitboxes and 3D airborne interactions remain open.",
+    "wasm_observations": "Real collectible pickup/contact producer, duplicate copies creating only one familiar, delayed path and catch-up, actual allied kill of Horf by frame 300, and repeated fire reducing ally HP from 64 to 60.8/57.6. All four cases retain 100 player HP and no hostile threat contribution from allies; JavaScript/GL error lists empty."
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "kind": "item_spawn_only",
+    "source_pools": [
+      "devil",
+      "greedDevil"
+    ],
+    "local_pool": "bargain",
+    "local_weight": 2,
+    "fixture": {
+      "seed": 3,
+      "floor_zero_based": 0,
+      "room": 6,
+      "slot_zero_based": 1,
+      "max_hp_after_purchase": 80
+    },
+    "log": "docs/reports/isaac-enemy-port/shadow/persistence.txt",
+    "scope": "Actual generated Smuggler offers and purchase create the familiar on the next simulation tick. No ordinary hostile floor entry. Existing 170-floor regression still covers 29 ordinary/conditional identities and preserves tutorial, story, Mine and geometry paths."
+  },
+  "configuration": {
+    "result": "pass_for_tested_scope",
+    "files": [
+      "assets/mechanics/companions.mechanics",
+      "assets/mechanics/monsters.mechanics",
+      "assets/mechanics/items.mechanics",
+      "assets/mechanics/pools.mechanics"
+    ],
+    "scope": "Finite/bounded companion and familiar rows; duplicate and unknown producers/children rejected; hostile-pool/boss/component/hazard/death-recipe companions rejected; immutable expedition snapshot retained. Future producers have a 32-definition bound and configured children retain the global actor limit."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "scope": "Synthetic fixture preserves 100 HP/24 damage character defaults, validates 27.84 allied outgoing contact and 3.2 incoming ordinary-contact conversion, and verifies finite bargain cost. No human or varied-build balance acceptance.",
+    "log": "docs/reports/isaac-enemy-port/shadow/persistence.txt"
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/shadow/linux-contact-final.png",
+      "docs/reports/isaac-enemy-port/shadow/linux-path-final.png"
+    ],
+    "observation": "Dark procedural Charger bodies have teal ally rings and teal damaged-health bars, without hostile attack warnings. A charcoal ground familiar is visible after a scripted player move. Allied swarms crowd the protagonist at close range; foreground canyon scenery still limits some camera views. Procedural silhouettes remain provisional.",
+    "capture_provenance": "Final native captures include the presentation-only teal health-bar correction. Earlier pre-correction captures are retained separately. Screenshot FPS includes startup and is not a performance measurement.",
+    "wasm": [
+      "docs/reports/isaac-enemy-port/shadow/full/wasm-shadow-contact-300.png",
+      "docs/reports/isaac-enemy-port/shadow/full/wasm-shadow-path-32.png",
+      "docs/reports/isaac-enemy-port/shadow/full/wasm-shadow-fire-45.png"
+    ]
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Structural bounds only: 16 live+pending My Shadow allies, at most 120 Hz/256-pose history per familiar, bounded per-enemy contact cooldown records and existing global actor/projectile/event caps. Earlier stress measurements predate this item; no controlled Linux/WASM performance signoff for this batch."
+  },
+  "failures_resolved": [
+    "Initial browser attempt failed because the local server was no longer running; verified the absent listener, restarted the packaged server and reran. Failure log is preserved.",
+    "Final capture initially used unsupported --capture; corrected to the documented --screenshot option before the successful visual checks."
+  ],
+  "limitations": [
+    "Athame, Jumper Cables, Duct Tape, Eraser, Ace cards, Broken Modem/Stop Watch and Blood Puppy exceptions still need concrete content support; distinct event/provenance plumbing alone is not those implementations.",
+    "Exact native contact/spawn/hurt timings, familiar hitbox and source damage-resistance behavior remain unmeasured; current values are declared local tuning.",
+    "3D contact against elevated/airborne targets and broader status/charm/faction behavior need source and gameplay validation.",
+    "Source item pool depletion, unlock conditions and Greed-specific routing remain separate unfinished systems.",
+    "All-camera mixed-threat readability, varied-build/human balance and controlled native/WASM performance acceptance remain open."
+  ],
+  "reproduction": {
+    "native": "./build/deathward_companion_tests",
+    "full_native": "ctest --test-dir build -j4 --output-on-failure",
+    "browser": "node web/enemy-port-test.cjs with Playwright, DEATHWARD_BROWSER and packaged server on port 8098",
+    "contact": "./build/deathward --smoke --scene enemy-11.0.0 --enemy-item isaac:collectible:433 --enemy-player-at 1 1.1 0 --theme canyon --style original --frames 300 --mute --screenshot /tmp/shadow.png",
+    "path": "./build/deathward --smoke --scene enemy-11.0.0 --enemy-item isaac:collectible:433 --enemy-player-side below --enemy-player-at 30 8 8 --theme canyon --style original --frames 32 --mute --screenshot /tmp/shadow-path.png"
+  },
+  "browser": {
+    "passed": 69,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/shadow/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/shadow/full/browser-tests.txt",
+    "count_policy": "69 distinct cases in one complete final run. Four new companion cases plus 65 prior regressions; targeted runs are historical and not added to this count. Final runtime includes teal allied health bars."
+  }
+}

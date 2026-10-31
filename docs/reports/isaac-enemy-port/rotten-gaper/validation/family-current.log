@@ -1,0 +1,6 @@
+IDENTITY seeded128=1 all_five=1 exact=1 health76.8=1 PHYSICS analytic30=1 initialization=1
+ORBIT zero_vector=1 source_force=1 radius6=1 cover=1 partition30_120=1
+BROOD births=62..91 owner_cap=1 cap_reset=1 refill=1 two_parents=1 completion=1
+AVOIDANCE selection=1 retention=1 flee=1 death=1 filters=1 INTEGRATION contact=1 fire=1 stun=1 reentry=1
+EXTERNAL reload=1 immutable=1 invalid_contracts=12
+Rotten Gaper checks passed

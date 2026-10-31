@@ -1,0 +1,70 @@
+{
+  "scope": [
+    "814.0.0 Strider",
+    "884.0.0 Swarm Spider"
+  ],
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "findings": [
+    "Strider init: grid collision6 NOPITS, height-8, angle90, ready state3. Idle1/4check; then1/2chance of chase if CheckLine mode3 to current target passes; otherwise1/3chance random unit wander. No normal acquisition distance limit. Player control/confusion paths are separate.",
+    "Strider state4 preserves walk animation frame while facing changes. Stored zero direction means aim at current target each update; nonzero direction means wander. Angle follows20%of wrapped angular error each source update. Row event adds6+3*U velocity along current direction; end controller friction retention0.95. Walk20frames with Row6; returns ready when animation ends. State6 handles thrown arrival and is not ordinary rowing.",
+    "Swarm init sets ready3 and ENTCOLL_PLAYEROBJECTS2. Native enum says player/tears/familiars, excluding ordinary enemy-body collision. Nonzero subtype expands into extra same-type actors scattered +/-20source units and then clears subtype; only installed884.0.0 is covered here.",
+    "Swarm ready gets player target (normal helper). Zero distance does nothing. Direction turns if rng modulo4 is0, or modulo20 when distance>200; distance<100 always turns. A turn is half reverse180degrees, half randomly+90/-90degrees. Otherwise direction points toward target.",
+    "Swarm weighted hop choices short/medium/long: distance<100 weights5/3/0;100..200 weights2/3/2;>200 weights2/3/9. Short speed5+U, spread+/-45degrees; medium8+2U,+/-20; long10+3U,+/-10. Selected launch vector is committed before the animation.",
+    "Swarm Jump assigns committed velocity and sets FLAG_NO_PHYSICS_KNOCKBACK bit30; Land clears it. While not carrying that flag, friction retention0.7. Native controller changes no grid collision or physical world height during ordinary hops; sprite carries visual hop. After Land,1/4chance ends animation early per update, otherwise wait for its end.",
+    "Animation metadata at30FPS: HopShort10/Jump2/Land8; Hop12/Jump3/Land9; HopLong18/Jump4/Land14. Jump also emits source sound258 with randomized pitch1.8..2.0. Item377Bursting Sack loads inert visuals and changes target selection; not ordinary hostile behavior.",
+    "Installed XML StriderHP6.5/stage0 and SwarmHP4.5/stage.2, contact1, radius13. Pinned Spider wiki establishes Strider replacement of all Spider spawns in Downpour/Dross, and Swarm immunity to fireplace damage. Current web fetch403; pinned revision268921 retained. Local fireplace exception is scoped to source actor contact, not arbitrary Flame/Burning damage."
+  ],
+  "source_manifest": "docs/reports/isaac-enemy-port/spider_variants/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/spider_variants/animations/manifest.json",
+  "wiki": {
+    "article": "Spider",
+    "revision": 268921,
+    "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268921",
+    "preserved": "docs/reports/isaac-enemy-port/spider_variants/wiki-source.json",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "access": "Current fetch returned403; preserved complete revision used."
+  },
+  "adaptations": [
+    "SourceHPx3.2, source XZ distancesx0.1 and source velocityx3. Strider20.8local HP; Swarm(4.5+.2*sourceStageMultiplier)*3.2. Both retain local collider0.4, reflecting equal source radius13. Player defaults and global enemy damage multiplier are unchanged.",
+    "Source30Hz decisions and animation events are integrated within the60Hz simulation, using existing physical canyon collision. This is not bit-identical native interpolation, friction/time-scale or RNG sequencing.",
+    "Strider gridNOPITS uses reusable swim collision on all surfaces, crossing deep river water but respecting solid rocks, gates and room bounds. Source height-8 becomes visual lift0.8; body collision remains on the combat plane. Orientation uses a wrapped20%angular correction, while the Row impulse uses the current actual chase direction. Strider leg tips reach the ground below that lifted body; this is an Original-style procedural silhouette adaptation.",
+    "Swarm Jump/Land does not change native grid collision or world height. Local ground collision remains throughout the hop; visual sinusoidal lift0.35 and yellow airborne tint adapt the source sprite to Original procedural3D. The body is drawn at65%ordinary Spider radius while the source-equal physical collider remains0.4.",
+    "Swarm playerObjectsOnly preserves sourceENTCOLL_PLAYEROBJECTS by bypassing enemy crowd steering/separation and fireplace-body hazard contact. Ordinary Flame/Burning events, bullets and explosions remain damaging. Generic enemy fire-patch friendly-fire policy remains unchanged; native collision masks beyond this integrated scope are not claimed.",
+    "External replace_spawn applies a deterministic final identity rule to both encounter plans and all direct/queued births, before stats and placement. Cyclic/chained spawn rewrites are rejected. The wet band1variant maps source Downpour/Dross replacement of85to814, including Big Spider offspring and their retained impulses.",
+    "Swarm pursuit groups of4cost2, weight1/max8 across bands0..2 are local encounter-budget choices based on early/middle source habitats, not source template probabilities. Strider uses conditional wet replacement rather than a generic dry-floor pool.",
+    "Stun cancels the current stroke/hop and resets its local timer and movement. Capacity/placement retains mandatory children under existing room completion policy. These are integration policies rather than complete native status parity."
+  ],
+  "remaining": [
+    "Strider thrown state6, player-controlled rowing, confusion/fear/shrink branches and full native time-scale/grid/CheckLine semantics are not implemented by this normal hostile slice.",
+    "Swarm Bursting Sack inert behavior, nonzero-subtype group expansion, friendly/status/champion branches, complete native entity-collision/knockback equivalence and Jump sound258 adaptation remain open. Installed884.0.0 is the exact covered tuple.",
+    "Exact animation-frame integration/RNG parity, broad visual/crowd readability, balance and controlled native/WASM performance acceptance remain open. Both IDs remain in_progress, not complete."
+  ],
+  "evidence_corrections": [
+    "First animation request used resources/gfx keys. The correct Repentance metadata uses resources-dlc3/gfx; the corrected extraction retrieves both records from the pinned repentance.a archive.",
+    "Initial build command used a nonexistent target deathward_mechanics_check. Correct target is deathward_check_mechanics; failed log retained.",
+    "Initial compile warned about same-line unconditional returns after stun recovery checks. Formatting was corrected without changing the intended control flow before final builds.",
+    "The loader originally prohibited every replacement on grouped entries. Deterministic all-birth replacement cannot split a group, so only replace_spawn is now exempt. Random replace_monster still rejects grouped entries; the new fixture explicitly verifies that rejection.",
+    "The real fireplace comparison failed because EnvironmentActors constructed a temporary contact Hazard with its default delay1 and immediately tested it at age0; it could never expose nearby monsters. Set delay0 for this immediate contact check. The fixture now compares actual source33contact against ordinary Spider and Swarm, and separately checks Flame/Burning damage remains effective.",
+    "The first WASM cover scene used a flight fixture that deliberately spawned its actor inside a crate. Strider obeys solid collision and could not move. The debug scene now starts this ground actor outside cover; the original failed browser report and image are retained.",
+    "Native visual inspection found Strider generic short legs floating with its lifted body. Its leg tips now extend down by the visual lift; the source-derived body height and physical collider are unchanged. Both before and corrected captures are retained.",
+    "The first full native run passed69of72. The stage eligibility assertion only followed phase0 replacements, missing the new deterministic phase3. It now enumerates legal outcomes across all4phases and correctly removes impossible unreplaced outcomes for100%rules.",
+    "The Eggy fixture assumed a smaller Swarm collision radius. Installed ordinary Spider and Swarm both use radius13, so it now checks source-equal colliders and the distinct Swarm controller; the smaller Swarm artwork remains.",
+    "The pacing fixture found a flying Mr.Maw Head35.1 at seed1/ShortCorridors/Canyon/room8 validly spawned above low scenery. It had incorrectly applied the walking mask. It now checks the flying collision mask and supporting height for actual flyers, retaining the walking check for ground actors."
+  ],
+  "natural_witnesses": [
+    {
+      "id": "884.0.0",
+      "seed": 0,
+      "floor": 0,
+      "room": 2
+    },
+    {
+      "id": "814.0.0",
+      "seed": 2,
+      "floor": 2,
+      "room": 4
+    }
+  ]
+}

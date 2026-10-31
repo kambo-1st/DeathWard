@@ -1,0 +1,12 @@
+MOTION reveal20=1 native_force=1 committed_heading=1 cycle48=1 partition=1 chase_wander=1
+DEATH four_subtypes=1 same_entity=1 no_extra_reward=1 overkill=1 fire_morph=1 burning=1 debug=1
+COAL retained_birth=1 matching_shape=1 bounce=1 per_hit_wear=1 explosive=1 flame=1 timed_decay=1 clear=1
+COLLISION walls=1 contact=1 height_classes=1
+CONFIG immutable=1 rejects_invalid=5
+NATURAL_ROCK 818.0.3 seed=0 floor=2 room=1
+NATURAL_ROCK 818.0.1 seed=0 floor=2 room=1
+NATURAL_ROCK 818.2.1 seed=2 floor=0 room=3
+NATURAL_ROCK 818.0.2 seed=14 floor=2 room=6
+NATURAL_ROCK 818.2.3 seed=23 floor=2 room=6
+NATURAL_ROCK 818.2.2 seed=30 floor=0 room=1
+PASS Rock Spider and Coal Spider

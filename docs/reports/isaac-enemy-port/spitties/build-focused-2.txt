@@ -1,0 +1,7 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spitties.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_spitty_tests
+[100%] Building CXX object CMakeFiles/deathward_spitty_tests.dir/tests/spitty_tests.cpp.o
+[100%] Linking CXX executable deathward_spitty_tests
+[100%] Built target deathward_spitty_tests

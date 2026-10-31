@@ -1,0 +1,24 @@
+{
+  "verified_utc": "2026-10-28T13:42:21.461814+00:00",
+  "result": "partial_progress",
+  "mechanics_fingerprint": "44afc2d79a64a284",
+  "counts": {
+    "reviewed": 227,
+    "in_progress": 191,
+    "ordinary_in_progress": 143,
+    "missing": 432,
+    "existing_unverified": 18,
+    "excluded": 12,
+    "complete": 0
+  },
+  "native": "docs/reports/isaac-enemy-port/rotten-gaper/native-summary.json",
+  "contract": "docs/reports/isaac-enemy-port/rotten-gaper/implementation-contract.json",
+  "roster_breakdown": "docs/reports/isaac-enemy-port/rotten-gaper/roster-progress.json",
+  "validation_override": {
+    "date": "2026-10-28",
+    "instruction": "User: pursue goal, skip WASM check.",
+    "policy": "Do not run new WASM builds or checks. Continue Linux behavior, reachability, visuals, balance and performance verification. Existing browser evidence remains historical, not proof for later runtime changes."
+  },
+  "next_work": "Continue confirmed-missing regular enemy Nest205.0.0 with source-backed fleeing/spider spit/death children and native validation. Rotten family dedicated controller and scoped tests recorded; full status/grid-cache/readability/balance/performance gaps remain. Skip WASM builds/checks per user.",
+  "prior_goal_turn": "Status-only user response: no implementation progress. This continuation replaced provisional Rotten controllers, verified source evidence and fixed/tested real doorway navigation."
+}

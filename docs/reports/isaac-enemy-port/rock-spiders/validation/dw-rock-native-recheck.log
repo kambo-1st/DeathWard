@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  5: floor_progression
+1/4 Test  #5: floor_progression ..................   Passed  176.22 sec
+    Start 45: dip_variants
+2/4 Test #45: dip_variants .......................   Passed    2.31 sec
+    Start 50: monster_fire_reactions
+3/4 Test #50: monster_fire_reactions .............   Passed    0.22 sec
+    Start 70: source_immunity_and_lethal_morph
+4/4 Test #70: source_immunity_and_lethal_morph ...   Passed    0.28 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) = 179.03 sec

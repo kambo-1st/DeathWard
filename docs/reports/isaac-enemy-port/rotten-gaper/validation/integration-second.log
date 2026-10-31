@@ -1,0 +1,8 @@
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 207 entries including offspring
+ROTTEN_STARTING_KIT subtype=1 seconds=0.966667 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=0.933333 hp=87.5 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=7.66667 hp=25 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=0.95 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=20 hp=100 peak=1
+FAIL: starting revolver clears activated Rotten encounter and children without items/bombs/god mode

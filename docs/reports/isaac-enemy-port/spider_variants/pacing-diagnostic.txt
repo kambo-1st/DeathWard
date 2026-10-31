@@ -1,0 +1,2 @@
+BLOCKED_RESIDENT pacing=1 theme=1 room=8 monster=35.1 position=121.843,1.22784,-106.056 radius=0.45
+FAIL seed 1: smaller floor residents spawn clear of scenery

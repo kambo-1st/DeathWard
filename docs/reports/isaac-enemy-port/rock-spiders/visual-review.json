@@ -1,0 +1,37 @@
+{
+  "status": "Partial visual review, Original style at160%zoom. No full art/readability acceptance.",
+  "native_inspected": [
+    "docs/reports/isaac-enemy-port/rock-spiders/native/coal-child-1.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/coal-child-2.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/coal-child-3.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/spider-0-1.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/spider-0-2.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/spider-0-3.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/spider-2-1.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/spider-2-2.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/native/spider-2-3.png"
+  ],
+  "browser_inspected": [
+    "docs/reports/isaac-enemy-port/rock-spiders/web/isolated-818-0-1-rock.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/isolated-818-0-1-reveal.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/isolated-818-0-1-skitter.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/isolated-818-0-1-inner-spider.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/isolated-818-2-1-skitter.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/isolated-818-2-1-hot-coal.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/resident-818-2-2-skitter.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/resident-818-0-2-skitter.png",
+    "docs/reports/isaac-enemy-port/rock-spiders/web/flame-morph-skitter.png"
+  ],
+  "observations": [
+    "Rock disguise, appearing legs and moving stone shell are visibly different. Three authored stone shapes inspected in native captures.",
+    "Coal bodies have dark shells and visible orange flames. Living spiders retain legs; death remnants have no legs.",
+    "Initial native captures revealed buried flames/cracks; renderer corrected and all nine native captures repeated. Initial rejected captures retained in native/initial.",
+    "Two natural browser populations show bodies against different canyon rooms. Coal death capture includes a temporary damage flash, so final native captures also support the unflashed hazard appearance.",
+    "flame-morph-skitter.png is captured BEFORE the scripted flame hit and is not visual proof of the later morph. Trace verifies the transformation."
+  ],
+  "limitations": [
+    "Subtype1 versus3 silhouettes remain subtle at crowded gameplay zoom.",
+    "No full mixed-room/camera/occlusion/art-direction acceptance.",
+    "Instrumented FPS counters in screenshots are not a controlled performance benchmark."
+  ]
+}

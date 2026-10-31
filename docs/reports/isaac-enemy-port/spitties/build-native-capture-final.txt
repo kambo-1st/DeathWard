@@ -1,0 +1,13 @@
+[ 15%] Built target glfw
+[ 21%] Built target raylib
+[ 81%] Built target deathward_core
+[ 81%] Built target deathward_skinning
+[ 84%] Built target deathward_mission_lighting
+[ 87%] Built target deathward_cloth
+[ 87%] Built target deathward_particles
+[ 87%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 87%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 87%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 87%] Linking CXX executable deathward
+[100%] Built target deathward

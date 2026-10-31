@@ -1,0 +1,4 @@
+PASS WASM shadow-contact: actual companion system and Original presentation
+PASS WASM shadow-copies: actual companion system and Original presentation
+PASS WASM shadow-path: actual companion system and Original presentation
+PASS WASM shadow-fire: actual companion system and Original presentation

@@ -1,0 +1,176 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 33,
+      "index": 19,
+      "case": "0x699cd7",
+      "controller": "0x6a7ae0"
+    },
+    {
+      "type": 818,
+      "index": 154,
+      "case": "0x69a0af",
+      "controller": "0x4e7250"
+    },
+    {
+      "type": 826,
+      "index": 161,
+      "case": "0x69a10f",
+      "controller": "0x4ee860"
+    }
+  ],
+  "constants": {
+    "move_retention": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "normal_force": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "tinted_force": {
+      "address": "0xb6a8f8",
+      "value": 5.100000381469727
+    },
+    "coal_force_multiplier": {
+      "address": "0xb6a754",
+      "value": 1.7999999523162842
+    },
+    "singe_coal_force_multiplier": {
+      "address": "0xb6a70c",
+      "value": 1.600000023841858
+    },
+    "bounce": {
+      "address": "0xb6ae08",
+      "value": -0.30000001192092896
+    },
+    "landing_retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "gravity": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "wake_speed": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "wake_vertical": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "air_entity_collision": {
+      "address": "0xb6af28",
+      "value": -50.0
+    },
+    "air_grid_collision": {
+      "address": "0xb6ae88",
+      "value": -4.0
+    },
+    "hot_coal_impulse": {
+      "address": "0xb6ae44",
+      "value": -1.0
+    },
+    "coal_death_threshold": {
+      "address": "0xb6a6f0",
+      "value": 1.5
+    },
+    "wander_distance": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "chase_spread": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "hardy_move_retention": {
+      "address": "0xb6a5d8",
+      "value": 0.949999988079071
+    },
+    "hardy_force": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    }
+  },
+  "strings": {
+    "0xb42a58": "IdleRock",
+    "0xb40360": "Appear",
+    "0xb41264": "Walk",
+    "0xb3fd8c": "Idle",
+    "0xb40c58": "Idle%d",
+    "0xb42ae8": "Slide%d"
+  },
+  "states": {
+    "rock_spider": {
+      "0": "0x4e72ff",
+      "1": "0x4e74be",
+      "2": "0x4e74be",
+      "3": "0x4e7b3b",
+      "4": "0x4e74be",
+      "5": "0x4e74be",
+      "6": "0x4e74be",
+      "7": "0x4e7af2",
+      "8": "0x4e74be",
+      "9": "0x4e74be",
+      "10": "0x4e74be",
+      "11": "0x4e74be",
+      "12": "0x4e74be",
+      "13": "0x4e74be",
+      "14": "0x4e74be",
+      "15": "0x4e74be",
+      "16": "0x4e742e"
+    },
+    "hardy": {
+      "0": "0x4ee8c6",
+      "1": "0x4ef795",
+      "2": "0x4ef795",
+      "3": "0x4ee924",
+      "4": "0x4eeacb",
+      "5": "0x4ef795",
+      "6": "0x4eeacb",
+      "7": "0x4ef795",
+      "8": "0x4ef609",
+      "9": "0x4ef795",
+      "10": "0x4ef795",
+      "11": "0x4ef795",
+      "12": "0x4ef795",
+      "13": "0x4ef795",
+      "14": "0x4ef795",
+      "15": "0x4ef795",
+      "16": "0x4ef72e"
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/source/rock_spider_controller.asm",
+      "start": "0x4e7250",
+      "end": "0x4e82af",
+      "raw_sha256": "8d6c0e4b32a3ae3094925a78fc0c27ce4301d8f02bd8c2054881257c98d60309",
+      "sha256": "b8a0f7491de556ee425049bdc52eb0522f7f653b7dc3b93e52527ce49863194e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/source/hardy_controller.asm",
+      "start": "0x4ee860",
+      "end": "0x4efacf",
+      "raw_sha256": "012d067a06ceb1686ba13c1a4e1992da2708ba7942c2fd5a83febe75bba896d6",
+      "sha256": "c4815db32fe32eb40802523872f183a7c4ef27120e82f2f56e526dbe2ea2daef"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/source/rock_projectile_factory.asm",
+      "start": "0x4e70a0",
+      "end": "0x4e7250",
+      "raw_sha256": "6cefe69afb9a9d99b1b282e38aa3da694e0730a58444ad37cbf98d68a824d978",
+      "sha256": "8ca0921cb301f7f4c281603ff08881f4ac3e5816bb760b6aa6189c19f7c43c8e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/source/fireplace_coal_dispatch.asm",
+      "start": "0x6a7ae0",
+      "end": "0x6a7b92",
+      "raw_sha256": "3191501934501c9643c64bb13354b4fa1b82d8809da34f53148d3faf10edd909",
+      "sha256": "3ae5064c738e08543150297d944170f8b1d9ba7c318ce56b3b65c8e522252a3e"
+    }
+  ]
+}

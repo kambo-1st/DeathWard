@@ -1,0 +1,10 @@
+{
+  "state": "finished",
+  "runner_pid": 311457,
+  "started_utc": "2026-10-28T13:33:05.841144+00:00",
+  "binary_sha256": "3cbf0f8d6069945bdce7fcd594b71e87cae85d39ca85afa203dc880ae37c09f4",
+  "mechanics_fingerprint": "44afc2d79a64a284",
+  "child_pid": 311458,
+  "returncode": 0,
+  "finished_utc": "2026-10-28T13:37:36.673911+00:00"
+}

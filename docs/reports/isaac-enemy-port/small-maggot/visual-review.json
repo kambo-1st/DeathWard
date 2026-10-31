@@ -1,0 +1,42 @@
+{
+  "result": "partial_pass",
+  "mechanics_fingerprint": "96d4ddaff380d3af",
+  "scope": "Four inspected native Original-style captures; current binary and actual natural witness.",
+  "captures": {
+    "path": "docs/reports/isaac-enemy-port/small-maggot/native/captures.json",
+    "bytes": 2093,
+    "sha256": "ffadf81d59d53113cbc0d4cd78d545b631ff1040139c0cf627badd394a7b86b5"
+  },
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/small-maggot/native/initial.png",
+      "bytes": 1675878,
+      "sha256": "82c1009fa3d792588ab654b8dd65421f735795bb213606c5b841647c53ecf852"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/small-maggot/native/crawl.png",
+      "bytes": 1665606,
+      "sha256": "43885e305fca62ca19df34e11cd72fb2ce8ae33e18219f679a8785fbc50034ab"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/small-maggot/native/cover.png",
+      "bytes": 1685818,
+      "sha256": "bb975181c1f6f8fadea64f0edf9d448168e54dc985602c3c687cd4bab7a1bb10"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/small-maggot/native/natural.png",
+      "bytes": 1547622,
+      "sha256": "21ea771284909570cec9f07198902ebcb8df8fe7d2da79de7cecac1ca071f5bf"
+    }
+  ],
+  "observations": [
+    "Small segmented pale body is visible on the open floor and beside the protagonist. The source-timed crawl gait is implemented, though static captures do not alone establish animation quality.",
+    "Cover capture completely hides the body behind a crate; existing orange occlusion outline remains visible.",
+    "Natural scene includes the Small Maggot among larger actors near the player. Its size and yellow/green coloration give weak contrast against the sand."
+  ],
+  "not_accepted": [
+    "Crowded and color-independent readability at all zoom/camera angles.",
+    "Exact source sprite shape, animation or collision mass.",
+    "Controlled performance; screenshots were taken during compiler and floor-test work."
+  ]
+}

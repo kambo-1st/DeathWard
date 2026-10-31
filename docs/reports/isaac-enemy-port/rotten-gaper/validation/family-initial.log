@@ -1,0 +1,3 @@
+IDENTITY seeded128=1 all_five=1 exact=1 health76.8=1 PHYSICS analytic30=1 initialization=1
+ORBIT zero_vector=1 source_force=1 radius6=1 cover=1 partition30_120=1
+queued birth shares parent location and zero velocity

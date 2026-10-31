@@ -1,0 +1,15 @@
+START spitty
+PASS spitty
+START conjoined
+PASS conjoined
+START tainted-spitty
+PASS tainted-spitty
+START spitty-cover
+AssertionError [ERR_ASSERTION]: actual locomotion
+    at /home/kambo/workspace/DeathWard/web/spitty-test.cjs:56:4 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 33: source_projectile_motion
+1/2 Test #33: source_projectile_motion .........   Passed    0.17 sec
+    Start 34: spitty_family
+2/2 Test #34: spitty_family ....................***Failed    0.14 sec
+PRIMARY 31.0 count=1 source_frames=16 shoot=6
+PRIMARY 243.0 count=2 source_frames=16 shoot=6
+PRIMARY 31.1 count=10 source_frames=16 shoot=6
+WALK burst_event=1 no_pursuit=1 stun=1 room_suspend=1
+second death ring has source half-step angular offset
+
+
+50% tests passed, 1 tests failed out of 2
+
+Total Test time (real) =   0.31 sec
+
+The following tests FAILED:
+	 34 - spitty_family (Failed)
+Errors while running CTest

@@ -1,0 +1,197 @@
+[
+  {
+    "name": "spider-0-1",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.0.1",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/spider-0-1.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "spider-0-2",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.0.2",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/spider-0-2.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "spider-0-3",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.0.3",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/spider-0-3.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "spider-2-1",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.2.1",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/spider-2-1.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "spider-2-2",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.2.2",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/spider-2-2.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "spider-2-3",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.2.3",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/spider-2-3.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "coal-child-1",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.2.1",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--enemy-count",
+      "2",
+      "--enemy-hit",
+      "660",
+      "10000",
+      "--frames",
+      "680",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/coal-child-1.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "coal-child-2",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.2.2",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--enemy-count",
+      "2",
+      "--enemy-hit",
+      "660",
+      "10000",
+      "--frames",
+      "680",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/coal-child-2.png"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "coal-child-3",
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-818.2.3",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--enemy-count",
+      "2",
+      "--enemy-hit",
+      "660",
+      "10000",
+      "--frames",
+      "680",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/rock-spiders/native/coal-child-3.png"
+    ],
+    "returncode": 0
+  }
+]

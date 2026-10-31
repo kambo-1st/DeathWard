@@ -1,0 +1,26 @@
+{
+  "verified_utc": "2026-10-28T12:39:04.460327+00:00",
+  "session": 29755,
+  "exit": 0,
+  "mechanics_fingerprint": "96d4ddaff380d3af",
+  "artifacts": [
+    {
+      "path": "build-web/index.js",
+      "bytes": 248498,
+      "sha256": "e110c9a3e2d4d0f358414927ee2920b248f30449fef8a6fc5f7338df1af31cfc",
+      "gzip_equal": true
+    },
+    {
+      "path": "build-web/index.wasm",
+      "bytes": 5689908,
+      "sha256": "b086a932883b61fabf7f522ead4acb822635cccd1bc4e5d95704f3984c6494a2",
+      "gzip_equal": true
+    },
+    {
+      "path": "build-web/index.data",
+      "bytes": 213458626,
+      "sha256": "9f8e89083f72aa357a5dc19a242864b14a1459fba0eae8a2b2a0ab6f8ba54f25",
+      "gzip_equal": true
+    }
+  ]
+}

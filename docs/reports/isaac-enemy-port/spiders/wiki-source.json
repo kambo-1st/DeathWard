@@ -1,0 +1,131 @@
+{
+  "title": "Spider",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Spider",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268921",
+  "revision": 268921,
+  "timestamp": "2026-08-30T01:48:51Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "Spiders are arachnid enemies that can be commonly found in most chapters. They move quickly and will go in all directions randomly, making them unpredictable. However, if they have a direct line of sight on Isaac, and are close enough, they will move towards him. They are also able to fit through small diagonal gaps."
+    },
+    {
+      "heading": "Variations",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Big Spider",
+      "level": 3,
+      "text": "Big Spiders look like regular Spiders, but with a large black abdomen attached. They behave in the same way as the regular Spiders, having the same movement speed and erratic behavior. However, they have over triple the health of regular Spiders, and upon death, they will split into two regular Spiders. \n\nAlternatively, if a Big Spider's health is dropped to -20 or less in one instance (i.e., by using a Bomb), it will spawn nothing on death."
+    },
+    {
+      "heading": "Swarm Spider",
+      "level": 3,
+      "text": "Swarm Spiders act much like normal Spiders but are much smaller and tend to come in much larger groups. They also hop and flash a bright yellow.\n\nThey are spawned by Eggy in large number when one dies.\n\nSwarm Spiders cannot be damaged by Fire Places."
+    },
+    {
+      "heading": "Strider",
+      "level": 3,
+      "text": "Striders are a type of spider that can only spawn in Downpour and special rooms in Dross. They glide on the water towards Isaac in short bursts and can swim across flooded gaps.\n\nStriders replace all Spider spawns in the Downpour and Dross stages."
+    },
+    {
+      "heading": "Gallery",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Notes",
+      "level": 2,
+      "text": "\u2022 [Afterbirth onward] The following spiders will not attack Isaac, deal contact damage or actively spawn enemies if he has Bursting Sack:\n\n\u2022 Spider, Big Spider, Level 2 Spider, Ticking Spider, Baby Long Legs, Small Baby Long Legs, Crazy Long Legs and Small Crazy Long Legs.\n\n\u2022 [Afterbirth+ onward] Spiders and Big Spiders no longer blink red when neutral due to it.\n\n\u2022 [Repentance] Swarm Spiders no longer blink yellow when neutral due to it."
+    },
+    {
+      "heading": "Trivia",
+      "level": 2,
+      "text": "\u2022 The original Spider and Big Spider were first added to the original The Binding of Isaac game's DLC - Wrath of the Lamb.\n\n\u2022 [Repentance] Striders are from the Antibirth mod. [end edition note] \n\n\u2022 Striders are named after the family Gerridae, also known as water striders.\n\n\u2022 Swarm Spiders have the lowest Stage HP among all entities in the game by far. It takes until Caves I (etc.) before they have more than 5 HP, and then until Sheol / Cathedral before they have more than 6 HP."
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "id": "85",
+        "base hp": "6.5",
+        "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nSheol / Cathedral / \nChest / \nboss / curse / secret / clean bedroom / dirty bedroom / vault /",
+        "behavior": "Erratically moves around the room. If Isaac gets close to it, it chases him, trying to deal contact damage."
+      },
+      "group": "entity",
+      "id": 85,
+      "name": "Spider",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "name": "Big Spider",
+        "id": "94",
+        "base hp": "20",
+        "environment": "Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nGehenna / \nUtero / Scarred Womb / \nSheol / Cathedral / \ncurse /",
+        "behavior": "Erratically moves around the room. If Isaac gets close to it, it chases him, trying to deal contact damage. Spawns two Spiders upon death."
+      },
+      "group": "entity",
+      "id": 94,
+      "name": "Big Spider",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 3,
+      "fields": {
+        "dlc": "r",
+        "name": "Swarm Spider",
+        "id": "884",
+        "base hp": "4.5",
+        "stage hp": "0.2",
+        "environment": "Basement / Cellar / Burning Basement / \nCatacombs / \nNecropolis /",
+        "behavior": "Very erratically hops toward Isaac in large groups, dealing contact damage."
+      },
+      "group": "entity",
+      "id": 884,
+      "name": "Swarm Spider",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        3
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 4,
+      "fields": {
+        "dlc": "r",
+        "name": "Strider",
+        "id": "814",
+        "base hp": "6.5",
+        "environment": "Downpour / \nchallenge / \nsecret / (Downpour only)\nCurse / (Downpour and Dross only)",
+        "behavior": "Erratically swims around the room. If it sees Isaac, it chases him, trying to deal contact damage."
+      },
+      "group": "entity",
+      "id": 814,
+      "name": "Strider",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        4
+      ]
+    }
+  ]
+}

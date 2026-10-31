@@ -1,0 +1,75 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "record": "853.0.0",
+  "status": "Dedicated normal-ground controller implemented; three scoped Linux suites,753-floor regression and four current WASM scenario types pass. Four native and four browser captures inspected with explicit limits. No complete-port claim.",
+  "evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-manifest.json",
+      "bytes": 867,
+      "sha256": "363a43f2ed8a15e9b72f10977966a1cd10f4ae2ab762036201cbdd1358083ada"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/small-maggot-details.json",
+      "bytes": 2921,
+      "sha256": "d740ccb3a0050a2cfb28709620f201810494dbc144a4c79b66899fb204241caf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/animations/manifest.json",
+      "bytes": 7382,
+      "sha256": "9470e814f83648f6e98c5a9778e7fe7a41f27fb08ff7cb984d708dca14ad9797"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/rotten-gaper/source/records.json",
+      "bytes": 33970,
+      "sha256": "aaeb6f7a4f4276bf3d7ecb993de3ad3faef8d39d423fa2d8215046315dab43c9"
+    }
+  ],
+  "source_contract": {
+    "health": "XML10 baseHP, stageHP0, mass3, friction1, ground collision; existing3.2HP conversion gives32.",
+    "initialization": "4c4c28..4c4cf4: enter state3, random unit heading,10..39initial frames; force/curve start at zero. No fixed .5second emergence animation.",
+    "awareness": "4c43ed..4c4561: collision resets direction timer; damage below maxHP alerts. Every fourth global frame,1/4chance to query within80native units: detectable player or already-alert853 wakes it. This query is not line-of-sight gated. Alerted body has1/25chance to forget each update.",
+    "direction": "4c4561..4c4716: on timer expiry, alert plus clear ground line selects unit target direction and force multiplier2; otherwise retain curved heading and multiplier1. Zero heading gets random unit direction. Native charm/fear/confusion/control branches are reviewed separately and remain open.",
+    "obstacles": "4c4761..4c48ba: probe grid6native units ahead; up to10 random rotations in[-90,+90]degrees until clear. Native grid lookup adapts to physical body clearance in irregular canyon geometry.",
+    "movement": "4c48ba..4c4a26: choose angular drift in[-2,+2]degrees/update, force in[.15,.45] times targeting multiplier, timer10..39. Each active tick adds force along heading, rotates heading, then shared physics applies.8retention before moving. Native30Hz, distancex.1 and velocityx3.",
+    "animation": "Directional13frame loop selected from velocity angle, restarting on direction change. Bullet8 and Land16 are separate thrown-state animations, not ordinary spawn emergence.",
+    "damage": "Contact base10 and unchanged global1.25multiplier. No ranged shot, damaging trail, special armor or fire immunity. Existing owner relationship survives parent death; child remains a threat."
+  },
+  "external_profile": "small_maggot <id> scale retention forceMin forceMax targetMultiplier curveDegrees lookahead obstacleTurnDegrees alertRange contact initialMin initialMax turnMin turnMax alertInterval alertChance forgetChance obstacleAttempts walkFrames",
+  "runtime": [
+    "src/combat/SmallMaggots.cpp",
+    "assets/mechanics/small_maggots.mechanics",
+    "src/content/Mechanics.hpp",
+    "src/content/Mechanics.cpp",
+    "src/content/EncounterVariants.cpp",
+    "src/combat/Simulation.hpp",
+    "src/combat/Monsters.cpp",
+    "src/render/MonsterVisuals.hpp"
+  ],
+  "placement": {
+    "source": "25positive-weight templates in installed33.corpse.stb; presence is not spawn probability. Also required offspring of10.3.3.",
+    "local": "Independent basic entry in final band3, authored weight1/cost1; existing parent summons retain ownership.",
+    "witness": {
+      "seed": 0,
+      "floor": 5,
+      "room": 1,
+      "indexing": "zero-based"
+    }
+  },
+  "adaptations": [
+    "Native radius17 retains existing .3world radius and low-poly procedural worm. No source sprite artwork copied.",
+    "Global30Hz awareness derives from simulation elapsed time; seeded combat RNG is deterministic but does not reproduce native random stream identities.",
+    "Ground footprint/lookahead and body separation adapt native grid and mass interactions to DeathWard terrain.",
+    "Stun pauses the controller under existing DeathWard policy. Full native freeze/slow/charm/confusion/fear/camouflage and special room/control behavior remain open.",
+    "Brood parent still uses its provisional graph; offspring use the new controller immediately. Parent source-timed behavior must be corrected separately."
+  ],
+  "remaining": [
+    "Source thrown/projectile states and alternate producers.",
+    "Full status/collision-mass/save fidelity and all production context coverage.",
+    "Crowded and color-independent readability, balance and controlled performance."
+  ],
+  "validation": {
+    "linux": "native-summary.json",
+    "wasm": "browser-summary.json",
+    "native_visuals": "visual-review.json"
+  }
+}

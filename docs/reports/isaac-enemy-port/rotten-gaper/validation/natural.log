@@ -1,0 +1,6 @@
+NATURAL_ROTTEN subtype=2 seed=0 floor=5 room=1
+NATURAL_ROTTEN subtype=1 seed=0 floor=5 room=12
+NATURAL_DEFAULT seed=1 floor=6 room=1 subtype=1
+NATURAL_ROTTEN subtype=5 seed=1 floor=6 room=2
+NATURAL_ROTTEN subtype=4 seed=1 floor=6 room=3
+NATURAL_ROTTEN subtype=3 seed=1 floor=6 room=4
