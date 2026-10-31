@@ -1,0 +1,7 @@
+chain 1 depth 1 effect -1: queue capacity
+PASS source30Hz full-batch formula, zero frames, rolling expiry and current large hit
+PASS separate history/scaling bypasses, piercing distinction and real dynamite
+PASS bounded admission, chain retention, suspension, execution and ordinary death
+PASS derived item damage, removed-source attribution and chain cleanup
+PASS seven source profiles and validated external reload
+PASS adaptive armor

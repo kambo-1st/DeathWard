@@ -1,0 +1,284 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": {
+    "deadzone": {
+      "address": "0xb6a9ec",
+      "value": 25.0
+    },
+    "axis_scale": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "gain": {
+      "address": "0xb6a2ac",
+      "value": 0.07999999821186066
+    },
+    "force_cap": {
+      "address": "0xb6a670",
+      "value": 1.2000000476837158
+    },
+    "contact_friction": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "parent_scale": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    }
+  },
+  "findings": [
+    "Type18 dispatches to shared update4f4e30. Target cache refreshes on global third frames; the ordinary target helper returns the player target position. The source force scheduler is every two entity-time frames.",
+    "Ordinary pursuit uses target minus position with second axis multiplied by.5, then normalizes. Native deadzone25, gain.08 and cap1.2. The special214/249/819 doubling is not applied to18. Parent-linked variants have an additional.2 scale and tether branch; a summoner is not necessarily a Parent.",
+    "Existing shared fourth-frame jitter and third-frame friction apply. Actor byte16c adds.9 friction during pursuit. SpawnerType67 skips ordinary edge bias.",
+    "Live Hive22 spawn4fa8cb..4fa930 sets child18 byte16c=1. Player collision6a5552 invokes virtual Kill when this byte is set. NPC vtableb49398 resolves Kill695560 and HandleCollision6a3970. Hive death offspring do not pass through this live-spawn branch.",
+    "Collectible9 morphs a non-friendly18 into13. Native Morph clamps current HP to the new maximum; unlike dung morph, this caller does not explicitly restore full HP. The examined Morph/config-load code does not clear byte16c. A fly-tag collision branch also suppresses contact damage when collectible9 is owned.",
+    "Boss-child source preflight is retained only: Gurdy36 live children set byte16c and subtract2 from current HP; Duke/Husk67 share a controller with parent-linked children and source-specific size/HP changes. No boss-child parity is claimed by this ordinary-enemy slice."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/dispatch.asm",
+      "start": "0x69a0c7",
+      "end": "0x69a0ce",
+      "raw_sha256": "d71259b473274bc0b6b7fe82113649ff2009909a52c3129622aae96ea52637d0",
+      "sha256": "e8a848113ff6aa7ac235cbd673a77283784ab87fe30708f51ba78a841f816a4e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/initialization.asm",
+      "start": "0x4f4e30",
+      "end": "0x4f4f03",
+      "raw_sha256": "bc6339b74d872ce46d8caa554c89d72d0dabcedf3bf0812861a098db9529ac0f",
+      "sha256": "cb512a4e420e68f6c00529191210fe4ef310861d70ac62fedc37b706fc8eb8a3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/skatole_morph.asm",
+      "start": "0x4f4ff6",
+      "end": "0x4f503f",
+      "raw_sha256": "859d378b02157f16a2a18d2d271187bcfcf0172d03990e915e907dadef9f5a50",
+      "sha256": "5f5e9bf088c5ed14b38610ce2d11bc2f498cffe6ba7c3cbd2216c0077e58c53e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/target_period.asm",
+      "start": "0x4f6162",
+      "end": "0x4f61b5",
+      "raw_sha256": "74421eac2f6745c8f7325b8ed571812f6d72d6d617f0a91a599176a204463c9c",
+      "sha256": "a3cf985bbeecc5812b9daf4827e74f883656898273e3334b08db0b92528e6630"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/target_cache.asm",
+      "start": "0x4f64f5",
+      "end": "0x4f651a",
+      "raw_sha256": "6d85e859a16a7a086429565a08ba9ba25bf15950f28e2e4ee27aa73588be1a33",
+      "sha256": "8be01bdd04f74e26b2fef164b9cbc5ef8f8a7c922c2fdb61892a12cc4613b095"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/ordinary_target.asm",
+      "start": "0x695bf3",
+      "end": "0x695c2d",
+      "raw_sha256": "33753292f20d594402af9e9d6f3b0a0a97a7ab5cd880015888e249696ed32087",
+      "sha256": "b5e0364873dc454d009b1cb81ceebd9a50470eae7b57829f910726a302c6fc4a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/pursuit_force.asm",
+      "start": "0x4f67c1",
+      "end": "0x4f6a3a",
+      "raw_sha256": "9bd0e6e15489917c7026d90781981084ad48deed514a47ecb3c81dd3208e3780",
+      "sha256": "cce43318cf6bdb49b38f364055d281b178159ed6ef0293d44661c822bca5ac13"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/shared_jitter_and_edge.asm",
+      "start": "0x4f6d0e",
+      "end": "0x4f6ee0",
+      "raw_sha256": "8d12504f730bedb824a0504c5ca44d7bf4845f66523425d1e4abfcbdbb472404",
+      "sha256": "152a876b7577645da916523168eeb815f05d2013f8c7047e7694bb64ccc66b67"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/hive_live_spawn.asm",
+      "start": "0x4fa8cb",
+      "end": "0x4fa930",
+      "raw_sha256": "669aee7b1da7c3e263d6a628ef3b0a1b008ff761e1980648a2a0e9eab1d121f1",
+      "sha256": "627e1b425c2bc3854bc5fc0ca3635a3bb4a0a94a37670673002024e5c7020976"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/player_collision.asm",
+      "start": "0x6a5129",
+      "end": "0x6a5562",
+      "raw_sha256": "1ec5a5f788238591b72cf9e766f737600f1b623d674b5326b8ad093d79f39d3e",
+      "sha256": "ec24abc5e98c37cb6ee003c9097bdf7016ba5aa1e45074467884dcd525ca9d94"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/kill.asm",
+      "start": "0x695560",
+      "end": "0x6955f5",
+      "raw_sha256": "1ead07b87308fb7d4fc76de9cc7d54230488935594a729cb165f6cdf26abea42",
+      "sha256": "f2a3873fe80c2b25f61687a178d6b882da23a21278e17a9c95a918765b391d8b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/morph.asm",
+      "start": "0x697c60",
+      "end": "0x697e21",
+      "raw_sha256": "811937034eaac8ea8aefdf30ca2ba54dd4c4b9adffeb4f6bdd5ac279fa9e19a6",
+      "sha256": "90c2d0f0f0a8571d2ea35a9de4a949fd4d9bf658d0655192ccaee5400dfdca4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/load_npc_config.asm",
+      "start": "0x692960",
+      "end": "0x692f73",
+      "raw_sha256": "85b3a443de304b0aebefd4158df936b2c6bd5c84d182ccef8a52dfda27aa49f9",
+      "sha256": "47a82eb4b11f7accff02b9a79f16f1c9fbbb1d8564dee26acb7c0436e15c5c48"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/load_entity_config.asm",
+      "start": "0x681ea0",
+      "end": "0x682190",
+      "raw_sha256": "36a26ba5aaa9b23d8e96f4a8eb9110f8348b30fb1aeb180ecc9f8da7c07b2857",
+      "sha256": "d44b00677e9bc0a0ceaadf926e1008e02e7bc1591054266c92202fabdb2ded9f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/gurdy_child_preflight.asm",
+      "start": "0x46b791",
+      "end": "0x46b7d0",
+      "raw_sha256": "fa9131d74371b8f88707347c8b5e646cbdc4a33a80436b671cf5332d03d97c74",
+      "sha256": "362dd6f634c080d5ead77699665a50ed59b5854e39001eb276a1197d416231db"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/attack_fly/source/duke_husk_child_preflight.asm",
+      "start": "0x45e9a1",
+      "end": "0x45ead8",
+      "raw_sha256": "8aae474f5acbce350207d9f905b074169789e20c1121d7695c0b1abf087e30a8",
+      "sha256": "4fcebcc9e6ea4d1156598e43e70d6d33db7e0b34a3602cf156104be97a47493b"
+    }
+  ],
+  "xml": {
+    "anm2path": "018.000_Attack Fly.anm2",
+    "baseHP": "5",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "1",
+    "collisionMass": "3",
+    "collisionRadius": "17",
+    "friction": "1",
+    "gridCollision": "walls",
+    "id": "18",
+    "name": "#ATTACK_FLY",
+    "numGridCollisionPoints": "4",
+    "portrait": "5",
+    "reroll": "true",
+    "shadowSize": "11",
+    "stageHP": "0",
+    "tags": "fly",
+    "variant": "0"
+  },
+  "room_library_presence": {
+    "rooms/00.special rooms.stb": {
+      "templates": 30,
+      "positive_weight_templates": 30
+    },
+    "rooms/01.basement.stb": {
+      "templates": 95,
+      "positive_weight_templates": 95
+    },
+    "rooms/02.cellar.stb": {
+      "templates": 14,
+      "positive_weight_templates": 14
+    },
+    "rooms/03.burning basement.stb": {
+      "templates": 95,
+      "positive_weight_templates": 95
+    },
+    "rooms/04.caves.stb": {
+      "templates": 22,
+      "positive_weight_templates": 22
+    },
+    "rooms/05.catacombs.stb": {
+      "templates": 5,
+      "positive_weight_templates": 5
+    },
+    "rooms/06.flooded caves.stb": {
+      "templates": 25,
+      "positive_weight_templates": 25
+    },
+    "rooms/07.depths.stb": {
+      "templates": 7,
+      "positive_weight_templates": 7
+    },
+    "rooms/08.necropolis.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    },
+    "rooms/09.dank depths.stb": {
+      "templates": 6,
+      "positive_weight_templates": 6
+    },
+    "rooms/10.womb.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    },
+    "rooms/11.utero.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/12.scarred womb.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    },
+    "rooms/17.chest.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/26.the void.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    },
+    "rooms/28.dross.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    },
+    "rooms/36.backwards.stb": {
+      "templates": 5,
+      "positive_weight_templates": 5
+    },
+    "rooms/greed/00.special rooms.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/01.basement.stb": {
+      "templates": 18,
+      "positive_weight_templates": 18
+    },
+    "rooms/greed/02.cellar.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/03.burning basement.stb": {
+      "templates": 18,
+      "positive_weight_templates": 18
+    },
+    "rooms/greed/28.dross.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    }
+  },
+  "scope": "Ordinary Attack Fly18.0.0, its required Skatole morph and source-backed live Hive contact policy. Other boss/fly families remain partial.",
+  "adaptations": [
+    "Source5HPx3.2=16 instead of the old32. Contact uses local10before the existing1.25hostile multiplier. Radius.45 matches ordinary Fly so in-place morph does not grow into scenery; previous Attack Fly radius was.38. Existing Original low-poly artwork is retained.",
+    "Source target period3 and force period2 run on the shared local30Hz clock. World delta is divided by.1, second axis scaled.5, force min((distance-25)*.08,1.2). Shared jitter/friction and local room-edge/24speed safety cap remain. This is not certification of exact native entity-time/friction integration or animation ordering.",
+    "Physical3D flight crosses interior cover/deep water while retaining room boundaries and sealed gates. Swept relative player contact retains vertical separation and line-of-sight; these are explicit3D collision adaptations.",
+    "Skatole morph occurs on the next local30Hz update. It keeps entity, summoner, generation, momentum and live-summon expiry, clamps currentHP to new max9.6 and grants no kill. Item presence prevents contact damage before that update. New Fly logic begins on the next local tick; source ordering may continue within the native update.",
+    "Only live Hive22.0 summons acquire contact expiry and.9pursuit friction. The flag is latched on the child and survives parent removal and harmless morph. Death-offspring retain ordinary persistence. Existing Hive attack cadence/death mixtures are still partial.",
+    "Contact expiry uses the bounded execution-damage queue, with a spent latch and retry under pressure. It passes through ordinary DeathWard kill/threat accounting once; generation>0 suppresses money. This local lifetime/capacity policy is not a new Isaac bomb or explosion.",
+    "Sparse pursuit specialist placement spans bands0\u20133, weight2/cost1/max3per room, supported by installed authored room presence. This is local stage mapping, not a reproduction of native room templates.",
+    "External buzz_chase, buzz_item_morph and buzz_contact_summon rows validate references/values and preserve immutable content snapshots. Skatole stays unpooled until its remaining fly effects are implemented."
+  ],
+  "remaining": [
+    "Regular enemies remain first. Continue Tainted Pooter and other unfinished ordinary fly-family controllers, then the remaining regular roster. No boss-specific expansion in this slice.",
+    "Duke/Husk parent tether, large-child HP/scale and edge exceptions, Gurdy child currentHP reduction and Eternal Fly-derived variants remain separate pending policies. Retained disassembly preflight is not their implementation.",
+    "Full Skatole, charm/fear/confusion/control, native time-scale/integration, knockback and complete animation/frame parity remain unverified. Existing Hive and Moter parent controllers are not completed by fixing this child.",
+    "Broader encounter/build balance, all-angle occlusion and controlled rendered Linux/WASM performance remain open. All653records and six acceptance gates are still required; zero records certified complete."
+  ],
+  "shared_source_evidence": [
+    "docs/reports/isaac-enemy-port/fly_pooter/source/add_velocity.asm",
+    "docs/reports/isaac-enemy-port/horf_fly/source/shared_interval.asm",
+    "docs/reports/isaac-enemy-port/horf_fly/source/fly_buzz_and_edge_forces.asm"
+  ]
+}

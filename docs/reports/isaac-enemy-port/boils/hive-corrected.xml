@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="65"
+	timestamp="2026-10-27T05:47:04"
+	>
+	<testcase name="hive_evaders" classname="hive_evaders" time="65.9132" status="run">
+		<system-out>PASS Hive/Drowned health, harmless contact, native attack event/timer, global population delay, live-child policy and bounded Shoot
+PASS independent death mixtures, population count, scaled overkill, live/death distinction, retained births and completion
+PASS flee/wander and validated immutable external profiles; Flooded-only replacement
+NATURAL_HIVE seed=23 floor=0 room=5 band=0
+NATURAL_HIVE seed=45 floor=2 room=3 band=1
+NATURAL_DROWNED_HIVE seed=109 floor=2 room=6
+NATURAL_HIVE seed=58 floor=4 room=1 band=2
+PASS Hive/Drowned evaders
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,5 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_baby_tests
+[100%] Building CXX object CMakeFiles/deathward_baby_tests.dir/tests/baby_tests.cpp.o
+[100%] Linking CXX executable deathward_baby_tests
+[100%] Built target deathward_baby_tests

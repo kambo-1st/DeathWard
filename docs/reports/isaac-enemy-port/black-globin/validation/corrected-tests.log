@@ -1,0 +1,18 @@
+[OUTPUT] 
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+
+[HANDLER_OUTPUT] 
+Test project /home/kambo/workspace/DeathWard/build
+
+    Start 103: prey_and_small_leech
+    Start  79: black_globin_family
+    Start  81: spider_family
+1/4 Test  #81: spider_family ....................   Passed    1.16 sec
+    Start  37: brain
+2/4 Test  #37: brain ............................   Passed    1.66 sec
+3/4 Test  #79: black_globin_family ..............   Passed    6.88 sec
+4/4 Test #103: prey_and_small_leech .............   Passed   11.73 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =  11.73 sec

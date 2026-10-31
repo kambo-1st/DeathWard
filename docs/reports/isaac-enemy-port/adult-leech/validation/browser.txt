@@ -1,0 +1,6 @@
+START wall-impact
+PASS wall-impact {"charges":10,"wallRings":9,"burrows":0,"landingRings":0}
+START burrow-fall
+PASS burrow-fall {"charges":8,"wallRings":5,"burrows":1,"landingRings":1}
+START resident
+PASS resident {"charges":25,"wallRings":5,"burrows":0,"landingRings":0}

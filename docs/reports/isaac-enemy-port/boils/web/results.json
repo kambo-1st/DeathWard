@@ -1,0 +1,123 @@
+{
+  "checks": [
+    {
+      "case": "boil",
+      "attacks": 7,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 0,
+      "sampleCount": 140
+    },
+    {
+      "case": "gut",
+      "attacks": 6,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 0,
+      "sampleCount": 140
+    },
+    {
+      "case": "sack",
+      "attacks": 2,
+      "child": true,
+      "thrown": true,
+      "maxHealth": 64,
+      "travel": 0,
+      "sampleCount": 160
+    },
+    {
+      "case": "walking-boil",
+      "attacks": 7,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 62.728133058217445,
+      "sampleCount": 100
+    },
+    {
+      "case": "walking-gut",
+      "attacks": 5,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 71.88063156486622,
+      "sampleCount": 100
+    },
+    {
+      "case": "walking-sack",
+      "attacks": 5,
+      "child": true,
+      "thrown": true,
+      "maxHealth": 64,
+      "travel": 119.68786922503838,
+      "sampleCount": 160
+    },
+    {
+      "case": "walking-boil-cover",
+      "attacks": 7,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 60.6542880231944,
+      "sampleCount": 100
+    },
+    {
+      "case": "natural-boil",
+      "attacks": 2,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 0,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-gut",
+      "attacks": 2,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 0,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-sack",
+      "attacks": 0,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 56.29035949707031,
+      "travel": 0,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-walking-boil",
+      "attacks": 2,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 34.70758544146756,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-walking-gut",
+      "attacks": 2,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 19.607284950519485,
+      "sampleCount": 50
+    },
+    {
+      "case": "natural-walking-sack",
+      "attacks": 1,
+      "child": false,
+      "thrown": false,
+      "maxHealth": 64,
+      "travel": 35.033048165994636,
+      "sampleCount": 50
+    }
+  ],
+  "errors": [],
+  "scope": "13 Original-style production WASM cases: six isolated family members, walking cover navigation and six actual seeded residents. Exact growth/events/ballistics/immunity/retained impacts and stun during thrown flight have native fixtures. Broader acceptance gates remain open."
+}

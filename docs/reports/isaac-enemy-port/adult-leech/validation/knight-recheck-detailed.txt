@@ -1,0 +1,30 @@
+Start testing: Oct 28 05:33 CET
+----------------------------------------------------------
+41/98 Testing: knight_lifecycle
+41/98 Test: knight_lifecycle
+Command: "/home/kambo/workspace/DeathWard/build/deathward_knight_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"knight_lifecycle" start time: Oct 28 05:33 CET
+Output:
+----------------------------------------------------------
+MASK cardinal_half_plane=1 loose_armored=1 bypasses=1 specular_speed=1 grace15=1
+PAIR same_id=1 scale=1 no_duplicate_rewards=1 invulnerability=1 capacity=1 orphan=1 nearest_unique=1
+PON source_hop=1 landing_patch=1 life125=1 red_damage=1 fade=1 blocked_target_retry=1 capacity_after_death=1
+MOVEMENT cardinal_commit=1 no_generic_windup=1 no_timeout=1 selfless_force=1 black_acceleration=1 occlusion=1 remnant_wander=1 mass_ratio=1
+IMPACT three_directions=1 discrete_jets=1 lift=1 recovery45=1 ordinary_no_payload=1 capacity_after_death=1 open_passage_boundary=1
+CONFIG immutable_reload=1 invalid_profiles=7
+NATURAL_KNIGHT id=41.0 seed=0 floor=2 room=5
+NATURAL_KNIGHT id=41.1 seed=1 floor=6 room=7
+NATURAL_KNIGHT id=41.2 seed=0 floor=3 room=2
+NATURAL_KNIGHT id=41.4 seed=1 floor=6 room=10
+NATURAL_KNIGHT id=840.0 seed=28 floor=7 room=3
+PASS Knight armor/lifecycle and Pon contracts
+<end of output>
+Test time =   2.43 sec
+----------------------------------------------------------
+Test Passed.
+"knight_lifecycle" end time: Oct 28 05:33 CET
+"knight_lifecycle" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Oct 28 05:33 CET

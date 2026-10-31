@@ -1,0 +1,181 @@
+{
+  "passed": 43,
+  "failed": 0,
+  "seconds": 93.89,
+  "basis": "All 43 suites passed in one complete run; the Bloat fixture was additionally rebuilt/rerun after adding explicit ordinary-Charger band assertions.",
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.3956
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "seconds": 1.20571
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "seconds": 51.3659
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "seconds": 7.9906
+    },
+    "floor_progression": {
+      "result": "pass",
+      "seconds": 91.3612
+    },
+    "item_builds": {
+      "result": "pass",
+      "seconds": 9.4205
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "seconds": 76.384
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "seconds": 0.0326839
+    },
+    "expedition": {
+      "result": "pass",
+      "seconds": 17.6164
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "seconds": 16.5635
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "seconds": 0.254379
+    },
+    "save_slots": {
+      "result": "pass",
+      "seconds": 0.0955156
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "seconds": 1.26341
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "seconds": 0.0806264
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "seconds": 8.19402
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "seconds": 25.6913
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "seconds": 0.769511
+    },
+    "building_navigation": {
+      "result": "pass",
+      "seconds": 0.0407294
+    },
+    "particle_emission": {
+      "result": "pass",
+      "seconds": 0.0317897
+    },
+    "town_characters": {
+      "result": "pass",
+      "seconds": 0.0308159
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "seconds": 0.222166
+    },
+    "train_motion": {
+      "result": "pass",
+      "seconds": 0.765012
+    },
+    "object_animation": {
+      "result": "pass",
+      "seconds": 0.0657022
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "seconds": 1.49131
+    },
+    "mission_shop": {
+      "result": "pass",
+      "seconds": 2.77659
+    },
+    "money_pickups": {
+      "result": "pass",
+      "seconds": 1.5275
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "seconds": 1.28737
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "seconds": 0.0847216
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "seconds": 3.71255
+    },
+    "monster_flight": {
+      "result": "pass",
+      "seconds": 3.61039
+    },
+    "monster_formations": {
+      "result": "pass",
+      "seconds": 0.182942
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "seconds": 0.302562
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "seconds": 0.255355
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "seconds": 0.344324
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "seconds": 1.37575
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "seconds": 1.86956
+    },
+    "bloat_boss_and_chargers": {
+      "result": "pass",
+      "seconds": 2.35384
+    },
+    "mission_themes": {
+      "result": "pass",
+      "seconds": 5.01468
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "seconds": 0.107363
+    },
+    "core_contracts": {
+      "result": "pass",
+      "seconds": 0.635107
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "seconds": 3.48743
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "seconds": 27.4324
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "seconds": 0.811117
+    }
+  },
+  "resolved_failure": "Initial CLI compile used value instead of the existing form variable; corrected and both native/WASM builds passed. No gameplay fixture failures in this batch."
+}

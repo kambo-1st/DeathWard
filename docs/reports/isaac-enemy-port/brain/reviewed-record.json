@@ -1,0 +1,148 @@
+{
+  "id": "32.0.0",
+  "name": "Brain",
+  "review": "reviewed",
+  "disposition": "ordinary",
+  "implementation": "in_progress",
+  "parents": [],
+  "children": [],
+  "evidence": [
+    {
+      "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Exact32.0.0 identity, HP20/stageHP0, contact2, radius13 and champion eligibility."
+    },
+    {
+      "source": "docs/reports/isaac-enemy-port/brain/source-discovery.json",
+      "supports": "Revision-pinned Brain description, XML and ordinary positive-weight source room-template habitats."
+    },
+    {
+      "source": "docs/reports/isaac-enemy-port/brain/source-review.md",
+      "supports": "Installed1.7.9b controller, movement/friction/charge timing, red-creep producer/effect and explicit3D adaptations."
+    }
+  ],
+  "contract": {
+    "movement": "Cardinal wandering at30Hz: force.75, X retention.85, Y retention.8. On alignment, committed cardinal charge obeys v=.8v+direction with perpendicular .1 current-grid centering; real terrain/body collisions end it.",
+    "targeting": "Global interval7 with stable entity offset; predict target velocity by16U source frames, clamp20-unit room inset. Require one axis below20, distance below200 and line of sight from current grid center. No homing during charge.",
+    "attacks": "Contact2 source units ->20 then shared1.25=25. Red creep effect22: base periods12/24 below/at least5 living enemies, extra half-period when speed squared>9. Radius24.6 source ->2.46 local; damage1 ->10 then1.25=12.5. No ranged projectiles.",
+    "vulnerability": "Ordinary grounded independently damageable body; sourceHP20/stageHP0 ->64 localHP. Shared player contact invulnerability applies. Source champion/control and item immunity branches remain open.",
+    "phases": "First30Hz update initializes only; Walk30 loop thereafter. Wander/committed charge, physical-contact stop, local stun cancellation and inactive-room preservation. Existing creep lives125 source frames then harmless40-frame fade with .98 scale per source frame.",
+    "offspring": "No ordinary Brain child/death payload. MemBrain producer routes, Poison Mind locked replacement and other special-mode dependencies require their own review; shared native function279/301 branches are not inherited.",
+    "completion": "One ordinary room threat and normal kill. Emitted creep survives owner death while another enemy remains; last enemy death clears room immediately and starts harmless fade without holding doors closed.",
+    "source_numbers": {
+      "baseHP": 20,
+      "stageHP": 0,
+      "collisionDamage": 2,
+      "collisionRadius": 13,
+      "collisionMass": 10,
+      "force": 0.75,
+      "chargeInterval": 7,
+      "creepLifetime": 125,
+      "creepFade": 40
+    },
+    "adaptations": "Healthx3.2, distance.1, physical body radius.6, damagex10 then existing hostile1.25. Room-center grid and swept radius-aware collision replace native tile queries. Stable local IDs,30Hz decisions/60Hz physical movement, circular visible creep footprint with player contact skin instead of source animation-mask sampling. Pending creep retained under capacity pressure. Depths/Womb habitats map to Works/Storm bands2/3; weights/costs are authored tuning.",
+    "unknowns": "Exact native grid/RNG/global-update equivalence, appearance activation, source status/control/champion and all item-immunity/producer routes, exact alpha-mask footprint, all-camera mixed-room readability, full-floor mixed-build balance and controlled Linux/WASM rendering performance."
+  },
+  "runtime": [
+    "assets/mechanics/brains.mechanics",
+    "src/combat/Brains.cpp",
+    "src/combat/CardinalWalkers.cpp",
+    "src/combat/Simulation.hpp",
+    "src/combat/Monsters.cpp",
+    "src/combat/MonsterMovement.cpp",
+    "src/combat/Enemies.cpp",
+    "src/content/Mechanics.hpp",
+    "src/content/Mechanics.cpp",
+    "src/content/EncounterVariants.cpp",
+    "src/render/MonsterVisuals.hpp",
+    "src/render/Renderer.cpp",
+    "src/main.cpp",
+    "tests/brain_tests.cpp",
+    "web/brain-test.cjs"
+  ],
+  "placement": [
+    {
+      "kind": "ordinary_pool",
+      "approved": true,
+      "band": 2,
+      "pattern": "pursuit",
+      "role": "specialist",
+      "weight": 1,
+      "cost": 3,
+      "maximum": 2,
+      "members": 1,
+      "floor_variant": "any",
+      "source": "assets/mechanics/brains.mechanics",
+      "note": "Installed Depths/Womb ordinary habitat, mapped to Works/Storm; actual seeded residents and an interior-river room validated."
+    },
+    {
+      "kind": "ordinary_pool",
+      "approved": true,
+      "band": 3,
+      "pattern": "pursuit",
+      "role": "specialist",
+      "weight": 1,
+      "cost": 3,
+      "maximum": 2,
+      "members": 1,
+      "floor_variant": "any",
+      "source": "assets/mechanics/brains.mechanics",
+      "note": "Installed Depths/Womb ordinary habitat, mapped to Works/Storm; actual seeded residents and an interior-river room validated."
+    }
+  ],
+  "validation": {
+    "behavior": [
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/native-focused-final.txt",
+        "result": "partial_pass",
+        "scope": "Source movement endpoints, target prediction, committed charge, physical/body stops, safe grid correction, creep intervals/damage/lifecycle, automatic completion, capacity, stun, room suspension and immutable external configuration."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/native-summary.json",
+        "result": "partial_pass",
+        "scope": "Passing results cover all87 currently registered Linux suites after the unrelated Eggy navigation fixture is decoupled from a frozen roster roll; original geometry/target assertion retained."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/web/results.json",
+        "result": "partial_pass",
+        "scope": "Seven production WASM cases verify dedicated controller, source-derived health, committed charge, physical terrain legality and independent creep fade/expiry."
+      }
+    ],
+    "reachability": [
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/natural-witnesses.json",
+        "result": "partial_pass",
+        "scope": "Actual generated Works/Storm residents and a naturally populated interior-river room, simulated240ticks without illegal footprints. Zero-based seed22/floor5/room6, seed2/floor5/room6 and seed101/floor6/room9."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/web/results.json",
+        "result": "partial_pass",
+        "scope": "All three exact generated witnesses activated in the real production WASM game without injecting or replacing enemies."
+      }
+    ],
+    "visual_linux": [
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/visual-review.json",
+        "result": "partial_pass",
+        "scope": "Five final native views individually inspected and accepted as smoke evidence. Two preserved earlier defect views exposed the now-corrected overlap artifact; all-camera/mixed-room approval remains open."
+      }
+    ],
+    "visual_wasm": [
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/visual-review.json",
+        "result": "partial_pass",
+        "scope": "Eight final WASM views individually inspected: open, cover, river, owner-death trail, expiry and all three generated witnesses. No all-camera or full-floor readability approval."
+      }
+    ],
+    "balance": [
+      {
+        "path": "docs/reports/isaac-enemy-port/brain/native-focused-final.txt",
+        "result": "partial_pass",
+        "scope": "Default100HP/24damage kit defeats an isolated Brain in8.68333seconds with100HP. Bot leaves charge lane/avoids visible creep; no enemy stat or damage assertion changes. Full-floor mixed-build balance remains open."
+      }
+    ],
+    "performance": []
+  },
+  "unresolved": [
+    "Exact native grid/RNG/global-update equivalence, appearance activation, source status/control/champion and all item-immunity/producer routes, exact alpha-mask footprint, all-camera mixed-room readability, full-floor mixed-build balance and controlled Linux/WASM rendering performance."
+  ]
+}

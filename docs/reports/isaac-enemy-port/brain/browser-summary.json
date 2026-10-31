@@ -1,0 +1,75 @@
+{
+  "passed": 11,
+  "total": 11,
+  "browser": "149.0.7827.55",
+  "errors": [],
+  "cases": [
+    {
+      "name": "brain",
+      "pass": true,
+      "last_frame": 301,
+      "report": "docs/reports/isaac-enemy-port/brain/web/results.json"
+    },
+    {
+      "name": "brain-cover",
+      "pass": true,
+      "last_frame": 301,
+      "report": "docs/reports/isaac-enemy-port/brain/web/results.json"
+    },
+    {
+      "name": "brain-river",
+      "pass": true,
+      "last_frame": 301,
+      "report": "docs/reports/isaac-enemy-port/brain/web/results.json"
+    },
+    {
+      "name": "brain-death",
+      "pass": true,
+      "last_frame": 500,
+      "report": "docs/reports/isaac-enemy-port/brain/web/results.json"
+    },
+    {
+      "name": "resident-band-2",
+      "pass": true,
+      "last_frame": 301,
+      "report": "docs/reports/isaac-enemy-port/brain/web/results.json"
+    },
+    {
+      "name": "resident-band-3",
+      "pass": true,
+      "last_frame": 301,
+      "report": "docs/reports/isaac-enemy-port/brain/web/results.json"
+    },
+    {
+      "name": "resident-river",
+      "pass": true,
+      "last_frame": 301,
+      "report": "docs/reports/isaac-enemy-port/brain/web/results.json"
+    },
+    {
+      "name": "spitty",
+      "pass": true,
+      "last_frame": 241,
+      "report": "docs/reports/isaac-enemy-port/brain/web-spitty-final/results.json"
+    },
+    {
+      "name": "conjoined",
+      "pass": true,
+      "last_frame": 240,
+      "report": "docs/reports/isaac-enemy-port/brain/web-spitty-final/results.json"
+    },
+    {
+      "name": "tainted-spitty",
+      "pass": true,
+      "last_frame": 242,
+      "report": "docs/reports/isaac-enemy-port/brain/web-spitty-final/results.json"
+    },
+    {
+      "name": "tainted-death",
+      "pass": true,
+      "last_frame": 243,
+      "report": "docs/reports/isaac-enemy-port/brain/web-spitty-final/results.json"
+    }
+  ],
+  "scope": "Seven Brain cases and four Spitty compatibility cases on the final production build. Earlier refused-connection attempt is retained separately."
+}

@@ -1,0 +1,77 @@
+START normal
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME normal 5 volleys 0 teleports 0 dashes 0
+FRAME normal 125 volleys 2 teleports 0 dashes 0
+FRAME normal 245 volleys 2 teleports 1 dashes 0
+FRAME normal 364 volleys 2 teleports 1 dashes 0
+PASS normal
+START angelic
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME angelic 5 volleys 0 teleports 0 dashes 0
+FRAME angelic 125 volleys 1 teleports 0 dashes 0
+FRAME angelic 244 volleys 1 teleports 1 dashes 0
+FRAME angelic 365 volleys 3 teleports 1 dashes 0
+PASS angelic
+START small
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME small 5 volleys 0 teleports 0 dashes 0
+FRAME small 125 volleys 1 teleports 0 dashes 0
+FRAME small 244 volleys 1 teleports 1 dashes 0
+FRAME small 365 volleys 3 teleports 1 dashes 0
+PASS small
+START wrinkly
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME wrinkly 5 volleys 0 teleports 0 dashes 0
+FRAME wrinkly 125 volleys 1 teleports 0 dashes 0
+FRAME wrinkly 245 volleys 2 teleports 0 dashes 1
+FRAME wrinkly 365 volleys 3 teleports 0 dashes 1
+PASS wrinkly
+START normal-cover
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME normal-cover 6 volleys 0 teleports 0 dashes 0
+FRAME normal-cover 125 volleys 1 teleports 0 dashes 0
+FRAME normal-cover 244 volleys 3 teleports 0 dashes 0
+FRAME normal-cover 365 volleys 3 teleports 1 dashes 0
+PASS normal-cover
+START angelic-river
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME angelic-river 5 volleys 0 teleports 0 dashes 0
+FRAME angelic-river 125 volleys 2 teleports 0 dashes 0
+FRAME angelic-river 245 volleys 4 teleports 0 dashes 0
+FRAME angelic-river 365 volleys 5 teleports 0 dashes 0
+PASS angelic-river
+START resident-0-seed-5-floor-3
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME resident-0-seed-5-floor-3 6 volleys 0 teleports 0 dashes 0
+FRAME resident-0-seed-5-floor-3 125 volleys 1 teleports 0 dashes 0
+FRAME resident-0-seed-5-floor-3 245 volleys 2 teleports 1 dashes 0
+FRAME resident-0-seed-5-floor-3 365 volleys 3 teleports 1 dashes 0
+PASS resident-0-seed-5-floor-3
+START resident-0-seed-5-floor-4
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME resident-0-seed-5-floor-4 6 volleys 0 teleports 0 dashes 0
+FRAME resident-0-seed-5-floor-4 125 volleys 2 teleports 0 dashes 0
+FRAME resident-0-seed-5-floor-4 244 volleys 4 teleports 0 dashes 0
+FRAME resident-0-seed-5-floor-4 365 volleys 5 teleports 0 dashes 0
+PASS resident-0-seed-5-floor-4
+START resident-1-seed-8-floor-6
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME resident-1-seed-8-floor-6 6 volleys 0 teleports 0 dashes 0
+FRAME resident-1-seed-8-floor-6 125 volleys 2 teleports 0 dashes 0
+FRAME resident-1-seed-8-floor-6 245 volleys 4 teleports 0 dashes 0
+FRAME resident-1-seed-8-floor-6 365 volleys 5 teleports 0 dashes 0
+PASS resident-1-seed-8-floor-6
+START resident-1-seed-18-floor-5
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME resident-1-seed-18-floor-5 6 volleys 0 teleports 0 dashes 0
+FRAME resident-1-seed-18-floor-5 125 volleys 2 teleports 0 dashes 0
+FRAME resident-1-seed-18-floor-5 245 volleys 4 teleports 0 dashes 0
+FRAME resident-1-seed-18-floor-5 365 volleys 5 teleports 0 dashes 0
+PASS resident-1-seed-18-floor-5
+START resident-3-seed-28-floor-7
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME resident-3-seed-28-floor-7 6 volleys 0 teleports 0 dashes 0
+FRAME resident-3-seed-28-floor-7 125 volleys 1 teleports 0 dashes 0
+FRAME resident-3-seed-28-floor-7 245 volleys 2 teleports 0 dashes 0
+FRAME resident-3-seed-28-floor-7 365 volleys 3 teleports 0 dashes 1
+PASS resident-3-seed-28-floor-7

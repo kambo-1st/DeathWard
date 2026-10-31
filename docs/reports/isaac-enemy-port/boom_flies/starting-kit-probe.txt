@@ -1,0 +1,7 @@
+BOOM_STARTING_KIT seed=0 floor=2 room=2 initial_threats=4 seconds=2.11667 player_hp=100 dead=0 clear=1 remaining=0 explosions=1 inventory=3 god=0 teleports_during_combat=0 max_hp=100 shot_damage=24 items=0
+BOOM_STARTING_KIT seed=0 floor=3 room=8 initial_threats=5 seconds=3.9 player_hp=100 dead=0 clear=1 remaining=0 explosions=0 inventory=3 god=0 teleports_during_combat=0 max_hp=100 shot_damage=24 items=0
+BOOM_STARTING_KIT seed=0 floor=4 room=11 initial_threats=5 seconds=32 player_hp=100 dead=0 clear=1 remaining=0 explosions=2 inventory=3 god=0 teleports_during_combat=0 max_hp=100 shot_damage=24 items=0
+BOOM_STARTING_KIT seed=4 floor=3 room=4 initial_threats=4 seconds=3.31667 player_hp=100 dead=0 clear=1 remaining=0 explosions=0 inventory=3 god=0 teleports_during_combat=0 max_hp=100 shot_damage=24 items=0
+BOOM_STARTING_KIT seed=4 floor=6 room=8 initial_threats=5 seconds=7.73333 player_hp=100 dead=0 clear=1 remaining=0 explosions=1 inventory=3 god=0 teleports_during_combat=0 max_hp=100 shot_damage=24 items=0
+BOOM_STARTING_KIT seed=16 floor=1 room=4 initial_threats=4 seconds=6.56667 player_hp=75 dead=0 clear=1 remaining=0 explosions=0 inventory=3 god=0 teleports_during_combat=0 max_hp=100 shot_damage=24 items=0
+BOOM_STARTING_KIT seed=19 floor=2 room=7 initial_threats=4 seconds=5.75 player_hp=100 dead=0 clear=1 remaining=0 explosions=0 inventory=3 god=0 teleports_during_combat=0 max_hp=100 shot_damage=24 items=0

@@ -1,0 +1,6 @@
+STATS normal80 angel80 small51.2 wrinkly80 movement=.7v+.33dir retreat=1
+SHOTS global7 cooldown35 Shoot5 counts1/3/1 current_target=1 native_spread=1 inherited_velocity=1 atomic=1
+TELEPORT search=1 safe_cells=1 counter25 appear19 damage_window=1 animation_events=1 interrupted_attack=1
+WRINKLY retreat120 windup7 locked_direction=1 Shoot11 triple=1 recovery=1 wall_stop=1
+CONFIG external=1 snapshots=1 invalid_profile=1 stage_pools=1
+PASS Baby family

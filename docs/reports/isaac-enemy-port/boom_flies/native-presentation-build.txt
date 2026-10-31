@@ -1,0 +1,93 @@
+[  7%] Built target glfw
+[  9%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 10%] Built target deathward_post_process_tests
+[ 27%] Built target deathward_core
+[ 27%] Built target deathward_skinning
+[ 28%] Built target deathward_cloth
+[ 29%] Built target deathward_particles
+[ 31%] Built target deathward_check_mechanics
+[ 31%] Built target deathward_bake_navigation
+[ 31%] Built target deathward_mission_lighting
+[ 32%] Built target deathward_mechanics_tests
+[ 32%] Built target deathward_canyon_boss_tests
+[ 33%] Built target deathward_expedition_economy_tests
+[ 34%] Built target deathward_floor_progression_tests
+[ 35%] Built target deathward_destruction_tests
+[ 36%] Built target deathward_item_build_tests
+[ 37%] Built target deathward_walk_area_tests
+[ 37%] Built target deathward_expedition_tests
+[ 38%] Built target deathward_pacing_tests
+[ 38%] Built target deathward_flag_cloth_tests
+[ 39%] Built target deathward_save_slot_tests
+[ 39%] Built target deathward_arrival_quest_tests
+[ 40%] Built target deathward_cinematic_tests
+[ 41%] Built target deathward_road_tests
+[ 42%] Built target deathward_river_tests
+[ 42%] Built target deathward_redstone_tests
+[ 42%] Built target deathward_building_navigation_tests
+[ 42%] Built target deathward_particle_tests
+[ 43%] Built target deathward_character_tests
+[ 44%] Built target deathward_animal_tests
+[ 44%] Built target deathward_train_tests
+[ 45%] Built target deathward_object_animation_tests
+[ 46%] Built target deathward_dynamite_tests
+[ 47%] Built target deathward_shop_tests
+[ 48%] Built target deathward_money_tests
+[ 48%] Built target deathward_resident_enemies_tests
+[ 50%] Built target deathward_audio_cue_tests
+[ 50%] Built target deathward_monster_tests
+[ 51%] Built target deathward_flight_tests
+[ 52%] Built target deathward_formation_tests
+[ 53%] Built target deathward_pattern_tests
+[ 54%] Built target deathward_fire_reaction_tests
+[ 54%] Built target deathward_hop_tests
+[ 55%] Built target deathward_bloat_tests
+[ 56%] Built target deathward_monster_boss_tests
+[ 57%] Built target deathward_replacement_tests
+[ 57%] Built target deathward_charger_tests
+[ 57%] Built target deathward_companion_tests
+[ 58%] Built target deathward_statue_tests
+[ 58%] Built target deathward_maw_tests
+[ 58%] Built target deathward_quake_tests
+[ 59%] Built target deathward_supplied_bomb_tests
+[ 59%] Built target deathward_fly_bomb_tests
+[ 59%] Built target deathward_segmented_boss_tests
+[ 60%] Built target deathward_boom_fly_tests
+[ 61%] Built target deathward_shell_tests
+[ 62%] Built target deathward_theme_tests
+[ 63%] Built target deathward_hub_tests
+[ 63%] Built target deathward_tests
+[ 63%] Built target deathward_dungeon_tests
+[ 64%] Built target deathward_enemy_tests
+[ 64%] Built target deathward_room_graph_tests
+[ 64%] Built target deathward_runtime_assets
+[ 64%] Built target deathward_cinematic_cast_tests
+[ 65%] Built target deathward_flag_render_tests
+[ 65%] Building CXX object CMakeFiles/deathward_arrival_input_tests.dir/src/render/Renderer.cpp.o
+Consolidate compiler generated dependencies of target deathward
+[ 66%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 68%] Built target deathward_art_direction_tests
+[ 70%] Built target deathward_cinematic_editor_tests
+[ 72%] Built target deathward_cel_shading_tests
+[ 74%] Built target deathward_redstone_render_tests
+[ 76%] Built target deathward_particle_render_tests
+[ 77%] Built target deathward_building_tests
+[ 78%] Built target deathward_character_model_tests
+[ 79%] Built target deathward_animal_model_tests
+[ 80%] Built target deathward_audio_tests
+[ 80%] Building CXX object CMakeFiles/deathward_occlusion_tests.dir/src/render/Renderer.cpp.o
+[ 82%] Built target deathward_editor_tests
+[ 82%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/Renderer.cpp.o
+[ 82%] Linking CXX executable deathward_arrival_input_tests
+[ 82%] Linking CXX executable deathward
+[ 82%] Linking CXX executable deathward_occlusion_tests
+[ 85%] Built target deathward_arrival_input_tests
+[ 85%] Linking CXX executable deathward_input_tests
+[ 86%] Built target deathward_player_model_tests
+[ 87%] Built target deathward_town_assets_tests
+[ 90%] Built target deathward_occlusion_tests
+[ 91%] Built target deathward_mission_lighting_tests
+[ 92%] Built target deathward_western_assets_tests
+[ 96%] Built target deathward
+[100%] Built target deathward_input_tests

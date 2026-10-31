@@ -1,0 +1,54 @@
+{
+  "scope": "Ordinary Attack Fly18.0.0, its required Skatole morph and source-backed live Hive contact policy. Other boss/fly families remain partial.",
+  "mechanics_fingerprint": "bef0b7c155852203",
+  "changes": [
+    "Replace generic ordinary Attack Fly chase with cached source-based pursuit, jitter and source HP.",
+    "External item morph clamps HP in place and preserves ownership/reward identity.",
+    "External live Hive contact policy differs from death offspring, including contact friction and bounded expiry.",
+    "Sparse pursuit placement across four stage bands; retain player defaults, Original visuals and expedition structure."
+  ],
+  "adaptations": [
+    "Source5HPx3.2=16 instead of the old32. Contact uses local10before the existing1.25hostile multiplier. Radius.45 matches ordinary Fly so in-place morph does not grow into scenery; previous Attack Fly radius was.38. Existing Original low-poly artwork is retained.",
+    "Source target period3 and force period2 run on the shared local30Hz clock. World delta is divided by.1, second axis scaled.5, force min((distance-25)*.08,1.2). Shared jitter/friction and local room-edge/24speed safety cap remain. This is not certification of exact native entity-time/friction integration or animation ordering.",
+    "Physical3D flight crosses interior cover/deep water while retaining room boundaries and sealed gates. Swept relative player contact retains vertical separation and line-of-sight; these are explicit3D collision adaptations.",
+    "Skatole morph occurs on the next local30Hz update. It keeps entity, summoner, generation, momentum and live-summon expiry, clamps currentHP to new max9.6 and grants no kill. Item presence prevents contact damage before that update. New Fly logic begins on the next local tick; source ordering may continue within the native update.",
+    "Only live Hive22.0 summons acquire contact expiry and.9pursuit friction. The flag is latched on the child and survives parent removal and harmless morph. Death-offspring retain ordinary persistence. Existing Hive attack cadence/death mixtures are still partial.",
+    "Contact expiry uses the bounded execution-damage queue, with a spent latch and retry under pressure. It passes through ordinary DeathWard kill/threat accounting once; generation>0 suppresses money. This local lifetime/capacity policy is not a new Isaac bomb or explosion.",
+    "Sparse pursuit specialist placement spans bands0–3, weight2/cost1/max3per room, supported by installed authored room presence. This is local stage mapping, not a reproduction of native room templates.",
+    "External buzz_chase, buzz_item_morph and buzz_contact_summon rows validate references/values and preserve immutable content snapshots. Skatole stays unpooled until its remaining fly effects are implemented."
+  ],
+  "native": {
+    "covered_suites": 65,
+    "passed": 65,
+    "failed": 0,
+    "initial_report": "docs/reports/isaac-enemy-port/attack_fly/native.xml",
+    "corrected_test_report": "docs/reports/isaac-enemy-port/attack_fly/fixtures-final.xml",
+    "behavior": "docs/reports/isaac-enemy-port/attack_fly/behavior-final.txt",
+    "scope": "Full65-suite run passed63. Two outdated fixtures were corrected: quarter-health offspring now expect4HP from16rather than8from32; Ring Fly reachability samples32seeds instead of requiring one fixed seed to retain its previous weighted selection. Both complete affected suites were rebuilt/rerun successfully. Runtime was unchanged; no second full65-suite run is claimed.",
+    "tests": "Attack Fly source health, normalized anisotropic pursuit and cached target, ordinary contact, same-actor HP-clamped Skatole morph, pre-morph contact suppression, real live/death Hive spawn routes, live-child friction/contact expiry including god mode and parent removal, harmless converted live child, full-queue retry, no summoned money, invalid data/reload snapshots, all-four-band natural placement; existing buzzing/flight regressions."
+  },
+  "browser": {
+    "cases": 7,
+    "report": "docs/reports/isaac-enemy-port/attack_fly/web/results.json",
+    "errors": [],
+    "scope": "Final WASM build: ordinary pursuit, physical rock crossing, deep-river crossing and return to land, healthy and damaged Skatole morphs, one final death, natural seed0/floor0/room2 resident.",
+    "note": "No production-data overrides. Browser morph tests follow the same entity, not the requested debug tuple. Isolated smoke resets initial cooldown. Natural case keeps real generated residents. These cases do not certify full balance or rendered performance."
+  },
+  "visual": {
+    "result": "Inspected Original low-poly Attack Fly, flight elevation/shadow, actual crate crossing in browser and real seeded room in Linux/browser. Native cover capture is after crossing. No broad all-angle occlusion acceptance.",
+    "linux": [
+      "docs/reports/isaac-enemy-port/attack_fly/native-cover.png",
+      "docs/reports/isaac-enemy-port/attack_fly/native-resident.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/attack_fly/web/attack-cover.png",
+      "docs/reports/isaac-enemy-port/attack_fly/web/natural-attack.png"
+    ]
+  },
+  "remaining": [
+    "Regular enemies remain first. Continue Tainted Pooter and other unfinished ordinary fly-family controllers, then the remaining regular roster. No boss-specific expansion in this slice.",
+    "Duke/Husk parent tether, large-child HP/scale and edge exceptions, Gurdy child currentHP reduction and Eternal Fly-derived variants remain separate pending policies. Retained disassembly preflight is not their implementation.",
+    "Full Skatole, charm/fear/confusion/control, native time-scale/integration, knockback and complete animation/frame parity remain unverified. Existing Hive and Moter parent controllers are not completed by fixing this child.",
+    "Broader encounter/build balance, all-angle occlusion and controlled rendered Linux/WASM performance remain open. All653records and six acceptance gates are still required; zero records certified complete."
+  ]
+}

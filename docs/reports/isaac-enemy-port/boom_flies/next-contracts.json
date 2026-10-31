@@ -1,0 +1,599 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "status": "Seven additional dispositions/contracts reviewed; every one still missing from runtime.",
+  "contracts": {
+    "69.0.0": {
+      "movement": "Teleports to random positions away from player.",
+      "targeting": "Player-relative teleport separation; volleys use fixed cardinal/diagonal axes.",
+      "attacks": "Four cardinal shots, four diagonal, four cardinal; alternative eight-shot ring or Boom Fly summon. Whole-heart contact.",
+      "vulnerability": "Source350HP, no stageHP. Meat Cleaver converts into Lokii rather than generic duplication.",
+      "phases": "Independent teleport/attack cycles; optional Poky or four corner Stone Grimaces are encounter-specific support.",
+      "offspring": "Boom Fly25.0.0, at most four live. Meat Cleaver split uses69.1.0.",
+      "completion": "Root defeat pays encounter once; summoned threats and optional invulnerable support need explicit local room-clear policy.",
+      "adaptations": "No runtime adaptation implemented or approved here. Proposed boss bands follow installed bossID-to-pool evidence. All world-unit distances, animation timing, conversion and arena shapes need explicit later decisions while preserving player defaults and Original style.",
+      "unknowns": [
+        "Native attack/teleport timing, movement speeds, probabilities, phase thresholds and arena dimensions remain unmeasured.",
+        "Controller, source special-item interfaces, encounter routing, presentation and all six acceptance gates are still missing."
+      ]
+    },
+    "69.1.0": {
+      "movement": "Two halves teleport independently to random room positions.",
+      "targeting": "Each half makes its own attack choices; projectiles retain fixed axes.",
+      "attacks": "Same cardinal/diagonal/cardinal volley and eight-shot ring as Loki; Red Boom Fly summon. Whole-heart contact.",
+      "vulnerability": "350HP PER HALF, not350 aggregate; no stageHP.",
+      "phases": "Two autonomous halves; one dying must not delete the other or pay full encounter twice.",
+      "offspring": "Red Boom Fly25.1.0 with maximum one alive. Whether the source cap is shared across both halves needs native confirmation.",
+      "completion": "Both halves must be resolved before a single encounter payout; Red children retain ordinary hostile lifetime.",
+      "adaptations": "No runtime adaptation implemented or approved here. Proposed boss bands follow installed bossID-to-pool evidence. All world-unit distances, animation timing, conversion and arena shapes need explicit later decisions while preserving player defaults and Original style.",
+      "unknowns": [
+        "Native attack/teleport timing, movement speeds, probabilities, phase thresholds and arena dimensions remain unmeasured.",
+        "Controller, source special-item interfaces, encounter routing, presentation and all six acceptance gates are still missing."
+      ]
+    },
+    "906.0.0": {
+      "movement": "Phase1 follows authored rails through several paired wall doors, including high-speed repeated passes. Phase2 leaves cart and runs toward escape doors.",
+      "targeting": "Throws toward player while riding; track selection and decoy tracks require dedicated arena state.",
+      "attacks": "One/two bombs with rare Hot/Sad variants; three delayed Brimstone mines; acceleration bomb volley ends in vomiting a fireball with cardinal landing fire; one/two decoys. Contact falls from whole to half heart after leaving cart.",
+      "vulnerability": "Source240HP, no stageHP, gridCollision none; exact transition threshold unmeasured.",
+      "phases": "Cart attacks then vulnerable fleeing phase. Other payload carts can continue. Horny Boys split starts in fleeing phase with escape disabled.",
+      "offspring": "Sometimes two819.0 Fly Bombs accompany entrance.906.1 decoys have4HP and create six Troll Bombs.965 minecarts,967 doors and external1000.152 room controller are separate dependencies.",
+      "completion": "Successful phase2 escape ends encounter normally. Killing can grant bombs/item under1.7.9b rules. Horny Boys split may drop only if Loki died first; never substitute generic death-only completion.",
+      "adaptations": "No runtime adaptation implemented or approved here. Proposed boss bands follow installed bossID-to-pool evidence. All world-unit distances, animation timing, conversion and arena shapes need explicit later decisions while preserving player defaults and Original style.",
+      "unknowns": [
+        "Native attack/teleport timing, movement speeds, probabilities, phase thresholds and arena dimensions remain unmeasured.",
+        "Controller, source special-item interfaces, encounter routing, presentation and all six acceptance gates are still missing."
+      ]
+    },
+    "906.1.0": {
+      "movement": "Decoy follows a different authored rail from Hornfel.",
+      "targeting": "No independent player pursuit; triggered by destruction or contact.",
+      "attacks": "Bursts into six Troll Bombs when killed or walked into; whole-heart contact.",
+      "vulnerability": "Installed exact tuple906.1.0 has4HP and shares bossID82; shared boss pool ID does not make it an independent boss.",
+      "phases": "Rail decoy -> contact/death -> six hostile ordnance components.",
+      "offspring": "Six Troll Bombs outside the NPC roster.",
+      "completion": "Owned component with no separate boss payout or independently selected arena; death needs exactly-once ordnance handling.",
+      "adaptations": "No runtime adaptation implemented or approved here. Proposed boss bands follow installed bossID-to-pool evidence. All world-unit distances, animation timing, conversion and arena shapes need explicit later decisions while preserving player defaults and Original style.",
+      "unknowns": [
+        "Native attack/teleport timing, movement speeds, probabilities, phase thresholds and arena dimensions remain unmeasured.",
+        "Controller, source special-item interfaces, encounter routing, presentation and all six acceptance gates are still missing."
+      ]
+    },
+    "920.0.0": {
+      "movement": "Random floating movement plus scripted teleports.",
+      "targeting": "Thrown bombs target player; fixed-axis/radial patterns are not generic aimed shots.",
+      "attacks": "Ordered Boom Fly/Eternal group; three juggled random-flavor bombs; accelerating19-volley182-shot sequence then three cardinal-fire landing fireballs; finally either three Brimstone-bomb teleports or five Sad-bomb smokescreen teleports.",
+      "vulnerability": "Source707HP, no stageHP, half-heart contact. Meat Cleaver splits into Loki and Hornfel phase2.",
+      "phases": "Attack order must be retained. The two terminal teleport sequences are alternatives, not both run consecutively.",
+      "offspring": "25.0 owner plus three819.1 orbiters. On special split69.0 Loki plus906.0 fleeing Hornfel, unable to exit. Normal/Hot/Sad/Brimstone ordnance and landing fire are additional components.",
+      "completion": "One boss encounter spans special split. Hornfel bombs/item drop only if Loki killed first; never certify a parent before its required child behavior.",
+      "adaptations": "No runtime adaptation implemented or approved here. Proposed boss bands follow installed bossID-to-pool evidence. All world-unit distances, animation timing, conversion and arena shapes need explicit later decisions while preserving player defaults and Original style.",
+      "unknowns": [
+        "Native attack/teleport timing, movement speeds, probabilities, phase thresholds and arena dimensions remain unmeasured.",
+        "Controller, source special-item interfaces, encounter routing, presentation and all six acceptance gates are still missing."
+      ]
+    },
+    "965.0.0": {
+      "movement": "Rail-bound carrier used by Hornfel and possibly additional mine contexts. General uses outside this reviewed parent remain unresolved.",
+      "targeting": "Rail topology controls movement; carried creatures may have separate targeting.",
+      "attacks": "Carries fire, TNT or creatures in Hornfel arena; no independent attack established for carrier itself.",
+      "vulnerability": "Installed baseHP0, collisionDamage0 and shutdoors=false; cannot be modelled as an ordinary living enemy with a fabricated HP bar.",
+      "phases": "Carrier plus payload ownership, rail entry/exit and parent encounter lifetime.",
+      "offspring": "Payload identity/attachment and dismount/destruction behavior need further source review. Hornfel crash patch demonstrates an actual GetMinecart dependency.",
+      "completion": "Carrier itself must not seal doors. Payload threats and cleanup require independent ownership. Native patch is evidence of a relationship, not a full AI implementation.",
+      "adaptations": "No runtime adaptation implemented or approved here. Proposed boss bands follow installed bossID-to-pool evidence. All world-unit distances, animation timing, conversion and arena shapes need explicit later decisions while preserving player defaults and Original style.",
+      "unknowns": [
+        "Native attack/teleport timing, movement speeds, probabilities, phase thresholds and arena dimensions remain unmeasured.",
+        "Controller, source special-item interfaces, encounter routing, presentation and all six acceptance gates are still missing."
+      ]
+    },
+    "967.0.0": {
+      "movement": "Authored Hornfel rail door; not the moving decoy.",
+      "targeting": "Room controller/rail endpoints select activation; exact door-state API is not recovered.",
+      "attacks": "No autonomous attack established. XML collisionDamage2 alone does not establish an always-active damaging trap.",
+      "vulnerability": "Installed baseHP0, shutdoors=false and noreroll; environmental encounter component, not ordinary kill target.",
+      "phases": "Rail endpoint opening/closing and phase2 escape integration require dedicated room controller.",
+      "offspring": "No independent NPC offspring established; admits Hornfel/rail payloads under parent scheduling.",
+      "completion": "No own boss reward or kill-gating. Must support valid escape completion and disabled escape in Horny Boys split.",
+      "adaptations": "No runtime adaptation implemented or approved here. Proposed boss bands follow installed bossID-to-pool evidence. All world-unit distances, animation timing, conversion and arena shapes need explicit later decisions while preserving player defaults and Original style.",
+      "unknowns": [
+        "Native attack/teleport timing, movement speeds, probabilities, phase thresholds and arena dimensions remain unmeasured.",
+        "Controller, source special-item interfaces, encounter routing, presentation and all six acceptance gates are still missing."
+      ]
+    }
+  },
+  "identity_correction": "Hornfel Decoy is906.1.0.967.0.0 is Hornfel Door. The earlier draft next-dependency note conflated them; corrected before implementation.",
+  "xml": {
+    "69.0.0": {
+      "anm2path": "069.000_Loki.anm2",
+      "baseHP": "350",
+      "boss": "1",
+      "bossID": "15",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "69",
+      "name": "#LOKI",
+      "numGridCollisionPoints": "12",
+      "portrait": "36",
+      "shadowSize": "19",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "69.1.0": {
+      "anm2path": "069.001_Lokii.anm2",
+      "baseHP": "350",
+      "boss": "1",
+      "bossID": "31",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "69",
+      "name": "#LOKII",
+      "numGridCollisionPoints": "12",
+      "portrait": "37",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    "906.0.0": {
+      "anm2path": "906.000_hornfel.anm2",
+      "baseHP": "240",
+      "boss": "1",
+      "bossID": "82",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "906",
+      "name": "#HORNFEL",
+      "numGridCollisionPoints": "12",
+      "portrait": "108",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "0"
+    },
+    "906.1.0": {
+      "anm2path": "906.000_hornfel.anm2",
+      "baseHP": "4",
+      "boss": "1",
+      "bossID": "82",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "906",
+      "name": "Hornfel Decoy",
+      "numGridCollisionPoints": "12",
+      "portrait": "109",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "1"
+    },
+    "920.0.0": {
+      "anm2path": "920.000_horny boys.anm2",
+      "baseHP": "707",
+      "boss": "1",
+      "bossID": "101",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "30",
+      "collisionRadius": "30",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "920",
+      "name": "#HORNY_BOYS",
+      "numGridCollisionPoints": "12",
+      "portrait": "136",
+      "shadowSize": "22",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "0"
+    },
+    "965.0.0": {
+      "anm2path": "965.000_minecart.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "100",
+      "collisionRadius": "13",
+      "friction": "1",
+      "hasFloorAlts": "true",
+      "id": "965",
+      "name": "Minecart",
+      "numGridCollisionPoints": "12",
+      "portrait": "200",
+      "shadowSize": "15",
+      "shutdoors": "false",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "967.0.0": {
+      "anm2path": "grid/door_10_bossroomdoor_rails.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "967",
+      "name": "Hornfel Door",
+      "numGridCollisionPoints": "12",
+      "portrait": "109",
+      "shadowSize": "18",
+      "shutdoors": "false",
+      "stageHP": "0",
+      "tags": "noreroll",
+      "variant": "0"
+    }
+  },
+  "stage_evidence": {
+    "69.0.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/15.cathedral.stb",
+          "source_stage": "cathedral",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/16.dark room.stb",
+          "source_stage": "dark room",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/17.chest.stb",
+          "source_stage": "chest",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "boss_pool_evidence": [
+        {
+          "pool": "depths",
+          "weight": 1.0,
+          "proposed_band": 2
+        },
+        {
+          "pool": "necropolis",
+          "weight": 1.0,
+          "proposed_band": 2
+        },
+        {
+          "pool": "dank depths",
+          "weight": 1.0,
+          "proposed_band": 2
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ]
+    },
+    "69.1.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/16.dark room.stb",
+          "source_stage": "dark room",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/17.chest.stb",
+          "source_stage": "chest",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "boss_pool_evidence": [
+        {
+          "pool": "womb",
+          "weight": 1.0,
+          "proposed_band": 3
+        },
+        {
+          "pool": "utero",
+          "weight": 1.0,
+          "proposed_band": 3
+        },
+        {
+          "pool": "scarred womb",
+          "weight": 1.0,
+          "proposed_band": 3
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ]
+    },
+    "906.0.0": {
+      "source_stage_evidence": [],
+      "boss_pool_evidence": [
+        {
+          "pool": "mines",
+          "weight": 1.0,
+          "proposed_band": 1
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 13,
+          "positive_weight_templates": 13,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ]
+    },
+    "906.1.0": {
+      "source_stage_evidence": [],
+      "boss_pool_evidence": [
+        {
+          "pool": "mines",
+          "weight": 1.0,
+          "proposed_band": 1
+        }
+      ],
+      "separate_mode_or_special_evidence": []
+    },
+    "920.0.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/32.gehenna.stb",
+          "source_stage": "gehenna",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "alternate"
+        }
+      ],
+      "boss_pool_evidence": [
+        {
+          "pool": "gehenna",
+          "weight": 1.0,
+          "proposed_band": 2
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        }
+      ]
+    },
+    "965.0.0": {
+      "source_stage_evidence": [],
+      "boss_pool_evidence": [],
+      "separate_mode_or_special_evidence": []
+    },
+    "967.0.0": {
+      "source_stage_evidence": [],
+      "boss_pool_evidence": [],
+      "separate_mode_or_special_evidence": []
+    }
+  },
+  "source_patch": {
+    "path": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/repentogon/Patches/VanillaTweaks.cpp",
+    "scope": "Lines98-119 guard native Hornfel states6/7 when GetMinecart is null and frame states4/13. This confirms a minecart dependency and failure case, not native attack behavior or licensing to copy the patch."
+  },
+  "outside_roster": [
+    {
+      "anm2path": "005.041_Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "0",
+      "collisionRadius": "0",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "1000",
+      "name": "Hornfel Room Controller",
+      "numGridCollisionPoints": "0",
+      "shadowSize": "0",
+      "stageHP": "0",
+      "variant": "152"
+    }
+  ]
+}

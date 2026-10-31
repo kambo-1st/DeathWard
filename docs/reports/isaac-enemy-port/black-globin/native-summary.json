@@ -1,0 +1,127 @@
+{
+  "verified_utc": "2026-10-28T14:59:52.195999+00:00",
+  "result": "scoped_native_pass_full_acceptance_open",
+  "mechanics_fingerprint": "f731696ff0c76e5e",
+  "monster_definitions": 211,
+  "source_checks": {
+    "native_command": "python3 scripts/isaac-reference/analyze-black-globin.py --check",
+    "animation_command": "python3 scripts/isaac-reference/extract-black-globin-animations.py --check",
+    "result": "pass",
+    "complete_windows": 4,
+    "animations": 3
+  },
+  "native_tests": {
+    "unique_suites_passed": 10,
+    "suites": [
+      "black_globin_family",
+      "brain",
+      "gaper_family",
+      "headless_family",
+      "spider_family",
+      "nest_family",
+      "prey_and_small_leech",
+      "mechanics_content",
+      "monster_behaviors",
+      "floor_progression"
+    ],
+    "initial_log": "docs/reports/isaac-enemy-port/black-globin/validation/focused-tests.log",
+    "corrected_log": "docs/reports/isaac-enemy-port/black-globin/validation/corrected-tests.log",
+    "details": "docs/reports/isaac-enemy-port/black-globin/validation/corrected-test-details.log",
+    "version_note": "Eight suites passed in initial focused run, including656floor generation; Prey exposed an overbroad new area-damage immunity. That proposed immunity was removed. Corrected BlackGlobin/Brain/Prey/Spider suites pass on final binary. Earlier shared Gaper/headless and content/floor checks do not depend on that reverted damage policy; their passing generation sweep was not needlessly repeated."
+  },
+  "placement": {
+    "natural_parent": [
+      {
+        "seed": 7,
+        "floor": 4,
+        "room": 2,
+        "band": 3
+      },
+      {
+        "seed": 10,
+        "floor": 5,
+        "room": 7,
+        "band": 3
+      },
+      {
+        "seed": 12,
+        "floor": 6,
+        "room": 5,
+        "band": 3
+      }
+    ],
+    "offspring": "Required head/body and Spider releases tested in ordinary, extreme-overkill, capacity and ancestry cases.",
+    "generated_floors": 656
+  },
+  "starting_kit": {
+    "scope": "Four isolated starting-revolver/dodge bots; no upgrades, bombs or god mode. Not human mixed-room balance acceptance.",
+    "cases": [
+      {
+        "seed": 0,
+        "seconds": 5.43333,
+        "remaining_hp": 75.0,
+        "peak_threats": 7,
+        "cleared": true
+      },
+      {
+        "seed": 1,
+        "seconds": 4.23333,
+        "remaining_hp": 75.0,
+        "peak_threats": 7,
+        "cleared": true
+      },
+      {
+        "seed": 2,
+        "seconds": 7.2,
+        "remaining_hp": 62.5,
+        "peak_threats": 7,
+        "cleared": true
+      },
+      {
+        "seed": 3,
+        "seconds": 4.23333,
+        "remaining_hp": 87.5,
+        "peak_threats": 7,
+        "cleared": true
+      }
+    ]
+  },
+  "current_game_sha256": "57bb52b7bcd87944fb787aabc2e0968f88e8c9a065663294a276f103be458174",
+  "core_library_sha256": "ebcb54eb517fcbb90c9f3f09f9c7bad540aefbdbdfd018c1a6c376135dcf48af",
+  "runtime_sha256": {
+    "assets/mechanics/black_globin.mechanics": "1b2d40c1b6860da3eb519f500a505278b8edf9ff95fb69cf411501ff2734bc74",
+    "src/combat/BlackGlobin.cpp": "3603401058027cd795f417f2411df33c3094f7b8c1eedb07468668f954b8ae4f",
+    "src/combat/GroundPursuit.cpp": "942db00e2a1db7a42a64b57ff7692f9cd2ebdc01d9dc4081b96d259ee93045c4",
+    "src/combat/Gapers.cpp": "7463a1fabfe4c8c1eba838f78aa9f9a44fee40fd8af7939a33b69ac06a583a68",
+    "src/combat/Brains.cpp": "59074fa7ec9da08e7ef29bef23ecb71cc60e43d1632435b864ba4d570f69e971",
+    "src/combat/Headless.cpp": "380daab67f773e70efa01768618d96cb84fdd1f0ce250581532429ff45b7063b",
+    "src/combat/Spiders.cpp": "3102830dbbe09098de5398fe1f8ca41372ea892d297b1e17e5474d40f08ecf24",
+    "src/combat/Monsters.cpp": "04559f5b04b755fffca8165c3c142a04cb0014802c8d6b0dccf00bd0d5db64c2",
+    "src/combat/Simulation.cpp": "3bb848a2d6c09614506d2ef65343d4c1242129342d51c597098ead5ba59e6f60",
+    "src/combat/Simulation.hpp": "a1262112fe46993910434fad9c41488ca2d0c3da07a5fd988028d09f6a261ab1",
+    "src/combat/ProjectileMotion.cpp": "157fa264bf5a1b833ec67df8523b06c5f1f27dfd1c891a34744b2bc8707e9d4f",
+    "src/content/Mechanics.cpp": "8a763be3221374207b60d0f2fcc469329f6b8a1d1b959e88fde1c7512a722c9a",
+    "src/content/Mechanics.hpp": "069694b6d4b17fd98f2eaabea85c251458796ad22a35afca7de4edf94b610c89",
+    "src/content/EncounterVariants.cpp": "8c256779254a7ce135e7a9f3e9d64a62395354b6f58a4907fa4936b3c907d2c4",
+    "src/render/MonsterVisuals.hpp": "ef0d882fece52669d88ea445da17a5c067a22d6e36620e84f96f8aa6753efe61",
+    "tests/black_globin_tests.cpp": "b89c468aae8a008445bf63bf465ab7249b0fc3492c0f58ade98c3ff4b9874f0b",
+    "tests/brain_tests.cpp": "d3b527707812b174bc40264c0ad0e7d077e0f9f76209a606c58a2532347b2674"
+  },
+  "initial_failures": {
+    "brain": "Fixed-seed roster witnesses expired. Search of unchanged production pool found band2 seed9/floor5/room5 and interior-river band3 seed326/floor4/room4; regression uses these actual residents.",
+    "area_damage": "Removed newly proposed blanket thrown-child area immunity after Prey regression failed. Native bomb/generic-radial/direct-damage distinction remains explicitly open."
+  },
+  "wasm": {
+    "status": "skipped_by_user",
+    "instruction": "pursure goal - Skip WASM check!",
+    "no_new_build_or_check": true
+  },
+  "remaining": [
+    "Native grid/free-position/appearance/status/champion/control/item/slow-clock details.",
+    "Exact bomb versus generic radial and scripted damage policy during airborne births.",
+    "Full required-child acceptance and all-angle mixed-room readability.",
+    "Broader balance and measured rendering/performance."
+  ],
+  "visual_review": "docs/reports/isaac-enemy-port/black-globin/visual-review.json",
+  "capture_manifest": "docs/reports/isaac-enemy-port/black-globin/native-current/captures.json"
+}

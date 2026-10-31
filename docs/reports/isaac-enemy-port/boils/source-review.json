@@ -1,0 +1,88 @@
+{
+  "scope": [
+    "30.0.0 Boil",
+    "30.1.0 Gut",
+    "30.2.0 Sack (shared integration)",
+    "88.0.0 Walking Boil",
+    "88.1.0 Walking Gut",
+    "88.2.0 Walking Sack"
+  ],
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "source_manifest": "docs/reports/isaac-enemy-port/boils/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/boils/animations/manifest.json",
+  "wiki": "docs/reports/isaac-enemy-port/boils/wiki-source.json",
+  "findings": [
+    "Type30 dispatch6999ec->5054e0. Type88 dispatch699a28->5099c0. These are separate native controllers, sharing attack payload logic. All six XML records have20baseHP,0stageHP,radius13. Type30collisionDamage0,Type88collisionDamage1.",
+    "Stationary initialization normal mode currentHP7/max20; hard modes1/3 choose7+U*(max(7,.8maxHP)-7). Damage resets growth; belowfullHP: heal priorGrowth*1.2, increment growth.02 then multiply.8. Sack adds another.8; normal Boil/Gut regenerate faster. Blackchampion36 uses.01growth. UnderfullHP interrupts activeattack. Walking variants do not change HP/scale and never regenerate.",
+    "Both controllers filter native EXPLOSION4 damage records, except friendly sources, direct player, player/familiar spawner1/3 and TNT0x1000. They do not filter FIRE2. Existing source-aware immunity system implements this rule; it includes own Gut projectiles.",
+    "At source30Hz: stationaryfullready3 orwalkingready4 checks RNG%50==0; distance>=230 additionally requiresRNG%4==0. Native fear/shrink/confusion/control branches remain distinct. Shoot24frames, eventShoot12 for every variant. Stationary Sack rejected population roll usesShake26; walkingSack simply keepswalking.",
+    "Spider-producing variants require room alive-enemy count<8 and RNG%count==0. Other variants have no population gate. Walkers do not cancel shooting when ordinary damage reducesHP; stationary variants return to growth.",
+    "Walking ready always multiplies basefriction.75 and calls WalkRandom7a6180: sample random point40units away, reset whenwithin3/colliding or1in10when speedSquared<.1. Add normalizedforce.5 dividedby currentfriction; integratefriction.75. During attack noWalkRandomcall, so momentum coasts. Native22frame WalkHori/WalkVert animations.",
+    "Shoot determines targeted branch ifdistance<250-20U, exceptblackchampion. Otherwise use a zero-target sentinel meaning random direction. Boil calls FireBossProjectiles count3+(RNG&1), trajectory10. For each: targetedspeed7towardcurrentplayer+randomunit*3.5U; farshot randomunit*7.",
+    "FireBossProjectiles10 gives fallingaccel10*.1+.32=1.32; fallingSpeed5-30U*.8-10=-5-24U; initialheight-23. Sprite scale.9+.4*(RNG&1)+.05U. CommonflightfallSpeed=.9*fallSpeed+.1+accel. Default params keep trajectory fields unchanged.",
+    "Gut uses count1/trajectory10, setsEXPLODEbit2, velocity*.55, scale1.6, accel-=.3, fallingSpeed=fallingSpeed*.7-13. Targetedshots multiplyvelocityby.6+U; farshots skip this extra factor. Thus initialfallSpeed-16.5..-33.3 andaccel1.02. Stationary Gut setsNPC+af0=-50atShoot; no normal ready condition reads this field in these controllers.",
+    "Explosiveprojectile handler uses50NPCdamage,60radius,lineChecktrue and producer reference. Shared existing DeathWard policy converts to160NPCdamage,radius6,20playerdamage before1.25hostile multiplier; real impact tests check immunity and room completion.",
+    "Sack throws Spider85instate6: initialheight-10stationary versus-30walking, upwardspeed-8, gravity+.7; planarvelocity=(target-origin)*.04. Near aim uses player/owner midpoint+freeposition70radius; far usesowner+freeposition100radius. Entitycollisionzero until landing. Wet allbirth replacement selectsStrider814.",
+    "Pinned Boil wiki revision262993 preserves edition notes, contributors andCCBYSA4license. Source room templates establish source habitats. Wiki5.71%Gut and1%Sack replacement rates are not treated as installed-code proof; dedicated positive template pools provide reachability while native replacement pass remains open."
+  ],
+  "adaptations": [
+    "SourceHPx3.2, horizontalpositionx.1, verticalheightx.05. Bloodlocalvelocity21 plusradialjitter0..10.5, initialup7.5..43.5, gravity63.9, retention.9. Gutvelocity11.55 plusjitter0..5.775, targetedmultiplier.6..1.6, initialup24.75..49.95, gravity50.4. Physical3D collision and floor replace rectangular sourcegrid.",
+    "Shared SackRuntime retains immutable profile values and single-event latches; capacity retains whole selected bloodvolleys or offspring requests. Source RNG ordering and unlimited native capacity are not reproduced. Existing local generationlimit4 remains.",
+    "SourceWalkRandom destination40/arrival3/force.5/friction.75 use a local legal-ground/clear-path sampler with12tries. Actual terrain/crowd collision, source30Hz decisions inside60Hzsimulation and local stun handling are deliberate integrations.",
+    "CurrentHP initialization is applied at creation so dormant stationary actors show partialgrowth before firstAI tick. Walking bodies beginfullHP. Source champions/hardmode/damage-entry details remain unimplemented.",
+    "Shared thrown helper now advances stun duration for Spider/Strider as it already did for swimmers; walkingSack sets nativeinitialheight-30. Flight/landing uses actualterrain, pendingrequests and correct wet childidentity.",
+    "Original procedural blob geometry gains red/green/pale family palettes, swelling and walkingfeet. No sprite artwork or global stylefilter introduced. Stationary body height follows its growth for ground contact.",
+    "Boilbands1..3;Gut1..2;Sack0..2;WalkingBoil1..3;WalkingGut1..2;WalkingSack0..2. Sparsecap1specialists. Localweights/costs andsourcehabitat grouping are explicit balancing choices, not exact roomlibraries or source substitution rates. Existing lateGutband3was unsupported by sourcedhabitats and removed.",
+    "Hubs,Mine roster,Originalstyle,player100HP/defaultdamage,tutorial and4\u20138floor expeditionstructure remain unchanged. Registry total stays173because these definitions replace existing generic rows."
+  ],
+  "remaining": [
+    "Native5.71%/1%replacement selection, hardmode/championgrowth, full status/friendly/player-controlled branches, damage-entry exceptions and exact RNG/timeScale/grid parity still require review.",
+    "Native audio/spriteevents beyondShoot metadata and exact rendered sprite-size/collider relationship are not reproduced. Sourcefree-position grid selection is adapted to3D landing.",
+    "Full combat readability, long-run balance and controlled Linux/WASM performance gates remain open; these records are in_progress, never complete based only on focused tests.",
+    "Visual inspection found natural Walking Boil obscured by foreground cliffs (existing outline visible) and a native Walking Gut body obscured by its broad opaque explosion. All six bodies are visible in isolated captures, but these mixed-room frames are not full readability passes."
+  ],
+  "corrections": [
+    "First mechanics check correctly rejected ordinary Sack placement because its earlier offspring-only definition disabled natural encounters. The source-supported natural flag was enabled; no actor was admitted by bypassing the validation rule.",
+    "Adding regular family pool entries changes deterministic weighted selections. The older Hive regression retained seeds0..99 and245 but no longer found a Drowned Hive. A separate production search found seed109/floor2/room6 on a configured Flooded floor. The fixture retains all previous candidates and adds that actual witness; no replacement chance or runtime behavior was changed to satisfy it.",
+    "The old Mulligan placement fixture also lost its rare witnesses. Independent production search found Mulligoon seed35/floor0/room5 and Mulliboom seed160/floor1/room4. The test retains earlier candidates, adds both and still requires all three actual family members. Runtime and encounter parameters were not changed."
+  ],
+  "natural_witnesses": [
+    {
+      "id": "88.2.0",
+      "seed": 0,
+      "floor": 2,
+      "room": 1
+    },
+    {
+      "id": "30.1.0",
+      "seed": 0,
+      "floor": 3,
+      "room": 8
+    },
+    {
+      "id": "88.1.0",
+      "seed": 0,
+      "floor": 4,
+      "room": 1
+    },
+    {
+      "id": "30.0.0",
+      "seed": 0,
+      "floor": 4,
+      "room": 2
+    },
+    {
+      "id": "88.0.0",
+      "seed": 2,
+      "floor": 5,
+      "room": 3
+    },
+    {
+      "id": "30.2.0",
+      "seed": 8,
+      "floor": 3,
+      "room": 6
+    }
+  ]
+}

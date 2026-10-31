@@ -1,0 +1,50 @@
+{
+  "total": 653,
+  "identity_verified": 653,
+  "source_archive_available": true,
+  "reviewed": 97,
+  "dispositions": {
+    "ordinary": 59,
+    "dedicated": 6,
+    "environment": 10,
+    "pending": 556,
+    "component": 7,
+    "boss": 2,
+    "excluded": 12,
+    "item_dependency": 1
+  },
+  "implementations": {
+    "in_progress": 40,
+    "existing_unverified": 96,
+    "missing": 505,
+    "excluded": 12
+  },
+  "complete": 0,
+  "remaining": 641,
+  "milestones": [
+    {
+      "number": 1,
+      "status": "in_progress"
+    },
+    {
+      "number": 2,
+      "status": "pending"
+    },
+    {
+      "number": 3,
+      "status": "pending"
+    },
+    {
+      "number": 4,
+      "status": "pending"
+    },
+    {
+      "number": 5,
+      "status": "pending"
+    },
+    {
+      "number": 6,
+      "status": "pending"
+    }
+  ]
+}

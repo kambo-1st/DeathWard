@@ -1,0 +1,173 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "30": {
+      "index": 17,
+      "case": "0x6999ec",
+      "controller": "0x5054e0"
+    },
+    "88": {
+      "index": 59,
+      "case": "0x699a28",
+      "controller": "0x5099c0"
+    }
+  },
+  "constants": {
+    "walking_friction": {
+      "address": "0xb6a53c",
+      "value": 0.75
+    },
+    "stationary_friction_and_regen": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "initial_HP_and_shot_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "wander_reach": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "wander_arrival": {
+      "address": "0xb6a864",
+      "value": 3.0
+    },
+    "wander_force": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "near_distance": {
+      "address": "0xb6abd0",
+      "value": 230.0
+    },
+    "aim_distance": {
+      "address": "0xb6abec",
+      "value": 250.0
+    },
+    "aim_jitter": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "shot_scatter": {
+      "address": "0xb6a8a0",
+      "value": 3.5
+    },
+    "trajectory_bias": {
+      "address": "0xb6a3c4",
+      "value": 0.3199999928474426
+    },
+    "falling_base": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "fall_random_and_walking_throw_height": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "gut_velocity": {
+      "address": "0xb6a4a0",
+      "value": 0.550000011920929
+    },
+    "gut_targeted_multiplier": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "gut_accel_modifier": {
+      "address": "0xb6a3b0",
+      "value": 0.30000001192092896
+    },
+    "gut_fall_multiplier": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "gut_fall_subtract": {
+      "address": "0xb6a994",
+      "value": 13.0
+    },
+    "stationary_throw_height": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "throw_planar": {
+      "address": "0xb6a264",
+      "value": 0.03999999910593033
+    },
+    "shot_scale_jitter": {
+      "address": "0xb6a274",
+      "value": 0.05000000074505806
+    },
+    "shot_scale_step": {
+      "address": "0xb6a434",
+      "value": 0.4000000059604645
+    }
+  },
+  "named_helper_binding": "docs/reports/isaac-enemy-port/gurgle_mortality/source/manifest.json",
+  "note": "FireBossProjectiles binding independently established there; full bounded helper and both controllers preserved here. No source sprite artwork copied into runtime.",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/stationary_dispatch.asm",
+      "start": "0x6999ec",
+      "end": "0x6999f8",
+      "raw_sha256": "e09528f1d2ca0236e059a4547946815e1c1e2c964d9b9a860877694504d6a6cf",
+      "sha256": "466d4103758573736e60f6172ce9bcad6051fa9fb38484075fd304d0ef3168e9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/walking_dispatch.asm",
+      "start": "0x699a28",
+      "end": "0x699a34",
+      "raw_sha256": "53f10b5027d820135daf5ce0998a2ec478dcccdd8dfdbec421590c209440ed15",
+      "sha256": "66c106344117aaee697ef3ee81f191199d80858bc4fcd242e61e93a4562a8057"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/stationary_controller.asm",
+      "start": "0x5054e0",
+      "end": "0x50612d",
+      "raw_sha256": "faac5f0cb8dfb6f542755bb2eb9454f0cf2de206c1c2f788471d8e0eb717b2c2",
+      "sha256": "d99dfc0faedf8204955a6155d1fa08cc33066a182a69de9085d7f1b59314bce5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/walking_controller.asm",
+      "start": "0x5099c0",
+      "end": "0x50a447",
+      "raw_sha256": "eff7f02571b7dcde3e0305c8a71d31c1da4d5af80d26d92ca71e46455a26e248",
+      "sha256": "3d6458d00a9e85d3ca1aa24abe0ea9a6dab7d1e56aa53fb0f7241e361dc523a3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/random_walk_helper.asm",
+      "start": "0x7a6180",
+      "end": "0x7a64a9",
+      "raw_sha256": "c9fbefa689af02e86b31d7ac66a303c72fa2e02304dd8054c74de070bb0fb258",
+      "sha256": "dafb89014a790a46b0c19f22baf59eefe4e040f3075d3953df11d788c2ebc7fb"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/boss_projectile_helper.asm",
+      "start": "0x6a3420",
+      "end": "0x6a3970",
+      "raw_sha256": "2c9458a658e2b64e29ac724a8655ee2b5a62c9ad9753cce4673ad898c74e0037",
+      "sha256": "219ef0ba1d01904fe78f3eb9452eb4b03dd2562f793797bd7e6619baa7836fe3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/projectile_initial.asm",
+      "start": "0x62f1ef",
+      "end": "0x62f2d0",
+      "raw_sha256": "9e4fa495b866108d9027dbd320e3b46a557bcd63d521affce743a9ecc4cbfdb2",
+      "sha256": "7c63ab8d86672d6aa14403dd3762584f8ead6d1d6e28946b6b60483c6ea20b52"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/flight_integrator.asm",
+      "start": "0x636567",
+      "end": "0x6365d5",
+      "raw_sha256": "e36d0d4128d9429273b807db099763ca63eae641b49ffaf016bafbeec05a697b",
+      "sha256": "6d4276f523c6bb04773dcddb94d31a06ec64c31db9b9c131fcc1eef42cdd082f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/source/explosive_projectile_blast.asm",
+      "start": "0x631ca4",
+      "end": "0x631d44",
+      "raw_sha256": "b83100c6f03edba3c4991c31bc7cae8945d4edcd388647018701a4bbb0c413a5",
+      "sha256": "91719d8c91d0a4e922bc12623bce9ed2231b9ded7addd6fb3689777820eb81d5"
+    }
+  ]
+}

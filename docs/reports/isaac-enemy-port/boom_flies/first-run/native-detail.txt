@@ -1,0 +1,1175 @@
+Start testing: Oct 26 02:27 CET
+----------------------------------------------------------
+3/53 Testing: expedition_economy
+3/53 Test: expedition_economy
+Command: "/home/kambo/workspace/DeathWard/build/deathward_expedition_economy_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"expedition_economy" start time: Oct 26 02:27 CET
+Output:
+----------------------------------------------------------
+Validated 98 actual floors with zero-resource mandatory routes
+PASS optional rooms, resource reachability, finite economy and distinct pools
+<end of output>
+Test time =  34.17 sec
+----------------------------------------------------------
+Test Passed.
+"expedition_economy" end time: Oct 26 02:27 CET
+"expedition_economy" time elapsed: 00:00:34
+----------------------------------------------------------
+
+16/53 Testing: canyon_rivers
+16/53 Test: canyon_rivers
+Command: "/home/kambo/workspace/DeathWard/build/deathward_river_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"canyon_rivers" start time: Oct 26 02:27 CET
+Output:
+----------------------------------------------------------
+PASS river seed 0: interior, 205 deep samples
+PASS river seed 1: boundary, 2769 deep samples
+PASS river seed 2: boundary, 2391 deep samples
+PASS river seed 3: boundary, 2217 deep samples
+PASS river seed 4: interior, 55 deep samples
+PASS river seed 5: boundary, 2824 deep samples
+PASS river seed 6: interior, 70 deep samples
+PASS river seed 7: interior, 152 deep samples
+PASS river seed 42: interior, 118 deep samples
+PASS river seed 1866: boundary, 2414 deep samples
+PASS river seed 69175541: interior, 72 deep samples
+<end of output>
+Test time =  16.54 sec
+----------------------------------------------------------
+Test Passed.
+"canyon_rivers" end time: Oct 26 02:27 CET
+"canyon_rivers" time elapsed: 00:00:16
+----------------------------------------------------------
+
+7/53 Testing: expedition_destruction
+7/53 Test: expedition_destruction
+Command: "/home/kambo/workspace/DeathWard/build/deathward_destruction_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"expedition_destruction" start time: Oct 26 02:27 CET
+Output:
+----------------------------------------------------------
+Placement: 256 floors, 249 complete single-room clusters
+PASS destruction, cover snapshot, permissions, fuses, seeded loot and optional-cache reachability
+<end of output>
+Test time =  55.81 sec
+----------------------------------------------------------
+Test Passed.
+"expedition_destruction" end time: Oct 26 02:27 CET
+"expedition_destruction" time elapsed: 00:00:55
+----------------------------------------------------------
+
+9/53 Testing: expedition
+9/53 Test: expedition
+Command: "/home/kambo/workspace/DeathWard/build/deathward_expedition_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"expedition" start time: Oct 26 02:27 CET
+Output:
+----------------------------------------------------------
+PASS multi-floor plans, full room networks, embedded sites, build carry-over, evidence provenance, save migration/validation and witness approaches
+<end of output>
+Test time =  13.84 sec
+----------------------------------------------------------
+Test Passed.
+"expedition" end time: Oct 26 02:28 CET
+"expedition" time elapsed: 00:00:13
+----------------------------------------------------------
+
+10/53 Testing: expedition_pacing
+10/53 Test: expedition_pacing
+Command: "/home/kambo/workspace/DeathWard/build/deathward_pacing_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"expedition_pacing" start time: Oct 26 02:27 CET
+Output:
+----------------------------------------------------------
+PASS separate pacing trials, room/corridor collision, objectives, spawns, boss space, tutorial and size exhaustion
+<end of output>
+Test time =   9.69 sec
+----------------------------------------------------------
+Test Passed.
+"expedition_pacing" end time: Oct 26 02:28 CET
+"expedition_pacing" time elapsed: 00:00:09
+----------------------------------------------------------
+
+5/53 Testing: floor_progression
+5/53 Test: floor_progression
+Command: "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"floor_progression" start time: Oct 26 02:27 CET
+Output:
+----------------------------------------------------------
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_CHARGER id=855.0 seed=0 floor=5 room=12 variant=0
+NATURAL_GRILLED seed=1 floor=0 room=4
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_REPLACEMENT seed=3 floor=1 room=1 source=23.0 target=23.1
+NATURAL_CHARGER id=23.3 seed=5 floor=2 room=8 variant=2
+NATURAL_STATUE id=202.10.1 seed=5 floor=4 room=11
+NATURAL_STATUE id=804.0 seed=9 floor=2 room=2
+NATURAL_STATUE id=804.0.2 seed=10 floor=2 room=7
+NATURAL_STATUE id=804.0.3 seed=23 floor=2 room=6
+NATURAL_STATUE id=804.0.1 seed=31 floor=2 room=3
+NATURAL_REPLACEMENT seed=92 floor=2 room=4 source=15.0 target=15.2
+NATURAL_REPLACEMENT seed=98 floor=0 room=2 source=29.0 target=54.0
+Scorched floors=12 Hopper substitutions=1 Drowned substitutions=8
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+Activated Ring Fly groups band=2 count=2
+Activated Hopper forms band=0 count=2
+Activated Hopper forms band=1 count=2
+Activated Hopper forms band=2 count=2
+Reachable pool identities=36
+band=0 meanThreat=4.50769
+band=1 meanThreat=6.30108
+band=2 meanThreat=8.2438
+band=3 meanThreat=11.1504
+Reachable statue identities=14
+Validated 170 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss
+<end of output>
+Test time =  66.86 sec
+----------------------------------------------------------
+Test Passed.
+"floor_progression" end time: Oct 26 02:28 CET
+"floor_progression" time elapsed: 00:01:06
+----------------------------------------------------------
+
+6/53 Testing: item_builds
+6/53 Test: item_builds
+Command: "/home/kambo/workspace/DeathWard/build/deathward_item_build_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"item_builds" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 2 depth 1 effect -1: hazard capacity
+chain 15 depth 2 effect 1: chain event limit
+Pair matrix: 66 unordered pairs including duplicates; both orders and mouse/arrow inputs
+PASS six weapon mechanics, explicit interactions, duplicates, provenance, resource rules, input parity and saves
+<end of output>
+Test time =   8.25 sec
+----------------------------------------------------------
+Test Passed.
+"item_builds" end time: Oct 26 02:28 CET
+"item_builds" time elapsed: 00:00:08
+----------------------------------------------------------
+
+4/53 Testing: canyon_bosses
+4/53 Test: canyon_bosses
+Command: "/home/kambo/workspace/DeathWard/build/deathward_canyon_boss_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"canyon_bosses" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+RIDGEBACK seed=7 floor=0 time=11.75 HP=100
+RIDGEBACK seed=7 floor=4 time=17.9333 HP=100
+RIDGEBACK seed=42 floor=0 time=11.75 HP=100
+RIDGEBACK seed=42 floor=6 time=19.6833 HP=100
+RIDGEBACK seed=1866 floor=0 time=11.4167 HP=100
+RIDGEBACK seed=1866 floor=5 time=19.6 HP=100
+POWDER FOREMAN seed=7 floor=0 time=6.93333 HP=100
+POWDER FOREMAN seed=7 floor=4 time=10.4833 HP=80
+POWDER FOREMAN seed=42 floor=0 time=7.51667 HP=80
+POWDER FOREMAN seed=42 floor=6 time=10.4833 HP=100
+POWDER FOREMAN seed=1866 floor=0 time=6.93333 HP=100
+POWDER FOREMAN seed=1866 floor=5 time=10.4833 HP=80
+STORM MARSHAL seed=7 floor=0 time=7.51667 HP=100
+STORM MARSHAL seed=7 floor=4 time=11.1 HP=100
+STORM MARSHAL seed=42 floor=0 time=8.1 HP=100
+STORM MARSHAL seed=42 floor=6 time=11.1 HP=100
+STORM MARSHAL seed=1866 floor=0 time=7.51667 HP=100
+STORM MARSHAL seed=1866 floor=5 time=11.1 HP=100
+PASS canyon boss pool, phases, counterplay, cleanup and weak builds
+<end of output>
+Test time =   6.98 sec
+----------------------------------------------------------
+Test Passed.
+"canyon_bosses" end time: Oct 26 02:28 CET
+"canyon_bosses" time elapsed: 00:00:06
+----------------------------------------------------------
+
+15/53 Testing: canyon_roads
+15/53 Test: canyon_roads
+Command: "/home/kambo/workspace/DeathWard/build/deathward_road_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"canyon_roads" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS road seed 0 river 2: 130m, rooms 6 13 14
+PASS road seed 1 river 1: 128m, rooms 12 1 11
+PASS road seed 2 river 1: 121m, rooms 1 10 3
+PASS road seed 3 river 1: 120m, rooms 8 1 9
+PASS road seed 4 river 2: 113m, rooms 5 7 15
+PASS road seed 5 river 1: 141m, rooms 8 1 3
+PASS road seed 6 river 2: 121m, rooms 12 10 14
+PASS road seed 7 river 2: 119m, rooms 3 2 4
+PASS road seed 42 river 2: 109m, rooms 8 13 14
+PASS road seed 1866 river 1: 110m, rooms 3 1 2
+PASS road seed 69175541 river 2: 109m, rooms 3 9 12
+PASS road seed 42 river 0: 137m, rooms 1 7 4
+PASS road seed 1866 river 0: 110m, rooms 3 1 2
+<end of output>
+Test time =   7.03 sec
+----------------------------------------------------------
+Test Passed.
+"canyon_roads" end time: Oct 26 02:28 CET
+"canyon_roads" time elapsed: 00:00:07
+----------------------------------------------------------
+
+37/53 Testing: bloat_boss_and_chargers
+37/53 Test: bloat_boss_and_chargers
+Command: "/home/kambo/workspace/DeathWard/build/deathward_bloat_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"bloat_boss_and_chargers" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+BLOAT_LASERS down_pair=1 side_pair=1 no_up=1 immediate=1 owner_cleanup=1 cover=1
+BLOAT_ATTACK form=0 action=0 shots=0 summons=0 peak=1.3
+BLOAT_ATTACK form=0 action=1 shots=8 summons=0 peak=1.99841
+BLOAT_ATTACK form=0 action=2 shots=8 summons=0 peak=5.0987
+BLOAT_ATTACK form=3 action=0 shots=0 summons=2 peak=1.3
+BLOAT_ATTACK form=3 action=1 shots=2 summons=0 peak=1.99841
+BLOAT_ATTACK form=3 action=2 shots=3 summons=0 peak=5.0987
+CHARGER immediate_cardinal=1 locked_heading=1 untargeted_wander=1 los=1 collision_recovery=1
+BLOAT_STAGE seed=1 floor=4 band=2 form=3 completion=1
+BLOAT_STAGE seed=1 floor=6 band=3 form=0 completion=1
+BLOAT_STAGE seed=2 floor=3 band=2 form=0 completion=1
+BLOAT_STAGE seed=5 floor=4 band=3 form=3 completion=1
+BLOAT_STARTING_KIT form=0 hp=100 seconds=18.9333 kills=1
+BLOAT_STARTING_KIT form=3 hp=12.5 seconds=24.8833 kills=3
+PASS Bloat forms, real lasers/ballistics, owned eyes and Chargers
+<end of output>
+Test time =   2.27 sec
+----------------------------------------------------------
+Test Passed.
+"bloat_boss_and_chargers" end time: Oct 26 02:28 CET
+"bloat_boss_and_chargers" time elapsed: 00:00:02
+----------------------------------------------------------
+
+44/53 Testing: fly_bombs
+44/53 Test: fly_bombs
+Command: "/home/kambo/workspace/DeathWard/build/deathward_fly_bomb_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"fly_bombs" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 1 depth 0 effect -1: queue capacity
+FLY_BOMB_DAMAGE contact_40=1 death_100=1 player_12_5_25=1 delayed_after_clear=1 exactly_once=1
+FLY_BOMB_MOVEMENT curved_pursuit=1 reaches_player=1 flies_over_cover=1 swept_dodge=1
+FLY_BOMB_OWNERSHIP trio=1 invulnerable=1 real_orbit=1 owner_death=1 contact_chain=1 atomic_group=1
+FLY_BOMB_LIFECYCLE inactive_pause=1 pending_retry=1 actual_tuff_armor=1 rock_demolition=1 debug_clear=1
+FLY_BOMB_STAGE seed=19 floor=2 room=8 variant=standard
+FLY_BOMB_STAGE seed=33 floor=2 room=8 variant=standard
+FLY_BOMB_STAGE seed=46 floor=2 room=1 variant=standard
+FLY_BOMB_EXTERNAL immutable_snapshot=1 fuse_damage=1 duplicate_rejected=1 actual_seeded_route=1 eternal_producer_pending=1
+PASS Fly Bomb pursuit, explosions, ordnance, ownership, external configuration and stage routing
+<end of output>
+Test time =  13.15 sec
+----------------------------------------------------------
+Test Passed.
+"fly_bombs" end time: Oct 26 02:28 CET
+"fly_bombs" time elapsed: 00:00:13
+----------------------------------------------------------
+
+30/53 Testing: monster_flight
+30/53 Test: monster_flight
+Command: "/home/kambo/workspace/DeathWard/build/deathward_flight_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_flight" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+FLIGHT_COVER peak=2.85 safe_path_points=3
+FLIGHT_OFFSPRING water_births=0 land_births=8 samples=16
+FLIGHT_COMBAT shooter_damage=12.5 mouse_arrow_hits=2
+FLIGHT_SEEDED rocks=160 water_cells=120 cliffs=2185
+PASS flight collision, elevation, combat and seeded terrain
+<end of output>
+Test time =   3.12 sec
+----------------------------------------------------------
+Test Passed.
+"monster_flight" end time: Oct 26 02:28 CET
+"monster_flight" time elapsed: 00:00:03
+----------------------------------------------------------
+
+39/53 Testing: companion_familiars
+39/53 Test: companion_familiars
+Command: "/home/kambo/workspace/DeathWard/build/deathward_companion_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"companion_familiars" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+SHADOW_PRODUCER duplicate_once=1 max_live=16 item_owner=1 removal_stops_only_producer=1
+SHADOW_PATH lag=1 catch_up=1 bounded_history=1
+SHADOW_CONTACT enemy_damage=27.84 ally_damage=3.2 player_damage=0 cardinal_target=1
+SHADOW_DAMAGE player_bomb_immune=1 hostile_blast=1 repeated_fire=1 beam=1 no_death_rewards=1
+SHADOW_PROJECTILES hostile_interception=1 player_pass_through=1 kill_hook_isolation=1
+SHADOW_LIFETIME transition_expiry=1 no_resurrection=1 room_clear=1
+SHADOW_BARGAIN seed=3 floor=0 room=6 slot=1 hp=80
+SHADOW_PERSISTENCE floor_carry=1 expired_allies=1 fresh_producer=1 journal_item=1
+PASS My Shadow producer, allied combat and room lifetime
+<end of output>
+Test time =   1.80 sec
+----------------------------------------------------------
+Test Passed.
+"companion_familiars" end time: Oct 26 02:28 CET
+"companion_familiars" time elapsed: 00:00:01
+----------------------------------------------------------
+
+47/53 Testing: shell_boss
+47/53 Test: shell_boss
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shell_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"shell_boss" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+SHELL_ARMOR pair_5=1 head_invulnerability=1 body_hp=112 armor=15 full_explosive_damage=1 atomic_spawn=1
+SHELL_MOTION diagonal=1 reflection=1 flesh_slowdown=1 aimed_triple=1 tail_fly_bomb=1
+SHELL_SPLIT promotion=1 reversed_endpoint=1 short_armor_retirement=1 detached_group=1 stationary_single=1 simultaneous_masks=15
+SHELL_LIFECYCLE cover_landing=1 water_landing=1 aggregate_reward_once=1 children_gate_clear=1 inactive_persistence=1
+SHELL_STAGE_FIXTURE seed=7 floor=2 room=11 width=32 depth=80
+SHELL_STAGE_FIXTURE seed=23 floor=2 room=11 width=80 depth=36
+SHELL_STAGE_FIXTURE seed=28 floor=3 room=11 width=72 depth=36
+SHELL_STAGE seeded_profiles=10 band=1 standard_only=1 double_arena=1
+SHELL_EXTERNAL immutable_snapshot=1 armor_speed=1 invalid_duplicate_rejected=1
+PASS Shell armor, movement, topology, attacks, landing, lifecycle and route
+<end of output>
+Test time =   2.78 sec
+----------------------------------------------------------
+Test Passed.
+"shell_boss" end time: Oct 26 02:28 CET
+"shell_boss" time elapsed: 00:00:02
+----------------------------------------------------------
+
+52/53 Testing: generated_dungeons
+52/53 Test: generated_dungeons
+Command: "/home/kambo/workspace/DeathWard/build/deathward_dungeon_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"generated_dungeons" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+Extra quiet rooms: 9 / 64 seeded floors
+PASS 64 seeds: deterministic varied geometry, connected floor, doors, objectives and boss clearance
+PASS branches, reachable keys, locks, combat seals, unique pickups and revisits
+<end of output>
+Test time =  23.31 sec
+----------------------------------------------------------
+Test Passed.
+"generated_dungeons" end time: Oct 26 02:28 CET
+"generated_dungeons" time elapsed: 00:00:23
+----------------------------------------------------------
+
+36/53 Testing: monster_boss_components
+36/53 Test: monster_boss_components
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_boss_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_boss_components" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+PEEP_OWNERSHIP thresholds=2/3,1/3 cyan_start=2 capacity_retry=1 no_respawn=1 no_orphans=1
+PEEP_ATTACKS creep=1 ring=8 landing=12 locked_arc=1 yellow_size=.85 whole_contact=25
+PEEP_EYES wall_and_body_bounce=1 rocks=1 projectile_block=1 bomb_direction=1 contact=12.5
+PEEP_STAGE seed=1 floor=2 form=0 components=2 completion=1
+PEEP_STAGE seed=3 floor=1 form=2 components=2 completion=1
+PEEP_STAGE seed=21 floor=2 form=1 components=2 completion=1
+PEEP_CONFIG immutable=1 geometry_unchanged=1 ordinary_pools_unchanged=1 tutorial_unchanged=1
+PEEP_STARTING_KIT form=0 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=1 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=2 seconds=20.1333 hp=87.5 kills=1
+PASS Peep multipart encounter, owned eyes and stage routing
+<end of output>
+Test time =   1.42 sec
+----------------------------------------------------------
+Test Passed.
+"monster_boss_components" end time: Oct 26 02:28 CET
+"monster_boss_components" time elapsed: 00:00:01
+----------------------------------------------------------
+
+42/53 Testing: quake_waves
+42/53 Test: quake_waves
+Command: "/home/kambo/workspace/DeathWard/build/deathward_quake_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"quake_waves" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: hazard capacity
+QUAKE_AXES left_up_right_down=1 anchored_hop=1 first_landing_3s=1 period_3s=1 real_wave_speed=10
+QUAKE_CONTACT base_player_damage=10 multiplied_at_impact=1 one_front_hit=1 vertical_clearance=1 wall_cover=1 corridor_stop=1
+QUAKE_DEMOLITION first_surface_only=1 cache_analogue=1 no_spent_bomb=1 no_kill_credit=1 persistent_loot_once=1 protected_ore=1
+QUAKE_LIFETIME combat_persistence=1 plate=1 emitted_wave_finishes=1 reentry=1 bounded_hazards=1
+QUAKE_CONFIG actual_speed=1 immutable_snapshot=1
+PASS Quake directions, landing cadence, swept waves, cover, cache adaptation, plates and external rules
+<end of output>
+Test time =   0.71 sec
+----------------------------------------------------------
+Test Passed.
+"quake_waves" end time: Oct 26 02:28 CET
+"quake_waves" time elapsed: 00:00:00
+----------------------------------------------------------
+
+35/53 Testing: monster_replacements
+35/53 Test: monster_replacements
+Command: "/home/kambo/workspace/DeathWard/build/deathward_replacement_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_replacements" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+REPLACEMENT_ODDS source=15.0 replaced=90 samples=10000
+REPLACEMENT_ODDS source=15.1 replaced=90 samples=10000
+REPLACEMENT_ODDS source=29.0 replaced=5965 samples=10000
+REPLACEMENT_ODDS source=23.0 replaced=5002 samples=10000
+REPLACEMENT_SNAPSHOT one_shot=1 budget_reserved=1 immutable=1 explicit_spawn=1
+FLOODED_QUARRY samples=600 flooded=192 patches=42 geometry_unchanged=1
+FLOOR_VARIANTS scorched=192 samples=600 patches=16 geometry_unchanged=1
+REPLACEMENT_RESIDENTS iblob=8 safe_placement=1 target_stats=1 reentry=1
+PASS conditional replacements and floor variants
+<end of output>
+Test time =   1.72 sec
+----------------------------------------------------------
+Test Passed.
+"monster_replacements" end time: Oct 26 02:28 CET
+"monster_replacements" time elapsed: 00:00:01
+----------------------------------------------------------
+
+46/53 Testing: segmented_bosses
+46/53 Test: segmented_bosses
+Command: "/home/kambo/workspace/DeathWard/build/deathward_segmented_boss_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"segmented_bosses" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+TUFF_MOVEMENT paired_six=1 suppliers=2 cardinal_roaming=1 path_following=1 bounded_trail=1 atomic_spawn=1
+TUFF_ARMOR separate_hp=1 bullets_blocked=1 real_explosion=1 near_25=1 far_14=1 no_spillover_policy=1
+TUFF_TOPOLOGY head_promotion=1 rear_split=1 short_fragment_policy=1 aggregate_reward_once=1 inactive_persistence=1
+TUFF_ATTACKS armored_ink=1 exposed_sucker=1 body_spray=1 cardinal_ordinal_deaths=1 slowing_black_creep=1
+TUFF_SUPPLY actual_pickup_fuse_explosion=1 inventory_unchanged=1 shared_child_cap=1 burst_overshoot=1
+TUFF_STAGE seed=10 floor=2 room=10 stock_reachable=1 complete=1
+TUFF_STAGE seed=20 floor=2 room=11 stock_reachable=1 complete=1
+TUFF_STAGE seed=37 floor=1 room=10 stock_reachable=1 complete=1
+TUFF_EXTERNAL immutable_snapshot=1 armor_speed=1 variant_filter=1
+PASS segmented Tuff encounter, armor, topology, movement, children and aggregate reward
+<end of output>
+Test time =   1.89 sec
+----------------------------------------------------------
+Test Passed.
+"segmented_bosses" end time: Oct 26 02:28 CET
+"segmented_bosses" time elapsed: 00:00:01
+----------------------------------------------------------
+
+41/53 Testing: maw_attraction
+41/53 Test: maw_attraction
+Command: "/home/kambo/workspace/DeathWard/build/deathward_maw_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"maw_attraction" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+MAW_INPUT normal_z=6.61054 broken_z=5.1026 keyboard=1 dodge=1 mouse=1 stationary=1 no_shots=1
+MAW_LIFECYCLE four_seconds=1 inactive_phase=1 active_resume=1 clear_persistence=1 plate=1 exceptional_respawn=1
+MAW_PROJECTILES both_teams=1 current_velocity=1 height=1 gravity=1 terrain=1 corridor=1 opposing_fields=1 aggregate_limit=1
+MAW_CONFIG actual_force=1 snapshot_isolation=1
+PASS Maw suction, alternating cycle, both projectile teams, collision and configured snapshots
+<end of output>
+Test time =   0.86 sec
+----------------------------------------------------------
+Test Passed.
+"maw_attraction" end time: Oct 26 02:28 CET
+"maw_attraction" time elapsed: 00:00:00
+----------------------------------------------------------
+
+40/53 Testing: room_statues
+40/53 Test: room_statues
+Command: "/home/kambo/workspace/DeathWard/build/deathward_statue_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"room_statues" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+STATUE_AIMED single=1 triple=3 ballistic=1 ordinary_immune=1 cleared_body_retained=1
+STATUE_LIFETIME last_enemy_clear=1 inactive_reentry=1 exceptional_respawn=1 eye_removal=1
+STATUE_PLATES persistent_combat_fire=1 all_plates=1 immediate_beam_stop=1 saved_plate_state=1 plate_objective=1
+STATUE_CROSS alternating_axes=1 subtype_phase=1 always_on=1 objective_free_trap=1
+STATUE_PHYSICS walking=1 flight=1 swept_dodge=1 mouse_path=1 ray_aim=1 exceptional_collider_removal=1
+PASS configurable Grimace attacks, completion, plate state, re-entry and collision
+<end of output>
+Test time =   0.72 sec
+----------------------------------------------------------
+Test Passed.
+"room_statues" end time: Oct 26 02:28 CET
+"room_statues" time elapsed: 00:00:00
+----------------------------------------------------------
+
+43/53 Testing: supplied_bombs
+43/53 Test: supplied_bombs
+Command: "/home/kambo/workspace/DeathWard/build/deathward_supplied_bomb_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"supplied_bombs" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: supplied bomb capacity
+SUPPLY_STOCK unlit_wait=1 pickup_5_41=1 armed_4_13=1 replenish_before_explosion=1 held_fuse=1 zero_inventory=1
+SUPPLY_CONTROLS arrows=1 place=1 no_inventory=1 no_shot_cycle=1 no_invented_braid=1 fuse_preserved=1 swept_throw=1
+SUPPLY_DEATH independent_stock=1 ten_unlit_drops=1 retained_stock=1 no_kill_credit=1 no_reentry_duplicate=1 bounded_pending=1
+SUPPLY_PERSISTENCE held_across_rooms=1 thrown_pause_resume=1 own_demolition_permission=1 actual_enemy_damage=1 dedicated_only=1
+SUPPLY_CONFIG actual_fuse=1 immutable_snapshot=1
+SUPPLY_ROUTING blocked_retry=1 real_floor_travel=1 preserved_fuse=1
+PASS supplied bomb stock, taking, controls, flight, fuse, death drops, room persistence and external rules
+<end of output>
+Test time =   0.65 sec
+----------------------------------------------------------
+Test Passed.
+"supplied_bombs" end time: Oct 26 02:28 CET
+"supplied_bombs" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/53 Testing: mission_shop
+25/53 Test: mission_shop
+Command: "/home/kambo/workspace/DeathWard/build/deathward_shop_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mission_shop" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS peaceful seeded shops, stock, purchases, menu freeze, spending and save migration
+<end of output>
+Test time =   2.30 sec
+----------------------------------------------------------
+Test Passed.
+"mission_shop" end time: Oct 26 02:28 CET
+"mission_shop" time elapsed: 00:00:02
+----------------------------------------------------------
+
+13/53 Testing: arrival_quest
+13/53 Test: arrival_quest
+Command: "/home/kambo/workspace/DeathWard/build/deathward_arrival_quest_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"arrival_quest" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS arrival quest ordering, persistence, physical approaches, scene anchors and tutorial navigation, documents, interruption recovery and mine isolation
+<end of output>
+Test time =   1.09 sec
+----------------------------------------------------------
+Test Passed.
+"arrival_quest" end time: Oct 26 02:28 CET
+"arrival_quest" time elapsed: 00:00:01
+----------------------------------------------------------
+
+48/53 Testing: mission_themes
+48/53 Test: mission_themes
+Command: "/home/kambo/workspace/DeathWard/build/deathward_theme_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mission_themes" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+Checking canyon seed 0
+Checking canyon seed 1
+Checking canyon seed 42
+Checking canyon seed 1866
+Checking canyon seed 69175541
+PASS seeded/explicit themes, organic terrain, connected routes, seals, reproducible encounters, named locations and saved theme recovery
+<end of output>
+Test time =   4.32 sec
+----------------------------------------------------------
+Test Passed.
+"mission_themes" end time: Oct 26 02:28 CET
+"mission_themes" time elapsed: 00:00:04
+----------------------------------------------------------
+
+51/53 Testing: enemy_behaviors
+51/53 Test: enemy_behaviors
+Command: "/home/kambo/workspace/DeathWard/build/deathward_enemy_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"enemy_behaviors" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 2 depth 0 effect -1: hazard capacity
+chain 3 depth 0 effect -1: hazard capacity
+POPULATION seeds=32 opening/final floors area=331.689..1556.28 enemies=5..23 types=15 populations=19
+PASS fifteen enemy behaviors, tells, counters, hazards and seeded area-based groups
+<end of output>
+Test time =   2.94 sec
+----------------------------------------------------------
+Test Passed.
+"enemy_behaviors" end time: Oct 26 02:28 CET
+"enemy_behaviors" time elapsed: 00:00:02
+----------------------------------------------------------
+
+34/53 Testing: monster_hopping
+34/53 Test: monster_hopping
+Command: "/home/kambo/workspace/DeathWard/build/deathward_hop_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_hopping" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+HOP_RANGE normal=6 flaming=11 committed_endpoint=1 peak=2.24997 duration=0.636364
+HOP_TERRAIN rock_crossing=1 peak=3.59994 river_crossing=1 legal_landings=1
+HOP_BOUNDARY closed_gate=1 active_room=1 launch_recheck=1
+HOP_INTERRUPTS stun=1 morph=1 flame_height=1 elevated_projectile=1
+HOP_STARTING_KIT type=29 seconds=0.766667 hp=100
+HOP_STARTING_KIT type=54 seconds=0.716667 hp=100
+PASS configured Hopper movement and collision
+<end of output>
+Test time =   0.30 sec
+----------------------------------------------------------
+Test Passed.
+"monster_hopping" end time: Oct 26 02:28 CET
+"monster_hopping" time elapsed: 00:00:00
+----------------------------------------------------------
+
+32/53 Testing: monster_patterns
+32/53 Test: monster_patterns
+Command: "/home/kambo/workspace/DeathWard/build/deathward_pattern_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_patterns" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PATTERN id=15.0 count=4 axes_repeat=1 windup_moving=1
+PATTERN id=15.1 count=4 axes_repeat=1 windup_moving=1
+PATTERN id=15.2 count=8 axes_repeat=1 windup_moving=1
+PATTERN id=15.3 count=4 axes_repeat=1 windup_moving=1
+CURVE alternating=1 stun_parity=1 reentry_parity=1 survives_owner=1
+SURFACES tar_slow_only=1 ember_no_fire_patch=1 curved_cover_collision=1
+PATTERN_STARTING_KIT id=15.0 seconds=1.35 health=100
+PATTERN_STARTING_KIT id=15.1 seconds=1.35 health=100
+PATTERN_STARTING_KIT id=15.2 seconds=1.33333 health=100
+PATTERN_STARTING_KIT id=15.3 seconds=1.38333 health=100
+PATTERN_STARTING_KIT id=872.0 seconds=1.35 health=100
+PASS monster patterns
+<end of output>
+Test time =   0.23 sec
+----------------------------------------------------------
+Test Passed.
+"monster_patterns" end time: Oct 26 02:28 CET
+"monster_patterns" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/53 Testing: money_pickups
+26/53 Test: money_pickups
+Command: "/home/kambo/workspace/DeathWard/build/deathward_money_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"money_pickups" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS seeded/reachable money, random drops, collection, collision, wallet and legacy saves
+<end of output>
+Test time =   1.37 sec
+----------------------------------------------------------
+Test Passed.
+"money_pickups" end time: Oct 26 02:28 CET
+"money_pickups" time elapsed: 00:00:01
+----------------------------------------------------------
+
+24/53 Testing: player_dynamite
+24/53 Test: player_dynamite
+Command: "/home/kambo/workspace/DeathWard/build/deathward_dynamite_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"player_dynamite" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS dynamite placement, kicking, fuse, collisions, damage, guards, chains and shop refill
+<end of output>
+Test time =   0.95 sec
+----------------------------------------------------------
+Test Passed.
+"player_dynamite" end time: Oct 26 02:28 CET
+"player_dynamite" time elapsed: 00:00:00
+----------------------------------------------------------
+
+33/53 Testing: monster_fire_reactions
+33/53 Test: monster_fire_reactions
+Command: "/home/kambo/workspace/DeathWard/build/deathward_fire_reaction_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_fire_reactions" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: hazard capacity
+FIRE_TRANSFORM fraction=1 identity=1 owner=1 team=1 stun=1 no_reward=1 reentry=1
+FLOODED disables_transform=1 enables_fire_damage=1 local_room=1 actual_clear=1
+HOPPER flame_transforms=1 burning_damages=1 no_flood_exception=1
+FIRE_PROJECTILE channel_preserved=1
+FIRE_HAZARDS real_contacts=1 cover=1 height=1 lifetime=1 overlap_bound=1 mine_unchanged=1
+PASS monster fire reactions
+<end of output>
+Test time =   0.21 sec
+----------------------------------------------------------
+Test Passed.
+"monster_fire_reactions" end time: Oct 26 02:28 CET
+"monster_fire_reactions" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/53 Testing: resident_enemies
+27/53 Test: resident_enemies
+Command: "/home/kambo/workspace/DeathWard/build/deathward_resident_enemies_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"resident_enemies" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS resident groups, corridor inactivity, ambient animation, entry continuity, doorway clearance, companions, cleared revisits and debug replay in both themes
+<end of output>
+Test time =   0.82 sec
+----------------------------------------------------------
+Test Passed.
+"resident_enemies" end time: Oct 26 02:28 CET
+"resident_enemies" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/53 Testing: charger_variants
+38/53 Test: charger_variants
+Command: "/home/kambo/workspace/DeathWard/build/deathward_charger_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"charger_variants" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+DROWNED hp=70.4 immediate=1 diagonal_death_shots=4 execution_cleanup=1
+DANK fast_dash=1 swept_wall_reflection=1 stationary_recovery=1 slowing_nondamaging_trail=1
+PRINCESS diagonal=1 real_tail_projectile=1 head_piercing_blocked=1 spatial_explosions=1
+LEVEL2 hp=128 cardinal_start=1 steering=1 slower=1 contact_damage=25
+CHARGER_STARTING_KIT id=23.1 seconds=2.16667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.2 seconds=3.15 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.3 seconds=6.01667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=855.0 seconds=3.26667 post_death_seconds=1.5 hp=100 kills=1
+PASS Charger variants and weak-point collision
+<end of output>
+Test time =   0.19 sec
+----------------------------------------------------------
+Test Passed.
+"charger_variants" end time: Oct 26 02:28 CET
+"charger_variants" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/53 Testing: monster_formations
+31/53 Test: monster_formations
+Command: "/home/kambo/workspace/DeathWard/build/deathward_formation_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_formations" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+FORMATION slots=10 surviving_after_two_deaths=8 founder_independent=1 reentry=1
+FORMATION_TERRAIN cover_peak=2.85 contact_damage=12.5
+FORMATION_STARTING_KIT seconds=5.18333 health=100 kills=4
+PASS translating formations, stable slots, ownership, terrain, budgets and basic starting-kit encounter
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"monster_formations" end time: Oct 26 02:28 CET
+"monster_formations" time elapsed: 00:00:00
+----------------------------------------------------------
+
+17/53 Testing: redstone_hub
+17/53 Test: redstone_hub
+Command: "/home/kambo/workspace/DeathWard/build/deathward_redstone_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"redstone_hub" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS story hub routes, residents, original fort, expanded camp, parked train and retained departure animation
+<end of output>
+Test time =   0.57 sec
+----------------------------------------------------------
+Test Passed.
+"redstone_hub" end time: Oct 26 02:28 CET
+"redstone_hub" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/53 Testing: train_motion
+22/53 Test: train_motion
+Command: "/home/kambo/workspace/DeathWard/build/deathward_train_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"train_motion" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS train routes, wheel axles, groups, station stops, player clearance, dynamic navigation and persistence
+<end of output>
+Test time =   0.50 sec
+----------------------------------------------------------
+Test Passed.
+"train_motion" end time: Oct 26 02:28 CET
+"train_motion" time elapsed: 00:00:00
+----------------------------------------------------------
+
+53/53 Testing: generated_room_graphs
+53/53 Test: generated_room_graphs
+Command: "/home/kambo/workspace/DeathWard/build/deathward_room_graph_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"generated_room_graphs" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS 7,168 variable-size graphs and 10,004 Classic seeds: deterministic connected graphs, safe passage topology, junctions and locked leaves
+PASS 256-seed diversity: 232 distinct footprints, 256 distinct structural profiles, 4 loop counts, 7 dead-end counts, 7 boss depths, 6 path diameters
+<end of output>
+Test time =   0.60 sec
+----------------------------------------------------------
+Test Passed.
+"generated_room_graphs" end time: Oct 26 02:28 CET
+"generated_room_graphs" time elapsed: 00:00:00
+----------------------------------------------------------
+
+50/53 Testing: core_contracts
+50/53 Test: core_contracts
+Command: "/home/kambo/workspace/DeathWard/build/deathward_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"core_contracts" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 12 depth 3 effect -1: chain event limit
+chain 2 depth 1 effect -1: generation limit
+PASS 3D swept collisions
+PASS five items and composed effects
+PASS continuous fire and sixth-shot effects
+PASS player health, damage and item tuning
+PASS mouse routes, interactions and keyboard override
+PASS bounded chains and cleanup
+PASS independent seeded RNG streams
+PASS persistence, recovery, consequences and revisits
+PASS full expedition progression
+PASS cheat clears, stress cleanup, room restart and repeatable boss
+<end of output>
+Test time =   0.48 sec
+----------------------------------------------------------
+Test Passed.
+"core_contracts" end time: Oct 26 02:28 CET
+"core_contracts" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/53 Testing: mechanics_content
+2/53 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+Mechanics contracts passed
+<end of output>
+Test time =   1.25 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 26 02:28 CET
+"mechanics_content" time elapsed: 00:00:01
+----------------------------------------------------------
+
+11/53 Testing: flag_cloth
+11/53 Test: flag_cloth
+Command: "/home/kambo/workspace/DeathWard/build/deathward_flag_cloth_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"flag_cloth" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS redstone: 2 textured flags, pinned seams, gusts, bounds, length and deterministic preview
+PASS frontier: 2 textured flags, pinned seams, gusts, bounds, length and deterministic preview
+PASS town: 0 textured flags, pinned seams, gusts, bounds, length and deterministic preview
+<end of output>
+Test time =   0.20 sec
+----------------------------------------------------------
+Test Passed.
+"flag_cloth" end time: Oct 26 02:28 CET
+"flag_cloth" time elapsed: 00:00:00
+----------------------------------------------------------
+
+21/53 Testing: ambient_animals
+21/53 Test: ambient_animals
+Command: "/home/kambo/workspace/DeathWard/build/deathward_animal_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"ambient_animals" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS animals: seeded roaming, clearance, trains, frame rates and reset
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Passed.
+"ambient_animals" end time: Oct 26 02:28 CET
+"ambient_animals" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/53 Testing: save_slots
+12/53 Test: save_slots
+Command: "/home/kambo/workspace/DeathWard/build/deathward_save_slot_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"save_slots" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS three-slot isolation, story resume, read-only browsing, corruption and write failure
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"save_slots" end time: Oct 26 02:28 CET
+"save_slots" time elapsed: 00:00:00
+----------------------------------------------------------
+
+1/53 Testing: enemy_port_coverage
+1/53 Test: enemy_port_coverage
+Command: "/usr/bin/python3.10" "/home/kambo/workspace/DeathWard/scripts/isaac-reference/track-enemies.py" "--check"
+Directory: /home/kambo/workspace/DeathWard/build
+"enemy_port_coverage" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+{
+  "total": 653,
+  "identity_verified": 653,
+  "source_archive_available": true,
+  "reviewed": 121,
+  "dispositions": {
+    "ordinary": 61,
+    "dedicated": 7,
+    "environment": 11,
+    "pending": 532,
+    "boss": 4,
+    "item_dependency": 2,
+    "component": 8,
+    "hazard": 16,
+    "excluded": 12
+  },
+  "implementations": {
+    "in_progress": 76,
+    "existing_unverified": 79,
+    "missing": 486,
+    "excluded": 12
+  },
+  "complete": 0,
+  "remaining": 641,
+  "milestones": [
+    {
+      "number": 1,
+      "status": "in_progress"
+    },
+    {
+      "number": 2,
+      "status": "pending"
+    },
+    {
+      "number": 3,
+      "status": "pending"
+    },
+    {
+      "number": 4,
+      "status": "pending"
+    },
+    {
+      "number": 5,
+      "status": "pending"
+    },
+    {
+      "number": 6,
+      "status": "pending"
+    }
+  ]
+}
+<end of output>
+Test time =   0.33 sec
+----------------------------------------------------------
+Test Passed.
+"enemy_port_coverage" end time: Oct 26 02:28 CET
+"enemy_port_coverage" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/53 Testing: cinematic_timeline
+14/53 Test: cinematic_timeline
+Command: "/home/kambo/workspace/DeathWard/build/deathward_cinematic_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"cinematic_timeline" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS cinematic persistence, validation, camera anchors, deterministic seeking, emergency stop and timed sound delivery
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"cinematic_timeline" end time: Oct 26 02:28 CET
+"cinematic_timeline" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/53 Testing: walkable_areas
+8/53 Test: walkable_areas
+Command: "/home/kambo/workspace/DeathWard/build/deathward_walk_area_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"walkable_areas" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS walk-area geometry, union, exclusions, clearance, WASD/mouse boundaries, guarded markers and scene/navigation persistence
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"walkable_areas" end time: Oct 26 02:28 CET
+"walkable_areas" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/53 Testing: object_animation
+23/53 Test: object_animation
+Command: "/home/kambo/workspace/DeathWard/build/deathward_object_animation_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"object_animation" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS object motion, ground collisions, pivots, stable IDs, scene versions and imported tumbleweeds
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"object_animation" end time: Oct 26 02:28 CET
+"object_animation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/53 Testing: audio_presentation
+28/53 Test: audio_presentation
+Command: "/home/kambo/workspace/DeathWard/build/deathward_audio_cue_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"audio_presentation" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS bounded/prioritized audio cues, confirmed actions, cleanup and determinism
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"audio_presentation" end time: Oct 26 02:28 CET
+"audio_presentation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+18/53 Testing: building_navigation
+18/53 Test: building_navigation
+Command: "/home/kambo/workspace/DeathWard/build/deathward_building_navigation_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"building_navigation" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS hollow building meshes, doorway clearance, solid walls, headroom, keyboard entry and mouse exit
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"building_navigation" end time: Oct 26 02:28 CET
+"building_navigation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/53 Testing: particle_emission
+19/53 Test: particle_emission
+Command: "/home/kambo/workspace/DeathWard/build/deathward_particle_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"particle_emission" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS imported curves, burst timing, collision materials, dynamite triggers, pause, isolated RNG and budgets
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"particle_emission" end time: Oct 26 02:28 CET
+"particle_emission" time elapsed: 00:00:00
+----------------------------------------------------------
+
+49/53 Testing: imported_town_navigation
+49/53 Test: imported_town_navigation
+Command: "/home/kambo/workspace/DeathWard/build/deathward_hub_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"imported_town_navigation" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+PASS all three hub navigation packs, mission round trips, height following, barriers and missing assets; precise mouse picking, direct/smoothed routes and held steering
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"imported_town_navigation" end time: Oct 26 02:28 CET
+"imported_town_navigation" time elapsed: 00:00:00
+----------------------------------------------------------
+
+20/53 Testing: town_characters
+20/53 Test: town_characters
+Command: "/home/kambo/workspace/DeathWard/build/deathward_character_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"town_characters" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+Demo visits=17 blocked=0 at=-3.56,0.999997 target=2
+PASS character routes, obstacle navigation, pauses, deterministic timing, persistence and town demo
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"town_characters" end time: Oct 26 02:28 CET
+"town_characters" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/53 Testing: monster_behaviors
+29/53 Test: monster_behaviors
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_behaviors" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 155 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.1 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.1 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.1 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.1 entity=48 x=0.486997 z=7.04164
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.3.4 entity=48 x=0.486997 z=7.04164
+PASS monster roster, armor, regeneration, summons, linked deaths, room hazards, beams, collision and projectiles
+<end of output>
+Test time =   3.42 sec
+----------------------------------------------------------
+Test Passed.
+"monster_behaviors" end time: Oct 26 02:28 CET
+"monster_behaviors" time elapsed: 00:00:03
+----------------------------------------------------------
+
+45/53 Testing: boom_flies
+45/53 Test: boom_flies
+Command: "/home/kambo/workspace/DeathWard/build/deathward_boom_fly_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"boom_flies" start time: Oct 26 02:28 CET
+Output:
+----------------------------------------------------------
+BOOM_HEALTH source_stages_1_to_13=1 floor_lengths=5 diagonal_axis_reflection=1 contact=1 cover=1
+BOOM_DEATH seven_patterns=1 bone_alignment=1 green_not_ipecac=1 actual_blast=1 execution_policy=1
+BOOM_LIFECYCLE aligned_live_bones=1 gas_trail=1 gas_clear=1 tainted_cross=49 clear_persistence=1 bounded_pending=1
+BOOM_EXTERNAL stage_scaled_child=1 illegal_birth_suppressed=1 immutable_blast_config=1 validation=1
+BOOM_REPLACEMENT flooded=0 normal=9068 red=932 drowned=0 samples=10000
+BOOM_REPLACEMENT flooded=1 normal=4486 red=433 drowned=5081 samples=10000
+BOOM_RESIDENT id=25.0 seed=0 floor=2 room=2 stage=3 hp=54.4
+BOOM_RESIDENT id=25.1 seed=0 floor=3 room=8 stage=5 hp=64
+BOOM_RESIDENT id=25.2 seed=0 floor=4 room=11 stage=6 hp=71.68
+BOOM_RESIDENT id=25.3.1 seed=4 floor=3 room=4 stage=4 hp=64
+BOOM_RESIDENT id=25.5 seed=4 floor=6 room=8 stage=7 hp=79.36
+BOOM_RESIDENT id=25.3 seed=16 floor=1 room=4 stage=3 hp=54.4
+BOOM_RESIDENT id=25.4 seed=19 floor=2 room=7 stage=3 hp=54.4
+BOOM_ROUTING identities=7 generated_floors=117 tainted_dedicated_pending=1
+PASS Boom Fly family behavior, stage health, ordered replacements and natural routing
+<end of output>
+Test time =  32.71 sec
+----------------------------------------------------------
+Test Passed.
+"boom_flies" end time: Oct 26 02:29 CET
+"boom_flies" time elapsed: 00:00:32
+----------------------------------------------------------
+
+End testing: Oct 26 02:29 CET

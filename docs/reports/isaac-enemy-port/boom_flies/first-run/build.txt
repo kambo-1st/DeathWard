@@ -1,0 +1,28 @@
+Consolidate compiler generated dependencies of target glfw
+[  7%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[  9%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+Consolidate compiler generated dependencies of target deathward_post_process_tests
+[  9%] Built target deathward_post_process_tests
+[  9%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 10%] Built target deathward_runtime_assets
+[ 11%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/BoomFlies.cpp: In member function ‘void dw::Simulation::updateBoomFly(dw::Enemy&, float)’:
+/home/kambo/workspace/DeathWard/src/combat/BoomFlies.cpp:37:80: error: cannot convert ‘Vector3’ to ‘const dw::Context&’
+   37 |         arena.sight(enemy.position,player.position))hurtPlayer(p.contact,enemy.position);
+      |                                                                          ~~~~~~^~~~~~~~
+      |                                                                                |
+      |                                                                                Vector3
+In file included from /home/kambo/workspace/DeathWard/src/combat/BoomFlies.cpp:1:
+/home/kambo/workspace/DeathWard/src/combat/Simulation.hpp:616:50: note:   initializing argument 2 of ‘bool dw::Simulation::hurtPlayer(float, const dw::Context&, bool)’
+  616 |     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);
+      |                                   ~~~~~~~~~~~~~~~^~~~~~~~~~~~
+gmake[2]: *** [CMakeFiles/deathward_core.dir/build.make:160: CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:335: CMakeFiles/deathward_core.dir/all] Error 2
+gmake: *** [Makefile:166: all] Error 2

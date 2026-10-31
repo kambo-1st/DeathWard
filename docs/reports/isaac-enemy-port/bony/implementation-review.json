@@ -1,0 +1,59 @@
+{
+  "status": "partial ordinary Bony implementation",
+  "identity": "227.0.0",
+  "mechanics_fingerprint": "a75ed88e17329b04",
+  "source_review": "docs/reports/isaac-enemy-port/bony_review/source-review.json",
+  "implemented": [
+    "Externally configured cardinal wandering and cadence-limited alignment acquisition with prediction, distance and sight checks.",
+    "One fast current-target bone at source animation frame4/30; stationary13-frame throw/recovery; interruption/death cancels pending shot.",
+    "Source8+2stage HP converted by existing3.2 scale, sparse ordinary crossfire/supply_guard roles in bands1-3.",
+    "Procedural skeleton, raised throwing arm and bone projectile in Original renderer; no imported sprite art."
+  ],
+  "adaptations": [
+    "Source animation counts converted to seconds at30FPS, simulated at60Hz. Existing graph state transitions add at most one simulation tick around boundaries.",
+    "Wander decision interval.7..1.8s and wall turns use DeathWard navigation; source1.25 speed converted to3.75world/s plus existing10% aggression modifier.",
+    "Acquisition phase uses actor age/entityID rather than original global counter/InitSeed; body position replaces path-grid centre.",
+    "Existing seeded spawn cooldown provides initial entry grace; no extra cooldown is reset after a throw.",
+    "World range20,alignment2,shot speed30; body radius.65 and hostile10damage before existing25% multiplier retain DeathWard proportions."
+  ],
+  "native": {
+    "covered_suites": 59,
+    "result": "all covered by passing results after one test-only coverage fix",
+    "initial": "docs/reports/isaac-enemy-port/bony/native.xml",
+    "initial_pass": 58,
+    "initial_fail": 1,
+    "rerun": "docs/reports/isaac-enemy-port/bony/pool-coverage.xml",
+    "rerun_pass": 1,
+    "explanation": "Adding a real weighted resident changed seed draws. Existing broad test supplemented rare-family activation but stopped before every enabled ordinary pool identity had appeared. It now also searches missing pool identities, within the existing128-seed bound. No runtime probability or assertion was weakened."
+  },
+  "browser": {
+    "cases": 3,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/bony/web/results.json"
+  },
+  "visual": {
+    "reviewed": [
+      "linux-natural.png",
+      "linux-ordinary.png",
+      "web/ordinary-bone-throw-300.png"
+    ],
+    "finding": "Original native/WASM palette retained; full skeletal silhouette, ribs/skull, visible raised throwing arm/bone and ground shadow. Natural mixed room shows ordinary resident among existing cover and river. Camera/occlusion matrix not fully accepted.",
+    "excluded_capture": "linux-throw.png at frame15 predates camera settling and is not visual acceptance evidence."
+  },
+  "balance": {
+    "cases": 6,
+    "clears": 5,
+    "report": "docs/reports/isaac-enemy-port/bony/starting-kit-final.txt",
+    "player_hp": 100,
+    "shot_damage": 24,
+    "items": 0,
+    "god_mode": false
+  },
+  "remaining": [
+    "Exact source grid-centre/pathfinder/friction, status/faction and special item/projectile exceptions remain open.",
+    "Mounted Bony is not enabled. Installed ordinary acquisition skips SpawnerType906 without an alternate forced target; carrier behavior requires separate review.",
+    "Five of six automated mixed-room samples cleared. Remaining seed1/floor2/room2 actor is21.0 at40HP behind blocked sight with a four-point walkable path; the simple strafe bot has no path-following logic. This is not full human/varied-build balance acceptance.",
+    "No controlled rendered performance measurements this batch. Historical broader boss browser fixtures remain deferred; this browser pass covers only the three named ordinary Bony cases.",
+    "No completed port; regular enemies retain priority over further boss work."
+  ]
+}

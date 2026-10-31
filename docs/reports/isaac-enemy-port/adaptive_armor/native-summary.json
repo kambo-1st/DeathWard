@@ -1,0 +1,513 @@
+{
+  "scope": "82 distinct Linux suites pass across the full run and the corrected Boom Fly fixture rerun. The full run remains preserved with its one initial failure; no combined clean-run claim. Final runtime was unchanged by the test-fixture correction.",
+  "passed": 82,
+  "failed": 0,
+  "reports": [
+    {
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "passed": 81,
+      "failed": [
+        "boom_flies"
+      ]
+    },
+    {
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-boom-final.xml",
+      "passed": 1,
+      "failed": []
+    }
+  ],
+  "latest_results": [
+    {
+      "name": "adaptive_armor",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.23112
+    },
+    {
+      "name": "ambient_animals",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.133775
+    },
+    {
+      "name": "arrival_quest",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.994574
+    },
+    {
+      "name": "audio_presentation",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0517376
+    },
+    {
+      "name": "authored_rails",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0381161
+    },
+    {
+      "name": "black_bony_regular_enemy",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.18268
+    },
+    {
+      "name": "bloat_boss_and_chargers",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.90666
+    },
+    {
+      "name": "boil_family",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 8.21432
+    },
+    {
+      "name": "bony_regular_enemy",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.564621
+    },
+    {
+      "name": "boom_flies",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-boom-final.xml",
+      "seconds": 170.45
+    },
+    {
+      "name": "building_navigation",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0213956
+    },
+    {
+      "name": "buzzing_flies",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 50.3356
+    },
+    {
+      "name": "canyon_bosses",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 6.45986
+    },
+    {
+      "name": "canyon_rivers",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 17.2398
+    },
+    {
+      "name": "canyon_roads",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 6.48591
+    },
+    {
+      "name": "charger_variants",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.188493
+    },
+    {
+      "name": "cinematic_timeline",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0766402
+    },
+    {
+      "name": "companion_familiars",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.54399
+    },
+    {
+      "name": "core_contracts",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.438482
+    },
+    {
+      "name": "crackle_discrete_fire_jets",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.840398
+    },
+    {
+      "name": "eggy",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 10.8672
+    },
+    {
+      "name": "enemy_behaviors",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 2.61085
+    },
+    {
+      "name": "enemy_bomb_payloads",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.515518
+    },
+    {
+      "name": "enemy_port_coverage",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.268965
+    },
+    {
+      "name": "expedition",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 14.291
+    },
+    {
+      "name": "expedition_destruction",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 64.4571
+    },
+    {
+      "name": "expedition_economy",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 37.5148
+    },
+    {
+      "name": "expedition_pacing",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 9.42618
+    },
+    {
+      "name": "flag_cloth",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.164553
+    },
+    {
+      "name": "floor_progression",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 222.248
+    },
+    {
+      "name": "fly_bombs",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 5.77901
+    },
+    {
+      "name": "generated_dungeons",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 22.9127
+    },
+    {
+      "name": "generated_room_graphs",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.547518
+    },
+    {
+      "name": "gurgle_splasher_physical_lobs",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.88991
+    },
+    {
+      "name": "hard_host",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.95999
+    },
+    {
+      "name": "hive_evaders",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 23.4574
+    },
+    {
+      "name": "horf_stationary_shooting",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.465134
+    },
+    {
+      "name": "hornfel_boss",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 4.34897
+    },
+    {
+      "name": "hosts",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 12.5399
+    },
+    {
+      "name": "imported_town_navigation",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0587919
+    },
+    {
+      "name": "item_builds",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 7.58422
+    },
+    {
+      "name": "loki_bosses",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.03616
+    },
+    {
+      "name": "long_legs_and_sack",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 12.9024
+    },
+    {
+      "name": "maw_attraction",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.827391
+    },
+    {
+      "name": "maw_family",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 15.1922
+    },
+    {
+      "name": "mechanics_content",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.5521
+    },
+    {
+      "name": "mission_shop",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 2.41562
+    },
+    {
+      "name": "mission_themes",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 3.96495
+    },
+    {
+      "name": "money_pickups",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.16431
+    },
+    {
+      "name": "monster_behaviors",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 3.29414
+    },
+    {
+      "name": "monster_boss_components",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.49408
+    },
+    {
+      "name": "monster_fire_reactions",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.200811
+    },
+    {
+      "name": "monster_flight",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 3.0212
+    },
+    {
+      "name": "monster_formations",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.632181
+    },
+    {
+      "name": "monster_hopping",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.262088
+    },
+    {
+      "name": "monster_patterns",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.22635
+    },
+    {
+      "name": "monster_replacements",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.72281
+    },
+    {
+      "name": "mulligan_family",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 32.4579
+    },
+    {
+      "name": "mushroom",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.913023
+    },
+    {
+      "name": "object_animation",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0498281
+    },
+    {
+      "name": "particle_emission",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0209488
+    },
+    {
+      "name": "player_dynamite",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.936789
+    },
+    {
+      "name": "prey_and_small_leech",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 33.9375
+    },
+    {
+      "name": "quake_waves",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.78583
+    },
+    {
+      "name": "rail_passengers",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.41219
+    },
+    {
+      "name": "redstone_hub",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.510923
+    },
+    {
+      "name": "resident_enemies",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.818074
+    },
+    {
+      "name": "room_statues",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.59964
+    },
+    {
+      "name": "save_slots",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.06369
+    },
+    {
+      "name": "segmented_bosses",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 1.67553
+    },
+    {
+      "name": "shell_boss",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 2.71568
+    },
+    {
+      "name": "source_immunity_and_lethal_morph",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.237794
+    },
+    {
+      "name": "spider_family",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 8.18463
+    },
+    {
+      "name": "spider_variants",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 2.18193
+    },
+    {
+      "name": "supplied_bombs",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.537932
+    },
+    {
+      "name": "tainted_hopper",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 13.5329
+    },
+    {
+      "name": "tainted_pooter_impacts",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.294585
+    },
+    {
+      "name": "town_characters",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.016845
+    },
+    {
+      "name": "train_motion",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.445102
+    },
+    {
+      "name": "trite",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.545904
+    },
+    {
+      "name": "walkable_areas",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 0.0362424
+    },
+    {
+      "name": "willo_and_mullighoul",
+      "pass": true,
+      "report": "docs/reports/isaac-enemy-port/adaptive_armor/native-all-initial.xml",
+      "seconds": 23.7823
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+PASS native supplied bomb mouse approach, empty-ground throw, arrows over HUD, B placement and zero-inventory HUD throw
+PASS native mouse picking and click-locked firing at elevated flying body
+PASS compact HUD hitboxes, mouse controls, build inspection, modal guards and warning priority
+PASS keyboard hub/setup, menus/settings, bombs over HUD, directed throws, camera, doors, trades, rewards and evidence-gated floor exits
+PASS native service walking, mouse/keyboard trades, modal guards, health preview and boss reward dismissal
+PASS mine arrow fire, diagonals, rotated camera, strafing, short taps, mouse fallback and modal guards
+PASS canyon arrow fire, diagonals, rotated camera, strafing, short taps, mouse fallback and modal guards
+PASS mine shopkeeper approach, purchases, UI guards, closing and saved spending
+PASS mine dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill
+PASS canyon shopkeeper approach, purchases, UI guards, closing and saved spending
+PASS canyon dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill
+PASS original town movement, station approach, mission seeds, launch and return loop
+PASS Frontier travel, movement, picking, editor selection and mission return
+PASS contextual LMB movement/attack/interaction, target tracking, Shift and RMB fire
+PASS short clicks, no reload, mouse dodge, pause/resume, connected doorways, rescue and retreat
+PASS mouse key pickup, locked doors and one-time power-room choice
+PASS function-key cheats, disabled-mode guards, room/boss replay and modal outcomes
+PASS smooth wheel zoom, limits, modal guards, zoomed ground clicks and retained zoom
+PASS middle-drag orbit, tilt limits, rotated controls, modal guards and retained angle
+PASS animated natural death, frozen combat and closing during death
+PASS HUD clicks never fire; sixth-shot effects covered by core contracts

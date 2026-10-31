@@ -1,0 +1,7 @@
+CHARGE hp288=1 steering=1 committed_x=1 strong12=1 weak_no_ring=1 no_LOS_gate=1
+BURROW health_gate=1 Hit22=1 area_vs_direct=1 hidden30=1 tracking=1 Hit18_ring10=1 Sound31=1 once=1
+PARTITION distance=1.52597e-05 ticks=70,70 impacts=1,1
+SYSTEM render_partition=1 knockback=1 ring_capacity=1 contact25=1 death_completion=1
+CONFIG immutable_reload=1 invalid_profiles=4
+NATURAL_ADULT_LEECH seed=14 floor=6 room=7
+PASS Adult Leech

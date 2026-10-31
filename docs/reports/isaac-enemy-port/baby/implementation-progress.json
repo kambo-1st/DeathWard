@@ -1,0 +1,106 @@
+{
+  "status": "Progress: corrected source fidelity issue discovered in WASM, completed11final browser cases, inspected26views, preserved Vis source contracts. Full653-record goal active.",
+  "updated_utc": "2026-10-27T22:44:15.240928+00:00",
+  "previous_turn": "No progress: user requested status only. Revalidated authoritative state and resumed browser/implementation work.",
+  "scope": [
+    "38.0.0",
+    "38.1.0",
+    "38.1.1",
+    "38.3.0"
+  ],
+  "previous_checkpoint": "docs/reports/isaac-enemy-port/mr-maw/checkpoint.json",
+  "mechanics_fingerprint": "c0d4e092a3ac08b4",
+  "counts": {
+    "total": 653,
+    "identity_verified": 653,
+    "source_archive_available": true,
+    "reviewed": 187,
+    "dispositions": {
+      "ordinary": 114,
+      "dedicated": 7,
+      "environment": 12,
+      "pending": 466,
+      "boss": 8,
+      "item_dependency": 2,
+      "component": 16,
+      "hazard": 16,
+      "excluded": 12
+    },
+    "implementations": {
+      "in_progress": 140,
+      "missing": 460,
+      "existing_unverified": 41,
+      "excluded": 12
+    },
+    "complete": 0,
+    "remaining": 641,
+    "milestones": [
+      {
+        "number": 1,
+        "status": "in_progress"
+      },
+      {
+        "number": 2,
+        "status": "pending"
+      },
+      {
+        "number": 3,
+        "status": "pending"
+      },
+      {
+        "number": 4,
+        "status": "pending"
+      },
+      {
+        "number": 5,
+        "status": "pending"
+      },
+      {
+        "number": 6,
+        "status": "pending"
+      }
+    ]
+  },
+  "source_review": "source-review.md",
+  "implementation_review": "implementation-review.md",
+  "native_focused": "native-lifecycle.txt",
+  "native_residents": "native-residents.txt",
+  "live_jobs": {},
+  "finished_jobs": {
+    "initial_build": 2,
+    "corrected_build": 0,
+    "corrected_focused": 0,
+    "lifecycle_and_kit": 0,
+    "native_full_build": 0,
+    "resident_search": 0,
+    "resident_activation": 0,
+    "native_full_regression": 8,
+    "native_cadence_and_witness_correction": 0,
+    "production_wasm_initial": 0,
+    "production_wasm_cadence": 0,
+    "native_captures": 0,
+    "brain_witness_discovery": 0,
+    "wrinkly_resident_final": 0,
+    "software_browser": 1,
+    "hardware_browser_initial": 1,
+    "final_native_eligibility": 0,
+    "final_native_wasm_build": 0,
+    "final_browser": 0,
+    "final_native_resident": 0,
+    "final_native_capture": 0,
+    "vis_export": 0,
+    "vis_source_check": 0,
+    "server_stop": 143,
+    "vis_source_check_complete": 0
+  },
+  "pending": [
+    "Implement reviewed regular Vis39.0/1/2/3 and required39.22 attack component, including missing beam friendly-fire and returning-body services.",
+    "Resolve remaining native status/charm/control/champion/appearance behavior, recent-damage decay, RNG/grid equivalence and hard-mode integration.",
+    "Full-camera visual readability, mixed-floor balance and controlled Linux/WASM performance remain open.",
+    "Continue every eligible record in full653-record goal; zero complete ports."
+  ],
+  "native_summary": "docs/reports/isaac-enemy-port/baby/native-summary.json",
+  "browser_summary": "docs/reports/isaac-enemy-port/baby/browser-summary.json",
+  "visual_review": "docs/reports/isaac-enemy-port/baby/visual-review.json",
+  "next_source_review": "docs/reports/isaac-enemy-port/vis/source-review.md"
+}

@@ -1,0 +1,20 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_tainted_hopper_tests
+[100%] Building CXX object CMakeFiles/deathward_tainted_hopper_tests.dir/tests/tainted_hopper_tests.cpp.o
+[100%] Linking CXX executable deathward_tainted_hopper_tests
+[100%] Built target deathward_tainted_hopper_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_tainted_pooter_tests
+[100%] Building CXX object CMakeFiles/deathward_tainted_pooter_tests.dir/tests/tainted_pooter_tests.cpp.o
+[100%] Linking CXX executable deathward_tainted_pooter_tests
+[100%] Built target deathward_tainted_pooter_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_boom_fly_tests
+[100%] Building CXX object CMakeFiles/deathward_boom_fly_tests.dir/tests/boom_fly_tests.cpp.o
+[100%] Linking CXX executable deathward_boom_fly_tests
+[100%] Built target deathward_boom_fly_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests

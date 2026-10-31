@@ -1,0 +1,57 @@
+{
+  "status": "validated_partial_implementation_checkpoint",
+  "last_verified_checkpoint": "../maggot/checkpoint.json",
+  "mechanics_fingerprint": "8f2115c5da5f2e7f",
+  "native_game_build": {
+    "passed": true,
+    "log": "build-native-final.txt"
+  },
+  "mechanics_validation": {
+    "passed": true,
+    "log": "mechanics-1.txt"
+  },
+  "shared_regression": {
+    "passed": 2,
+    "total": 2,
+    "log": "shared-regression-2.txt",
+    "suites": [
+      "spitty_family",
+      "cardinal_walkers"
+    ],
+    "earlier_attempt": "shared-regression-1.txt matched no tests and is not validation evidence"
+  },
+  "focused_brain": {
+    "passed": true,
+    "log": "native-focused-final.txt"
+  },
+  "earlier_failures": [
+    "Undefined Paper render color replaced with the existing explicit flash palette.",
+    "Test called private addHazard; isolated hazard fixture now copies the real emitted patch into the public test state.",
+    "Body collision test used a flying Fly, excluded by ground-body constraints; corrected to a grounded Maggot.",
+    "Fast interval fixture pre-initializes charge; its expected first-tick phase now accounts for that while keeping the separate initialization test.",
+    "Initial bot followed Brain through active creep; threat-aware player steering passes without changing enemy stats or damage expectations.",
+    "First64seed search found both source bands but no natural interior river; offline search found seed101, now a fixed real-generated regression witness.",
+    "Eggy navigation counterexample depended on an old encounter roll; original terrain/actor/target coordinates are now explicit while its separate natural-spawn test remains.",
+    "Final WASM link exited143; terminal status verified before successful retry.",
+    "Initial Spitty browser compatibility attempt found the local server PID absent and connection refused; server was restarted and four cases passed."
+  ],
+  "remaining": [
+    "Exact native grid/RNG/global-update equivalence, appearance activation, source status/control/champion and all item-immunity/producer routes, exact alpha-mask footprint, all-camera mixed-room readability, full-floor mixed-build balance and controlled Linux/WASM rendering performance.",
+    "Continue Mr. Maw family and the remaining full roster; no complete ports claimed."
+  ],
+  "jobs": "All builds, tests, captures and source checks terminal. Local server stopped after served-build verification.",
+  "global_checklist_unchanged": false,
+  "goal_active": true,
+  "priority": "regular enemies and required offspring",
+  "checkpoint": "docs/reports/isaac-enemy-port/brain/checkpoint.json",
+  "native": {
+    "passed": 87,
+    "total": 87,
+    "report": "native-summary.json"
+  },
+  "browser": {
+    "passed": 11,
+    "total": 11,
+    "report": "browser-summary.json"
+  }
+}

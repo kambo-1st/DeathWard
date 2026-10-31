@@ -1,0 +1,112 @@
+[
+  {
+    "name": "open",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-32.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "42",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/brain/native-final-open.png"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "cover",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-32.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/brain/native-final-cover.png",
+      "--enemy-terrain",
+      "cover"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "river",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-32.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/brain/native-final-river.png",
+      "--enemy-terrain",
+      "river"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "death",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-32.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "188",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/brain/native-final-death.png",
+      "--enemy-hit",
+      "180",
+      "10000"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "expired",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-32.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "520",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/brain/native-final-expired.png",
+      "--enemy-hit",
+      "180",
+      "10000"
+    ],
+    "exit": 0
+  }
+]

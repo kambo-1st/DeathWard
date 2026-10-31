@@ -1,0 +1,109 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/854.000_adult leech.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/adult-leech/animations/854.000_adult leech.anm2",
+      "sha256": "ff5c1f6d26a1bf0215c93cfb2c015f82832fbaba87cbf427f71be213ac0d91d6",
+      "checksum": "0xb29594e5",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Sound"
+        },
+        {
+          "Id": "1",
+          "Name": "Hit"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "BounceOverlay",
+            "FrameNum": "12",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "MoveHori",
+            "FrameNum": "16",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Burrow",
+            "FrameNum": "25",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "8"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "22"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Charge",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "ChargeHit",
+            "FrameNum": "19",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "11"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "ChargeDown",
+            "FrameNum": "43",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "18"
+            },
+            {
+              "EventId": "0",
+              "AtFrame": "31"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

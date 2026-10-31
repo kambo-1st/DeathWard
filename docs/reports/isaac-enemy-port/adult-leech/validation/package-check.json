@@ -1,0 +1,20 @@
+{
+  "pass": true,
+  "files": [
+    {
+      "file": "index.js",
+      "sha256": "894d4d47a917a3ba5b729b2834b2e531829aa63bf80c9f65ba9212e9443d4cd5",
+      "gzip_matches": true
+    },
+    {
+      "file": "index.wasm",
+      "sha256": "611441963c7fb243459254e4e35ad57f08c543d0b77f04c3ad566a9cb58338dc",
+      "gzip_matches": true
+    },
+    {
+      "file": "index.data",
+      "sha256": "5dc967d4ac14ddf42109164823bc5a776a13d00c5dc6ec4e676a4c99c3dcf84e",
+      "gzip_matches": true
+    }
+  ]
+}

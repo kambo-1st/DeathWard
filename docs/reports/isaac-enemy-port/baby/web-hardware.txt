@@ -1,0 +1,37 @@
+START normal
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME normal 5 volleys 0 teleports 0 dashes 0
+FRAME normal 125 volleys 2 teleports 0 dashes 0
+FRAME normal 244 volleys 2 teleports 1 dashes 0
+FRAME normal 364 volleys 2 teleports 1 dashes 0
+PASS normal
+START angelic
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME angelic 5 volleys 0 teleports 0 dashes 0
+FRAME angelic 125 volleys 1 teleports 0 dashes 0
+FRAME angelic 244 volleys 1 teleports 1 dashes 0
+FRAME angelic 365 volleys 3 teleports 1 dashes 0
+PASS angelic
+START small
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME small 5 volleys 0 teleports 0 dashes 0
+FRAME small 125 volleys 1 teleports 0 dashes 0
+FRAME small 244 volleys 1 teleports 1 dashes 0
+FRAME small 364 volleys 3 teleports 1 dashes 0
+PASS small
+START wrinkly
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME wrinkly 6 volleys 0 teleports 0 dashes 0
+FRAME wrinkly 125 volleys 0 teleports 0 dashes 0
+FRAME wrinkly 245 volleys 0 teleports 0 dashes 0
+FRAME wrinkly 365 volleys 0 teleports 0 dashes 0
+FRAME wrinkly 484 volleys 0 teleports 0 dashes 0
+FRAME wrinkly 605 volleys 0 teleports 0 dashes 0
+AssertionError [ERR_ASSERTION]: real attack
+    at /home/kambo/workspace/DeathWard/web/baby-test.cjs:70:77 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

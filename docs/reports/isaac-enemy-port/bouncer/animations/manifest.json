@@ -1,0 +1,95 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/822.000_bouncer.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/bouncer/animations/822.000_bouncer.anm2",
+      "sha256": "2f9d2905f4d7479a84a50dcea960f23744d2ba7faa30a33e1b3099a97d29a114",
+      "checksum": "0x6d358ae9",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Inflate"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadWalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadWalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadAppear",
+            "FrameNum": "21",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "HeadInflate",
+            "FrameNum": "21",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "7"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "HeadWalkInflated",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

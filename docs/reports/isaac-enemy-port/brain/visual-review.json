@@ -1,0 +1,118 @@
+{
+  "scope": "Individually inspected Original-style screenshots. Full-camera mixed-room readability and controlled performance remain open. FPS labels captured during concurrent builds/tests are not benchmark evidence.",
+  "full_gate": false,
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/native-open.png",
+      "platform": "Linux",
+      "build": "before_pool_render_fix",
+      "result": "limited",
+      "observation": "Readable folded Brain and red trail, but overlapping coplanar patches show depth-fighting stripes. This prompted the shared translucent-pool depth-write fix."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/native-river.png",
+      "platform": "Linux",
+      "build": "before_pool_render_fix",
+      "result": "limited",
+      "observation": "Readable folded Brain and red trail, but overlapping coplanar patches show depth-fighting stripes. This prompted the shared translucent-pool depth-write fix."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/native-final-open.png",
+      "platform": "Linux",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Two-lobed pink Brain visible beside the protagonist. Red trail boundaries are clear and overlapping patches blend without the prior stripes."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/native-final-cover.png",
+      "platform": "Linux",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Brain visible beside the solid crate, with a turning red trail around nearby props. No depth-fighting stripes; body and prop shadows remain visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/native-final-river.png",
+      "platform": "Linux",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Grounded Brain visible on the dry bank beside the cliff, with continuous red patches and the river at left. Patch overlaps no longer have striped artifacts."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/native-final-death.png",
+      "platform": "Linux",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Active-room hostile counter is zero and the Brain body is gone; its emitted trail persists in this debug fixture. The purple spider belongs to visible neighboring-room scenery/residents, not this Brain offspring."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/native-final-expired.png",
+      "platform": "Linux",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Same death-fixture view after trail lifetime and fade: all red patches have disappeared; loot and background geometry remain."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/brain-charge.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Folded pink Brain and circular red creep clearly visible on open ground beside the player; Original palette, lighting and shadows intact."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/brain-cover-trail.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Brain and turning red trail visible around the crate and barrel; overlapping circles blend without stripes."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/brain-river-trail.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Brain remains on the dry bank beside cliff and river; trail visible and overlaps cleanly."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/brain-death-after-death.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Active hostile counter is zero, Brain removed and its red trail remains in the debug lifecycle fixture; neighboring-room spider is separate."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/brain-death-expired.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Same view after expiry and fade: red trail removed, loot and environment unchanged."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/resident-band-2-charge.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Actual Works-band Brain visible among green spiders and taller walkers. Pink lobes and red patch distinguish it from surrounding bodies."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/resident-band-3-trail.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Actual Storm-band Brain and its overlapping trail visible beside rock and taller walkers; local obstacle occlusion remains natural."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web/resident-river-trail.png",
+      "platform": "WASM",
+      "build": "final",
+      "result": "accepted_smoke",
+      "observation": "Actual seeded mixed room with visible river/ford. Brain and hero at the crossing, red trail on the approach; physics probe separately verifies legal grounded positions."
+    }
+  ],
+  "summary": {
+    "inspected": 15,
+    "accepted_smoke": 13,
+    "limited": 2,
+    "final_inspected": 13,
+    "historical_defect_views": 2
+  }
+}

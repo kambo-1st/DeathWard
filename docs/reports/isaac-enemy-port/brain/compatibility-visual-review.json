@@ -1,0 +1,10 @@
+{
+  "scope": "Additional individually inspected compatibility screenshot, separate from the15 Brain views.",
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/web-spitty-final/tainted-spitty-scene.png",
+      "result": "accepted_body_smoke",
+      "observation": "Tainted Spitty body and moving red projectiles retain Original presentation and shadows. No landed tar is visible at this captured frame, so this image does not establish tar-overlap rendering."
+    }
+  ]
+}

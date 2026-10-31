@@ -1,0 +1,224 @@
+{
+  "status": "Partial Charger-family checkpoint. Full 653-record goal remains active; no full acceptance claimed.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "mechanics_fingerprint": "131ed398f76a5e9b",
+  "runtime_definitions": 137,
+  "scope": [
+    "23.0.0 normal Charger shared-controller correction",
+    "23.1.0 Drowned Charger",
+    "23.2.0 Dank Charger",
+    "23.3.0 Carrion Princess",
+    "855.0.0 Level 2 Charger"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/chargers/source-review.json",
+  "source_only_dependencies": [
+    "23.0.1 My Shadow: item producer and ally contract reviewed, not ported",
+    "855.1.0 Elleech: dedicated Ascent route classification, not ported"
+  ],
+  "native": {
+    "passed": 44,
+    "failed": 0,
+    "seconds": 98.43,
+    "basis": "All 44 suites passed in one complete run after the repeated-fire cooldown correction, including last-enemy Drowned death volley and four starting-kit trials. My Shadow/Elleech source-only review was subsequently added and the checklist validator passed separately.",
+    "results": "docs/reports/isaac-enemy-port/chargers/native-results.json"
+  },
+  "browser": {
+    "passed": 65,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/chargers/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/chargers/full/browser-tests.txt",
+    "count_policy": "65 distinct cases in one final complete run. Earlier 63-case and targeted runs are historical, not additional distinct coverage. Final run includes frame-45 Princess capture and both repeated-fire checks on the rebuilt WASM runtime."
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "native_fixture": "docs/reports/isaac-enemy-port/chargers/behavior.txt",
+    "covered": "Immediate cardinal or diagonal acquisition; straight versus bounded-steering charge; swept wall-normal reflection including oblique incidence; stationary Dank recovery and nondamaging slowing tar; real nearest-shape bullet collision with armored front/side and vulnerable pink tail, including piercing; blast/fire overlap with actual tail; repeated flame cooldown after charge-controller dispatch; Drowned four fixed-diagonal death shots surviving last-enemy room completion; execution cleanup; Level 2 doubled contact conversion.",
+    "wasm_observations": "Drowned four death shots and zero remaining threats; Dank reflected heading, tar and stationary recovery; negative-diagonal Princess dash; Level 2 cardinal start and subsequent curved heading; Drowned HP 60.4 then 50.4 under continued fire, Princess 73.2 then 63.2; actual flooded replacement and Level 2 seeded residents. Browser and GL error lists are empty."
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "ordinary_conditional_ids": 29,
+    "actual_canyon_floors": 170,
+    "log": "docs/reports/isaac-enemy-port/chargers/floor_progression.txt",
+    "replacement_log": "docs/reports/isaac-enemy-port/chargers/monster_replacements.txt",
+    "dedicated_boss_ids": [
+      "68.0.0",
+      "68.1.0"
+    ],
+    "owned_component_ids": [
+      "68.10.0",
+      "68.11.0"
+    ],
+    "stage_bands": {
+      "23.0.0": [
+        1,
+        3
+      ],
+      "23.1.0": [
+        1,
+        2
+      ],
+      "23.2.0": [
+        2
+      ],
+      "23.3.0": [
+        1
+      ],
+      "855.0.0": [
+        3
+      ]
+    },
+    "actual_fixtures": [
+      {
+        "id": "23.1.0",
+        "seed": 0,
+        "floor_zero_based": 2,
+        "room": 3,
+        "variant": "standard"
+      },
+      {
+        "id": "23.2.0",
+        "seed": 0,
+        "floor_zero_based": 3,
+        "room": 2,
+        "variant": "standard"
+      },
+      {
+        "id": "855.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 12,
+        "variant": "standard"
+      },
+      {
+        "id": "23.1.0",
+        "seed": 3,
+        "floor_zero_based": 1,
+        "room": 1,
+        "source": "23.0.0",
+        "variant": "flooded"
+      },
+      {
+        "id": "23.3.0",
+        "seed": 5,
+        "floor_zero_based": 2,
+        "room": 8,
+        "variant": "flooded"
+      }
+    ],
+    "replacement_sample": {
+      "draws": 10000,
+      "drowned": 5002,
+      "configured_probability": 0.5
+    },
+    "floor_context_sample": {
+      "seeds": 600,
+      "flooded": 192,
+      "local_standard_to_flooded_weights": [
+        2,
+        1
+      ]
+    },
+    "scope": "Actual Rourke-account rooms with source-slot provenance, four approved broad stage bands, immutable definition snapshots and preserved topology/heights/roads/rivers. Flooded is a local context with damp patches and combat-room flags, not complete native water-floor art. My Shadow and Elleech are not enabled ordinary pool entries."
+  },
+  "configuration": {
+    "result": "pass_for_tested_scope",
+    "files": [
+      "assets/mechanics/chargers.mechanics",
+      "assets/mechanics/encounters.mechanics",
+      "assets/mechanics/replacements.mechanics",
+      "assets/mechanics/monsters.mechanics"
+    ],
+    "coverage": "External charge modes, steering, recovery, contact damage, trail, compact tail geometry and death shots. Duplicate extension rows, absent charge controller, invalid bounds, oversized tail and incompatible controller rejected. Existing replacement snapshot, deterministic draw, placement budget, tutorial and geometry regressions pass."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "starting_kit": {
+      "hp": 100,
+      "damage": 24,
+      "items": 0,
+      "bombs": 0,
+      "god_mode": false
+    },
+    "bot_results": [
+      {
+        "id": "23.1.0",
+        "seconds": 2.16667,
+        "remaining_hp": 100,
+        "kills": 1
+      },
+      {
+        "id": "23.2.0",
+        "seconds": 3.15,
+        "remaining_hp": 100,
+        "kills": 1
+      },
+      {
+        "id": "23.3.0",
+        "seconds": 6.01667,
+        "remaining_hp": 100,
+        "kills": 1
+      },
+      {
+        "id": "855.0.0",
+        "seconds": 3.26667,
+        "remaining_hp": 100,
+        "kills": 1
+      }
+    ],
+    "scope": "Synthetic flat-room circular movement/fire/dodge bot with 1.5 seconds of survival after each death, including Drowned shots. No claim of human difficulty, varied builds or mixed generated rooms."
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/chargers/linux-drowned.png",
+      "docs/reports/isaac-enemy-port/chargers/linux-dank.png",
+      "docs/reports/isaac-enemy-port/chargers/linux-princess.png",
+      "docs/reports/isaac-enemy-port/chargers/linux-level2.png",
+      "docs/reports/isaac-enemy-port/chargers/linux-flooded.png",
+      "docs/reports/isaac-enemy-port/chargers/linux-level2-resident.png",
+      "docs/reports/isaac-enemy-port/chargers/linux-princess-repeat-fire.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/chargers/full/wasm-drowned-death-volley-48.png",
+      "docs/reports/isaac-enemy-port/chargers/full/wasm-dank-reflection-70.png",
+      "docs/reports/isaac-enemy-port/chargers/full/wasm-princess-diagonal-45.png",
+      "docs/reports/isaac-enemy-port/chargers/full/wasm-level2-steering-40.png",
+      "docs/reports/isaac-enemy-port/chargers/full/wasm-resident-drowned-charger-60.png",
+      "docs/reports/isaac-enemy-port/chargers/full/wasm-resident-level2-charger-60.png",
+      "docs/reports/isaac-enemy-port/chargers/full/wasm-princess-repeat-fire-45.png"
+    ],
+    "observation": "Blue Drowned, dark Dank, bone Princess with visible pink tail, and green/bone Level 2 remain distinguishable in these Original-style captures. Flooded context adds muted damp sediment. Early camera motion and foreground canyon geometry obscure some actors; all-camera mixed-threat readability remains open. Dank tar appears as separated deposits; native trail continuity is not established. These procedural shapes are provisional.",
+    "capture_provenance": "Six original native views preceded the final cooldown-only runtime correction; final native Princess fire view and the complete 65-case browser run use the rebuilt runtime. Earlier heavily occluded Princess frame-12 image is preserved separately; frame 45 is the clearer view. No screenshot FPS is used as a performance result."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Structural bounds only: four swept reflections per tick, bounded local tail hit shapes, configured timed trail/death-shot work, per-room specialist caps and existing global hazards/actors/projectiles/events limits. No controlled Linux/WASM performance acceptance for this batch."
+  },
+  "failures_resolved": [
+    "Initial compilation used an unavailable flatDirection helper; corrected to existing horizontal/unit primitives.",
+    "An initial weak-point test called a private helper; replaced with real projectile simulation assertions.",
+    "Dank reflection fixture placed an invulnerable spectator directly in the dash lane, preventing wall arrival. Moving the spectator after acquisition exercises committed reflection.",
+    "Initial Princess browser destination lay behind a barrel, correctly preventing acquisition; a legal negative diagonal now tests the behavior.",
+    "Starting-kit fixture initially dereferenced an enemy after normal dead-actor cleanup removed it. Null-safe fixture lookup fixes the test crash; production cleanup was correct.",
+    "Charge dispatch returned before the common fire-contact timer update. The dedicated controller now advances the timer; protected-front and repeated-tail fire checks and both browser repeated-fire cases pass.",
+    "Early Princess frame-12 native view was heavily occluded during camera movement. Later frame 45 provides a useful capture; this does not certify all-camera visibility."
+  ],
+  "limitations": [
+    "Exact native acceleration, acquisition width, steering speed, recovery and dash termination values need measurement or final accepted adaptation review.",
+    "Generic champions, full item/status/team exceptions and mode-specific/Ascent routing are not completed by these normal variants.",
+    "Princess item-specific armor exceptions and exact source explosion/fire behavior remain unverified; current spatial-tail policy is documented local behavior.",
+    "Flooded Quarry context is functional and visible but does not reproduce full source water-floor art or native environment interactions.",
+    "All-camera mixed-threat readability, human/mixed-build floor balance and controlled Linux/WASM performance acceptance remain open."
+  ],
+  "reproduction": {
+    "fixture": "./build/deathward_charger_tests",
+    "native": "ctest --test-dir build -j4 --output-on-failure",
+    "browser": "node web/enemy-port-test.cjs (with Playwright, DEATHWARD_BROWSER and the packaged WASM server)",
+    "princess": "./build/deathward --smoke --scene enemy-23.3.0 --enemy-player-at 1 -8 -8 --theme canyon --style original --frames 45 --mute",
+    "flooded": "./build/deathward --smoke --scene resident-23.1.0 --resident-seed 3 --resident-floor 1 --resident-from 23.0.0 --theme canyon --style original --frames 60 --mute",
+    "level2": "./build/deathward --smoke --scene resident-855.0.0 --resident-seed 0 --resident-floor 5 --theme canyon --style original --frames 60 --mute"
+  }
+}

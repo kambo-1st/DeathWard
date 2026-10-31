@@ -1,0 +1,79 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "status": "ordinary Bony behavioral source review; not completion certification",
+  "identity": {
+    "id": "227.0.0",
+    "name": "Bony",
+    "baseHP": 8,
+    "stageHP": 2,
+    "collisionRadius": 13,
+    "collisionDamage": 1,
+    "not_variants": {
+      "227.1.0": "Holy Bony",
+      "277.0.0": "Black Bony"
+    }
+  },
+  "evidence": {
+    "installed_dispatch": "Previously verified NPC227 case0x699d4f calls0x525830. Full bounded AI retained in native/bony_ai.asm.",
+    "wiki": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266724",
+    "wiki_reference": "docs/research/isaac-mechanics-reference.json articles.Bony",
+    "animation": "animations/manifest.json",
+    "native": "native/manifest.json",
+    "target_getter_binding": {
+      "method": "GetPlayerTarget",
+      "name_address": "0xb533b8",
+      "registration": "0x807737..0x807740",
+      "function": "0x695680",
+      "bytes": "688056690068b833b500",
+      "note": "Installed push function/push name registration uniquely identifies the getter after the newer function signature failed."
+    }
+  },
+  "findings": [
+    {
+      "claim": "State4 uses axis-aligned random movement with native speed parameter1.25.",
+      "evidence": "0x525c72..0x525cb9; installed signature uniquely binds NPCAI_Pathfinder::MoveRandomlyAxisAligned to0x7a51e0.",
+      "limit": "Shared native pathfinder destination/friction details are not reproduced by local wander decisions."
+    },
+    {
+      "claim": "Default acquisition is gated every3 global updates with entity offset.",
+      "evidence": "0x525f48..0x525f54 and frame_gate.asm: (globalCounter+entityOffset)%interval==0, with source flags/global pause exceptions."
+    },
+    {
+      "claim": "Predict target position using uniform[0,16) times target velocity; test either coordinate within20 and range strictly below200, then room line check.",
+      "evidence": "0x525fa0..0x526159, constants b6a9b0=16,b6a9c8=20,b6aba8=200; source compares pathfinder grid centre with predicted/clamped position.",
+      "limit": "Local alignment uses body position, a0..16/30s velocity prediction, explicit2-unit margin/20-unit range and world sight; native grid clamping/path-marker semantics remain unverified."
+    },
+    {
+      "claim": "Attack plays AttackHori/Up/Down, throws on Shoot, then returns to wander on animation completion.",
+      "evidence": "0x526159..0x526211 and0x52629e..0x5266a2; checksum-verified normal/Black animation metadata:13frames, Shoot at4,30FPS."
+    },
+    {
+      "claim": "Normal Bony fires one bone toward current target at the Shoot event, with native speed10.",
+      "evidence": "0x5262f5..0x5263af,variant1 atProjectileParams+0x94; FireProjectiles mode0 call0x6a1a20 uniquely matches installed signature.",
+      "limit": "Projectile collision/status/item exceptions and exact native default params need further acceptance."
+    },
+    {
+      "claim": "Source normal acquisition explicitly skips SpawnerType906 when no alternate forced target is active.",
+      "evidence": "0x525f5a compares[entity+0x34] with0x38a then branches out; SpawnerType+0x34 was independently verified in passenger source review.",
+      "limit": "Do not assume normal Bony attacks while carried by Hornfel. Forced target branch and carrier scheduling need separate source review; current cart slot remains pending."
+    }
+  ],
+  "implementation_scope": [
+    "Ordinary ground Bony only: reusable cardinal wandering, cadence-limited alignment acquisition, aimed bone,13-frame stop/throw/recover sequence.",
+    "Stage HP8+2*sharedSourceStage mapped x3.2; sparse crossfire/supply_guard roles in bands1-3.",
+    "Preserve tutorial/Mine/player defaults and Original rendering; source art is not imported."
+  ],
+  "adaptations": [
+    "Source animation counts converted to seconds at30FPS, simulated at60Hz. Existing graph state transitions add at most one simulation tick around boundaries.",
+    "Wander decision interval.7..1.8s and wall turns use DeathWard navigation; source1.25 speed converted to3.75world/s plus existing10% aggression modifier.",
+    "Acquisition phase uses actor age/entityID rather than original global counter/InitSeed; body position replaces path-grid centre.",
+    "Existing seeded spawn cooldown provides initial entry grace; no extra cooldown is reset after a throw.",
+    "World range20,alignment2,shot speed30; body radius.65 and hostile10damage before existing25% multiplier retain DeathWard proportions."
+  ],
+  "remaining": [
+    "Status/faction/item exceptions, exact shared pathfinder and projectile default semantics.",
+    "Holy/Black and other family members tracked separately; no variant implied by normal Bony.",
+    "Mounted behavior explicitly deferred; normal acquisition has a native Hornfel spawner guard.",
+    "All six acceptance gates, including native/WASM visuals, balance and rendered performance."
+  ]
+}

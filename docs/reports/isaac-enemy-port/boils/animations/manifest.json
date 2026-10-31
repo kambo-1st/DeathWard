@@ -1,0 +1,337 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/030.000_Boil.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/boils/animations/030.000_Boil.anm2",
+      "sha256": "cec01d00e5ffe32e1a5d6d071669656326619a3489134529f953ef1213ed5ebd",
+      "checksum": "0xc62cfed",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 4:19:49 PM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shake",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Shrink",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/030.001_Gut.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/boils/animations/030.001_Gut.anm2",
+      "sha256": "8428bbf19878752a0ac3b0c4b270f4a72db48d57cfbe818bda5c46eb18cbba71",
+      "checksum": "0xbf77e763",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 4:20:27 PM",
+        "Version": "106",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shake",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Shrink",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/030.002_Sack.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/boils/animations/030.002_Sack.anm2",
+      "sha256": "2e398eb5d54ae788ddea398f0f0727982a6f5d225cd4b7d89bf6ac23aa108849",
+      "checksum": "0x67ab9eb4",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 4:20:08 PM",
+        "Version": "106",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Shake",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Shrink",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/088.000_Walking Boil.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/boils/animations/088.000_Walking Boil.anm2",
+      "sha256": "83839331e9075edbeef5e347da425632a7f40c99943cd310a12be8f910c7f328",
+      "checksum": "0x336d511b",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 11:46:49 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/088.001_Walking Gut.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/boils/animations/088.001_Walking Gut.anm2",
+      "sha256": "2bc7ae27f7be23e61aab9cd4c245f9cf2ed44c070c2ed7003306087cb07c51a2",
+      "checksum": "0x6dcc02bd",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 11:47:55 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/088.002_Walking Sack.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/boils/animations/088.002_Walking Sack.anm2",
+      "sha256": "1c016500899db16931c4db16380631f94ae29de43da3c89ebbde68d59960c6b5",
+      "checksum": "0xb7ad2e19",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 11:48:55 AM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Shoot",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

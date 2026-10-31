@@ -1,0 +1,122 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Ordinary hostile subtype zero; shared controllers do not imply shared behavior.",
+  "dispatch": [
+    {
+      "type": 278,
+      "index": 11,
+      "case": "0x699d13",
+      "controller": "0x4fc330"
+    },
+    {
+      "type": 279,
+      "index": 18,
+      "case": "0x699e4b",
+      "controller": "0x500140"
+    },
+    {
+      "type": 280,
+      "index": 1,
+      "case": "0x699cfb",
+      "controller": "0x4f8e40"
+    }
+  ],
+  "windows": [
+    {
+      "name": "parent",
+      "start": "0x4fc330",
+      "end_exclusive": "0x4fd0b5",
+      "instructions": 796,
+      "raw_sha256": "febd10cad00e71de1762677bfc92007fc4f78f5ccad3714b7fad6088590442d7",
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/parent.asm",
+      "sha256": "bcef706f3e141b6b9deade0e1d0ae065c34002a3b3516bd8d136ee336d22a8d4"
+    },
+    {
+      "name": "head-complete",
+      "start": "0x500140",
+      "end_exclusive": "0x500f98",
+      "instructions": 781,
+      "raw_sha256": "b924a06007301543b44744cc71b6d6f0f8831d1f9de184468773f7283ff4675f",
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/head-complete.asm",
+      "sha256": "e8fd60c04dd4ebe9860c5c012767bedd27de32fb1cc4f9bd019d93798af81591"
+    },
+    {
+      "name": "body-complete",
+      "start": "0x4f8e40",
+      "end_exclusive": "0x4f9a6e",
+      "instructions": 756,
+      "raw_sha256": "bc408b2f5a36e5e2a1db9bc51194934b30b8dde1a2d9cf4a50407d380b6b9877",
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/body-complete.asm",
+      "sha256": "92e1aea11cdc7bc57460f8a12f4536d945b6d2c8f1683fa4dfb727f6add65950"
+    },
+    {
+      "name": "throw-spider",
+      "start": "0x6994f0",
+      "end_exclusive": "0x69972c",
+      "instructions": 145,
+      "raw_sha256": "81dc7e65d0c3d5cc632937b4c8bb0f592ee3a0da45a45d03e0ffe15dc34dd6a4",
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/throw-spider.asm",
+      "sha256": "aa5adc9c360457058c0f9e730604b924779015be6f1c828e96999023a748e906"
+    }
+  ],
+  "constants": {
+    "strict_damage_threshold": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "target_fraction_and_body_friction": {
+      "address": "0xb6a53c",
+      "value": 0.75
+    },
+    "parent_path_force": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "dense_creep_interval": {
+      "address": "0xb6a98c",
+      "value": 12.0
+    },
+    "sparse_creep_interval": {
+      "address": "0xb6a9e8",
+      "value": 24.0
+    },
+    "extra_creep_speed_squared": {
+      "address": "0xb6a95c",
+      "value": 9.0
+    }
+  },
+  "body_overlay": {
+    "address": "0xb42efc",
+    "animation": "Spiders",
+    "frames": 8
+  },
+  "claims": [
+    {
+      "window": "parent",
+      "address": "0x4fc57a..0x4fc62e",
+      "meaning": "Poll last emitted HP minus current HP; strictly greater than 5 emits once and updates baseline. Throw toward 75% of player delta from height -30."
+    },
+    {
+      "window": "parent",
+      "address": "0x4fcbce..0x4fd097",
+      "meaning": "Death releases independent body280 at origin and head279 at free position within40; no goo, overkill suppression or separate forced spider."
+    },
+    {
+      "window": "head-complete",
+      "address": "0x5003b7..0x500407",
+      "meaning": "Type279 pursues using .5 path force and grid cost900; bypasses ordinary Brain cardinal wandering/charge."
+    },
+    {
+      "window": "head-complete",
+      "address": "0x500dcd..0x500f98",
+      "meaning": "Common red-creep trail uses12/24 interval at room count5, extra halfway emission at speed squared>9."
+    },
+    {
+      "window": "body-complete",
+      "address": "0x4f982f..0x4f9a6e",
+      "meaning": "Initial20..39 cooldown, requires room count<5; ThrowSpider zero target selects nearby free position. Reload90 or180, not uniform. Final tail after RET decrements cooldown."
+    }
+  ],
+  "preflight_correction": "head.asm and body.asm are incomplete historical first-return windows. Use head-complete.asm and body-complete.asm."
+}

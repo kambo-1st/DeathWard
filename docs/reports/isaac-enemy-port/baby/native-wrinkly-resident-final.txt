@@ -1,0 +1,1 @@
+PASS seed=28 floor=7 room=9 band=3 variant=3 river=0 frames=360 ticks=180 volleys=2 teleports=0 dashes=1

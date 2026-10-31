@@ -1,0 +1,7 @@
+MOVEMENT hp64 X.85 Y.8 charge=.8v+direction global7 committed=1 prediction=1 cover=1 bodies=1 grid=1 safe_grid=1
+CREEP crowd5 periods12/24 fast_half_step=1 radius2.46 lifetime125 fade40 damage12.5 owner_survival=1 clear=1 capacity=1 suspend=1
+STARTING_KIT seconds=8.68333 hp=100
+CONFIG immutable=1 invalid_profiles=6
+NATURAL_BRAIN seed=2 floor=5 room=6 band=3
+NATURAL_BRAIN seed=22 floor=5 room=6 band=2
+both native-equivalent habitat bands and a real river room

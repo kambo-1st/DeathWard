@@ -1,0 +1,9 @@
+{
+  "stopped_utc": "2026-10-27T22:30:12.900855+00:00",
+  "pid": 280509,
+  "command": "node web/baby-test.cjs ",
+  "signal": "SIGTERM",
+  "reason": "Confirmed headless WebGL renderer is SwiftShader; independent windowed probe uses RTX4070TiSUPER via WSL D3D12. Intentionally stop software run before repeating same behavioral cases on verified hardware configuration.",
+  "evidence": "browser-renderer-probe.json",
+  "pass_claimed": false
+}

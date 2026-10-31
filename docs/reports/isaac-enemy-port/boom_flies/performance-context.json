@@ -1,0 +1,13 @@
+{
+  "kernel": "6.18.33.2-microsoft-standard-WSL2",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
+  "logical_cpus": 12,
+  "load": [
+    7.8251953125,
+    8.740234375,
+    8.40576171875
+  ],
+  "scope": "Optimized native core only; mixed24 actors and eight Tainted blast chains in synthetic flat arena. No render or pre-port binary comparison. Not full performance acceptance.",
+  "compiler": "GCC11 -O3 C++20",
+  "procedure": "Final probes compiled with GCC11 -O3 C++20 against the final native core after full native/WASM builds and the 127-case browser run completed; serial CPU probes, no concurrent game capture. Recorded load sample predates this rerun and is not a per-sample load trace."
+}

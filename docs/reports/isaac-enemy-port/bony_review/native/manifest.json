@@ -1,0 +1,61 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "anchors": {
+    "MoveRandomlyAxisAligned": {
+      "matches": [
+        "0x7a51e0"
+      ],
+      "signature": "558bec83e4f081ec98000000a1????????33c4898424????????5657",
+      "declaration": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/NPCAI_Pathfinder.zhl",
+      "sha256": "fa0b5d927ed0a352d166dfc4a1a8d4abdd1f0dca862f81b6f43aad7a8f6b8a75",
+      "status": "unique signature binding"
+    },
+    "GetPlayerTarget": {
+      "matches": [],
+      "signature": "558bec6aff68????????64a1????????5083ec64535657a1????????33c5508d45??64a3????????8bf1",
+      "declaration": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+      "sha256": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462",
+      "status": "unresolved newer signature"
+    },
+    "FireProjectiles": {
+      "matches": [
+        "0x6a1a20"
+      ],
+      "signature": "538bdc83ec0883e4f883c404558b6b??896c24??8bec6aff68????????64a1????????505383ec405657a1????????33c5508d45??64a3????????894d??33f6",
+      "declaration": "reference/isaac-mechanics-study/code/TeamREPENTOGON__REPENTOGON/348e5d0ea277760fc87af420d88e2c7909c9167e/libzhl/functions/EntityNPC.zhl",
+      "sha256": "bcfd9d7fee74e6820338dcc0b8a6df2b81d6002affd7bb553b094fb3a4a3d462",
+      "status": "unique signature binding"
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/bony_review/native/bony_ai.asm",
+      "start": "0x525830",
+      "end_exclusive": "0x5268bd",
+      "raw_sha256": "6274a116c17c5c278314e3abe95297a13f064ec7c0eecf95f8206f7b581e868b",
+      "artifact_sha256": "b608dd8a6e426787eebf99a8f14ddd124919324dab71d794d5441729b6762658"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/bony_review/native/frame_gate.asm",
+      "start": "0x684790",
+      "end_exclusive": "0x684800",
+      "raw_sha256": "6c216adb256ea0830aad9137ed36c65f6dc865bd25caa19ffe4623eb11524a46",
+      "artifact_sha256": "28e0da156cee7931ffce089afeeacca051a166a00e7288211c2772d92acbeec9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/bony_review/native/axis_wander.asm",
+      "start": "0x7a51e0",
+      "end_exclusive": "0x7a55f0",
+      "raw_sha256": "23f44b6893f8b2e6d2608adb1e98a8c14c43e60d327ec8f4f7f0f72168454a4b",
+      "artifact_sha256": "0074cc4403928f0b98492b1d60c8c506c8ed5f879ba8f473a725a077e3514d54"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/bony_review/native/grid_destination.asm",
+      "start": "0x7a6e20",
+      "end_exclusive": "0x7a6eb0",
+      "raw_sha256": "55cc3d0dbb62d53c8c3cc804ad82d359b9a163edcb49e5a85fb9fac2ff259cbf",
+      "artifact_sha256": "fc496d1cbab6fb33033a7e9c91f173598e9d561a066b287a4aa3d24a17f9d7d0"
+    }
+  ]
+}

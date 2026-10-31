@@ -1,0 +1,136 @@
+{
+  "inspected": [
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/native-normal.png",
+      "result": "accepted_smoke",
+      "scope": "Original-style unwinged body and emitted single shot visible in open clearing."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/native-angelic.png",
+      "result": "accepted_smoke",
+      "scope": "Pale winged silhouette and three separated projectiles visible; exact packet math comes from native behavior checks."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/native-small.png",
+      "result": "accepted_smoke",
+      "scope": "Smaller winged child and single shot distinguish it from full Angelic."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/native-wrinkly.png",
+      "result": "limited",
+      "scope": "Wrinkled dark face is visible; player is clipped by bottom edge of camera-follow capture. This is not full combat readability approval."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-hardware/normal-shot.png",
+      "result": "limited",
+      "scope": "Body and player visible; the first release frame overlaps the projectile with the body, so this does not establish flight readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-hardware/normal-vanish.png",
+      "result": "accepted_smoke",
+      "scope": "Body disappears fully with an unobtrusive ground ring; player remains visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-hardware/normal-appear.png",
+      "result": "limited",
+      "scope": "Body reappears beside clear cliff terrain; enemy-follow camera leaves the player offscreen."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-hardware/angelic-shot.png",
+      "result": "limited",
+      "scope": "Winged pale body distinct, but three shots overlap at release; flight inspection still needed."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-hardware/small-shot.png",
+      "result": "limited",
+      "scope": "Smaller winged body distinct, but release frame alone cannot establish projectile readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-hardware/wrinkly-ready.png",
+      "result": "limited",
+      "scope": "Dark wrinkled face visible; diagonal spectator clipped by lower edge and no attack in this failed pre-fix case."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/normal-flight.png",
+      "result": "accepted_smoke",
+      "scope": "Single red shot is clearly separated from the body and visible approaching player."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/angelic-flight.png",
+      "result": "accepted_smoke",
+      "scope": "Three red shots with distinct trajectories and ground shadows visible around player."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/small-flight.png",
+      "result": "accepted_smoke",
+      "scope": "Small winged child remains distinct and its single red projectile is clear."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/wrinkly-flight.png",
+      "result": "limited",
+      "scope": "Narrow triple volley clear above cover; player clipped by enemy-follow camera."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/wrinkly-dash-windup.png",
+      "result": "limited",
+      "scope": "Warning ring present; player clipped so reaction-space readability remains unapproved."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/wrinkly-dash.png",
+      "result": "limited",
+      "scope": "Warning ring ends at dash commitment; static frame and clipped player do not establish readable motion."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/angelic-river-flight.png",
+      "result": "accepted_smoke",
+      "scope": "Full triple packet crosses visible river with readable body/player on opposing banks."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/resident-3-seed-28-floor-7-flight.png",
+      "result": "limited",
+      "scope": "Actual populated room and triple packet visible; foreground terrain clips part of Wrinkly body."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/normal-cover-flight.png",
+      "result": "limited",
+      "scope": "Single projectile and actor clear around crate; HUD partly covers the spectator."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/resident-0-seed-5-floor-3-flight.png",
+      "result": "accepted_smoke",
+      "scope": "Target Baby, its shot and player visible in actual mixed population; other terrain-occluded enemies still need broader review."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/resident-0-seed-5-floor-4-flight.png",
+      "result": "limited",
+      "scope": "River population and player visible; foreground terrain clips Baby lower body and shot overlaps player."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/resident-1-seed-8-floor-6-flight.png",
+      "result": "accepted_smoke",
+      "scope": "Angelic silhouette and separated triple packet visible with actual mixed population."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/resident-1-seed-18-floor-5-flight.png",
+      "result": "accepted_smoke",
+      "scope": "Three incoming shots and Angelic visible beside actual interior river and mixed actors."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/angelic-appear.png",
+      "result": "limited",
+      "scope": "Reappeared winged silhouette clear; HUD overlaps spectator lower body."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-final/small-appear.png",
+      "result": "limited",
+      "scope": "Reappeared smaller child clear; HUD overlaps spectator lower body."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/native-wrinkly-final.png",
+      "result": "accepted_smoke",
+      "scope": "Final fixed build with normal player-follow camera shows both Wrinkly and protagonist clearly. Frame does not claim projectile-flight or dash-motion approval."
+    }
+  ],
+  "full_gate": false,
+  "performance_note": "Startup FPS overlays and concurrent build/test load are not controlled performance measurements."
+}

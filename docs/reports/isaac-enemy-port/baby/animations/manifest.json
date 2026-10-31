@@ -1,0 +1,527 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    },
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/038.001_Angelic Baby (small).anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/baby/animations/038.001_Angelic Baby (small).anm2",
+      "sha256": "638a761199884bc452744638af9402f9c6eb239e9d61b02b94bf4afaa149dd61",
+      "checksum": "0xe2fd98f4",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "07.05.2020 17:38:05",
+        "Fps": "30",
+        "Version": "106"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        },
+        {
+          "Id": "1",
+          "Name": "Jump"
+        },
+        {
+          "Id": "2",
+          "Name": "Land"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "8",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "32",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish2",
+            "FrameNum": "19",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/038.003_Wrinkly Baby.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/baby/animations/038.003_Wrinkly Baby.anm2",
+      "sha256": "3fe36b1a8b3e57c19c24b5bdad9fe02091403ee23da4ae6227b66fa1e1b04181",
+      "checksum": "0x495b566f",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "07.15.2019 18:02:26",
+        "Fps": "30",
+        "Version": "1"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        },
+        {
+          "Id": "1",
+          "Name": "Jump"
+        },
+        {
+          "Id": "2",
+          "Name": "Land"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "38",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "11"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "DashStart",
+            "FrameNum": "7",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "DashHori",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "DashDown",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "DashUp",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Vanish",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish2",
+            "FrameNum": "19",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/038.000_Baby.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/baby/animations/038.000_Baby.anm2",
+      "sha256": "952ae3d0da6ce01bdbe3b833b32816a8b91d4096663bd3cea6e396b44781294f",
+      "checksum": "0xcaa9c6b2",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 4:35:22 PM",
+        "Version": "106",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        },
+        {
+          "Name": "Jump",
+          "Id": "1"
+        },
+        {
+          "Name": "Land",
+          "Id": "2"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "32",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish2",
+            "FrameNum": "19",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/038.001_Angelic Baby.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/baby/animations/038.001_Angelic Baby.anm2",
+      "sha256": "1fa0e4e6ab469107cf8513cbbf5e2e705b7555528c8d6666f0d5c7608658b037",
+      "checksum": "0xba128cc6",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "07.05.2020 17:38:05",
+        "Fps": "30",
+        "Version": "106"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        },
+        {
+          "Id": "1",
+          "Name": "Jump"
+        },
+        {
+          "Id": "2",
+          "Name": "Land"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "8",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "32",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish2",
+            "FrameNum": "19",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/038.002_Ultra Pride Baby.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/baby/animations/038.002_Ultra Pride Baby.anm2",
+      "sha256": "868d07859fc557f5b79c492e115b629de8e51e1ff96b98b942ea78d2f9c56c74",
+      "checksum": "0x568e098c",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 4:37:12 PM",
+        "Version": "105",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Explosion",
+          "Id": "0"
+        },
+        {
+          "Name": "Shoot",
+          "Id": "1"
+        },
+        {
+          "Name": "Jump",
+          "Id": "2"
+        },
+        {
+          "Name": "Land",
+          "Id": "3"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Move",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack",
+            "FrameNum": "32",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "1",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Vanish2",
+            "FrameNum": "19",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "3",
+              "AtFrame": "5"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Death",
+            "FrameNum": "1",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

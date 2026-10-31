@@ -1,0 +1,26 @@
+{
+  "verified_utc": "2026-10-28T14:59:52.195999+00:00",
+  "result": "partial_progress",
+  "mechanics_fingerprint": "f731696ff0c76e5e",
+  "counts": {
+    "in_progress": 195,
+    "missing": 428,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "reviewed": 229,
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/black-globin/native-summary.json",
+  "roster_breakdown": "docs/reports/isaac-enemy-port/black-globin/roster-progress.json",
+  "next_work": "Prioritize ordinary Leper310.0.0..3 and required shed parts: review installed native branches/animations before implementing external controllers and appropriate seeded placement. Skip WASM. BlackGlobin and earlier family full-acceptance gaps remain recorded.",
+  "wasm_waiver": {
+    "visual_wasm": {
+      "authority": "user",
+      "instruction": "pursure goal - Skip WASM check!",
+      "date": "2026-10-28"
+    }
+  },
+  "live_jobs": "All builds, tests, source checks, witness search and native capture processes for this slice completed.",
+  "visual_review": "docs/reports/isaac-enemy-port/black-globin/visual-review.json",
+  "monster_definitions": 211
+}

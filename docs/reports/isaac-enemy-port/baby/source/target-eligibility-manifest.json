@@ -1,0 +1,10 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "start": "0x6aeb40",
+  "end": "0x6aebce",
+  "raw_sha256": "976a5823b917a1ccd461e3a9382b501d7ce998e222f572934d56142a1689d63b",
+  "path": "docs/reports/isaac-enemy-port/baby/source/target_eligibility.asm",
+  "sha256": "f9796c4c8d57f94dfdfd5a090e7645b555b44457c7c81632a53957c9a86c40d1",
+  "finding": "6aeb40 reads entity types and allegiance flags only; no position, grid or sight call. Wrinkly hostile acquisition at53cd1a..53cd36 calls this and the RNG, not6a15a0 line-of-sight acquisition."
+}

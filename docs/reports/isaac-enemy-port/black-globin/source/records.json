@@ -1,0 +1,462 @@
+[
+  {
+    "key": "278.0.0",
+    "id": 278,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Black Globin",
+    "xml": {
+      "anm2path": "278.000_Black Globin.anm2",
+      "baseHP": "33",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "2",
+      "collisionMass": "10",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "278",
+      "name": "#BLACK_GLOBIN",
+      "numGridCollisionPoints": "12",
+      "portrait": "142",
+      "reroll": "true",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:278.0.0",
+    "wiki_matches": [
+      {
+        "page": "Globin",
+        "box": 4,
+        "group": "entity",
+        "fields": {
+          "dlc": "a",
+          "name": "Black Globin",
+          "id": "278",
+          "base hp": "33",
+          "environment": "Sheol / \nDark Room / \nchallenge /",
+          "behavior": "Chases Isaac, dealing a full heart of contact damage and launching Spiders towards Isaac whenever it takes damage. Spawns a Spider, a Black Globin's Head, and a Black Globin's Body upon death."
+        },
+        "section_indices": [
+          5
+        ],
+        "name": "Black Globin",
+        "variant": 0,
+        "subtype": 0,
+        "id": 278,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Globin"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 33.0,
+      "2": 33.0,
+      "3": 33.0,
+      "4": 33.0,
+      "5": 33.0,
+      "6": 33.0,
+      "7": 33.0,
+      "8": 33.0,
+      "9": 33.0,
+      "10": 33.0,
+      "11": 33.0,
+      "12": 33.0,
+      "13": 33.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Black Globin",
+    "room_library_presence": {
+      "rooms/14.sheol.stb": {
+        "templates": 13,
+        "positive_weight_templates": 13
+      },
+      "rooms/16.dark room.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/greed/14.sheol.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Globin",
+        "section": 5
+      }
+    ],
+    "feature_triage": [
+      "damage-modifiers",
+      "child-spawns-and-ownership",
+      "locomotion-and-navigation",
+      "forms-and-transformations"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "279.0.0",
+    "id": 279,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Black Globins Head",
+    "xml": {
+      "anm2path": "279.000_Black Globins Head.anm2",
+      "baseHP": "20",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "2",
+      "collisionMass": "10",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "279",
+      "name": "#BLACK_GLOBINS_HEAD",
+      "numGridCollisionPoints": "12",
+      "portrait": "125",
+      "reroll": "true",
+      "shadowSize": "25",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:279.0.0",
+    "wiki_matches": [
+      {
+        "page": "Brain",
+        "box": 2,
+        "group": "entity",
+        "fields": {
+          "dlc": "a",
+          "name": "Black Globin's Head",
+          "id": "279",
+          "base hp": "20",
+          "environment": "Cellar / \nDepths / Necropolis / Dank Depths / \nSheol / \nchallenge / number magnet / curse / Super Secret / \nSpawned after killing a Black Globin.",
+          "behavior": "Slides towards Isaac, leaving a trail of damaging red creep."
+        },
+        "section_indices": [
+          3
+        ],
+        "name": "Black Globin's Head",
+        "variant": 0,
+        "subtype": 0,
+        "id": 279,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Brain"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 20.0,
+      "2": 20.0,
+      "3": 20.0,
+      "4": 20.0,
+      "5": 20.0,
+      "6": 20.0,
+      "7": 20.0,
+      "8": 20.0,
+      "9": 20.0,
+      "10": 20.0,
+      "11": 20.0,
+      "12": 20.0,
+      "13": 20.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Black Globin's Head",
+    "room_library_presence": {
+      "rooms/00.special rooms.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/02.cellar.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/07.depths.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 2,
+        "positive_weight_templates": 2
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/14.sheol.stb": {
+        "templates": 5,
+        "positive_weight_templates": 5
+      },
+      "rooms/greed/14.sheol.stb": {
+        "templates": 8,
+        "positive_weight_templates": 8
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Brain",
+        "section": 3
+      }
+    ],
+    "feature_triage": [],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  },
+  {
+    "key": "280.0.0",
+    "id": 280,
+    "variant": 0,
+    "subtype": 0,
+    "name": "Black Globins Body",
+    "xml": {
+      "anm2path": "280.000_Black Globins Body.anm2",
+      "baseHP": "10",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "3",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "280",
+      "name": "#BLACK_GLOBINS_BODY",
+      "numGridCollisionPoints": "12",
+      "portrait": "126",
+      "reroll": "true",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "source_file": "entities2.xml",
+    "group": "enemy",
+    "record_key": "entity:280.0.0",
+    "wiki_matches": [
+      {
+        "page": "Pacer",
+        "box": 3,
+        "group": "entity",
+        "fields": {
+          "dlc": "a",
+          "name": "Black Globin's Body",
+          "image name": "* [Before Repentance] Afterbirth",
+          "id": "280",
+          "base hp": "10",
+          "environment": "Cellar / \nDepths / Necropolis / Dank Depths / \nSheol / \nSpawned after killing a Black Globin.",
+          "behavior": "Walks aimlessly around the room, occasionally spawning spiders."
+        },
+        "section_indices": [
+          6
+        ],
+        "name": "Black Globin's Body",
+        "variant": 0,
+        "subtype": 0,
+        "id": 280,
+        "template": "infobox monster"
+      }
+    ],
+    "wiki_match_method": "entity/item ID",
+    "wiki_pages": [
+      "Pacer"
+    ],
+    "evidence": {
+      "numeric": "installed Repentance 1.7.9b XML",
+      "behavior": "current wiki revision; edition notes must be respected",
+      "native_ai_timers": "not established by XML or API declarations",
+      "implementation": "research only; no behavior ported by this report"
+    },
+    "hp_by_stage": {
+      "1": 10.0,
+      "2": 10.0,
+      "3": 10.0,
+      "4": 10.0,
+      "5": 10.0,
+      "6": 10.0,
+      "7": 10.0,
+      "8": 10.0,
+      "9": 10.0,
+      "10": 10.0,
+      "11": 10.0,
+      "12": 10.0,
+      "13": 10.0
+    },
+    "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+    "hp_formula_source": "Stage HP",
+    "display_name": "Black Globin's Body",
+    "room_library_presence": {
+      "rooms/02.cellar.stb": {
+        "templates": 1,
+        "positive_weight_templates": 1
+      },
+      "rooms/07.depths.stb": {
+        "templates": 28,
+        "positive_weight_templates": 28
+      },
+      "rooms/08.necropolis.stb": {
+        "templates": 29,
+        "positive_weight_templates": 29
+      },
+      "rooms/09.dank depths.stb": {
+        "templates": 29,
+        "positive_weight_templates": 29
+      },
+      "rooms/14.sheol.stb": {
+        "templates": 4,
+        "positive_weight_templates": 4
+      },
+      "rooms/greed/14.sheol.stb": {
+        "templates": 3,
+        "positive_weight_templates": 3
+      }
+    },
+    "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+    "port_contract": {
+      "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+      "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+      "state_requirements": [
+        "spawn/activation",
+        "idle and target acquisition",
+        "movement and path selection",
+        "attack selection and telegraph",
+        "attack emission",
+        "recovery",
+        "damage/vulnerability",
+        "phase transitions",
+        "death/children",
+        "room-clear participation"
+      ],
+      "parameters_not_established": {
+        "walk_speed_world_units_per_second": null,
+        "acceleration": null,
+        "attack_cooldown_seconds": null,
+        "telegraph_seconds": null,
+        "projectile_speed": null,
+        "attack_selection_weights": null,
+        "animation_event_ticks": null
+      },
+      "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+      "required_checks": [
+        "fixed seed and RNG calls",
+        "line of sight versus alignment",
+        "pit/wall/flying navigation",
+        "contact and projectile damage",
+        "vulnerability during each state",
+        "slow/freeze/charm effects",
+        "overkill and offspring",
+        "phase HP ownership",
+        "despawn versus room clear",
+        "save/load and re-entry"
+      ],
+      "implementation_status": "not ported by this research"
+    },
+    "behavior_section_refs": [
+      {
+        "page": "Pacer",
+        "section": 6
+      }
+    ],
+    "feature_triage": [
+      "child-spawns-and-ownership",
+      "locomotion-and-navigation"
+    ],
+    "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+  }
+]

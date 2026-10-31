@@ -1,0 +1,3 @@
+PASS ordinary-bone-throw
+PASS death-interrupts-throw
+PASS natural-quarry-resident

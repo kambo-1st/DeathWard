@@ -1,0 +1,14 @@
+chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+PASS stationary growth/damage/reset versus nonregenerating walkers
+PASS Shoot24/event12, blood and Ipecac trajectories, atomic volley retention and damage interruption
+PASS walking movement/collision/contact, population gating, high throws and independent wet children
+PASS source-aware explosion immunity and strict immutable external configuration
+PASS independent fall recurrence and real Gut blast/producer immunity/completion under pressure
+NATURAL_BOIL id=88.2 seed=0 floor=2 room=1
+NATURAL_BOIL id=30.1 seed=0 floor=3 room=8
+NATURAL_BOIL id=88.1 seed=0 floor=4 room=1
+NATURAL_BOIL id=30.0 seed=0 floor=4 room=2
+NATURAL_BOIL id=88.0 seed=2 floor=5 room=3
+NATURAL_BOIL id=30.2 seed=8 floor=3 room=6
+PASS Boil family

@@ -1,0 +1,1 @@
+Encounter pool cannot independently spawn component/hazard 30.2

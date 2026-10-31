@@ -1,0 +1,84 @@
+[
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-38.0.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "20",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/baby/native-normal.png"
+    ],
+    "exit_code": 0,
+    "scope": "Before global-reentry cadence correction; unchanged isolated rendering."
+  },
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-38.1.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "26",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/baby/native-angelic.png"
+    ],
+    "exit_code": 0,
+    "scope": "Before global-reentry cadence correction; unchanged isolated rendering."
+  },
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-38.1.1",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "20",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/baby/native-small.png"
+    ],
+    "exit_code": 0,
+    "scope": "Before global-reentry cadence correction; unchanged isolated rendering."
+  },
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "enemy-38.3.0",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--mute",
+      "--enemy-camera-follow",
+      "--frames",
+      "70",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/baby/native-wrinkly.png",
+      "--enemy-player-side",
+      "diagonal"
+    ],
+    "exit_code": 0,
+    "scope": "Before global-reentry cadence correction; unchanged isolated rendering."
+  }
+]

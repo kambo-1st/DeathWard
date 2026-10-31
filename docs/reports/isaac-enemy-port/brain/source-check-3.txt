@@ -1,0 +1,1 @@
+{"pass": true, "source_windows": 10, "animations": 1}

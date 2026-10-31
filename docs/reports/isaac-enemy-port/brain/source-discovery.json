@@ -1,0 +1,220 @@
+{
+  "status": "Preserved discovery before implementation; source evidence remains unchanged. Dedicated implementation and current validation are documented in source-review.md and checkpoint.json.",
+  "id": "32.0.0",
+  "baseline": "Repentance1.7.9b",
+  "source_xml": {
+    "anm2path": "032.000_Brain.anm2",
+    "baseHP": "20",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "2",
+    "collisionMass": "10",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "32",
+    "name": "#BRAIN",
+    "numGridCollisionPoints": "12",
+    "portrait": "30",
+    "reroll": "true",
+    "shadowSize": "25",
+    "stageHP": "0",
+    "variant": "0"
+  },
+  "source_room_presence": {
+    "rooms/07.depths.stb": {
+      "templates": 33,
+      "positive_weight_templates": 33
+    },
+    "rooms/08.necropolis.stb": {
+      "templates": 14,
+      "positive_weight_templates": 14
+    },
+    "rooms/09.dank depths.stb": {
+      "templates": 31,
+      "positive_weight_templates": 31
+    },
+    "rooms/10.womb.stb": {
+      "templates": 26,
+      "positive_weight_templates": 26
+    },
+    "rooms/11.utero.stb": {
+      "templates": 27,
+      "positive_weight_templates": 27
+    },
+    "rooms/12.scarred womb.stb": {
+      "templates": 24,
+      "positive_weight_templates": 24
+    },
+    "rooms/26.the void.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/36.backwards.stb": {
+      "templates": 6,
+      "positive_weight_templates": 6
+    },
+    "rooms/greed/24.the shop.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    }
+  },
+  "wiki_article": {
+    "title": "Brain",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Brain",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270038",
+    "revision": 270038,
+    "timestamp": "2026-10-03T03:04:15Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "Brains slide around the room erratically in the cardinal directions, leaving a trail of red creep, they deal a whole heart of contact damage. When Isaac is within line of sight they will charge in his direction until they collide with an obstacle or another enemy similar to Knights."
+      },
+      {
+        "heading": "Variants",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Poison Mind",
+        "level": 3,
+        "text": "Poison Minds behave like regular Brains, but they slide diagonally and leave a trail of green creep.\n\n[Repentance] Poison Minds float, passing over obstacles, and explode when killed."
+      },
+      {
+        "heading": "Black Globin's Head",
+        "level": 3,
+        "text": "Black Globin's Heads behave like Brains, but they target Isaac directly, chasing him."
+      },
+      {
+        "heading": "Festering Guts",
+        "level": 3,
+        "text": "Festering Guts are spawned exclusively by Gutted Fatty. They travel around the room randomly in cardinal directions and occasionally spawn a Charger."
+      },
+      {
+        "heading": "Pon",
+        "level": 3,
+        "text": "Pons hop around erratically leaving red creep wherever they land. If close to Isaac then they will hop towards Isaac chasing him similarly to Hoppers.\n\nThey can spawn with a paired Brainless Knight in which killing them is required to kill their corresponding Brainless Knight. A Pon and a Brainless Knight pair will always spawn when Loose Knight is killed."
+      },
+      {
+        "heading": "Notes",
+        "level": 2,
+        "text": "\u2022 [Afterbirth+ onward] If Poison Minds aren't unlocked yet, they are replaced by Brains."
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "\u2022 [Repentance] The Pon first appeared in the Antibirth mod where it could also appear in Depths.\n\n\u2022 [Repentance] The name of Pon is likely a pun in reference to the homophonic pronunciation of the Pons region of the brain and pawns from chess."
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "id": "32",
+          "image name": "* [Before Repentance] Rebirth",
+          "base hp": "20",
+          "environment": "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+          "behavior": "Slowly crawls around the room, leaving a trail of red creep."
+        },
+        "group": "entity",
+        "id": 32,
+        "name": "Brain",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 2,
+        "fields": {
+          "dlc": "a+",
+          "name": "Poison Mind",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "id": "301",
+          "base hp": "20",
+          "environment": "Depths / Necropolis / \nWomb / Utero / Scarred Womb / \nCorpse / \nchallenge / \n[Before Repentance] Chance to replace Brains",
+          "behavior": "Slowly [Before Repentance] crawls/ [Repentance] floats around the room diagonally, leaving a trail of damaging green creep. [Repentance] Explodes upon death.",
+          "unlocked by": "The gate is open!"
+        },
+        "group": "entity",
+        "id": 301,
+        "name": "Poison Mind",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          2
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 3,
+        "fields": {
+          "dlc": "a",
+          "name": "Black Globin's Head",
+          "id": "279",
+          "base hp": "20",
+          "environment": "Cellar / \nDepths / Necropolis / Dank Depths / \nSheol / \nchallenge / number magnet / curse / Super Secret / \nSpawned after killing a Black Globin.",
+          "behavior": "Slides towards Isaac, leaving a trail of damaging red creep."
+        },
+        "group": "entity",
+        "id": 279,
+        "name": "Black Globin's Head",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          3
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 4,
+        "fields": {
+          "dlc": "r",
+          "name": "Festering Guts",
+          "id": "831",
+          "variant": "20",
+          "base hp": "22",
+          "environment": "Corpse / \nSpawned exclusively by Gutted Fatties.",
+          "behavior": "Spawned by Gutted Fatty, Festering Guts randomly slide around the room and occasionally spawn a Charger."
+        },
+        "group": "entity",
+        "id": 831,
+        "name": "Festering Guts",
+        "variant": 20,
+        "subtype": 0,
+        "section_indices": [
+          4
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 5,
+        "fields": {
+          "dlc": "r",
+          "name": "Pon",
+          "id": "840",
+          "base hp": "20",
+          "environment": "Mines / \nMausoleum /",
+          "behavior": "Hops around the room, leaving damaging red creep wherever it lands. Upon death, its associated Brainless Knight dies with it."
+        },
+        "group": "entity",
+        "id": 840,
+        "name": "Pon",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          5
+        ]
+      }
+    ]
+  },
+  "native_source": "docs/reports/isaac-enemy-port/brain/source/manifest.json",
+  "scope": "Brain32.0.0 only. Shared controller also contains Poison Mind301 and Black Globin Head279 paths; these must be separately reviewed and must not leak into ordinary Brain.",
+  "review": "docs/reports/isaac-enemy-port/brain/source-review.md",
+  "next": "Implement dedicated Brain charge/creep using reviewed source contract, external configuration and correct bands2/3, then run focused Linux and production WASM validation."
+}

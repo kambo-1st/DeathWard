@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 29: monster_behaviors
+1/5 Test #29: monster_behaviors ................   Passed    3.22 sec
+    Start 47: boom_flies
+2/5 Test #47: boom_flies .......................***Failed    0.72 sec
+BOOM_HEALTH source_stages_1_to_13=1 floor_lengths=5 diagonal_axis_reflection=1 contact=1 cover=1
+BOOM_DEATH seven_patterns=1 bone_alignment=1 green_not_ipecac=1 actual_blast=1 execution_policy=1
+FAIL: Explosion markers form a cardinal cross without physical bombs
+
+    Start 58: tainted_pooter_impacts
+3/5 Test #58: tainted_pooter_impacts ...........   Passed    0.27 sec
+    Start 70: tainted_hopper
+4/5 Test #70: tainted_hopper ...................   Passed   12.12 sec
+    Start 71: adaptive_armor
+5/5 Test #71: adaptive_armor ...................   Passed    0.16 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =  16.49 sec
+
+The following tests FAILED:
+	 47 - boom_flies (Failed)
+Errors while running CTest

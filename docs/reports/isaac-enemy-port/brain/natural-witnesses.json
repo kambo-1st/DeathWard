@@ -1,0 +1,26 @@
+{
+  "bands": [
+    {
+      "seed": 22,
+      "floor": 5,
+      "room": 6,
+      "band": 2
+    },
+    {
+      "seed": 2,
+      "floor": 5,
+      "room": 6,
+      "band": 3
+    }
+  ],
+  "river": {
+    "seed": 101,
+    "floor": 6,
+    "room": 9,
+    "band": 3
+  },
+  "source": "native-focused-4.txt",
+  "scope": "Actual generated residents in both approved bands, source controller activation, and 240 simulation ticks in a naturally populated interior-river room. All coordinates use zero-based floor/room indices.",
+  "river_discovery": "river-search-1.txt",
+  "validated_by": "native-focused-final.txt"
+}

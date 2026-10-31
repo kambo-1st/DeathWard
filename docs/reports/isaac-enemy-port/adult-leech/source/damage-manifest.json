@@ -1,0 +1,34 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/radial_damage.asm",
+      "start": "0x6d1280",
+      "end": "0x6d1446",
+      "raw_sha256": "437f9dde8a69f8b7c4d4422935530e1229123493e39891d89b01104bf5ab5bf8",
+      "sha256": "d47f69e6266578a908ce2c52bf8f7e3f28d27d7d83d684464af87240a5fb0997"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/vulnerable_query.asm",
+      "start": "0x684630",
+      "end": "0x6846dc",
+      "raw_sha256": "2cf3a0294a4abeb8ad265be6275f3f506b97b4afa54964e0e1008d96c107a1e9",
+      "sha256": "486291aa281fa5a2b0160042b6e5b20beb3943c623e1a1797248584132879c13"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/direct_damage.asm",
+      "start": "0x684bb0",
+      "end": "0x68500b",
+      "raw_sha256": "1b75d8c70a44889149efca68b6d89ba538a80c1395907e80653120b18bb7592f",
+      "sha256": "da56e6dcb1287d5672156ab2c421dd43a6cb32752d8d524b9f41e26d7a603870"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/npc_damage_forward.asm",
+      "start": "0x6ac370",
+      "end": "0x6ac3b8",
+      "raw_sha256": "dd4ee274a8b440bff213946e874d9409d5c525a00e0c4c4536de936d8317c688",
+      "sha256": "7a1acf2d1703bd9d20e2e927334b39cc0693b8fc666ef5435275071d36da3377"
+    }
+  ],
+  "finding": "Radial collection skips EntityCollisionClass zero at 6d1356. General scripted TakeDamage registers pending damage without that blanket guard; the IsVulnerableEnemy call near 684bfb belongs to a special protection/effect route, not an unconditional rejection."
+}

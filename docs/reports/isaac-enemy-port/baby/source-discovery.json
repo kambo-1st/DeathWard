@@ -1,0 +1,757 @@
+{
+  "article": {
+    "title": "Baby",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Baby",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270035",
+    "revision": 270035,
+    "timestamp": "2026-10-03T02:59:55Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "[disambig msg: the monster; co-op babies; Co-op; items that follow Isaac; Familiar] \n\nBabies slowly float towards Isaac, occasionally shooting a single projectile towards him. They can also occasionally teleport to anywhere in the room."
+      },
+      {
+        "heading": "Variants",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Angelic Baby",
+        "level": 3,
+        "text": "Angelic Babies are variants of Babies that fire 3 projectiles at Isaac in a spread instead of 1. They also teleport more often, usually near Isaac."
+      },
+      {
+        "heading": "Small Angelic Baby",
+        "level": 3,
+        "text": "Small Angelic Babies behave identically to Angelic Babies but have less health and shoots only one projectile instead of three.\n\nThey are exclusively spawned by Holy Mulligans."
+      },
+      {
+        "heading": "Wrinkly Baby",
+        "level": 3,
+        "text": "Wrinkly Babies slowly move towards Isaac similar to regular Babies, but while approaching him, they may dash towards him at high speed until they hit either a wall or Isaac and then subsequently fire three projectiles in his direction once they stop dashing. If Isaac approaches them after they've performed their previous attack, they will move back from Isaac and fire three projectiles at him without dashing for as long as Isaac continues to follow them, although they will resume their chase and dashing attack if Isaac then moves far from them. They are unable to teleport."
+      },
+      {
+        "heading": "Imp",
+        "level": 3,
+        "text": "Imps slowly float towards Isaac, occasionally firing 5 projectiles at Isaac in quick succession and can also occasionally randomly teleport around the room. They move slightly to try to avoid Isaac's tears."
+      },
+      {
+        "heading": "Baby Begotten",
+        "level": 3,
+        "text": "Baby Begottens float toward Isaac, attempting to avoid Isaac's tears as it approaches. After getting close to him, it lines itself up with him in the closest cardinal direction and fires a thin short-range Brimstone laser at him, propelling itself in the opposite direction.\n\nDespite their namesake and visual similarities to Begottens they have no similarities in behavior."
+      },
+      {
+        "heading": "Unborn",
+        "level": 3,
+        "text": "Unborn fly towards Isaac in a circular pattern, and will periodically teleport near Isaac on another side of him."
+      },
+      {
+        "heading": "Sounds",
+        "level": 2,
+        "text": "[sound table row: ; Baby Monster Attack Sound/Scream.] \n[sound table row: ; Baby Monster Attack Sound/Scream.] \n[sound table row: ; Baby Monster when dying.] \n[sound table row: ; Baby Monster when dying.] \n[sound table row: ; Baby Monster when dying.] \n|}"
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "\u2022 [Repentance] The Unborn first appeared in the Antibirth mod.\n\n\u2022 [edition anr+] The Imp entirely lacks sound effects.\n\n\u2022 [Repentance+] The Imp has a wholly unique set of sound effects."
+      },
+      {
+        "heading": "Bugs",
+        "level": 2,
+        "text": "Bug note: If a Baby, Angelic Baby or Imp tries to shoot Isaac at the same time as it teleports, their shots will be fired without their corresponding animation.\nBug note: If an Imp is stunned, feared, or shrunken, it will still attack Isaac while running away from him."
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "id": "38",
+          "base hp": "25",
+          "environment": "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /",
+          "behavior": "Slowly floats towards Isaac and fires a blood shot at him. Occasionally teleports and reappears elsewhere."
+        },
+        "group": "entity",
+        "id": 38,
+        "name": "Baby",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 2,
+        "fields": {
+          "name": "Angelic Baby",
+          "variant": "1",
+          "base hp": "25",
+          "environment": "Cathedral /",
+          "replace": "Baby",
+          "replace chance": "5.71%",
+          "behavior": "Slowly floats towards Isaac and fires three spread shots. Occasionally teleports and reappears elsewhere."
+        },
+        "group": "entity",
+        "id": 38,
+        "name": "Angelic Baby",
+        "variant": 1,
+        "subtype": 0,
+        "section_indices": [
+          2
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 3,
+        "fields": {
+          "dlc": "r",
+          "name": "Angelic Baby (small)",
+          "subtype": "1",
+          "base hp": "16",
+          "environment": "Spawned by Holy Mulligans",
+          "behavior": "Slowly floats towards Isaac and fires a blood shot at him. Occasionally teleports and reappears elsewhere. Can only be spawned by Holy Mulligans."
+        },
+        "group": "entity",
+        "id": 38,
+        "name": "Angelic Baby (small)",
+        "variant": 0,
+        "subtype": 1,
+        "section_indices": [
+          3
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 4,
+        "fields": {
+          "dlc": "r",
+          "name": "Wrinkly Baby",
+          "variant": "3",
+          "base hp": "25",
+          "environment": "Utero / \nCorpse / \nSheol / \nDark Room / Chest / \nchallenge /",
+          "behavior": "Dashes towards Isaac at high speed and fires three blood shots in his direction once stopped."
+        },
+        "group": "entity",
+        "id": 38,
+        "name": "Wrinkly Baby",
+        "variant": 3,
+        "subtype": 0,
+        "section_indices": [
+          4
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 5,
+        "fields": {
+          "dlc": "a",
+          "name": "Imp",
+          "id": "259",
+          "base hp": "25",
+          "environment": "Sheol / \nDark Room / Chest / \nchallenge / curse / number magnet /",
+          "behavior": "Slowly drifts towards Isaac, frequently firing 5 blood shots in quick succession towards him. Tries to avoid Isaac's shots and occasionally teleports and reappears elsewhere."
+        },
+        "group": "entity",
+        "id": 259,
+        "name": "Imp",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          5
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 6,
+        "fields": {
+          "dlc": "r",
+          "name": "Baby Begotten",
+          "id": "883",
+          "base hp": "18",
+          "stage hp": "3",
+          "environment": "Mausoleum / Gehenna / \nchallenge /",
+          "behavior": "Floats toward Isaac, avoiding his tears. After getting close, fires a short Brimstone laser in the closest cardinal direction and propels itself away from him."
+        },
+        "group": "entity",
+        "id": 883,
+        "name": "Baby Begotten",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          6
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 7,
+        "fields": {
+          "dlc": "r",
+          "name": "Unborn",
+          "id": "860",
+          "base hp": "32",
+          "environment": "Corpse /",
+          "behavior": "Floats quickly towards Isaac, and occasionally teleports to another position near him."
+        },
+        "group": "entity",
+        "id": 860,
+        "name": "Unborn",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          7
+        ]
+      }
+    ]
+  },
+  "records": [
+    {
+      "record_key": "entity:38.0.0",
+      "id": "38.0.0",
+      "source_name": "Baby",
+      "display_name": "Baby",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Baby",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 66
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 34,
+          "positive_weight_templates": 34,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 22,
+          "positive_weight_templates": 22,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 31,
+          "positive_weight_templates": 31,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 22,
+          "positive_weight_templates": 22,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 45,
+          "positive_weight_templates": 45,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 26,
+          "positive_weight_templates": 26,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 11,
+          "positive_weight_templates": 11,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 12,
+          "positive_weight_templates": 12,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        2,
+        3
+      ],
+      "proposed_first_band": 2,
+      "proposed_first_band_name": "Abandoned Works",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Baby",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270035"
+        }
+      ],
+      "feature_review_hints": [
+        "projectile-transform",
+        "child-spawns-and-ownership",
+        "status-effects",
+        "room-floor-run-events",
+        "locomotion-and-navigation"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:38.1.0",
+      "id": "38.1.0",
+      "source_name": "Angelic Baby",
+      "display_name": "Angelic Baby",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Angelic Baby",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 67
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/15.cathedral.stb",
+          "source_stage": "cathedral",
+          "templates": 47,
+          "positive_weight_templates": 47,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/26.the void.stb",
+          "source_stage": "the void",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/24.the shop.stb",
+          "source_stage": "the shop",
+          "templates": 11,
+          "positive_weight_templates": 11,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        3
+      ],
+      "proposed_first_band": 3,
+      "proposed_first_band_name": "Storm Cut",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Cathedral /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Baby",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270035"
+        }
+      ],
+      "feature_review_hints": [
+        "projectile-transform",
+        "locomotion-and-navigation"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:38.1.1",
+      "id": "38.1.1",
+      "source_name": "Angelic Baby (small)",
+      "display_name": "Angelic Baby",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "16",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Angelic Baby (small)",
+        "behavior": "legacy",
+        "natural": false,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 68
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "existing_support_or_hazard_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [],
+      "separate_mode_or_special_evidence": [],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [],
+      "proposed_first_band": null,
+      "proposed_first_band_name": null,
+      "proposal_basis": "parent_or_scripted_encounter_review_required",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": false,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Cathedral /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Baby",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270035"
+        }
+      ],
+      "feature_review_hints": [
+        "projectile-transform",
+        "locomotion-and-navigation"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:38.2.0",
+      "id": "38.2.0",
+      "source_name": "Ultra Pride Baby",
+      "display_name": "Ultra Pride Baby",
+      "source_group": "boss",
+      "boss_pool_id": null,
+      "source_base_hp": "30",
+      "source_stage_hp": "5",
+      "current_runtime": null,
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "boss_encounter_or_component_review",
+      "review_approved": false,
+      "implementation_status": "not_implemented",
+      "source_stage_evidence": [],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [],
+      "proposed_first_band": null,
+      "proposed_first_band_name": null,
+      "proposal_basis": "parent_or_scripted_encounter_review_required",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [],
+      "article_revisions": [
+        {
+          "title": "Ultra Pride",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=263324"
+        }
+      ],
+      "feature_review_hints": [
+        "damage-modifiers",
+        "projectile-transform",
+        "child-spawns-and-ownership",
+        "health-and-defenses",
+        "status-effects",
+        "room-floor-run-events",
+        "locomotion-and-navigation",
+        "randomness",
+        "forms-and-transformations"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:38.3.0",
+      "id": "38.3.0",
+      "source_name": "Wrinkly Baby",
+      "display_name": "Wrinkly Baby",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Wrinkly Baby",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 69
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 16,
+          "positive_weight_templates": 16,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 33,
+          "positive_weight_templates": 33,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/16.dark room.stb",
+          "source_stage": "dark room",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/17.chest.stb",
+          "source_stage": "chest",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/33.corpse.stb",
+          "source_stage": "corpse",
+          "templates": 39,
+          "positive_weight_templates": 39,
+          "proposed_band": 3,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        3
+      ],
+      "proposed_first_band": 3,
+      "proposed_first_band_name": "Storm Cut",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Utero / \nCorpse / \nSheol / \nDark Room / Chest / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Baby",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270035"
+        }
+      ],
+      "feature_review_hints": [
+        "projectile-transform",
+        "status-effects",
+        "locomotion-and-navigation",
+        "forms-and-transformations"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    }
+  ],
+  "scope": "Regular Baby family first; Ultra Pride Baby is a dedicated boss dependency and remains in the full goal.",
+  "priority": "Ordinary enemies and required offspring first."
+}

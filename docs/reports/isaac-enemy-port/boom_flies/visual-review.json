@@ -1,0 +1,39 @@
+{
+  "result": "partial_pass",
+  "style": "Original",
+  "linux": [
+    "docs/reports/isaac-enemy-port/boom_flies/linux-normal.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-red.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-drowned.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-dragon.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-dragon-x.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-bone.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-sick.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-tainted.png"
+  ],
+  "additional_linux": [
+    "docs/reports/isaac-enemy-port/boom_flies/linux-dragon-fire.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-sick-death.png",
+    "docs/reports/isaac-enemy-port/boom_flies/linux-tainted-warning.png"
+  ],
+  "wasm": "docs/reports/isaac-enemy-port/boom_flies/full/wasm-probes.json",
+  "findings": [
+    "All eight silhouettes inspected in native captures; active/death states and seven natural routes checked in WASM.",
+    "Early frame15 captures had unsettled camera framing; new cases capture from45 and isolated spectator uses the opposite side. Prior state/captures are retained where available.",
+    "Dragon face can point away; cross/X pattern now repeats on upper shell in actual world axes.",
+    "Initial Tainted warnings climbed cliffs; final propagation uses real flight boundaries while crossing interior cover. Native regression and final capture verify it.",
+    "Fire, gas and blast markers remain partly obscured by HUD/edges in some captures. Low contrast on bright sand and all-camera/mixed-threat readability remain open.",
+    "Screenshot FPS is a startup/display sample, not a controlled performance benchmark.",
+    "Final WASM Tainted frame 110 contains a black shape clipped by the lower screen edge during the blast chain; absent at frames 65 and 240. Root cause is unconfirmed. Keep visual acceptance partial and reproduce before accepting this effect.",
+    "Native bodies are visible, but several distinctions rely on palette and small underside/face features at this viewing angle. They are not certified for every camera or accessibility condition."
+  ],
+  "open_defects": [
+    {
+      "capture": "docs/reports/isaac-enemy-port/boom_flies/full/wasm-tainted-boom-110.png",
+      "region": "lower center edge",
+      "observation": "Black clipped shape during the chain explosion.",
+      "status": "unresolved; no root-cause claim",
+      "next_check": "Reproduce the same frame in Linux and WASM, isolate blast visuals/particles and post-processing, and verify other chain-explosion producers."
+    }
+  ]
+}

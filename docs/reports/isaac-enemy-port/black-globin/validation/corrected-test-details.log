@@ -1,0 +1,98 @@
+Start testing: Oct 28 15:55 CET
+----------------------------------------------------------
+81/111 Testing: spider_family
+81/111 Test: spider_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_spider_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"spider_family" start time: Oct 28 15:55 CET
+Output:
+----------------------------------------------------------
+PASS source idle/acquisition, acceleration, committed bursts, wandering and shared movement
+PASS sight/solid collision, blocked-target recovery, contact, fire and interruption
+PASS two outward death children, extreme-overkill suppression and retained completion
+NATURAL_SPIDER id=85.0 seed=0 floor=0 room=2
+NATURAL_SPIDER id=94.0 seed=5 floor=0 room=5
+PASS validated configuration and actual seeded stage placement
+PASS Spider and Big Spider
+<end of output>
+Test time =   1.16 sec
+----------------------------------------------------------
+Test Passed.
+"spider_family" end time: Oct 28 15:55 CET
+"spider_family" time elapsed: 00:00:01
+----------------------------------------------------------
+
+37/111 Testing: brain
+37/111 Test: brain
+Command: "/home/kambo/workspace/DeathWard/build/deathward_brain_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"brain" start time: Oct 28 15:55 CET
+Output:
+----------------------------------------------------------
+MOVEMENT hp64 X.85 Y.8 charge=.8v+direction global7 committed=1 prediction=1 cover=1 bodies=1 grid=1 safe_grid=1
+CREEP crowd5 periods12/24 fast_half_step=1 radius2.46 lifetime125 fade40 damage12.5 owner_survival=1 clear=1 capacity=1 suspend=1
+STARTING_KIT seconds=8.68333 hp=100
+CONFIG immutable=1 invalid_profiles=6
+NATURAL_BRAIN seed=9 floor=5 room=5 band=2
+NATURAL_BRAIN seed=326 floor=4 room=4 band=3
+RIVER_BRAIN seed=326 floor=4 room=4
+PASS Brain
+<end of output>
+Test time =   1.66 sec
+----------------------------------------------------------
+Test Passed.
+"brain" end time: Oct 28 15:55 CET
+"brain" time elapsed: 00:00:01
+----------------------------------------------------------
+
+79/111 Testing: black_globin_family
+79/111 Test: black_globin_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_black_globin_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"black_globin_family" start time: Oct 28 15:55 CET
+Output:
+----------------------------------------------------------
+PASS initialization, ground pursuit, strict accumulated damage, coalescing, throws and contact policy
+PASS mortality, no goo/overkill cutoff, no duplicate final spider, retained births and room completion
+PASS head pursuit/creep and body cooldown/population/throw behavior
+NATURAL_BLACK_GLOBIN seed=7 floor=4 room=2 band=3
+NATURAL_BLACK_GLOBIN seed=10 floor=5 room=7 band=3
+NATURAL_BLACK_GLOBIN seed=12 floor=6 room=5 band=3
+PASS external snapshot reload, validation and seeded placement
+BLACK_GLOBIN_STARTING_KIT seed=0 seconds=5.43333 hp=75 peak=7 cleared=1
+BLACK_GLOBIN_STARTING_KIT seed=1 seconds=4.23333 hp=75 peak=7 cleared=1
+BLACK_GLOBIN_STARTING_KIT seed=2 seconds=7.2 hp=62.5 peak=7 cleared=1
+BLACK_GLOBIN_STARTING_KIT seed=3 seconds=4.23333 hp=87.5 peak=7 cleared=1
+PASS Black Globin family
+<end of output>
+Test time =   6.88 sec
+----------------------------------------------------------
+Test Passed.
+"black_globin_family" end time: Oct 28 15:55 CET
+"black_globin_family" time elapsed: 00:00:06
+----------------------------------------------------------
+
+103/111 Testing: prey_and_small_leech
+103/111 Test: prey_and_small_leech
+Command: "/home/kambo/workspace/DeathWard/build/deathward_prey_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"prey_and_small_leech" start time: Oct 28 15:55 CET
+Output:
+----------------------------------------------------------
+PASS swimming acceleration and source Hop10/Land6 timing
+PASS real river crossing, solid obstacles and room boundaries
+PASS Prey health, live/death offspring, population, retained births, overkill and contacts
+PASS airborne projectile/contact policy, blast vulnerability, landing and obstacle arcs
+NATURAL_PREY_FAMILY id=817.0 seed=66 floor=2 room=1
+NATURAL_PREY_FAMILY id=810.0 seed=90 floor=2 room=7
+PASS validated snapshots and natural Prey/Small Leech placement
+PASS Prey and Small Leech
+<end of output>
+Test time =  11.73 sec
+----------------------------------------------------------
+Test Passed.
+"prey_and_small_leech" end time: Oct 28 15:55 CET
+"prey_and_small_leech" time elapsed: 00:00:11
+----------------------------------------------------------
+
+End testing: Oct 28 15:55 CET

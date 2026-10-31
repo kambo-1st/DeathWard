@@ -1,0 +1,55 @@
+{
+  "scope": "Each listed image was opened and inspected.9accepted smoke images and1limited image; no full visual/balance/performance gate certified. HUD FPS is not a benchmark.",
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/linux-hopper.png",
+      "result": "accepted_smoke",
+      "notes": "Native Original renderer: surviving Hopper, reduced health bar and landing shots visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-final/14.2.0.png",
+      "result": "accepted_smoke",
+      "notes": "Airborne red fly and its health bar remain visible; Original terrain and shadows intact."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-final/22.3.0.png",
+      "result": "accepted_smoke",
+      "notes": "Parent and six fly children are visible; existing long yellow cue remains a separate source/presentation review gap."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-final/25.6.0.png",
+      "result": "accepted_smoke",
+      "notes": "Small dark body and health bar visible near canyon wall; contrast at distance is limited."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-final/29.3.0.png",
+      "result": "accepted_smoke",
+      "notes": "Airborne headless body, health bar, physical ring shots and shadows visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-final/31.1.0.png",
+      "result": "accepted_smoke",
+      "notes": "Existing red body and projectiles visible; this does not validate legacy AI."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-final/61.7.0.png",
+      "result": "limited",
+      "notes": "Body overlaps and obscures protagonist. Retained as a visual limitation, not full readability acceptance."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-final/855.0.0.png",
+      "result": "accepted_smoke",
+      "notes": "Green charging body and reduced health bar separated from protagonist."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-hopper/resident-resident.png",
+      "result": "accepted_smoke",
+      "notes": "Natural late-floor mixed room with Hopper and emitted cross; close approach near wall still needs all-camera review."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adaptive_armor/web-hopper/death-death.png",
+      "result": "accepted_smoke",
+      "notes": "Ordinary lethal damage removes Hopper; zero hostile HUD and retained loot visible."
+    }
+  ]
+}

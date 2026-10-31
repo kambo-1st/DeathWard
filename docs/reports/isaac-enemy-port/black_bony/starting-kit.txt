@@ -1,0 +1,7 @@
+BLACK_BONY_STARTING_KIT seed=0 floor=3 band=2 room=3 initial_threats=4 seconds=5.15 hp=100 dead=0 clear=1 remaining=0 max_hp=100 shot_damage=24 items=0 god=0 teleports_during_combat=0
+BLACK_BONY_STARTING_KIT seed=0 floor=4 band=2 room=4 initial_threats=4 seconds=4.81667 hp=100 dead=0 clear=1 remaining=0 max_hp=100 shot_damage=24 items=0 god=0 teleports_during_combat=0
+BLACK_BONY_STARTING_KIT seed=2 floor=5 band=3 room=1 initial_threats=6 seconds=10.2333 hp=100 dead=0 clear=1 remaining=0 max_hp=100 shot_damage=24 items=0 god=0 teleports_during_combat=0
+BLACK_BONY_STARTING_KIT seed=3 floor=3 band=3 room=6 initial_threats=5 seconds=5.48333 hp=87.5 dead=0 clear=1 remaining=0 max_hp=100 shot_damage=24 items=0 god=0 teleports_during_combat=0
+BLACK_BONY_STARTING_KIT seed=19 floor=2 band=1 room=7 initial_threats=4 seconds=4.21667 hp=100 dead=0 clear=1 remaining=0 max_hp=100 shot_damage=24 items=0 god=0 teleports_during_combat=0
+BLACK_BONY_STARTING_KIT seed=22 floor=3 band=1 room=6 initial_threats=4 seconds=57.0167 hp=75 dead=0 clear=1 remaining=0 max_hp=100 shot_damage=24 items=0 god=0 teleports_during_combat=0
+BLACK_BONY_SAMPLE clears=6 cases=6 scope=automated_mixed_room_sample_not_final_balance

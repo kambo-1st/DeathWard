@@ -1,0 +1,108 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "id": "854.0.0",
+  "status": "Source analysis in progress. No Adult Leech runtime implementation or acceptance is claimed.",
+  "reproduce": "python3 scripts/isaac-reference/analyze-adult-leech.py --check",
+  "evidence": {
+    "identity_and_habitat": "source-discovery.json",
+    "native_controller": "source/controller.asm",
+    "heading_helper": "source/heading.asm",
+    "falling_pathfinder": "source/falling_pathfinder.asm",
+    "source_manifests": ["source/manifest.json", "source/additional-manifest.json"],
+    "animation_metadata": "animations/manifest.json",
+    "wiki_revision": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268624",
+    "wiki_attribution": "The Binding of Isaac: Rebirth Wiki contributors; CC BY-SA 4.0. Preserved article is supplementary to the installed baseline."
+  },
+  "identity": {
+    "name": "Adult Leech",
+    "source_hp": 90,
+    "stage_hp": 0,
+    "contact_damage": 2,
+    "mass": 100,
+    "collision_radius": 24,
+    "grid_collision": "walls",
+    "champions_enabled": true,
+    "boss": false,
+    "habitat": "22 positive-weight Corpse room templates; proposed DeathWard band 3. Template count is not a spawn probability."
+  },
+  "ordinary_state_graph": {
+    "0": "Initialize state 3, recovery counter 0, one-time burrow counter -1; consume this update.",
+    "3": "Recovery or wandering; acquire horizontal charge or the one-time low-health burrow.",
+    "8": "Horizontal charge with limited vertical steering; wall collision returns to state 3.",
+    "6": "Burrow animation followed by hidden waiting, then teleport to current target and enter state 7.",
+    "7": "ChargeDown falling animation; Hit restores collision, emits ring; completion returns to state 3."
+  },
+  "movement": {
+    "ordinary_velocity_step": "0.8 * velocity + 0.7 * heading, after native AddVelocity/friction ordering; source decisions at 30 Hz.",
+    "heading": "Uniform angle from -45 to +45 degrees around positive X; a separate half-chance reverses X. Another half-chance reverses Y when pointing away from target Y. This is not the axis wander used by type 55.",
+    "heading_updates": "Choose when zero. On empty grid, a 1/30 draw rerolls; grid collision reverses both heading components. On nonempty grid, a 1/30 branch calls a separate free-position helper whose exact selection remains open.",
+    "recovery": "Positive recovery counter decreases by elapsed source frames; velocity retention is 0.9 and ordinary acquisition is skipped.",
+    "charge_acquisition": "1/3 draw, absolute target Y separation < 30 source units. Ordinary branch has no line-of-sight or maximum-distance guard. Committed X sign points toward the current target; gain begins at 0.5.",
+    "charge_velocity_step": "Retention 0.86; X force is gain times committed sign. If target Y is more than 10 units above/below, Y force is gain times +/-0.12, clamped to [-2,2]. X sign remains committed.",
+    "charge_gain": "Increase by 0.2 per elapsed source frame, capped at 5, while gain < 1 or absolute X distance to target < 500.",
+    "ordinary_charge_stop": "Any grid collision stops charge. The ordinary state-8 path does not contain the low-speed timeout seen in separate state 9.",
+    "wall_ring_guard": "Length of native collision vector at +18c/+190 > 10 and its normalized dot with +194/+198 > 0.6. The exact engine meaning of these collision fields still needs confirmation.",
+    "strong_impact": "Screen shake 6, sound 72, velocity recoil of 2.5 times collision vector +194/+198, recovery 12 source frames, BounceOverlay, and 12-shot ring. Weak collision still stops charge without this ring."
+  },
+  "burrow_and_fall": {
+    "trigger": "Only while counter is negative, HP/maxHP < 0.66, current grid is empty, and (absolute Y separation > absolute X separation OR absolute Y separation > 80), with a 1/3 draw.",
+    "burrow_entry": "Set counter to 0 and targetPosition to current grid center. Source grid spacing is 40; origin is (40,120).",
+    "burrow_motion": "0.8 * velocity + 0.3 * (anchor - position), in source units.",
+    "burrow_events": "Burrow Sound frame 8 emits sound 72. Hit frame 22 emits sound 66 and sets EntityCollisionClass to 0.",
+    "hidden_wait": "After the 25-frame Burrow finishes, clear anchor and velocity and increment counter. Once counter > 30, a 1/15 draw enters state 7, teleports to the current target, sets GridCollisionClass to 5 and plays sound 510 before falling.",
+    "pre_hit_fall": "ChargeDown before Hit follows the current target through helper 7a3650 with speed argument 0.8 and arguments 0,true. It is not stationary after the initial teleport.",
+    "pathfinder_correction": "The helper's velocity reset at 7a37fc is gated by status flags (0x200 present and 0x100 absent), not its normal pursuit path. Do not interpret that branch as ordinary constant-speed movement.",
+    "ordinary_pathfinder_output": "For a selected destination more than one source unit away, the common path multiplies friction by 0.7 and adds normalized force equal to min(distance*0.1,2) * argument 0.8 * terrain factor. Terrain factor is initialized to 1 and can become 0.7. Distance <= 1 applies friction 0.5; absent destination applies 0.85. Exact native grid selection and status paths are not yet ported.",
+    "landing_hit": "ChargeDown Hit frame 18: GridCollisionClass 3, screen shake 12, sound 77, zero velocity, set anchor to current position, EntityCollisionClass 4 and emit 10-shot ring.",
+    "landing_settle": "While anchor exists, velocity is 0.7 * velocity + (anchor - position). Sound frame 31 emits sound 72 and clears anchor; subsequent movement retains velocity by 0.8. Animation completion at 43 frames returns to state 3.",
+    "one_time": "The burrow counter is never restored to -1 in the ordinary loop, so this attack happens at most once per actor.",
+    "vulnerability_caution": "EntityCollisionClass 0 establishes absent body collision, not by itself immunity to every damage route. Bomb, area, execution and scripted damage handling must be traced before applying a blanket damage rejection."
+  },
+  "projectiles": {
+    "wall_impact": {
+      "mode": 9,
+      "count": 12,
+      "source_speed": 10,
+      "source_origin_offset": 8,
+      "falling_acceleration_modifier": 0.08
+    },
+    "landing": {
+      "mode": 9,
+      "count": 10,
+      "source_speed": 8,
+      "falling_acceleration_modifier": -0.02
+    },
+    "shared": "Default ProjectileParams: scale 1, height -23 and random falling speed [-0.1,0.1). Mode 9 increments the ring angle before emission. These branches do not set wall-bounce flags.",
+    "proposed_existing_engine_conversion": "Planar speed 30/24, height 1.15, upward speed [-0.15,0.15], gravity 8.1/3.6, retention 0.9, radius 0.22, damage 10 before shared enemy multiplier. Conversion is a DeathWard adaptation, not a source value."
+  },
+  "animation_frames_30fps": {
+    "MoveHori": {"frames": 16, "loop": true},
+    "BounceOverlay": {"frames": 12, "loop": false},
+    "Burrow": {"frames": 25, "Sound": 8, "Hit": 22},
+    "Charge": {"frames": 12, "loop": true},
+    "ChargeHit": {"frames": 19, "Sound": 11},
+    "ChargeDown": {"frames": 43, "Hit": 18, "Sound": 31}
+  },
+  "other_source_paths": {
+    "state_5": "External travelling charge can leave room bounds and remove actor; ordinary entry route not identified.",
+    "state_9": "Separate fixed-direction charge uses force 3.8 and retention 0.86; has a low-speed counter and stronger impact branch calling FireBossProjectiles. Entry route remains untraced.",
+    "state_10": "ChargeHit recovery after state 9; Sound at frame 11 kicks back with force 5 and clears anchor. Returns to state 3 on completion.",
+    "death": "Controller tail emits three gore effects; no offspring found in this controller. Shared mortality and all external spawning routes remain to be checked."
+  },
+  "implementation_requirements": [
+    "Dedicated controller, external profile, 30-Hz decisions with continuous collision integration, separate ordinary and falling collision rules.",
+    "Do not reuse type-55 leech behavior: its acquisition, steering and phases differ.",
+    "Preserve whole projectile packets under capacity pressure and document that safety adaptation.",
+    "Source HP 90 would become 288 at existing conversion; contact 2 becomes 20 before shared multiplier. Preserve player defaults.",
+    "Knockback immunity is stated by the revision-pinned wiki; verify corresponding installed flags and shared knockback path.",
+    "Seeded band-3 reachability, native behavior tests, browser behavior traces and original-style captures are required before counting runtime progress."
+  ],
+  "remaining_research": [
+    "Confirm the collision-vector fields and strong-impact sign against engine collision processing.",
+    "Trace general damage handling while EntityCollisionClass is zero, including bombs and area damage.",
+    "Resolve state-5/state-9 creation routes and special encounter dependencies.",
+    "Trace statuses, control/charm, champions and freeze interactions; do not infer fidelity from the ordinary hostile loop.",
+    "Exact grid helper decisions, RNG order, frame ordering and shared mortality remain unverified.",
+    "No runtime, reachability, visual, balance or performance acceptance evidence exists for Adult Leech yet."
+  ]
+}

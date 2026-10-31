@@ -1,0 +1,86 @@
+Start testing: Oct 28 15:42 CET
+----------------------------------------------------------
+37/110 Testing: brain
+37/110 Test: brain
+Command: "/home/kambo/workspace/DeathWard/build/deathward_brain_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"brain" start time: Oct 28 15:42 CET
+Output:
+----------------------------------------------------------
+MOVEMENT hp64 X.85 Y.8 charge=.8v+direction global7 committed=1 prediction=1 cover=1 bodies=1 grid=1 safe_grid=1
+CREEP crowd5 periods12/24 fast_half_step=1 radius2.46 lifetime125 fade40 damage12.5 owner_survival=1 clear=1 capacity=1 suspend=1
+STARTING_KIT seconds=8.68333 hp=100
+CONFIG immutable=1 invalid_profiles=6
+fixed seeded witness contains a real Brain without injection
+<end of output>
+Test time =   0.74 sec
+----------------------------------------------------------
+Test Failed.
+"brain" end time: Oct 28 15:42 CET
+"brain" time elapsed: 00:00:00
+----------------------------------------------------------
+
+80/110 Testing: spider_family
+80/110 Test: spider_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_spider_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"spider_family" start time: Oct 28 15:42 CET
+Output:
+----------------------------------------------------------
+PASS source idle/acquisition, acceleration, committed bursts, wandering and shared movement
+PASS sight/solid collision, blocked-target recovery, contact, fire and interruption
+PASS two outward death children, extreme-overkill suppression and retained completion
+NATURAL_SPIDER id=85.0 seed=0 floor=0 room=2
+NATURAL_SPIDER id=94.0 seed=5 floor=0 room=5
+PASS validated configuration and actual seeded stage placement
+PASS Spider and Big Spider
+<end of output>
+Test time =   1.03 sec
+----------------------------------------------------------
+Test Passed.
+"spider_family" end time: Oct 28 15:42 CET
+"spider_family" time elapsed: 00:00:01
+----------------------------------------------------------
+
+83/110 Testing: gaper_family
+83/110 Test: gaper_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_gaper_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"gaper_family" start time: Oct 28 15:42 CET
+Output:
+----------------------------------------------------------
+MOVEMENT hp32_32_28_8=1 first_tick=1 source_acceleration=1 analytic30ticks=1 arrival=1 no_route=1 walk22=1
+AWARENESS closed_chase=1 delayed_open=1 permanent_wake=1 animation20=1 reentry=1 cover=1
+DAMAGE fire_vulnerable=3 no_ignition=1 no_trail=1 contact_base10_global_multiplier=1 partition30_120=1
+EXTERNAL immutable_reload=1 runtime_force=1 rejected_contracts=11
+PLACEMENT bands0_1=1 scorched0_only=1 replacement60percent=1 support_reserve=1600
+PASS Gaper family
+<end of output>
+Test time =   0.33 sec
+----------------------------------------------------------
+Test Passed.
+"gaper_family" end time: Oct 28 15:42 CET
+"gaper_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+86/110 Testing: headless_family
+86/110 Test: headless_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_headless_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"headless_family" start time: Oct 28 15:42 CET
+Output:
+----------------------------------------------------------
+MOVEMENT no_target=1 retention_before_impulse=1 grounded_cover=1 pacer_no_shots=1
+SHOTS initial20_39=1 reload40_59=1 decrement_branch=1 velocity_aim=1 zero_aim=1 lob_physics=1 no_los_gate=1
+MORTALITY retained_payload=1 no_early_clear=1 gaper_offspring=2 faceless_morphs=2
+PARTITION source30Hz=1 immutable_reload=1 runtime_reload=1 rejected_contracts=6
+PASS Headless family
+<end of output>
+Test time =   0.38 sec
+----------------------------------------------------------
+Test Passed.
+"headless_family" end time: Oct 28 15:42 CET
+"headless_family" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 28 15:42 CET

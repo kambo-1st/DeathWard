@@ -1,0 +1,51 @@
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_bloat_tests.dir/tests/bloat_tests.cpp.o
+[100%] Linking CXX executable deathward_bloat_tests
+[100%] Built target deathward_bloat_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_boss_tests
+[100%] Built target deathward_monster_boss_tests
+Consolidate compiler generated dependencies of target glfw
+[ 29%] Built target glfw
+[ 88%] Built target deathward_core
+Consolidate compiler generated dependencies of target raylib
+[ 96%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[100%] Building CXX object CMakeFiles/deathward_mechanics_tests.dir/tests/mechanics_tests.cpp.o
+[100%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Built target deathward_monster_tests
+[ 22%] Built target glfw
+[ 66%] Built target deathward_core
+[ 72%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+[ 75%] Built target deathward_cloth
+[ 77%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 80%] Built target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 83%] Building CXX object CMakeFiles/deathward_mission_lighting.dir/src/render/GroundSurface.cpp.o
+[ 83%] Linking CXX static library libdeathward_mission_lighting.a
+[ 83%] Built target deathward_mission_lighting
+[ 83%] Built target deathward_runtime_assets
+[ 83%] Linking CXX static library libdeathward_particles.a
+[ 83%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward
+[ 83%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+/home/kambo/workspace/DeathWard/src/main.cpp: In function ‘int main(int, char**)’:
+/home/kambo/workspace/DeathWard/src/main.cpp:201:21: error: ‘value’ was not declared in this scope
+  201 |             else if(value=="green")enemyBossForm=dw::BossForm::Green;
+      |                     ^~~~~
+[ 83%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+gmake[3]: *** [CMakeFiles/deathward.dir/build.make:76: CMakeFiles/deathward.dir/src/main.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:462: CMakeFiles/deathward.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:469: CMakeFiles/deathward.dir/rule] Error 2
+gmake: *** [Makefile:265: deathward] Error 2

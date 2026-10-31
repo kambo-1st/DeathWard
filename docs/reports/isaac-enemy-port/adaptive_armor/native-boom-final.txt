@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 47: boom_flies
+1/1 Test #47: boom_flies .......................   Passed  170.45 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) = 170.45 sec

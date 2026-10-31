@@ -1,0 +1,2 @@
+NATURAL_BONY seed=1 floor=2 room=2 hp=44.8
+PASS Bony alignment,13-frame throw, bone hits, interruption, navigation and stage routing

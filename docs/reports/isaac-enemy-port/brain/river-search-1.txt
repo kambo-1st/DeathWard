@@ -1,0 +1,11 @@
+SEARCH seed=64
+SEARCH seed=68
+SEARCH seed=72
+SEARCH seed=76
+SEARCH seed=80
+SEARCH seed=84
+SEARCH seed=88
+SEARCH seed=92
+SEARCH seed=96
+SEARCH seed=100
+RIVER_BRAIN seed=101 floor=6 room=9 band=3

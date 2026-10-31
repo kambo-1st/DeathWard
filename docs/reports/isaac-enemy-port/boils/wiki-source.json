@@ -1,0 +1,266 @@
+{
+  "title": "Boil",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Boil",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=262993",
+  "revision": 262993,
+  "timestamp": "2026-04-05T08:24:59Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "Boils start as small red spheres that slowly grow to full size. When at their full size, they can spurt out a cluster of blood shots at Isaac, similar to one of Monstro's attacks. Boils decrease in size when hit, but will regenerate to their full size until fully destroyed."
+    },
+    {
+      "heading": "Variants",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Gut",
+      "level": 3,
+      "text": "Guts have a 5.71% chance to replace Boils and behave almost identically. Instead of disorganized blood shots, they fire singular Ipecac shots at Isaac that do not damage them."
+    },
+    {
+      "heading": "Sack",
+      "level": 3,
+      "text": "[disambig msg: the enemy; the pickup; Sacks] \n\nSacks don't shoot projectiles; instead, they periodically spawn a Spider when fully swollen. Therefore, damaging them will prevent them from spawning Spiders, making them easy to kill. They also regenerate much slower than Boils or Guts. They can commonly be found on the early floors."
+    },
+    {
+      "heading": "Notes",
+      "level": 3,
+      "text": "\u2022 Up to six spiders can be active at once.\n\n\u2022 [Repentance] They can spawn in unique Curse Room layouts if Isaac has Voodoo Head. [end edition note]"
+    },
+    {
+      "heading": "Blue Boil",
+      "level": 3,
+      "text": "Blue Boils are mainly spawned during the Hush fight. They spawn fully swollen and don't need to charge up like regular Boils. Instead of spraying clusters of blood shots, they fire either one blood shot, or three blood shots in a spread towards Isaac. They also regain their health 10x faster than regular Boils if they are damaged but not killed."
+    },
+    {
+      "heading": "Notes",
+      "level": 4,
+      "text": "\u2022 Blue Boils that appear in regular rooms can be Champions.\n\n\u2022 Blue Boils' shots deal a full heart of damage to Isaac.\n\n\u2022 [Repentance] They can also appear in ??? with the use of Red Key or by entering doors unlocked with the Blue Key. [end edition note]"
+    },
+    {
+      "heading": "Gush",
+      "level": 3,
+      "text": "Gushes are stationary, being unable to do any form of damage. Instead, they continuously create slowing black creep around them that slowly expands infinitely in radius and can cover the entire room if left alive for long enough. Unlike other Boil variants, they do not shrink or regenerate.\n\nAlthough the Black Creep is relatively harmless on its own, Tar Boys can use their special attack if Isaac is standing on the creep."
+    },
+    {
+      "heading": "Pustule",
+      "level": 3,
+      "text": "Pustules are stationary enemies that appear to grow out of the ground, unlike Boils they do not shrink when damaged and instead continuously swell in size. When destroyed at the smallest stages, they explode into a tiny puddle of red creep and don't spawn anything. When destroyed at the last 2 stages of swelling they spawn a Small Maggot and a small pool of Red Creep, and if not destroyed, they will burst into a Bloodfly and a slightly larger puddle of Red Creep."
+    },
+    {
+      "heading": "Walking Boil",
+      "level": 3,
+      "text": "Walking Boils act like Boils, but randomly wander around the room, can deal half a heart of contact damage, and don't shrink or regenerate."
+    },
+    {
+      "heading": "Walking Gut",
+      "level": 3,
+      "text": "Walking Guts act like Guts, but randomly wander around the room, can deal half a heart of contact damage, and don't shrink and regenerate."
+    },
+    {
+      "heading": "Walking Sack",
+      "level": 3,
+      "text": "Walking Sacks act like Sacks, but randomly wander around the room, can deal half a heart of contact damage, and don't shrink or regenerate."
+    },
+    {
+      "heading": "Notes",
+      "level": 2,
+      "text": "\u2022 [Before Afterbirth+] While regular Boils can be touched without taking damage, champion forms do inflict one heart of damage on touch (like all champions).\n\n\u2022 Champion Boils grow significantly slower but take more hits to deflate. The exception to this is gray champions, which grow faster and take fewer hits to deflate."
+    },
+    {
+      "heading": "Trivia",
+      "level": 2,
+      "text": "\u2022 Gushes were added in Booster Pack #4, after the initial release of the DLC.\n\n\u2022 [Repentance] A pustule is the scientific name for a pimple.\n\n\u2022 [Repentance] Pustules in Antibirth would burst into Small Maggots and puddles of Green Creep as opposed to the Bloodfly and Red Creep in Repentance."
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "id": "30",
+        "base hp": "20",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nboss / dice /",
+        "behavior": "Stationary enemy that decreases in size when hit, but regenerates to its full size until fully destroyed. Fires multiple short-ranged blood projectiles in random directions when fully swollen."
+      },
+      "group": "entity",
+      "id": 30,
+      "name": "Boil",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "name": "Gut",
+        "variant": "1",
+        "base hp": "20",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths /",
+        "replace": "Boil",
+        "replace chance": "5.71%",
+        "behavior": "Stationary enemy that decreases in size when hit, but regenerates to its full size until fully destroyed. Fires Ipecac shots in random directions when fully swollen."
+      },
+      "group": "entity",
+      "id": 30,
+      "name": "Gut",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 3,
+      "fields": {
+        "name": "Sack",
+        "variant": "2",
+        "base hp": "20",
+        "environment": "Cellar / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nboss / Curse /",
+        "replace": "Boil, Gut",
+        "replace chance": "1%",
+        "behavior": "Stationary enemy that decreases in size when hit, but regenerates to its full size until fully destroyed. Occasionally spawns Spiders when fully swollen."
+      },
+      "group": "entity",
+      "id": 30,
+      "name": "Sack",
+      "variant": 2,
+      "subtype": 0,
+      "section_indices": [
+        3
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 5,
+      "fields": {
+        "dlc": "a",
+        "name": "Blue Boil",
+        "image name": "* [Before Repentance] Afterbirth",
+        "id": "298",
+        "base hp": "20",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \n??? / \nSpawned By Hush",
+        "behavior": "Stationary enemy that decreases in size when hit, but regenerates to its full size until fully destroyed. Fires 1-3 blood shots towards Isaac when fully swollen."
+      },
+      "group": "entity",
+      "id": 298,
+      "name": "Blue Boil",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        5,
+        6
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 7,
+      "fields": {
+        "dlc": "a+",
+        "name": "Gush",
+        "id": "309",
+        "base hp": "20",
+        "environment": "Dank Depths /",
+        "behavior": "Stationary, harmless enemy that continually creates slowing black creep."
+      },
+      "group": "entity",
+      "id": 309,
+      "name": "Gush",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        7
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 8,
+      "fields": {
+        "dlc": "r",
+        "name": "Pustule",
+        "id": "861",
+        "base hp": "19",
+        "environment": "Corpse / \nchallenge /",
+        "behavior": "Slowly increases in size over time, spawning Small Maggots and damaging red creep depending on its size upon death. If it grows to full size, it transforms into a Bloodfly."
+      },
+      "group": "entity",
+      "id": 861,
+      "name": "Pustule",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        8
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 9,
+      "fields": {
+        "name": "Walking Boil",
+        "id": "88",
+        "base hp": "20",
+        "environment": "Catacombs / Flooded Caves / \nNecropolis / \nWomb / Utero / Scarred Womb /",
+        "behavior": "Does not shrink or regenerate. Walks around aimlessly and fires multiple short-ranged blood projectiles in random directions."
+      },
+      "group": "entity",
+      "id": 88,
+      "name": "Walking Boil",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        9
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 10,
+      "fields": {
+        "name": "Walking Gut",
+        "variant": "1",
+        "base hp": "20",
+        "environment": "Caves / Catacombs / \nNecropolis /",
+        "replace": "Walking Boil",
+        "replace chance": "5.71%",
+        "behavior": "Does not shrink or regenerate. Walks around aimlessly and fires Ipecac shots in random directions."
+      },
+      "group": "entity",
+      "id": 88,
+      "name": "Walking Gut",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        10
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 11,
+      "fields": {
+        "name": "Walking Sack",
+        "variant": "2",
+        "base hp": "20",
+        "environment": "Cellar / \nCatacombs / \nDepths / Necropolis / Dank Depths /",
+        "replace": "Walking Boil, Walking Gut",
+        "replace chance": "1%",
+        "behavior": "Does not shrink or regenerate. Walks around aimlessly and occasionally spawns Spiders."
+      },
+      "group": "entity",
+      "id": 88,
+      "name": "Walking Sack",
+      "variant": 2,
+      "subtype": 0,
+      "section_indices": [
+        11
+      ]
+    }
+  ]
+}

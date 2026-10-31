@@ -1,0 +1,34 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/falling_pathfinder.asm",
+      "start": "0x7a3650",
+      "end": "0x7a4813",
+      "raw_sha256": "a63c08242d9973fb51fb3c0c7c595c0f83b95889d1d8f05d7271009b7b2a2191",
+      "sha256": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af"
+    }
+  ],
+  "state_dispatch": {
+    "address": "0x4c70b0",
+    "targets": [
+      "0x4c5ca9",
+      "0x4c6ed9",
+      "0x4c6ed9",
+      "0x4c5ccc",
+      "0x4c6ed9",
+      "0x4c6d26",
+      "0x4c6554",
+      "0x4c6ae2",
+      "0x4c612e",
+      "0x4c672a",
+      "0x4c69a1"
+    ]
+  },
+  "pathfinder_constants": {
+    "0xb6a588": 0.8500000238418579,
+    "0xb6a2cc": 0.10000000149011612,
+    "0xb6a50c": 0.699999988079071,
+    "0xb6a7b0": 2.0
+  }
+}

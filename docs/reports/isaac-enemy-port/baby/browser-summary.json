@@ -1,0 +1,112 @@
+{
+  "passed": 11,
+  "final_build_passed": 11,
+  "earlier_build_passed": 3,
+  "final_build_result": "docs/reports/isaac-enemy-port/baby/web-final/results.json",
+  "exit_code": 0,
+  "headless": false,
+  "renderers": [
+    "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+  ],
+  "cases": [
+    {
+      "name": "normal",
+      "pass": true,
+      "movement": 23.438681019113144,
+      "shots": 2,
+      "teleports": 1,
+      "dashes": 0
+    },
+    {
+      "name": "angelic",
+      "pass": true,
+      "movement": 9.21263301963182,
+      "shots": 3,
+      "teleports": 1,
+      "dashes": 0
+    },
+    {
+      "name": "small",
+      "pass": true,
+      "movement": 9.212633031250164,
+      "shots": 3,
+      "teleports": 1,
+      "dashes": 0
+    },
+    {
+      "name": "wrinkly",
+      "pass": true,
+      "movement": 17.584181484979666,
+      "shots": 3,
+      "teleports": 0,
+      "dashes": 1
+    },
+    {
+      "name": "normal-cover",
+      "pass": true,
+      "movement": 16.789997706300547,
+      "shots": 3,
+      "teleports": 1,
+      "dashes": 0
+    },
+    {
+      "name": "angelic-river",
+      "pass": true,
+      "movement": 0.7967779356024356,
+      "shots": 5,
+      "teleports": 0,
+      "dashes": 0
+    },
+    {
+      "name": "resident-0-seed-5-floor-3",
+      "pass": true,
+      "movement": 22.352130242080168,
+      "shots": 3,
+      "teleports": 1,
+      "dashes": 0
+    },
+    {
+      "name": "resident-0-seed-5-floor-4",
+      "pass": true,
+      "movement": 0.6654586222891695,
+      "shots": 5,
+      "teleports": 0,
+      "dashes": 0
+    },
+    {
+      "name": "resident-1-seed-8-floor-6",
+      "pass": true,
+      "movement": 0.6657313057274091,
+      "shots": 5,
+      "teleports": 0,
+      "dashes": 0
+    },
+    {
+      "name": "resident-1-seed-18-floor-5",
+      "pass": true,
+      "movement": 0.7686504664658544,
+      "shots": 5,
+      "teleports": 0,
+      "dashes": 0
+    },
+    {
+      "name": "resident-3-seed-28-floor-7",
+      "pass": true,
+      "movement": 20.82537841796875,
+      "shots": 3,
+      "teleports": 0,
+      "dashes": 1
+    }
+  ],
+  "scope": "Six isolated behavior/terrain cases and five actual generated populations. Snapshots and actual draw-boundary captures; partial acceptance, no full balance/performance approval.",
+  "preserved_failures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-initial/results.json",
+      "reason": "Intentionally stopped confirmed SwiftShader run; no passes claimed."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/baby/web-hardware/results.json",
+      "reason": "Three cases passed, then Wrinkly failed due to invented sight gate. Source-traced correction and final11cases pass."
+    }
+  ]
+}

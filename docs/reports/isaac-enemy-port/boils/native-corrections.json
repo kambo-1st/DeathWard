@@ -1,0 +1,40 @@
+{
+  "initial_report": "docs/reports/isaac-enemy-port/boils/native.xml",
+  "corrections": [
+    {
+      "suite": "hive_evaders",
+      "cause": "Old fixed seed sample lost its rare Drowned Hive after regular enemy pool expansion.",
+      "witness": {
+        "id": "22.1.0",
+        "seed": 109,
+        "floor": 2,
+        "room": 6,
+        "variant": "Flooded"
+      },
+      "search": "docs/reports/isaac-enemy-port/boils/hive-witness-corrected.txt",
+      "change": "Retain seeds0..99 and245; add109. Behavior, room cap and Flooded-only assertions preserved.",
+      "corrected_report": "docs/reports/isaac-enemy-port/boils/hive-corrected.xml"
+    },
+    {
+      "suite": "mulligan_family",
+      "cause": "Expanded ordinary specialist pool changed seeded placement; earlier fixed opening-floor samples lost Mulligoon, and first128 band1 candidates lost Mulliboom.",
+      "witnesses": [
+        {
+          "id": "16.1.0",
+          "seed": 35,
+          "floor": 0,
+          "room": 5
+        },
+        {
+          "id": "16.2.0",
+          "seed": 160,
+          "floor": 1,
+          "room": 4
+        }
+      ],
+      "search": "docs/reports/isaac-enemy-port/boils/mulligan-witnesses.txt",
+      "change": "Retain all prior samples; add actual production seeds35 and160. Require all three family identities; no gameplay weights or replacement rules changed.",
+      "corrected_report": "docs/reports/isaac-enemy-port/boils/mulligan-corrected.xml"
+    }
+  ]
+}

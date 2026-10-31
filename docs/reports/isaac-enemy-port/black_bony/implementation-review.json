@@ -1,0 +1,54 @@
+{
+  "status": "partial ordinary Black Bony implementation",
+  "tuple": "277.0.0",
+  "mechanics_fingerprint": "c5b1a1be8d2a9025",
+  "source_review": "docs/reports/isaac-enemy-port/black_bony/source-review.json",
+  "implemented": [
+    "Three complete source13-frame animations with aimed bones at frames4/17/30; current target on each shot, no reacquisition between bones.",
+    "External death_blast row: immediate128enemy/20player damage,radius6,line-check. Genuine execution explodes; debug mass-kill bypasses it.",
+    "Mandatory death blast retained when queue admission fails; dead actor and room completion wait for admission. Normal Bony is unaffected.",
+    "Dark procedural skeleton/projectile presentation and sparse cost4/cap1 ordinary pools in standard Broken Quarry and later bands."
+  ],
+  "native": {
+    "covered_suites": 60,
+    "result": "all covered by passing results after rare-replacement coverage fix",
+    "initial": "docs/reports/isaac-enemy-port/black_bony/native.xml",
+    "initial_pass": 59,
+    "initial_fail": 1,
+    "rerun": "docs/reports/isaac-enemy-port/black_bony/coverage.xml",
+    "rerun_pass": 1,
+    "finding": "A previously fixed I.Blob seed no longer selected it after adding a weighted enemy. Test now supplements missing replacement coverage across eligible bands, with actual default chances and the same128-seed bound. Runtime probabilities/placement unchanged."
+  },
+  "browser": {
+    "cases": 6,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/black_bony/web/results.json",
+    "scope": "Normal and Black Bony isolated attacks/deaths plus two unforced natural residents. Older boss-browser fixtures not rerun."
+  },
+  "balance": {
+    "cases": 6,
+    "clears": 6,
+    "report": "docs/reports/isaac-enemy-port/black_bony/starting-kit.txt",
+    "player_health": 100,
+    "shot_damage": 24,
+    "items": 0,
+    "god_mode": false,
+    "scope": "Automated mixed rooms, two in each eligible band; no human or varied-build acceptance."
+  },
+  "visuals": {
+    "inspected": [
+      "docs/reports/isaac-enemy-port/black_bony/linux-ordinary.png",
+      "docs/reports/isaac-enemy-port/black_bony/web/black-three-throws-300.png",
+      "docs/reports/isaac-enemy-port/black_bony/web/natural-black-resident-360.png"
+    ],
+    "result": "Original palette retained; dark skeletal silhouette and dark elongated bone shots distinguish the family variant. Native/browser settled captures and actual mixed room show ground shadows. Full camera/occlusion and explosion readability matrix remains open."
+  },
+  "remaining": [
+    "Shared source pathfinder/grid clamp, exact physics/projectile defaults, status/faction/special-item and damage-source flag exceptions remain unfinished.",
+    "Forsaken black-form summons and other boss routes remain deferred; this is an ordinary-enemy increment.",
+    "Six/six starting-kit bot rooms clear, but varied-build/human balance and controlled rendered performance acceptance are open.",
+    "Existing broader boss-browser timing fixtures remain historical; only six named Bony-family cases were run on this build.",
+    "Zero certified complete ports; regular enemies and required offspring remain the priority."
+  ],
+  "next_regular_preflight": "docs/reports/isaac-enemy-port/gurgle_review/preflight/manifest.json"
+}

@@ -1,0 +1,39 @@
+[OUTPUT] 
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+
+[HANDLER_OUTPUT] 
+Test project /home/kambo/workspace/DeathWard/build
+
+    Start 103: prey_and_small_leech
+    Start  78: nest_family
+    Start   5: floor_progression
+1/9 Test #103: prey_and_small_leech .............***Failed    0.25 sec
+PASS swimming acceleration and source Hop10/Land6 timing
+PASS real river crossing, solid obstacles and room boundaries
+PASS Prey health, live/death offspring, population, retained births, overkill and contacts
+FAIL entity collision zero does not grant bomb immunity
+
+    Start  87: headless_family
+2/9 Test  #87: headless_family ..................   Passed    0.48 sec
+    Start   2: mechanics_content
+3/9 Test   #2: mechanics_content ................   Passed    2.26 sec
+    Start  30: monster_behaviors
+4/9 Test  #30: monster_behaviors ................   Passed    4.53 sec
+    Start  81: spider_family
+5/9 Test  #81: spider_family ....................   Passed    1.42 sec
+    Start  84: gaper_family
+6/9 Test  #84: gaper_family .....................   Passed    0.43 sec
+    Start  79: black_globin_family
+7/9 Test  #78: nest_family ......................   Passed   11.69 sec
+8/9 Test  #79: black_globin_family ..............   Passed    8.20 sec
+9/9 Test   #5: floor_progression ................   Passed  192.33 sec
+
+89% tests passed, 1 tests failed out of 9
+
+Total Test time (real) = 192.34 sec
+
+The following tests FAILED:
+	103 - prey_and_small_leech (Failed)
+[ERROR_MESSAGE] 
+Errors while running CTest
+

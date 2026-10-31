@@ -1,0 +1,2 @@
+BOOM_CPU_STEP chain=0 samples=1800 mean_us=3.91699 p95_us=4.14 max_us=11.95 peak_actors=24 peak_bullets=4 peak_fields=20 peak_armed=0 peak_pending=0 suppressed=0 explosions=0 render=0 baseline_comparison=0
+BOOM_CPU_STEP chain=1 samples=1860 mean_us=0.617287 p95_us=1.89 max_us=24.501 peak_actors=0 peak_bullets=0 peak_fields=0 peak_armed=128 peak_pending=256 suppressed=8 explosions=384 render=0 baseline_comparison=0

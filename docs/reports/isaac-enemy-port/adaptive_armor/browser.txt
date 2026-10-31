@@ -1,0 +1,14 @@
+START 14.2.0
+PASS 14.2.0 burst damage 15.778656005859375
+START 22.3.0
+AssertionError [ERR_ASSERTION]: rolling history expires
+
+25 !== 0
+
+    at /home/kambo/workspace/DeathWard/web/adaptive-armor-test.cjs:29:57 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 25,
+  expected: 0,
+  operator: 'strictEqual'
+}

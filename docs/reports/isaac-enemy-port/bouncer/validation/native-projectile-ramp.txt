@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 35: spitty_family
+    Start 80: leper_flesh
+    Start 81: leper_family
+1/4 Test #81: leper_family .....................   Passed    2.03 sec
+    Start 34: source_projectile_motion
+2/4 Test #34: source_projectile_motion .........   Passed    0.26 sec
+3/4 Test #80: leper_flesh ......................   Passed    3.83 sec
+4/4 Test #35: spitty_family ....................   Passed   27.35 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =  27.35 sec

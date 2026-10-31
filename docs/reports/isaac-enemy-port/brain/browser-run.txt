@@ -1,0 +1,14 @@
+START brain
+PASS brain
+START brain-cover
+PASS brain-cover
+START brain-river
+PASS brain-river
+START brain-death
+PASS brain-death
+START resident-band-2
+PASS resident-band-2
+START resident-band-3
+PASS resident-band-3
+START resident-river
+PASS resident-river

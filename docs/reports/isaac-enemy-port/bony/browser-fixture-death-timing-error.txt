@@ -1,0 +1,12 @@
+PASS ordinary-bone-throw
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(p.alive&&p.threats===1)
+
+    at /home/kambo/workspace/DeathWard/web/bony-test.cjs:32:6 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

@@ -1,0 +1,57 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "tuple": "277.0.0",
+  "ai": "0x525830",
+  "animation_manifest": "docs/reports/isaac-enemy-port/bony_review/animations/manifest.json",
+  "animation_sha256": "fa54549feedb7e998098287ec88f7e1fcdd3c31d904a43e4af39a7f264937442",
+  "is_playing_signature": "558bec8b41??85c074??8079??0074??8b4d??80390074??8378??1072??8b008a103a1175??84d274??8a50??3a51??75??83c00283c10284d275??33c0eb??1bc083c80185c075??b0015dc2040032c05dc20400??????????????????????558bec8b45??8378??1072??8b008945??5de9??????????????????????????558bec8b41??85c075??8b45??803800eb??8079??0075??8b4d??80390074??8378??1072??8b008a103a1175??84d274??8a50??3a51??75??83c00283c10284d275??33c0eb??1bc083c80185c075??b0015dc2040032c05dc20400??????558bec8b45??8378??1072??8b008945??5de9??????????????????????????558bec83ec08538bc18b4d??565733ff8945??8b58??85db74??8b40??8bf08945??837e??108bc672??8b060f1f40008a103a1175??84d274??8a50??3a51??75??83c00283c10284d275??33c0eb??1bc083c80185c074??8b4d??4781c63c0100003bfb72??5168????????6a00e8????????83c40c32c05f5e5b8be55dc208008b4d??69c73c01000083c130",
+  "bomb_damage_binding": {
+    "name": "0xb54e44",
+    "function": "0x6d1750",
+    "registration": "0x80a081",
+    "bytes": "6850176d0068444eb500"
+  },
+  "findings": [
+    "Repeat gate checks animation pointer and playing flag, not the Shoot event. Counter starts0 and repeats while<2: three complete13-frame animations.",
+    "Each Shoot event aims at the current player target, retaining ordinary speed10 and bone variant1; black projectile color multiplier.4, body.3.",
+    "Death calls named BombDamage with40damage/60radius/lineCheck=true/sourceNPC. Local128damage/radius6/player20 are explicit world/damage conversions."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/black_bony/source/dispatch.asm",
+      "start": "0x699d4f",
+      "end": "0x699d5b",
+      "sha256": "e068243c9b6c09a5401b962c6a140212c3daa378b2ea631de35be02be526aad6",
+      "raw_sha256": "0d329fca0fc927e52f023989ca89d640b399a539333b37417767771f545eefaf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/black_bony/source/playing.asm",
+      "start": "0x405640",
+      "end": "0x405695",
+      "sha256": "35843315f5aba4e29440e50ce567c316698b9c0e6b9e0e2fae416e5b4066a945",
+      "raw_sha256": "4516a5bbb7c622c6af2d9ca244862e9e230f25f486d9317d16b65ede2491dcb7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/black_bony/source/repeat_gate.asm",
+      "start": "0x5265c3",
+      "end": "0x52668a",
+      "sha256": "e706e7567720921c1fe1460632252f064f34e9ba8de0e17ef840bdf4c8172d22",
+      "raw_sha256": "824f0f72b3a44023208a2dac0529fc389c4abe4083a897ec0cbe19a40ae144aa"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/black_bony/source/death_blast.asm",
+      "start": "0x52680e",
+      "end": "0x526887",
+      "sha256": "e4bbcb15a94a3e5ba834e5dd3cfcc59fc26ddb8ec1ee6ef23329e8657382fae3",
+      "raw_sha256": "5d3eabba714f3300c902e6bb0c4a705224aa4ac68b72ce1eb2bc80d8c9a51e91"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/black_bony/source/bomb_api_binding.asm",
+      "start": "0x80a081",
+      "end": "0x80a090",
+      "sha256": "f893889065cf28fb84badc3ded552157a3c760dcf7fa7b77ef0ad041442ecaad",
+      "raw_sha256": "cfcc986e783a642dd193b96b9359c5531bd59236fef2f29d5462748c6ce1b15f"
+    }
+  ]
+}

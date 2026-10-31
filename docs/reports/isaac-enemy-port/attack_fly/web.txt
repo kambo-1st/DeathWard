@@ -1,0 +1,7 @@
+PASS attack-pursuit
+PASS attack-cover
+PASS attack-river
+PASS attack-skatole
+PASS attack-damaged-morph
+PASS attack-death
+PASS natural-attack

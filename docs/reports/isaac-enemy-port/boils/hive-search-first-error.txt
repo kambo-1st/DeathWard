@@ -1,0 +1,1 @@
+First standalone witness search exited1 after checking the unconfigured ExpeditionPlan profile. That profile is Standard until MechanicsLibrary::configureFloor applies seeded floor variants. The corrected helper uses the same configureFloor call as Simulation before skipping dry candidates. This was a search-helper error, not evidence of unavailable Drowned Hives.

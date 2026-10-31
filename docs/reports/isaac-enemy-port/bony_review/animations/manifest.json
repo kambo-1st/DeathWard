@@ -1,0 +1,197 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/227.000_boney.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/bony_review/animations/227.000_boney.anm2",
+      "sha256": "11d1cc86affcb5f052b8bfee68ca9f6c5bcf12ac795820b98b49246d6c8f232b",
+      "checksum": "0xba0f9877",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03.21.2021 12:55:07",
+        "Fps": "30",
+        "Version": "105"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkDown",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkUp",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "AttackDown",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "AttackUp",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "AttackHori",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/277.000_black boney.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/bony_review/animations/277.000_black boney.anm2",
+      "sha256": "fa54549feedb7e998098287ec88f7e1fcdd3c31d904a43e4af39a7f264937442",
+      "checksum": "0xc4ba8d7f",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03.21.2021 12:57:04",
+        "Fps": "30",
+        "Version": "105"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Shoot"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkDown",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkUp",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "AttackDown",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "AttackUp",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "AttackHori",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

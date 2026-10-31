@@ -1,0 +1,274 @@
+{
+  "scope": [
+    "30.0.0 Boil",
+    "30.1.0 Gut",
+    "30.2.0 Sack (shared integration)",
+    "88.0.0 Walking Boil",
+    "88.1.0 Walking Gut",
+    "88.2.0 Walking Sack"
+  ],
+  "mechanics_fingerprint": "bb632c6e46f99362",
+  "native": {
+    "covered_suites": 74,
+    "passed": 74,
+    "failed": 0,
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "boil_family",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "initial_full_run": {
+      "report": "docs/reports/isaac-enemy-port/boils/native.xml",
+      "passed": 72,
+      "failed": [
+        "hive_evaders",
+        "mulligan_family"
+      ]
+    },
+    "corrected_runs": [
+      "docs/reports/isaac-enemy-port/boils/hive-corrected.xml",
+      "docs/reports/isaac-enemy-port/boils/mulligan-corrected.xml"
+    ],
+    "behavior": "docs/reports/isaac-enemy-port/boils/behavior-final.txt",
+    "behavior_scope": "Source regenerative recurrence and damage reset; Shoot24/event12; blood and explosive lobs checked against independent 30Hz recurrence; exact impact and immunity exceptions; pending whole volleys/impacts and room completion; wandering/collision/contact; Spider/Strider throw height, stun and independent landing; strict immutable configuration; all six actual seeded residents.",
+    "correction_review": "docs/reports/isaac-enemy-port/boils/native-corrections.json"
+  },
+  "browser": {
+    "cases": 13,
+    "report": "docs/reports/isaac-enemy-port/boils/web/results.json",
+    "errors": [],
+    "scope": "13 Original-style production WASM cases: six isolated family members, walking cover navigation and six actual seeded residents. Exact growth/events/ballistics/immunity/retained impacts and stun during thrown flight have native fixtures. Broader acceptance gates remain open."
+  },
+  "visual": {
+    "style": "Original",
+    "inspected_captures": 24,
+    "captures_showing_selected_body": 21,
+    "captures": [
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-boil.png",
+        "observation": "Red, partly grown stationary blob with a grounded shadow and clear separation from the protagonist.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-gut.png",
+        "observation": "Green stationary blob clearly differs from the blood shooter; grounded shadow and smaller growing body remain visible.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-sack.png",
+        "observation": "Pale stationary Sack is distinct from the red/green shooters; its partly grown body stays at ground level.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-walking-boil.png",
+        "observation": "Full red body has moved left of its spawn; small feet and ground shadow are visible.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-walking-gut.png",
+        "observation": "Full green body and small feet visible left of its spawn, matching the walking family silhouette.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-walking-sack.png",
+        "observation": "Full pale body and small feet visible left of its spawn, distinct from its green Spider offspring.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-natural-boil.png",
+        "observation": "Red Boil remains visible on the shallow ford among the mixed room roster; canyon, river and protagonist retain Original rendering.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-natural-gut.png",
+        "observation": "Small green Gut remains visible near the right wall in the mixed generated room; separate green Maggot has a larger elongated body.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-natural-sack.png",
+        "observation": "Pale stationary Sack is visible beyond the crowded protagonist; spider residents and occlusion outlines expose the remaining crowd-readability limitation.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-natural-walking-boil-retry.png",
+        "observation": "Selected walking Boil is hidden by foreground canyon geometry and appears only as a red occlusion outline. Valid location evidence, not a body/silhouette pass.",
+        "body_visible": false
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-natural-walking-gut.png",
+        "observation": "Green walking Gut appears next to the player in the browser capture. Native capture catches the broad opaque explosion covering that body; no native body-visibility claim for this frame.",
+        "body_visible": false
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/native-natural-walking-sack.png",
+        "observation": "Pale walking Sack is visible beside the central rock; other green spiders crowd the protagonist. Matching room composition with slightly different animation sampling.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/boil.png",
+        "observation": "Red, partly grown stationary blob with a grounded shadow and clear separation from the protagonist.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/gut.png",
+        "observation": "Green stationary blob clearly differs from the blood shooter; grounded shadow and smaller growing body remain visible.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/sack.png",
+        "observation": "Pale stationary Sack is distinct from the red/green shooters; its partly grown body stays at ground level.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/walking-boil.png",
+        "observation": "Full red body has moved left of its spawn; small feet and ground shadow are visible.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/walking-gut.png",
+        "observation": "Full green body and small feet visible left of its spawn, matching the walking family silhouette.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/walking-sack.png",
+        "observation": "Full pale body and small feet visible left of its spawn, distinct from its green Spider offspring.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/natural-boil.png",
+        "observation": "Red Boil remains visible on the shallow ford among the mixed room roster; canyon, river and protagonist retain Original rendering.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/natural-gut.png",
+        "observation": "Small green Gut remains visible near the right wall in the mixed generated room; separate green Maggot has a larger elongated body.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/natural-sack.png",
+        "observation": "Pale stationary Sack is visible beyond the crowded protagonist; spider residents and occlusion outlines expose the remaining crowd-readability limitation.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/natural-walking-boil.png",
+        "observation": "Selected walking Boil is hidden by foreground canyon geometry and appears only as a red occlusion outline. Valid location evidence, not a body/silhouette pass.",
+        "body_visible": false
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/natural-walking-gut.png",
+        "observation": "Green walking Gut appears next to the player in the browser capture. Native capture catches the broad opaque explosion covering that body; no native body-visibility claim for this frame.",
+        "body_visible": true
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/boils/web/natural-walking-sack.png",
+        "observation": "Pale walking Sack is visible beside the central rock; other green spiders crowd the protagonist. Matching room composition with slightly different animation sampling.",
+        "body_visible": true
+      }
+    ],
+    "result": "Partial visual validation:24 Linux/WASM captures inspected;21 show the selected body. All six family palettes and stationary/walking bodies are visible in isolated scenes. Two natural Walking Boil frames show only the existing occlusion outline; one native Walking Gut frame is obscured by its explosion. These limits prevent a full combat-readability pass.",
+    "limitations": [
+      "Procedural DeathWard geometry; no Isaac sprite artwork imported.",
+      "Small walking feet and pale Sack contrast need broader camera/crowd assessment.",
+      "Foreground canyon geometry and the existing opaque explosion effect still obscure bodies in the documented frames.",
+      "A static invulnerable player permits contact overlap; it is not a representative player combat evaluation.",
+      "Native captures stop exactly at frame140; browser screenshot execution can sample a few later frames. Layout/identity parity is verified, not pixel/animation parity.",
+      "Incidental FPS overlays are not controlled performance measurements.",
+      "Screenshots alone cannot prove projectile timing, immunity or throw collision; focused native assertions and browser telemetry supply those checks."
+    ],
+    "capture_execution": {
+      "first_run_exit": 143,
+      "first_run_images": 10,
+      "cause": "Not established; process ended before the last two captures. Partial log retained, no successful screenshot claimed for the interrupted case.",
+      "retry": "capture-remaining.py completed both remaining cases with exit0 and a new filename for the interrupted Walking Boil case."
+    }
+  },
+  "adaptations": [
+    "SourceHPx3.2, horizontalpositionx.1, verticalheightx.05. Bloodlocalvelocity21 plusradialjitter0..10.5, initialup7.5..43.5, gravity63.9, retention.9. Gutvelocity11.55 plusjitter0..5.775, targetedmultiplier.6..1.6, initialup24.75..49.95, gravity50.4. Physical3D collision and floor replace rectangular sourcegrid.",
+    "Shared SackRuntime retains immutable profile values and single-event latches; capacity retains whole selected bloodvolleys or offspring requests. Source RNG ordering and unlimited native capacity are not reproduced. Existing local generationlimit4 remains.",
+    "SourceWalkRandom destination40/arrival3/force.5/friction.75 use a local legal-ground/clear-path sampler with12tries. Actual terrain/crowd collision, source30Hz decisions inside60Hzsimulation and local stun handling are deliberate integrations.",
+    "CurrentHP initialization is applied at creation so dormant stationary actors show partialgrowth before firstAI tick. Walking bodies beginfullHP. Source champions/hardmode/damage-entry details remain unimplemented.",
+    "Shared thrown helper now advances stun duration for Spider/Strider as it already did for swimmers; walkingSack sets nativeinitialheight-30. Flight/landing uses actualterrain, pendingrequests and correct wet childidentity.",
+    "Original procedural blob geometry gains red/green/pale family palettes, swelling and walkingfeet. No sprite artwork or global stylefilter introduced. Stationary body height follows its growth for ground contact.",
+    "Boilbands1..3;Gut1..2;Sack0..2;WalkingBoil1..3;WalkingGut1..2;WalkingSack0..2. Sparsecap1specialists. Localweights/costs andsourcehabitat grouping are explicit balancing choices, not exact roomlibraries or source substitution rates. Existing lateGutband3was unsupported by sourcedhabitats and removed.",
+    "Hubs,Mine roster,Originalstyle,player100HP/defaultdamage,tutorial and4–8floor expeditionstructure remain unchanged. Registry total stays173because these definitions replace existing generic rows."
+  ],
+  "remaining": [
+    "Native5.71%/1%replacement selection, hardmode/championgrowth, full status/friendly/player-controlled branches, damage-entry exceptions and exact RNG/timeScale/grid parity still require review.",
+    "Native audio/spriteevents beyondShoot metadata and exact rendered sprite-size/collider relationship are not reproduced. Sourcefree-position grid selection is adapted to3D landing.",
+    "Full combat readability, long-run balance and controlled Linux/WASM performance gates remain open; these records are in_progress, never complete based only on focused tests.",
+    "Visual inspection found natural Walking Boil obscured by foreground cliffs (existing outline visible) and a native Walking Gut body obscured by its broad opaque explosion. All six bodies are visible in isolated captures, but these mixed-room frames are not full readability passes."
+  ],
+  "complete": false,
+  "historical_artifacts_preserved": 5924
+}

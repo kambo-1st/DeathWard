@@ -1,0 +1,13 @@
+PASS native supplied bomb mouse approach, empty-ground throw, arrows over HUD, B placement and zero-inventory HUD throw
+PASS native mouse picking and click-locked firing at elevated flying body
+PASS compact HUD hitboxes, mouse controls, build inspection, modal guards and warning priority
+PASS keyboard hub/setup, menus/settings, bombs over HUD, directed throws, camera, doors, trades, rewards and evidence-gated floor exits
+PASS native service walking, mouse/keyboard trades, modal guards, health preview and boss reward dismissal
+PASS mine arrow fire, diagonals, rotated camera, strafing, short taps, mouse fallback and modal guards
+PASS canyon arrow fire, diagonals, rotated camera, strafing, short taps, mouse fallback and modal guards
+PASS mine shopkeeper approach, purchases, UI guards, closing and saved spending
+PASS mine dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill
+PASS canyon shopkeeper approach, purchases, UI guards, closing and saved spending
+PASS canyon dynamite ground placement, WASD/mouse contact kicks, throws, pause, cancellation and refill
+FAIL: F6 grants all effects and Shift+F6 supplies testing keys
+Temporary campaign: "/tmp/deathward-input-36387571433009"

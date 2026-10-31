@@ -1,0 +1,138 @@
+[
+  {
+    "name": "parent",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-278.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "1",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/black-globin/native/parent.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "1766cecd0ed4461e1c9ecc24a517afc0315406d2aa008ff8439b95b50b8f7bc3"
+  },
+  {
+    "name": "damage-spider",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-278.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "55",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/black-globin/native/damage-spider.png",
+      "--enemy-hit",
+      "30",
+      "20"
+    ],
+    "exit": 0,
+    "binary_sha256": "1766cecd0ed4461e1c9ecc24a517afc0315406d2aa008ff8439b95b50b8f7bc3"
+  },
+  {
+    "name": "split",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-278.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/black-globin/native/split.png",
+      "--enemy-hit",
+      "60",
+      "110"
+    ],
+    "exit": 0,
+    "binary_sha256": "1766cecd0ed4461e1c9ecc24a517afc0315406d2aa008ff8439b95b50b8f7bc3"
+  },
+  {
+    "name": "head-creep",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-279.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "150",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/black-globin/native/head-creep.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "1766cecd0ed4461e1c9ecc24a517afc0315406d2aa008ff8439b95b50b8f7bc3"
+  },
+  {
+    "name": "body-brood",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-280.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/black-globin/native/body-brood.png"
+    ],
+    "exit": 0,
+    "binary_sha256": "1766cecd0ed4461e1c9ecc24a517afc0315406d2aa008ff8439b95b50b8f7bc3"
+  },
+  {
+    "name": "natural",
+    "command": [
+      "./build/deathward",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-278.0.0",
+      "--enemy-camera-follow",
+      "--frames",
+      "100",
+      "--mute",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/black-globin/native/natural.png",
+      "--resident-seed",
+      "7",
+      "--resident-floor",
+      "4"
+    ],
+    "exit": 0,
+    "binary_sha256": "1766cecd0ed4461e1c9ecc24a517afc0315406d2aa008ff8439b95b50b8f7bc3"
+  }
+]

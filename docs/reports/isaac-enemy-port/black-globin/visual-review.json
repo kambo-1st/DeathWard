@@ -1,0 +1,37 @@
+{
+  "reviewed_utc": "2026-10-28T15:02:19.035837+00:00",
+  "result": "partial_pass",
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "initial_manifest": "docs/reports/isaac-enemy-port/black-globin/native/captures.json",
+  "current_manifest": "docs/reports/isaac-enemy-port/black-globin/native-current/captures.json",
+  "images_inspected": 9,
+  "current_images_inspected": [
+    "split",
+    "head-creep",
+    "natural"
+  ],
+  "initial_images_inspected": [
+    "parent",
+    "damage-spider",
+    "split",
+    "head-creep",
+    "body-brood",
+    "natural"
+  ],
+  "findings": [
+    "Dark parent, separate low detached head, open-neck body and thrown Spider remain distinguishable by silhouette and motion.",
+    "Split captures show exactly three hostile entities after lethal damage; parent is absent, independent head/body and airborne Spider visible.",
+    "Head pursuit lays an actual red danger trail; body capture shows a thrown Spider and cosmetic blood flecks, not Gusher projectiles.",
+    "Actual seed7/floor4 resident capture places BlackGlobin alongside other threats near canyon cover."
+  ],
+  "limitations": [
+    "Head identity is weaker from behind; detailed eyes/neck overlay are small at default camera.",
+    "Creep uses existing conspicuous circular hazard rendering; broader mixed-room/zoom readability remains open.",
+    "Screenshot FPS includes startup/smoke conditions and is not a measured performance result.",
+    "No browser validation per user override."
+  ]
+}

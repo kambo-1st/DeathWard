@@ -1,0 +1,26 @@
+[
+  {
+    "file": "build-web/index.html",
+    "encoding": "identity",
+    "sha256": "c3fb1cb54df2095770cffc4d721a2c561f735bc6222b3cf0c5870128ee888031",
+    "pass": true
+  },
+  {
+    "file": "build-web/index.js.gz",
+    "encoding": "gzip",
+    "sha256": "391bd8fbb0447bc1e316883e5c7009568bdcef1036943ab33172f68b99f2efb6",
+    "pass": true
+  },
+  {
+    "file": "build-web/index.wasm.gz",
+    "encoding": "gzip",
+    "sha256": "a7110e750f2a4566fb8449631458f9b8cebe4234a8d57debf04e3d22fab3cfea",
+    "pass": true
+  },
+  {
+    "file": "build-web/index.data.gz",
+    "encoding": "gzip",
+    "sha256": "776bee2d76143c687dd3a8ef774a628a9e2ae00c51d2c3f6531859f5d703bfef",
+    "pass": true
+  }
+]

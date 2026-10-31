@@ -1,0 +1,6 @@
+{
+  "pid": 213242,
+  "action": "SIGTERM after browser checks and served-build verification",
+  "original_server_pid": 203309,
+  "original_server_was_absent_before_restart": true
+}

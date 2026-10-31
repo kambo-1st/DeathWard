@@ -1,0 +1,28 @@
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.2 seed=0 floor=3 room=2 variant=0
+NATURAL_CHARGER id=855.0 seed=0 floor=5 room=12 variant=0
+NATURAL_GRILLED seed=1 floor=0 room=4
+NATURAL_REPLACEMENT seed=3 floor=1 room=1 source=23.0 target=23.1
+NATURAL_CHARGER id=23.3 seed=5 floor=2 room=8 variant=2
+NATURAL_REPLACEMENT seed=46 floor=2 room=1 source=15.0 target=15.2
+NATURAL_REPLACEMENT seed=98 floor=0 room=2 source=29.0 target=54.0
+Scorched floors=12 Hopper substitutions=1 Drowned substitutions=8
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+Activated Ring Fly groups band=2 count=2
+Activated Hopper forms band=0 count=2
+Activated Hopper forms band=1 count=2
+Activated Hopper forms band=2 count=2
+Reachable pool identities=29
+band=0 meanThreat=4.50769
+band=1 meanThreat=6.33155
+band=2 meanThreat=8.2438
+band=3 meanThreat=11.1504
+Validated 170 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss

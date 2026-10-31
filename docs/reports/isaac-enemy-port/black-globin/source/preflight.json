@@ -1,0 +1,27 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Initial controller windows to first return only; boundary/branch review still needed.",
+  "windows": [
+    {
+      "name": "parent",
+      "start": "0x4fc330",
+      "end_exclusive": "0x4fd0b5",
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/parent.asm",
+      "sha256": "bcef706f3e141b6b9deade0e1d0ae065c34002a3b3516bd8d136ee336d22a8d4"
+    },
+    {
+      "name": "head",
+      "start": "0x500140",
+      "end_exclusive": "0x5001e5",
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/head.asm",
+      "sha256": "5f9d424cb6801d28dc68400f776eb4ea63a02371e0d9cecdbbb77ba212b973d9"
+    },
+    {
+      "name": "body",
+      "start": "0x4f8e40",
+      "end_exclusive": "0x4f9a52",
+      "path": "docs/reports/isaac-enemy-port/black-globin/source/body.asm",
+      "sha256": "0ae61997e3afccb2096742a959aa2174819e892ac7d01731a43a0e5040a629ca"
+    }
+  ]
+}

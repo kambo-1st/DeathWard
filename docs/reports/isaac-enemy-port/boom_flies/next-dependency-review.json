@@ -1,0 +1,735 @@
+{
+  "status": "Next dependency preflight; not an implementation or completed eligibility review.",
+  "baseline": "Repentance1.7.9b",
+  "source_revisions": {
+    "The Horny Boys": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268743",
+    "Loki": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=261933",
+    "Lokii": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=261934",
+    "Hornfel": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268740",
+    "Hot Bombs": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=264728",
+    "Sad Bombs": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=262676",
+    "Brimstone Bombs": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=262667"
+  },
+  "prior_horny_boys_contract": {
+    "status": "Next dependency analysis only; Horny Boys remains unimplemented and unapproved.",
+    "baseline": "Repentance1.7.9b",
+    "shell_status": "Partial dedicated controller tested; source-specific items and acceptance gaps remain in source-review.json.",
+    "horny_boys": {
+      "id": "920.0.0",
+      "route": "Dedicated Gehenna analogue in Abandoned Works; not implemented.",
+      "required": "Actual ordered controller: Boom Fly plus three Eternal Fly Bombs; three juggled thrown bombs with Hot/Sad effects; ordered 19-pattern accelerating barrage and three spreading fireballs; branching three Brimstone Bomb teleports or five Sad Bomb smokescreen teleports.",
+      "additional_dependencies": [
+        "Hot/Sad/Brimstone hostile bomb effects",
+        "Meat Cleaver splitting into Loki and second-phase Hornfel, including reward ordering",
+        "Per-attack native timing/weights or declared tuning"
+      ],
+      "ready": "Shell now adds a tested normal Fly Bomb producer; Eternal trio remains owner-fixture only. Generic Boom Fly behavior must be reviewed before Horny Boys is accepted.",
+      "source": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268743",
+      "source_health": 707,
+      "source_stage": "Gehenna, positive boss-room template and boss-pool weight1; local Abandoned Works candidate, not yet enabled.",
+      "barrage": [
+        {
+          "count": 4,
+          "pattern": "cardinal"
+        },
+        {
+          "count": 4,
+          "pattern": "diagonal"
+        },
+        {
+          "count": 4,
+          "pattern": "cardinal"
+        },
+        {
+          "count": 8,
+          "pattern": "ring"
+        },
+        {
+          "count": 12,
+          "pattern": "ring"
+        },
+        {
+          "count": 24,
+          "pattern": "eight clusters of3"
+        },
+        {
+          "count": 10,
+          "pattern": "counterclockwise curved ring"
+        },
+        {
+          "count": 10,
+          "pattern": "clockwise curved ring"
+        },
+        {
+          "count": 4,
+          "pattern": "diagonal"
+        },
+        {
+          "count": 12,
+          "pattern": "four cardinal spreads of3"
+        },
+        {
+          "count": 12,
+          "pattern": "four diagonal spreads of3"
+        },
+        {
+          "count": 8,
+          "pattern": "ring"
+        },
+        {
+          "count": 20,
+          "pattern": "four diagonal spreads of5"
+        },
+        {
+          "count": 10,
+          "pattern": "ring"
+        },
+        {
+          "count": 8,
+          "pattern": "ring"
+        },
+        {
+          "count": 12,
+          "pattern": "ring"
+        },
+        {
+          "count": 12,
+          "pattern": "ring"
+        },
+        {
+          "count": 4,
+          "pattern": "cardinal"
+        },
+        {
+          "count": 4,
+          "pattern": "diagonal"
+        }
+      ],
+      "barrage_total_projectiles": 182,
+      "implementation_sequence": [
+        "Review Boom Fly25.0.0: diagonal movement, baseHP8+stageHP3, deathblast and fly-item exceptions; replace legacy placeholder as needed. Do not mistake baseHP for total stage HP.",
+        "Extend shared hostile bomb payloads for Hot,Sad and Brimstone effects, preserving normal Fly Bomb damage/fuse, ownership, floor lifetime and overflow behavior.",
+        "Implement authored ordered barrage table with configurable intervals/acceleration, muzzle geometry and curved volleys; verify all19 steps and182 projectiles, not just aggregate count.",
+        "Add3 cardinal-spreading landing fireballs and both teleport branches, preserving phase counters across inactive-room reentry.",
+        "Connect actual producer to atomic Boom Fly+3Eternal group; define source-specific cap/ownership and failure retry without unbounded summons.",
+        "Review Loki69.0.0, Lokii69.1.0, Hornfel906.0.0 and Meat Cleaver split/reward ordering; do not silently certify missing dependency behavior.",
+        "Enable reviewed dedicated Gehenna analogue, then validate native/WASM behavior, visuals, real encounter reachability, starting-kit/mixed-build balance and performance."
+      ],
+      "tuning_uncertainties": [
+        "Exact native action timings, juggled-bomb flight/fuses/effect probabilities, barrage acceleration/spread/curvature, teleport weights and immunity windows.",
+        "Boss immunity to own/offspring explosive effects and exact Boom Fly owner population/expiration rules need source confirmation or explicit local policy.",
+        "Meat Cleaver split creates second-phase Hornfel unable to exit room; his bomb drops depend on killing Loki first. This is an item-dependent completion requirement, not a normal enemy-pool entry."
+      ]
+    },
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Proposed tests and adaptations are DeathWard analysis.",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "boom_fly_family_preflight": {
+      "status": "Analysis only; existing legacy controllers are not certified.",
+      "source": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266731",
+      "identities": [
+        {
+          "id": "25.0.0",
+          "name": "Boom Fly",
+          "base_hp": "8",
+          "stage_hp": "3",
+          "candidate_bands": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "25.1.0",
+          "name": "Red Boom Fly",
+          "base_hp": "8",
+          "stage_hp": "3",
+          "candidate_bands": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "25.2.0",
+          "name": "Drowned Boom Fly",
+          "base_hp": "8",
+          "stage_hp": "3",
+          "candidate_bands": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": "25.3.0",
+          "name": "Dragon Fly",
+          "base_hp": "8",
+          "stage_hp": "3",
+          "candidate_bands": [
+            1
+          ]
+        },
+        {
+          "id": "25.3.1",
+          "name": "Dragon Fly X",
+          "base_hp": "8",
+          "stage_hp": "3",
+          "candidate_bands": [
+            1
+          ]
+        },
+        {
+          "id": "25.4.0",
+          "name": "Bone Fly",
+          "base_hp": "8",
+          "stage_hp": "3",
+          "candidate_bands": [
+            1
+          ]
+        },
+        {
+          "id": "25.5.0",
+          "name": "Sick Boom Fly",
+          "base_hp": "8",
+          "stage_hp": "3",
+          "candidate_bands": [
+            3
+          ]
+        },
+        {
+          "id": "25.6.0",
+          "name": "Tainted Boom Fly",
+          "base_hp": "20",
+          "stage_hp": "0",
+          "candidate_bands": []
+        }
+      ],
+      "health_blocker": "Seven normal-family tuples have baseHP8 AND stageHP3; Tainted25.6 has20/0. Do not apply8*3.2 as constant full HP. Preserved analysis.py documents stage plateau/formula; define explicit DeathWard floor-to-source-stage mapping before changing HP.",
+      "documented_stage_formula": "baseHP + stageHP * (min(stage,4) + .8*clamp(stage-5,0,5)); source stage5 multiplier remains4.",
+      "legacy_gaps": [
+        "Initial facing uses eight directions, including cardinals; source family requires diagonal flight.",
+        "Generic bounce reflects only when total movement is underhalf requested, so one blocked diagonal axis may slide without reflecting; test both axes independently.",
+        "Normal/Drowned death uses generic .7s radius2.8 MonsterBomb, currently80 enemy damage. Source-specific blast timing/damage must be established or explicitly adapted.",
+        "Bone Fly currently uses generic aimedShot at any bearing and default three-shot death ring. Source requires cardinal alignment for live shots, bone projectiles, and one death bone aligned to nearest cardinal bearing.",
+        "Sick death is one radius3 gas patch for4seconds plus six ordinary bullets, not eight persistent clouds and green shots; live gas trail already exists but unverified.",
+        "Tainted death lacks documented brief cross glow and faithful delayed cross-room explosions. Keep Ascent-only source identity out of ordinary floor pools.",
+        "Dragon cardinal/diagonal fire lines use generic ten*1.5unit patches and2.5s duration; verify extent/collision and preserve subtypeX identity.",
+        "Drowned offspring uses an explicit .5 local probability and landing clearance, but source-native probability and exact offspring positioning remain unknown.",
+        "Skatole suppresses contact and slows everyvariant; Beelzebub friendship must suppress explosions against player as well as body contact. Current generic companion system must not be assumed to provide these semantics."
+      ],
+      "reusable_work": [
+        "External stage-sensitive HP conversion with clear source-stage versuslocal-floor fields.",
+        "Shared diagonal-flight reflection primitive suitable for Shell,Hollow and Boom Fly variants, without forcing their distinct steering rules.",
+        "Typed real death-explosion, fan/cardinal bone projectile, gas-cloud group and delayed cross-chain payloads.",
+        "Faction/attribution policy applied to contact,projectiles,explosions and lingeringhazards."
+      ],
+      "first_dependency": "Review and implement25.0.0 before certifying Horny Boys producer; remaining variants can be a separate source-backed batch."
+    }
+  },
+  "current_dependency_changes": [
+    "Seven ordinary Boom Fly tuples now have explicit stage HP and diagonal/variant controllers; Tainted remains partial dedicated work.",
+    "819.0/819.1 and the atomic Boom Fly plus three Eternal group helper exist. Horny Boys920 producer does not.",
+    "Real bounded enemy ordnance, stationary warning chains, physical dropping and room-persistent fuses can be extended; no hostile bomb flavor is certified by an item dossier alone."
+  ],
+  "next_engine_work": [
+    "External hostile ordnance profiles: real throw trajectory/fuse, normal blast, Hot contact/fire, Sad projectile emission, Brimstone crossing lasers and per-target hit intervals. Preserve source owner/faction and cleanup; avoid borrowing player item scaling.",
+    "Reusable landing cardinal fire propagation for Hornfel/Horny Boys fireballs, with terrain policy and no last-enemy clear race.",
+    "Loki69.0 teleport/cardinal-diagonal-cardinal, eight-shot ring, at most four live Boom Fly offspring; band2 boss route with supported hazard arena.",
+    "Lokii69.1 has two independent350HP halves, independent attacks/teleports, only one Red Boom Fly alive at once (cap scope requires source verification). Shared encounter completion and Meat Cleaver split interface.",
+    "Hornfel906 requires explicit rail/door arena with decoy906.1, door967, minecart965 and external1000.152 controller dependencies. Phase2 escape can end boss normally; Horny Boys split disables exit and gates drops on Loki death.",
+    "Horny Boys920 ordered attack schedule, accelerating19-volley/182-shot burst, three landing fireballs and mutually exclusive teleport/bomb branches. Preserve all dependencies and source special interaction requirements."
+  ],
+  "ordnance_identity_candidates": {
+    "normal": "4.3.0 Troll Bomb",
+    "sad": "4.7.0 Sad Bomb or4.16.0 Bloody Sad Bomb; hostile linkage needs verification",
+    "hot": "4.8.0 Hot Troll Bomb",
+    "brimstone": "4.15.0 Brimstone Bomb"
+  },
+  "avoid_false_equivalence": [
+    "Player Hot Bomb fire is harmless to Isaac and lasts up to10s with four durability hits; this does not establish hostile boss fire damage/faction.",
+    "Player Sad Bomb tears have25+Isaac damage and inherit item modifiers; hostile boss projectiles must not inherit player build.",
+    "Player Brimstone Bomb lasers hit up to19 times for8 damage, cannot stack simultaneous laser hits and do not hurt Isaac; hostile beam equivalents need separately sourced/tuned behavior.",
+    "Repentance+1% boss item drops are outside1.7.9b. Keep source1/7 second-phase Hornfel outcome distinct.",
+    "XML ordnance names provide candidate identities, not proof of the exact native boss spawn call.",
+    "No additional ordinary room entry can substitute for Hornfel rail traversal or the dedicated Ascent route."
+  ],
+  "xml_entries": [
+    {
+      "anm2path": "004.000_Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    {
+      "anm2path": "004.001_Big Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Big Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    {
+      "anm2path": "004.002_Decoy.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "30",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Decoy",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "24",
+      "stageHP": "0",
+      "variant": "2"
+    },
+    {
+      "anm2path": "004.003_Troll Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Troll Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "3"
+    },
+    {
+      "anm2path": "004.004_Megatroll Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Megatroll Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "4"
+    },
+    {
+      "anm2path": "004.005_Poison Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Poison Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "16",
+      "stageHP": "0",
+      "variant": "5"
+    },
+    {
+      "anm2path": "004.006_Big Poison Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Big Poison Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "6"
+    },
+    {
+      "anm2path": "004.007_SadBomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Sad Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "7"
+    },
+    {
+      "anm2path": "004.008_Hot Troll Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Hot Troll Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "8"
+    },
+    {
+      "anm2path": "004.009_ButtBomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Butt Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "9"
+    },
+    {
+      "anm2path": "004.010_Mr Mega Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Mr. Mega Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "10"
+    },
+    {
+      "anm2path": "004.011_Bobby Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Bobby Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "11"
+    },
+    {
+      "anm2path": "004.012_GlitterBomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Glitter Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "12"
+    },
+    {
+      "anm2path": "069.000_Loki.anm2",
+      "baseHP": "350",
+      "boss": "1",
+      "bossID": "15",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "69",
+      "name": "#LOKI",
+      "numGridCollisionPoints": "12",
+      "portrait": "36",
+      "shadowSize": "19",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    {
+      "anm2path": "069.001_Lokii.anm2",
+      "baseHP": "350",
+      "boss": "1",
+      "bossID": "31",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "69",
+      "name": "#LOKII",
+      "numGridCollisionPoints": "12",
+      "portrait": "37",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "1"
+    },
+    {
+      "anm2path": "004.013_Throwable Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Throwable Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "13"
+    },
+    {
+      "anm2path": "004.014_Small Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "12",
+      "friction": "1",
+      "id": "4",
+      "name": "Small Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "10",
+      "stageHP": "0",
+      "variant": "14"
+    },
+    {
+      "anm2path": "004.015_Brimstone Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Brimstone Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "15"
+    },
+    {
+      "anm2path": "004.016_Bloody Sad Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Bloody Sad Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "16"
+    },
+    {
+      "anm2path": "004.017_Giga Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "60",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "4",
+      "name": "Giga Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "34",
+      "stageHP": "0",
+      "variant": "17"
+    },
+    {
+      "anm2path": "004.018_Golden Troll Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Golden Troll Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "18"
+    },
+    {
+      "anm2path": "004.019_Rocket.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "10",
+      "friction": "1",
+      "id": "4",
+      "name": "Rocket",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "19"
+    },
+    {
+      "anm2path": "004.020_Giga Rocket.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "20",
+      "friction": "1",
+      "id": "4",
+      "name": "Giga Rocket",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "17",
+      "stageHP": "0",
+      "variant": "20"
+    },
+    {
+      "anm2path": "906.000_hornfel.anm2",
+      "baseHP": "240",
+      "boss": "1",
+      "bossID": "82",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "906",
+      "name": "#HORNFEL",
+      "numGridCollisionPoints": "12",
+      "portrait": "108",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "0"
+    },
+    {
+      "anm2path": "906.000_hornfel.anm2",
+      "baseHP": "4",
+      "boss": "1",
+      "bossID": "82",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "906",
+      "name": "Hornfel Decoy",
+      "numGridCollisionPoints": "12",
+      "portrait": "109",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "1"
+    },
+    {
+      "anm2path": "920.000_horny boys.anm2",
+      "baseHP": "707",
+      "boss": "1",
+      "bossID": "101",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "30",
+      "collisionRadius": "30",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "920",
+      "name": "#HORNY_BOYS",
+      "numGridCollisionPoints": "12",
+      "portrait": "136",
+      "shadowSize": "22",
+      "stageHP": "0",
+      "tags": "nodelirium",
+      "variant": "0"
+    },
+    {
+      "anm2path": "965.000_minecart.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "100",
+      "collisionRadius": "13",
+      "friction": "1",
+      "hasFloorAlts": "true",
+      "id": "965",
+      "name": "Minecart",
+      "numGridCollisionPoints": "12",
+      "portrait": "200",
+      "shadowSize": "15",
+      "shutdoors": "false",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    {
+      "anm2path": "grid/door_10_bossroomdoor_rails.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "2",
+      "collisionMass": "20",
+      "collisionRadius": "20",
+      "friction": "1",
+      "gridCollision": "none",
+      "id": "967",
+      "name": "Hornfel Door",
+      "numGridCollisionPoints": "12",
+      "portrait": "109",
+      "shadowSize": "18",
+      "shutdoors": "false",
+      "stageHP": "0",
+      "tags": "noreroll",
+      "variant": "0"
+    }
+  ],
+  "identity_correction": "Hornfel Decoy is906.1.0.967.0.0 is Hornfel Door. The earlier draft next-dependency note conflated them; corrected before implementation.",
+  "reviewed_contracts": "docs/reports/isaac-enemy-port/boom_flies/next-contracts.json",
+  "additional_engine_followup": {
+    "source": "src/combat/FireReactions.cpp:transformMonster",
+    "finding": "Health-preserving transforms normalize by the definition stage-one HP. Before adding stage_health to a transforming family, use source/target effective stage HP so stage scaling is not mistaken for an offspring/champion multiplier. Current Boom Fly definitions have no fire transformations.",
+    "required_check": "Two different per-stage health curves, fraction/current policies and half-health offspring under a real fire-triggered transform. Do not claim arbitrary stage-health transformation support yet."
+  }
+}

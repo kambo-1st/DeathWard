@@ -1,0 +1,53 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/018.000_Attack Fly.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/attack_fly/animations/018.000_Attack Fly.anm2",
+      "sha256": "f42bf9896c0b85669ea33cb3fc62e2c5ad89d5a8e17ea27a3896a0e5829a352e",
+      "checksum": "0xff3c2b37",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 1:42:45 PM",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Fly",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Die",
+            "FrameNum": "11",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "13",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

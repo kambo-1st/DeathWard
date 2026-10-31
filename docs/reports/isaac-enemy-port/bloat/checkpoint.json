@@ -1,0 +1,179 @@
+{
+  "status": "Partial Bloat, owned-eye and normal Charger checkpoint. Full 653-record goal remains active.",
+  "mechanics_fingerprint": "d5c12bd7ccf59093",
+  "runtime_definitions": 136,
+  "scope": [
+    "68.1.0 The Bloat, normal/green forms",
+    "68.11.0 owned Bloat Eye",
+    "23.0.0 normal Charger"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/bloat/source-review.json",
+  "native": {
+    "passed": 43,
+    "failed": 0,
+    "seconds": 93.89,
+    "results": "docs/reports/isaac-enemy-port/bloat/native-results.json",
+    "basis": "All 43 suites passed in one complete run; the Bloat fixture was additionally rebuilt/rerun after adding explicit ordinary-Charger band assertions."
+  },
+  "browser": {
+    "passed": 57,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/bloat/full/wasm-probes.json",
+    "targeted": "docs/reports/isaac-enemy-port/bloat/targeted/wasm-probes.json",
+    "supplemental": "docs/reports/isaac-enemy-port/bloat/creep/wasm-probes.json",
+    "count_policy": "57 distinct full-suite cases. Targeted 6 and supplemental green-creep 1 repeat those cases; do not add them to the distinct count. Full suite preceded addition of the frame-560 green-creep assertion; the supplemental run checks it on the same final build/configuration."
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "native_fixture": "docs/reports/isaac-enemy-port/bloat/behavior.txt",
+    "covered": "Both initial eyes; independent owners; fixed eight-shot rings; short in-place/long directed swept arcs; normal red and Repentance green creep; two/three actual explosive projectiles; green action summons two normal Chargers; immediate paired down/side lasers, none above or off-axis; cover clipping, damage and owner-bound cleanup; normal Charger untargeted wandering, immediate cardinal acquisition, locked heading, LOS and collision recovery; owner death, room re-entry and one-time boss reward.",
+    "wasm_observations": "Real controllers emit fixed ring/paired lasers and two gravity-driven explosive shots. Supplemental frame 560 has a green creep hazard and two Charger children; after owner execution the eyes/owned rays disappear and two ordinary Charger threats remain. Actual seeded green boss and isolated cardinal Charger execute in WASM."
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "ordinary_conditional_ids": 25,
+    "actual_canyon_floors": 170,
+    "log": "docs/reports/isaac-enemy-port/bloat/floor_progression.txt",
+    "dedicated_boss_ids": [
+      "68.0.0",
+      "68.1.0"
+    ],
+    "owned_component_ids": [
+      "68.10.0",
+      "68.11.0"
+    ],
+    "actual_form_fixtures": [
+      {
+        "seed": 1,
+        "floor_zero_based": 4,
+        "band": 2,
+        "form": "green"
+      },
+      {
+        "seed": 1,
+        "floor_zero_based": 6,
+        "band": 3,
+        "form": "normal"
+      },
+      {
+        "seed": 2,
+        "floor_zero_based": 3,
+        "band": 2,
+        "form": "normal"
+      },
+      {
+        "seed": 5,
+        "floor_zero_based": 4,
+        "band": 3,
+        "form": "green"
+      }
+    ],
+    "scope": "Actual Rourke-account Bloat encounters in bands 2/3; both forms, initial owned eyes, re-entry and one-time rewards checked. Normal Charger ordinary pools restricted to bands 1/3; green Bloat summons remain valid in bands 2/3. Separate 170-floor regression retains all 25 ordinary/conditional identities. Later double/degraded encounters remain open."
+  },
+  "configuration": {
+    "result": "pass_for_tested_scope",
+    "files": [
+      "assets/mechanics/bosses.mechanics",
+      "assets/mechanics/encounters.mechanics"
+    ],
+    "coverage": "Bounded values, required attack rows/dependencies, duplicate IDs/rows and incompatible forms/controllers rejected. File-only action weights exercised for every normal/green action. Existing dedicated-pool snapshot/RNG/tutorial checks remain passing."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "starting_kit": {
+      "hp": 100,
+      "damage": 24,
+      "items": 0,
+      "bombs": 0,
+      "god_mode": false
+    },
+    "bot_results": [
+      {
+        "form": "normal",
+        "seconds": 18.9333,
+        "remaining_hp": 100,
+        "kills": 1
+      },
+      {
+        "form": "green",
+        "seconds": 24.8833,
+        "remaining_hp": 12.5,
+        "kills": 3
+      }
+    ],
+    "scope": "Simple movement/fire/dodge bot attempts to remain behind Bloat in a synthetic enclosed room. Green includes surviving Charger children. This does not certify human difficulty, isolated Charger balance, varied builds or actual mixed expeditions."
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/bloat/linux-down.png",
+      "docs/reports/isaac-enemy-port/bloat/linux-ring.png",
+      "docs/reports/isaac-enemy-port/bloat/linux-green-lob.png",
+      "docs/reports/isaac-enemy-port/bloat/linux-green-creep.png",
+      "docs/reports/isaac-enemy-port/bloat/linux-resident.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/bloat/full/wasm-bloat-down.png",
+      "docs/reports/isaac-enemy-port/bloat/full/wasm-bloat-sides.png",
+      "docs/reports/isaac-enemy-port/bloat/full/wasm-bloat-above.png",
+      "docs/reports/isaac-enemy-port/bloat/full/wasm-bloat-green.png",
+      "docs/reports/isaac-enemy-port/bloat/full/wasm-resident-bloat.png",
+      "docs/reports/isaac-enemy-port/bloat/full/wasm-charger-cardinal.png",
+      "docs/reports/isaac-enemy-port/bloat/creep/wasm-bloat-green-creep.png"
+    ],
+    "observation": "Original-style captures show the detached eyes, fixed eight-shot ring, paired lasers, actual green arcing shots, green creep and summoned Chargers. Small summons overlap the boss silhouette; HUD/foreground and rotated-camera directional readability still need acceptance. Procedural body shapes remain provisional. Capture HUD FPS is not a controlled performance measurement."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Structural limits only: two owned eye slots, bounded action/arc work, configured live+pending summon cap and existing global event/projectile/enemy caps. No controlled Linux/WASM performance acceptance or regression comparison for this batch."
+  },
+  "failures_resolved": [
+    "Initial CLI compile used value instead of the existing form variable; corrected and both native/WASM builds passed. No gameplay fixture failures in this batch.",
+    "Config was corrected after the first WASM data package: ordinary Charger bands are 1/3, not 1/2/3. Repacked and tested final fingerprint d5c12bd7ccf59093.",
+    "Initial green-creep capture frame 240 contained no creep; final native frame 560 and supplemental browser frame 560 show and assert the actual creep/summons."
+  ],
+  "investigation": {
+    "path": "docs/reports/isaac-enemy-port/bloat/isolated-laser-path-investigation.txt",
+    "finding": "A beam appearing across a foreground cliff in the isolated scene follows an open flat corridor behind that foreground. Native terrain/ray probes found no blocking height at the beam path. This is an investigated projection concern, not a claimed collision fix; actual sealed-room capture and explicit cover fixture remain separate evidence."
+  },
+  "limitations": [
+    "Chaos Card, Euthanasia, God's Flesh and Little Horn eye-destruction exceptions remain unfinished; debug execution is not an implementation of these items.",
+    "Exact native attack probabilities/timers, laser acquisition geometry/recovery, jump immunity windows, Charger acceleration/stopping and any native summon cap are not established by article/XML data.",
+    "Champion/item/status/team interactions, additional dedicated/double/degraded routes and broader Charger variants remain open.",
+    "Green summoned-child survival and hostile-blast faction/demolition behavior use current DeathWard policies; native encounter edge cases require further verification.",
+    "All-camera readability, final silhouettes, human/mixed-build balance and controlled native/WASM performance acceptance remain open."
+  ],
+  "reproduction": {
+    "fixture": "./build/deathward_bloat_tests",
+    "actual_forms": [
+      {
+        "seed": 1,
+        "floor_zero_based": 4,
+        "band": 2,
+        "form": "green"
+      },
+      {
+        "seed": 1,
+        "floor_zero_based": 6,
+        "band": 3,
+        "form": "normal"
+      },
+      {
+        "seed": 2,
+        "floor_zero_based": 3,
+        "band": 2,
+        "form": "normal"
+      },
+      {
+        "seed": 5,
+        "floor_zero_based": 4,
+        "band": 3,
+        "form": "green"
+      }
+    ],
+    "isolated": "./build/deathward --smoke --theme canyon --style original --scene enemy-68.1.0 --enemy-boss-form green --enemy-player-side above --frames 560",
+    "natural": "./build/deathward --smoke --theme canyon --style original --scene resident-68.1.0 --resident-seed 1 --resident-floor 4 --frames 32"
+  }
+}

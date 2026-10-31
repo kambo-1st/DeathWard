@@ -1,0 +1,1 @@
+chain 0 depth 0 effect -1: enemy death bomb capacity

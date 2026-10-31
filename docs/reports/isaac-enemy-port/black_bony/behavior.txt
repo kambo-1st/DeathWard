@@ -1,0 +1,8 @@
+chain 1 depth 1 effect -1: queue capacity
+chain 2 depth 0 effect -1: queue capacity
+chain 1 depth 1 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+chain 4 depth 0 effect -1: queue capacity
+NATURAL_BLACK_BONY seed=0 floor=3 room=3 hp=51.2
+NATURAL_BLACK_BONY seed=0 floor=3 room=9 hp=51.2
+PASS Black Bony three-cycle aim, death blast, pressure retention and ordinary routing

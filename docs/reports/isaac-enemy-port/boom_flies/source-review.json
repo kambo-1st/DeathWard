@@ -1,0 +1,848 @@
+{
+  "baseline": "Repentance1.7.9b",
+  "status": "Partial family port; none complete. Eight already-reviewed tuples upgraded from existing_unverified to in_progress.",
+  "sources": {
+    "Boom Fly": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266731",
+    "Stage HP": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269064",
+    "Damage Scaling": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271609"
+  },
+  "contracts": {
+    "25.0.0": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Contact; immediate explosion on death.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.000_Boom Fly.anm2",
+        "baseHP": "8",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "25",
+        "name": "#BOOM_FLY",
+        "numGridCollisionPoints": "12",
+        "portrait": "19",
+        "reroll": "true",
+        "shadowSize": "20",
+        "stageHP": "3",
+        "tags": "fly explosive_soul",
+        "variant": "0"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open.",
+        "Red replacement must be prohibited in source Dross; local Dross is not yet distinct. Separate special/mode routes and additional parent producers remain unfinished."
+      ]
+    },
+    "25.1.0": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Contact; six radial blood shots on death, no explosion.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.001_Red Boom Fly.anm2",
+        "baseHP": "8",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "25",
+        "name": "#RED_BOOM_FLY",
+        "numGridCollisionPoints": "12",
+        "portrait": "20",
+        "reroll": "true",
+        "shadowSize": "20",
+        "stageHP": "3",
+        "tags": "fly",
+        "variant": "1"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open.",
+        "Red replacement must be prohibited in source Dross; local Dross is not yet distinct. Separate special/mode routes and additional parent producers remain unfinished."
+      ]
+    },
+    "25.2.0": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Contact; immediate death explosion plus four cardinal blood shots; probabilistic Drowned Charger only from a legal ground death footprint.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.002_Drowned Boom Fly.anm2",
+        "baseHP": "8",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "25",
+        "name": "#DROWNED_BOOM_FLY",
+        "numGridCollisionPoints": "12",
+        "portrait": "138",
+        "reroll": "true",
+        "shadowSize": "20",
+        "stageHP": "3",
+        "tags": "fly explosive_soul",
+        "variant": "2"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open."
+      ]
+    },
+    "25.3.0": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Contact; four cardinal lines of fire on death.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.003_dragonfly.anm2",
+        "baseHP": "8",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "hasFloorAlts": "1",
+        "id": "25",
+        "name": "#DRAGON_FLY",
+        "numGridCollisionPoints": "12",
+        "portrait": "250",
+        "shadowSize": "20",
+        "stageHP": "3",
+        "tags": "fly",
+        "variant": "3"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open."
+      ]
+    },
+    "25.3.1": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Contact; four diagonal lines of fire on death, matching X eyes.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.003_dragonfly2.anm2",
+        "baseHP": "8",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "hasFloorAlts": "1",
+        "id": "25",
+        "name": "#DRAGON_FLY_X",
+        "numGridCollisionPoints": "12",
+        "portrait": "250",
+        "shadowSize": "20",
+        "stageHP": "3",
+        "subtype": "1",
+        "tags": "fly",
+        "variant": "3"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open."
+      ]
+    },
+    "25.4.0": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Contact and cardinal-aligned live bone shots; death emits three evenly spaced bones, the first along the nearest cardinal toward player.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.004_bone fly.anm2",
+        "baseHP": "8",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "25",
+        "name": "#BONE_FLY",
+        "numGridCollisionPoints": "12",
+        "portrait": "305",
+        "shadowSize": "20",
+        "stageHP": "3",
+        "tags": "fly",
+        "variant": "4"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open."
+      ]
+    },
+    "25.5.0": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Contact and short-lived gas trail; death emits eight longer-lived gas clouds plus six green nonexplosive shots.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.005_sick boom fly.anm2",
+        "baseHP": "8",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "25",
+        "name": "#SICK_BOOM_FLY",
+        "numGridCollisionPoints": "12",
+        "portrait": "278",
+        "shadowSize": "20",
+        "stageHP": "3",
+        "tags": "fly explosive_soul",
+        "variant": "5"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open."
+      ]
+    },
+    "25.6.0": {
+      "movement": "Untargeted straight diagonal flight; independent reflection from walls, no pursuit.",
+      "targeting": "Bone acquires cardinal alignment with range/LOS; other bodies do not target player movement.",
+      "attacks": "Doubled source contact damage; death leaves a brief cross warning followed by a central explosion and four room-spanning explosion chains.",
+      "vulnerability": "Ordinarily vulnerable, with source stage HP for first seven variants. Tainted shieldStrength10 adaptive scaling remains missing; no invented flat10 subtraction.",
+      "phases": "Continuous flight, live bone/gas behavior where applicable; death produces configured variant pattern. Tainted has a persistent delayed-warning phase.",
+      "offspring": "Drowned may produce23.1.0 on legal ground; other variants have no NPC offspring. Normal can own three819.1.0 through an existing group helper; Horny Boys producer remains missing.",
+      "completion": "Living hostile bodies gate room clear; resolved offspring also gate it. Delayed explosions remain dangerous after clear; Sick gas dissipates. Debug clear cancels remaining effects.",
+      "source_numbers": {
+        "anm2path": "025.006_ultra boom fly.anm2",
+        "baseHP": "20",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "2",
+        "collisionMass": "20",
+        "collisionRadius": "24",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "25",
+        "name": "#TAINTED_BOOM_FLY",
+        "numGridCollisionPoints": "12",
+        "portrait": "352",
+        "shadowSize": "28",
+        "shieldStrength": "10",
+        "stageHP": "0",
+        "tags": "fly explosive_soul",
+        "variant": "6"
+      },
+      "adaptations": {
+        "health": "First seven variants use (8 + 3*(min(stage,4)+.8*clamp(stage-5,0,5)))*3.2; Tainted uses20*3.2=64. Source stages1/2,3/4,5/6,7/8 map to the two possible floors of each DW band. Inactive/tutorial/Classic use1. This mapping/scale is local, source formula/XML values are sourced.",
+        "movement": "World speed2.6 before existing1.1 hostile multiplier; 3D flight crosses interior cover and water, reflects each blocked axis, respects sealed boundaries. No player-directed steering.",
+        "damage": "Base contact10 (Tainted20), shot10, field8; existing hostile multiplier1.25 remains. Normal/Drowned/Tainted blast100 enemy and20 base player, radius3: these are local values, NOT recovered native Boom Fly damage.",
+        "fields": "Dragon range30/spacing1.25/progression.025s/duration4; fire clips at ground terrain/cover/water. Sick trail.6s/radius.7/duration2.5; eight death clouds at radius2.25 with cloud radius1.3/duration12. Existing gas contact policy is local.",
+        "tainted": "Warning .6s, line spacing2/delay.065 per step, max range100. Real flight boundaries/cliffs end the line; interior cover does not. Actual blast collision shields actors. Stationary warnings are not physical bombs.",
+        "lifecycle": "Ordinary and non-debug execution deaths produce attacks, debug execution suppresses them. Gas/fire use existing room-clear cleanup. Real delayed blasts persist after ordinary clear, pause outside active room, and have active128/pending256 caps; pending fuses start on admission. Over-cap work logs suppression.",
+        "placement": "Bands use positive authored habitats, sparse per-room caps and costs3/4; no opening-band family. Normal/Red bands1-3; Drowned Flooded1 and2; Dragon/X/Bone standard1; Sick3. Tainted remains unrouted dedicated Ascent work.",
+        "replacement": "Normal-to-Red phase0 probability949/10000; Flooded normal-or-Red-to-Drowned phase1 probability5000/10000. Phases use independent seeded slot streams, preserve original source, reserve conservative worst-case cumulative threat. Dross exclusion cannot be encoded until a distinct Dross context exists.",
+        "presentation": "Original renderer, procedural fly silhouettes, variant colors/face markers, X/cross eyes, skull/teeth, bloated gas sacs; bone projectiles elongated and green shots nonexplosive. No source art imported. Dragon cross/X is also shown on the upper shell, because the face can point away from the camera."
+      },
+      "unknowns": [
+        "Skatole slowing/contact removal and Beelzebub allied behavior (including harmless death attacks) are not implemented. Beelzebub does NOT mean invulnerability to all incoming damage; the earlier contract incorrectly said so.",
+        "Native speeds, attack/projectile timings, blast damage/radius, gas exposure timing and Drowned offspring chance are unmeasured; external values are explicitly local tuning.",
+        "Champion overlays and named item/status exceptions require further review and implementation.",
+        "All-camera readability, human/mixed-build balance and controlled rendered Linux/WASM performance acceptance remain open.",
+        "Ascent-only dedicated gameplay route remains missing. Debug visibility is not reachability.",
+        "Source shieldStrength10 requires adaptive damage scaling, still unimplemented; current unarmored body is partial."
+      ]
+    }
+  },
+  "stage_evidence": {
+    "25.0.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 52,
+          "positive_weight_templates": 52,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 28,
+          "positive_weight_templates": 28,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 42,
+          "positive_weight_templates": 42,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 23,
+          "positive_weight_templates": 23,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 26,
+          "positive_weight_templates": 26,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/28.dross.stb",
+          "source_stage": "dross",
+          "templates": 66,
+          "positive_weight_templates": 66,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 7,
+          "positive_weight_templates": 7,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/01.basement.stb",
+          "source_stage": "basement",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/03.burning basement.stb",
+          "source_stage": "burning basement",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ]
+    },
+    "25.1.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 9,
+          "positive_weight_templates": 9,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 12,
+          "positive_weight_templates": 12,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/15.cathedral.stb",
+          "source_stage": "cathedral",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/03.burning basement.stb",
+          "source_stage": "burning basement",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ]
+    },
+    "25.2.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 25,
+          "positive_weight_templates": 25,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 2,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/greed/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "source_band_candidates": [
+        1,
+        2
+      ]
+    },
+    "25.3.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 21,
+          "positive_weight_templates": 21,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        },
+        {
+          "file": "rooms/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "source_band_candidates": [
+        1
+      ]
+    },
+    "25.3.1": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        },
+        {
+          "file": "rooms/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 14,
+          "positive_weight_templates": 14,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "source_band_candidates": [
+        1
+      ]
+    },
+    "25.4.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 72,
+          "positive_weight_templates": 72,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/30.ashpit.stb",
+          "source_stage": "ashpit",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "source_band_candidates": [
+        1
+      ]
+    },
+    "25.5.0": {
+      "source_stage_evidence": [
+        {
+          "file": "rooms/33.corpse.stb",
+          "source_stage": "corpse",
+          "templates": 35,
+          "positive_weight_templates": 35,
+          "proposed_band": 3,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_mode_or_special_evidence": [],
+      "source_band_candidates": [
+        3
+      ]
+    },
+    "25.6.0": {
+      "source_stage_evidence": [],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        }
+      ],
+      "source_band_candidates": []
+    }
+  },
+  "scope": "Implements source-supported family distinctions. Source exact timing, item/faction behavior, champions and Tainted armor/Ascent remain incomplete."
+}

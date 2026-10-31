@@ -1,0 +1,5 @@
+{"seed":5,"floor":3,"room":4,"band":2,"variant":0,"flooded":false,"river":false}
+{"seed":5,"floor":4,"room":2,"band":3,"variant":0,"flooded":false,"river":true}
+{"seed":8,"floor":6,"room":5,"band":3,"variant":1,"flooded":false,"river":false}
+{"seed":18,"floor":5,"room":7,"band":3,"variant":1,"flooded":false,"river":true}
+{"seed":28,"floor":7,"room":9,"band":3,"variant":3,"flooded":false,"river":false}

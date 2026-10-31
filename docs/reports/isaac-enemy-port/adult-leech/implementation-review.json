@@ -1,0 +1,50 @@
+{
+  "id": "854.0.0",
+  "status": "Dedicated ordinary behavior implemented in progress; all six acceptance gates not complete.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "source_review": "source-review.json",
+  "source_addition": "source/damage-manifest.json",
+  "damage_finding": "Radial damage collection at6d1356 skips EntityCollisionClass0. Base direct damage registration does not contain a general collision-class rejection. Ordinary bullets/beam collision and contact are disabled after Burrow Hit22 until ChargeDown Hit18. Scripted direct damage and execution remain separate; all item/status producers are not certified.",
+  "runtime": [
+    "assets/mechanics/adult_leeches.mechanics",
+    "src/combat/AdultLeeches.cpp",
+    "src/content/Mechanics.hpp",
+    "src/content/Mechanics.cpp",
+    "src/content/EncounterVariants.cpp",
+    "src/combat/Simulation.hpp",
+    "src/combat/Monsters.cpp",
+    "src/combat/Charging.cpp",
+    "src/combat/Enemies.cpp",
+    "src/combat/Simulation.cpp",
+    "src/core/Game.cpp",
+    "src/render/MonsterVisuals.hpp",
+    "src/render/Renderer.cpp"
+  ],
+  "source_contract": {
+    "movement": "Horizontal-biased random wander; charge keeps X sign with limited vertical steering. Force, retention, random gates, acceleration and strong-impact tests come from preserved native controller.",
+    "burrow": "Once below66%HP, with source target-separation/grid/chance guards.25-frame Burrow, collision removed at22; wait more than30frames then1/15chance; teleport near target;43-frame ChargeDown, landing ring/collision restoration at18, settle release31.",
+    "shots": "Mode9 wall ring12 atspeed10 and landing ring10 atspeed8, incremented-before-emission ring ordering, separate falling accelerations and default random near-zero falling speed.",
+    "death": "No ordinary offspring. Surviving emitted lob shots continue to gate room completion."
+  },
+  "adaptations": [
+    "HP90*3.2=288, no stage growth. Contact2 maps20 then shared1.25=25 actual. Shot damage10 before shared multiplier. Player100HP/24damage unchanged.",
+    "Continuous canyon terrain replaces Isaac grid and pathfinder. Source unit scale.1,30Hz source decisions. Falling pursuit uses actual ground path clearance; native exact grid cost/status selection is not reproduced.",
+    "Walls-only movement uses real room boundaries, cliffs and flight obstacles, traversing low cover/pits. Axis sweeps to the impact point make30/120Hz partitions consistent. Collision normal is approximated from blocked sliding axes; exact native collision fields/complex corner response remain open.",
+    "Native teleport is exactly to target. A larger DeathWard hull searches deterministic nearby legal ground when that target footprint cannot fit. This prevents embedding in canyon cliffs.",
+    "Whole projectile packets retain their original origin/directions under capacity pressure, pausing the actor until admitted. This backpressure is an explicit engine safety adaptation.",
+    "Existing stun pauses decisions and momentum while retaining phase. Complete native statuses/charm/champions/knockback production paths remain unverified.",
+    "Original procedural segmented body, toothed mouth, visual burrow compression and rising/falling silhouette; reused local warning/impact/attack cues rather than Isaac artwork/audio. Hidden actors have no body, shadow, health bar or hover target.",
+    "Band3 charge-lane specialist, authored weight1/threat7/cap1 based on Corpse habitat.22source templates are evidence of habitat, not spawn probability."
+  ],
+  "native_witness": {
+    "seed": 14,
+    "floor_index": 6,
+    "room_index": 7
+  },
+  "remaining": [
+    "Trace external state5 and state9/state10 production routes. These existing source states are not silently claimed implemented.",
+    "Full status/charm/control/champion interactions, exact RNG and animation event ordering, native grid selection and collision-vector semantics.",
+    "All alternate creation and persistence routes, comprehensive visual readability and audiovisual parity.",
+    "Default-kit balance and controlled Linux/WASM performance against pre-port baseline."
+  ]
+}

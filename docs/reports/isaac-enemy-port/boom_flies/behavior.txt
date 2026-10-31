@@ -1,0 +1,23 @@
+Testing: boom_flies
+45/53 Test: boom_flies
+Command: "/home/kambo/workspace/DeathWard/build/deathward_boom_fly_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"boom_flies" start time: Oct 26 02:37 CET
+Output:
+----------------------------------------------------------
+BOOM_HEALTH source_stages_1_to_13=1 floor_lengths=5 diagonal_axis_reflection=1 contact=1 cover=1
+BOOM_DEATH seven_patterns=1 bone_alignment=1 green_not_ipecac=1 actual_blast=1 execution_policy=1
+BOOM_LIFECYCLE aligned_live_bones=1 gas_trail=1 gas_clear=1 tainted_cross=49 clear_persistence=1 bounded_pending=1
+BOOM_EXTERNAL stage_scaled_child=1 illegal_birth_suppressed=1 immutable_blast_config=1 validation=1
+BOOM_REPLACEMENT flooded=0 normal=9068 red=932 drowned=0 samples=10000
+BOOM_REPLACEMENT flooded=1 normal=4486 red=433 drowned=5081 samples=10000
+BOOM_RESIDENT id=25.0 seed=0 floor=2 room=2 stage=3 hp=54.4
+BOOM_RESIDENT id=25.1 seed=0 floor=3 room=8 stage=5 hp=64
+BOOM_RESIDENT id=25.2 seed=0 floor=4 room=11 stage=6 hp=71.68
+BOOM_RESIDENT id=25.3.1 seed=4 floor=3 room=4 stage=4 hp=64
+BOOM_RESIDENT id=25.5 seed=4 floor=6 room=8 stage=7 hp=79.36
+BOOM_RESIDENT id=25.3 seed=16 floor=1 room=4 stage=3 hp=54.4
+BOOM_RESIDENT id=25.4 seed=19 floor=2 room=7 stage=3 hp=54.4
+BOOM_ROUTING identities=7 generated_floors=117 tainted_dedicated_pending=1
+PASS Boom Fly family behavior, stage health, ordered replacements and natural routing
+

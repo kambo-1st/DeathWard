@@ -1,0 +1,39 @@
+{
+  "result": "partial_pass",
+  "cases": [
+    {
+      "name": "wall-impact",
+      "pass": true,
+      "natural": false,
+      "charges": 10,
+      "wall_rings": 9,
+      "burrows": 0,
+      "landing_rings": 0,
+      "observed_projectiles": 108
+    },
+    {
+      "name": "burrow-fall",
+      "pass": true,
+      "natural": false,
+      "charges": 8,
+      "wall_rings": 5,
+      "burrows": 1,
+      "landing_rings": 1,
+      "observed_projectiles": 70
+    },
+    {
+      "name": "resident",
+      "pass": true,
+      "natural": true,
+      "charges": 25,
+      "wall_rings": 5,
+      "burrows": 0,
+      "landing_rings": 0,
+      "observed_projectiles": 60
+    }
+  ],
+  "source": "web/results.json",
+  "style": "Original",
+  "errors": [],
+  "scope": "Three production WASM cases, including actual seeded band3 resident. Not full behavior/status, balance or performance acceptance."
+}

@@ -1,0 +1,13 @@
+PASS boil
+PASS gut
+PASS sack
+PASS walking-boil
+PASS walking-gut
+PASS walking-sack
+PASS walking-boil-cover
+PASS natural-boil
+PASS natural-gut
+PASS natural-sack
+PASS natural-walking-boil
+PASS natural-walking-gut
+PASS natural-walking-sack

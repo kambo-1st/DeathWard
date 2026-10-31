@@ -1,0 +1,29 @@
+[ 14%] Built target glfw
+[ 17%] Built target raylib
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 17%] Built target deathward_runtime_assets
+[ 17%] Linking CXX static library libdeathward_core.a
+[ 82%] Built target deathward_core
+[ 85%] Built target deathward_skinning
+[ 88%] Built target deathward_cloth
+[ 88%] Built target deathward_particles
+[ 91%] Built target deathward_mission_lighting
+[ 91%] Linking CXX executable deathward
+[100%] Built target deathward
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_black_globin_tests
+[100%] Building CXX object CMakeFiles/deathward_black_globin_tests.dir/tests/black_globin_tests.cpp.o
+[100%] Linking CXX executable deathward_black_globin_tests
+[100%] Built target deathward_black_globin_tests
+[100%] Built target deathward_core
+[100%] Building CXX object CMakeFiles/deathward_brain_tests.dir/tests/brain_tests.cpp.o
+[100%] Linking CXX executable deathward_brain_tests
+[100%] Built target deathward_brain_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_prey_tests
+[100%] Linking CXX executable deathward_prey_tests
+[100%] Built target deathward_prey_tests
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_spider_tests
+[100%] Built target deathward_spider_tests

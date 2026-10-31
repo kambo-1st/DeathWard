@@ -1,0 +1,12 @@
+BEGIN floor=0
+BUILT floor=0 band=0
+BEGIN floor=1
+BUILT floor=1 band=0
+BEGIN floor=2
+BUILT floor=2 band=1
+BEGIN floor=3
+BUILT floor=3 band=2
+BEGIN floor=4
+BUILT floor=4 band=2
+BEGIN floor=5
+BUILT floor=5 band=3

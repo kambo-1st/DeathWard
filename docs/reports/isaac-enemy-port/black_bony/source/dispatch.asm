@@ -1,0 +1,3 @@
+00699d4f mov ecx, esi
+00699d51 call 0x525830
+00699d56 jmp 0x69a7d3

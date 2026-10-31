@@ -1,0 +1,53 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/032.000_Brain.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/brain/animations/032.000_Brain.anm2",
+      "sha256": "1f6f573e465b5d045c11239a3b9a73feb80adf55e71075bab0c1d39da6290b97",
+      "checksum": "0x8d8e831e",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "5/16/2014 2:50:14 PM",
+        "Version": "103",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "10",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "30",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

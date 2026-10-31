@@ -1,0 +1,143 @@
+{
+  "style": "Original",
+  "inspected_captures": 24,
+  "captures_showing_selected_body": 21,
+  "captures": [
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-boil.png",
+      "observation": "Red, partly grown stationary blob with a grounded shadow and clear separation from the protagonist.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-gut.png",
+      "observation": "Green stationary blob clearly differs from the blood shooter; grounded shadow and smaller growing body remain visible.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-sack.png",
+      "observation": "Pale stationary Sack is distinct from the red/green shooters; its partly grown body stays at ground level.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-walking-boil.png",
+      "observation": "Full red body has moved left of its spawn; small feet and ground shadow are visible.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-walking-gut.png",
+      "observation": "Full green body and small feet visible left of its spawn, matching the walking family silhouette.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-walking-sack.png",
+      "observation": "Full pale body and small feet visible left of its spawn, distinct from its green Spider offspring.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-natural-boil.png",
+      "observation": "Red Boil remains visible on the shallow ford among the mixed room roster; canyon, river and protagonist retain Original rendering.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-natural-gut.png",
+      "observation": "Small green Gut remains visible near the right wall in the mixed generated room; separate green Maggot has a larger elongated body.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-natural-sack.png",
+      "observation": "Pale stationary Sack is visible beyond the crowded protagonist; spider residents and occlusion outlines expose the remaining crowd-readability limitation.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-natural-walking-boil-retry.png",
+      "observation": "Selected walking Boil is hidden by foreground canyon geometry and appears only as a red occlusion outline. Valid location evidence, not a body/silhouette pass.",
+      "body_visible": false
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-natural-walking-gut.png",
+      "observation": "Green walking Gut appears next to the player in the browser capture. Native capture catches the broad opaque explosion covering that body; no native body-visibility claim for this frame.",
+      "body_visible": false
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/native-natural-walking-sack.png",
+      "observation": "Pale walking Sack is visible beside the central rock; other green spiders crowd the protagonist. Matching room composition with slightly different animation sampling.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/boil.png",
+      "observation": "Red, partly grown stationary blob with a grounded shadow and clear separation from the protagonist.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/gut.png",
+      "observation": "Green stationary blob clearly differs from the blood shooter; grounded shadow and smaller growing body remain visible.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/sack.png",
+      "observation": "Pale stationary Sack is distinct from the red/green shooters; its partly grown body stays at ground level.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/walking-boil.png",
+      "observation": "Full red body has moved left of its spawn; small feet and ground shadow are visible.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/walking-gut.png",
+      "observation": "Full green body and small feet visible left of its spawn, matching the walking family silhouette.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/walking-sack.png",
+      "observation": "Full pale body and small feet visible left of its spawn, distinct from its green Spider offspring.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/natural-boil.png",
+      "observation": "Red Boil remains visible on the shallow ford among the mixed room roster; canyon, river and protagonist retain Original rendering.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/natural-gut.png",
+      "observation": "Small green Gut remains visible near the right wall in the mixed generated room; separate green Maggot has a larger elongated body.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/natural-sack.png",
+      "observation": "Pale stationary Sack is visible beyond the crowded protagonist; spider residents and occlusion outlines expose the remaining crowd-readability limitation.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/natural-walking-boil.png",
+      "observation": "Selected walking Boil is hidden by foreground canyon geometry and appears only as a red occlusion outline. Valid location evidence, not a body/silhouette pass.",
+      "body_visible": false
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/natural-walking-gut.png",
+      "observation": "Green walking Gut appears next to the player in the browser capture. Native capture catches the broad opaque explosion covering that body; no native body-visibility claim for this frame.",
+      "body_visible": true
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/boils/web/natural-walking-sack.png",
+      "observation": "Pale walking Sack is visible beside the central rock; other green spiders crowd the protagonist. Matching room composition with slightly different animation sampling.",
+      "body_visible": true
+    }
+  ],
+  "result": "Partial visual validation:24 Linux/WASM captures inspected;21 show the selected body. All six family palettes and stationary/walking bodies are visible in isolated scenes. Two natural Walking Boil frames show only the existing occlusion outline; one native Walking Gut frame is obscured by its explosion. These limits prevent a full combat-readability pass.",
+  "limitations": [
+    "Procedural DeathWard geometry; no Isaac sprite artwork imported.",
+    "Small walking feet and pale Sack contrast need broader camera/crowd assessment.",
+    "Foreground canyon geometry and the existing opaque explosion effect still obscure bodies in the documented frames.",
+    "A static invulnerable player permits contact overlap; it is not a representative player combat evaluation.",
+    "Native captures stop exactly at frame140; browser screenshot execution can sample a few later frames. Layout/identity parity is verified, not pixel/animation parity.",
+    "Incidental FPS overlays are not controlled performance measurements.",
+    "Screenshots alone cannot prove projectile timing, immunity or throw collision; focused native assertions and browser telemetry supply those checks."
+  ],
+  "capture_execution": {
+    "first_run_exit": 143,
+    "first_run_images": 10,
+    "cause": "Not established; process ended before the last two captures. Partial log retained, no successful screenshot claimed for the interrupted case.",
+    "retry": "capture-remaining.py completed both remaining cases with exit0 and a new filename for the interrupted Walking Boil case."
+  }
+}

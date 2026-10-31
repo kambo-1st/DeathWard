@@ -1,0 +1,28 @@
+{
+  "result": "partial_pass",
+  "unique_scoped_suites_passed": 8,
+  "ctest_suites": [
+    "adult_leech",
+    "leech_behavior",
+    "knight_lifecycle",
+    "mechanics_content",
+    "monster_behaviors",
+    "floor_progression",
+    "resident_enemies"
+  ],
+  "standalone": [
+    "deathward_input_tests"
+  ],
+  "initial_ctest": "Six of seven passed; Knight behavior passed but a fixed natural population witness changed after pool expansion.",
+  "knight_correction": "Native search found Selfless seed1/floor6/room7, Black seed1/floor6/room10 and Pon seed28/floor7/room3. Existing behavior and habitat assertions retained; corrected Knight suite passes.",
+  "input_correction": "Initial input run reached an obsolete fixed ItemCount assertion for F6. The cheat already grants all13 external definitions. Test now checks exact membership of the current registry and still verifies Shift+F6 keys; full input binary passes.",
+  "evidence": [
+    "validation/native-initial.txt",
+    "validation/native-initial-detailed.txt",
+    "validation/knight-recheck.txt",
+    "validation/knight-recheck-detailed.txt",
+    "validation/input-initial.txt",
+    "validation/input-final.txt"
+  ],
+  "scope": "Eight unique scoped native suites pass across initial and corrected runs. Full98 registered CTest suites and six acceptance gates were not completed."
+}

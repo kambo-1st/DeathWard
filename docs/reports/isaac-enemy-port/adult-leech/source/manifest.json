@@ -1,0 +1,125 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 854,
+      "index": 179,
+      "case": "0x69a25f",
+      "controller": "0x4c5c20"
+    }
+  ],
+  "constants": {
+    "walk_retention": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "walk_force": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "charge_retention": {
+      "address": "0xb6a58c",
+      "value": 0.8600000143051147
+    },
+    "charge_steer": {
+      "address": "0xb6a2e4",
+      "value": 0.11999999731779099
+    },
+    "charge_acceleration": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "charge_max_force": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "alignment": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "health_threshold": {
+      "address": "0xb6a4e0",
+      "value": 0.6600000262260437
+    },
+    "burrow_y_distance": {
+      "address": "0xb6aad4",
+      "value": 80.0
+    },
+    "impact_min_speed": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "impact_dot": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "impact_recoil": {
+      "address": "0xb6a820",
+      "value": 2.5
+    },
+    "impact_shot_offset": {
+      "address": "0xb6a940",
+      "value": 8.0
+    },
+    "burrow_pull": {
+      "address": "0xb6a3b0",
+      "value": 0.30000001192092896
+    }
+  },
+  "strings": {
+    "0xb400b4": "Sound",
+    "0xb40190": "Hit",
+    "0xb40410": "Charge",
+    "0xb41c5c": "ChargeDown",
+    "0xb42404": "MoveHori",
+    "0xb42420": "BounceOverlay",
+    "0xb42430": "Burrow",
+    "0xb42470": "ChargeHit",
+    "0xb4247c": "Deform"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/controller.asm",
+      "start": "0x4c5c20",
+      "end": "0x4c70ae",
+      "raw_sha256": "9d024624ed7d7d954257d27d18981535434713a21867c346a44d8bc69858c4b2",
+      "sha256": "2d2182438b732692f9268749759cfa0801f4a60f108bd08e8132b984f550807e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/heading.asm",
+      "start": "0x4c5b50",
+      "end": "0x4c5c16",
+      "raw_sha256": "3023a95fee2f0e78a95ec56aab768b5c6c2161371545a8e531928afce6805419",
+      "sha256": "f4ffc26068ce580bad98afa08ce3a94666ff7e9eaae059ccc38bb7bcf1bfe1f6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/add_velocity.asm",
+      "start": "0x422b60",
+      "end": "0x422bcf",
+      "raw_sha256": "544f78f82e6fae2f3ee69e46b0ddb409eb0e74b88b5f31b1d55f4bb75e6cad33",
+      "sha256": "0bec19041e8143ee7c450dec124580b5a7a219a3303ebad5bda885bc02b715a1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/base_movement.asm",
+      "start": "0x686406",
+      "end": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf",
+      "sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a33ec",
+      "raw_sha256": "450521a19558deb4c799a9999bef9f2cdd43c1e6080cc03d13fe72cd4fcbaec9",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "raw_sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    }
+  ]
+}

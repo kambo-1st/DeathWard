@@ -1,0 +1,2 @@
+STATS normal80 angel80 small51.2 wrinkly80 movement=.7v+.33dir retreat=1
+spread is unnormalized native side vector

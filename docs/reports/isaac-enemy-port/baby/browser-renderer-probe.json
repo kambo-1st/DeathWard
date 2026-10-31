@@ -1,0 +1,26 @@
+[
+  {
+    "name": "current-headless",
+    "result": {
+      "webgl2": true,
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+    }
+  },
+  {
+    "name": "display-default",
+    "result": {
+      "webgl2": true,
+      "vendor": "Google Inc. (Microsoft Corporation)",
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    }
+  },
+  {
+    "name": "display-angle-gl",
+    "result": {
+      "webgl2": true,
+      "vendor": "Google Inc. (Microsoft Corporation)",
+      "renderer": "ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)"
+    }
+  }
+]

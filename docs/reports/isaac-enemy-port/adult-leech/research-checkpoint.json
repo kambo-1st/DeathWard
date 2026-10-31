@@ -1,0 +1,43 @@
+{
+  "created_utc": "2026-10-28T04:07:34.004206+00:00",
+  "classification": "Research progress; active full-port goal and regular-enemy priority unchanged.",
+  "scope": "Adult Leech source-only checkpoint. No runtime edits or new implemented records in this continuation.",
+  "previous_runtime_checkpoint": "docs/reports/isaac-enemy-port/membrains/checkpoint.json",
+  "previous_checkpoint_sha256": "4cc07817fbfaa0ad30afcc751a3ea81b4f7ca6e935977a41cf864584997b9bf2",
+  "previous_files_revalidated": {
+    "runtime_files_sha256": 117,
+    "build_files_sha256": 18,
+    "artifact_files_sha256": 68
+  },
+  "previous_files_changed": [],
+  "reviewed_records": 206,
+  "regular_enemy_implementations_in_progress": 120,
+  "fully_accepted_records": 0,
+  "direct_pool_ids": 105,
+  "source_validation": "analyze-adult-leech.py --check passed: original six windows, one complete supplemental pathfinder, state dispatch, one animation file; pinned executable and archive hashes checked.",
+  "new_findings": [
+    "Ordinary falling pursuit is not the status-only velocity reset in the shared pathfinder.",
+    "No blanket damage immunity can be inferred solely from EntityCollisionClass=0. Damage-route research remains required."
+  ],
+  "next": [
+    "Trace hidden-phase damage and collision-vector semantics, then implement Adult Leech ordinary behavior with external configuration.",
+    "Keep external charge states, statuses and champions explicitly open until their routes are established.",
+    "Validate native/WASM behavior, natural reachability and visuals before increasing implementation counts."
+  ],
+  "files_sha256": {
+    "docs/reports/isaac-enemy-port/adult-leech/animations/854.000_adult leech.anm2": "ff5c1f6d26a1bf0215c93cfb2c015f82832fbaba87cbf427f71be213ac0d91d6",
+    "docs/reports/isaac-enemy-port/adult-leech/animations/manifest.json": "c16049bd3f13130c257c212b1960b1157c99de810f50de7b018e3d16ab42511e",
+    "docs/reports/isaac-enemy-port/adult-leech/source/add_velocity.asm": "0bec19041e8143ee7c450dec124580b5a7a219a3303ebad5bda885bc02b715a1",
+    "docs/reports/isaac-enemy-port/adult-leech/source/additional-manifest.json": "d25d915db224e132b1a6bf5d7a78d836671506235d9209cba441c727b3cdb937",
+    "docs/reports/isaac-enemy-port/adult-leech/source/base_movement.asm": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0",
+    "docs/reports/isaac-enemy-port/adult-leech/source/controller.asm": "2d2182438b732692f9268749759cfa0801f4a60f108bd08e8132b984f550807e",
+    "docs/reports/isaac-enemy-port/adult-leech/source/falling_pathfinder.asm": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af",
+    "docs/reports/isaac-enemy-port/adult-leech/source/heading.asm": "f4ffc26068ce580bad98afa08ce3a94666ff7e9eaae059ccc38bb7bcf1bfe1f6",
+    "docs/reports/isaac-enemy-port/adult-leech/source/manifest.json": "b297b8f5a9f57ed74987bedcd8400d3b4568c47f31db39d1dd2bfce50c884e82",
+    "docs/reports/isaac-enemy-port/adult-leech/source/projectile_params.asm": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602",
+    "docs/reports/isaac-enemy-port/adult-leech/source/projectiles.asm": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d",
+    "docs/reports/isaac-enemy-port/adult-leech/source-discovery.json": "6f872933b0aa57f46c5c7425af0a231c303364300fca8447afce80f7440067b2",
+    "docs/reports/isaac-enemy-port/adult-leech/source-review.json": "a9ae1c546a06f75ba2ef804b03ca634117480ae4593b3b14fe2c2aad62aebb4d",
+    "scripts/isaac-reference/analyze-adult-leech.py": "dcb9a7000039fc337c899309d1b08c745d0c2f7461e98287d97933df59b43eee"
+  }
+}

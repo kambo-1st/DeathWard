@@ -1,0 +1,6 @@
+PASS ordinary-bone-throw
+PASS death-interrupts-throw
+PASS natural-quarry-resident
+PASS black-three-throws
+PASS black-death-explosion
+PASS natural-black-resident

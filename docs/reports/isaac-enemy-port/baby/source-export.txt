@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/analyze-baby.py", line 78, in <module>
+    if __name__=='__main__':main()
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/analyze-baby.py", line 13, in main
+    if not args.check:assert not (OUT/'source/manifest.json').exists() and not (OUT/'checkpoint.json').exists()
+AssertionError

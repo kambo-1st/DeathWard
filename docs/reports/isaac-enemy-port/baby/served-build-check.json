@@ -1,0 +1,26 @@
+[
+  {
+    "served": "index.html",
+    "local": "build-web/index.html",
+    "sha256": "c3fb1cb54df2095770cffc4d721a2c561f735bc6222b3cf0c5870128ee888031",
+    "pass": true
+  },
+  {
+    "served": "index.js",
+    "local": "build-web/index.js.gz",
+    "sha256": "391bd8fbb0447bc1e316883e5c7009568bdcef1036943ab33172f68b99f2efb6",
+    "pass": true
+  },
+  {
+    "served": "index.wasm",
+    "local": "build-web/index.wasm.gz",
+    "sha256": "26b68f78f24636736e8b7902b6fc0b10c8922277f8fb3608849372113d923910",
+    "pass": true
+  },
+  {
+    "served": "index.data",
+    "local": "build-web/index.data.gz",
+    "sha256": "776bee2d76143c687dd3a8ef774a628a9e2ae00c51d2c3f6531859f5d703bfef",
+    "pass": true
+  }
+]

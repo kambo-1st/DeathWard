@@ -1,0 +1,6 @@
+PASS WASM bloat-down: real controller and Original presentation
+PASS WASM bloat-sides: real controller and Original presentation
+PASS WASM bloat-above: real controller and Original presentation
+PASS WASM bloat-green: real controller and Original presentation
+PASS WASM resident-bloat: real controller and Original presentation
+PASS WASM charger-cardinal: real controller and Original presentation

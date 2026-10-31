@@ -1,0 +1,25 @@
+DeathWard: http://127.0.0.1:8098
+127.0.0.1 - - [26/Oct/2026 21:17:15] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-227.0.0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:15] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:15] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:15] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:26] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-227.0.0&enemy-hit=6%3A1000 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:26] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:26] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:26] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:33] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-227.0.0&resident-seed=1&resident-floor=2 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:34] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:34] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:34] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:45] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-277.0.0 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:45] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:45] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:45] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:56] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=enemy-277.0.0&enemy-hit=6%3A1000 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:56] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:56] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:17:56] "GET /index.wasm HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:18:03] "GET /?verify=&mute=&smoke=&frames=100000&theme=canyon&scene=resident-277.0.0&resident-seed=0&resident-floor=3 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:18:03] "GET /index.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:18:03] "GET /index.data HTTP/1.1" 200 -
+127.0.0.1 - - [26/Oct/2026 21:18:03] "GET /index.wasm HTTP/1.1" 200 -

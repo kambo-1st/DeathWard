@@ -1,0 +1,39 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RailTraffic.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnvironmentActors.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mortality.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LobWalkers.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HeadShooters.cpp.o
+[ 25%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MawFamily.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spitties.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CardinalWalkers.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Brains.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LinkedHeads.cpp.o
+[ 30%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Babies.cpp.o
+[ 35%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hosts.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/Babies.cpp: In member function ‘bool dw::Simulation::babyDestinationClear(const dw::Enemy&, Vector3) const’:
+/home/kambo/workspace/DeathWard/src/combat/Babies.cpp:39:73: error: ‘const struct dw::Enemy’ has no member named ‘room’
+   39 |     for(const auto &other:enemies)if(other.alive&&other.id!=e.id&&other.room==room) {
+      |                                                                         ^~~~
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:468: CMakeFiles/deathward_core.dir/src/combat/Babies.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:409: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:2737: CMakeFiles/deathward_baby_tests.dir/rule] Error 2
+gmake: *** [Makefile:1305: deathward_baby_tests] Error 2

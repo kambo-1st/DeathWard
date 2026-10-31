@@ -1,0 +1,13 @@
+{
+  "state": "parked_by_user_priority",
+  "implemented": false,
+  "record": "822.0.0",
+  "reason": "Finish the selected ten existing first-floor enemies in batches before new roster expansion.",
+  "retained": [
+    "source/manifest.json",
+    "animations/manifest.json",
+    "validation/native-projectile-ramp.txt",
+    "validation/CTest-ramp-detail.log"
+  ],
+  "scope": "Source research and reusable extended projectile acceleration primitive only. No Bouncer runtime/controller, encounter placement or completion claim."
+}

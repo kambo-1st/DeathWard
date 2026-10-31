@@ -1,0 +1,15 @@
+PASS WASM boom-normal: family behavior, presentation and source-stage health
+PASS WASM boom-red: family behavior, presentation and source-stage health
+PASS WASM boom-drowned: family behavior, presentation and source-stage health
+PASS WASM dragon-cardinal: family behavior, presentation and source-stage health
+PASS WASM dragon-diagonal: family behavior, presentation and source-stage health
+PASS WASM bone-fly: family behavior, presentation and source-stage health
+PASS WASM sick-boom: family behavior, presentation and source-stage health
+PASS WASM tainted-boom: family behavior, presentation and source-stage health
+PASS WASM resident-boom: family behavior, presentation and source-stage health
+PASS WASM resident-red-boom: family behavior, presentation and source-stage health
+PASS WASM resident-drowned-boom: family behavior, presentation and source-stage health
+PASS WASM resident-dragon: family behavior, presentation and source-stage health
+PASS WASM resident-dragon-x: family behavior, presentation and source-stage health
+PASS WASM resident-bone-fly: family behavior, presentation and source-stage health
+PASS WASM resident-sick-boom: family behavior, presentation and source-stage health

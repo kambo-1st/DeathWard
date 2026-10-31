@@ -1,0 +1,105 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "status": "Partial Bloat, owned-eye and normal Charger implementation. No full port acceptance implied.",
+  "ids": [
+    "68.1.0",
+    "68.11.0",
+    "23.0.0"
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived behavior summaries licensed CC BY-SA 4.0. Implementation, test interpretation and local tuning are separately identified.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "sources": [
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Bloat is 68.1.0, owned Bloat Eye is 68.11.0, normal Charger is 23.0.0. Bloat HP450/contact2/radius27; eye source HP450/contact1/radius13; Charger HP20/contact1/radius13."
+    },
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269953",
+      "supports": "Both eyes initially detached; short in-place hop releases a fixed-orientation eight-shot ring. Larger player-directed jump releases eight shots and a small red-creep patch. Large red-creep action; two nearly instant, untelegraphed lasers directed down or to both sides, never up. Green form replaces short/long-jump shots with two/three Ipecac shots, summons two Chargers on large creep and uses green creep in Repentance. Named eye-destruction exceptions."
+    },
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268685",
+      "supports": "Eye family floats diagonally over obstacles, bounces from walls/monsters, blocks shots, deals contact, responds to bombs, vanishes with its owner; component identity comes from installed XML rather than ambiguous wiki index numbers."
+    },
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270010",
+      "supports": "Normal Charger wanders slowly without pursuing; cardinal alignment triggers an immediate fast straight charge. Other variants have distinct rules and are not silently certified by the normal controller."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/bosspools.xml",
+      "supports": "Bloat boss-family pool in Necropolis and Utero: DeathWard bands 2/3."
+    },
+    {
+      "path": "docs/research/isaac-enemy-port-plan.json",
+      "supports": "Positive ordinary Charger room templates in Caves/Catacombs/Flooded Caves and Womb/Utero/Scarred Womb/Sheol/Corpse support bands 1/3; band 2 ordinary selection removed. Green Bloat still summons Chargers in band 2."
+    }
+  ],
+  "implemented": [
+    "Independent Bloat controller with fixed rings, short in-place and long directed swept jumps, red/green creep, immediate paired cardinal lasers and green form attacks.",
+    "Owned Bloat Eyes use independent owner/slot identities, refusal of mismatched eye family, retry after capacity failures, real flying collision/projectile interception and owner-only cleanup.",
+    "Owner-bound beam hazards, clipped to cover, real player hit volumes, source owner chain release and cancellation on death; no upward beam or advance warning delay.",
+    "Reusable projectile gravity/blast parameters: arcing green shots hit actual terrain/cover/player, explode once, do not apply duplicate contact-plus-blast damage, use current hostile/soft-demolition policy.",
+    "Normal Charger has externally configured slow aimless wandering, immediate cardinal acquisition with LOS, locked dash heading, collision/end recovery. Summoned Chargers remain normal room threats.",
+    "Dedicated weighted Bloat normal/green pools in Abandoned Works and Storm Cut; existing native bosses remain selectable. Ordinary Chargers use only bands 1/3.",
+    "Original procedural Bloat skin/socket/belly cues, green variant/projectiles/creep and actual beam/jump warnings; no proprietary Isaac art imported."
+  ],
+  "source_rules_retained": {
+    "normal_rings": 8,
+    "short_green_shots": 2,
+    "long_green_shots": 3,
+    "initial_owned_eyes": 2,
+    "green_large_creep_chargers": 2,
+    "laser_pair": 2,
+    "laser_warning_delay": 0,
+    "upward_laser": false
+  },
+  "deathward_adaptations": {
+    "hp": "Bloat 450*3.2=1440; normal Charger 20*3.2=64. Invulnerable eye HP remains the local sentinel 1, not a source HP conversion.",
+    "damage": "Bloat contact 20, beams/shots/creep/eye/Charger contact 10, green blast 20 before hostile multiplier1.25. Starting player remains100 HP/24 damage.",
+    "attacks": "Local cooldown2.4/windup.5; large jump .9s, range7, apex3.8..6; short hop .35s/apex.7. Existing movement/aggression multipliers apply. Grounded/windup damageable; complete airborne immunity is explicit local policy, not verified source timing.",
+    "lasers": "Fixed world south corresponds to source down; two parallel front rays or opposed side rays from sockets. Range32/radius.32/duration.7/recovery1.5/alignment.8 are local. Geometry is clipped at creation; solid cover also guards damage. No added telegraph delay.",
+    "creep": "Large radius3, landing radius1, lifetime6. Nearby owned deposits refresh rather than unbounded stacking. Large creep action summons ordinary independent Chargers; they survive body death and must be cleared for room completion.",
+    "ipecac": "1.1s aimed flight, gravity12, lateral spread2, explosion radius2.8/damage20; discrete swept 3D motion and flat-plane fallback only without canyon terrain. Hostile blast does not damage its own faction; it can ignite powder barrels using soft demolition. No player-Ipecac item, item damage formula, or generic poisoning status is implemented by this enemy attack.",
+    "summon_bound": "Configurable cap12 live/pending owned Chargers plus existing global limits; reaching the cap can reduce an otherwise two-child action. This bound is not asserted as native Isaac behavior.",
+    "charger": "Local dash11 before1.1 movement multiplier, maximum1.5s, alignment.8, recovery.7, wander timers.7..1.8; no anticipation windup. Native exact speed/timer/stop conditions require measurement.",
+    "selection": "Bands2/3 native weight6, Bloat normal3/green1. These weights are local, not source spawn odds. Dedicated stream leaves layout/ordinary selection RNG independent."
+  },
+  "unresolved": [
+    "Chaos Card, Euthanasia, God's Flesh and Little Horn eye-destruction exceptions remain unfinished; debug execution is not an implementation of these items.",
+    "Exact native attack probabilities/timers, laser acquisition geometry/recovery, jump immunity windows, Charger acceleration/stopping and any native summon cap are not established by article/XML data.",
+    "Champion/item/status/team interactions, additional dedicated/double/degraded routes and broader Charger variants remain open.",
+    "Green summoned-child survival and hostile-blast faction/demolition behavior use current DeathWard policies; native encounter edge cases require further verification.",
+    "All-camera readability, final silhouettes, human/mixed-build balance and controlled native/WASM performance acceptance remain open."
+  ],
+  "reproduction": {
+    "fixture": "./build/deathward_bloat_tests",
+    "actual_forms": [
+      {
+        "seed": 1,
+        "floor_zero_based": 4,
+        "band": 2,
+        "form": "green"
+      },
+      {
+        "seed": 1,
+        "floor_zero_based": 6,
+        "band": 3,
+        "form": "normal"
+      },
+      {
+        "seed": 2,
+        "floor_zero_based": 3,
+        "band": 2,
+        "form": "normal"
+      },
+      {
+        "seed": 5,
+        "floor_zero_based": 4,
+        "band": 3,
+        "form": "green"
+      }
+    ],
+    "isolated": "./build/deathward --smoke --theme canyon --style original --scene enemy-68.1.0 --enemy-boss-form green --enemy-player-side above --frames 560",
+    "natural": "./build/deathward --smoke --theme canyon --style original --scene resident-68.1.0 --resident-seed 1 --resident-floor 4 --frames 32"
+  }
+}

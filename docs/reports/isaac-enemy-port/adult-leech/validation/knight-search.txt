@@ -1,0 +1,5 @@
+FOUND 41.0 seed=0 floor=2 room=5
+FOUND 41.2 seed=0 floor=3 room=2
+FOUND 41.1 seed=1 floor=6 room=7
+FOUND 41.4 seed=1 floor=6 room=10
+FOUND 840.0 seed=28 floor=7 room=3

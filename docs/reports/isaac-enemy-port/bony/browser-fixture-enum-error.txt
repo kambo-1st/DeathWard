@@ -1,0 +1,11 @@
+AssertionError [ERR_ASSERTION]: actual bone projectile
+
+13 !== 1
+
+    at /home/kambo/workspace/DeathWard/web/bony-test.cjs:34:14 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 13,
+  expected: 1,
+  operator: 'strictEqual'
+}

@@ -1,0 +1,157 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 32,
+      "index": 18,
+      "case": "0x699e4b",
+      "controller": "0x500140"
+    }
+  ],
+  "constants": {
+    "walk_force_immediate": {
+      "address": "0x5008f5",
+      "value": 0.75
+    },
+    "x_retention": {
+      "address": "0xb6a588",
+      "value": 0.8500000238418579
+    },
+    "z_retention_and_charge_friction": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "grid_spacing": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "charge_alignment": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "charge_range": {
+      "address": "0xb6aba8",
+      "value": 200.0
+    },
+    "target_prediction": {
+      "address": "0xb6a9b0",
+      "value": 16.0
+    },
+    "charge_grid_correction": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "charge_grid_old": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "creep_sparse_interval": {
+      "address": "0xb6a9e8",
+      "value": 24.0
+    },
+    "creep_dense_interval": {
+      "address": "0xb6a98c",
+      "value": 12.0
+    },
+    "extra_creep_speed_squared": {
+      "address": "0xb6a95c",
+      "value": 9.0
+    },
+    "creep_base_radius": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "creep_damage": {
+      "address": "0xb6a614",
+      "value": 1.0
+    },
+    "creep_fade_scale": {
+      "address": "0xb6a604",
+      "value": 0.9800000190734863
+    },
+    "arrival": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "stuck_speed": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    }
+  },
+  "strings": {
+    "0xb41264": "Walk"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/controller.asm",
+      "start": "0x500140",
+      "end": "0x500f98",
+      "raw_sha256": "b924a06007301543b44744cc71b6d6f0f8831d1f9de184468773f7283ff4675f",
+      "sha256": "e8fd60c04dd4ebe9860c5c012767bedd27de32fb1cc4f9bd019d93798af81591"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/axis_random_walk.asm",
+      "start": "0x7a51e0",
+      "end": "0x7a617d",
+      "raw_sha256": "ef71ccb69cba5c9049682eaa58ee22518c8c116b8243e5f6825dcd56d0b6fa97",
+      "sha256": "9b4fea12a9e0f9ed56cd562307d1b6a8d6b4789069742e0229c555ef5a771fd6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/base_movement.asm",
+      "start": "0x686406",
+      "end": "0x68649a",
+      "raw_sha256": "6daabb77c51e24eb1403508ae788ecc0d7fef96070fa5db8ab4c4f2ab2a64378",
+      "sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/global_interval.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/actor_interval.asm",
+      "start": "0x6847e0",
+      "end": "0x684852",
+      "raw_sha256": "3114e2f81eb2fc94d3f4b8769e72049337e5841d1ffe29957db2cd22a677191d",
+      "sha256": "f080409245b440a02e70762eda343ae440cb3e50d88f2ea10d42f79681c2269a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/alive_enemy_count.asm",
+      "start": "0x6ad7a0",
+      "end": "0x6ad86d",
+      "raw_sha256": "652b9ee0f9132ad43a41b76ff0dbce3ba3144d7d6915b7b7aa1660d2dc3aa9ac",
+      "sha256": "94610750707bacb9ab0456948e73fb9079c6c2552a4ad16979543bfaf173b3d6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/effect_init.asm",
+      "start": "0x5b79c0",
+      "end": "0x5bbf98",
+      "raw_sha256": "ef5bcd75dcd18613af3d11574cb07f4d2d220b253416f2daccfe9afa40e69b1a",
+      "sha256": "39f5f9589e7875510d9e7a050b4930f3fe7d70d0c8044826c616194926bd79d8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/creep_update.asm",
+      "start": "0x5d17fc",
+      "end": "0x5d32ec",
+      "raw_sha256": "23a15197d074f495e33d67d58c8253d4c582fa790dbbd5ac66c6e539d36ae212",
+      "sha256": "dda4550fc12a4ef43c3ca79a145fbb81c8275bc195da4af6d8b58061422e9583"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/effect_timer_epilogue.asm",
+      "start": "0x5e9122",
+      "end": "0x5e9168",
+      "raw_sha256": "189359fdb76b600d31bf16000d1c0c0ceb91963bea3a4158696602fb3958b165",
+      "sha256": "58b3bde92807e3c7a4ac47ddd3a4c488f30c5adfe225c2fece6c4cee0f60b500"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/brain/source/grid_position.asm",
+      "start": "0x7a6e20",
+      "end": "0x7a6e9e",
+      "raw_sha256": "c1e8c5bb037884b82da52e3c3da4bd66d702bcc08f86dbe4df8c7bafa5c0aa8f",
+      "sha256": "d972d66d2aadb91185e12a97be768efda6e04f225dd6fee4cffdb3a94c4ed827"
+    }
+  ]
+}

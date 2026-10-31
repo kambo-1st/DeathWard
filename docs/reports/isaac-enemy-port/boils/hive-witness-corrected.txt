@@ -1,0 +1,1 @@
+WITNESS id=22.1.0 seed=109 floor=2 room=6 flooded=1

@@ -1,0 +1,33 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/7 Test  #2: mechanics_content ................   Passed    1.76 sec
+    Start  5: floor_progression
+2/7 Test  #5: floor_progression ................   Passed  140.53 sec
+    Start 27: resident_enemies
+3/7 Test #27: resident_enemies .................   Passed    0.92 sec
+    Start 29: monster_behaviors
+4/7 Test #29: monster_behaviors ................   Passed    3.39 sec
+    Start 41: knight_lifecycle
+5/7 Test #41: knight_lifecycle .................***Failed    1.01 sec
+MASK cardinal_half_plane=1 loose_armored=1 bypasses=1 specular_speed=1 grace15=1
+PAIR same_id=1 scale=1 no_duplicate_rewards=1 invulnerability=1 capacity=1 orphan=1 nearest_unique=1
+PON source_hop=1 landing_patch=1 life125=1 red_damage=1 fade=1 blocked_target_retry=1 capacity_after_death=1
+MOVEMENT cardinal_commit=1 no_generic_windup=1 no_timeout=1 selfless_force=1 black_acceleration=1 occlusion=1 remnant_wander=1 mass_ratio=1
+IMPACT three_directions=1 discrete_jets=1 lift=1 recovery45=1 ordinary_no_payload=1 capacity_after_death=1 open_passage_boundary=1
+CONFIG immutable_reload=1 invalid_profiles=7
+NATURAL_KNIGHT id=41.0 seed=0 floor=2 room=5
+fixed witness contains natural family member
+
+    Start 42: leech_behavior
+6/7 Test #42: leech_behavior ...................   Passed    2.77 sec
+    Start 44: adult_leech
+7/7 Test #44: adult_leech ......................   Passed    0.54 sec
+
+86% tests passed, 1 tests failed out of 7
+
+Total Test time (real) = 150.92 sec
+
+The following tests FAILED:
+	 41 - knight_lifecycle (Failed)
+Errors while running CTest

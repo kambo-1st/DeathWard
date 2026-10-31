@@ -1,0 +1,15 @@
+{
+  "browser": "149.0.7827.55",
+  "checks": [
+    {
+      "name": "spitty",
+      "id": "31.0.0",
+      "pass": false,
+      "samples": [],
+      "captures": {},
+      "captureFrames": {}
+    }
+  ],
+  "errors": [],
+  "scope": "Production WASM three exact Spitty controllers, primary/moving/death attacks, terrain, source health and real seeded activation. These are smoke/behavior checks, not complete six-gate acceptance."
+}

@@ -1,0 +1,60 @@
+{
+  "result": "partial_pass",
+  "style": "Original",
+  "manual_image_inspections": 8,
+  "images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/native/wall-ring.png",
+      "platform": "Linux",
+      "inspected": true,
+      "finding": "Large segmented body at canyon edge; visible red wall-impact projectiles remain separated from terrain."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/native/fall.png",
+      "platform": "Linux",
+      "inspected": true,
+      "finding": "Elevated body and shadow communicate downward attack; hidden-phase health bar is absent."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/native/landing.png",
+      "platform": "Linux",
+      "inspected": true,
+      "finding": "Grounded body, restored health bar and ten-projectile landing ring after player moves aside."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/web/wall-impact-wall-ring.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Visible partial ring against cliff; shots entering wall terminate, remaining radial directions readable."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/web/burrow-fall-fall.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Elevated body and shadow above the player during pre-hit falling phase."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/web/burrow-fall-landing.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Landing ring visible after scripted player movement; body returns to the ground."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/web/burrow-fall-hidden.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Body, shadow and health bar absent while hostile count remains one."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/adult-leech/web/resident-wall-ring.png",
+      "platform": "WASM",
+      "inspected": true,
+      "finding": "Natural resident produces real wall-impact ring beside a passage; grounded visual contact retained."
+    }
+  ],
+  "limitations": [
+    "Source art/audio is not imported; procedural body and reused local cues are adaptations.",
+    "Initial stationary god-mode landing capture consumed shots on the overlapping player. Final capture moves the player before impact to inspect the radial pattern.",
+    "FPS overlays during concurrent tests/capture are not controlled performance evidence. Broader visual readability remains open."
+  ]
+}

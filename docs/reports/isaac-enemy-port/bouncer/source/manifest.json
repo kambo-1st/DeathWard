@@ -1,0 +1,318 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 822,
+    "index": 157,
+    "case": "0x69a127",
+    "controller": "0x4efe40"
+  },
+  "windows": [
+    {
+      "name": "controller",
+      "start": "0x4efe40",
+      "end_exclusive": "0x4f0868",
+      "complete_function": true,
+      "instructions": 616,
+      "raw_sha256": "85084cad3e1379ee44df406645a79f6ddef99b14db045e5bffab78dabe8b6a4b",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/controller.asm",
+      "sha256": "9da6d0c4773c7c3af676e3dda5c9d01acf03c3eb092ac29d23b76a223946524e"
+    },
+    {
+      "name": "reflection",
+      "start": "0x64dff6",
+      "end_exclusive": "0x64e10d",
+      "complete_function": false,
+      "instructions": 49,
+      "raw_sha256": "21d335004ab9350939928c97d2a154161b031adce2bf1a89c67ec135c1facd52",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/reflection.asm",
+      "sha256": "432e4b3ed7287e58a5f4d989c9099f9fa88fafc4661a7f355a9c08382e941fd3"
+    },
+    {
+      "name": "explosive-tear-gate",
+      "start": "0x64dd2a",
+      "end_exclusive": "0x64dd88",
+      "complete_function": false,
+      "instructions": 24,
+      "raw_sha256": "620ecc44b28e8196758ccc6ea78f472248442906118b8303ea032c26e14d22f5",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/explosive-tear-gate.asm",
+      "sha256": "a5ffc40399fd83e984b5d087ff669817fa1aa7da2ca84072388e2bb112ba01f8"
+    },
+    {
+      "name": "contact-kill",
+      "start": "0x6a43a5",
+      "end_exclusive": "0x6a43d0",
+      "complete_function": false,
+      "instructions": 13,
+      "raw_sha256": "053f4ab0226b341026312e0ceaaaef4b50e7b49ecb1497b8d695e361b8d6cd56",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/contact-kill.asm",
+      "sha256": "0559f6c3c0e657dcf140c46a051807dc1c16d619a9f60f768aad89259e2cd16f"
+    },
+    {
+      "name": "pair-rng",
+      "start": "0x7a7d50",
+      "end_exclusive": "0x7a7da8",
+      "complete_function": true,
+      "instructions": 41,
+      "raw_sha256": "a1aa1efb23dafa54da380c60cb6388079169afdb873750d59eb523619da1ba6c",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/pair-rng.asm",
+      "sha256": "d8469663fbe2a4abd63345735b89eada368d14b30c72022672bdb66a3419fbd9"
+    },
+    {
+      "name": "extended-acceleration",
+      "start": "0x635ea6",
+      "end_exclusive": "0x635f3a",
+      "complete_function": false,
+      "instructions": 26,
+      "raw_sha256": "c4f52c1470368d75f520ce1bd1ed16ec9bde647d1bbf29118cf42d98fd3f50cf",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/extended-acceleration.asm",
+      "sha256": "a0cf50c0b347f173e5e3cae4c3d9aa02947e4cc8929c76de2ebb5b7853a0be6e"
+    },
+    {
+      "name": "linear-interpolation",
+      "start": "0x962380",
+      "end_exclusive": "0x96238d",
+      "complete_function": true,
+      "instructions": 4,
+      "raw_sha256": "1e587d2c6331c5b3364272b3abc12c885d13d97be2067601e223649bd3fd9da3",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/linear-interpolation.asm",
+      "sha256": "0273cba92134a41129ae35dff27e48f3c5a80716337a001903d40a63cf3b2c30"
+    },
+    {
+      "name": "minimum-helper",
+      "start": "0x407e80",
+      "end_exclusive": "0x407e8d",
+      "complete_function": true,
+      "instructions": 5,
+      "raw_sha256": "a81be708a20d2e10f5781f70c30f2afc27cafeee1b11320b975dc844a9901f63",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/minimum-helper.asm",
+      "sha256": "bd7dbe9e05a73dcaaa42ffc1b70adbdfad2fa8c29d87bdc6ce1d1fc7f163d4d2"
+    },
+    {
+      "name": "projectile-common-update",
+      "start": "0x6302e0",
+      "end_exclusive": "0x6302e7",
+      "complete_function": false,
+      "instructions": 2,
+      "raw_sha256": "f76c4b8d84003e82a2cd5a8d51141a6bce1a41d7aa9fa2f3ac70a9217f5d6dd7",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/projectile-common-update.asm",
+      "sha256": "bd2bd194ff79d68b0bdfd0f6c6d21ffc8f1c7152d81716f57c2816c4938e0a87"
+    },
+    {
+      "name": "common-age-increment",
+      "start": "0x6860e7",
+      "end_exclusive": "0x686116",
+      "complete_function": false,
+      "instructions": 9,
+      "raw_sha256": "4e74f3fa3af53b91e46fea31dfd4f594faaca961ff28fabaa994c7eaa646c823",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/common-age-increment.asm",
+      "sha256": "88a6a305059f56e1726c04c1d22b8ea0c0c1cae5275d510735bcb6998272c503"
+    },
+    {
+      "name": "shockwave-helper",
+      "start": "0x6d6570",
+      "end_exclusive": "0x6d6c5b",
+      "complete_function": true,
+      "instructions": 431,
+      "raw_sha256": "09e554d55aa93d5b0eca6c1f945896c19ba365e055df018d6eb1a43e48a1aabc",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/shockwave-helper.asm",
+      "sha256": "56e44b9c75cf45bc853bd569ab2944631aba98a2619a4aac739cb2cb1797022e"
+    },
+    {
+      "name": "blood-effect-callback",
+      "start": "0x4efb00",
+      "end_exclusive": "0x4efe35",
+      "complete_function": true,
+      "instructions": 192,
+      "raw_sha256": "e962c0af60653fb39c5e0378bfcdff14bd118e8b57cba9e2c4332c646d87be7b",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/blood-effect-callback.asm",
+      "sha256": "4387407cd21e404427a19f70674e7734d2617da6a3ba016f3b81090ed57c24a1"
+    },
+    {
+      "name": "target-selection",
+      "start": "0x695680",
+      "end_exclusive": "0x695a26",
+      "complete_function": true,
+      "instructions": 297,
+      "raw_sha256": "3e137d46fce59a1bf80cc103f3f36d2bc15a4820c92b5a4b78f0d20480b6753b",
+      "path": "docs/reports/isaac-enemy-port/bouncer/source/target-selection.asm",
+      "sha256": "fff3c20b544538035785b1eceb04235d916bde3fbc255c1511197a43be53e0b6"
+    }
+  ],
+  "constants": {
+    "timer_min": {
+      "address": "0xb6a910",
+      "value": 6.0
+    },
+    "timer_range": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "timer_decrement": {
+      "address": "0xb6a25c",
+      "value": 0.03333333507180214
+    },
+    "damage_timer_divisor": {
+      "address": "0xb6a8a0",
+      "value": 3.5
+    },
+    "evade_friction": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "inflating_friction": {
+      "address": "0xb6a4c4",
+      "value": 0.6000000238418579
+    },
+    "inflated_radius_factor": {
+      "address": "0xb6a6f0",
+      "value": 1.5
+    },
+    "cloud_spawn_offset": {
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    "cloud_max_planar_speed": {
+      "address": "0xb6a9ac",
+      "value": 15.0
+    },
+    "cloud_height_base": {
+      "address": "0xb6aee8",
+      "value": -22.0
+    },
+    "cloud_height_range": {
+      "address": "0xb6a940",
+      "value": 8.0
+    },
+    "cloud_falling_accel_base": {
+      "address": "0xb6addc",
+      "value": -0.05999999865889549
+    },
+    "cloud_falling_accel_range": {
+      "address": "0xb6a24c",
+      "value": 0.030000004917383194
+    },
+    "cloud_scale_range": {
+      "address": "0xb6a66c",
+      "value": 1.1999999284744263
+    },
+    "ramp_frames": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "cluster_speed": {
+      "address": "0xb6a928",
+      "value": 7.0
+    },
+    "cluster_falling_accel": {
+      "address": "0xb6a3c4",
+      "value": 0.3199999928474426
+    },
+    "cluster_fall_range_base": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    }
+  },
+  "states": {
+    "0": "0x4efeb0",
+    "1": "0x4f0517",
+    "2": "0x4f0517",
+    "3": "0x4eff48",
+    "4": "0x4f0517",
+    "5": "0x4f0517",
+    "6": "0x4f0517",
+    "7": "0x4f0517",
+    "8": "0x4f01c9",
+    "9": "0x4f0517",
+    "10": "0x4f0517",
+    "11": "0x4f0517",
+    "12": "0x4f0517",
+    "13": "0x4f0517",
+    "14": "0x4f0517",
+    "15": "0x4f0517",
+    "16": "0x4f0313"
+  },
+  "shared_evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/bouncer/animations/manifest.json",
+      "sha256": "72b03885686f2b9f3edb3de5e19bfb513a5695a8f2ac584d4c9a27850b966bc5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/nest/source/evade_pathfinder.asm",
+      "sha256": "614544eaa7ac8518ce1cab9234aacb252ac68bf87bfd820fa472ee260ae3f4d1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/long_legs/source/chase_pathfinder.asm",
+      "sha256": "81c78926e1044829d58e4f5cb3bc3461d59d728e434a9f80fb987a1cac5c31af"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/tear_collision.asm",
+      "sha256": "a220713b754300174d7e19a832e86190396d807f2db9814bc556b2dfd393c449"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/chubber/source/npc_collision.asm",
+      "sha256": "422ee691e5a72d26aa1809a462b9b57e27f532b6fd6bf17d03f1b4f11c80dba7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/aimed_cluster.asm",
+      "sha256": "ddfae7350e140b99e5c93bedd65ebe0ce81e35e8cd3476911f9c2dd4692146a3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/fire_projectiles.asm",
+      "sha256": "8faf40194ad1cda63d260ff83a09b427743d1f21edbd27651f05da59a9ccc90d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/hardy/source/projectile_params.asm",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/spitties/source/projectile_init.asm",
+      "sha256": "074f795aece0883b18f3d37cf644621de9ec7ef0f85460790c218be698df47ae"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/gurgle_lobs/source/flight_integrator.asm",
+      "sha256": "6d4276f523c6bb04773dcddb94d31a06ec64c31db9b9c131fcc1eef42cdd082f"
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/loose/resources/scripts/enums.lua",
+      "sha256": "dce1892f51e4e645d66ac8ffb31d217e8c36a32457c1005dd128978141103dc5"
+    }
+  ],
+  "reflection_rng": {
+    "seed": "uint32(tear.InitSeed + target.InitSeed)",
+    "shifts": [
+      5,
+      9,
+      7
+    ],
+    "algorithm": "x ^= x>>5; x ^= x<<9; x ^= x>>7; unsigned32 modulo5 ==0",
+    "incoming_condition": "dot(tearVelocity, normalized(tearPosition-targetPosition)) <0",
+    "explosive_mask": [
+      "0x1000",
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "ludovico_mask": [
+      "0x0",
+      "0x0",
+      "0x0",
+      "0x80000000"
+    ]
+  },
+  "claims": [
+    "State0 starts HeadAppear and paused body walk, sets state3, clears the post-inflation chase latch and samples timer U[6,10). First update only initializes.",
+    "State3 uses the shared EvadeTarget pathfinder and .8 friction. Timer decrements1/30 per update while positive, additionally max(0,timer-queuedDamage/3.5). Inflation requires age>30, proximity memoryAA0>0, timer<=0, and RNG%20==0; no direct low-HP percentage test.",
+    "HeadInflate has21 source frames and Inflate event at7. That event changes state8 to16 and multiplies collision size by1.5. State16 can already reflect/explode before the animation finishes. .6 friction while waiting; after animation completion a latch enables ground chase speed.9 with path marker900 and direct path enabled.",
+    "Inflated head animation playback direction alternates +/-1; this is not the reflection lottery. Reflection tests state16 and deterministic pair seed modulo5. It reflects the existing incoming tear radially and returns without ordinary damage; allegiance/ownership and piercing are not changed in this branch. Explosive non-Ludovico tears bypass it.",
+    "NPC contact handler kills state16 on collision with a player or its tracked target. Normal forms remain contact-damaging but are not consumed.",
+    "Early death (state!=16) emits FireProjectiles mode7: four diagonal shots, planar speed10. Init/default falling properties remain distinct from the large cloud.",
+    "Inflated death emits12 FireBossProjectiles with zero target and trajectory0: random directions, speed7, fallingSpeed5-U*24, fallingAccel.32, size.9+.4*(RNG&1)+U*.05.",
+    "Inflated death additionally emits22 direct projectiles: random radial offset5, speedU*15, height-22-U*8, fallingSpeed0, fallingAccel-.06-U*.03, size.6+U*1.2. Flags highword0x20 means ACCELERATE_EX (bit37), not ordinary DECELERATE.",
+    "ACCELERATE_EX applies lerp(1,.9,min(elapsedSourceAge/20,1)). Common entity update increments age and translates before this multiplier; first age is1. Flight separately uses .9 falling retention and (.1+fallingAccel). Direct cloud shots also invoke one native Update immediately after creation; deferred DeathWard admission must explicitly account for or document this timing difference.",
+    "Inflated death calls shockwave helper6d6570 with native radius120 and both booleansfalse. It pushes nearby eligible entities; direct10damage branch is gated on a player source and does not apply to a normal hostile Bouncer. This is not an unconditional damaging bomb explosion or rock-destruction call.",
+    "Callback4efb00 creates type1000 effect variant2 subtype3 (blood effects), not additional hostile projectiles. Sound/shake/gore are separate from the34 hostile projectiles."
+  ],
+  "scope": "Source-backed implementation contract; Bouncer controller remains unimplemented at this research checkpoint. Existing native primitives and 3D conversions require scoped validation; no original-game live execution claimed.",
+  "preflight_note": "Preserved *-preflight.asm files are exploratory and may include tables or following functions. Only bounded manifest windows are authoritative."
+}

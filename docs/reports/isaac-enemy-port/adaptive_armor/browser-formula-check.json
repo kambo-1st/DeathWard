@@ -1,0 +1,59 @@
+{
+  "scope": "Offline independent formula check of preserved production browser samples; source frame60 hits resolve together on tick31. Native render log independently matches Hopper HP. No additional gameplay runs or full balance claim.",
+  "profiles": [
+    {
+      "id": "14.2.0",
+      "source_batch_tick": 31,
+      "expected_damage": 15.778666666666666,
+      "observed_damage": 15.778656005859375,
+      "pass": true
+    },
+    {
+      "id": "22.3.0",
+      "source_batch_tick": 31,
+      "expected_damage": 18.038222222222224,
+      "observed_damage": 18.0382080078125,
+      "pass": true
+    },
+    {
+      "id": "25.6.0",
+      "source_batch_tick": 31,
+      "expected_damage": 14.422933333333333,
+      "observed_damage": 14.422935485839844,
+      "pass": true
+    },
+    {
+      "id": "29.3.0",
+      "source_batch_tick": 31,
+      "expected_damage": 16.23057777777778,
+      "observed_damage": 16.2305908203125,
+      "pass": true
+    },
+    {
+      "id": "31.1.0",
+      "source_batch_tick": 31,
+      "expected_damage": 14.422933333333333,
+      "observed_damage": 14.422943115234375,
+      "pass": true
+    },
+    {
+      "id": "61.7.0",
+      "source_batch_tick": 31,
+      "expected_damage": 12.796053333333331,
+      "observed_damage": 12.796051788330075,
+      "pass": true
+    },
+    {
+      "id": "855.0.0",
+      "source_batch_tick": 31,
+      "expected_damage": 52.906666666666666,
+      "observed_damage": 52.90667724609375,
+      "pass": true
+    }
+  ],
+  "hopper_linux_wasm": {
+    "linux_hp": 239.769,
+    "wasm_hp": 239.7694091796875,
+    "pass": true
+  }
+}

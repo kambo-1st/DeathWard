@@ -1,0 +1,86 @@
+{
+  "status": "ordinary Black Bony source contract and local adaptations; not full acceptance",
+  "identity": "277.0.0",
+  "source_name": "Black Boney",
+  "not_variant": "227.1.0 is Holy Bony",
+  "evidence": [
+    "source/manifest.json",
+    "docs/reports/isaac-enemy-port/bony_review/source-review.json",
+    "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266724"
+  ],
+  "source_stage_evidence": [
+    {
+      "file": "rooms/07.depths.stb",
+      "source_stage": "depths",
+      "templates": 30,
+      "positive_weight_templates": 30,
+      "proposed_band": 2,
+      "source_path": "main"
+    },
+    {
+      "file": "rooms/08.necropolis.stb",
+      "source_stage": "necropolis",
+      "templates": 28,
+      "positive_weight_templates": 28,
+      "proposed_band": 2,
+      "source_path": "main"
+    },
+    {
+      "file": "rooms/09.dank depths.stb",
+      "source_stage": "dank depths",
+      "templates": 53,
+      "positive_weight_templates": 53,
+      "proposed_band": 2,
+      "source_path": "main"
+    },
+    {
+      "file": "rooms/14.sheol.stb",
+      "source_stage": "sheol",
+      "templates": 10,
+      "positive_weight_templates": 10,
+      "proposed_band": 3,
+      "source_path": "main"
+    },
+    {
+      "file": "rooms/16.dark room.stb",
+      "source_stage": "dark room",
+      "templates": 3,
+      "positive_weight_templates": 3,
+      "proposed_band": 3,
+      "source_path": "main"
+    },
+    {
+      "file": "rooms/29.mines.stb",
+      "source_stage": "mines",
+      "templates": 1,
+      "positive_weight_templates": 1,
+      "proposed_band": 1,
+      "source_path": "alternate"
+    },
+    {
+      "file": "rooms/30.ashpit.stb",
+      "source_stage": "ashpit",
+      "templates": 2,
+      "positive_weight_templates": 2,
+      "proposed_band": 1,
+      "source_path": "alternate"
+    }
+  ],
+  "movement": "Same native axis-aligned Bony wandering/acquisition; stays still during each attack animation. Source native pathfinder/friction differs from local cardinal turn navigation.",
+  "attacks": "Three complete13-frame attack animations, Shoot atframe4 each, giving native shot frames4/17/30. Every bone aims at current target; alignment checked only on initial acquisition. Installed AnimationState playing gate verified independently.",
+  "death": "Immediate native BombDamage40/radius60/lineCheck=true; no creature offspring. Separate explosion visual and shake in native callsite. Preserve real death effects for genuine execution; debug mass-clear bypass is local tool policy.",
+  "visuals": "Native body RGB multiplier.3 and bones.4. Local procedural skeleton dark palette and dark bone shot preserve family silhouette without source artwork.",
+  "adaptations": [
+    "Native30FPS attack counts at60Hz simulation; local world distance x.1 and shot10/update ->30world/s.",
+    "Source HP8+2stage converted x3.2 using shared stage formula. Blast40 ->128 enemy damage, radius60 ->6world; local player20 before existinghostile1.25.",
+    "Existing enemy aggression10%, entry grace, actor-ID cadence, body-relative alignment and cardinal wander interval.7..1.8s unchanged from normal Bony.",
+    "Local line-check geometry/demolition uses shared explosion pipeline. Pending mandatory blast retained across event-queue saturation before dead-actor cleanup and room completion.",
+    "Source native fire/status/faction/item exceptions and exact physics/default projectile params remain unfinished. No mounted or Forsaken encounter route enabled."
+  ],
+  "placement": "Sparse standard Broken Quarry crossfire, then crossfire/supply_guard in bands2-3. Per-ID cap1, threatcost4. Main/alternate room evidence kept separate; no opening-band/tutorial/Mine additions.",
+  "remaining": [
+    "Native shared pathfinder/grid clamp, status/faction/special-item exceptions and death damage-source flag effects.",
+    "Forsaken403 black-form summon dependency remains separate; no additional boss work in this batch.",
+    "Complete Linux/WASM visuals, varied-build/human balance and rendered performance acceptance."
+  ]
+}
