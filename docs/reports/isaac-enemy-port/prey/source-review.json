@@ -1,0 +1,70 @@
+{
+  "scope": [
+    "810.0.0 Small Leech",
+    "817.0.0 Prey"
+  ],
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "findings": [
+    "Type810 dispatches548fc0; type817 shares Hive controller4fa1e0. Positive room field+7134 chooses wet behavior and grid collision6(no pits); dry uses5(ground), except thrown state6 uses3(walls).",
+    "Ordinary wet Small Leech normalizes the current target delta, increases internal acceleration by.016/update capped.35, adds that force and applies.96retention. It has no alignment acquisition or wall-stop attack state. Source speed cap is10 after friction. Source edge response reverses the offending velocity axis by-.6 within X10/top20/bottom4room margins.",
+    "Ordinary dry Small Leech applies.7retention while idle and has a1/2chance per ready update to launch a short hop. Impulse is normalized target direction times2+2*U. State7 coasts until Land has occurred, then.7retention, returning to state3after animation completion. Metadata establishes Hop10/Land6,30FPS. Source hop is sprite animation, not an airborne entity-height state.",
+    "The native wet controller also contains owner-orbit, status/fear/confusion and subtype1branches; only exact XML810.0.0 normal hostile behavior is in this slice. Knockback is not disabled by this controller.",
+    "Prey uses shared evasion/cooldown/population/HeadAttack18/Shoot4rules. Its Shoot emits type810variant0subtype0without the Hive AttackFly contact-expiry flag. Live children have full sourceHP5.",
+    "Prey death requiresHP>-20. The shared ceil(4/(1+.2*room population))count is reduced by1and clamped to minimum1; native signedNPC+bc6then subtracts. Ordinary zero counter gives3alone,2with2others,1with5others. The wiki2..3description omits crowd suppression.",
+    "Death selects a free nearby point with source radius80and wet-room permission, adds a random direction times10and calls549d70with initial height-10. The helper emits a Small Leech at the parent, state6, initial vertical velocity-8and planar velocity.04*(target-origin). State6integrates gravity+.7perupdate, sets grid collision3and entity collision0, and restores grid6/entity4/ready3on landing. This thrown birth is distinct from ordinary sprite hops and live spitting.",
+    "Prey,Small Leech XML, room-library habitats and animation metadata are preserved separately. Canyon wet-room mapping, HPx3.2 and world geometry/visual conversion are DeathWard adaptations, not native engine equivalence."
+  ],
+  "source_manifest": "docs/reports/isaac-enemy-port/prey/source/manifest.json",
+  "animation_manifest": "docs/reports/isaac-enemy-port/prey/animations/manifest.json",
+  "wiki": {
+    "articles": [
+      {
+        "title": "Leech (Enemy)",
+        "revision": 268624,
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268624"
+      },
+      {
+        "title": "Mulligan",
+        "revision": 271647,
+        "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271647"
+      }
+    ],
+    "preserved": "docs/reports/isaac-enemy-port/prey/wiki-source.json",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "access": "Pinned previously preserved articles; current retrieval failed. Installed executable and metadata resolve abbreviated descriptions."
+  },
+  "adaptations": [
+    "Source HP x3.2 and distances x.1. Half-heart contact maps to10 before existing1.25 multiplier. Original visuals and player defaults unchanged.",
+    "Source30Hz wet/dry control runs within60Hz simulation. Physical room bounds constrain source margins to local body radius; ground navigation/body avoidance remain DeathWard adaptations.",
+    "Flooded rooms and rooms intersected by interior rivers use room-wide wet behavior. Swimming crosses water while preserving rocks, gates, raised terrain and room boundaries.",
+    "Death launch uses source height-10, velocity-8, gravity+.7 and planar.04 times target delta. Height scale.1 yields23sourceupdate flight. Actual3D elevation drives rendering; airborne state excludes projectile/body contact but not area damage.",
+    "Nearby launch destination uses bounded local free-point search with radius8 and scatter1. Full3D arc and actual endpoint are validated before admission; vertical fallback or retained birth replaces invalid source-grid destinations. This can reject arcs Isaac sprite collision permits.",
+    "Dry Hop10/Land6 remains a grounded collider with small local visual lift. Live children are grounded and persistent.",
+    "Population death count applies native817adjustment/minimum with zero NPC+bc6 counter. Reserved births count toward capacity/room completion; dead carrier removal never discards admitted requests.",
+    "Local wet band1 pursuit weights/costs/caps adapt Downpour/Dross and FloodedCaves habitats, not source room-template probabilities."
+  ],
+  "remaining": [
+    "Native nonzero NPC+bc6 death-count counter lifecycle remains unresolved.",
+    "Small Leech friendly/owner-orbit, fear/confusion, subtype1 and complete item/status/time-scale behavior are not certified. Only exact normal hostile810.0.0 is implemented here.",
+    "Shared Hive evasion native grid-path/cache/initial impulse equivalence remains unfinished; source free-point launch distribution is approximated.",
+    "Thrown arcs are validated before admission; geometry changed after launch has no complete recovery policy yet.",
+    "Original generic worm/walker silhouettes remain. Source sprite/appearance fidelity, all-angle readability, broad balance and controlled native/WASM performance acceptance remain open.",
+    "Prey champions and full friendly/status/item interactions remain open. The two exact IDs remain in_progress, not completed ports."
+  ],
+  "natural_witnesses": [
+    {
+      "id": "810.0.0",
+      "seed": 41,
+      "floor": 2,
+      "room": 7
+    },
+    {
+      "id": "817.0.0",
+      "seed": 119,
+      "floor": 2,
+      "room": 3
+    }
+  ]
+}

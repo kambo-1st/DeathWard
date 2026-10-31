@@ -1,0 +1,26 @@
+{
+  "style": "Original",
+  "result": "Partial visual pass: selected Linux and WASM captures inspected. Prey walker and Small Leech worm silhouettes, dry visual hop, river-side body, thrown elevated offspring and ground shadows are visible. Source sprite parity and all-angle/crowd readability remain open.",
+  "inspected": [
+    "docs/reports/isaac-enemy-port/prey/native-small-leech-dry.png",
+    "docs/reports/isaac-enemy-port/prey/native-small-leech-river.png",
+    "docs/reports/isaac-enemy-port/prey/native-prey-live.png",
+    "docs/reports/isaac-enemy-port/prey/native-prey-death.png",
+    "docs/reports/isaac-enemy-port/prey/native-prey-landed.png",
+    "docs/reports/isaac-enemy-port/prey/web/prey-death.png",
+    "docs/reports/isaac-enemy-port/prey/web/natural-prey.png",
+    "docs/reports/isaac-enemy-port/prey/web/small-leech-river.png"
+  ],
+  "observations": [
+    "Native live Prey stands near the north canyon wall; its live Small Leech pursues the player.",
+    "Native death/landed captures show three independent death children in addition to the already existing live child. During launch the children can visually overlap; after landing they separate.",
+    "WASM death capture shows the three airborne bodies near the top of the view and their separated ground shadows; the airborne height is visible without a new render style.",
+    "River captures show a Small Leech at the player bank after crossing. The screenshot alone does not prove traversed distance; native swept-water tests and browser telemetry provide the movement evidence.",
+    "Natural Prey capture includes the production room residents and scenery. Ordinary crowd overlap and distant silhouettes still need broader readability review."
+  ],
+  "limits": [
+    "Only selected camera positions and frames were inspected; no animation/artwork or full visual-equivalence acceptance.",
+    "FPS counters captured during builds/tests are not controlled performance measurements.",
+    "Current worm/walker bodies are existing Original-style generic visuals, not newly authored source sprites."
+  ]
+}

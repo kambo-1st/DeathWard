@@ -1,0 +1,90 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "status": "Partial implementation; two source records, not two certified complete ports.",
+  "ids": [
+    "68.0.0",
+    "68.10.0"
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived behavior summaries licensed CC BY-SA 4.0. Original implementation, tuning and test interpretation are distinguished below.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "sources": [
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Exact Peep 68.0.0, Peep Eye 68.10.0; Bloat is 68.1.0, Bloat Eye 68.11.0. Peep base HP 450, stage HP 0, contact 2, radius 27. Eye source HP 450/contact 1/radius 13; local invulnerable HP sentinel is not a source HP conversion."
+    },
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267060",
+      "supports": "Yellow creep; varying eight-shot radial burst; player-directed jump with twelve-shot landing; detach eyes at two-thirds/one-third HP; whole-heart body contact. Cyan starts with both eyes; yellow is 15% smaller, faster, leaves constant creep. Named eye-kill exceptions."
+    },
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268685",
+      "supports": "Owned, invulnerable, non-gating eyes move diagonally over obstacles, bounce off walls/monsters, block tears, deal contact damage, respond to bombs, disappear on owner death. Article index/infobox tuple is overridden by installed XML identity."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/bosspools.xml",
+      "supports": "Peep family belongs to Caves/Catacombs/Flooded Caves main-route pools; bossID family membership is not independent-eye eligibility."
+    }
+  ],
+  "implemented": [
+    "Dedicated Peep controller with externally weighted creep/ring/jump actions, forms, HP/timing/range/damage values.",
+    "Shared bounded swept jump planner with actual 3D position, windup, locked destination, legal landing and retained flight through stun/room re-entry.",
+    "Owned eye slots, one-time successful detachment, retry after capacity/placement rejection, no orphan pending spawns, owner-death cleanup without extra kills or loot.",
+    "Flying diagonal eye launch, axis reflection at enclosing walls, body reflection, real projectile interception, real explosion direction change.",
+    "Cyan initial two eyes and yellow scale/speed/continuous creep, refreshing nearby patches to keep hazard count bounded.",
+    "Independent seeded dedicated boss pool for Broken Quarry, preserving native canyon bosses, normal encounter RNG, geometry, tutorial and existing run snapshots.",
+    "Original procedural boss geometry, empty eye sockets, form colors, yellow shots/creep, grounded warning marker through flight, boss name/HP HUD."
+  ],
+  "source_rules_retained": {
+    "ring_projectiles": 8,
+    "landing_projectiles": 12,
+    "eye_thresholds": [
+      0.6666666666666666,
+      0.3333333333333333
+    ],
+    "cyan_initial_eyes": 2,
+    "yellow_size_multiplier": 0.85
+  },
+  "deathward_adaptations": {
+    "hp": {
+      "source": 450,
+      "local": 1440,
+      "conversion": 3.2
+    },
+    "eye_hp": "Local HP=1 sentinel because ordinary damage is rejected; not equivalent to source baseHP=450.",
+    "damage": "Body 20, eye/shot/creep 10 before existing hostile multiplier 1.25: actual contact 25/12.5. Starting player remains 100 HP / 24 damage.",
+    "timing": "Local cooldown 2.4, windup .65, flight .85, initial recovery 1.2, component retry .25; existing global/floor pacing also applies.",
+    "jump": "Local range 6, apex 3.5..6, safe lateral/shorter or in-place alternatives. Complete airborne damage immunity is a declared 3D gameplay choice, NOT a verified Isaac window.",
+    "yellow": "Speed multiplier 1.25; trail interval .3, radius .7, duration 6. Source only establishes faster and continuous trail, not these constants.",
+    "projectiles": "Speed 7.5, uniform local random ring orientation; yellow material carries no fire/tar secondary effect.",
+    "creep": "Radius 2.8, duration 6, surface-projected persistent yellow damage. Terrain/water restrictions and refreshing nearby deposits are local policies.",
+    "eyes": "Actual raised height over interior cover, walls/gates stay solid; elastic body reflection and bomb direction blend 1.5. These are local 3D collision/physics choices.",
+    "pool": "Broken Quarry band 1: native weight 5, Peep normal 3/cyan 1/yellow 1. Local distribution, not extracted Isaac spawn probability.",
+    "render": "Original procedural low-poly geometry; no Isaac sprites/models/audio imported."
+  },
+  "unresolved": [
+    "Chaos Card, Euthanasia, God's Flesh and Little Horn item-specific eye destruction remains unimplemented. Generic debug execution is not parity evidence for these items.",
+    "Native attack selection probabilities, exact timing and damage windows are not established by the preserved article/XML sources.",
+    "Double-boss/degraded later-stage encounter routes need their own reviewed placement contract; current reachability is the dedicated Caves-equivalent pool only.",
+    "Bloat and Bloat Eye encounter remain a separate unfinished port.",
+    "All-camera mixed-threat readability, diverse player builds/skill balance, and controlled Linux/WASM performance acceptance remain open."
+  ],
+  "reproduction": {
+    "native_fixture": "./build/deathward_monster_boss_tests",
+    "normal_seed": {
+      "seed": 1,
+      "floor_zero_based": 2
+    },
+    "cyan_seed": {
+      "seed": 0,
+      "floor_zero_based": 2
+    },
+    "yellow_seed": {
+      "seed": 3,
+      "floor_zero_based": 1
+    },
+    "isolated": "./build/deathward --smoke --theme canyon --style original --scene enemy-68.0.0 --enemy-boss-form yellow --frames 130",
+    "natural": "./build/deathward --smoke --theme canyon --style original --scene resident-68.0.0 --resident-seed 0 --resident-floor 2 --frames 130",
+    "threshold_damage": "--enemy-hit 20 480 --enemy-hit 30 480",
+    "cleanup": "--enemy-execute 600 10000; browser uses enemy-execute=600:10000"
+  }
+}

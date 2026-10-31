@@ -1,0 +1,124 @@
+{
+  "status": "Partial Peep/owned-eye implementation checkpoint. Full 653-record goal remains active.",
+  "mechanics_fingerprint": "4c35331c1799c579",
+  "scope": [
+    "68.0.0 Peep, normal/cyan/yellow forms",
+    "68.10.0 owned Peep Eye"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/peep/source-review.json",
+  "native": {
+    "passed": 42,
+    "failed": 0,
+    "results": "docs/reports/isaac-enemy-port/peep/native-results.json",
+    "basis": "41 of 42 passed in the complete run; enemy_port_coverage passed on a targeted rerun after the regenerated reference fingerprint was re-audited. Not a claim of one clean 42-suite run."
+  },
+  "browser": {
+    "passed": 51,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/peep/full/wasm-probes.json",
+    "targeted": "docs/reports/isaac-enemy-port/peep/targeted/wasm-probes.json"
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "native_fixture": "docs/reports/isaac-enemy-port/peep/behavior.txt",
+    "covered": "Thresholds, initial cyan parts, yellow size/trail, 8/12-shot attacks, locked swept jump, stun, airborne adaptation, vulnerability recovery, wall/body reflection, cover flight, real projectile blocking and bomb direction, capacity retry, no orphan/duplicate slots, room re-entry mid-flight, one-time rewards.",
+    "wasm_observations": "Isolated forms emitted 8-shot rings and creep. Actual cyan stage was airborne at frame 131, emitted 12 landing shots by frame 211 and 24 after two completed jumps by frame 361. Component ownership/thresholds and execution cleanup were checked on the real WASM build."
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "ordinary_conditional_ids": 25,
+    "actual_canyon_floors": 170,
+    "log": "docs/reports/isaac-enemy-port/peep/floor_progression.txt",
+    "dedicated_boss_ids": [
+      "68.0.0"
+    ],
+    "owned_component_ids": [
+      "68.10.0"
+    ],
+    "actual_form_fixtures": [
+      {
+        "seed": 0,
+        "floor_zero_based": 2,
+        "form": "cyan"
+      },
+      {
+        "seed": 1,
+        "floor_zero_based": 2,
+        "form": "normal"
+      },
+      {
+        "seed": 3,
+        "floor_zero_based": 1,
+        "form": "yellow"
+      }
+    ],
+    "scope": "Caves-equivalent Broken Quarry dedicated encounter; source double/degraded later-route placements remain open. Ordinary/conditional 25-ID roster remains reachable; components are not independent room threats."
+  },
+  "configuration": {
+    "result": "pass_for_tested_scope",
+    "file": "assets/mechanics/bosses.mechanics",
+    "coverage": "Bad/duplicate IDs/forms/controllers/weights rejected. File-only action and boss pool weights apply to new snapshots, preserve existing snapshots, ordinary composition RNG, topology/heightfields and tutorial routing."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "starting_kit": {
+      "hp": 100,
+      "damage": 24,
+      "items": 0,
+      "bombs": 0,
+      "god_mode": false
+    },
+    "bot_results": [
+      {
+        "form": "normal",
+        "seconds": 19.45,
+        "remaining_hp": 87.5
+      },
+      {
+        "form": "cyan",
+        "seconds": 19.45,
+        "remaining_hp": 87.5
+      },
+      {
+        "form": "yellow",
+        "seconds": 20.1333,
+        "remaining_hp": 87.5
+      }
+    ],
+    "scope": "Simple circular movement/fire/dodge bot in a synthetic enclosed room. Does not certify human difficulty, varied builds or actual mixed expeditions."
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/peep/linux-normal.png",
+      "docs/reports/isaac-enemy-port/peep/linux-thresholds.png",
+      "docs/reports/isaac-enemy-port/peep/linux-yellow.png",
+      "docs/reports/isaac-enemy-port/peep/linux-resident-cyan.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/peep/full/wasm-peep-thresholds.png",
+      "docs/reports/isaac-enemy-port/peep/full/wasm-peep-cyan.png",
+      "docs/reports/isaac-enemy-port/peep/full/wasm-peep-yellow.png",
+      "docs/reports/isaac-enemy-port/peep/full/wasm-resident-peep.png"
+    ],
+    "observation": "Inspected native and browser captures. Attached/empty sockets and separate eye bodies are visible; cyan and yellow have distinct colors/scale; natural cyan jump shows elevated body, shadow and landing marker. Yellow shots are visible against sand, but bright-ground contrast and eyes behind minimap/foreground remain limitations. Simple spherical body is provisional, not final silhouette acceptance."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Capacity/slot limits, short bounded patch refresh and finite arc planning tested. No controlled Linux/WASM performance signoff; changing concurrent build/test load makes HUD FPS and wall times unsuitable for comparison."
+  },
+  "failures_resolved": [
+    "Coverage audit expected the older reference SHA because the generated dataset was refreshed before its checklist identity audit; audited all 653 XML tuples again, preserved decisions, reran failing coverage suite.",
+    "Initial eye-cover fixture omitted rebuilding flight-cover metadata after editing obstacles; corrected fixture to use real Arena::rebuildWalls and verified actual airborne height.",
+    "Invalid component ID triggered generic death-ownership validation first; moved component structural validation earlier for precise diagnostics. Final mechanics suite passes."
+  ],
+  "limitations": [
+    "Chaos Card, Euthanasia, God's Flesh and Little Horn item-specific eye destruction remains unimplemented. Generic debug execution is not parity evidence for these items.",
+    "Native attack selection probabilities, exact timing and damage windows are not established by the preserved article/XML sources.",
+    "Double-boss/degraded later-stage encounter routes need their own reviewed placement contract; current reachability is the dedicated Caves-equivalent pool only.",
+    "Bloat and Bloat Eye encounter remain a separate unfinished port.",
+    "All-camera mixed-threat readability, diverse player builds/skill balance, and controlled Linux/WASM performance acceptance remain open."
+  ]
+}

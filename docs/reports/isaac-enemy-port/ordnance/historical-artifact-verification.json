@@ -1,0 +1,32 @@
+[
+  {
+    "checkpoint": "docs/reports/isaac-enemy-port/supply/checkpoint.json",
+    "artifacts_checked": 189,
+    "mismatches": []
+  },
+  {
+    "checkpoint": "docs/reports/isaac-enemy-port/tuff/checkpoint.json",
+    "artifacts_checked": 216,
+    "mismatches": []
+  },
+  {
+    "checkpoint": "docs/reports/isaac-enemy-port/fly_bombs/checkpoint.json",
+    "artifacts_checked": 221,
+    "mismatches": []
+  },
+  {
+    "checkpoint": "docs/reports/isaac-enemy-port/shell/checkpoint.json",
+    "artifacts_checked": 232,
+    "mismatches": []
+  },
+  {
+    "checkpoint": "docs/reports/isaac-enemy-port/boom_flies/checkpoint.json",
+    "artifacts_checked": 309,
+    "mismatches": []
+  },
+  {
+    "checkpoint": "docs/reports/isaac-enemy-port/loki/checkpoint.json",
+    "artifacts_checked": 331,
+    "mismatches": []
+  }
+]

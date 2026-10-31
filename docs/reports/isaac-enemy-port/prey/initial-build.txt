@@ -1,0 +1,41 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RailTraffic.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnvironmentActors.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mortality.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LobWalkers.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HeadShooters.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BuzzFlies.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Evaders.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Swimmers.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireWaves.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/Swimmers.cpp: In member function ‘void dw::Simulation::updateSwimmer(dw::Enemy&, float)’:
+/home/kambo/workspace/DeathWard/src/combat/Swimmers.cpp:27:47: error: ‘flatDirection’ was not declared in this scope; did you mean ‘railDirection’?
+   27 |             r.momentum=mul(add(r.momentum,mul(flatDirection(e.position,player.position),r.acceleration)),p.retention);
+      |                                               ^~~~~~~~~~~~~
+      |                                               railDirection
+/home/kambo/workspace/DeathWard/src/combat/Swimmers.cpp:31:47: error: ‘flatDirection’ was not declared in this scope; did you mean ‘railDirection’?
+   31 |                 r.momentum=add(r.momentum,mul(flatDirection(e.position,player.position),combatRng.real(p.hopMinimum,p.hopMaximum)));
+      |                                               ^~~~~~~~~~~~~
+      |                                               railDirection
+gmake[3]: *** [CMakeFiles/deathward_core.dir/build.make:426: CMakeFiles/deathward_core.dir/src/combat/Swimmers.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+gmake[2]: *** [CMakeFiles/Makefile2:367: CMakeFiles/deathward_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:374: CMakeFiles/deathward_core.dir/rule] Error 2
+gmake: *** [Makefile:200: deathward_core] Error 2

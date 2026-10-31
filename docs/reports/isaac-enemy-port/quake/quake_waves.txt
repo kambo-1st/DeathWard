@@ -1,0 +1,7 @@
+chain 0 depth 0 effect -1: hazard capacity
+QUAKE_AXES left_up_right_down=1 anchored_hop=1 first_landing_3s=1 period_3s=1 real_wave_speed=10
+QUAKE_CONTACT base_player_damage=10 multiplied_at_impact=1 one_front_hit=1 vertical_clearance=1 wall_cover=1 corridor_stop=1
+QUAKE_DEMOLITION first_surface_only=1 cache_analogue=1 no_spent_bomb=1 no_kill_credit=1 persistent_loot_once=1 protected_ore=1
+QUAKE_LIFETIME combat_persistence=1 plate=1 emitted_wave_finishes=1 reentry=1 bounded_hazards=1
+QUAKE_CONFIG actual_speed=1 immutable_snapshot=1
+PASS Quake directions, landing cadence, swept waves, cover, cache adaptation, plates and external rules

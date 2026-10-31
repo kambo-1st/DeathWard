@@ -1,0 +1,1323 @@
+{
+  "status": "Source geometry preflight for the next Hornfel implementation; no rail route is enabled.",
+  "raw_templates": "docs/reports/isaac-enemy-port/ordnance/hornfel-room-templates.json",
+  "editor_reference": "docs/reports/isaac-enemy-port/ordnance/sources/basement-renovator-EntitiesRepentance.xml",
+  "evidence": [
+    "16 installed templates contain Hornfel: 13 in the special-room library (three named Double Trouble), two in The Void and one Mines entry.",
+    "The Mines entry has only the boss spawn and no rail tiles. The special/Void templates contain the actual grid geometry. Dynamic selection or replacement is an inference, not recovered native control flow.",
+    "No selected template directly places 1000.152, 965 or 967; these may be runtime-created. Their absence in these templates does not exclude them.",
+    "STB 6000 means ordinary rail and 6001 means rail over a pit according to the pinned editor mapping. STB 1000.0 here is a grid encoding, not proof of a runtime Effect entity.",
+    "Tile labels describe travel direction. Connector directions were checked against alpha at the preserved 26x26 orientation icons; corners 2/3 point south and 4/5 point north."
+  ],
+  "coordinates": "x increases right, y increases down in stored STB coordinates.",
+  "candidate_connectors": {
+    "0": [
+      "E",
+      "W"
+    ],
+    "1": [
+      "N",
+      "S"
+    ],
+    "2": [
+      "E",
+      "S"
+    ],
+    "3": [
+      "W",
+      "S"
+    ],
+    "4": [
+      "E",
+      "N"
+    ],
+    "5": [
+      "W",
+      "N"
+    ],
+    "6": [
+      "N",
+      "E",
+      "S",
+      "W"
+    ],
+    "7": [
+      "E"
+    ],
+    "8": [
+      "W"
+    ],
+    "9": [
+      "N"
+    ],
+    "10": [
+      "S"
+    ]
+  },
+  "templates": [
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/26.the void.stb",
+      "index": 107,
+      "name": "",
+      "size": [
+        13,
+        14
+      ],
+      "shape": 4,
+      "kind": 1,
+      "variant": 105,
+      "weight": 1.0,
+      "rail_cells": 70,
+      "pit_rail_cells": 18,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 71,
+      "open_boundary_ports": [
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            3
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            3
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            10
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            10
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            6,
+            13
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/26.the void.stb",
+      "index": 132,
+      "name": "",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 3,
+      "kind": 1,
+      "variant": 131,
+      "weight": 1.0,
+      "rail_cells": 16,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 16,
+      "open_boundary_ports": [
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            6,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 591,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5220,
+      "weight": 0.125,
+      "rail_cells": 52,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 54,
+      "open_boundary_ports": [
+        {
+          "at": [
+            2,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            10,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            3
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            3
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            2,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            6,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            10,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 592,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5221,
+      "weight": 0.125,
+      "rail_cells": 58,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 62,
+      "open_boundary_ports": [
+        {
+          "at": [
+            1,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            4,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            8,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            11,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            1,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            4,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            8,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            11,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 593,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5222,
+      "weight": 0.125,
+      "rail_cells": 66,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 64,
+      "open_boundary_ports": [
+        {
+          "at": [
+            2,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            10,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            3
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            3
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            2,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            6,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            10,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": [
+        {
+          "at": [
+            11,
+            1
+          ],
+          "variant": 3,
+          "side": "S",
+          "neighbor": {
+            "x": 11,
+            "y": 2,
+            "type": 6000,
+            "variant": 10,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        },
+        {
+          "at": [
+            11,
+            2
+          ],
+          "variant": 10,
+          "side": "S",
+          "neighbor": {
+            "x": 11,
+            "y": 3,
+            "type": 6000,
+            "variant": 0,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        },
+        {
+          "at": [
+            1,
+            4
+          ],
+          "variant": 9,
+          "side": "N",
+          "neighbor": {
+            "x": 1,
+            "y": 3,
+            "type": 6000,
+            "variant": 0,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        },
+        {
+          "at": [
+            1,
+            5
+          ],
+          "variant": 4,
+          "side": "N",
+          "neighbor": {
+            "x": 1,
+            "y": 4,
+            "type": 6000,
+            "variant": 9,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 594,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5223,
+      "weight": 0.125,
+      "rail_cells": 55,
+      "pit_rail_cells": 5,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 60,
+      "open_boundary_ports": [
+        {
+          "at": [
+            2,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            12,
+            1
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            3
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            5
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            1,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            4,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            6,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            8,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            11,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": [
+        {
+          "at": [
+            6,
+            5
+          ],
+          "variant": 1,
+          "side": "S",
+          "neighbor": {
+            "x": 6,
+            "y": 6,
+            "type": 6000,
+            "variant": 10,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        }
+      ]
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 595,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5224,
+      "weight": 1.0,
+      "rail_cells": 52,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 56,
+      "open_boundary_ports": [
+        {
+          "at": [
+            2,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            10,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            3
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            3
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            2,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            6,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            10,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 596,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5225,
+      "weight": 1.0,
+      "rail_cells": 52,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 56,
+      "open_boundary_ports": [
+        {
+          "at": [
+            5,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            7,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            2
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            2
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            4
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            4
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            5,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            7,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 597,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5226,
+      "weight": 1.0,
+      "rail_cells": 55,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 54,
+      "open_boundary_ports": [
+        {
+          "at": [
+            1,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            4,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            11,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            6
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            3,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            5,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            8,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            10,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            12,
+            6
+          ],
+          "side": "E"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 598,
+      "name": "Hornfel",
+      "size": [
+        13,
+        14
+      ],
+      "shape": 4,
+      "kind": 5,
+      "variant": 5227,
+      "weight": 0.10000000149011612,
+      "rail_cells": 114,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 128,
+      "open_boundary_ports": [
+        {
+          "at": [
+            1,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            4,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            8,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            11,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            1
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            1
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            5
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            5
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            8
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            8
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            12
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            12
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            1,
+            13
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            4,
+            13
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            8,
+            13
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            11,
+            13
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 599,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5228,
+      "weight": 1.0,
+      "rail_cells": 65,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 72,
+      "open_boundary_ports": [
+        {
+          "at": [
+            2,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            9,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            12,
+            0
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            1
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            0,
+            3
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            3
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            12,
+            5
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            6
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            3,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            10,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 600,
+      "name": "Hornfel",
+      "size": [
+        13,
+        7
+      ],
+      "shape": 1,
+      "kind": 5,
+      "variant": 5229,
+      "weight": 1.0,
+      "rail_cells": 75,
+      "pit_rail_cells": 7,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 78,
+      "open_boundary_ports": [
+        {
+          "at": [
+            0,
+            0
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            12,
+            0
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            3
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            12,
+            3
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            6
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            6,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            12,
+            6
+          ],
+          "side": "E"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 601,
+      "name": "Hornfel (Double Trouble)",
+      "size": [
+        26,
+        7
+      ],
+      "shape": 6,
+      "kind": 5,
+      "variant": 6050,
+      "weight": 1.0,
+      "rail_cells": 88,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 88,
+      "open_boundary_ports": [
+        {
+          "at": [
+            5,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            20,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            1
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            25,
+            1
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            5
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            25,
+            5
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            5,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            20,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 602,
+      "name": "Hornfel (Double Trouble)",
+      "size": [
+        26,
+        7
+      ],
+      "shape": 6,
+      "kind": 5,
+      "variant": 6051,
+      "weight": 1.0,
+      "rail_cells": 60,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 59,
+      "open_boundary_ports": [
+        {
+          "at": [
+            15,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            0,
+            1
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            25,
+            1
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            0,
+            5
+          ],
+          "side": "W"
+        },
+        {
+          "at": [
+            25,
+            5
+          ],
+          "side": "E"
+        },
+        {
+          "at": [
+            10,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/00.special rooms.stb",
+      "index": 603,
+      "name": "Hornfel (Double Trouble)",
+      "size": [
+        26,
+        7
+      ],
+      "shape": 6,
+      "kind": 5,
+      "variant": 6052,
+      "weight": 1.0,
+      "rail_cells": 50,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 51,
+      "open_boundary_ports": [
+        {
+          "at": [
+            6,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            19,
+            0
+          ],
+          "side": "N"
+        },
+        {
+          "at": [
+            3,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            10,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            15,
+            6
+          ],
+          "side": "S"
+        },
+        {
+          "at": [
+            22,
+            6
+          ],
+          "side": "S"
+        }
+      ],
+      "unmatched_internal_ports": []
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/greed/29.mines.stb",
+      "index": 129,
+      "name": "New Room",
+      "size": [
+        13,
+        14
+      ],
+      "shape": 4,
+      "kind": 5,
+      "variant": 123,
+      "weight": 1.0,
+      "rail_cells": 0,
+      "pit_rail_cells": 0,
+      "duplicate_rail_positions": 0,
+      "reciprocal_edges": 0,
+      "open_boundary_ports": [],
+      "unmatched_internal_ports": []
+    }
+  ],
+  "do_not_assume": [
+    "STB template weights are not overall gameplay spawn probabilities.",
+    "Do not select Double Trouble or Void layouts for the ordinary boss without an explicit encounter eligibility rule.",
+    "Do not treat crossings as arbitrary four-way turns; native routing through crossings and stops requires confirmation.",
+    "Outer standard room doors are not a list of runtime Hornfel rail doors. Open track boundary ports are candidate rail-door positions only.",
+    "Preserve pit-rail support, barriers and multiple carriers when creating the arena. A visual rail decal over ordinary wandering AI is not sufficient.",
+    "Source geometry does not establish phase transition HP, entry/exit timers or passenger schedules."
+  ],
+  "connector_caveat": "Corner connectors 2\u20135 were cross-checked using the preserved icon alpha. Endcap variants 7\u201310 also contain cap artwork at other image edges; their one-port connectivity remains a label-based candidate. Five unmatched interior connectors across templates 593/594 remain unresolved. Do not silently patch those source templates or claim recovered native routing."
+}

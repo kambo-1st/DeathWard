@@ -1,0 +1,16 @@
+Consolidate compiler generated dependencies of target deathward_core
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Swimmers.cpp.o
+[  0%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_prey_tests
+[100%] Building CXX object CMakeFiles/deathward_prey_tests.dir/tests/prey_tests.cpp.o
+[100%] Linking CXX executable deathward_prey_tests
+[100%] Built target deathward_prey_tests
+[ 22%] Built target glfw
+[ 29%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+[100%] Building CXX object CMakeFiles/deathward_check_mechanics.dir/tools/check_mechanics.cpp.o
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

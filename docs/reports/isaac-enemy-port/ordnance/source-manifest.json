@@ -1,0 +1,124 @@
+[
+  {
+    "title": "Brimstone Bombs",
+    "revision": 262667,
+    "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=262667",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/brimstone-bombs.wikitext",
+    "sha256": "2f7459bea7cb7094999be6ea2e5ddc20184474b257ea4e2884a857fc2848719f",
+    "license": "CC BY-SA 4.0; The Binding of Isaac: Rebirth Wiki contributors",
+    "basis": "Already archived revision, not new 1.7.9b timing measurements."
+  },
+  {
+    "title": "Hornfel",
+    "revision": 268740,
+    "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268740",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/hornfel.wikitext",
+    "sha256": "4533ea8c08bc41deb668042e3fa236f7b498d6d4e8ce245780d65cd68c94947c",
+    "license": "CC BY-SA 4.0; The Binding of Isaac: Rebirth Wiki contributors",
+    "basis": "Already archived revision, not new 1.7.9b timing measurements."
+  },
+  {
+    "title": "Hot Bombs",
+    "revision": 264728,
+    "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=264728",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/hot-bombs.wikitext",
+    "sha256": "d95aa13efd9b83195293226d6855101417e307c4575e851e00eb62fe612f8135",
+    "license": "CC BY-SA 4.0; The Binding of Isaac: Rebirth Wiki contributors",
+    "basis": "Already archived revision, not new 1.7.9b timing measurements."
+  },
+  {
+    "title": "Sad Bombs",
+    "revision": 262676,
+    "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=262676",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/sad-bombs.wikitext",
+    "sha256": "dd7b1e3a8ca5baf3cf25c99d11b8f785af129ff662ccdcbf860444e00c9bd5a8",
+    "license": "CC BY-SA 4.0; The Binding of Isaac: Rebirth Wiki contributors",
+    "basis": "Already archived revision, not new 1.7.9b timing measurements."
+  },
+  {
+    "title": "The Horny Boys",
+    "revision": 268743,
+    "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268743",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/the-horny-boys.wikitext",
+    "sha256": "85d78822580baf89cca35b50a5e07b6eaef3f33cd3b3cf8f7b7f363200633ddf",
+    "license": "CC BY-SA 4.0; The Binding of Isaac: Rebirth Wiki contributors",
+    "basis": "Already archived revision, not new 1.7.9b timing measurements."
+  },
+  {
+    "url": "https://repentogon.com/EntityBomb.html",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/repentogon-entitybomb.html",
+    "sha256": "4c273525a102ed7e834fbbf6c6c7f540fdd691a7aec3ebb03cceeac7a9699cfc",
+    "retrieved_utc": "2026-10-26T03:10:52.560000+00:00",
+    "scope": "Public API documents explosion countdown/fall-speed access, not native Hornfel payload probabilities or faction/damage behavior."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/EntitiesRepentance.xml",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/basement-renovator-EntitiesRepentance.xml",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "4c9b897c452823dc11d51c5620568dc1bd167d547ea29dca4b2dc94caee4ed5b",
+    "scope": "Editor mapping of STB grid spawn identifiers and rail orientations. This is not native NPC AI."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/LICENSE.md",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/LICENSE.md",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "c823c3e0d0531ac166874de0c0b5d0cb4fa5730fed7471cc99d835ca10083911",
+    "scope": "Preserved source attribution or rail orientation icon for inspecting ambiguous editor labels; not a DeathWard asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.2.0%20-%20Rail%20%28up-to-right%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.2.0 - Rail (up-to-right).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "c13069489eab790a3683648c90b81e6176188a3438544918336a936e8cf786af",
+    "scope": "Preserved source attribution or rail orientation icon for inspecting ambiguous editor labels; not a DeathWard asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.3.0%20-%20Rail%20%28up-to-left%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.3.0 - Rail (up-to-left).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "f4013c1cf33a8a68b2faf66a55a9a399118807510489abb4c627a116bf813c6b",
+    "scope": "Preserved source attribution or rail orientation icon for inspecting ambiguous editor labels; not a DeathWard asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.4.0%20-%20Rail%20%28left-to-up%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.4.0 - Rail (left-to-up).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "878d8b10d305efa9c3b4718eac95c0964fd6edab0ee31f9336d02013e8eab6af",
+    "scope": "Preserved source attribution or rail orientation icon for inspecting ambiguous editor labels; not a DeathWard asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.5.0%20-%20Rail%20%28right-to-up%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.5.0 - Rail (right-to-up).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "f3df389ebbce783089c200e2d382a1ffea288d8b147cc500ae5eda9b9b1716b9",
+    "scope": "Preserved source attribution or rail orientation icon for inspecting ambiguous editor labels; not a DeathWard asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.7.0%20-%20Rail%20%28stop-to-right%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.7.0 - Rail (stop-to-right).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "e533cf363810331c60c279f60d58282c351fc46679e76a41ad2278455c27666e",
+    "scope": "Rail endpoint orientation reference only; not a runtime asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.8.0%20-%20Rail%20%28left-to-stop%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.8.0 - Rail (left-to-stop).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "cd1d0a461fc0f2374040bfa508d51c777b6425cc817df74d4c9bd18fb745db07",
+    "scope": "Rail endpoint orientation reference only; not a runtime asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.9.0%20-%20Rail%20%28up-to-stop%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.9.0 - Rail (up-to-stop).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "704331224f25a08b0eeb7ad08a8aa0e838effbc5ebadd5877b69102fad76dccb",
+    "scope": "Rail endpoint orientation reference only; not a runtime asset."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Basement-Renovator/basement-renovator/7b551a79a14db829b516ef06685d80840bf0162c/resources/Entities/6000.10.0%20-%20Rail%20%28stop-to-down%29.png",
+    "path": "docs/reports/isaac-enemy-port/ordnance/sources/6000.10.0 - Rail (stop-to-down).png",
+    "commit": "7b551a79a14db829b516ef06685d80840bf0162c",
+    "sha256": "7d00279223538ae7981e2c4d3751f2f0ca1e288f200c1b3209ea557d9121515c",
+    "scope": "Rail endpoint orientation reference only; not a runtime asset."
+  }
+]

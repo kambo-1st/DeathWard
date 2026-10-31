@@ -1,0 +1,20 @@
+{
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266727",
+  "revision": 266727,
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "corrections": [
+    "Grilled body text describes faster movement; it does not establish faster attack cadence. Existing local cadence is retained.",
+    "Infobox calls Grilled projectiles flame shots. Ember presentation is retained without claiming ground-fire deposition or inherited fire immunity.",
+    "Ordinary Clotty fire immunity and transformation have a flooded-room exception; the article says killed normally in flooded conditions. Both damage survival and transformation need implementation.",
+    "I.Blob combines cardinal and diagonal shots. Its old continuously rotating radial offset did not express those fixed axes.",
+    "Cloggy launches cardinal brown shots with handedness alternating on successive volleys. Exact angular speed is not established."
+  ],
+  "not_implemented": [
+    "Clotty ignition transformation/fire vulnerability channel",
+    "flooded-room state and interactions",
+    "1% I.Blob replacement",
+    "complete HP and stageHP conversion",
+    "all champion/item/team/status reactions"
+  ]
+}

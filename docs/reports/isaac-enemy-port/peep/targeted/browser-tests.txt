@@ -1,0 +1,4 @@
+PASS WASM peep-thresholds: boss form, owned eyes, attacks, cleanup
+PASS WASM peep-cyan: boss form, owned eyes, attacks, cleanup
+PASS WASM peep-yellow: boss form, owned eyes, attacks, cleanup
+PASS WASM resident-peep: boss form, owned eyes, attacks in generated stage

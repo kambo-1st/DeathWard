@@ -1,0 +1,2 @@
+Placement: 256 floors, 249 complete single-room clusters
+PASS destruction, cover snapshot, permissions, fuses, seeded loot and optional-cache reachability

@@ -1,0 +1,8 @@
+PASS swimming acceleration and source Hop10/Land6 timing
+PASS real river crossing, solid obstacles and room boundaries
+PASS Prey health, live/death offspring, population, retained births, overkill and contacts
+PASS airborne projectile/contact policy, blast vulnerability, landing and obstacle arcs
+NATURAL_PREY_FAMILY id=810.0 seed=41 floor=2 room=7
+NATURAL_PREY_FAMILY id=817.0 seed=119 floor=2 room=3
+PASS validated snapshots and natural Prey/Small Leech placement
+PASS Prey and Small Leech

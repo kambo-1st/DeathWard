@@ -1,0 +1,12 @@
+PATTERN id=15.0 count=4 axes_repeat=1 windup_moving=1
+PATTERN id=15.1 count=4 axes_repeat=1 windup_moving=1
+PATTERN id=15.2 count=8 axes_repeat=1 windup_moving=1
+PATTERN id=15.3 count=4 axes_repeat=1 windup_moving=1
+CURVE alternating=1 stun_parity=1 reentry_parity=1 survives_owner=1
+SURFACES tar_slow_only=1 ember_no_fire_patch=1 curved_cover_collision=1
+PATTERN_STARTING_KIT id=15.0 seconds=1.35 health=100
+PATTERN_STARTING_KIT id=15.1 seconds=1.35 health=100
+PATTERN_STARTING_KIT id=15.2 seconds=1.33333 health=100
+PATTERN_STARTING_KIT id=15.3 seconds=1.38333 health=100
+PATTERN_STARTING_KIT id=872.0 seconds=1.35 health=100
+PASS monster patterns

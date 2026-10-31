@@ -1,0 +1,19 @@
+{
+  "command": [
+    "ctest",
+    "--test-dir",
+    "build",
+    "--output-on-failure",
+    "-R",
+    "^(nest_family|hive_evaders|mulligan_family|spider_family|trite|prey_and_small_leech|willo_and_mullighoul|mechanics_content|monster_behaviors|floor_progression)$",
+    "-j",
+    "3"
+  ],
+  "runner_pid": 370802,
+  "started_utc": "2026-10-28T14:07:02.529822+00:00",
+  "status": "pass",
+  "game_sha256": "b0ffdf16b9aae978ec08a535cb6ef0fbc5cee27259b653bbdb5820f5670aae8e",
+  "child_pid": 370803,
+  "exit_code": 0,
+  "finished_utc": "2026-10-28T14:11:27.688016+00:00"
+}

@@ -1,0 +1,89 @@
+{
+  "status": "Dependency analysis for the next batch only; no Bomb Grimace, supplied bomb or dependent boss implementation is claimed.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "sources": {
+    "xml": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+    "bomb_pickups": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267747",
+    "supplier": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270009",
+    "tuff_twins": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270021",
+    "shell": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022"
+  },
+  "identity_correction": {
+    "finding": "There are TWO required external identities: unlit Throwable Bomb pickup 5.41.0 and bomb entity 4.13.0. Both share the animation but differ in collision mass/radius/grid-collision settings. The prior hazard preflight mentioned only 4.13.0. Neither is one of the 653 enemy/boss records.",
+    "installed_entities": [
+      {
+        "anm2path": "004.013_Throwable Bomb.anm2",
+        "baseHP": "0",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "0",
+        "collisionMass": "6",
+        "collisionRadius": "16",
+        "friction": "1",
+        "id": "4",
+        "name": "Throwable Bomb",
+        "numGridCollisionPoints": "12",
+        "shadowSize": "18",
+        "stageHP": "0",
+        "variant": "13"
+      },
+      {
+        "anm2path": "004.013_Throwable Bomb.anm2",
+        "baseHP": "0",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "0",
+        "collisionMass": "3",
+        "collisionRadius": "12",
+        "friction": "1",
+        "id": "5",
+        "name": "Throwable Bomb (pickup)",
+        "numGridCollisionPoints": "24",
+        "shadowSize": "20",
+        "stageHP": "0",
+        "subtype": "0",
+        "variant": "41"
+      }
+    ],
+    "scope": "Keep typed pickup/bomb identities; do not invent extra enemy rows or collapse pickup state into a normal inventory bomb."
+  },
+  "source_contract": {
+    "unlit": "Bomb Grimace keeps a throwable bomb available. The pickup cannot add ordinary inventory bombs.",
+    "take": "The bomb can be picked up and thrown; its fuse starts after pickup, not on initial floor supply.",
+    "replenish": "A few seconds after Isaac takes the bomb, supplier creates another. Exact delay and global-versus-per-producer stock ownership remain unmeasured.",
+    "exceptional_death": "Bomb Grimace emits ten Throwable Bombs on documented instant-death destruction. Generic execution is only a test hook; named item producers remain necessary."
+  },
+  "current_engine_gaps": [
+    "Simulation::deployDynamite always checks and decrements ordinary dynamite inventory. It is not the correct producer for free supplied bombs.",
+    "makeDynamite snapshots the player Braid item and starts an already-lit fuse. Whether source throwable bombs inherit each item effect is not established; do not silently inherit all player bomb modifiers.",
+    "Current hazards are cleared on room transitions; an unlit supplied pickup needs explicit per-room persistence. Carrying an armed bomb needs a defined transition policy without freezing or resetting its fuse.",
+    "Existing movement/gravity/collision can be reused after throwing. The pickup/carry/fuse/resource phases still need real state, input, visuals and tests.",
+    "Current Demolition tags distinguish spent inventory dynamite and rock waves. Add supplied-bomb provenance explicitly; do not label it spent inventory merely to enable demolition."
+  ],
+  "planned_state_contract": [
+    "Unlit stock pickup with stable ID and supplier/room ownership; does not tick a fuse.",
+    "Taking transfers to at most one carried armed bomb and schedules replenishment. Replenishment is tied to taking stock, not to explosion; existing carried/thrown bombs may still be alive.",
+    "Carried bomb follows the player with a running fuse. Throw uses aim and current swept ballistic collision; fuse is preserved and can expire while held.",
+    "Explosion keeps source/ownership, terrain permissions and damage separate from normal inventory spending.",
+    "Exceptional supplier death queues ten valid pickup positions with bounded capacity. Re-entry must not accidentally duplicate stock or erase remaining drops."
+  ],
+  "control_adaptation_to_define": "Provide both keyboard and mouse operation using existing interact/aim/attack controls, with carried-bomb use taking precedence over ordinary shooting. Preserve current place-dynamite behavior whenever no supplied bomb is held. This mapping is DeathWard control design, not a measured Isaac input contract.",
+  "validation_needed": [
+    "Unlit pickup never detonates over a long wait; taking starts the configured fuse.",
+    "Pickup and throw work at zero inventory without changing inventory, ordinary shot count or copied bomb affixes.",
+    "Held fuse expires and damages the holder; throwing does not restart it.",
+    "Taking one supply schedules a replacement while previous bomb is still armed.",
+    "Two suppliers, exceptional ten-drop burst, global caps and blocked spawn sites remain deterministic and bounded.",
+    "Room leave/re-entry and carried transition preserve explicit state/clock ownership.",
+    "Throw hits cover and applies real armor/demolition effects through correct provenance.",
+    "Mandatory supplied-bomb encounters remain completable after supplier destruction/wasted bombs; any recovery rule is declared an adaptation."
+  ],
+  "dependent_encounters": [
+    "Tuff Twins: two six-part armored chains, at least two suppliers, sourced armor/segment HP, explosive resistance and child-spawn conditions.",
+    "The Shell: two five-part flying chains, one or two suppliers, grounded exposed segments and detached-group behavior; split/new-head rule still needs clarification.",
+    "Mother's Shadow: dedicated escape sequence with temporary item/resource suppression/restoration and a continuously pursuing invulnerable entity."
+  ],
+  "rock_wave_scope": "The pinned Tuff/Shell pages document armor-breaking rock waves created by named items (Mega Bean/Wait What?) and Terra. This does not establish that hostile Quake Grimace waves must damage those bosses. Implement item-produced rock-wave armor interaction separately; preserve ownership distinctions.",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Engine gap analysis and implementation plan by DeathWard.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

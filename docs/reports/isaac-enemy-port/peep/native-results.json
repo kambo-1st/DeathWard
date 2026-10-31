@@ -1,0 +1,191 @@
+{
+  "passed": 42,
+  "failed": 0,
+  "basis": "41 of 42 passed in the complete run; enemy_port_coverage passed on a targeted rerun after the regenerated reference fingerprint was re-audited. Not a claim of one clean 42-suite run.",
+  "initial_full_run": {
+    "passed": 41,
+    "failed": 1,
+    "wall_seconds": 101.41
+  },
+  "targeted_rerun": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.301607
+    }
+  },
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.301607
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "seconds": 1.3072
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "seconds": 53.6755
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "seconds": 11.9955
+    },
+    "floor_progression": {
+      "result": "pass",
+      "seconds": 100.184
+    },
+    "item_builds": {
+      "result": "pass",
+      "seconds": 12.8987
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "seconds": 84.5528
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "seconds": 0.037179
+    },
+    "expedition": {
+      "result": "pass",
+      "seconds": 19.5745
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "seconds": 16.0726
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "seconds": 0.219627
+    },
+    "save_slots": {
+      "result": "pass",
+      "seconds": 0.0614164
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "seconds": 1.42313
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "seconds": 0.0766014
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "seconds": 8.95799
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "seconds": 28.8158
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "seconds": 0.691277
+    },
+    "building_navigation": {
+      "result": "pass",
+      "seconds": 0.0390218
+    },
+    "particle_emission": {
+      "result": "pass",
+      "seconds": 0.0264754
+    },
+    "town_characters": {
+      "result": "pass",
+      "seconds": 0.0197997
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "seconds": 0.168647
+    },
+    "train_motion": {
+      "result": "pass",
+      "seconds": 0.57391
+    },
+    "object_animation": {
+      "result": "pass",
+      "seconds": 0.0494594
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "seconds": 1.2333
+    },
+    "mission_shop": {
+      "result": "pass",
+      "seconds": 3.28257
+    },
+    "money_pickups": {
+      "result": "pass",
+      "seconds": 1.55982
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "seconds": 0.992861
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "seconds": 0.0666028
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "seconds": 3.69592
+    },
+    "monster_flight": {
+      "result": "pass",
+      "seconds": 3.96604
+    },
+    "monster_formations": {
+      "result": "pass",
+      "seconds": 0.163249
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "seconds": 0.337371
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "seconds": 0.293561
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "seconds": 0.313061
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "seconds": 1.20924
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "seconds": 1.58801
+    },
+    "mission_themes": {
+      "result": "pass",
+      "seconds": 5.64075
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "seconds": 0.0739122
+    },
+    "core_contracts": {
+      "result": "pass",
+      "seconds": 0.558536
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "seconds": 3.44849
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "seconds": 31.2237
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "seconds": 0.742574
+    }
+  },
+  "resolved_failures": [
+    "Coverage audit expected the older reference SHA because the generated dataset was refreshed before its checklist identity audit; audited all 653 XML tuples again, preserved decisions, reran failing coverage suite.",
+    "Initial eye-cover fixture omitted rebuilding flight-cover metadata after editing obstacles; corrected fixture to use real Arena::rebuildWalls and verified actual airborne height.",
+    "Invalid component ID triggered generic death-ownership validation first; moved component structural validation earlier for precise diagnostics. Final mechanics suite passes."
+  ]
+}

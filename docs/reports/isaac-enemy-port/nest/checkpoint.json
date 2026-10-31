@@ -1,0 +1,24 @@
+{
+  "verified_utc": "2026-10-28T14:15:13.190010+00:00",
+  "result": "partial_progress",
+  "mechanics_fingerprint": "5db864532e552b5e",
+  "counts": {
+    "in_progress": 192,
+    "missing": 431,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "reviewed": 227,
+  "complete": 0,
+  "report": "docs/reports/isaac-enemy-port/nest/native-summary.json",
+  "roster_breakdown": "docs/reports/isaac-enemy-port/nest/roster-progress.json",
+  "next_work": "Continue confirmed-missing regular enemy Black Globin278.0.0 with source-backed regrowth/offspring behavior. Keep regular enemies ahead of bosses. Skip WASM builds/checks. Nest full source/status/readability/balance/performance limits remain recorded.",
+  "wasm_waiver": {
+    "visual_wasm": {
+      "authority": "user",
+      "instruction": "pursure goal - Skip WASM check!",
+      "date": "2026-10-28"
+    }
+  },
+  "live_jobs": "All build, test and capture processes for this slice completed."
+}

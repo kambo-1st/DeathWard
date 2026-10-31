@@ -1,0 +1,16 @@
+{
+  "status": "Full 653-record goal stays active. Components exist; dedicated producer and complete source acceptance remain missing.",
+  "next": [
+    "Implement Hornfel rail graph, doors 967, cart 965 and external 1000.152 controller duties, preserving track entry/exit and physical traversal.",
+    "Implement Hornfel normal/fast cycles, 1\u20132 throws, three Brimstone mines, landing-fire cardinal spread, two optional Fly Bomb escorts and decoy 906.1 with six Troll Bombs. Bomb producer must retain action state and retry on a rejected throw, not treat an unaccepted payload as fired.",
+    "Review and supply the optional cart passengers (Fire Place, TNT, Bony, Faceless, Danny, Gurgle, Quakey); existing registry entries are not behavioral proof.",
+    "Add damage-triggered cart loss and unarmed escape, normal escape completion, killed-versus-escaped rewards and the Horny Boys split restriction/drop order.",
+    "Implement the Horny Boys ordered attacks, 19-volley/182-shot barrage, three cardinal-spreading landing fireballs, alternate teleport branches and actual Boom Fly plus Eternal trio producer.",
+    "Complete Meat Cleaver conversions, fly-item factions, optional Loki supports and special routes; continue all remaining roster contracts and six acceptance gates.",
+    "Repair effective stage-HP normalization before migrating any transforming family to stage_health."
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/ordnance/source-review.json",
+  "preexisting_contracts": "docs/reports/isaac-enemy-port/boom_flies/next-contracts.json",
+  "rail_preflight": "docs/reports/isaac-enemy-port/ordnance/hornfel-rail-preflight.json",
+  "rail_templates": "docs/reports/isaac-enemy-port/ordnance/hornfel-room-templates.json"
+}

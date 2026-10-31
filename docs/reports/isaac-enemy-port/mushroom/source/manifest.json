@@ -1,0 +1,55 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "index": 121,
+    "case": "0x699d97",
+    "controller": "0x52fcb0"
+  },
+  "states": {
+    "3": "0x52fd93",
+    "8": "0x52fe6e",
+    "9": "0x52fe6e",
+    "16": "0x530034"
+  },
+  "constants": {
+    "closed_damage_scale": {
+      "address": "0xb6a38c",
+      "value": 0.25
+    },
+    "diagonal_component": {
+      "address": "0xb6a524",
+      "value": 0.7071067690849304
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/source/controller.asm",
+      "start": "0x52fcb0",
+      "end": "0x53017c",
+      "raw_sha256": "259273e1c9cb056deaff842973a4e60585859996a09e6b6477401caec74ca6ee",
+      "sha256": "eac821cbb6a4ce0ab6bb9b2b2e4aa2951e25d5d6c08bcc7fa876428edfc2bdb6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/source/cardinal.asm",
+      "start": "0x6a269d",
+      "end": "0x6a286f",
+      "raw_sha256": "cf48e12cd1e8e9b9d35a3dc819df01613ccf29527da7d766f5a3b7623609af31",
+      "sha256": "ab7b4e0ebdb75289332b674f4a216c4e6f0d3f6ec7a39e832ff05ddc8b52c1e6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/source/diagonal.asm",
+      "start": "0x6a286f",
+      "end": "0x6a2a49",
+      "raw_sha256": "4edee7578f252b085e3214212f15e8af477466d929abd0618633103ed7ffcd57",
+      "sha256": "af79f01d708f949d1c0fca9b3493a71f4acb7038e6e074ef7377ffcc0348d7ce"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/source/postpass.asm",
+      "start": "0x6a301c",
+      "end": "0x6a3159",
+      "raw_sha256": "5a2e57c1106356c0ca57d70ad24b313eddb5b86ba3613d981ee3d5c5e28d8cf1",
+      "sha256": "83dcd6c754d166a001cecb9c371c4b0756755377bf30dfff134a28c129b13613"
+    }
+  ]
+}

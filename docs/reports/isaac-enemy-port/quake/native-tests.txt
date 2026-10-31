@@ -1,0 +1,117 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  5: floor_progression
+      Start  7: expedition_destruction
+      Start  3: expedition_economy
+      Start 16: canyon_rivers
+ 1/48 Test #16: canyon_rivers ....................   Passed   19.93 sec
+      Start  9: expedition
+ 2/48 Test  #9: expedition .......................   Passed   15.61 sec
+      Start 10: expedition_pacing
+ 3/48 Test  #3: expedition_economy ...............   Passed   39.37 sec
+      Start 37: bloat_boss_and_chargers
+ 4/48 Test #37: bloat_boss_and_chargers ..........   Passed    2.38 sec
+      Start  4: canyon_bosses
+ 5/48 Test #10: expedition_pacing ................   Passed   10.45 sec
+      Start  6: item_builds
+ 6/48 Test  #4: canyon_bosses ....................   Passed    7.26 sec
+      Start 47: generated_dungeons
+ 7/48 Test  #6: item_builds ......................   Passed    8.76 sec
+      Start 30: monster_flight
+ 8/48 Test #30: monster_flight ...................   Passed    4.42 sec
+      Start 15: canyon_roads
+ 9/48 Test  #7: expedition_destruction ...........   Passed   67.23 sec
+      Start 39: companion_familiars
+10/48 Test #39: companion_familiars ..............   Passed    4.55 sec
+      Start 36: monster_boss_components
+11/48 Test #15: canyon_roads .....................   Passed   13.41 sec
+      Start 35: monster_replacements
+12/48 Test #36: monster_boss_components ..........   Passed    4.24 sec
+      Start 41: maw_attraction
+13/48 Test #35: monster_replacements .............   Passed    3.71 sec
+      Start 40: room_statues
+14/48 Test #40: room_statues .....................   Passed    1.08 sec
+      Start 42: quake_waves
+15/48 Test #41: maw_attraction ...................   Passed    1.48 sec
+      Start 43: mission_themes
+16/48 Test #42: quake_waves ......................   Passed    2.60 sec
+      Start  2: mechanics_content
+17/48 Test  #2: mechanics_content ................   Passed    1.83 sec
+      Start 25: mission_shop
+18/48 Test #43: mission_themes ...................   Passed    7.64 sec
+      Start 29: monster_behaviors
+19/48 Test #25: mission_shop .....................   Passed    3.68 sec
+      Start 46: enemy_behaviors
+20/48 Test #47: generated_dungeons ...............   Passed   39.99 sec
+      Start 13: arrival_quest
+21/48 Test #46: enemy_behaviors ..................   Passed    4.13 sec
+      Start 34: monster_hopping
+22/48 Test #29: monster_behaviors ................   Passed    4.74 sec
+      Start 32: monster_patterns
+23/48 Test #34: monster_hopping ..................   Passed    0.32 sec
+      Start 26: money_pickups
+24/48 Test  #5: floor_progression ................   Passed   89.98 sec
+      Start 38: charger_variants
+25/48 Test #32: monster_patterns .................   Passed    0.32 sec
+      Start 33: monster_fire_reactions
+26/48 Test #38: charger_variants .................   Passed    0.23 sec
+      Start 24: player_dynamite
+27/48 Test #13: arrival_quest ....................   Passed    1.33 sec
+      Start  1: enemy_port_coverage
+28/48 Test #33: monster_fire_reactions ...........   Passed    0.26 sec
+      Start 27: resident_enemies
+29/48 Test  #1: enemy_port_coverage ..............***Failed    0.49 sec
+Traceback (most recent call last):
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/track-enemies.py", line 144, in <module>
+    main()
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/track-enemies.py", line 132, in main
+    result = validate(source, records, status)
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/track-enemies.py", line 67, in validate
+    require(status['identity_audit']['reference_sha256'] == sha(REFERENCE), 'Source changed: review and rerun the identity audit')
+  File "/home/kambo/workspace/DeathWard/scripts/isaac-reference/track-enemies.py", line 26, in require
+    raise ValueError(message)
+ValueError: Source changed: review and rerun the identity audit
+
+      Start 17: redstone_hub
+30/48 Test #24: player_dynamite ..................   Passed    1.26 sec
+      Start 31: monster_formations
+31/48 Test #26: money_pickups ....................   Passed    1.59 sec
+      Start 22: train_motion
+32/48 Test #27: resident_enemies .................   Passed    1.12 sec
+      Start 48: generated_room_graphs
+33/48 Test #17: redstone_hub .....................   Passed    0.78 sec
+      Start 11: flag_cloth
+34/48 Test #31: monster_formations ...............   Passed    0.20 sec
+      Start 45: core_contracts
+35/48 Test #11: flag_cloth .......................   Passed    0.24 sec
+      Start 21: ambient_animals
+36/48 Test #21: ambient_animals ..................   Passed    0.23 sec
+      Start 12: save_slots
+37/48 Test #12: save_slots .......................   Passed    0.08 sec
+      Start 14: cinematic_timeline
+38/48 Test #22: train_motion .....................   Passed    0.70 sec
+      Start  8: walkable_areas
+39/48 Test #14: cinematic_timeline ...............   Passed    0.09 sec
+      Start 23: object_animation
+40/48 Test  #8: walkable_areas ...................   Passed    0.04 sec
+      Start 28: audio_presentation
+41/48 Test #23: object_animation .................   Passed    0.07 sec
+      Start 44: imported_town_navigation
+42/48 Test #45: core_contracts ...................   Passed    0.63 sec
+      Start 18: building_navigation
+43/48 Test #28: audio_presentation ...............   Passed    0.08 sec
+      Start 19: particle_emission
+44/48 Test #18: building_navigation ..............   Passed    0.04 sec
+      Start 20: town_characters
+45/48 Test #20: town_characters ..................   Passed    0.03 sec
+46/48 Test #19: particle_emission ................   Passed    0.03 sec
+47/48 Test #48: generated_room_graphs ............   Passed    0.80 sec
+48/48 Test #44: imported_town_navigation .........   Passed    0.09 sec
+
+98% tests passed, 1 tests failed out of 48
+
+Total Test time (real) =  92.40 sec
+
+The following tests FAILED:
+	  1 - enemy_port_coverage (Failed)
+Errors while running CTest

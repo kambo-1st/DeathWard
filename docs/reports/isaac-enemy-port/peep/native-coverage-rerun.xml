@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="1"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="0"
+	timestamp="2026-10-25T19:53:14"
+	>
+	<testcase name="enemy_port_coverage" classname="enemy_port_coverage" time="0.301607" status="run">
+		<system-out>{
+  "total": 653,
+  "identity_verified": 653,
+  "source_archive_available": true,
+  "reviewed": 97,
+  "dispositions": {
+    "ordinary": 59,
+    "dedicated": 6,
+    "environment": 10,
+    "pending": 556,
+    "component": 7,
+    "boss": 2,
+    "excluded": 12,
+    "item_dependency": 1
+  },
+  "implementations": {
+    "in_progress": 37,
+    "existing_unverified": 98,
+    "missing": 506,
+    "excluded": 12
+  },
+  "complete": 0,
+  "remaining": 641,
+  "milestones": [
+    {
+      "number": 1,
+      "status": "in_progress"
+    },
+    {
+      "number": 2,
+      "status": "pending"
+    },
+    {
+      "number": 3,
+      "status": "pending"
+    },
+    {
+      "number": 4,
+      "status": "pending"
+    },
+    {
+      "number": 5,
+      "status": "pending"
+    },
+    {
+      "number": 6,
+      "status": "pending"
+    }
+  ]
+}
+</system-out>
+	</testcase>
+</testsuite>

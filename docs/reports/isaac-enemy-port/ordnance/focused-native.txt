@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/5 Test  #2: mechanics_content ................   Passed    1.19 sec
+    Start 44: fly_bombs
+2/5 Test #44: fly_bombs ........................   Passed   12.40 sec
+    Start 45: enemy_bomb_payloads
+3/5 Test #45: enemy_bomb_payloads ..............   Passed    0.50 sec
+    Start 46: boom_flies
+4/5 Test #46: boom_flies .......................   Passed   38.64 sec
+    Start 47: loki_bosses
+5/5 Test #47: loki_bosses ......................   Passed    1.55 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  54.30 sec

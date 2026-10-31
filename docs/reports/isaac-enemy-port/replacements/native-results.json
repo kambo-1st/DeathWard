@@ -1,0 +1,172 @@
+{
+  "passed": 41,
+  "failed": 0,
+  "seconds": 273.96,
+  "basis": "One complete clean CTest run after the final native build.",
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "passed",
+      "seconds": 0.3
+    },
+    "mechanics_content": {
+      "result": "passed",
+      "seconds": 0.96
+    },
+    "expedition_economy": {
+      "result": "passed",
+      "seconds": 36.38
+    },
+    "canyon_bosses": {
+      "result": "passed",
+      "seconds": 5.87
+    },
+    "floor_progression": {
+      "result": "passed",
+      "seconds": 75.63
+    },
+    "item_builds": {
+      "result": "passed",
+      "seconds": 8.45
+    },
+    "expedition_destruction": {
+      "result": "passed",
+      "seconds": 51.99
+    },
+    "walkable_areas": {
+      "result": "passed",
+      "seconds": 0.03
+    },
+    "expedition": {
+      "result": "passed",
+      "seconds": 13.5
+    },
+    "expedition_pacing": {
+      "result": "passed",
+      "seconds": 9.21
+    },
+    "flag_cloth": {
+      "result": "passed",
+      "seconds": 0.18
+    },
+    "save_slots": {
+      "result": "passed",
+      "seconds": 0.06
+    },
+    "arrival_quest": {
+      "result": "passed",
+      "seconds": 1.14
+    },
+    "cinematic_timeline": {
+      "result": "passed",
+      "seconds": 0.06
+    },
+    "canyon_roads": {
+      "result": "passed",
+      "seconds": 6.69
+    },
+    "canyon_rivers": {
+      "result": "passed",
+      "seconds": 16.88
+    },
+    "redstone_hub": {
+      "result": "passed",
+      "seconds": 0.6
+    },
+    "building_navigation": {
+      "result": "passed",
+      "seconds": 0.03
+    },
+    "particle_emission": {
+      "result": "passed",
+      "seconds": 0.02
+    },
+    "town_characters": {
+      "result": "passed",
+      "seconds": 0.02
+    },
+    "ambient_animals": {
+      "result": "passed",
+      "seconds": 0.14
+    },
+    "train_motion": {
+      "result": "passed",
+      "seconds": 0.46
+    },
+    "object_animation": {
+      "result": "passed",
+      "seconds": 0.06
+    },
+    "player_dynamite": {
+      "result": "passed",
+      "seconds": 0.93
+    },
+    "mission_shop": {
+      "result": "passed",
+      "seconds": 2.48
+    },
+    "money_pickups": {
+      "result": "passed",
+      "seconds": 1.56
+    },
+    "resident_enemies": {
+      "result": "passed",
+      "seconds": 0.86
+    },
+    "audio_presentation": {
+      "result": "passed",
+      "seconds": 0.05
+    },
+    "monster_behaviors": {
+      "result": "passed",
+      "seconds": 3.16
+    },
+    "monster_flight": {
+      "result": "passed",
+      "seconds": 2.97
+    },
+    "monster_formations": {
+      "result": "passed",
+      "seconds": 0.15
+    },
+    "monster_patterns": {
+      "result": "passed",
+      "seconds": 0.22
+    },
+    "monster_fire_reactions": {
+      "result": "passed",
+      "seconds": 0.2
+    },
+    "monster_hopping": {
+      "result": "passed",
+      "seconds": 0.27
+    },
+    "monster_replacements": {
+      "result": "passed",
+      "seconds": 1.1
+    },
+    "mission_themes": {
+      "result": "passed",
+      "seconds": 3.95
+    },
+    "imported_town_navigation": {
+      "result": "passed",
+      "seconds": 0.07
+    },
+    "core_contracts": {
+      "result": "passed",
+      "seconds": 0.5
+    },
+    "enemy_behaviors": {
+      "result": "passed",
+      "seconds": 2.95
+    },
+    "generated_dungeons": {
+      "result": "passed",
+      "seconds": 23.21
+    },
+    "generated_room_graphs": {
+      "result": "passed",
+      "seconds": 0.63
+    }
+  }
+}

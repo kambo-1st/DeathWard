@@ -1,0 +1,286 @@
+Start testing: Oct 28 15:07 CET
+----------------------------------------------------------
+30/110 Testing: monster_behaviors
+30/110 Test: monster_behaviors
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_behaviors" start time: Oct 28 15:07 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 208 entries including offspring
+ROTTEN_STARTING_KIT subtype=1 seconds=0.966667 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=0.933333 hp=87.5 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=7.66667 hp=25 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=0.95 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=1.48333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249074 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=1.0688 z=7.88158 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=45 x=-0.132168 z=6.93303 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=46 x=-1.06714 z=8.13257 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=47 x=-1.70836 z=6.36956 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.1 entity=48 x=0.119447 z=9.06868 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=44 x=-0.867695 z=7.36507 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.861982 z=8.64267 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=46 x=0.347355 z=6.98246 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=47 x=0.344904 z=9.01838 waypoints=1 waypoint=0,8
+GROUND_PASSAGE type=10.3.4 entity=48 x=1.07519 z=8.00314 waypoints=1 waypoint=0,8
+PASS monster roster, armor, regeneration, summons, linked deaths, room hazards, beams, collision and projectiles
+<end of output>
+Test time =   4.75 sec
+----------------------------------------------------------
+Test Passed.
+"monster_behaviors" end time: Oct 28 15:07 CET
+"monster_behaviors" time elapsed: 00:00:04
+----------------------------------------------------------
+
+78/110 Testing: nest_family
+78/110 Test: nest_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_nest_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"nest_family" start time: Oct 28 15:07 CET
+Output:
+----------------------------------------------------------
+chain 2 depth 0 effect -1: queue capacity
+PASS source initialization, Shoot4/18frames,130..149 cooldown, fleeing/wandering, sight and global population
+PASS live/death policy distinction, invulnerable contact, capacity, orphaned birth and event-queue retry
+PASS equal death choice, overkill, offspring chain and sealed completion
+NATURAL_NEST seed=1 floor=3 room=6 band=1
+NATURAL_NEST seed=8 floor=5 room=10 band=2
+NATURAL_NEST seed=10 floor=0 room=1 band=0
+PASS external validation, snapshot reload and actual seeded floor placement
+NEST_STARTING_KIT seed=0 seconds=5.11667 hp=100 peak=2
+NEST_STARTING_KIT seed=1 seconds=3.75 hp=100 peak=2
+NEST_STARTING_KIT seed=2 seconds=2.96667 hp=100 peak=2
+NEST_STARTING_KIT seed=3 seconds=4.73333 hp=100 peak=2
+NEST_STARTING_KIT seed=4 seconds=2.88333 hp=100 peak=2
+NEST_STARTING_KIT seed=5 seconds=4.8 hp=100 peak=2
+NEST_STARTING_KIT seed=6 seconds=4.68333 hp=100 peak=2
+NEST_STARTING_KIT seed=7 seconds=4.86667 hp=100 peak=2
+PASS Nest
+<end of output>
+Test time =  13.60 sec
+----------------------------------------------------------
+Test Passed.
+"nest_family" end time: Oct 28 15:07 CET
+"nest_family" time elapsed: 00:00:13
+----------------------------------------------------------
+
+102/110 Testing: prey_and_small_leech
+102/110 Test: prey_and_small_leech
+Command: "/home/kambo/workspace/DeathWard/build/deathward_prey_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"prey_and_small_leech" start time: Oct 28 15:07 CET
+Output:
+----------------------------------------------------------
+PASS swimming acceleration and source Hop10/Land6 timing
+PASS real river crossing, solid obstacles and room boundaries
+PASS Prey health, live/death offspring, population, retained births, overkill and contacts
+PASS airborne projectile/contact policy, blast vulnerability, landing and obstacle arcs
+NATURAL_PREY_FAMILY id=817.0 seed=66 floor=2 room=1
+NATURAL_PREY_FAMILY id=810.0 seed=90 floor=2 room=7
+PASS validated snapshots and natural Prey/Small Leech placement
+PASS Prey and Small Leech
+<end of output>
+Test time =  16.34 sec
+----------------------------------------------------------
+Test Passed.
+"prey_and_small_leech" end time: Oct 28 15:07 CET
+"prey_and_small_leech" time elapsed: 00:00:16
+----------------------------------------------------------
+
+101/110 Testing: willo_and_mullighoul
+101/110 Test: willo_and_mullighoul
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mullighoul_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"willo_and_mullighoul" start time: Oct 28 15:07 CET
+Output:
+----------------------------------------------------------
+PASS elliptical player orbit, redistribution and attack serialization
+PASS Warn6/Shoot24/Attack36, damped shot, capacity and stun
+PASS body/contact/fire vulnerability and separate wall-passing projectile policy
+PASS Mullighoul live/death children,overkill,completion and hover navigation
+NATURAL_WILLO_FAMILY id=808.0 seed=5 floor=2 room=4
+NATURAL_WILLO_FAMILY id=817.1 seed=21 floor=2 room=6
+PASS validated content and seeded Willo/Mullighoul residents
+PASS Willo and Mullighoul
+<end of output>
+Test time =   6.36 sec
+----------------------------------------------------------
+Test Passed.
+"willo_and_mullighoul" end time: Oct 28 15:07 CET
+"willo_and_mullighoul" time elapsed: 00:00:06
+----------------------------------------------------------
+
+77/110 Testing: hive_evaders
+77/110 Test: hive_evaders
+Command: "/home/kambo/workspace/DeathWard/build/deathward_evader_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"hive_evaders" start time: Oct 28 15:07 CET
+Output:
+----------------------------------------------------------
+PASS Hive/Drowned health, harmless contact, native attack event/timer, global population delay, live-child policy and bounded Shoot
+PASS independent death mixtures, population count, scaled overkill, live/death distinction, retained births and completion
+PASS flee/wander and validated immutable external profiles; Flooded-only replacement
+NATURAL_HIVE seed=14 floor=0 room=2 band=0
+NATURAL_HIVE seed=50 floor=2 room=1 band=1
+NATURAL_DROWNED_HIVE seed=631 floor=2 room=2
+NATURAL_HIVE seed=1 floor=4 room=3 band=2
+PASS Hive/Drowned evaders
+<end of output>
+Test time =  72.57 sec
+----------------------------------------------------------
+Test Passed.
+"hive_evaders" end time: Oct 28 15:08 CET
+"hive_evaders" time elapsed: 00:01:12
+----------------------------------------------------------
+
+95/110 Testing: trite
+95/110 Test: trite
+Command: "/home/kambo/workspace/DeathWard/build/deathward_trite_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"trite" start time: Oct 28 15:08 CET
+Output:
+----------------------------------------------------------
+TRITE_STARTING_KIT seconds=1.11667 hp=100
+NATURAL_TRITE seed=0 floor=0 room=2
+NATURAL_TRITE seed=0 floor=0 room=6
+PASS Trite destination law, source timing/inertia, terrain, lifecycle, config, starting kit and placement
+<end of output>
+Test time =   0.48 sec
+----------------------------------------------------------
+Test Passed.
+"trite" end time: Oct 28 15:08 CET
+"trite" time elapsed: 00:00:00
+----------------------------------------------------------
+
+80/110 Testing: spider_family
+80/110 Test: spider_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_spider_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"spider_family" start time: Oct 28 15:08 CET
+Output:
+----------------------------------------------------------
+PASS source idle/acquisition, acceleration, committed bursts, wandering and shared movement
+PASS sight/solid collision, blocked-target recovery, contact, fire and interruption
+PASS two outward death children, extreme-overkill suppression and retained completion
+NATURAL_SPIDER id=85.0 seed=0 floor=0 room=2
+NATURAL_SPIDER id=94.0 seed=5 floor=0 room=5
+PASS validated configuration and actual seeded stage placement
+PASS Spider and Big Spider
+<end of output>
+Test time =   1.30 sec
+----------------------------------------------------------
+Test Passed.
+"spider_family" end time: Oct 28 15:08 CET
+"spider_family" time elapsed: 00:00:01
+----------------------------------------------------------
+
+2/110 Testing: mechanics_content
+2/110 Test: mechanics_content
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mechanics_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mechanics_content" start time: Oct 28 15:08 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+HOP_RELOAD old_ready=1 new_ready=1 old=1,-7 new=1,9
+Mechanics contracts passed
+<end of output>
+Test time =   2.15 sec
+----------------------------------------------------------
+Test Passed.
+"mechanics_content" end time: Oct 28 15:08 CET
+"mechanics_content" time elapsed: 00:00:02
+----------------------------------------------------------
+
+79/110 Testing: mulligan_family
+79/110 Test: mulligan_family
+Command: "/home/kambo/workspace/DeathWard/build/deathward_mulligan_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"mulligan_family" start time: Oct 28 15:07 CET
+Output:
+----------------------------------------------------------
+PASS grid-triggered detonation,29-frame windup, ordinary death interruption and no fixed-age trigger
+PASS four independent death draws, scaled overkill, persistent flies and crowd-independent count
+PAYLOAD voluntary=0 bombs=1 shots=4 explosions=0
+PAYLOAD voluntary=1 bombs=1 shots=8 explosions=1
+PASS Mulligoon4/8shot rings, real randomized Troll Bomb and atomic capacity retry
+PASS source5-frame proximity, immediate blast, half-heart conversion and fast pursuit
+PASS real death blast affects neighboring enemy and destructible terrain once
+NATURAL_MULLIGAN id=16.0 seed=2 floor=0 room=3
+NATURAL_MULLIGAN id=16.1 seed=368 floor=0 room=3
+NATURAL_MULLIGAN id=16.2 seed=159 floor=2 room=9
+PASS validated snapshots and seeded Mulligan family
+PASS Mulligan family
+<end of output>
+Test time = 105.42 sec
+----------------------------------------------------------
+Test Passed.
+"mulligan_family" end time: Oct 28 15:08 CET
+"mulligan_family" time elapsed: 00:01:45
+----------------------------------------------------------
+
+5/110 Testing: floor_progression
+5/110 Test: floor_progression
+Command: "/home/kambo/workspace/DeathWard/build/deathward_floor_progression_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"floor_progression" start time: Oct 28 15:07 CET
+Output:
+----------------------------------------------------------
+Ridgeback seed=7 floor=0 time=11.1333 hp=100
+Ridgeback seed=7 floor=4 time=19.5333 hp=100
+Ridgeback seed=1866 floor=0 time=12.5167 hp=100
+Ridgeback seed=1866 floor=5 time=16.2333 hp=100
+Ridgeback seed=42 floor=0 time=13.5333 hp=100
+Ridgeback seed=42 floor=6 time=19.6667 hp=100
+NATURAL_CHARGER id=23.1 seed=0 floor=2 room=3 variant=0
+NATURAL_CHARGER id=23.3 seed=0 floor=2 room=7 variant=0
+NATURAL_STATUE id=202.10 seed=0 floor=3 room=8
+NATURAL_STATUE id=42.0 seed=0 floor=5 room=1
+NATURAL_STATUE id=203.0 seed=0 floor=5 room=2
+NATURAL_STATUE id=235.0 seed=0 floor=5 room=5
+NATURAL_STATUE id=201.0 seed=0 floor=5 room=7
+NATURAL_REPLACEMENT seed=1 floor=0 room=2 source=10.0 target=10.2
+NATURAL_STATUE id=236.0 seed=1 floor=2 room=4
+NATURAL_STATUE id=42.2 seed=1 floor=6 room=12
+NATURAL_STATUE id=42.1 seed=2 floor=3 room=2
+NATURAL_STATUE id=202.0 seed=2 floor=5 room=10
+NATURAL_CHARGER id=23.2 seed=3 floor=2 room=5 variant=0
+NATURAL_STATUE id=202.10.1 seed=5 floor=4 room=11
+NATURAL_STATUE id=804.0 seed=9 floor=2 room=2
+NATURAL_STATUE id=804.0.2 seed=10 floor=2 room=7
+NATURAL_CHARGER id=855.0 seed=20 floor=4 room=2 variant=0
+NATURAL_GRILLED seed=21 floor=0 room=5
+NATURAL_REPLACEMENT seed=21 floor=2 room=6 source=85.0 target=814.0
+NATURAL_REPLACEMENT seed=21 floor=2 room=6 source=85.0 target=814.0
+NATURAL_STATUE id=804.0.3 seed=23 floor=2 room=6
+NATURAL_REPLACEMENT seed=39 floor=2 room=2 source=23.0 target=23.1
+NATURAL_STATUE id=804.0.1 seed=52 floor=1 room=6
+NATURAL_REPLACEMENT seed=78 floor=0 room=4 source=29.0 target=54.0
+NATURAL_REPLACEMENT seed=163 floor=6 room=7 source=15.1 target=15.2
+Replacement coverage: I.Blob=1 Grilled=1 Hopper substitutions=2 Drowned substitutions=8
+Scorched floors=55 Hopper substitutions=2 Drowned substitutions=8
+Activated Ring Fly groups band=0 count=2
+Activated Ring Fly groups band=1 count=2
+Activated Ring Fly groups band=2 count=2
+Activated Hopper forms band=0 count=2
+Activated Hopper forms band=1 count=2
+Activated Hopper forms band=2 count=2
+Reachable pool identities=136
+band=0 meanThreat=4.49214
+band=1 meanThreat=6.28709
+band=2 meanThreat=8.24033
+band=3 meanThreat=11.3052
+Reachable statue identities=14
+Validated 656 canyon floors across four bands
+PASS floor identities, threat grammar, safe geometry and complete canyon boss
+<end of output>
+Test time = 228.84 sec
+----------------------------------------------------------
+Test Passed.
+"floor_progression" end time: Oct 28 15:11 CET
+"floor_progression" time elapsed: 00:03:48
+----------------------------------------------------------
+
+End testing: Oct 28 15:11 CET

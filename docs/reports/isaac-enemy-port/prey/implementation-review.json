@@ -1,0 +1,67 @@
+{
+  "scope": [
+    "810.0.0 Small Leech",
+    "817.0.0 Prey"
+  ],
+  "mechanics_fingerprint": "3aa583b1c562abba",
+  "native": {
+    "covered_suites": 69,
+    "passed": 69,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/prey/native.xml",
+    "behavior": "docs/reports/isaac-enemy-port/prey/behavior-final.txt",
+    "scope": "Full native CTest run. Focused fixtures independently verify wet acceleration/friction and bounce, dry Hop10/Land6, swimming across actual water while respecting rock/room bounds, Prey Shoot4 live child, population-adjusted death counts and retained births, overkill,23sourceupdate thrown arc, airborne projectile/contact exclusion with blast vulnerability, legal landings/cover clearance, configuration rejection/immutable reload and two actual seeded residents."
+  },
+  "browser": {
+    "cases": 8,
+    "report": "docs/reports/isaac-enemy-port/prey/web/results.json",
+    "errors": [],
+    "scope": "Eight Original-style production WASM scenes: dry/wet/river Small Leech movement, Prey live children, thrown death children and landing, overkill, and two actual seeded wet-floor residents. Native tests cover exact source timing, contact/projectile collision, solid obstacles, population/capacity, and configuration validation. Full parity, balance and controlled performance remain open."
+  },
+  "visual": {
+    "style": "Original",
+    "result": "Partial visual pass: selected Linux and WASM captures inspected. Prey walker and Small Leech worm silhouettes, dry visual hop, river-side body, thrown elevated offspring and ground shadows are visible. Source sprite parity and all-angle/crowd readability remain open.",
+    "inspected": [
+      "docs/reports/isaac-enemy-port/prey/native-small-leech-dry.png",
+      "docs/reports/isaac-enemy-port/prey/native-small-leech-river.png",
+      "docs/reports/isaac-enemy-port/prey/native-prey-live.png",
+      "docs/reports/isaac-enemy-port/prey/native-prey-death.png",
+      "docs/reports/isaac-enemy-port/prey/native-prey-landed.png",
+      "docs/reports/isaac-enemy-port/prey/web/prey-death.png",
+      "docs/reports/isaac-enemy-port/prey/web/natural-prey.png",
+      "docs/reports/isaac-enemy-port/prey/web/small-leech-river.png"
+    ],
+    "observations": [
+      "Native live Prey stands near the north canyon wall; its live Small Leech pursues the player.",
+      "Native death/landed captures show three independent death children in addition to the already existing live child. During launch the children can visually overlap; after landing they separate.",
+      "WASM death capture shows the three airborne bodies near the top of the view and their separated ground shadows; the airborne height is visible without a new render style.",
+      "River captures show a Small Leech at the player bank after crossing. The screenshot alone does not prove traversed distance; native swept-water tests and browser telemetry provide the movement evidence.",
+      "Natural Prey capture includes the production room residents and scenery. Ordinary crowd overlap and distant silhouettes still need broader readability review."
+    ],
+    "limits": [
+      "Only selected camera positions and frames were inspected; no animation/artwork or full visual-equivalence acceptance.",
+      "FPS counters captured during builds/tests are not controlled performance measurements.",
+      "Current worm/walker bodies are existing Original-style generic visuals, not newly authored source sprites."
+    ]
+  },
+  "adaptations": [
+    "Source HP x3.2 and distances x.1. Half-heart contact maps to10 before existing1.25 multiplier. Original visuals and player defaults unchanged.",
+    "Source30Hz wet/dry control runs within60Hz simulation. Physical room bounds constrain source margins to local body radius; ground navigation/body avoidance remain DeathWard adaptations.",
+    "Flooded rooms and rooms intersected by interior rivers use room-wide wet behavior. Swimming crosses water while preserving rocks, gates, raised terrain and room boundaries.",
+    "Death launch uses source height-10, velocity-8, gravity+.7 and planar.04 times target delta. Height scale.1 yields23sourceupdate flight. Actual3D elevation drives rendering; airborne state excludes projectile/body contact but not area damage.",
+    "Nearby launch destination uses bounded local free-point search with radius8 and scatter1. Full3D arc and actual endpoint are validated before admission; vertical fallback or retained birth replaces invalid source-grid destinations. This can reject arcs Isaac sprite collision permits.",
+    "Dry Hop10/Land6 remains a grounded collider with small local visual lift. Live children are grounded and persistent.",
+    "Population death count applies native817adjustment/minimum with zero NPC+bc6 counter. Reserved births count toward capacity/room completion; dead carrier removal never discards admitted requests.",
+    "Local wet band1 pursuit weights/costs/caps adapt Downpour/Dross and FloodedCaves habitats, not source room-template probabilities."
+  ],
+  "remaining": [
+    "Native nonzero NPC+bc6 death-count counter lifecycle remains unresolved.",
+    "Small Leech friendly/owner-orbit, fear/confusion, subtype1 and complete item/status/time-scale behavior are not certified. Only exact normal hostile810.0.0 is implemented here.",
+    "Shared Hive evasion native grid-path/cache/initial impulse equivalence remains unfinished; source free-point launch distribution is approximated.",
+    "Thrown arcs are validated before admission; geometry changed after launch has no complete recovery policy yet.",
+    "Original generic worm/walker silhouettes remain. Source sprite/appearance fidelity, all-angle readability, broad balance and controlled native/WASM performance acceptance remain open.",
+    "Prey champions and full friendly/status/item interactions remain open. The two exact IDs remain in_progress, not completed ports."
+  ],
+  "complete": false,
+  "historical_artifacts_preserved": 5480
+}

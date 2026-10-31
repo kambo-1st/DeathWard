@@ -1,0 +1,2 @@
+QUAKE_AXES left_up_right_down=1 anchored_hop=1 first_landing_3s=1 period_3s=1 real_wave_speed=10
+Actual wave front hurts a grounded player once

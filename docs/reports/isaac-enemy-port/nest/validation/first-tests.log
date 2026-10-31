@@ -1,0 +1,58 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  77: hive_evaders
+    Start  79: mulligan_family
+    Start 102: prey_and_small_leech
+1/8 Test #102: prey_and_small_leech .............   Passed   16.12 sec
+    Start  95: trite
+2/8 Test  #95: trite ............................   Passed    0.52 sec
+    Start  80: spider_family
+3/8 Test  #80: spider_family ....................   Passed    1.47 sec
+    Start  30: monster_behaviors
+4/8 Test  #30: monster_behaviors ................***Failed    4.23 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 208 entries including offspring
+FAIL: voluntary detonation bypasses overkill suppression and adds a cardinal burst
+
+    Start   2: mechanics_content
+5/8 Test   #2: mechanics_content ................   Passed    2.81 sec
+    Start  78: nest_family
+6/8 Test  #78: nest_family ......................***Failed    8.07 sec
+chain 2 depth 0 effect -1: queue capacity
+PASS source initialization, Shoot4/18frames,130..149 cooldown, fleeing/wandering, sight and global population
+PASS live/death policy distinction, invulnerable contact, capacity, orphaned birth and event-queue retry
+PASS equal death choice, overkill, offspring chain and sealed completion
+NATURAL_NEST seed=1 floor=3 room=6 band=1
+FAIL Invalid expedition floor
+
+7/8 Test  #77: hive_evaders .....................***Failed   61.32 sec
+PASS Hive/Drowned health, harmless contact, native attack event/timer, global population delay, live-child policy and bounded Shoot
+PASS independent death mixtures, population count, scaled overkill, live/death distinction, retained births and completion
+PASS flee/wander and validated immutable external profiles; Flooded-only replacement
+NATURAL_HIVE seed=14 floor=0 room=2 band=0
+NATURAL_HIVE seed=50 floor=2 room=1 band=1
+NATURAL_HIVE seed=1 floor=4 room=3 band=2
+FAIL real seeded Flooded replacement reachable
+
+8/8 Test  #79: mulligan_family ..................***Failed   79.89 sec
+PASS grid-triggered detonation,29-frame windup, ordinary death interruption and no fixed-age trigger
+PASS four independent death draws, scaled overkill, persistent flies and crowd-independent count
+PAYLOAD voluntary=0 bombs=1 shots=4 explosions=0
+PAYLOAD voluntary=1 bombs=1 shots=8 explosions=1
+PASS Mulligoon4/8shot rings, real randomized Troll Bomb and atomic capacity retry
+PASS source5-frame proximity, immediate blast, half-heart conversion and fast pursuit
+PASS real death blast affects neighboring enemy and destructible terrain once
+NATURAL_MULLIGAN id=16.0 seed=2 floor=0 room=3
+FAIL all three regular variants naturally reachable through production source/replacement pools
+
+
+50% tests passed, 4 tests failed out of 8
+
+Total Test time (real) =  79.89 sec
+
+The following tests FAILED:
+	 30 - monster_behaviors (Failed)
+	 77 - hive_evaders (Failed)
+	 78 - nest_family (Failed)
+	 79 - mulligan_family (Failed)
+Errors while running CTest

@@ -1,0 +1,40 @@
+{
+  "status": "partial_visual_review; not final readability acceptance",
+  "style": "Original",
+  "scope": "Isolated injected hostile-bomb components with a frozen Loki source; no Hornfel/Horny Boys controller or seeded producer encounter.",
+  "linux": [
+    {
+      "capture": "docs/reports/isaac-enemy-port/ordnance/linux-hot-100.png",
+      "observation": "Residual flame starts among blast particles and the nearby barrel warning, making the initial effect harder to distinguish."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/ordnance/linux-hot-200.png",
+      "observation": "Later flame field has visible yellow lobes and a red boundary; actor and ground remain visible."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/ordnance/linux-sad-45.png",
+      "observation": "Armed blue bomb is visible beside the barrel but its face detail is small at default zoom."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/ordnance/linux-sad-100.png",
+      "observation": "Ten-shot radial aftermath is visible around the detonation area."
+    },
+    {
+      "capture": "docs/reports/isaac-enemy-port/ordnance/linux-brimstone-100.png",
+      "observation": "Four bright red/pink cardinal beams are visible; long endpoints reach outside the camera and behind HUD regions."
+    }
+  ],
+  "wasm": [
+    {
+      "capture": "docs/reports/isaac-enemy-port/ordnance/focused/wasm-ordnance-brimstone-100.png",
+      "observation": "The four-ray cross is clearly visible in browser rendering; rays are visually flat pink/red and overlap the warning ring. Camera does not contain every endpoint."
+    }
+  ],
+  "automated": "136 cases, zero JS errors, zero reported WebGL errors. Archived captures exist for each probe that records an image; this is not a claim that every archived frame received manual visual review.",
+  "open": [
+    "Default-zoom armed-payload silhouette readability during actual boss movement.",
+    "Hot fire/blast overlap and four-ray warning clarity in populated arenas.",
+    "Actual Hornfel/Horny Boys full-fight Linux/WASM review.",
+    "No screenshot FPS counter is used as a controlled performance measurement."
+  ]
+}

@@ -1,0 +1,10 @@
+git diff --check: pass
+node --check web/enemy-port-test.cjs: pass
+deathward_check_mechanics: pass, 157 NPC definitions, 12 items, fingerprint 2801c8cd382db5bd
+track-enemies.py --check --csv: pass, 653 records, 128 reviewed, zero complete
+Full native run: 55/55 passed
+Full WASM run: 136/136 passed, errors=[]
+Focused WASM run: 4/4 passed
+CPU-only ordnance stress probe: exit 0, three cases within configured capacities
+Compressed JS/WASM/data payloads equal raw build: pass
+Historical artifact hashes: 1498 verified, zero mismatches

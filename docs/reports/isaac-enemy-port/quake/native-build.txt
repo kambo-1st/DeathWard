@@ -1,0 +1,421 @@
+-- Testing if -Werror=pointer-arith can be used -- compiles
+-- Testing if -Werror=implicit-function-declaration can be used -- compiles
+-- Testing if -fno-strict-aliasing can be used -- compiles
+-- Using raylib's GLFW
+-- Including X11 support
+-- Audio Backend: miniaudio
+-- Building raylib static library
+-- SUPPORT_MODULE_RSHAPES=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- SUPPORT_MODULE_RTEXT=ON
+-- SUPPORT_MODULE_RMODELS=ON
+-- SUPPORT_MODULE_RAUDIO=ON
+-- SUPPORT_CAMERA_SYSTEM=ON
+-- SUPPORT_GESTURES_SYSTEM=ON
+-- SUPPORT_RPRAND_GENERATOR=ON
+-- SUPPORT_MOUSE_GESTURES=ON
+-- SUPPORT_SSH_KEYBOARD_RPI=ON
+-- SUPPORT_WINMM_HIGHRES_TIMER=ON
+-- SUPPORT_PARTIALBUSY_WAIT_LOOP=ON
+-- SUPPORT_SCREEN_CAPTURE=ON
+-- SUPPORT_GIF_RECORDING=ON
+-- SUPPORT_COMPRESSION_API=ON
+-- SUPPORT_AUTOMATION_EVENTS=ON
+-- RL_SUPPORT_MESH_GPU_SKINNING=ON
+-- SUPPORT_QUADS_DRAW_MODE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_FILEFORMAT_GIF=ON
+-- SUPPORT_FILEFORMAT_QOI=ON
+-- SUPPORT_FILEFORMAT_DDS=ON
+-- SUPPORT_IMAGE_EXPORT=ON
+-- SUPPORT_IMAGE_GENERATION=ON
+-- SUPPORT_IMAGE_MANIPULATION=ON
+-- SUPPORT_DEFAULT_FONT=ON
+-- SUPPORT_FILEFORMAT_TTF=ON
+-- SUPPORT_FILEFORMAT_FNT=ON
+-- SUPPORT_TEXT_MANIPULATION=ON
+-- SUPPORT_FONT_ATLAS_WHITE_REC=ON
+-- SUPPORT_FILEFORMAT_OBJ=ON
+-- SUPPORT_FILEFORMAT_MTL=ON
+-- SUPPORT_FILEFORMAT_IQM=ON
+-- SUPPORT_FILEFORMAT_GLTF=ON
+-- SUPPORT_FILEFORMAT_VOX=ON
+-- SUPPORT_FILEFORMAT_M3D=ON
+-- SUPPORT_MESH_GENERATION=ON
+-- SUPPORT_FILEFORMAT_WAV=ON
+-- SUPPORT_FILEFORMAT_OGG=ON
+-- SUPPORT_FILEFORMAT_MP3=ON
+-- SUPPORT_FILEFORMAT_QOA=ON
+-- SUPPORT_FILEFORMAT_XM=ON
+-- SUPPORT_FILEFORMAT_MOD=ON
+-- SUPPORT_STANDARD_FILEIO=ON
+-- SUPPORT_TRACELOG=ON
+-- SUPPORT_CLIPBOARD_IMAGE=ON
+-- SUPPORT_FILEFORMAT_PNG=ON
+-- SUPPORT_MODULE_RTEXTURES=ON
+-- Generated build type: Release
+-- Compiling with the flags:
+--   PLATFORM=PLATFORM_DESKTOP
+--   GRAPHICS=GRAPHICS_API_OPENGL_33
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kambo/workspace/DeathWard/build
+Consolidate compiler generated dependencies of target glfw
+[  7%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[  9%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_post_process_tests
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[ 11%] Built target deathward_post_process_tests
+[ 11%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[ 11%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 12%] Built target deathward_runtime_assets
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 12%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 13%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 14%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 14%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 17%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 18%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 19%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 19%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 19%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 20%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 22%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 22%] Linking CXX static library libdeathward_core.a
+[ 26%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 27%] Built target deathward_skinning
+[ 27%] Building CXX object CMakeFiles/deathward_particles.dir/src/render/ParticleEffects.cpp.o
+[ 27%] Built target deathward_cloth
+[ 28%] Built target deathward_mission_lighting
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+Consolidate compiler generated dependencies of target deathward_bake_navigation
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[ 28%] Building CXX object CMakeFiles/deathward_bake_navigation.dir/tools/bake_navigation.cpp.o
+[ 28%] Building CXX object CMakeFiles/deathward_mechanics_tests.dir/tests/mechanics_tests.cpp.o
+[ 28%] Building CXX object CMakeFiles/deathward_check_mechanics.dir/tools/check_mechanics.cpp.o
+[ 28%] Linking CXX executable deathward_check_mechanics
+[ 28%] Built target deathward_check_mechanics
+Consolidate compiler generated dependencies of target deathward_expedition_economy_tests
+[ 28%] Building CXX object CMakeFiles/deathward_expedition_economy_tests.dir/tests/expedition_economy_tests.cpp.o
+[ 28%] Linking CXX executable deathward_bake_navigation
+[ 28%] Built target deathward_bake_navigation
+Consolidate compiler generated dependencies of target deathward_canyon_boss_tests
+[ 28%] Building CXX object CMakeFiles/deathward_canyon_boss_tests.dir/tests/canyon_boss_tests.cpp.o
+[ 28%] Linking CXX static library libdeathward_particles.a
+[ 29%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[ 30%] Building CXX object CMakeFiles/deathward_floor_progression_tests.dir/tests/floor_progression_tests.cpp.o
+[ 31%] Linking CXX executable deathward_expedition_economy_tests
+[ 31%] Linking CXX executable deathward_mechanics_tests
+[ 32%] Linking CXX executable deathward_canyon_boss_tests
+[ 32%] Built target deathward_expedition_economy_tests
+Consolidate compiler generated dependencies of target deathward_item_build_tests
+[ 34%] Building CXX object CMakeFiles/deathward_item_build_tests.dir/tests/item_build_tests.cpp.o
+[ 34%] Built target deathward_mechanics_tests
+Consolidate compiler generated dependencies of target deathward_destruction_tests
+[ 34%] Building CXX object CMakeFiles/deathward_destruction_tests.dir/tests/destruction_tests.cpp.o
+[ 34%] Built target deathward_canyon_boss_tests
+Consolidate compiler generated dependencies of target deathward_walk_area_tests
+[ 34%] Building CXX object CMakeFiles/deathward_walk_area_tests.dir/tests/walk_area_tests.cpp.o
+[ 34%] Linking CXX executable deathward_walk_area_tests
+[ 34%] Built target deathward_walk_area_tests
+Consolidate compiler generated dependencies of target deathward_expedition_tests
+[ 34%] Building CXX object CMakeFiles/deathward_expedition_tests.dir/tests/expedition_tests.cpp.o
+[ 34%] Linking CXX executable deathward_item_build_tests
+[ 35%] Linking CXX executable deathward_destruction_tests
+[ 35%] Built target deathward_item_build_tests
+Consolidate compiler generated dependencies of target deathward_pacing_tests
+[ 36%] Building CXX object CMakeFiles/deathward_pacing_tests.dir/tests/pacing_tests.cpp.o
+[ 36%] Linking CXX executable deathward_floor_progression_tests
+[ 36%] Built target deathward_destruction_tests
+Consolidate compiler generated dependencies of target deathward_flag_cloth_tests
+[ 37%] Linking CXX executable deathward_flag_cloth_tests
+[ 37%] Built target deathward_floor_progression_tests
+Consolidate compiler generated dependencies of target deathward_flag_render_tests
+[ 37%] Linking CXX executable deathward_flag_render_tests
+[ 37%] Built target deathward_flag_cloth_tests
+Consolidate compiler generated dependencies of target deathward_save_slot_tests
+[ 38%] Building CXX object CMakeFiles/deathward_save_slot_tests.dir/tests/save_slot_tests.cpp.o
+[ 39%] Built target deathward_flag_render_tests
+Consolidate compiler generated dependencies of target deathward_arrival_input_tests
+[ 39%] Building CXX object CMakeFiles/deathward_arrival_input_tests.dir/tests/arrival_input_tests.cpp.o
+[ 39%] Linking CXX executable deathward_pacing_tests
+[ 39%] Linking CXX executable deathward_save_slot_tests
+[ 39%] Built target deathward_pacing_tests
+Consolidate compiler generated dependencies of target deathward_arrival_quest_tests
+[ 40%] Building CXX object CMakeFiles/deathward_arrival_quest_tests.dir/tests/arrival_quest_tests.cpp.o
+[ 40%] Built target deathward_save_slot_tests
+Consolidate compiler generated dependencies of target deathward_cinematic_cast_tests
+[ 41%] Building CXX object CMakeFiles/deathward_cinematic_cast_tests.dir/tests/cinematic_cast_tests.cpp.o
+[ 41%] Linking CXX executable deathward_expedition_tests
+[ 41%] Building CXX object CMakeFiles/deathward_arrival_input_tests.dir/src/core/Game.cpp.o
+[ 41%] Built target deathward_expedition_tests
+Consolidate compiler generated dependencies of target deathward_cinematic_tests
+[ 42%] Linking CXX executable deathward_cinematic_tests
+[ 42%] Built target deathward_cinematic_tests
+Consolidate compiler generated dependencies of target deathward_cinematic_editor_tests
+[ 42%] Building CXX object CMakeFiles/deathward_cinematic_editor_tests.dir/tests/cinematic_editor_tests.cpp.o
+[ 42%] Linking CXX executable deathward_cinematic_cast_tests
+[ 42%] Built target deathward_cinematic_cast_tests
+[ 42%] Building CXX object CMakeFiles/deathward_cinematic_editor_tests.dir/src/editor/CinematicEditor.cpp.o
+[ 42%] Linking CXX executable deathward_arrival_quest_tests
+[ 42%] Built target deathward_arrival_quest_tests
+[ 43%] Building CXX object CMakeFiles/deathward_cinematic_editor_tests.dir/src/render/AnimalModels.cpp.o
+Consolidate compiler generated dependencies of target deathward_road_tests
+[ 44%] Linking CXX executable deathward_road_tests
+[ 44%] Built target deathward_road_tests
+Consolidate compiler generated dependencies of target deathward_river_tests
+[ 45%] Building CXX object CMakeFiles/deathward_river_tests.dir/tests/river_tests.cpp.o
+Consolidate compiler generated dependencies of target deathward_redstone_tests
+[ 45%] Building CXX object CMakeFiles/deathward_redstone_tests.dir/tests/redstone_tests.cpp.o
+[ 45%] Building CXX object CMakeFiles/deathward_arrival_input_tests.dir/src/core/GameQuest.cpp.o
+[ 45%] Linking CXX executable deathward_river_tests
+[ 45%] Built target deathward_river_tests
+Consolidate compiler generated dependencies of target deathward_art_direction_tests
+[ 45%] Building CXX object CMakeFiles/deathward_art_direction_tests.dir/tests/art_direction_tests.cpp.o
+[ 45%] Linking CXX executable deathward_redstone_tests
+[ 45%] Building CXX object CMakeFiles/deathward_arrival_input_tests.dir/src/render/Renderer.cpp.o
+[ 45%] Built target deathward_redstone_tests
+[ 46%] Building CXX object CMakeFiles/deathward_arrival_input_tests.dir/src/render/PlayerModel.cpp.o
+[ 46%] Linking CXX executable deathward_cinematic_editor_tests
+[ 47%] Built target deathward_cinematic_editor_tests
+Consolidate compiler generated dependencies of target deathward_cel_shading_tests
+[ 47%] Building CXX object CMakeFiles/deathward_cel_shading_tests.dir/tests/cel_shading_tests.cpp.o
+Consolidate compiler generated dependencies of target deathward_redstone_render_tests
+[ 47%] Building CXX object CMakeFiles/deathward_redstone_render_tests.dir/tests/redstone_render_tests.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_art_direction_tests.dir/src/render/PlayerModel.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_redstone_render_tests.dir/src/render/PlayerModel.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_cel_shading_tests.dir/src/render/PlayerModel.cpp.o
+[ 47%] Linking CXX executable deathward_art_direction_tests
+[ 48%] Built target deathward_art_direction_tests
+Consolidate compiler generated dependencies of target deathward_building_navigation_tests
+[ 48%] Building CXX object CMakeFiles/deathward_building_navigation_tests.dir/tests/building_navigation_tests.cpp.o
+[ 49%] Linking CXX executable deathward_cel_shading_tests
+[ 50%] Linking CXX executable deathward_redstone_render_tests
+[ 51%] Built target deathward_cel_shading_tests
+Consolidate compiler generated dependencies of target deathward_building_tests
+[ 52%] Building CXX object CMakeFiles/deathward_building_tests.dir/tests/building_tests.cpp.o
+[ 53%] Built target deathward_redstone_render_tests
+[ 53%] Building CXX object CMakeFiles/deathward_building_tests.dir/src/render/PlayerModel.cpp.o
+[ 53%] Linking CXX executable deathward_building_navigation_tests
+[ 53%] Building CXX object CMakeFiles/deathward_arrival_input_tests.dir/src/render/AnimalModels.cpp.o
+[ 53%] Built target deathward_building_navigation_tests
+Consolidate compiler generated dependencies of target deathward_particle_tests
+[ 54%] Building CXX object CMakeFiles/deathward_particle_tests.dir/tests/particle_tests.cpp.o
+[ 54%] Linking CXX executable deathward_arrival_input_tests
+Consolidate compiler generated dependencies of target deathward_particle_render_tests
+[ 54%] Building CXX object CMakeFiles/deathward_particle_render_tests.dir/tests/particle_render_tests.cpp.o
+[ 54%] Linking CXX executable deathward_building_tests
+[ 56%] Built target deathward_arrival_input_tests
+Consolidate compiler generated dependencies of target deathward_character_tests
+[ 57%] Building CXX object CMakeFiles/deathward_character_tests.dir/tests/character_tests.cpp.o
+[ 58%] Built target deathward_building_tests
+Consolidate compiler generated dependencies of target deathward_character_model_tests
+[ 58%] Building CXX object CMakeFiles/deathward_character_model_tests.dir/tests/character_model_tests.cpp.o
+[ 58%] Linking CXX executable deathward_particle_tests
+[ 58%] Built target deathward_particle_tests
+Consolidate compiler generated dependencies of target deathward_animal_tests
+[ 59%] Building CXX object CMakeFiles/deathward_animal_tests.dir/tests/animal_tests.cpp.o
+[ 59%] Linking CXX executable deathward_character_model_tests
+[ 59%] Linking CXX executable deathward_character_tests
+[ 59%] Built target deathward_character_model_tests
+Consolidate compiler generated dependencies of target deathward_animal_model_tests
+[ 60%] Building CXX object CMakeFiles/deathward_animal_model_tests.dir/tests/animal_model_tests.cpp.o
+[ 60%] Built target deathward_character_tests
+[ 60%] Building CXX object CMakeFiles/deathward_animal_model_tests.dir/src/render/AnimalModels.cpp.o
+[ 60%] Linking CXX executable deathward_animal_tests
+[ 60%] Built target deathward_animal_tests
+Consolidate compiler generated dependencies of target deathward_train_tests
+[ 60%] Building CXX object CMakeFiles/deathward_train_tests.dir/tests/train_tests.cpp.o
+[ 60%] Linking CXX executable deathward_particle_render_tests
+[ 61%] Built target deathward_particle_render_tests
+Consolidate compiler generated dependencies of target deathward_object_animation_tests
+[ 62%] Building CXX object CMakeFiles/deathward_object_animation_tests.dir/tests/object_animation_tests.cpp.o
+Consolidate compiler generated dependencies of target deathward_dynamite_tests
+[ 63%] Building CXX object CMakeFiles/deathward_dynamite_tests.dir/tests/dynamite_tests.cpp.o
+[ 63%] Linking CXX executable deathward_animal_model_tests
+[ 63%] Built target deathward_animal_model_tests
+Consolidate compiler generated dependencies of target deathward_shop_tests
+[ 63%] Building CXX object CMakeFiles/deathward_shop_tests.dir/tests/shop_tests.cpp.o
+[ 63%] Linking CXX executable deathward_object_animation_tests
+[ 64%] Linking CXX executable deathward_train_tests
+[ 64%] Built target deathward_object_animation_tests
+Consolidate compiler generated dependencies of target deathward_money_tests
+[ 64%] Building CXX object CMakeFiles/deathward_money_tests.dir/tests/money_tests.cpp.o
+[ 64%] Built target deathward_train_tests
+Consolidate compiler generated dependencies of target deathward_resident_enemies_tests
+[ 64%] Building CXX object CMakeFiles/deathward_resident_enemies_tests.dir/tests/resident_enemies_tests.cpp.o
+[ 64%] Linking CXX executable deathward_dynamite_tests
+[ 64%] Built target deathward_dynamite_tests
+Consolidate compiler generated dependencies of target deathward_audio_cue_tests
+[ 64%] Building CXX object CMakeFiles/deathward_audio_cue_tests.dir/tests/audio_cue_tests.cpp.o
+[ 64%] Linking CXX executable deathward_shop_tests
+[ 64%] Built target deathward_shop_tests
+Consolidate compiler generated dependencies of target deathward_audio_tests
+[ 65%] Linking CXX executable deathward_audio_tests
+[ 67%] Built target deathward_audio_tests
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[ 67%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[ 67%] Linking CXX executable deathward_resident_enemies_tests
+[ 67%] Built target deathward_resident_enemies_tests
+Consolidate compiler generated dependencies of target deathward_flight_tests
+[ 67%] Building CXX object CMakeFiles/deathward_flight_tests.dir/tests/flight_tests.cpp.o
+[ 67%] Linking CXX executable deathward_audio_cue_tests
+[ 67%] Built target deathward_audio_cue_tests
+Consolidate compiler generated dependencies of target deathward_formation_tests
+[ 67%] Building CXX object CMakeFiles/deathward_formation_tests.dir/tests/formation_tests.cpp.o
+[ 67%] Linking CXX executable deathward_money_tests
+[ 67%] Built target deathward_money_tests
+Consolidate compiler generated dependencies of target deathward_pattern_tests
+[ 67%] Building CXX object CMakeFiles/deathward_pattern_tests.dir/tests/pattern_tests.cpp.o
+[ 67%] Linking CXX executable deathward_flight_tests
+[ 67%] Built target deathward_flight_tests
+Consolidate compiler generated dependencies of target deathward_fire_reaction_tests
+[ 68%] Building CXX object CMakeFiles/deathward_fire_reaction_tests.dir/tests/fire_reaction_tests.cpp.o
+[ 68%] Linking CXX executable deathward_monster_tests
+[ 68%] Built target deathward_monster_tests
+Consolidate compiler generated dependencies of target deathward_hop_tests
+[ 68%] Building CXX object CMakeFiles/deathward_hop_tests.dir/tests/hop_tests.cpp.o
+[ 69%] Linking CXX executable deathward_formation_tests
+[ 70%] Linking CXX executable deathward_pattern_tests
+[ 70%] Built target deathward_formation_tests
+Consolidate compiler generated dependencies of target deathward_replacement_tests
+[ 70%] Building CXX object CMakeFiles/deathward_replacement_tests.dir/tests/replacement_tests.cpp.o
+[ 70%] Built target deathward_pattern_tests
+Consolidate compiler generated dependencies of target deathward_monster_boss_tests
+[ 71%] Building CXX object CMakeFiles/deathward_monster_boss_tests.dir/tests/monster_boss_tests.cpp.o
+[ 71%] Linking CXX executable deathward_hop_tests
+[ 71%] Linking CXX executable deathward_fire_reaction_tests
+[ 71%] Built target deathward_hop_tests
+Consolidate compiler generated dependencies of target deathward_bloat_tests
+[ 71%] Building CXX object CMakeFiles/deathward_bloat_tests.dir/tests/bloat_tests.cpp.o
+[ 71%] Built target deathward_fire_reaction_tests
+Consolidate compiler generated dependencies of target deathward_charger_tests
+[ 71%] Building CXX object CMakeFiles/deathward_charger_tests.dir/tests/charger_variant_tests.cpp.o
+[ 72%] Linking CXX executable deathward_replacement_tests
+[ 72%] Built target deathward_replacement_tests
+Consolidate compiler generated dependencies of target deathward_companion_tests
+[ 73%] Building CXX object CMakeFiles/deathward_companion_tests.dir/tests/companion_tests.cpp.o
+[ 73%] Linking CXX executable deathward_monster_boss_tests
+[ 73%] Built target deathward_monster_boss_tests
+Consolidate compiler generated dependencies of target deathward_statue_tests
+[ 74%] Building CXX object CMakeFiles/deathward_statue_tests.dir/tests/statue_tests.cpp.o
+[ 75%] Linking CXX executable deathward_charger_tests
+[ 75%] Built target deathward_charger_tests
+Consolidate compiler generated dependencies of target deathward_maw_tests
+[ 75%] Building CXX object CMakeFiles/deathward_maw_tests.dir/tests/maw_tests.cpp.o
+[ 76%] Linking CXX executable deathward_bloat_tests
+[ 76%] Built target deathward_bloat_tests
+[ 77%] Building CXX object CMakeFiles/deathward_quake_tests.dir/tests/quake_tests.cpp.o
+[ 77%] Linking CXX executable deathward_companion_tests
+[ 77%] Built target deathward_companion_tests
+Consolidate compiler generated dependencies of target deathward_theme_tests
+[ 77%] Building CXX object CMakeFiles/deathward_theme_tests.dir/tests/theme_tests.cpp.o
+[ 77%] Linking CXX executable deathward_statue_tests
+[ 77%] Built target deathward_statue_tests
+Consolidate compiler generated dependencies of target deathward_hub_tests
+[ 78%] Building CXX object CMakeFiles/deathward_hub_tests.dir/tests/hub_tests.cpp.o
+[ 79%] Linking CXX executable deathward_maw_tests
+[ 79%] Linking CXX executable deathward_hub_tests
+[ 79%] Linking CXX executable deathward_quake_tests
+[ 79%] Built target deathward_maw_tests
+Consolidate compiler generated dependencies of target deathward_tests
+[ 79%] Building CXX object CMakeFiles/deathward_tests.dir/tests/tests.cpp.o
+[ 79%] Linking CXX executable deathward_theme_tests
+[ 79%] Built target deathward_hub_tests
+Consolidate compiler generated dependencies of target deathward_enemy_tests
+[ 79%] Building CXX object CMakeFiles/deathward_enemy_tests.dir/tests/enemy_tests.cpp.o
+[ 79%] Built target deathward_quake_tests
+Consolidate compiler generated dependencies of target deathward_dungeon_tests
+[ 79%] Building CXX object CMakeFiles/deathward_dungeon_tests.dir/tests/dungeon_tests.cpp.o
+[ 79%] Built target deathward_theme_tests
+Consolidate compiler generated dependencies of target deathward_room_graph_tests
+[ 79%] Linking CXX executable deathward_room_graph_tests
+[ 79%] Built target deathward_room_graph_tests
+Consolidate compiler generated dependencies of target deathward_occlusion_tests
+[ 79%] Building CXX object CMakeFiles/deathward_occlusion_tests.dir/tests/occlusion_tests.cpp.o
+[ 80%] Linking CXX executable deathward_tests
+[ 80%] Linking CXX executable deathward_dungeon_tests
+[ 80%] Built target deathward_tests
+Consolidate compiler generated dependencies of target deathward_editor_tests
+[ 80%] Linking CXX executable deathward_enemy_tests
+[ 80%] Building CXX object CMakeFiles/deathward_editor_tests.dir/tests/editor_tests.cpp.o
+[ 80%] Built target deathward_dungeon_tests
+[ 81%] Building CXX object CMakeFiles/deathward_editor_tests.dir/src/render/AnimalModels.cpp.o
+[ 81%] Built target deathward_enemy_tests
+[ 81%] Building CXX object CMakeFiles/deathward_editor_tests.dir/src/editor/TownEditor.cpp.o
+[ 81%] Building CXX object CMakeFiles/deathward_occlusion_tests.dir/src/render/PlayerModel.cpp.o
+[ 82%] Building CXX object CMakeFiles/deathward_editor_tests.dir/src/editor/TownEditorAnimals.cpp.o
+[ 82%] Building CXX object CMakeFiles/deathward_occlusion_tests.dir/src/render/AnimalModels.cpp.o
+[ 82%] Building CXX object CMakeFiles/deathward_editor_tests.dir/src/editor/TownEditorNavigation.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward_occlusion_tests.dir/src/render/Renderer.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward_occlusion_tests.dir/src/core/Game.cpp.o
+[ 83%] Building CXX object CMakeFiles/deathward_occlusion_tests.dir/src/core/GameQuest.cpp.o
+[ 84%] Linking CXX executable deathward_editor_tests
+[ 84%] Built target deathward_editor_tests
+Consolidate compiler generated dependencies of target deathward_input_tests
+[ 84%] Building CXX object CMakeFiles/deathward_input_tests.dir/tests/input_tests.cpp.o
+[ 84%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/Game.cpp.o
+[ 84%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/core/GameQuest.cpp.o
+[ 84%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/Renderer.cpp.o
+[ 85%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/PlayerModel.cpp.o
+[ 85%] Linking CXX executable deathward_occlusion_tests
+[ 87%] Built target deathward_occlusion_tests
+Consolidate compiler generated dependencies of target deathward_player_model_tests
+[ 87%] Building CXX object CMakeFiles/deathward_player_model_tests.dir/tests/player_model_tests.cpp.o
+[ 87%] Building CXX object CMakeFiles/deathward_player_model_tests.dir/src/render/PlayerModel.cpp.o
+[ 87%] Building CXX object CMakeFiles/deathward_input_tests.dir/src/render/AnimalModels.cpp.o
+Consolidate compiler generated dependencies of target deathward_town_assets_tests
+[ 88%] Building CXX object CMakeFiles/deathward_town_assets_tests.dir/tests/town_assets_tests.cpp.o
+[ 88%] Linking CXX executable deathward_player_model_tests
+[ 88%] Built target deathward_player_model_tests
+Consolidate compiler generated dependencies of target deathward_mission_lighting_tests
+[ 89%] Linking CXX executable deathward_mission_lighting_tests
+Consolidate compiler generated dependencies of target deathward_western_assets_tests
+[ 90%] Linking CXX executable deathward_western_assets_tests
+[ 91%] Built target deathward_mission_lighting_tests
+Consolidate compiler generated dependencies of target deathward
+[ 91%] Building CXX object CMakeFiles/deathward.dir/src/main.cpp.o
+[ 92%] Built target deathward_western_assets_tests
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/core/FrontEnd.cpp.o
+[ 92%] Linking CXX executable deathward_town_assets_tests
+[ 92%] Built target deathward_town_assets_tests
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/editor/CinematicEditor.cpp.o
+[ 92%] Linking CXX executable deathward_input_tests
+[ 92%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditor.cpp.o
+[ 94%] Built target deathward_input_tests
+[ 94%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorAnimals.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/editor/TownEditorNavigation.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 95%] Building CXX object CMakeFiles/deathward.dir/src/render/PlayerModel.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward.dir/src/render/AnimalModels.cpp.o
+[ 97%] Building CXX object CMakeFiles/deathward.dir/src/core/Game.cpp.o
+[ 97%] Building CXX object CMakeFiles/deathward.dir/src/core/GameQuest.cpp.o
+[ 97%] Linking CXX executable deathward
+[100%] Built target deathward

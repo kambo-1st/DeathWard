@@ -1,0 +1,161 @@
+{
+  "key": "300.0.0",
+  "id": 300,
+  "variant": 0,
+  "subtype": 0,
+  "name": "MushroomMan",
+  "xml": {
+    "anm2path": "300.000_MushroomMan.anm2",
+    "baseHP": "23",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "1",
+    "collisionMass": "100",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "300",
+    "name": "#MUSHROOM",
+    "numGridCollisionPoints": "12",
+    "portrait": "156",
+    "shadowSize": "14",
+    "stageHP": "0",
+    "variant": "0"
+  },
+  "source_file": "entities2.xml",
+  "group": "enemy",
+  "record_key": "entity:300.0.0",
+  "wiki_matches": [
+    {
+      "page": "Host",
+      "box": 6,
+      "group": "entity",
+      "fields": {
+        "dlc": "a+",
+        "name": "Mushroom",
+        "image": "Mushroom (Enemy).png",
+        "id": "300",
+        "base hp": "23",
+        "environment": "Caves / Catacombs / Flooded Caves /",
+        "replace": "Host, Red Host",
+        "replace chance": "20%",
+        "replace notes": "[Repentance] in Chapter 2",
+        "behavior": "Stationary enemy that occasionally pops up and fires four shots in the cardinal or diagonal directions. Takes less damage while its head is down.",
+        "unlocked by": "The gate is open!"
+      },
+      "section_indices": [
+        7
+      ],
+      "name": "Mushroom",
+      "variant": 0,
+      "subtype": 0,
+      "id": 300,
+      "template": "infobox monster"
+    }
+  ],
+  "wiki_match_method": "entity/item ID",
+  "wiki_pages": [
+    "Host"
+  ],
+  "evidence": {
+    "numeric": "installed Repentance 1.7.9b XML",
+    "behavior": "current wiki revision; edition notes must be respected",
+    "native_ai_timers": "not established by XML or API declarations",
+    "implementation": "research only; no behavior ported by this report"
+  },
+  "hp_by_stage": {
+    "1": 23.0,
+    "2": 23.0,
+    "3": 23.0,
+    "4": 23.0,
+    "5": 23.0,
+    "6": 23.0,
+    "7": 23.0,
+    "8": 23.0,
+    "9": 23.0,
+    "10": 23.0,
+    "11": 23.0,
+    "12": 23.0,
+    "13": 23.0
+  },
+  "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+  "hp_formula_source": "Stage HP",
+  "display_name": "Mushroom",
+  "room_library_presence": {
+    "rooms/04.caves.stb": {
+      "templates": 33,
+      "positive_weight_templates": 33
+    },
+    "rooms/05.catacombs.stb": {
+      "templates": 25,
+      "positive_weight_templates": 25
+    },
+    "rooms/06.flooded caves.stb": {
+      "templates": 31,
+      "positive_weight_templates": 31
+    },
+    "rooms/greed/04.caves.stb": {
+      "templates": 7,
+      "positive_weight_templates": 7
+    },
+    "rooms/greed/05.catacombs.stb": {
+      "templates": 7,
+      "positive_weight_templates": 7
+    },
+    "rooms/greed/06.flooded caves.stb": {
+      "templates": 8,
+      "positive_weight_templates": 8
+    }
+  },
+  "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+  "port_contract": {
+    "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+    "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+    "state_requirements": [
+      "spawn/activation",
+      "idle and target acquisition",
+      "movement and path selection",
+      "attack selection and telegraph",
+      "attack emission",
+      "recovery",
+      "damage/vulnerability",
+      "phase transitions",
+      "death/children",
+      "room-clear participation"
+    ],
+    "parameters_not_established": {
+      "walk_speed_world_units_per_second": null,
+      "acceleration": null,
+      "attack_cooldown_seconds": null,
+      "telegraph_seconds": null,
+      "projectile_speed": null,
+      "attack_selection_weights": null,
+      "animation_event_ticks": null
+    },
+    "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+    "required_checks": [
+      "fixed seed and RNG calls",
+      "line of sight versus alignment",
+      "pit/wall/flying navigation",
+      "contact and projectile damage",
+      "vulnerability during each state",
+      "slow/freeze/charm effects",
+      "overkill and offspring",
+      "phase HP ownership",
+      "despawn versus room clear",
+      "save/load and re-entry"
+    ],
+    "implementation_status": "not ported by this research"
+  },
+  "behavior_section_refs": [
+    {
+      "page": "Host",
+      "section": 7
+    }
+  ],
+  "feature_triage": [
+    "damage-modifiers",
+    "room-floor-run-events",
+    "randomness"
+  ],
+  "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+}

@@ -1,0 +1,13 @@
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Spiders.cpp.o
+[  9%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_nest_tests
+[100%] Building CXX object CMakeFiles/deathward_nest_tests.dir/tests/nest_tests.cpp.o
+/home/kambo/workspace/DeathWard/tests/nest_tests.cpp: In function ‘void {anonymous}::startingKit()’:
+/home/kambo/workspace/DeathWard/tests/nest_tests.cpp:157:31: error: ‘playerAttack’ was not declared in this scope
+  157 |             const float speed=playerAttack(s,s.player.shotDamage,false).speed;
+      |                               ^~~~~~~~~~~~
+gmake[3]: *** [CMakeFiles/deathward_nest_tests.dir/build.make:76: CMakeFiles/deathward_nest_tests.dir/tests/nest_tests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:3810: CMakeFiles/deathward_nest_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:3817: CMakeFiles/deathward_nest_tests.dir/rule] Error 2
+gmake: *** [Makefile:1825: deathward_nest_tests] Error 2

@@ -1,0 +1,6 @@
+PASS WASM enemy 15.0.0: 4 shots, 80 HP, one threat, Original rendering
+PASS WASM enemy 15.1.0: 4 shots, 80 HP, one threat, Original rendering
+PASS WASM enemy 15.2.0: 8 shots, 96 HP, one threat, Original rendering
+PASS WASM enemy 15.3.0: 4 shots, 96 HP, one threat, Original rendering
+PASS WASM enemy 872.0.0: 4 shots, 80 HP, one threat, Original rendering
+PASS WASM Cloggy: opposite curve directions on successive actual volleys

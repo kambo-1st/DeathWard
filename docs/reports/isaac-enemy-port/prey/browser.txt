@@ -1,0 +1,8 @@
+PASS small-leech-dry
+PASS small-leech-wet
+PASS small-leech-river
+PASS prey-live
+PASS prey-death
+PASS prey-overkill
+PASS natural-small-leech
+PASS natural-prey

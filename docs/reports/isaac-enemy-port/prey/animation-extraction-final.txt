@@ -1,0 +1,173 @@
+[
+  {
+    "source": "resources-dlc3/gfx/810.000_small leech.anm2",
+    "archive": "resources/packed/repentance.a",
+    "path": "docs/reports/isaac-enemy-port/prey/animations/810.000_small leech.anm2",
+    "sha256": "a07eddcbb38b657fa3917c6920496d138a9138e47dc58a868fd1f522b9094490",
+    "checksum": "0xa1f7d23f",
+    "info": {
+      "CreatedBy": "trtv",
+      "CreatedOn": "05.07.2019 16:05:56",
+      "Fps": "30",
+      "Version": "2"
+    },
+    "events": [
+      {
+        "Id": "0",
+        "Name": "Land"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "HopRight",
+          "FrameNum": "10",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "HopLeft",
+          "FrameNum": "10",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "HopDown",
+          "FrameNum": "10",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "HopUp",
+          "FrameNum": "10",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "SwimRight",
+          "FrameNum": "8",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "SwimLeft",
+          "FrameNum": "8",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "SwimDown",
+          "FrameNum": "8",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "SwimUp",
+          "FrameNum": "8",
+          "Loop": "true"
+        },
+        "triggers": []
+      }
+    ]
+  },
+  {
+    "source": "resources-dlc3/gfx/817.000_prey.anm2",
+    "archive": "resources/packed/repentance.a",
+    "path": "docs/reports/isaac-enemy-port/prey/animations/817.000_prey.anm2",
+    "sha256": "1a0111f9a79cf6d9409c211e946df75274c1b0d44916409f58841b6073257011",
+    "checksum": "0xa1eada6e",
+    "info": {
+      "CreatedBy": "trtv",
+      "CreatedOn": "05.06.2019 17:56:50",
+      "Fps": "30",
+      "Version": "3"
+    },
+    "events": [
+      {
+        "Id": "0",
+        "Name": "Shoot"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "WalkHori",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "WalkVert",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadWalk",
+          "FrameNum": "22",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadAppear",
+          "FrameNum": "21",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "HeadAttack",
+          "FrameNum": "18",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          }
+        ]
+      }
+    ]
+  }
+]

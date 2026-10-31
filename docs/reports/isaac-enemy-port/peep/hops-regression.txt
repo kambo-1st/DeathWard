@@ -1,0 +1,7 @@
+HOP_RANGE normal=6 flaming=11 committed_endpoint=1 peak=2.24997 duration=0.636364
+HOP_TERRAIN rock_crossing=1 peak=3.59994 river_crossing=1 legal_landings=1
+HOP_BOUNDARY closed_gate=1 active_room=1 launch_recheck=1
+HOP_INTERRUPTS stun=1 morph=1 flame_height=1 elevated_projectile=1
+HOP_STARTING_KIT type=29 seconds=0.766667 hp=100
+HOP_STARTING_KIT type=54 seconds=0.716667 hp=100
+PASS configured Hopper movement and collision

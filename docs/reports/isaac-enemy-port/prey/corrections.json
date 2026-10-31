@@ -1,0 +1,9 @@
+{
+  "source_export": "Initial exporter expected planar launch multiplier .05; assertion failed. Direct installed float read at0xb6a264 proved .04, corrected before final preservation and runtime implementation.",
+  "builds": [
+    "Initial Swimmers.cpp referenced flatDirection from another translation unit; replaced with existing unit(horizontal(delta)).",
+    "Thrown-state test used std::optional as an implicit function argument; corrected to explicit bool."
+  ],
+  "behavior_fixture": "Initial wet-speed test required >10 local units/second after22sourceupdates; this was a guessed threshold, not a native value. Replaced with independently accumulated exact acceleration/friction formula, without changing runtime constants.",
+  "preservation": "Original failed logs retained; later files identify corrected runs. No previous checkpoint artifact modified."
+}

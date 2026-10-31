@@ -1,0 +1,65 @@
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_nest_tests
+[100%] Building CXX object CMakeFiles/deathward_nest_tests.dir/tests/nest_tests.cpp.o
+[100%] Linking CXX executable deathward_nest_tests
+[100%] Built target deathward_nest_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_evader_tests
+[100%] Building CXX object CMakeFiles/deathward_evader_tests.dir/tests/evader_tests.cpp.o
+[100%] Linking CXX executable deathward_evader_tests
+[100%] Built target deathward_evader_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mulligan_tests
+[100%] Building CXX object CMakeFiles/deathward_mulligan_tests.dir/tests/mulligan_tests.cpp.o
+[100%] Linking CXX executable deathward_mulligan_tests
+[100%] Built target deathward_mulligan_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_spider_tests
+[100%] Linking CXX executable deathward_spider_tests
+[100%] Built target deathward_spider_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_trite_tests
+[100%] Linking CXX executable deathward_trite_tests
+[100%] Built target deathward_trite_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_prey_tests
+[100%] Linking CXX executable deathward_prey_tests
+[100%] Built target deathward_prey_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mullighoul_tests
+[100%] Linking CXX executable deathward_mullighoul_tests
+[100%] Built target deathward_mullighoul_tests
+[ 17%] Built target glfw
+[ 20%] Built target raylib
+[ 96%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mechanics_tests
+[ 96%] Linking CXX executable deathward_mechanics_tests
+[100%] Built target deathward_mechanics_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Building CXX object CMakeFiles/deathward_monster_tests.dir/tests/monster_tests.cpp.o
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_floor_progression_tests
+[100%] Linking CXX executable deathward_floor_progression_tests
+[100%] Built target deathward_floor_progression_tests
+[ 15%] Built target glfw
+[ 18%] Built target raylib
+[ 87%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_particles
+[ 87%] Built target deathward_cloth
+[ 90%] Built target deathward_skinning
+[ 90%] Built target deathward_particles
+[ 90%] Built target deathward_mission_lighting
+[ 90%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 90%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 17%] Built target glfw
+[ 21%] Built target raylib
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

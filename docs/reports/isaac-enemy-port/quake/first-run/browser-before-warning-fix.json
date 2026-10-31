@@ -1,0 +1,2045 @@
+{
+  "platform": "WASM/Chromium",
+  "browser": "141.0.7390.37",
+  "checks": [
+    {
+      "id": "804.0.0",
+      "case": "quake-left",
+      "samples": [
+        {
+          "frame": 166,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 0,
+            "alive": true,
+            "hp": 64,
+            "state": 1,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 0,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 1,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": -1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 0,
+              "fx": -1,
+              "fz": 0,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 2.7833334784954786,
+              "lift": 0.9983080625534058
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-left-165.png"
+        },
+        {
+          "frame": 196,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 0,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 0,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": -1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": -1,
+              "fz": 0,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.2833335045725107,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -83.74995422363281,
+                "z": -126,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80.75,
+                "originZ": -126,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-left-195.png"
+        },
+        {
+          "frame": 226,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 0,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 0,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": -1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": -1,
+              "fz": 0,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.7833335306495428,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -88.7498779296875,
+                "z": -126,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80.75,
+                "originZ": -126,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-left-225.png"
+        },
+        {
+          "frame": 375,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 0,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 0,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": -1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 2,
+              "fx": -1,
+              "fz": 0,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.2666669934988022,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -83.58329010009766,
+                "z": -126,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80.75,
+                "originZ": -126,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-left-375.png"
+        }
+      ],
+      "scope": "All four fixed axes, anchored hop, three-second landing, moving rock front, combat-clear persistence and plate shutdown. Dimensions and cache-wall behavior are explicit local adaptations."
+    },
+    {
+      "id": "804.0.1",
+      "case": "quake-up",
+      "samples": [
+        {
+          "frame": 165,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 1,
+            "alive": true,
+            "hp": 64,
+            "state": 1,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 1,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 1,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": -1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 0,
+              "fx": 0,
+              "fz": -1,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 2.7666668109595776,
+              "lift": 0.9983082413673401
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-up-165.png"
+        },
+        {
+          "frame": 196,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 1,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 1,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": -1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": 0,
+              "fz": -1,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.2833335045725107,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -80,
+                "z": -129.75003051757812,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80,
+                "originZ": -126.75,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-up-195.png"
+        },
+        {
+          "frame": 226,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 1,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 1,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": -1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": 0,
+              "fz": -1,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.7833335306495428,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -80,
+                "z": -134.75018310546875,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80,
+                "originZ": -126.75,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-up-225.png"
+        },
+        {
+          "frame": 376,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 1,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 1,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": -1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 2,
+              "fx": 0,
+              "fz": -1,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.28333366103470325,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -80,
+                "z": -129.75003051757812,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80,
+                "originZ": -126.75,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-up-375.png"
+        }
+      ],
+      "scope": "All four fixed axes, anchored hop, three-second landing, moving rock front, combat-clear persistence and plate shutdown. Dimensions and cache-wall behavior are explicit local adaptations."
+    },
+    {
+      "id": "804.0.2",
+      "case": "quake-right",
+      "samples": [
+        {
+          "frame": 166,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 2,
+            "alive": true,
+            "hp": 64,
+            "state": 1,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 2,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 1,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 0,
+              "fx": 1,
+              "fz": 0,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 2.7833334784954786,
+              "lift": 0.9983080625534058
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-right-165.png"
+        },
+        {
+          "frame": 196,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 2,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 2,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": 1,
+              "fz": 0,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.2833335045725107,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -76.25004577636719,
+                "z": -126,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -79.25,
+                "originZ": -126,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-right-195.png"
+        },
+        {
+          "frame": 226,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 2,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 2,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": 1,
+              "fz": 0,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.7833335306495428,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -71.2501220703125,
+                "z": -126,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -79.25,
+                "originZ": -126,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-right-225.png"
+        },
+        {
+          "frame": 376,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 2,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 2,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 1,
+              "fz": 0,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 2,
+              "fx": 1,
+              "fz": 0,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.28333366103470325,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -76.25004577636719,
+                "z": -126,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -79.25,
+                "originZ": -126,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-right-375.png"
+        }
+      ],
+      "scope": "All four fixed axes, anchored hop, three-second landing, moving rock front, combat-clear persistence and plate shutdown. Dimensions and cache-wall behavior are explicit local adaptations."
+    },
+    {
+      "id": "804.0.3",
+      "case": "quake-down-plate",
+      "samples": [
+        {
+          "frame": 166,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 3,
+            "alive": true,
+            "hp": 64,
+            "state": 1,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 3,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 1,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": 1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 0,
+              "fx": 0,
+              "fz": 1,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 2.7833334784954786,
+              "lift": 0.9983080625534058
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-down-plate-165.png"
+        },
+        {
+          "frame": 196,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 3,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 3,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": 1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": 0,
+              "fz": 1,
+              "clear": false,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.2833335045725107,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -80,
+                "z": -122.25004577636719,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80,
+                "originZ": -125.25,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-down-plate-195.png"
+        },
+        {
+          "frame": 226,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 3,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -80,
+            "playerZ": -118,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 3,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": 1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": false,
+              "volleys": 1,
+              "fx": 0,
+              "fz": 1,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 0.7833335306495428,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": false
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [
+              {
+                "kind": 12,
+                "x": -80,
+                "z": -117.2501220703125,
+                "radius": 0.5,
+                "tintG": 0,
+                "owner": 18,
+                "originX": -80,
+                "originZ": -125.25,
+                "delay": 0,
+                "duration": 3.200000047683716,
+                "ownerBound": false
+              }
+            ],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-down-plate-225.png"
+        },
+        {
+          "frame": 376,
+          "probe": {
+            "type": 804,
+            "variant": 0,
+            "subtype": 3,
+            "alive": true,
+            "hp": 64,
+            "state": 0,
+            "graphState": 0,
+            "x": -80,
+            "z": -126,
+            "shots": 0,
+            "projectiles": 0,
+            "threats": 0,
+            "kills": 0,
+            "entity": 18,
+            "playerX": -85,
+            "playerZ": -121,
+            "actors": [
+              {
+                "type": 804,
+                "variant": 0,
+                "subtype": 3,
+                "hp": 64,
+                "maxHp": 64,
+                "state": 0,
+                "x": -80,
+                "z": -126,
+                "entity": 18,
+                "summoner": 0,
+                "vx": 0,
+                "vz": 0,
+                "radius": 0.699999988079071,
+                "y": 0.8500000238418579,
+                "vy": 0,
+                "formation": 0,
+                "componentOwner": 0,
+                "componentSlot": -1,
+                "friendly": false,
+                "hurtCooldown": 0
+              }
+            ],
+            "startX": -80,
+            "startZ": -126,
+            "y": 0.8500000238418579,
+            "playerY": 0.8500000238418579,
+            "flightBlocked": true,
+            "waterBlocked": false,
+            "groundBlocked": true,
+            "resident": {
+              "natural": false,
+              "source": [
+                0,
+                0,
+                0
+              ],
+              "floor": 0,
+              "room": 8,
+              "scorched": true,
+              "patches": 16,
+              "variant": 1,
+              "dampPatches": 0
+            },
+            "charge": {
+              "fx": 0,
+              "fz": 1,
+              "recovery": 0
+            },
+            "boss": {
+              "form": 0,
+              "parts": 0,
+              "attack": 0,
+              "cycles": 0
+            },
+            "familiars": [],
+            "playerHp": 100,
+            "statue": {
+              "disabled": true,
+              "volleys": 1,
+              "fx": 0,
+              "fz": 1,
+              "clear": true,
+              "explosions": 0,
+              "pulling": false,
+              "phase": 1.0000002086162567,
+              "lift": 0
+            },
+            "plates": [
+              {
+                "x": -85,
+                "z": -121,
+                "pressed": true
+              }
+            ],
+            "groups": [],
+            "bullets": [],
+            "hazards": [],
+            "flooded": false,
+            "hop": {
+              "active": false,
+              "pursuing": false,
+              "startX": 0,
+              "startZ": 0,
+              "endX": 0,
+              "endZ": 0,
+              "elapsed": 0,
+              "duration": 0,
+              "height": 0
+            }
+          },
+          "style": "Original",
+          "error": "",
+          "gl": 0,
+          "capture": "docs/reports/isaac-enemy-port/quake/first-run/wasm-quake-down-plate-375.png"
+        }
+      ],
+      "scope": "All four fixed axes, anchored hop, three-second landing, moving rock front, combat-clear persistence and plate shutdown. Dimensions and cache-wall behavior are explicit local adaptations."
+    }
+  ],
+  "errors": []
+}

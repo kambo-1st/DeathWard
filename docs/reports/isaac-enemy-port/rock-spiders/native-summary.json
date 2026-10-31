@@ -1,0 +1,82 @@
+{
+  "selected_suites": {
+    "mechanics_content": {
+      "result": "Passed",
+      "seconds": 2.36,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "floor_progression": {
+      "result": "Passed",
+      "seconds": 176.22,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-recheck.log"
+    },
+    "resident_enemies": {
+      "result": "Passed",
+      "seconds": 0.76,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "monster_behaviors": {
+      "result": "Passed",
+      "seconds": 3.89,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "adult_leech": {
+      "result": "Passed",
+      "seconds": 0.6,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "dip_variants": {
+      "result": "Passed",
+      "seconds": 2.31,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-recheck.log"
+    },
+    "dinga_family": {
+      "result": "Passed",
+      "seconds": 1.38,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "membrain_family": {
+      "result": "Passed",
+      "seconds": 1.96,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "rail_passengers": {
+      "result": "Passed",
+      "seconds": 0.39,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "gurgle_splasher_physical_lobs": {
+      "result": "Passed",
+      "seconds": 10.71,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "spider_family": {
+      "result": "Passed",
+      "seconds": 1.37,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "rock_spider_family": {
+      "result": "Passed",
+      "seconds": 53.07,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "spider_variants": {
+      "result": "Passed",
+      "seconds": 4.13,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-final.log"
+    },
+    "monster_fire_reactions": {
+      "result": "Passed",
+      "seconds": 0.22,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-recheck.log"
+    },
+    "source_immunity_and_lethal_morph": {
+      "result": "Passed",
+      "seconds": 0.28,
+      "log": "docs/reports/isaac-enemy-port/rock-spiders/validation/dw-rock-native-recheck.log"
+    }
+  },
+  "unique_passed": 15,
+  "registered_suites": 101,
+  "scope": "Fifteen selected suites. Initial floor default-subtype expectation and three Dip-family seeded witnesses corrected after actual source/spawn evidence. Rechecked all four affected/reaction suites. Remaining suites and full six-gate acceptance are not claimed."
+}

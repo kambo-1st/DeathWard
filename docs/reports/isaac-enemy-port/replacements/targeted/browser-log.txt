@@ -1,0 +1,3 @@
+PASS WASM resident-iblob: actual seed 46, floor 2, source 15.0.0
+PASS WASM resident-grilled: actual seed 1, floor 0, source 15.3.0
+PASS WASM resident-flaming: actual seed 98, floor 0, source 29.0.0

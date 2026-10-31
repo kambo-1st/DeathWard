@@ -1,0 +1,95 @@
+[
+  {
+    "name": "native-small-leech-dry",
+    "command": [
+      "build/deathward",
+      "--mute",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--scene",
+      "enemy-810.0.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/prey/native-small-leech-dry.png"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-small-leech-river",
+    "command": [
+      "build/deathward",
+      "--mute",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--scene",
+      "enemy-810.0.0",
+      "--enemy-terrain",
+      "river",
+      "--frames",
+      "100",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/prey/native-small-leech-river.png"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-prey-live",
+    "command": [
+      "build/deathward",
+      "--mute",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--scene",
+      "enemy-817.0.0",
+      "--frames",
+      "110",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/prey/native-prey-live.png"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-prey-death",
+    "command": [
+      "build/deathward",
+      "--mute",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--scene",
+      "enemy-817.0.0",
+      "--enemy-hit",
+      "100",
+      "45",
+      "--frames",
+      "120",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/prey/native-prey-death.png"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-prey-landed",
+    "command": [
+      "build/deathward",
+      "--mute",
+      "--smoke",
+      "--theme",
+      "canyon",
+      "--scene",
+      "enemy-817.0.0",
+      "--enemy-hit",
+      "100",
+      "45",
+      "--frames",
+      "160",
+      "--screenshot",
+      "docs/reports/isaac-enemy-port/prey/native-prey-landed.png"
+    ],
+    "exit_code": 0
+  }
+]

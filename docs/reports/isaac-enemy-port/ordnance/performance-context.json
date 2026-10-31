@@ -1,0 +1,20 @@
+{
+  "started_utc": "2026-10-26T03:35:27.087933+00:00",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "processor": "x86_64",
+  "cpu_count": 12,
+  "load_before": [
+    7.2666015625,
+    7.8818359375,
+    8.1689453125
+  ],
+  "command": "/tmp/deathward-ordnance-perf",
+  "scope": "CPU simulation only, flat Mine fixture, one frozen Loki source; no graphics, no WASM timing, no normal-play boss balance claim. Full browser job confirmed finished with exit 0 before this run.",
+  "exit_code": 0,
+  "wall_seconds": 0.15387253602966666,
+  "load_after": [
+    7.2666015625,
+    7.8818359375,
+    8.1689453125
+  ]
+}

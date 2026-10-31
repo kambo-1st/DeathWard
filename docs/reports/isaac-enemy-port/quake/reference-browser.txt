@@ -1,0 +1,1 @@
+{"status":"passed","browser":"Chromium headless; local file://","checks":["offline load","public enemy name lookup","Gaper behavior and HP","normal/horse pill details","interaction search","coverage and unknowns","source manifest","implementation chapter","catalog pagination","390px viewport without horizontal overflow"],"javascript_errors":[],"network_requests":[]}

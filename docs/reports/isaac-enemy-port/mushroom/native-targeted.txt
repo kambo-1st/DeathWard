@@ -1,0 +1,2 @@
+NATURAL_MUSHROOM seed=1 floor=2 room=5
+PASS Mushroom source cycle, quarter damage, cross patterns, terrain, lifecycle, limits, config and placement

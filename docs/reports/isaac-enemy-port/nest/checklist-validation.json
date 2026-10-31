@@ -1,0 +1,65 @@
+{
+  "total": 653,
+  "identity_verified": 653,
+  "source_archive_available": true,
+  "reviewed": 227,
+  "dispositions": {
+    "ordinary": 153,
+    "dedicated": 7,
+    "environment": 16,
+    "pending": 426,
+    "boss": 8,
+    "item_dependency": 2,
+    "component": 13,
+    "hazard": 16,
+    "excluded": 12
+  },
+  "implementations": {
+    "in_progress": 192,
+    "missing": 431,
+    "existing_unverified": 18,
+    "excluded": 12
+  },
+  "complete": 0,
+  "remaining": 641,
+  "required_validation_gates": [
+    "behavior",
+    "reachability",
+    "visual_linux",
+    "balance",
+    "performance"
+  ],
+  "waived_validation_gates": {
+    "visual_wasm": {
+      "authority": "user",
+      "instruction": "pursure goal - Skip WASM check!",
+      "date": "2026-10-28"
+    }
+  },
+  "milestones": [
+    {
+      "number": 1,
+      "status": "in_progress"
+    },
+    {
+      "number": 2,
+      "status": "pending"
+    },
+    {
+      "number": 3,
+      "status": "pending"
+    },
+    {
+      "number": 4,
+      "status": "pending"
+    },
+    {
+      "number": 5,
+      "status": "pending"
+    },
+    {
+      "number": 6,
+      "status": "pending"
+    }
+  ]
+}

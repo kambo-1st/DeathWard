@@ -1,0 +1,3 @@
+ORDNANCE_CPU burst=1 every_ticks=120 samples=1800 mean_us=0.742699 p50_us=0.88 p95_us=0.98 max_us=10.05 peak_bombs=3 peak_pending=0 peak_projectiles=10 rejected=0 explosions=15 render=0 baseline_comparison=0
+ORDNANCE_CPU burst=16 every_ticks=120 samples=1800 mean_us=5.23861 p50_us=4.72 p95_us=6.61 max_us=47.73 peak_bombs=40 peak_pending=0 peak_projectiles=120 rejected=0 explosions=240 render=0 baseline_comparison=0
+ORDNANCE_CPU burst=64 every_ticks=120 samples=1800 mean_us=19.6594 p50_us=20.52 p95_us=26.23 max_us=129.694 peak_bombs=128 peak_pending=79 peak_projectiles=479 rejected=0 explosions=931 render=0 baseline_comparison=0

@@ -1,0 +1,398 @@
+{
+  "status": "Partial four-Quake checkpoint. Full 653-record goal active; zero records newly certified complete.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "mechanics_fingerprint": "ae56eab67c0e5584",
+  "runtime_definitions": 150,
+  "item_definitions": 12,
+  "ids": [
+    "804.0.0",
+    "804.0.1",
+    "804.0.2",
+    "804.0.3"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/quake/source-review.json",
+  "native": {
+    "passed": 48,
+    "failed": 0,
+    "basis": "47 suites passed in the complete 48-suite run; the sole failure was the stale reference hash while the reference regenerated. After the explicit identity audit, enemy_port_coverage passed in its isolated rerun. No gameplay/core changes followed the full run. The final rendering-only warning correction was rebuilt and checked in native/WASM captures.",
+    "full_run": "docs/reports/isaac-enemy-port/quake/native-tests.xml",
+    "coverage_rerun": "docs/reports/isaac-enemy-port/quake/coverage-final.xml",
+    "tests": {
+      "enemy_port_coverage": {
+        "result": "pass",
+        "seconds": 0.266283
+      },
+      "mechanics_content": {
+        "result": "pass",
+        "seconds": 1.83282
+      },
+      "expedition_economy": {
+        "result": "pass",
+        "seconds": 39.3722
+      },
+      "canyon_bosses": {
+        "result": "pass",
+        "seconds": 7.26286
+      },
+      "floor_progression": {
+        "result": "pass",
+        "seconds": 89.983
+      },
+      "item_builds": {
+        "result": "pass",
+        "seconds": 8.76319
+      },
+      "expedition_destruction": {
+        "result": "pass",
+        "seconds": 67.2253
+      },
+      "walkable_areas": {
+        "result": "pass",
+        "seconds": 0.0437503
+      },
+      "expedition": {
+        "result": "pass",
+        "seconds": 15.6096
+      },
+      "expedition_pacing": {
+        "result": "pass",
+        "seconds": 10.4494
+      },
+      "flag_cloth": {
+        "result": "pass",
+        "seconds": 0.239795
+      },
+      "save_slots": {
+        "result": "pass",
+        "seconds": 0.0777944
+      },
+      "arrival_quest": {
+        "result": "pass",
+        "seconds": 1.32567
+      },
+      "cinematic_timeline": {
+        "result": "pass",
+        "seconds": 0.0887336
+      },
+      "canyon_roads": {
+        "result": "pass",
+        "seconds": 13.4055
+      },
+      "canyon_rivers": {
+        "result": "pass",
+        "seconds": 19.9327
+      },
+      "redstone_hub": {
+        "result": "pass",
+        "seconds": 0.780948
+      },
+      "building_navigation": {
+        "result": "pass",
+        "seconds": 0.0377895
+      },
+      "particle_emission": {
+        "result": "pass",
+        "seconds": 0.029819
+      },
+      "town_characters": {
+        "result": "pass",
+        "seconds": 0.0279119
+      },
+      "ambient_animals": {
+        "result": "pass",
+        "seconds": 0.2296
+      },
+      "train_motion": {
+        "result": "pass",
+        "seconds": 0.703528
+      },
+      "object_animation": {
+        "result": "pass",
+        "seconds": 0.0655888
+      },
+      "player_dynamite": {
+        "result": "pass",
+        "seconds": 1.26141
+      },
+      "mission_shop": {
+        "result": "pass",
+        "seconds": 3.67899
+      },
+      "money_pickups": {
+        "result": "pass",
+        "seconds": 1.59211
+      },
+      "resident_enemies": {
+        "result": "pass",
+        "seconds": 1.12399
+      },
+      "audio_presentation": {
+        "result": "pass",
+        "seconds": 0.078404
+      },
+      "monster_behaviors": {
+        "result": "pass",
+        "seconds": 4.73517
+      },
+      "monster_flight": {
+        "result": "pass",
+        "seconds": 4.41993
+      },
+      "monster_formations": {
+        "result": "pass",
+        "seconds": 0.201646
+      },
+      "monster_patterns": {
+        "result": "pass",
+        "seconds": 0.322418
+      },
+      "monster_fire_reactions": {
+        "result": "pass",
+        "seconds": 0.259541
+      },
+      "monster_hopping": {
+        "result": "pass",
+        "seconds": 0.319418
+      },
+      "monster_replacements": {
+        "result": "pass",
+        "seconds": 3.70537
+      },
+      "monster_boss_components": {
+        "result": "pass",
+        "seconds": 4.24042
+      },
+      "bloat_boss_and_chargers": {
+        "result": "pass",
+        "seconds": 2.38223
+      },
+      "charger_variants": {
+        "result": "pass",
+        "seconds": 0.233071
+      },
+      "companion_familiars": {
+        "result": "pass",
+        "seconds": 4.55058
+      },
+      "room_statues": {
+        "result": "pass",
+        "seconds": 1.07886
+      },
+      "maw_attraction": {
+        "result": "pass",
+        "seconds": 1.48149
+      },
+      "quake_waves": {
+        "result": "pass",
+        "seconds": 2.59997
+      },
+      "mission_themes": {
+        "result": "pass",
+        "seconds": 7.63796
+      },
+      "imported_town_navigation": {
+        "result": "pass",
+        "seconds": 0.0888191
+      },
+      "core_contracts": {
+        "result": "pass",
+        "seconds": 0.633357
+      },
+      "enemy_behaviors": {
+        "result": "pass",
+        "seconds": 4.12865
+      },
+      "generated_dungeons": {
+        "result": "pass",
+        "seconds": 39.9861
+      },
+      "generated_room_graphs": {
+        "result": "pass",
+        "seconds": 0.801839
+      }
+    }
+  },
+  "browser": {
+    "passed": 95,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/quake/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/quake/full/browser-tests.txt",
+    "count_policy": "95 distinct cases in one complete final browser run: 87 prior regressions, four isolated Quake variants and four real seeded Quake rooms. Earlier focused cases repeat coverage and are not additional cases."
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/quake/quake_waves.txt",
+    "covered": "All four fixed axes; no horizontal pursuit; actual hop before three-second landing; three-second repeat period; moving front at configured speed; real player damage through existing multiplier; one hit per front; airborne/cover/corridor protection; first-surface demolition independent of prop order; cache reward once and intact bomb inventory/kill/explosion accounting; persistent opened geometry; ordinary-clear and plate/re-entry policy; inactive phase pause; hazard-cap suppression; file-only speed edit and snapshot isolation.",
+    "limits": "Wave physics, shape, startup/offscreen conventions and crack/cache treatment are declared local adaptations; full secret-room graph and named item interactions remain open."
+  },
+  "reachability": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/quake/floor_progression.txt",
+    "actual_canyon_floors": 170,
+    "ordinary_conditional_ids": 29,
+    "hazard_ids": 14,
+    "stage_bands": {
+      "804.0.0": [
+        1
+      ],
+      "804.0.1": [
+        1
+      ],
+      "804.0.2": [
+        1
+      ],
+      "804.0.3": [
+        1
+      ]
+    },
+    "actual_fixtures": [
+      {
+        "id": "804.0.0",
+        "seed": 9,
+        "floor_zero_based": 2,
+        "room": 2
+      },
+      {
+        "id": "804.0.2",
+        "seed": 10,
+        "floor_zero_based": 2,
+        "room": 7
+      },
+      {
+        "id": "804.0.3",
+        "seed": 23,
+        "floor_zero_based": 2,
+        "room": 6
+      },
+      {
+        "id": "804.0.1",
+        "seed": 31,
+        "floor_zero_based": 2,
+        "room": 3
+      }
+    ],
+    "all_hazard_fixtures": [
+      {
+        "id": "202.10.0",
+        "seed": 0,
+        "floor_zero_based": 3,
+        "room": 8
+      },
+      {
+        "id": "42.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 1
+      },
+      {
+        "id": "203.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 2
+      },
+      {
+        "id": "235.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 5
+      },
+      {
+        "id": "201.0.0",
+        "seed": 0,
+        "floor_zero_based": 5,
+        "room": 7
+      },
+      {
+        "id": "236.0.0",
+        "seed": 1,
+        "floor_zero_based": 2,
+        "room": 4
+      },
+      {
+        "id": "42.2.0",
+        "seed": 1,
+        "floor_zero_based": 6,
+        "room": 12
+      },
+      {
+        "id": "42.1.0",
+        "seed": 2,
+        "floor_zero_based": 3,
+        "room": 2
+      },
+      {
+        "id": "202.0.0",
+        "seed": 2,
+        "floor_zero_based": 5,
+        "room": 10
+      },
+      {
+        "id": "202.10.1",
+        "seed": 5,
+        "floor_zero_based": 4,
+        "room": 11
+      },
+      {
+        "id": "804.0.0",
+        "seed": 9,
+        "floor_zero_based": 2,
+        "room": 2
+      },
+      {
+        "id": "804.0.2",
+        "seed": 10,
+        "floor_zero_based": 2,
+        "room": 7
+      },
+      {
+        "id": "804.0.3",
+        "seed": 23,
+        "floor_zero_based": 2,
+        "room": 6
+      },
+      {
+        "id": "804.0.1",
+        "seed": 31,
+        "floor_zero_based": 2,
+        "room": 3
+      }
+    ],
+    "scope": "All four directional Quakes found in real band-1 generated rooms, with fixed inward axes, usable attack lane, optional reachable plate and retained ordinary residents. The 170-floor regression reaches fourteen separate hazard identities and preserves ordinary room/threat budgets. No Quake opening/tutorial/Mine entries."
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/quake/linux-hop.png",
+      "docs/reports/isaac-enemy-port/quake/linux-wave.png",
+      "docs/reports/isaac-enemy-port/quake/linux-resident.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/quake/full/wasm-quake-right-165.png",
+      "docs/reports/isaac-enemy-port/quake/full/wasm-quake-right-195.png",
+      "docs/reports/isaac-enemy-port/quake/full/wasm-resident-quake-left.png"
+    ],
+    "observation": "Native hop/wave/resident captures and four-axis browser captures inspected in Original style. Broad brow, directional wedge, short fixed-axis chevrons and moving low-poly crest are visible. The first capture revealed a generic warning aimed at an unset target; replaced with short directional arrows. Low contrast against sand and HUD/scenery overlaps still need all-camera readability review. Screenshot FPS is not a controlled performance measurement."
+  },
+  "balance": {
+    "result": "partial_pass",
+    "scope": "Deterministic grounded/airborne/cover contacts preserve player defaults and existing 1.25 hostile impact multiplier; this is not human or varied-build encounter balance acceptance."
+  },
+  "performance": {
+    "result": "partial_pass",
+    "scope": "Structural bounds: one optional hazard per generated room, existing global hazard cap, finite wave duration and bounded seven-piece visual trail. No controlled native/WASM current-roster benchmark acceptance."
+  },
+  "failures_resolved": [
+    "Initial damage assertion omitted the existing 1.25 hostile multiplier; runtime scaling was unchanged.",
+    "Initial seeded-lane assertion tested movement clearance through the statue own collider. It now tests terrain collision used by the actual wave.",
+    "First visual warning inherited an unset ordinary target; replaced by short fixed-axis arrows.",
+    "Reference regeneration changed the reference hash during the second full native run; identity audit preserved all records and the isolated coverage rerun passed."
+  ],
+  "limitations": [
+    "Full secret/super-secret-room routing is not implemented by the cache analogue.",
+    "Source-exact wave speed, hit radius, damage conversion, hop timing/height, first-cycle phase, geometry interactions and lifetime require measurement.",
+    "Named instant-kill, reroll, Infestation 2, Dead Eye and Fire Mind item producers remain dependencies.",
+    "All-camera visual readability, mixed-build/human balance and controlled native/WASM performance acceptance remain open."
+  ]
+}

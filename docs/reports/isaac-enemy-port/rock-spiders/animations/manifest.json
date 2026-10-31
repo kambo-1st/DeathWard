@@ -1,0 +1,657 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/818.000_rock spider 1.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.000_rock spider 1.anm2",
+      "sha256": "969b2619c11676c0a65acab07eae133e4c63ae66bb4644c36b4a339e910b0a75",
+      "checksum": "0xfcb070af",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "16",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.000_rock spider 2.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.000_rock spider 2.anm2",
+      "sha256": "66e706b8b3b16cbb97297c2b4473a06ef013895b1e38b388bf110cd17ef750c8",
+      "checksum": "0x9b928371",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "16",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.000_rock spider 3.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.000_rock spider 3.anm2",
+      "sha256": "1f068f97871b3f915c91d6d53ad3135d7f262f706aa5867bc33394c89fedd932",
+      "checksum": "0xf49b9665",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "16",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.001_tinted rock spider 1.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.001_tinted rock spider 1.anm2",
+      "sha256": "d6bde3a4df48f7c726abbdacf4b82499c6b5909885c3d44d0f4c4f889db46a1f",
+      "checksum": "0xdb8920ba",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "16",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.001_tinted rock spider 2.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.001_tinted rock spider 2.anm2",
+      "sha256": "1bbc962d0e7e543419ddc5e471513f2e3c24bbe3c54dfb2abb733e2472b6af04",
+      "checksum": "0x667dc654",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "16",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.001_tinted rock spider 3.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.001_tinted rock spider 3.anm2",
+      "sha256": "0d91473f830a4f66139f0c4fca4df2c9c74265bb0bb3f9c06fc673f9dc7e0f14",
+      "checksum": "0x4e784541",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "16",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "2",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.002_coal 1.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.002_coal 1.anm2",
+      "sha256": "5eb1dd5a550ca9fdf6bf09da052390934fc31cf8274c6e67ad0c657a2895e48e",
+      "checksum": "0x2f2a913",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.002_coal 2.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.002_coal 2.anm2",
+      "sha256": "860cb54ede853f9b7da86492ebc66da8e4664d98b82077022d5287664d967c91",
+      "checksum": "0x9e243549",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.002_coal 3.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.002_coal 3.anm2",
+      "sha256": "8801b444b262921c40954f2121321b38fc194953084bb76c7d7f5f1017831a2c",
+      "checksum": "0x3cf53fbe",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.002_coal spider 1.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.002_coal spider 1.anm2",
+      "sha256": "06e341b20e62b5b3dbcf1c30db97281f1dae65d19b4f906c8d3e7050debadccc",
+      "checksum": "0x516370ca",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.002_coal spider 2.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.002_coal spider 2.anm2",
+      "sha256": "e7412766eed0392ac2fa40a6f1fe1b828046f36e71b0638dcf0f9b34d94dd93a",
+      "checksum": "0xb6e002c2",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/818.002_coal spider 3.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/818.002_coal spider 3.anm2",
+      "sha256": "f2bde3305f89739171c15d88b8b5d3557a897c7869bf4753f16740cdc0310de8",
+      "checksum": "0x3ce5dd32",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "8",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "IdleRock",
+            "FrameNum": "12",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources-dlc3/gfx/826.000_hardy.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/rock-spiders/animations/826.000_hardy.anm2",
+      "sha256": "1ab1dd452d08af8f5a4dcc8c25fad1c1f4be94a93b9a2c1907ad68ff47cc909e",
+      "checksum": "0xbbe88184",
+      "info": {
+        "CreatedBy": "trtv",
+        "CreatedOn": "05.07.2019 16:05:56",
+        "Fps": "30",
+        "Version": "2"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Slide"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle1",
+            "FrameNum": "33",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack1",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "36"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Slide1",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Hit1",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle2",
+            "FrameNum": "33",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack2",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "36"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Slide2",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Hit2",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle3",
+            "FrameNum": "33",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack3",
+            "FrameNum": "40",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "36"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Slide3",
+            "FrameNum": "6",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Hit3",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

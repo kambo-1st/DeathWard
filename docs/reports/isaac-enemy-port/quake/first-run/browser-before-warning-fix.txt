@@ -1,0 +1,4 @@
+PASS WASM quake-left: landing, wave direction and lifecycle
+PASS WASM quake-up: landing, wave direction and lifecycle
+PASS WASM quake-right: landing, wave direction and lifecycle
+PASS WASM quake-down-plate: landing, wave direction and lifecycle

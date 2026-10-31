@@ -1,0 +1,6 @@
+STATUE_AIMED single=1 triple=3 ballistic=1 ordinary_immune=1 cleared_body_retained=1
+STATUE_LIFETIME last_enemy_clear=1 inactive_reentry=1 exceptional_respawn=1 eye_removal=1
+STATUE_PLATES persistent_combat_fire=1 all_plates=1 immediate_beam_stop=1 saved_plate_state=1 plate_objective=1
+STATUE_CROSS alternating_axes=1 subtype_phase=1 always_on=1 objective_free_trap=1
+STATUE_PHYSICS walking=1 flight=1 swept_dodge=1 mouse_path=1 ray_aim=1 exceptional_collider_removal=1
+PASS configurable Grimace attacks, completion, plate state, re-entry and collision

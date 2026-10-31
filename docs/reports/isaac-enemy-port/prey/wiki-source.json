@@ -1,0 +1,562 @@
+{
+  "Leech (Enemy)": {
+    "title": "Leech (Enemy)",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Leech_%28Enemy%29",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=268624",
+    "revision": 268624,
+    "timestamp": "2026-08-25T17:45:34Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "[disambig msg: the monster; the item; Leech] \n\nLeeches are flying monsters introduced in the vanilla content of The Binding of Isaac: Rebirth.\n\nSimilar to Chargers, if Isaac lines up with a Leech horizontally or vertically, the Leech will quickly charge towards him. Leeches do a full heart of contact damage.\n\n[Repentance] Leeches and their variants are immune to knockback."
+      },
+      {
+        "heading": "Variations",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Kamikaze Leech",
+        "level": 3,
+        "text": "Kamikaze Leeches are a unique type of Leech with an eye in their mouth. They are introduced in the vanilla content of The Binding of Isaac: Rebirth and commonly found in Sheol but can appear elsewhere such as Necropolis and Dark Room.\n\nThese behave similarly to normal Leeches, but explode upon death. They can be spawned by a couple of bosses, such as Satan's second form; as well, two of these will also appear to either side of The Fallen during the first phase of this battle."
+      },
+      {
+        "heading": "Holy Leech",
+        "level": 3,
+        "text": "Holy Leeches are white-colored variants of the Kamikaze Leech commonly found in the Cathedral, but can occasionally appear in Utero.\n\nThese behave similarly to Kamikaze Leeches, but have an Eternal Fly circling them. Because the Holy Leech explodes upon death, the Eternal Fly will die instantly and only serves to block projectiles."
+      },
+      {
+        "heading": "Small Leech",
+        "level": 3,
+        "text": "Small Leeches are small, juvenile versions of the Leech added in The Binding of Isaac: Repentance DLC.\n\nThey are quite similar to normal Leeches and make the same sound effect (albeit higher-pitched), but they have no knockback immunity, and continuously chase Isaac rather than only pursuing him if Isaac lines up with one horizontally or vertically. They are also very small in size and can swim over flooded gaps.\n\nPrimarily spawned by Prey and Lil Blub, and can be found in Buckets. They will also spawn during Wormwood's boss fight, after Wormwood charges out from the wall.\n\nWhen in a room without water, Small Leeches make small, short hops towards Isaac."
+      },
+      {
+        "heading": "Adult Leech",
+        "level": 3,
+        "text": "Adult Leeches are bigger and stronger versions of the Leech added in The Binding of Isaac: Repentance DLC.\n\nThey are characterized by their large size and much higher amount of health in comparison to typical Leeches. They behave like Leeches but will only charge horizontally and release a ring of 12 blood shots in all directions upon colliding with a wall. Upon taking a certain amount of damage, they burrow underground then reappear by attempting to crash into Isaac from above (a sound cue will play prior to it crashing down) and sending out a ring of 10 blood shots in all directions on impact, which only occurs once per Adult Leech."
+      },
+      {
+        "heading": "Gallery",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "\u2022 Kamikaze Leech was first added in the Halloween update for the original Flash version of The Binding of Isaac.\n\n\u2022 Holy Leech was first added in the original Flash game's Wrath of the Lamb DLC.\n\n\u2022 The Leech's charging sound effect is, in reality, a man saying \"EHHH\" sped up. This can be revealed by listening to the attack sound of a Large Champion Leech.\n\n\u2022 [Repentance] The Small Leech and Adult Leech first appeared in the fan DLC Antibirth.\n\n\u2022 The Adult Leech's design is from a mockup for a Corpse altfloor by artist NotYourSagittarius created in February 2015."
+      },
+      {
+        "heading": "References",
+        "level": 2,
+        "text": ""
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "name": "Leech",
+          "image name": "* [Before Repentance] Rebirth",
+          "id": "55",
+          "base hp": "25",
+          "environment": "Depths / Dank Depths / \nWomb / Utero / Scarred Womb / \nCorpse / \nSheol / Cathedral / \nchallenge /",
+          "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage."
+        },
+        "group": "entity",
+        "id": 55,
+        "name": "Leech",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 1,
+        "fields": {
+          "name": "Kamikaze Leech",
+          "image name": "* [Before Repentance] Rebirth",
+          "variant": "1",
+          "base hp": "25",
+          "environment": "Necropolis / \nSheol / \nDark Room / \nchallenge /",
+          "replace": "Leech",
+          "replace chance": "4.96%",
+          "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage. Explodes upon death."
+        },
+        "group": "entity",
+        "id": 55,
+        "name": "Kamikaze Leech",
+        "variant": 1,
+        "subtype": 0,
+        "section_indices": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 3,
+        "fields": {
+          "name": "Holy Leech",
+          "image name": "* [Before Repentance] Rebirth",
+          "variant": "2",
+          "base hp": "25",
+          "environment": "Utero / \nCathedral / \nchallenge /",
+          "replace": "Leech, Kamikaze Leech",
+          "replace chance": "1%",
+          "behavior": "Quickly charges towards Isaac when he gets in its line of sight, dealing a full heart of contact damage. Explodes upon death. Spawns with an Eternal Fly circling it, which instantly dies when the Holy Leech explodes."
+        },
+        "group": "entity",
+        "id": 55,
+        "name": "Holy Leech",
+        "variant": 2,
+        "subtype": 0,
+        "section_indices": [
+          3
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 4,
+        "fields": {
+          "dlc": "r",
+          "name": "Small Leech",
+          "image scale": "1/2",
+          "id": "810",
+          "base hp": "5",
+          "environment": "Downpour / Dross / \ntreasure / (Downpour only)\nsecret / (Dross only)\nboss / challenge /",
+          "behavior": "Chases Isaac continuously, not stopping at walls. Able to swim over gaps."
+        },
+        "group": "entity",
+        "id": 810,
+        "name": "Small Leech",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          4
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 5,
+        "fields": {
+          "dlc": "r",
+          "name": "Adult Leech",
+          "id": "854",
+          "base hp": "90",
+          "environment": "Corpse / \nchallenge /",
+          "behavior": "Wanders around the room, quickly charging at Isaac when he lines up horizontally with him and releasing a ring of blood shots upon colliding with a wall. After taking a certain amount of damage, burrows into the ground and reappears by falling above Isaac, releasing another ring of blood shots and only performing this behavior once."
+        },
+        "group": "entity",
+        "id": 854,
+        "name": "Adult Leech",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          5
+        ]
+      }
+    ]
+  },
+  "Mulligan": {
+    "title": "Mulligan",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Mulligan",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271647",
+    "revision": 271647,
+    "timestamp": "2026-10-16T14:09:13Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "level": 0,
+        "text": "[disambig msg: the enemy; the item; The Mulligan] \n\nMulligans are enemies that will actively try to avoid Isaac; their eyes widen and their speed increases when doing so. When running away, they may walk over spikes or into a fire.\n\nUpon death, they spawn several Fly, Attack Fly and, occasionally, a Pooter. Mulligans may sometimes self-detonate. If this occurs: in addition to spawning flies as normal, it will also fire four projectiles in the cardinal directions and destroy nearby objects when doing so. Mulligans cannot deal contact damage to Isaac ( [Before Afterbirth+] unless they are Champions).\n\nAlternatively, if a Mulligan's health is dropped to -10 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death."
+      },
+      {
+        "heading": "Variations",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Mulligoon",
+        "level": 3,
+        "text": "Mulligoons behave like Mulligans and will run away from Isaac, don't deal contact damage, and can self-detonate. They release 4 projectiles in ordinal directions and drop a Troll Bomb on death. If they self-detonate, they release 8 projectiles in the cardinal and ordinal directions in addition to dropping a Troll bomb."
+      },
+      {
+        "heading": "Mulliboom",
+        "level": 3,
+        "text": "Mullibooms, unlike Mulligans, will chase Isaac at a very fast pace and explode on contact, dealing half a heart of damage. They also explode immediately if they are killed."
+      },
+      {
+        "heading": "Hive",
+        "level": 3,
+        "text": "Hives behave similarly to Mulligans, evading Isaac and spawning Fly, Attack Fly, and Pooters upon death. However, they also occasionally spit Attack Fly while running away from Isaac, and unlike Mulligans and Mulligoons, they can't self-detonate.\n\nAlternatively, if a Hive's health is dropped to -20 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death."
+      },
+      {
+        "heading": "Drowned Hive",
+        "level": 3,
+        "text": "Drowned Hives behave similarly to Hives but spit out Drowned Chargers instead of Attack Flies. Upon death, they spawn 1-2 Drowned Chargers.\n\nAlternatively, if a Drowned Hive's health is dropped to -20 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death.\n\n[Repentance] Drowned Chargers spawned by Drowned Hives have half their usual health (11 HP)."
+      },
+      {
+        "heading": "Nest",
+        "level": 3,
+        "text": "Nests behave similarly to Hives, but they spit out Spider instead of Attack Fly when being chased. They spawn a Trite or a Big Spider upon death.\n\nUnlike normal Spider, those spawned by the Nest die upon touching Isaac. This is not the case for spiders spawned from killing the Big spider.\n\nAlternatively, if a Nest's health is dropped to -20 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death."
+      },
+      {
+        "heading": "Leper",
+        "level": 3,
+        "text": "Lepers are a Mulligan variant that alternate between walking towards and running away from Isaac. For every 15 damage they take, a chunk of their head, known as a Leper Flesh, will detach and start erratically chasing Isaac. Lepers deal contact damage if they are in this state or below. Lepers can naturally be found with some head chunks missing.\n\nAfter being reduced to 15 health, Lepers will chase Isaac continuously, leaving a trail of damaging Red Creep. Upon death, they leave behind one Leper Flesh and have a 50% chance to leave behind a Grey-colored Gusher.\n\nAlternatively, if a Leper's health is dropped to -25 or less in one instance (e.g., by using a Bomb), it will never spawn a Gusher on death, but will still spawn Leper Flesh."
+      },
+      {
+        "heading": "Leper Flesh",
+        "level": 3,
+        "text": "Leper Fleshes are head chunks from Lepers that erratically chase Isaac and are spawned from Lepers for every 15 damage they take. Upon death, they fire a projectile at Isaac that predicts his movements.\n\nThey will die if Isaac walks into them, though he will still take contact damage."
+      },
+      {
+        "heading": "Holy Mulligan",
+        "level": 3,
+        "text": "Holy Mulligans behave similarly to Nests and Hives; avoiding Isaac and spawning Angelic Baby (small) when chased. When killed, they leave behind 1-2 Embryos.\n\nAlternatively, if a Holy Mulligan's health is dropped to -20 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death."
+      },
+      {
+        "heading": "Prey",
+        "level": 3,
+        "text": "Preys behave similarly to Nests and Hives; avoiding Isaac and spawning Small Leeches when chased. Upon death, they spawn 2-3 Small Leeches.\n\nAlternatively, if a Prey's health is dropped to -20 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death."
+      },
+      {
+        "heading": "Mullighoul",
+        "level": 3,
+        "text": "Mullighouls behave similarly to Nests and Hives; avoiding Isaac and occasionally spawning a Willo when chased. Upon death it spawns 1-2 Willos. This variant can fly over pits.\n\nAlternatively, if a Mullighoul's health is dropped to -20 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death."
+      },
+      {
+        "heading": "Gas Dwarf",
+        "level": 3,
+        "text": "Gas Dwarves act similar to Mullibooms, but hock up explosive gas as they chase Isaac. Upon death, they release an explosive Ipecac shot that blows up any gas clouds it hits. If it manages to reach Isaac, however, it will explode, damaging Isaac and detonating nearby gas clouds."
+      },
+      {
+        "heading": "Bouncer",
+        "level": 3,
+        "text": "Bouncers behave like regular Mulligans and avoid Isaac with the exception that they can still deal contact damage to Isaac in their normal state. However, after some time or when close to death, their head inflates and they start chasing Isaac. If they die or come into contact with him in this state, they explode into a large cloud of projectiles with some lingering in the air before dropping down. If they are killed before they enter this hostile state, they release 4 projectiles in the ordinal directions.\n\nThey can also occasionally reflect tears in their inflated state."
+      },
+      {
+        "heading": "Tainted Mulligan",
+        "level": 3,
+        "text": "Tainted Mulligans are stronger versions of Mulligans that behave similarly to Hives. They walk away from Isaac and will spit several Ring Fly at him if he is near. Upon death, they spawn a plethora of fly enemies including: Fly, Attack Fly, Suckers, Spits, Inks, Boom Fly, and Red Boom Fly.\n\nAlternatively, if a Tainted Mulligan's health is dropped to -20 or less in one instance (e.g., by using a Bomb), it will spawn nothing on death.\n\nThey are exclusive to the Ascent to Home."
+      },
+      {
+        "heading": "Gallery",
+        "level": 2,
+        "text": ""
+      },
+      {
+        "heading": "Trivia",
+        "level": 2,
+        "text": "\u2022 The Leper and Leper Flesh enemies were added in Booster Pack #5.\n\n\u2022 The Mulligan, Mulligoon, Hive, and Swarmer are all the same monster in stages of decay and infestation.\n\n\u2022 In the original Binding of Isaac, when a Mulligan self-detonated, the explosion would not break rocks.\n\n\u2022 Mulligans will start running in random directions instead of directly away from Isaac if he stays close to them for long enough. This behavior also applies to Small Baby Long Legs.\n\n\u2022 In the game's files, there is an unused Mulliboom self-detonation animation, an unused graphic of a Hive with a Mulligoon's face, and an unused graphic of the [Afterbirth onward] Drowned Hive with a blue-tinted Mulligoon's face.\n\n\u2022 [Afterbirth onward] Drowned Hives, along with Drowned Chargers (name of Drowned Charger wasn't revealed), were revealed for Afterbirth in this official Binding of Isaac post.\n\n\u2022 [Afterbirth+ onward] A leper is a person who suffers from leprosy, which is a contagious disease that causes discoloration and lumping on the skin plus disfigurement and deformities.\n\n\u2022 [Repentance] Due to the Holy Mulligan leaving behind Embryos on death, it could be suggested that it transforms Embryos into the Small Angelic Babies it spawns.\n\n\u2022 [Repentance] Holy Mulligans, Holy Bony, and Holy Eyes originated as cards from the card game The Binding of Isaac: Four Souls.\n\n\u2022 [Repentance] Gas Dwarves used to be called Fartigans.\n\n\u2022 [Repentance] Prey, Mullighouls, and Bouncers originate from the Antibirth mod. In Antibirth, Mullighouls could also appear in Mausoleum and had 13 stage hp. [end edition note]"
+      },
+      {
+        "heading": "Bugs",
+        "level": 2,
+        "text": "Bug note: If a Mulligan or a Mulligoon is killed before the spawning period is finished (before they move), it will count as a self-detonation.\nBug note: If a Nest is killed in the Burning Basement, it has a chance to spawn a Flaming Hopper.\nBug note: Rarely if you kill a Drowned Hive before their spawn period is finished (before they move), it will shoot 4 projectiles in ordinal directions but the monster won't explode."
+      }
+    ],
+    "boxes": [
+      {
+        "template": "infobox monster",
+        "section": 0,
+        "fields": {
+          "id": "16",
+          "base hp": "13",
+          "environment": "Basement / Cellar / Burning Basement / \nboss / challenge /",
+          "behavior": "Walks around the room, avoiding Isaac. Upon death, spawns several flies, which can be Fly, Attack Fly, and/or Pooters. Can self-detonate and launch four projectiles in the cardinal directions while still releasing flies."
+        },
+        "group": "entity",
+        "id": 16,
+        "name": "Mulligan",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          0
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 2,
+        "fields": {
+          "name": "Mulligoon",
+          "variant": "1",
+          "base hp": "13",
+          "environment": "Basement / Cellar / Burning Basement /",
+          "replace": "Mulligan",
+          "replace chance": "9.49%",
+          "behavior": "Walks around the room, avoiding Isaac. Upon death, spawns a Troll Bomb and fires four shots in the ordinal directions. Can self-detonate, spawn a Troll bomb, and launch eight projectiles in all directions."
+        },
+        "group": "entity",
+        "id": 16,
+        "name": "Mulligoon",
+        "variant": 1,
+        "subtype": 0,
+        "section_indices": [
+          2
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 3,
+        "fields": {
+          "name": "Mulliboom",
+          "variant": "2",
+          "base hp": "13",
+          "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs /",
+          "replace": "Mulligan, Mulligoon",
+          "replace chance": "1%",
+          "behavior": "Chases Isaac and explodes upon death or upon touching Isaac. The explosion deals a half-heart of damage instead of the regular full heart."
+        },
+        "group": "entity",
+        "id": 16,
+        "name": "Mulliboom",
+        "variant": 2,
+        "subtype": 0,
+        "section_indices": [
+          3
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 4,
+        "fields": {
+          "name": "Hive",
+          "id": "22",
+          "base hp": "20",
+          "environment": "Basement / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nchallenge /",
+          "behavior": "Wanders around the room, avoiding Isaac and spawning Attack Fly if he gets close. Spawns a large number of flies on death, which can be Fly, Attack Fly, and/or Pooters."
+        },
+        "group": "entity",
+        "id": 22,
+        "name": "Hive",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          4
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 5,
+        "fields": {
+          "dlc": "a",
+          "name": "Drowned Hive",
+          "variant": "1",
+          "base hp": "18",
+          "environment": "Flooded Caves / \nchallenge /",
+          "replace": "Hive",
+          "replace chance": "50%",
+          "replace notes": "in Flooded Caves",
+          "behavior": "Wanders around the room, avoiding Isaac and spawning Drowned Chargers if he gets close. Spawns 0-2 Drowned Chargers upon death."
+        },
+        "group": "entity",
+        "id": 22,
+        "name": "Drowned Hive",
+        "variant": 1,
+        "subtype": 0,
+        "section_indices": [
+          5
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 6,
+        "fields": {
+          "name": "Nest",
+          "id": "205",
+          "base hp": "20",
+          "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nNecropolis /",
+          "behavior": "Wanders around the room, avoiding Isaac and spawning Spiders if he gets close. Spawns a Big Spider or Trite upon death."
+        },
+        "group": "entity",
+        "id": 205,
+        "name": "Nest",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          6
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 7,
+        "fields": {
+          "dlc": "a+",
+          "name": "Leper",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "id": "310",
+          "base hp": "60",
+          "environment": "Scarred Womb / \nchallenge /",
+          "behavior": "Alternating between walking towards and running away from Isaac. Releases a Leper Flesh each time it takes enough damage. At low health, constantly chases Isaac and leaves behind damaging red creep. Spawns a Leper Flesh and Gusher upon death."
+        },
+        "group": "entity",
+        "id": 310,
+        "name": "Leper",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          7
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 8,
+        "fields": {
+          "dlc": "a+",
+          "name": "Leper Flesh",
+          "image name": "* [Before Repentance] Afterbirth+",
+          "variant": "1",
+          "base hp": "5",
+          "stage hp": "1.5",
+          "environment": "Scarred Womb / \nTreasure / (Scarred Womb Only)\nSpawned from Lepers",
+          "behavior": "Floats slowly toward Isaac and fires a predictive projectile at him upon death."
+        },
+        "group": "entity",
+        "id": 310,
+        "name": "Leper Flesh",
+        "variant": 1,
+        "subtype": 0,
+        "section_indices": [
+          8
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 9,
+        "fields": {
+          "dlc": "r",
+          "name": "Holy Mulligan",
+          "id": "22",
+          "variant": "2",
+          "base hp": "40",
+          "stage hp": "3",
+          "environment": "Cathedral / \nChest / \nchallenge /",
+          "behavior": "Wanders around the room, avoiding Isaac and spawning Angelic Baby (small) if he gets close. Spawns 1-2 Embryos upon death."
+        },
+        "group": "entity",
+        "id": 22,
+        "name": "Holy Mulligan",
+        "variant": 2,
+        "subtype": 0,
+        "section_indices": [
+          9
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 10,
+        "fields": {
+          "dlc": "r",
+          "name": "Prey",
+          "id": "817",
+          "base hp": "14",
+          "environment": "Downpour / Dross / \nFlooded Caves / \nchallenge /",
+          "behavior": "Wanders around the room, avoiding Isaac and spawning Small Leeches if he gets close. Spawns 3 Small Leeches upon death."
+        },
+        "group": "entity",
+        "id": 817,
+        "name": "Prey",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          10
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 11,
+        "fields": {
+          "dlc": "r",
+          "name": "Mullighoul",
+          "variant": "1",
+          "base hp": "13",
+          "environment": "Downpour / \nchallenge /",
+          "behavior": "Wanders around the room, avoiding Isaac and spawning Willos if he gets close. Spawns 1-2 Willos upon death."
+        },
+        "group": "entity",
+        "id": 817,
+        "name": "Mullighoul",
+        "variant": 1,
+        "subtype": 0,
+        "section_indices": [
+          11
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 12,
+        "fields": {
+          "dlc": "r",
+          "name": "Gas Dwarf",
+          "id": "874",
+          "base hp": "13",
+          "stage hp": "0",
+          "environment": "Dross / \nchallenge /",
+          "behavior": "Chases Isaac, periodically coughing up gas clouds. On death, fires an explosive shot that can detonate gas clouds it hits."
+        },
+        "group": "entity",
+        "id": 874,
+        "name": "Gas Dwarf",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          12
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 13,
+        "fields": {
+          "dlc": "r",
+          "name": "Bouncer",
+          "id": "822",
+          "base hp": "30",
+          "stage hp": "0",
+          "environment": "Mines / \nchallenge /",
+          "behavior": "Wanders around the room, avoiding Isaac. If Isaac stays close to one for long enough, it inflates and starts chasing him, gaining a chance to deflect shots and causing it to explode into lingering blood shots on death."
+        },
+        "group": "entity",
+        "id": 822,
+        "name": "Bouncer",
+        "variant": 0,
+        "subtype": 0,
+        "section_indices": [
+          13
+        ]
+      },
+      {
+        "template": "infobox monster",
+        "section": 14,
+        "fields": {
+          "dlc": "r",
+          "name": "Tainted Mulligan",
+          "id": "22",
+          "variant": "3",
+          "base hp": "100",
+          "stage hp": "8",
+          "environment": "Basement / \nFound on the Ascent to Home.",
+          "behavior": "Wanders around the room, avoiding Isaac and spawning 6 Ring Fly if he gets close. Spawns a plethora of fly enemies upon death."
+        },
+        "group": "entity",
+        "id": 22,
+        "name": "Tainted Mulligan",
+        "variant": 3,
+        "subtype": 0,
+        "section_indices": [
+          14
+        ]
+      }
+    ]
+  }
+}

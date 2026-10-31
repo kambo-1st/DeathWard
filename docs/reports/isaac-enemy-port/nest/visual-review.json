@@ -1,0 +1,24 @@
+{
+  "reviewed_utc": "2026-10-28T14:15:13.190010+00:00",
+  "result": "partial_pass",
+  "style": "Original",
+  "resolution": [
+    1440,
+    900
+  ],
+  "initial_manifest": "docs/reports/isaac-enemy-port/nest/native/captures.json",
+  "current_manifest": "docs/reports/isaac-enemy-port/nest/native-current/captures.json",
+  "images_inspected": 8,
+  "findings": [
+    "First four images exposed facial patches reading as protruding balls. Flattened patches against the head and captured four final images.",
+    "Final idle/spit captures show a pale swollen head, uneven dark openings and changing mouth. A tiny pre-Shoot spider is visible at the mouth but is not a strong distant warning by itself.",
+    "Final48frame capture shows a separate live Spider and two actual threats. Earlier180frame image had no surviving live child; it is not retained as proof of a birth.",
+    "Natural seed1/floor3/room6 capture shows Nest among other resident enemies beside canyon cover.",
+    "Head and legs stay readable in sampled camera views; original palette/low-poly geometry retained."
+  ],
+  "limitations": [
+    "Back view has weaker identity cues. Small windup and dark spiders still need broader zoom/occlusion/mixed-room readability review.",
+    "Captured FPS values include startup, smoke execution and concurrent test load; these screenshots are not performance measurements.",
+    "No browser validation per user override."
+  ]
+}

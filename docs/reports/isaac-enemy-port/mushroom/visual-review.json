@@ -1,0 +1,86 @@
+{
+  "scope": "Eleven final Original-style images individually inspected: four Linux and seven production WASM. Closed cap, raised stem, physical cross bursts and natural mixed-room resident visible. Static appearance only; full combat readability, balance and controlled performance remain open.",
+  "final_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/native-final-burst.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Raised cap and pale stem, four separated red bullets around the actor; no misleading aimed warning line."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/native-final-closed.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Low orange-brown spotted cap against sand, stem concealed and shadow attached; distinct from raised pose."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/native-final-exposed.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale exposed stem and elevated spotted cap readable; bullets have traveled outward, one partly covered by the minimap. No aimed warning ray."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/native-final-resident.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed spotted cap visible in actual seeded mixed room beside other enemies and a statue; distinct low silhouette."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/isolated-closed.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed spotted cap is low and readable against the canyon floor; stem hidden."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/isolated-burst.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Four separate red shots clearly surround the raised cap and pale stem. No single aimed warning ray remains."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/isolated-exposed.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Raised cap and pale stem remain visible after firing; outward shots contrast with the sand. Body shadow reads as attached."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/closed-hit-closed.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed cap still visible after a test hit, with a small depleted health indicator. Quarter damage is established by probe assertions, not inferred from bar pixels."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/closed-hit-burst.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Damaged Mushroom raises cap and emits four distinct shots; no misleading target ray. Health bar and enemy stay visible."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/closed-hit-exposed.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Pale exposed stem and raised cap remain readable after the test hit; shots disperse outward and damaged health indicator persists."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/mushroom/web-placement/resident-resident.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Closed Mushroom visible in the seeded mixed encounter alongside statue and other enemies. This checks one view, not full mixed-combat readability."
+    }
+  ],
+  "superseded": [
+    "web-final: behavior passed; misleading aimed warning ray still present before rendering correction.",
+    "native-*.png: earlier captures before final placement build; native-burst frame259 too early to show bullets. Accepted native-final-burst is frame266."
+  ]
+}

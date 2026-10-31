@@ -1,0 +1,184 @@
+{
+  "status": "Partial four-Quake implementation; validation recorded in checkpoint.json. No complete port accepted.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "ids": [
+    "804.0.0",
+    "804.0.1",
+    "804.0.2",
+    "804.0.3"
+  ],
+  "sources": [
+    {
+      "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270009",
+      "supports": "Revision-pinned family behaviors, room completion, item exceptions and edition boundaries."
+    },
+    {
+      "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+      "supports": "Exact tuples, zero contact damage, shutdoors false, distinct always-on and directional animation identities."
+    },
+    {
+      "path": "docs/research/isaac-enemy-port-plan.json",
+      "supports": "Positive authored template evidence and candidate broad-band mapping, not approved runtime placement."
+    }
+  ],
+  "source_contracts": [
+    {
+      "id": "804.0.0",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies left; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_left.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "left"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 5,
+        "rooms/30.ashpit.stb": 3,
+        "rooms/36.backwards.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "804.0.1",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies up; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_up.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "up"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 6,
+        "rooms/30.ashpit.stb": 8,
+        "rooms/36.backwards.stb": 1
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "804.0.2",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies right; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_right.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "right"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 7,
+        "rooms/30.ashpit.stb": 3,
+        "rooms/36.backwards.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    },
+    {
+      "id": "804.0.3",
+      "name": "Quake Grimace",
+      "disposition": "hazard",
+      "contract": {
+        "movement": "Anchored hop/landing action; no horizontal pursuit.",
+        "targeting": "Installed animation filename specifies down; other coordinate/arena conventions still need explicit mapping.",
+        "attacks": "On landing, creates a directional line of rocks; source cadence three seconds. The attack can break a secret/super-secret wall in its path.",
+        "vulnerability": "Immune to ordinary damage; solid to player movement even with flight. Chaos Card, Little Horn and Euthanasia are documented instant-kill exceptions. Generally respawns on room re-entry after such kills; Stone Eye has a distinct cleared-room re-entry rule. Generic XML HP is not ordinary damageability.",
+        "phases": "Repeated landing attacks normally continue after ordinary combat ends; pressure plates can deactivate it.",
+        "offspring": "No ordinary enemy offspring. Infestation 2 can create a Blue Spider on an exceptional kill; separate item dependency.",
+        "completion": "Does not seal doors. Ordinary clear generally does not stop its attack; plate completion does.",
+        "source_numbers": {
+          "baseHP": "20",
+          "stageHP": "0",
+          "collisionDamage": "0",
+          "collisionRadius": "13",
+          "shutdoors": "false",
+          "anm2path": "804.000_quakegrimace_down.anm2",
+          "attack_period_seconds": 3,
+          "animation_orientation": "down"
+        },
+        "adaptations": "No new runtime behavior or stage enablement in this review. Future 3D silhouette, obstacle footprint, projectile heights and timing must be declared DeathWard adaptations. Hazard placement needs its own budget and must not count as a kill-required enemy.",
+        "unknowns": "Exact native projectile speed, firing interval/selection, collision shape and effect-specific status/timing exceptions are not established. Pressure plates, instant-kill items, reroll behavior, re-entry and projectile-hit item hooks need concrete runtime support and tests."
+      },
+      "source_band_candidates": [
+        1
+      ],
+      "positive_room_templates": {
+        "rooms/29.mines.stb": 16,
+        "rooms/30.ashpit.stb": 18,
+        "rooms/36.backwards.stb": 2
+      },
+      "runtime_status": "Source review only; existing generic definitions are unverified and no new encounter entries are enabled."
+    }
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; derived behavior summaries CC BY-SA 4.0. Runtime gaps and adaptation decisions are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "adaptations": {
+    "coordinates": "Installed left/up/right/down animation suffixes map to fixed -X/-Z/+X/+Z. Subtypes never turn toward the player or room center.",
+    "cycle": "Source three-second landing cadence; local startup waits a full cycle. Hop occupies the last 0.45 seconds, reaching one world unit high. Inactive rooms pause phase. Physical stationary footprint remains solid during cosmetic lift.",
+    "wave": "Local moving front speed 10 units/s, radius 0.5, range 32, base damage 10 (12.5 after the unchanged 1.25 hostile multiplier) and 0.5-second visual trail. One hit per front; trail is cosmetic. Wave is planar at ordinary actor height, clipped at terrain and room boundaries. Ordinary enemies are not targets; vulnerable allied companions use their existing shared contact cooldown.",
+    "barriers": "Source attack opens secret/super-secret entrances. DeathWard currently has an optional cache enclosure, not the full Isaac secret-room graph. CacheGate is the explicit local entrance analogue: one wave opens it and pays its existing seeded reward once. CrackedRock also breaks, a local adaptation. OreSeam, CacheSide and structural terrain stay intact. Wave stops on its first solid surface even when that surface breaks; cover is evaluated before destruction. No inventory bomb is spent or explosion/ordinary-kill credit awarded.",
+    "plate": "Pressure plates stop further hops/landings. A previously emitted wave finishes its finite course, like other emitted attacks. Exact source plate interaction with in-flight rocks remains unmeasured.",
+    "placement": "Separate one-hazard budget, source-backed band 1 only, fixed inward-facing axis with at least six clear travel units and optional reachable plate. Existing room/ordinary-threat budgets unchanged.",
+    "visuals": "Original procedural stone head, broad brow/directional wedge, anchored hop and travelling low-poly rock crest. No source art or map style changes."
+  },
+  "unresolved": [
+    "Full secret/super-secret-room routing is not implemented by the cache analogue.",
+    "Source-exact wave speed, hit radius, damage conversion, hop timing/height, first-cycle phase, geometry interactions and lifetime require measurement.",
+    "Named instant-kill, reroll, Infestation 2, Dead Eye and Fire Mind item producers remain dependencies.",
+    "All-camera visual readability, mixed-build/human balance and controlled native/WASM performance acceptance remain open."
+  ],
+  "source_contracts_scope": "These contracts were copied from the earlier hazard source review. Their source-only wording records that historical review; implemented behavior and current validation are described by adaptations and checkpoint.json."
+}

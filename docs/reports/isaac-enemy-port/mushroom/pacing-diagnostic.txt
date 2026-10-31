@@ -1,0 +1,12 @@
+blocked pacing=1 seed=0 theme=1 room=1 center=-120,60 kind=0
+without movement bodies=0
+42.0 pos=-120.395,60.332 radius=0.7
+18.0 pos=-127.731,50.9953 radius=0.45
+18.0 pos=-114.81,53.975 radius=0.45
+18.0 pos=-123.155,70.5293 radius=0.45
+18.0 pos=-117.472,60.8032 radius=0.45
+18.0 pos=-120.15,62.1053 radius=0.45
+18.0 pos=-113.327,69.734 radius=0.45
+18.0 pos=-125.834,47.0945 radius=0.45
+18.0 pos=-118.25,65.0523 radius=0.45
+18.0 pos=-121.592,70.0563 radius=0.45

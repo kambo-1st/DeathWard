@@ -1,0 +1,178 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "status": "Implementation in progress;15 selected Linux suites and14 browser scenarios passed,18 final captures inspected. Full six-gate acceptance remains open.",
+  "previous_goal_turn_classification": "No progress: status-only user request. Objective and current worktree revalidated; resumed concrete source and runtime work.",
+  "source_executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "source_notes": [
+    "33 dispatch699cd7 calls6a7ae0; variant11 routes at6a7b81 to4e7250, the same installed controller as818. 826Hardy independently calls4ee860.",
+    "Native state16 integrates falling rocks; damping.8 and bounce-.3 on landing, gravity.5, speed<2 and vertical<.6 with1/4 roll start Appear. ANM2 Appear20 at30FPS then state3.",
+    "Counter advances1 normally/2 for variants1or2; exact12/24/36 selects heading before a1/2 roll accelerates odd counters. Thus normal selections may be skipped; do not force three turns per cycle. Reset at48 after last impulse.",
+    "Ordinary normal chase5/6, coal/tinted3/4; chase uses pathfinding for blocked line and spread+-15degrees; wander picks up to10 directions tested20 units out. Force3 normal,5.1 tinted,5.4 coal except Singe907-spawned coal4.8.",
+    "Normal death4e8173 morphs the same entity85 and restores fullHP; does not spawn independently. Occupied-grid death suppresses normal morph and coal offspring.",
+    "Coal death4e80c7 creates33.11 with same subtype, half XY velocity, height-1 and vertical[-2,-1]. Hot coal stays in16; does not awaken.",
+    "Hot coal HP15 manual damage: <=10source hit causes1or2 wear; larger causes2or3;1/3 chance for extra wear. Explosion/crush forcesHP1/death. Native fire flags are removed after manual wear, so a delivered positive flame hit still causes bounded coal wear, unlike flame-immune Coal Spider.",
+    "Coal applies a2/3 one-damage event every30 sourceframes. The Fireplace wrapper adds a one-damage event every5frames in water>0.2. Each event passes through manual wear. Population empty with early clear timer removes coal.",
+    "Subtype0 selects1..3 using sourceInitSeed%3+1. DeathWard uses its seeded encounter RNG; no RNG-stream parity claimed.",
+    "Wiki Rock Spider revision270019 supplies descriptive habitat, stomp and tinted-rock/soul-heart production context. Repentance+Hagalaz behavior is excluded from this1.7.9b baseline.",
+    "Hardy source/animation metadata is preserved here as the next dependency consumer; its full controller contract and implementation are still pending. Tinted Rock Spider requires actual soul-heart resource behavior and tinted-rock production, so is not enabled by this batch."
+  ],
+  "contracts": {
+    "818.0.0": {
+      "movement": "Rock/reveal/skitter cycle; force3, retention.6; counter step1, optional extra odd increment; reset48.",
+      "targeting": "Chase 5/6, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Morph same entity into85.0.0 full health; no separate death reward.",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "818.0.1": {
+      "movement": "Rock/reveal/skitter cycle; force3, retention.6; counter step1, optional extra odd increment; reset48.",
+      "targeting": "Chase 5/6, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Morph same entity into85.0.0 full health; no separate death reward.",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "818.0.2": {
+      "movement": "Rock/reveal/skitter cycle; force3, retention.6; counter step1, optional extra odd increment; reset48.",
+      "targeting": "Chase 5/6, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Morph same entity into85.0.0 full health; no separate death reward.",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "818.0.3": {
+      "movement": "Rock/reveal/skitter cycle; force3, retention.6; counter step1, optional extra odd increment; reset48.",
+      "targeting": "Chase 5/6, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Morph same entity into85.0.0 full health; no separate death reward.",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "818.2.0": {
+      "movement": "Rock/reveal/skitter cycle; force5.4, retention.6; counter step2, optional extra odd increment; reset48.",
+      "targeting": "Chase 3/4, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Retained33.11.0 birth, half planar velocity, initial height-1, upward velocity[-2,-1].",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "818.2.1": {
+      "movement": "Rock/reveal/skitter cycle; force5.4, retention.6; counter step2, optional extra odd increment; reset48.",
+      "targeting": "Chase 3/4, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Retained33.11.1 birth, half planar velocity, initial height-1, upward velocity[-2,-1].",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "818.2.2": {
+      "movement": "Rock/reveal/skitter cycle; force5.4, retention.6; counter step2, optional extra odd increment; reset48.",
+      "targeting": "Chase 3/4, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Retained33.11.2 birth, half planar velocity, initial height-1, upward velocity[-2,-1].",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "818.2.3": {
+      "movement": "Rock/reveal/skitter cycle; force5.4, retention.6; counter step2, optional extra odd increment; reset48.",
+      "targeting": "Chase 3/4, pathfinding if blocked, chase scatter+-15degrees; otherwise up to10 random20-unit probes; heading committed between selections.",
+      "attacks": "Contact10 only. Normal flame transforms into matching Coal Spider without the flame hit applying damage. Coal Spider also ignores flame; burning-status channel remains separate.",
+      "vulnerability": "Damageable rock, reveal and skitter poses; high falling rock at sourceheight<-50 has no entity collision. Ordinary grounded collisions and pits respected. Champion0.",
+      "phases": "Subtype0 seeded selection1..3; state16 rock, state7Appear20, state3 skitter. Explicit subtype is a distinct rocky silhouette with shared controller.",
+      "offspring": "Retained33.11.3 birth, half planar velocity, initial height-1, upward velocity[-2,-1].",
+      "completion": "Normal morph preserves a threat until inner Spider dies; Coal Spider death pays one kill but hot coal is not a required threat. Debug clear bypasses death actions.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "33.11.0": {
+      "movement": "Shared state16 falling/bounce. Settled.9 retention; never enters appearance/skitter.",
+      "targeting": "No pursuit or target selection.",
+      "attacks": "Contact10; blocks ordinary player bullets with rendered-height collision hull.",
+      "vulnerability": "15 native wearHP; individual positive hits cause1/2 or2/3 loss based on10source damage threshold. Explosion/crush extinguishes. Source delivered flame entries also cause manual wear before their ordinary damage is cancelled.",
+      "phases": "Rock-only hazard; color intensity follows remaining health.2/3 decay event each30frames; flooded additional event each5frames.",
+      "offspring": "None. Required matching-subtype death hazard from818.2; default subtype0 selects1..3.",
+      "completion": "No ordinary kill reward; not a room-locking threat; removed once hostile population is empty. Retained birth cannot be lost at enemy cap.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "33.11.1": {
+      "movement": "Shared state16 falling/bounce. Settled.9 retention; never enters appearance/skitter.",
+      "targeting": "No pursuit or target selection.",
+      "attacks": "Contact10; blocks ordinary player bullets with rendered-height collision hull.",
+      "vulnerability": "15 native wearHP; individual positive hits cause1/2 or2/3 loss based on10source damage threshold. Explosion/crush extinguishes. Source delivered flame entries also cause manual wear before their ordinary damage is cancelled.",
+      "phases": "Rock-only hazard; color intensity follows remaining health.2/3 decay event each30frames; flooded additional event each5frames.",
+      "offspring": "None. Required matching-subtype death hazard from818.2; default subtype0 selects1..3.",
+      "completion": "No ordinary kill reward; not a room-locking threat; removed once hostile population is empty. Retained birth cannot be lost at enemy cap.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "33.11.2": {
+      "movement": "Shared state16 falling/bounce. Settled.9 retention; never enters appearance/skitter.",
+      "targeting": "No pursuit or target selection.",
+      "attacks": "Contact10; blocks ordinary player bullets with rendered-height collision hull.",
+      "vulnerability": "15 native wearHP; individual positive hits cause1/2 or2/3 loss based on10source damage threshold. Explosion/crush extinguishes. Source delivered flame entries also cause manual wear before their ordinary damage is cancelled.",
+      "phases": "Rock-only hazard; color intensity follows remaining health.2/3 decay event each30frames; flooded additional event each5frames.",
+      "offspring": "None. Required matching-subtype death hazard from818.2; default subtype0 selects1..3.",
+      "completion": "No ordinary kill reward; not a room-locking threat; removed once hostile population is empty. Retained birth cannot be lost at enemy cap.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    },
+    "33.11.3": {
+      "movement": "Shared state16 falling/bounce. Settled.9 retention; never enters appearance/skitter.",
+      "targeting": "No pursuit or target selection.",
+      "attacks": "Contact10; blocks ordinary player bullets with rendered-height collision hull.",
+      "vulnerability": "15 native wearHP; individual positive hits cause1/2 or2/3 loss based on10source damage threshold. Explosion/crush extinguishes. Source delivered flame entries also cause manual wear before their ordinary damage is cancelled.",
+      "phases": "Rock-only hazard; color intensity follows remaining health.2/3 decay event each30frames; flooded additional event each5frames.",
+      "offspring": "None. Required matching-subtype death hazard from818.2; default subtype0 selects1..3.",
+      "completion": "No ordinary kill reward; not a room-locking threat; removed once hostile population is empty. Retained birth cannot be lost at enemy cap.",
+      "adaptations": "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation. Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order. 3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "unknowns": "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open. Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open. Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    }
+  },
+  "runtime": [
+    "assets/mechanics/rock_spiders.mechanics",
+    "src/combat/RockSpiders.cpp",
+    "src/combat/EnvironmentActors.cpp",
+    "src/combat/FireReactions.cpp",
+    "src/combat/Monsters.cpp",
+    "src/combat/Simulation.hpp",
+    "src/combat/Simulation.cpp",
+    "src/combat/Enemies.cpp",
+    "src/combat/Charging.cpp",
+    "src/combat/MonsterMovement.cpp",
+    "src/content/Mechanics.hpp",
+    "src/content/Mechanics.cpp",
+    "src/content/EncounterVariants.cpp",
+    "src/render/MonsterVisuals.hpp",
+    "src/main.cpp"
+  ],
+  "uncertainties": [
+    "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open.",
+    "Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open.",
+    "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation.",
+    "Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order.",
+    "3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+    "Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "810": {
+      "index": 147,
+      "address": "0x699fbf"
+    },
+    "817": {
+      "index": 10,
+      "address": "0x699fef"
+    }
+  },
+  "constants": {
+    "wet_acceleration": {
+      "address": "0xb6a228",
+      "value": 0.01600000075995922
+    },
+    "wet_acceleration_cap": {
+      "address": "0xb6a3f8",
+      "value": 0.3499999940395355
+    },
+    "wet_retention": {
+      "address": "0xb6a5e8",
+      "value": 0.9599999785423279
+    },
+    "dry_retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "dry_impulse_minimum": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "dry_impulse_span": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "speed_cap": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "wall_bounce": {
+      "address": "0xb6ae28",
+      "value": -0.6000000238418579
+    },
+    "wall_margin_x": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "wall_margin_top": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "wall_margin_bottom": {
+      "address": "0xb6a8cc",
+      "value": 4.0
+    },
+    "source_overkill": {
+      "address": "0xb6aee4",
+      "value": -20.0
+    },
+    "death_launch_initial_height": {
+      "address": "0xb6aeb8",
+      "value": -10.0
+    },
+    "death_launch_planar_multiplier": {
+      "address": "0xb6a264",
+      "value": 0.03999999910593033
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/prey/source/dispatch_small_leech.asm",
+      "start": "0x699fbf",
+      "end": "0x699fcb",
+      "raw_sha256": "5f2f61586b1258604698eefb92432c84d6ff4e031c11a3fff26c09497c1bd220",
+      "sha256": "afeafc26615089eb3e02671beb93ba6fb8ff799c4c3d26164095df46d4931f46"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/prey/source/dispatch_prey.asm",
+      "start": "0x699fef",
+      "end": "0x699ffb",
+      "raw_sha256": "e7fa8e8fccc95ba4815c6bd99956a23b31b28b0a528baf5eb2683fab89898a7d",
+      "sha256": "24653e9a8f3c928edf6cf68607f50cee6269f38c0881e32d7159c40dc86d78e2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/prey/source/small_leech_controller.asm",
+      "start": "0x548fc0",
+      "end": "0x549d41",
+      "raw_sha256": "eba23591a3d296c3956be830e081bfb38faf5ec87122d96c8bd953cd7a1f2cef",
+      "sha256": "1eacb00664fc28380e416f7082ae5c90eac76357816993364b6edf1412358967"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/prey/source/leech_launch.asm",
+      "start": "0x549d70",
+      "end": "0x549f48",
+      "raw_sha256": "43300c882d5772af306c3f8e83cae8b44161f7ddbf5ceb7f144f5a87be1ba773",
+      "sha256": "2f8acf138727aa7e87c1487fe620da15015b2756656adfb123de5ae1c9bf47dc"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/prey/source/prey_live_child.asm",
+      "start": "0x4fa868",
+      "end": "0x4fa8cb",
+      "raw_sha256": "be20c7b3c11859081ef62b7c4b44a62402d01e06f8cf025fc80efe31639d30d1",
+      "sha256": "95b2e63fdb28db016aa1877c23aed8d0dfd2adfb6e6c8eeff4aa927736178309"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/prey/source/population_death_count.asm",
+      "start": "0x4faccb",
+      "end": "0x4fada7",
+      "raw_sha256": "c4b4af1607fdd887600ffe418092e49a117e6b033359098faa97460abfe19686",
+      "sha256": "b07df216187da95c252ba7f831f924869c442db87e6a372dba455e6caaa6b0e0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/prey/source/prey_death_launch.asm",
+      "start": "0x4fb036",
+      "end": "0x4fb127",
+      "raw_sha256": "266faa58845cffd8a98f9fa0a5808166d567dc93bcc7c8ff5595528a260f9a39",
+      "sha256": "ff1531a7a5617eb31be2dab822b1d3586d1f7fdd0d5170d46345f91497e558f7"
+    }
+  ],
+  "findings": [
+    "Type810 dispatches548fc0; type817 shares Hive controller4fa1e0. Positive room field+7134 chooses wet behavior and grid collision6(no pits); dry uses5(ground), except thrown state6 uses3(walls).",
+    "Ordinary wet Small Leech normalizes the current target delta, increases internal acceleration by.016/update capped.35, adds that force and applies.96retention. It has no alignment acquisition or wall-stop attack state. Source speed cap is10 after friction. Source edge response reverses the offending velocity axis by-.6 within X10/top20/bottom4room margins.",
+    "Ordinary dry Small Leech applies.7retention while idle and has a1/2chance per ready update to launch a short hop. Impulse is normalized target direction times2+2*U. State7 coasts until Land has occurred, then.7retention, returning to state3after animation completion. Metadata establishes Hop10/Land6,30FPS. Source hop is sprite animation, not an airborne entity-height state.",
+    "The native wet controller also contains owner-orbit, status/fear/confusion and subtype1branches; only exact XML810.0.0 normal hostile behavior is in this slice. Knockback is not disabled by this controller.",
+    "Prey uses shared evasion/cooldown/population/HeadAttack18/Shoot4rules. Its Shoot emits type810variant0subtype0without the Hive AttackFly contact-expiry flag. Live children have full sourceHP5.",
+    "Prey death requiresHP>-20. The shared ceil(4/(1+.2*room population))count is reduced by1and clamped to minimum1; native signedNPC+bc6then subtracts. Ordinary zero counter gives3alone,2with2others,1with5others. The wiki2..3description omits crowd suppression.",
+    "Death selects a free nearby point with source radius80and wet-room permission, adds a random direction times10and calls549d70with initial height-10. The helper emits a Small Leech at the parent, state6, initial vertical velocity-8and planar velocity.04*(target-origin). State6integrates gravity+.7perupdate, sets grid collision3and entity collision0, and restores grid6/entity4/ready3on landing. This thrown birth is distinct from ordinary sprite hops and live spitting.",
+    "Prey,Small Leech XML, room-library habitats and animation metadata are preserved separately. Canyon wet-room mapping, HPx3.2 and world geometry/visual conversion are DeathWard adaptations, not native engine equivalence."
+  ],
+  "records": {
+    "810.0.0": {
+      "xml": {
+        "anm2path": "810.000_small leech.anm2",
+        "baseHP": "5",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "3",
+        "collisionRadius": "17",
+        "friction": "1",
+        "gridCollision": "nopits",
+        "hasFloorAlts": "true",
+        "id": "810",
+        "name": "#SMALL_LEECH",
+        "numGridCollisionPoints": "8",
+        "portrait": "212",
+        "shadowSize": "10",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/00.special rooms.stb": {
+          "templates": 3,
+          "positive_weight_templates": 3
+        },
+        "rooms/27.downpour.stb": {
+          "templates": 87,
+          "positive_weight_templates": 87
+        },
+        "rooms/28.dross.stb": {
+          "templates": 70,
+          "positive_weight_templates": 70
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        },
+        "rooms/greed/27.downpour.stb": {
+          "templates": 21,
+          "positive_weight_templates": 21
+        },
+        "rooms/greed/28.dross.stb": {
+          "templates": 17,
+          "positive_weight_templates": 17
+        }
+      }
+    },
+    "817.0.0": {
+      "xml": {
+        "anm2path": "817.000_prey.anm2",
+        "baseHP": "14",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "0",
+        "collisionMass": "7",
+        "collisionRadius": "13",
+        "friction": "1",
+        "hasFloorAlts": "true",
+        "id": "817",
+        "name": "#PREY",
+        "numGridCollisionPoints": "12",
+        "portrait": "217",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "variant": "0"
+      },
+      "room_library_presence": {
+        "rooms/06.flooded caves.stb": {
+          "templates": 1,
+          "positive_weight_templates": 1
+        },
+        "rooms/27.downpour.stb": {
+          "templates": 76,
+          "positive_weight_templates": 76
+        },
+        "rooms/28.dross.stb": {
+          "templates": 52,
+          "positive_weight_templates": 52
+        },
+        "rooms/36.backwards.stb": {
+          "templates": 4,
+          "positive_weight_templates": 4
+        },
+        "rooms/greed/27.downpour.stb": {
+          "templates": 12,
+          "positive_weight_templates": 12
+        },
+        "rooms/greed/28.dross.stb": {
+          "templates": 11,
+          "positive_weight_templates": 11
+        }
+      }
+    }
+  }
+}

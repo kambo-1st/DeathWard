@@ -1,0 +1,75 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/content/EncounterVariants.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/content/Mechanics.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterBoss.cpp.o
+[  5%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LokiBoss.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelBoss.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelDecoys.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HornfelEscorts.cpp.o
+[ 10%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/RailTraffic.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnvironmentActors.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SegmentedBoss.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ShellBoss.cpp.o
+[ 15%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BoomFlies.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BloatBoss.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Charging.cpp.o
+[ 21%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Companions.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Statues.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/OwnedComponents.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Behavior.cpp.o
+[ 26%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireReactions.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Mortality.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/LobWalkers.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/HeadShooters.cpp.o
+[ 31%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BuzzFlies.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Evaders.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Swimmers.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FireWaves.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Hopping.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownNavigation.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/world/HubWorld.cpp.o
+[ 36%] Building CXX object CMakeFiles/deathward_core.dir/src/world/Animals.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/world/TownCharacters.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/world/ArrivalQuest.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/world/SaveSlots.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FloorEncounters.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CanyonBoss.cpp.o
+[ 42%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FrontierBoss.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Simulation.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Loot.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Shop.cpp.o
+[ 47%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Services.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Dynamite.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/SuppliedBombs.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/FlyBombs.cpp.o
+[ 52%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/EnemyBombs.cpp.o
+[ 57%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Destruction.cpp.o
+[ 57%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/ProjectileMotion.cpp.o
+[ 57%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Enemies.cpp.o
+[ 57%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Encounters.cpp.o
+[ 63%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Monsters.cpp.o
+[ 63%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/MonsterMovement.cpp.o
+/home/kambo/workspace/DeathWard/src/combat/Monsters.cpp: In member function ‘void dw::Simulation::queueMonster(dw::MonsterId, Vector3, dw::EntityId, int, bool, float, int, dw::EntityId, dw::EntityId, int, std::optional<dw::ItemKey>, bool, std::optional<dw::ThrownOffspringRuntime>)’:
+/home/kambo/workspace/DeathWard/src/combat/Monsters.cpp:96:31: warning: missing initializer for member ‘dw::Simulation::MonsterSpawn::thrown’ [-Wmissing-field-initializers]
+   96 |     pendingMonsters_.push_back({id, at, partner, generation, collapsed, healthScale, regrowthSplits, summoner,componentOwner,componentSlot,sourceItem,retained});
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ 63%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Formations.cpp.o
+[ 63%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/Navigation.cpp.o
+[ 68%] Building CXX object CMakeFiles/deathward_core.dir/src/items/Items.cpp.o
+[ 68%] Building CXX object CMakeFiles/deathward_core.dir/src/items/ItemPools.cpp.o
+[ 68%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_prey_tests
+[100%] Building CXX object CMakeFiles/deathward_prey_tests.dir/tests/prey_tests.cpp.o
+/home/kambo/workspace/DeathWard/tests/prey_tests.cpp: In function ‘void {anonymous}::spawning()’:
+/home/kambo/workspace/DeathWard/tests/prey_tests.cpp:82:77: error: cannot convert ‘const std::optional<dw::ThrownOffspringRuntime>’ to ‘bool’
+   82 |   for(const auto &e:q.enemies)if(e.alive&&e.monster==monsterId(810))check(e.thrownOffspring,"thrown state remains through22sourceframes");
+      |                                                                           ~~^~~~~~~~~~~~~~~
+      |                                                                             |
+      |                                                                             const std::optional<dw::ThrownOffspringRuntime>
+/home/kambo/workspace/DeathWard/tests/prey_tests.cpp:9:17: note:   initializing argument 1 of ‘void {anonymous}::check(bool, const char*)’
+    9 | void check(bool ok,const char *message){if(!ok)throw std::runtime_error(message);}
+      |            ~~~~~^~
+gmake[3]: *** [CMakeFiles/deathward_prey_tests.dir/build.make:76: CMakeFiles/deathward_prey_tests.dir/tests/prey_tests.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:3314: CMakeFiles/deathward_prey_tests.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:3321: CMakeFiles/deathward_prey_tests.dir/rule] Error 2
+gmake: *** [Makefile:1617: deathward_prey_tests] Error 2

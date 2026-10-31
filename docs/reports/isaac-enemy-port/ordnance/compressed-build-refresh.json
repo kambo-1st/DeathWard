@@ -1,0 +1,23 @@
+[
+  {
+    "file": "build-web/index.wasm",
+    "raw_sha256": "813e45cc1a7024dac02add58fa2811d9ae443b05b376ee36e1b446a20a7c191e",
+    "previous_gzip_payload_sha256": "5f08cec3dfdecffb12f9bcaf9589d49960e9cfc4fabb5f1a439df9b0813ebc01",
+    "previous_payload_matched": false,
+    "refreshed_payload_matches": true
+  },
+  {
+    "file": "build-web/index.js",
+    "raw_sha256": "deccdae40627245be6277e3fe8222b005f27a77270d9d48074c9b337e3de6285",
+    "previous_gzip_payload_sha256": "12de891f4c9a69df1122e672fbdeeb8c08d9ac2440ec1458ba653c9383a977d1",
+    "previous_payload_matched": false,
+    "refreshed_payload_matches": true
+  },
+  {
+    "file": "build-web/index.data",
+    "raw_sha256": "6ccb9d0a2f899b8abce8d6715497b557aa859aaae6494ceb1298457e1ad34005",
+    "previous_gzip_payload_sha256": "efb518e3579a6bb6a2dc27495a3d9b72698b4cdd6eb1b9b685b92eb38f31b2c1",
+    "previous_payload_matched": false,
+    "refreshed_payload_matches": true
+  }
+]
