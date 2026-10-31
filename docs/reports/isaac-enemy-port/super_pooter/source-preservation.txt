@@ -1,0 +1,1 @@
+{"result": "pass", "mode": "preserved", "windows": 6, "pair": {"mode": 1, "forward": 0.9610000252723694, "side": 0.2759999930858612, "half_angle_degrees": 16.024108876989324, "speed_multiplier": 0.9998485109039719, "default_spread": 1}}

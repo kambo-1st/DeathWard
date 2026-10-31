@@ -1,0 +1,5 @@
+TUFF_MOVEMENT paired_six=1 suppliers=2 cardinal_roaming=1 path_following=1 bounded_trail=1 atomic_spawn=1
+TUFF_ARMOR separate_hp=1 bullets_blocked=1 real_explosion=1 near_25=1 far_14=1 no_spillover_policy=1
+TUFF_TOPOLOGY head_promotion=1 rear_split=1 short_fragment_policy=1 aggregate_reward_once=1 inactive_persistence=1
+TUFF_ATTACKS armored_ink=1 exposed_sucker=1 body_spray=1 cardinal_ordinal_deaths=1 damaging_black_creep=1
+PASS segmented Tuff encounter, armor, topology, movement, children and aggregate reward

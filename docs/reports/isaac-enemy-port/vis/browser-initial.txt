@@ -1,0 +1,38 @@
+START vis
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME vis 5 volleys 0
+FRAME vis 125 volleys 1
+FRAME vis 245 volleys 2
+PASS vis
+START double
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME double 5 volleys 0
+FRAME double 125 volleys 1
+FRAME double 244 volleys 2
+PASS double
+START scarred
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME scarred 5 volleys 0
+FRAME scarred 125 volleys 1
+FRAME scarred 244 volleys 2
+PASS scarred
+START vis-cover
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME vis-cover 5 volleys 0
+FRAME vis-cover 124 volleys 1
+FRAME vis-cover 244 volleys 2
+PASS vis-cover
+START double-river
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME double-river 5 volleys 0
+FRAME double-river 124 volleys 0
+FRAME double-river 244 volleys 0
+FRAME double-river 364 volleys 0
+AssertionError [ERR_ASSERTION]: real laser attack
+    at /home/kambo/workspace/DeathWard/web/vis-test.cjs:60:4 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

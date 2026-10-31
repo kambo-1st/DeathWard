@@ -1,0 +1,90 @@
+[
+  {
+    "name": "air",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.3.0",
+      "--frames",
+      "78",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/tainted_hopper/native-air.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/tainted_hopper/native-air.png",
+    "log": "docs/reports/isaac-enemy-port/tainted_hopper/native-air.txt"
+  },
+  {
+    "name": "first",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.3.0",
+      "--frames",
+      "94",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/tainted_hopper/native-first.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/tainted_hopper/native-first.png",
+    "log": "docs/reports/isaac-enemy-port/tainted_hopper/native-first.txt"
+  },
+  {
+    "name": "fourth",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.3.0",
+      "--frames",
+      "178",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/tainted_hopper/native-fourth.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/tainted_hopper/native-fourth.png",
+    "log": "docs/reports/isaac-enemy-port/tainted_hopper/native-fourth.txt"
+  },
+  {
+    "name": "resident",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-29.3.0",
+      "--frames",
+      "180",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/tainted_hopper/native-resident.png",
+      "--resident-seed",
+      "22",
+      "--resident-floor",
+      "7"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/tainted_hopper/native-resident.png",
+    "log": "docs/reports/isaac-enemy-port/tainted_hopper/native-resident.txt"
+  }
+]

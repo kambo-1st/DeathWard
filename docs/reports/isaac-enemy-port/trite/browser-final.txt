@@ -1,0 +1,12 @@
+START isolated browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS isolated
+START cover browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS cover
+START river browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS river
+START resident browser 141.0.7390.37
+GL ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+PASS resident

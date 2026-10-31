@@ -1,0 +1,82 @@
+{
+  "scope": "Original style procedural Tainted Hopper: isolated air/ring poses and a natural mixed encounter. Screenshots establish the inspected views only, not all-angle readability or controlled performance.",
+  "final_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-air.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Large red headless body and asymmetric arms visibly airborne with separate ground shadow; original scene palette retained."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-fourth.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Twelve-spoke ring visible around the grounded body with projectile shadows; some older shots are farther away. Screenshot alone does not establish exact recurrence."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-resident.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Red armed Tainted Hopper is distinguishable from smaller purple Hoppers, but overlaps the player near the canyon edge at this instant. Body visible through current occlusion treatment; overlap limits readability."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/isolated-air.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Large red headless body and asymmetric arms are elevated above a separate shadow. Matches inspected Linux air presentation."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/isolated-fourth.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Twelve-spoke final ring is clearly visible with projectile ground shadows; original canyon material/palette retained."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/cover-cover.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Actual elevated body clears the two-unit crate; shadow, player and cover remain distinguishable."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/river-river.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Body is visibly over the deep-water channel, with a water shadow; native and browser telemetry separately validate safe landing."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/death-death.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": false,
+      "notes": "Body removed after one kill; coin remains and earlier projectiles continue toward the room boundary. No offspring or lingering false body."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/resident-resident.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Large red Tainted Hopper and its four-shot cross contrast with smaller purple Hoppers in the unchanged generated mixed encounter. Player proximity can still make overlap difficult."
+    }
+  ],
+  "rejected_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-first.png",
+      "reason": "Inspected but no first-ring projectiles are visibly apparent at this capture. Native log reports four emitted shots; use a later visually verified ring capture instead. Do not treat this image as first-ring evidence."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/isolated-first.png",
+      "reason": "Inspected but first ring is no longer visible at screenshot time; accepted natural-resident image shows the four-shot cross. Counts/timing are asserted separately."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-first-emission.png",
+      "reason": "Extra frame90 capture shows emitted shots overlapping the stationary player/body; insufficient separation to use as a readable four-shot formation image. Retained as an overlap limitation."
+    }
+  ]
+}

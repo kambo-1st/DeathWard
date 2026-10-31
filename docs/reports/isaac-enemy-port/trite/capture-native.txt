@@ -1,0 +1,6 @@
+PASS ground
+PASS air
+PASS landed
+PASS cover
+PASS river
+PASS resident

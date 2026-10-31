@@ -1,0 +1,1 @@
+PASS native supplied bomb mouse approach, empty-ground throw, arrows over HUD, B placement and zero-inventory HUD throw

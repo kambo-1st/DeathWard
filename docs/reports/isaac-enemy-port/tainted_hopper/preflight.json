@@ -1,0 +1,33 @@
+{
+  "status": "Source preflight only; no dedicated Tainted Hopper runtime or checklist increment.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "last_validated_checkpoint": "docs/reports/isaac-enemy-port/eggy/checkpoint.json",
+  "next": [
+    "Implement externally configured four-landing ring sequence and alternating Hop/Hop2 presentation.",
+    "Trace installed shieldStrength30 adaptive armor; keep its regular-enemy dependencies ahead of more bosses.",
+    "Validate exact sequence, capacity/stun/re-entry, natural late-floor placement, Linux/WASM visuals, balance and performance."
+  ],
+  "source_sha256": {
+    "docs/reports/isaac-enemy-port/tainted_hopper/record.json": "daf77bb9746c039f1902a453c0f10d038f6c4ec8dcba2455698a4e01397b9fe5",
+    "docs/reports/isaac-enemy-port/tainted_hopper/wiki-source.json": "2c058ff09b47d6abadc7c899d85f1051a9a7f75dce8191f74107a6a68fd6f767",
+    "docs/reports/isaac-enemy-port/tainted_hopper/armor-wiki-source.json": "92c3f1fb5d6771fd2ef538180d1bb796fedc065f1e61be8978db06d37a1b4a59",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source-review.md": "5d706cd70aba25623a8f0e9973f14e6969cfc07c9d654549a0521b4e42ce9a07",
+    "docs/reports/isaac-enemy-port/tainted_hopper/extract-metadata.py": "ef081a9b56ce10b53de2de601e7c849927ca59a32d590191d32867241906e96b",
+    "scripts/isaac-reference/analyze-tainted-hopper.py": "eab49fa2d96528ad3ee3265e9d6350f7da2748f04f1c340eb009913760c687f2",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/fire_projectiles.asm": "2d0a0127cface958faafe4918f9dc1da192324a9d65ef901eaef5dba90a0cbaf",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/grid_position.asm": "7f134b6ab787fa769fe76e2642d9fe8070ec88ba5e9c7fe64b328f01cd569b46",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/projectile_params.asm": "40daa567d9e2d04ad8d9cc7f37d83d353f99f2864ae117198c0c1f7daf2622b2",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/grid_index.asm": "dea300527baaf74d862d6a894dc634aa2024aaa088870cbc0c9164cc25ca360d",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/clamp_wrapper.asm": "2881db21f562cbcce4ddf5613c3e47f4c1187b93a29af3e6d500c8caea4fbb2c",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/controller.asm": "36b274c004b56a8a12c71ff0c02be30750a9d6684f1e9b85e661a48fc628ff3a",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/normal_target_helper.asm": "5fa37a34aac81e4ff33ddb31f28b041323525d95f594029167fd3e0857ed2ae2",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/event_masks.asm": "6bad9dd0abb002d729aefe253e0f20d830a5e77486a1a4a6c09c034ec04bd046",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/landing_effect.asm": "d176b4e6ce28f783cf38ae7cdf0025f8833e3471c2279cbe352c59ffe9f83e47",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/manifest.json": "d2f49c090313b4b6b9791d9a7b8b471f3e02d10e1fa67b7da2a252cb15d0f0b6",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/entity_defaults.asm": "93f5ef5527954173018442017e6937262ea7f73d3a079f9abeadd98f061c01c9",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/current_event_wrapper.asm": "0b3047f7e7fe72954c8e7e8cd142562639cea38374929ab6a5fdc15181c138f4",
+    "docs/reports/isaac-enemy-port/tainted_hopper/source/entity_movement.asm": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0",
+    "docs/reports/isaac-enemy-port/tainted_hopper/animations/029.003_Ultra Hopper.anm2": "c364fa068ccc535134119112d0dec9d69ad267840002e59e518b6343f97c405e",
+    "docs/reports/isaac-enemy-port/tainted_hopper/animations/manifest.json": "f5966245c724c509ff105842d85313b0bcc4b6f7343b75369c1d2ac7560baf2b"
+  }
+}

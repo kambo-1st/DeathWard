@@ -1,0 +1,10 @@
+PASS tainted-volley
+PASS tainted-cover
+AssertionError [ERR_ASSERTION]: physical body crosses deep river and returns to land
+    at /home/kambo/workspace/DeathWard/web/tainted-pooter-test.cjs:70:30 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}

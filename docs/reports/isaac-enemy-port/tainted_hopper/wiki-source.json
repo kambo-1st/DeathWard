@@ -1,0 +1,179 @@
+{
+  "title": "Hopper",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Hopper",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267012",
+  "revision": 267012,
+  "timestamp": "2026-07-29T16:10:16Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "A Hopper jumps around the room, doing contact damage to Isaac. They jump slowly around the room until Isaac gets close to them, at which point they start chasing Isaac. They can jump across rocks and gaps.\n\nHoppers transform into Flaming Hoppers after touching a Fire Place, fire spawned from Fire Mind or [Repentance] Red Candle, or if they touch a Hot Bombs bomb."
+    },
+    {
+      "heading": "Variations",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Flaming Hopper",
+      "level": 3,
+      "text": "Flaming Hoppers behave similarly to normal Hoppers in that they will randomly hop around the room, following Isaac only when within a certain range. Unlike normal Hoppers, Flaming Hoppers have a larger range of detection and can hop both further and faster.\n\nFlaming Hoppers will still take damage from the burning status effect."
+    },
+    {
+      "heading": "Leaper",
+      "level": 3,
+      "text": "Leapers behave similarly to Hoppers, hopping around the room and chasing Isaac when he gets close but can also jump into the air and land on Isaac's position, firing four blood projectiles in the cardinal directions upon landing."
+    },
+    {
+      "heading": "Sticky Leaper",
+      "level": 3,
+      "text": "Sticky Leapers behave like normal Leapers but spawn a pool of Black Creep and spew several tar shots around themselves upon landing."
+    },
+    {
+      "heading": "Eggy",
+      "level": 3,
+      "text": "Eggies behave similarly to Hopper jumping around the room and chasing Isaac, spawning white creep wherever it jumps. When it takes enough damage, it spawns a group of Swarm Spiders. After dying its body remains for a few seconds where it can delay the room from being completed."
+    },
+    {
+      "heading": "Tainted Hopper",
+      "level": 3,
+      "text": "Tainted Hoppers are much stronger versions of Hoppers. They jump and twirl consecutively around the room, shooting 4 rings of projectiles, each increasing in size compared to the last. The first ring has 4 projectiles, the second has 6, the third has 8, and the last has 12.\n\nThey are exclusive to the Ascent to Home."
+    },
+    {
+      "heading": "Gallery",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Trivia",
+      "level": 2,
+      "text": "\u2022 Hoppers share similar movement patterns with Tektites from The Legend Of Zelda.\n\n\u2022 Death's Head, Flesh Death's Head, Stoney, Cross Stoney, and Eggies are the only non-boss enemies with a death animation."
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "id": "29",
+        "base hp": "10",
+        "environment": "Basement / Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nDepths / Dank Depths / \nboss / challenge /",
+        "behavior": "Slowly hops around the room, doing contact damage. Can turn into a Flaming Hopper by jumping into Fire Places or other fires."
+      },
+      "group": "entity",
+      "id": 29,
+      "name": "Hopper",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "name": "Flaming Hopper",
+        "id": "54",
+        "base hp": "20",
+        "environment": "Basement / Burning Basement / \nCaves / Catacombs / \nDepths / Necropolis / Dank Depths /",
+        "replace": "[Afterbirth onward] Hopper",
+        "replace chance": "60%",
+        "replace notes": "in Burning Basement",
+        "behavior": "Quickly hops around the room, doing contact damage. Covers a larger distance than the regular Hopper."
+      },
+      "group": "entity",
+      "id": 54,
+      "name": "Flaming Hopper",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 3,
+      "fields": {
+        "name": "Leaper",
+        "id": "34",
+        "base hp": "25",
+        "environment": "Caves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nchallenge /",
+        "behavior": "Hops around the room, doing contact damage. Occasionally jumps high into the air, dropping down onto Isaac's position while firing 4 blood shots in the cardinal directions."
+      },
+      "group": "entity",
+      "id": 34,
+      "name": "Leaper",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        3
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 4,
+      "fields": {
+        "dlc": "r",
+        "name": "Sticky Leaper",
+        "variant": "1",
+        "base hp": "28",
+        "environment": "Dank Depths / \nchallenge /",
+        "behavior": "Hops around the room, dealing contact damage. Occasionally jumps high into the air, dropping down onto Isaac's position while creating a chaotic burst of tar shots in all directions and a puddle of slowing black creep."
+      },
+      "group": "entity",
+      "id": 34,
+      "name": "Sticky Leaper",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        4
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 5,
+      "fields": {
+        "dlc": "r",
+        "name": "Eggy",
+        "id": "29",
+        "variant": "2",
+        "base hp": "20",
+        "stage hp": "2",
+        "environment": "Catacombs / \nNecropolis / \nUtero / \nCorpse / \nchallenge /",
+        "behavior": "Hops aimlessly around the room, spawning slowing white creep wherever it hops. Spawns a group of Swarm Spiders upon death."
+      },
+      "group": "entity",
+      "id": 29,
+      "name": "Eggy",
+      "variant": 2,
+      "subtype": 0,
+      "section_indices": [
+        5
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 6,
+      "fields": {
+        "dlc": "r",
+        "name": "Tainted Hopper",
+        "variant": "3",
+        "base hp": "80",
+        "environment": "Basement / \nFound on the Ascent to Home.",
+        "behavior": "Jumps and twirls around the room, shooting 4 rings of projectiles that increase in size with each shot."
+      },
+      "group": "entity",
+      "id": 29,
+      "name": "Tainted Hopper",
+      "variant": 3,
+      "subtype": 0,
+      "section_indices": [
+        6
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+BUZZ path=21.8698 side=1.36487
+FAIL pair preserves attribution and one hostile multiplier

@@ -1,0 +1,53 @@
+{
+  "scope": "Regular Tainted Pooter14.2.0 and reusable bounded, impact-only backward projectile splitting. Its dedicated Ascent-equivalent route remains pending.",
+  "mechanics_fingerprint": "b0d8066e316c078e",
+  "changes": [
+    "Replace generic Tainted Pooter chase/spread with configured shared buzz, source health/timing and unnormalized four-vector volley.",
+    "Reusable external impact-only backward pair with child-size/speed/offset, nonrecursive ownership and immutable birth snapshot.",
+    "Atomically reserve roots/children; retry stopped impacts under capacity pressure; clip backward spawn against scenery.",
+    "Retain dedicated placement requirement; no ordinary-stage expansion or change to player defaults, Original visuals or expedition structure."
+  ],
+  "adaptations": [
+    "Source75HPx3.2=240, contact0 and retained physical radius.6. Existing Original low-poly artwork, player100HP and damage defaults remain unchanged.",
+    "Shared30Hz buzzing uses the established local world scale.1, pursuit/jitter/friction, local room-edge handling and24speed safety cap. Source check7, cooldown63 from acquisition, Attack14 and Shoot6 are external values. Tiny float remainder is clamped so cooldown expiry cannot miss a source check.",
+    "Mode4 four-shot coefficients are (.99,+/-.1668) and (.8226,+/-.43956) times base21 local speed, retaining the outer slowdown without normalization. Root radius is1.4x.22=.308. Current physical target is sampled at Shoot, including vertical pitch.",
+    "Each physical terminal impact emits two ordinary, nonrecursive children backward+/-24degrees, speed30, radius.22, damage10before the existing hostile multiplier, and local offset1. Parent source attribution survives its death. Root/child lifetime5seconds is a local safety bound; expiry and explicit cancellation do not split.",
+    "Native projectile height/falling coefficients are retained as evidence, not reproduced here. Roots use DeathWard3D aim; children remain horizontal at impact elevation. Spawn offset is clipped against current solid scenery so it cannot teleport across thin walls. Native default height, negative-acceleration curve and entity-time integration remain separate parity work.",
+    "Four roots and each two-child split are admitted atomically within local projectile/queue/chain capacity. Saturated impacts retain a single stopped carrier and retry; no repeated damage or partial pair. This bounded runtime policy is DeathWard-specific.",
+    "Skatole suppresses all Pooter variants through the native type14 branch, including14.2. The incomplete item remains outside natural reward pools.",
+    "Ascent-only enemy remains deliberately excluded from ordinary stage pools. Isolated debug captures validate implementation but do not establish natural encounter reachability."
+  ],
+  "native": {
+    "covered_suites": 66,
+    "passed": 66,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/tainted_pooter/native.xml",
+    "behavior": "docs/reports/isaac-enemy-port/tainted_pooter/behavior-final.txt",
+    "scope": "Full66-suite final native run; focused Tainted and shared buzzing suites also passed. A pre-validation timing failure exposed float residuals postponing the63-frame delay by one acquisition interval; fixed before both final builds. The legacy monster test was corrected to reject timeout splitting.",
+    "tests": "Source health, harmless contact, Shoot6/Attack14/delay63, current-target four-vector volley without normalization, atomic capacities, Skatole, windup death, released roots surviving owner death, wall/player/god-mode impact, exact backward pair/speed/size/attribution, no recursion/timeout/cancellation splitting, retained carrier retry and thin-wall clipping, live bounce separation, invalid config, immutable reload snapshots and ordinary-pool exclusion."
+  },
+  "browser": {
+    "cases": 5,
+    "report": "docs/reports/isaac-enemy-port/tainted_pooter/web/results.json",
+    "errors": [],
+    "scope": "Final WASM production mechanics: ordinary volley, cover, river, Skatole and death. Asserts source-scaledHP, real movement, root coefficients/radii/damage, physical pitch and backward child angle/size/speed. No dedicated natural route is claimed.",
+    "note": "Initial7-second river observation was too short for the slow buzzing body. Extending that case to a30-second maximum allowed the production actor to cross and return to land by frame475, then stopped early. Initial log/results preserved; no runtime change for this observation-window correction."
+  },
+  "visual": {
+    "result": "Inspected Original low-poly body, four-shot spacing and airborne shadow in native/browser captures, native scene after cover crossing and browser flight over deep water. No all-angle occlusion or performance acceptance.",
+    "linux": [
+      "docs/reports/isaac-enemy-port/tainted_pooter/native-volley.png",
+      "docs/reports/isaac-enemy-port/tainted_pooter/native-cover.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/tainted_pooter/web/tainted-volley.png",
+      "docs/reports/isaac-enemy-port/tainted_pooter/browser-river.png"
+    ]
+  },
+  "remaining": [
+    "Add a source-appropriate dedicated Ascent-equivalent encounter without changing the established4-8floor expedition structure. No new natural route is claimed by this slice.",
+    "Native projectile height/falling curve, time-scale/status/control interactions, full Skatole and exact animation/integration parity remain pending.",
+    "Broader build/encounter balance, all-angle occlusion and controlled rendered Linux/WASM performance remain unaccepted. Zero records certified complete; all653records and six gates remain required.",
+    "Continue remaining regular fly families and their dependencies before further boss/Hornfel work."
+  ]
+}

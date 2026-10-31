@@ -1,0 +1,16 @@
+{
+  "passed_scoped_suites": 7,
+  "suites": {
+    "mechanics_content": "docs/reports/isaac-enemy-port/vis/native-width-regression.txt",
+    "spitty_family": "docs/reports/isaac-enemy-port/vis/native-width-regression.txt",
+    "cardinal_walkers": "docs/reports/isaac-enemy-port/vis/native-width-regression.txt",
+    "brain": "docs/reports/isaac-enemy-port/vis/native-width-regression.txt",
+    "baby_family": "docs/reports/isaac-enemy-port/vis/native-width-regression.txt",
+    "monster_behaviors": "docs/reports/isaac-enemy-port/vis/native-final-correction.txt",
+    "vis_family": "docs/reports/isaac-enemy-port/vis/native-final-correction.txt"
+  },
+  "registered": 90,
+  "scope": "Current batch scoped regression only; previous Baby checkpoint all89 result is historical.",
+  "native_executable_build_exit": 0,
+  "wasm_build_exit": 0
+}

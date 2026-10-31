@@ -1,0 +1,19 @@
+{
+  "scope": "Partial normal-hostile Tainted Hopper29.3.0 target hopping, four-stage physical rings and ordinary lifecycle.",
+  "complete": false,
+  "adaptations": [
+    "Source30Hz within60Hz simulation, planar distance x.1, velocity x3 and HP x3.2.80HP becomes256; contact2 becomes base20 before the existing hostile multiplier. Protagonist defaults unchanged.",
+    "Shared physical hop predicts legal ground landings. Source Land restarts chain immediately when the projected ground is legal; otherwise the current flight finishes before chaining. A blocked snapped target can use a legal unsnapped candidate.",
+    "Source four stages emit4/6/8/12 fixed-world-angle shots at24/30/24/30 world speed. Native falling-speed damping.9 and acceleration.03 map to upward velocity-.15..+.15, gravity1.35,height1.15 with30Hz endpoints preserved.",
+    "Actual swept3D floor/wall/body collisions replace native grid-height thresholds. Projectile radius.18 and six-second safety life are authored. Emitted physical shots survive the owner and hold local completion.",
+    "Queue limits retain whole rings at their original landing positions, at most one cycle. Stun delays emission; death discards un-emitted rings. Inactive-room suspension preserves phases. These are explicit local policies.",
+    "Original headless procedural silhouette gains visible arms and alternating full-hop twists. No source artwork, global filter or geometry replacement.",
+    "Source Ascent-only habitat is adapted into a sparse band3 pursuit specialist,weight1,cost6,cap1. Natural Rourke seed22/floor7/room1; no first-floor or tutorial placement."
+  ],
+  "remaining": [
+    "Adaptive shieldStrength30 armor is NOT implemented. Installed history/soft-cap formula is preserved; source damage batching, bypass mapping, initial-protection and large-hit/version reconciliation remain required.",
+    "Native special-status/champion/control branches, fear/shrink/charm/familiar interactions and exact RNG/update ordering remain open. Friendly shots currently use the local player-attack adapter, not certified parity.",
+    "Native fixed-grid collision and room geometry differ from actual3D terrain; landing deferrals, sphere radius, expiration and room-completion policies are documented adaptations.",
+    "Native placement probabilities, Ascent unlock/context parity, starting-kit and varied-build balance, all-angle readability and controlled Linux/WASM performance remain open. No complete port claimed."
+  ]
+}

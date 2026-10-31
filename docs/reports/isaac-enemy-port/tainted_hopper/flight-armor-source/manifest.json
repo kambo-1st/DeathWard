@@ -1,0 +1,100 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "constants": {
+    "flight_retention": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "flight_base_accel": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "random_fall_width": {
+      "address": "0xb6a350",
+      "value": 0.20000000298023224
+    },
+    "random_fall_center": {
+      "address": "0xb6a480",
+      "value": 0.5
+    },
+    "armor_floor": {
+      "address": "0xb6a2b4",
+      "value": 0.09000000357627869
+    },
+    "armor_correction": {
+      "address": "0xb6a330",
+      "value": 0.18000000715255737
+    },
+    "fps": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/ring_fall_modifier.asm",
+      "start": "0x515f20",
+      "end": "0x515f4c",
+      "raw_sha256": "6154564508f67c6bb1010bd68c2100df6f8a2fa0aad13b7033b94fe5f91b632c",
+      "sha256": "95be5ef4143b20e7b16335a8a57cdbb9c84fa38dc1c0a796e67ee391fb05475f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/projectile_defaults.asm",
+      "start": "0x62f1ef",
+      "end": "0x62f2d0",
+      "raw_sha256": "9e4fa495b866108d9027dbd320e3b46a557bcd63d521affce743a9ecc4cbfdb2",
+      "sha256": "7c63ab8d86672d6aa14403dd3762584f8ead6d1d6e28946b6b60483c6ea20b52"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/projectile_modifiers.asm",
+      "start": "0x6a3059",
+      "end": "0x6a3372",
+      "raw_sha256": "ab08393624e10773b29934090e684d1075af9a7a45fb80b046fe99b5bf544974",
+      "sha256": "06593fc18f35e8aecbf1f3e239e18bd59c67d0e1027df74471ae1d29de170cb3"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/flight_integrator.asm",
+      "start": "0x636567",
+      "end": "0x6365d5",
+      "raw_sha256": "e36d0d4128d9429273b807db099763ca63eae641b49ffaf016bafbeec05a697b",
+      "sha256": "6d4276f523c6bb04773dcddb94d31a06ec64c31db9b9c131fcc1eef42cdd082f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/time_scale_retention.asm",
+      "start": "0x65c960",
+      "end": "0x65c98a",
+      "raw_sha256": "1e437a595421fcef0cb21856fb649db4f94646cfc06b7b72c0028fb1892e53b8",
+      "sha256": "ee77d50d106e676e5643eb8b8abc50bf0b22ba07a134311b058007c0266a1ca8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/npc_armor_defaults.asm",
+      "start": "0x68fbfc",
+      "end": "0x68fc1a",
+      "raw_sha256": "d5101555d066cabd0e76595891e08b5c9f6bb9e2b07a40bb6762f874df17c606",
+      "sha256": "cf51438a2cccd8e4053a0ecbe2f72d523a4c7c36aa8f3727a2f22f32c16045f6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/npc_armor_config.asm",
+      "start": "0x692a10",
+      "end": "0x692a90",
+      "raw_sha256": "a8659adb0374a395222811268bf1417e875223fc5e25dcffd9de253f463ee7a9",
+      "sha256": "99e723bce6ee64ea314499da4026dbd7aea8063e3e931f4a5a8f1dc167946d9d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/npc_armor_update_call.asm",
+      "start": "0x69b66e",
+      "end": "0x69b691",
+      "raw_sha256": "21d4595d749b7cca3eb042be2819f02279c0f55ed6e35309665fdf6725592879",
+      "sha256": "2e01fe1767c57671839b5c0e863e716eec6b999b550631afd501dd0a75ecf3fd"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/npc_adaptive_armor.asm",
+      "start": "0x6adfd0",
+      "end": "0x6ae315",
+      "raw_sha256": "8d31f685b0906ced0fa051058986cdc82e63702c4af2f89227ce10d8a1a23576",
+      "sha256": "f02210e17646dba70b1962e2e23bf267d845837beedb0bfe7e267a72a8190744"
+    }
+  ],
+  "scope": "Physical ring flight plus verified NPC adaptive-history formula. Armor implementation, initial-protection and large-hit claims are NOT certified."
+}

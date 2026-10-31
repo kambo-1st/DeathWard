@@ -1,0 +1,11 @@
+{
+  "source": "reference/isaac-repentance-1.7.9b/loose/resources/scripts/enums.lua",
+  "source_sha256": "dce1892f51e4e645d66ac8ffb31d217e8c36a32457c1005dd128978141103dc5",
+  "extracted": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-source/damage-flags.lua",
+  "sha256": "22b6d2d7df11e264b1cdc22da9c282f74d5609bdb2b01b07c261a97165e4e8f3",
+  "mappings": {
+    "0x2000": "DAMAGE_INVINCIBLE",
+    "0x40000000": "DAMAGE_IGNORE_ARMOR"
+  },
+  "note": "Installed API names identify the verified native masks. Exact producer mapping from weapons/explosions remains to be implemented and tested."
+}

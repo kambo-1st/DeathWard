@@ -1,0 +1,10 @@
+{
+  "status": "Resolved test assumptions and visual issue; initial log/capture retained where available.",
+  "findings": [
+    "Replenishment first assertion sampled before float cooldown crossed zero; allow the next fixed tick. No runtime timing changed.",
+    "Held-fuse test waited beyond explosion, allowing automatic contact pickup of fresh stock. Final assertion stops at first actual explosion.",
+    "Room-pause test left player on original supply point and picked up another replacement. It observed two explosions. Move player away to isolate the inactive bomb.",
+    "First carried visual overlapped hat. Raise display only by 0.8 units; physical explosion center unchanged.",
+    "First browser death probe used unsupported query enemy-kill instead of enemy-execute, so it never killed the supplier. Corrected harness parameter; no runtime change."
+  ]
+}

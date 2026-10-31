@@ -1,0 +1,88 @@
+{
+  "scope": "Eleven individually inspected final Original-style images: five Linux and six production WASM. Ground/preparation/air, actual cover and water traversal, and a natural mixed encounter are visible. These are static presentation checks; full combat readability, balance and controlled performance remain open.",
+  "final_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/native-air.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Original orange spider body clearly airborne with separated ground shadow; no aimed projectile line."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/native-cover.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Spider body raised above the crate edge with legs visible; actual-height cover crossing, checked separately by collision tests."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/native-river.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Airborne spider at river bank with clear water context and detached shadow. This static frame alone does not prove crossing; native fixture and browser water probes supply that evidence."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/native-landed.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Grounded orange spider beside player with attached shadow after its hop; body and legs remain readable."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/native-resident.png",
+      "platform": "Linux",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Orange Trite visible in natural mixed spider encounter beside a river. It is distinct from smaller yellow/purple spiders; full mixed-combat acceptance remains open."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/web-final/isolated-ground.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Grounded orange spider is unobscured next to the protagonist after camera settling; legs and attached shadow readable."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/web-final/isolated-air.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Airborne orange body and legs clearly separated from ground shadow; actual elevation evident and no misleading aimed ray."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/web-final/isolated-prepare.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Grounded preparation frame shows orange body, dark legs and small body ring; no long ranged-attack warning."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/web-final/cover-cover.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Orange spider and legs visibly clear the crate top at real height; cover remains solid and shadowed."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/web-final/river-river.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Airborne spider visibly crosses water channel with detached shadow on water. Browser waterBlocked probe confirms it is over impassable water, not a ford."
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/web-final/resident-resident.png",
+      "platform": "WASM",
+      "inspected": true,
+      "body_visible": true,
+      "notes": "Orange Trite airborne on the bank in naturally selected mixed spider room; color/size distinct from nearby yellow and purple spiders. Five threats remain; full mixed-combat readability is not certified."
+    }
+  ],
+  "rejected_images": [
+    {
+      "path": "docs/reports/isaac-enemy-port/trite/native-ground.png",
+      "reason": "Frame20 is too early: camera still settling and a foreground cliff conceals the actor. Retained as rejected capture; final grounded evidence uses native-landed and WASM isolated-ground."
+    }
+  ]
+}

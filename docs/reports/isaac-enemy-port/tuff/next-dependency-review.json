@@ -1,0 +1,46 @@
+{
+  "status": "Next dependency analysis only; none of these three records is implemented by this checkpoint.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "sources": {
+    "fly_bomb": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266992",
+    "shell": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022"
+  },
+  "ids": [
+    "819.0.0",
+    "819.1.0",
+    "19.3.0"
+  ],
+  "order": [
+    {
+      "id": "819.0.0",
+      "source_contract": "Flying pursuit with a circling tendency. Ordinary death produces a delayed tiny bomb. Player contact instead detonates immediately: half-heart player and 40 monster damage, versus one-heart player and 100 monster damage for the delayed bomb. Source base HP 7.",
+      "implementation": "Distinct death causes, real swept player contact, one explosion path per death, source identity for delayed ordnance, explicit neutral/player-versus-enemy damage provenance. Do not reuse an ordinary damaging flyer or instant-explosion placeholder. Preserve bomb damage to other enemies, including segmented armor.",
+      "routing": "28 positive Mines and 23 positive Ashpit templates; standard Broken Quarry analogue, plus actual Shell offspring. No Flooded Quarry or opening assignment merely because both belong to band 1.",
+      "unknowns": "Native steering/orbit strength, radius, speed, contact explosion radius and delayed fuse are not established. Review exact tiny-bomb XML/animation identity before assigning one. Independent damage scaling for armor versus player HP must be explicit."
+    },
+    {
+      "id": "819.1.0",
+      "source_contract": "Three invulnerable orbiters owned by the Boom Fly produced by The Horny Boys. Owner death turns them into delayed tiny bombs; player contact can still trigger their immediate explosions.",
+      "implementation": "Must attach to a real owning Boom Fly; three stable slots, no independent spawn, no duplicate owner-death bombs or room-clear rewards. Keep owner lifecycle separate from ordinary health damage.",
+      "routing": "Dedicated Horny Boys dependency; no authored independent ordinary route. Debug registry entry is not reachability.",
+      "unknowns": "Owner identity/champion semantics and source orbit timing still require review."
+    },
+    {
+      "id": "19.3.0",
+      "source_contract": "Two five-part chains: four body parts and an invulnerable head. Diagonal flight and wall reflection, slight nearby-player steering. Armor loss grounds flesh, slows attached chain, changes middle parts to aimed triples and ends to Fly Bomb production. Detached flesh groups pursue slowly; lone flesh stays stationary. Head dies once it has no body parts.",
+      "implementation": "Extend group lifetime/ordered membership, but supply a separate Shell movement/topology controller. Flight state is per part. Do not copy Tuff explosive resistance, acceleration, all-ground motion or short-fragment reattachment.",
+      "routing": "One positive Ashpit template and Ashpit boss pool; standard Broken Quarry with one or two suppliers. Needs ground-safe routes for detached flesh while head can fly.",
+      "unknowns": "Pinned prose says cannot split, then describes promotion when the three-part side has an armored endpoint; shorter-side armored parts disappear while flesh survives. Implement only after recording explicit head/body cut examples and handling ambiguity. HP 35 applies to body rather than invulnerable head; no sourced Tuff resistance for Shell."
+    }
+  ],
+  "required_checks": [
+    "Real player-contact versus shot-death explosions, damage recipients and exactly-once ordnance.",
+    "Hostile family explosions stripping Tuff/Shell armor without ordinary inventory or item modifiers.",
+    "Bomb and child lifetime through room departure, capped queues, owner death, simultaneous blasts.",
+    "Shell over-cover flight plus grounded flesh collision and no trapped mandatory segments.",
+    "Head/body aggregate completion, suppliers, source stage constraints, existing Peep/Bloat regressions.",
+    "Native/WASM Original captures and starting-kit probes on actual generated arenas."
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Dependency design and tests are DeathWard analysis.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

@@ -1,0 +1,16 @@
+PASS WASM supply-stock: actual supplied-bomb lifecycle
+PASS WASM supply-carry: actual supplied-bomb lifecycle
+PASS WASM supply-throw: actual supplied-bomb lifecycle
+Browser errors: []
+Failure state: {"state":{"frame":45,"screen":1,"hub":0,"paused":false,"menu":false,"x":-80,"z":-118,"zoom":160,"room":8,"enemies":1,"shots":0,"audio":0,"music":0.4000000059604645,"theme":1,"history":0,"error":"","editor":false,"score":2,"editorSaved":false,"editorStatus":"","money":0,"earned":0,"coinX":-1,"coinY":-1,"coinValue":0,"artPoc":false,"missionShadows":true,"decorations":163,"roomDecorations":37,"vegetationDensity":100,"vegetationCount":63,"groundDetail":true,"celShading":false,"visualStyle":0,"visualStyleName":"Original","shopRoom":4,"shopOpen":false,"shopX":1504.204345703125,"shopY":-879.9886474609375,"spent":0,"dynamite":4,"dynamiteArmed":false,"litDynamite":0,"explosions":0,"dynamiteThrowMode":false,"placedDynamite":0,"canyonRiver":true,"riverActive":true,"riverRoom":0,"riverKind":1,"roadRoom":0,"sandstorm":false},"probe":{"type":809,"variant":0,"subtype":0,"alive":true,"hp":64,"state":0,"graphState":0,"x":-80,"z":-126,"shots":0,"projectiles":0,"threats":0,"kills":0,"entity":18,"playerX":-80,"playerZ":-118,"actors":[{"type":809,"variant":0,"subtype":0,"hp":64,"maxHp":64,"state":0,"x":-80,"z":-126,"entity":18,"summoner":0,"vx":0,"vz":0,"radius":0.699999988079071,"y":0.8500000238418579,"vy":0,"formation":0,"componentOwner":0,"componentSlot":-1,"friendly":false,"hurtCooldown":0}],"startX":-80,"startZ":-126,"y":0.8500000238418579,"playerY":0.8500000238418579,"flightBlocked":true,"waterBlocked":false,"groundBlocked":true,"resident":{"natural":false,"source":[0,0,0],"floor":0,"room":8,"scorched":true,"patches":16,"variant":1,"dampPatches":0},"charge":{"fx":0,"fz":1,"recovery":0},"boss":{"form":0,"parts":0,"attack":0,"cycles":0},"familiars":[],"playerHp":100,"statue":{"disabled":false,"volleys":0,"fx":0,"fz":1,"clear":false,"explosions":0,"pulling":false,"phase":0,"lift":0},"plates":[{"x":-85,"z":-121,"pressed":false}],"supply":{"inventory":4,"carried":0,"produced":1,"pending":0,"bombs":[{"entity":19,"supplier":18,"state":0,"source":[5,41,0],"room":8,"deathDrop":false,"x":-80,"y":0.18000000715255737,"z":-124,"age":0,"fuse":3,"vx":0,"vy":0,"vz":0}]},"groups":[],"bullets":[],"hazards":[],"flooded":false,"hop":{"active":false,"pursuing":false,"startX":0,"startZ":0,"endX":0,"endZ":0,"elapsed":0,"duration":0,"height":0}},"problem":""}
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== 11
+
+    at /home/kambo/workspace/DeathWard/web/enemy-port-test.cjs:42:18 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 11,
+  operator: 'strictEqual'
+}

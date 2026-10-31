@@ -1,0 +1,11 @@
+BUZZ path=21.8698 side=1.36487
+NATURAL_SUPER_POOTER seed=1 floor=0 room=2 band=0
+NATURAL_SUPER_POOTER seed=2 floor=2 room=2 band=1
+NATURAL_SUPER_POOTER seed=0 floor=3 room=9 band=2
+NATURAL_SUPER_POOTER seed=0 floor=5 room=2 band=3
+PASS Super Pooter source pair, timing, health, atomic capacity, Skatole dependency, death, configuration and stage placement
+DUNG_MORPHS trials=1000 updates=30 transformed=34
+NATURAL_POOTER seed=0 floor=0 room=3
+NATURAL_FLY seed=0 floor=0 room=5
+NATURAL_FLY_DUNG seed=1 floor=0 room=1
+PASS Fly/Pooter buzz, source shot timing, dung damage/morph, collision, health and seeded placement

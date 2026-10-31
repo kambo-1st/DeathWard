@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 29: monster_behaviors
+1/2 Test #29: monster_behaviors ................   Passed    3.03 sec
+    Start 58: tainted_pooter_impacts
+2/2 Test #58: tainted_pooter_impacts ...........   Passed    0.22 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   3.25 sec

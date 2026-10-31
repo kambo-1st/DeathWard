@@ -1,0 +1,5 @@
+PASS WASM tuff-armor: segmented armor/ownership or flyer death
+PASS WASM resident-tuff: segmented armor/ownership or flyer death
+PASS WASM sucker-death: segmented armor/ownership or flyer death
+PASS WASM ink-death: segmented armor/ownership or flyer death
+PASS WASM resident-peep: boss form, owned eyes, attacks in generated stage

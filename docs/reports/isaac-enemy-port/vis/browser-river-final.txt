@@ -1,0 +1,6 @@
+START double-river
+RENDERER ANGLE (Microsoft Corporation, D3D12 (NVIDIA GeForce RTX 4070 Ti SUPER), OpenGL 4.2)
+FRAME double-river 5 volleys 0
+FRAME double-river 125 volleys 1
+FRAME double-river 245 volleys 2
+PASS double-river

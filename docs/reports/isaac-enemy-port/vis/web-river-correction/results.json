@@ -1,0 +1,14 @@
+{
+  "headless": false,
+  "renderers": [],
+  "checks": [
+    {
+      "name": "double-river",
+      "pass": false,
+      "samples": [],
+      "captures": {}
+    }
+  ],
+  "errors": [],
+  "scope": "Production isolated controller and rendering smoke only; not full visual/balance/performance acceptance."
+}

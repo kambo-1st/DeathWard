@@ -1,0 +1,567 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Highest available DLC override before base metadata; source animation files only, no artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/039.000_Vis.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/vis/animations/039.000_Vis.anm2",
+      "sha256": "37da3921e9c725b7181498e6a1e26808bc692bd48cd967b69d1d0d208e9d5a64",
+      "checksum": "0xf05fdc91",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "3/22/2021 5:40:44 PM",
+        "Version": "115",
+        "Fps": "45"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Horiz",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Down",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Up",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Horiz",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Down",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Up",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Horiz",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Down",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Up",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/039.001_Double Vis.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/vis/animations/039.001_Double Vis.anm2",
+      "sha256": "d0021cb84feb14a592f88b5b2224177fa2bac42846b23ffcf98c9f03f399564e",
+      "checksum": "0xe16ac8a2",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "3/22/2021 5:40:01 PM",
+        "Version": "116",
+        "Fps": "45"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Horiz",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Down",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Up",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Horiz",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Down",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Up",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Horiz",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Down",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Up",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/039.002_Chubber.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/vis/animations/039.002_Chubber.anm2",
+      "sha256": "28bc0993df2896e0575c01076269879dc7291d95da87f6777ce81bc0496ac6f0",
+      "checksum": "0x788ddd88",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "1/14/2021 12:50:23 AM",
+        "Version": "117",
+        "Fps": "45"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Horiz",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Down",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack01Up",
+            "FrameNum": "79",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "28"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Horiz",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Down",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack02Up",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Horiz",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Down",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack03Up",
+            "FrameNum": "69",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "18"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "WalkVert",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/039.003_Scarred Double Vis.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/vis/animations/039.003_Scarred Double Vis.anm2",
+      "sha256": "fcdc6bcda4aac5d034261d1f88d4efff013933e434baa3281055eea3fb6d07c0",
+      "checksum": "0x965c6517",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "3/22/2021 5:41:41 PM",
+        "Version": "107",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "Shoot",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Attack04Horiz",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack04Down",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Attack04Up",
+            "FrameNum": "82",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "30"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "WalkHori",
+            "FrameNum": "22",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/039.022_Chubber Projectile.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-enemy-port/vis/animations/039.022_Chubber Projectile.anm2",
+      "sha256": "c32488c6d7826d95e7751a18793c32e4a616e9619b3c89b1bf5a1c304fc20abb",
+      "checksum": "0xcf052a66",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "25.09.2015 04:15:28",
+        "Version": "104",
+        "Fps": "30"
+      },
+      "events": [],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Down",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Side",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Up",
+            "FrameNum": "4",
+            "Loop": "true"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

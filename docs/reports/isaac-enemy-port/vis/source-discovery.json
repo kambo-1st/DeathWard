@@ -1,0 +1,755 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "wiki": {
+    "title": "Vis",
+    "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Vis",
+    "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271633",
+    "revision": 271633,
+    "timestamp": "2026-10-15T21:40:21Z",
+    "license": "CC BY-SA 4.0",
+    "attribution": "The Binding of Isaac: Rebirth Wiki contributors"
+  },
+  "source_records": [
+    {
+      "record_key": "entity:39.0.0",
+      "id": "39.0.0",
+      "source_name": "Vis",
+      "display_name": "Vis",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Vis",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 70
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [
+        {
+          "band": 3,
+          "pattern": "supply_guard",
+          "role": "specialist",
+          "weight": 2,
+          "cost": 4,
+          "maximum": 1,
+          "members": 1,
+          "floor_variant": "any",
+          "source": "assets/mechanics/encounters.mechanics",
+          "line": 36
+        }
+      ],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 37,
+          "positive_weight_templates": 37,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 20,
+          "positive_weight_templates": 20,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 36,
+          "positive_weight_templates": 36,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 7,
+          "positive_weight_templates": 7,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 17,
+          "positive_weight_templates": 17,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/00.special rooms.stb",
+          "source_stage": "special rooms",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Unmapped/special/unused library; needs eligibility review."
+        },
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 8,
+          "positive_weight_templates": 8,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/04.caves.stb",
+          "source_stage": "caves",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/06.flooded caves.stb",
+          "source_stage": "flooded caves",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 7,
+          "positive_weight_templates": 7,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        2,
+        3
+      ],
+      "proposed_first_band": 2,
+      "proposed_first_band_name": "Abandoned Works",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Depths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Vis",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271633"
+        }
+      ],
+      "feature_review_hints": [
+        "projectile-transform",
+        "conditional-vulnerability"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:39.1.0",
+      "id": "39.1.0",
+      "source_name": "Double Vis",
+      "display_name": "Double Vis",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Double Vis",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 71
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 23,
+          "positive_weight_templates": 23,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 12,
+          "positive_weight_templates": 12,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 10,
+          "positive_weight_templates": 10,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/greed/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 7,
+          "positive_weight_templates": 7,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 7,
+          "positive_weight_templates": 7,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 7,
+          "positive_weight_templates": 7,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        2,
+        3
+      ],
+      "proposed_first_band": 2,
+      "proposed_first_band_name": "Abandoned Works",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Necropolis / \nWomb / Utero / Scarred Womb / \nSheol / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Vis",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271633"
+        }
+      ],
+      "feature_review_hints": [
+        "projectile-transform",
+        "conditional-vulnerability"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:39.2.0",
+      "id": "39.2.0",
+      "source_name": "Chubber",
+      "display_name": "Chubber",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "25",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Chubber",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 72
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/05.catacombs.stb",
+          "source_stage": "catacombs",
+          "templates": 27,
+          "positive_weight_templates": 27,
+          "proposed_band": 1,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/07.depths.stb",
+          "source_stage": "depths",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 26,
+          "positive_weight_templates": 26,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 6,
+          "positive_weight_templates": 6,
+          "proposed_band": 2,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 14,
+          "positive_weight_templates": 14,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/29.mines.stb",
+          "source_stage": "mines",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 1,
+          "source_path": "alternate"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 4,
+          "positive_weight_templates": 4,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/08.necropolis.stb",
+          "source_stage": "necropolis",
+          "templates": 12,
+          "positive_weight_templates": 12,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/09.dank depths.stb",
+          "source_stage": "dank depths",
+          "templates": 12,
+          "positive_weight_templates": 12,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 3,
+          "positive_weight_templates": 3,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        1,
+        2,
+        3
+      ],
+      "proposed_first_band": 1,
+      "proposed_first_band_name": "Broken Quarry",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Catacombs / \nMines / \nDepths / Necropolis / Dank Depths / \nWomb / Utero / Scarred Womb / \nchallenge /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Vis",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271633"
+        }
+      ],
+      "feature_review_hints": [
+        "damage-modifiers",
+        "fire-rate-and-charge",
+        "projectile-transform",
+        "child-spawns-and-ownership",
+        "grid-and-explosions",
+        "health-and-defenses",
+        "status-effects",
+        "room-floor-run-events",
+        "locomotion-and-navigation",
+        "forms-and-transformations"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:39.3.0",
+      "id": "39.3.0",
+      "source_name": "Scarred Double Vis",
+      "display_name": "Scarred Double Vis",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "22",
+      "source_stage_hp": "0",
+      "current_runtime": {
+        "name": "Scarred Double Vis",
+        "behavior": "legacy",
+        "natural": true,
+        "hazard": false,
+        "source": "assets/mechanics/monsters.mechanics",
+        "line": 73
+      },
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "unverified_existing",
+      "source_stage_evidence": [
+        {
+          "file": "rooms/10.womb.stb",
+          "source_stage": "womb",
+          "templates": 23,
+          "positive_weight_templates": 23,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 18,
+          "positive_weight_templates": 18,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 30,
+          "positive_weight_templates": 30,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/14.sheol.stb",
+          "source_stage": "sheol",
+          "templates": 2,
+          "positive_weight_templates": 2,
+          "proposed_band": 3,
+          "source_path": "main"
+        },
+        {
+          "file": "rooms/16.dark room.stb",
+          "source_stage": "dark room",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "proposed_band": 3,
+          "source_path": "main"
+        }
+      ],
+      "separate_mode_or_special_evidence": [
+        {
+          "file": "rooms/36.backwards.stb",
+          "source_stage": "backwards",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Special encounter or mode library; requires dedicated encounter rules."
+        },
+        {
+          "file": "rooms/greed/11.utero.stb",
+          "source_stage": "utero",
+          "templates": 1,
+          "positive_weight_templates": 1,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/12.scarred womb.stb",
+          "source_stage": "scarred womb",
+          "templates": 13,
+          "positive_weight_templates": 13,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        },
+        {
+          "file": "rooms/greed/24.the shop.stb",
+          "source_stage": "the shop",
+          "templates": 5,
+          "positive_weight_templates": 5,
+          "reason": "Separate Greed-mode evidence; do not merge into standard spawn weights."
+        }
+      ],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [
+        3
+      ],
+      "proposed_first_band": 3,
+      "proposed_first_band_name": "Storm Cut",
+      "proposal_basis": "positive_room_template_review",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": true,
+      "has_article": true,
+      "wiki_environment_review": [
+        "Womb / Utero / Scarred Womb / \nSheol / \nDark Room /"
+      ],
+      "article_revisions": [
+        {
+          "title": "Vis",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271633"
+        }
+      ],
+      "feature_review_hints": [
+        "projectile-transform"
+      ],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    },
+    {
+      "record_key": "entity:39.22.0",
+      "id": "39.22.0",
+      "source_name": "Chubber Projectile",
+      "display_name": "Chubber Projectile",
+      "source_group": "enemy",
+      "boss_pool_id": null,
+      "source_base_hp": "1000",
+      "source_stage_hp": "0",
+      "current_runtime": null,
+      "identity_conflict": false,
+      "naming_alias_review": false,
+      "current_floor_pools": [],
+      "current_replacement_routes": [],
+      "current_boss_pools": [],
+      "current_component_routes": [],
+      "suggested_identity_for_current_name": null,
+      "review_role": "enemy_or_component_review",
+      "review_approved": false,
+      "implementation_status": "not_implemented",
+      "source_stage_evidence": [],
+      "separate_mode_or_special_evidence": [],
+      "boss_pool_evidence": [],
+      "source_band_candidates": [],
+      "proposed_first_band": null,
+      "proposed_first_band_name": null,
+      "proposal_basis": "parent_or_scripted_encounter_review_required",
+      "ordinary_spawn_approved": false,
+      "has_any_room_templates": false,
+      "has_article": true,
+      "wiki_environment_review": [],
+      "article_revisions": [
+        {
+          "title": "Vis",
+          "url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=271633"
+        }
+      ],
+      "feature_review_hints": [],
+      "feature_note": "Keyword triage only. Not an implemented or manually verified capability list.",
+      "unresolved_native_parameters": [
+        "walk_speed_world_units_per_second",
+        "acceleration",
+        "attack_cooldown_seconds",
+        "telegraph_seconds",
+        "projectile_speed",
+        "attack_selection_weights",
+        "animation_event_ticks"
+      ],
+      "required_review": [
+        "root/component/hazard/unused classification",
+        "parent and child dependencies",
+        "source-edition behavior contract",
+        "terrain and arena requirements",
+        "threat cost and exclusive combinations",
+        "visual and damage-window contract",
+        "source numbers versus DeathWard conversion",
+        "stage eligibility and deterministic reachability",
+        "behavior tests and render capture"
+      ]
+    }
+  ],
+  "export_check": {
+    "pass": true,
+    "source_windows": 7,
+    "animations": 5
+  },
+  "scope": "Reviewed contracts and archived source; no dedicated runtime implementation yet.",
+  "export_correction": "Initial cardinal_snap export ended before its positive-y branch; both initial files retained, complete manifest/helper now cover through6593fc."
+}

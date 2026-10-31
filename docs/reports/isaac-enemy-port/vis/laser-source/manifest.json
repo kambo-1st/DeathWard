@@ -1,0 +1,81 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Supplemental instruction windows; original Vis source/animations remain frozen.",
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/spawn.asm",
+      "start": "0x8c7550",
+      "end": "0x8c765f",
+      "raw_sha256": "c766c64ad2187cd8090761bc57f5ef3b58aa3fda41af99bde5ecf19527e3e5df",
+      "sha256": "c4a2f0bd2a4843c82f4b392e4a22d87570dc22ad33c6c4eccdac3b58e75b261d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/target_eligibility.asm",
+      "start": "0x8c5a90",
+      "end": "0x8c5be9",
+      "raw_sha256": "1d37835bc00fdfca983e00730ae250543ecaa9160d8465dad26fb3c31848485f",
+      "sha256": "e211fca978035832e26889a5e1d7db212be61769fa7d44e4f76541890f838cdf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/update.asm",
+      "start": "0x8cc300",
+      "end": "0x8d0a99",
+      "raw_sha256": "c9e0e57261c8479cffa79ad596004890b1018d0458dcc56be2a9b1721df177d2",
+      "sha256": "7b52ab12a677992e53e1c89c2e80b6df5e6a35e6665ce84e8422aa0d3ab553f2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/damage_driver.asm",
+      "start": "0x8cbe80",
+      "end": "0x8cc11a",
+      "raw_sha256": "fc9ec558c31a541df8bb11ac689340f9c280a45de883c0d4e6eaab29f8891373",
+      "sha256": "351c5e81bbbda2df3de4c2c02cb7dc60ef5fd1b08623e2f140b61f421a9ef42f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/apply_damage.asm",
+      "start": "0x8d6600",
+      "end": "0x8d688f",
+      "raw_sha256": "acf54f87e0c16a40cfe83069eb77274f05bba02e09248dfc4452748aefc930fc",
+      "sha256": "087b8ffc991bc0314659d21d7b67bd52cf18874ed4e795303ff83d87af3bbf4b"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/interval.asm",
+      "start": "0x6847e0",
+      "end": "0x684852",
+      "raw_sha256": "3114e2f81eb2fc94d3f4b8769e72049337e5841d1ffe29957db2cd22a677191d",
+      "sha256": "f080409245b440a02e70762eda343ae440cb3e50d88f2ea10d42f79681c2269a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/base_movement_window.asm",
+      "start": "0x686060",
+      "end": "0x68694d",
+      "raw_sha256": "c1842948aa03d0a257b101720294f6c4d1b6417615dcc879336d63f5bd3d152c",
+      "sha256": "48d6bf83bb6045764dac6e6d026a0d9cf885c16bda6b7e23f90bcb3aa94283ce"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/laser-source/base_damage_window.asm",
+      "start": "0x684bb0",
+      "end": "0x685bff",
+      "raw_sha256": "9a333bf36a738cd3eafb2455e08e8119907f0fb57631b2fd32e85794ff2d18a5",
+      "sha256": "4438175e76749697e4108cd6c104dd67d663e555f3954bf37f548613c020774e"
+    }
+  ],
+  "constants": {
+    "hit_interval": {
+      "address": "0xb6a7b0",
+      "value": 2.0
+    },
+    "fade_scale": {
+      "address": "0xb6a5a0",
+      "value": 0.8949999809265137
+    }
+  },
+  "variant1_timeout_uses_fade": true,
+  "laser_xml": {
+    "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+    "sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+    "id": "7.1.0",
+    "collisionDamage": 11,
+    "collisionRadius": 16
+  }
+}

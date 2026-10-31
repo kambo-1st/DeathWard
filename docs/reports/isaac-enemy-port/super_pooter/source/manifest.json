@@ -1,0 +1,143 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "previous_shared_controller": "docs/reports/isaac-enemy-port/fly_pooter/source/manifest.json",
+  "pair": {
+    "mode": 1,
+    "forward": 0.9610000252723694,
+    "side": 0.2759999930858612,
+    "half_angle_degrees": 16.024108876989324,
+    "speed_multiplier": 0.9998485109039719,
+    "default_spread": 1
+  },
+  "findings": [
+    "Shared Pooter Shoot chooses FireProjectiles mode1 for variant1, mode0 for ordinary. Normal speed7; hard Super speed8. Source range200/check7/delay35 and Attack14/Shoot6 match ordinary Pooter.",
+    "Mode1 emits two vectors: (forward*x - side*Spread*y, forward*y + side*Spread*x) and its opposite-side partner. Constructor initializes Spread at+28 to1. The approximate .961/.276 coefficients are not renormalized in this branch.",
+    "Shared update queries collectible9 with its final boolean argument true. For non-friendly actors it sets a local suppression flag; the complete Pooter attack/cooldown-damping branch is skipped while set. Attack animation recovery is earlier and is not skipped.",
+    "The same item branch morphs Attack Fly18 into Fly13; other shared-fly branches also consume the flag. Only ordinary/Super Pooter attack suppression is implemented in this slice. This is not a complete Skatole item port.",
+    "Local adaptation maps the planar pair to horizontal aim plus physical vertical aiming. The .961/.276 planar coefficients and resulting slight speed loss are preserved; vertical velocity retains the common aimed pitch.",
+    "Installed room templates place Super Pooter in Basement/Cellar/Burning Basement, Caves variants, Necropolis and Utero. Local sparse crossfire roles cover bands0\u20133; source random replacement probability is separate pending work."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/super_pooter/source/pair_dispatch.asm",
+      "start": "0x6a1a6d",
+      "end": "0x6a1a83",
+      "raw_sha256": "65143173c13c5cc7d414883c2ccf2ad250b1f38c0f32f46ded7d6348f27cd6a7",
+      "sha256": "98a7a3740caa137e1b3cfd4245a245942ab540642205f4cab8459a3289848891"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/super_pooter/source/pair_vectors.asm",
+      "start": "0x6a1afb",
+      "end": "0x6a1c91",
+      "raw_sha256": "23932fa3cb27045025cbbe47f9a103dd5c5afacfb3c1f14c34afeb40e4b9299a",
+      "sha256": "ec1db5265bd9e061b0f6fa7cc6db96584dc7f338dc58bf8d2a0af2ecf6fd0b1c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/super_pooter/source/params_spread_default.asm",
+      "start": "0x430d70",
+      "end": "0x430dc5",
+      "raw_sha256": "1d1c2d4116ad66cf527a236006f1885bbe091ec9663628a7e71f2bb5dd045800",
+      "sha256": "acf32ccbb53ceb6f373879fb686ac4ef53b5d816d7c1960eabd04736a8220f52"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/super_pooter/source/skatole_flag_and_attack_fly_morph.asm",
+      "start": "0x4f4ff6",
+      "end": "0x4f503f",
+      "raw_sha256": "859d378b02157f16a2a18d2d271187bcfcf0172d03990e915e907dadef9f5a50",
+      "sha256": "5f5e9bf088c5ed14b38610ce2d11bc2f498cffe6ba7c3cbd2216c0077e58c53e"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/super_pooter/source/pooter_attack.asm",
+      "start": "0x4f5b1e",
+      "end": "0x4f5dc5",
+      "raw_sha256": "7088a6ec45b37f2725eaf6741bfce30ac63a594ffc7cafce5de125720e410b9c",
+      "sha256": "df6f430db826f3d8f89a9d86f67bdf7990732cf39231737b8315d2c7896d15e7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/super_pooter/source/pooter_recovery.asm",
+      "start": "0x4f5a1d",
+      "end": "0x4f5a5b",
+      "raw_sha256": "e5c7c0efc1d9aab6080a17608bada5fe4fa13bcc66c82600983da8769f920422",
+      "sha256": "069292cee9239322af76f18fec5ff36288a331b137b96630a732f3daa5a3f997"
+    }
+  ],
+  "xml": {
+    "anm2path": "014.001_Super Pooter.anm2",
+    "baseHP": "8",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "0",
+    "collisionMass": "4",
+    "collisionRadius": "17",
+    "friction": "1",
+    "gridCollision": "walls",
+    "id": "14",
+    "name": "#SUPER_POOTER",
+    "numGridCollisionPoints": "4",
+    "portrait": "7",
+    "reroll": "true",
+    "shadowSize": "13",
+    "stageHP": "0",
+    "tags": "fly",
+    "variant": "1"
+  },
+  "room_library_presence": {
+    "rooms/01.basement.stb": {
+      "templates": 4,
+      "positive_weight_templates": 4
+    },
+    "rooms/02.cellar.stb": {
+      "templates": 4,
+      "positive_weight_templates": 4
+    },
+    "rooms/03.burning basement.stb": {
+      "templates": 7,
+      "positive_weight_templates": 7
+    },
+    "rooms/04.caves.stb": {
+      "templates": 3,
+      "positive_weight_templates": 3
+    },
+    "rooms/05.catacombs.stb": {
+      "templates": 32,
+      "positive_weight_templates": 32
+    },
+    "rooms/06.flooded caves.stb": {
+      "templates": 3,
+      "positive_weight_templates": 3
+    },
+    "rooms/08.necropolis.stb": {
+      "templates": 5,
+      "positive_weight_templates": 5
+    },
+    "rooms/11.utero.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/01.basement.stb": {
+      "templates": 4,
+      "positive_weight_templates": 4
+    },
+    "rooms/greed/02.cellar.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/03.burning basement.stb": {
+      "templates": 5,
+      "positive_weight_templates": 5
+    },
+    "rooms/greed/04.caves.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    },
+    "rooms/greed/05.catacombs.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/06.flooded caves.stb": {
+      "templates": 2,
+      "positive_weight_templates": 2
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "status": "Development error corrected before final 50-suite native and 104-case WASM runs.",
+  "incorrect": "Ink death creep was initially implemented/tested as health damage. The passing initial test certified the wrong intended behavior.",
+  "correct": "Pinned Sucker description plus Creep black-creep section establish slowing only. Final death_cross uses zero-damage Tar, with damaging diagonal Bullet projectiles separately.",
+  "sources": [
+    "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270040",
+    "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=250496"
+  ],
+  "final_evidence": "docs/reports/isaac-enemy-port/tuff/segmented-bosses.txt"
+}

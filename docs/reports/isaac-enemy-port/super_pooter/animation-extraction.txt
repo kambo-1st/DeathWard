@@ -1,0 +1,52 @@
+[
+  {
+    "source": "resources/gfx/014.001_Super Pooter.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/super_pooter/animations/014.001_Super Pooter.anm2",
+    "sha256": "a532f5d9559d30f449c6a8bec36824436c1edf4cda6b028a8c2e3e53ac22c59f",
+    "checksum": "0x62bb0b60",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 3:52:13 PM",
+      "Version": "104",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Shoot",
+        "Id": "0"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Fly",
+          "FrameNum": "2",
+          "Loop": "true"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Attack",
+          "FrameNum": "14",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "6"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "25",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  }
+]

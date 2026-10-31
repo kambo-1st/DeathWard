@@ -1,0 +1,103 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": [
+    {
+      "type": 39,
+      "index": 23,
+      "case": "0x69a1cf",
+      "controller": "0x519dd0"
+    }
+  ],
+  "constants": {
+    "alignment": {
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    "attack_range": {
+      "address": "0xb6ac60",
+      "value": 400.0
+    },
+    "child_velocity": {
+      "address": "0xb6a9b0",
+      "value": 16.0
+    },
+    "child_horizontal_multiplier": {
+      "address": "0xb6a6c8",
+      "value": 1.399999976158142
+    },
+    "damping": {
+      "address": "0xb6a560",
+      "value": 0.800000011920929
+    },
+    "origin_horizontal_offset": {
+      "address": "0xb6a910",
+      "value": 6.0
+    },
+    "child_reversal_divisor": {
+      "address": "0xb6a9cc",
+      "value": 21.0
+    }
+  },
+  "strings": {
+    "0xb40504": "WalkHori",
+    "0xb400ac": "Shoot",
+    "0xb43150": "Attack03Horiz",
+    "0xb43160": "Attack03Up",
+    "0xb431e8": "Attack03Down",
+    "0xb431f8": "Attack%02uUp",
+    "0xb431c8": "Attack%02uDown",
+    "0xb431d8": "Attack%02uHoriz"
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/source/controller.asm",
+      "start": "0x519dd0",
+      "end": "0x51af94",
+      "raw_sha256": "37d4b95927af7cb70f47df2db1a7eb27ffbc10eb47d709ee98154431d8adbb26",
+      "sha256": "939231ffa3c2f49a93ecd4b2a9ad0b0bf848e92cfd4830abe5e3d680ad5f246c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/source/chubber_projectile.asm",
+      "start": "0x519980",
+      "end": "0x519da4",
+      "raw_sha256": "9409455bdbb7dd903335c132de55c483735e035d20b5456d4eafa485c36182ed",
+      "sha256": "445b0df458608940368994945eca288041ce26f5b173f95fcd07d761bef47ced"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/source/cardinal_snap.asm",
+      "start": "0x6593a0",
+      "end": "0x6593f8",
+      "raw_sha256": "828b2e0f5bd755d30208f110698880f2fa151156ddd3dfcc0beb5cc003128e31",
+      "sha256": "6ef59b6644a5f311f13f4dd1f303891352dcba4e5b8b9105defafb090ebd1d15"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/source/attack_view_check.asm",
+      "start": "0x89fbb0",
+      "end": "0x89ff2a",
+      "raw_sha256": "afadae55112d73a4cf33b81a846c9543fb1d608f1098e29f18194162aeb1c793",
+      "sha256": "4da9208666c65fae3b1a2135946730db95da6cfef5c577e9971d42fb7f448e92"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/source/random_walk.asm",
+      "start": "0x7a51e0",
+      "end": "0x7a617d",
+      "raw_sha256": "ef71ccb69cba5c9049682eaa58ee22518c8c116b8243e5f6825dcd56d0b6fa97",
+      "sha256": "9b4fea12a9e0f9ed56cd562307d1b6a8d6b4789069742e0229c555ef5a771fd6"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/source/target_eligibility.asm",
+      "start": "0x6aeb40",
+      "end": "0x6aebce",
+      "raw_sha256": "976a5823b917a1ccd461e3a9382b501d7ce998e222f572934d56142a1689d63b",
+      "sha256": "f9796c4c8d57f94dfdfd5a090e7645b555b44457c7c81632a53957c9a86c40d1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/vis/source/global_interval.asm",
+      "start": "0x684790",
+      "end": "0x6847db",
+      "raw_sha256": "efddfb2813e48ccd407cf124b843181ba3b2ee17c8e2314de071ccfdf69a105a",
+      "sha256": "f8919529a3124a3b711a41e7cae46f07721c119cb6016f78961f68d2a3a6d0a2"
+    }
+  ]
+}

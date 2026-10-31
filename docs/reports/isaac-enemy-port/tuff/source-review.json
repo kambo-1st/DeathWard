@@ -1,0 +1,84 @@
+{
+  "status": "Partial Tuff Twins encounter and dependency correction; no full parity acceptance.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "ids": [
+    "19.2.0",
+    "61.0.0",
+    "61.3.0"
+  ],
+  "sources": {
+    "xml": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+    "tuff": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270021",
+    "sucker": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270040",
+    "creep": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=250496"
+  },
+  "contracts": {
+    "19.2.0": {
+      "movement": "Pair of six-part grounded worms roam cardinally, following head trails; speed increases as armor disappears.",
+      "targeting": "Random roaming, not aimed pursuit. Child population checked across the whole room.",
+      "attacks": "Armored heads spawn Ink; exposed heads spawn Suckers. No attempt at four living children, but a final burst can exceed four. Exposed bodies spray blood shots.",
+      "vulnerability": "Separate 15 armor and source 35 flesh HP per part. Nonexplosive damage blocked by armor; explosions apply distance-dependent 25\u201314 percent damage before and after stripping. Plan C cannot bypass armor. Terra and item-created rock waves are named exceptions; Sulfuric Acid is not. Repentance+ Hagalaz excluded.",
+      "phases": "New rear chains need more than two surviving parts; topology reconciles after each complete damage batch. Aggregate fight outlives either original head.",
+      "offspring": "Two six-part worms, at least two Bomb Grimaces, Ink and Sucker children. Same source tuple represents each worm segment.",
+      "completion": "Defeating one head does not finish the pair. All segments must die. Children remain ordinary threats.",
+      "adaptations": {
+        "health": "Source flesh 35 * 3.2 = 112 per segment; independent armor stays 15. No player-default change. Aggregate bar sums flesh HP over initial 1344; armor is visible on each part.",
+        "damage": "Linear interpolation between sourced explosive endpoints is local, as is no flesh spillover on the stripping hit. Explicit explosion provenance; generic area/piercing/execution flags cannot fake bombs. Cheat execution is separate.",
+        "motion": "Local 1.8 units/s, up to 80 percent exposed speed bonus, spacing 1.55, turn interval 1.2\u20133.4 s; path samples spaced 0.1 units, bounded 1024. Followers close gaps at up to 1.5 times head speed. Short rear fragments reattach without deleting HP/armor: unverified edge-case policy.",
+        "attacks": "Local 5 s head interval, 1\u20132 children per burst, 3 s body interval with 7 random shots at 3.75\u20137.5 units/s; base contact/projectile damage 10, existing hostile multiplier remains.",
+        "arena": "Standard Broken Quarry boss pool, weight 2, two suppliers on opposite open sides, atomic spawn preflight; no ordinary/tutorial/Mine additions. Native and Peep bosses remain.",
+        "completion": "One aggregate boss reward; projectiles owned by original segments cancelled at aggregate death. Offspring must also die for clear. Inactive room pauses full chain state.",
+        "presentation": "Original style, procedural faceted stone armor and exposed flesh, no imported Isaac art."
+      },
+      "unknowns": [
+        "Exact native turn/shot/burst timing, size conversion, explosive falloff curve and armor spillover.",
+        "Exact short-fragment split/promotion edge cases; current reattachment is an explicit local policy.",
+        "Named item-created rock waves/Terra and per-item instant-kill exceptions are not implemented.",
+        "Starting-kit survival/difficulty and broader visual/performance acceptance remain open."
+      ]
+    },
+    "61.0.0": {
+      "movement": "Slow flying pursuit toward player, traversing low obstacles and water with room-bound flight collision.",
+      "targeting": "Pursues the player; death-shot directions fixed rather than aimed.",
+      "attacks": "Contact while alive; four cardinal damaging shots at death.",
+      "vulnerability": "Ordinary damageable flyer, source HP 10. Repentance Skatole suppresses contact only, leaving death attacks active.",
+      "phases": "Alive pursuit then one death burst; no regeneration.",
+      "offspring": "No enemy children.",
+      "completion": "Ordinary room threat while alive; projectiles and creep do not count as enemies.",
+      "adaptations": {
+        "health": "Source 10 * 3.2 = 32, replacing legacy 48 HP.",
+        "attacks": "Local shot speed 8 and base damage 10; current hostile damage conversion remains. Fixed four-way angles are source-backed.",
+        "creep": "Ink uses zero-damage Tar hazard, radius 2, lifetime 4 s, slows current player movement from 6 to 3.2 units/s with 0.3 s refresh; dimensions/duration local. Sucker has none.",
+        "routing": "Actual Tuff offspring in standard Broken Quarry; independent ordinary pools remain pending stage approval. Existing Mine roster identities unchanged."
+      },
+      "unknowns": [
+        "Exact native motion and shot speed, collision conversion and creep timing.",
+        "Skatole/item immunity and champion-specific semantics not implemented.",
+        "Independent floor routes and full six-gate acceptance remain pending."
+      ]
+    },
+    "61.3.0": {
+      "movement": "Slow flying pursuit toward player, traversing low obstacles and water with room-bound flight collision.",
+      "targeting": "Pursues the player; death-shot directions fixed rather than aimed.",
+      "attacks": "Contact while alive; four diagonal damaging shots at death. Leaves slowing black creep at death position, without creating extra puddles on projectile impacts.",
+      "vulnerability": "Ordinary damageable flyer, source HP 10. Repentance Skatole suppresses contact only, leaving death attacks active.",
+      "phases": "Alive pursuit then one death burst; no regeneration.",
+      "offspring": "No enemy children.",
+      "completion": "Ordinary room threat while alive; projectiles and creep do not count as enemies.",
+      "adaptations": {
+        "health": "Source 10 * 3.2 = 32, replacing legacy 56 HP.",
+        "attacks": "Local shot speed 8 and base damage 10; current hostile damage conversion remains. Fixed four-way angles are source-backed.",
+        "creep": "Ink uses zero-damage Tar hazard, radius 2, lifetime 4 s, slows current player movement from 6 to 3.2 units/s with 0.3 s refresh; dimensions/duration local. Sucker has none.",
+        "routing": "Actual Tuff offspring in standard Broken Quarry; independent ordinary pools remain pending stage approval. Existing Mine roster identities unchanged."
+      },
+      "unknowns": [
+        "Exact native motion and shot speed, collision conversion and creep timing.",
+        "Skatole/item immunity and champion-specific semantics not implemented.",
+        "Independent floor routes and full six-gate acceptance remain pending."
+      ]
+    }
+  },
+  "review_correction": "Initial development incorrectly treated Ink black creep as damaging. Pinned Sucker plus Creep establish slowing-only. Corrected before final native/WASM verification; earlier development test is not acceptance evidence.",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. DeathWard architecture and tuning analysis are local.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

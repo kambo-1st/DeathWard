@@ -1,0 +1,12 @@
+chain 0 depth 0 effect -1: monster offspring capacity
+PEEP_OWNERSHIP thresholds=2/3,1/3 cyan_start=2 capacity_retry=1 no_respawn=1 no_orphans=1
+PEEP_ATTACKS creep=1 ring=8 landing=12 locked_arc=1 yellow_size=.85 whole_contact=25
+PEEP_EYES wall_and_body_bounce=1 rocks=1 projectile_block=1 bomb_direction=1 contact=12.5
+PEEP_STAGE seed=3 floor=1 form=2 components=2 completion=1
+PEEP_STAGE seed=5 floor=2 form=0 components=2 completion=1
+PEEP_STAGE seed=8 floor=2 form=1 components=2 completion=1
+PEEP_CONFIG immutable=1 geometry_unchanged=1 ordinary_pools_unchanged=1 tutorial_unchanged=1
+PEEP_STARTING_KIT form=0 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=1 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=2 seconds=20.1333 hp=87.5 kills=1
+PASS Peep multipart encounter, owned eyes and stage routing

@@ -1,0 +1,8 @@
+chain 0 depth 0 effect -1: supplied bomb capacity
+SUPPLY_STOCK unlit_wait=1 pickup_5_41=1 armed_4_13=1 replenish_before_explosion=1 held_fuse=1 zero_inventory=1
+SUPPLY_CONTROLS arrows=1 place=1 no_inventory=1 no_shot_cycle=1 no_invented_braid=1 fuse_preserved=1 swept_throw=1
+SUPPLY_DEATH independent_stock=1 ten_unlit_drops=1 retained_stock=1 no_kill_credit=1 no_reentry_duplicate=1 bounded_pending=1
+SUPPLY_PERSISTENCE held_across_rooms=1 thrown_pause_resume=1 own_demolition_permission=1 actual_enemy_damage=1 dedicated_only=1
+SUPPLY_CONFIG actual_fuse=1 immutable_snapshot=1
+SUPPLY_ROUTING blocked_retry=1 real_floor_travel=1 preserved_fuse=1
+PASS supplied bomb stock, taking, controls, flight, fuse, death drops, room persistence and external rules

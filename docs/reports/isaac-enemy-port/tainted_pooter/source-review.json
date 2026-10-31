@@ -1,0 +1,205 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "projectile_vtable": {
+    "address": "0xb46790",
+    "type_descriptor": "0xbeabf4",
+    "entries": {
+      "Update": {
+        "offset": "0xc",
+        "address": "0x62f6f0"
+      },
+      "Kill": {
+        "offset": "0x24",
+        "address": "0x6848b0"
+      },
+      "Remove": {
+        "offset": "0x28",
+        "address": "0x6848f0"
+      },
+      "HandleCollision": {
+        "offset": "0x58",
+        "address": "0x6375e0"
+      }
+    }
+  },
+  "constants": {
+    "inner_forward": {
+      "address": "0xb6a60c",
+      "value": 0.9900000095367432
+    },
+    "inner_side": {
+      "address": "0xb6a2f8",
+      "value": 0.13899999856948853
+    },
+    "outer_forward": {
+      "address": "0xb6a5b0",
+      "value": 0.9139999747276306
+    },
+    "outer_side": {
+      "address": "0xb6a43c",
+      "value": 0.40700000524520874
+    },
+    "outer_scale": {
+      "address": "0xb6a5a4",
+      "value": 0.8999999761581421
+    },
+    "back_split_angle": {
+      "address": "0xb6a9e8",
+      "value": 24.0
+    },
+    "sight_range": {
+      "address": "0xb6aba8",
+      "value": 200.0
+    }
+  },
+  "findings": [
+    "Shared type14 attack excludes the Skatole-suppressed branch. Variant2 chooses delay63 rather than35, acquires through the shared seven-frame/sight helper, and aims again at Shoot.",
+    "Variant2 ProjectileParams: Scale1.4, FallingSpeedModifier1, FallingAccelModifier-.15, Spread1.2, BulletFlags bit54 BACKSPLIT, internal byte+98=1. Aim is resized to7; FireProjectiles mode4. Stack pushes shift the apparent local offsets; constructor and application confirm fields.",
+    "Mode4 dispatch6a33ec[4] points to6a2099. Inner velocity coefficients are forward.99 and side+/-.139*Spread. Outer coefficients are .914 and +/-.407*Spread, both multiplied by.9. The vectors are not normalized afterward. Final outer shot joins6a2023.",
+    "Internal ProjectileParams byte+98 skips the default mode-specific falling/velocity adjustment. Parameter application adds falling modifiers and applies the scale. Exact native height curves are preserved as evidence but not ported in this slice.",
+    "Projectile vtable b46790 resolves Update62f6f0 and collision6375e0. Update631c84 enters dead processing on byte16b; entity flag0x20 takes an early Remove path. Collision637945 also sets dead byte16b on player impact.",
+    "BACKSPLIT branch63371e normalizes and negates original velocity, rotates by +/-24 degrees, scales child velocity to10, and adds that velocity to impact position as spawn offset. Both children are projectile type9 variant0; owner pointer and spawner type/variant are retained. Child falling acceleration is-.04. BACKSPLIT is cleared, preventing recursion. No scale override is applied to the children.",
+    "The wiki describes wall/obstacle splitting; installed ordinary player collision also reaches the dead-processing branch. Local safety TTL and explicit cancellation do not count as physical impacts.",
+    "Installed XML source HP75, contact0. The extracted DLC animation metadata is30FPS: Attack14 with Shoot6, Fly2loop, Appear25. Source Ascent placement remains dedicated, not ordinary floor pools."
+  ],
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/pooter_attack.asm",
+      "start": "0x4f5b1e",
+      "end": "0x4f5dc5",
+      "raw_sha256": "7088a6ec45b37f2725eaf6741bfce30ac63a594ffc7cafce5de125720e410b9c",
+      "sha256": "df6f430db826f3d8f89a9d86f67bdf7990732cf39231737b8315d2c7896d15e7"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/projectile_params_defaults.asm",
+      "start": "0x430d70",
+      "end": "0x430ef9",
+      "raw_sha256": "fb85f96ec31cdc3275b4b3b1f6129f9165f6f7fce48b67d47a17522178aa1fa4",
+      "sha256": "bd5318d1515b7d4ec6e337d6d27224bd96197a3485d48f9c7e20546a38220602"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/mode4_volley.asm",
+      "start": "0x6a2023",
+      "end": "0x6a2360",
+      "raw_sha256": "01a1e5c9fcac09dfa0f1a97d3be68fa53fb6166b97f96dd0c2eb21bc1d74f082",
+      "sha256": "3275cd353b97f3e75567d18d50b8ab393efad83be87e812b1cf5d0851eeff460"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/params_physics_and_damage.asm",
+      "start": "0x6a3059",
+      "end": "0x6a31f2",
+      "raw_sha256": "5dfd450adb1f2ba6cfd99cbd87ee14952cc2e5260fbc3f7fb65461cdd249900a",
+      "sha256": "f9cbb31608864f71590234fdd5d8e11258d00da6804c36d3cc07a2b56f5d08b5"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/projectile_init.asm",
+      "start": "0x62f1b0",
+      "end": "0x62f340",
+      "raw_sha256": "9fce32f81355043a1f8a27ca0ae8e9a2e127d042e36a49dad4f58be03fec8a48",
+      "sha256": "5457d2887c2ce8b9016fd7d5f6eeda79f7d87726a036dad43ae54295dde14a20"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/projectile_dead_gate.asm",
+      "start": "0x631c84",
+      "end": "0x631cd5",
+      "raw_sha256": "c16ae7a7bde51d8c6f0da20d42907a5a7bac28307ae5d1487a4c6115633dfafb",
+      "sha256": "a9e09a23c25cfbe6e8145c87fc196d386cd00c4e14dcaed48b954bfbe4540a1a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/back_split.asm",
+      "start": "0x63371e",
+      "end": "0x633859",
+      "raw_sha256": "b1160c8835e754b44cb96c96deea0e8a33501ae4e3b9d2a8788453a943d2cd06",
+      "sha256": "8d6c6eb6834c87531eed53574e1913446d3f5d0a46f297a3f38de63f2b60a564"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/player_collision_dead_flag.asm",
+      "start": "0x6375e0",
+      "end": "0x637985",
+      "raw_sha256": "822e6e753ba9e313f1913e7721df5684b1292de8f3dfd5a592d4e0e88fe2a773",
+      "sha256": "eade6b37f8e49643ec7a03070e364355799b1144321959039ba65f1981e6fbb1"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/falling_acceleration_setter.asm",
+      "start": "0x436b90",
+      "end": "0x436ba0",
+      "raw_sha256": "9791519a0de727b4e6b3c91dc570feca8b912907f0d619f4d2741b6aeaf5a1c2",
+      "sha256": "0bac7610cbc4c08d86583959e9c3a748e53431bb017339d14f1187fd4a59f64f"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/vector_normalize.asm",
+      "start": "0x962560",
+      "end": "0x962600",
+      "raw_sha256": "2e6c9556fc7b18d0f3c2c6da80642eb8a1b9898333147265412ef2114fee7d61",
+      "sha256": "3a7ed45f6af0efe53678090d04b08869713d8faaa3a3b3b7711a395a1794acbf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/vector_negate.asm",
+      "start": "0x962b20",
+      "end": "0x962b50",
+      "raw_sha256": "3b6ca48a371924c6de2796e295facd3a4f49bf4bf37a4334ef6bf7b8c06f1794",
+      "sha256": "df382a2b90b071d597b49a0e701ce32e98e8f286378be496a0005012b3864bd9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_pooter/source/vector_scale.asm",
+      "start": "0x962b50",
+      "end": "0x962b80",
+      "raw_sha256": "aebf37574d6c4162f4867ba4303e38396402aa55f994d7a928e0c6d7b25f81e6",
+      "sha256": "bb88b85b19c37ffad02016cbf7db709e757193666392caa448285cc82e143e2e"
+    }
+  ],
+  "xml": {
+    "anm2path": "014.002_Ultra Pooter.anm2",
+    "baseHP": "75",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionMass": "10",
+    "collisionRadius": "20",
+    "friction": "1",
+    "gridCollision": "walls",
+    "id": "14",
+    "name": "#TAINTED_POOTER",
+    "numGridCollisionPoints": "4",
+    "portrait": "349",
+    "reroll": "false",
+    "shadowSize": "18",
+    "shieldStrength": "30",
+    "stageHP": "0",
+    "tags": "fly",
+    "variant": "2"
+  },
+  "room_library_presence": {
+    "rooms/36.backwards.stb": {
+      "templates": 6,
+      "positive_weight_templates": 6
+    }
+  },
+  "scope": "Regular Tainted Pooter14.2.0 and reusable bounded, impact-only backward projectile splitting. Its dedicated Ascent-equivalent route remains pending.",
+  "adaptations": [
+    "Source75HPx3.2=240, contact0 and retained physical radius.6. Existing Original low-poly artwork, player100HP and damage defaults remain unchanged.",
+    "Shared30Hz buzzing uses the established local world scale.1, pursuit/jitter/friction, local room-edge handling and24speed safety cap. Source check7, cooldown63 from acquisition, Attack14 and Shoot6 are external values. Tiny float remainder is clamped so cooldown expiry cannot miss a source check.",
+    "Mode4 four-shot coefficients are (.99,+/-.1668) and (.8226,+/-.43956) times base21 local speed, retaining the outer slowdown without normalization. Root radius is1.4x.22=.308. Current physical target is sampled at Shoot, including vertical pitch.",
+    "Each physical terminal impact emits two ordinary, nonrecursive children backward+/-24degrees, speed30, radius.22, damage10before the existing hostile multiplier, and local offset1. Parent source attribution survives its death. Root/child lifetime5seconds is a local safety bound; expiry and explicit cancellation do not split.",
+    "Native projectile height/falling coefficients are retained as evidence, not reproduced here. Roots use DeathWard3D aim; children remain horizontal at impact elevation. Spawn offset is clipped against current solid scenery so it cannot teleport across thin walls. Native default height, negative-acceleration curve and entity-time integration remain separate parity work.",
+    "Four roots and each two-child split are admitted atomically within local projectile/queue/chain capacity. Saturated impacts retain a single stopped carrier and retry; no repeated damage or partial pair. This bounded runtime policy is DeathWard-specific.",
+    "Skatole suppresses all Pooter variants through the native type14 branch, including14.2. The incomplete item remains outside natural reward pools.",
+    "Ascent-only enemy remains deliberately excluded from ordinary stage pools. Isolated debug captures validate implementation but do not establish natural encounter reachability."
+  ],
+  "remaining": [
+    "Add a source-appropriate dedicated Ascent-equivalent encounter without changing the established4-8floor expedition structure. No new natural route is claimed by this slice.",
+    "Native projectile height/falling curve, time-scale/status/control interactions, full Skatole and exact animation/integration parity remain pending.",
+    "Broader build/encounter balance, all-angle occlusion and controlled rendered Linux/WASM performance remain unaccepted. Zero records certified complete; all653records and six gates remain required.",
+    "Continue remaining regular fly families and their dependencies before further boss/Hornfel work."
+  ],
+  "shared_source_evidence": [
+    "docs/reports/isaac-enemy-port/fly_pooter/source/add_velocity.asm",
+    "docs/reports/isaac-enemy-port/horf_fly/source/shared_interval.asm",
+    "docs/reports/isaac-enemy-port/horf_fly/source/fly_buzz_and_edge_forces.asm",
+    "docs/reports/isaac-enemy-port/super_pooter/source-review.json"
+  ],
+  "animation_evidence": "docs/reports/isaac-enemy-port/tainted_pooter/animations/manifest.json",
+  "wiki_evidence": "docs/reports/isaac-enemy-port/tainted_pooter/wiki-source.json",
+  "api_evidence": "docs/reports/isaac-enemy-port/tainted_pooter/projectile-flags.source.json"
+}

@@ -1,0 +1,104 @@
+{
+  "baseline": "Installed1.7.9b",
+  "scope": "Animation/event metadata only; no sprite artwork imported. DLC override searched before base animation archive.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/029.003_Ultra Hopper.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/animations/029.003_Ultra Hopper.anm2",
+      "sha256": "c364fa068ccc535134119112d0dec9d69ad267840002e59e518b6343f97c405e",
+      "checksum": "0x645f0c33",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "11.11.2020 20:31:07",
+        "Fps": "30",
+        "Version": "120"
+      },
+      "events": [
+        {
+          "Id": "0",
+          "Name": "Jump"
+        },
+        {
+          "Id": "1",
+          "Name": "Land"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Hop",
+            "FrameNum": "23",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Hop2",
+            "FrameNum": "23",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "4"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "17"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Bestiary",
+            "FrameNum": "46",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "14",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Idle2",
+            "FrameNum": "14",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "20",
+            "Loop": "false"
+          },
+          "triggers": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+[
+  {
+    "name": "ground",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.1.0",
+      "--frames",
+      "20",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/trite/native-ground.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/trite/native-ground.png",
+    "log": "docs/reports/isaac-enemy-port/trite/native-ground.txt"
+  },
+  {
+    "name": "air",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.1.0",
+      "--frames",
+      "54",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/trite/native-air.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/trite/native-air.png",
+    "log": "docs/reports/isaac-enemy-port/trite/native-air.txt"
+  },
+  {
+    "name": "landed",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.1.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/trite/native-landed.png"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/trite/native-landed.png",
+    "log": "docs/reports/isaac-enemy-port/trite/native-landed.txt"
+  },
+  {
+    "name": "cover",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.1.0",
+      "--frames",
+      "54",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/trite/native-cover.png",
+      "--enemy-terrain",
+      "hop-cover"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/trite/native-cover.png",
+    "log": "docs/reports/isaac-enemy-port/trite/native-cover.txt"
+  },
+  {
+    "name": "river",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "enemy-29.1.0",
+      "--frames",
+      "54",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/trite/native-river.png",
+      "--enemy-terrain",
+      "river"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/trite/native-river.png",
+    "log": "docs/reports/isaac-enemy-port/trite/native-river.txt"
+  },
+  {
+    "name": "resident",
+    "command": [
+      "/home/kambo/workspace/DeathWard/build/deathward",
+      "--smoke",
+      "--mute",
+      "--theme",
+      "canyon",
+      "--style",
+      "original",
+      "--scene",
+      "resident-29.1.0",
+      "--frames",
+      "100",
+      "--screenshot",
+      "/home/kambo/workspace/DeathWard/docs/reports/isaac-enemy-port/trite/native-resident.png",
+      "--resident-seed",
+      "0",
+      "--resident-floor",
+      "1"
+    ],
+    "exit_code": 0,
+    "image": "docs/reports/isaac-enemy-port/trite/native-resident.png",
+    "log": "docs/reports/isaac-enemy-port/trite/native-resident.txt"
+  }
+]

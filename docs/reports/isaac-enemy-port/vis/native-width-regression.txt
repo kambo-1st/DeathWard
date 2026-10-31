@@ -1,0 +1,45 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  2: mechanics_content
+1/7 Test  #2: mechanics_content ................   Passed    2.02 sec
+    Start 29: monster_behaviors
+2/7 Test #29: monster_behaviors ................***Failed    3.79 sec
+chain 0 depth 0 effect -1: monster offspring capacity
+CATALOG 179 entries including offspring
+ROTTEN_ORBIT radius=4.92227..8.15569 turn=-19.2846 max_speed=7.8368
+ROTTEN_STARTING_KIT subtype=1 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=2 seconds=5 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=3 seconds=5.91667 hp=100 peak=3
+ROTTEN_STARTING_KIT subtype=4 seconds=5.05 hp=100 peak=1
+ROTTEN_STARTING_KIT subtype=5 seconds=5.08333 hp=100 peak=1
+GROUND_BROOD player_gap=0.475 body_gap=0.0249002 threats=7
+GROUND_PASSAGE type=10.1 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.1 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.1 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.1 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.1 entity=48 x=0.486997 z=7.04164
+GROUND_PASSAGE type=10.3.4 entity=44 x=0.169782 z=9.06151
+GROUND_PASSAGE type=10.3.4 entity=45 x=-0.966968 z=8.46968
+GROUND_PASSAGE type=10.3.4 entity=46 x=-0.74553 z=7.22553
+GROUND_PASSAGE type=10.3.4 entity=47 x=1.0642 z=8.15202
+GROUND_PASSAGE type=10.3.4 entity=48 x=0.486997 z=7.04164
+FAIL: laser damage is clipped by solid cover
+
+    Start 34: spitty_family
+3/7 Test #34: spitty_family ....................   Passed   19.37 sec
+    Start 35: cardinal_walkers
+4/7 Test #35: cardinal_walkers .................   Passed    2.09 sec
+    Start 36: brain
+5/7 Test #36: brain ............................   Passed    1.23 sec
+    Start 37: baby_family
+6/7 Test #37: baby_family ......................   Passed    0.39 sec
+    Start 38: vis_family
+7/7 Test #38: vis_family .......................   Passed    0.42 sec
+
+86% tests passed, 1 tests failed out of 7
+
+Total Test time (real) =  29.32 sec
+
+The following tests FAILED:
+	 29 - monster_behaviors (Failed)
+Errors while running CTest

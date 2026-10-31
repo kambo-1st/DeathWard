@@ -1,0 +1,205 @@
+{
+  "passed": 49,
+  "failed": 0,
+  "basis": "All 49 suites passed in one full run. After reference regeneration, the isolated coverage suite also passed. The later carry-only render offset was rebuilt and inspected in native/browser captures; gameplay code did not change.",
+  "full_run": "docs/reports/isaac-enemy-port/supply/native-tests.xml",
+  "coverage_rerun": "docs/reports/isaac-enemy-port/supply/coverage-final.xml",
+  "tests": {
+    "enemy_port_coverage": {
+      "result": "pass",
+      "seconds": 0.409032
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "seconds": 1.18636
+    },
+    "expedition_economy": {
+      "result": "pass",
+      "seconds": 40.9848
+    },
+    "canyon_bosses": {
+      "result": "pass",
+      "seconds": 6.17431
+    },
+    "floor_progression": {
+      "result": "pass",
+      "seconds": 74.5974
+    },
+    "item_builds": {
+      "result": "pass",
+      "seconds": 7.40998
+    },
+    "expedition_destruction": {
+      "result": "pass",
+      "seconds": 63.4697
+    },
+    "walkable_areas": {
+      "result": "pass",
+      "seconds": 0.0337032
+    },
+    "expedition": {
+      "result": "pass",
+      "seconds": 12.7257
+    },
+    "expedition_pacing": {
+      "result": "pass",
+      "seconds": 8.94733
+    },
+    "flag_cloth": {
+      "result": "pass",
+      "seconds": 0.186776
+    },
+    "save_slots": {
+      "result": "pass",
+      "seconds": 0.0688595
+    },
+    "arrival_quest": {
+      "result": "pass",
+      "seconds": 1.29043
+    },
+    "cinematic_timeline": {
+      "result": "pass",
+      "seconds": 0.0718501
+    },
+    "canyon_roads": {
+      "result": "pass",
+      "seconds": 7.04985
+    },
+    "canyon_rivers": {
+      "result": "pass",
+      "seconds": 18.0181
+    },
+    "redstone_hub": {
+      "result": "pass",
+      "seconds": 1.10282
+    },
+    "building_navigation": {
+      "result": "pass",
+      "seconds": 0.0284315
+    },
+    "particle_emission": {
+      "result": "pass",
+      "seconds": 0.0228698
+    },
+    "town_characters": {
+      "result": "pass",
+      "seconds": 0.0183798
+    },
+    "ambient_animals": {
+      "result": "pass",
+      "seconds": 0.183161
+    },
+    "train_motion": {
+      "result": "pass",
+      "seconds": 0.67911
+    },
+    "object_animation": {
+      "result": "pass",
+      "seconds": 0.0613561
+    },
+    "player_dynamite": {
+      "result": "pass",
+      "seconds": 1.13837
+    },
+    "mission_shop": {
+      "result": "pass",
+      "seconds": 3.42757
+    },
+    "money_pickups": {
+      "result": "pass",
+      "seconds": 1.5183
+    },
+    "resident_enemies": {
+      "result": "pass",
+      "seconds": 1.6306
+    },
+    "audio_presentation": {
+      "result": "pass",
+      "seconds": 0.0613573
+    },
+    "monster_behaviors": {
+      "result": "pass",
+      "seconds": 5.52285
+    },
+    "monster_flight": {
+      "result": "pass",
+      "seconds": 2.80098
+    },
+    "monster_formations": {
+      "result": "pass",
+      "seconds": 0.27783
+    },
+    "monster_patterns": {
+      "result": "pass",
+      "seconds": 0.402953
+    },
+    "monster_fire_reactions": {
+      "result": "pass",
+      "seconds": 0.250025
+    },
+    "monster_hopping": {
+      "result": "pass",
+      "seconds": 0.27331
+    },
+    "monster_replacements": {
+      "result": "pass",
+      "seconds": 1.66073
+    },
+    "monster_boss_components": {
+      "result": "pass",
+      "seconds": 1.59718
+    },
+    "bloat_boss_and_chargers": {
+      "result": "pass",
+      "seconds": 1.95375
+    },
+    "charger_variants": {
+      "result": "pass",
+      "seconds": 0.218353
+    },
+    "companion_familiars": {
+      "result": "pass",
+      "seconds": 1.75658
+    },
+    "room_statues": {
+      "result": "pass",
+      "seconds": 0.703332
+    },
+    "maw_attraction": {
+      "result": "pass",
+      "seconds": 0.906683
+    },
+    "quake_waves": {
+      "result": "pass",
+      "seconds": 0.691387
+    },
+    "supplied_bombs": {
+      "result": "pass",
+      "seconds": 0.587157
+    },
+    "mission_themes": {
+      "result": "pass",
+      "seconds": 6.96652
+    },
+    "imported_town_navigation": {
+      "result": "pass",
+      "seconds": 0.0728919
+    },
+    "core_contracts": {
+      "result": "pass",
+      "seconds": 0.516333
+    },
+    "enemy_behaviors": {
+      "result": "pass",
+      "seconds": 4.16689
+    },
+    "generated_dungeons": {
+      "result": "pass",
+      "seconds": 27.6398
+    },
+    "generated_room_graphs": {
+      "result": "pass",
+      "seconds": 0.848769
+    }
+  }
+}

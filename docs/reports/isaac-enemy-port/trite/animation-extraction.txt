@@ -1,0 +1,76 @@
+[
+  {
+    "source": "resources/gfx/029.001_Trite.anm2",
+    "archive": "resources/packed/afterbirthp.a",
+    "path": "docs/reports/isaac-enemy-port/trite/animations/029.001_Trite.anm2",
+    "sha256": "e13cf58a766e9d8c33b4e417ca595b3870af4d2cddfc7d1f87516d4a94720108",
+    "checksum": "0x27e1c3d6",
+    "info": {
+      "CreatedBy": "robot",
+      "CreatedOn": "03-May-19 4:19:25 PM",
+      "Version": "104",
+      "Fps": "30"
+    },
+    "events": [
+      {
+        "Name": "Jump",
+        "Id": "0"
+      },
+      {
+        "Name": "Land",
+        "Id": "1"
+      }
+    ],
+    "animations": [
+      {
+        "attributes": {
+          "Name": "Hop",
+          "FrameNum": "26",
+          "Loop": "false"
+        },
+        "triggers": [
+          {
+            "EventId": "0",
+            "AtFrame": "4"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "18"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "Name": "Idle",
+          "FrameNum": "2",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "Appear",
+          "FrameNum": "26",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "BigJumpUp",
+          "FrameNum": "12",
+          "Loop": "false"
+        },
+        "triggers": []
+      },
+      {
+        "attributes": {
+          "Name": "BigJumpDown",
+          "FrameNum": "40",
+          "Loop": "false"
+        },
+        "triggers": []
+      }
+    ]
+  }
+]

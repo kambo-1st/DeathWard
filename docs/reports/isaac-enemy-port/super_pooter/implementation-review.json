@@ -1,0 +1,53 @@
+{
+  "scope": "Normal-mode Super Pooter14.1; ordinary/Super Pooter Skatole attack suppression capability only.",
+  "mechanics_fingerprint": "72c06a2ea58542e1",
+  "changes": [
+    "Replace legacy Super Pooter graph with shared buzzing controller, source health and normal-mode source pair.",
+    "External buzz_pair coefficients and item-bound buzz_suppress; whole-volley bounded admission.",
+    "Skatole Pooter dependency remains outside natural pools; original player defaults and item weights preserved.",
+    "One sparse Super Pooter crossfire specialist per room, reachable in all four stage bands."
+  ],
+  "adaptations": [
+    "Source8HP times3.2 becomes25.6; zero contact damage. Existing original-style .5radius body and physical flight remain.",
+    "Shared buzzing uses the prior ordinary Fly/Pooter local30Hz clock, room-edge conversion and collision safety cap. Integration/status/parent exceptions remain partial.",
+    "Native approximate pair coefficients .961/.276 are exposed as buzz_pair, preserving their slight planar speed loss. World speed is7times30times.1=21 before pair transform. Both bullets share current target pitch from the elevated body.",
+    "Queue/projectile/event-chain limits admit a whole pair or retain Shoot until capacity returns. This bounded safety policy stretches the animation under saturation and is a local adaptation.",
+    "buzz_suppress references an external item key; inventory state is read during simulation, not cached at spawn. Attack recovery continues, skipped Shoot is not replayed, cooldown and its movement damping pause while suppressed.",
+    "Skatole is a registered research dependency without any natural item pool. Its Attack Fly morph, other fly families and status/parent interactions are pending; this is not a complete collectible port.",
+    "Sparse crossfire placement in bands0–3 costs3threat points and caps one Super Pooter per room. Source native random replacements are not implemented by this direct placement."
+  ],
+  "native": {
+    "covered_suites": 65,
+    "passed": 65,
+    "failed": 0,
+    "initial_report": "docs/reports/isaac-enemy-port/super_pooter/native.xml",
+    "corrected_test_report": "docs/reports/isaac-enemy-port/super_pooter/economy-final.xml",
+    "behavior": "docs/reports/isaac-enemy-port/super_pooter/behavior-final.txt",
+    "scope": "Full65-suite run passed64. The economy test expected every registered item in rewards; it was corrected to require all supported items and explicitly forbid unfinished Skatole. Its complete suite was rebuilt and rerun successfully. Runtime was unchanged after the full build; no second full65-suite run is claimed.",
+    "tests": "Shared buzzing/dung regressions; Super Pooter source health, current-target mode1 coefficients, Shoot6/Attack14/delay35, actual impact damage, harmless contact, atomic event/projectile/chain capacity, death cancellation, live item addition/removal and skipped-Shoot handling, invalid config, immutable snapshots, four-band seeded residents."
+  },
+  "browser": {
+    "cases": 6,
+    "report": "docs/reports/isaac-enemy-port/super_pooter/web/results.json",
+    "errors": [],
+    "scope": "Final WASM build: isolated pair; physical flight and downward shots over a crate; Skatole suppression for ordinary/Super Pooter; one death; natural seed1/floor0/room2 resident. No production data edits or forced probabilities.",
+    "note": "Isolated smoke resets initial cooldown; the natural case retains generated residents. Screenshot capture can advance frames relative to the sampled probe. FPS display is not performance certification."
+  },
+  "visual": {
+    "result": "Inspected Original-style purple winged actor, paired red shots, cover elevation and shadows; actual seeded room is visible in Linux and WASM. No broad occlusion or all-angle acceptance.",
+    "linux": [
+      "docs/reports/isaac-enemy-port/super_pooter/native-super.png",
+      "docs/reports/isaac-enemy-port/super_pooter/native-resident.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/super_pooter/web/super-cover.png",
+      "docs/reports/isaac-enemy-port/super_pooter/web/natural-super.png"
+    ]
+  },
+  "remaining": [
+    "Tainted Pooter and Attack Fly remain prior partial controllers; implement them and other regular families before further boss work.",
+    "Full Skatole effects, native replacements/champions, hard-mode speeds, parent/controlled/charmed cases, common movement/time-scale integration and animation ordering remain pending.",
+    "Projectile vertical physics/lifetime, damage scale and room terrain are explicit3D adaptations. Full multi-build balance, occlusion and controlled rendered performance acceptance remains open.",
+    "All653records and all six gates remain required. Zero records certified complete."
+  ]
+}

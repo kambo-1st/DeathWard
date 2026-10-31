@@ -1,0 +1,5 @@
+START double-river
+page.waitForFunction: Timeout 90000ms exceeded.
+    at /home/kambo/workspace/DeathWard/web/vis-test.cjs:40:70 {
+  name: 'TimeoutError'
+}

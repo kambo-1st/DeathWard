@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 59: hive_evaders
+1/1 Test #59: hive_evaders .....................***Failed   10.12 sec
+PASS Hive/Drowned health, harmless contact, native attack event/timer, global population delay, live-child policy and bounded Shoot
+PASS independent death mixtures, population count, scaled overkill, live/death distinction, retained births and completion
+PASS flee/wander and validated immutable external profiles; Flooded-only replacement
+NATURAL_HIVE seed=23 floor=0 room=5 band=0
+NATURAL_HIVE seed=34 floor=2 room=7 band=1
+NATURAL_HIVE seed=1 floor=4 room=3 band=2
+FAIL real seeded Flooded replacement reachable
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =  10.12 sec
+
+The following tests FAILED:
+	 59 - hive_evaders (Failed)
+Errors while running CTest

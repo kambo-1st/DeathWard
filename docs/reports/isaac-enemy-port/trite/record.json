@@ -1,0 +1,185 @@
+{
+  "key": "29.1.0",
+  "id": 29,
+  "variant": 1,
+  "subtype": 0,
+  "name": "Trite",
+  "xml": {
+    "anm2path": "029.001_Trite.anm2",
+    "baseHP": "10",
+    "boss": "0",
+    "champion": "1",
+    "collisionDamage": "1",
+    "collisionMass": "10",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "29",
+    "name": "#TRITE",
+    "numGridCollisionPoints": "12",
+    "portrait": "26",
+    "reroll": "true",
+    "shadowSize": "28",
+    "stageHP": "0",
+    "tags": "spider",
+    "variant": "1"
+  },
+  "source_file": "entities2.xml",
+  "group": "enemy",
+  "record_key": "entity:29.1.0",
+  "wiki_matches": [
+    {
+      "page": "Trite",
+      "box": 0,
+      "group": "entity",
+      "fields": {
+        "name": "Trite",
+        "id": "29",
+        "variant": "1",
+        "base hp": "10",
+        "environment": "Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nNecropolis /",
+        "replace": "Hopper",
+        "replace chance": "5.71%",
+        "behavior": "Quickly leaps towards Isaac and deals contact damage."
+      },
+      "section_indices": [
+        0
+      ],
+      "name": "Trite",
+      "variant": 1,
+      "subtype": 0,
+      "id": 29,
+      "template": "infobox monster"
+    }
+  ],
+  "wiki_match_method": "entity/item ID",
+  "wiki_pages": [
+    "Trite"
+  ],
+  "evidence": {
+    "numeric": "installed Repentance 1.7.9b XML",
+    "behavior": "current wiki revision; edition notes must be respected",
+    "native_ai_timers": "not established by XML or API declarations",
+    "implementation": "research only; no behavior ported by this report"
+  },
+  "hp_by_stage": {
+    "1": 10.0,
+    "2": 10.0,
+    "3": 10.0,
+    "4": 10.0,
+    "5": 10.0,
+    "6": 10.0,
+    "7": 10.0,
+    "8": 10.0,
+    "9": 10.0,
+    "10": 10.0,
+    "11": 10.0,
+    "12": 10.0,
+    "13": 10.0
+  },
+  "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+  "hp_formula_source": "Stage HP",
+  "display_name": "Trite",
+  "room_library_presence": {
+    "rooms/00.special rooms.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/02.cellar.stb": {
+      "templates": 82,
+      "positive_weight_templates": 82
+    },
+    "rooms/03.burning basement.stb": {
+      "templates": 10,
+      "positive_weight_templates": 10
+    },
+    "rooms/04.caves.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/05.catacombs.stb": {
+      "templates": 17,
+      "positive_weight_templates": 17
+    },
+    "rooms/06.flooded caves.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/08.necropolis.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/26.the void.stb": {
+      "templates": 1,
+      "positive_weight_templates": 1
+    },
+    "rooms/greed/02.cellar.stb": {
+      "templates": 7,
+      "positive_weight_templates": 7
+    },
+    "rooms/greed/03.burning basement.stb": {
+      "templates": 6,
+      "positive_weight_templates": 6
+    }
+  },
+  "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+  "deathward": {
+    "name": "Trite",
+    "motion": "Hop",
+    "attack": "None",
+    "shape": "Spider",
+    "catalog_base_hp": 48.0,
+    "behavior": "legacy",
+    "source": "assets/mechanics/monsters.mechanics",
+    "line": 51,
+    "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+  },
+  "port_contract": {
+    "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+    "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+    "state_requirements": [
+      "spawn/activation",
+      "idle and target acquisition",
+      "movement and path selection",
+      "attack selection and telegraph",
+      "attack emission",
+      "recovery",
+      "damage/vulnerability",
+      "phase transitions",
+      "death/children",
+      "room-clear participation"
+    ],
+    "parameters_not_established": {
+      "walk_speed_world_units_per_second": null,
+      "acceleration": null,
+      "attack_cooldown_seconds": null,
+      "telegraph_seconds": null,
+      "projectile_speed": null,
+      "attack_selection_weights": null,
+      "animation_event_ticks": null
+    },
+    "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+    "required_checks": [
+      "fixed seed and RNG calls",
+      "line of sight versus alignment",
+      "pit/wall/flying navigation",
+      "contact and projectile damage",
+      "vulnerability during each state",
+      "slow/freeze/charm effects",
+      "overkill and offspring",
+      "phase HP ownership",
+      "despawn versus room clear",
+      "save/load and re-entry"
+    ],
+    "implementation_status": "not ported by this research"
+  },
+  "behavior_section_refs": [
+    {
+      "page": "Trite",
+      "section": 0
+    }
+  ],
+  "feature_triage": [
+    "room-floor-run-events"
+  ],
+  "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+}

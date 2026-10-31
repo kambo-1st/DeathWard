@@ -1,0 +1,201 @@
+{
+  "scope": "Partial normal-hostile Tainted Hopper29.3.0 target hopping, four-stage physical rings and ordinary lifecycle.",
+  "complete": false,
+  "adaptations": [
+    "Source30Hz within60Hz simulation, planar distance x.1, velocity x3 and HP x3.2.80HP becomes256; contact2 becomes base20 before the existing hostile multiplier. Protagonist defaults unchanged.",
+    "Shared physical hop predicts legal ground landings. Source Land restarts chain immediately when the projected ground is legal; otherwise the current flight finishes before chaining. A blocked snapped target can use a legal unsnapped candidate.",
+    "Source four stages emit4/6/8/12 fixed-world-angle shots at24/30/24/30 world speed. Native falling-speed damping.9 and acceleration.03 map to upward velocity-.15..+.15, gravity1.35,height1.15 with30Hz endpoints preserved.",
+    "Actual swept3D floor/wall/body collisions replace native grid-height thresholds. Projectile radius.18 and six-second safety life are authored. Emitted physical shots survive the owner and hold local completion.",
+    "Queue limits retain whole rings at their original landing positions, at most one cycle. Stun delays emission; death discards un-emitted rings. Inactive-room suspension preserves phases. These are explicit local policies.",
+    "Original headless procedural silhouette gains visible arms and alternating full-hop twists. No source artwork, global filter or geometry replacement.",
+    "Source Ascent-only habitat is adapted into a sparse band3 pursuit specialist,weight1,cost6,cap1. Natural Rourke seed22/floor7/room1; no first-floor or tutorial placement."
+  ],
+  "remaining": [
+    "Adaptive shieldStrength30 armor is NOT implemented. Installed history/soft-cap formula is preserved; source damage batching, bypass mapping, initial-protection and large-hit/version reconciliation remain required.",
+    "Native special-status/champion/control branches, fear/shrink/charm/familiar interactions and exact RNG/update ordering remain open. Friendly shots currently use the local player-attack adapter, not certified parity.",
+    "Native fixed-grid collision and room geometry differ from actual3D terrain; landing deferrals, sphere radius, expiration and room-completion policies are documented adaptations.",
+    "Native placement probabilities, Ascent unlock/context parity, starting-kit and varied-build balance, all-angle readability and controlled Linux/WASM performance remain open. No complete port claimed."
+  ],
+  "source_preflight": "docs/reports/isaac-enemy-port/tainted_hopper/source-review.md",
+  "flight_and_armor_review": "docs/reports/isaac-enemy-port/tainted_hopper/flight-armor-review.md",
+  "native": {
+    "passed": 81,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/tainted_hopper/native-final.xml",
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "boil_family",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "eggy",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hard_host",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "hosts",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "maw_family",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "mushroom",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_hopper",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "trite",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "behavior": "docs/reports/isaac-enemy-port/tainted_hopper/native-flight.txt",
+    "note": "Fresh full81/81 regression run after final runtime changes."
+  },
+  "browser": {
+    "cases": 5,
+    "report": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/results.json",
+    "scope": "Production WASM Tainted Hopper four-stage rings, actual cover/water hopping, ordinary death and natural late-floor encounter in Original style. Native tests verify exact timings, flight recurrence and capacity handling. Adaptive armor and full six-gate acceptance remain open.",
+    "errors": [],
+    "build": "docs/reports/isaac-enemy-port/tainted_hopper/build-wasm.txt",
+    "compression": "docs/reports/isaac-enemy-port/tainted_hopper/web-compression.txt"
+  },
+  "visual": {
+    "scope": "Original style procedural Tainted Hopper: isolated air/ring poses and a natural mixed encounter. Screenshots establish the inspected views only, not all-angle readability or controlled performance.",
+    "final_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-air.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Large red headless body and asymmetric arms visibly airborne with separate ground shadow; original scene palette retained."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-fourth.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Twelve-spoke ring visible around the grounded body with projectile shadows; some older shots are farther away. Screenshot alone does not establish exact recurrence."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-resident.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Red armed Tainted Hopper is distinguishable from smaller purple Hoppers, but overlaps the player near the canyon edge at this instant. Body visible through current occlusion treatment; overlap limits readability."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/isolated-air.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Large red headless body and asymmetric arms are elevated above a separate shadow. Matches inspected Linux air presentation."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/isolated-fourth.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Twelve-spoke final ring is clearly visible with projectile ground shadows; original canyon material/palette retained."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/cover-cover.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Actual elevated body clears the two-unit crate; shadow, player and cover remain distinguishable."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/river-river.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Body is visibly over the deep-water channel, with a water shadow; native and browser telemetry separately validate safe landing."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/death-death.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": false,
+        "notes": "Body removed after one kill; coin remains and earlier projectiles continue toward the room boundary. No offspring or lingering false body."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/resident-resident.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Large red Tainted Hopper and its four-shot cross contrast with smaller purple Hoppers in the unchanged generated mixed encounter. Player proximity can still make overlap difficult."
+      }
+    ],
+    "rejected_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-first.png",
+        "reason": "Inspected but no first-ring projectiles are visibly apparent at this capture. Native log reports four emitted shots; use a later visually verified ring capture instead. Do not treat this image as first-ring evidence."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/web-final/isolated-first.png",
+        "reason": "Inspected but first ring is no longer visible at screenshot time; accepted natural-resident image shows the four-shot cross. Counts/timing are asserted separately."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/tainted_hopper/native-first-emission.png",
+        "reason": "Extra frame90 capture shows emitted shots overlapping the stationary player/body; insufficient separation to use as a readable four-shot formation image. Retained as an overlap limitation."
+      }
+    ]
+  }
+}

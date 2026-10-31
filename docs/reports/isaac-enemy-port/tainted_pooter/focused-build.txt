@@ -1,0 +1,24 @@
+[  0%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/BuzzFlies.cpp.o
+[  5%] Linking CXX static library libdeathward_core.a
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_tainted_pooter_tests
+[100%] Building CXX object CMakeFiles/deathward_tainted_pooter_tests.dir/tests/tainted_pooter_tests.cpp.o
+[100%] Linking CXX executable deathward_tainted_pooter_tests
+[100%] Built target deathward_tainted_pooter_tests
+Consolidate compiler generated dependencies of target deathward_core
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_tests
+[100%] Linking CXX executable deathward_monster_tests
+[100%] Built target deathward_monster_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_buzz_fly_tests
+[100%] Linking CXX executable deathward_buzz_fly_tests
+[100%] Built target deathward_buzz_fly_tests
+Consolidate compiler generated dependencies of target glfw
+[ 21%] Built target glfw
+[ 89%] Built target deathward_core
+Consolidate compiler generated dependencies of target raylib
+[ 96%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_check_mechanics
+[100%] Linking CXX executable deathward_check_mechanics
+[100%] Built target deathward_check_mechanics

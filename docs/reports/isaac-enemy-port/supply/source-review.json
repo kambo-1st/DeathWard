@@ -1,0 +1,86 @@
+{
+  "status": "Partial support controller, not a completed enemy port or dedicated encounter.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "ids": [
+    "809.0.0"
+  ],
+  "outside_enemy_roster_components": [
+    {
+      "anm2path": "004.013_Throwable Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Throwable Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "18",
+      "stageHP": "0",
+      "variant": "13"
+    },
+    {
+      "anm2path": "004.013_Throwable Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "3",
+      "collisionRadius": "12",
+      "friction": "1",
+      "id": "5",
+      "name": "Throwable Bomb (pickup)",
+      "numGridCollisionPoints": "24",
+      "shadowSize": "20",
+      "stageHP": "0",
+      "subtype": "0",
+      "variant": "41"
+    }
+  ],
+  "sources": {
+    "xml": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+    "bomb_pickups": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=267747",
+    "supplier": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270009",
+    "tuff_twins": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270021",
+    "shell": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022"
+  },
+  "source_contract": {
+    "unlit": "Bomb Grimace keeps a throwable bomb available. The pickup cannot add ordinary inventory bombs.",
+    "take": "The bomb can be picked up and thrown; its fuse starts after pickup, not on initial floor supply.",
+    "replenish": "A few seconds after Isaac takes the bomb, supplier creates another. Exact delay and global-versus-per-producer stock ownership remain unmeasured.",
+    "exceptional_death": "Bomb Grimace emits ten Throwable Bombs on documented instant-death destruction. Generic execution is only a test hook; named item producers remain necessary."
+  },
+  "deathward_adaptations": {
+    "parameters": "External replenish 2.5 s, fuse 3 s, radius 4.5 units, damage 100, holder damage 25, throw range 12, flight 0.7 s, pickup radius 0.75. Ten exceptional-death drops are sourced; other values are local tuning, not measured native constants. Float clocks may cross a configured boundary one fixed tick late. Invulnerable display HP 64 retains the local 3.2 conversion of source baseHP 20.",
+    "ownership": "Each producer tracks its own single normal unlit pickup. Taking schedules replenishment independently of existing carried/thrown ordnance. Other producers and death drops do not suppress it. This ownership choice is not verified against native Isaac.",
+    "controls": "Actual player contact takes a pickup. Mouse picking walks to stock; attack/arrow aim throws held ordnance; B places or throws according to existing mode. HUD throw accepts zero inventory. Holding takes precedence over ordinary gun/dynamite use. At most one carried bomb.",
+    "physics": "Shared swept ballistic terrain/cover collision; existing gravity 18 units/s squared. Throwing or placing never resets fuse. Held detonation can hurt player and uses player-origin damage without the hostile 1.25 multiplier. Its explosion has explicit SuppliedBomb demolition provenance, opening existing cache/cracked rock/ore routes without inventory spend. Braid is not copied without source evidence.",
+    "persistence": "Unlit pickups do not age. Floor-wide vector retains ground stock; thrown bombs pause outside their active room. Carried bombs continue with player through rooms and real floor transitions, retaining fuse and rule snapshot; former supplier link clears on next floor. Ground ordnance stays behind. These are declared local transition policies.",
+    "capacity": "128 supplied bombs per floor. At most 32 pending exceptional drops per producer. Placement tries up to 160 deterministic radial candidates, checks current-room bounds, cover, entrance/cache reservations, path to player, and pickup spacing. Failed placement retries after 0.25 s. Pending death drops are retained rather than silently lost.",
+    "completion": "Non-hostile support never seals doors or earns normal kill/loot credit. Ordinary combat clear does not stop production. Existing statue execution/re-entry lifecycle is reused; stock persists and re-entry does not replay death burst. No ordinary or optional hazard-pool entry is enabled.",
+    "visuals": "Original procedural stone head with bomb emblem and gold rim; low-poly bomb, fuse spark, unlit pickup ring and lit blast/fuse rings. Carried visual is raised 0.8 units clear of hat without changing explosion origin. All-angle readability is not yet accepted."
+  },
+  "unresolved": [
+    "Exact native supply ownership, fuse/replenishment/startup timings, throwable speed/range/collision and pickup knockback require measurement.",
+    "Tuff Twins, The Shell and Mother's Shadow dedicated encounter/escape producers remain unimplemented; no natural reachability acceptance.",
+    "Named instant-kill items, item-hit/reroll exceptions and per-bomb item inheritance are not established by generic execution hooks.",
+    "Mandatory encounter recovery after all bombs are wasted or supplier destroyed needs explicit encounter design/testing.",
+    "Save/reload of transient supplied-bomb state follows current expedition reconstruction rather than serializing mid-fuse ordnance; source-exact re-entry/floor behavior remains unverified.",
+    "All-camera readability, mixed-build/human balance and controlled current-roster native/WASM performance remain open."
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Engine gap analysis and implementation plan by DeathWard.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "visual_review": {
+    "inspected": [
+      "linux-stock.png",
+      "linux-carried.png",
+      "linux-thrown.png",
+      "artifacts/enemy-port/wasm-supply-carry-40.png",
+      "artifacts/enemy-port/wasm-supply-death-150.png"
+    ],
+    "observed": "Original scene treatment retained. Unlit stock has a pickup ring, held bomb/fuse is visibly above the hat after display offset correction, thrown bomb has a blast ring, and exceptional-death stock forms distinct pickups around the supplier.",
+    "limits": "Isolated camera/zoom only. Crowded boss arenas, occlusion and all-angle readability not accepted. Screenshot FPS is not controlled performance evidence."
+  }
+}

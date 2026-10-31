@@ -1,0 +1,4 @@
+PASS Tainted Pooter source health, four-shot coefficients, Shoot6/Attack14/delay63, atomic volley, harmless contact and Skatole
+PASS impact-only backward split: wall/player, lifetime/cancellation, no recursion, source identity, queue/chain/projectile pressure and bounce separation
+PASS external validation/snapshots and no accidental ordinary-pool placement; dedicated Ascent route remains pending
+PASS Tainted Pooter and reusable impact splitting

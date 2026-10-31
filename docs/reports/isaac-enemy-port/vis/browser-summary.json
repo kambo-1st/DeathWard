@@ -1,0 +1,36 @@
+{
+  "passed_cases": 5,
+  "cases": [
+    {
+      "name": "vis",
+      "path": "docs/reports/isaac-enemy-port/vis/web/results.json",
+      "result": "pass"
+    },
+    {
+      "name": "double",
+      "path": "docs/reports/isaac-enemy-port/vis/web/results.json",
+      "result": "pass"
+    },
+    {
+      "name": "scarred",
+      "path": "docs/reports/isaac-enemy-port/vis/web/results.json",
+      "result": "pass"
+    },
+    {
+      "name": "vis-cover",
+      "path": "docs/reports/isaac-enemy-port/vis/web/results.json",
+      "result": "pass"
+    },
+    {
+      "name": "double-river",
+      "path": "docs/reports/isaac-enemy-port/vis/web-river-final/results.json",
+      "result": "pass"
+    }
+  ],
+  "scope": "Isolated production WASM smoke; no natural resident/balance/performance acceptance.",
+  "failures_preserved": [
+    "web/results.json: initial diagonal river target did not meet cardinal alignment; no invented diagonal attack added.",
+    "web-river-correction/results.json: harness used frame0 but CLI requires positive frame; startup timed out.",
+    "web-river-final/results.json: legal frame1 player placement at relative0,10; two actual volleys and all four captured phases."
+  ]
+}

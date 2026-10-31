@@ -1,0 +1,133 @@
+{
+  "status": "Dependency and architecture review for next implementation; no chain bosses or Fly Bombs implemented by this checkpoint.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "sources": {
+    "Tuff Twins": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270021",
+    "The Shell": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=270022",
+    "Fly Bomb": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266992",
+    "Mother's Shadow": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=269573"
+  },
+  "exact_records": [
+    {
+      "key": "19.2.0",
+      "name": "tuff twin",
+      "xml": {
+        "anm2path": "019.002_tuff twin.anm2",
+        "baseHP": "35",
+        "boss": "1",
+        "bossID": "80",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "100",
+        "collisionRadius": "20",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "19",
+        "name": "#TUFF_TWIN",
+        "numGridCollisionPoints": "8",
+        "portrait": "106",
+        "shadowSize": "25",
+        "stageHP": "0",
+        "tags": "nodelirium",
+        "variant": "2"
+      }
+    },
+    {
+      "key": "19.3.0",
+      "name": "the shell",
+      "xml": {
+        "anm2path": "019.003_the shell.anm2",
+        "baseHP": "35",
+        "boss": "1",
+        "bossID": "96",
+        "champion": "0",
+        "collisionDamage": "1",
+        "collisionMass": "100",
+        "collisionRadius": "20",
+        "friction": "1",
+        "id": "19",
+        "name": "#THE_SHELL",
+        "numGridCollisionPoints": "10",
+        "portrait": "126",
+        "shadowSize": "22",
+        "stageHP": "0",
+        "tags": "nodelirium",
+        "variant": "3"
+      }
+    },
+    {
+      "key": "819.0.0",
+      "name": "fly bomb",
+      "xml": {
+        "anm2path": "819.000_fly bomb.anm2",
+        "baseHP": "7",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "6",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "819",
+        "name": "#FLY_BOMB",
+        "numGridCollisionPoints": "8",
+        "portrait": "242",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "tags": "fly explosive_soul",
+        "variant": "0"
+      }
+    },
+    {
+      "key": "819.1.0",
+      "name": "eternal fly bomb",
+      "xml": {
+        "anm2path": "819.001_eternal fly bomb.anm2",
+        "baseHP": "7",
+        "boss": "0",
+        "champion": "1",
+        "collisionDamage": "1",
+        "collisionMass": "6",
+        "collisionRadius": "13",
+        "friction": "1",
+        "gridCollision": "walls",
+        "id": "819",
+        "name": "#ETERNAL_FLY_BOMB",
+        "numGridCollisionPoints": "8",
+        "portrait": "242",
+        "shadowSize": "14",
+        "stageHP": "0",
+        "tags": "fly explosive_soul",
+        "variant": "1"
+      }
+    }
+  ],
+  "contracts": {
+    "19.2.0": {
+      "source": "Two six-segment grounded chains, each five bodies plus head; double-size arena, at least two suppliers. Source body HP 35 and independent armor 15. Armor blocks nonexplosive damage; exposed segments retain distance-dependent 25–14% explosive resistance. Armored heads spawn Ink; exposed heads Sucker. Room total >=4 blocks attempts, but multi-spawn bursts can exceed it. Exposed bodies emit bloody shots; speed increases with armor lost. Splits require resulting chains longer than two segments.",
+      "open": "Explosive attenuation curve and armor/health spillover, exact split/promotion selection, child-burst distribution and movement/attack timings are not specified by pinned prose. Do not infer an exact curve from its endpoint percentages."
+    },
+    "19.3.0": {
+      "source": "Two five-segment flying chains, four bodies plus invulnerable head; double-size arena, one or two suppliers. Diagonal wall bounce with mild nearby-player steering. Body armor 15; exposed bodies become grounded. Exposed middle segments fire aimed triples, end segments spawn Fly Bombs. Attached flesh slows head; detached groups pursue slowly, singleton flesh stays still. Head dies after losing all segments.",
+      "open": "The article first says it cannot split, then permits a three-piece side with an armored endpoint to form a new head; shorter sides lose armored pieces while retaining flesh. Review concrete cuts and ties before encoding topology. Do not copy Tuff explosive resistance to Shell without evidence."
+    }
+  },
+  "engine_dependencies": [
+    "Introduce a room-persistent encounter group independent of any single head. Same 19.2/19.3 tuple can have head/body roles; do not invent extra enemy rows for each runtime segment.",
+    "Maintain ordered chain membership and head roles. Queue topology changes until a damage batch completes so one explosion can hit several segments without invalidating iteration or duplicating events.",
+    "Add independent segment armor plus explosive provenance. Existing areaDamage or armorPiercing flags alone do not prove an event is an armor-breaking bomb; Quake hostile waves are not the documented item-created rock waves.",
+    "Create aggregate boss completion/reward logic: one dead head or segment must not open the exit or pay a boss reward while another chain still exists. Preserve or explicitly decide offspring completion policy.",
+    "Add real Ink/Sucker spawn dependencies and full Fly Bomb movement/fuse/death contracts. Existing 61.0/61.3 legacy definitions are not behavioral acceptance; 819.0 and 819.1 have no runtime definitions.",
+    "Validate large arena, two independent chains, suppliers and navigable lanes before enabling a boss-pool entry. Keep native canyon bosses and reviewed Peep/Bloat pools.",
+    "Use source Mines/Ashpit -> Broken Quarry band 1, with separate eligible terrain/encounter predicates; no opening, tutorial or Mine roster additions.",
+    "Keep destroyed-supplier soft-lock behavior separate from source fidelity: pinned Tuff notes admit a soft lock if every supplier and dropped bomb is exhausted. If DeathWard guarantees recovery, label the rescue mechanism an explicit adaptation.",
+    "Review actual cut cases, grounded/flying transitions, detached head promotion, zero-inventory bombing, re-entry, all-bosses-dead reward once, failed spawns/caps, player control, source-band reachability, Original silhouettes and native/browser behavior.",
+    "enemyDamage currently accepts generic execution before all other checks. Tuff source says Plan C cannot kill armored segments: separate item-specific execution provenance before reusing the generic bypass. Do not let a test execute flag silently certify all kill-item semantics."
+  ],
+  "balance_warning": "Source armor 15 and segment HP 35 are independent. Current local enemies usually scale HP by 3.2 while supplied explosion damage is locally 100. Blindly multiplying armor by 3.2 changes how many bombs break it. Decide and document armor, health and bomb scales together; do not claim source-equivalent bomb counts from copied HP alone.",
+  "edition_exclusions": [
+    "Hagalaz stripping armor is explicitly Repentance+ in pinned Tuff/Shell notes; exclude from the 1.7.9b baseline."
+  ],
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; source-derived summaries CC BY-SA 4.0. Architecture analysis by DeathWard.",
+  "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+}

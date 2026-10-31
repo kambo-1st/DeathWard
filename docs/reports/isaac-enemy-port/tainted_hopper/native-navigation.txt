@@ -1,0 +1,5 @@
+PASS source26idle,Hop23,Jump4,Land17,four chained rings4/6/8/12,speeds8/10/8/10,alignment and recovery
+PASS whole-ring capacity retention, bounded cycle, stun, room suspension, death and full-heart contact
+NATURAL_TAINTED_HOPPER seed=22 floor=7 room=1
+PASS external data and natural late-floor placement
+PASS Tainted Hopper

@@ -1,0 +1,176 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "scope": "Tainted Hopper normal branch, shared destination motion, current/accumulated event queries, four-stage projectile modes and landing effect. Not a complete behavior or armor port.",
+  "dispatch": {
+    "index": 16,
+    "case": "0x69a19f",
+    "controller": "0x514450"
+  },
+  "tables": {
+    "land_ring_stage": {
+      "address": "0x516ddc",
+      "cases": [
+        "0x515f58",
+        "0x515f77",
+        "0x515f83",
+        "0x515f99"
+      ]
+    },
+    "projectile_modes": {
+      "address": "0x6a33ec",
+      "cases": [
+        "0x6a1a83",
+        "0x6a1afb",
+        "0x6a1c91",
+        "0x6a1ead",
+        "0x6a2099",
+        "0x6a2360",
+        "0x6a269d",
+        "0x6a286f",
+        "0x6a2a49",
+        "0x6a2e74"
+      ]
+    }
+  },
+  "strings": {
+    "0xb3fd8c": "Idle",
+    "0xb40218": "Idle2",
+    "0xb405cc": "Hop",
+    "0xb430f0": "Hop2",
+    "0xb40338": "Jump",
+    "0xb4034c": "Land"
+  },
+  "constants": {
+    "target_range": {
+      "address": "0xb6ab34",
+      "value": 130.0
+    },
+    "wander": {
+      "address": "0xb6aaf0",
+      "value": 95.0
+    },
+    "far_force": {
+      "address": "0xb6a274",
+      "value": 0.05000000074505806
+    },
+    "ground_factor": {
+      "address": "0xb6a2cc",
+      "value": 0.10000000149011612
+    },
+    "retention": {
+      "address": "0xb6a50c",
+      "value": 0.699999988079071
+    },
+    "arrival": {
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    "near_force_range": {
+      "address": "0xb6aa0c",
+      "value": 30.0
+    },
+    "stuck_speed": {
+      "address": "0xb6a53c",
+      "value": 0.75
+    },
+    "grid_spacing": {
+      "address": "0xb6aa3c",
+      "value": 40.0
+    },
+    "ring_radians": {
+      "address": "0xb6a914",
+      "value": 6.2831854820251465
+    },
+    "ring_count_rounding": {
+      "address": "0xb6a480",
+      "value": 0.5
+    }
+  },
+  "windows": [
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/controller.asm",
+      "start": "0x514450",
+      "end": "0x516dda",
+      "raw_sha256": "c3654c5889ad6cd265388dd724e956fbd6e6a7d9090ad35fccda0b4cfb3e1b45",
+      "sha256": "36b274c004b56a8a12c71ff0c02be30750a9d6684f1e9b85e661a48fc628ff3a"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/normal_target_helper.asm",
+      "start": "0x695a30",
+      "end": "0x695c2e",
+      "raw_sha256": "600d76bba642781741fc8e1585cd14184fd586d979b00b3f9eafbdfd4f72dce9",
+      "sha256": "5fa37a34aac81e4ff33ddb31f28b041323525d95f594029167fd3e0857ed2ae2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/entity_defaults.asm",
+      "start": "0x681aa7",
+      "end": "0x681b4e",
+      "raw_sha256": "7e3430da2a069f892fe529fd6c38e95fa25218f68c936ad27101c60240bec47a",
+      "sha256": "93f5ef5527954173018442017e6937262ea7f73d3a079f9abeadd98f061c01c9"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/entity_movement.asm",
+      "start": "0x686406",
+      "end": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf",
+      "sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/event_masks.asm",
+      "start": "0x405e90",
+      "end": "0x405fcb",
+      "raw_sha256": "86ff32c63e0c0f5b7266ea6261335796aa0b4be7c8a0969a4ede901acd2a6564",
+      "sha256": "6bad9dd0abb002d729aefe253e0f20d830a5e77486a1a4a6c09c034ec04bd046"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/current_event_wrapper.asm",
+      "start": "0x4060f0",
+      "end": "0x40610f",
+      "raw_sha256": "0209c463026d3f1767b48a3072f521e83880114610ef64494cb12c564d3d2afb",
+      "sha256": "0b3047f7e7fe72954c8e7e8cd142562639cea38374929ab6a5fdc15181c138f4"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/clamp_wrapper.asm",
+      "start": "0x427710",
+      "end": "0x42773e",
+      "raw_sha256": "14db3dc4e68c74faf7e32354b2bcc160929c4a99cce3f4efbbe933c997d4982c",
+      "sha256": "2881db21f562cbcce4ddf5613c3e47f4c1187b93a29af3e6d500c8caea4fbb2c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/grid_index.asm",
+      "start": "0x7ce950",
+      "end": "0x7ce9bc",
+      "raw_sha256": "f5c77f91320475062b5cb77b390ad176d12b9d82e02087274e543b9555a9ad4a",
+      "sha256": "dea300527baaf74d862d6a894dc634aa2024aaa088870cbc0c9164cc25ca360d"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/grid_position.asm",
+      "start": "0x7cebc0",
+      "end": "0x7cec06",
+      "raw_sha256": "0de91fd3ccd5311227d3bc9f9664d16e88ef5cd2459a28ca684a837cd1947fbf",
+      "sha256": "7f134b6ab787fa769fe76e2642d9fe8070ec88ba5e9c7fe64b328f01cd569b46"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/projectile_params.asm",
+      "start": "0x430d70",
+      "end": "0x430ec0",
+      "raw_sha256": "369935e5430f63710266eab256fbed2c7bb8610e6c3c8ac19577baf4dcf9390a",
+      "sha256": "40daa567d9e2d04ad8d9cc7f37d83d353f99f2864ae117198c0c1f7daf2622b2"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/fire_projectiles.asm",
+      "start": "0x6a1a20",
+      "end": "0x6a3420",
+      "raw_sha256": "f67feb27f0c5f637e022002e36222355a197c764ca267f3d4fbfe67cc0249ce5",
+      "sha256": "2d0a0127cface958faafe4918f9dc1da192324a9d65ef901eaef5dba90a0cbaf"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/tainted_hopper/source/landing_effect.asm",
+      "start": "0x68d7b0",
+      "end": "0x68d821",
+      "raw_sha256": "a563a14c6587dfe5f9ecad652fa9f3bdb8db1d8c60c1889bf970cea830a17e24",
+      "sha256": "d176b4e6ce28f783cf38ae7cdf0025f8833e3471c2279cbe352c59ffe9f83e47"
+    }
+  ]
+}

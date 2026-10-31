@@ -1,0 +1,207 @@
+{
+  "scope": "Partial normal-hostile Trite29.1 destination law, source-frame inertia and physical hopping.",
+  "source": "docs/reports/isaac-enemy-port/trite/source-review.md",
+  "adaptations": [
+    "Source30Hz within60Hz simulation; distance x.1, velocity x3, HP x3.2; source10HP becomes32. Radius.5, height1.6 and base10contact authored.",
+    "Four-unit destination grid anchored within generated room bounds, radius-aware clamping and legal-floor checks replace source fixed-coordinate grid.",
+    "Same-force trajectory prediction rejects unsafe landings; flight sweeps cross cover/water while walls block. Actual height affects collision/aiming. Closing geometry restores last legal ground without a swept corrective attack.",
+    "Stun cancels grounded preparation or permits airborne motion to safe ground before waiting. Room suspension retains complete runtime. Friendly contact uses local adapter, not native charm certification.",
+    "Original procedural orange spider retained; preparation ring replaces misleading aimed ray. No source artwork imported.",
+    "Seeded direct ordinary bands0-2 placement is authored; Mine roster, tutorial, hubs, expedition length and player defaults unchanged."
+  ],
+  "remaining": [
+    "Native special-status/champion/control branches and exact RNG/update ordering remain open.",
+    "Native grid/collision parity and unusual geometry require further acceptance; real3D elevation and safe landing are adaptations.",
+    "Source Hopper replacement probability/unlock/context rules remain open; direct bands0-2 specialist weight2/cost2/cap2 is authored.",
+    "Full mixed-room balance, all-angle combat readability and controlled Linux/WASM performance remain open; no complete port claimed."
+  ],
+  "native": {
+    "passed": 79,
+    "failed": 0,
+    "report": "docs/reports/isaac-enemy-port/trite/native.xml",
+    "passing_suites": [
+      "ambient_animals",
+      "arrival_quest",
+      "audio_presentation",
+      "authored_rails",
+      "black_bony_regular_enemy",
+      "bloat_boss_and_chargers",
+      "boil_family",
+      "bony_regular_enemy",
+      "boom_flies",
+      "building_navigation",
+      "buzzing_flies",
+      "canyon_bosses",
+      "canyon_rivers",
+      "canyon_roads",
+      "charger_variants",
+      "cinematic_timeline",
+      "companion_familiars",
+      "core_contracts",
+      "crackle_discrete_fire_jets",
+      "enemy_behaviors",
+      "enemy_bomb_payloads",
+      "enemy_port_coverage",
+      "expedition",
+      "expedition_destruction",
+      "expedition_economy",
+      "expedition_pacing",
+      "flag_cloth",
+      "floor_progression",
+      "fly_bombs",
+      "generated_dungeons",
+      "generated_room_graphs",
+      "gurgle_splasher_physical_lobs",
+      "hard_host",
+      "hive_evaders",
+      "horf_stationary_shooting",
+      "hornfel_boss",
+      "hosts",
+      "imported_town_navigation",
+      "item_builds",
+      "loki_bosses",
+      "long_legs_and_sack",
+      "maw_attraction",
+      "maw_family",
+      "mechanics_content",
+      "mission_shop",
+      "mission_themes",
+      "money_pickups",
+      "monster_behaviors",
+      "monster_boss_components",
+      "monster_fire_reactions",
+      "monster_flight",
+      "monster_formations",
+      "monster_hopping",
+      "monster_patterns",
+      "monster_replacements",
+      "mulligan_family",
+      "mushroom",
+      "object_animation",
+      "particle_emission",
+      "player_dynamite",
+      "prey_and_small_leech",
+      "quake_waves",
+      "rail_passengers",
+      "redstone_hub",
+      "resident_enemies",
+      "room_statues",
+      "save_slots",
+      "segmented_bosses",
+      "shell_boss",
+      "source_immunity_and_lethal_morph",
+      "spider_family",
+      "spider_variants",
+      "supplied_bombs",
+      "tainted_pooter_impacts",
+      "town_characters",
+      "train_motion",
+      "trite",
+      "walkable_areas",
+      "willo_and_mullighoul"
+    ],
+    "correction_reports": [
+      "docs/reports/isaac-enemy-port/trite/hive-final.xml",
+      "docs/reports/isaac-enemy-port/trite/mulligan-corrected.xml"
+    ],
+    "behavior": "docs/reports/isaac-enemy-port/trite/native-targeted.txt",
+    "corrections": "Initial full run77/79. Weighted-pool addition invalidated old fixed seed witnesses for Mulligoon and Drowned Hive. Bounded production searches preserve spawn rules and assertions; both corrected suites pass. An intermediate Hive filter incorrectly read an unconfigured profile; final uses production configureFloor. Evidence is79 distinct passing suites across the full run and targeted reruns, not a fresh full79/79 run."
+  },
+  "browser": {
+    "cases": 4,
+    "report": "docs/reports/isaac-enemy-port/trite/web-final/results.json",
+    "scope": "Production WASM Trite source-frame destination hopping: isolated lifecycle, real cover and river traversal, natural resident and Original appearance. Native tests separately verify numeric recurrence and lifecycle. Full six-gate acceptance remains open.",
+    "errors": [],
+    "build": "docs/reports/isaac-enemy-port/trite/build-wasm.txt",
+    "compression": "docs/reports/isaac-enemy-port/trite/web-compression.txt"
+  },
+  "visual": {
+    "scope": "Eleven individually inspected final Original-style images: five Linux and six production WASM. Ground/preparation/air, actual cover and water traversal, and a natural mixed encounter are visible. These are static presentation checks; full combat readability, balance and controlled performance remain open.",
+    "final_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/native-air.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Original orange spider body clearly airborne with separated ground shadow; no aimed projectile line."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/native-cover.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Spider body raised above the crate edge with legs visible; actual-height cover crossing, checked separately by collision tests."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/native-river.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Airborne spider at river bank with clear water context and detached shadow. This static frame alone does not prove crossing; native fixture and browser water probes supply that evidence."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/native-landed.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Grounded orange spider beside player with attached shadow after its hop; body and legs remain readable."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/native-resident.png",
+        "platform": "Linux",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Orange Trite visible in natural mixed spider encounter beside a river. It is distinct from smaller yellow/purple spiders; full mixed-combat acceptance remains open."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/web-final/isolated-ground.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Grounded orange spider is unobscured next to the protagonist after camera settling; legs and attached shadow readable."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/web-final/isolated-air.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Airborne orange body and legs clearly separated from ground shadow; actual elevation evident and no misleading aimed ray."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/web-final/isolated-prepare.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Grounded preparation frame shows orange body, dark legs and small body ring; no long ranged-attack warning."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/web-final/cover-cover.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Orange spider and legs visibly clear the crate top at real height; cover remains solid and shadowed."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/web-final/river-river.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Airborne spider visibly crosses water channel with detached shadow on water. Browser waterBlocked probe confirms it is over impassable water, not a ford."
+      },
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/web-final/resident-resident.png",
+        "platform": "WASM",
+        "inspected": true,
+        "body_visible": true,
+        "notes": "Orange Trite airborne on the bank in naturally selected mixed spider room; color/size distinct from nearby yellow and purple spiders. Five threats remain; full mixed-combat readability is not certified."
+      }
+    ],
+    "rejected_images": [
+      {
+        "path": "docs/reports/isaac-enemy-port/trite/native-ground.png",
+        "reason": "Frame20 is too early: camera still settling and a foreground cliff conceals the actor. Retained as rejected capture; final grounded evidence uses native-landed and WASM isolated-ground."
+      }
+    ]
+  },
+  "complete": false
+}

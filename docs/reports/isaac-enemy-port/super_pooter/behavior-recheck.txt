@@ -1,0 +1,5 @@
+BUZZ path=21.8698 side=1.36487
+NATURAL_SUPER_POOTER seed=1 floor=0 room=2
+NATURAL_SUPER_POOTER seed=2 floor=2 room=2
+NATURAL_SUPER_POOTER seed=2 floor=4 room=9
+FAIL Invalid expedition floor

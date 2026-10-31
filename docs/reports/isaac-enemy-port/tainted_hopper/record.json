@@ -1,0 +1,148 @@
+{
+  "key": "29.3.0",
+  "id": 29,
+  "variant": 3,
+  "subtype": 0,
+  "name": "Ultra Hopper",
+  "xml": {
+    "anm2path": "029.003_Ultra Hopper.anm2",
+    "baseHP": "80",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "2",
+    "collisionMass": "20",
+    "collisionRadius": "18",
+    "friction": "1",
+    "id": "29",
+    "name": "#TAINTED_HOPPER",
+    "numGridCollisionPoints": "12",
+    "portrait": "351",
+    "shadowSize": "18",
+    "shieldStrength": "30",
+    "stageHP": "0",
+    "variant": "3"
+  },
+  "source_file": "entities2.xml",
+  "group": "enemy",
+  "record_key": "entity:29.3.0",
+  "wiki_matches": [
+    {
+      "page": "Hopper",
+      "box": 5,
+      "group": "entity",
+      "fields": {
+        "dlc": "r",
+        "name": "Tainted Hopper",
+        "variant": "3",
+        "base hp": "80",
+        "environment": "Basement / \nFound on the Ascent to Home.",
+        "behavior": "Jumps and twirls around the room, shooting 4 rings of projectiles that increase in size with each shot."
+      },
+      "section_indices": [
+        6
+      ],
+      "name": "Tainted Hopper",
+      "variant": 3,
+      "subtype": 0,
+      "id": 29,
+      "template": "infobox monster"
+    }
+  ],
+  "wiki_match_method": "entity/item ID",
+  "wiki_pages": [
+    "Hopper"
+  ],
+  "evidence": {
+    "numeric": "installed Repentance 1.7.9b XML",
+    "behavior": "current wiki revision; edition notes must be respected",
+    "native_ai_timers": "not established by XML or API declarations",
+    "implementation": "research only; no behavior ported by this report"
+  },
+  "hp_by_stage": {
+    "1": 80.0,
+    "2": 80.0,
+    "3": 80.0,
+    "4": 80.0,
+    "5": 80.0,
+    "6": 80.0,
+    "7": 80.0,
+    "8": 80.0,
+    "9": 80.0,
+    "10": 80.0,
+    "11": 80.0,
+    "12": 80.0,
+    "13": 80.0
+  },
+  "hp_calculation_note": "Standard Stage HP formula applied to local XML, before champion, phase, shared-health, runtime or mod overrides.",
+  "hp_formula_source": "Stage HP",
+  "display_name": "Tainted Hopper",
+  "room_library_presence": {
+    "rooms/36.backwards.stb": {
+      "templates": 6,
+      "positive_weight_templates": 6
+    }
+  },
+  "room_library_note": "Presence in stored STB templates, including unused and zero-weight entries; not actual spawn probability. Absence does not mean unused: entities may be spawned by AI/items.",
+  "deathward": {
+    "name": "Tainted Hopper",
+    "motion": "Hop",
+    "attack": "Ring",
+    "shape": "Headless",
+    "catalog_base_hp": 192.0,
+    "behavior": "legacy",
+    "source": "assets/mechanics/monsters.mechanics",
+    "line": 53,
+    "status": "Existing DeathWard adaptation; exact Isaac parity NOT verified; runtime tuning may change these stats."
+  },
+  "port_contract": {
+    "classification": "Needs manual eligibility review: standalone creature, boss phase, child, hazard, prop or unused record.",
+    "numeric_policy": "Use local XML as baseline; HP table is derived. Do not interpret mass/friction as measured walking speed.",
+    "state_requirements": [
+      "spawn/activation",
+      "idle and target acquisition",
+      "movement and path selection",
+      "attack selection and telegraph",
+      "attack emission",
+      "recovery",
+      "damage/vulnerability",
+      "phase transitions",
+      "death/children",
+      "room-clear participation"
+    ],
+    "parameters_not_established": {
+      "walk_speed_world_units_per_second": null,
+      "acceleration": null,
+      "attack_cooldown_seconds": null,
+      "telegraph_seconds": null,
+      "projectile_speed": null,
+      "attack_selection_weights": null,
+      "animation_event_ticks": null
+    },
+    "unknown_parameter_note": "Null means not uniformly extracted into a verified machine-readable field. The linked article may provide individual values; check before measuring.",
+    "required_checks": [
+      "fixed seed and RNG calls",
+      "line of sight versus alignment",
+      "pit/wall/flying navigation",
+      "contact and projectile damage",
+      "vulnerability during each state",
+      "slow/freeze/charm effects",
+      "overkill and offspring",
+      "phase HP ownership",
+      "despawn versus room clear",
+      "save/load and re-entry"
+    ],
+    "implementation_status": "not ported by this research"
+  },
+  "behavior_section_refs": [
+    {
+      "page": "Hopper",
+      "section": 6
+    }
+  ],
+  "feature_triage": [
+    "projectile-transform",
+    "room-floor-run-events",
+    "locomotion-and-navigation"
+  ],
+  "feature_triage_note": "Keyword-based review hints only, not verified behavior classifications."
+}

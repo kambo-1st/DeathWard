@@ -1,0 +1,6 @@
+PASS super-pair
+PASS super-cover
+PASS super-skatole
+PASS pooter-skatole
+PASS super-death
+PASS natural-super

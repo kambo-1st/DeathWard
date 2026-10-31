@@ -1,0 +1,143 @@
+{
+  "title": "Trite",
+  "url": "https://bindingofisaacrebirth.wiki.gg/wiki/Trite",
+  "revision_url": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266778",
+  "revision": 266778,
+  "timestamp": "2026-07-27T05:32:06Z",
+  "license": "CC BY-SA 4.0",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors",
+  "sections": [
+    {
+      "heading": "Introduction",
+      "level": 0,
+      "text": "[disambig msg: the enemy; the trinket; Blister] \n\nThe Trite is a spider variant of the Hoppers. Leaps with less frequency, but at greater distances. This can make them extremely dangerous, as they could potentially leap from one side of the room to the other, catching the player off guard."
+    },
+    {
+      "heading": "Variants",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Ragling",
+      "level": 3,
+      "text": "The Ragling is a variant to the normal Trite. They do not leap as often as the Trite and rarely move directly towards Isaac but gains the ability to occasionally shoot 2 magenta-colored orbiting shots."
+    },
+    {
+      "heading": "Rag Man's Ragling",
+      "level": 3,
+      "text": "Rag Man's Ragling is an alternate version of the Ragling that behave like normal Raglings but have more health. They can be spawned by Rag Man and Rag Mega and used as a part of their attacks. If they were spawned by Rag Man or by Rag Mega, they will leave a pile of Rags upon death, from which Rag Man and Rag Mega can revive them. If Rag Man or Rag Mega is killed before them, then they will not leave Rags behind."
+    },
+    {
+      "heading": "Blister",
+      "level": 3,
+      "text": "A Blister is a Trite variant that has much higher health but leaps very slowly. They occasionally spawn a Dark Ball like the ones spawned by Little Horn. They spawn a Sack upon death."
+    },
+    {
+      "heading": "Gallery",
+      "level": 2,
+      "text": ""
+    },
+    {
+      "heading": "Notes",
+      "level": 2,
+      "text": "\u2022 If Blisters aren't unlocked yet, they are replaced by Trites in Normal mode, or Ticking Spiders in Hard mode."
+    },
+    {
+      "heading": "Trivia",
+      "level": 2,
+      "text": "\u2022 A trite is the name of a genus of the jumping spider family.\n\n\u2022 Trites share the same name with an enemy in Doom 3, an enemy that leaps towards the player and has an upside-down human-like face.\n\n\u2022 [Afterbirth+ onward] Blisters were given a shooting animation in Booster Pack #5, based on this Steam Workshop mod by TheShadyOne.\n\n\u2022 [Afterbirth+ onward] Blisters originally had 54 base hp and 0 stage hp; however, this was changed in Booster Pack #5.\n\n\u2022 Blisters had the fifth-highest base health of all the non-boss enemies, after Dingas, Mama Guts, MemBrains, and Oobs."
+    },
+    {
+      "heading": "Bugs",
+      "level": 2,
+      "text": "Bug note: If a Blister is scared, stunned, or shrunken, the Blister will still attack Isaac by chasing him or spawning Dark Balls."
+    }
+  ],
+  "boxes": [
+    {
+      "template": "infobox monster",
+      "section": 0,
+      "fields": {
+        "name": "Trite",
+        "id": "29",
+        "variant": "1",
+        "base hp": "10",
+        "environment": "Cellar / Burning Basement / \nCaves / Catacombs / Flooded Caves / \nNecropolis /",
+        "replace": "Hopper",
+        "replace chance": "5.71%",
+        "behavior": "Quickly leaps towards Isaac and deals contact damage."
+      },
+      "group": "entity",
+      "id": 29,
+      "name": "Trite",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        0
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 2,
+      "fields": {
+        "name": "Ragling",
+        "id": "246",
+        "base hp": "13",
+        "environment": "Cellar / \nCaves / Catacombs / Flooded Caves / \nDepths / Necropolis / Dank Depths / \nMausoleum / \nCathedral /",
+        "behavior": "Quickly leaps towards Isaac and deals contact damage. Randomly shoots two purple shots that orbit around it."
+      },
+      "group": "entity",
+      "id": 246,
+      "name": "Ragling",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        2
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 3,
+      "fields": {
+        "dlc": "a",
+        "name": "[edition alternatives: baseline: Rag man's Rag Ling; Repentance: Rag Man's Ragling]",
+        "variant": "1",
+        "base hp": "30",
+        "environment": "Basement / Burning Basement / \nMausoleum / \nChest / \nboss /",
+        "behavior": "Quickly leaps towards Isaac and deals contact damage. Randomly shoots two purple shots that orbit around it."
+      },
+      "group": "entity",
+      "id": 246,
+      "name": "[edition alternatives: baseline: Rag man's Rag Ling; Repentance: Rag Man's Ragling]",
+      "variant": 1,
+      "subtype": 0,
+      "section_indices": [
+        3
+      ]
+    },
+    {
+      "template": "infobox monster",
+      "section": 4,
+      "fields": {
+        "dlc": "a+",
+        "name": "Blister",
+        "id": "303",
+        "base hp": "16",
+        "stage hp": "8",
+        "environment": "Catacombs / \nMines / \nDepths / Necropolis / Dank Depths / \nUtero /",
+        "replace": "[Before Repentance] Ticking Spider, Keeper",
+        "replace chance": "",
+        "behavior": "Slowly hops towards Isaac, occasionally spawning a Dark Ball. Spawns a Sack upon death.",
+        "unlocked by": "The gate is open!"
+      },
+      "group": "entity",
+      "id": 303,
+      "name": "Blister",
+      "variant": 0,
+      "subtype": 0,
+      "section_indices": [
+        4
+      ]
+    }
+  ]
+}

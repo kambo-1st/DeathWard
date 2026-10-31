@@ -1,0 +1,45 @@
+{
+  "scope": "Direct inspection of eight named captures only. No complete visual or performance gate.",
+  "images": [
+    {
+      "path": "native/scarred-beam.png",
+      "result": "rejected",
+      "notes": "Initial1.6 radius overwhelms the scene and obscures the body; preserved as the reason for local-width correction."
+    },
+    {
+      "path": "native/scarred-beam-readable.png",
+      "result": "partial_pass",
+      "notes": "Corrected.35 radius preserves visible body, player and four lanes. Captured during a build; FPS is not performance evidence."
+    },
+    {
+      "path": "web/vis-beam.png",
+      "result": "partial_pass",
+      "notes": "One forward lane visible in Original style."
+    },
+    {
+      "path": "web/double-beam.png",
+      "result": "partial_pass",
+      "notes": "Two opposing lanes visible; unchanged procedural scene."
+    },
+    {
+      "path": "web/scarred-windup.png",
+      "result": "partial_pass",
+      "notes": "Four mouth shapes visible. Windup detail remains small at this zoom; startup FPS is not representative."
+    },
+    {
+      "path": "web/scarred-beam.png",
+      "result": "partial_pass",
+      "notes": "Four distinct cardinal lanes visible in isometric view."
+    },
+    {
+      "path": "web/vis-cover-beam.png",
+      "result": "limited",
+      "notes": "Crate occludes the body and short clipped beam. Pipeline/cover check, not warning-readability acceptance."
+    },
+    {
+      "path": "web-river-final/double-river-beam.png",
+      "result": "partial_pass",
+      "notes": "Two beams visible across the river; legal scripted player placement aligns with the source attack rule."
+    }
+  ]
+}

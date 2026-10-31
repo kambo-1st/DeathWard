@@ -1,0 +1,552 @@
+{
+  "status": "Partial Bomb Grimace and supplied-bomb checkpoint. Full 653-record goal active; no complete port accepted.",
+  "baseline": "Installed Repentance 1.7.9b",
+  "mechanics_fingerprint": "46f7e5d8f901a81e",
+  "runtime_definitions": 151,
+  "item_definitions": 12,
+  "ids": [
+    "809.0.0"
+  ],
+  "outside_roster_components": [
+    "5.41.0",
+    "4.13.0"
+  ],
+  "source_review": "docs/reports/isaac-enemy-port/supply/source-review.json",
+  "native": {
+    "passed": 49,
+    "failed": 0,
+    "basis": "All 49 suites passed in one full run. After reference regeneration, the isolated coverage suite also passed. The later carry-only render offset was rebuilt and inspected in native/browser captures; gameplay code did not change.",
+    "full_run": "docs/reports/isaac-enemy-port/supply/native-tests.xml",
+    "coverage_rerun": "docs/reports/isaac-enemy-port/supply/coverage-final.xml",
+    "tests": {
+      "enemy_port_coverage": {
+        "result": "pass",
+        "seconds": 0.409032
+      },
+      "mechanics_content": {
+        "result": "pass",
+        "seconds": 1.18636
+      },
+      "expedition_economy": {
+        "result": "pass",
+        "seconds": 40.9848
+      },
+      "canyon_bosses": {
+        "result": "pass",
+        "seconds": 6.17431
+      },
+      "floor_progression": {
+        "result": "pass",
+        "seconds": 74.5974
+      },
+      "item_builds": {
+        "result": "pass",
+        "seconds": 7.40998
+      },
+      "expedition_destruction": {
+        "result": "pass",
+        "seconds": 63.4697
+      },
+      "walkable_areas": {
+        "result": "pass",
+        "seconds": 0.0337032
+      },
+      "expedition": {
+        "result": "pass",
+        "seconds": 12.7257
+      },
+      "expedition_pacing": {
+        "result": "pass",
+        "seconds": 8.94733
+      },
+      "flag_cloth": {
+        "result": "pass",
+        "seconds": 0.186776
+      },
+      "save_slots": {
+        "result": "pass",
+        "seconds": 0.0688595
+      },
+      "arrival_quest": {
+        "result": "pass",
+        "seconds": 1.29043
+      },
+      "cinematic_timeline": {
+        "result": "pass",
+        "seconds": 0.0718501
+      },
+      "canyon_roads": {
+        "result": "pass",
+        "seconds": 7.04985
+      },
+      "canyon_rivers": {
+        "result": "pass",
+        "seconds": 18.0181
+      },
+      "redstone_hub": {
+        "result": "pass",
+        "seconds": 1.10282
+      },
+      "building_navigation": {
+        "result": "pass",
+        "seconds": 0.0284315
+      },
+      "particle_emission": {
+        "result": "pass",
+        "seconds": 0.0228698
+      },
+      "town_characters": {
+        "result": "pass",
+        "seconds": 0.0183798
+      },
+      "ambient_animals": {
+        "result": "pass",
+        "seconds": 0.183161
+      },
+      "train_motion": {
+        "result": "pass",
+        "seconds": 0.67911
+      },
+      "object_animation": {
+        "result": "pass",
+        "seconds": 0.0613561
+      },
+      "player_dynamite": {
+        "result": "pass",
+        "seconds": 1.13837
+      },
+      "mission_shop": {
+        "result": "pass",
+        "seconds": 3.42757
+      },
+      "money_pickups": {
+        "result": "pass",
+        "seconds": 1.5183
+      },
+      "resident_enemies": {
+        "result": "pass",
+        "seconds": 1.6306
+      },
+      "audio_presentation": {
+        "result": "pass",
+        "seconds": 0.0613573
+      },
+      "monster_behaviors": {
+        "result": "pass",
+        "seconds": 5.52285
+      },
+      "monster_flight": {
+        "result": "pass",
+        "seconds": 2.80098
+      },
+      "monster_formations": {
+        "result": "pass",
+        "seconds": 0.27783
+      },
+      "monster_patterns": {
+        "result": "pass",
+        "seconds": 0.402953
+      },
+      "monster_fire_reactions": {
+        "result": "pass",
+        "seconds": 0.250025
+      },
+      "monster_hopping": {
+        "result": "pass",
+        "seconds": 0.27331
+      },
+      "monster_replacements": {
+        "result": "pass",
+        "seconds": 1.66073
+      },
+      "monster_boss_components": {
+        "result": "pass",
+        "seconds": 1.59718
+      },
+      "bloat_boss_and_chargers": {
+        "result": "pass",
+        "seconds": 1.95375
+      },
+      "charger_variants": {
+        "result": "pass",
+        "seconds": 0.218353
+      },
+      "companion_familiars": {
+        "result": "pass",
+        "seconds": 1.75658
+      },
+      "room_statues": {
+        "result": "pass",
+        "seconds": 0.703332
+      },
+      "maw_attraction": {
+        "result": "pass",
+        "seconds": 0.906683
+      },
+      "quake_waves": {
+        "result": "pass",
+        "seconds": 0.691387
+      },
+      "supplied_bombs": {
+        "result": "pass",
+        "seconds": 0.587157
+      },
+      "mission_themes": {
+        "result": "pass",
+        "seconds": 6.96652
+      },
+      "imported_town_navigation": {
+        "result": "pass",
+        "seconds": 0.0728919
+      },
+      "core_contracts": {
+        "result": "pass",
+        "seconds": 0.516333
+      },
+      "enemy_behaviors": {
+        "result": "pass",
+        "seconds": 4.16689
+      },
+      "generated_dungeons": {
+        "result": "pass",
+        "seconds": 27.6398
+      },
+      "generated_room_graphs": {
+        "result": "pass",
+        "seconds": 0.848769
+      }
+    }
+  },
+  "native_input": "docs/reports/isaac-enemy-port/supply/native-input.txt",
+  "browser": {
+    "passed": 99,
+    "failed": 0,
+    "errors": [],
+    "report": "docs/reports/isaac-enemy-port/supply/full/wasm-probes.json",
+    "log": "docs/reports/isaac-enemy-port/supply/full/browser-tests.txt",
+    "count_policy": "99 distinct cases in one complete final run: 95 preceding regressions plus four supplied-bomb cases. Focused/repeated probes are not extra cases."
+  },
+  "behavior": {
+    "result": "partial_pass",
+    "log": "docs/reports/isaac-enemy-port/supply/supplied_bombs.txt",
+    "scope": "Unlit wait, actual taking and fuse, replenishment before prior explosion, independent stock, zero inventory, held self-damage, swept throwing, placement, ten-drop death burst, capacity/blocked retry, room/floor persistence, actual enemy/terrain explosion and external file edits."
+  },
+  "reachability": {
+    "result": "pending",
+    "approved": false,
+    "scope": "Debug support only. No ordinary/statue-pool placement. Tuff Twins, The Shell and Mother's Shadow encounters remain required.",
+    "regression": {
+      "actual_canyon_floors": 170,
+      "ordinary_conditional_ids": 29,
+      "hazard_ids": 14,
+      "log": "docs/reports/isaac-enemy-port/supply/floor_progression.txt"
+    }
+  },
+  "visuals": {
+    "result": "partial_pass",
+    "style": "Original",
+    "linux": [
+      "docs/reports/isaac-enemy-port/supply/linux-stock.png",
+      "docs/reports/isaac-enemy-port/supply/linux-carried.png",
+      "docs/reports/isaac-enemy-port/supply/linux-thrown.png"
+    ],
+    "wasm": [
+      "docs/reports/isaac-enemy-port/supply/full/wasm-supply-carry-40.png",
+      "docs/reports/isaac-enemy-port/supply/full/wasm-supply-death-150.png"
+    ],
+    "scope": "Native stock/carried/thrown and browser carried/death-stock images inspected in Original style. Carried visual raised clear of hat. Isolated camera only; crowded encounters, occlusion and all-angle readability remain open.",
+    "capture_build_note": "Native stock/thrown preceded the carry-only display offset; final carried native and all final browser captures include it. No gameplay code changed."
+  },
+  "balance": {
+    "path": "docs/reports/isaac-enemy-port/supply/supplied_bombs.txt",
+    "result": "partial_pass",
+    "scope": "Actual holder damage 25, enemy explosion, inventory unchanged, no ordinary shot/magazine effects. Not human or varied-build boss balance acceptance."
+  },
+  "performance": {
+    "path": "docs/reports/isaac-enemy-port/supply/source-review.json",
+    "result": "partial_pass",
+    "scope": "Bounded 128 floor bombs, 32 pending drops per producer, 160 candidates per spawn and quarter-second retry. No controlled native/WASM performance benchmark acceptance."
+  },
+  "failures_resolved": "docs/reports/isaac-enemy-port/supply/first-run/test-findings.json",
+  "limitations": [
+    "Exact native supply ownership, fuse/replenishment/startup timings, throwable speed/range/collision and pickup knockback require measurement.",
+    "Tuff Twins, The Shell and Mother's Shadow dedicated encounter/escape producers remain unimplemented; no natural reachability acceptance.",
+    "Named instant-kill items, item-hit/reroll exceptions and per-bomb item inheritance are not established by generic execution hooks.",
+    "Mandatory encounter recovery after all bombs are wasted or supplier destroyed needs explicit encounter design/testing.",
+    "Save/reload of transient supplied-bomb state follows current expedition reconstruction rather than serializing mid-fuse ordnance; source-exact re-entry/floor behavior remains unverified.",
+    "All-camera readability, mixed-build/human balance and controlled current-roster native/WASM performance remain open."
+  ],
+  "next_dependency_review": "docs/reports/isaac-enemy-port/supply/next-dependency-review.json",
+  "runtime_sha256": {
+    "CMakeLists.txt": "af81ab9e9677e97dfcf3e757e64695506ea134fb4b150f67475319d67495615d",
+    "assets/mechanics/behaviors.mechanics": "49c45b03a2005fe597edea753520760bf42a15a6d5ab3d1ed60e6533fad2a3b8",
+    "assets/mechanics/bosses.mechanics": "404394fdbfdf561e287a16870ed28ad26deebb90ef1acd6b10252c1b810b18a3",
+    "assets/mechanics/builds.mechanics": "0bcf33eba3828c05bcf713256ef15a31c3968425d1cb6dfb1eed888a138c1514",
+    "assets/mechanics/chargers.mechanics": "5a8cb81b52180875ab49528f0e4c630611e1ad89e1ba8fc8ee9a6ebddc66cd29",
+    "assets/mechanics/companions.mechanics": "22ddb472b8d292e1ccccc689ef6ec31568355c437ccc3d4d87841f407ae95dca",
+    "assets/mechanics/deaths.mechanics": "2301cbd02f5459983f5c506a8c928ef569929e8b8263435a6fad8c14789172d5",
+    "assets/mechanics/encounters.mechanics": "169bca765a8b76bbfc3d0b90f2627ea78722c668bd2101109dfb120b422d6bb6",
+    "assets/mechanics/fire.mechanics": "ca66fab40ece6e1bd196182fd834590df0da94a0c77223169747f9fa3f9e8502",
+    "assets/mechanics/formations.mechanics": "a465f037bb9d3722019fb49bd39e5f99d9e7b732bc05c61d747244f0ea037acc",
+    "assets/mechanics/hops.mechanics": "8850939c80eabd9b40354de81f98542f13371ab677eba102ea7bd8e504c1c47d",
+    "assets/mechanics/items.mechanics": "ad33532c0b4456cd01838feefb4de58f4752478f62250a9818d3a2dcfbe66b7e",
+    "assets/mechanics/monsters.mechanics": "4debc67e7fdbbcb9fd9e4df8938b8f4546dee9431782bc84646787b40d315bc6",
+    "assets/mechanics/pools.mechanics": "dbfbf853ead0cf3b94c3aae315fb941d499fb639f956846961aa2be66431006b",
+    "assets/mechanics/replacements.mechanics": "5f79c6441fb062f5e8410b0674909559252d8ebe58b197c7cc48001e90099a9e",
+    "assets/mechanics/statues.mechanics": "080a9c86d2bec364bfbeea65894425df6cc502f1051221b3a03c09864c396ff5",
+    "scripts/isaac-reference/plan-enemies.py": "17a2999b335e0a7ce97b11e547ff9095b281d990eacd81aef6fd172ebd379011",
+    "src/combat/BloatBoss.cpp": "47c37be2acf282cb0ba6478218e8baced89f00a2d376e57fdca092c57d947770",
+    "src/combat/CanyonBoss.cpp": "af1a8e3422b6fb08182327d2775626ff23bd04591f5f694b553f68dc41a048cc",
+    "src/combat/Charging.cpp": "9f955b8c2d88839e7eecb675771337dc9208411f71addcfbae638e3d1f6dc10c",
+    "src/combat/Companions.cpp": "c7b323c82ce8374e383d4ce1c1cdae36b052afb69ad8410f4274774921737623",
+    "src/combat/Destruction.cpp": "af13e623c21a0474e3999b8f4e0930d83bdc20dbc16c137b8bc6836f44a8f7d8",
+    "src/combat/Dynamite.cpp": "84c918800d521d86ca31985d475414c8ceaceaf8869358c6d49ed2f69e2ed0fa",
+    "src/combat/Encounters.cpp": "b9975750387ce3d31584560860563a9977c2c19df5299322067bc374c77411c9",
+    "src/combat/Enemies.cpp": "2bf5b68ff6f9d3bb66a9575b1bae9672f13675dee4524b9b34af274507c6d8e5",
+    "src/combat/FireReactions.cpp": "c683628cf24049ddadb101a7efb3c5cda1504067fdcc120520c2767e732a6aca",
+    "src/combat/Hopping.cpp": "f101721200e94b1074b0b355f21bfef26a2c0aebc1ca307e00697f5959daef53",
+    "src/combat/MonsterBoss.cpp": "0a0054554ff9c2ddc7f4af5412247c2ba5426717ebfba11e68babd590354b834",
+    "src/combat/Monsters.cpp": "630670449eb0f63e523c2452668d60172e2e6b547931454c10dc73da0acd91a1",
+    "src/combat/Navigation.cpp": "8ace7d1fa863ca92ebab0f3173592f99e8cc72e28f21ef4ef0f651167efa706b",
+    "src/combat/OwnedComponents.cpp": "ac7a98cd0daca8f349960614d572079cf71982ea7e104883fb1ed20d044ce5ed",
+    "src/combat/Simulation.cpp": "42d244171f08cf1913e9570b264d73c098487fa3ab65ae34a179c90d5d18a494",
+    "src/combat/Simulation.hpp": "045a130ebc50b34f3bb5a8465f524322bfe7afb98180231a9f509b9d57be19e3",
+    "src/combat/Statues.cpp": "dfc6ae0e41f22bafc0c3595eb682eb9da475bea4f08ce787658a074315438b8e",
+    "src/combat/SuppliedBombs.cpp": "545a9ef197d7e8ae6004762be0afd2587803c2e63f1407d8b3a058b61a9d5775",
+    "src/content/EncounterVariants.cpp": "12788da43306e910e278a6d42df5c4b826875a68b9a30802c73ff936fde28474",
+    "src/content/Mechanics.cpp": "4c632f11f8e9a5200a3295af3def3f57bef554c11702382abe7bc9f8f16e994a",
+    "src/content/Mechanics.hpp": "c65b8a448f2b5cf55e40690b06659e77eaef4c0fcf57b60c83527e4fb56e0f21",
+    "src/core/Game.cpp": "af202cbabf667eb08113e4678b7be181e9b208037865e7aad2e5506a91acf732",
+    "src/core/Types.hpp": "08ac9c07c578b6e8937c21c81ffed35c52ee1c5a1125b84ffa859a24721c7789",
+    "src/main.cpp": "5fa7069fa8494cb7a4f5fe861633b77b330e840f3a2918ac33705b1c9f5f2d06",
+    "src/render/MonsterVisuals.hpp": "929c5696ab25ab49d25233b7b0548d7ebdd0fdcf3728ab53678502de77e075d4",
+    "src/render/Renderer.cpp": "324a1f49d539a68403226fb0f56be23c63b5d658d6b47a3d078b2a583ce3b69e",
+    "src/world/Dungeon.cpp": "967abfe652a1349451140c764b778f6ec2e4a5baf6bfbdf9334a340d46df3441",
+    "src/world/Dungeon.hpp": "7bfddfffc4d7ada8f664cf98d2591b89964e229cc73c0254b0c2a77e5459b287",
+    "src/world/Expedition.hpp": "b9b89139f4e0f0e7dae20369a3ba8d972e804b6b7a1287f3e1460e4836938dc6",
+    "src/world/FlightNavigation.cpp": "0a4203d24214c88a8f23c0d7bcd0fd5e24dea150f4b8dac476d0ff845bf4f845",
+    "src/world/FloorDressing.cpp": "e02f8938625205b5b69824d17a33f7a6e2fda7862c040ebfe79b6af7a548ae20",
+    "tests/bloat_tests.cpp": "ca93e01493cab789314a078298e1dd98c323e57af5c44d84281862d618212560",
+    "tests/charger_variant_tests.cpp": "4351307ff5584985e51665e82c28ef1a3940a0f309193e44818f6e45b2926adf",
+    "tests/companion_tests.cpp": "d81494db50b92f214d01a664345a9bb6a9ca3dfe4a06102cea494f8087b4877a",
+    "tests/expedition_economy_tests.cpp": "0622d34726e5445eb35b7fe8f13d04e9a03d176d3be4f4e1ec48f22bc9ed39f9",
+    "tests/floor_progression_tests.cpp": "c266154f1842b50cbb81f485d6b3085b11bc7a9e32743bdf788ea910b88ef127",
+    "tests/input_tests.cpp": "574edccb86fb2895bb723f8911fed14d3597c4eb6c84eb1000780c710cda45cb",
+    "tests/maw_tests.cpp": "e34b0c3ddf04aa15204fdf4d8889ffef13243642a89dc7fd7564f1ae00e86b73",
+    "tests/mechanics_tests.cpp": "e20f4cd755d1713352724f63a1abedec54690d153f018f527bef3da520770c96",
+    "tests/monster_boss_tests.cpp": "d5eed91e2f2672edef1a2aa5b717a2d505a08fa25d76c8bd4eea362285f7be4f",
+    "tests/monster_tests.cpp": "79607afc896b86e44df79db3cf8c82ac3f50066767a0b45284dfcc4a25fd18b9",
+    "tests/pacing_tests.cpp": "af40a45c9ed3ecd3337f6ff84ed68b6c2ec9bbe61966f87716b75e4626160253",
+    "tests/quake_tests.cpp": "ab0478a79ceeec74ddbb9735c465465518278a490d31cfea4cc9ae53fd067073",
+    "tests/replacement_tests.cpp": "b0c865d853afed057afc501717988a0a3f57e4b6d105e4e8dd4a22718f1bd4b9",
+    "tests/statue_tests.cpp": "13aec90151c86c489b84cd2812c54ebfc8117b2472ce3d0c031d13de190f29c0",
+    "tests/supplied_bomb_tests.cpp": "cea404f62ee05af2a59ce585a2be33f997fa3302d90e327a3336897c9739723e",
+    "web/enemy-port-test.cjs": "3cc523bb30bda972726bccf243a2a44c1106694305e8488451e957ca367ce040",
+    "web/shell.html": "2807aa2a8409d208e51dbc9f94dda9226c604c3196b08410d5e9778de70eff2c"
+  },
+  "build_sha256": {
+    "build/deathward": "f3b403baea2c72a79cd1e7da4e926f0fe1a4f7a6f5ab77037e0bbf2c30bc3a2a",
+    "build-web/index.wasm": "4f6f45b181f9fc9de8f56e4aa367cbaf092171495bb45cba5c2c8b286f7649bc",
+    "build-web/index.data": "d2829b5295547b03347611f2566f02d279f20de9ffe2b84b96a583130bc78fa2",
+    "build-web/index.js": "7795352dbebd0ba34d2a8c59f019baeb3046fa49407cb26c6fd9d1a0b700d8de"
+  },
+  "artifacts_sha256": {
+    "docs/reports/isaac-enemy-port/supply/coverage-final.xml": "dae5df5f148c3e020af9dba06a1c4630cfd703fcbbfaee03dc66bc46b72f1202",
+    "docs/reports/isaac-enemy-port/supply/coverage.json": "cbdcd256b8c622221ff3418dd0180fd44f47137923b4c320ee41aecb119b54aa",
+    "docs/reports/isaac-enemy-port/supply/first-run/browser-incorrect-execution-parameter.txt": "375f358418b1030f0c1bee501d70abe06e361863d0b0648633ebfa27885fd6de",
+    "docs/reports/isaac-enemy-port/supply/first-run/linux-carried-overlap.png": "0f67ed56d7759377d927f5dd41c3a1244686a3afe22b0d75a22f6cd07ef6a4ef",
+    "docs/reports/isaac-enemy-port/supply/first-run/native-initial.txt": "9d6fddfcb9236380a7dd0544690254f620cb6b2907e222a04bdd8b2898a14318",
+    "docs/reports/isaac-enemy-port/supply/first-run/test-findings.json": "9e7d15a86d2b4411268674151d958beaf2172f8e9cfbdc82087e71966fb77380",
+    "docs/reports/isaac-enemy-port/supply/floor_progression.txt": "15d838e53a78634f8d22623064dd864dcaf5a5012f175a374fe554b9e8083ecb",
+    "docs/reports/isaac-enemy-port/supply/full/browser-tests.txt": "bf9dd8c1eaf0a25cf74d1df62c53a5f889e44db3a41dc99132343471144c172d",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-10.3.1.png": "6481046f5cd1cabbb89b1027aaae7802108aaa8072a66818e83f6bff98eb27c3",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-10.3.2.png": "c7c09e8d4f30b890fa00ad2e4abce0581bc452d92e58db5c8995cfb4fceaf19d",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-10.3.3.png": "e877a3827b0c3680d6e1b6496ba3873564586a72f1f56656ff3cd0c7edbfd198",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-10.3.4.png": "0cfcfdc2656a6bb86e8b6b0136b3d9e0d746203a40eb933d0fb3d0309c6b8021",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-10.3.5.png": "99646dc80234623d8d417b690f432c8227f9b71c3b4b5bcb92b87beae8799d1e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-11.0.0.png": "288283f408dad0e7a778376066562d62f7af988551389db94f6929720aaef6e8",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-11.1.0.png": "e9e15384cd8af2ce594dfb3d0b9aac2d1658d21612bfbaa3e969f1da2e9a951c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-12.0.0.png": "2820a2355e4ba91639568ee20c7748be0b7b3eaa6c372a2da6bdb583d6af80c8",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-14.0.0.png": "6e3189862fc197a38b4d7916d6f7aaaa606fa9dc8503b97cc8f771187809f94c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-14.1.0.png": "c5e2ca7300b718ed2d23c493dd4b735aea3082c820dd277779837ff6f01e330e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-15.0.0.png": "ef81063d720af3a56cf9c963fdac30da59255f0940d248b9524672920faa4637",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-15.1.0.png": "65c095cb76997cb6d22f2c279698a8569f938bd1dbf55b9f83acecc5b2dfb761",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-15.2.0.png": "b2072dc7bce372bcb1b77059578dfbf4411190401bae98a9038e73d854390fc9",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-15.3.0.png": "744e839fb1b4e4d4a17f8b39ed48181c38a6aaf031c330d051cd0e26e09f8524",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-853.0.0.png": "d94e132f44c271c86d9ed3e81bbd0424033fab58c650a275e692c4f431d0625e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-872.0.0.png": "3d23d182fcaa6feb19e401fed87a75c01e5827b35dbbc7aa5d1549f0a00daee3",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-bloat-above.png": "adfdef2d3b26f8a4d2225bbebd93a1b8896b83725dc7c7808662cc0874636644",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-bloat-down.png": "1166813a313ee230bccc064bdf209a5d9f7189a4d2336af99ff38076c303829e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-bloat-green-creep.png": "4f4b1139b438b76d3228ada7cdf695e2aa494d9b3ab444867ca41b5b0e39e0b0",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-bloat-green.png": "62d14e4ed41a81e1d945c6d2b5220263510a5d8b4896ee8706fb249d6e71f0a3",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-bloat-sides.png": "d79cb6362a15c4be51f6a8485c288fdfa0ee69c15df0c6754e582048112c5841",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-charger-cardinal.png": "1200a6ecc86fd23a187e56e7d0ab30502023f220e77f5f1e064b81fc610b945a",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-cloggy-curves.png": "458d79f86e8156f923ab8de2fba132dde5a4e63277e87549913515024d868f25",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-clotty-burning.png": "e9fc872f73734591e5627a2a02fbd959d9aa1e3880189b823228c04833de9956",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-clotty-flame.png": "26327af13332646a3f3204ac8044758c65afcfe29e7b636851f959c65669c426",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-clotty-flooded-death.png": "97e04bab2e87d2036ca99844375733e8fc5db47220379ab9ec1dae45456229f9",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-clotty-flooded.png": "b1d21ff57bac70e6a123d2942a87032430019740f8823eaf1c9531792e10a555",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-clotty-live-fire.png": "13973dc5cec90f9aea8a438d00b42b35b987c2578c9dd7aa36604ebbf62c33aa",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-cursed-goo.png": "523ef91fbf7d3f12bfbfb4bc2810ebc6433260d4dd82aad431c169b49cd5d6ca",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-cursed-regrown.png": "b11a551a3a653010ac5fe8682c2f73cc61b0c0238ff2a56b0502b43beb20d71e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-dank-reflection-110.png": "18d7a5b5ec695a8c7cb7cb1a1d491ffa23d5ff0cad6ec556712412e5ee0fa321",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-dank-reflection-30.png": "9ff8b8a3de99a9ada32fb69599d9b2959dc26339e4a3ca3b73e89b67d102c640",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-dank-reflection-70.png": "7f9e3a7ffbd62921c367f0391a858348c6edea3649dcf12a1fd3a0a746f43589",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-drowned-death-volley-15.png": "bb0949912c0b623ec428b347c692a4853c551d788e5199132d7b0ce7daf4c326",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-drowned-death-volley-48.png": "ffa09707815c5c15d207dd587ff0b3475c4096b95273b427f9ab3ed43c8de684",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-drowned-hive-overkill.png": "55d3a6d40a4e58950bf5759e169a7da5c80339b9e4ac39cb73c84787f5e7311f",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-drowned-hive-split.png": "49012fbe248ac9bb0f9529fa442c67f9e47135b16ef4ffb8d2fe85d26cf2c54e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-drowned-repeat-fire-15.png": "9169c028cb39754fcea96f8471513523b5a3c8b20a0b42cc1e87502235eb9553",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-drowned-repeat-fire-45.png": "6a0332cdcc27f1c732fdf3b942a693b023f03d733c9903cea2edd9c8340467fa",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-fire-above-cover.png": "b0bdaaabe3b63868a0c034079291e7ea37090543cc36fe7f900e73550290b750",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-flaming-cover.png": "2a120b226fc3552d9453462a52de4b13135d12ea933eff316b5ab5df25395504",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-flaming-pursuit.png": "8e4fd81b469e6ce50197a8fa3befc780b7a11f313a1a73fe1a67f2a68a92aa79",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-flight-cover-pursuit.png": "f8c4ef223f4fa1a5347c31328bb0f85f07bbfc7a248ca6f183e6abdca8aaa1e1",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-flight-cover-shooter.png": "a2e352aae8e61bbff051d4a36019280f67cf1ddd25c7785920fbc46fb2ba1c61",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-flight-river.png": "a8c4f4151df7532a5c70ae65f26dd4630a0d8fc5b05948db1d6656f4810bfd5f",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-globin-finished.png": "88872f32525657e2844e3f09c61a36f84738b63d1c82a21e95f90e19b880b7da",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-globin-goo.png": "85c6231d86083b17d5168dc99722cc694b4fc2f6ace833fbcee5e5ca95e44af9",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-globin-regrown.png": "72ea17115521f63537e7ea3f6cb48847a40956caa7bfb5518432957d141cc3a5",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-hopper-cover-morph.png": "75b05c560353e4c75d2f7a87291103d3e5aebcf761e875bbdb9c7a6479d0fabc",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-hopper-cover.png": "7d069ceff2c11ced78f7f6d90933d9a749f9fb35e738b14a0396df645ed45179",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-hopper-fire-burn.png": "0d91e8c0ee82aa39747bc42e97f96baf28137366b60d73ff032fc48141cc3ecc",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-hopper-wander.png": "7a74c0d6aa78a33d0fd70bb5730b8cac03d063e720718378b96d8ba621901e07",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-level2-steering-10.png": "9f3bb815a78e1696f6dd07bf58e97ccffe10dfb498b1eafd0bd64ce969eb8f18",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-level2-steering-40.png": "2cd1fc6089e451ce1e3711acd7b49a9f218dab97cedc5b418a98383f0bed9031",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-broken-cycle-245.png": "cb8a5b5dd5cd21acce558cbf0fdef077b8b710648d27c8c8e031b3f34ea74160",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-broken-cycle-400.png": "8193e7bb99e96d07d46b0c533695f7e6c3f90b553fa078aa23fa0cdcc0b5b4f1",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-broken-cycle-490.png": "9b2b04866ad529f84ca5b87c9fe45dc9055604250daadc65a7d19c90b08765a7",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-broken-cycle-60.png": "bdd19553437480e312ac310deaedc744cc73fefa4da7b96bdf43f69af4b47e37",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-normal-30.png": "465822953b3f4f2a12448556e8f379b51c8cf167f172d93768f6ae109c32c398",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-normal-90.png": "7eb456c80c30f21156505e1a26149c0ad0be9e91243ce658e4a55f8aeab96046",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-plate-120.png": "c99dfa70f92fe7eba26ca9f3e8301b0c9ca70782cfd54b09d5e96f493fc820f7",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-plate-30.png": "c24138b02a079e0002d1176827311979311ab4d209e002dbd3317d00bbf2621c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-plate-300.png": "8ed766dada4a5b14879325b798145084cd53bc7fdc74b9aaa22728db3b855526",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-projectiles-30.png": "08757b5e2ad43952dbc49f77a8332f2fc0db2f59b0da240eb48cddcef619cbee",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-maw-projectiles-60.png": "9ca981ff5bd950b799e6a6cd712e73ea2248829e12a7a321a3d2cff1202baa7d",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-moter-overkill.png": "8a881a3bc5d099e030b6b328d16f2b64ba2320c226fac675e53da0b29be35511",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-moter-split.png": "cbc2a25ded15373783712fcd89bdc91a099b644cb8ecc4e584f68860e8250401",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-peep-cyan.png": "d3649904fce7c629b208f346017a92e70956171d6ae859cd14b7051159461775",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-peep-thresholds.png": "45de0421d7f783af63cd74ba583e9c1355ef252d24625dd3ba681a51cee25257",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-peep-yellow.png": "0f948b51317daefb92fc22bf3529d4b9d5bb4672aec9685ea8cd7c79368680e3",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-princess-diagonal-12.png": "4de08123a4fa9c4cabc4b8765f5d42ee99769749a4b4287d528c31c1b608144d",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-princess-diagonal-45.png": "95e009e0a9a16bbb3fccc807fb21b4891776c470306bf997f1d8ea866b4455d4",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-princess-repeat-fire-15.png": "23acfc593330e59e25931bd4e8fc6f337b488657ef8edb3ac76489b0af904e5d",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-princess-repeat-fire-45.png": "6604eca621c63ee31044e5dc0d91bf057aec65b781b4d7c41938dda6a8fcc284",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-probes.json": "67355237259ec146cfbf6c18346f42516f43ac736cc16cd30185c8ecf28ce14e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-down-plate-165.png": "08c9a792fc5cd5f73750ae537dc6e2d066b5ab05189cb7aa19d25ee75b005e35",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-down-plate-195.png": "be7b6665301c22f011b213276607e963aae6857c258e1a183867e9cd3d65b598",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-down-plate-225.png": "dc5b56f9be1a45501f2d650d18ca1e2a47bde4f7d124d167bf4e3b9805232ab9",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-down-plate-375.png": "55715caabc5a35354dffe719c5fc88a682de7a150cac13d4fd1e311fd0099b8f",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-left-165.png": "d0538a939deec6b13aaf42e783b6892deea30ec1a10aa80567777f0fab4586d2",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-left-195.png": "7dfa2b6ab97519febc471971a8d20e4d672fc019c0fd47a9729f59dfd906e24b",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-left-225.png": "5d1110f208d5c363fd52105586261910ae252fe6324009de3986a9a9b885daf3",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-left-375.png": "338b5d1f95b5b98d5dd433328d9ff91893447adfd8acdd78a21d374c8938fdca",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-right-165.png": "7dae5d50d48818660dba49a3fd6549ee5e87b96a4547b98234d33932dd0e3d5d",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-right-195.png": "6ec3e7e1a79af6c77a49abaa4c2dc380295ccb79b6504de593e298daed731411",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-right-225.png": "ff99e31495a96fd6c53975fb48d32764cc4f7543d9b1e2eb164ec079b2a15378",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-right-375.png": "1ca4086a9c4d4270c0f69d796bd9f7cf367b2df4011cd7579b5830b58d4224ac",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-up-165.png": "4172f9147a3ea4ba2fac70ab8c660b8fb31126abf263b155cae0cda3ae08dc23",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-up-195.png": "66c5257975c2ba14dca2471100e5713ae59c56337037d13184788d9311b943ce",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-up-225.png": "1ffb05c3969487919aa3a2181f0ab809f49327d4d161f6c08016a72fedf1dd5c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-quake-up-375.png": "942a8df5372bd8831b12355e4248bf6023b38ce09c84428bc81ca8865d15a076",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-bloat.png": "cb1f8225e6dbe7da71d662e6cdb42df600ae95dc111d34c4c0102053ebb0a064",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-broken-maw.png": "ce7f0f3e53082d58fcccbc47ec8bb5952b87e2b4f39cf961f1a81940dde6fb77",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-drowned-charger-60.png": "d37766286b52d36d99d5d53e52931e3392665741dc785751cd9a04efabbf9ee5",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-flaming.png": "b0162fe0fb07c02e31bc615fd239a5f9371fa8429590846836fa913e12c0f584",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-grilled.png": "4e0cea3a98a8a9fd39e52a9d5858cbcd611e55591e29d67921715eb4dea5be0f",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-iblob.png": "a8ebf7be187d12b5ed07f1959543fcc963eb5de4710c4886a30d8c85d39d5783",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-level2-charger-60.png": "9896617f6ebdf5263caf7eae2260d7aa47e8e94191884acea193211ee3fe4583",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-maw.png": "d9853608ffb3f909efffe03e989898cc502b4fdd4593f0d7f8efe80ab02459f2",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-peep.png": "35b00b8956b2acb7a68b25d2b4b57f5c98ac5b53d2083e306546481f4dc0c616",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-quake-down.png": "f2db3690c68938ec8dfa157e7c8213e0d8a9acbe3119e59297199fe569684412",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-quake-left.png": "94069d5b599a6e3a52c3521d60cb5c929bb2720a05e20d0b9ec869bf26a02ef0",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-quake-right.png": "f67e1467a2a981b84878472309cc0d197a7715af917abb8df532d347a1a1accd",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-quake-up.png": "6d5ee6da78cb88cde487bb69e0404384937e4440ee71591e05f02cfd59111daa",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-statue-brimstone.png": "fba2671e0bee7ea7410c7e54c155f3e709c35eb7e72995191ac566fc9b6429a5",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-resident-statue-fixed.png": "e917dca9fd12576090ae407c5a7d86a2692460a24351b3479e61df54febefb0b",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-ring-formation.png": "b2501800ff420fee7f4081969f3e0eff66d302ca18c687703d166f5091d462b1",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-rotten-brood-cycle.png": "a27ccc75d503272330544465bf021f0983f9a00c8eef26b797635fe7c64c3c93",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-rotten-orbit-cycle.png": "3dfbe1e12193aa76804fac5fb586dddcb52b691baf9857f0222f68d898179edf",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-contact-12.png": "bc9ae294a939cda3a510e040fa789595a5bf9e3905278e9df827fb42ac8f765c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-contact-300.png": "596244a0acbdc647ab0913a874a46d09dfa459573c2dc9f78da76d2c6c75e4f4",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-contact-90.png": "c383ed6ffa200a01137b8f25efbae7543d3c004e7c2958b32c170a7b508365dc",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-copies-12.png": "80d2d97d8e0f6d3e3d91ace146a46b5c5d94c800829acf16b1a34a4209fa9f71",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-copies-90.png": "bb97c08c763124a20623176cc4a2d067c85e94039da6270cf842f07a74f0f066",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-fire-15.png": "33fce569f75386222f195b1cce5c807c8cd346ad0bf8ecf9e318dd8840ef40e3",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-fire-45.png": "468e875952f9c659649ef63422508529b73607acd00fc371618880ae34ffa224",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-path-32.png": "2815ab7db7f150fd302fb0b571495898a10fd81c0d12bd0828af0b2a31107d4f",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-shadow-path-45.png": "e541066d007a9968cd0f6bb2a5c46804384ef0d1d1c731e8dfee87c44231f8c5",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-120.png": "cd1d5325e7d4a6ef8091f8df38b413b4b7bddee9ed09c1a243c054be5de59e0b",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-45.png": "8e51bf3b3348c18a1ce6dacf50ee230e05fc20b2dd7b56fb60aeca8ca0728a5e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-5.png": "a2841d65950348cae234d29ae0eb5801cb5d0b6f530b54d6e4823ef90af9461c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-90.png": "01de3050c79d60a4f476e4badbb1eff90e35b0148ac35230bc6eb534baf6e2d8",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-alt-120.png": "b1b47695f3a20986d91588893b32c78830e12146eb7c3d03156e34c89720a03f",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-alt-45.png": "5e9470bde32a498811df4507a2d019ccc6e95cf63aa18be2b0442f1e302023b0",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-alt-5.png": "a2841d65950348cae234d29ae0eb5801cb5d0b6f530b54d6e4823ef90af9461c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-always-alt-90.png": "194b8191e8cc79b74d7eea924ab44af67fac614d5ef5e97aea3a1fbd379e5bb9",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-brimstone-120.png": "48563cea9ce35e42df6ffb114faede519d2827be9e0687af57690083958da304",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-brimstone-200.png": "da83ddfd828133941fa0dcb716bd6c02be3dcd709b5be2bfa1f57cd53b4460cb",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-brimstone-32.png": "58a9d161b612aeb6114802e712a5c1e0ad3a1d4ccf1d48916bd4769a3a60f080",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-brimstone-60.png": "98775314f1b6ae6b824295671dd1eae0f75a4b7f4a0aae50eeec6cae687d0cf0",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-cross-45.png": "8141f5651ddaa38d0b8ef03f8aab41b274b9048005e57d262ef753da9b4ea3d6",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-cross-5.png": "5bad1f4baf5fc6349dbbac5db3e37e9ae1c616b82bbc2ddae21e8c9e29468e43",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-cross-90.png": "09fb22aa72fb654e0e4b9fa015af92a07b2e0a2fd455e75a348a16e612fe514e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-cross-alt-45.png": "8522b3a3e975d7b90c9facbea7b2a4045a711626291e8e816f77f9b7b0f3dd23",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-cross-alt-5.png": "08fa39b1baa020ce12625dd44143125f8edde1ff4cfd2f8ff6388f187dd27497",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-cross-alt-90.png": "80491019455958fff3278149e51c7cb6a09e08b457d2b424089b7c5f0a09c0e5",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-eye-45.png": "a60ee0a8a2b1f06383c963da062a1dd3808c1cdbffa6ccba4902830c74eb7e43",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-eye-5.png": "a2841d65950348cae234d29ae0eb5801cb5d0b6f530b54d6e4823ef90af9461c",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-eye-70.png": "627b07426473922f937874e3b81e7700d05ab7e97bbb653b7174e8bfef19d870",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-eye-90.png": "bbe42ca2f2411bb373c00fe32f4b9faeaa4901b03e9bcc655cb27cc362108336",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-fixed-120.png": "e7efff3e4b80f08740ccd369e5072df8292e16ff35eeeed7ad759b22c4d88663",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-fixed-160.png": "63fbe18cb2cf7b2f201642462eef0542ebc3afb40809d1bb5dc93a81f6cbb4bc",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-fixed-30.png": "f3090e23f66d04079da6761afce1a7e5a3c699df9cf1e2106ccf23e8315c2a5f",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-fixed-90.png": "d506b28905335629850a4e48b4247a9d34987e5a09b8b924722263b87ac1bf27",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-stone-30.png": "36a3241c127731f9945ca32f5352dd492c7901653c5b7c94fe2cebbd74d56b17",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-stone-90.png": "66dfd251ca2445771858ffe845270001c1f17616268e0412611e1a13cbf4b3ce",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-triple-30.png": "c8cf4eacfb496a049eeae817ea13b2364dd1a82611ab0b30e7becf7f400cdcb4",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-triple-90.png": "238f50603c718d122e1209580ea00bbbe361584fbd25b0d8c6000b34e6ee1f93",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-vomit-30.png": "57a9b64d9cf9841b1af6a639f46e3ad7c3c2a4150a5aeca64a5ed28d84c1f0da",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-statue-vomit-90.png": "e71f6fb43138a9d8e37ef430f9f570b00c90dd27ee2e5f49809986a0556e34e2",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-carry-185.png": "3f42abdb60b5f157cfba4f7c4d326aebe0d0f396800ccca1eca911607539caa8",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-carry-220.png": "72641ab1bbb4c0d7be6160f9d71efc0c84a016714fb12208c1a662399e33f1d4",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-carry-40.png": "dcb496fc00cb30e5c8a78983b9b3d582816fa82b907be473fd5221816c8e65ca",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-death-15.png": "a18f894d43fd97dc4439f2458ff8d63c9ac517e0e64fc326c0f2508a54d79e58",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-death-150.png": "82a8321cf210cdd743c372994205e66b3762358bd75d0e6e2cb1f1481cbf1965",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-death-45.png": "1efec4d042bb724845446bed644185172e833a3ca274c21cd28616c936b067d4",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-stock-15.png": "d867560bf87467fe332e8b3adb23a6c87334b6ca72b7f36d09910deecd016073",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-stock-400.png": "266b2afbb0e6d1aace81966fd0f2960903a1944b41228d4ee8744c9283820d78",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-throw-130.png": "2d6d087e62b1db872f3631e7852c9daa88a9b858128773b590341128be2e08c4",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-throw-220.png": "13820e976494cac7c3da88cbd8c028965dbe3714cfb267d2e9967a164b0e2467",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-throw-40.png": "15709313c6865c7567ca7b3babe9996f3597509bc03e31922a2fe12e7ca6180e",
+    "docs/reports/isaac-enemy-port/supply/full/wasm-supply-throw-65.png": "badd7527c2f8ed32603e236bb9b4efce6b0a1c512e384e84e79b46d4666803dd",
+    "docs/reports/isaac-enemy-port/supply/historical-artifact-audit.json": "ad005fd50ccae01cab939978e177394c4b4d4cc08ad3a473fec5fe6bfc36a9ba",
+    "docs/reports/isaac-enemy-port/supply/linux-carried.png": "da82bb1524a3d3adeef2f524d045e9fa7c8ce3fc6424d812a83641d2032bd838",
+    "docs/reports/isaac-enemy-port/supply/linux-carried.txt": "3e84756184dad02f8e2c5d3cfefc897c80b65a3f8bf926f49eda17e21d6642ad",
+    "docs/reports/isaac-enemy-port/supply/linux-stock.png": "b0f6c92c93ad0e50dbcd161bcf46690bba666bf704b6849252331ba4fb523ecc",
+    "docs/reports/isaac-enemy-port/supply/linux-stock.txt": "c1b3645cb04856730ce8873f529bdd66332f0b601966da9cfaf731b38af8251c",
+    "docs/reports/isaac-enemy-port/supply/linux-thrown.png": "a08e3c400e635a9d21e4b6f797b5ac08abedc5ccdbfb674ac0665eb644a2ddfa",
+    "docs/reports/isaac-enemy-port/supply/linux-thrown.txt": "ac873339c2a6682156440e1c61c36185c8441216e2198dee937505b5019ae0ea",
+    "docs/reports/isaac-enemy-port/supply/mechanics_content.txt": "96e3a5ff79c9d4af1ffe5ce55d46182970d4d8709287966e02c0196741c131cd",
+    "docs/reports/isaac-enemy-port/supply/native-build.txt": "7f5979fde6fd5133feb7807b50a86b88788d6bdd1585b41fe0b24eaab600787a",
+    "docs/reports/isaac-enemy-port/supply/native-input.txt": "7e28af3a55d15bff37b3ad11246722299166e85abd761a76accfc6c5f52ff771",
+    "docs/reports/isaac-enemy-port/supply/native-render-build.txt": "f04ed17ce2edcdf474d6e70f271d7ac607ea46033c41ab74a611056a7f158687",
+    "docs/reports/isaac-enemy-port/supply/native-results.json": "4533d35ecc88c6bb5e6ac565f401eebc54bfeb4ddef5160c230da0ca6eeeb79a",
+    "docs/reports/isaac-enemy-port/supply/native-tests.txt": "633b1ad1e56d876c7487985ce16e8b8ffec2033f1b771c096f1b5981c8be7da2",
+    "docs/reports/isaac-enemy-port/supply/native-tests.xml": "a8f5885fa7fcbb2a2c46c1a029eb139e9f2fade409ba99eef9429dabb54303a8",
+    "docs/reports/isaac-enemy-port/supply/next-dependency-review.json": "75ba003019b478cbfeeea6ca877cc81fdf53057c3eb7c8c9748c7b5f273735f4",
+    "docs/reports/isaac-enemy-port/supply/reference-validation.txt": "4ecad08eaed6af825f41fb0a39978b34ac80397f3151a6f68c0ce1887760361c",
+    "docs/reports/isaac-enemy-port/supply/source-review.json": "1af4615e2c18ba55d087ad83e0417f43e26ca4196ccd3096751cd7245bc024c0",
+    "docs/reports/isaac-enemy-port/supply/supplied_bombs.txt": "07775ed56b270576603d6209e935190a21493e19a858bb26291d2be2da71377e",
+    "docs/reports/isaac-enemy-port/supply/wasm-build.txt": "564d40349dea5f447840087ba86a54001af71e073aabc51a53e76692e02cfe0c"
+  },
+  "reference_sha256": {
+    "docs/research/isaac-mechanics-reference.json": "15b05116c0a197352bea4f0c48333ce76d03af7bba87df45e2dabd8bf3d87b2f",
+    "docs/research/isaac-enemy-port-plan.json": "3a3c30aad3b0f0e59125c07050230829958f5254b47407a695ddaaa8a4ef6587",
+    "docs/research/isaac-enemy-port-status.json": "dc6ae55db692feb3aa2edc769895c605215f24b3f57996fff8d98b00fd68589a",
+    "docs/research/isaac-enemy-port-status.csv": "7eaa3a43dca14d9467e87051cba85f099562d673168e4efdb7ec98dee119bde3",
+    "docs/isaac_monsters.md": "a0804fe386f9fc4e37f195a7d0a7af8e073b9aaeb2ac5328fb7d8d6e8b4f0ed7",
+    "README.md": "a3e6f486590bed25a50a3ee7459b0e54a1cbdda5bf0534e18b7926a0237a87f4"
+  }
+}
