@@ -129,6 +129,7 @@ add_library(deathward_core
     src/combat/CanyonBoss.cpp
     src/combat/FrontierBoss.cpp
     src/world/CanyonTerrain.cpp
+    src/world/CanyonAppearance.cpp
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
@@ -204,6 +205,7 @@ function(deathward_assets target)
     add_dependencies(${target} deathward_runtime_assets)
     add_custom_command(TARGET deathward_runtime_assets POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/mechanics" "$<TARGET_FILE_DIR:deathward>/assets/mechanics"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/visual" "$<TARGET_FILE_DIR:deathward>/assets/visual"
         VERBATIM)
     foreach(ui_file title.ttf body.ttf LICENSE.txt)
         set(ui_asset "${CMAKE_CURRENT_SOURCE_DIR}/assets/ui/${ui_file}")
@@ -284,7 +286,7 @@ if(EMSCRIPTEN)
         assets/ui/title.ttf assets/ui/body.ttf assets/ui/LICENSE.txt
         assets/bandit/bandit.glb assets/cowgirl/cowgirl.glb assets/western/western.glb assets/western/western.catalog)
     file(GLOB mechanics_assets CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "assets/mechanics/*.mechanics")
-    list(APPEND web_assets ${mechanics_assets})
+    list(APPEND web_assets ${mechanics_assets} assets/visual/canyon.cfg assets/visual/canyon-legacy.cfg)
     file(GLOB web_particles CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
         "assets/particles/*.glb" "assets/particles/*.png"
         "assets/particles/*.particles" "assets/particles/*.attachments")
@@ -395,6 +397,10 @@ if(BUILD_TESTING)
         src/render/TownScene.cpp src/render/PostProcess.cpp src/render/AnimalModels.cpp)
     target_link_libraries(deathward_cinematic_editor_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_cinematic_editor_tests)
+    add_executable(deathward_canyon_appearance_tests tests/canyon_appearance_tests.cpp)
+    target_link_libraries(deathward_canyon_appearance_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_canyon_appearance_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_test(NAME canyon_visual_geometry COMMAND deathward_canyon_appearance_tests)
     add_executable(deathward_road_tests tests/road_tests.cpp)
     target_link_libraries(deathward_road_tests PRIVATE deathward_core)
     add_test(NAME canyon_roads COMMAND deathward_road_tests)

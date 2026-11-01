@@ -4,6 +4,7 @@
 #include "render/GroundSurface.hpp"
 #include "render/MissionLighting.hpp"
 #include "render/PlayerOcclusion.hpp"
+#include "world/CanyonAppearance.hpp"
 #include "world/Dungeon.hpp"
 #include <filesystem>
 
@@ -89,6 +90,9 @@ class WesternScene {
     bool terrainReady() const {
         return !terrain_.empty();
     }
+    const CanyonAppearance *canyonAppearance() const {
+        return canyonAppearance_ ? &*canyonAppearance_ : nullptr;
+    }
     const auto &terrainChunks() const {
         return terrain_;
     }
@@ -133,6 +137,7 @@ class WesternScene {
     std::vector<TerrainChunk> terrain_;
     Mesh terrainBase_{};
     std::shared_ptr<const CanyonTerrain> terrainField_;
+    std::optional<CanyonAppearance> canyonAppearance_;
     std::vector<int> terrainSections_;
     Shader terrainShader_{};
     Material terrainMaterial_{};

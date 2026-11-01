@@ -1,0 +1,17 @@
+Pointer fixture pitch 30 theme 0 yaw 0 transparent 1 candidates 11/11/1/1
+PASS mine-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 0 yaw 0 transparent 0 candidates 1/1/1/1
+PASS mine-solid selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 0 yaw 1.2 transparent 1 candidates 19/19/1/1
+PASS mine-rotated-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 0 yaw 1.2 transparent 0 candidates 1/1/1/1
+PASS mine-rotated-solid selection, left/force fire, aim and solid collision
+Pointer fixture pitch 12 theme 1 yaw 0 transparent 1 candidates 1649/2/1/1
+PASS canyon-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 12 theme 1 yaw 0 transparent 0 candidates 1076/1/1/1
+PASS canyon-solid selection, left/force fire, aim and solid collision
+Pointer fixture pitch 12 theme 1 yaw 1.2 transparent 1 candidates 1136/2/1/1
+PASS canyon-rotated-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 12 theme 1 yaw 1.2 transparent 0 candidates 1142/1/1/1
+PASS canyon-rotated-solid selection, left/force fire, aim and solid collision
+PASS town/canyon transparency, enemy outlines, restoration, zoom and collision

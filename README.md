@@ -2135,3 +2135,19 @@ in the regular-enemy HTML report.
 The consolidated [enemy work remaining report](docs/reports/isaac-enemy-missing-work/index.html)
 separates completed checkpoints, shared systems still missing, and the full
 per-record backlog. It can be rebuilt with `python3 scripts/isaac-reference/build-enemy-missing-work-report.py`.
+
+### Lower, terraced expedition canyons
+
+The canyon rendering treatment is configured in `assets/visual/canyon.cfg`
+(runtime copy: `build/assets/visual/canyon.cfg`). Restart after editing it.
+It uses a separate seeded cosmetic height field and terrain-aware dressing;
+room connectivity, canonical collision, roads and rivers remain unchanged.
+Set `enabled 0` to restore the original geometry and decoration, or launch with
+`DEATHWARD_CANYON_CONFIG=assets/visual/canyon-legacy.cfg ./build/deathward`.
+The original taller physical volumes still block elevated shots even where the
+visual cliff is lower. Camera, controls, combat and lighting are unchanged.
+
+See the [canyon comparison report](docs/reports/canyon-terraces/index.html) for
+matched screenshots, parameters, regression results and measured performance.
+Rebuild the report from its saved logs with
+`python3 scripts/canyon-terraces-report.py`.

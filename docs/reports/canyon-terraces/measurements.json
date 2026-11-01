@@ -1,0 +1,181 @@
+{
+  "base_commit": "7e565fe",
+  "seed": 1866,
+  "capture": {
+    "resolution": [
+      1440,
+      900
+    ],
+    "zoom_percent": 160,
+    "projection": "perspective",
+    "fov": 45,
+    "frames": 120,
+    "style": "original",
+    "scenes": [
+      "combat",
+      "profile-quarry",
+      "profile-works"
+    ]
+  },
+  "geometry": {
+    "maps": "12",
+    "categories": "4",
+    "asset_roles": "4",
+    "candidates": "12329",
+    "collision_room_checks": "180",
+    "original_highland_median": "7.55781",
+    "visual_highland_median": "4.51846",
+    "original_max": "10.7415",
+    "visual_max": "7.8",
+    "appearance_mean_ms": "58.9398"
+  },
+  "rollback_comparison": {
+    "resolution": [
+      1440,
+      900
+    ],
+    "maximum_channel_delta_excluding_fps": 2,
+    "changed_channel_fraction_excluding_fps": 0.00034722222222222224
+  },
+  "benchmark_runs": {
+    "legacy": [
+      {
+        "seed": "1866",
+        "version": "deathward-m1-61",
+        "resolution": "1440x900",
+        "frames": "240",
+        "mean_ms": "206.791",
+        "p95_ms": "530.567",
+        "max_ms": "3018.59",
+        "max_projectiles": "2015",
+        "min_active_enemies": "3",
+        "min_active_projectiles": "600",
+        "kills": "472",
+        "max_chain_depth": "16",
+        "suppressed": "336",
+        "simulation_ms": "2.62954",
+        "draw_ms": "117.937",
+        "present_ms": "86.224"
+      },
+      {
+        "seed": "1866",
+        "version": "deathward-m1-61",
+        "resolution": "1440x900",
+        "frames": "240",
+        "mean_ms": "185.064",
+        "p95_ms": "409.419",
+        "max_ms": "2954.17",
+        "max_projectiles": "2015",
+        "min_active_enemies": "3",
+        "min_active_projectiles": "600",
+        "kills": "472",
+        "max_chain_depth": "16",
+        "suppressed": "336",
+        "simulation_ms": "2.57985",
+        "draw_ms": "105.798",
+        "present_ms": "76.6856"
+      },
+      {
+        "seed": "1866",
+        "version": "deathward-m1-61",
+        "resolution": "1440x900",
+        "frames": "240",
+        "mean_ms": "191.68",
+        "p95_ms": "385.684",
+        "max_ms": "2836.65",
+        "max_projectiles": "2015",
+        "min_active_enemies": "3",
+        "min_active_projectiles": "600",
+        "kills": "472",
+        "max_chain_depth": "16",
+        "suppressed": "336",
+        "simulation_ms": "2.69449",
+        "draw_ms": "107.809",
+        "present_ms": "81.1772"
+      }
+    ],
+    "terraced": [
+      {
+        "seed": "1866",
+        "version": "deathward-m1-61",
+        "resolution": "1440x900",
+        "frames": "240",
+        "mean_ms": "180.556",
+        "p95_ms": "395.177",
+        "max_ms": "2809.63",
+        "max_projectiles": "2015",
+        "min_active_enemies": "3",
+        "min_active_projectiles": "600",
+        "kills": "472",
+        "max_chain_depth": "16",
+        "suppressed": "336",
+        "simulation_ms": "2.60706",
+        "draw_ms": "103.307",
+        "present_ms": "74.6412"
+      },
+      {
+        "seed": "1866",
+        "version": "deathward-m1-61",
+        "resolution": "1440x900",
+        "frames": "240",
+        "mean_ms": "180.786",
+        "p95_ms": "421.345",
+        "max_ms": "3015.82",
+        "max_projectiles": "2015",
+        "min_active_enemies": "3",
+        "min_active_projectiles": "600",
+        "kills": "472",
+        "max_chain_depth": "16",
+        "suppressed": "336",
+        "simulation_ms": "2.58623",
+        "draw_ms": "104.942",
+        "present_ms": "73.2574"
+      },
+      {
+        "seed": "1866",
+        "version": "deathward-m1-61",
+        "resolution": "1440x900",
+        "frames": "240",
+        "mean_ms": "203.963",
+        "p95_ms": "460.79",
+        "max_ms": "3160.23",
+        "max_projectiles": "2015",
+        "min_active_enemies": "3",
+        "min_active_projectiles": "600",
+        "kills": "472",
+        "max_chain_depth": "16",
+        "suppressed": "336",
+        "simulation_ms": "2.6935",
+        "draw_ms": "116.163",
+        "present_ms": "85.1066"
+      }
+    ]
+  },
+  "benchmark_medians": {
+    "legacy": {
+      "mean_ms": 191.68,
+      "p95_ms": 409.419,
+      "max_ms": 2954.17,
+      "simulation_ms": 2.62954,
+      "draw_ms": 107.809,
+      "present_ms": 81.1772
+    },
+    "terraced": {
+      "mean_ms": 180.786,
+      "p95_ms": 421.345,
+      "max_ms": 3015.82,
+      "simulation_ms": 2.60706,
+      "draw_ms": 104.942,
+      "present_ms": 74.6412
+    }
+  },
+  "benchmark_note": "Uncapped stress workload, 240 frames, not ordinary gameplay FPS. Alternating legacy/default in the same final executable; no parallel graphics jobs.",
+  "checks": {
+    "geometry": "PASS",
+    "gameplay_suites": 5,
+    "gameplay": "PASS",
+    "western_assets": "PASS",
+    "occlusion_and_aim": "PASS",
+    "WASM": "not run, standing user waiver"
+  }
+}

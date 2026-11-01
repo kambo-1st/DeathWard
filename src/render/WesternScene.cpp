@@ -224,6 +224,15 @@ void WesternScene::prepare(const Arena &arena) {
         lastArena_ = &arena;
         lastSeed_ = arena.visualSeed;
         lastTheme_ = arena.theme;
+        if (arena.canyon) {
+            int triangles = terrainBase_.triangleCount;
+            for (const auto &chunk : terrain_)
+                triangles += chunk.mesh.triangleCount;
+            TraceLog(LOG_INFO,
+                     "CANYON_RENDER: enabled=%d triangles=%d chunks=%d instances=%d vegetation=%d density=%d",
+                     canyonAppearance_ && canyonAppearance_->parameters.enabled, triangles,
+                     int(terrain_.size()), int(placements_.size()), vegetationCount(), vegetationDensity_);
+        }
     }
 }
 void WesternScene::setVegetationDensity(int percent) {
@@ -418,6 +427,8 @@ void WesternScene::generateRoomDecorations(const Arena &arena) {
     if (!loaded())
         return;
     const bool canyon = bool(arena.canyon);
+    if (canyon && canyonAppearance_ && canyonAppearance_->parameters.enabled)
+        return; // Terrain-aware candidates replace legacy floor dressing.
     auto distanceXZ = [](Vector3 a, Vector3 b) { return std::hypot(a.x - b.x, a.z - b.z); };
     auto routeDistance = [&](Vector3 p, Vector3 a, Vector3 b) {
         a.y = b.y = p.y = 0;

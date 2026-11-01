@@ -148,8 +148,16 @@ void townCheck(HubKind hub) {
         [&](bool enabled) { scene.setPlayerOcclusion(camera, player, enabled); }, hubFolder(hub));
     check(town.walkable(player), "rendering leaves town collision unchanged");
 }
-void enemyOutlineCheck(Vector3 enemyPosition, const Camera3D &camera, const std::string &name) {
+void enemyOutlineCheck(const Arena &geometry, Vector3 enemyPosition, const Camera3D &camera,
+                       const std::string &name) {
     Simulation run(69175541, 1, {}, MissionTheme::Canyon);
+    // Use the same map as the occluder search: otherwise a flying probe can
+    // be auto-raised onto an unrelated canonical mesa in the expedition map.
+    run.arena = geometry;
+    run.rooms.resize(geometry.rooms.size());
+    const auto visible = buildCanyonAppearance(
+        run.arena,
+        CanyonVisualParameters::load(std::filesystem::path(DEATHWARD_ASSET_DIR) / "visual/canyon.cfg"));
     // Isolate the actor under test from the mission's prepopulated neighboring rooms.
     for (auto &room : run.rooms)
         room.residents.clear();
@@ -164,7 +172,7 @@ void enemyOutlineCheck(Vector3 enemyPosition, const Camera3D &camera, const std:
                 sight.set(camera, p);
                 bool clear = true;
                 for (auto target : sight.targets())
-                    clear = clear && !run.arena.canyon->trace(camera.position, target).hit;
+                    clear = clear && !visible.trace(camera.position, target).hit;
                 if (clear) {
                     found = true;
                     run.player.position = p;
@@ -230,31 +238,55 @@ void canyonCheck() {
     scene.prepare(arena);
     check(scene.terrainReady(), "canyon terrain builds with the occlusion shader");
     Vector3 player{};
-    float yaw = 0;
+    float yaw = 0, pitch = 30;
     bool found = false;
-    for (const auto &room : arena.rooms) {
-        for (float z = room.bounds.min.z; z < room.bounds.max.z && !found; z += 2)
-            for (float x = room.bounds.min.x; x < room.bounds.max.x && !found; x += 2) {
-                Vector3 p{x, .85f, z};
-                if (arena.blocked(p, .6f))
-                    continue;
-                for (float angle : {0.f, Pi / 2, Pi, -Pi / 2}) {
-                    const auto camera = view(p, angle);
-                    const auto hit = arena.canyon->trace(camera.position, camera.target);
-                    if (hit.hit && hit.t > .1f && hit.t < .8f) {
-                        found = true;
-                        player = p;
-                        yaw = angle;
-                        break;
-                    }
-                }
-            }
+    // Lower terraces may leave the default view entirely clear. A lower-angle
+    // test-only camera still exercises fading without changing game cameras.
+    for (float candidatePitch : {30.f, 12.f, 6.f}) {
         if (found)
             break;
+        pitch = candidatePitch;
+        for (const auto &room : arena.rooms) {
+            for (float z = room.bounds.min.z; z < room.bounds.max.z && !found; z += 2)
+                for (float x = room.bounds.min.x; x < room.bounds.max.x && !found; x += 2) {
+                    Vector3 p{x, .85f, z};
+                    if (arena.blocked(p, .6f))
+                        continue;
+                    for (float angle : {0.f, Pi / 2, Pi, -Pi / 2}) {
+                        auto camera = view(p, angle);
+                        camera.position.y = p.y + .1f + pitch * .625f;
+                        const auto hit = scene.canyonAppearance()
+                                             ? scene.canyonAppearance()->trace(camera.position, camera.target)
+                                             : arena.canyon->trace(camera.position, camera.target);
+                        if (hit.hit && hit.t > .1f && hit.t < .8f) {
+                            PlayerOcclusion body;
+                            body.set(camera, p);
+                            bool covered = true;
+                            for (auto target : body.targets()) {
+                                const auto ray =
+                                    scene.canyonAppearance()
+                                        ? scene.canyonAppearance()->trace(camera.position, target)
+                                        : arena.canyon->trace(camera.position, target);
+                                covered = covered && ray.hit && ray.t < .93f;
+                            }
+                            if (!covered)
+                                continue;
+                            found = true;
+                            player = p;
+                            yaw = angle;
+                            break;
+                        }
+                    }
+                }
+            if (found)
+                break;
+        }
     }
-    check(found, "find a walkable player position behind the full-height canyon mesh");
+    std::cout << "Canyon occlusion test pitch=" << pitch << " (production camera unchanged)\n";
+    check(found, "find a walkable player position behind the actual visible canyon mesh");
     for (float zoom : {.625f, 1.5f}) {
-        const auto camera = view(player, yaw, zoom);
+        auto camera = view(player, yaw, zoom);
+        camera.position.y = player.y + .1f + pitch * zoom;
         verifyVisibility(
             player, camera, [&] { scene.draw(player); },
             [&] {
@@ -272,7 +304,7 @@ void canyonCheck() {
             retained += section.rock && !section.faded;
         }
         check(faded > 0 && retained > 0, "only obstructing canyon rock sections become translucent");
-        enemyOutlineCheck(player, camera, zoom < 1 ? "canyon" : "canyon-wide");
+        enemyOutlineCheck(arena, player, camera, zoom < 1 ? "canyon" : "canyon-wide");
     }
 }
 void residentRenderCheck(MissionTheme theme) {
@@ -356,68 +388,79 @@ void sceneryInputCheck(MissionTheme theme, float yaw, bool transparent) {
     Camera3D camera{};
     bool found = false;
     std::array<int, 4> candidates{};
-    for (int room = 0; room < run.arena.roomCount() && !found; ++room) {
-        const auto bounds = run.arena.rooms[size_t(room)].bounds;
-        for (float z = bounds.min.z + 2; z < bounds.max.z - 2 && !found; z += 2)
-            for (float x = bounds.min.x + 2; x < bounds.max.x - 2 && !found; x += 2) {
-                const Vector3 p{x, .85f, z};
-                if (run.arena.blocked(p, .65f))
-                    continue;
-                const auto candidate = view(p, yaw);
-                for (int direction = 0; direction < 8 && !found; ++direction) {
-                    const auto enemy =
-                        add(p, rotateY({transparent ? 1.8f : 6.f, 0, 0}, float(direction) * Pi / 4));
-                    if (run.arena.roomAt(enemy) != room || run.arena.blocked(enemy, .8f) ||
-                        !run.arena.clear(p, enemy, .3f))
+    float fixturePitch = 30;
+    // Search a lower test-only angle when the shorter cliffs no longer hide
+    // a close target at the production camera angle.
+    for (float pitch : {30.f, 12.f, 6.f}) {
+        if (found || (theme != MissionTheme::Canyon && pitch != 30.f))
+            continue;
+        for (int room = 0; room < run.arena.roomCount() && !found; ++room) {
+            const auto bounds = run.arena.rooms[size_t(room)].bounds;
+            for (float z = bounds.min.z + 2; z < bounds.max.z - 2 && !found; z += 2)
+                for (float x = bounds.min.x + 2; x < bounds.max.x - 2 && !found; x += 2) {
+                    const Vector3 p{x, .85f, z};
+                    if (run.arena.blocked(p, .65f))
                         continue;
-                    auto pixel = GetWorldToScreen(add(enemy, {0, -.2f, 0}), candidate);
-                    pixel = {float(int(pixel.x)), float(int(pixel.y))};
-                    const auto ray = GetScreenToWorldRay(pixel, candidate);
-                    const auto body = GetRayCollisionBox(
-                        ray, {{enemy.x - .6f, 0, enemy.z - .6f}, {enemy.x + .6f, 2.5f, enemy.z + .6f}});
-                    if (!body.hit ||
-                        !run.arena.trace(ray.position, add(ray.position, mul(ray.direction, body.distance)))
-                             .hit)
-                        continue;
-                    ++candidates[0];
-                    scene.setPlayerOcclusion(candidate, p, false);
-                    const auto opaque = scene.pick(ray, p);
-                    if (!opaque.hit || opaque.distance >= body.distance - .1f)
-                        continue;
-                    ++candidates[1];
-                    scene.setPlayerOcclusion(candidate, p);
-                    const auto visibleHit = scene.pick(ray, p);
-                    const bool stillBlocked = visibleHit.hit && visibleHit.distance < body.distance;
-                    if (stillBlocked == transparent)
-                        continue;
-                    ++candidates[2];
-                    auto floorPixel = GetWorldToScreen({enemy.x, 0, enemy.z}, candidate);
-                    floorPixel = {float(int(floorPixel.x)), float(int(floorPixel.y))};
-                    const auto floorRay = GetScreenToWorldRay(floorPixel, candidate);
-                    const float t = -floorRay.position.y / floorRay.direction.y;
-                    const auto floorHit = scene.pick(floorRay, p);
-                    const bool floorBlocked = floorHit.hit && floorHit.distance < t - .15f;
-                    if (floorBlocked == transparent)
-                        continue;
-                    ++candidates[3];
-                    check(run.arena.trace(ray.position, add(ray.position, mul(ray.direction, body.distance)))
-                              .hit,
-                          "fading leaves the camera obstruction physically solid");
-                    player = p;
-                    enemyPoint = enemy;
-                    enemyPixel = pixel;
-                    groundPixel = floorPixel;
-                    groundPoint = add(floorRay.position, mul(floorRay.direction, t));
-                    groundPoint.y = .85f;
-                    camera = candidate;
-                    run.room = room;
-                    found = true;
+                    auto candidate = view(p, yaw);
+                    candidate.position.y = candidate.target.y + pitch * .625f;
+                    for (int direction = 0; direction < 8 && !found; ++direction) {
+                        const auto enemy =
+                            add(p, rotateY({transparent ? 1.8f : 6.f, 0, 0}, float(direction) * Pi / 4));
+                        if (run.arena.roomAt(enemy) != room || run.arena.blocked(enemy, .8f) ||
+                            !run.arena.clear(p, enemy, .3f))
+                            continue;
+                        auto pixel = GetWorldToScreen(add(enemy, {0, -.2f, 0}), candidate);
+                        pixel = {float(int(pixel.x)), float(int(pixel.y))};
+                        const auto ray = GetScreenToWorldRay(pixel, candidate);
+                        const auto body = GetRayCollisionBox(
+                            ray, {{enemy.x - .6f, 0, enemy.z - .6f}, {enemy.x + .6f, 2.5f, enemy.z + .6f}});
+                        if (!body.hit ||
+                            !run.arena
+                                 .trace(ray.position, add(ray.position, mul(ray.direction, body.distance)))
+                                 .hit)
+                            continue;
+                        ++candidates[0];
+                        scene.setPlayerOcclusion(candidate, p, false);
+                        const auto opaque = scene.pick(ray, p);
+                        if (!opaque.hit || opaque.distance >= body.distance - .1f)
+                            continue;
+                        ++candidates[1];
+                        scene.setPlayerOcclusion(candidate, p);
+                        const auto visibleHit = scene.pick(ray, p);
+                        const bool stillBlocked = visibleHit.hit && visibleHit.distance < body.distance;
+                        if (stillBlocked == transparent)
+                            continue;
+                        ++candidates[2];
+                        auto floorPixel = GetWorldToScreen({enemy.x, 0, enemy.z}, candidate);
+                        floorPixel = {float(int(floorPixel.x)), float(int(floorPixel.y))};
+                        const auto floorRay = GetScreenToWorldRay(floorPixel, candidate);
+                        const float t = -floorRay.position.y / floorRay.direction.y;
+                        const auto floorHit = scene.pick(floorRay, p);
+                        const bool floorBlocked = floorHit.hit && floorHit.distance < t - .15f;
+                        if (floorBlocked == transparent)
+                            continue;
+                        ++candidates[3];
+                        check(run.arena
+                                  .trace(ray.position, add(ray.position, mul(ray.direction, body.distance)))
+                                  .hit,
+                              "fading leaves the camera obstruction physically solid");
+                        player = p;
+                        enemyPoint = enemy;
+                        enemyPixel = pixel;
+                        groundPixel = floorPixel;
+                        groundPoint = add(floorRay.position, mul(floorRay.direction, t));
+                        groundPoint.y = .85f;
+                        camera = candidate;
+                        fixturePitch = pitch;
+                        run.room = room;
+                        found = true;
+                    }
                 }
-            }
+        }
     }
-    std::cout << "Pointer fixture " << int(theme) << " yaw " << yaw << " transparent " << transparent
-              << " candidates " << candidates[0] << "/" << candidates[1] << "/" << candidates[2] << "/"
-              << candidates[3] << std::endl;
+    std::cout << "Pointer fixture pitch " << fixturePitch << " theme " << int(theme) << " yaw " << yaw
+              << " transparent " << transparent << " candidates " << candidates[0] << "/" << candidates[1]
+              << "/" << candidates[2] << "/" << candidates[3] << std::endl;
     check(found, "find an enemy behind the requested transparent or opaque scenery");
     run.player.position = player;
     const auto target = run.spawnMonster(monsterId(12), enemyPoint); // Stationary Horf.

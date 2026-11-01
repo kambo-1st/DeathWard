@@ -21,6 +21,37 @@ bool same(const WesternPlacement &a, const WesternPlacement &b) {
            distance(a.bounds.max, b.bounds.max) < 0.0001f;
 }
 void verifyDecorations(WesternScene &scene, const Arena &arena, int limit = 80) {
+    if (const auto *look = scene.canyonAppearance(); look && look->parameters.enabled) {
+        int count = 0;
+        std::set<int> kinds;
+        for (const auto &p : scene.placements())
+            if (p.decorationRoom >= 0) {
+                ++count;
+                kinds.insert(int(p.asset));
+                check(p.naturalScale > 0 && p.decorationRoom < arena.roomCount(),
+                      "cosmetic terrain dressing preserves proportions and room attribution");
+                const auto center = mul(add(p.bounds.min, p.bounds.max), .5f);
+                const float h = look->height(center.x, center.z);
+                check(std::abs(h - p.bounds.min.y) < .15f,
+                      "terrace props are supported by the visible surface");
+                const auto road = arena.canyon->roadSample(center);
+                const float radius =
+                    std::hypot(p.bounds.max.x - p.bounds.min.x, p.bounds.max.z - p.bounds.min.z) * .5f;
+                check(road.distance >= road.width + radius + .54f,
+                      "cosmetic terrain props leave road shoulders clear");
+                if (count % 30 == 0) {
+                    const Vector3 target{center.x, .85f, center.z};
+                    scene.setPlayerOcclusion(
+                        {add(target, {0, 20, 10}), target, {0, 1, 0}, 45, CAMERA_PERSPECTIVE}, target, false);
+                    const auto hit = scene.pick({{center.x, 30, center.z}, {0, -1, 0}}, target);
+                    check(hit.hit && std::abs(hit.point.y - h) < .005f,
+                          "aim/movement rays ignore cosmetic props and hit visual terrain");
+                }
+            }
+        check(count > arena.roomCount() * 4 && count <= look->parameters.maxDecorations && kinds.size() >= 4,
+              "bounded, varied terrain-aware decoration");
+        return;
+    }
     std::array<int, RoomCount> counts{}, skulls{}, bones{};
     std::set<WesternAsset> kinds;
     for (const auto &p : scene.placements()) {
@@ -136,7 +167,9 @@ void verifyVegetation(WesternScene &scene, const Arena &arena) {
             // Denser, independently spaced samples include the supporting pad.
             for (float x = p.bounds.min.x - .35f; x <= p.bounds.max.x + .35f; x += .12f)
                 for (float z = p.bounds.min.z - .35f; z <= p.bounds.max.z + .35f; z += .12f) {
-                    const float h = arena.canyon->height(x, z);
+                    const float h = scene.canyonAppearance() && scene.canyonAppearance()->parameters.enabled
+                                        ? scene.canyonAppearance()->height(x, z)
+                                        : arena.canyon->height(x, z);
                     low = std::min(low, h);
                     high = std::max(high, h);
                 }
@@ -170,10 +203,12 @@ size_t verifyCanyon(WesternScene &scene) {
             const auto *v = chunk.mesh.vertices;
             const Vector3 p{(v[0] + v[3] + v[6]) / 3, 0, (v[2] + v[5] + v[8]) / 3};
             const Vector3 from{p.x, 30, p.z}, to{p.x, -4, p.z};
-            const auto hit = field.trace(from, to);
+            const auto hit =
+                scene.canyonAppearance() ? scene.canyonAppearance()->trace(from, to) : field.trace(from, to);
             const auto meshHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
             check(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f,
-                  "rendered terrain triangles and collision rays agree across every chunk");
+                  "visual terrain sampler and rendered mesh agree across every chunk; gameplay field stays "
+                  "separate");
         }
         // Exercise oblique rays through cliff faces and cover, not only vertical ground probes.
         // Keep reference rays off exact lattice seams: raylib's float barycentric
@@ -183,7 +218,9 @@ size_t verifyCanyon(WesternScene &scene) {
             const float angle = n * Pi / 6;
             const Vector3 from = add(center, {std::cos(angle) * 35, 18, std::sin(angle) * 35});
             const auto direction = unit(sub(center, from));
-            const auto hit = field.trace(from, add(from, mul(direction, 70)));
+            const auto hit = scene.canyonAppearance()
+                                 ? scene.canyonAppearance()->trace(from, add(from, mul(direction, 70)))
+                                 : field.trace(from, add(from, mul(direction, 70)));
             float closest = 1000;
             for (const auto &chunk : scene.terrainChunks()) {
                 if (!segmentBox(from, add(from, mul(direction, 70)), chunk.bounds).hit)
