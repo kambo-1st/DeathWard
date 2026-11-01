@@ -1,0 +1,106 @@
+{
+  "scope": "Boundary geometry only, relative to the uncommitted canyon-composition pass at task start. Earlier uncommitted material/dressing changes are not part of this task.",
+  "checks": {
+    "geometry-tests": "PASS",
+    "graphics-tests": "PASS",
+    "occlusion-tests": "PASS",
+    "gameplay-tests": "PASS"
+  },
+  "geometry": {
+    "maps": "12",
+    "categories": "4",
+    "asset_roles": "5",
+    "candidates": "25212",
+    "collision_room_checks": "180",
+    "original_highland_median": "7.55781",
+    "visual_highland_median": "4.08886",
+    "original_max": "10.7415",
+    "visual_max": "6.8",
+    "appearance_mean_ms": "295.108"
+  },
+  "benchmark": {
+    "historical_before": {
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "240",
+      "mean_ms": "155.404",
+      "p95_ms": "332.599",
+      "max_ms": "3248.63",
+      "max_projectiles": "2015",
+      "min_active_enemies": "3",
+      "min_active_projectiles": "600",
+      "kills": "472",
+      "max_chain_depth": "16",
+      "suppressed": "336",
+      "simulation_ms": "2.40514",
+      "draw_ms": "91.2771",
+      "present_ms": "61.7216"
+    },
+    "current": {
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "240",
+      "mean_ms": "118.964",
+      "p95_ms": "247.023",
+      "max_ms": "2053.69",
+      "max_projectiles": "2015",
+      "min_active_enemies": "3",
+      "min_active_projectiles": "600",
+      "kills": "472",
+      "max_chain_depth": "16",
+      "suppressed": "336",
+      "simulation_ms": "1.77465",
+      "draw_ms": "70.2029",
+      "present_ms": "46.9861"
+    }
+  },
+  "render": {
+    "historical_before": {
+      "enabled": "1",
+      "triangles": "274613",
+      "chunks": "105",
+      "instances": "1068",
+      "vegetation": "332",
+      "density": "100"
+    },
+    "current": {
+      "enabled": "1",
+      "triangles": "82673",
+      "chunks": "105",
+      "instances": "1242",
+      "vegetation": "421",
+      "density": "100"
+    }
+  },
+  "camera": {
+    "zoom": 160,
+    "fov": 45,
+    "resolution": [
+      1440,
+      900
+    ],
+    "seed": 1866,
+    "scene": "profile-works",
+    "geometry_diagnostic_player_marker_height": 1.8
+  },
+  "remaining": [
+    "The low collision skirt still follows the immutable floor boundary; parts of that outline remain visible. Main cliff contours are independent, but this is not a claim that every visual trace of the old room outline has disappeared.",
+    "Some faces remain more planar and angular than the target. The report does not certify exact visual equivalence.",
+    "Detached room boulders were deliberately retained, so their regular lower footprints are outside this boundary-only correction.",
+    "No decoration rules were changed. Existing terrain-aware support tests naturally resample candidate acceptance and root height against the new terrain; generated placements can therefore differ.",
+    "The visual rock profile remains separate from canonical collision/projectile volumes. Those physical volumes are unchanged.",
+    "Only native Linux was built and exercised. WASM checks remain waived."
+  ],
+  "visual_acceptance": "FAILED",
+  "performance_scope": "Historical before stress capture from the preceding pass versus a fresh current capture, same stress seed/workload. Not an isolated paired experiment or a statistical speedup claim.",
+  "status": "Rejected by user; reverted to pre-rebuild canyon-composition snapshot",
+  "active_geometry": "preceding canyon-composition pass",
+  "rollback_verification": {
+    "source": "byte-identical to saved pre-rebuild snapshot",
+    "native_build": "passed",
+    "capture": "../canyon-composition/restored-works.png",
+    "remaining": "Reference matching remains unfinished."
+  }
+}

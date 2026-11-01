@@ -48,7 +48,7 @@ void main() {
     // Local sandstone art direction only; lighting and legacy materials stay intact.
     if (terracedCliffs != 0 && world.y > .15) {
         float cap = smoothstep(.65,.96,n.y);
-        surface = mix(surface,mix(vec3(.8,.46,.26),vec3(.82,.49,.26),cap),mix(.9,.75,cap));
+        surface = mix(surface,mix(vec3(.73,.46,.32),vec3(.74,.45,.31),cap),.96);
     }
     if(terracedCliffs != 0 && world.y < .15) surface *= vec3(.96,.88,.85);
     surface *= tint;
@@ -487,15 +487,16 @@ void WesternScene::updateTerrainOcclusion() {
                 for (int x = left; x <= right; ++x) {
                     const bool extruded = canyonAppearance_ && canyonAppearance_->parameters.enabled;
                     size_t cell = size_t(z * (field.width - 1) + x);
-                    size_t begin = extruded ? canyonAppearance_->cellOffsets[cell] : cell * 2;
-                    size_t end = extruded ? canyonAppearance_->cellOffsets[cell + 1] : begin + 2;
+                    size_t begin = extruded ? canyonAppearance_->queryBegin(cell) : cell * 2;
+                    size_t end = extruded ? canyonAppearance_->queryEnd(cell) : begin + 2;
                     for (size_t i = begin; i < end; ++i) {
-                        int index = terrainSections_[i];
+                        size_t triangle = extruded ? canyonAppearance_->queryTriangle(i) : i;
+                        int index = terrainSections_[triangle];
                         if (index < 0 || terrain_[size_t(index)].faded)
                             continue;
                         std::array<Vector3, 3> t;
                         if (extruded)
-                            t = canyonAppearance_->triangles[i].vertices;
+                            t = canyonAppearance_->triangles[triangle].vertices;
                         else {
                             auto a = field.vertex(x, z), b = field.vertex(x + 1, z),
                                  c = field.vertex(x, z + 1), d = field.vertex(x + 1, z + 1);

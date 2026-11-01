@@ -271,6 +271,16 @@ void canyonCheck() {
                                         : arena.canyon->trace(camera.position, target);
                                 covered = covered && ray.hit && ray.t < .93f;
                             }
+                            // Select a fixture whose canonical solid also obstructs
+                            // both views. Visual cliffs can be higher or lower than
+                            // the immutable physical shoulder; fading must not
+                            // change that physical obstruction.
+                            for (float zoom : {.625f, 1.5f}) {
+                                auto physicalView = view(p, angle, zoom);
+                                physicalView.position.y = p.y + .1f + pitch * zoom;
+                                covered = covered &&
+                                          arena.canyon->trace(physicalView.position, physicalView.target).hit;
+                            }
                             if (!covered)
                                 continue;
                             found = true;

@@ -26,8 +26,8 @@ void configuration() {
     check(p.enabled && p.terraces == 3, "production config enables three-tier presentation");
     auto bad = std::filesystem::temp_directory_path() / "deathward-canyon-invalid.cfg";
     for (const auto *line : {"terrace_count 0", "minimum_height -1", "maximum_height 0", "facet_variation 2",
-                             "plateau_vegetation -1", "maximum_decorations 6001", "terrace_count 2.5",
-                             "unknown 3", "enabled 2", "enabled 1\nenabled 0"}) {
+                             "composition_strength 1.1", "plateau_vegetation -1", "maximum_decorations 6001",
+                             "terrace_count 2.5", "unknown 3", "enabled 2", "enabled 1\nenabled 0"}) {
         std::ofstream(bad) << "DEATHWARD_CANYON 1\n" << line << '\n';
         bool rejected = false;
         try {
@@ -38,7 +38,7 @@ void configuration() {
         check(rejected, "bad or duplicate visual parameters rejected");
     }
     std::filesystem::remove(bad);
-    std::cout << "CONFIG validated_parameters=10 default_loaded=1\n";
+    std::cout << "CONFIG validated_parameters=11 default_loaded=1\n";
 }
 void narrowSupportRegression() {
     CanyonAppearance f;
@@ -61,6 +61,25 @@ void narrowSupportRegression() {
     check(f.supports({.8f, 0, .8f}, .05f, .1f), "clear flat support is retained");
     std::cout
         << "FOOTPRINT exact_triangle_clip=PASS narrow_ledge=PASS vertical_riser=PASS flat_ground=PASS\n";
+}
+void displacedQueryRegression() {
+    CanyonAppearance look;
+    look.surface.width = 3;
+    look.surface.depth = 2;
+    look.surface.step = 1;
+    look.surface.heights.assign(6, 0);
+    look.triangles.push_back({{{Vector3{1.2f, 1, .1f}, Vector3{1.2f, 1, .8f}, Vector3{1.8f, 1, .1f}}}, true});
+    // Render order still associates this triangle with source cell zero.
+    // Its actual geometry has moved entirely into cell one.
+    look.triangles.push_back({{{Vector3{1.4f, 0, .2f}, Vector3{1.4f, 1, .2f}, Vector3{1.4f, 0, .4f}}}, true});
+    look.cellOffsets = {0, 2, 2};
+    look.spatialOffsets = {0, 0, 2};
+    look.spatialTriangles = {0, 1};
+    check(std::abs(look.height(1.4f, .3f) - 1) < .00001f, "height follows displaced triangle bins");
+    auto hit = look.trace({1.4f, 3, .3f}, {1.4f, -1, .3f});
+    check(hit.hit && std::abs(hit.t - .5f) < .00001f, "ray follows displaced triangle bins");
+    check(!look.supports({1.4f, 0, .3f}, .08f, .1f), "root support follows displaced geometry");
+    std::cout << "SPATIAL displaced_height=PASS displaced_ray=PASS displaced_support=PASS\n";
 }
 void verify() {
     std::set<int> zones, kinds, rivers;
@@ -208,6 +227,7 @@ int main() {
     try {
         configuration();
         narrowSupportRegression();
+        displacedQueryRegression();
         verify();
         std::cout << "PASS canyon visual determinism, collision invariance, support, water/road clearance "
                      "and reversible config\n";

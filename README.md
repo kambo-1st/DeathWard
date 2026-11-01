@@ -2154,7 +2154,19 @@ with `DEATHWARD_CANYON_CONFIG=assets/visual/canyon-legacy.cfg ./build/deathward`
 Camera, controls, combat, roads, rivers and lighting remain unchanged; the new
 cliff path applies a local sandstone palette adjustment.
 
-The [current reference matching gallery](docs/reports/canyon-reference-match/index.html)
+The [rejected boundary rebuild](docs/reports/canyon-contour-rebuild/index.html)
+is archived for reference. It was visually worse and has been reverted to the
+preceding canyon-composition pass; it is not the active game geometry.
+
+The [canyon contour correction report](docs/reports/canyon-composition/index.html)
+compares independent eroded shelf contours, varied rises, recessed upper faces and
+muted sandstone against the target and commit `09cd526`. Playable footprints and
+collision remain fixed. Visual acceptance is explicitly partial: inherited ground
+outlines and some facets still differ. It includes native 160% captures, regression
+logs and a paired legacy/current stress observation. Rebuild it with
+`python3 scripts/canyon-composition-report.py`.
+
+The [previous reference matching gallery](docs/reports/canyon-reference-match/index.html)
 compares the target with native captures of geological blocks, warmer sandstone,
 green agaves, grass tufts, desert trees and flowering cacti. Rebuild it with
 `python3 scripts/canyon-reference-match-report.py`. The flowering cactus is a

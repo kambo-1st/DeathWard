@@ -90,7 +90,7 @@ void CanyonVisualParameters::validate() const {
     auto range = [](float v, float a, float b) { return std::isfinite(v) && v >= a && v <= b; };
     if (!range(minHeight, .8f, 10) || !range(maxHeight, minHeight, 16) || !range(heightVariation, 0, 1) ||
         terraces < 1 || terraces > 6 || !range(terraceWidth, 1, 8) || !range(silhouette, 0, 1) ||
-        !range(facets, 0, 1) || !range(extent, 0, 35) || !range(debris, 0, 3) ||
+        !range(facets, 0, 1) || !range(extent, 0, 35) || !range(composition, 0, 1) || !range(debris, 0, 3) ||
         !range(floorVegetation, 0, 3) || !range(baseVegetation, 0, 3) || !range(terraceVegetation, 0, 3) ||
         !range(plateauVegetation, 0, 3) || candidatesPerRoom < 0 || candidatesPerRoom > 1000 ||
         maxDecorations < 0 || maxDecorations > 6000)
@@ -112,7 +112,8 @@ CanyonVisualParameters CanyonVisualParameters::load(const std::filesystem::path 
                                           {"base_vegetation", &p.baseVegetation},
                                           {"terrace_vegetation", &p.terraceVegetation},
                                           {"plateau_vegetation", &p.plateauVegetation},
-                                          {"decorative_extent", &p.extent}};
+                                          {"decorative_extent", &p.extent},
+                                          {"composition_strength", &p.composition}};
     std::set<std::string> seen;
     std::string line;
     int version = 0;
@@ -161,8 +162,8 @@ float CanyonAppearance::height(float x, float z) const {
         return 20;
     size_t cell = size_t(iz * (surface.width - 1) + ix);
     float result = -10000;
-    for (size_t i = cellOffsets[cell]; i < cellOffsets[cell + 1]; ++i) {
-        const auto &t = triangles[i].vertices;
+    for (size_t i = queryBegin(cell); i < queryEnd(cell); ++i) {
+        const auto &t = triangles[queryTriangle(i)].vertices;
         auto a = t[0], b = t[1], c = t[2];
         float det = (b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x);
         if (std::abs(det) < .000001f)
@@ -222,8 +223,8 @@ SegmentHit CanyonAppearance::trace(Vector3 from, Vector3 to) const {
         };
         if (!triangles.empty()) {
             size_t cell = size_t(iz * (width - 1) + ix);
-            for (size_t i = cellOffsets[cell]; i < cellOffsets[cell + 1]; ++i) {
-                const auto &v = triangles[i].vertices;
+            for (size_t i = queryBegin(cell); i < queryEnd(cell); ++i) {
+                const auto &v = triangles[queryTriangle(i)].vertices;
                 triangle(v[0], v[1], v[2]);
             }
         } else {
@@ -273,11 +274,12 @@ bool CanyonAppearance::supports(Vector3 p, float radius, float tolerance) const 
         for (int z = z0; z <= z1; ++z)
             for (int x = x0; x <= x1; ++x) {
                 size_t cell = size_t(z * (surface.width - 1) + x);
-                for (size_t i = cellOffsets[cell]; i < cellOffsets[cell + 1]; ++i) {
+                for (size_t i = queryBegin(cell); i < queryEnd(cell); ++i) {
                     // Clip the actual triangle to the support square. This catches
                     // thin risers and bevels that fixed sample grids can step over.
                     std::array<Vector3, 32> a{}, b{};
-                    std::copy(triangles[i].vertices.begin(), triangles[i].vertices.end(), a.begin());
+                    std::copy(triangles[queryTriangle(i)].vertices.begin(),
+                              triangles[queryTriangle(i)].vertices.end(), a.begin());
                     int count = 3;
                     for (int plane = 0; plane < 4 && count; ++plane) {
                         auto value = [&](Vector3 v) {
@@ -342,19 +344,22 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
             }
     }
 
-    // Clip source triangles into contour bands. Each band gets an exactly flat
+    // Clip source triangles into contour bands. Each band gets an broad, nearly horizontal
     // cap, and its contour edges are extruded vertically. We never interpolate
     // heights between tiers: a shelf meets a wall, not a triangular embankment.
     struct Point {
         Vector3 p;
-        float mask, depth;
+        float mask;
+        std::array<float, 6> layers{};
     };
     using Polygon = std::vector<Point>;
-    auto clip = [](const Polygon &poly, float threshold, bool depth, bool greater) {
+    auto clip = [](const Polygon &poly, float threshold, int layer, bool greater) {
         Polygon result;
         if (poly.empty())
             return result;
-        auto value = [&](const Point &v) { return (depth ? v.depth : v.mask) - threshold; };
+        auto value = [&](const Point &v) {
+            return (layer >= 0 ? v.layers[size_t(layer)] : v.mask) - threshold;
+        };
         auto inside = [&](float v) { return greater ? v >= 0 : v <= 0; };
         Point a = poly.back();
         float av = value(a);
@@ -362,8 +367,10 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
             float bv = value(b);
             if (inside(av) != inside(bv)) {
                 float t = av / (av - bv);
-                result.push_back({add(a.p, mul(sub(b.p, a.p), t)), std::lerp(a.mask, b.mask, t),
-                                  std::lerp(a.depth, b.depth, t)});
+                Point point{add(a.p, mul(sub(b.p, a.p), t)), std::lerp(a.mask, b.mask, t)};
+                for (size_t i = 0; i < point.layers.size(); ++i)
+                    point.layers[i] = std::lerp(a.layers[i], b.layers[i], t);
+                result.push_back(point);
             }
             if (inside(bv))
                 result.push_back(b);
@@ -372,7 +379,7 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
         }
         return result;
     };
-    std::vector<float> depth(source.heights.size());
+    std::vector<std::array<float, 6>> layers(source.heights.size());
     for (int z = 0; z < source.depth; ++z)
         for (int x = 0; x < source.width; ++x) {
             size_t i = size_t(z * source.width + x);
@@ -389,50 +396,105 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
                 std::lerp(float(p.terraces),
                           .25f * n + .75f * mesaCap(v.x, v.z, out.seed ^ 0x424c4f434bULL, p.terraces),
                           p.heightVariation);
+            // Static composition follows the game's normal scenic axis, not
+            // the live camera. Foreground shoulders remain low while distant
+            // walls carry the larger sandstone masses.
+            const RoomLayout *nearest = &arena.rooms.front();
+            float closest = 1e30f;
+            for (const auto &room : arena.rooms) {
+                float dx = v.x - room.center.x, dz = v.z - room.center.z;
+                float d = dx * dx + dz * dz;
+                if (d < closest) {
+                    closest = d;
+                    nearest = &room;
+                }
+            }
+            float rx = std::max(1.f, (nearest->bounds.max.x - nearest->bounds.min.x) * .5f);
+            float rz = std::max(1.f, (nearest->bounds.max.z - nearest->bounds.min.z) * .5f);
+            float back = std::clamp(
+                .5f - .25f * ((v.x - nearest->center.x) / rx + (v.z - nearest->center.z) / rz), 0.f, 1.f);
+            float framing =
+                std::lerp(float(p.terraces) + .5f, .4f + (p.terraces + .2f) * back, p.composition);
+            localCap = std::min(localCap, framing);
             float outside = std::max({arena.bounds.min.x - v.x, v.x - arena.bounds.max.x,
                                       arena.bounds.min.z - v.z, v.z - arena.bounds.max.z, 0.f});
             localCap = std::lerp(localCap, std::min(localCap, .8f), smooth((outside - p.extent) / 12));
-            depth[i] = std::max(0.f, std::min(out.distanceToFloor[i] / width + warp, localCap));
-            // Signed depth pins the first shelf to the outer rim. An unsigned
-            // floor value can let a higher tier meet the ground contour and leave
-            // a missing piece between the low wall and that tier's cap.
-            if (source.heights[i] <= CanyonTerrain::WalkableHeight)
-                depth[i] = -2.f;
-            if (source.boundaryHeights.size() == source.heights.size() &&
-                source.boundaryHeights[i] <= CanyonTerrain::WalkableHeight)
-                depth[i] = std::min(depth[i], .8f); // Detached boulders have broad low tops.
+            // Each shelf has an independent, domain-warped erosion field.
+            // Nesting is enforced at vertices (and therefore along clipped edges),
+            // so local ledges can end/merge without crossing or opening seams.
+            float previous = 1000;
+            for (int band = 0; band < p.terraces; ++band) {
+                uint64_t salt = out.seed ^ (0x45524f53494f4eULL + uint64_t(band) * 0x9e3779b97f4a7c15ULL);
+                float wx = v.x + 4 * p.silhouette * (noise(v.x / 17, v.z / 17, salt) - .5f);
+                float wz = v.z + 4 * p.silhouette * (noise(v.x / 17, v.z / 17, salt ^ 0x123ULL) - .5f);
+                float erosion = (noise(wx / 8, wz / 8, salt ^ 0x214ULL) - .5f) * 3 * p.silhouette;
+                float shelfWidth = width * (.75f + .75f * noise(wx / 12, wz / 12, salt ^ 0x317ULL));
+                float available = out.distanceToFloor[i] / shelfWidth + warp + erosion - float(band + 1);
+                float geology = localCap - float(band + 1) + erosion * .65f;
+                float value = std::min({available, geology, previous - .28f});
+                if (source.heights[i] <= CanyonTerrain::WalkableHeight ||
+                    (source.boundaryHeights.size() == source.heights.size() &&
+                     source.boundaryHeights[i] <= CanyonTerrain::WalkableHeight))
+                    value = -2.f - float(band);
+                layers[i][size_t(band)] = value;
+                previous = value;
+            }
         }
     const float bevelHeight = std::min(
-        {.30f + .35f * p.facets, (p.maxHeight - p.minHeight) / p.terraces * .49f, p.minHeight * .35f});
-    auto elevation = [&](int band) { return std::lerp(p.minHeight, p.maxHeight, float(band) / p.terraces); };
-    auto topOffset = [&](Vector3 at) {
-        // Coarse planes align to groups of three source cells. Their internal
-        // triangulation stays coplanar, producing broad sandstone facets rather
-        // than exposing the fine sampling lattice or smooth height noise.
-        float gx = (at.x - source.x) / (source.step * 3), gz = (at.z - source.z) / (source.step * 3);
+        {.15f + .20f * p.facets, (p.maxHeight - p.minHeight) / p.terraces * .49f, p.minHeight * .35f});
+
+    auto planeAt = [&](Vector3 at, int cells, uint64_t salt) {
+        float gx = (at.x - source.x) / (source.step * cells), gz = (at.z - source.z) / (source.step * cells);
         int ix = int(std::floor(gx)), iz = int(std::floor(gz));
         float u = gx - ix, v = gz - iz;
-        auto capSeed = out.seed ^ 0x434150504c414e45ULL;
-        float a = hash(ix, iz, capSeed), b = hash(ix + 1, iz, capSeed), c = hash(ix, iz + 1, capSeed),
-              d = hash(ix + 1, iz + 1, capSeed);
-        float plane = u >= v ? a + u * (b - a) + v * (d - b) : a + v * (c - a) + u * (d - c);
-        float dome =
-            std::min(1.1f, std::max(0.f, source.height(at.x, at.z) - source.height(at.x, at.z, true)) * .4f);
-        return dome + std::min(p.facets * 1.3f, p.minHeight * .3f) * (plane - 1.f);
+        auto seed = out.seed ^ salt;
+        float a = hash(ix, iz, seed), b = hash(ix + 1, iz, seed), c = hash(ix, iz + 1, seed),
+              d = hash(ix + 1, iz + 1, seed);
+        return u >= v ? a + u * (b - a) + v * (d - b) : a + v * (c - a) + u * (d - c);
+    };
+    auto elevation = [&](int band, Vector3 at) {
+        float base = p.minHeight *
+                     std::lerp(1.f, .75f + .7f * planeAt(at, 8, 0x4241534552495345ULL), p.heightVariation);
+        float rise = (p.maxHeight - p.minHeight) / p.terraces;
+        for (int k = 0; k < band; ++k)
+            base +=
+                rise *
+                std::lerp(1.f,
+                          .45f + .8f * planeAt(at, 13, 0x52495345ULL + uint64_t(k) * 0x9e3779b97f4a7c15ULL),
+                          p.heightVariation);
+        return base;
+    };
+    auto outcropWeight = [&](Vector3 at) {
+        float boundary = source.height(at.x, at.z, true);
+        float rock = std::max(0.f, source.height(at.x, at.z) - boundary);
+        return (1 - smooth(std::max(0.f, boundary) / .45f)) * smooth(rock / .15f);
+    };
+    auto topOffset = [&](Vector3 at) {
+        float fine =
+            std::min(p.facets * .6f, p.minHeight * .12f) * (planeAt(at, 3, 0x434150504c414e45ULL) - 1);
+        float formation = std::min(p.heightVariation * .6f, p.minHeight * .22f) *
+                          (2 * planeAt(at, 9, 0x464f524d4154494fULL) - 1);
+        float natural = .55f + 1.18f * std::sqrt(std::max(0.f, source.height(at.x, at.z))) -
+                        elevation(0, at) + fine * .25f;
+        return std::lerp(formation + fine, natural, outcropWeight(at));
+    };
+    auto localBevel = [&](Vector3 at) {
+        return std::lerp(bevelHeight, std::min(.12f, bevelHeight), outcropWeight(at));
     };
     auto append = [&](Vector3 a, Vector3 b, Vector3 c, bool rock) {
         if (dot(cross(sub(b, a), sub(c, a)), cross(sub(b, a), sub(c, a))) > 1e-10f)
             out.triangles.push_back({{a, b, c}, rock});
     };
-    auto cap = [&](const Polygon &poly, float y, bool rock, int bevel = -1) {
+    auto cap = [&](const Polygon &poly, int band, bool rock, int bevel = -1) {
         for (size_t i = 1; i + 1 < poly.size(); ++i) {
             auto a = poly[0].p, b = poly[i].p, c = poly[i + 1].p;
             if (rock) {
                 auto top = [&](const Point &point) {
                     float t = bevel < 0    ? 1.f
                               : bevel == 0 ? point.mask / .12f
-                                           : (point.depth - float(bevel)) / .20f;
-                    return std::min(p.maxHeight, y - bevelHeight + bevelHeight * std::clamp(t, 0.f, 1.f) +
+                                           : point.layers[size_t(bevel - 1)] / .20f;
+                    return std::min(p.maxHeight, elevation(band, point.p) - localBevel(point.p) +
+                                                     localBevel(point.p) * std::clamp(t, 0.f, 1.f) +
                                                      topOffset(point.p));
                 };
                 a.y = top(poly[0]);
@@ -442,14 +504,15 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
             append(a, b, c, rock);
         }
     };
-    auto wall = [&](const Polygon &poly, float threshold, bool isDepth, float low, float high,
+    auto wall = [&](const Polygon &poly, float threshold, int layer, int low, int high,
                     const Polygon &foot = Polygon{}) {
         if (poly.size() < 2)
             return;
         // Only contour edges, never the source triangle's internal edges.
         for (size_t i = 0; i < poly.size(); ++i) {
             const auto &a = poly[i], &b = poly[(i + 1) % poly.size()];
-            float av = isDepth ? a.depth : a.mask, bv = isDepth ? b.depth : b.mask;
+            float av = layer >= 0 ? a.layers[size_t(layer)] : a.mask,
+                  bv = layer >= 0 ? b.layers[size_t(layer)] : b.mask;
             if (std::abs(av - threshold) > .0001f || std::abs(bv - threshold) > .0001f)
                 continue;
             auto at = a.p, bt = b.p, ab = a.p, bb = b.p;
@@ -466,10 +529,12 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
                     bb = edge[1];
                 }
             }
-            at.y = std::min(p.maxHeight, high + topOffset(at));
-            bt.y = std::min(p.maxHeight, high + topOffset(bt));
-            ab.y = std::min(p.maxHeight, low + (isDepth ? topOffset(ab) : 0));
-            bb.y = std::min(p.maxHeight, low + (isDepth ? topOffset(bb) : 0));
+            at.y = std::min(p.maxHeight, elevation(high, at) + topOffset(at) - localBevel(at));
+            bt.y = std::min(p.maxHeight, elevation(high, bt) + topOffset(bt) - localBevel(bt));
+            ab.y = std::min(p.maxHeight,
+                            layer >= 0 ? elevation(low, ab) + topOffset(ab) : CanyonTerrain::WalkableHeight);
+            bb.y = std::min(p.maxHeight,
+                            layer >= 0 ? elevation(low, bb) + topOffset(bb) : CanyonTerrain::WalkableHeight);
             append(ab, bt, at, true);
             append(ab, bb, bt, true);
         }
@@ -482,39 +547,107 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
             auto point = [&](int dx, int dz) {
                 size_t i = size_t((z + dz) * source.width + x + dx);
                 return Point{source.vertex(x + dx, z + dz), source.heights[i] - CanyonTerrain::WalkableHeight,
-                             depth[i]};
+                             layers[i]};
             };
             auto a = point(0, 0), b = point(1, 0), c = point(0, 1), d = point(1, 1);
             // Keep the canonical diagonal at the floor boundary; this preserves
             // the precise contour around roads, sockets and river banks.
             for (const auto &tri : std::array<Polygon, 2>{Polygon{a, d, b}, Polygon{a, c, d}}) {
-                auto ground = clip(tri, 0, false, false);
+                auto ground = clip(tri, 0, -1, false);
                 cap(ground, 0, false);
-                auto foot = clip(tri, 0, false, true);
+                auto foot = clip(tri, 0, -1, true);
                 auto rim = tri;
                 for (auto &v : rim)
                     v.mask = std::min(v.mask, .5f);
-                auto rock = clip(rim, 0, false, true);
+                auto rock = clip(rim, 0, -1, true);
                 // Recess the upper rim slightly while retaining the exact canonical
                 // ground contact. These short, steep buttresses remove needle-like
                 // top corners without widening into the playable floor.
-                wall(rock, 0, false, CanyonTerrain::WalkableHeight, elevation(0) - bevelHeight, foot);
+                wall(rock, 0, -1, 0, 0, foot);
                 for (int band = 0; band <= p.terraces; ++band) {
-                    auto poly = band ? clip(rock, float(band), true, true) : rock;
-                    if (band && std::any_of(rock.begin(), rock.end(),
-                                            [&](const auto &v) { return v.depth < float(band) - .00001f; }))
-                        wall(poly, float(band), true, elevation(band - 1), elevation(band) - bevelHeight);
+                    auto poly = band ? clip(rock, 0, band - 1, true) : rock;
+                    if (band && std::any_of(rock.begin(), rock.end(), [&](const auto &v) {
+                            return v.layers[size_t(band - 1)] < -.00001f;
+                        }))
+                        wall(poly, 0, band - 1, band - 1, band);
                     if (band < p.terraces)
-                        poly = clip(poly, float(band + 1), true, false);
-                    // Small top-edge chamfer, then a broad, exactly level cap.
-                    auto bevel = clip(poly, band ? float(band) + .20f : .12f, band != 0, false);
-                    auto flat = clip(poly, band ? float(band) + .20f : .12f, band != 0, true);
-                    cap(bevel, elevation(band), true, band);
-                    cap(flat, elevation(band), true);
+                        poly = clip(poly, 0, band, false);
+                    // Small top-edge chamfer, then a broad, nearly horizontal cap.
+                    auto bevel = clip(poly, band ? .20f : .12f, band - 1, false);
+                    auto flat = clip(poly, band ? .20f : .12f, band - 1, true);
+                    cap(bevel, band, true, band);
+                    cap(flat, band, true);
                 }
             }
         }
     out.cellOffsets.push_back(out.triangles.size());
+    // The floor contour is immutable. Only the upper mesh is eroded inward.
+    // This deliberately separates scenic contours from the canonical heightmap:
+    // visible upper faces need not inherit its long straight boundary segments.
+    auto floorDistance = [&](float wx, float wz) {
+        float gx = std::clamp((wx - source.x) / source.step, 0.f, float(source.width - 1) - .001f);
+        float gz = std::clamp((wz - source.z) / source.step, 0.f, float(source.depth - 1) - .001f);
+        int x = int(gx), z = int(gz);
+        float u = gx - x, v = gz - z;
+        size_t i = size_t(z * source.width + x);
+        return std::lerp(
+            std::lerp(out.distanceToFloor[i], out.distanceToFloor[i + 1], u),
+            std::lerp(out.distanceToFloor[i + source.width], out.distanceToFloor[i + source.width + 1], u),
+            v);
+    };
+    for (auto &triangle : out.triangles) {
+        if (!triangle.rock)
+            continue;
+        for (auto &v : triangle.vertices) {
+            if (v.x < source.x + source.step || v.z < source.z + source.step ||
+                v.x > source.x + (source.width - 2) * source.step ||
+                v.z > source.z + (source.depth - 2) * source.step ||
+                v.y <= CanyonTerrain::WalkableHeight + .00001f || outcropWeight(v) > .5f)
+                continue;
+            Vector3 inward{floorDistance(v.x + source.step, v.z) - floorDistance(v.x - source.step, v.z), 0,
+                           floorDistance(v.x, v.z + source.step) - floorDistance(v.x, v.z - source.step)};
+            float length = std::sqrt(dot(inward, inward));
+            if (length < .001f)
+                continue;
+            float amount = .65f * p.silhouette * smooth((v.y - CanyonTerrain::WalkableHeight) / 3.5f) *
+                           (.2f + .8f * noise(v.x / 6.f, v.z / 6.f, out.seed ^ 0x52494d45524f4445ULL));
+            auto displaced = add(v, mul(inward, amount / length));
+            if (source.height(displaced.x, displaced.z) > CanyonTerrain::WalkableHeight)
+                v = displaced;
+        }
+    }
+    // A displaced triangle can cross the source lattice. Spatial queries and
+    // occlusion must use its real bounds rather than its original cell ID.
+    const int columns = source.width - 1, rows = source.depth - 1;
+    auto bounds = [&](const CanyonSurfaceTriangle &triangle) {
+        int left = columns - 1, right = 0, top = rows - 1, bottom = 0;
+        for (auto v : triangle.vertices) {
+            int x = std::clamp(int(std::floor((v.x - source.x) / source.step)), 0, columns - 1);
+            int z = std::clamp(int(std::floor((v.z - source.z) / source.step)), 0, rows - 1);
+            left = std::min(left, x);
+            right = std::max(right, x);
+            top = std::min(top, z);
+            bottom = std::max(bottom, z);
+        }
+        return std::array<int, 4>{left, right, top, bottom};
+    };
+    out.spatialOffsets.assign(size_t(columns * rows) + 1, 0);
+    for (const auto &triangle : out.triangles) {
+        auto b = bounds(triangle);
+        for (int z = b[2]; z <= b[3]; ++z)
+            for (int x = b[0]; x <= b[1]; ++x)
+                ++out.spatialOffsets[size_t(z * columns + x) + 1];
+    }
+    for (size_t i = 1; i < out.spatialOffsets.size(); ++i)
+        out.spatialOffsets[i] += out.spatialOffsets[i - 1];
+    out.spatialTriangles.resize(out.spatialOffsets.back());
+    auto cursor = out.spatialOffsets;
+    for (size_t i = 0; i < out.triangles.size(); ++i) {
+        auto b = bounds(out.triangles[i]);
+        for (int z = b[2]; z <= b[3]; ++z)
+            for (int x = b[0]; x <= b[1]; ++x)
+                out.spatialTriangles[cursor[size_t(z * columns + x)]++] = i;
+    }
     // The sampled surface is useful for water/detail metadata only. The mesh
     // and all visual height/ray tests use the explicit caps and wall triangles.
     for (int z = 0; z < source.depth; ++z)
@@ -523,7 +656,10 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
             if (source.heights[i] > CanyonTerrain::WalkableHeight)
                 out.surface.heights[i] =
                     std::min(p.maxHeight,
-                             elevation(std::min(p.terraces, int(depth[i]))) + topOffset(source.vertex(x, z)));
+                             elevation(int(std::count_if(layers[i].begin(), layers[i].begin() + p.terraces,
+                                                         [](float v) { return v >= 0; })),
+                                       source.vertex(x, z)) +
+                                 topOffset(source.vertex(x, z)));
         }
     out.surface.boundaryHeights = out.surface.heights;
     auto reserved = [&](Vector3 at, float radius, int index) {
@@ -582,7 +718,9 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
                 bool rock = rng.real(0, 1) < (zone == CanyonZone::CliffBase ? .65f : .3f);
                 if (phase && rock)
                     continue;
-                if (rng.real(0, 1) > std::min(1.f, (rock ? p.debris : vegetation) * .7f))
+                float pocket =
+                    smooth((noise(at.x / 5.f, at.z / 5.f, out.seed ^ 0x504f434b4554ULL) - .25f) * 2.f);
+                if (rng.real(0, 1) > std::min(1.f, (rock ? p.debris : vegetation) * (.2f + 1.1f * pocket)))
                     continue;
                 auto kind =
                     rock ? CanyonDecorationKind::Rock
@@ -592,8 +730,9 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
                                           : CanyonDecorationKind::Grass;
                 if (!rock && zone == CanyonZone::Plateau && n % 19 == 0)
                     kind = CanyonDecorationKind::Tree;
-                float span = kind == CanyonDecorationKind::Tree     ? rng.real(2.3f, 3.1f)
-                             : kind == CanyonDecorationKind::Rock   ? rng.real(.2f, .8f)
+                float span = kind == CanyonDecorationKind::Tree ? rng.real(2.3f, 3.1f)
+                             : kind == CanyonDecorationKind::Rock
+                                 ? (zone == CanyonZone::CliffBase ? rng.real(.35f, 1.f) : rng.real(.2f, .8f))
                              : kind == CanyonDecorationKind::Cactus ? rng.real(.7f, 1.1f)
                              : kind == CanyonDecorationKind::Shrub  ? rng.real(.55f, .95f)
                                                                     : rng.real(.45f, .85f);

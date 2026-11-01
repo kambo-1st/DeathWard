@@ -4,12 +4,13 @@
 namespace dw {
 struct CanyonVisualParameters {
     bool enabled = true;
-    float minHeight = 1.65f, maxHeight = 6.8f, heightVariation = .85f;
+    float minHeight = 2.4f, maxHeight = 6.8f, heightVariation = .85f;
     int terraces = 3;
-    float terraceWidth = 1.f, silhouette = .65f, facets = .35f;
+    float terraceWidth = 1.4f, silhouette = .9f, facets = .35f;
     float debris = .85f, floorVegetation = .35f, baseVegetation = .9f, terraceVegetation = 1.2f,
           plateauVegetation = .85f;
     float extent = 24;
+    float composition = .85f;
     int candidatesPerRoom = 360, maxDecorations = 2200;
     static CanyonVisualParameters load(const std::filesystem::path &path);
     void validate() const;
@@ -38,6 +39,17 @@ struct CanyonAppearance {
     // Separate polygon caps and extruded walls, indexed by original source cell.
     std::vector<CanyonSurfaceTriangle> triangles;
     std::vector<size_t> cellOffsets;
+    // Render order stays stable; these bins index the actual displaced triangles.
+    std::vector<size_t> spatialOffsets, spatialTriangles;
+    size_t queryBegin(size_t cell) const {
+        return spatialOffsets.empty() ? cellOffsets[cell] : spatialOffsets[cell];
+    }
+    size_t queryEnd(size_t cell) const {
+        return spatialOffsets.empty() ? cellOffsets[cell + 1] : spatialOffsets[cell + 1];
+    }
+    size_t queryTriangle(size_t entry) const {
+        return spatialOffsets.empty() ? entry : spatialTriangles[entry];
+    }
     float height(float x, float z) const;
     SegmentHit trace(Vector3 from, Vector3 to) const;
     bool supports(Vector3 p, float radius, float tolerance = .18f) const;

@@ -1,0 +1,100 @@
+{
+  "base_commit": "09cd526",
+  "working_tree": "uncommitted",
+  "checks": {
+    "geometry-tests": "PASS",
+    "graphics-tests": "PASS",
+    "occlusion-tests": "PASS",
+    "gameplay-tests": "PASS"
+  },
+  "geometry": {
+    "maps": "12",
+    "categories": "4",
+    "asset_roles": "5",
+    "candidates": "21268",
+    "collision_room_checks": "180",
+    "original_highland_median": "7.55781",
+    "visual_highland_median": "3.56685",
+    "original_max": "10.7415",
+    "visual_max": "6.8",
+    "appearance_mean_ms": "790.897"
+  },
+  "benchmark": {
+    "legacy": {
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "240",
+      "mean_ms": "150.897",
+      "p95_ms": "322.109",
+      "max_ms": "2505.19",
+      "max_projectiles": "2015",
+      "min_active_enemies": "3",
+      "min_active_projectiles": "600",
+      "kills": "472",
+      "max_chain_depth": "16",
+      "suppressed": "336",
+      "simulation_ms": "2.24165",
+      "draw_ms": "87.183",
+      "present_ms": "61.472"
+    },
+    "current": {
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "240",
+      "mean_ms": "155.404",
+      "p95_ms": "332.599",
+      "max_ms": "3248.63",
+      "max_projectiles": "2015",
+      "min_active_enemies": "3",
+      "min_active_projectiles": "600",
+      "kills": "472",
+      "max_chain_depth": "16",
+      "suppressed": "336",
+      "simulation_ms": "2.40514",
+      "draw_ms": "91.2771",
+      "present_ms": "61.7216"
+    }
+  },
+  "render": {
+    "legacy": {
+      "enabled": "0",
+      "triangles": "113388",
+      "chunks": "105",
+      "instances": "198",
+      "vegetation": "68",
+      "density": "100"
+    },
+    "current": {
+      "enabled": "1",
+      "triangles": "274613",
+      "chunks": "105",
+      "instances": "1068",
+      "vegetation": "332",
+      "density": "100"
+    }
+  },
+  "capture": {
+    "zoom_percent": 160,
+    "projection": "perspective",
+    "fov": 45,
+    "resolution": [
+      1440,
+      900
+    ],
+    "seed": 1866,
+    "frame": 120,
+    "matching_scope": "Same native scene flags before/after. Reference camera pose and seed unavailable."
+  },
+  "performance_scope": "One paired native 240-frame stress observation, same executable and assets, enabled0 legacy versus current geometry. Not a comparison against the immediately preceding commit, not ordinary-play FPS, not statistical evidence of a speedup. Geometry-test timings are startup CPU observations, with no formal before/after isolation.",
+  "remaining": [
+    "Visual acceptance is not complete. Ground-level wall runs can still reveal the fixed room outline; some upper shelves remain too continuous.",
+    "Exact composition is not matched: the reference has an unknown floor/seed and arranged objects. Existing playable footprints and boulder positions remain fixed by instruction.",
+    "Some boulders still have regular lower footprints and some cliff facets follow the source lattice. These are visible in the native comparisons.",
+    "Cliff plants are less densely clustered than the reference in some views. Green native assets remain in use.",
+    "Visual and canonical physical rock profiles differ. Canonical navigation/projectile/flying-actor height volumes were not redesigned.",
+    "WASM verification remains waived. No claim of pixel identity or full visual acceptance is made."
+  ],
+  "visual_acceptance": "partial; not an exact reference match"
+}

@@ -1,0 +1,34 @@
+town blocker SM_Bld_Single_Roof_02 player -16.1,0.539095,-29.1
+town / marker pixels 0 -> 344, outside 42353, translucent surface 47931
+frontier blocker SM_Env_RockTall_01 player 42.9,2.66334,-49.1
+frontier / marker pixels 0 -> 344, outside 134572, translucent surface 138311
+redstone blocker SM_Bld_Fort_TowerCorner_01 player -11.9,1.06795,-11.9
+redstone / marker pixels 0 -> 344, outside 18930, translucent surface 23828
+Canyon occlusion test pitch=30 (production camera unchanged)
+canyon / marker pixels 0 -> 344, outside 179429, translucent surface 183031
+canyon enemy 10 outline pixels 251
+canyon enemy 13 outline pixels 225
+canyon enemy 21 outline pixels 206
+canyon-wide / marker pixels 0 -> 60, outside 123137, translucent surface 123785
+canyon-wide enemy 10 outline pixels 112
+canyon-wide enemy 13 outline pixels 97
+canyon-wide enemy 21 outline pixels 90
+mine resident pixels 5155, animation pixels 588
+canyon resident pixels 2043, animation pixels 543
+Pointer fixture pitch 30 theme 0 yaw 0 transparent 1 candidates 11/11/1/1
+PASS mine-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 0 yaw 0 transparent 0 candidates 1/1/1/1
+PASS mine-solid selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 0 yaw 1.2 transparent 1 candidates 19/19/1/1
+PASS mine-rotated-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 0 yaw 1.2 transparent 0 candidates 1/1/1/1
+PASS mine-rotated-solid selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 1 yaw 0 transparent 1 candidates 134/2/1/1
+PASS canyon-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 1 yaw 0 transparent 0 candidates 67/1/1/1
+PASS canyon-solid selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 1 yaw 1.2 transparent 1 candidates 26/7/1/1
+PASS canyon-rotated-transparent selection, left/force fire, aim and solid collision
+Pointer fixture pitch 30 theme 1 yaw 1.2 transparent 0 candidates 5/1/1/1
+PASS canyon-rotated-solid selection, left/force fire, aim and solid collision
+PASS town/canyon transparency, enemy outlines, restoration, zoom and collision
