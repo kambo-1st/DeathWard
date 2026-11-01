@@ -99,6 +99,10 @@ bool Simulation::advanceFloor() {
         carried.charge.position=carried.charge.origin=add(next.player.position,{0,.8f,0});
         next.suppliedBombs.push_back(carried); // Fuse and original rule snapshot survive floor travel.
     }
+    next.charmFollowers_=std::move(charmFollowers_);
+    for(auto &e:enemies)if(e.alive&&e.permanentCharmed)next.charmFollowers_.push_back(std::move(e));
+    for(auto &e:next.charmFollowers_){e.id=next.nextEntity_++;e.summoner=e.componentOwner=0;}
+    next.restoreCharmFollowers();
     next.checkpointNeeded=true;
     *this=std::move(next);
     return true;
@@ -224,6 +228,8 @@ void Simulation::chooseReward(int index) {
 }
 void Simulation::enterRoom(int index) {
     resetPlayerLaunch();
+    for(auto &e:enemies)if(e.alive&&e.permanentCharmed)charmFollowers_.push_back(std::move(e));
+    std::erase_if(enemies,[](const Enemy &e){return e.permanentCharmed;});
     saveAdaptiveChains();
     // Room-limited allies expire without death effects, loot or saved residents.
     std::erase_if(enemies,[&](const Enemy &e){return e.friendly&&content->companion(e.monster);});
@@ -651,8 +657,10 @@ void Simulation::createProjectile(const Event &event) {
     p.lastRound = event.lastRound;
     p.ghost = event.ghost;
     p.noWallCollision=event.noWallCollision;
+    if(const auto *owner=findEnemy(event.context.sourceEntity);owner&&owner->champion==8)p.noWallCollision=p.championSpectral=true;
     p.repeatWallBounce=event.repeatWallBounce;
     p.context = event.context;
+    if(const auto *owner=findEnemy(event.context.sourceEntity);owner&&owner->champion==3)p.context.championCoinLoss=true;
     p.kind = event.projectileKind;
     p.tint = event.projectileTint;
     p.angularVelocity = event.projectileCurve;
@@ -688,6 +696,7 @@ void Simulation::createProjectile(const Event &event) {
             if ((type == 11 || type == 30 || type == 88) && p.kind == ProjectileKind::Bullet)
                 p.life = .8f;
         }
+        if(const auto *source=findEnemy(p.context.sourceEntity))p.damage*=source->championDamage;
         if(event.projectileLife>0)p.life=event.projectileLife;
         if(event.projectileRadius>0)p.radius=event.projectileRadius;
     } else {
@@ -773,10 +782,19 @@ void Simulation::process(const Event &e) {
             particleEffect(target->kind == EnemyKind::Ironhide ? ParticleEffect::Metal : ParticleEffect::Flesh,
                            e.position, mul(e.direction,-1));
         if(!target->friendly)stats.damageDealt += std::min(target->hp, damage);
+        if(!e.execution&&(e.projectileImpact||e.explosionDamage))if(const auto *p=content->hitResponse(target->monster)) {
+            const auto direction=e.explosionDamage?unit(horizontal(sub(target->position,e.position))):unit(horizontal(e.direction));
+            auto velocity=add(target->velocity,mul(direction,(e.explosionDamage?p->explosion:p->projectile)/p->mass));
+            const float speed=length(velocity);
+            if(speed>p->maximum)velocity=mul(velocity,p->maximum/speed);
+            target->velocity=velocity;
+        }
+        if(const auto *cycle=content->creatureCycle(target->monster);cycle&&cycle->bouncer&&target->creature)
+            target->creature->timer=std::max(0.f,target->creature->timer-damage/(3.2f*content->regularHealthAdjustment(target->monster))/cycle->bouncer->damageDivisor);
         target->hp -= damage;
-        if(target->danny&&!e.debugExecution)target->danny->incomingDamage+=damage/content->danny(target->monster)->damageScale;
+        if(target->danny&&!e.debugExecution)target->danny->incomingDamage+=damage/(content->danny(target->monster)->damageScale*content->regularHealthAdjustment(target->monster));
         if(const auto *p=content->faceless(target->monster);p&&target->faceless&&!e.debugExecution)
-            target->faceless->incomingDamage+=damage/p->damageScale;
+            target->faceless->incomingDamage+=damage/(p->damageScale*content->regularHealthAdjustment(target->monster));
         if(target->baby)target->baby->recentDamageFrames=4;
         if(const auto *c=content->companion(target->monster);target->friendly&&c)
             target->companionHurtCooldown=c->hurtInterval;
@@ -786,12 +804,14 @@ void Simulation::process(const Event &e) {
             target->state = EnemyState::Ready;
             target->cooldown = 1.5f;
         }
+        if(damage>0&&!e.execution)championHurt(*target);
         target->flash = 0.12f;
         Event hit = e;
         hit.position = target->position;
         hit.type = target->friendly?EventType::CompanionDamaged:EventType::EnemyDamaged;
         emit(hit, e.context);
         if (target->hp <= 0) {
+            if(!e.execution&&(collapseChampion(*target)||collapseClack(*target)))break;
             if(content->leper(target->monster)&&leperDeath(*target,e))break;
             if(tryFacelessMorph(*target,e))break;
             if(rockSpiderDeath(*target,e))break;
@@ -802,6 +822,13 @@ void Simulation::process(const Event &e) {
             if (!e.execution && target->kind == EnemyKind::Monster && collapseMonster(*target))
                 break;
             target->alive = false;
+            if(!e.debugExecution)creatureDeath(*target);
+            if(const auto *head=content->headShooter(target->monster);head&&head->reactive&&!e.debugExecution)subHorfDeath(*target);
+            if(!e.debugExecution&&(target->championEffect(5)||target->championEffect(13)||target->champion==15||target->champion==17||target->champion==23)){
+                target->championDeathPending=true;
+                if(target->champion==23)for(const auto &other:enemies)if(other.alive&&other.id!=target->id&&other.friendly==target->friendly)target->championTargets.push_back(other.id);
+                flushChampionDeath(*target);
+            }
             cancelLeperDamage(*target);
             finishLinkedRemnant(*target);
             cancelAdaptiveDamage(*target);
@@ -1135,7 +1162,7 @@ void Simulation::updateProjectiles(float dt) {
                 p.velocity = mul(unit(sub(source->position, p.position)), 14);
         }
         float attractionLimit=length(horizontal(p.velocity));
-        const auto attraction=statueAttraction(p.position,true,&attractionLimit);
+        const auto attraction=statueAttraction(p.position,true,&attractionLimit,!p.hostile);
         if(length(attraction)>0) {
             auto planar=add(horizontal(p.velocity),mul(attraction,dt));const float speed=length(planar);
             if(speed>attractionLimit)planar=mul(planar,attractionLimit/speed);
@@ -1155,6 +1182,10 @@ void Simulation::updateProjectiles(float dt) {
                 slice=std::min(slice,(p.attack.returnRange-p.traveled)/std::max(.01f,length(p.velocity)));
             Vector3 end = add(p.position, mul(p.velocity, slice*timeScale));
             if(p.flightRetention>0)end.y=p.position.y+lobTravelY*slice;
+            if(p.championSpectral) {
+                const auto &b=arena.rooms[size_t(room)].bounds;
+                if(end.x<b.min.x+p.radius||end.x>b.max.x-p.radius||end.z<b.min.z+p.radius||end.z>b.max.z-p.radius){p.alive=false;break;}
+            }
             float best = 2;
             Vector3 normal{};
             EntityId target = 0;
@@ -1227,6 +1258,9 @@ void Simulation::updateProjectiles(float dt) {
             p.position = add(p.position, mul(sub(end, p.position), best));
             remaining-=slice*best;
             if(caught){p.alive=false;break;}
+            if(target)if(auto *body=findEnemy(target);body&&reflectBouncer(*body,p)) {
+                remaining=std::max(0.f,remaining-.0001f);continue;
+            }
             Event event;
             event.position = p.position;
             event.origin = p.origin;
@@ -1234,6 +1268,7 @@ void Simulation::updateProjectiles(float dt) {
             event.damage = target&&p.hostile&&p.npcDamage>0?p.npcDamage:p.damage;
             event.damageKind = p.damageKind;
             event.speed = length(horizontal(p.velocity));
+            event.projectileImpact=true;
             event.target = target;
             event.lastRound = p.lastRound;
             event.ghost = p.ghost;
@@ -1394,6 +1429,7 @@ void Simulation::step(const Input &input, float dt) {
     updateAdaptiveArmor(dt);
     updateContactFamiliars(dt);
     updateRailTraffic(dt); // Allocate riders outside the enemy vector iteration.
+    restoreCharmFollowers();
     prepareCharmContacts();
     updateEnemies(dt);
     updateHornfelDecoys(dt);
@@ -1417,7 +1453,9 @@ void Simulation::step(const Input &input, float dt) {
     // Keep the defeated half until its encounter ends: aggregate health and
     // projectile ownership must survive death and inactive-room round trips.
     std::erase_if(enemies, [this](const Enemy &e) {
+        if(e.championDeathPending||e.chargeDeathPending||(e.creature&&e.creature->deathPending))return false;
         if(e.charmContact&&e.charmContact->pending)return false;
+        if(e.headShooter&&!e.headShooter->pendingShots.empty())return false;
         return !e.alive&&!e.deathBlastPending&&!(e.leper&&e.leper->pendingCreep)&&!(e.leperFlesh&&!e.leperFlesh->pendingShots.empty())&&!(e.headless&&!e.headless->pendingShots.empty())&&!(e.faceless&&!e.faceless->pendingShots.empty())&&!(e.danny&&!e.danny->pendingShots.empty())&&!(e.hardy&&!e.hardy->pendingShots.empty())&&!(e.slide&&!e.slide->deathShot.empty())&&!(e.maw&&e.maw->deathPending)&&!(e.spitty&&e.spitty->deathPending)&&!(e.linkedHead&&e.linkedHead->deathPending)&&!(e.landingCreep&&!e.landingCreep->pending.empty())&&!(e.knight&&e.knight->pendingImpact)&&!content->statue(e.monster)&&(!e.bossGroup||
             std::none_of(enemies.begin(),enemies.end(),[&](const auto &body){return body.alive&&body.bossGroup==e.bossGroup;}));
     });
@@ -1429,9 +1467,9 @@ void Simulation::step(const Input &input, float dt) {
     }
     if (debugScenario)
         return;
-    if (!roomClear && roomThreats() == 0 && queue_.empty() && pendingMonsters_.empty()&&!environmentActionsPending()&&
+    if (!roomClear && roomThreats() == 0 && std::none_of(enemies.begin(),enemies.end(),[](const Enemy &e){return e.championDeathPending||e.chargeDeathPending||(e.creature&&e.creature->deathPending);}) && queue_.empty() && pendingMonsters_.empty()&&!environmentActionsPending()&&
         std::none_of(projectiles.begin(),projectiles.end(),[](const auto &p){return !p.cancelled&&p.hostile&&p.flightRetention>0;})&&
-        std::none_of(enemies.begin(),enemies.end(),[](const auto &e){return e.deathBlastPending||(e.leper&&e.leper->pendingCreep)||(e.leperFlesh&&!e.leperFlesh->pendingShots.empty())||(e.headless&&!e.headless->pendingShots.empty())||(e.faceless&&!e.faceless->pendingShots.empty())||(e.danny&&!e.danny->pendingShots.empty())||(e.hardy&&!e.hardy->pendingShots.empty())||(e.slide&&!e.slide->deathShot.empty())||(e.maw&&e.maw->deathPending)||(e.spitty&&e.spitty->deathPending)||(e.linkedHead&&e.linkedHead->deathPending)||(e.landingCreep&&!e.landingCreep->pending.empty())||(e.knight&&e.knight->pendingImpact);})&&
+        std::none_of(enemies.begin(),enemies.end(),[](const auto &e){return e.deathBlastPending||(e.headShooter&&!e.headShooter->pendingShots.empty())||(e.leper&&e.leper->pendingCreep)||(e.leperFlesh&&!e.leperFlesh->pendingShots.empty())||(e.headless&&!e.headless->pendingShots.empty())||(e.faceless&&!e.faceless->pendingShots.empty())||(e.danny&&!e.danny->pendingShots.empty())||(e.hardy&&!e.hardy->pendingShots.empty())||(e.slide&&!e.slide->deathShot.empty())||(e.maw&&e.maw->deathPending)||(e.spitty&&e.spitty->deathPending)||(e.linkedHead&&e.linkedHead->deathPending)||(e.landingCreep&&!e.landingCreep->pending.empty())||(e.knight&&e.knight->pendingImpact);})&&
         (!rooms[size_t(room)].plateObjective||platesComplete()))
         clearRoom();
 }

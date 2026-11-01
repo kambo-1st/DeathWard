@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-31T16:31:15.498573+00:00",
+  "status": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "newly_completed_records": 0,
+  "mechanics_fingerprint": "766fd59984373a0",
+  "binary_sha256": "6f7374610d3455bbaa4065a424a7b3348de6ec2eaed0ed0993c3f509aa006396",
+  "implemented": [
+    "Negative-duration permanent Charm with independent affiliation and no positive-duration downgrade",
+    "Player contact safety and player/ally damage rejection; ordinary hostile damage remains possible",
+    "NPC contact recipient quarter/cap, independent projectile masks, Horf player fallback acquisition suppression",
+    "Room/floor followers with retained HP/statuses and bounded legal placement retry; no duplicate actors"
+  ],
+  "adaptation": "DeathWard room/floor travel preserves actor state and assigns new IDs between floors. Exact native registry/save transfer is not claimed. Followers remain part of the live expedition; save reconstruction is outside this change.",
+  "validation": {
+    "linux_suites": 16,
+    "result": "pass",
+    "log": "docs/reports/isaac-enemy-port/first-floor-batch1/permanent-charm/tests.log",
+    "tests": "All five conversion/damage/contact safety/room return; entire five-member cohort next-floor legal placement; Horf targeting/projectile affiliation; existing movement, mortality, statuses, companions, seeded placement and starting-kit fights.",
+    "native_capture": "docs/reports/isaac-enemy-port/first-floor-batch1/permanent-charm/horf.png",
+    "capture_inspected": true,
+    "visual_scope": "One original-style two-Horf scene at160% zoom. Friendly ring and heart visible; hostile reduced to12.8HP, one room threat; player100HP. Full mixed-cohort visual acceptance remains open."
+  },
+  "remaining": [
+    "Applicable champion and knockback interactions",
+    "Remaining control/damage status and player-item producer integration",
+    "Mixed-cohort visual/occlusion, varied-build balance and controlled rendered performance acceptance"
+  ],
+  "wasm": "Skipped by user instruction"
+}

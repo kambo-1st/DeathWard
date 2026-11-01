@@ -49,7 +49,7 @@ float Simulation::stepEvaderMotion(Enemy &e,const EvaderDefinition &p,EvaderRunt
         const float force=(flee||p.chase)?std::min(length(delta)/p.scale*.1f,2.f)*p.pathForce:p.wanderForce;
         const float pathFriction=(flee||p.chase)?.7f:p.wanderRetention;
         appliedRetention=pathFriction;
-        r.momentum=add(mul(r.momentum,pathFriction),mul(unit(delta),force));
+        r.momentum=add(mul(r.momentum,pathFriction),mul(unit(delta),force*e.championSpeed));
     }
     return appliedRetention;
 }
@@ -62,6 +62,7 @@ void Simulation::updateEvader(Enemy &e,float dt) {
         r.initialized=true;r.tick=uint64_t(std::max(0.,std::floor((stats.duration-dt)*30+.00001)));
         r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));
     }
+    r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.fireContactCooldown=std::max(0.f,e.fireContactCooldown-dt);e.lift=0;
     if(p.hoverHeight>0)e.position.y=.85f+p.hoverHeight;
     auto requestDeath=[&] {

@@ -52,7 +52,7 @@ EncounterPlan Simulation::floorEncounter(int index) const {
         for(int phase=0;phase<4;++phase) {
             const auto *rule=content->replacement(result.monsters[i],p,phase);if(!rule)continue;
             Random variant(seed_^0x5245504c414345ULL^(uint64_t(index+1)*0x9e3779b97f4a7c15ULL)^((i+1)*0xbf58476d1ce4e5b9ULL)^(uint64_t(phase)*0x94d049bb133111ebULL));
-            if(variant.bounded(10000)<uint32_t(rule->chance))result.monsters[i]=rule->target;
+            if(variant.bounded(uint32_t(rule->chanceOutOf))<uint32_t(rule->chance))result.monsters[i]=rule->target;
         }
     }
     Random statueRng(seed_^0x535441545545504cULL^(uint64_t(index+1)*0x9e3779b97f4a7c15ULL));

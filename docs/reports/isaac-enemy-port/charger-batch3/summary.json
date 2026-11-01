@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-31T17:38:12.353685+00:00",
+  "status": "ordinary_playable_checkpoint",
+  "cohort": [
+    "23.0.0",
+    "23.1.0",
+    "23.2.0",
+    "23.3.0",
+    "855.0.0"
+  ],
+  "names": [
+    "Charger",
+    "Drowned Charger",
+    "Dank Charger",
+    "Carrion Princess",
+    "Level2Charger"
+  ],
+  "mechanics_fingerprint": "8868b7cbbc982475",
+  "binary_sha256": "fd0101de24f43ff7f1be17e8d1bc40bfbeb6730e62fd869174908765e995ce99",
+  "changes": [
+    "Charge movement clamps to remaining dash duration, including acquisition and long steps",
+    "Relative swept player contact detects crossings between frames and respects terrain sight",
+    "Drowned death volley retains pending work through queue/projectile capacity instead of dropping shots; pending work delays room completion",
+    "Existing8champion types apply to all five; movement multipliers and contact floors preserve already-strong Level2contact",
+    "Shared practice setup supports --practice-batch3, isolated temporary save and ordinary100HP/24damage controls"
+  ],
+  "validation": {
+    "charger_suite": "pass",
+    "shared_suites": {
+      "companion_familiars": "pass",
+      "first_floor_batch2": "pass",
+      "first_floor_charm_effect": "pass"
+    },
+    "individual_starting_kit_fights": 5,
+    "remaining_hp": 100,
+    "combat_scope": "Synthetic circular movement bot, no items/bombs/godmode; includes1.5seconds of post-death movement. Not full mixed-terrain or human balance acceptance.",
+    "regressions": "Remaining-duration and swept-contact checks for all five;40champion HP/contact/free-speed combinations; reflection/tar; real tail armor vs bullets, piercing, explosion and fire; bounded death-volley retry with one reward;8generated practice layouts.",
+    "reachability": {
+      "generated_floors_scanned": 68,
+      "identities_witnessed": 5,
+      "scope": "Actual non-boss-room residents at supported difficulty bands, seeds0through16; footprint checks. Not exhaustive layout acceptance."
+    },
+    "capture": "practice.png",
+    "capture_inspected": true,
+    "visual_scope": "One30-frame mixed generated-room capture at Original style. Five threats and100HP visible. FPS display is not a benchmark.",
+    "warm_capture": {
+      "image": "practice-warm.png",
+      "inspected": true,
+      "frames": 180,
+      "observation": "Four remaining threats and player50HP after the scripted smoke input. HUD reads43FPS after startup; this uncontrolled readout is not a rendered performance acceptance measurement."
+    }
+  },
+  "initial_test_failure": "Speed assertion originally overlapped player and enemy, so measured collision separation as dash velocity. Final test checks contact and isolated free movement separately. All four suites passed except that fixture assertion in the initial combined run; final charger suite including expanded natural checks passes.",
+  "adaptations": [
+    "Existing charge speed, alignment, recovery and visual geometry remain documented DeathWard tuning, not recovered exact native constants.",
+    "Pending death-volley capacity handling is a bounded DeathWard admission policy.",
+    "Practice combines stage-specific enemies for testing; normal expedition placement remains unchanged."
+  ],
+  "remaining": [
+    "Full applicable status/item/control interactions and native tuning review",
+    "Other18champion types and champion-specific pickups",
+    "Full all-angle/crowded visual, varied-build balance and controlled rendered performance acceptance"
+  ],
+  "full_port_complete": false,
+  "wasm": "Skipped by user instruction"
+}

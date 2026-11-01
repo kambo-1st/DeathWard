@@ -23,6 +23,26 @@ void arm(Enemy &e,int cooldown=0,Vector3 velocity={3,0,0}) {
     r.clock=0;r.frameReady=false;r.blocked=false;e.velocity=velocity;
 }
 void hit(Simulation &s,EntityId id,float damage) {Event e;e.type=EventType::Damage;e.target=id;e.damage=damage;s.queueRoot(e);s.drainEvents();}
+void magentaGusher() {
+    auto s=fixture();const auto id=spawn(s);arm(*s.findEnemy(id),0);
+    check(s.championTypeEligible(monsterId(11),10)&&!s.championTypeEligible(monsterId(11,1),10),"Magenta scope is Gusher only in the headless family");
+    check(s.makeChampion(id,10),"Gusher accepts Magenta champion");
+    auto *e=s.findEnemy(id);e->championAbility=.2f;
+    tick(s);
+    check(e->headless->shots==1&&s.stats.projectiles==1,"ordinary Gusher shot precedes independent Magenta timer");
+    tick(s,7);
+    check(e->headless->shots==1&&s.stats.projectiles==2,"Magenta adds a second attack stream without spending ordinary cooldown");
+    const auto ability=e->championAbility;
+    check(s.applyEnemyStatus(id,EnemyStatus::Freeze,30),"freeze applies to Magenta Gusher");tick(s,3);
+    check(near(e->championAbility,ability,.001f)&&s.stats.projectiles==2,"freeze pauses extra-shot timer");
+    s.removeEnemyStatus(id,EnemyStatus::Freeze);e->championAbility=0;s.limits.projectiles=0;
+    tick(s);check(e->championAbility<=0&&s.stats.projectiles==2,"full projectile capacity retains due Magenta shot");
+    s.limits.projectiles=64;tick(s);
+    check(e->championAbility>1&&s.stats.projectiles==3,"due Magenta shot retries once capacity returns");
+    auto pacer=fixture();auto p=spawn(pacer,1);
+    check(!pacer.makeChampion(p,10),"unreviewed Pacer Magenta remains excluded");
+    std::cout<<"MAGENTA_GUSHER independent_timers=1 freeze=1 capacity_retry=1 eligibility_shared=1\n";
+}
 void movement() {
     auto a=fixture(),b=fixture();const auto ia=spawn(a,1),ib=spawn(b,1);
     b.player.position={-60,.85f,-40};tick(a,60);tick(b,60);
@@ -134,4 +154,4 @@ void natural() {
     check(found[0]&&found[1],"both natural headless bodies found");
 }
 }
-int main(int argc,char**argv){std::cout<<std::unitbuf;try{if(argc>1&&std::string(argv[1])=="--natural"){natural();return 0;}movement();cadenceAndAim();capacityAndMortality();partitionAndReload();sourceFlight();std::cout<<"PASS Headless family\n";}catch(const std::exception&e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+int main(int argc,char**argv){std::cout<<std::unitbuf;try{if(argc>1&&std::string(argv[1])=="--natural"){natural();return 0;}magentaGusher();movement();cadenceAndAim();capacityAndMortality();partitionAndReload();sourceFlight();std::cout<<"PASS Headless family\n";}catch(const std::exception&e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

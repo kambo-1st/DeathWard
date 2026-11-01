@@ -70,7 +70,7 @@ void Simulation::updateHeadless(Enemy &e,float dt) {
                         const auto delta=horizontal(sub(r.destination,e.position));
                         if(length(delta)<p.arrival*p.scale||r.blocked||
                            (priorSpeedSquared<p.stuckSpeedSquared&&combatRng.bounded(unsigned(p.stuckChance))==0))r.targetReady=false;
-                        else r.momentum=add(r.momentum,mul(unit(delta),p.force));
+                        else r.momentum=add(r.momentum,mul(unit(delta),p.force*e.championSpeed));
                     }
                 }
                 if(!afraid)r.momentum=slowEnemyMotion(e,before,r.momentum,p.retention);

@@ -18,3 +18,8 @@ replace_monster 15.1.0 15.2.0 0 3 any 100 1
 replace_monster 29.0.0 54.0.0 0 0 scorched 6000 1
 # Charger oldid=270010: Repentance replaces Charger (not Maggot/Spitty) 50% in Flooded Caves.
 replace_monster 23.0.0 23.1.0 1 1 flooded 5000 1
+
+# Horf room-layout substitution: exact1/60, any band; no death offspring.
+# Native room/callback exclusions are recorded in replacement-review/status.json.
+# source target first-band last-band condition numerator denominator surcharge
+replace_fraction 12.0.0 812.0.0 0 3 any 1 60 1

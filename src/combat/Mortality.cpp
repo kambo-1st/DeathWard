@@ -36,7 +36,7 @@ bool Simulation::tryLethalMorph(Enemy &enemy,const Event &event) {
        enemy.componentOwner||enemy.partner||enemy.formation)return false;
     const float scale=enemy.maxHp/content->monsterHealth(enemy.monster,arena.profile.sourceStage);
     // Strict source residual-health gate, already converted into DeathWard HP.
-    if(enemy.hp<=-p->overkill||combatRng.bounded(unsigned(p->chanceOutOf))>=unsigned(p->chance))return false;
+    if(enemy.hp<=-p->overkill*content->regularHealthAdjustment(enemy.monster)||combatRng.bounded(unsigned(p->chanceOutOf))>=unsigned(p->chance))return false;
     auto target=p->target;
     if(!p->choices.empty()) {
         int total=0;for(const auto &[child,weight]:p->choices)total+=weight;

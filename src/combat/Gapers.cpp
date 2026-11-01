@@ -27,7 +27,7 @@ void Simulation::updateGaper(Enemy &e,float dt) {
             // parameter is a stop threshold; it does not scale animation speed.
             r.walkFrame=length(r.momentum)>=p.stopSpeed?(r.walkFrame+animationFrames)%p.walkFrames:0;
             r.walkPhase=float(r.walkFrame)/p.walkFrames;
-            r.force=p.frowning&&r.headFrame>0?p.awakeForce:p.force;
+            r.force=(p.frowning&&r.headFrame>0?p.awakeForce:p.force)*e.championSpeed;
             if((e.affectedBy(EnemyStatus::Fear)||e.affectedBy(EnemyStatus::Shrink))) {
                 stepFearMotion(e,r.momentum);
                 // Native EvadeTarget can itself call FindGridPath. Its direct

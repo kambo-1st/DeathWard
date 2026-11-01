@@ -1,0 +1,35 @@
+Start testing: Oct 31 18:35 CET
+----------------------------------------------------------
+56/121 Testing: charger_variants
+56/121 Test: charger_variants
+Command: "/home/kambo/workspace/DeathWard/build/deathward_charger_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"charger_variants" start time: Oct 31 18:35 CET
+Output:
+----------------------------------------------------------
+DROWNED hp=70.4 immediate=1 diagonal_death_shots=4 execution_cleanup=1
+DANK fast_dash=1 swept_wall_reflection=1 stationary_recovery=1 slowing_nondamaging_trail=1
+PRINCESS diagonal=1 real_tail_projectile=1 head_piercing_blocked=1 spatial_explosions=1
+LEVEL2 hp=128 cardinal_start=1 steering=1 slower=1 contact_damage=25
+CHARGER_STARTING_KIT id=23.0 seconds=2.15 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.1 seconds=2.15 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.2 seconds=3.16667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.3 seconds=6.01667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=855.0 seconds=3.66667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_BATCH3 duration=5 swept_contact=5 champion_combinations=40 death_retry=1 practice_seeds=8
+CHARGER_NATURAL id=23.0 seed=0 floor=2 room=3
+CHARGER_NATURAL id=23.1 seed=0 floor=2 room=3
+CHARGER_NATURAL id=23.3 seed=0 floor=2 room=7
+CHARGER_NATURAL id=23.2 seed=3 floor=2 room=5
+CHARGER_NATURAL id=855.0 seed=16 floor=3 room=7
+CHARGER_REACHABILITY floors=68 identities=5
+PASS Charger variants and weak-point collision
+<end of output>
+Test time =  25.26 sec
+----------------------------------------------------------
+Test Passed.
+"charger_variants" end time: Oct 31 18:36 CET
+"charger_variants" time elapsed: 00:00:25
+----------------------------------------------------------
+
+End testing: Oct 31 18:36 CET

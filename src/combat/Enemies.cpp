@@ -22,6 +22,13 @@ bool Simulation::hurtPlayer(float damage, const Context &context, bool hostile) 
     if (hostile)
         damage *= EnemyDamageMultiplier;
     player.hp -= damage;
+    const auto *attacker=findEnemy(context.sourceEntity);
+    if(hostile&&damage>0&&(context.championCoinLoss||(attacker&&attacker->champion==3))&&money()>0) {
+        const auto lost=std::min<uint64_t>(money(),2+combatRng.bounded(3));
+        const int dropped=std::max(1,int(lost)-1);moneySpent+=lost;
+        if(moneyPickups.size()<1024)moneyPickups.push_back({player.position,dropped,0,true});
+        else moneyPickups.front().value=std::min(1000000,moneyPickups.front().value+dropped);
+    }
     audioCues.push(AudioCueKind::Hurt, player.position);
     stats.damageTaken += damage;
     player.hurt = 0.45f;
@@ -41,11 +48,21 @@ float Simulation::enemyDamage(const Enemy &enemy, const Event &event) const {
         return event.debugExecution||(enemy.selfDetonated&&event.execution&&event.context.sourceEntity==enemy.id)?event.damage:0;
     if (event.execution)
         return event.damage;
+    if(content->creatureCycle(enemy.monster)&&content->creatureCycle(enemy.monster)->clack&&enemy.state==EnemyState::Collapsed)return 0;
+    if(enemy.champion==6&&std::any_of(enemies.begin(),enemies.end(),[&](const Enemy &other){
+        const auto *definition=content->monster(other.monster);
+        return other.id!=enemy.id&&other.alive&&!other.dyingEggy()&&other.friendly==enemy.friendly&&
+            other.champion!=6&&!other.championPile&&(!definition||!definition->roomHazard);
+    }))return 0;
     // Source radial-damage collection skips EntityCollisionClass 0. A direct
     // scripted damage call is separate and is not granted blanket immunity.
     if(enemy.adultLeech&&enemy.adultLeech->intangible&&event.areaDamage)return 0;
     if(enemy.rockSpider&&enemy.rockSpider->height<content->rockSpider(enemy.monster)->entityHeight&&event.areaDamage)return 0;
     if(const auto *p=content->hardy(enemy.monster);p&&(event.explosionDamage||event.damageKind==DamageKind::Crush))return event.damage*p->blastMultiplier;
+    if(enemy.permanentCharmed) {
+        if(event.context.damageSource==DamageSource::Player||event.context.damageSource==DamageSource::Ally)return 0;
+        return std::max(0.f,event.damage);
+    }
     if(enemy.friendly) {
         const auto *c=content->companion(enemy.monster);
         if(!c||enemy.companionHurtCooldown>0)return 0;
@@ -171,6 +188,14 @@ void Simulation::clearHazards(bool preservePlayer) {
 void Simulation::updateHazards(float dt) {
     std::vector<Hazard> children;
     for (auto &hazard : hazards) {
+        if(hazard.explosiveGas&&hazard.gasIgnited) {
+            Event blast;blast.type=EventType::Explosion;blast.position=blast.origin=hazard.position;
+            blast.radius=hazard.gasBlastRadius;blast.damage=hazard.gasBlastDamage;blast.playerDamage=hazard.gasPlayerDamage;
+            blast.context=hazard.context;blast.context.damageSource=DamageSource::Enemy;
+            if(queueRoot(blast)) {hazard.alive=false;auto it=chains.find(hazard.context.chainId);if(it!=chains.end()&&it->second.active)--it->second.active;}
+            continue; // Retain an ignited cloud under queue pressure; never explode twice.
+        }
+        if(hazard.kind==HazardKind::Fire&&hazard.age>=hazard.delay)igniteGas(hazard.position,hazard.radius);
         if(hazard.ownedBeam)followOwnedBeam(hazard);
         if(hazard.ownerBound) {
             const auto *owner=findEnemy(hazard.context.sourceEntity);
@@ -377,6 +402,10 @@ void Simulation::updateEnemies(float dt) {
     for (auto &enemy : enemies) {
         if(enemy.leper&&enemy.leper->pendingCreep)flushLeperCreep(enemy);
         if (!enemy.alive) {
+            if(enemy.headShooter&&!enemy.headShooter->pendingShots.empty())flushReactiveShot(enemy);
+            if(enemy.creature&&enemy.creature->deathPending)flushCreatureShots(enemy);
+            if(enemy.championDeathPending)flushChampionDeath(enemy);
+            if(enemy.chargeDeathPending)flushChargeDeath(enemy);
             if(enemy.leperFlesh&&!enemy.leperFlesh->pendingShots.empty())flushLeperFleshShot(enemy);
             if(enemy.headless&&!enemy.headless->pendingShots.empty())flushHeadlessShot(enemy);
             if(enemy.faceless&&!enemy.faceless->pendingShots.empty())flushFacelessShots(enemy);
@@ -395,6 +424,7 @@ void Simulation::updateEnemies(float dt) {
         if(canyonBoss(enemy.bossKind)){updateCanyonBoss(enemy,dt);continue;}
         if (enemy.kind == EnemyKind::Monster) {
             updateMonsterStatuses(enemy, dt);
+            if(enemy.alive)updateChampion(enemy,dt);
             updateMaskArmor(enemy,dt);
             continue;
         }

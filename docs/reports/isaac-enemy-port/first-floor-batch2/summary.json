@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-31T17:21:28.375818+00:00",
+  "status": "ordinary_playable_checkpoint",
+  "cohort": [
+    "13.0.0",
+    "14.0.0",
+    "18.0.0",
+    "85.0.0",
+    "16.0.0"
+  ],
+  "names": [
+    "Fly",
+    "Pooter",
+    "Attack Fly",
+    "Spider",
+    "Mulligan"
+  ],
+  "mechanics_fingerprint": "8868b7cbbc982475",
+  "binary_sha256": "b0d3336ea6820a0a33e7fa293d8a7b6c5a7ad11dda221f035546fbaaf669364b",
+  "changes": [
+    "Retain admitted-hit/external momentum in BuzzFly and Evader controllers instead of overwriting it from their cache",
+    "Mass-scaled projectile/blast recoil reuses existing hit-response system: Fly3,Pooter4,AttackFly3,Spider5,Mulligan6",
+    "Existing8champion types extended to ordinary Pooter and Mulligan, including seeded placement and force scaling; Fly/Attack Fly/Spider remain ineligible",
+    "Interactive --practice-batch2 uses real generated combat-room geometry, legal reachable placements,100HP/24damage,no perks and ordinary controls; default save is isolated in temporary directory"
+  ],
+  "validation": {
+    "family_suites": [
+      "buzzing_flies",
+      "mulligan_family",
+      "spider_family",
+      "first_floor_batch2"
+    ],
+    "family_result": "4/4pass",
+    "shared_regression": "first_floor_charm_effect pass",
+    "mixed_fights": 8,
+    "remaining_hp_range": [
+      75,
+      100
+    ],
+    "kills_per_fight": 9,
+    "fight_meaning": "Five initial roots and four Mulligan offspring defeated without bombs, perks or godmode; synthetic flat-room fixture, not all terrain/build balance.",
+    "seeded_first_floors": 24,
+    "identities_witnessed": 5,
+    "practice_setup_seeds": 8,
+    "champion_combinations": 16,
+    "capture": "practice.png",
+    "capture_inspected": true,
+    "capture_scope": "One30-frame real generated practice scene: five visible threats,100HP,normal controls path. Static capture does not certify all-angle occlusion or rendered performance; FPS display is not a benchmark."
+  },
+  "remaining": [
+    "Remaining item/status/control interactions and source-specific producer branches",
+    "Remaining champion types and champion-specific pickups for Pooter/Mulligan",
+    "Full visual/occlusion, varied-build balance and controlled rendered performance acceptance"
+  ],
+  "full_port_complete": false,
+  "wasm": "Skipped by user instruction"
+}

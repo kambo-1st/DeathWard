@@ -117,6 +117,15 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
                     require(d.id.type>0&&d.hp>=0&&d.speed>=0&&d.speed<=200&&d.radius>0&&d.radius<=100&&d.cooldown>=Tick&&d.windup>=0,"Invalid monster stats");
                     require(lib->monsters_.size()<8192&&!lib->monsterIndex_.contains(d.id),"Duplicate monster ID or capacity exceeded");
                     lib->monsterIndex_[d.id]=lib->monsters_.size();lib->monsters_.push_back(std::move(d));
+                } else if(command=="regular_health_multiplier") {
+                    require(!item&&!rule&&!graph&&!death,"regular_health_multiplier inside definition");
+                    require(!lib->explicitRegularHealthMultiplier_,"Duplicate regular health multiplier");
+                    lib->regularHealthMultiplier_=real(row);
+                    require(lib->regularHealthMultiplier_>=.05f&&lib->regularHealthMultiplier_<=4,"Regular health multiplier must be between0.05and4");
+                    lib->explicitRegularHealthMultiplier_=true;
+                } else if(command=="regular_health") {
+                    require(!item&&!rule&&!graph&&!death,"regular_health inside definition");
+                    require(lib->regularHealthIds_.insert(parseMonsterId(word(row))).second,"Duplicate regular health member");
                 } else if(command=="stage_health") {
                     require(!item&&!rule&&!graph&&!death,"stage_health inside definition");
                     const auto id=parseMonsterId(word(row));StageHealthDefinition p;
@@ -1333,6 +1342,37 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
                     require(p.released&&p.radiusX>0&&p.radiusX<=20&&p.radiusZ>0&&p.radiusZ<=20&&p.phase>0&&p.phase<=Pi&&
                         p.follow>0&&p.follow<=1&&p.contact>0&&p.contact<=1000,"Invalid Eternal Fly profile");
                     require(lib->eternalFlies_.emplace(id,p).second,"Duplicate Eternal Fly profile");
+                } else if(command=="bouncer"||command=="quakey"||command=="gas_dwarf"||command=="clack") {
+                    require(!item&&!rule&&!graph&&!death,"creature controller inside definition");
+                    const auto id=parseMonsterId(word(row));CreatureCycleDefinition cycle;
+                    auto number=[&]{float v=real(row);require(v>0&&v<=1000,"Invalid creature parameter");return v;};
+                    if(command=="bouncer") {
+                        BouncerDefinition p;p.timerMin=number();p.timerRange=number();p.damageDivisor=number();p.proximity=number();
+                        p.fleeSpeed=number();p.chaseSpeed=number();p.contact=number();p.inflateFrames=integer(row,1,300);p.inflateEvent=integer(row,1,p.inflateFrames);cycle.bouncer=p;
+                    } else if(command=="quakey") {
+                        QuakeyDefinition p;p.interval=number();p.windup=number();p.flight=number();p.height=number();p.range=number();p.shotSpeed=number();p.damage=number();p.rocks=integer(row,1,12);cycle.quakey=p;
+                    } else if(command=="gas_dwarf") {
+                        GasDwarfDefinition p;p.interval=number();p.radius=number();p.duration=number();p.blastRadius=number();p.blastDamage=number();p.playerDamage=number();p.shotSpeed=number();cycle.gasDwarf=p;
+                    } else {
+                        ClackDefinition p;p.chase=number();p.wander=number();p.regrow=number();p.contact=number();cycle.clack=p;
+                    }
+                    require(lib->creatureCycles_.emplace(id,cycle).second,"Duplicate creature controller");
+                } else if(command=="champion_spawn") {
+                    require(!item&&!rule&&!graph&&!death,"champion_spawn inside definition");lib->championChance_=integer(row,0,10000);
+                } else if(command=="champion") {
+                    require(!item&&!rule&&!graph&&!death,"champion inside definition");
+                    const int id=integer(row,0,25);require(id>=0&&id<=25,"Unsupported champion type");
+                    ChampionDefinition p;p.name=word(row);p.hp=real(row);p.speed=real(row);p.visual=real(row);p.collision=real(row);p.damage=real(row);p.firstStage=integer(row,1,13);
+                    int red=integer(row,0,255),green=integer(row,0,255),blue=integer(row,0,255);p.tint={static_cast<unsigned char>(red),static_cast<unsigned char>(green),static_cast<unsigned char>(blue),255};
+                    require(p.hp>0&&p.hp<=10&&p.speed>0&&p.speed<=3&&p.visual>0&&p.visual<=3&&p.collision>0&&p.collision<=3&&p.damage>0&&p.damage<=10,"Invalid champion parameters");
+                    require(lib->champions_.emplace(id,p).second,"Duplicate champion type");
+                } else if(command=="hit_response") {
+                    require(!item&&!rule&&!graph&&!death,"hit_response inside definition");
+                    const auto id=parseMonsterId(word(row));HitResponseDefinition p;
+                    p.mass=real(row);p.projectile=real(row);p.explosion=real(row);p.maximum=real(row);
+                    require(p.mass>0&&p.mass<=1000&&p.projectile>=0&&p.projectile<=1000&&
+                        p.explosion>=0&&p.explosion<=1000&&p.maximum>0&&p.maximum<=100,"Invalid hit response");
+                    require(lib->hitResponses_.emplace(id,p).second,"Duplicate hit response");
                 } else if(command=="status_effects") {
                     require(!item&&!rule&&!graph&&!death,"status_effects inside definition");
                     const auto id=parseMonsterId(word(row));EnemyStatusDefinition p;
@@ -1401,6 +1441,15 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
                     p.range=real(row);p.speed=real(row);p.damage=real(row);p.life=real(row);
                     require(p.cooldownFrames>=p.attackFrames&&p.range>0&&p.range<=100&&p.speed>0&&p.speed<=100&&
                         p.damage>0&&p.damage<=1000&&p.life>0&&p.life<=30,"Invalid stationary shooter profile");
+                    require(lib->headShooters_.emplace(id,p).second,"Duplicate stationary shooter");
+                } else if(command=="sub_horf") {
+                    require(!item&&!rule&&!graph&&!death,"sub_horf inside definition");
+                    const auto id=parseMonsterId(word(row));HeadShooterDefinition p;p.reactive=true;
+                    p.bodyRetention=real(row);p.spinPerSpeed=real(row);p.intervalNumerator=real(row);p.velocityScale=real(row);
+                    p.speed=real(row);p.damage=real(row);p.life=real(row);
+                    require(p.bodyRetention>0&&p.bodyRetention<1&&p.spinPerSpeed>0&&p.spinPerSpeed<=20&&
+                        p.intervalNumerator>=1&&p.intervalNumerator<=300&&p.velocityScale>0&&p.velocityScale<=10&&
+                        p.speed>0&&p.speed<=100&&p.damage>0&&p.damage<=1000&&p.life>0&&p.life<=30,"Invalid reactive head profile");
                     require(lib->headShooters_.emplace(id,p).second,"Duplicate stationary shooter");
                 } else if(command=="head_shooter_body") {
                     require(!item&&!rule&&!graph&&!death,"head_shooter_body inside definition");
@@ -1824,7 +1873,7 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
                     const auto variant=named<FloorVariant>(word(row),{{"standard",FloorVariant::Standard},{"scorched",FloorVariant::Scorched},{"flooded",FloorVariant::Flooded},{"dank",FloorVariant::Dank},{"scarred",FloorVariant::Scarred}});
                     const int weight=integer(row,0,10000);
                     require(lib->floorVariants_[size_t(band)].emplace(variant,weight).second,"Duplicate floor variant");
-                } else if(command=="replace_monster"||command=="replace_spawn") {
+                } else if(command=="replace_monster"||command=="replace_spawn"||command=="replace_fraction") {
                     require(!item&&!rule&&!graph&&!death,"replace_monster inside definition");
                     MonsterReplacement r;r.source=parseMonsterId(word(row));r.target=parseMonsterId(word(row));
                     r.firstBand=integer(row,0,3);r.lastBand=integer(row,r.firstBand,3);
@@ -1832,7 +1881,11 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
                     if(variant!="any")r.variant=named<FloorVariant>(variant,{{"standard",FloorVariant::Standard},{"scorched",FloorVariant::Scorched},{"flooded",FloorVariant::Flooded},{"dank",FloorVariant::Dank},{"scarred",FloorVariant::Scarred}});
                     if(command=="replace_spawn"){r.chance=10000;r.phase=3;r.allSpawns=true;}
                     else {
-                        r.chance=integer(row,0,10000);r.extraCost=integer(row,0,100);
+                        if(command=="replace_fraction") {
+                            r.chance=integer(row,0,1000000);r.chanceOutOf=integer(row,1,1000000);
+                            require(r.chance<=r.chanceOutOf,"Replacement numerator exceeds denominator");
+                        } else r.chance=integer(row,0,10000);
+                        r.extraCost=integer(row,0,100);
                         row>>std::ws;if(!row.eof()&&row.peek()!='#')r.phase=integer(row,0,3);
                     }
                     require(lib->replacements_.size()<8192,"Too many replacement rules");lib->replacements_.push_back(r);
@@ -2479,17 +2532,21 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
             !lib->component(id)&&!lib->companion(id)&&!lib->hop(id)&&!lib->charge(id)&&!lib->formation(id),"Maw requires independent flying chaser");
         if(p.child)require(lib->eternalFly(p.child),"Maw requires an Eternal Fly dependency");
     }
+    for(const auto &[id,p]:lib->creatureCycles_) {
+        if(!lib->monster(id))throw std::runtime_error("Creature controller requires a monster definition");
+    }
     for(const auto &[id,p]:lib->eternalFlies_) {
         const auto *d=lib->monster(id);const auto *released=lib->monster(p.released);
         require(d&&d->flying&&d->roomHazard&&d->motion==MonsterMotion::Orbit&&d->attack==MonsterAttack::None&&
             d->behavior=="legacy"&&released&&released->flying&&!released->roomHazard&&lib->buzzFly(p.released)&&
             !lib->monsterBoss(id)&&!lib->component(id)&&!lib->companion(id),"Eternal Fly requires orbit hazard and released buzzing actor");
     }
+    for(const auto &[id,p]:lib->hitResponses_)require(lib->gaper(id)||lib->headless(id)||lib->headShooter(id)||lib->buzzFly(id)||lib->spider(id)||lib->evader(id)||lib->creatureCycle(id),"Hit response requires reviewed controller");
     for(const auto &[id,p]:lib->enemyStatuses_) {
         require(lib->monster(id)&&
-            (lib->gapers_.contains(id)||lib->headless_.contains(id)||lib->headShooters_.contains(id)),
+            (lib->gapers_.contains(id)||lib->headless_.contains(id)||lib->headShooters_.contains(id)||lib->creatureCycles_.contains(id)),
             "Status effects require a reviewed Gaper, headless or stationary shooter controller");
-        require(bool(p.fear)==(lib->gapers_.contains(id)||lib->headless_.contains(id)),
+        require(bool(p.fear)==(lib->gapers_.contains(id)||lib->headless_.contains(id)||lib->creatureCycles_.contains(id)),
             "Moving status recipients need fear motion; stationary recipients must not have it");
     }
     for(const auto &[id,p]:lib->headShooters_) {
@@ -2579,7 +2636,7 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
     }
     for(const auto &[id,p]:lib->stageHealth_) {
         const auto *d=lib->monster(id);
-        require(d&&!lib->monsterBoss(id)&&!lib->component(id)&&!lib->companion(id)&&!lib->regrowth(id)&&
+        require(d&&!lib->monsterBoss(id)&&!lib->component(id)&&!lib->companion(id)&&
             std::abs(d->hp-lib->monsterHealth(id,1))<.001f,"Stage health needs an independent actor with matching stage-one fallback HP");
     }
     for(size_t i=1;i<lib->sourceStages_.size();++i)
@@ -2916,6 +2973,17 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
             require(lib->dung_&&p.morph!=id&&!p.shot&&!p.chase&&target&&next&&next->shot&&!next->morphChance&&
                 std::abs(d->radius-target->radius)<.001f,"Dung morph requires compatible buzzing shooter and dung profile");
         }
+    }
+    // Keep source units and authored conversions intact during validation.
+    // Scale runtime definitions together with stage profiles so proportional
+    // morphs/offspring never apply the multiplier a second time.
+    for(const auto id:lib->regularHealthIds_) {
+        auto *d=lib->monsterIndex_.contains(id)?&lib->monsters_[lib->monsterIndex_.at(id)]:nullptr;
+        auto hp=lib->stageHealth_.find(id);
+        require(d&&hp!=lib->stageHealth_.end()&&!d->roomHazard&&!lib->monsterBoss(id)&&!lib->component(id)&&!lib->companion(id),
+            "Regular health member requires independent profiled monster");
+        require(lib->monsterHealth(id,13)*lib->regularHealthMultiplier_<=1000000,"Scaled regular health exceeds limit");
+        d->hp*=lib->regularHealthMultiplier_;hp->second.scale*=lib->regularHealthMultiplier_;
     }
     std::ostringstream hex;hex<<std::hex<<hash;lib->fingerprint_=hex.str();return lib;
 }

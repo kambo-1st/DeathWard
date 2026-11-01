@@ -1,0 +1,14 @@
+DEATHWARD_MECHANICS 1
+# Mass from installed entities2.xml; impulse strengths/cap are DeathWard tuning.
+# ID mass projectile-impulse explosion-impulse maximum-resulting-speed
+hit_response 10.0.0 5 15 30 20
+hit_response 10.1.0 5 15 30 20
+hit_response 11.0.0 3 15 30 20
+hit_response 11.1.0 3 15 30 20
+hit_response 12.0.0 3 15 30 20
+# Second first-floor batch: source masses, same authored recoil policy.
+hit_response 13.0.0 3 15 30 20
+hit_response 14.0.0 4 15 30 20
+hit_response 18.0.0 3 15 30 20
+hit_response 85.0.0 5 15 30 20
+hit_response 16.0.0 6 15 30 20

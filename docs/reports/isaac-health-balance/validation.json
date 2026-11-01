@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-01T09:55:15.289366+00:00",
+  "scope": "Numeric baseline/HP control and scoped regressions; no full enemy-completion claim.",
+  "result": "pass",
+  "tests": {
+    "regular_health_balance": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/health-tests.log"
+    },
+    "creature_cycles": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/initial-shared-tests.log"
+    },
+    "charger_variants": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/initial-shared-tests.log"
+    },
+    "boom_flies": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/initial-shared-tests.log"
+    },
+    "first_floor_charm_effect": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/initial-shared-tests.log"
+    },
+    "mechanics_content": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "black_globin_family": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "leper_family": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "danny_family": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "faceless_family": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "first_floor_cohort": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "long_legs_and_sack": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "hosts": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "boil_family": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/lifecycle-tests.log"
+    },
+    "source_immunity_and_lethal_morph": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/basic-five-tests.log"
+    },
+    "horf_stationary_shooting": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/basic-five-tests.log"
+    },
+    "gaper_family": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/basic-five-tests.log"
+    },
+    "headless_family": {
+      "result": "pass",
+      "evidence": "docs/reports/isaac-health-balance/basic-five-tests.log"
+    }
+  },
+  "checks": [
+    "154native source HP profiles",
+    "32numeric resolutions",
+    "half and25percent reductions over13source stages",
+    "Player100HP/24damage unchanged; default multiplier1",
+    "HP calculator/source-stage and mobile browser checks",
+    "Source HTML hashes preserved;18native suites pass",
+    "No WASM build or checks"
+  ],
+  "sha256": {
+    "assets/mechanics/regular_enemy_health.mechanics": "f8eee9b0d4f6b24ad0acc0663fe5791bf4f1d101f3195185304b8dff83767dc7",
+    "src/content/Mechanics.cpp": "b17eeccaddf9b0dcab6003f65b39f04b53f2bf391470f05325c70b8152474075",
+    "src/content/Mechanics.hpp": "fd1f8d7473d25db3f966626216e5301c08552ef7c225e9df14cebb96a0520157",
+    "src/combat/Monsters.cpp": "c856db37044bbfbd5113b8f3652941fa98fda90f47ed5a7e882967db8db6b444",
+    "src/combat/Simulation.cpp": "5dbbe9108527a0b6f4d42b8fb8a563f5f52c17d5ef6f2d49a17847202a3e2f2c",
+    "tests/regular_health_tests.cpp": "7230e8d7f80167efb36d3f44c8a2389221bfec31f6117f68d7f6ad19e958efc9",
+    "docs/reports/isaac-health-balance/index.html": "921c150a9898791ddbcda17a488d6b3bbcf2974348ae8b079c5cfcd24b1a0a43",
+    "docs/reports/isaac-health-balance/baseline.json": "e2d314d4f945272540bd569d7025039627f6f90294395b4727b0cd787fc70776"
+  },
+  "sub_horf_checkpoint": {
+    "date": "2026-11-01T11:12:08.522700+00:00",
+    "regular_identities": 155,
+    "result": "pass",
+    "evidence": "docs/reports/isaac-enemy-port/sub-horf/tests.log",
+    "detail": "Six affected native suites pass; ordinary SubHorf source14HP participates in shared scaling. Earlier broader suite results above remain historical evidence. Calculator155rows and.75factor checked."
+  }
+}

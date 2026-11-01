@@ -50,7 +50,7 @@ void natural() {
         for(int room=1;room<s.finalRoom();++room)for(const auto &e:s.roomEnemies(room))
             if(std::find(Cohort.begin(),Cohort.end(),e.monster)!=Cohort.end()) {
                 check(!s.arena.blocked(e.position,e.radius),"natural cohort body has a legal physical footprint");
-                check(e.hp==32&&(e.gaper||e.headless||s.content->headShooter(e.monster)),"seeded cohort has correct health and dedicated behavior");
+                check(e.hp==32*(e.champion<0?1:s.content->champion(e.champion)->hp)&&(e.gaper||e.headless||s.content->headShooter(e.monster)),"seeded cohort has correct health and dedicated behavior");
                 if(found.insert(e.monster).second)std::cout<<"COHORT_NATURAL id="<<monsterIdText(e.monster)<<" seed="<<seed<<" floor=0 room="<<room<<'\n';
                 residents.push_back({room,e.id,e.position,e.age});++checked;
             }

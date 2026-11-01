@@ -109,7 +109,7 @@ void validation() {
     rejects(p,"statue 11.0.0 attraction plates 1 0 1 1 0 24 .25 .08 0 0 0\nstatue_attraction 11.0.0 6 12 40 4 0 0\n","Invalid statue attraction values");
     rejects(p,"statue 11.0.0 attraction plates 1 0 1 1 0 24 .25 .08 0 0 0\nstatue_attraction 11.0.0 2 12 40 4 4 0\n","Invalid statue attraction values");
     rejects(p,"companion 23.0.1 20 .7 .45 .32 room\n","Duplicate companion controller");
-    rejects(p,"companion 23.0.0 20 .7 .45 .32 room\n","non-pool independent charge actor");
+    rejects(p,"companion 23.0.0 20 .7 .45 .32 room\n","Stage health needs an independent actor");
     rejects(p,"companion 11.0.0 20 .7 .45 .32 room\n","Invalid linked head release identity");
     rejects(p,"companion 23.0.0 20 .7 .45 0 room\n","Invalid companion values");
     rejects(p,"contact_familiar isaac:collectible:433 23.0.1 16 .15 .6 .25\n","Duplicate contact familiar");
@@ -134,6 +134,10 @@ void validation() {
     rejects(p,"replace_monster 11.0.0 11.0.0 0 3 any 100 1\n","distinct independent natural monsters");
     rejects(p,"replace_monster 222.0.0 18.0.0 0 3 any 100 1\n","distinct independent natural monsters");
     rejects(p,"replace_monster 11.0.0 11.1.0 0 3 any 10001 1\n","Integer outside allowed range");
+    rejects(p,"replace_fraction 11.0.0 11.1.0 0 3 any 1 0 0\n","Integer outside allowed range");
+    rejects(p,"replace_fraction 11.0.0 11.1.0 0 3 any 61 60 0\n","Replacement numerator exceeds denominator");
+    rejects(p,"sub_horf 812.0.0 1 2 20 3 30 10 5\n","Invalid reactive head profile");
+
     rejects(p,"behavior broken ready 24\nprojectile_life 0\nend\n","Invalid projectile lifetime");
     rejects(p,"behavior broken ready 24\nprojectile_pattern radial 8\nend\n","Invalid projectile pattern angle");
     rejects(p,"behavior broken ready 24\nprojectile_curve nan alternate\nend\n","finite number");
@@ -197,7 +201,7 @@ void externalEncounters() {
             auto &r=run.arena.rooms[size_t(room)];r.kind=RoomKind::Combat;r.floors={{{-25,-.4f,-25},{25,0,25}}};
             const auto plan=run.floorEncounter(room);
             int cost=0;std::map<MonsterId,int> counts;
-            for(auto id:plan.originalMonsters){++counts[id];cost+=id==monsterId(12)?2:id==monsterId(15)?4:1;}
+            for(auto id:plan.originalMonsters){++counts[id];cost+=id==monsterId(12)?3:id==monsterId(15)?4:1;}
             check(!plan.monsters.empty()&&cost==plan.spent&&cost<=plan.budget,"file-defined costs reach actual floor plans");
             check(counts[monsterId(12)]<=1&&counts[monsterId(15)]<=1,"file-defined room caps survive repeated weighted choices");
             check(!counts[monsterId(10,1)]&&counts.size()<=4,"disabled basics never selected");

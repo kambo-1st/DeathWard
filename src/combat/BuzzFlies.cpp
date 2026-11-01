@@ -16,6 +16,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         r.tick=uint64_t(std::max(0.,std::floor((stats.duration-dt)*30+.00001)));
         r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));r.initialized=true;
     }
+    r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.fireContactCooldown=std::max(0.f,e.fireContactCooldown-dt);
     const bool suppressed=p.suppressor&&!e.friendly&&itemStacks(*p.suppressor)>0;
     const bool itemMorph=p.morphItem&&!e.friendly&&itemStacks(*p.morphItem)>0;
@@ -114,12 +115,12 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
                 delta.z*=c.axisScale;
                 if(r.diesOnContact)friction*=r.contactRetention;
                 const float distance=length(delta);
-                if(distance>c.deadzone)r.momentum=add(r.momentum,mul(unit(delta),std::min((distance-c.deadzone)*c.gain,c.force)/friction));
+                if(distance>c.deadzone)r.momentum=add(r.momentum,mul(unit(delta),std::min((distance-c.deadzone)*c.gain,c.force)*e.championSpeed/friction));
             }
         // Ordinary Fly/Pooter discard their temporary dung-search target. Their
         // actual pursuit is an intermittent impulse, not a path-following chase.
         } else if(combatRng.bounded(unsigned(p.pursuitChance))==0)
-            r.momentum=add(r.momentum,mul(unit(horizontal(sub(player.position,e.position))),p.pursuit));
+            r.momentum=add(r.momentum,mul(unit(horizontal(sub(player.position,e.position))),p.pursuit*e.championSpeed));
         if(r.tick%4==1)
             r.wander=mul(add(r.wander,rotateY({p.jitter,0,0},combatRng.real(0,2*Pi))),p.jitterRetention);
         if(r.tick%3==2) {
@@ -132,7 +133,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             // AddVelocity divides its impulse by current friction before the
             // common movement update applies friction. Pooter's cooldown slows
             // existing momentum without suppressing the same-frame buzz force.
-            r.momentum=add(r.momentum,mul(r.wander,2/friction));friction*=p.retention;
+            r.momentum=add(r.momentum,mul(r.wander,2*e.championSpeed/friction));friction*=p.retention;
         }
         r.momentum=mul(r.momentum,friction);
     }

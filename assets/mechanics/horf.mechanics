@@ -14,8 +14,9 @@ head_shooter_body 12.0.0 .7
 # Horizontal scale remains .1; this compression is an explicit 3D adaptation.
 head_shooter_flight 12.0.0 .69 2.7 5.4 .9 .22
 
-# Basement analogue only; rare Sub Horf replacement remains disabled until
-# that independent enemy and its reactive shots are implemented.
+# Ordinary Horf slots use the Basement analogue. Rare Sub Horf substitution
+# is enabled in replacements.mechanics with exact1/60odds and no stage gate.
+# Source conditions: horf_fly/replacement-review; implementation: sub-horf.
 encounter 0 0 pursuit specialist 12.0.0 2 2 1
 encounter 0 0 crossfire specialist 12.0.0 2 2 2
 encounter 0 0 supply_guard specialist 12.0.0 1 2 2

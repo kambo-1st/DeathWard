@@ -1,0 +1,11 @@
+BATCH2_IMPACT identities=5 momentum=1 masses=1 champion_eligibility=1
+BATCH2_FIGHT seed=0 seconds=6.13333 hp=87.5 kills=9 clear=1
+BATCH2_FIGHT seed=1 seconds=7 hp=100 kills=9 clear=1
+BATCH2_FIGHT seed=2 seconds=7.3 hp=87.5 kills=9 clear=1
+BATCH2_FIGHT seed=3 seconds=5.81667 hp=87.5 kills=9 clear=1
+BATCH2_FIGHT seed=4 seconds=7.73333 hp=87.5 kills=9 clear=1
+BATCH2_FIGHT seed=5 seconds=8.5 hp=87.5 kills=9 clear=1
+BATCH2_FIGHT seed=6 seconds=6.95 hp=75 kills=9 clear=1
+BATCH2_FIGHT seed=7 seconds=10.9333 hp=87.5 kills=9 clear=1
+BATCH2_PLACEMENT seeds=24 identities=5 champions=1 practice_seeds=8
+PASS second first-floor batch

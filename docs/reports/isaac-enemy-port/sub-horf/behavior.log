@@ -1,0 +1,4 @@
+SUB_HORF idle=1 hit_recoil=1 external_push=1 spin=1 shots=1 partitions=3 cover=1
+SUB_HORF_COMBINED death_retry=1 no_early_clear=1 charm_affiliation=1 freeze_slow=1 poison_frozen_death=1
+SUB_HORF_REPLACEMENT originals=346 replacements=6 witness_room=3661 exact_denominator=60 actual_spawn=1
+PASS Sub Horf

@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   2: mechanics_content
+1/9 Test   #2: mechanics_content ................   Passed    1.79 sec
+    Start  81: black_globin_family
+2/9 Test  #81: black_globin_family ..............   Passed    2.84 sec
+    Start  83: leper_family
+3/9 Test  #83: leper_family .....................   Passed    1.70 sec
+    Start  86: danny_family
+4/9 Test  #86: danny_family .....................   Passed    0.19 sec
+    Start  87: faceless_family
+5/9 Test  #87: faceless_family ..................   Passed    0.23 sec
+    Start  93: first_floor_cohort
+6/9 Test  #93: first_floor_cohort ...............   Passed    3.94 sec
+    Start 103: long_legs_and_sack
+7/9 Test #103: long_legs_and_sack ...............   Passed    7.82 sec
+    Start 105: hosts
+8/9 Test #105: hosts ............................   Passed   19.01 sec
+    Start 113: boil_family
+9/9 Test #113: boil_family ......................   Passed    3.17 sec
+
+100% tests passed, 0 tests failed out of 9
+
+Total Test time (real) =  40.71 sec

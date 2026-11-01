@@ -77,6 +77,7 @@ struct MonsterReplacement {
     MonsterId source, target;
     int firstBand=0, lastBand=3, chance=0, extraCost=0; // Chance in basis points, 0..10000.
     std::optional<FloorVariant> variant;
+    int chanceOutOf=10000; // Exact rational odds; legacy rules use basis points.
     int phase=0; // Explicit ordered passes; old rules remain single-pass phase zero.
     bool allSpawns=false; // Deterministic final identity, including offspring.
 };
@@ -201,6 +202,8 @@ struct SourceImmunityDefinition { bool flame=false, explosion=false; };
 struct HeadShooterDefinition {
     int checkFrames=7,cooldownFrames=28,attackFrames=20,shootFrame=4;
     float range=20,speed=21,damage=10,life=5;
+    bool reactive=false;
+    float spinPerSpeed=2,intervalNumerator=20,velocityScale=3;
     float bodyRetention=0;
     float shotHeight=0,shotUp=0,shotGravity=0,shotRetention=0,shotRadius=.22f;
 };
@@ -604,6 +607,22 @@ struct CharmDefinition {
     float contactOffset=110,contactDivisor=100,contactGain=33,projectileDamage=19.2f;
 };
 struct DamageStatusDefinition {int capFrames=120,periodFrames=20,firstTick=2;float minimumDamage=6.4f;};
+// Native Bouncer phase constants and explicitly tuned 3D locomotion.
+struct BouncerDefinition {
+    float timerMin=6,timerRange=4,damageDivisor=3.5f,proximity=12,fleeSpeed=3.5f,chaseSpeed=2.7f,contact=10;
+    int inflateFrames=21,inflateEvent=7;
+};
+struct QuakeyDefinition {float interval=4,windup=.45f,flight=.7f,height=3,range=12,shotSpeed=8,damage=10;int rocks=3;};
+struct GasDwarfDefinition {float interval=.65f,radius=1.4f,duration=5,blastRadius=2.8f,blastDamage=40,playerDamage=20,shotSpeed=6;};
+struct ClackDefinition {float chase=2.5f,wander=1.2f,regrow=3,contact=10;};
+struct CreatureCycleDefinition {
+    std::optional<BouncerDefinition> bouncer;
+    std::optional<QuakeyDefinition> quakey;
+    std::optional<GasDwarfDefinition> gasDwarf;
+    std::optional<ClackDefinition> clack;
+};
+struct ChampionDefinition {std::string name;float hp=2,speed=1,visual=1.15f,collision=1,damage=2;int firstStage=1;Color tint{};};
+struct HitResponseDefinition {float mass=5,projectile=15,explosion=30,maximum=20;};
 struct EnemyStatusDefinition {
     int capFrames=120,confusionRefreshFrames=15;
     float confusionRadius=24,fearAlertRetention=1;
@@ -995,6 +1014,10 @@ class MechanicsLibrary {
     const HeadShooterDefinition *headShooter(MonsterId id) const;
     const BuzzFlyDefinition *buzzFly(MonsterId id) const;
     const EvaderDefinition *evader(MonsterId id) const;
+    const CreatureCycleDefinition *creatureCycle(MonsterId id) const {auto i=creatureCycles_.find(id);return i==creatureCycles_.end()?nullptr:&i->second;}
+    const ChampionDefinition *champion(int id) const {auto i=champions_.find(id);return i==champions_.end()?nullptr:&i->second;}
+    int championChance() const {return championChance_;}
+    const HitResponseDefinition *hitResponse(MonsterId id) const {auto i=hitResponses_.find(id);return i==hitResponses_.end()?nullptr:&i->second;}
     const EnemyStatusDefinition *enemyStatuses(MonsterId id) const;
     const SwimmerDefinition *swimmer(MonsterId id) const;
     const SpiderDefinition *spider(MonsterId id) const;
@@ -1035,6 +1058,9 @@ class MechanicsLibrary {
     const BoomFlyDefinition *boomFly(MonsterId id) const;
     float monsterHealth(MonsterId id,int sourceStage) const;
     const StageHealthDefinition *stageHealth(MonsterId id) const;
+    float regularHealthMultiplier() const {return regularHealthMultiplier_;}
+    float regularHealthAdjustment(MonsterId id) const {return regularHealthIds_.contains(id)?regularHealthMultiplier_:1.f;}
+    bool regularHealthMember(MonsterId id) const {return regularHealthIds_.contains(id);}
     const std::vector<WeightedItem> &pool(std::string_view key) const;
     const EncounterPool &encounterPool(int band, EncounterPattern pattern) const;
     const MonsterReplacement *replacement(MonsterId source,const FloorProfile &profile,int phase=0) const;
@@ -1099,6 +1125,10 @@ class MechanicsLibrary {
     std::map<MonsterId,HeadShooterDefinition> headShooters_;
     std::map<MonsterId,BuzzFlyDefinition> buzzFlies_;
     std::map<MonsterId,EvaderDefinition> evaders_;
+    std::map<int,ChampionDefinition> champions_;
+    std::map<MonsterId,CreatureCycleDefinition> creatureCycles_;
+    int championChance_=0;
+    std::map<MonsterId,HitResponseDefinition> hitResponses_;
     std::map<MonsterId,EnemyStatusDefinition> enemyStatuses_;
     std::map<MonsterId,SwimmerDefinition> swimmers_;
     std::map<MonsterId,SpiderDefinition> spiders_;
@@ -1126,6 +1156,9 @@ class MechanicsLibrary {
     std::map<std::string,RailLayout,std::less<>> railLayouts_;
     std::map<MonsterId,BoomFlyDefinition> boomFlies_;
     std::map<MonsterId,StageHealthDefinition> stageHealth_;
+    std::set<MonsterId> regularHealthIds_;
+    float regularHealthMultiplier_=1;
+    bool explicitRegularHealthMultiplier_=false;
     std::array<std::array<int,2>,4> sourceStages_{{{1,2},{3,4},{5,6},{7,8}}};
     std::array<bool,4> explicitSourceStages_{};
     std::map<MonsterId,ChargeDefinition> charges_;

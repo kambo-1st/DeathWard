@@ -1,0 +1,12 @@
+DEATHWARD_MECHANICS 1
+# Repentance1.7.9b XML:14baseHP,0stageHP,mass3,grounded. World HP x3.2.
+monster 812.0.0 "Sub Horf" Still Shot Skull 44.8 0 .65 .933333333 .133333333 1 0 1 0 1 legacy
+stage_health 812.0.0 14 0 3.2
+regular_health 812.0.0
+# retention; spin degrees per native speed/frame; interval numerator;
+# native velocity -> world velocity; shot speed; local damage; local life.
+sub_horf 812.0.0 .97 2 20 3 30 10 5
+head_shooter_flight 812.0.0 .69 2.7 5.4 .9 .22
+hit_response 812.0.0 3 36 60 24
+# Source response is velocity-driven, not aimed at the player. Impulse
+# strengths and compressed3Dwater-shot arc/lifetime are explicit DeathWard adaptations.

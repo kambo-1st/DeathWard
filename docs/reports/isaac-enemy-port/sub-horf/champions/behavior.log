@@ -1,0 +1,8 @@
+SUB_HORF idle=1 hit_recoil=1 external_push=1 spin=1 shots=1 partitions=3 cover=1
+SUB_HORF_COMBINED death_retry=1 no_early_clear=1 charm_affiliation=1 freeze_slow=1 poison_frozen_death=1
+SUB_HORF_REPLACEMENT originals=346 replacements=6 witness_room=3661 exact_denominator=60 actual_spawn=1
+SUB_HORF_CHAMPION_STATS types=26 charm_combinations=52 size_damage=1 idle_physics=1 visibility=1
+SUB_HORF_CHAMPION_FIELDS moving_trails=2 magenta_retry=1 spectral=1 attraction_repulsion=2 healing=1 white_release=1
+SUB_HORF_CHAMPION_DEATHS types=26 affiliation_scenarios=52 revival=1 own_plus_volley=9 split=2 permanent_charm_children=1 orbit_release=1 skull_chain=1 fly_cap=5 crown=1
+SUB_HORF_CHAMPION_NATURAL seeds=12 residents=8 distinct_types=8 stage_gates=1 deterministic=1 production_chance_unchanged=1
+PASS Sub Horf

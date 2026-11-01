@@ -33,8 +33,7 @@ void duration() {
         ticks(s,hz,hz);check(s.findEnemy(id)->statuses->charm==270,"real-time duration");
         s.applyEnemyStatus(id,EnemyStatus::Charm,20);check(s.findEnemy(id)->statuses->charm==270,"shorter refresh neither adds nor shortens");
         s.applyEnemyStatus(id,EnemyStatus::Charm,360);check(s.findEnemy(id)->statuses->charm==360,"longer refresh is max with no120/150 cap");
-        check(!s.applyEnemyStatus(id,EnemyStatus::Charm,-1)&&s.findEnemy(id)->statuses->charm==360,
-              "unimplemented permanent conversion is rejected, never interpreted as abs(duration)");
+        check(!s.applyEnemyStatus(id,EnemyStatus::Charm,-18001),"out-of-range duration rejected");
         s.removeEnemyStatus(id,EnemyStatus::Charm);check(!s.findEnemy(id)->affectedBy(EnemyStatus::Charm),"explicit removal");
         s.applyEnemyStatus(id,EnemyStatus::Charm,30);s.applyEnemyStatus(id,EnemyStatus::Freeze,30);s.applyEnemyStatus(id,EnemyStatus::Slow,30);
         ticks(s,hz-1,hz);check(s.findEnemy(id)->affectedBy(EnemyStatus::Charm),"active before exact expiry");ticks(s,1,hz);
@@ -42,7 +41,7 @@ void duration() {
         s.applyEnemyStatus(id,EnemyStatus::Charm,90);s.rewardOpen=true;ticks(s,hz,hz);
         check(s.findEnemy(id)->statuses->charm==90,"modal pause holds duration");
     }
-    std::cout<<"CHARM_TIME max_refresh=1 no_cap=1 expiry_partition=1 permanent_rejected=1 freeze_slow=1 room_threat=1 pause=1\n";
+    std::cout<<"CHARM_TIME max_refresh=1 no_cap=1 expiry_partition=1 duration_bounds=1 freeze_slow=1 room_threat=1 pause=1\n";
 }
 void targeting() {
     for(auto kind:{monsterId(10),monsterId(10,1),monsterId(12)}) {
@@ -176,6 +175,113 @@ void lifecycle() {
     check(s.findEnemy(id)&&s.findEnemy(id)->statuses->charm==90,"temporary Charm stays with inactive resident room");
     std::cout<<"CHARM_LIFECYCLE morph=1 room_storage=1\n";
 }
+void permanent() {
+    for(auto kind:Cohort) {
+        auto s=fixture();s.godMode=false;auto id=spawn(s,kind);hold(s,id);
+        s.player.position=s.findEnemy(id)->position;
+        check(s.applyEnemyStatus(id,EnemyStatus::Charm,-1),"permanent conversion accepted");
+        check(s.findEnemy(id)->friendly&&s.findEnemy(id)->affectedBy(EnemyStatus::Charm)&&s.roomThreats()==0,"converted affiliation and clear participation");
+        s.applyEnemyStatus(id,EnemyStatus::Charm,1);ticks(s,3);
+        check(s.findEnemy(id)->statuses->charm==0&&s.findEnemy(id)->permanentCharmed,"positive application cannot shorten permanence");
+        check(near(s.player.hp,StartingHealth),"converted body cannot hurt player");
+        const float hp=s.findEnemy(id)->hp;hit(s,id,7);
+        check(near(s.findEnemy(id)->hp,hp),"player damage rejected");
+        Event e;e.type=EventType::Damage;e.target=id;e.damage=7;e.hostile=true;e.context.damageSource=DamageSource::Enemy;s.queueRoot(e);s.drainEvents();
+        check(near(s.findEnemy(id)->hp,hp-7),"enemy damage accepted without generic invulnerability");
+        Simulation travel(1866,1,{},MissionTheme::Canyon,true,false);travel.godMode=true;
+        travel.enemies.clear();auto follower=spawn(travel,kind);travel.applyEnemyStatus(follower,EnemyStatus::Charm,-1);
+        travel.enterRoom(1);ticks(travel);
+        check(travel.findEnemy(follower)&&travel.findEnemy(follower)->friendly&&!travel.arena.blocked(travel.findEnemy(follower)->position,travel.findEnemy(follower)->radius),"room transfer preserves legal ally");
+        travel.enterRoom(0);ticks(travel);
+        check(std::count_if(travel.enemies.begin(),travel.enemies.end(),[&](const Enemy &b){return b.id==follower;})==1,"return travel does not duplicate ally");
+    }
+    auto s=fixture();auto id=spawn(s,monsterId(12));s.player.position={7,.85f,0};
+    s.applyEnemyStatus(id,EnemyStatus::Charm,-1);ticks(s,60);
+    check(s.stats.projectiles==0,"permanent Horf rejects player fallback acquisition");
+    auto target=spawn(s,monsterId(12),{7,.85f,0});hold(s,target);ticks(s,15);
+    check(s.stats.projectiles>0,"permanent Horf fires at eligible NPC");
+    for(const auto &shot:s.projectiles)check(shot.ignoresPlayer&&shot.hitsEnemies,"permanent Horf shot masks");
+    auto contact=fixture();auto ally=spawn(contact,monsterId(12));auto foe=spawn(contact,monsterId(12),{.5f,.85f,0});
+    hold(contact,ally);hold(contact,foe);contact.applyEnemyStatus(ally,EnemyStatus::Charm,-1);
+    ticks(contact);
+    const float raw=std::log((10.f+110)/100)*33*3.2f;
+    check(near(contact.findEnemy(ally)->hp,32-std::min(raw*.25f,11.2f)),"converted contact recipient uses native quarter/cap");
+    check(near(contact.findEnemy(foe)->hp,32-raw),"converted contact source deals ordinary curve");
+    Simulation run(1866,1,{},MissionTheme::Canyon,true,false);
+    run.enemies.clear();
+    for(auto kind:Cohort){auto ally=spawn(run,kind);run.applyEnemyStatus(ally,EnemyStatus::Charm,-1);}
+    run.room=run.finalRoom();run.roomClear=true;run.rooms[size_t(run.room)].cleared=true;run.floorExitRequested=true;
+    check(run.advanceFloor(),"converted cohort crosses expedition floor");
+    check(std::count_if(run.enemies.begin(),run.enemies.end(),[](const Enemy &b){return b.alive&&b.permanentCharmed;})==5,"all five retained across floor");
+    for(const auto &b:run.enemies)if(b.permanentCharmed)
+        check(!run.arena.blocked(b.position,b.radius)&&run.arena.roomAt(b.position)==run.room,"floor transfer legal placement");
+    std::cout<<"CHARM_PERMANENT affiliation=1 incoming_damage=1 player_safety=1 room_travel=1 targeting=1\n";
+}
+void recoil() {
+    for(auto kind:Cohort) {
+        auto s=fixture();auto id=spawn(s,kind);auto *body=s.findEnemy(id);body->hp=body->maxHp=1000;
+        Event hit;hit.type=EventType::Damage;hit.target=id;hit.damage=1;hit.direction={1,0,0};
+        s.queueRoot(hit);s.drainEvents();check(near(length(s.findEnemy(id)->velocity),0),"scripted damage has no invented impact");
+        hit.projectileImpact=true;s.queueRoot(hit);s.drainEvents();
+        const float mass=kind.type==10?5.f:3.f;
+        check(near(s.findEnemy(id)->velocity.x,15/mass),"projectile recoil uses source mass");
+        ticks(s);check(s.findEnemy(id)->position.x>0,"ordinary controller retains external recoil");
+        s.findEnemy(id)->velocity={};hit.projectileImpact=false;hit.explosionDamage=true;hit.position=sub(s.findEnemy(id)->position,{1,0,0});
+        s.queueRoot(hit);s.drainEvents();check(near(s.findEnemy(id)->velocity.x,30/mass),"blast recoil points away from blast origin");
+        for(int n=0;n<30;++n)s.queueRoot(hit);s.drainEvents();
+        check(length(s.findEnemy(id)->velocity)<=20.001f,"repeated recoil remains bounded");
+    }
+    for(auto effect:{EnemyStatus::Freeze,EnemyStatus::Slow}) {
+        auto s=fixture();auto id=spawn(s,monsterId(12));s.applyEnemyStatus(id,effect,60);
+        Event hit;hit.type=EventType::Damage;hit.target=id;hit.damage=1;hit.direction={1,0,0};hit.projectileImpact=true;
+        s.queueRoot(hit);s.drainEvents();ticks(s);
+        check(s.findEnemy(id)->position.x>0&&s.findEnemy(id)->affectedBy(effect),"status retains collision-safe impulse without removal");
+    }
+    auto s=fixture();auto id=spawn(s,monsterId(12));s.arena.floorProps.push_back({StoryPropKind::Crate,{{1,-1,-3},{3,4,3}}});s.arena.rebuildWalls();
+    Event hit;hit.type=EventType::Damage;hit.target=id;hit.damage=1;hit.direction={1,0,0};hit.projectileImpact=true;
+    s.queueRoot(hit);s.drainEvents();ticks(s,30);
+    check(!s.arena.blocked(s.findEnemy(id)->position,s.findEnemy(id)->radius),"recoil cannot penetrate solid cover");
+    std::cout<<"RECOIL mass=5 impulse=1 blast=1 cap=1 statuses=1 cover=1\n";
+}
+void champions() {
+    for(auto kind:Cohort)for(int variant:{0,1,2,5,7,13,18,19}) {
+        auto s=fixture();auto id=spawn(s,kind);const float radius=s.findEnemy(id)->radius;
+        check(s.makeChampion(id,variant),"champion applies to all five");const auto *p=s.content->champion(variant);
+        auto *body=s.findEnemy(id);check(near(body->hp,32*p->hp)&&near(body->radius,radius*p->collision),"champion health and collision multipliers");
+        check(near(body->championVisual*body->radius,radius*p->visual),"visual and collision scales independent");
+        check(!s.makeChampion(id,variant)&&!s.makeChampion(id,25),"no stacking or unsupported champion type");
+        s.godMode=false;s.player.position=body->position;ticks(s);
+        check(near(s.player.hp,StartingHealth-10*p->damage*EnemyDamageMultiplier),"champion contact damage policy");
+        s.applyEnemyStatus(id,EnemyStatus::Charm,-1);const auto hp=s.player.hp;s.player.hurt=0;ticks(s);
+        check(near(s.player.hp,hp),"converted champion remains safe to player");
+    }
+    auto green=fixture();auto id=spawn(green,monsterId(12));green.makeChampion(id,2);ticks(green,3);
+    check(!green.hazards.empty()&&green.hazards.front().kind==HazardKind::Creep,"green champion emits creep");
+    auto burst=fixture();id=spawn(burst,monsterId(12));spawn(burst,monsterId(12),{30,.85f,0});burst.makeChampion(id,13);burst.limits.queuedEvents=1;
+    hit(burst,id,10000);ticks(burst,12);
+    check(burst.stats.projectiles==8,"light blue eight-shot death survives event backpressure");
+    auto boom=fixture();id=spawn(boom,monsterId(12));auto other=spawn(boom,monsterId(12),{2,.85f,0});hold(boom,other);boom.makeChampion(id,5);
+    hit(boom,id,10000);check(!boom.findEnemy(other)->alive,"cyan champion death explosion hits nearby enemy");
+    int seen=0;
+    for(int seed=0;seed<12;++seed) {
+        Simulation a(seed,1,{},MissionTheme::Canyon,true,false),b(seed,1,{},MissionTheme::Canyon,true,false);
+        for(size_t r=0;r<a.rooms.size();++r) {
+            const auto &aa=a.roomEnemies(int(r));const auto &bb=b.roomEnemies(int(r));check(aa.size()==bb.size(),"champions preserve seeded residents");
+            for(size_t n=0;n<aa.size();++n){check(aa[n].champion==bb[n].champion,"seeded champion identity reproducible");if(aa[n].champion>=0){++seen;check(aa[n].champion!=1,"yellow champion stage gate");}}
+        }
+    }
+    check(seen>0,"champions reachable in seeded first floors");
+    for(auto kind:{monsterId(10),monsterId(10,1)}) {
+        bool morphed=false;
+        for(int seed=0;seed<20&&!morphed;++seed) {
+            auto s=fixture();s.combatRng=Random(seed);auto id=spawn(s,kind);s.makeChampion(id,19);
+            hit(s,id,s.findEnemy(id)->hp+1);auto *e=s.findEnemy(id);
+            if(e&&e->alive&&e->monster.type==11){morphed=true;check(e->champion==19&&near(e->maxHp,96)&&s.stats.kills==0,"headless champion morph retains modifiers without paying kill");}
+        }
+        check(morphed,"champion headless transform reachable");
+    }
+    std::cout<<"CHAMPIONS variants=8 identities=5 stats=1 contact=1 charm=1 creep=1 burst_retry=1 explosion=1 seeded=1\n";
+}
 void configuration() {
     auto base=defaultMechanics();const auto dir=std::filesystem::temp_directory_path()/("dw-charm-"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
     struct Cleanup{std::filesystem::path p;~Cleanup(){std::filesystem::remove_all(p);}}cleanup{dir};std::filesystem::create_directories(dir);
@@ -194,8 +300,27 @@ void configuration() {
         "charm_effect 12.0.0 15 500 1600 3 3.2 110 100 33 19.2\ncharm_effect 12.0.0 15 500 1600 3 3.2 110 100 33 19.2"}) {
         bool rejected=false;try{edit(bad);}catch(const std::exception&){rejected=true;}check(rejected,"invalid Charm profile rejected");
     }
+    std::ofstream(file)<<original;
+    const auto response=dir/"hit_responses.mechanics";
+    for(const auto *bad:{"0 15 30 20","3 -1 30 20","3 15 30 0","nan 15 30 20"}) {
+        std::ofstream(response)<<"DEATHWARD_MECHANICS 1\nhit_response 12.0.0 "<<bad<<"\n";
+        bool rejected=false;try{MechanicsLibrary::load(dir);}catch(const std::exception&){rejected=true;}
+        check(rejected,"invalid mass/impulse/cap rejected");
+    }
+
+    std::ofstream(response)<<"DEATHWARD_MECHANICS 1\nhit_response 12.0.0 15 15 30 20\n";
+    auto changed=MechanicsLibrary::load(dir);auto tuned=fixture();tuned.content=changed;auto actor=spawn(tuned,monsterId(12));
+    Event impact;impact.type=EventType::Damage;impact.target=actor;impact.damage=1;impact.direction={1,0,0};impact.projectileImpact=true;
+    tuned.queueRoot(impact);tuned.drainEvents();
+    check(near(tuned.findEnemy(actor)->velocity.x,1)&&near(base->hitResponse(monsterId(12))->mass,3),"external response tuning and immutable snapshots");
+    const auto championFile=dir/"champions.mechanics";
+    for(const auto *bad:{"champion 0 Red 0 1 1 1 2 1 200 0 0","champion 0 Red 2 1 0 1 2 1 200 0 0","champion 26 Invalid 3 1 1 1 2 1 200 0 0","champion 0 Red 2 1 1 1 2 1 300 0 0"}) {
+        std::ofstream(championFile)<<"DEATHWARD_MECHANICS 1\n"<<bad<<"\n";
+        bool rejected=false;try{MechanicsLibrary::load(dir);}catch(const std::exception&){rejected=true;}
+        check(rejected,"invalid champion tuning rejected");
+    }
     std::cout<<"CHARM_CONTENT tuning=1 immutable_reload=1 opt_in=1 rejected_contracts=9\n";
 }
 }
-int main(){try{duration();targeting();shots();contact();combinations();lifecycle();configuration();std::cout<<"First-floor temporary Charm contracts passed\n";return 0;}
+int main(){try{duration();targeting();shots();contact();combinations();lifecycle();permanent();recoil();champions();configuration();std::cout<<"First-floor Charm contracts passed\n";return 0;}
 catch(const std::exception &e){std::cerr<<e.what()<<'\n';return 1;}}

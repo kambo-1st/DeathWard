@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-01T09:14:02.053838+00:00",
+  "result": "pass",
+  "scope": "Audit artifact checks and existing Charger suite; no new full native parity acceptance.",
+  "checks": [
+    "154reviewed regular source HP profiles resolved numerically; AI acceptance separate",
+    "154rows/HP calculator,25percent reduction and stage progression checked",
+    "Saved source hashes unchanged",
+    "Offline desktop/mobile HTML checks; no WASM game checks"
+  ],
+  "html_sha256": "fa5605f3f969013ec9e3eab0145df9da907367c04701e3e7dae284046fe15354",
+  "audit_sha256": "ab0e5e4f81512cf3a8f1322e1c9cdb55ca911c81eb8edc3d04fc54978bfa3610",
+  "verified_utc": "2026-11-01T09:55:15.289366+00:00",
+  "sha256": "8a91fc72429553e81a79dc3b97114d0be682c0b636af9bd1c9441325d13f3386"
+}

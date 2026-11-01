@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 56: creature_cycles
+1/2 Test #56: creature_cycles ..................   Passed   27.69 sec
+    Start 57: charger_variants
+2/2 Test #57: charger_variants .................   Passed   27.23 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  54.93 sec

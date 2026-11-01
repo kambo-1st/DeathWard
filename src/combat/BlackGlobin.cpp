@@ -17,7 +17,7 @@ bool Simulation::queueThrownSpider(Enemy &e,MonsterId child,Vector3 target,float
 void Simulation::blackGlobinDamageBrood(Enemy &e) {
     const auto &p=*content->blackGlobin(e.monster);
     auto &r=*e.blackGlobin;
-    if(!r.initialized||r.lastEmissionHP-e.hp<=p.damageThreshold)return;
+    if(!r.initialized||r.lastEmissionHP-e.hp<=p.damageThreshold*content->regularHealthAdjustment(e.monster))return;
     const auto target=add(e.position,mul(horizontal(sub(player.position,e.position)),p.targetFraction));
     if(queueThrownSpider(e,p.spider,target,p.throwHeight)) {
         r.lastEmissionHP=e.hp;++r.births;

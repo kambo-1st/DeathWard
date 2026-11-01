@@ -1,0 +1,29 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 56: charger_variants
+1/4 Test #56: charger_variants .................***Failed    0.25 sec
+DROWNED hp=70.4 immediate=1 diagonal_death_shots=4 execution_cleanup=1
+DANK fast_dash=1 swept_wall_reflection=1 stationary_recovery=1 slowing_nondamaging_trail=1
+PRINCESS diagonal=1 real_tail_projectile=1 head_piercing_blocked=1 spatial_explosions=1
+LEVEL2 hp=128 cardinal_start=1 steering=1 slower=1 contact_damage=25
+CHARGER_STARTING_KIT id=23.0 seconds=2.15 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.1 seconds=2.15 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.2 seconds=3.16667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=23.3 seconds=6.01667 post_death_seconds=1.5 hp=100 kills=1
+CHARGER_STARTING_KIT id=855.0 seconds=3.66667 post_death_seconds=1.5 hp=100 kills=1
+FAIL champion movement applies configured speed multiplier
+
+    Start 57: companion_familiars
+2/4 Test #57: companion_familiars ..............   Passed    1.65 sec
+    Start 90: first_floor_batch2
+3/4 Test #90: first_floor_batch2 ...............   Passed    3.99 sec
+    Start 97: first_floor_charm_effect
+4/4 Test #97: first_floor_charm_effect .........   Passed    6.87 sec
+
+75% tests passed, 1 tests failed out of 4
+
+Total Test time (real) =  12.77 sec
+
+The following tests FAILED:
+	 56 - charger_variants (Failed)
+Errors while running CTest

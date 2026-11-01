@@ -89,6 +89,7 @@ struct Context {
     int sourceEffect = -1;
     std::optional<ItemKey> sourceItem{};
     DamageSource damageSource = DamageSource::Unspecified;
+    bool championCoinLoss=false;
 };
 struct Stats {
     double duration = 0, bossDuration = 0;

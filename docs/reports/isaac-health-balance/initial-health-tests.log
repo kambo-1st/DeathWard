@@ -1,0 +1,15 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 56: regular_health_balance
+1/1 Test #56: regular_health_balance ...........***Failed    0.33 sec
+REGULAR_HEALTH identities=154 stages=13 source_preserved=1 spawn=1 champion=1 player_unchanged=1 stage_growth=1
+FAIL proportional overkill preserves Mulligan offspring
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.34 sec
+
+The following tests FAILED:
+	 56 - regular_health_balance (Failed)
+Errors while running CTest

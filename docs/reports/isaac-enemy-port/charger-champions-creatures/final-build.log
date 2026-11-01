@@ -1,0 +1,18 @@
+[  4%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/CreatureCycles.cpp.o
+[  4%] Linking CXX static library libdeathward_core.a
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_creature_cycle_tests
+[ 95%] Linking CXX executable deathward_creature_cycle_tests
+[100%] Built target deathward_creature_cycle_tests
+[ 12%] Built target glfw
+[ 15%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 81%] Built target deathward_core
+[ 87%] Built target deathward_cloth
+[ 87%] Built target deathward_particles
+[ 90%] Built target deathward_skinning
+[ 90%] Built target deathward_mission_lighting
+[ 90%] Built target deathward_runtime_assets
+[ 93%] Building CXX object CMakeFiles/deathward.dir/src/render/Renderer.cpp.o
+[ 93%] Linking CXX executable deathward
+[100%] Built target deathward

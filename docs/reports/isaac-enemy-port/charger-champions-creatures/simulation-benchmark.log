@@ -1,0 +1,2 @@
+batch=3 mean_sim_ms=0.0395549 max_sim_ms=0.422317 actors=5 projectiles=0
+batch=4 mean_sim_ms=0.0362892 max_sim_ms=0.30116 actors=5 projectiles=0

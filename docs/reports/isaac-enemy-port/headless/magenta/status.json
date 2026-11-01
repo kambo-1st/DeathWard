@@ -1,0 +1,12 @@
+{
+  "status": "scoped_pass",
+  "source": "docs/reports/isaac-wiki/monsters-wiki/pages/Pacer.html",
+  "implemented": "Gusher alone may use Magenta in both debug application and natural champion selection. Its normal blood shots and generic Magenta shots retain independent timers.",
+  "tests": "tests/headless_tests.cpp: magentaGusher; tests.log",
+  "adaptations": [
+    "Magenta extra-shot cadence 1.2 seconds, speed 7 and lifetime 0.8 seconds remain DeathWard tuning; wiki prose does not establish native timing."
+  ],
+  "remaining": [
+    "Full visual/balance acceptance and other champion interactions remain open."
+  ]
+}

@@ -8,7 +8,7 @@ namespace {
 // retain their existing movement/separation path.
 const MonsterDefinition *groundBody(const Enemy &e, const MechanicsLibrary &content) {
     if(e.rockSpider&&e.rockSpider->height<content.rockSpider(e.monster)->gridHeight)return nullptr;
-    if(content.mirror(e.monster))return nullptr; // Its reflected position owns translation.
+    if(e.championPile||(content.creatureCycle(e.monster)&&content.creatureCycle(e.monster)->clack&&e.state==EnemyState::Collapsed)||e.champion==8||content.mirror(e.monster))return nullptr; // Its reflected position owns translation.
     if (!e.alive || e.dyingEggy() || e.railCarrier || e.kind != EnemyKind::Monster || e.state == EnemyState::Buried ||
         e.state == EnemyState::Teleporting || e.state == EnemyState::Jumping || e.hop.active || e.thrownOffspring ||
         (e.targetHop&&e.targetHop->airborne))
@@ -32,6 +32,13 @@ Vector3 separationNormal(Vector3 delta, EntityId a, EntityId b) {
 }
 
 void Simulation::moveMonster(Enemy &e, Vector3 velocity, float dt) {
+    if(e.champion==8) {
+        const auto &b=arena.rooms[size_t(room)].bounds;const auto before=e.position;
+        e.position=add(before,mul(velocity,dt));
+        e.position.x=std::clamp(e.position.x,b.min.x+e.radius,b.max.x-e.radius);
+        e.position.z=std::clamp(e.position.z,b.min.z+e.radius,b.max.z-e.radius);
+        e.velocity=mul(sub(e.position,before),1/dt);return;
+    }
     if(e.railCarrier)return; // Targeting/attacks continue; the carrier owns translation.
     const auto before = e.position;
     const auto *d=content->monster(e.monster);

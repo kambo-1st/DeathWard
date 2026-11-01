@@ -1,5 +1,7 @@
 # Isaac enemy integration
 
+The [regular-enemy implementation report](reports/regular-enemy-implementation.html) provides a searchable, evidence-linked snapshot of Isaac base names, current runtime definitions, partial work and known gaps. Regenerate it with `python3 scripts/isaac-reference/build-regular-enemy-report.py`.
+
 ## Full enemy port plan — 2026-10-25
 
 This is the implementation specification for expanding the existing adaptations
@@ -171,6 +173,17 @@ falls back to the player. Exact registry consumption during room/floor travel
 still needs tracing. This checkpoint changes evidence only; permanent conversion
 is still unimplemented, and the runtime fingerprint and completion counts above
 are unchanged.
+
+The [permanent Charm implementation](reports/isaac-enemy-port/first-floor-batch1/permanent-charm/summary.json)
+adds negative-duration conversion for the same five. Converted actors reject
+player/ally damage, retain ordinary hostile vulnerability, stop blocking room
+completion and cannot hurt the player. Horf suppresses player fallback attacks.
+Room/floor travel preserves HP and statuses with bounded legal placement retry;
+this is a documented DeathWard adaptation rather than a claim of exact native
+registry/save transfer. Sixteen selected Linux suites pass, including all-five
+room/floor travel. One inspected native Horf pair capture confirms the friendly
+cue, NPC damage and threat accounting. Fingerprint `766fd59984373a0`; full cohort
+acceptance remains open and no record is promoted.
 
 The preceding four Leper parent forms `310.0.0`–`310.0.3` have source-backed evasion,
 pursuit, batched damage/shedding, final-form creep and same-entity gray Gusher

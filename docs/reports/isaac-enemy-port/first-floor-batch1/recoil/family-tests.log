@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 74: horf_stationary_shooting
+1/4 Test #74: horf_stationary_shooting .........   Passed    1.00 sec
+    Start 86: gaper_family
+2/4 Test #86: gaper_family .....................   Passed    0.44 sec
+    Start 89: headless_family
+3/4 Test #89: headless_family ..................   Passed    0.54 sec
+    Start 96: first_floor_charm_effect
+4/4 Test #96: first_floor_charm_effect .........   Passed    2.30 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   4.28 sec

@@ -483,7 +483,7 @@ been imported wholesale or certified as exact Isaac behavior.
 | [`chargers.mechanics`](assets/mechanics/chargers.mechanics) | Charge axes, reflection, steering, stationary recovery, tar, tail armor and death volleys |
 | [`companions.mechanics`](assets/mechanics/companions.mechanics) | Friendly charge actors, contact/damage conversion, room lifetime and item-driven contact familiars |
 | [`statues.mechanics`](assets/mechanics/statues.mechanics) | Stationary hazard attacks, clear/plate policies, re-entry removal and separate seeded hazard pools |
-| [`first_floor_statuses.mechanics`](assets/mechanics/first_floor_statuses.mechanics) | Opt-in Fear/Confusion/Freeze/Slow, Poison/Burn, Shrink and temporary Charm for Frowning Gaper, Gaper, Gusher, Pacer and Horf |
+| [`first_floor_statuses.mechanics`](assets/mechanics/first_floor_statuses.mechanics) | Opt-in Fear/Confusion/Freeze/Slow, Poison/Burn, Shrink and Charm for Frowning Gaper, Gaper, Gusher, Pacer and Horf |
 
 Edit the files, validate, then restart the game. Native development builds read
 the checkout's files directly, so balance edits need **no C++ rebuild**. Portable
@@ -496,6 +496,12 @@ cmake --build build --target deathward_check_mechanics
 ./build/deathward_check_mechanics assets/mechanics
 ctest --test-dir build -R 'mechanics_content|item_builds|monster_behaviors' --output-on-failure
 ```
+
+The first five enemies also read `hit_responses.mechanics`: `hit_response ID MASS PROJECTILE_IMPULSE EXPLOSION_IMPULSE MAXIMUM_SPEED`.
+Mass comes from the installed Isaac data; impulse strengths and the speed cap are
+DeathWard tuning. Admitted projectile and blast hits add momentum without a stun;
+existing terrain collision and Freeze/Slow behavior still apply. Scripted damage
+and periodic status damage add no recoil.
 
 All `.mechanics` files in that directory are loaded in filename order. Each
 begins with `DEATHWARD_MECHANICS 1`. Fields are whitespace separated; quote names
@@ -520,7 +526,7 @@ This API does not grant the player a new perk. To inspect it in a native capture
 ```
 
 Repeat `--enemy-status FRAME fear|confusion|freeze|slow|poison|burn|shrink|charm DURATION` for scripted changes;
-duration `0` removes that effect. `FRAME` is the capture frame, while `DURATION`
+duration `0` removes a timed effect; it does not undo permanent conversion. `FRAME` is the capture frame, while `DURATION`
 uses the 30-Hz simulation clock. This option requires an isolated enemy smoke
 scene. It does not change ordinary gameplay controls.
 
@@ -576,11 +582,16 @@ player item producers, champions and other controllers still need review.
 See the [Shrink source evidence](docs/reports/isaac-enemy-port/first-floor-batch1/shrink/source/manifest.json)
 for native rules and explicit adaptations.
 
-`EnemyStatus::Charm` currently implements **temporary Charm** for those same five.
+`EnemyStatus::Charm` implements temporary and permanent conversion for those same five.
 Positive durations retain the greater of the existing and new duration, without
-the 120/150-frame cap. Negative duration is rejected: permanent conversion and
-followers are still unfinished. The enemy remains a room threat and can still
-hurt the player. With another eligible enemy present, Gapers pursue it and Horf
+the 120/150-frame cap. Negative duration permanently converts the enemy.
+A converted actor remains charmed, rejects player/ally damage, cannot hurt the
+player and stops blocking room completion. Positive reapplication cannot expire
+conversion. Converted actors travel between rooms and floors; DeathWard places
+them on legal floor, retaining them for retry when capacity or geometry prevents
+placement. Floor travel assigns fresh entity IDs. This is an explicit DeathWard
+travel adaptation; exact Isaac registry transfer/save behavior is not claimed.
+Temporary Charm keeps the enemy a room threat that can still hurt the player. With another eligible enemy present, Gapers pursue it and Horf
 aims at it; Gusher/Pacer retain their random movement. Confusion, Fear, Freeze,
 Slow and headless transformations preserve their separate rules.
 
@@ -2067,3 +2078,60 @@ obstacle lookahead/turn limits, awareness range, contact damage, initial/turn
 timer ranges, awareness cadence/chance, forget chance and walking frames.
 Reloaded files affect new content snapshots; active simulations keep theirs.
 Native status, camouflage, special thrown states and full acceptance remain open.
+
+
+Eight ordinary champion types are available for Frowning Gaper, Gaper, Gusher,
+Pacer and Horf: Red (0), Yellow (1), Green (2), Dark Cyan (5), Gray (7), Light
+Blue (13), Small (18) and Large (19). They change HP, contact/projectile damage,
+movement and/or size; Green leaves creep, Dark Cyan explodes on final death,
+and Light Blue fires eight death shots. Headless morphs retain champion state.
+Champion contact remains harmless after permanent conversion.
+
+`assets/mechanics/champions.mechanics` controls HP, speed, visual/collision scale,
+damage and source-stage eligibility. Eligible natural Canyon residents have a
+seeded 5% chance; supported types have equal weights. Yellow unlocks at source
+stage 3. Tutorial and Mine encounters keep their existing rules. Speed values,
+creep/blast strengths and pickup behavior are DeathWard adaptations. Existing
+ordinary loot remains in use; Isaac's champion-specific pickups and the other
+18 champion types are not implemented.
+
+To force a supported type in a capture (bypassing natural stage/chance rules):
+
+```sh
+./build/deathward --smoke --theme canyon --scene enemy-10.0.0 \
+  --enemy-champion 0 --enemy-camera-follow --frames 60 --mute
+```
+
+
+`./build/deathward --practice-batch2` opens a playable mixed Fly, Pooter,
+Attack Fly, Spider and Mulligan encounter in a generated combat room. It uses
+ordinary mouse/keyboard controls, starting100HP/24damage and no perks. The default
+save is a separate `deathward-batch2-practice.save` in the system temporary
+directory; an explicit `--save` overrides it. This is a testing shortcut, not a
+shortened expedition or story replacement. `--smoke --frames 30 --screenshot PATH`
+can capture the same setup. Existing F-key cheats remain available.
+
+This batch reuses the mass-based recoil system; airborne and evader controllers
+now preserve externally supplied momentum between updates. Pooter and Mulligan
+also support the existing eight champion types. Fly, Attack Fly and Spider
+remain champion-ineligible. Other item/status interactions and full acceptance
+remain in progress; see the honest regular-enemy HTML report.
+
+
+`./build/deathward --practice-batch3` opens the Charger-family practice room:
+Charger, Drowned Charger, Dank Charger, Carrion Princess and Level 2 Charger.
+It uses normal controls, starting100HP/24damage, no perks, and a separate
+`deathward-batch3-practice.save` in the system temporary directory. It combines
+stage-specific enemies for testing; their normal expedition floor pools stay
+stage-specific. The eight shared champion types also apply to these five.
+
+Charges now respect their remaining duration on long simulation steps and use
+swept contact checks. Drowned death shots retry under event/projectile pressure
+without paying extra rewards or clearing the room early. Carrion Princess keeps
+its spatial tail weakness; Dank retains reflection and harmless slowing tar.
+Remaining native tuning, status/item interactions and full acceptance are listed
+in the regular-enemy HTML report.
+
+The consolidated [enemy work remaining report](docs/reports/isaac-enemy-missing-work/index.html)
+separates completed checkpoints, shared systems still missing, and the full
+per-record backlog. It can be rebuilt with `python3 scripts/isaac-reference/build-enemy-missing-work-report.py`.

@@ -18,3 +18,10 @@ __pycache__/
 # Local Isaac research inputs; report, measurements and instructions remain versionable.
 /reference/isaac-repentance-1.7.9b/
 /reference/isaac-mechanics-study/
+
+# Aborted HTTrack full-wiki mirror (9.8 GB, ads and other sections) and API cache of the monsters-only mirror.
+/docs/reports/isaac-wiki/isaac/
+/docs/reports/isaac-wiki/isaac.whtt
+/docs/reports/isaac-wiki/index.html
+/docs/reports/isaac-wiki/*.gif
+/docs/reports/isaac-wiki/monsters/.cache/

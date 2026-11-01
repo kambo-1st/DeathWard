@@ -1,0 +1,28 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   2: mechanics_content
+1/6 Test   #2: mechanics_content ................   Passed    2.45 sec
+    Start  56: regular_health_balance
+2/6 Test  #56: regular_health_balance ...........   Passed    0.43 sec
+    Start  58: charger_variants
+3/6 Test  #58: charger_variants .................   Passed   20.95 sec
+    Start  76: sub_horf_reactive
+4/6 Test  #76: sub_horf_reactive ................***Failed    1.03 sec
+SUB_HORF idle=1 hit_recoil=1 external_push=1 spin=1 shots=1 partitions=3 cover=1
+SUB_HORF_COMBINED death_retry=1 no_early_clear=1 charm_affiliation=1 freeze_slow=1 poison_frozen_death=1
+SUB_HORF_REPLACEMENT originals=346 replacements=6 witness_room=3661 exact_denominator=60 actual_spawn=1
+SUB_HORF_CHAMPION_STATS types=26 charm_combinations=52 size_damage=1 idle_physics=1 visibility=1
+FAIL Brown droppings are destructible but pay no loot
+
+    Start  92: headless_family
+5/6 Test  #92: headless_family ..................   Passed    0.50 sec
+    Start 100: first_floor_charm_effect
+6/6 Test #100: first_floor_charm_effect .........   Passed    5.51 sec
+
+83% tests passed, 1 tests failed out of 6
+
+Total Test time (real) =  30.89 sec
+
+The following tests FAILED:
+	 76 - sub_horf_reactive (Failed)
+Errors while running CTest

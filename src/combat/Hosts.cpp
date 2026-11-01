@@ -7,7 +7,7 @@ void Simulation::hostBlockedHit(Enemy &e,const Event &event) {
     if(!e.host)e.host=HostRuntime{};
     // Damage is accumulated before the next source update, not rounded once
     // per pellet. Hits during the attack do not add idle opening delay.
-    if(e.host->frame<0&&event.damage>0)e.host->blockedDamage+=event.damage/p->healthScale;
+    if(e.host->frame<0&&event.damage>0)e.host->blockedDamage+=event.damage/(p->healthScale*content->regularHealthAdjustment(e.monster));
 }
 
 void Simulation::updateHost(Enemy &e,float dt) {

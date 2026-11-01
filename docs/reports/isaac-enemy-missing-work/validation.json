@@ -1,0 +1,13 @@
+{
+  "verified_utc": "2026-11-01T13:46:29.559938+00:00",
+  "result": "pass",
+  "html_sha256": "4f190484dd0b2d14963c94c6962ca4d4432c091c8213eefc17680865ec5d13e3",
+  "checks": [
+    "155reviewed regular actors;653source records;418missing and18existing_unverified.",
+    "Offline HTML scopes/search/expandable details checked in Chromium.",
+    "390pixel mobile viewport has no horizontal overflow; no JavaScript errors.",
+    "All report evidence links resolve locally.",
+    "Tracker validation and authored source/staged whitespace checks passed."
+  ],
+  "scope": "Missing-work report presentation/data checks. Gameplay validation is recorded in linked enemy checkpoints."
+}

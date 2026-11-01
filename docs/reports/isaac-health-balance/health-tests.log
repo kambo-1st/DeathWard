@@ -1,0 +1,3 @@
+REGULAR_HEALTH identities=155 stages=13 source_preserved=1 spawn=1 champion=1 player_unchanged=1 stage_growth=1
+REGULAR_HEALTH_LIFECYCLE regrowth_floor=1 boil_growth=1 overkill=1 offspring_once=1
+PASS regular health balance

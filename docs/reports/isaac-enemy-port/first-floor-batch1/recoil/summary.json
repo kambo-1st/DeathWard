@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-31T16:37:00.660405+00:00",
+  "status": "partial_progress",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "source_masses": {
+    "10.0.0": 5.0,
+    "10.1.0": 5.0,
+    "11.0.0": 3.0,
+    "11.1.0": 3.0,
+    "12.0.0": 3.0
+  },
+  "source": "Preserved installed1.7.9b entities2.xml fields in docs/research/isaac-mechanics-reference.json",
+  "config": "assets/mechanics/hit_responses.mechanics",
+  "adaptation": "Source mass is preserved. Projectile impulse15, explosion impulse30 and final speed cap20 are explicit DeathWard tuning, not recovered native impulse constants. Recoil uses existing controller momentum and terrain collision; no new stun is added. Only positive admitted damage from actual projectile impacts/explosions adds recoil.",
+  "mechanics_fingerprint": "af484eaa80884c52",
+  "binary_sha256": "9f1b0dd378ba49f8d0ad84889bc7c8474708e49e5e887c2ff872c9154ca65ff4",
+  "validation": {
+    "suites_passed": 6,
+    "tests": [
+      "first_floor_charm_effect",
+      "gaper_family",
+      "headless_family",
+      "horf_stationary_shooting",
+      "first_floor_cohort",
+      "monster_behaviors"
+    ],
+    "scope": "All five masses, actual-controller motion, radial blast direction, bounded repeated impacts, Freeze/Slow, cover, invalid external values and immutable tuning. Existing starting-kit combat and seeded placement tests pass.",
+    "native_capture_inspected": true,
+    "capture": "horf.png",
+    "native_result": "Hostile Horf after one charmed-NPC shot retains12.8HP and moves fromx=-84 to-84.3844. Player100HP and one room threat retained. Single isolated scene; full visual/performance acceptance remains open."
+  },
+  "completed_records": 0,
+  "remaining": [
+    "Champion and remaining status/item integration",
+    "Full mixed-cohort visual/occlusion, varied-build balance and controlled rendered performance"
+  ],
+  "wasm": "Skipped by user instruction"
+}

@@ -1,0 +1,38 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  2: mechanics_content
+ 1/16 Test  #2: mechanics_content ..................   Passed    1.76 sec
+      Start 30: monster_behaviors
+ 2/16 Test #30: monster_behaviors ..................   Passed    3.45 sec
+      Start 34: source_projectile_motion
+ 3/16 Test #34: source_projectile_motion ...........   Passed    0.23 sec
+      Start 51: monster_fire_reactions
+ 4/16 Test #51: monster_fire_reactions .............   Passed    0.19 sec
+      Start 57: companion_familiars
+ 5/16 Test #57: companion_familiars ................   Passed    1.37 sec
+      Start 71: source_immunity_and_lethal_morph
+ 6/16 Test #71: source_immunity_and_lethal_morph ...   Passed    0.58 sec
+      Start 74: horf_stationary_shooting
+ 7/16 Test #74: horf_stationary_shooting ...........   Passed    0.78 sec
+      Start 86: gaper_family
+ 8/16 Test #86: gaper_family .......................   Passed    0.32 sec
+      Start 89: headless_family
+ 9/16 Test #89: headless_family ....................   Passed    0.41 sec
+      Start 90: first_floor_cohort
+10/16 Test #90: first_floor_cohort .................   Passed    3.97 sec
+      Start 91: first_floor_status_effects
+11/16 Test #91: first_floor_status_effects .........   Passed    0.67 sec
+      Start 92: first_floor_freeze_effect
+12/16 Test #92: first_floor_freeze_effect ..........   Passed    0.74 sec
+      Start 93: first_floor_damage_statuses
+13/16 Test #93: first_floor_damage_statuses ........   Passed    1.10 sec
+      Start 94: first_floor_slow_effect
+14/16 Test #94: first_floor_slow_effect ............   Passed    0.91 sec
+      Start 95: first_floor_shrink_effect
+15/16 Test #95: first_floor_shrink_effect ..........   Passed    0.79 sec
+      Start 96: first_floor_charm_effect
+16/16 Test #96: first_floor_charm_effect ...........   Passed    1.89 sec
+
+100% tests passed, 0 tests failed out of 16
+
+Total Test time (real) =  19.18 sec

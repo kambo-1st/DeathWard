@@ -1,0 +1,31 @@
+{
+  "verified_utc": "2026-11-01T11:37:15.513441+00:00",
+  "report": "docs/reports/regular-enemy-implementation.html",
+  "sha256": "e862f54e4608fc3a2139d056429297d9d516b3c61543b680f44069c4a6ddcac0",
+  "result": "pass",
+  "checks": [
+    "155reviewed regular records, all155with runtime definitions,0fully accepted,653total records.",
+    "Offline report search, expandable details, CSV export and desktop/mobile layout passed without JavaScript errors.",
+    "HP calculator155rows; SubHorf44.8to33.6at.75multiplier."
+  ],
+  "scope": "Report presentation and data joins. Gameplay evidence is the separately linked six-suite SubHorf checkpoint.",
+  "previous_checkpoint": {
+    "verified_utc": "2026-11-01T09:55:15.289366+00:00",
+    "report": "docs/reports/regular-enemy-implementation.html",
+    "sha256": "3b02c3dcc7a56e9b2656637bb40fcd8c868c5c83df25904184cbb33cf819ed0b",
+    "result": "pass",
+    "checks": [
+      "154reviewed regular source HP profiles resolved numerically; AI acceptance separate",
+      "154rows/HP calculator,25percent reduction and stage progression checked",
+      "Saved source hashes unchanged",
+      "Offline desktop/mobile HTML checks; no WASM game checks"
+    ],
+    "scope": "Report presentation and data joins only. Enemy gameplay was not retested to create this report."
+  },
+  "sub_horf_champions_checkpoint": {
+    "combat_types": 26,
+    "result": "scoped_pass",
+    "evidence": "docs/reports/isaac-enemy-port/sub-horf/champions/status.json",
+    "full_port_accepted": false
+  }
+}

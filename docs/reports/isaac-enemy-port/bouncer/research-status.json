@@ -1,13 +1,7 @@
 {
-  "state": "parked_by_user_priority",
-  "implemented": false,
+  "state": "runtime_in_progress",
+  "implemented": true,
   "record": "822.0.0",
-  "reason": "Finish the selected ten existing first-floor enemies in batches before new roster expansion.",
-  "retained": [
-    "source/manifest.json",
-    "animations/manifest.json",
-    "validation/native-projectile-ramp.txt",
-    "validation/CTest-ramp-detail.log"
-  ],
-  "scope": "Source research and reusable extended projectile acceleration primitive only. No Bouncer runtime/controller, encounter placement or completion claim."
+  "evidence": "docs/reports/isaac-enemy-port/charger-champions-creatures/summary.json",
+  "scope": "Ordinary playable controller and tests added; exact3D/native timing equivalence and all acceptance gates remain open."
 }

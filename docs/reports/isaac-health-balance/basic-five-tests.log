@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 73: source_immunity_and_lethal_morph
+1/4 Test #73: source_immunity_and_lethal_morph ...   Passed    0.54 sec
+    Start 76: horf_stationary_shooting
+2/4 Test #76: horf_stationary_shooting ...........   Passed    0.71 sec
+    Start 88: gaper_family
+3/4 Test #88: gaper_family .......................   Passed    0.30 sec
+    Start 91: headless_family
+4/4 Test #91: headless_family ....................   Passed    0.38 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   1.95 sec

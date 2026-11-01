@@ -1,0 +1,1747 @@
+{
+  "source": "https://bindingofisaacrebirth.fandom.com/wiki/Monsters",
+  "fetched_utc": "2026-11-01T09:03:12Z",
+  "method": "MediaWiki API action=parse (HTML pages are behind a Cloudflare challenge)",
+  "index": {
+    "file": "Monsters.html",
+    "revid": 319196
+  },
+  "top_pages": [
+    {
+      "title": "Monsters",
+      "file": "Monsters.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Monsters",
+      "revid": 319196
+    },
+    {
+      "title": "Champions",
+      "file": "Champions.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Champions",
+      "revid": 319222
+    }
+  ],
+  "linked_titles": [
+    "Gaper",
+    "Horf",
+    "Pacer",
+    "Faceless",
+    "Exorcist",
+    "Candler",
+    "Dump",
+    "Fly",
+    "Fly_Bomb",
+    "Sucker",
+    "Pooter",
+    "Clotty",
+    "Mulligan",
+    "Danny",
+    "Blaster",
+    "Maggot",
+    "Charger",
+    "My_Shadow",
+    "Leech_(Enemy)",
+    "Blood_Puppy",
+    "Spitty",
+    "Globin",
+    "Gasbag",
+    "Cohort",
+    "Boom_Fly",
+    "Maw",
+    "Host",
+    "Hopper",
+    "Trite",
+    "Boil",
+    "Brain",
+    "Gyro",
+    "Mr._Maw",
+    "Baby",
+    "Vis",
+    "Guts",
+    "Knight",
+    "Whipper",
+    "Dople",
+    "Lump",
+    "MemBrain",
+    "Para-Bite",
+    "Fred",
+    "Eye",
+    "Embryo",
+    "Spider",
+    "Rock_Spider",
+    "Keeper_(Enemy)",
+    "Buttlicker",
+    "Hanger",
+    "Swarmer",
+    "Mask_+_Heart",
+    "Baby_Long_Legs",
+    "Crazy_Long_Legs",
+    "Fatty",
+    "Death's_Head",
+    "Mom's_Hand",
+    "Level_2_Fly",
+    "Level_2_Spider",
+    "Dip",
+    "Wizoob",
+    "Squirt",
+    "Cod_Worm",
+    "Oob",
+    "Skinny",
+    "Bony",
+    "Homunculus",
+    "Tumor",
+    "Nerve_Ending",
+    "Bishop",
+    "One_Tooth",
+    "Gurgling_(Enemy)",
+    "Goat",
+    "Cultist",
+    "Grub",
+    "Wall_Creep",
+    "Round_Worm",
+    "Mole",
+    "Lil'_Haunt",
+    "Polty",
+    "Dust",
+    "Dukie",
+    "Meatball",
+    "Ministro",
+    "Fistuloid",
+    "Fly_Trap",
+    "Poot_Mine",
+    "Bombgagger",
+    "Flesh_Maiden",
+    "Morningstar",
+    "Needle",
+    "Fissure",
+    "Portal",
+    "Henry",
+    "Stone_Grimace",
+    "Peep_Eye",
+    "Poky",
+    "Ball_and_Chain",
+    "Pitfall",
+    "Death_Scythe",
+    "Corn_Mine",
+    "Siren_Minion",
+    "Dark_Ball",
+    "Ultra_Greed_Coin",
+    "Dummy",
+    "Mulligoon",
+    "Mulliboom",
+    "Vomit_Grimace",
+    "Evil_Twin",
+    "Bloodshot_Eye_(Enemy)",
+    "Kamikaze_Leech",
+    "Holy_Leech",
+    "Red_Maw",
+    "Psychic_Maw",
+    "Red_Host",
+    "Double_Vis",
+    "Chubber",
+    "Red_Boom_Fly",
+    "Fat_Fly",
+    "Selfless_Knight",
+    "I.Blob",
+    "Clot",
+    "Mama_Guts",
+    "Gazing_Globin",
+    "Angelic_Baby",
+    "Gut",
+    "Sack",
+    "Walking_Boil",
+    "Walking_Gut",
+    "Walking_Sack",
+    "Spit",
+    "Slide",
+    "Frowning_Gaper",
+    "Flaming_Gaper",
+    "Flaming_Fatty",
+    "Pale_Fatty",
+    "Flaming_Hopper",
+    "Hive",
+    "Drowned_Hive",
+    "Drowned_Charger",
+    "Drowned_Boom_Fly",
+    "Dank_Squirt",
+    "Dank_Death's_Head",
+    "Dank_Globin",
+    "Scarred_Guts",
+    "Scarred_Para-Bite",
+    "Scarred_Double_Vis",
+    "Blister_(Enemy)",
+    "Ticking_Spider",
+    "Mushroom_(Enemy)",
+    "Nerve_Ending_2",
+    "Poison_Mind",
+    "Stoney",
+    "The_Thing",
+    "Blind_Creep",
+    "Rage_Creep",
+    "Mr._Red_Maw",
+    "Crispy",
+    "Rotty",
+    "Dank_Charger",
+    "Cross_Stoney",
+    "Sub_Horf",
+    "Loose_Knight"
+  ],
+  "pages": [
+    {
+      "title": "Baby",
+      "file": "pages/Baby.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Baby",
+      "revid": 310161,
+      "redirected_from": [
+        "Angelic_Baby"
+      ],
+      "categories": [
+        "Monsters",
+        "Added_in_Repentance",
+        "Added_in_Afterbirth",
+        "Modified_in_Repentance",
+        "Bugs",
+        "Modified_in_Afterbirth",
+        "Fetal_Monsters"
+      ]
+    },
+    {
+      "title": "Baby Long Legs",
+      "file": "pages/Baby_Long_Legs.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Baby_Long_Legs",
+      "revid": 313948,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Spider_Monsters"
+      ]
+    },
+    {
+      "title": "Ball and Chain",
+      "file": "pages/Ball_and_Chain.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Ball_and_Chain",
+      "revid": 309327,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Bishop",
+      "file": "pages/Bishop.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Bishop",
+      "revid": 311813,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Blaster",
+      "file": "pages/Blaster.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Blaster",
+      "revid": 310268,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Blood Puppy",
+      "file": "pages/Blood_Puppy.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Blood_Puppy",
+      "revid": 312433,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Passive_collectibles",
+        "Collectibles",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Boil",
+      "file": "pages/Boil.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Boil",
+      "revid": 310377,
+      "redirected_from": [
+        "Gut",
+        "Walking_Boil",
+        "Walking_Gut",
+        "Walking_Sack"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Afterbirth+",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth+"
+      ]
+    },
+    {
+      "title": "Bombgagger",
+      "file": "pages/Bombgagger.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Bombgagger",
+      "revid": 317584,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Bony",
+      "file": "pages/Bony.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Bony",
+      "revid": 309362,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth",
+        "Bone_Monsters"
+      ]
+    },
+    {
+      "title": "Boom Fly",
+      "file": "pages/Boom_Fly.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Boom_Fly",
+      "revid": 310212,
+      "redirected_from": [
+        "Drowned_Boom_Fly",
+        "Red_Boom_Fly"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Fly_Monsters",
+        "Chapter_2_Monsters",
+        "Chapter_2.5_Monsters",
+        "Chapter_3_Monsters",
+        "Chapter_3.5_Monsters",
+        "Chapter_4_Monsters",
+        "Chapter_4.5_Monsters",
+        "Chapter_5_Monsters"
+      ]
+    },
+    {
+      "title": "Brain",
+      "file": "pages/Brain.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Brain",
+      "revid": 309374,
+      "redirected_from": [
+        "Poison_Mind"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth+",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth+"
+      ]
+    },
+    {
+      "title": "Buttlicker",
+      "file": "pages/Buttlicker.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Buttlicker",
+      "revid": 316834,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Candler",
+      "file": "pages/Candler.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Candler",
+      "revid": 309839,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Charger",
+      "file": "pages/Charger.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Charger",
+      "revid": 309287,
+      "redirected_from": [
+        "Dank_Charger",
+        "Drowned_Charger"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Modified_in_Afterbirth+",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Afterbirth+",
+        "Added_in_Repentance",
+        "Maggot_Monsters",
+        "Chapter_1.5_Monsters",
+        "Chapter_2_Monsters",
+        "Chapter_2.5_Monsters",
+        "Chapter_3_Monsters",
+        "Chapter_4_Monsters",
+        "Chapter_4.5_Monsters",
+        "Chapter_5_Monsters"
+      ]
+    },
+    {
+      "title": "Clotty",
+      "file": "pages/Clotty.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Clotty",
+      "revid": 310157,
+      "redirected_from": [
+        "Clot",
+        "I.Blob"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Cod Worm",
+      "file": "pages/Cod_Worm.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Cod_Worm",
+      "revid": 310288,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Worm_Monsters",
+        "Chapter_4_Monsters"
+      ]
+    },
+    {
+      "title": "Cohort",
+      "file": "pages/Cohort.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Cohort",
+      "revid": 310073,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Corn Mine",
+      "file": "pages/Corn_Mine.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Corn_Mine",
+      "revid": 310322,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Afterbirth+",
+        "Added_in_Afterbirth",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Crazy Long Legs",
+      "file": "pages/Crazy_Long_Legs.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Crazy_Long_Legs",
+      "revid": 310170,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Spider_Monsters"
+      ]
+    },
+    {
+      "title": "Cultist",
+      "file": "pages/Cultist.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Cultist",
+      "revid": 310357,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Danny",
+      "file": "pages/Danny.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Danny",
+      "revid": 298408,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Dark Ball",
+      "file": "pages/Dark_Ball.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Dark_Ball",
+      "revid": 318954,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Afterbirth",
+        "Monsters",
+        "Modified_in_Afterbirth+",
+        "Added_in_Afterbirth+",
+        "Modified_in_Repentance",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Death Scythe",
+      "file": "pages/Death_Scythe.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Death_Scythe",
+      "revid": 316724,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Death's Head",
+      "file": "pages/Death's_Head.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Death%27s_Head",
+      "revid": 310299,
+      "redirected_from": [
+        "Dank_Death's_Head"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth+",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth"
+      ]
+    },
+    {
+      "title": "Dip",
+      "file": "pages/Dip.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Dip",
+      "revid": 312367,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth"
+      ]
+    },
+    {
+      "title": "Dople",
+      "file": "pages/Dople.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Dople",
+      "revid": 308600,
+      "redirected_from": [
+        "Evil_Twin"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth+",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Dukie",
+      "file": "pages/Dukie.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Dukie",
+      "revid": 310246,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Added_in_Afterbirth",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Dummy",
+      "file": "pages/Dummy.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Dummy",
+      "revid": 307110,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Dump",
+      "file": "pages/Dump.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Dump",
+      "revid": 310379,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Dust",
+      "file": "pages/Dust.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Dust",
+      "revid": 309980,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Embryo",
+      "file": "pages/Embryo.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Embryo",
+      "revid": 309202,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Modified_in_Afterbirth"
+      ]
+    },
+    {
+      "title": "Exorcist",
+      "file": "pages/Exorcist.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Exorcist",
+      "revid": 310248,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Eye",
+      "file": "pages/Eye.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Eye",
+      "revid": 319585,
+      "redirected_from": [
+        "Bloodshot_Eye_(Enemy)"
+      ],
+      "categories": [
+        "Monsters",
+        "Modified_in_Repentance",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Faceless",
+      "file": "pages/Faceless.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Faceless",
+      "revid": 314861,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Fatty",
+      "file": "pages/Fatty.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Fatty",
+      "revid": 319431,
+      "redirected_from": [
+        "Cross_Stoney",
+        "Flaming_Fatty",
+        "Pale_Fatty",
+        "Stoney"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Modified_in_Afterbirth+",
+        "Added_in_Repentance",
+        "Added_in_Afterbirth+",
+        "Modified_in_Afterbirth"
+      ]
+    },
+    {
+      "title": "Fissure",
+      "file": "pages/Fissure.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Fissure",
+      "revid": 319592,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Fistuloid",
+      "file": "pages/Fistuloid.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Fistuloid",
+      "revid": 316812,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Afterbirth+",
+        "Monsters",
+        "Booster_Pack_4"
+      ]
+    },
+    {
+      "title": "Flesh Maiden",
+      "file": "pages/Flesh_Maiden.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Flesh_Maiden",
+      "revid": 310162,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Fly",
+      "file": "pages/Fly.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Fly",
+      "revid": 318267,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth+",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth",
+        "Fly_Monsters",
+        "Chapter_1_Monsters",
+        "Chapter_1.5_Monsters",
+        "Chapter_2_Monsters",
+        "Chapter_2.5_Monsters",
+        "Chapter_3_Monsters",
+        "Chapter_3.5_Monsters",
+        "Chapter_4_Monsters",
+        "Chapter_5_Monsters",
+        "Chapter_6_Monsters"
+      ]
+    },
+    {
+      "title": "Fly Bomb",
+      "file": "pages/Fly_Bomb.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Fly_Bomb",
+      "revid": 303106,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Fly Trap",
+      "file": "pages/Fly_Trap.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Fly_Trap",
+      "revid": 310061,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Fred",
+      "file": "pages/Fred.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Fred",
+      "revid": 315732,
+      "redirected_from": [],
+      "categories": [
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Gaper",
+      "file": "pages/Gaper.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Gaper",
+      "revid": 319532,
+      "redirected_from": [
+        "Flaming_Gaper",
+        "Frowning_Gaper"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Modified_in_Afterbirth+",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Modified_in_Afterbirth",
+        "Added_in_Repentance",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Gasbag",
+      "file": "pages/Gasbag.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Gasbag",
+      "revid": 309347,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Globin",
+      "file": "pages/Globin.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Globin",
+      "revid": 310242,
+      "redirected_from": [
+        "Dank_Globin",
+        "Gazing_Globin"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Bone_Monsters"
+      ]
+    },
+    {
+      "title": "Goat",
+      "file": "pages/Goat.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Goat",
+      "revid": 310343,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Grub",
+      "file": "pages/Grub.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Grub",
+      "revid": 310158,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth+",
+        "Modified_in_Afterbirth",
+        "Bugs",
+        "Maggot_Monsters",
+        "Chapter_2_Monsters",
+        "Chapter_3_Monsters",
+        "Chapter_4_Monsters"
+      ]
+    },
+    {
+      "title": "Gurgling (Enemy)",
+      "file": "pages/Gurgling_(Enemy).html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Gurgling_%28Enemy%29",
+      "revid": 310373,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Guts",
+      "file": "pages/Guts.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Guts",
+      "revid": 310349,
+      "redirected_from": [
+        "Scarred_Guts"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Gyro",
+      "file": "pages/Gyro.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Gyro",
+      "revid": 310375,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Hanger",
+      "file": "pages/Hanger.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Hanger",
+      "revid": 309976,
+      "redirected_from": [],
+      "categories": [
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Henry",
+      "file": "pages/Henry.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Henry",
+      "revid": 315820,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Homunculus",
+      "file": "pages/Homunculus.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Homunculus",
+      "revid": 310205,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Modified_in_Afterbirth+",
+        "Monsters",
+        "Modified_in_Afterbirth",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Hopper",
+      "file": "pages/Hopper.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Hopper",
+      "revid": 309195,
+      "redirected_from": [
+        "Flaming_Hopper"
+      ],
+      "categories": [
+        "Monsters",
+        "Modified_in_Repentance",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth",
+        "Modified_in_Afterbirth+"
+      ]
+    },
+    {
+      "title": "Horf",
+      "file": "pages/Horf.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Horf",
+      "revid": 314007,
+      "redirected_from": [
+        "Sub_Horf"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Host",
+      "file": "pages/Host.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Host",
+      "revid": 319402,
+      "redirected_from": [
+        "Mushroom_(Enemy)",
+        "Red_Host"
+      ],
+      "categories": [
+        "Modified_in_Afterbirth",
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance",
+        "Added_in_Afterbirth+",
+        "Bugs",
+        "Bone_Monsters"
+      ]
+    },
+    {
+      "title": "Keeper (Enemy)",
+      "file": "pages/Keeper_(Enemy).html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Keeper_%28Enemy%29",
+      "revid": 309974,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Modified_in_Afterbirth"
+      ]
+    },
+    {
+      "title": "Knight",
+      "file": "pages/Knight.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Knight",
+      "revid": 310306,
+      "redirected_from": [
+        "Loose_Knight",
+        "Selfless_Knight"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth+",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Leech (Enemy)",
+      "file": "pages/Leech_(Enemy).html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Leech_%28Enemy%29",
+      "revid": 314141,
+      "redirected_from": [
+        "Holy_Leech",
+        "Kamikaze_Leech"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance",
+        "Worm_Monsters",
+        "Chapter_1.5_Monsters",
+        "Chapter_3_Monsters",
+        "Chapter_4_Monsters"
+      ]
+    },
+    {
+      "title": "Level 2 Fly",
+      "file": "pages/Level_2_Fly.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Level_2_Fly",
+      "revid": 310195,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Level 2 Spider",
+      "file": "pages/Level_2_Spider.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Level_2_Spider",
+      "revid": 310120,
+      "redirected_from": [
+        "Ticking_Spider"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance",
+        "Spider_Monsters"
+      ]
+    },
+    {
+      "title": "Lil' Haunt",
+      "file": "pages/Lil'_Haunt.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Lil%27_Haunt",
+      "revid": 309840,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Ghost_Monsters"
+      ]
+    },
+    {
+      "title": "Lump",
+      "file": "pages/Lump.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Lump",
+      "revid": 315754,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth+",
+        "Modified_in_Afterbirth",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Maggot",
+      "file": "pages/Maggot.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Maggot",
+      "revid": 316809,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Modified_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Repentance",
+        "Maggot_Monsters",
+        "Chapter_2_Monsters",
+        "Chapter_4.5_Monsters"
+      ]
+    },
+    {
+      "title": "Mask + Heart",
+      "file": "pages/Mask_+_Heart.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Mask_%2B_Heart",
+      "revid": 310371,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth+",
+        "Modified_in_Repentance"
+      ]
+    },
+    {
+      "title": "Maw",
+      "file": "pages/Maw.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Maw",
+      "revid": 309676,
+      "redirected_from": [
+        "Psychic_Maw",
+        "Red_Maw"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Meatball",
+      "file": "pages/Meatball.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Meatball",
+      "revid": 310321,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Afterbirth",
+        "Monsters",
+        "Modified_in_Repentance",
+        "Modified_in_Afterbirth+"
+      ]
+    },
+    {
+      "title": "MemBrain",
+      "file": "pages/MemBrain.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/MemBrain",
+      "revid": 309375,
+      "redirected_from": [
+        "Mama_Guts"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance",
+        "Added_in_Afterbirth",
+        "Modified_in_Afterbirth"
+      ]
+    },
+    {
+      "title": "Ministro",
+      "file": "pages/Ministro.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Ministro",
+      "revid": 318883,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Added_in_Afterbirth+",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Mole",
+      "file": "pages/Mole.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Mole",
+      "revid": 310244,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Mom's Hand",
+      "file": "pages/Mom's_Hand.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Mom%27s_Hand",
+      "revid": 308617,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Modified_in_Afterbirth",
+        "Added_in_Afterbirth",
+        "Modified_in_Afterbirth+",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Morningstar",
+      "file": "pages/Morningstar.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Morningstar",
+      "revid": 312326,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Mr. Maw",
+      "file": "pages/Mr._Maw.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Mr._Maw",
+      "revid": 316407,
+      "redirected_from": [
+        "Mr._Red_Maw"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth+",
+        "Modified_in_Afterbirth+",
+        "Bugs",
+        "Booster_Pack_5"
+      ]
+    },
+    {
+      "title": "Mulligan",
+      "file": "pages/Mulligan.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Mulligan",
+      "revid": 317669,
+      "redirected_from": [
+        "Drowned_Hive",
+        "Hive",
+        "Mulliboom",
+        "Mulligoon"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth+",
+        "Added_in_Afterbirth",
+        "Added_in_Afterbirth+",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "My Shadow",
+      "file": "pages/My_Shadow.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/My_Shadow",
+      "revid": 316147,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Afterbirth+",
+        "Modified_in_Repentance",
+        "Added_in_Afterbirth",
+        "Passive_collectibles",
+        "Collectibles",
+        "Monsters",
+        "Damage-triggered_items"
+      ]
+    },
+    {
+      "title": "Needle",
+      "file": "pages/Needle.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Needle",
+      "revid": 309126,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters",
+        "Worm_Monsters",
+        "Chapter_1_Monsters",
+        "Chapter_2_Monsters",
+        "Chapter_2.5_Monsters",
+        "Chapter_3_Monsters",
+        "Chapter_4_Monsters",
+        "Chapter_6_Monsters"
+      ]
+    },
+    {
+      "title": "Nerve Ending",
+      "file": "pages/Nerve_Ending.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Nerve_Ending",
+      "revid": 312879,
+      "redirected_from": [
+        "Nerve_Ending_2"
+      ],
+      "categories": [
+        "Monsters",
+        "Added_in_Afterbirth+"
+      ]
+    },
+    {
+      "title": "One Tooth",
+      "file": "pages/One_Tooth.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/One_Tooth",
+      "revid": 316878,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth"
+      ]
+    },
+    {
+      "title": "Oob",
+      "file": "pages/Oob.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Oob",
+      "revid": 310173,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Pacer",
+      "file": "pages/Pacer.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Pacer",
+      "revid": 302863,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth",
+        "Modified_in_Afterbirth+",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Para-Bite",
+      "file": "pages/Para-Bite.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Para-Bite",
+      "revid": 310320,
+      "redirected_from": [
+        "Scarred_Para-Bite"
+      ],
+      "categories": [
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Worm_Monsters",
+        "Chapter_4_Monsters"
+      ]
+    },
+    {
+      "title": "Peep Eye",
+      "file": "pages/Peep_Eye.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Peep_Eye",
+      "revid": 310374,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Afterbirth+",
+        "Monsters",
+        "Added_in_Repentance",
+        "Modified_in_Repentance"
+      ]
+    },
+    {
+      "title": "Pitfall",
+      "file": "pages/Pitfall.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Pitfall",
+      "revid": 309333,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Afterbirth",
+        "Monsters",
+        "Modified_in_Afterbirth+",
+        "Modified_in_Repentance",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Poky",
+      "file": "pages/Poky.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Poky",
+      "revid": 312218,
+      "redirected_from": [
+        "Slide"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Modified_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth+"
+      ]
+    },
+    {
+      "title": "Polty",
+      "file": "pages/Polty.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Polty",
+      "revid": 311379,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Poot Mine",
+      "file": "pages/Poot_Mine.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Poot_Mine",
+      "revid": 310270,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Pooter",
+      "file": "pages/Pooter.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Pooter",
+      "revid": 301849,
+      "redirected_from": [
+        "Fat_Fly"
+      ],
+      "categories": [
+        "Monsters",
+        "Added_in_Repentance",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Portal",
+      "file": "pages/Portal.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Portal",
+      "revid": 312469,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Added_in_Afterbirth+",
+        "Monsters",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Rock Spider",
+      "file": "pages/Rock_Spider.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Rock_Spider",
+      "revid": 309223,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Round Worm",
+      "file": "pages/Round_Worm.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Round_Worm",
+      "revid": 309852,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Afterbirth+",
+        "Modified_in_Repentance",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth+",
+        "Modified_in_Afterbirth",
+        "Worm_Monsters",
+        "Chapter_1_Monsters",
+        "Chapter_2_Monsters",
+        "Chapter_2.5_Monsters",
+        "Chapter_3_Monsters"
+      ]
+    },
+    {
+      "title": "Sack (Disambiguation)",
+      "file": "pages/Sack_(Disambiguation).html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Sack_%28Disambiguation%29",
+      "revid": 305553,
+      "redirected_from": [
+        "Sack"
+      ],
+      "categories": [
+        "Modified_in_Afterbirth",
+        "Modified_in_Afterbirth+",
+        "Modified_in_Repentance",
+        "Disambiguations"
+      ]
+    },
+    {
+      "title": "Siren Minion",
+      "file": "pages/Siren_Minion.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Siren_Minion",
+      "revid": 310345,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Skinny",
+      "file": "pages/Skinny.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Skinny",
+      "revid": 305605,
+      "redirected_from": [
+        "Crispy",
+        "Rotty"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth+",
+        "Modified_in_Afterbirth+"
+      ]
+    },
+    {
+      "title": "Spider",
+      "file": "pages/Spider.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Spider",
+      "revid": 305619,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth",
+        "Modified_in_Afterbirth+",
+        "Modified_in_Repentance",
+        "Spider_Monsters"
+      ]
+    },
+    {
+      "title": "Spitty",
+      "file": "pages/Spitty.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Spitty",
+      "revid": 310342,
+      "redirected_from": [],
+      "categories": [
+        "Monsters",
+        "Modified_in_Repentance",
+        "Added_in_Repentance",
+        "Maggot_Monsters",
+        "Chapter_2_Monsters"
+      ]
+    },
+    {
+      "title": "Squirt",
+      "file": "pages/Squirt.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Squirt",
+      "revid": 310179,
+      "redirected_from": [
+        "Dank_Squirt"
+      ],
+      "categories": [
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Repentance",
+        "Poop_Monsters"
+      ]
+    },
+    {
+      "title": "Stone Grimace",
+      "file": "pages/Stone_Grimace.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Stone_Grimace",
+      "revid": 318855,
+      "redirected_from": [
+        "Vomit_Grimace"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth",
+        "Added_in_Afterbirth+",
+        "Modified_in_Afterbirth+",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Sucker",
+      "file": "pages/Sucker.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Sucker",
+      "revid": 313667,
+      "redirected_from": [
+        "Spit"
+      ],
+      "categories": [
+        "Monsters",
+        "Modified_in_Repentance",
+        "Added_in_Repentance",
+        "Added_in_Afterbirth+",
+        "Modified_in_Afterbirth+",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Swarmer",
+      "file": "pages/Swarmer.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Swarmer",
+      "revid": 310325,
+      "redirected_from": [],
+      "categories": [
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Trite",
+      "file": "pages/Trite.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Trite",
+      "revid": 316879,
+      "redirected_from": [
+        "Blister_(Enemy)"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Modified_in_Afterbirth+",
+        "Added_in_Afterbirth+",
+        "Bugs",
+        "Spider_Monsters"
+      ]
+    },
+    {
+      "title": "Tumor",
+      "file": "pages/Tumor.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Tumor",
+      "revid": 310247,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Repentance"
+      ]
+    },
+    {
+      "title": "Ultra Greed Coin",
+      "file": "pages/Ultra_Greed_Coin.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Ultra_Greed_Coin",
+      "revid": 311185,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Afterbirth",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Vis",
+      "file": "pages/Vis.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Vis",
+      "revid": 310378,
+      "redirected_from": [
+        "Chubber",
+        "Double_Vis",
+        "Scarred_Double_Vis"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Added_in_Repentance",
+        "Modified_in_Afterbirth",
+        "Modified_in_Afterbirth+",
+        "Bugs"
+      ]
+    },
+    {
+      "title": "Wall Creep",
+      "file": "pages/Wall_Creep.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Wall_Creep",
+      "revid": 310308,
+      "redirected_from": [
+        "Blind_Creep",
+        "Rage_Creep",
+        "The_Thing"
+      ],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth+",
+        "Added_in_Repentance",
+        "Spider_Monsters"
+      ]
+    },
+    {
+      "title": "Whipper",
+      "file": "pages/Whipper.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Whipper",
+      "revid": 319166,
+      "redirected_from": [],
+      "categories": [
+        "Added_in_Repentance",
+        "Monsters"
+      ]
+    },
+    {
+      "title": "Wizoob",
+      "file": "pages/Wizoob.html",
+      "source": "https://bindingofisaacrebirth.fandom.com/wiki/Wizoob",
+      "revid": 310152,
+      "redirected_from": [],
+      "categories": [
+        "Modified_in_Repentance",
+        "Monsters",
+        "Added_in_Afterbirth",
+        "Ghost_Monsters"
+      ]
+    }
+  ],
+  "redirects": {
+    "Mulligoon": "Mulligan",
+    "Mulliboom": "Mulligan",
+    "Vomit_Grimace": "Stone Grimace",
+    "Evil_Twin": "Dople",
+    "Bloodshot_Eye_(Enemy)": "Eye",
+    "Kamikaze_Leech": "Leech (Enemy)",
+    "Holy_Leech": "Leech (Enemy)",
+    "Red_Maw": "Maw",
+    "Psychic_Maw": "Maw",
+    "Red_Host": "Host",
+    "Double_Vis": "Vis",
+    "Chubber": "Vis",
+    "Red_Boom_Fly": "Boom Fly",
+    "Fat_Fly": "Pooter",
+    "Selfless_Knight": "Knight",
+    "I.Blob": "Clotty",
+    "Clot": "Clotty",
+    "Mama_Guts": "MemBrain",
+    "Gazing_Globin": "Globin",
+    "Angelic_Baby": "Baby",
+    "Gut": "Boil",
+    "Sack": "Sack (Disambiguation)",
+    "Walking_Boil": "Boil",
+    "Walking_Gut": "Boil",
+    "Walking_Sack": "Boil",
+    "Spit": "Sucker",
+    "Slide": "Poky",
+    "Frowning_Gaper": "Gaper",
+    "Flaming_Gaper": "Gaper",
+    "Flaming_Fatty": "Fatty",
+    "Pale_Fatty": "Fatty",
+    "Flaming_Hopper": "Hopper",
+    "Hive": "Mulligan",
+    "Drowned_Hive": "Mulligan",
+    "Drowned_Charger": "Charger",
+    "Drowned_Boom_Fly": "Boom Fly",
+    "Dank_Squirt": "Squirt",
+    "Dank_Death's_Head": "Death's Head",
+    "Dank_Globin": "Globin",
+    "Scarred_Guts": "Guts",
+    "Scarred_Para-Bite": "Para-Bite",
+    "Scarred_Double_Vis": "Vis",
+    "Blister_(Enemy)": "Trite",
+    "Ticking_Spider": "Level 2 Spider",
+    "Mushroom_(Enemy)": "Host",
+    "Nerve_Ending_2": "Nerve Ending",
+    "Poison_Mind": "Brain",
+    "Stoney": "Fatty",
+    "The_Thing": "Wall Creep",
+    "Blind_Creep": "Wall Creep",
+    "Rage_Creep": "Wall Creep",
+    "Mr._Red_Maw": "Mr. Maw",
+    "Crispy": "Skinny",
+    "Rotty": "Skinny",
+    "Dank_Charger": "Charger",
+    "Cross_Stoney": "Fatty",
+    "Sub_Horf": "Horf",
+    "Loose_Knight": "Knight"
+  },
+  "images": {
+    "referenced": 1034,
+    "downloaded_this_run": 0,
+    "present": 1034
+  },
+  "failures": {
+    "pages": [],
+    "images": []
+  }
+}

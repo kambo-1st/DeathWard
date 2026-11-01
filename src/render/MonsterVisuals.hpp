@@ -382,6 +382,7 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
     if(type==827&&e.flash<=0)skin=variant==1?Color{76,60,68,255}:Color{178,124,105,255};
     if(type==10&&variant<=2&&e.flash<=0)skin=variant==2?Color{93,69,57,255}:Color{178,124,105,255};
     if(type==11&&e.flash<=0)skin=variant==0?Color{178,124,105,255}:Color{145,122,111,255};
+    if(type==812&&e.flash<=0)skin={134,158,170,255};
     if(type>=278&&type<=280&&e.flash<=0)skin={62,54,61,255};
     if(e.willo&&e.flash<=0) {
         const bool warning=e.willo->warning;
@@ -417,6 +418,11 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
             {163,137,92,255},{114,142,135,255},{150,100,108,255}}};
         skin=rottenSkin[size_t(rotten-1)];
     }
+    if(e.crowned&&e.flash<=0)skin={235,194,50,255};
+    if(e.champion>=0&&e.flash<=0) {
+        skin=e.champion==25?ColorFromHSV(std::fmod(e.age*90,360.f),.6f,.85f):e.championTint;
+        if(e.champion==15||e.champion==16||e.champion==20||e.champion==21)skin=ColorLerp(skin,WHITE,.15f+.15f*std::sin(e.age*9));
+    }
     const float time = e.animationTime();
     if(e.flash<=0&&e.affectedBy(EnemyStatus::Fear))skin=ColorLerp(skin,{147,176,188,255},.4f);
     if(e.flash<=0&&e.affectedBy(EnemyStatus::Confusion))skin=ColorLerp(skin,{186,142,201,255},.35f);
@@ -431,7 +437,9 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
     if(e.flash<=0&&frozen)skin=ColorLerp(skin,{133,204,235,255},.65f);
     if (type == 884 && std::fmod(time, .7f) < .16f)
         skin = {240, 206, 65, 255};
-    const Color dark{41, 31, 35, 255}, bone=frozen?Color{155,208,227,255}:burning?Color{218,103,48,255}:poisoned?Color{118,177,76,255}:slowed?Color{177,154,93,255}:Color{210,193,154,255}, blood{153, 42, 49, 255};
+    const float championAlpha=e.championVisibility();
+    skin=ColorAlpha(skin,championAlpha);
+    const Color dark=ColorAlpha({41,31,35,255},championAlpha), bone=ColorAlpha(frozen?Color{155,208,227,255}:burning?Color{218,103,48,255}:poisoned?Color{118,177,76,255}:slowed?Color{177,154,93,255}:e.champion>=0?e.championTint:Color{210,193,154,255},championAlpha), blood=ColorAlpha({153,42,49,255},championAlpha);
     auto dir = unit(e.facing);
     if(type==205&&e.evader&&e.evader->attackFrame>=0)dir=unit(horizontal(sub(e.target,e.position)));
     if(e.hopRings&&e.targetHop&&e.targetHop->airborne) {
@@ -443,7 +451,9 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
     auto p = e.position;
     p.y += e.lift;
     const float base=e.position.y-.85f;
-    const float r = e.statuses&&e.statuses->unshrunkRadius>0?e.statuses->unshrunkRadius:e.radius;
+    const float r = (e.statuses&&e.statuses->unshrunkRadius>0?e.statuses->unshrunkRadius:e.radius)*e.championVisual;
+    if(e.champion==22)for(int n=0;n<3;++n)DrawCylinderEx({p.x+float(n-1)*r*.4f,p.y+r*1.8f,p.z},{p.x+float(n-1)*r*.4f,p.y+r*2.2f,p.z},r*.12f,.01f,4,{235,194,50,255});
+    if(e.champion==23)DrawSphereEx({p.x,p.y+r*1.9f,p.z},r*.22f,4,5,{235,227,202,255});
     // Small distinct cues remain legible above the low-poly body, including
     // Horf's bone-colored skull; neither cue changes collision or targeting.
     if(e.affectedBy(EnemyStatus::Fear))for(float side:{-1.f,1.f}) {
@@ -572,12 +582,45 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
         DrawCircle3D({p.x, .08f, p.z}, r * .8f, {1, 0, 0}, 90, skin);
         return;
     }
+    if(type==889) {
+        if(e.state==EnemyState::Collapsed) {
+            for(int n=0;n<6;++n) {
+                const auto a=add(Vector3{p.x,base+.12f,p.z},rotateY({r*.55f,0,0},float(n)*2.399963f));
+                DrawCylinderEx(a,add(a,rotateY({r*.7f,0,0},float(n)*1.7f)),.08f,.09f,5,bone);
+            }
+            DrawSphereEx({p.x,base+.22f,p.z},r*.4f,5,6,bone);
+        } else drawBonyModel(e,false);
+        return;
+    }
     if (e.state == EnemyState::Collapsed) {
         DrawCylinder({p.x, .05f, p.z}, r, r * 1.2f, .2f, 9, skin);
         DrawSphereEx({p.x, .3f, p.z}, r * .32f, 5, 7, blood);
         return;
     }
     auto sphere = [&](Vector3 at, float radius, Color c) { DrawSphereEx(at, radius, 7, 10, c); };
+    if(type==822||type==874) {
+        const bool inflated=type==822&&e.creature&&e.creature->inflated;
+        const float bodyR=inflated&&e.creature->phaseTime<=0?r/1.5f:r;
+        const Color hide=type==874&&e.flash<=0?Color{139,155,96,255}:skin;
+        for(float side:{-1.f,1.f})DrawCylinderEx({p.x+side*bodyR*.25f,base+.15f,p.z},{p.x+side*bodyR*.25f,p.y-.25f,p.z},bodyR*.13f,bodyR*.16f,5,dark);
+        DrawSphereEx({p.x,p.y-.05f,p.z},bodyR*.6f,5,7,hide);
+        const float head=bodyR*(inflated?1.25f:type==874?.55f:.65f);
+        const auto face=add(p,add(Vector3{0,bodyR*(inflated?.85f:.6f),0},mul(dir,bodyR*.12f)));
+        DrawSphereEx(face,head,6,8,hide);
+        for(float side:{-1.f,1.f})DrawSphereEx(add(face,add(mul(dir,head*.85f),mul(Vector3{-dir.z,0,dir.x},side*head*.36f))),head*.12f,4,5,dark);
+        if(type==874)DrawSphereEx(add(face,mul(dir,head*.92f)),head*.22f,4,5,{78,103,59,255});
+        return;
+    }
+    if(type==823) {
+        const Color stone=e.flash>0?Color{237,218,178,255}:Color{136,124,104,255};
+        for(int n=0;n<5;++n) {
+            const auto at=add(p,rotateY({r*.45f,float(n%2)*r*.3f,0},float(n)*2.399963f));
+            DrawSphereEx(at,r*(n==4?1.05f:.75f),4,5,ColorLerp(stone,dark,float(n)*.04f));
+        }
+        for(float side:{-1.f,1.f})DrawSphereEx(add(p,add(mul(dir,r*.86f),mul(Vector3{-dir.z,0,dir.x},side*r*.3f))),r*.13f,4,5,dark);
+        return;
+    }
+
     if(e.returningBody) {
         // Original canyon palette, with a long segmented silhouette distinct
         // from the walking parent. This is our geometry, not imported artwork.
@@ -948,7 +991,7 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
                 DrawCubeV(add(cap,add(mul(dir,r*.75f),add(mul(side,float(tooth)*r*.22f),{0,-r*.48f,0}))),{r*.16f,r*.3f,r*.18f},bone);
             break;
         }
-        sphere(p, r, type == 41 ? Color{87, 94, 93, 255} : bone);
+        sphere(p, r, type == 41 ? Color{87, 94, 93, 255} : type==812?skin:bone);
         eyes(p);
         sphere(add(p, add(mul(dir, r * .85f), {0, -r * .3f, 0})), r * .25f, dark);
         if (type == 41) {

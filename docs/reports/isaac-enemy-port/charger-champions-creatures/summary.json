@@ -1,0 +1,390 @@
+{
+  "date": "2026-10-31T18:37:36.836274+00:00",
+  "status": "combat_playable_checkpoint_not_full_source_parity",
+  "chargers": [
+    "23.0.0",
+    "23.1.0",
+    "23.2.0",
+    "23.3.0",
+    "855.0.0"
+  ],
+  "champion_types": 26,
+  "new_champion_types": 18,
+  "tested_charger_champion_combinations": 130,
+  "champion_scope": "All26 combat modifiers on five Chargers. Earlier eligible families retain their tested8 types. Isaac-specific special resource payouts are not implemented; ordinary DeathWard loot remains. Split/fly births are implemented.",
+  "champions": [
+    {
+      "id": 0,
+      "name": "Red",
+      "new_in_this_checkpoint": false,
+      "combat": "More HP",
+      "hp_multiplier": 2.6,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 1,
+      "name": "Yellow",
+      "new_in_this_checkpoint": false,
+      "combat": "Faster, reduced champion HP",
+      "hp_multiplier": 1.5,
+      "speed_multiplier": 1.3,
+      "first_source_stage": 3,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 2,
+      "name": "Green",
+      "new_in_this_checkpoint": false,
+      "combat": "Damaging green creep",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 3,
+      "name": "Orange",
+      "new_in_this_checkpoint": true,
+      "combat": "Coin loss on admitted player hits; projectile effect survives shooter removal",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 4,
+      "name": "Dark Blue",
+      "new_in_this_checkpoint": true,
+      "combat": "Slower movement",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 0.75,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 5,
+      "name": "Dark Cyan",
+      "new_in_this_checkpoint": false,
+      "combat": "Explosion on death; retained under queue pressure",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 6,
+      "name": "White",
+      "new_in_this_checkpoint": true,
+      "combat": "Invulnerability until other non-White threats die; White pairs cannot softlock",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 7,
+      "name": "Gray",
+      "new_in_this_checkpoint": false,
+      "combat": "Less HP and slower movement",
+      "hp_multiplier": 0.66,
+      "speed_multiplier": 0.75,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 8,
+      "name": "Translucent",
+      "new_in_this_checkpoint": true,
+      "combat": "Crosses interior obstacles/pits; spectral shots retain sealed room bounds after shooter removal",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 9,
+      "name": "Black",
+      "new_in_this_checkpoint": true,
+      "combat": "Visibility oscillates; damage briefly reveals",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 10,
+      "name": "Magenta",
+      "new_in_this_checkpoint": true,
+      "combat": "Periodic short-range shot in facing direction",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 11,
+      "name": "Violet",
+      "new_in_this_checkpoint": true,
+      "combat": "Attracts player and player projectiles, capped aggregate force",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 12,
+      "name": "Dark Red",
+      "new_in_this_checkpoint": true,
+      "combat": "Flesh pile, regeneration, can be finished off; source-frame armored Level2 integration checked",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 13,
+      "name": "Light Blue",
+      "new_in_this_checkpoint": false,
+      "combat": "Eight radial death shots; retained capacity handling",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 14,
+      "name": "Camouflage",
+      "new_in_this_checkpoint": true,
+      "combat": "Low visibility; damage reveals",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 15,
+      "name": "Pulsing Green",
+      "new_in_this_checkpoint": true,
+      "combat": "Two ordinary copies on death, retained births",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 16,
+      "name": "Pulsing Gray",
+      "new_in_this_checkpoint": true,
+      "combat": "Pulsed player-projectile repulsion; never pushes player",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 17,
+      "name": "Light White",
+      "new_in_this_checkpoint": true,
+      "combat": "One owned Eternal Fly; release plus additional Attack Fly on death",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 18,
+      "name": "Small",
+      "new_in_this_checkpoint": false,
+      "combat": "Smaller body/collision and less HP; faster; no extra shot damage",
+      "hp_multiplier": 0.66,
+      "speed_multiplier": 1.3,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 19,
+      "name": "Large",
+      "new_in_this_checkpoint": false,
+      "combat": "Larger appearance, unchanged collision, more HP, slower, stronger contact",
+      "hp_multiplier": 3.0,
+      "speed_multiplier": 0.85,
+      "first_source_stage": 1,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 20,
+      "name": "Pulsing Red",
+      "new_in_this_checkpoint": true,
+      "combat": "Heals other enemies; excludes self, other healers, Bishops, piles and hazards",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 21,
+      "name": "Pulsating",
+      "new_in_this_checkpoint": true,
+      "combat": "Attack Fly on damage with cooldown; max five living/queued owned flies",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 22,
+      "name": "Crown",
+      "new_in_this_checkpoint": true,
+      "combat": "Sixfold HP; other ordinary enemies turn yellow without combat-stat bonuses",
+      "hp_multiplier": 6.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 23,
+      "name": "Skull",
+      "new_in_this_checkpoint": true,
+      "combat": "Necronomicon-style room damage on death; stronger contact",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 24,
+      "name": "Brown",
+      "new_in_this_checkpoint": true,
+      "combat": "Real destructible dung trail; excludes occupied space/door approaches and checks route connectivity",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    },
+    {
+      "id": 25,
+      "name": "Rainbow",
+      "new_in_this_checkpoint": true,
+      "combat": "Fast, triple HP, creep, orbiter, facing shots, attraction, death explosion and eight shots; retries do not repeat explosion",
+      "hp_multiplier": 3.0,
+      "speed_multiplier": 1.3,
+      "first_source_stage": 5,
+      "status": "combat_implemented_and_scoped_tested; full_port_in_progress"
+    }
+  ],
+  "creatures": [
+    {
+      "id": "822.0.0",
+      "name": "Bouncer",
+      "behavior": "Flee, source6\u201310s damage-accelerated timer and proximity memory;21/7 inflation animation/event, enlarged collision, pursuit, deterministic intermittent reflection. Early4diagonal shots; inflated12cluster+22ramping cloud shots and nondamaging push."
+    },
+    {
+      "id": "823.0.0",
+      "name": "Quakey",
+      "behavior": "Slow pursuit, visible windup, locked jump target and airborne arc;8landing rocks plus3falling ceiling rocks and nearby knockback. Mounted translation stays carrier-owned."
+    },
+    {
+      "id": "874.0.0",
+      "name": "Gas Dwarf",
+      "behavior": "Chase and explosive gas trail; ordinary death Ipecac; contact self-detonation; bounded ignition and gas chain reactions."
+    },
+    {
+      "id": "889.0.0",
+      "name": "Clickety Clack",
+      "behavior": "Chase/wander; projectile-blocking collapsed bones; regrow while an active peer remains; all-collapsed cleanup with one reward per body; no champion eligibility enabled."
+    }
+  ],
+  "placement": {
+    "bands": [
+      1
+    ],
+    "description": "Mines/Ashpit-equivalent band, authored weights/costs. Clacks selected as groups of2; maximum4.",
+    "witnesses": [
+      {
+        "id": "874.0.0",
+        "seed": 3,
+        "floor": 1,
+        "room": 5
+      },
+      {
+        "id": "823.0.0",
+        "seed": 40,
+        "floor": 2,
+        "room": 4
+      },
+      {
+        "id": "889.0.0",
+        "seed": 41,
+        "floor": 2,
+        "room": 7
+      },
+      {
+        "id": "822.0.0",
+        "seed": 97,
+        "floor": 2,
+        "room": 8
+      }
+    ],
+    "practice": "--practice-batch4; five actors (two Clacks), tested8seeds; isolated temporary save by default"
+  },
+  "validation": {
+    "new_suites": [
+      "charger_variants",
+      "creature_cycles"
+    ],
+    "new_suites_result": "pass",
+    "shared_suites_pass": [
+      "mechanics_content",
+      "source_projectile_motion",
+      "companion_familiars",
+      "room_statues",
+      "boom_flies",
+      "first_floor_batch2",
+      "first_floor_cohort",
+      "first_floor_status_effects",
+      "first_floor_charm_effect",
+      "adaptive_armor"
+    ],
+    "starting_kit": "Four individual synthetic circular-bot fights,100HP/24damage,no items/bombs/godmode; each survived with100HP including1.5s post-death movement. Not mixed-room/human balance acceptance.",
+    "source_check": "Bouncer13native windows,18constants and preserved animation contract validate. Other three use pinned wiki/XML; exact native timers remain unmeasured.",
+    "initial_regression_failures": "Mechanics test binary was stale; rebuilt. Charm test still treated now-supported Rainbow ID25 as invalid; changed invalid-ID case to26. Boom fixture used a replaceable Gaper as unlimited fallback; aligned fixture to existing Pacer fallback. No production pool invariant relaxed.",
+    "wasm": "Skipped as instructed",
+    "bouncer_clearance": "Native inflated screenshot exposed wall overlap. Added short old-radius-swept correction and delayed retry when inflation footprint cannot yet fit; preserves shrink restoration radius. Dedicated wall regression passes.",
+    "simulation_benchmark": "600ticks,seed1866,circular movement,godmode,no firing: batch3mean0.0396ms/max0.422ms; batch4mean0.0363ms/max0.301ms. Rendering excluded; not full dense acceptance.",
+    "rendering_caveat": "Isolated captures~60FPS; generated mixed-practice frame180capture showed26FPS versus55FPS for Charger practice. This observation is not a controlled renderer benchmark and is not certified performance parity. Later frame420capture showed45FPS after combat effects subsided. Simulation-only timing remained below0.05ms/step on average; renderer parity remains unaccepted."
+  },
+  "remaining": [
+    "Isaac-specific champion pickup rewards and exact native rarity weighting; Crown yellow conversion currently supplies color only, without Battery drops.",
+    "Exact native Quakey/GasDwarf/Clack timing, force, targeting/animation events and special item exceptions. Current external values are explicit DeathWard tuning.",
+    "Bouncer uses local RNG/init IDs, 3D flight/height conversion and deferred shot admission; native immediate-update equivalence is not certified.",
+    "Full applicable status/item/champion matrices, mixed-room/human balance, all-angle visual acceptance and dense rendered performance. Native screenshot smoke checks are partial evidence.",
+    "Clutch boss three-Clack composition is not added by this ordinary-creature checkpoint; Hornfel mounted creature attacks have scoped carrier tests, not full passenger parity."
+  ],
+  "runtime_sha256": {
+    "src/combat/Champions.cpp": "fb04fcf11c9cd85fe24a33b76c240412b815dc2ad965e1d9715711814b273d90",
+    "src/combat/CreatureCycles.cpp": "8e95fff167702c3858c6703fe1d0aa81cafa157dbe3637610443e72aa37f5981",
+    "assets/mechanics/champions.mechanics": "6cbe33e9cef345af405abbbdc131982ee0a7636b27d7172fc47d647dfd369d3e",
+    "assets/mechanics/creature_cycles.mechanics": "d542b6eb90e93a4fce1e6a8d082d6108d63c75f53d3af6efd35957c146792d85",
+    "tests/charger_variant_tests.cpp": "a45118ebf4a48630931fd4cf1e850fd4957de66801f301fece8a5bbf9081e71f",
+    "tests/creature_cycle_tests.cpp": "0af991153a0ee3ccbf4f7bffba877c55a99e76326f8e6d236050e2c102da81df"
+  },
+  "binary_sha256": "62451e7220d33320781176bdcfedfd7d25bffc94874a2da96084b0a58d834ad7",
+  "mechanics_fingerprint": "54b065b93ad64bd",
+  "captures": {
+    "bouncer.png": "960e5ab692f31ae54fd39025563503c683c9818623d240fdc139c6f82057bee3",
+    "practice4-settled.png": "827b27004ecbd3dcdbb3d5c26c19596bc0a2da6096c17418f360efcbb9e0ae12",
+    "champion-white.png": "2fd1757fdd3a22352c061158e3ca338960440e42db41867f9775fbeb6bacd141",
+    "champion-camouflage.png": "184f0a0a6ba67b712508ae31006e3a941715893e0260ef4727db22350f3f41db",
+    "clickety-clack.png": "392431450a3bc0ff2857bca272fcae4553a2bf25fd61ce6b5d1de9a6fadb836a",
+    "clack-pile.png": "9b5ee6be16be49ac3c709111c6fb5ca714afbc443f76ef69d5466e3709d885ab",
+    "champion-rainbow.png": "9567b5c05d00f286dbba9433b4c3defbc1c62c957ef9786741b9ab192ab8d447",
+    "quakey.png": "dba4f9f5b37be9b7037afa591b632b69c310ba4820f3f715e4e203885ac43b05",
+    "practice4-warm.png": "b8e2ec8a4eac4389d005edd34aef4e0646e4a0e91fec230bfcb1386c57c08188",
+    "gas-dwarf.png": "3f4971ccd6b97f880b65c7ef5195ff76d9247870741d6faaf43ccad6f046fc2f",
+    "practice4.png": "fa404a66082277f848fc6bda69d5a8319595de2cff3629139bdbdbd6dfde53c5",
+    "quakey-airborne.png": "f2d6375e550c8ca70c3c18cf278858a8c7a4db72ddb5d35c96b2d1a86f3dca86",
+    "bouncer-inflated.png": "d3c6237f02fb022a68b0afc70176af78181b89a6a2d4755164347352f56a87c1"
+  }
+}

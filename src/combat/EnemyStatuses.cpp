@@ -39,9 +39,8 @@ bool Simulation::applyEnemyStatus(EntityId id,EnemyStatus status,int frames,floa
     const auto *p=e?content->enemyStatuses(e->monster):nullptr;
     if(!e||!e->alive||!p||(status==EnemyStatus::Freeze&&!p->freeze)||(status==EnemyStatus::Slow&&!p->slow)||
        (status==EnemyStatus::Poison&&!p->poison)||(status==EnemyStatus::Burn&&!p->burn)||
-       (status==EnemyStatus::Shrink&&!p->shrink)||(status==EnemyStatus::Charm&&(!p->charm||frames<0||e->friendly)))return false;
-    // Negative Charm is permanent conversion, not an extended temporary timer.
-    // Reject it until follower lifetime/transfer support is implemented.
+       (status==EnemyStatus::Shrink&&!p->shrink)||(status==EnemyStatus::Charm&&(!p->charm||(e->friendly&&!e->permanentCharmed))))return false;
+    if(status==EnemyStatus::Charm&&e->permanentCharmed)return true;
     EnemyStatusRuntime probe;
     if(!statusCounter(probe,status))return false;
     if(!e->statuses) {
@@ -72,11 +71,16 @@ bool Simulation::applyEnemyStatus(EntityId id,EnemyStatus status,int frames,floa
             // the end of that step and silently skip source frames.
             if(!e->headShooter)e->headShooter.emplace();
             e->headShooter->tick=uint64_t(std::max(0.,std::floor(stats.duration*30+.00001)));
+            e->headShooter->angle=std::atan2(e->facing.z,e->facing.x);
             e->headShooter->initialized=true;
         }
     }
     if(status==EnemyStatus::Charm) {
-        remaining=std::max(remaining,frames);
+        if(frames<0){
+            e->friendly=e->permanentCharmed=true;remaining=0;checkpointNeeded=true;
+            for(auto &hazard:hazards)if(hazard.kind==HazardKind::Creep&&hazard.context.sourceEntity==id)hazard.harmsPlayer=false;
+        }
+        else remaining=std::max(remaining,frames);
         if(!already)e->statuses->charmFrame=uint64_t(std::max(0.,std::floor(stats.duration*30+.00001)));
     } else if(status==EnemyStatus::Slow) {
         // Native slowing is additive without the120-frame cap. Negative
@@ -140,6 +144,7 @@ void Simulation::updateMonsterStatuses(Enemy &e,float dt) {
         // acquisition phase when an effect is applied before its first update.
         if(!e.headShooter)e.headShooter.emplace();
         e.headShooter->tick=uint64_t(std::max(0.,std::floor((stats.duration-dt)*30+.00001)));
+        e.headShooter->angle=std::atan2(e.facing.z,e.facing.x);
         e.headShooter->initialized=true;
     }
     flushStatusDamage(e,r.poison);flushStatusDamage(e,r.burn);
@@ -196,9 +201,10 @@ void Simulation::flushSquashedEnemy(Enemy &e) {
 }
 
 void Simulation::contactMonsterPlayer(Enemy &e,float damage) {
+    if(e.friendly)return;
     if(e.affectedBy(EnemyStatus::Shrink)||(e.statuses&&e.statuses->squashed)) {
         e.statuses->squashed=true;flushSquashedEnemy(e);
-    } else hurtPlayer(damage,{0,0,e.id,-1});
+    } else hurtPlayer(damage*e.championDamage,{0,0,e.id,-1});
 }
 
 bool Simulation::flushStatusDamage(Enemy &e,DamageStatusRuntime &r) {

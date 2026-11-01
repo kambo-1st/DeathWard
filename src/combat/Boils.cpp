@@ -68,7 +68,7 @@ void Simulation::updateSack(Enemy &e,float dt) {
             r.momentum=mul(r.momentum,w.retention);
         }
         if(!walking&&e.hp<e.maxHp-.0001f) {
-            e.hp=std::min(e.maxHp,e.hp+r.growth*p.healing*p.healthScale);
+            e.hp=std::min(e.maxHp,e.hp+r.growth*p.healing*p.healthScale*content->regularHealthAdjustment(e.monster));
             r.growth=(r.growth+p.growth)*p.growthRetention;r.frame=-1;r.fired=false;r.shots=0;e.state=EnemyState::Ready;
             continue;
         }

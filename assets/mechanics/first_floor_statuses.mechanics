@@ -5,7 +5,7 @@ DEATHWARD_MECHANICS 1
 # slow_effect ID actor-time-scale shot-time-scale negative-duration-refresh
 # shrink_effect ID additive-cap target-visual-scale approach-per-source-update
 # charm_effect ID target-period range squared-charmed-penalty contact-period health-scale contact-offset divisor gain NPC-shot-damage
-# Temporary Charm only; permanent negative-duration conversion remains unsupported.
+# Positive Charm is timed; negative duration permanently converts these reviewed actors.
 # damage_status ID poison|burn cap period first-tick minimum-damage (DeathWard HP)
 # fear_motion ID scale seen-range hidden-range check-period memory outer-friction wander-force wander-friction path-force alert-friction
 status_effects 10.0.0 120 15 24
@@ -47,3 +47,12 @@ slow_effect 12.0.0 .5 .5 2
 shrink_effect 12.0.0 150 .333 .166666667
 damage_status 12.0.0 poison 120 20 2 6.4
 damage_status 12.0.0 burn 120 20 2 6.4
+
+# Reactive Sub Horf shares stationary status interfaces.
+status_effects 812.0.0 120 15 24
+charm_effect 812.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 812.0.0 120 .01
+slow_effect 812.0.0 .5 .5 2
+shrink_effect 812.0.0 150 .333 .166666667
+damage_status 812.0.0 poison 120 20 2 6.4
+damage_status 812.0.0 burn 120 20 2 6.4

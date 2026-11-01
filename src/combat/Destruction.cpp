@@ -124,6 +124,7 @@ void Simulation::hitBreakable(Breakable &prop,float damage,bool hard) {
     prop.destroyed=true;
 }
 void Simulation::resolveExplosion(const Event &e) {
+    igniteGas(e.position,e.radius);
     // Snapshot ALL recipients before any collision changes. Never let vector order
     // turn a single blast into a shot through the cover it has just destroyed.
     std::vector<EntityId> victims;

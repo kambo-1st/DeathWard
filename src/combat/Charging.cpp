@@ -10,7 +10,7 @@ float Simulation::enemyProjectileHit(const Enemy &e,Vector3 from,Vector3 to,floa
     if(e.adultLeech&&e.adultLeech->intangible)return 2.f;
     if(e.rockSpider) {
         if(e.rockSpider->height<content->rockSpider(e.monster)->entityHeight)return 2.f;
-        return segmentSphere(from,to,add(e.position,{0,e.lift,0}),e.radius+radius);
+        return segmentSphere(from,to,content->creatureCycle(e.monster)?add(e.position,{0,e.lift,0}):e.position,e.radius+radius);
     }
     if(e.thrownOffspring||e.dyingEggy())return 2.f; // These source states have no entity collision.
     if(content->statue(e.monster)&&content->monster(e.monster)->shape==MonsterShape::Stone) {
@@ -18,7 +18,7 @@ float Simulation::enemyProjectileHit(const Enemy &e,Vector3 from,Vector3 to,floa
         const Box body{{e.position.x-half,0,e.position.z-half},{e.position.x+half,e.radius*2,e.position.z+half}};
         const auto hit=segmentBox(from,to,body,radius);return hit.hit?hit.t:2.f;
     }
-    if(!c||c->tailRadius<=0)return segmentSphere(from,to,e.position,e.radius+radius);
+    if(!c||c->tailRadius<=0)return segmentSphere(from,to,content->creatureCycle(e.monster)?add(e.position,{0,e.lift,0}):e.position,e.radius+radius);
     const auto facing=unit(horizontal(e.facing));
     // Compact armored head/midsection and exposed tail share the navigation hull.
     // Test nearest geometry first: a rearward direction alone is insufficient.
@@ -31,12 +31,20 @@ float Simulation::enemyProjectileHit(const Enemy &e,Vector3 from,Vector3 to,floa
 void Simulation::updateCharge(Enemy &e,float dt) {
     const auto &c=*content->charge(e.monster);const auto &d=*content->monster(e.monster);
     const float multiplier=e.friendly?1.f:EnemyMovementMultiplier;
-    const float speed=c.speed*multiplier,walk=d.speed*multiplier;
+    const float speed=c.speed*multiplier*e.championSpeed,walk=d.speed*multiplier*e.championSpeed;
+    const auto previous=e.position;
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.velocity={};e.cooldown-=dt;e.auxiliary-=dt;e.trailTime-=dt;
     e.fireContactCooldown=std::max(0.f,e.fireContactCooldown-dt);
     auto finish=[&]{e.state=EnemyState::Ready;e.cooldown=c.recovery;e.chargeRecovery=c.pause;e.auxiliary=0;};
     auto dash=[&] {
-        const auto start=e.position;float remaining=dt;bool blocked=false;
+        const auto start=e.position;float remaining=std::min(dt,std::max(0.f,e.stateTime));
+        e.stateTime-=remaining;bool blocked=false;
+        if(e.champion==8) {
+            if(remaining>0)moveMonster(e,mul(e.facing,speed),remaining);
+            e.velocity=mul(sub(e.position,start),1/dt);
+            if(e.stateTime<=0||planarDistance(start,e.position)<speed*remaining*.5f)finish();
+            return;
+        }
         // Swept reflections retain the remaining distance and reflect the actual
         // wall normal. Four impacts per tick bound pathological tight corners.
         for(int bounce=0;bounce<4&&remaining>Tick*.001f;++bounce) {
@@ -71,13 +79,12 @@ void Simulation::updateCharge(Enemy &e,float dt) {
     if(e.state==EnemyState::Stunned) {
         e.stateTime-=dt;if(e.stateTime<=0)finish();
     } else if(e.state==EnemyState::Charging) {
-        e.stateTime-=dt;
         if(c.turnRate>0) {
             const auto *other=e.friendly?findEnemy(e.partner):nullptr;
             const auto target=unit(horizontal(sub(e.friendly?(other&&other->alive?other->position:add(e.position,e.facing)):player.position,e.position)));
             const float angle=std::atan2(target.x,target.z)-std::atan2(e.facing.x,e.facing.z);
             const float turn=std::atan2(std::sin(angle),std::cos(angle));
-            e.facing=rotateY(e.facing,std::clamp(turn,-c.turnRate*dt,c.turnRate*dt));
+            e.facing=rotateY(e.facing,std::clamp(turn,-c.turnRate*std::min(dt,std::max(0.f,e.stateTime)),c.turnRate*std::min(dt,std::max(0.f,e.stateTime))));
         }
         dash();
     } else if(e.chargeRecovery>0) {
@@ -90,7 +97,7 @@ void Simulation::updateCharge(Enemy &e,float dt) {
                 const auto delta=sub(other.position,e.position);
                 if(std::abs(delta.x)>c.alignment&&std::abs(delta.z)>c.alignment)continue;
                 const auto range=distance(e.position,other.position);
-                if(range<nearest&&arena.sight(e.position,other.position)) {
+                if(range<nearest&&(e.champion==8||arena.sight(e.position,other.position))) {
                     nearest=range;target=other.position;e.partner=other.id;hasTarget=true;
                 }
             }
@@ -98,7 +105,7 @@ void Simulation::updateCharge(Enemy &e,float dt) {
         const auto delta=sub(target,e.position);
         const bool vertical=std::abs(delta.x)<=c.alignment,horizontal=std::abs(delta.z)<=c.alignment;
         const bool aligned=c.diagonal?std::abs(std::abs(delta.x)-std::abs(delta.z))*.70710678f<=c.alignment:vertical||horizontal;
-        if(e.cooldown<=0&&hasTarget&&aligned&&arena.sight(e.position,target)) {
+        if(e.cooldown<=0&&hasTarget&&aligned&&(e.champion==8||arena.sight(e.position,target))) {
             e.facing=c.diagonal?unit(Vector3{delta.x<0?-1.f:1.f,0,delta.z<0?-1.f:1.f}):
                 vertical?Vector3{0,0,delta.z<0?-1.f:1.f}:Vector3{delta.x<0?-1.f:1.f,0,0};
             e.state=EnemyState::Charging;e.stateTime=c.duration;
@@ -109,6 +116,29 @@ void Simulation::updateCharge(Enemy &e,float dt) {
             if(planarDistance(before,e.position)<walk*dt*.5f)e.auxiliary=0;
         }
     }
-    if(!e.friendly&&d.contact&&distance(e.position,player.position)<e.radius+.48f&&arena.sight(e.position,player.position))hurtPlayer(c.contactDamage);
+    if(!e.friendly&&d.contact) {
+        const float fraction=segmentSphere(sub(previous,playerStepStart_),sub(e.position,player.position),{},e.radius+.48f);
+        if(fraction<=1&&arena.sight(add(previous,mul(sub(e.position,previous),fraction)),
+                                  add(playerStepStart_,mul(sub(player.position,playerStepStart_),fraction))))
+            hurtPlayer(e.champion<0?c.contactDamage:std::max(c.contactDamage,10.f*e.championDamage),{0,0,e.id,-1});
+    }
+}
+bool Simulation::flushChargeDeath(Enemy &e) {
+    const auto *c=content->charge(e.monster);
+    if(!e.chargeDeathPending||!c)return true;
+    while(e.chargeDeathShot<c->deathShots) {
+        const auto queued=std::count_if(queue_.begin(),queue_.end(),[](const Event &v){return v.type==EventType::Shot;});
+        if(queue_.size()>=limits.queuedEvents||projectiles.size()+size_t(queued)>=limits.projectiles)return false;
+        Event shot;shot.hostile=true;shot.context.sourceEntity=e.id;shot.position=shot.origin=e.position;
+        shot.direction=rotateY({1,0,0},c->deathAngle+float(e.chargeDeathShot)*2*Pi/float(c->deathShots));
+        shot.position=add(e.position,mul(shot.direction,e.radius+.15f));
+        if(!arena.clear(e.position,shot.position,.22f))shot.position=e.position;
+        shot.origin=shot.position;
+        shot.speed=c->deathSpeed;shot.damage=c->deathDamage;
+        if(!queueRoot(shot))return false;
+        audioCues.push(AudioCueKind::MonsterAttack,e.position);
+        ++e.chargeDeathShot;
+    }
+    e.chargeDeathPending=false;return true;
 }
 } // namespace dw

@@ -146,7 +146,7 @@ void liveAttacksAndLifecycle() {
 }
 void childAndExternal() {
     Pack p;p.edit("boom_flies.mechanics","boom_child 25.2.0 23.1.0 5000","boom_child 25.2.0 23.1.0 10000");
-    p.extra("stage_health 23.1.0 12 10 3.2\n");auto rules=p.load();auto land=fixture(rules);land.arena.profile.sourceStage=4;
+    p.edit("regular_enemy_health.mechanics","stage_health 23.1.0 22 0 3.2","stage_health 23.1.0 12 10 3.2");auto rules=p.load();auto land=fixture(rules);land.arena.profile.sourceStage=4;
     kill(land,land.spawnMonster(monsterId(25,2),{}));land.step({});
     check(land.livingEnemies()==1&&land.enemies[0].monster==monsterId(23,1)&&near(land.enemies[0].hp,166.4f),"Drowned child preserves actual stage health through queued spawning");
     auto rock=fixture(rules);rock.arena.obstacles={{{-2,0,-2},{2,2,2}}};rock.arena.rebuildWalls();
@@ -165,7 +165,7 @@ void replacementAndRouting() {
         std::ifstream in(file.path());std::string line,data;while(std::getline(in,line)){std::istringstream row(line);std::string cmd;row>>cmd;if(cmd!="encounter")data+=line+'\n';}
         in.close();std::ofstream(file.path())<<data;
     }
-    p.extra("encounter 0 3 any basic 10.1.0 1 1 0\nencounter 0 3 any specialist 25.0.0 1 3 1\n");
+    p.extra("encounter 0 3 any basic 11.1.0 1 1 0\nencounter 0 3 any specialist 25.0.0 1 3 1\n");
     auto s=fixture(p.load());s.arena.profile.band=1;s.arena.profile.patterns={1,0,0,0};s.arena.profile.maxThreat=12;s.arena.profile.areaPerThreat=95;
     s.arena.rooms.resize(10000);for(auto &r:s.arena.rooms){r.kind=RoomKind::Combat;r.floorArea=800;}
     for(const auto variant:{FloorVariant::Standard,FloorVariant::Flooded}) {

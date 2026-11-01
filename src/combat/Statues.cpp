@@ -32,16 +32,24 @@ void Simulation::refreshStatueAttraction(float dt) {
         if(e.statuePullActive)statueAttractors_.push_back({e.position,s});
     }
 }
-Vector3 Simulation::statueAttraction(Vector3 position,bool projectile,float *speedLimit) const {
+Vector3 Simulation::statueAttraction(Vector3 position,bool projectile,float *speedLimit,bool championFields) const {
     Vector3 force{};float maximum=0;
     // Unentered rooms and corridors have no active attraction field.
-    if(statueAttractors_.empty()||arena.roomAt(position)!=room)return force;
+    if(arena.roomAt(position)!=room)return force;
     for(const auto &field:statueAttractors_) {
         const auto &s=*field.definition;auto toward=horizontal(sub(field.position,position));const float d=length(toward);
         if(d<.0001f||d>=s.range||std::abs(position.y-field.position.y)>s.pullHeight)continue;
         const float strength=(projectile?s.projectilePull:s.playerPull)*(1-d/s.range);
         force=add(force,mul(toward,strength/d));maximum=std::max(maximum,projectile?s.projectilePull:s.playerPull);
         if(speedLimit)*speedLimit=std::max(*speedLimit,s.projectileLimit);
+    }
+    if(championFields)for(const auto &e:enemies)if(e.alive&&!e.friendly&&!e.affectedBy(EnemyStatus::Freeze)&&
+        (e.championEffect(11)||(projectile&&e.champion==16&&std::fmod(e.age,2.f)<.3f))) {
+        auto toward=horizontal(sub(e.position,position));const float d=length(toward);
+        if(d<.001f||d>=20||std::abs(position.y-e.position.y)>3)continue;
+        const float power=projectile?32.f:4.f;
+        force=add(force,mul(toward,(e.champion==16?-1:1)*power*(1-d/20)/d));
+        maximum=std::max(maximum,power);if(projectile&&speedLimit)*speedLimit=std::max(*speedLimit,80.f);
     }
     // Opposing fields cancel; stacked fields remain counterable. These force
     // units, falloff, vertical extent and aggregate cap are explicit 3D tuning.

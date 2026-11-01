@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include <stdexcept>
 
 namespace dw {
 const EnemyDefinition &enemyDefinition(EnemyKind kind) {
@@ -187,6 +188,13 @@ void Simulation::prepareRoomEnemies(int index) {
     // Required components must exist in resident rooms before the player enters.
     // Retain births that cannot yet fit instead of discarding this room's queue.
     flushMonsterSpawns();
+    if(arena.theme==MissionTheme::Canyon&&arena.profile.active()&&!surveyTutorial) {
+        Random champions(seed_^uint64_t(index+1)*0x9e3779b97f4a7c15ULL);
+        for(auto &body:enemies)if(championEligible(body.monster)&&champions.bounded(10000)<unsigned(content->championChance())) {
+            std::vector<int> pool;for(int k=0;k<26;++k)if(const auto *p=content->champion(k);p&&arena.profile.sourceStage>=p->firstStage&&championTypeEligible(body.monster,k))pool.push_back(k);
+            if(!pool.empty())makeChampion(body.id,pool[champions.bounded(unsigned(pool.size()))]);
+        }
+    }
     rooms[size_t(index)].pendingSpawns=std::move(pendingMonsters_);
     rooms[size_t(index)].residents = std::move(enemies);
     enemies = std::move(active);
@@ -326,5 +334,34 @@ void Simulation::spawnRoomEnemies() {
         }
         unpaired = 0;
     }
+}
+void Simulation::startPractice(int batch) {
+    if(batch!=2&&batch!=3&&batch!=4)throw std::runtime_error("Unknown practice batch");
+    int target=-1;
+    for(int n=1;n<finalRoom();++n)if(arena.rooms[size_t(n)].kind==RoomKind::Combat&&arena.rooms[size_t(n)].story==StoryRoom::None){target=n;break;}
+    if(target<0)throw std::runtime_error("No combat room available for practice");
+    jumpDebug(target);clearRoomDebug();arena.sealRoom(room);
+    const auto center=arena.rooms[size_t(room)].center;
+    const std::vector<MonsterId> cohort=batch==2?std::vector<MonsterId>{monsterId(13),monsterId(14),monsterId(18),monsterId(85),monsterId(16)}:
+        batch==3?std::vector<MonsterId>{monsterId(23),monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)}:
+        std::vector<MonsterId>{monsterId(822),monsterId(823),monsterId(874),monsterId(889),monsterId(889)};
+    for(auto id:cohort) {
+        bool placed=false;const auto *d=content->monster(id);
+        for(int ring=0;ring<32&&!placed;++ring)for(int n=0;n<24&&!placed;++n) {
+            const auto at=add(center,rotateY({float(ring)*.75f,0,0},float(n)*2*Pi/24));
+            if(arena.roomAt(at)!=room||distance(at,player.position)<4||
+               (d->flying?arena.flightBlocked(at,d->radius,room):arena.blocked(at,d->radius))||
+               std::any_of(enemies.begin(),enemies.end(),[&](const Enemy &e){return distance(e.position,at)<e.radius+d->radius+1;}))continue;
+            if(!d->flying&&arena.path(player.position,at,d->radius).empty())continue;
+            placed=spawnMonster(id,at)!=0;
+        }
+        if(!placed)throw std::runtime_error("Cannot place practice enemy safely");
+    }
+    moneyPickups.clear();
+    items.clear();player.baseHealth=player.maxHp=player.hp=StartingHealth;player.shotDamage=RevolverDamage;
+    player.hurt=player.fireCooldown=player.dodge=player.dodgeCooldown=0;
+    stats={};roomClear=false;rooms[size_t(room)].cleared=false;rooms[size_t(room)].rewardTaken=true;
+    rewardOpen=shopOpen=finished=dead=godMode=debugScenario=false;messageTime=0;
+    arena.sealRoom(room);checkpointNeeded=true;
 }
 } // namespace dw

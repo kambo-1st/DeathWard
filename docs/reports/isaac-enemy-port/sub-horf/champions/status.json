@@ -1,0 +1,404 @@
+{
+  "date": "2026-11-01T11:37:13.035631+00:00",
+  "actor": "812.0.0",
+  "status": "all26combat_variants_enabled_and_scoped_tested",
+  "champion_types": [
+    {
+      "id": 0,
+      "name": "Red",
+      "hp_multiplier": 2.6,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "More HP",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 1,
+      "name": "Yellow",
+      "hp_multiplier": 1.5,
+      "speed_multiplier": 1.3,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 3,
+      "combat": "Faster, reduced champion HP",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 2,
+      "name": "Green",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Damaging green creep",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 3,
+      "name": "Orange",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Coin loss on admitted player hits; projectile effect survives shooter removal",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 4,
+      "name": "Dark Blue",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 0.75,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Slower movement",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 5,
+      "name": "Dark Cyan",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Explosion on death; retained under queue pressure",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 6,
+      "name": "White",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Invulnerability until other non-White threats die; White pairs cannot softlock",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 7,
+      "name": "Gray",
+      "hp_multiplier": 0.66,
+      "speed_multiplier": 0.75,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Less HP and slower movement",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 8,
+      "name": "Translucent",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Crosses interior obstacles/pits; spectral shots retain sealed room bounds after shooter removal",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 9,
+      "name": "Black",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Visibility oscillates; damage briefly reveals",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 10,
+      "name": "Magenta",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Periodic short-range shot in facing direction",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 11,
+      "name": "Violet",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Attracts player and player projectiles, capped aggregate force",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 12,
+      "name": "Dark Red",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Flesh pile, regeneration, can be finished off; source-frame armored Level2 integration checked",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 13,
+      "name": "Light Blue",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Eight radial death shots; retained capacity handling",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 14,
+      "name": "Camouflage",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Low visibility; damage reveals",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 15,
+      "name": "Pulsing Green",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Two ordinary copies on death, retained births",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 16,
+      "name": "Pulsing Gray",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "Pulsed player-projectile repulsion; never pushes player",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 17,
+      "name": "Light White",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 1,
+      "combat": "One owned Eternal Fly; release plus additional Attack Fly on death",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 18,
+      "name": "Small",
+      "hp_multiplier": 0.66,
+      "speed_multiplier": 1.3,
+      "visual_multiplier": 0.5,
+      "collision_multiplier": 0.5,
+      "damage_multiplier": 1.0,
+      "first_source_stage": 1,
+      "combat": "Smaller body/collision and less HP; faster; no extra shot damage",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 19,
+      "name": "Large",
+      "hp_multiplier": 3.0,
+      "speed_multiplier": 0.85,
+      "visual_multiplier": 1.5,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 4.0,
+      "first_source_stage": 1,
+      "combat": "Larger appearance, unchanged collision, more HP, slower, stronger contact",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 20,
+      "name": "Pulsing Red",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Heals other enemies; excludes self, other healers, Bishops, piles and hazards",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 21,
+      "name": "Pulsating",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Attack Fly on damage with cooldown; max five living/queued owned flies",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 22,
+      "name": "Crown",
+      "hp_multiplier": 6.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Sixfold HP; other ordinary enemies turn yellow without combat-stat bonuses",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 23,
+      "name": "Skull",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 4.0,
+      "first_source_stage": 5,
+      "combat": "Necronomicon-style room damage on death; stronger contact",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 24,
+      "name": "Brown",
+      "hp_multiplier": 2.0,
+      "speed_multiplier": 1.0,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Real destructible dung trail; excludes occupied space/door approaches and checks route connectivity",
+      "status": "combat_enabled_scoped_tests_pass"
+    },
+    {
+      "id": 25,
+      "name": "Rainbow",
+      "hp_multiplier": 3.0,
+      "speed_multiplier": 1.3,
+      "visual_multiplier": 1.15,
+      "collision_multiplier": 1.0,
+      "damage_multiplier": 2.0,
+      "first_source_stage": 5,
+      "combat": "Fast, triple HP, creep, orbiter, facing shots, attraction, death explosion and eight shots; retries do not repeat explosion",
+      "status": "combat_enabled_scoped_tests_pass"
+    }
+  ],
+  "validation": {
+    "result": "pass",
+    "native_suites": 6,
+    "first_batch_passed": 5,
+    "failed_suite_rerun_passed": 1,
+    "logs": [
+      "tests.log",
+      "tests-retry.log",
+      "behavior.log"
+    ],
+    "stat_charm_scenarios": 52,
+    "death_affiliation_scenarios": 52,
+    "natural": {
+      "seeds": 12,
+      "residents": 8,
+      "distinct_types": 8,
+      "forced_fixture": "Replacement and champion chance100percent only in copied test content; production1/60and5percent remain unchanged.",
+      "stage_gates": "Natural types retain first-source-stage restrictions; debug forcing covers all26."
+    },
+    "native_build": "pass",
+    "binary_sha256": "baf5101ea2bff9833af4fd1a393d982f6311a4f502083fd74fe2580f4abb8ace",
+    "captures": [
+      {
+        "name": "dark-red",
+        "image": "dark-red.png",
+        "sha256": "5537fe7bd643f5f19d8e387201a47a2b7116313b7c14f9b357ba9cd506799b7f",
+        "probe": "ENEMY_PROBE id=812.0 frames=60 alive=1 hp=22.4 shots=0 threats=1",
+        "inspected": true,
+        "scope": "Isolated Original1440x900/160percent; three representative states, not all26visual/occlusion acceptance."
+      },
+      {
+        "name": "split",
+        "image": "split.png",
+        "sha256": "3d7a189a4d801e62876c588a5a5833781951fc2d0f12651106db531e406f94e3",
+        "probe": "ENEMY_PROBE id=812.0 frames=75 alive=0 hp=0 shots=1 threats=2",
+        "inspected": true,
+        "scope": "Isolated Original1440x900/160percent; three representative states, not all26visual/occlusion acceptance."
+      },
+      {
+        "name": "rainbow",
+        "image": "rainbow.png",
+        "sha256": "64685694b2e9602d6aea2c4841ec0ec34501e859d092c5cef888c73a9431d3dd",
+        "probe": "ENEMY_PROBE id=812.0 frames=90 alive=1 hp=110.4 shots=3 threats=1",
+        "inspected": true,
+        "scope": "Isolated Original1440x900/160percent; three representative states, not all26visual/occlusion acceptance."
+      }
+    ],
+    "test_history": "New Brown destruction assertion initially used a soft blast, which only removes dung hits. Corrected fixture to spent-dynamite demolition, then reran the failed suite successfully. Earlier five regression suites passed; original failed run is retained.",
+    "wasm": "Skipped by user instruction"
+  },
+  "checked": [
+    "All26HP/size/contact modifiers with ordinary and permanent-Charm affiliation; stationary variants never acquire autonomous walking.",
+    "Green/Brown trails require physical movement. Brown droppings break under dynamite without loot.",
+    "White immunity releases without softlock; Black/Camouflage reveal behavior; spectral body/own death shot retain room bounds after owner cleanup.",
+    "Magenta fires independently at rest and retries under projectile pressure, including already queued shots. Violet/Gray fields and PulsingRed healing work on this body.",
+    "DarkRed collapse emits no own death shot/reward, revives, and final finishing pays once.",
+    "Every type retains the ordinary final shot; LightBlue/Rainbow add8for9total, without replacing or duplicating the base shot.",
+    "PulsingGreen creates two ordinary source-HP copies, retaining functional permanent Charm and safe descendant shots.",
+    "LightWhite orbiter releases plus extra fly; Pulsating caps offspring at5; Crown coloring and Skull chained deaths preserve correct per-body rewards and shots.",
+    "Orange final-shot coin loss remains after the owner is removed.",
+    "Production resident preparation selects seeded champions with stage gates; default tuning unchanged."
+  ],
+  "fixes": [
+    "Enabled ordinary812.0through the shared champion eligibility checks; Tainted812.1remains excluded.",
+    "Reactive Green/Brown/Rainbow movement trails no longer accumulate while stationary.",
+    "Magenta checks queued shots as well as live projectiles before consuming its extra-shot timer.",
+    "Profiled permanently charmed champion offspring receive status runtime so their shots keep allegiance."
+  ],
+  "adaptations": [
+    "Existing HP/size/generic combat definitions are reused; effect strengths, aura forces, delays and movement tuning are DeathWard values rather than exact native champion-engine recovery.",
+    "Yellow/Gray/DarkBlue speed modifiers do not manufacture autonomous motion or multiply external SubHorf recoil. This is the local stationary-body policy; exact native special impulse modifiers remain unverified.",
+    "Existing one-orbiter LightWhite policy is retained; wiki allows1-2. Global uniform eligible-type selection and ordinary DeathWard loot remain unchanged."
+  ],
+  "remaining": [
+    "Isaac-specific champion pickup rewards and native rarity weighting remain unimplemented/adapted in the shared system.",
+    "Real pickup-to-status triggers and full body/build/status interaction matrix remain open.",
+    "Exact native champion knockback/status/item exceptions, mixed-room/all-angle visual acceptance, human balance and dense rendered performance remain open.",
+    "Tainted Sub Horf812.1is a separate missing actor."
+  ],
+  "source": [
+    "docs/reports/isaac-wiki/monsters-wiki/Champions.html",
+    "docs/reports/isaac-wiki/monsters-wiki/pages/Horf.html",
+    "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml"
+  ],
+  "full_port_accepted": false
+}

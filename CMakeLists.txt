@@ -89,6 +89,8 @@ add_library(deathward_core
     src/combat/Gapers.cpp
     src/combat/GroundPursuit.cpp
     src/combat/EnemyStatuses.cpp
+    src/combat/CreatureCycles.cpp
+    src/combat/Champions.cpp
     src/combat/Charm.cpp
     src/combat/BlackGlobin.cpp
     src/combat/LeperFlesh.cpp
@@ -542,6 +544,12 @@ if(BUILD_TESTING)
     add_executable(deathward_bloat_tests tests/bloat_tests.cpp)
     target_link_libraries(deathward_bloat_tests PRIVATE deathward_core)
     add_test(NAME bloat_boss_and_chargers COMMAND deathward_bloat_tests)
+    add_executable(deathward_regular_health_tests tests/regular_health_tests.cpp)
+    target_link_libraries(deathward_regular_health_tests PRIVATE deathward_core)
+    add_test(NAME regular_health_balance COMMAND deathward_regular_health_tests)
+    add_executable(deathward_creature_cycle_tests tests/creature_cycle_tests.cpp)
+    target_link_libraries(deathward_creature_cycle_tests PRIVATE deathward_core)
+    add_test(NAME creature_cycles COMMAND deathward_creature_cycle_tests)
     add_executable(deathward_charger_tests tests/charger_variant_tests.cpp)
     target_link_libraries(deathward_charger_tests PRIVATE deathward_core)
     add_test(NAME charger_variants COMMAND deathward_charger_tests)
@@ -596,6 +604,9 @@ if(BUILD_TESTING)
     add_executable(deathward_crackle_tests tests/crackle_tests.cpp)
     target_link_libraries(deathward_crackle_tests PRIVATE deathward_core)
     add_test(NAME crackle_discrete_fire_jets COMMAND deathward_crackle_tests)
+    add_executable(deathward_sub_horf_tests tests/sub_horf_tests.cpp)
+    target_link_libraries(deathward_sub_horf_tests PRIVATE deathward_core)
+    add_test(NAME sub_horf_reactive COMMAND deathward_sub_horf_tests)
     add_executable(deathward_horf_tests tests/horf_tests.cpp)
     target_link_libraries(deathward_horf_tests PRIVATE deathward_core)
     add_test(NAME horf_stationary_shooting COMMAND deathward_horf_tests)
@@ -644,6 +655,9 @@ if(BUILD_TESTING)
     add_executable(deathward_headless_tests tests/headless_tests.cpp)
     target_link_libraries(deathward_headless_tests PRIVATE deathward_core)
     add_test(NAME headless_family COMMAND deathward_headless_tests)
+    add_executable(deathward_batch2_tests tests/batch2_tests.cpp)
+    target_link_libraries(deathward_batch2_tests PRIVATE deathward_core)
+    add_test(NAME first_floor_batch2 COMMAND deathward_batch2_tests)
     add_executable(deathward_first_floor_cohort_tests tests/first_floor_cohort_tests.cpp)
     target_link_libraries(deathward_first_floor_cohort_tests PRIVATE deathward_core)
     add_test(NAME first_floor_cohort COMMAND deathward_first_floor_cohort_tests)

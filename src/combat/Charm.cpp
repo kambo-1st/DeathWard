@@ -2,9 +2,9 @@
 
 namespace dw {
 namespace {
-bool charmCandidate(const Enemy &e,const MechanicsLibrary &content) {
+bool charmCandidate(const Enemy &e,const MechanicsLibrary &content,bool contact=false) {
     const auto *p=content.monster(e.monster);
-    if(!e.alive||e.friendly||e.kind!=EnemyKind::Monster||!p||p->roomHazard||e.dyingEggy()||
+    if(!e.alive||(e.friendly&&!(contact&&e.permanentCharmed))||e.kind!=EnemyKind::Monster||!p||p->roomHazard||e.dyingEggy()||
        e.returningBody||e.thrownOffspring||e.state==EnemyState::Buried||e.state==EnemyState::Teleporting||
        (e.leaper&&e.leaper->phase&&e.targetHop->airborne))return false;
     const int type=e.monster.type;
@@ -58,7 +58,7 @@ void Simulation::setEnemyShotAffiliation(const Enemy &e,Event &shot) const {
 
 void Simulation::prepareCharmContacts() {
     if(std::none_of(enemies.begin(),enemies.end(),[](const auto &e){return e.alive&&e.affectedBy(EnemyStatus::Charm);}))return;
-    for(auto &e:enemies)if(charmCandidate(e,*content)) {
+    for(auto &e:enemies)if(charmCandidate(e,*content,true)) {
         if(!e.charmContact)e.charmContact.emplace();
         if(!e.charmContact->motionReady){e.charmContact->previous=e.position;e.charmContact->motionReady=true;}
     }
@@ -77,13 +77,13 @@ void Simulation::updateCharmContacts() {
             Event hit;hit.type=EventType::Damage;hit.target=pending->target;
             hit.damage=pending->damage;hit.position=pending->position;hit.origin=pending->origin;
             hit.direction=unit(horizontal(sub(hit.position,hit.origin)));hit.hostile=true;
-            hit.context.sourceEntity=source.id;hit.context.damageSource=DamageSource::Enemy;
+            hit.context.sourceEntity=source.id;hit.context.damageSource=source.friendly?DamageSource::Ally:DamageSource::Enemy;
             if(!queueRoot(hit))return false;
             pending.reset();return true;
         };
-        if(!flush()||!active||!sample||!charmCandidate(source,*content)||contactDamage(source)<=0)continue;
+        if(!flush()||!active||!sample||!charmCandidate(source,*content,true)||contactDamage(source)<=0)continue;
         for(const auto &target:enemies) {
-            if(source.id==target.id||!charmCandidate(target,*content))continue;
+            if(source.id==target.id||!charmCandidate(target,*content,true))continue;
             const bool charmed=source.affectedBy(EnemyStatus::Charm),other=target.affectedBy(EnemyStatus::Charm);
             if(charmed==other&&(!source.statuses||source.statuses->charmTarget!=target.id))continue;
             const auto *profile=content->enemyStatuses(charmed?source.monster:target.monster);
@@ -105,7 +105,8 @@ void Simulation::updateCharmContacts() {
             const auto otherAt=add(otherFrom,mul(sub(target.position,otherFrom),fraction));
             if(fraction>1||!arena.sight(at,otherAt)||
                std::find(r.touched.begin(),r.touched.end(),target.id)!=r.touched.end())continue;
-            const float damage=std::log((source.maxHp/p.healthScale+p.contactOffset)/p.contactDivisor)*p.contactGain*p.healthScale;
+            float damage=std::log((source.maxHp/(p.healthScale*content->regularHealthAdjustment(source.monster))+p.contactOffset)/p.contactDivisor)*p.contactGain*p.healthScale;
+            if(target.permanentCharmed)damage=std::min(damage*.25f,3.5f*p.healthScale);
             r.touched.push_back(target.id);
             r.pending=CharmContactHit{target.id,damage,at,otherAt};
             // One retained hit per actor under backpressure; no unbounded
@@ -117,5 +118,21 @@ void Simulation::updateCharmContacts() {
         if(!active)e.charmContact->motionReady=false;
         else if(sample){e.charmContact->previous=e.position;e.charmContact->motionReady=true;}
     }
+}
+void Simulation::restoreCharmFollowers() {
+    std::erase_if(charmFollowers_,[&](Enemy &e) {
+        if(!e.alive)return true;
+        if(enemies.size()>=limits.enemies)return false;
+        const auto center=arena.rooms[size_t(room)].center;
+        for(int ring=0;ring<32;++ring)for(int n=0;n<(ring?32:1);++n) {
+            const auto candidate=add(center,rotateY({float(ring)*1.25f,0,0},float(n)*2*Pi/32));
+            if(arena.roomAt(candidate)!=room||arena.blocked(candidate,e.radius)||
+               std::any_of(enemies.begin(),enemies.end(),[&](const Enemy &b){return b.alive&&distance(b.position,candidate)<b.radius+e.radius+.1f;}))continue;
+            e.position=e.home=candidate;e.velocity={};e.path.clear();e.pathTime=0;e.charmContact.reset();
+            invalidateStatusPath(e,EnemyStatus::Charm);
+            enemies.push_back(std::move(e));return true;
+        }
+        return false;
+    });
 }
 } // namespace dw

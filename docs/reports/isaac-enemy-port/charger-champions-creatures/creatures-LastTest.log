@@ -1,0 +1,15 @@
+chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+BOUNCER flee=1 inflate=1 damage_timer=1 early4=1 inflated34=1 ramp22=1 retained_death=1 contact=1 intermittent_reflection=1
+QUAKEY jump=1 locked_aim=1 landing_ring8=1 ceiling3=1 mounted=1
+GAS_DWARF gas=1 ipecac=1 ignition=1 contact=1 retained_ignition=1
+CLACK collapse=1 pile_block=1 regrow=1 all_collapsed_cleanup=1 reward_once=1 white_excluded=1
+CREATURE_STARTING_KIT id=822 seconds=1.36667 hp=100
+CREATURE_STARTING_KIT id=823 seconds=1.7 hp=100
+CREATURE_STARTING_KIT id=874 seconds=0.516667 hp=100
+CREATURE_STARTING_KIT id=889 seconds=1.15 hp=100
+CREATURE_NATURAL id=874 seed=3 floor=1 room=5
+CREATURE_NATURAL id=823 seed=40 floor=2 room=4
+CREATURE_NATURAL id=889 seed=41 floor=2 room=7
+CREATURE_NATURAL id=822 seed=97 floor=2 room=8
+PASS four creature cycles

@@ -40,7 +40,7 @@ void Simulation::resolveLeperDamage(Enemy &e) {
     const auto &p=*content->leper(e.monster);
     r.applyingDamage=std::move(r.pendingDamage);r.pendingDamage.clear();++r.batches;
     float damage=0;for(const auto &hit:r.applyingDamage)damage+=enemyDamage(e,hit);
-    if(r.chase>0)r.chase=std::max(1,r.chase-int(std::ceil(p.damageTimerGain*damage/p.damageScale)));
+    if(r.chase>0)r.chase=std::max(1,r.chase-int(std::ceil(p.damageTimerGain*damage/(p.damageScale*content->regularHealthAdjustment(e.monster)))));
     // Native AI predicts the entire queued batch before Entity::Update applies
     // individual hits. MaxHP remains fixed inside this loop; Morph runs once.
     const float predicted=e.hp-damage,oldMax=e.maxHp;
@@ -85,7 +85,7 @@ bool Simulation::leperDeath(Enemy &e,const Event &event) {
     auto &r=*e.leper;if(r.deathReleased)return false;r.deathReleased=true;
     emitLeperFlesh(e,true);
     flushLeperBirths(e);
-    if(e.hp<=-p.overkill||combatRng.bounded(unsigned(p.morphChance))!=0)return false;
+    if(e.hp<=-p.overkill*content->regularHealthAdjustment(e.monster)||combatRng.bounded(unsigned(p.morphChance))!=0)return false;
     const float scale=e.maxHp/content->monsterHealth(e.monster,arena.profile.sourceStage);
     e.monster=p.gusher;e.hp=e.maxHp=content->monsterHealth(p.gusher,arena.profile.sourceStage)*scale;
     e.state=EnemyState::Ready;e.stateTime=0;e.phase=0;e.behavior={};e.hop={};

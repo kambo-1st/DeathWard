@@ -1,0 +1,63 @@
+DEATHWARD_MECHANICS 1
+# Installed Repentance1.7.9b identities/HP, pinned wiki behavioral contracts.
+# HP*3.2, radii*.05; speeds, jump/regen/gas timings are explicit 3D tuning.
+monster 822.0.0 "Bouncer" Chase None Walker 96 3.5 .65 2.4 .4 2 0 1 0 1 legacy
+monster 823.0.0 "Quakey" Chase None Stone 144 1.4 .65 4 .45 2 0 1 0 1 legacy
+monster 874.0.0 "Gas Dwarf" Chase None Walker 41.6 3.4 .65 2.4 .4 2 0 0 0 1 legacy
+monster 889.0.0 "Clickety Clack" Chase None Skull 73.6 3 .65 2.4 .4 2 0 1 0 1 legacy
+stage_health 822.0.0 30 0 3.2
+stage_health 823.0.0 45 0 3.2
+stage_health 874.0.0 13 0 3.2
+stage_health 889.0.0 20 3 3.2
+# Bouncer timer min/range, source damage divisor, proximity, flee/chase speed,
+# contact, inflation animation frames/event. Timer6..10, divisor3.5,21/7 measured native.
+bouncer 822.0.0 6 4 3.5 12 3.5 2.7 10 21 7
+# Quakey interval windup flight height max-jump-range ring-speed damage ceiling-rock-count.
+quakey 823.0.0 4 .45 .7 3 12 8 10 3
+# Gas interval radius lifetime blast-radius enemy-damage player-damage ipecac-speed.
+gas_dwarf 874.0.0 .65 1.4 5 2.8 40 20 6
+# Clack chase-duration wander-duration regeneration-delay contact.
+clack 889.0.0 2.5 1.2 3 10
+# Mines/Ashpit analog: ordinary room roles, authored weights rather than native table probabilities.
+encounter 1 1 pursuit specialist 822.0.0 1 3 2
+encounter 1 1 pursuit specialist 823.0.0 1 4 1
+encounter 1 1 pursuit specialist 874.0.0 1 2 2
+encounter 1 1 pursuit specialist 889.0.0 2 2 4 2
+
+# Shared tested status primitives; detailed per-creature native exceptions remain unverified.
+status_effects 822.0.0 120 15 24
+charm_effect 822.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 822.0.0 120 .01
+slow_effect 822.0.0 .5 .5 2
+shrink_effect 822.0.0 150 .333 .166666667
+damage_status 822.0.0 poison 120 20 2 6.4
+damage_status 822.0.0 burn 120 20 2 6.4
+fear_motion 822.0.0 .1 25 17 14 3 .8 .5 .9 1.079 1
+hit_response 822.0.0 7 15 30 20
+status_effects 823.0.0 120 15 24
+charm_effect 823.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 823.0.0 120 .01
+slow_effect 823.0.0 .5 .5 2
+shrink_effect 823.0.0 150 .333 .166666667
+damage_status 823.0.0 poison 120 20 2 6.4
+damage_status 823.0.0 burn 120 20 2 6.4
+fear_motion 823.0.0 .1 25 17 14 3 .8 .5 .9 1.079 1
+hit_response 823.0.0 20 15 30 20
+status_effects 874.0.0 120 15 24
+charm_effect 874.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 874.0.0 120 .01
+slow_effect 874.0.0 .5 .5 2
+shrink_effect 874.0.0 150 .333 .166666667
+damage_status 874.0.0 poison 120 20 2 6.4
+damage_status 874.0.0 burn 120 20 2 6.4
+fear_motion 874.0.0 .1 25 17 14 3 .8 .5 .9 1.079 1
+hit_response 874.0.0 6 15 30 20
+status_effects 889.0.0 120 15 24
+charm_effect 889.0.0 15 500 1600 3 3.2 110 100 33 19.2
+freeze_effect 889.0.0 120 .01
+slow_effect 889.0.0 .5 .5 2
+shrink_effect 889.0.0 150 .333 .166666667
+damage_status 889.0.0 poison 120 20 2 6.4
+damage_status 889.0.0 burn 120 20 2 6.4
+fear_motion 889.0.0 .1 25 17 14 3 .8 .5 .9 1.079 1
+hit_response 889.0.0 7 15 30 20

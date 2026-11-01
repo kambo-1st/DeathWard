@@ -1,0 +1,99 @@
+{
+  "status": "ordinary_actor_implemented_scoped_tests_pass_full_acceptance_open",
+  "actor": "812.0.0",
+  "tainted_variant": "812.1.0 is not implemented by this change",
+  "baseline": "Repentance1.7.9b",
+  "health": {
+    "native_base": 14,
+    "native_stage": 0,
+    "conversion": 3.2,
+    "local_default": 44.8,
+    "control": "regular_health_multiplier"
+  },
+  "replacement": {
+    "source": "12.0.0",
+    "chance_numerator": 1,
+    "chance_denominator": 60,
+    "scope": "Seeded room-layout encounter selection, all bands where a Horf slot exists. Source room/callback exclusions documented in horf_fly/replacement-review.",
+    "fixture": {
+      "seed": 1866,
+      "rooms": 4000,
+      "horf_slots": 346,
+      "substitutions": 6,
+      "spawn_witness_room": 3661
+    }
+  },
+  "behavior": [
+    "Idle and nearby player do not trigger firing.",
+    "Projectile/explosion or external body impulses drive spin, movement and facing shots.",
+    "Signed rotation2degrees/native-speed/source-frame; speed-dependent ordinary shot threshold; source.97friction.",
+    "One final-death shot, retained under capacity; no duplicate death reward or premature room completion.",
+    "Normal source14HP profile participates in the155actor regular health scale."
+  ],
+  "combined_checked": [
+    "Freeze+Slow: spin and firing pause; controller resumes after thaw.",
+    "Permanent Charm: death shot keeps NPC targeting/player immunity after corpse cleanup; no hostile kill payout.",
+    "Enemy-owned Poison+Freeze+permanent Charm: damage continues, final shot retains affiliation. Player/ally-origin damage is separately blocked by the existing permanent-Charm policy.",
+    "Death shot+full projectile capacity: retry retains source, ownership and one-shot count; room completes after its projectile resolves.",
+    "Existing first-floor Charm suite: Fear target selection, Confusion suppression, Slow shot ownership, frozen/swept contacts, morph/room/follower lifecycle,40basic champion combinations and recoil.",
+    "Existing weapon-build suite:66unordered pairs including duplicates, both acquisition orders and mouse/arrow controls; chain bounds, provenance, room cleanup, dynamite and save round trips. These are synthetic target tests, not a complete Sub Horf/build matrix.",
+    "Native render check: Freeze+Poison+temporary Charm coexist; the body preserves status tint and the visible Charm cue. The base SubHorf color is applied before shared status tinting."
+  ],
+  "validation": {
+    "native_suites": 6,
+    "result": "pass",
+    "log": "tests.log",
+    "behavior": "behavior.log",
+    "native_source": "source/manifest.json",
+    "native_source_check": "python3 scripts/isaac-reference/analyze-sub-horf.py --check",
+    "replacement_check": "python3 scripts/isaac-reference/analyze-horf-replacement.py --check",
+    "native_game_build": "pass",
+    "visual": "Three inspected isolated Original1440x900native captures: idle, real player hit, Freeze+Poison+temporary Charm. Detailed mixed-room visual acceptance remains open.",
+    "wasm": "Skipped by user instruction",
+    "captures": [
+      {
+        "image": "idle.png",
+        "sha256": "dfcb236c58a9048eae5f911014887c241d7d0d454ad5c9243c5fd2bdf92d7ffb",
+        "probe": "ENEMY_PROBE id=812.0 frames=60 alive=1 hp=44.8 shots=0 threats=1",
+        "inspected": true,
+        "scope": "Isolated Original1440x900/160percent; confirms visible body and post-hit displacement. Mixed-room, all-angle readability and performance not accepted."
+      },
+      {
+        "image": "reactive.png",
+        "sha256": "1da54e59f7e946bd90b356fd1dfffa87cc5911d2db53b7957959d07fa3403962",
+        "probe": "ENEMY_PROBE id=812.0 frames=90 alive=1 hp=20.8 shots=2 threats=1",
+        "inspected": true,
+        "scope": "Isolated Original1440x900/160percent; confirms visible body and post-hit displacement. Mixed-room, all-angle readability and performance not accepted."
+      },
+      {
+        "image": "combined.png",
+        "sha256": "06be17fc5f5929f23a2a74a70f23e9461f8b4788c9f7756504f88f19ec94b23d",
+        "probe": "ENEMY_PROBE id=812.0 frames=60 alive=1 hp=20.8 shots=0 threats=1",
+        "inspected": true,
+        "scope": "Isolated Original1440x900/160percent; confirms visible body and post-hit displacement. Mixed-room, all-angle readability and performance not accepted."
+      }
+    ],
+    "binary_sha256": "baf5101ea2bff9833af4fd1a393d982f6311a4f502083fd74fe2580f4abb8ace"
+  },
+  "adaptations": [
+    "Projectile/explosion impulse strengths36/60and cap24are local tuning, with source mass3. Generic15/30impulses were too weak to produce a live shot with the source speed-dependent cadence; the focused hit test caught this and dedicated tuning fixes it.",
+    "World velocity conversion3and HP conversion3.2are explicit. Standing-target vertical compression, local damage10/radius.22/lifetime5and death-shot facing remain DeathWard adaptations.",
+    "Blue-gray body distinguishes the reactive enemy outside native Downpour art context.",
+    "Producer capacity pressure holds one selected live shot; final death replaces any unadmitted live shot with one final projectile. This is bounded local lifecycle policy."
+  ],
+  "remaining": [
+    "Isaac-specific champion pickup rewards and native rarity weighting remain unimplemented/adapted in the shared system.",
+    "Isaac-specific champion pickup rewards and native rarity weighting remain unimplemented/adapted in the shared system.",
+    "Real item pickups do not yet call the status-application API. Poison/freeze/charm item activation and proc rules remain missing.",
+    "Full Sub Horf\u00d7weapon/status/champion/morph/room/save interaction matrix is not complete; the current tests cover selected combinations only.",
+    "Exact native final-death projectile packet/direction, special knockback sources, Dross water streams and source-specific status/item exceptions remain unverified.",
+    "Mixed-room/occlusion visual acceptance, human balance and dense rendered performance remain open.",
+    "Tainted Sub Horf812.1remains a separate missing actor."
+  ],
+  "full_port_accepted": false,
+  "champions": {
+    "combat_types": 26,
+    "status": "enabled_and_scoped_tested",
+    "evidence": "champions/status.json"
+  }
+}

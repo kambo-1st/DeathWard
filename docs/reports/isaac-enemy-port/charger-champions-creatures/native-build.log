@@ -1,0 +1,19 @@
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_creature_cycle_tests
+[100%] Building CXX object CMakeFiles/deathward_creature_cycle_tests.dir/tests/creature_cycle_tests.cpp.o
+[100%] Linking CXX executable deathward_creature_cycle_tests
+[100%] Built target deathward_creature_cycle_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_charger_tests
+[ 95%] Building CXX object CMakeFiles/deathward_charger_tests.dir/tests/charger_variant_tests.cpp.o
+[100%] Linking CXX executable deathward_charger_tests
+[100%] Built target deathward_charger_tests
+[ 12%] Built target glfw
+[ 15%] Built target raylib
+[ 81%] Built target deathward_core
+[ 84%] Built target deathward_mission_lighting
+[ 84%] Built target deathward_particles
+[ 87%] Built target deathward_skinning
+[ 90%] Built target deathward_cloth
+[ 90%] Built target deathward_runtime_assets
+[100%] Built target deathward

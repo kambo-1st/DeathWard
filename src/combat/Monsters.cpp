@@ -77,8 +77,8 @@ EntityId Simulation::spawnMonster(MonsterId id, Vector3 position,EntityId owner,
     if(content->headless(id))e.headless=HeadlessRuntime{};
     if(content->environmentActor(id))e.environment=EnvironmentActorRuntime{};
     e.hp = e.maxHp = content->monsterHealth(id,arena.profile.sourceStage);
-    if(const auto *s=content->sack(id))e.hp=std::min(e.maxHp,s->initialHealth*s->healthScale);
-    if(const auto *p=content->boil(id);p&&!p->walking)e.hp=std::min(e.maxHp,p->cycle.initialHealth*p->cycle.healthScale);
+    if(const auto *s=content->sack(id))e.hp=std::min(e.maxHp,s->initialHealth*s->healthScale*content->regularHealthAdjustment(id));
+    if(const auto *p=content->boil(id);p&&!p->walking)e.hp=std::min(e.maxHp,p->cycle.initialHealth*p->cycle.healthScale*content->regularHealthAdjustment(id));
     e.radius = d->radius;
     if(d->flying)e.position.y=arena.flightHeight(e.position,e.radius);
     e.home = e.position;
@@ -295,6 +295,10 @@ void Simulation::flushMonsterSpawns(Random *placement, float playerClearance) {
                 // away from a body beside raised canyon scenery.
                 e.position=parent->position;
             }
+        if(request.championFriendly) {
+            e.friendly=true;e.permanentCharmed=request.championPermanent;
+            if(request.championCharm>0||(request.championPermanent&&content->enemyStatuses(e.monster))){if(!e.statuses)e.statuses.emplace();e.statuses->charm=request.championCharm;}
+        }
         e.summoner = request.summoner;
         e.spawnerType=request.spawnerType;
         if(thrown) {
@@ -518,6 +522,12 @@ void Simulation::attackMonster(Enemy &e) {
 }
 
 void Simulation::updateMonster(Enemy &e, float dt) {
+    if(e.championPile) {
+        e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.velocity={};e.stateTime-=dt;
+        if(e.stateTime<=0){e.championPile=false;e.state=EnemyState::Ready;e.hp=e.maxHp;}
+        return;
+    }
+    if(content->creatureCycle(e.monster)){updateCreatureCycle(e,dt);return;}
     if(!updateLinkedRemnant(e))return;
     if(content->knight(e.monster)){updateKnight(e,dt);return;}
     if(content->mirror(e.monster)){updateMirror(e,dt);return;}
@@ -625,7 +635,7 @@ void Simulation::updateMonster(Enemy &e, float dt) {
             }
             e.monster = monsterId(18);
             e.partner = 0;
-            e.hp = e.maxHp = 32;
+            e.hp = e.maxHp = 32*content->regularHealthAdjustment(e.monster);
             return;
         }
     }
@@ -747,12 +757,12 @@ void Simulation::updateMonster(Enemy &e, float dt) {
         }
     } else {
         if (t == 30)
-            e.hp = std::min(e.maxHp, e.hp + dt * 12);
+            e.hp = std::min(e.maxHp, e.hp + dt * 12*content->regularHealthAdjustment(e.monster));
         if (t == 861) {
-            e.hp = std::min(e.maxHp, e.hp + dt * 3);
+            e.hp = std::min(e.maxHp, e.hp + dt * 3*content->regularHealthAdjustment(e.monster));
             if (e.age > 7) {
                 e.monster = monsterId(61, 6);
-                e.hp = e.maxHp = 48;
+                e.hp = e.maxHp = 48*content->regularHealthAdjustment(e.monster);
                 e.radius = .5f;
             }
         }
@@ -949,7 +959,7 @@ bool Simulation::collapseMonster(Enemy &e) {
     e.stateTime = regrowth->delay;
     // A scaled summoned body may start below the floor; collapse must never heal
     // its maximum HP up to an unscaled definition's minimum.
-    e.maxHp = std::min(e.maxHp, std::max(regrowth->minimumHealth, e.maxHp * regrowth->healthRetention));
+    e.maxHp = std::min(e.maxHp, std::max(regrowth->minimumHealth*content->regularHealthAdjustment(e.monster), e.maxHp * regrowth->healthRetention));
     e.hp = e.maxHp * regrowth->gooFraction;
     e.lift = 0;
     if (e.monster == monsterId(24, 2)) {
@@ -966,7 +976,7 @@ bool Simulation::collapseMonster(Enemy &e) {
 void Simulation::monsterDeathOffspring(const Enemy &e, const MonsterDeathRule &rule) {
     // Overkill uses post-hit health. Voluntary detonation is a distinct death cause,
     // so its synthetic lethal damage must not incorrectly suppress the offspring.
-    if (!e.selfDetonated && rule.overkill && e.hp <= *rule.overkill)
+    if (!e.selfDetonated && rule.overkill && e.hp <= *rule.overkill*content->regularHealthAdjustment(e.monster))
         return;
     uint32_t totalWeight = 0;
     for (const auto &outcome : rule.outcomes) totalWeight += uint32_t(outcome.weight);
@@ -1038,7 +1048,7 @@ void Simulation::monsterDeath(Enemy &e, const Event &event) {
         else {
             child.monster = monsterId(18);
             child.partner = 0;
-            child.hp = child.maxHp = 32;
+            child.hp = child.maxHp = 32*content->regularHealthAdjustment(child.monster);
         }
     }
     auto offspring = [&](MonsterId id, int count) {
@@ -1059,9 +1069,7 @@ void Simulation::monsterDeath(Enemy &e, const Event &event) {
         if (v == 2)
             monsterPatch(e, HazardKind::MonsterBomb, e.position, 2.8f, 0, 0);
     }
-    if (const auto *c=content->charge(e.monster);c&&c->deathShots)
-        for(int n=0;n<c->deathShots;++n)
-            shootEnemy(e,rotateY({1,0,0},c->deathAngle+float(n)*2*Pi/float(c->deathShots)),c->deathDamage,c->deathSpeed);
+    if (const auto *c=content->charge(e.monster);c&&c->deathShots){e.chargeDeathPending=true;flushChargeDeath(e);}
     if (t == 24 && v == 2)
         monsterPatch(e, HazardKind::Tar, e.position, 1.6f, 0, 4);
     if(const auto *p=content->maw(e.monster);p&&p->deathShots) {
@@ -1079,7 +1087,7 @@ void Simulation::monsterDeath(Enemy &e, const Event &event) {
             offspring(monsterId(11), 1);
         else if (auto *parent = findEnemy(e.partner); parent && parent->alive) {
             parent->monster = monsterId(11);
-            parent->hp = parent->maxHp = 40;
+            parent->hp = parent->maxHp = 40*content->regularHealthAdjustment(parent->monster);
         }
     }
 

@@ -1,5 +1,6 @@
 #include "combat/Simulation.hpp"
 #include <iostream>
+#include <set>
 #include <stdexcept>
 using namespace dw;
 namespace {
@@ -14,7 +15,7 @@ Simulation fixture() {
     s.rooms.resize(s.arena.roomCount());s.player.position={0,.85f,8};return s;
 }
 void ticks(Simulation &s,int n){for(int i=0;i<n;++i)s.step({});}
-void kill(Simulation &s,EntityId id,bool execute=false){Event e;e.type=EventType::Damage;e.target=id;e.damage=10000;e.execution=execute;s.queueRoot(e);s.drainEvents();}
+void kill(Simulation &s,EntityId id,bool execute=false){Event e;e.type=EventType::Damage;e.target=id;e.damage=10000;e.weakPointHit=true;e.execution=execute;s.queueRoot(e);s.drainEvents();}
 EntityId spawn(Simulation &s,MonsterId id){const auto actor=s.spawnMonster(id,{0,.85f,0});s.findEnemy(actor)->cooldown=0;return actor;}
 void drowned() {
     auto s=fixture();auto id=spawn(s,monsterId(23,1));check(near(s.findEnemy(id)->hp,70.4f),"Drowned HP is 10 percent over normal Charger");
@@ -86,7 +87,7 @@ void levelTwo() {
     std::cout<<"LEVEL2 hp=128 cardinal_start=1 steering=1 slower=1 contact_damage=25\n";
 }
 void startingKit() {
-    for(const auto monster:{monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)}) {
+    for(const auto monster:{monsterId(23),monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)}) {
         auto s=fixture();const auto id=spawn(s,monster);s.godMode=false;s.dynamite=0;int ticksTaken=0;
         for(;ticksTaken<3600&&s.findEnemy(id)&&s.player.hp>0;++ticksTaken) {
             const auto radial=unit(horizontal(s.player.position));const Vector3 tangent{-radial.z,0,radial.x};
@@ -104,6 +105,94 @@ void startingKit() {
         check(!s.findEnemy(id)&&s.player.hp>0,"synthetic-room starting-kit bot defeats each variant without items, bombs or god mode");
     }
 }
+void regressions() {
+    const std::array<MonsterId,5> cohort{monsterId(23),monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)};
+    for(auto kind:cohort) {
+        auto s=fixture();auto id=spawn(s,kind);auto *e=s.findEnemy(id);e->state=EnemyState::Charging;e->stateTime=.025f;e->facing={1,0,0};
+        s.player.position={0,.85f,20};const float speed=s.content->charge(kind)->speed*EnemyMovementMultiplier;
+        s.step({},.1f);e=s.findEnemy(id);
+        check(near(e->position.x,speed*.025f)&&e->state==EnemyState::Ready,"dash distance respects remaining duration under long step");
+        s=fixture();id=spawn(s,kind);e=s.findEnemy(id);e->state=EnemyState::Charging;e->stateTime=1;e->facing={1,0,0};
+        s.player.position={2,.85f,0};s.godMode=false;s.step({},.3f);
+        check(s.player.hp<100,"swept contact detects charge crossing between frames");
+        for(int variant:{0,1,2,5,7,13,18,19}) {
+            auto c=fixture();auto actor=spawn(c,kind);const auto hp=c.findEnemy(actor)->hp;
+            check(c.makeChampion(actor,variant),"champion eligibility for all five chargers");
+            check(near(c.findEnemy(actor)->hp,hp*c.content->champion(variant)->hp),"charger champion health");
+            c.godMode=false;c.player.position=c.findEnemy(actor)->position;
+            c.findEnemy(actor)->state=EnemyState::Charging;c.findEnemy(actor)->stateTime=1;c.findEnemy(actor)->facing={1,0,0};c.step({},Tick);
+            const auto *rule=c.content->charge(kind);const auto *champ=c.content->champion(variant);
+            check(near(c.player.hp,100-std::max(rule->contactDamage,10.f*champ->damage)*EnemyDamageMultiplier),"champion contact raises damage without multiplying already-strong contact");
+            // Measure free charge speed separately from player/body separation.
+            c.player.position={20,.85f,20};c.findEnemy(actor)->position={0,.85f,0};
+            c.findEnemy(actor)->state=EnemyState::Charging;c.findEnemy(actor)->stateTime=1;c.findEnemy(actor)->facing={1,0,0};c.step({},Tick);
+            if(!near(length(c.findEnemy(actor)->velocity),rule->speed*EnemyMovementMultiplier*champ->speed))std::cout<<"CHAMPION_SPEED id="<<monsterIdText(kind)<<" variant="<<variant<<" actual="<<length(c.findEnemy(actor)->velocity)<<" expected="<<rule->speed*EnemyMovementMultiplier*champ->speed<<" state="<<int(c.findEnemy(actor)->state)<<'\n';
+            check(near(length(c.findEnemy(actor)->velocity),rule->speed*EnemyMovementMultiplier*champ->speed),"champion movement applies configured speed multiplier");
+        }
+    }
+    auto s=fixture();auto id=spawn(s,monsterId(23,1));s.limits.projectiles=0;kill(s,id);ticks(s,2);
+    check(s.findEnemy(id)&&s.findEnemy(id)->chargeDeathPending&&!s.roomClear,"pending death shots retain body and room completion under backpressure");
+    s.limits.projectiles=32;ticks(s,10);check(s.stats.projectiles==4&&s.stats.kills==1,"death volley retries exactly once without extra rewards");
+    for(int seed=0;seed<8;++seed) {
+        Simulation p(seed,1,{},MissionTheme::Canyon,true,false);p.startPractice(3);
+        check(p.enemies.size()==5&&!p.godMode&&p.player.hp==100&&p.player.shotDamage==24,"batch3 playable starting kit");
+        std::set<MonsterId> actual;for(const auto &e:p.enemies){actual.insert(e.monster);check(!p.arena.blocked(e.position,e.radius),"practice charger footprint legal");}
+        check(actual==std::set<MonsterId>(cohort.begin(),cohort.end()),"practice includes all five charger identities");
+    }
+    std::cout<<"CHARGER_BATCH3 duration=5 swept_contact=5 champion_combinations=40 death_retry=1 practice_seeds=8\n";
+}
+void natural() {
+    const std::set<MonsterId> expected{monsterId(23),monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)};
+    std::set<MonsterId> found;int floors=0;
+    for(int seed=0;seed<32&&found!=expected;++seed) {
+        ExpeditionPlan plan(seed,false,WitnessAccount::Rourke);
+        for(int band=0;band<4;++band) {
+            int floor=0;while(plan.profileOnFloor(floor).band<band)++floor;
+            Simulation s(seed,1,{},MissionTheme::Canyon,true,false,WitnessAccount::Rourke,floor);++floors;
+            for(int room=1;room<s.finalRoom();++room)for(const auto &e:s.roomEnemies(room))if(expected.contains(e.monster)) {
+                check(!s.arena.blocked(e.position,e.radius),"natural charger footprint legal");
+                if(found.insert(e.monster).second)std::cout<<"CHARGER_NATURAL id="<<monsterIdText(e.monster)<<" seed="<<seed<<" floor="<<floor<<" room="<<room<<'\n';
+            }
+        }
+    }
+    check(found==expected,"all five charger types naturally reachable at their supported stages");
+    std::cout<<"CHARGER_REACHABILITY floors="<<floors<<" identities="<<found.size()<<'\n';
+}
+void championColors() {
+    const std::array<MonsterId,5> cohort{monsterId(23),monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)};
+    for(auto kind:cohort)for(int variant:{3,4,6,9,14}) {
+        auto s=fixture();auto id=spawn(s,kind);const auto original=s.findEnemy(id)->hp;
+        check(s.makeChampion(id,variant),"new champion modifier applies to every charger");
+        check(near(s.findEnemy(id)->hp,original*s.content->champion(variant)->hp),"new champion HP");
+        if(variant==4) {
+            auto *e=s.findEnemy(id);e->state=EnemyState::Charging;e->stateTime=1;e->facing={1,0,0};s.player.position={20,.85f,20};s.step({},Tick);
+            check(near(length(s.findEnemy(id)->velocity),s.content->charge(kind)->speed*EnemyMovementMultiplier*.75f),"dark blue slows dash without changing recovery clock");
+        }
+        if(variant==9) {
+            auto *e=s.findEnemy(id);e->age=0;const auto first=e->championVisibility();e->age=1.5f;
+            check(std::abs(e->championVisibility()-first)>.1f,"black champion visibility oscillates");
+        }
+        if(variant==14){auto *e=s.findEnemy(id);check(near(e->championVisibility(),.12f),"camouflage low visibility");e->flash=.1f;check(near(e->championVisibility(),1),"damage flash reveals camouflage");}
+    }
+    auto s=fixture();auto a=spawn(s,monsterId(23)),b=spawn(s,monsterId(23)),normal=spawn(s,monsterId(23));
+    s.makeChampion(a,6);s.makeChampion(b,6);
+    auto damage=[&](EntityId id){Event hit;hit.type=EventType::Damage;hit.target=id;hit.damage=1;s.queueRoot(hit);s.drainEvents();};
+    const float hp=s.findEnemy(a)->hp;damage(a);check(near(s.findEnemy(a)->hp,hp),"white waits for ordinary threats");
+    kill(s,normal,true);damage(a);damage(b);
+    check(near(s.findEnemy(a)->hp,hp-1)&&near(s.findEnemy(b)->hp,hp-1),"white champions ignore each other to avoid softlock");
+    auto orange=fixture();a=spawn(orange,monsterId(23));orange.makeChampion(a,3);orange.moneyCollected=10;orange.godMode=false;
+    orange.player.position=orange.findEnemy(a)->position;orange.findEnemy(a)->state=EnemyState::Charging;orange.findEnemy(a)->stateTime=1;orange.findEnemy(a)->facing={1,0,0};orange.step({},Tick);
+    check(orange.player.hp<100,"orange contact hit admitted");
+    check(orange.money()>=6&&orange.money()<=8&&!orange.moneyPickups.empty(),"orange removes2to4and drops1to3coins");
+    const auto spent=orange.moneySpent;orange.step({},Tick);check(orange.moneySpent==spent,"hurt cooldown prevents duplicate coin loss");
+    auto projectile=fixture();a=spawn(projectile,monsterId(23));projectile.makeChampion(a,3);projectile.moneyCollected=10;
+    Event shot;shot.hostile=true;shot.context.sourceEntity=a;shot.position=shot.origin={-5,.85f,0};shot.direction={1,0,0};shot.speed=10;
+    projectile.queueRoot(shot);projectile.drainEvents();check(projectile.projectiles.front().context.championCoinLoss,"projectile snapshots coin-loss modifier");
+    projectile.enemies.clear();projectile.godMode=false;projectile.player.position={0,.85f,0};
+    for(int n=0;n<90&&projectile.player.hp==100;++n)projectile.step({},Tick);
+    check(projectile.money()<10,"orange projectile retains effect after owner removal");
+    std::cout<<"CHAMPION_COLORS new_types=5 charger_combinations=25 white_gate=1 white_softlock=1 coin_loss=1 owner_lifetime=1 visibility=1\n";
+}
 void pools() {
     const auto c=defaultMechanics();
     for(int band=0;band<4;++band) {
@@ -116,4 +205,92 @@ void pools() {
     }
 }
 }
-int main(){try{drowned();dank();princess();levelTwo();startingKit();pools();std::cout<<"PASS Charger variants and weak-point collision\n";return 0;}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+void championFields() {
+    for(auto kind:{monsterId(23),monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)})
+    for(int variant:{8,10,11,16,20}) {
+        auto s=fixture();const auto actor=spawn(s,kind);check(s.makeChampion(actor,variant),"field champion applies to all Chargers");
+        auto *e=s.findEnemy(actor);e->state=EnemyState::Stunned;e->stateTime=10;e->adaptiveArmor.reset();
+        if(variant==8) {
+            s.arena.obstacles.push_back({{-3,-1,2},{3,5,3}});s.arena.rebuildWalls();
+            e->state=EnemyState::Charging;e->stateTime=.6f;e->facing={0,0,1};ticks(s,30);
+            check(s.findEnemy(actor)->position.z>3.5f,"ghost dash crosses solid cover");
+            Event shot;shot.type=EventType::Shot;shot.position={0,.85f,0};shot.direction={0,0,1};shot.speed=10;shot.hostile=true;shot.context.sourceEntity=actor;
+            s.queueRoot(shot);s.drainEvents();check(s.projectiles.back().noWallCollision,"ghost projectiles snapshot spectral flag");
+            s.findEnemy(actor)->position.z=24;ticks(s,30);check(s.findEnemy(actor)->position.z<=25-s.findEnemy(actor)->radius+.001f,"ghost stays within sealed room");
+        } else if(variant==10) {
+            ticks(s,80);check(!s.projectiles.empty(),"magenta fires periodic short-range shot");
+            const auto &p=s.projectiles.back();check(p.hostile&&p.life<=.8f&&p.damage>0,"magenta shot has finite short life and hostility");
+        } else if(variant==11||variant==16) {
+            s.player.position={0,.85f,8};e->age=variant==16?1:0;
+            Event shot;shot.type=EventType::Shot;shot.position={0,.85f,8};shot.direction={1,0,0};shot.speed=10;
+            s.queueRoot(shot);s.drainEvents();const auto before=s.player.position;
+            if(variant==16)ticks(s,70);else ticks(s,10);
+            check(!s.projectiles.empty(),"aura test projectile survives");
+            check(variant==11?s.projectiles.front().velocity.z<0:s.projectiles.front().velocity.z>0,"attraction and pulse repulsion bend player shots in correct direction");
+            if(variant==11)check(s.player.position.z<before.z,"violet pulls player");
+            else check(near(s.player.position.z,before.z),"gray repulsion never pushes player");
+        } else {
+            auto friendId=s.spawnMonster(monsterId(23),{8,.85f,0});auto healer=s.spawnMonster(monsterId(23),{-8,.85f,0});s.makeChampion(healer,20);
+            s.findEnemy(friendId)->hp=1;s.findEnemy(healer)->hp=1;const auto own=s.findEnemy(actor)->hp;
+            ticks(s,1);check(s.findEnemy(friendId)->hp>1,"red healer restores other enemy HP");
+            check(near(s.findEnemy(healer)->hp,1)&&near(s.findEnemy(actor)->hp,own),"healers cannot heal each other or themselves");
+            ticks(s,90);check(s.findEnemy(friendId)->hp<=s.findEnemy(friendId)->maxHp,"healing cannot exceed maximum");
+        }
+    }
+    auto spectral=fixture();const auto ghost=spawn(spectral,monsterId(23));spectral.makeChampion(ghost,8);
+    Event ray;ray.type=EventType::Shot;ray.hostile=true;ray.context.sourceEntity=ghost;ray.position=ray.origin={0,.85f,24};ray.direction={0,0,1};ray.speed=10;
+    spectral.queueRoot(ray);spectral.drainEvents();spectral.enemies.clear();ticks(spectral,20);
+    check(spectral.projectiles.empty(),"spectral champion shot retains room-boundary collision after owner removal");
+    std::cout<<"CHAMPION_FIELDS new_types=5 charger_combinations=25 ghost=1 spectral=1 magenta=1 attraction=1 repulsion=1 heal=1\n";
+}
+
+void championLifecycles() {
+    for(auto kind:{monsterId(23),monsterId(23,1),monsterId(23,2),monsterId(23,3),monsterId(855)})
+    for(int variant:{12,15,17,21,22,23,24,25}) {
+        auto s=fixture();const auto actor=spawn(s,kind);check(s.makeChampion(actor,variant),"lifecycle modifier applies to all Chargers");
+        auto *e=s.findEnemy(actor);e->state=EnemyState::Stunned;e->stateTime=10;e->adaptiveArmor.reset();
+        if(variant==12) {
+            kill(s,actor);check(s.findEnemy(actor)->alive&&s.findEnemy(actor)->championPile&&s.stats.kills==0,"dark red collapses without reward");
+            ticks(s,151);check(s.findEnemy(actor)->alive&&!s.findEnemy(actor)->championPile&&near(s.findEnemy(actor)->hp,s.findEnemy(actor)->maxHp),"dark red regenerates");
+            kill(s,actor);kill(s,actor);check(!s.findEnemy(actor)->alive&&s.stats.kills==1,"pile can be finished for one reward");
+        } else if(variant==15) {
+            kill(s,actor);ticks(s,1);int copies=0;for(const auto &child:s.enemies)if(child.alive&&child.monster==kind){++copies;check(child.champion<0,"split copies are ordinary");}
+            check(copies==2,"pulsing green produces exactly two copies");
+        } else if(variant==17) {
+            ticks(s,6);int orbiters=0;for(const auto &child:s.enemies)orbiters+=child.alive&&child.monster==monsterId(96)&&child.partner==actor;
+            check(orbiters==1,"light white has one owned Eternal Fly");
+            kill(s,actor);ticks(s,1);int flies=0;for(const auto &child:s.enemies)flies+=child.alive&&child.monster==monsterId(18);
+            check(flies==2,"orbiter releases and one additional Attack Fly is born");
+        } else if(variant==21) {
+            for(int n=0;n<8;++n){Event hit;hit.type=EventType::Damage;hit.target=actor;hit.damage=.01f;hit.weakPointHit=true;s.queueRoot(hit);s.drainEvents();ticks(s,19);}
+            int flies=0;for(const auto &child:s.enemies)flies+=child.alive&&child.summoner==actor&&child.monster==monsterId(18);
+            check(flies==5,"pulsating spawn population capped at five");
+        } else if(variant==22) {
+            const auto other=s.spawnMonster(monsterId(23),{8,.85f,0});const auto hp=s.findEnemy(other)->hp;ticks(s,1);
+            check(s.findEnemy(other)->crowned&&s.findEnemy(other)->champion<0&&near(s.findEnemy(other)->hp,hp)&&near(s.findEnemy(other)->championSpeed,1),"crown changes color without granting combat stats");
+            kill(s,actor);ticks(s,1);check(!s.findEnemy(other)->crowned,"crown effect ends with owner");
+        } else if(variant==23) {
+            const auto other=s.spawnMonster(monsterId(23),{8,.85f,0});s.arena.obstacles.push_back({{3,-1,-5},{4,5,5}});s.arena.rebuildWalls();
+            kill(s,actor);check(!s.findEnemy(other)->alive,"skull damages enemies across room through cover");
+            check(near(s.player.hp,100),"skull room effect does not hurt player");
+        } else if(variant==24) {
+            ticks(s,1);check(!s.arena.breakables.empty()&&s.arena.breakables.back().kind==BreakableKind::Dung,"brown deposits real destructible dung");
+            check(!s.arena.blocked(s.findEnemy(actor)->position,s.findEnemy(actor)->radius),"dung does not trap emitting actor");
+        } else {
+            ticks(s,80);check(!s.hazards.empty()&&!s.projectiles.empty(),"rainbow combines creep and periodic shots");
+            s.projectiles.clear();kill(s,actor);check(s.projectiles.size()>=8,"rainbow emits eight death shots with explosion");
+        }
+    }
+    // Integration keeps Level2's real source-frame armor and delayed damage.
+    auto armored=fixture();auto actor=spawn(armored,monsterId(855));armored.makeChampion(actor,12);
+    kill(armored,actor);check(!armored.findEnemy(actor)->championPile,"adaptive armor delays first lethal hit until source frame");
+    ticks(armored,3);check(armored.findEnemy(actor)&&armored.findEnemy(actor)->championPile,"real armored Level2 enters champion pile after damage replay");
+    kill(armored,actor);ticks(armored,3);check(!armored.findEnemy(actor)&&armored.stats.kills==1,"real armored champion pile can be finished once");
+    auto rainbow=fixture();actor=spawn(rainbow,monsterId(23));rainbow.makeChampion(actor,25);rainbow.limits.projectiles=2;
+    kill(rainbow,actor);check(rainbow.findEnemy(actor)->championDeathPending&&rainbow.stats.explosions==1,"rainbow retains partial volley after one explosion");
+    rainbow.projectiles.clear();ticks(rainbow,1);check(rainbow.stats.explosions==1,"rainbow retry never repeats death explosion");
+    rainbow.limits.projectiles=100;rainbow.projectiles.clear();ticks(rainbow,1);check(!rainbow.findEnemy(actor)&&rainbow.stats.explosions==1,"rainbow completes retained volley and retires");
+    std::cout<<"CHAMPION_LIFECYCLES new_types=8 charger_combinations=40 collapse=1 split=1 orbiter=1 capped_spawn=1 crown=1 skull=1 dung=1 rainbow=1\n";
+}
+
+int main(){try{drowned();dank();princess();levelTwo();startingKit();regressions();pools();natural();championColors();championFields();championLifecycles();std::cout<<"PASS Charger variants and weak-point collision\n";return 0;}catch(const std::exception &e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}

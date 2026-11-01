@@ -54,6 +54,13 @@ enum class EnemyState {
 const char *bossName(BossKind kind);
 struct Enemy;
 struct Event;
+struct CreatureCycleRuntime {
+    float clock=0,timer=0,phaseTime=0;
+    int phase=0,frame=0;
+    bool initialized=false,near=false,inflated=false,deathPending=false;
+    Vector3 origin{},target{},momentum{};
+    std::deque<Event> pending;
+};
 struct AdaptiveArmorRuntime {
     float clock=0,recentDps=0,multiplier=1;
     uint64_t ticks=0,batches=0;
@@ -223,6 +230,8 @@ struct HeadShooterRuntime {
     uint64_t tick=0;
     int attackFrame=-1;
     bool fired=false,initialized=false;
+    float angle=0,shotFrames=0;
+    std::vector<Event> pendingShots;
 };
 struct MawRuntime {
     HeadShooterRuntime cast;
@@ -476,6 +485,23 @@ struct Enemy {
     Vector3 home{};
     uint64_t observedShots = 0;
     bool awakened = false, friendly = false;
+    bool permanentCharmed = false;
+    int chargeDeathShot=0;
+    bool chargeDeathPending=false;
+    std::optional<CreatureCycleRuntime> creature;
+    int champion=-1,championDeathShot=0;
+    float championSpeed=1,championVisual=1,championDamage=1,championTrail=0,championAbility=1.2f;
+    Color championTint{};
+    bool championDeathPending=false,championPile=false,championOrbiter=false,crowned=false;
+    int championDeathStage=0;
+    std::vector<EntityId> championTargets;
+    bool championEffect(int id) const {
+        return champion==id||(champion==25&&(id==2||id==5||id==10||id==11||id==13||id==17));
+    }
+    float championVisibility() const {
+        if(flash>0)return 1;
+        return champion==14?.12f:champion==9?.08f+.92f*(.5f+.5f*std::sin(age*2.5f)):1.f;
+    }
     std::optional<EnemyStatusRuntime> statuses;
     std::optional<CharmContactRuntime> charmContact;
     bool affectedBy(EnemyStatus status) const {
@@ -488,7 +514,7 @@ struct Enemy {
         case EnemyStatus::Poison:return statuses->poison.frames>0;
         case EnemyStatus::Burn:return statuses->burn.frames>0;
         case EnemyStatus::Shrink:return statuses->shrink>0;
-        case EnemyStatus::Charm:return statuses->charm>0;
+        case EnemyStatus::Charm:return permanentCharmed||statuses->charm>0;
         }
         return false;
     }
@@ -629,6 +655,7 @@ struct Projectile {
     std::optional<ProjectileSplitDefinition> impactSplit;
     std::optional<ProjectileBurstDefinition> sourceBurst;
     bool physicalImpact=false;
+    bool championSpectral=false;
     bool noWallCollision=false;
     bool repeatWallBounce=false; // Reflect lateral terrain hits until landing/lifetime, without a bounce budget.
     Color tint{0,0,0,0}; // Optional visual tint; does not change impact mechanics.
@@ -658,6 +685,7 @@ struct Event {
     bool hostile = false, lastRound = false, ghost = false;
     bool projectileHitsEnemies=false,projectileIgnoresPlayer=false;
     float projectileNpcDamage=0;
+    bool projectileImpact=false;
     bool noWallCollision=false;
     bool repeatWallBounce=false; // Reflect lateral terrain hits until landing/lifetime, without a bounce budget.
     bool armorPiercing = false, areaDamage = false, weakPointHit = false;
@@ -725,6 +753,8 @@ struct OwnedBeamRuntime {
     uint64_t pulses=0;
 };
 struct Hazard {
+    bool explosiveGas=false,gasIgnited=false;
+    float gasBlastRadius=0,gasBlastDamage=0,gasPlayerDamage=0;
     HazardKind kind = HazardKind::Dynamite;
     Vector3 position{}, origin{};
     float age = 0, delay = 1, duration = 0, radius = 3, damage = 20;
@@ -952,6 +982,8 @@ struct MonsterSpawn {
     std::optional<RockSpiderRuntime> rockSpider;
     EntityId producer=0; // Backpressure attribution, independent of source child ownership.
     int spawnerType=0;
+    bool championFriendly=false,championPermanent=false;
+    float championCharm=0;
     bool childContactDeath=false; // Captured live-birth policy, never inherited by death offspring.
 };
 struct RoomProgress {
@@ -1064,6 +1096,21 @@ class Simulation {
     EntityId spawnMonster(MonsterId id, Vector3 position, EntityId componentOwner=0, int componentSlot=-1,
                           BossForm form=BossForm::Normal);
     void spawnMonsterDebug(MonsterId id);
+    bool makeChampion(EntityId id,int kind);
+    bool championEligible(MonsterId id) const {
+        return (id.type==10&&(id.variant==0||id.variant==1)&&id.subtype==0)||
+            (id.type==11&&(id.variant==0||id.variant==1)&&id.subtype==0)||
+            (id==monsterId(12)||id==monsterId(14)||id==monsterId(16)||id==monsterId(855)||id==monsterId(812))||
+            (id.type==23&&id.subtype==0&&id.variant>=0&&id.variant<=3);
+    }
+    bool championTypeEligible(MonsterId id,int kind) const {
+        if(!championEligible(id)||!content->champion(kind))return false;
+        // Only reviewed body/modifier combinations enter natural champion pools.
+        return id==monsterId(812)||content->charge(id)||kind==0||kind==1||kind==2||kind==5||kind==7||
+            kind==13||kind==18||kind==19||(id==monsterId(11)&&kind==10);
+    }
+    void startPractice(int batch);
+    void startBatch2Practice(){startPractice(2);}
     // Positive source-frame durations add up to the configured cap. Negative
     // durations ensure at least abs(frames), matching the native refresh path.
     bool applyEnemyStatus(EntityId id,EnemyStatus status,int frames,float damage=0,Context source={});
@@ -1138,6 +1185,9 @@ class Simulation {
     void updateBoomFly(Enemy &enemy,float dt);
     void updateLobWalker(Enemy &enemy,float dt);
     void updateHeadShooter(Enemy &enemy,float dt);
+    void updateSubHorf(Enemy &enemy,float dt);
+    bool flushReactiveShot(Enemy &enemy);
+    void subHorfDeath(Enemy &enemy);
     bool shootLobWalker(Enemy &enemy,Vector3 aim);
     void boomFlyDeath(const Enemy &enemy);
     bool queueEnemyBomb(EnemyBomb bomb);
@@ -1153,7 +1203,7 @@ class Simulation {
     void syncStatueBodies();
     void refreshStatues();
     void refreshStatueAttraction(float dt=0);
-    Vector3 statueAttraction(Vector3 position,bool projectile,float *speedLimit=nullptr) const;
+    Vector3 statueAttraction(Vector3 position,bool projectile,float *speedLimit=nullptr,bool championFields=true) const;
     struct StatueAttractor { Vector3 position; const StatueDefinition *definition; };
     std::vector<StatueAttractor> statueAttractors_;
     void updatePressurePlates();
@@ -1193,6 +1243,21 @@ class Simulation {
     Vector3 confusedTarget(Enemy &enemy);
     Vector3 resolvedEnemyTarget(Enemy &enemy);
     void setEnemyShotAffiliation(const Enemy &enemy,Event &shot) const;
+    std::vector<Enemy> charmFollowers_;
+    void restoreCharmFollowers();
+    void updateChampion(Enemy &e,float dt);
+    void updateCreatureCycle(Enemy &e,float dt);
+    bool collapseClack(Enemy &e);
+    void creatureDeath(Enemy &e);
+    bool flushCreatureShots(Enemy &e);
+    bool reflectBouncer(Enemy &e,Projectile &p);
+    void igniteGas(Vector3 position,float radius);
+
+    bool collapseChampion(Enemy &e);
+    void championHurt(Enemy &e);
+    void championChild(const Enemy &e,MonsterId kind,Vector3 at,EntityId partner=0);
+    bool flushChampionDeath(Enemy &e);
+    bool flushChargeDeath(Enemy &e);
     uint64_t charmContactFrame_=0;
     void prepareCharmContacts();
     void updateCharmContacts();

@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 75: buzzing_flies
+1/4 Test #75: buzzing_flies ....................   Passed   43.62 sec
+    Start 82: mulligan_family
+2/4 Test #82: mulligan_family ..................   Passed  130.54 sec
+    Start 83: spider_family
+3/4 Test #83: spider_family ....................   Passed    1.65 sec
+    Start 90: first_floor_batch2
+4/4 Test #90: first_floor_batch2 ...............   Passed    4.90 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) = 180.72 sec

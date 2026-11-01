@@ -46,6 +46,7 @@ bool upgradeTownNavigation(dw::HubKind hub) {
 int main(int argc, char **argv) {
     std::filesystem::path save = dw::CampaignStore::defaultPath();
     bool smoke = false, benchmark = false, startEditor = false, artPoc = false, startExpedition = false;
+    int practiceBatch=0;
     std::optional<dw::VisualStyle> styleChoice;
     bool startCinematic = false, intro = false, fullExperience = false, explicitSave = false;
     bool mute = false, explicitAudio = false, sandstorm = false;
@@ -70,7 +71,7 @@ int main(int argc, char **argv) {
     std::string enemyTerrain;
     bool enemyCameraFollow=false;
     Vector3 enemyCameraTarget{};
-    int enemyCount=1;
+    int enemyCount=1,enemyChampion=-1;
     std::optional<dw::BossForm> enemyBossForm;
     Vector3 probeStart{};
     dw::EntityId probeEnemy=0;
@@ -94,6 +95,9 @@ int main(int argc, char **argv) {
         }
         else if (arg == "--full-experience")
             fullExperience = true;
+        else if(arg=="--practice-batch4"){practiceBatch=4;startExpedition=true;}
+        else if(arg=="--practice-batch3"){practiceBatch=3;startExpedition=true;}
+        else if(arg=="--practice-batch2"){practiceBatch=2;startExpedition=true;}
         else if (arg == "--expedition")
             startExpedition = true;
         else if (arg == "--slots" && i + 1 < argc)
@@ -198,6 +202,10 @@ int main(int argc, char **argv) {
             try {residentFrom=dw::parseMonsterId(argv[++i]);}
             catch(const std::exception &e){std::cerr<<"Invalid resident source: "<<e.what()<<'\n';return 2;}
         }
+        else if(arg=="--enemy-champion"&&i+1<argc){
+            const std::string value=argv[++i];const auto parsed=std::from_chars(value.data(),value.data()+value.size(),enemyChampion);
+            if(parsed.ec!=std::errc{}||parsed.ptr!=value.data()+value.size()||enemyChampion<0||enemyChampion>25){std::cerr<<"Invalid champion ID\n";return 2;}
+        }
         else if (arg == "--enemy-count" && i + 1 < argc) {
             const std::string value=argv[++i];const auto parsed=std::from_chars(value.data(),value.data()+value.size(),enemyCount);
             if(parsed.ec!=std::errc{}||parsed.ptr!=value.data()+value.size()||enemyCount<1||enemyCount>64){std::cerr<<"--enemy-count must be 1..64\n";return 2;}
@@ -271,7 +279,7 @@ int main(int argc, char **argv) {
             const auto b=std::from_chars(duration.data(),duration.data()+duration.size(),ticks);
             if(a.ec!=std::errc{}||a.ptr!=at.data()+at.size()||atFrame<1||atFrame>1000000||
                b.ec!=std::errc{}||b.ptr!=duration.data()+duration.size()||ticks < -18000||ticks>18000||
-               (kind!="fear"&&kind!="confusion"&&kind!="freeze"&&kind!="slow"&&kind!="poison"&&kind!="burn"&&kind!="shrink"&&kind!="charm")||(kind=="charm"&&ticks<0)||enemyStatuses.size()>=64) {
+               (kind!="fear"&&kind!="confusion"&&kind!="freeze"&&kind!="slow"&&kind!="poison"&&kind!="burn"&&kind!="shrink"&&kind!="charm")||enemyStatuses.size()>=64) {
                 std::cerr<<"--enemy-status needs FRAME fear|confusion|freeze|slow|poison|burn|shrink|charm DURATION (-18000..18000 source frames; Charm requires >=0; 0 removes); at most 64 events\n";return 2;
             }
             enemyStatuses.push_back({atFrame,kind=="fear"?dw::EnemyStatus::Fear:kind=="confusion"?dw::EnemyStatus::Confusion:kind=="freeze"?dw::EnemyStatus::Freeze:kind=="slow"?dw::EnemyStatus::Slow:kind=="poison"?dw::EnemyStatus::Poison:kind=="burn"?dw::EnemyStatus::Burn:kind=="shrink"?dw::EnemyStatus::Shrink:dw::EnemyStatus::Charm,ticks});
@@ -295,7 +303,7 @@ int main(int argc, char **argv) {
                 return 2;
             }
         } else if (arg == "--help") {
-            std::cout << "DeathWard\n  --expedition         Start directly in a playable expedition\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
+            std::cout << "DeathWard\n  --practice-batch4     Play Bouncer/Quakey/Gas Dwarf/two Clacks\n  --practice-batch3     Play the five Charger-family enemies\n  --practice-batch2     Play Fly/Pooter/Attack Fly/Spider/Mulligan practice encounter\n  --expedition         Start directly in a playable expedition\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
                          " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
                          "black-creek"
@@ -321,6 +329,7 @@ int main(int argc, char **argv) {
                          "  --enemy-item KEY  Grant an installed item in the isolated enemy test\n"
                          "  --enemy-clear FRAME / --enemy-reenter FRAME  Exercise room lifecycle in an isolated enemy test\n"
                          "  --enemy-flooded  Set the isolated room's flooded gameplay condition\n"
+                         "  --enemy-champion ID   Force ordinary champion modifier (0-25)\n"
                          "  --enemy-count N       1..64 actors in an isolated enemy smoke scene\n"
                          "  --art-poc           Redstone art experiment (F6 compares in hub/editor)\n"
                          "  --style NAME        original, cel, comic, painted, poster, noir, retro,\n"
@@ -344,6 +353,8 @@ int main(int argc, char **argv) {
             return 2;
         }
     }
+    if(practiceBatch&&(fullExperience||startEditor||startCinematic||intro||benchmark)){std::cerr<<"Practice mode requires ordinary gameplay or smoke capture\n";return 2;}
+    if(practiceBatch&&!explicitSave)save=std::filesystem::temp_directory_path()/("deathward-batch"+std::to_string(practiceBatch)+"-practice.save");
     if (fullExperience && (explicitSave || startEditor || startCinematic || intro || smoke || benchmark ||
                            !editorDirectory.empty() || !sequenceFile.empty())) {
         std::cerr << "--full-experience starts the story menu; use --slots DIRECTORY for separate saves. "
@@ -377,6 +388,7 @@ int main(int argc, char **argv) {
     if(!enemyStatuses.empty()&&(!smoke||!enemyScene||residentScene)) {std::cerr<<"--enemy-status requires an isolated --smoke --scene enemy-ID capture\n";return 2;}
     if(!enemyTerrain.empty()&&!enemyScene) {std::cerr<<"--enemy-terrain requires an isolated enemy capture\n";return 2;}
     if(enemyCameraFollow&&(!smoke||!enemyScene)){std::cerr<<"--enemy-camera-follow requires an enemy/resident smoke capture\n";return 2;}
+    if(enemyChampion>=0&&(!enemyScene||residentScene)){std::cerr<<"--enemy-champion requires isolated enemy scene\n";return 2;}
     if(enemyCount!=1&&!enemyScene) {std::cerr<<"--enemy-count requires an isolated enemy capture\n";return 2;}
     if((enemyFlooded||!enemyFires.empty())&&!enemyScene){std::cerr<<"Fire/flood probes require an isolated enemy capture\n";return 2;}
     if (!enemyScene && scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
@@ -493,6 +505,7 @@ int main(int argc, char **argv) {
         if(startExpedition&&!startEditor&&!startCinematic&&!intro&&!fullExperience&&!smoke&&!benchmark) {
             game.launch(true);
             if(!game.run)throw std::runtime_error(game.error);
+            if(practiceBatch){game.run->startPractice(practiceBatch);game.updateCamera(1);}
         }
         dw::Renderer renderer;
         const dw::Game::SceneryPicker pickScenery = [&](const auto &run, const auto &camera, Ray ray) {
@@ -671,6 +684,7 @@ int main(int argc, char **argv) {
                     auto entity=fly&&fly->orbitOwner?game.run->spawnBombFlyHost(*enemyScene,at):
                         game.run->spawnMonster(*enemyScene,at,0,-1,enemyBossForm.value_or(dw::BossForm::Normal));
                     if(!entity)throw std::runtime_error("Failed to create enemy capture");
+                    if(enemyChampion>=0&&!game.run->makeChampion(entity,enemyChampion))throw std::runtime_error("Unsupported champion for this actor");
                     if(fly&&fly->orbitOwner) {
                         const auto owner=entity;
                         for(const auto &child:game.run->enemies)if(child.componentOwner==owner&&child.componentSlot==0){entity=child.id;break;}
@@ -766,6 +780,7 @@ int main(int argc, char **argv) {
                 game.finish(dw::EndReason::Victory);
             }
         }
+        if(practiceBatch&&smoke){game.run->startPractice(practiceBatch);game.updateCamera(1);}
         bool artCompare = artPoc;
         bool styleCompare = styleChoice.has_value();
         std::vector<double> timings;
@@ -1736,6 +1751,10 @@ int main(int argc, char **argv) {
                     <<" charges="<<h->charges<<" chargePasses="<<h->chargePasses<<" repeats="<<h->repeatsChosen<<" chargeBombs="<<h->chargeBombs
                     <<" recoveryShots="<<h->recoveryShots<<" fireWaves="<<game.run->fireWaves.size()
                     <<" escortsSpawned="<<h->escortsSpawned<<" escortsReleased="<<h->escortsReleased<<'\n';
+            if(enemy&&enemy->creature)std::cout<<"CREATURE_PROBE phase="<<enemy->creature->phase
+                <<" initialized="<<enemy->creature->initialized<<" timer="<<enemy->creature->timer
+                <<" near="<<enemy->creature->near<<" inflated="<<enemy->creature->inflated
+                <<" age="<<enemy->age<<" pending="<<enemy->creature->pending.size()<<'\n';
             std::cout<<"ENEMY_PROBE id="<<dw::monsterIdText(*enemyScene)<<" frames="<<frame
                 <<" alive="<<(enemy&&enemy->alive)<<" hp="<<(enemy?enemy->hp:0)
                 <<" shots="<<game.run->stats.projectiles<<" threats="<<game.run->roomThreats()<<'\n';

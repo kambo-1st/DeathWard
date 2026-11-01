@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-31T17:05:58.836222+00:00",
+  "status": "partial_champion_roster",
+  "cohort": [
+    "10.0.0",
+    "10.1.0",
+    "11.0.0",
+    "11.1.0",
+    "12.0.0"
+  ],
+  "implemented_types": {
+    "0": "Red",
+    "1": "Yellow",
+    "2": "Green",
+    "5": "Dark Cyan",
+    "7": "Gray",
+    "13": "Light Blue",
+    "18": "Small",
+    "19": "Large"
+  },
+  "pending_types": [
+    3,
+    4,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    14,
+    15,
+    16,
+    17,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25
+  ],
+  "source": "https://bindingofisaacrebirth.wiki.gg/index.php?oldid=266977",
+  "attribution": "The Binding of Isaac: Rebirth Wiki contributors; CC BY-SA4.0",
+  "config": "assets/mechanics/champions.mechanics",
+  "mechanics_fingerprint": "8914b71789671547",
+  "binary_sha256": "328e23bb479dea7025516fab2e4737cd84b9b4dab480d497724b7f37d16e0ae7",
+  "behavior": [
+    "Health, movement-force, visual/collision size and contact/projectile damage modifiers",
+    "Green creep; Dark Cyan final-death blast; Light Blue8death shots with bounded admission retry",
+    "Champion state retained through Gaper headless morph, room storage and permanent Charm/followers",
+    "Independent seeded5percent natural Canyon chance for reviewed five; Yellow gate sourceStage>=3; explicit debug forcing"
+  ],
+  "validation": {
+    "linux_suites": 6,
+    "result": "pass",
+    "log": "tests.log",
+    "detail": "LastTest.log",
+    "scope": "40enemy/type stat/contact/Charm combinations; both Gaper morphs; creep; death effects with event backpressure; deterministic natural champion witnesses and stage gate; invalid tuning; existing ordinary families and first-floor starting-kit/placement tests.",
+    "captures": [
+      {
+        "image": "docs/reports/isaac-enemy-port/first-floor-batch1/champions/red-gaper.png",
+        "inspected": true,
+        "sha256": "16bf4a4a25a92349400325bb7693aa552fadd31e0202e7fad78ff2bdd6851999",
+        "probe": [
+          "ENEMY_PROBE id=10.0 frames=60 alive=1 hp=83.2 shots=0 threats=1",
+          "ENEMY_ACTOR id=10.0 hp=83.2 max_hp=83.2 state=0 owner=0 x=-80 y=0.85 z=-119.075 radius=0.6 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=0 charm_target=0 visual_scale=1"
+        ]
+      },
+      {
+        "image": "docs/reports/isaac-enemy-port/first-floor-batch1/champions/green-horf.png",
+        "inspected": true,
+        "sha256": "7282e57c40159eba549e2d1271caa6f1d8b4a828db451171303fb910069ae715",
+        "probe": [
+          "ENEMY_PROBE id=12.0 frames=60 alive=1 hp=64 shots=1 threats=1",
+          "ENEMY_ACTOR id=12.0 hp=64 max_hp=64 state=0 owner=0 x=-80 y=0.85 z=-126 radius=0.65 speed=0 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=0 charm_target=0 visual_scale=1"
+        ]
+      },
+      {
+        "image": "docs/reports/isaac-enemy-port/first-floor-batch1/champions/small-pacer.png",
+        "inspected": true,
+        "sha256": "f3493ebbb9c1beb278470e76dde51eb973b31121567650270dd7516559e298da",
+        "probe": [
+          "ENEMY_PROBE id=11.1 frames=60 alive=1 hp=21.12 shots=0 threats=1",
+          "ENEMY_ACTOR id=11.1 hp=21.12 max_hp=21.12 state=0 owner=0 x=-84.031 y=0.85 z=-127.164 radius=0.3 speed=7.20912 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=0 charm_target=0 visual_scale=1"
+        ]
+      },
+      {
+        "image": "docs/reports/isaac-enemy-port/first-floor-batch1/champions/large-gusher.png",
+        "inspected": true,
+        "sha256": "8118839e5f0aea44ba792f0e55552dda6d88b9b183676e02fd6632dd95ec9533",
+        "probe": [
+          "ENEMY_PROBE id=11.0 frames=60 alive=1 hp=96 shots=0 threats=1",
+          "ENEMY_ACTOR id=11.0 hp=96 max_hp=96 state=0 owner=0 x=-83.2115 y=0.85 z=-128.408 radius=0.6 speed=2.77148 formation=0 component_owner=0 slot=-1 boss_form=0 parts=0 attack=0 follow_parent=0 fear_frames=0 confusion_frames=0 freeze_frames=0 slow_frames=0 poison_frames=0 burn_frames=0 shrink_frames=0 charm_frames=0 charm_target=0 visual_scale=1"
+        ]
+      }
+    ]
+  },
+  "fixed_failure": "Green creep already on the floor remained harmful after permanent Charm. Conversion now disables player harm for owned creep. A separate early regression run used an old monster-test executable while its target was rebuilding; final six-suite run follows terminal build completion.",
+  "adaptations": [
+    "HP/size and broad modifier roles use pinned wiki; movement multipliers and creep/blast strengths are authored DeathWard tuning, not exact native champion-engine recovery.",
+    "Supported champion pool uses uniform selection; it does not reproduce all original champion rarity weights.",
+    "Death effects occur on final death after any same-entity headless morph.",
+    "Existing ordinary loot remains: champion-specific hearts, batteries, pills and other pickups are unimplemented.",
+    "Four captures were run concurrently; their displayed FPS is not a controlled performance measurement."
+  ],
+  "full_port_accepted": false,
+  "wasm": "Skipped by user instruction"
+}

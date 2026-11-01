@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "generated": "2026-11-01T11:37:13.649823+00:00",
+    "baseline": "Installed Repentance 1.7.9b",
+    "commit": "903c95f57d4aeb608b9a57034f991de78e610d9c",
+    "dirty": true,
+    "counts": {
+      "regular": 155,
+      "support": 63,
+      "boss": 185,
+      "candidate": 250
+    },
+    "regularStatus": {
+      "Partial implementation": 155
+    },
+    "regularDefinitions": 155,
+    "candidateDefinitions": 18,
+    "registryDefinitions": 221,
+    "missingFiles": [],
+    "waivers": {
+      "visual_wasm": {
+        "authority": "user",
+        "instruction": "pursure goal - Skip WASM check!",
+        "date": "2026-10-28"
+      }
+    },
+    "checkpoint": {
+      "verified_utc": "2026-10-31T17:38:12.353685+00:00",
+      "report": "docs/reports/isaac-enemy-port/charger-batch3/summary.json",
+      "result": "Five Charger-family ordinary playable checkpoint; focused/shared tests pass. Full acceptance remains open.",
+      "mechanics_fingerprint": "8868b7cbbc982475"
+    },
+    "inputs": [
+      {
+        "path": "docs/research/isaac-enemy-port-status.json",
+        "sha256": "edbdf3e8bce5350ed061f23c8fb19838586a9b6c19d5e042e11f139ca99a9b10"
+      },
+      {
+        "path": "docs/research/isaac-mechanics-reference.json",
+        "sha256": "51a84e580d93a78f6cf220cc173ebd4abc0d32ad127ffb64cfd85efa8a5cc00e"
+      }
+    ]
+  },
+  "rows": 653,
+  "default_rows": 405,
+  "report": "docs/reports/regular-enemy-implementation.html",
+  "report_sha256": "e862f54e4608fc3a2139d056429297d9d516b3c61543b680f44069c4a6ddcac0"
+}

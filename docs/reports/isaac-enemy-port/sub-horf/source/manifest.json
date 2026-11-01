@@ -1,0 +1,52 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "baseline": "Repentance1.7.9b",
+  "function_start": "0x54d470",
+  "function_end": "0x54de41",
+  "raw_sha256": "bb9325f11b3e0e3f21c49c0b25d55aa19764e8def7d932568551fda5bffcaf86",
+  "constants": [
+    {
+      "name": "normal_interval_numerator",
+      "address": "0xb6a9c8",
+      "value": 20.0
+    },
+    {
+      "name": "tainted_interval_numerator_not_ported",
+      "address": "0xb6a8f4",
+      "value": 5.0
+    },
+    {
+      "name": "body_friction",
+      "address": "0xb6a5f8",
+      "value": 0.9700000286102295
+    },
+    {
+      "name": "shot_speed",
+      "address": "0xb6a974",
+      "value": 10.0
+    },
+    {
+      "name": "movement_threshold",
+      "address": "0xb6a214",
+      "value": 0.009999999776482582
+    },
+    {
+      "name": "max_native_hit_speed",
+      "address": "0xb6a940",
+      "value": 8.0
+    }
+  ],
+  "observations": [
+    "Ordinary812.0 dispatches to shared SubHorf update0x54d470; variant1 has separate pursuit and cadence branches, and is not enabled by this port.",
+    "Ordinary rotation at0x54db50 is driven by planar velocity length, adds twice native speed to I1, reverses sign for negative X velocity and wraps degrees.",
+    "Ordinary shot test at0x54dc44 requires speed>.01 and counterB10>2*max(1,int(20/speed)). It emits in the previously computed facing direction with planar native speed10, then resets the counter.",
+    "Final update multiplies friction by.97. Native knockback initialization has further special source/status handling; local projectile/explosion impulse strengths36/60 are deliberate DeathWard tuning.",
+    "Source XML14HP,0stageHP,mass3 are preserved; DeathWard HP conversion3.2 yields44.8 before the global regular multiplier.",
+    "One final-death shot is supported by the supplied Horf wiki prose. Its exact native death angle/vertical packet was not recovered here. The local shot uses current facing and the standing-target3Darc conversion."
+  ],
+  "limits": [
+    "Static native evidence, not a controlled Isaac replay.",
+    "The shared function includes Tainted/controlled-source branches that are preserved as context but not implemented by this ordinary812.0 port.",
+    "3Darc, local hit strengths, bounded shot admission and status policies remain explicit adaptations."
+  ]
+}

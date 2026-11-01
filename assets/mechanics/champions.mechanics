@@ -1,0 +1,33 @@
+DEATHWARD_MECHANICS 1
+# All 26 ordinary champion combat modifiers; special resource payouts remain a separate port.
+# Repentance wiki revision266977: HP, visual/collision sizes, stage gate, damage roles.
+# Speed multipliers and combat effect strengths are explicit DeathWard tuning.
+# id name HP speed visual collision damage first-source-stage RGB
+champion_spawn 500
+champion 0 "Red" 2.6 1 1.15 1 2 1 202 65 54
+champion 1 "Yellow" 1.5 1.3 1.15 1 2 3 235 194 50
+champion 2 "Green" 2 1 1.15 1 2 1 99 172 73
+champion 5 "Dark Cyan" 2 1 1.15 1 2 1 41 122 126
+champion 7 "Gray" .66 .75 1.15 1 2 1 134 140 145
+champion 13 "Light Blue" 2 1 1.15 1 2 1 121 204 232
+champion 18 "Small" .66 1.3 .5 .5 1 1 186 126 109
+champion 19 "Large" 3 .85 1.5 1 4 1 175 111 94
+# Newly implemented enemy modifiers. Native special pickup resources are tracked separately.
+champion 3 "Orange" 2 1 1.15 1 2 1 226 141 49
+champion 4 "Dark Blue" 2 .75 1.15 1 2 1 53 72 143
+champion 6 "White" 2 1 1.15 1 2 5 234 235 226
+champion 9 "Black" 2 1 1.15 1 2 5 58 51 62
+champion 14 "Camouflage" 2 1 1.15 1 2 1 160 132 88
+champion 8 "Translucent" 2 1 1.15 1 2 5 173 193 198
+champion 10 "Magenta" 2 1 1.15 1 2 1 193 59 136
+champion 11 "Violet" 2 1 1.15 1 2 5 131 70 173
+champion 16 "Pulsing Gray" 2 1 1.15 1 2 1 165 171 178
+champion 20 "Pulsing Red" 2 1 1.15 1 2 5 216 61 77
+champion 12 "Dark Red" 2 1 1.15 1 2 1 138 45 48
+champion 15 "Pulsing Green" 2 1 1.15 1 2 1 79 183 101
+champion 17 "Light White" 2 1 1.15 1 2 1 231 223 198
+champion 21 "Pulsating" 2 1 1.15 1 2 5 177 107 135
+champion 22 "Crown" 6 1 1.15 1 2 5 228 190 63
+champion 23 "Skull" 2 1 1.15 1 4 5 224 215 194
+champion 24 "Brown" 2 1 1.15 1 2 5 126 83 48
+champion 25 "Rainbow" 3 1.3 1.15 1 2 5 185 128 164

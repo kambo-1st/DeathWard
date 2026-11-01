@@ -118,7 +118,7 @@ void Simulation::updateFaceless(Enemy &e,float dt) {
 
 bool Simulation::tryFacelessMorph(Enemy &e,const Event &event) {
     const auto *p=content->faceless(e.monster);
-    if(!p||p->tainted||event.execution||e.hp>0||e.hp<=-p->overkill*p->damageScale||
+    if(!p||p->tainted||event.execution||e.hp>0||e.hp<=-p->overkill*p->damageScale*content->regularHealthAdjustment(e.monster)||
        combatRng.bounded(unsigned(p->morphChance))!=0)return false;
     const float hpScale=e.maxHp/content->monsterHealth(e.monster,arena.profile.sourceStage);
     const float radiusScale=e.radius/content->monster(e.monster)->radius;

@@ -1,0 +1,92 @@
+{
+  "baseline": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "status": "replacement_conditions_verified_runtime_enabled_scoped_tests",
+  "method": "Static disassembly, byte-checked native branch/gates and specification truth table; no live Isaac trial.",
+  "source": {
+    "type": 12,
+    "variant": "No variant test in the native type-12 case",
+    "subtype": "Preserved"
+  },
+  "target": {
+    "type": 812,
+    "variant": 0,
+    "subtype": "Unchanged"
+  },
+  "roll": {
+    "numerator": 1,
+    "denominator": 60,
+    "native": "xorshift32 output modulo 60 equals zero; do not round to basis points"
+  },
+  "conditions": [
+    "Room-layout spawn preprocessing: a successful MC_PRE_ROOM_ENTITY_SPAWN override bypasses native replacements.",
+    "The layout RoomConfig.Flags bit 0 must be clear (or the configuration pointer absent). Other flag bits do not suppress this branch.",
+    "Room type must not be ROOM_SECRET_EXIT (27).",
+    "After earlier normalization the current entity type must be Horf (12); Psychic Horf (248) does not use this case.",
+    "The native type-12 branch has no stage, stage-type, difficulty, unlock or variant check. It rolls once for the layout entry.",
+    "On residue zero it writes type812 and variant0, retaining subtype. This is a spawn replacement, never a death offspring."
+  ],
+  "downpour": "The wiki describes Sub Horfs authored in Downpour plus rare replacements elsewhere. It does not imply a guaranteed Horf conversion there. The recovered Horf branch remains1/60; nearby1/15 code is a different dispatch case.",
+  "deathward": {
+    "enabled": true,
+    "reason": "Ordinary812.0.0reactive controller and replace_fraction exact1/60rule are enabled; scoped tests in sub-horf/tests.log.",
+    "rule": {
+      "source": "12.0.0",
+      "target": "812.0.0",
+      "first_band": 0,
+      "last_band": 3,
+      "chance_numerator": 1,
+      "chance_denominator": 60,
+      "scope": "generated room encounter selection only"
+    },
+    "adaptations": [
+      "DeathWard seeded room/slot RNG will preserve repeatability, not reproduce Isaac seed streams.",
+      "DeathWard bands are not source floor numbers. No additional stage restriction belongs on this rare replacement.",
+      "DeathWard currently has no Isaac mod callback/RoomConfig flag/alternate-path trapdoor room equivalents. Apply any future equivalents before the roll.",
+      "replace_fraction uses an exact rational denominator; legacy basis-point rules retain their old behavior."
+    ]
+  },
+  "validation": {
+    "result": "pass",
+    "specification_cases": 224640,
+    "passing_cases": 208,
+    "native_windows": 5,
+    "scope": "Source condition checks only, not runtime replacement or Sub Horf acceptance"
+  },
+  "evidence": [
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/replacement-review/native-branch.asm",
+      "start": "0x7aba2c",
+      "end": "0x7aba58",
+      "sha256": "2e18a6243609099ccd7c6688ffe78989bc6e36b2107fe3412b6ad807608db6f8"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/replacement-review/native-room-gates-and-dispatch.asm",
+      "start": "0x7ab683",
+      "end": "0x7ab795",
+      "sha256": "0e5ea3ec9660d1c82b4615cf83ca3eddb8d6959b3bfa5ef5e061e8d587e4fb92"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/replacement-review/native-pre-spawn-override.asm",
+      "start": "0x7aacfa",
+      "end": "0x7aad9d",
+      "sha256": "418cc9aa4610a1e333d485506376d6d878f22c026b5bfb01c8e7031f01eb3e49"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/replacement-review/native-random-int.asm",
+      "start": "0x7a7d50",
+      "end": "0x7a7da8",
+      "sha256": "a1aa1efb23dafa54da380c60cb6388079169afdb873750d59eb523619da1ba6c"
+    },
+    {
+      "path": "docs/reports/isaac-enemy-port/horf_fly/replacement-review/native-type-normalization.asm",
+      "start": "0x697510",
+      "end": "0x697bd1",
+      "sha256": "7eb2ec5d80b10635a9d05a121f39446d9b6923ba2cbb415196da125fa2907ee3"
+    }
+  ],
+  "remaining": [
+    "Ordinary Sub Horf champion/item exceptions and full visual/balance/performance acceptance remain open.",
+    "Tainted Sub Horf812.1is a separate missing actor."
+  ]
+}

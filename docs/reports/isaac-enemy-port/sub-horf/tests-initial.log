@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   2: mechanics_content
+1/6 Test   #2: mechanics_content ................***Failed    0.96 sec
+file-defined costs reach actual floor plans
+
+    Start   7: item_builds
+2/6 Test   #7: item_builds ......................   Passed    6.76 sec
+    Start  56: regular_health_balance
+3/6 Test  #56: regular_health_balance ...........   Passed    0.38 sec
+    Start  76: sub_horf_reactive
+4/6 Test  #76: sub_horf_reactive ................   Passed    0.26 sec
+    Start  77: horf_stationary_shooting
+5/6 Test  #77: horf_stationary_shooting .........   Passed    0.79 sec
+    Start 100: first_floor_charm_effect
+6/6 Test #100: first_floor_charm_effect .........   Passed    5.49 sec
+
+83% tests passed, 1 tests failed out of 6
+
+Total Test time (real) =  14.65 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+Errors while running CTest

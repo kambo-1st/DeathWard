@@ -1,0 +1,52 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start   2: mechanics_content
+ 1/10 Test   #2: mechanics_content ................***Failed    0.02 sec
+/home/kambo/workspace/DeathWard/assets/mechanics/champions.mechanics:6: Unknown command 'champion_spawn'
+
+      Start  34: source_projectile_motion
+ 2/10 Test  #34: source_projectile_motion .........   Passed    0.31 sec
+      Start  58: companion_familiars
+ 3/10 Test  #58: companion_familiars ..............   Passed    1.90 sec
+      Start  59: room_statues
+ 4/10 Test  #59: room_statues .....................   Passed    0.71 sec
+      Start  66: boom_flies
+ 5/10 Test  #66: boom_flies .......................***Failed    1.27 sec
+BOOM_HEALTH source_stages_1_to_13=1 floor_lengths=5 diagonal_axis_reflection=1 contact=1 cover=1
+BOOM_DEATH seven_patterns=1 bone_alignment=1 green_not_ipecac=1 actual_blast=1 execution_policy=1
+BOOM_LIFECYCLE aligned_live_bones=1 gas_trail=1 gas_clear=1 tainted_cross=49 clear_persistence=1 bounded_pending=1
+BOOM_EXTERNAL stage_scaled_child=1 illegal_birth_suppressed=1 immutable_blast_config=1 validation=1
+FAIL: Encounter pool needs an unlimited positive-weight cost-1 single-actor basic in band 0
+
+      Start  91: first_floor_batch2
+ 6/10 Test  #91: first_floor_batch2 ...............   Passed    4.38 sec
+      Start  92: first_floor_cohort
+ 7/10 Test  #92: first_floor_cohort ...............   Passed    5.45 sec
+      Start  93: first_floor_status_effects
+ 8/10 Test  #93: first_floor_status_effects .......   Passed    0.96 sec
+      Start  98: first_floor_charm_effect
+ 9/10 Test  #98: first_floor_charm_effect .........***Failed    6.98 sec
+chain 1 depth 1 effect -1: queue capacity
+CHARM_TIME max_refresh=1 no_cap=1 expiry_partition=1 duration_bounds=1 freeze_slow=1 room_threat=1 pause=1
+CHARM_TARGET weighted=1 dead_fallback=1 cover=1 ancestry=1 birth_age=1 pursuit=1
+CHARM_SHOTS independent_masks=1 npc_hp=1 player_hp=1 owner_lifetime=1 selected_payload=1 pacer=1
+CHARM_CONTACT reciprocal=1 native_curve=1 poll_cadence=1 queue_retry=1 cover=1 player_contact=1
+CHARM_COMBINATIONS fear_target=1 confusion=1 slow_shot=1 frozen_contact=1 swept_contact=1 poll15=1
+CHARM_LIFECYCLE morph=1 room_storage=1
+CHARM_PERMANENT affiliation=1 incoming_damage=1 player_safety=1 room_travel=1 targeting=1
+RECOIL mass=5 impulse=1 blast=1 cap=1 statuses=1 cover=1
+CHAMPIONS variants=8 identities=5 stats=1 contact=1 charm=1 creep=1 burst_retry=1 explosion=1 seeded=1
+invalid champion tuning rejected
+
+      Start 110: adaptive_armor
+10/10 Test #110: adaptive_armor ...................   Passed    0.23 sec
+
+70% tests passed, 3 tests failed out of 10
+
+Total Test time (real) =  22.21 sec
+
+The following tests FAILED:
+	  2 - mechanics_content (Failed)
+	 66 - boom_flies (Failed)
+	 98 - first_floor_charm_effect (Failed)
+Errors while running CTest
