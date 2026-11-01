@@ -38,12 +38,20 @@ in vec3 tint;
 in float shore;
 uniform sampler2D texture0;
 uniform int terrainUnderlay;
+uniform int terracedCliffs;
 out vec4 finalColor;
 void main() {
     vec3 n = normalize(normal);
     vec3 sun = missionSun;
     float shade = terrainUnderlay == 0 ? missionVisibility(world,n) : 1.;
-    vec3 surface = texture(texture0,uv).rgb*tint;
+    vec3 surface = texture(texture0,uv).rgb;
+    // Local sandstone art direction only; lighting and legacy materials stay intact.
+    if (terracedCliffs != 0 && world.y > .15) {
+        float cap = smoothstep(.65,.96,n.y);
+        surface = mix(surface,mix(vec3(.8,.46,.26),vec3(.82,.49,.26),cap),mix(.9,.75,cap));
+    }
+    if(terracedCliffs != 0 && world.y < .15) surface *= vec3(.96,.88,.85);
+    surface *= tint;
     float floorBlend = (1.-smoothstep(.03,.45,world.y))*smoothstep(.6,.95,n.y);
     if (floorBlend > 0.) surface = mix(surface,groundSurface(surface,world),floorBlend);
     float gravel = groundNoise(world.xz*8.3);
@@ -52,6 +60,8 @@ void main() {
     sediment *= .96 + .08*gravel;
     surface = mix(surface,sediment,bank);
     vec3 color = worldSurfaceColor(surface)*westernDaylight(n,sun,shade);
+    if(terracedCliffs != 0 && world.y > .15 && n.y < .72)
+        color += worldSurfaceColor(surface)*vec3(.14,.095,.045)*(1.-max(dot(n,sun),0.)*shade);
     finalColor=playerOcclusionSurface(world,vec4(color,1.));
 }
 )GLSL";
@@ -93,6 +103,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
     terrainShader_ = loadWorldShader(TerrainVertex, fragment.c_str());
     terrainMaterial_ = LoadMaterialDefault();
     terrainMaterial_.shader = terrainShader_;
+    const int terraced = parameters.enabled ? 1 : 0;
+    SetShaderValue(terrainShader_, GetShaderLocation(terrainShader_, "terracedCliffs"), &terraced,
+                   SHADER_UNIFORM_INT);
     Vector2 sandUv{}, wallUv{}, capUv{};
     if (loaded()) {
         const int floorMesh = assets_[size_t(WesternAsset::Floor)].firstMesh;
@@ -145,26 +158,31 @@ void WesternScene::generateCanyon(const Arena &arena) {
         const int side = std::clamp(int((std::atan2(delta.z, delta.x) + Pi) / (Pi / 4)), 0, 7);
         return int(outcrops.size()) + int(closest) * 8 + side;
     };
-    for (int z = 0; z < field.depth - 1; ++z)
-        for (int x = 0; x < field.width - 1; ++x) {
-            const auto a = field.vertex(x, z), b = field.vertex(x + 1, z), c = field.vertex(x, z + 1),
-                       d = field.vertex(x + 1, z + 1);
-            const bool flipped = canyonAppearance_->flipped(x, z);
-            const std::array<Triangle, 2> faces =
-                flipped ? std::array<Triangle, 2>{Triangle{a, c, b}, Triangle{b, c, d}}
-                        : std::array<Triangle, 2>{Triangle{a, d, b}, Triangle{a, c, d}};
-            for (const auto triangle : faces) {
-                // Include the low foot of the wall so fading does not leave opaque triangular stubs.
-                const bool rock = std::max({triangle[0].y, triangle[1].y, triangle[2].y}) > .001f;
-                // Outcrops remain complete objects; each basin rim has eight wall sections.
-                // Floor chunks are independent so fading rock leaves playable surfaces opaque.
-                const int key =
-                    rock ? sectionFor(mul(add(add(triangle[0], triangle[1]), triangle[2]), 1.f / 3))
-                         : -1 - (z / 24) * ((field.width + 22) / 24) - x / 24;
-                sections[key].push_back(triangle);
-                terrainSections_.push_back(key);
+    auto addTriangle = [&](const Triangle &triangle, bool rock, int x, int z) {
+        const int key = rock ? sectionFor(mul(add(add(triangle[0], triangle[1]), triangle[2]), 1.f / 3))
+                             : -1 - (z / 24) * ((field.width + 22) / 24) - x / 24;
+        sections[key].push_back(triangle);
+        terrainSections_.push_back(key);
+    };
+    if (parameters.enabled) {
+        for (int z = 0; z + 1 < field.depth; ++z)
+            for (int x = 0; x + 1 < field.width; ++x) {
+                size_t cell = size_t(z * (field.width - 1) + x);
+                for (size_t i = canyonAppearance_->cellOffsets[cell];
+                     i < canyonAppearance_->cellOffsets[cell + 1]; ++i) {
+                    const auto &face = canyonAppearance_->triangles[i];
+                    addTriangle(face.vertices, face.rock, x, z);
+                }
             }
-        }
+    } else {
+        for (int z = 0; z + 1 < field.depth; ++z)
+            for (int x = 0; x + 1 < field.width; ++x) {
+                auto a = field.vertex(x, z), b = field.vertex(x + 1, z), c = field.vertex(x, z + 1),
+                     d = field.vertex(x + 1, z + 1);
+                for (const auto &t : std::array<Triangle, 2>{Triangle{a, d, b}, Triangle{a, c, d}})
+                    addTriangle(t, std::max({t[0].y, t[1].y, t[2].y}) > .001f, x, z);
+            }
+    }
     std::vector<unsigned char> shores(size_t(field.width * field.depth), 0);
     if (!field.river.empty())
         for (int z = 0; z < field.depth; ++z)
@@ -189,8 +207,10 @@ void WesternScene::generateCanyon(const Arena &arena) {
             const bool cap = normal.y > .72f;
             const auto uv = rock ? (cap ? capUv : wallUv) : sandUv;
             const Color tint = WHITE;
-            const float variation =
-                rock && !cap ? .96f + .04f * std::sin(dot(add(add(a, b), c), {1.17f, .73f, 2.31f})) : 1.f;
+            const float variation = !parameters.enabled ?
+                (rock&&!cap?.96f+.04f*std::sin(dot(add(add(a,b),c),{1.17f,.73f,2.31f})):1.f):
+                rock&&cap?.94f+.06f*std::sin(dot(normal,{9.1f,0,12.7f})):
+                rock?.96f+.04f*std::sin(dot(normal,{1.17f,.73f,2.31f})):1.f;
             for (auto p : triangle) {
                 mesh.vertices[3 * vertex] = p.x;
                 mesh.vertices[3 * vertex + 1] = p.y;
@@ -280,10 +300,21 @@ void WesternScene::generateCanyon(const Arena &arena) {
         return;
     if (parameters.enabled) {
         for (const auto &d : canyonAppearance_->decorations) {
-            WesternAsset asset = d.kind == CanyonDecorationKind::Rock     ? WesternAsset::RockA
+            if (int(placements_.size()) >= parameters.maxDecorations)
+                break;
+            WesternAsset asset = d.kind == CanyonDecorationKind::Tree     ? WesternAsset::DesertTree
+                                 : d.kind == CanyonDecorationKind::Rock   ? WesternAsset::RockA
                                  : d.kind == CanyonDecorationKind::Cactus ? WesternAsset::CactusA
-                                 : d.kind == CanyonDecorationKind::Shrub  ? WesternAsset::GrassA
+                                 : d.kind == CanyonDecorationKind::Shrub  ? WesternAsset::GreenBush
                                                                           : WesternAsset::GrassB;
+            if (d.kind == CanyonDecorationKind::Shrub && int(d.yaw * 100) % 4 != 0)
+                asset = WesternAsset::DesertGrass;
+            if (d.kind == CanyonDecorationKind::Cactus) {
+                int variant = int(d.yaw * 100) % 3;
+                asset = d.zone == CanyonZone::CliffBase || variant == 2 ? WesternAsset::FlowerCactus
+                        : variant == 1                                  ? WesternAsset::CactusB
+                                                                        : WesternAsset::CactusA;
+            }
             if (d.kind == CanyonDecorationKind::Rock)
                 asset = int(d.yaw * 100) % 7 == 0 ? WesternAsset::StickA
                         : int(d.yaw * 100) % 2    ? WesternAsset::RockA
@@ -294,7 +325,9 @@ void WesternScene::generateCanyon(const Arena &arena) {
             Vector3 size{scale * (native.x * c + native.z * s), scale * native.y,
                          scale * (native.z * c + native.x * s)};
             const bool cactus = d.kind == CanyonDecorationKind::Cactus;
-            const float supportRadius = std::max(size.x, size.z) * .5f + (cactus ? .35f : .15f);
+            const float supportRadius = d.kind == CanyonDecorationKind::Tree
+                                            ? .45f
+                                            : std::max(size.x, size.z) * .5f + (cactus ? .35f : .15f);
             if (!canyonAppearance_->supports(d.position, supportRadius, cactus ? .1f : .18f))
                 continue;
             float base = d.position.y;
@@ -311,18 +344,39 @@ void WesternScene::generateCanyon(const Arena &arena) {
                                    d.room,
                                    scale,
                                    d.extraVegetation ? 101 : 0});
+            if (d.kind == CanyonDecorationKind::Rock && asset != WesternAsset::StickA) {
+                for (int j = 0; j < 2 && int(placements_.size()) < parameters.maxDecorations; ++j) {
+                    float angle = d.yaw + float(j) * 2.7f;
+                    auto at = add(d.position,
+                                  {std::cos(angle) * d.span * .28f, 0, std::sin(angle) * d.span * .28f});
+                    auto tiny = mul(size, .35f);
+                    float radius = std::max(tiny.x, tiny.z) * .5f + .04f;
+                    if (!canyonAppearance_->supports(at, radius, .15f))
+                        continue;
+                    float base = canyonAppearance_->height(at.x, at.z) - .02f;
+                    placements_.push_back({asset,
+                                           {{at.x - tiny.x / 2, base, at.z - tiny.z / 2},
+                                            {at.x + tiny.x / 2, base + tiny.y, at.z + tiny.z / 2}},
+                                           d.yaw,
+                                           true,
+                                           d.room,
+                                           scale * .35f,
+                                           0});
+                }
+            }
         }
-        std::array<int, 4> zones{}, kinds{};
+        std::array<int, 4> zones{};
+        std::array<int, 5> kinds{};
         for (const auto &d : canyonAppearance_->decorations) {
             ++zones[size_t(d.zone)];
             ++kinds[size_t(d.kind)];
         }
         TraceLog(LOG_INFO,
                  "CANYON_VISUAL: grid=%dx%d triangles=%d chunks=%d candidates=%d props=%d floor=%d base=%d "
-                 "terrace=%d plateau=%d rocks=%d grass=%d shrub=%d cactus=%d enabled=1",
-                 field.width, field.depth, (field.width - 1) * (field.depth - 1) * 2, int(terrain_.size()),
+                 "terrace=%d plateau=%d rocks=%d grass=%d shrub=%d cactus=%d trees=%d enabled=1",
+                 field.width, field.depth, int(canyonAppearance_->triangles.size()), int(terrain_.size()),
                  int(canyonAppearance_->decorations.size()), int(placements_.size()), zones[0], zones[1],
-                 zones[2], zones[3], kinds[0], kinds[1], kinds[2], kinds[3]);
+                 zones[2], zones[3], kinds[0], kinds[1], kinds[2], kinds[3], kinds[4]);
         return;
     }
     Random rng(arena.visualSeed ^ 0x43414e594f4e4152ULL);
@@ -431,18 +485,24 @@ void WesternScene::updateTerrainOcclusion() {
                            field.depth - 2);
             for (int z = top; z <= bottom; ++z)
                 for (int x = left; x <= right; ++x) {
-                    const auto a = field.vertex(x, z), b = field.vertex(x + 1, z), c = field.vertex(x, z + 1),
-                               d = field.vertex(x + 1, z + 1);
-                    for (int triangle = 0; triangle < 2; ++triangle) {
-                        const int index =
-                            terrainSections_[size_t((z * (field.width - 1) + x) * 2 + triangle)];
+                    const bool extruded = canyonAppearance_ && canyonAppearance_->parameters.enabled;
+                    size_t cell = size_t(z * (field.width - 1) + x);
+                    size_t begin = extruded ? canyonAppearance_->cellOffsets[cell] : cell * 2;
+                    size_t end = extruded ? canyonAppearance_->cellOffsets[cell + 1] : begin + 2;
+                    for (size_t i = begin; i < end; ++i) {
+                        int index = terrainSections_[i];
                         if (index < 0 || terrain_[size_t(index)].faded)
                             continue;
-                        const bool flipped = canyonAppearance_ && canyonAppearance_->flipped(x, z);
-                        const auto hit = flipped ? (triangle == 0 ? GetRayCollisionTriangle(ray, a, c, b)
-                                                                  : GetRayCollisionTriangle(ray, b, c, d))
-                                                 : (triangle == 0 ? GetRayCollisionTriangle(ray, a, d, b)
-                                                                  : GetRayCollisionTriangle(ray, a, c, d));
+                        std::array<Vector3, 3> t;
+                        if (extruded)
+                            t = canyonAppearance_->triangles[i].vertices;
+                        else {
+                            auto a = field.vertex(x, z), b = field.vertex(x + 1, z),
+                                 c = field.vertex(x, z + 1), d = field.vertex(x + 1, z + 1);
+                            t = i == begin ? std::array<Vector3, 3>{a, d, b}
+                                           : std::array<Vector3, 3>{a, c, d};
+                        }
+                        const auto hit = GetRayCollisionTriangle(ray, t[0], t[1], t[2]);
                         if (hit.hit && hit.distance > .05f && hit.distance < reach &&
                             hit.point.y > occlusion_.player.y - .85f)
                             terrain_[size_t(index)].faded = true;

@@ -2136,18 +2136,33 @@ The consolidated [enemy work remaining report](docs/reports/isaac-enemy-missing-
 separates completed checkpoints, shared systems still missing, and the full
 per-record backlog. It can be rebuilt with `python3 scripts/isaac-reference/build-enemy-missing-work-report.py`.
 
-### Lower, terraced expedition canyons
+### Extruded expedition canyon cliffs
 
-The canyon rendering treatment is configured in `assets/visual/canyon.cfg`
-(runtime copy: `build/assets/visual/canyon.cfg`). Restart after editing it.
-It uses a separate seeded cosmetic height field and terrain-aware dressing;
-room connectivity, canonical collision, roads and rivers remain unchanged.
-Set `enabled 0` to restore the original geometry and decoration, or launch with
-`DEATHWARD_CANYON_CONFIG=assets/visual/canyon-legacy.cfg ./build/deathward`.
-The original taller physical volumes still block elevated shots even where the
-visual cliff is lower. Camera, controls, combat and lighting are unchanged.
+The canyon visual mesh uses explicit contour caps, narrow top chamfers and steep
+extruded walls. It does not interpolate broad heightmap slopes between terraces.
+The canonical collision terrain and room graph remain authoritative and unchanged;
+visual and physical rock surfaces therefore remain separate.
 
-See the [canyon comparison report](docs/reports/canyon-terraces/index.html) for
-matched screenshots, parameters, regression results and measured performance.
-Rebuild the report from its saved logs with
-`python3 scripts/canyon-terraces-report.py`.
+Tune `assets/visual/canyon.cfg` (runtime copy: `build/assets/visual/canyon.cfg`),
+then restart. `terrace_count` counts elevation transitions; its default of 3 gives
+four possible levels, locally truncated by the seed. `facet_variation` controls
+small chamfers and top undulation. Existing grass tufts, green desert leaves, leafy bushes, desert trees, debris
+and cacti dress supported terrain. Upper formations use seeded geological cells
+and broad, gently tilted cap facets. Placement uses exact footprint clipping.
+Set `enabled 0` to restore the original tall geometry and decoration, or launch
+with `DEATHWARD_CANYON_CONFIG=assets/visual/canyon-legacy.cfg ./build/deathward`.
+Camera, controls, combat, roads, rivers and lighting remain unchanged; the new
+cliff path applies a local sandstone palette adjustment.
+
+The [current reference matching gallery](docs/reports/canyon-reference-match/index.html)
+compares the target with native captures of geological blocks, warmer sandstone,
+green agaves, grass tufts, desert trees and flowering cacti. Rebuild it with
+`python3 scripts/canyon-reference-match-report.py`. The flowering cactus is a
+separate asset made from native Cactus_05 and Cactus_10 blossom geometry; the
+original cactus models remain available.
+
+The [previous cliff correction report](docs/reports/canyon-extruded-cliffs/index.html)
+contains target comparisons, undecorated iterations, matched captures, tests and
+performance. Rebuild it with `python3 scripts/canyon-extrusion-report.py`.
+The [earlier heightmap report](docs/reports/canyon-terraces/index.html) is archived;
+its geometry was rejected for producing slopes.

@@ -1830,6 +1830,211 @@
           }
         }
       ]
+    },
+    {
+      "name": "bush",
+      "prefab": "Prefabs/Props/SM_Prop_Bush_01.prefab",
+      "models": [
+        "Models/SM_Prop_Bush_01.fbx"
+      ],
+      "parts": {
+        "SM_Prop_Bush_01": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": []
+    },
+    {
+      "name": "green_bush",
+      "prefab": "frontier/Prefabs/Environments/SM_Env_Bush_01.prefab",
+      "models": [
+        "frontier/Models/SM_Env_Bush_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Bush_01": [
+          "frontier_PolygonWesternFrontier_Texture_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1622478004867848
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 3,
+          "m_Convex": 1,
+          "m_CookingOptions": 14,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43424240371128918,
+            "guid": "a1221ffcb378e764597eaf9eeae695e9",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "desert_grass",
+      "prefab": "frontier/Prefabs/Environments/SM_Env_Grass_Desert_01.prefab",
+      "models": [
+        "frontier/Models/SM_Env_Grass_Desert_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Grass_Desert_01": [
+          "frontier_PolygonWesternFrontier_Texture_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1368931990677380
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 3,
+          "m_Convex": 1,
+          "m_CookingOptions": 14,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43800943958659586,
+            "guid": "1e48073c30f4dfe4a84418e4bd7a6e78",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "desert_tree",
+      "prefab": "frontier/Prefabs/Environments/SM_Env_Tree_Desert_01.prefab",
+      "models": [
+        "frontier/Models/SM_Env_Tree_Desert_01.fbx"
+      ],
+      "parts": {
+        "SM_Env_Tree_Desert_01": [
+          "frontier_PolygonWesternFrontier_Texture_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1508417119092054
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 3,
+          "m_Convex": 1,
+          "m_CookingOptions": 14,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43037612631454090,
+            "guid": "99132776f344bb146812e407e5e4466c",
+            "type": 2
+          }
+        },
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1508417119092054
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 3,
+          "m_Convex": 1,
+          "m_CookingOptions": 14,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43884539381754226,
+            "guid": "99132776f344bb146812e407e5e4466c",
+            "type": 2
+          }
+        }
+      ]
+    },
+    {
+      "name": "flower_cactus",
+      "prefab": "Prefabs/Environments/SM_Env_Cactus_05.prefab",
+      "models": [
+        "Models/SM_Env_Cactus_05.fbx"
+      ],
+      "parts": {
+        "SM_Env_Cactus_05": [
+          "PolygonWestern_Material_01_A"
+        ]
+      },
+      "unity_colliders": [
+        {
+          "kind": "mesh",
+          "m_ObjectHideFlags": 1,
+          "m_PrefabParentObject": {
+            "fileID": 0
+          },
+          "m_PrefabInternal": {
+            "fileID": 100100000
+          },
+          "m_GameObject": {
+            "fileID": 1777024775841178
+          },
+          "m_Material": {
+            "fileID": 0
+          },
+          "m_IsTrigger": 0,
+          "m_Enabled": 1,
+          "serializedVersion": 2,
+          "m_Convex": 1,
+          "m_InflateMesh": 0,
+          "m_SkinWidth": 0.01,
+          "m_Mesh": {
+            "fileID": 43715115472252338,
+            "guid": "9470c7cd864eb504f87495ed0482d20d",
+            "type": 2
+          }
+        }
+      ],
+      "flower_model": "Models/SM_Env_Cactus_10.fbx"
     }
   ],
   "materials": {
@@ -1874,6 +2079,27 @@
       "roughness": 0.804,
       "transparent": true,
       "source": "Materials/Glass.mat"
+    },
+    "frontier_PolygonWesternFrontier_Texture_01_A": {
+      "texture": "frontier/Textures/PolygonWesternFrontier_Texture_01_A.png",
+      "tint": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "uv_scale": {
+        "x": 1,
+        "y": 1
+      },
+      "uv_offset": {
+        "x": 0,
+        "y": 0
+      },
+      "metallic": 0,
+      "roughness": 0.8,
+      "transparent": false,
+      "source": "frontier/Materials/PolygonWesternFrontier_Texture_01_A.mat"
     }
   },
   "source_sha256": {
@@ -1937,6 +2163,19 @@
     "Prefabs/Props/SM_Prop_Cow_Skull_01.prefab": "89bf27c2e6700cb173bf33c1d78abcac9f919aaa4aa360468a68792c89c927b5",
     "Models/SM_Prop_Cow_Skull_01.fbx": "ac67febec06436c42be145a851e8254f2ccbfc74091bd4120c0b714da37e7dd7",
     "Prefabs/Environments/SM_Env_BonePile_Small_01.prefab": "8addcb8026144c59291c637fc1d04f0267449af9c3ff783a162294f653166852",
-    "Models/SM_Env_BonePile_Small_01.fbx": "454e17c9c92f45f551d1c9d1fabdb52dafce614ac22d63b7305655ad9cc7cc48"
+    "Models/SM_Env_BonePile_Small_01.fbx": "454e17c9c92f45f551d1c9d1fabdb52dafce614ac22d63b7305655ad9cc7cc48",
+    "Prefabs/Props/SM_Prop_Bush_01.prefab": "accd34d2006a8285a6d63f1955f52f2f0fd7974a15fd8f217a2a5c052444c152",
+    "Models/SM_Prop_Bush_01.fbx": "d08abd2e889e2ee9ce862bd15bbf71feaaa1b65c1baf4ce43c5df9c9b1553d58",
+    "frontier/Prefabs/Environments/SM_Env_Bush_01.prefab": "f73bd96fa55d5a91a91f5836a3a2b0681e30b8eb8d342db0391414378dd5e358",
+    "frontier/Models/SM_Env_Bush_01.fbx": "1ef55bc1702719ac57b0c813a074e5b5e51ecf6fb0f11083bdf9027e2ebe1afc",
+    "frontier/Materials/PolygonWesternFrontier_Texture_01_A.mat": "51fc10abe6cb6cbe4518b0c98681a57d68356d7210fabb7d98ef134165b5ffea",
+    "frontier/Textures/PolygonWesternFrontier_Texture_01_A.png": "45216099e741cbb598daeef1c9b2f5bc261e99fc9b1efd5a966f785c66997547",
+    "frontier/Prefabs/Environments/SM_Env_Grass_Desert_01.prefab": "31b8d59766259ad7e02b7df0e239388c5739077382f9751d25154fedd192ebf4",
+    "frontier/Models/SM_Env_Grass_Desert_01.fbx": "d9571f96d6ecdf10937385238bcf1bed9cbaf6f4afee73e523daab2a6ca9f869",
+    "frontier/Prefabs/Environments/SM_Env_Tree_Desert_01.prefab": "f9f12ef0140da05a02db65951a6a91fe6acd87f738df1fa1278741787c9ea7eb",
+    "frontier/Models/SM_Env_Tree_Desert_01.fbx": "8e5581451c6a381130b287444dceac36f0c7308c1e6095fc2d34f4039d202ac4",
+    "Prefabs/Environments/SM_Env_Cactus_05.prefab": "b0d14c7db96c0b5b8f987b32090531b7d8d93c60c8bed7f44b52aab048fc1a1b",
+    "Models/SM_Env_Cactus_05.fbx": "f26fe04248ba0ef02eb5fcfad7e9f7d20b8c22508d024cd9524b4e298306399c",
+    "Models/SM_Env_Cactus_10.fbx": "aa7f05a256ff5ce6f0304182f43c9eb96eb409a9600ca4a08a6cf4263c098dd5"
   }
 }

@@ -524,6 +524,96 @@
       "first_mesh": 33,
       "mesh_count": 1
     },
+    "bush": {
+      "bounds": [
+        [
+          -0.6084442138671875,
+          0.0,
+          -0.6281242370605469
+        ],
+        [
+          0.6084442138671875,
+          0.8767969608306885,
+          0.6281242370605469
+        ]
+      ],
+      "vertices": 351,
+      "triangles": 654,
+      "first_mesh": 34,
+      "mesh_count": 1
+    },
+    "green_bush": {
+      "bounds": [
+        [
+          -0.24693959951400757,
+          0.0,
+          -0.24364420771598816
+        ],
+        [
+          0.24693959951400757,
+          0.7825141549110413,
+          0.24364420771598816
+        ]
+      ],
+      "vertices": 127,
+      "triangles": 217,
+      "first_mesh": 35,
+      "mesh_count": 1
+    },
+    "desert_grass": {
+      "bounds": [
+        [
+          -0.2993558347225189,
+          0.0,
+          -0.2833831310272217
+        ],
+        [
+          0.2993558347225189,
+          0.7140930891036987,
+          0.2833831310272217
+        ]
+      ],
+      "vertices": 85,
+      "triangles": 150,
+      "first_mesh": 36,
+      "mesh_count": 1
+    },
+    "desert_tree": {
+      "bounds": [
+        [
+          -1.5395663976669312,
+          0.0,
+          -2.389477252960205
+        ],
+        [
+          1.5395663976669312,
+          5.514072418212891,
+          2.389477252960205
+        ]
+      ],
+      "vertices": 1072,
+      "triangles": 2050,
+      "first_mesh": 37,
+      "mesh_count": 1
+    },
+    "flower_cactus": {
+      "bounds": [
+        [
+          -0.46436309814453125,
+          0.0,
+          -0.5097610950469971
+        ],
+        [
+          0.46436309814453125,
+          3.1113808155059814,
+          0.5097610950469971
+        ]
+      ],
+      "vertices": 692,
+      "triangles": 1236,
+      "first_mesh": 38,
+      "mesh_count": 1
+    },
     "floor": {
       "bounds": [
         [
@@ -539,7 +629,7 @@
       ],
       "vertices": 4,
       "triangles": 2,
-      "first_mesh": 34,
+      "first_mesh": 39,
       "mesh_count": 1
     },
     "sandstone": {
@@ -557,15 +647,16 @@
       ],
       "vertices": 104,
       "triangles": 52,
-      "first_mesh": 35,
+      "first_mesh": 40,
       "mesh_count": 1
     }
   },
   "materials": [
     "PolygonWestern_Material_01_A",
-    "Glass"
+    "Glass",
+    "frontier_PolygonWesternFrontier_Texture_01_A"
   ],
-  "embedded_images": 1,
-  "mesh_count": 36,
-  "glb_sha256": "950b75286bc3f456fa8fc8bc9591ecb9d8bc6fbb1f9b34d7ba0028535a822245"
+  "embedded_images": 2,
+  "mesh_count": 41,
+  "glb_sha256": "9524898254be1113b9b761d6bd4c72c9966150411dd8c950801bf8dc79896f37"
 }

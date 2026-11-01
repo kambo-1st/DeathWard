@@ -233,7 +233,9 @@ void enemyOutlineCheck(const Arena &geometry, Vector3 enemyPosition, const Camer
     UnloadImage(baseline);
 }
 void canyonCheck() {
-    Arena arena(69175541, MissionTheme::Canyon);
+    // Pixel-exact restoration needs a static fixture. River shaders animate
+    // in wall-clock time and are now visible over the lower cliffs.
+    Arena arena(69175541, MissionTheme::Canyon, false);
     WesternScene scene;
     scene.prepare(arena);
     check(scene.terrainReady(), "canyon terrain builds with the occlusion shader");

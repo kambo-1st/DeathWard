@@ -4,9 +4,9 @@
 namespace dw {
 struct CanyonVisualParameters {
     bool enabled = true;
-    float minHeight = 1.7f, maxHeight = 7.8f, heightVariation = .85f;
+    float minHeight = 1.65f, maxHeight = 6.8f, heightVariation = .85f;
     int terraces = 3;
-    float terraceWidth = 3.6f, silhouette = .65f, facets = .35f;
+    float terraceWidth = 1.f, silhouette = .65f, facets = .35f;
     float debris = .85f, floorVegetation = .35f, baseVegetation = .9f, terraceVegetation = 1.2f,
           plateauVegetation = .85f;
     float extent = 24;
@@ -15,7 +15,7 @@ struct CanyonVisualParameters {
     void validate() const;
 };
 enum class CanyonZone { Floor, CliffBase, Terrace, Plateau };
-enum class CanyonDecorationKind { Rock, Grass, Shrub, Cactus };
+enum class CanyonDecorationKind { Rock, Grass, Shrub, Cactus, Tree };
 struct CanyonDecoration {
     CanyonDecorationKind kind;
     CanyonZone zone;
@@ -25,13 +25,19 @@ struct CanyonDecoration {
     bool extraVegetation = false;
 };
 // Cosmetic copy only. Arena::canyon remains the authoritative gameplay field.
+struct CanyonSurfaceTriangle {
+    std::array<Vector3, 3> vertices;
+    bool rock = false;
+};
 struct CanyonAppearance {
     CanyonTerrain surface;
     CanyonVisualParameters parameters;
     uint64_t seed = 0;
     std::vector<float> distanceToFloor, distanceToRock;
     std::vector<CanyonDecoration> decorations;
-    bool flipped(int x, int z) const;
+    // Separate polygon caps and extruded walls, indexed by original source cell.
+    std::vector<CanyonSurfaceTriangle> triangles;
+    std::vector<size_t> cellOffsets;
     float height(float x, float z) const;
     SegmentHit trace(Vector3 from, Vector3 to) const;
     bool supports(Vector3 p, float radius, float tolerance = .18f) const;

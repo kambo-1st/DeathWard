@@ -41,11 +41,18 @@ enum class WesternAsset {
     StickB,
     Skull,
     Bones,
+    Bush,
+    GreenBush,
+    DesertGrass,
+    DesertTree,
+    FlowerCactus,
     Count
 };
 inline bool isVegetation(WesternAsset asset) {
     return asset == WesternAsset::GrassA || asset == WesternAsset::GrassB || asset == WesternAsset::CactusA ||
-           asset == WesternAsset::CactusB;
+           asset == WesternAsset::CactusB || asset == WesternAsset::Bush ||
+           asset == WesternAsset::GreenBush || asset == WesternAsset::DesertGrass ||
+           asset == WesternAsset::DesertTree || asset == WesternAsset::FlowerCactus;
 }
 struct WesternPlacement {
     WesternAsset asset;

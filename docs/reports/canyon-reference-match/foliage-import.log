@@ -1,0 +1,184 @@
+COLLECTED crate: 1 parts
+COLLECTED barrel: 1 parts
+COLLECTED sacks: 1 parts
+COLLECTED woodpile: 1 parts
+COLLECTED lantern: 2 parts
+COLLECTED coffin: 2 parts
+COLLECTED cart: 2 parts
+COLLECTED fence: 1 parts
+COLLECTED saloon: 11 parts
+COLLECTED jail: 7 parts
+COLLECTED church: 4 parts
+COLLECTED station: 6 parts
+COLLECTED water_tower: 1 parts
+COLLECTED well: 1 parts
+COLLECTED rail: 1 parts
+COLLECTED ground: 1 parts
+COLLECTED rock_a: 1 parts
+COLLECTED rock_b: 1 parts
+COLLECTED cactus_a: 1 parts
+COLLECTED cactus_b: 1 parts
+COLLECTED cliff_wall: 1 parts
+COLLECTED cliff_pillar: 1 parts
+COLLECTED cliff_cap: 1 parts
+COLLECTED grass_a: 1 parts
+COLLECTED grass_b: 1 parts
+COLLECTED stick_a: 1 parts
+COLLECTED stick_b: 1 parts
+COLLECTED skull: 1 parts
+COLLECTED bones: 1 parts
+COLLECTED bush: 1 parts
+COLLECTED green_bush: 1 parts
+COLLECTED desert_grass: 1 parts
+COLLECTED desert_tree: 1 parts
+COLLECTED flower_cactus: 1 parts
+Failed to open dir (No such file or directory): /mnt/wslg/runtime-dir/gvfs/
+FBX version: 7400
+BAKED crate: {'bounds': [[-0.4220542907714844, 0.0, -0.42205432057380676], [0.4220542907714844, 0.8441085815429688, 0.42205432057380676]], 'vertices': 282, 'triangles': 560}
+FBX version: 7400
+BAKED barrel: {'bounds': [[-0.4422492980957031, 0.0, -0.43106842041015625], [0.4422492980957031, 1.170074462890625, 0.43106842041015625]], 'vertices': 307, 'triangles': 546}
+FBX version: 7400
+BAKED sacks: {'bounds': [[-0.9645538330078125, 0.0, -0.34464263916015625], [0.9645538330078125, 0.4785194396972656, 0.34464263916015625]], 'vertices': 918, 'triangles': 1808}
+FBX version: 7400
+BAKED woodpile: {'bounds': [[-2.2860732078552246, 0.0, -0.6607781648635864], [2.2860732078552246, 1.359092354774475, 0.6607781648635864]], 'vertices': 700, 'triangles': 1200}
+FBX version: 7400
+BAKED lantern: {'bounds': [[-0.17093616724014282, 0.0, -0.10185563564300537], [0.17093616724014282, 0.5562832355499268, 0.10185563564300537]], 'vertices': 290, 'triangles': 536}
+FBX version: 7400
+BAKED coffin: {'bounds': [[-0.4721946716308594, 0.0, -1.1042900085449219], [0.4721946716308594, 0.43530574440956116, 1.1042900085449219]], 'vertices': 658, 'triangles': 1218}
+FBX version: 7400
+BAKED cart: {'bounds': [[-0.7499771118164062, 0.0, -1.5813026428222656], [0.7499771118164062, 1.0890324115753174, 1.5813026428222656]], 'vertices': 775, 'triangles': 1397}
+FBX version: 7400
+BAKED fence: {'bounds': [[-1.6248173713684082, 0.0, -0.1093280091881752], [1.6248173713684082, 1.226705551147461, 0.1093280091881752]], 'vertices': 92, 'triangles': 168}
+FBX version: 7400
+BAKED saloon: {'bounds': [[-8.327596664428711, 0.0, -8.342352867126465], [8.327596664428711, 9.913993835449219, 8.342352867126465]], 'vertices': 14272, 'triangles': 22348}
+FBX version: 7400
+BAKED jail: {'bounds': [[-4.230440139770508, 0.0, -5.099889755249023], [4.230440139770508, 5.786533832550049, 5.099889278411865]], 'vertices': 4600, 'triangles': 7350}
+FBX version: 7400
+BAKED church: {'bounds': [[-3.822920799255371, 0.0, -5.96014404296875], [3.822920799255371, 11.944945335388184, 5.96014404296875]], 'vertices': 4492, 'triangles': 6955}
+FBX version: 7400
+BAKED station: {'bounds': [[-7.420571327209473, 0.0, -2.98938250541687], [7.420571327209473, 11.13199234008789, 2.98938250541687]], 'vertices': 6004, 'triangles': 9085}
+FBX version: 7400
+BAKED water_tower: {'bounds': [[-1.340972900390625, 0.0, -1.3940353393554688], [1.340972900390625, 8.11474895477295, 1.3940353393554688]], 'vertices': 1150, 'triangles': 1826}
+FBX version: 7400
+BAKED well: {'bounds': [[-1.0134391784667969, 0.0, -0.944488525390625], [1.0134391784667969, 2.9000837802886963, 0.944488525390625]], 'vertices': 1425, 'triangles': 2647}
+FBX version: 7400
+BAKED rail: {'bounds': [[-1.6055808067321777, 0.0, -5.0], [1.6055808067321777, 0.4084683060646057, 5.0]], 'vertices': 128, 'triangles': 208}
+FBX version: 7400
+BAKED ground: {'bounds': [[-4.05379581451416, 0.0, -4.164647579193115], [4.05379581451416, 0.3778457045555115, 4.164647579193115]], 'vertices': 110, 'triangles': 200}
+FBX version: 7400
+BAKED rock_a: {'bounds': [[-0.3893299102783203, 0.0, -0.333404541015625], [0.3893299102783203, 0.6868038177490234, 0.333404541015625]], 'vertices': 108, 'triangles': 210}
+FBX version: 7400
+BAKED rock_b: {'bounds': [[-0.3893280029296875, 0.0, -0.333404541015625], [0.3893280029296875, 1.3854198455810547, 0.333404541015625]], 'vertices': 108, 'triangles': 210}
+FBX version: 7400
+BAKED cactus_a: {'bounds': [[-0.24092388153076172, 0.0, -0.6314334869384766], [0.24092388153076172, 2.595489501953125, 0.6314334869384766]], 'vertices': 507, 'triangles': 936}
+FBX version: 7400
+BAKED cactus_b: {'bounds': [[-0.3532390594482422, 0.0, -0.5827255249023438], [0.3532390594482422, 2.0336151123046875, 0.5827255249023438]], 'vertices': 605, 'triangles': 1080}
+FBX version: 7400
+BAKED cliff_wall: {'bounds': [[-17.19971466064453, 0.0, -8.233047485351562], [17.19971466064453, 10.365206718444824, 8.233047485351562]], 'vertices': 1056, 'triangles': 1986}
+FBX version: 7400
+BAKED cliff_pillar: {'bounds': [[-5.954574108123779, 0.0, -6.158872604370117], [5.954574108123779, 12.920878410339355, 6.158872604370117]], 'vertices': 155, 'triangles': 287}
+FBX version: 7400
+BAKED cliff_cap: {'bounds': [[-14.037765502929688, 0.0, -14.095817565917969], [14.037765502929688, 13.440162658691406, 14.095817565917969]], 'vertices': 909, 'triangles': 1797}
+FBX version: 7400
+BAKED grass_a: {'bounds': [[-1.7081146240234375, 0.0, -1.4193878173828125], [1.7081146240234375, 0.8016429543495178, 1.4193878173828125]], 'vertices': 387, 'triangles': 602}
+FBX version: 7400
+BAKED grass_b: {'bounds': [[-0.5568313598632812, 0.0, -0.6461906433105469], [0.5568313598632812, 1.1587142944335938, 0.6461906433105469]], 'vertices': 153, 'triangles': 238}
+FBX version: 7400
+BAKED stick_a: {'bounds': [[-0.173360675573349, 0.0, -0.6753728985786438], [0.173360675573349, 0.24538776278495789, 0.6753728985786438]], 'vertices': 44, 'triangles': 66}
+FBX version: 7400
+BAKED stick_b: {'bounds': [[-0.29390764236450195, 0.0, -0.756714403629303], [0.29390764236450195, 0.3770575523376465, 0.756714403629303]], 'vertices': 44, 'triangles': 66}
+FBX version: 7400
+BAKED skull: {'bounds': [[-0.5748271942138672, 0.0, -0.4140625], [0.5748271942138672, 0.4180583655834198, 0.4140625]], 'vertices': 138, 'triangles': 272}
+FBX version: 7400
+BAKED bones: {'bounds': [[-0.5192413330078125, 0.0, -0.7525100708007812], [0.5192413330078125, 0.3082399070262909, 0.7525100708007812]], 'vertices': 94, 'triangles': 176}
+FBX version: 7400
+BAKED bush: {'bounds': [[-0.6084442138671875, 0.0, -0.6281242370605469], [0.6084442138671875, 0.8767969608306885, 0.6281242370605469]], 'vertices': 351, 'triangles': 654}
+FBX version: 7400
+BAKED green_bush: {'bounds': [[-0.24693959951400757, 0.0, -0.24364420771598816], [0.24693959951400757, 0.7825141549110413, 0.24364420771598816]], 'vertices': 127, 'triangles': 217}
+FBX version: 7400
+BAKED desert_grass: {'bounds': [[-0.2993558347225189, 0.0, -0.2833831310272217], [0.2993558347225189, 0.7140930891036987, 0.2833831310272217]], 'vertices': 85, 'triangles': 150}
+FBX version: 7400
+BAKED desert_tree: {'bounds': [[-1.5395663976669312, 0.0, -2.389477252960205], [1.5395663976669312, 5.514072418212891, 2.389477252960205]], 'vertices': 1072, 'triangles': 2050}
+FBX version: 7400
+FBX version: 7400
+BAKED flower_cactus: {'bounds': [[-0.46436309814453125, 0.0, -0.5097610950469971], [0.46436309814453125, 3.1113808155059814, 0.5097610950469971]], 'vertices': 692, 'triangles': 1236}
+16:36:22 | INFO: Draco mesh compression is available, use library at /tmp/deathward-blender/3.6/python/lib/python3.10/site-packages/libextern_draco.so
+16:36:22 | INFO: Starting glTF 2.0 export
+16:36:22 | INFO: Extracting primitive: crate
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: barrel
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: sacks
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: woodpile
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: lantern
+16:36:22 | INFO: Primitives created: 2
+16:36:22 | INFO: Extracting primitive: coffin
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: cart
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: fence
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: saloon
+16:36:22 | INFO: Primitives created: 2
+16:36:22 | INFO: Extracting primitive: jail
+16:36:22 | INFO: Primitives created: 2
+16:36:22 | INFO: Extracting primitive: church
+16:36:22 | INFO: Primitives created: 2
+16:36:22 | INFO: Extracting primitive: station
+16:36:22 | INFO: Primitives created: 2
+16:36:22 | INFO: Extracting primitive: water_tower
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: well
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: rail
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: ground
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: rock_a
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: rock_b
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: cactus_a
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: cactus_b
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: cliff_wall
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: cliff_pillar
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: cliff_cap
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: grass_a
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: grass_b
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: stick_a
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: stick_b
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: skull
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: bones
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: bush
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: green_bush
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: desert_grass
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: desert_tree
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: flower_cactus
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: floor
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Extracting primitive: sandstone
+16:36:22 | INFO: Primitives created: 1
+16:36:22 | INFO: Finished glTF 2.0 export in 0.3228020668029785 s
+
+EXPORTED /home/kambo/workspace/DeathWard/assets/western/western.glb: 36 assets, 41 meshes, 2 embedded images
+Blender 3.6.23 (hash e467db79ca8c built 2025-06-17 01:32:54)
+
+Blender quit

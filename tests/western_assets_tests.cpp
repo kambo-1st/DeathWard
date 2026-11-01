@@ -159,7 +159,8 @@ void verifyVegetation(WesternScene &scene, const Arena &arena) {
     int cacti = 0;
     if (arena.canyon)
         for (const auto &p : scene.placements()) {
-            if (p.asset != WesternAsset::CactusA && p.asset != WesternAsset::CactusB)
+            if (p.asset != WesternAsset::CactusA && p.asset != WesternAsset::CactusB &&
+                p.asset != WesternAsset::FlowerCactus)
                 continue;
             ++cacti;
             const auto center = mul(add(p.bounds.min, p.bounds.max), .5f);
@@ -201,11 +202,28 @@ size_t verifyCanyon(WesternScene &scene) {
             check(chunk.mesh.vertexCount > 0, "terrain chunks upload visible triangles");
             // Rock sections and floor chunks have irregular footprints; sample an actual triangle.
             const auto *v = chunk.mesh.vertices;
+            // An extruded chunk can begin with a vertical wall. Probe a cap
+            // centroid for the downward height test, away from exact seams.
+            float largest = 0;
+            for (int i = 0; i < chunk.mesh.triangleCount; ++i) {
+                const auto *t = chunk.mesh.vertices + i * 9;
+                const auto *n = chunk.mesh.normals + i * 9;
+                const Vector3 a{t[0], t[1], t[2]}, b{t[3], t[4], t[5]}, c{t[6], t[7], t[8]};
+                float area = Vector3Length(Vector3CrossProduct(sub(b, a), sub(c, a)));
+                if (n[1] > .5f && area > largest) {
+                    v = t;
+                    largest = area;
+                }
+            }
             const Vector3 p{(v[0] + v[3] + v[6]) / 3, 0, (v[2] + v[5] + v[8]) / 3};
             const Vector3 from{p.x, 30, p.z}, to{p.x, -4, p.z};
             const auto hit =
                 scene.canyonAppearance() ? scene.canyonAppearance()->trace(from, to) : field.trace(from, to);
             const auto meshHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
+            if (!(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f))
+                std::cerr << "Sampler seed=" << seed << " p=" << p.x << "," << p.z << " cpu=" << hit.hit
+                          << ":" << hit.t * 34 << " gpu=" << meshHit.hit << ":" << meshHit.distance
+                          << std::endl;
             check(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f,
                   "visual terrain sampler and rendered mesh agree across every chunk; gameplay field stays "
                   "separate");

@@ -9,10 +9,12 @@
 namespace dw {
 namespace {
 constexpr std::array<const char *, size_t(WesternAsset::Count)> Names{
-    "crate",     "barrel",  "sacks",    "woodpile", "lantern",     "coffin",     "cart",         "fence",
-    "saloon",    "jail",    "church",   "station",  "water_tower", "well",       "rail",         "ground",
-    "rock_a",    "rock_b",  "cactus_a", "cactus_b", "floor",       "cliff_wall", "cliff_pillar", "cliff_cap",
-    "sandstone", "grass_a", "grass_b",  "stick_a",  "stick_b",     "skull",      "bones"};
+    "crate",       "barrel",   "sacks",      "woodpile",     "lantern",      "coffin",
+    "cart",        "fence",    "saloon",     "jail",         "church",       "station",
+    "water_tower", "well",     "rail",       "ground",       "rock_a",       "rock_b",
+    "cactus_a",    "cactus_b", "floor",      "cliff_wall",   "cliff_pillar", "cliff_cap",
+    "sandstone",   "grass_a",  "grass_b",    "stick_a",      "stick_b",      "skull",
+    "bones",       "bush",     "green_bush", "desert_grass", "desert_tree",  "flower_cactus"};
 constexpr const char *VertexShader = R"GLSL(#version 330
 in vec3 vertexPosition;
 in vec2 vertexTexCoord;
@@ -38,9 +40,14 @@ in vec3 normal;
 in vec3 world;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
+uniform int canyonAccent;
 out vec4 finalColor;
 void main() {
     vec4 surface = texture(texture0, uv) * colDiffuse;
+    if(canyonAccent == 1) surface.rgb=mix(surface.rgb,vec3(.70,.56,.16),.8);
+    if(canyonAccent == 2) surface.rgb=mix(surface.rgb,vec3(.33,.43,.12),.35);
+    if(canyonAccent == 3)surface.rgb=mix(surface.rgb,vec3(.5,.34,.22),.4);
+    if(canyonAccent == 4)surface.rgb=mix(surface.rgb,vec3(.24,.38,.10),.78);
     surface.rgb = groundSurface(surface.rgb,world);
     if (surface.a < 0.02) discard;
     surface = playerOcclusionSurface(world,surface);
@@ -48,6 +55,17 @@ void main() {
     finalColor = vec4(worldSurfaceColor(surface.rgb) * westernDaylight(litNormal,missionSun,missionVisibility(world,litNormal)), surface.a);
 }
 )GLSL";
+int desertAccentFor(WesternAsset asset) {
+    if (asset == WesternAsset::GrassB)
+        return 1;
+    if(asset==WesternAsset::DesertGrass)return 4;
+    if (asset == WesternAsset::GreenBush || asset == WesternAsset::DesertTree ||
+        asset == WesternAsset::DesertGrass)
+        return 2;
+    if (asset == WesternAsset::RockA || asset == WesternAsset::RockB)
+        return 3;
+    return 0;
+}
 bool overlaps(Box a, Box b, float margin = 0) {
     return a.min.x < b.max.x + margin && a.max.x > b.min.x - margin && a.min.z < b.max.z + margin &&
            a.max.z > b.min.z - margin;
@@ -697,7 +715,7 @@ void WesternScene::prepareLighting(const Camera3D &camera,
     lighting_.prepare(
         camera,
         [&](Shader instanceDepth, Shader meshDepth) {
-            // Use physical geometry, independently of the camera's occlusion fade and
+            // Use complete visual geometry, independently of the camera's occlusion fade and
             // distance culling. Off-screen cliffs still block the sun.
             if (terrainMaterial_.maps) {
                 auto material = terrainMaterial_;
@@ -738,10 +756,14 @@ void WesternScene::drawBatches(bool transparent) {
             continue;
         const auto &asset = assets_[i];
         const bool floor = i == size_t(WesternAsset::Floor);
+        int tone =
+            canyonAppearance_ && canyonAppearance_->parameters.enabled ? desertAccentFor(WesternAsset(i)) : 0;
+        SetShaderValue(shader_, GetShaderLocation(shader_, "canyonAccent"), &tone, SHADER_UNIFORM_INT);
         ground_.bind(shader_, floor);
         const bool cliff = i == size_t(WesternAsset::CliffWall) || i == size_t(WesternAsset::CliffCap) ||
                            i == size_t(WesternAsset::CliffPillar) || i == size_t(WesternAsset::GrassA) ||
-                           i == size_t(WesternAsset::GrassB);
+                           i == size_t(WesternAsset::GrassB) || i == size_t(WesternAsset::DesertGrass) ||
+                           i == size_t(WesternAsset::GreenBush) || i == size_t(WesternAsset::DesertTree);
         // Unity cliff faces are open at the back. Orbiting can see them from
         // either side; draw both sides instead of exposing holes and slivers.
         // Grass blades also need their reverse faces visible when orbiting.
@@ -792,17 +814,25 @@ void WesternScene::drawOccluders() {
     ground_.bind(shader_, false);
     if (loaded())
         occlusion_.bind(shader_, true);
+    int tone = 0;
+    if (loaded())
+        SetShaderValue(shader_, GetShaderLocation(shader_, "canyonAccent"), &tone, SHADER_UNIFORM_INT);
     for (const auto &surface : surfaces) {
         if (surface.terrain) {
             lighting_.draw(surface.terrain->mesh, terrainMaterial_, MatrixIdentity());
         } else {
             const auto *placement = surface.placement;
             const auto &asset = assets_[size_t(placement->asset)];
+            int accent = canyonAppearance_ && canyonAppearance_->parameters.enabled
+                             ? desertAccentFor(placement->asset)
+                             : 0;
+            SetShaderValue(shader_, GetShaderLocation(shader_, "canyonAccent"), &accent, SHADER_UNIFORM_INT);
             const auto transform = placementTransform(asset.bounds, *placement);
             const bool cliff =
                 placement->asset == WesternAsset::CliffWall || placement->asset == WesternAsset::CliffCap ||
                 placement->asset == WesternAsset::CliffPillar || placement->asset == WesternAsset::GrassA ||
-                placement->asset == WesternAsset::GrassB;
+                placement->asset == WesternAsset::GrassB || placement->asset == WesternAsset::DesertGrass ||
+                placement->asset == WesternAsset::GreenBush || placement->asset == WesternAsset::DesertTree;
             if (cliff)
                 rlDisableBackfaceCulling();
             for (int j = asset.firstMesh; j < asset.firstMesh + asset.meshCount; ++j) {

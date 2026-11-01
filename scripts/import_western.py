@@ -45,6 +45,11 @@ ASSETS = {
     "stick_b": "Props/SM_Prop_Stick_02",
     "skull": "Props/SM_Prop_Cow_Skull_01",
     "bones": "Environments/SM_Env_BonePile_Small_01",
+    "bush": "Props/SM_Prop_Bush_01",
+    "green_bush": "frontier/Environments/SM_Env_Bush_01",
+    "desert_grass": "frontier/Environments/SM_Env_Grass_Desert_01",
+    "desert_tree": "frontier/Environments/SM_Env_Tree_Desert_01",
+    "flower_cactus": "Environments/SM_Env_Cactus_05",
 }
 
 
@@ -63,21 +68,27 @@ def documents(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=ROOT / "assets/western/source")
+    parser.add_argument("--frontier-source", type=Path, default=ROOT / "assets/western/source/frontier")
+    parser.add_argument("--output", type=Path, default=ROOT / "assets/western")
     parser.add_argument("--blender", default="blender")
     args = parser.parse_args()
     source = args.source.resolve()
-    output = ROOT / "assets/western"
+    frontier = args.frontier_source.resolve()
+    output = args.output.resolve()
     copied = output / "source"
     output.mkdir(parents=True, exist_ok=True)
     index = {}
-    for path in source.rglob("*.meta"):
+    for path in list(source.rglob("*.meta")) + list(frontier.rglob("*.meta")):
         guid = re.search(r"^guid: (\w+)", path.read_text(), re.M)
         if guid:
             index[guid[1]] = path.with_suffix("")
     hashes = {}
 
+    def relative_path(path):
+        return Path("frontier") / path.relative_to(frontier) if path.is_relative_to(frontier) else path.relative_to(source)
+
     def collect(path):
-        relative = path.relative_to(source)
+        relative = relative_path(path)
         target = copied / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         if path != target:
@@ -98,7 +109,7 @@ def main():
 
     def material(reference):
         path = resolve(reference)
-        key = path.stem
+        key = ("frontier_" if path.is_relative_to(frontier) else "") + path.stem
         if key in materials:
             return key
         collect(path)
@@ -118,13 +129,14 @@ def main():
             "metallic": floats.get("_Metallic", 0),
             "roughness": 1 - floats.get("_Smoothness", floats.get("_Glossiness", 0)),
             "transparent": floats.get("_Surface", 0) == 1 or floats.get("_Mode", 0) in (2, 3),
-            "source": str(path.relative_to(source)),
+            "source": str(relative_path(path)),
         }
         return key
 
     assets = []
     for name, prefab in ASSETS.items():
-        path = source / "Prefabs" / (prefab + ".prefab")
+        path = (frontier / "Prefabs" / (prefab.removeprefix("frontier/") + ".prefab")
+                if prefab.startswith("frontier/") else source / "Prefabs" / (prefab + ".prefab"))
         collect(path)
         docs = documents(path)
         renderers = {obj["m_GameObject"]["fileID"]: obj for kind, _, obj in docs if kind == 23}
@@ -148,8 +160,10 @@ def main():
                 colliders.append({"kind": "box" if kind == 65 else "mesh", **obj})
         if not parts:
             raise RuntimeError(f"No renderable parts in {path}")
-        assets.append({"name": name, "prefab": str(path.relative_to(source)),
+        assets.append({"name": name, "prefab": str(relative_path(path)),
                        "models": sorted(models), "parts": parts, "unity_colliders": colliders})
+        if name == "flower_cactus":
+            assets[-1]["flower_model"] = collect(source / "Models/SM_Env_Cactus_10.fbx")
         if name in ("stick_a", "stick_b"):
             assets[-1]["ground_debris"] = True
         print(f"COLLECTED {name}: {len(parts)} parts", flush=True)

@@ -1,3 +1,5 @@
+#include "raylib.h"
+#include "raymath.h"
 #include "world/CanyonAppearance.hpp"
 #include "world/Dungeon.hpp"
 #include <bit>
@@ -38,6 +40,28 @@ void configuration() {
     std::filesystem::remove(bad);
     std::cout << "CONFIG validated_parameters=10 default_loaded=1\n";
 }
+void narrowSupportRegression() {
+    CanyonAppearance f;
+    f.surface.width = f.surface.depth = 2;
+    f.surface.step = 1;
+    f.surface.heights.assign(4, 0);
+    auto add = [&](Vector3 a, Vector3 b, Vector3 c) { f.triangles.push_back({{a, b, c}, true}); };
+    add({0, 0, 0}, {1, 0, 1}, {1, 0, 0});
+    add({0, 0, 0}, {0, 0, 1}, {1, 0, 1});
+    add({.331f, 1, .331f}, {.336f, 1, .336f}, {.336f, 1, .331f});
+    add({.35f, 0, .333f}, {.35f, 1, .333f}, {.35f, 1, .34f});
+    f.cellOffsets = {0, f.triangles.size()};
+    f.triangles.pop_back();
+    f.cellOffsets.back() = f.triangles.size();
+    check(!f.supports({.5f, 0, .5f}, .4f, .1f), "a tiny raised ledge cannot hide between footprint samples");
+    f.triangles.pop_back();
+    add({.35f, 0, .333f}, {.35f, 1, .333f}, {.35f, 1, .34f});
+    f.cellOffsets.back() = f.triangles.size();
+    check(!f.supports({.4f, 0, .4f}, .1f, .1f), "vertical risers inside a root pad reject placement");
+    check(f.supports({.8f, 0, .8f}, .05f, .1f), "clear flat support is retained");
+    std::cout
+        << "FOOTPRINT exact_triangle_clip=PASS narrow_ledge=PASS vertical_riser=PASS flat_ground=PASS\n";
+}
 void verify() {
     std::set<int> zones, kinds, rivers;
     size_t decor = 0, checks = 0;
@@ -68,28 +92,55 @@ void verify() {
                       boundary == arena.canyon->boundaryHeights,
                   "canonical terrain, boundary collision and navigation unchanged");
             check(look.surface.width == arena.canyon->width && look.surface.depth == arena.canyon->depth,
-                  "no additional terrain triangles or edge extent growth");
+                  "canonical lattice and exterior extent unchanged");
             rivers.insert(int(arena.canyon->riverKind));
             for (size_t i = 0; i < look.surface.heights.size(); ++i) {
                 const float a = arena.canyon->heights[i], b = look.surface.heights[i];
                 check(std::isfinite(b), "finite mesh heights");
                 check((a > CanyonTerrain::WalkableHeight) == (b > CanyonTerrain::WalkableHeight),
                       "all vertex walkability signs preserved");
-                if (a <= .2f)
+                if (a <= CanyonTerrain::WalkableHeight)
                     check(a == b, "floor, water and ford vertices unchanged");
                 if (a > 4) {
                     original.push_back(a);
                     visual.push_back(b);
                 }
-                check(b <= a + .0001f, "visual presentation never creates a taller blocker");
+                check(b <= look.parameters.maxHeight + .0001f,
+                      "visual rock heights bounded by configured cap");
             }
+            check(look.triangles.size() == repeat.triangles.size(), "deterministic contour mesh size");
+            double flatArea = 0, wallArea = 0, bevelArea = 0;
+            for (size_t i = 0; i < look.triangles.size(); ++i) {
+                const auto &t = look.triangles[i], &u = repeat.triangles[i];
+                for (int j = 0; j < 3; ++j)
+                    check(distance(t.vertices[j], u.vertices[j]) < .00001f,
+                          "deterministic cap and wall vertices");
+                if (!t.rock)
+                    continue;
+                auto a = t.vertices[0], b = t.vertices[1], c = t.vertices[2];
+                auto normal = Vector3CrossProduct(sub(b, a), sub(c, a));
+                float area = std::sqrt(dot(normal, normal)) * .5f;
+                float up = normal.y / std::max(.000001f, 2 * area);
+                if (up > .98f)
+                    flatArea += area;
+                else if (std::abs(up) < .35f)
+                    wallArea += area;
+                else
+                    bevelArea += area;
+            }
+            std::cout << "SURFACES seed=" << seed << " river=" << river << " caps=" << flatArea
+                      << " walls=" << wallArea << " bevels=" << bevelArea << std::endl;
+            check(flatArea > wallArea * .4 && wallArea > bevelArea * 2,
+                  "broad flat caps and vertical walls dominate small bevels");
+            check(look.triangles.size() < size_t((look.surface.width - 1) * (look.surface.depth - 1) * 8),
+                  "bounded contour extrusion geometry");
             check(look.decorations.size() <= 2200, "cosmetic budget bounded");
             for (size_t i = 0; i < look.decorations.size(); ++i) {
                 const auto &a = look.decorations[i], &b = repeat.decorations[i];
                 check(distance(a.position, b.position) < .00001f && a.kind == b.kind && a.zone == b.zone &&
                           a.yaw == b.yaw,
                       "decoration seed repeats all positions and categories");
-                check(look.supports(a.position, a.span * .65f,
+                check(look.supports(a.position, a.kind == CanyonDecorationKind::Tree ? .45f : a.span * .65f,
                                     a.kind == CanyonDecorationKind::Cactus ? .1f : .16f),
                       "complete candidate footprint supported; no plants on steep faces");
                 check(!arena.canyon->waterBlocked(a.position), "no dry vegetation in river");
@@ -112,7 +163,7 @@ void verify() {
             legacy.enabled = false;
             auto old = buildCanyonAppearance(arena, legacy);
             check(old.surface.heights == arena.canyon->heights && old.decorations.empty() &&
-                      !old.flipped(3, 5),
+                      old.triangles.empty(),
                   "enabled0 restores original surface and dressing path");
             if (seed == 1866 && !river) {
                 auto zero = CanyonVisualParameters{};
@@ -121,6 +172,17 @@ void verify() {
                 auto bare = buildCanyonAppearance(arena, zero);
                 check(bare.decorations.empty() && bare.surface.heights == look.surface.heights,
                       "density changes never alter terrain or gameplay");
+                auto flat = zero;
+                flat.minHeight = flat.maxHeight = 1.f;
+                flat.facets = 1.f;
+                auto single = buildCanyonAppearance(arena, flat);
+                for (size_t i = 0; i < single.surface.heights.size(); ++i) {
+                    float y = single.surface.heights[i];
+                    check(std::isfinite(y) && y <= 1.f, "equal height limits remain bounded");
+                    check((y > CanyonTerrain::WalkableHeight) ==
+                              (arena.canyon->heights[i] > CanyonTerrain::WalkableHeight),
+                          "equal height limits retain the rock mask");
+                }
                 auto small = zero;
                 small.maxDecorations = 3;
                 small.debris = 3;
@@ -131,10 +193,10 @@ void verify() {
     std::sort(visual.begin(), visual.end());
     check(visual[visual.size() / 2] < original[original.size() / 2] * .8f,
           "cliffs meaningfully lower without a camera change");
-    check(zones.size() == 4 && kinds.size() == 4,
+    check(zones.size() == 4 && kinds.size() == 5,
           "all terrain categories and existing asset roles represented");
     check(rivers.size() == 3, "dry, boundary and interior river maps covered");
-    std::cout << "GEOMETRY maps=12 categories=4 asset_roles=4 candidates=" << decor
+    std::cout << "GEOMETRY maps=12 categories=4 asset_roles=5 candidates=" << decor
               << " collision_room_checks=" << checks
               << " original_highland_median=" << original[original.size() / 2]
               << " visual_highland_median=" << visual[visual.size() / 2]
@@ -145,6 +207,7 @@ void verify() {
 int main() {
     try {
         configuration();
+        narrowSupportRegression();
         verify();
         std::cout << "PASS canyon visual determinism, collision invariance, support, water/road clearance "
                      "and reversible config\n";

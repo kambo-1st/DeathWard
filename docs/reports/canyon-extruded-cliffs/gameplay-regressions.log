@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   5: floor_progression
+1/5 Test   #5: floor_progression ................   Passed  299.34 sec
+    Start  17: canyon_roads
+2/5 Test  #17: canyon_roads .....................   Passed    7.56 sec
+    Start  18: canyon_rivers
+3/5 Test  #18: canyon_rivers ....................   Passed   19.70 sec
+    Start 124: generated_dungeons
+4/5 Test #124: generated_dungeons ...............   Passed   24.48 sec
+    Start 125: generated_room_graphs
+5/5 Test #125: generated_room_graphs ............   Passed    0.61 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) = 351.70 sec

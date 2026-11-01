@@ -1,0 +1,95 @@
+{
+  "base_commit": "32fa160",
+  "working_tree_when_prepared": "uncommitted",
+  "geometry": {
+    "maps": "12",
+    "categories": "4",
+    "asset_roles": "5",
+    "candidates": "21661",
+    "collision_room_checks": "180",
+    "original_highland_median": "7.55781",
+    "visual_highland_median": "3.18314",
+    "original_max": "10.7415",
+    "visual_max": "6.79616",
+    "appearance_mean_ms": "241.566"
+  },
+  "checks": {
+    "geometry-tests": "PASS",
+    "graphics-tests": "PASS",
+    "occlusion-tests": "PASS",
+    "gameplay-tests": "PASS"
+  },
+  "benchmark": {
+    "legacy": {
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "240",
+      "mean_ms": "130.688",
+      "p95_ms": "263.18",
+      "max_ms": "2099.9",
+      "max_projectiles": "2015",
+      "min_active_enemies": "3",
+      "min_active_projectiles": "600",
+      "kills": "472",
+      "max_chain_depth": "16",
+      "suppressed": "336",
+      "simulation_ms": "1.95102",
+      "draw_ms": "75.6414",
+      "present_ms": "53.0955"
+    },
+    "matched": {
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "240",
+      "mean_ms": "125.678",
+      "p95_ms": "244.222",
+      "max_ms": "2277.26",
+      "max_projectiles": "2015",
+      "min_active_enemies": "3",
+      "min_active_projectiles": "600",
+      "kills": "472",
+      "max_chain_depth": "16",
+      "suppressed": "336",
+      "simulation_ms": "1.99015",
+      "draw_ms": "75.3064",
+      "present_ms": "48.3819"
+    }
+  },
+  "render": {
+    "legacy": {
+      "enabled": "0",
+      "triangles": "113388",
+      "chunks": "105",
+      "instances": "198",
+      "vegetation": "68",
+      "density": "100"
+    },
+    "matched": {
+      "enabled": "1",
+      "triangles": "296207",
+      "chunks": "105",
+      "instances": "1088",
+      "vegetation": "333",
+      "density": "100"
+    }
+  },
+  "benchmark_scope": "One paired 240-frame native stress run, original legacy versus current matched treatment, same final executable and assets. Not a repeated statistical comparison or ordinary-play FPS.",
+  "capture": {
+    "zoom_percent": 160,
+    "fov": 45,
+    "projection": "perspective",
+    "resolution": [
+      1440,
+      900
+    ],
+    "seed": 1866,
+    "frame": 120
+  },
+  "remaining": [
+    "Exact pixel correspondence is not established: the concept has an unknown seed/layout and hand-directed object arrangements.",
+    "Canonical collision volumes remain the original taller terrain; visible and physical rock profiles are intentionally separate."
+  ],
+  "verified": true
+}

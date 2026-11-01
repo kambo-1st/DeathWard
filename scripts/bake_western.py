@@ -10,6 +10,60 @@ import bpy
 from mathutils import Matrix, Vector
 
 
+def add_cactus_flowers(combined, source_path, image):
+    """Reuse the native red blossom mesh on the three native saguaro tips."""
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.fbx(filepath=str(source_path), use_image_search=False, use_anim=False)
+    imported = set(bpy.data.objects) - before
+    donor = next(o for o in imported if o.type == 'MESH')
+    donor.data.transform(donor.matrix_world)
+    pixels = image.pixels
+    width, height = image.size
+    flowers = []
+    for face in donor.data.polygons:
+        uv = sum((donor.data.uv_layers.active.data[i].uv for i in face.loop_indices), Vector((0, 0))) / len(face.loop_indices)
+        x = min(width-1, max(0, int(uv.x*width)))
+        y = min(height-1, max(0, int(uv.y*height)))
+        r,g,b = pixels[4*(y*width+x):4*(y*width+x)+3]
+        if r > .3 and r > g*1.6 and r > b*1.5:
+            flowers.append(face)
+    if not flowers:
+        raise RuntimeError('Native cactus donor has no red blossom faces')
+    highest = max(f.center.z for f in flowers)
+    flowers = [f for f in flowers if f.center.z > highest-.15]
+    indices = sorted({v for f in flowers for v in f.vertices})
+    center = sum((donor.data.vertices[v].co for v in indices), Vector()) / len(indices)
+    lookup = {v:i for i,v in enumerate(indices)}
+    mesh = bpy.data.meshes.new('native_cactus_blossom')
+    mesh.from_pydata([(donor.data.vertices[v].co-center)*1.7 for v in indices], [], [[lookup[v] for v in f.vertices] for f in flowers])
+    mesh.materials.append(combined.data.materials[0])
+    uv = mesh.uv_layers.new(name=combined.data.uv_layers.active.name)
+    for new, old in zip(mesh.polygons, flowers):
+        for a,b in zip(new.loop_indices, old.loop_indices):
+            uv.data[a].uv = donor.data.uv_layers.active.data[b].uv
+    for o in imported:
+        bpy.data.objects.remove(o, do_unlink=True)
+    tips=[]
+    points=[v.co.copy() for v in combined.data.vertices]
+    for _ in range(3):
+        candidates=[p for p in points if all((Vector((p.x,p.y))-Vector((t.x,t.y))).length>.32 for t in tips)]
+        if not candidates: break
+        seed=max(candidates,key=lambda p:p.z)
+        cap=[p for p in candidates if p.z>seed.z-.10 and (Vector((p.x,p.y))-Vector((seed.x,seed.y))).length<.24]
+        tip=sum(cap,Vector())/len(cap)
+        tip.z=seed.z+.015
+        tips.append(tip)
+    bpy.ops.object.select_all(action='DESELECT')
+    combined.select_set(True)
+    for tip in tips:
+        flower=bpy.data.objects.new('blossom',mesh.copy())
+        bpy.context.collection.objects.link(flower)
+        flower.location=tip
+        flower.select_set(True)
+    bpy.context.view_layer.objects.active=combined
+    bpy.ops.object.join()
+
+
 def main():
     recipe_path = Path(sys.argv[sys.argv.index("--") + 1])
     recipe = json.loads(recipe_path.read_text())
@@ -73,6 +127,10 @@ def main():
             bpy.ops.object.join()
         combined = bpy.context.object
         combined.name = combined.data.name = asset["name"]
+        if asset.get("flower_model"):
+            nodes = combined.data.materials[0].node_tree.nodes
+            image = next(n.image for n in nodes if n.type == 'TEX_IMAGE')
+            add_cactus_flowers(combined, source / asset["flower_model"], image)
         # These source sticks stand upright. Lay them down before normalizing
         # the pivot so room debris rests on the ground, with its UVs intact.
         if asset.get("ground_debris"):
