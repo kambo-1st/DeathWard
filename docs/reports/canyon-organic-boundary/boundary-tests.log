@@ -1,0 +1,2 @@
+GENERATION paired_maps=14 classic_mean_ms=376.237 organic_mean_ms=757.285
+PASS organic boundaries maps=14 changed_vertices=12161 identical_road_samples=7447 clear_sockets=440 tutorial_maps=3

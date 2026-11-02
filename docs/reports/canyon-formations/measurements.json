@@ -1,0 +1,189 @@
+{
+  "base_commit": "b976baa",
+  "status": "Unified contour geometry implemented; exact reference fidelity remains open",
+  "checks": {
+    "boundary-tests": "PASS",
+    "geometry-tests": "PASS",
+    "seed-sweep": "PASS",
+    "gameplay-tests": "PASS",
+    "boss-tests": "PASS",
+    "graphics-tests": "PASS",
+    "occlusion-tests": "PASS"
+  },
+  "geometry": {
+    "maps": "12",
+    "categories": "4",
+    "asset_roles": "5",
+    "candidates": "26400",
+    "collision_room_checks": "180",
+    "original_highland_median": "7.5748",
+    "visual_highland_median": "3.62207",
+    "original_max": "10.7415",
+    "visual_max": "6.8",
+    "appearance_mean_ms": "1301.58"
+  },
+  "generation": {
+    "paired_maps": "14",
+    "classic_mean_ms": "410.286",
+    "organic_mean_ms": "831.093"
+  },
+  "capture_geometry": {
+    "zoom": "160",
+    "fov": "45",
+    "seed": "1866",
+    "triangles": "214806",
+    "floor": "3",
+    "hero_height": "1.8",
+    "appearance_ms": "871.088"
+  },
+  "facet_graph": {
+    "input": "25642",
+    "spans": "22777",
+    "chains": "4008",
+    "short": "3200",
+    "largest": "217",
+    "fallback": "200"
+  },
+  "benchmarks": [
+    {
+      "sample": "legacy-1",
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "360",
+      "mean_ms": "103.95",
+      "p95_ms": "193.067",
+      "max_ms": "2553.22",
+      "max_projectiles": "4096",
+      "min_active_enemies": "4",
+      "min_active_projectiles": "3",
+      "kills": "602",
+      "max_chain_depth": "16",
+      "suppressed": "9990",
+      "simulation_ms": "3.30122",
+      "draw_ms": "58.5287",
+      "present_ms": "42.1205"
+    },
+    {
+      "sample": "current-1",
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "360",
+      "mean_ms": "102.692",
+      "p95_ms": "196.011",
+      "max_ms": "2890.15",
+      "max_projectiles": "4096",
+      "min_active_enemies": "4",
+      "min_active_projectiles": "3",
+      "kills": "602",
+      "max_chain_depth": "16",
+      "suppressed": "9990",
+      "simulation_ms": "3.37655",
+      "draw_ms": "57.6142",
+      "present_ms": "41.7016"
+    },
+    {
+      "sample": "current-2",
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "360",
+      "mean_ms": "104.087",
+      "p95_ms": "193.507",
+      "max_ms": "2923.52",
+      "max_projectiles": "4096",
+      "min_active_enemies": "4",
+      "min_active_projectiles": "3",
+      "kills": "602",
+      "max_chain_depth": "16",
+      "suppressed": "9990",
+      "simulation_ms": "3.32969",
+      "draw_ms": "58.3988",
+      "present_ms": "42.359"
+    },
+    {
+      "sample": "legacy-2",
+      "seed": "1866",
+      "version": "deathward-m1-61",
+      "resolution": "1440x900",
+      "frames": "360",
+      "mean_ms": "100.402",
+      "p95_ms": "193.274",
+      "max_ms": "2468.26",
+      "max_projectiles": "4096",
+      "min_active_enemies": "4",
+      "min_active_projectiles": "3",
+      "kills": "602",
+      "max_chain_depth": "16",
+      "suppressed": "9990",
+      "simulation_ms": "3.41744",
+      "draw_ms": "56.6153",
+      "present_ms": "40.3692"
+    }
+  ],
+  "benchmark_summary": {
+    "legacy": {
+      "mean_ms": 102.176,
+      "p95_ms": 193.1705,
+      "render": {
+        "enabled": "1",
+        "triangles": "309900",
+        "chunks": "166",
+        "instances": "1696",
+        "vegetation": "509",
+        "density": "100"
+      }
+    },
+    "current": {
+      "mean_ms": 103.3895,
+      "p95_ms": 194.75900000000001,
+      "render": {
+        "enabled": "1",
+        "triangles": "220392",
+        "chunks": "166",
+        "instances": "2051",
+        "vegetation": "744",
+        "density": "100"
+      }
+    }
+  },
+  "bare_mesh_control": {
+    "zoom": "160",
+    "fov": "45",
+    "seed": "1866",
+    "triangles": "304314",
+    "floor": "3",
+    "hero_height": "1.8",
+    "appearance_ms": "387.287"
+  },
+  "remaining": [
+    "This is a new geometry candidate, not certification of an exact visual match. Some plateau stretches and faces remain plainer than the reference.",
+    "The target composition and individual rock silhouettes are not reproduced exactly. Existing detached gameplay cover was retained.",
+    "River channels, ford influence areas and boundary-river bank rooms retain their protected physical geometry.",
+    "Visual cliff heights and the authoritative collision height field remain separate. Organic floor outlines are an intentional, separately tested gameplay-boundary change.",
+    "Some seeds fill the 2,200-placement render budget at 100% vegetation; increasing density cannot add plants beyond that cap. The unchanged allocation policy can also leave later rooms sparsely dressed.",
+    "Native Linux validation only. WASM checks remain waived; Windows was not rebuilt for this change."
+  ],
+  "source_sha256": {
+    "src/world/CanyonTerrain.cpp": "9da158d3b037a154e9afd9f9cf3fd6157b286b51ff9ff3fc31f14eac3ff78f2a",
+    "src/world/CanyonBoundary.hpp": "91a44dd007fa29b3fad60e0df93e9ec532976056e31d92125ea2142cc26e245e",
+    "src/world/CanyonRoad.cpp": "2bafe2fba40d91621fba6e59aa9a8493c55fb496360b96e009e9d6d16f61c6f4",
+    "src/world/CanyonAppearance.cpp": "7d2d9ee7323c1ca59d7134d0f910a001bcd62c62c4a25568fe57f5b9a08b6feb",
+    "src/world/CanyonAppearance.hpp": "30d4d69ba870ae734430b314ef31a68044f6064b565324ad8c8c89dad9405b1c",
+    "src/world/CanyonFormations.cpp": "9881f024998c0c31305c797cd1bbdcf6d301904b17d84019b7b81d701b8880d9",
+    "src/world/CanyonFormations.hpp": "92fdff270ceac33271a80e3e4e50639d7114fdaaa626c55de6fcb53c8be51ddf",
+    "src/world/CanyonFacets.cpp": "fb2fe9a8b561488a05a7b39a00aeed971a77658e8a85fb48f5d9105ecfa55ba2",
+    "src/world/CanyonFacets.hpp": "b61fdb2006ff8b3aa512a4fa68e9009ad83a4a93e578de740eca94ceafec6617",
+    "assets/visual/canyon.cfg": "21ed9233392884491efafb84b3bee68a572d25bada648343c125f9d3dda96fde",
+    "CMakeLists.txt": "2e0a4096881adbdd400d179bd314a6ada086551b8ea402605c002271a86d5f45",
+    "tests/canyon_boundary_tests.cpp": "26a40901df976db1a78d4fe2bdda4d3b3cc07e0d3bdc2ec96f01d9e892f9fe63",
+    "tests/canyon_appearance_tests.cpp": "45915a54cd434def72aa98b0f36bb4a0b74552dffebbaebf12b0e0d3e7268653",
+    "tests/canyon_geometry_capture.cpp": "ceab1faadd2250c211537cbff7237585fec025f8baac1da6acc497f893e11c64",
+    "tests/western_assets_tests.cpp": "9f5972f3264f38eecb3c9fce1645ecddc0add716518be7cde586f077faef4cc1",
+    "third_party/canyon/SOURCES.txt": "8ca04d76ad05c40d2fcb43d50ef5a16a839e86c3fc4c858686b6c98c60641553",
+    "third_party/canyon/clipper.engine.cpp": "7b2cc17d4debd3b5ee6bd2c592ecda5082253324c7dd514b5593ae1b2c7812b2",
+    "third_party/canyon/clipper.offset.cpp": "ebc01258953212d20fed090a4a740f94926c3c6706a092fec4c5e9cb5292305a",
+    "third_party/canyon/earcut.hpp": "29091c0d7af22a2f985f5ebd9aedb1f1b056fe099d1d31395c393c5f1ecb8c52"
+  }
+}

@@ -1,0 +1,5 @@
+CONFIG validated_parameters=11 default_loaded=1
+FOOTPRINT exact_triangle_clip=PASS narrow_ledge=PASS vertical_riser=PASS flat_ground=PASS
+SPATIAL displaced_height=PASS displaced_ray=PASS displaced_support=PASS
+SURFACES seed=0 river=0 caps=109919 walls=18728.2 bevels=17592.9
+FAIL broad flat caps and vertical walls dominate small bevels

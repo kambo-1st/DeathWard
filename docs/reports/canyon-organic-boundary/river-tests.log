@@ -1,0 +1,11 @@
+PASS river seed 0: interior, 205 deep samples
+PASS river seed 1: boundary, 2769 deep samples
+PASS river seed 2: boundary, 2391 deep samples
+PASS river seed 3: boundary, 2217 deep samples
+PASS river seed 4: interior, 55 deep samples
+PASS river seed 5: boundary, 2824 deep samples
+PASS river seed 6: interior, 70 deep samples
+PASS river seed 7: interior, 152 deep samples
+PASS river seed 42: interior, 118 deep samples
+PASS river seed 1866: boundary, 2414 deep samples
+PASS river seed 69175541: interior, 72 deep samples

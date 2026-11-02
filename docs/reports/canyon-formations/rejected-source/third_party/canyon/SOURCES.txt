@@ -1,0 +1,22 @@
+Vendored for portable canyon polygon construction. No system Boost dependency.
+Downloaded 2026-11-01. Snapshot identified by SHA-256 below.
+Clipper2: https://github.com/AngusJohnson/Clipper2 (CPP/Clipper2Lib), Boost Software License 1.0.
+Earcut: https://github.com/mapbox/earcut.hpp, ISC license.
+The Clipper2 engine and offset translation units are compiled. Unused headers satisfy their upstream include graph.
+
+c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566  CLIPPER-LICENSE.txt
+828f2aed51b6526881a236758ec9b08cd69928fbfc70346d9d44a0b3a3444fe1  EARCUT-LICENSE.txt
+7b2cc17d4debd3b5ee6bd2c592ecda5082253324c7dd514b5593ae1b2c7812b2  clipper.engine.cpp
+b667c2fe968344252e2c32c0cffc09cf6520164e272fcf63bf46eccc707b138f  clipper2/clipper.core.h
+e77185eb535cdae22feb85a045b6b90365f0cfd841bd7fb01714fc03a026fa09  clipper2/clipper.engine.h
+145efd001ef2f45ac5655a18e19d8a122efdf665c38d306a1fe91ce9e0d18450  clipper2/clipper.h
+6ea4f08d3e2561bdd4d95a548e1b5d7983100e317ed805616b8d602f03d3dbe3  clipper2/clipper.minkowski.h
+147e5f4694327d62cec31fec55b69537f178e808a715a533bb42c01a85cc435a  clipper2/clipper.offset.h
+2970dbe3f91d32e96abc3117240694fc09f354060ff84e4a95014ec510f4d8dd  clipper2/clipper.rectclip.h
+a82d32e65583cce5a6d704796c54de3ddd2963d219057263a0f87f8d14a07d6c  clipper2/clipper.triangulation.h
+0d636f1599b09743496d5c15c7dcb5bc3101bd423d6745bf17e480edbffccdac  clipper2/clipper.version.h
+29091c0d7af22a2f985f5ebd9aedb1f1b056fe099d1d31395c393c5f1ecb8c52  earcut.hpp
+
+ebc01258953212d20fed090a4a740f94926c3c6706a092fec4c5e9cb5292305a  clipper.offset.cpp
+Offset source: https://raw.githubusercontent.com/AngusJohnson/Clipper2/main/CPP/Clipper2Lib/src/clipper.offset.cpp
+The downloaded offset header matched the preserved header SHA-256 before import.

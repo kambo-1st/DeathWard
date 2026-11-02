@@ -1,0 +1,43 @@
+[ 12%] Built target glfw
+[ 16%] Built target raylib
+[ 16%] Building CXX object CMakeFiles/deathward_core.dir/src/world/CanyonFacets.cpp.o
+[ 16%] Built target deathward_runtime_assets
+[ 16%] Linking CXX static library libdeathward_core.a
+[ 87%] Built target deathward_core
+[ 87%] Built target deathward_cloth
+[ 90%] Built target deathward_skinning
+[ 90%] Built target deathward_particles
+[ 90%] Built target deathward_mission_lighting
+[ 90%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 14%] Built target glfw
+[ 18%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_canyon_geometry_capture
+[100%] Built target deathward_canyon_geometry_capture
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_canyon_appearance_tests
+[100%] Building CXX object CMakeFiles/deathward_canyon_appearance_tests.dir/tests/canyon_appearance_tests.cpp.o
+[100%] Linking CXX executable deathward_canyon_appearance_tests
+[100%] Built target deathward_canyon_appearance_tests
+[ 13%] Built target glfw
+[ 17%] Built target raylib
+[ 93%] Built target deathward_core
+[ 93%] Built target deathward_cloth
+[ 93%] Built target deathward_particles
+[ 96%] Built target deathward_skinning
+[ 96%] Built target deathward_mission_lighting
+[ 96%] Built target deathward_runtime_assets
+[100%] Linking CXX executable deathward_western_assets_tests
+[100%] Built target deathward_western_assets_tests
+[ 13%] Built target glfw
+[ 16%] Built target raylib
+[ 90%] Built target deathward_core
+[ 90%] Built target deathward_cloth
+[ 90%] Built target deathward_particles
+[ 93%] Built target deathward_skinning
+[ 93%] Built target deathward_mission_lighting
+[ 93%] Built target deathward_runtime_assets
+[ 93%] Linking CXX executable deathward_occlusion_tests
+[100%] Built target deathward_occlusion_tests

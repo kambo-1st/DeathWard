@@ -23,11 +23,11 @@ uint64_t fingerprint(const CanyonTerrain &f) {
 void configuration() {
     const auto path = std::filesystem::path(DEATHWARD_ASSET_DIR) / "visual/canyon.cfg";
     const auto p = CanyonVisualParameters::load(path);
-    check(p.enabled && p.terraces == 3, "production config enables three-tier presentation");
+    check(p.enabled && p.irregularFacets && p.terraces == 3, "production config enables three-tier presentation");
     auto bad = std::filesystem::temp_directory_path() / "deathward-canyon-invalid.cfg";
     for (const auto *line : {"terrace_count 0", "minimum_height -1", "maximum_height 0", "facet_variation 2",
                              "composition_strength 1.1", "plateau_vegetation -1", "maximum_decorations 6001",
-                             "terrace_count 2.5", "unknown 3", "enabled 2", "enabled 1\nenabled 0"}) {
+                             "terrace_count 2.5", "unknown 3", "enabled 2", "enabled 1\nenabled 0", "irregular_facets 2"}) {
         std::ofstream(bad) << "DEATHWARD_CANYON 1\n" << line << '\n';
         bool rejected = false;
         try {
@@ -38,7 +38,7 @@ void configuration() {
         check(rejected, "bad or duplicate visual parameters rejected");
     }
     std::filesystem::remove(bad);
-    std::cout << "CONFIG validated_parameters=11 default_loaded=1\n";
+    std::cout << "CONFIG validated_parameters=12 default_loaded=1\n";
 }
 void narrowSupportRegression() {
     CanyonAppearance f;
@@ -185,6 +185,22 @@ void verify() {
                       old.triangles.empty(),
                   "enabled0 restores original surface and dressing path");
             if (seed == 1866 && !river) {
+                auto plainParameters=CanyonVisualParameters{};plainParameters.irregularFacets=false;
+                auto plain=buildCanyonAppearance(arena,plainParameters);
+                check(plain.surface.heights==look.surface.heights,"face detail preserves every elevation");
+                auto fixed=[](const CanyonAppearance &f){
+                    std::vector<std::array<Vector3,3>> result;
+                    for(const auto &t:f.triangles){auto n=Vector3Normalize(Vector3CrossProduct(sub(t.vertices[1],t.vertices[0]),sub(t.vertices[2],t.vertices[0])));
+                        if(!t.rock||n.y>.98f)result.push_back(t.vertices);
+                    }return result;
+                };
+                auto before=fixed(plain),after=fixed(look);
+                check(before.size()==after.size(),"face detail preserves floor and cap triangles");
+                for(size_t i=0;i<before.size();++i)for(int j=0;j<3;++j)check(distance(before[i][j],after[i][j])<.000001f,"face detail does not move shelf or floor vertices");
+                bool same=plain.decorations.size()==look.decorations.size();
+                for(size_t i=0;same&&i<plain.decorations.size();++i)same=distance(plain.decorations[i].position,look.decorations[i].position)<.000001f;
+                std::cout<<"FACE_SCOPE floors_caps=unchanged elevations=unchanged decorations="<<(same?"unchanged":"different")<<std::endl;
+                check(same,"face detail leaves decoration placements unchanged");
                 auto zero = CanyonVisualParameters{};
                 zero.debris = zero.floorVegetation = zero.baseVegetation = zero.terraceVegetation =
                     zero.plateauVegetation = 0;

@@ -1,0 +1,1040 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 122330f..df2dc35 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -130,6 +130,10 @@ add_library(deathward_core
+     src/combat/FrontierBoss.cpp
+     src/world/CanyonTerrain.cpp
+     src/world/CanyonAppearance.cpp
++    src/world/CanyonFacets.cpp
++    src/world/CanyonFormations.cpp
++    third_party/canyon/clipper.engine.cpp
++    third_party/canyon/clipper.offset.cpp
+     src/world/CanyonRiver.cpp
+     src/world/CanyonRoad.cpp
+     src/world/RoomGraph.cpp
+@@ -153,6 +157,7 @@ add_library(deathward_core
+     src/items/ItemPools.cpp
+ )
+ target_include_directories(deathward_core PUBLIC src)
++target_include_directories(deathward_core SYSTEM PRIVATE third_party/canyon)
+ target_include_directories(deathward_core SYSTEM PUBLIC ${raylib_SOURCE_DIR}/src)
+ if(DEATHWARD_PACKAGED_ASSETS)
+     # sourceAssetDirectory uses raylib's executable-directory lookup in portable builds.
+@@ -397,6 +402,12 @@ if(BUILD_TESTING)
+         src/render/TownScene.cpp src/render/PostProcess.cpp src/render/AnimalModels.cpp)
+     target_link_libraries(deathward_cinematic_editor_tests PRIVATE deathward_core raylib)
+     deathward_assets(deathward_cinematic_editor_tests)
++    add_executable(deathward_canyon_geometry_capture tests/canyon_geometry_capture.cpp)
++    target_link_libraries(deathward_canyon_geometry_capture PRIVATE deathward_core raylib)
++    target_compile_definitions(deathward_canyon_geometry_capture PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
++    add_executable(deathward_canyon_boundary_tests tests/canyon_boundary_tests.cpp)
++    target_link_libraries(deathward_canyon_boundary_tests PRIVATE deathward_core)
++    add_test(NAME canyon_organic_boundaries COMMAND deathward_canyon_boundary_tests)
+     add_executable(deathward_canyon_appearance_tests tests/canyon_appearance_tests.cpp)
+     target_link_libraries(deathward_canyon_appearance_tests PRIVATE deathward_core)
+     target_compile_definitions(deathward_canyon_appearance_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+diff --git a/README.md b/README.md
+index c234731..205559b 100644
+--- a/README.md
++++ b/README.md
+@@ -2138,15 +2138,28 @@ per-record backlog. It can be rebuilt with `python3 scripts/isaac-reference/buil
+ 
+ ### Extruded expedition canyon cliffs
+ 
+-The canyon visual mesh uses explicit contour caps, narrow top chamfers and steep
+-extruded walls. It does not interpolate broad heightmap slopes between terraces.
+-The canonical collision terrain and room graph remain authoritative and unchanged;
+-visual and physical rock surfaces therefore remain separate.
++The current [canyon geometry correction report](docs/reports/canyon-formations/index.html)
++contains the annotated requirements, native before/after captures at 160%, a bare
++geometry comparison, regression evidence and performance measurements. It keeps
++visual fidelity separate from technical acceptance; exact reference matching
++remains open. The active `formation_cliffs 1` path uses unified contour polygons,
++local terrace regions and broad wall facets. Set `formation_cliffs 0` in
++`assets/visual/canyon.cfg` and restart to compare the previous band mesh.
++The full comparison configuration is preserved at
++`docs/reports/canyon-formations/legacy.cfg`. Rebuild the report with
++`python3 scripts/canyon-formations-report.py`.
++
++The canyon visual mesh uses separate polygon caps and steep extruded walls. The
++formation mode constructs their contours together; the previous band mode retains
++its narrow top chamfers. Neither interpolates broad slopes between terraces.
++The visual-mesh pass leaves the canonical collision terrain and room graph
++authoritative; visual and physical rock surfaces remain separate. The separately
++selectable organic-boundary generator intentionally reshapes the playable floor.
+ 
+ Tune `assets/visual/canyon.cfg` (runtime copy: `build/assets/visual/canyon.cfg`),
+ then restart. `terrace_count` counts elevation transitions; its default of 3 gives
+ four possible levels, locally truncated by the seed. `facet_variation` controls
+-small chamfers and top undulation. Existing grass tufts, green desert leaves, leafy bushes, desert trees, debris
++wall relief and top undulation (and the previous mode's small chamfers). Existing grass tufts, green desert leaves, leafy bushes, desert trees, debris
+ and cacti dress supported terrain. Upper formations use seeded geological cells
+ and broad, gently tilted cap facets. Placement uses exact footprint clipping.
+ Set `enabled 0` to restore the original tall geometry and decoration, or launch
+@@ -2154,6 +2167,16 @@ with `DEATHWARD_CANYON_CONFIG=assets/visual/canyon-legacy.cfg ./build/deathward`
+ Camera, controls, combat, roads, rivers and lighting remain unchanged; the new
+ cliff path applies a local sandstone palette adjustment.
+ 
++The [organic playable-boundary report](docs/reports/canyon-organic-boundary/index.html)
++shows the new physical floor outlines, matched native captures and regression
++results. Organic canyon boundaries are now the default; seeded roads, sockets,
++room graph and river crossings are retained. Run with
++`DEATHWARD_CANYON_BOUNDARY=classic` to restore the previous physical outlines.
++That report records the earlier boundary-only phase. The newer formation report
++above covers the subsequent wall and terrace changes. Rebuild the collision plot/report with
++`python3 scripts/canyon-boundary-outline-plot.py` and
++`python3 scripts/canyon-organic-boundary-report.py`.
++
+ The [rejected boundary rebuild](docs/reports/canyon-contour-rebuild/index.html)
+ is archived for reference. It was visually worse and has been reverted to the
+ preceding canyon-composition pass; it is not the active game geometry.
+diff --git a/assets/visual/canyon.cfg b/assets/visual/canyon.cfg
+index 4951817..ab20682 100644
+--- a/assets/visual/canyon.cfg
++++ b/assets/visual/canyon.cfg
+@@ -1,17 +1,23 @@
+ DEATHWARD_CANYON 1
+-# Cosmetic only. Set enabled 0 and restart to restore the original canyon.
++# Appearance only. Set enabled 0 and restart to restore the original rendering.
++# Classic physical outlines are restored by default.
+ enabled 1
++# Rejected formation rebuild is retained as an opt-in experiment.
++formation_cliffs 0
++# Small reversible face-only detail test. Set 0 for the earlier cliff faces.
++irregular_facets 1
+ # Metres; protagonist is approximately 1.8m tall. minimum_height is the nominal
+ # first elevation; local erosion and broad geological planes vary its height. Caps and walls
+ # are visual only: navigation and shot collision retain the original terrain.
+ minimum_height 2.4
+ maximum_height 6.8
+ height_variation 0.85
+-# Number of transitions (3 permits four locally truncated elevation levels).
++# Maximum local transitions. Each additional formation must fit inside its
++# predecessor; higher tiers are increasingly rare rather than room-wide bands.
+ terrace_count 3
+ terrace_width 1.4
+ silhouette_irregularity 0.9
+-# Narrow chamfer depth and restrained cap undulation; floor diagonals stay fixed.
++# Facet relief, short top chamfers and restrained cap undulation.
+ facet_variation 0.35
+ rock_debris_density 0.85
+ floor_vegetation 0.35
+@@ -23,6 +29,6 @@ decorative_extent 24
+ candidates_per_room 360
+ maximum_decorations 2200
+ 
+-# Static room framing: lower near shoulders and higher distant formations.
++# Legacy band-mode room framing (formation_cliffs 0 only).
+ # Baked from room coordinates, never changed by camera/player movement.
+ composition_strength 0.85
+diff --git a/src/world/CanyonAppearance.cpp b/src/world/CanyonAppearance.cpp
+index 02e70ce..205f634 100644
+--- a/src/world/CanyonAppearance.cpp
++++ b/src/world/CanyonAppearance.cpp
+@@ -1,4 +1,6 @@
+ #include "world/CanyonAppearance.hpp"
++#include "world/CanyonFacets.hpp"
++#include "world/CanyonFormations.hpp"
+ #include "world/Dungeon.hpp"
+ #include <fstream>
+ #include <map>
+@@ -31,6 +33,36 @@ float noise(float x, float z, uint64_t seed) {
+     return std::lerp(std::lerp(hash(ix, iz, seed), hash(ix + 1, iz, seed), u),
+                      std::lerp(hash(ix, iz + 1, seed), hash(ix + 1, iz + 1, seed), u), v);
+ }
++// Finite geological footprints, independent of the room perimeter. Their
++// overlapping superlevel sets create local raised formations, not inset bands.
++float formationPatch(float x, float z, uint64_t seed, int layer, const CanyonVisualParameters &p) {
++    constexpr float span = 15;
++    int ix = int(std::floor(x / span)), iz = int(std::floor(z / span));
++    float result = -100;
++    uint64_t salt = seed ^ (0x50415443484d4553ULL + uint64_t(layer) * 0x9e3779b97f4a7c15ULL);
++    float scale = std::sqrt(p.terraceWidth / 1.4f);
++    const int reach = std::max(1, int(std::ceil(14.f * scale / span)));
++    for (int dz = -reach; dz <= reach; ++dz)
++        for (int dx = -reach; dx <= reach; ++dx) {
++            int a = ix + dx, b = iz + dz;
++            if (hash(a, b, salt) > (layer ? .35f / float(layer) : .9f))
++                continue;
++            float px = (a + .15f + .7f * hash(a, b, salt ^ 31)) * span,
++                  pz = (b + .15f + .7f * hash(a, b, salt ^ 53)) * span;
++            float angle = hash(a, b, salt ^ 79) * 2 * Pi;
++            auto v = rotateY({x - px, 0, z - pz}, angle);
++            float rx = ((layer ? 5.f : 7.f) + 3 * hash(a, b, salt ^ 101)) * scale,
++                  rz = ((layer ? 4.f : 5.5f) + (layer ? 3.f : 3.5f) * hash(a, b, salt ^ 127)) * scale;
++            float u = v.x / rx, w = v.z / rz, theta = std::atan2(w, u);
++            float shape = 1 + (p.silhouette / .9f) *
++                                  (.12f * std::sin(3 * theta + angle) + .06f * std::sin(5 * theta - angle));
++            float field = (shape - std::hypot(u, w)) * std::min(rx, rz);
++            float blend = 4.f * scale;
++            float overlap = std::max(0.f, blend - std::abs(result - field)) / blend;
++            result = std::max(result, field) + .25f * blend * overlap * overlap;
++        }
++    return result;
++}
+ // Jittered geological cells make separate mesas with low saddles between
+ // them, instead of wrapping every room in the same concentric height bands.
+ float mesaCap(float x, float z, uint64_t seed, int tiers) {
+@@ -128,11 +160,13 @@ CanyonVisualParameters CanyonVisualParameters::load(const std::filesystem::path
+         if (key == "DEATHWARD_CANYON") {
+             if (!(row >> version) || version != 1)
+                 throw std::runtime_error("Invalid canyon visual version");
+-        } else if (key == "enabled") {
++        } else if (key == "enabled" || key == "formation_cliffs" || key == "irregular_facets") {
+             int v;
+             if (!(row >> v) || (v != 0 && v != 1))
+                 throw std::runtime_error("Invalid canyon enabled flag");
+-            p.enabled = v;
++            (key == "enabled"            ? p.enabled
++             : key == "formation_cliffs" ? p.formationCliffs
++                                         : p.irregularFacets) = v;
+         } else if (key == "terrace_count" || key == "candidates_per_room" || key == "maximum_decorations") {
+             int v;
+             if (!(row >> v))
+@@ -206,7 +240,11 @@ SegmentHit CanyonAppearance::trace(Vector3 from, Vector3 to) const {
+         const float leave = std::min({tx, tz, 1.f});
+         SegmentHit best;
+         auto triangle = [&](Vector3 a, Vector3 b, Vector3 c) {
+-            const auto normal = unit(cross(sub(b, a), sub(c, a)));
++            const auto areaNormal = cross(sub(b, a), sub(c, a));
++            const float areaLength = std::sqrt(dot(areaNormal, areaNormal));
++            if (areaLength < 1e-12f)
++                return;
++            const auto normal = mul(areaNormal, 1.f / areaLength);
+             const float denominator = dot(normal, direction);
+             if (denominator >= -.000001f)
+                 return;
+@@ -439,9 +477,21 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
+                 layers[i][size_t(band)] = value;
+                 previous = value;
+             }
++            if (p.formationCliffs) {
++                float rim = source.heights[i] - CanyonTerrain::WalkableHeight;
++                layers[i][0] = std::min(rim, formationPatch(v.x, v.z, out.seed, 0, p));
++                for (int band = 1; band < p.terraces; ++band)
++                    layers[i][size_t(band)] = std::min(formationPatch(v.x, v.z, out.seed, band, p),
++                                                       layers[i][size_t(band - 1)] - .5f);
++                if (source.heights[i] > CanyonTerrain::WalkableHeight &&
++                    source.boundaryHeights.size() == source.heights.size() &&
++                    source.boundaryHeights[i] <= CanyonTerrain::WalkableHeight)
++                    for (int band = 0; band < p.terraces; ++band)
++                        layers[i][size_t(band)] = -2.f - band;
++            }
+         }
+     const float bevelHeight = std::min(
+-        {.15f + .20f * p.facets, (p.maxHeight - p.minHeight) / p.terraces * .49f, p.minHeight * .35f});
++        {(p.formationCliffs ? .07f + .10f * p.facets : .15f + .20f * p.facets), (p.maxHeight - p.minHeight) / p.terraces * .49f, p.minHeight * .35f});
+ 
+     auto planeAt = [&](Vector3 at, int cells, uint64_t salt) {
+         float gx = (at.x - source.x) / (source.step * cells), gz = (at.z - source.z) / (source.step * cells);
+@@ -490,12 +540,15 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
+             auto a = poly[0].p, b = poly[i].p, c = poly[i + 1].p;
+             if (rock) {
+                 auto top = [&](const Point &point) {
+-                    float t = bevel < 0    ? 1.f
+-                              : bevel == 0 ? point.mask / .12f
+-                                           : point.layers[size_t(bevel - 1)] / .20f;
+-                    return std::min(p.maxHeight, elevation(band, point.p) - localBevel(point.p) +
+-                                                     localBevel(point.p) * std::clamp(t, 0.f, 1.f) +
+-                                                     topOffset(point.p));
++                    float t = bevel < 0 ? 1.f
++                              : bevel == 0
++                                  ? point.mask / (p.formationCliffs ? 2.f : .12f)
++                                  : point.layers[size_t(bevel - 1)] / (p.formationCliffs ? .6f : .20f);
++                    float amount = localBevel(point.p);
++                    if (p.formationCliffs && band == 0)
++                        amount *= smooth(-point.layers[0] / .25f);
++                    return std::min(p.maxHeight, elevation(band, point.p) - amount +
++                                                     amount * std::clamp(t, 0.f, 1.f) + topOffset(point.p));
+                 };
+                 a.y = top(poly[0]);
+                 b.y = top(poly[i]);
+@@ -504,6 +557,7 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
+             append(a, b, c, rock);
+         }
+     };
++    std::vector<CanyonWallSpan> spans;
+     auto wall = [&](const Polygon &poly, float threshold, int layer, int low, int high,
+                     const Polygon &foot = Polygon{}) {
+         if (poly.size() < 2)
+@@ -529,14 +583,47 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
+                     bb = edge[1];
+                 }
+             }
+-            at.y = std::min(p.maxHeight, elevation(high, at) + topOffset(at) - localBevel(at));
+-            bt.y = std::min(p.maxHeight, elevation(high, bt) + topOffset(bt) - localBevel(bt));
++            float bevelA = localBevel(at), bevelB = localBevel(bt);
++            if (p.formationCliffs && high == 0) {
++                bevelA *= smooth(-a.layers[0] / .25f);
++                bevelB *= smooth(-b.layers[0] / .25f);
++            }
++            at.y = std::min(p.maxHeight, elevation(high, at) + topOffset(at) - bevelA);
++            bt.y = std::min(p.maxHeight, elevation(high, bt) + topOffset(bt) - bevelB);
+             ab.y = std::min(p.maxHeight,
+                             layer >= 0 ? elevation(low, ab) + topOffset(ab) : CanyonTerrain::WalkableHeight);
+             bb.y = std::min(p.maxHeight,
+                             layer >= 0 ? elevation(low, bb) + topOffset(bb) : CanyonTerrain::WalkableHeight);
+-            append(ab, bt, at, true);
+-            append(ab, bb, bt, true);
++            if (p.formationCliffs && std::max(at.y - ab.y, bt.y - bb.y) > .03f)
++                spans.push_back({ab, bb, at, bt, layer + 1});
++            else if (p.irregularFacets && !p.formationCliffs && p.facets > 0 &&
++                     outcropWeight(mul(add(at, bt), .5f)) < .5f && std::min(at.y - ab.y, bt.y - bb.y) > .3f &&
++                     distance(at, bt) > .25f) {
++                // Only the face interior changes. All four rim/contact corners
++                // stay exact, so this cannot alter the cliff outline or a shelf.
++                auto mid = mul(add(at, bt), .5f);
++                float u = .28f + .44f * hash(int(std::floor(mid.x * 1.7f)), int(std::floor(mid.z * 1.7f)),
++                                             out.seed ^ 0x4641434554ULL);
++                float v = .28f + .44f * hash(int(std::floor(mid.x * 1.7f)), int(std::floor(mid.z * 1.7f)),
++                                             out.seed ^ 0x484549474854ULL);
++                auto lower = add(ab, mul(sub(bb, ab), u)), upper = add(at, mul(sub(bt, at), u));
++                auto center = add(lower, mul(sub(upper, lower), v));
++                auto normal = unit(cross(sub(bb, ab), sub(bt, ab)));
++                normal.y = 0;
++                normal = unit(normal);
++                float relief = std::min(distance(at, bt), std::min(at.y - ab.y, bt.y - bb.y)) *
++                               (.08f + .12f * noise(mid.x / 2.5f, mid.z / 2.5f, out.seed ^ 0x524f434bULL)) *
++                               p.facets / .35f;
++                relief=std::min(relief,std::min(at.y-ab.y,bt.y-bb.y)*std::min(v,1-v)*.28f);
++                center = sub(center, mul(normal, relief));
++                append(ab, bb, center, true);
++                append(bb, bt, center, true);
++                append(bt, at, center, true);
++                append(at, ab, center, true);
++            } else {
++                append(ab, bt, at, true);
++                append(ab, bb, bt, true);
++            }
+         }
+     };
+     out.triangles.reserve(size_t((source.width - 1) * (source.depth - 1) * 3));
+@@ -555,10 +642,15 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
+             for (const auto &tri : std::array<Polygon, 2>{Polygon{a, d, b}, Polygon{a, c, d}}) {
+                 auto ground = clip(tri, 0, -1, false);
+                 cap(ground, 0, false);
++                if (p.formationCliffs && std::none_of(tri.begin(), tri.end(), [&](const auto &v) {
++                        return source.height(v.p.x, v.p.z) > source.height(v.p.x, v.p.z, true) + .025f;
++                    }))
++                    continue;
+                 auto foot = clip(tri, 0, -1, true);
+                 auto rim = tri;
+                 for (auto &v : rim)
+-                    v.mask = std::min(v.mask, .5f);
++                    if (!p.formationCliffs)
++                        v.mask = std::min(v.mask, .5f);
+                 auto rock = clip(rim, 0, -1, true);
+                 // Recess the upper rim slightly while retaining the exact canonical
+                 // ground contact. These short, steep buttresses remove needle-like
+@@ -566,54 +658,89 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
+                 wall(rock, 0, -1, 0, 0, foot);
+                 for (int band = 0; band <= p.terraces; ++band) {
+                     auto poly = band ? clip(rock, 0, band - 1, true) : rock;
+-                    if (band && std::any_of(rock.begin(), rock.end(), [&](const auto &v) {
+-                            return v.layers[size_t(band - 1)] < -.00001f;
+-                        }))
++                    if (band &&
++                        (p.formationCliffs || std::any_of(rock.begin(), rock.end(), [&](const auto &v) {
++                             return v.layers[size_t(band - 1)] < -.00001f;
++                         })))
+                         wall(poly, 0, band - 1, band - 1, band);
+                     if (band < p.terraces)
+                         poly = clip(poly, 0, band, false);
+                     // Small top-edge chamfer, then a broad, nearly horizontal cap.
+-                    auto bevel = clip(poly, band ? .20f : .12f, band - 1, false);
+-                    auto flat = clip(poly, band ? .20f : .12f, band - 1, true);
++                    float chamfer = p.formationCliffs ? (band ? .6f : 2.f) : (band ? .20f : .12f);
++                    auto bevel = clip(poly, chamfer, band - 1, false);
++                    auto flat = clip(poly, chamfer, band - 1, true);
+                     cap(bevel, band, true, band);
+                     cap(flat, band, true);
+                 }
+             }
+         }
+     out.cellOffsets.push_back(out.triangles.size());
+-    // The floor contour is immutable. Only the upper mesh is eroded inward.
+-    // This deliberately separates scenic contours from the canonical heightmap:
+-    // visible upper faces need not inherit its long straight boundary segments.
+-    auto floorDistance = [&](float wx, float wz) {
+-        float gx = std::clamp((wx - source.x) / source.step, 0.f, float(source.width - 1) - .001f);
+-        float gz = std::clamp((wz - source.z) / source.step, 0.f, float(source.depth - 1) - .001f);
+-        int x = int(gx), z = int(gz);
+-        float u = gx - x, v = gz - z;
+-        size_t i = size_t(z * source.width + x);
+-        return std::lerp(
+-            std::lerp(out.distanceToFloor[i], out.distanceToFloor[i + 1], u),
+-            std::lerp(out.distanceToFloor[i + source.width], out.distanceToFloor[i + source.width + 1], u),
+-            v);
+-    };
+-    for (auto &triangle : out.triangles) {
+-        if (!triangle.rock)
+-            continue;
+-        for (auto &v : triangle.vertices) {
+-            if (v.x < source.x + source.step || v.z < source.z + source.step ||
+-                v.x > source.x + (source.width - 2) * source.step ||
+-                v.z > source.z + (source.depth - 2) * source.step ||
+-                v.y <= CanyonTerrain::WalkableHeight + .00001f || outcropWeight(v) > .5f)
+-                continue;
+-            Vector3 inward{floorDistance(v.x + source.step, v.z) - floorDistance(v.x - source.step, v.z), 0,
+-                           floorDistance(v.x, v.z + source.step) - floorDistance(v.x, v.z - source.step)};
+-            float length = std::sqrt(dot(inward, inward));
+-            if (length < .001f)
++    if (p.formationCliffs)
++        rebuildCanyonFormations(out,source,spans,
++            [&](Vector3 v,int level){return std::min(p.maxHeight,elevation(level,v)+topOffset(v));},
++            [&](Vector3 v,int level){return formationPatch(v.x,v.z,out.seed,level,p);});
++    else {
++        // The floor contour is immutable. Only the upper mesh is eroded inward.
++        // This deliberately separates scenic contours from the canonical heightmap:
++        // visible upper faces need not inherit its long straight boundary segments.
++        auto floorDistance = [&](float wx, float wz) {
++            float gx = std::clamp((wx - source.x) / source.step, 0.f, float(source.width - 1) - .001f);
++            float gz = std::clamp((wz - source.z) / source.step, 0.f, float(source.depth - 1) - .001f);
++            int x = int(gx), z = int(gz);
++            float u = gx - x, v = gz - z;
++            size_t i = size_t(z * source.width + x);
++            return std::lerp(std::lerp(out.distanceToFloor[i], out.distanceToFloor[i + 1], u),
++                             std::lerp(out.distanceToFloor[i + source.width],
++                                       out.distanceToFloor[i + source.width + 1], u),
++                             v);
++        };
++        const auto undeformed = out.triangles;
++        for (auto &triangle : out.triangles) {
++            if (!triangle.rock)
+                 continue;
+-            float amount = .65f * p.silhouette * smooth((v.y - CanyonTerrain::WalkableHeight) / 3.5f) *
+-                           (.2f + .8f * noise(v.x / 6.f, v.z / 6.f, out.seed ^ 0x52494d45524f4445ULL));
+-            auto displaced = add(v, mul(inward, amount / length));
+-            if (source.height(displaced.x, displaced.z) > CanyonTerrain::WalkableHeight)
+-                v = displaced;
++            for (auto &v : triangle.vertices) {
++                if (v.x < source.x + source.step || v.z < source.z + source.step ||
++                    v.x > source.x + (source.width - 2) * source.step ||
++                    v.z > source.z + (source.depth - 2) * source.step ||
++                    v.y <= CanyonTerrain::WalkableHeight + .00001f || outcropWeight(v) > .5f)
++                    continue;
++                Vector3 inward{floorDistance(v.x + source.step, v.z) - floorDistance(v.x - source.step, v.z),
++                               0,
++                               floorDistance(v.x, v.z + source.step) - floorDistance(v.x, v.z - source.step)};
++                float length = std::sqrt(dot(inward, inward));
++                if (length < .001f)
++                    continue;
++                float amount = .65f * p.silhouette * smooth((v.y - CanyonTerrain::WalkableHeight) / 3.5f) *
++                               (.2f + .8f * noise(v.x / 6.f, v.z / 6.f, out.seed ^ 0x52494d45524f4445ULL));
++                auto displaced = add(v, mul(inward, amount / length));
++                if (source.height(displaced.x, displaced.z) > CanyonTerrain::WalkableHeight)
++                    v = displaced;
++            }
++        }
++        // Concave physical contours can make the cosmetic relaxation fold a cap
++        // inside out. Reduce the entire deformation coherently, rather than clamping
++        // individual triangles (which would split their shared edges).
++        for (int attempt = 0; attempt < 12; ++attempt) {
++            bool valid = true;
++            for (size_t i = 0; i < out.triangles.size(); ++i) {
++                if (!out.triangles[i].rock)
++                    continue;
++                const auto &a = undeformed[i].vertices, &b = out.triangles[i].vertices;
++                auto original = cross(sub(a[1], a[0]), sub(a[2], a[0]));
++                auto current = cross(sub(b[1], b[0]), sub(b[2], b[0]));
++                if ((original.y > 1e-9f && current.y <= 0) || dot(original, current) < 0) {
++                    valid = false;
++                    break;
++                }
++            }
++            if (valid)
++                break;
++            for (size_t i = 0; i < out.triangles.size(); ++i)
++                for (int j = 0; j < 3; ++j)
++                    out.triangles[i].vertices[j] =
++                        attempt == 11
++                            ? undeformed[i].vertices[j]
++                            : mul(add(undeformed[i].vertices[j], out.triangles[i].vertices[j]), .5f);
+         }
+     }
+     // A displaced triangle can cross the source lattice. Spatial queries and
+diff --git a/src/world/CanyonAppearance.hpp b/src/world/CanyonAppearance.hpp
+index dfe7a73..8935c96 100644
+--- a/src/world/CanyonAppearance.hpp
++++ b/src/world/CanyonAppearance.hpp
+@@ -4,6 +4,8 @@
+ namespace dw {
+ struct CanyonVisualParameters {
+     bool enabled = true;
++    bool formationCliffs = false;
++    bool irregularFacets = true;
+     float minHeight = 2.4f, maxHeight = 6.8f, heightVariation = .85f;
+     int terraces = 3;
+     float terraceWidth = 1.4f, silhouette = .9f, facets = .35f;
+diff --git a/src/world/CanyonRoad.cpp b/src/world/CanyonRoad.cpp
+index d3fdb17..bbb48f0 100644
+--- a/src/world/CanyonRoad.cpp
++++ b/src/world/CanyonRoad.cpp
+@@ -23,6 +23,10 @@ RoadSample CanyonTerrain::roadSample(Vector3 p) const {
+ }
+ void planCanyonRoad(Arena &arena) {
+     auto &field = *arena.canyon;
++    // A seeded road is an authored constraint for later boundary sculpting.
++    // Repeated preparation preserves it; explicitly clear it to request replanning.
++    if (!field.road.empty())
++        return;
+     field.road.clear();
+     field.roadRooms.clear();
+     field.roadPassages.clear();
+diff --git a/src/world/CanyonTerrain.cpp b/src/world/CanyonTerrain.cpp
+index 0740f00..792b98f 100644
+--- a/src/world/CanyonTerrain.cpp
++++ b/src/world/CanyonTerrain.cpp
+@@ -1,6 +1,10 @@
+ #include "world/CanyonTerrain.hpp"
++#include "world/CanyonBoundary.hpp"
+ #include "world/Dungeon.hpp"
++#include <cstdlib>
+ #include <memory>
++#include <queue>
++#include <string_view>
+ 
+ namespace dw {
+ namespace {
+@@ -28,6 +32,102 @@ struct TrailSegment {
+     Vector3 a, b;
+     float radius;
+ };
++// Sculpting can leave a tiny actor-sized shelf whose neighboring navigation
++// cells are all blocked. Remove such non-essential pockets rather than leave
++// unreachable spawn space. Required anchors, roads and water crossings are kept.
++void removeSmallPockets(Arena &arena, const CanyonTerrain &protectedGeometry) {
++    auto &field = *arena.canyon;
++    auto point = [](FloorCell c) {
++        return Vector3{(c.first + .5f) * FloorTile, .85f, (c.second + .5f) * FloorTile};
++    };
++    for (int pass = 0; pass < 3; ++pass) {
++        Arena nav;
++        nav.bounds = arena.bounds;
++        nav.canyon = arena.canyon;
++        std::set<FloorCell> walkable;
++        for (int z = int(std::floor(arena.bounds.min.z / FloorTile));
++             z < int(std::ceil(arena.bounds.max.z / FloorTile)); ++z)
++            for (int x = int(std::floor(arena.bounds.min.x / FloorTile));
++                 x < int(std::ceil(arena.bounds.max.x / FloorTile)); ++x)
++                if (!field.blocked(point({x, z}), .6f))
++                    walkable.insert({x, z});
++        if (walkable.empty())
++            return;
++        nav.floorCells = walkable;
++        auto origin = *std::min_element(walkable.begin(), walkable.end(), [&](auto a, auto b) {
++            return distance(point(a), arena.entrance) < distance(point(b), arena.entrance);
++        });
++        std::set<FloorCell> reached{origin};
++        std::queue<FloorCell> queue;
++        queue.push(origin);
++        while (!queue.empty()) {
++            auto at = queue.front();
++            queue.pop();
++            for (auto [dx, dz] : {FloorCell{0, -1}, {1, 0}, {0, 1}, {-1, 0}}) {
++                FloorCell next{at.first + dx, at.second + dz};
++                if (walkable.contains(next) && !reached.contains(next) &&
++                    nav.clear(point(at), point(next), .6f)) {
++                    reached.insert(next);
++                    queue.push(next);
++                }
++            }
++        }
++        std::set<FloorCell> missing;
++        for (auto cell : walkable)
++            if (!reached.contains(cell))
++                missing.insert(cell);
++        bool changed = false;
++        while (!missing.empty()) {
++            std::vector<FloorCell> component;
++            queue.push(*missing.begin());
++            missing.erase(missing.begin());
++            while (!queue.empty()) {
++                auto at = queue.front();
++                queue.pop();
++                component.push_back(at);
++                for (auto [dx, dz] : {FloorCell{0, -1}, {1, 0}, {0, 1}, {-1, 0}}) {
++                    FloorCell next{at.first + dx, at.second + dz};
++                    if (missing.erase(next))
++                        queue.push(next);
++                }
++            }
++            if (component.size() > 8)
++                continue;
++            bool required = false;
++            for (auto cell : component) {
++                auto p = point(cell);
++                auto water = field.riverSample(p);
++                auto road = protectedGeometry.roadSample(p);
++                required |= water.distance < water.width + 2.f || road.distance < road.width + 3.f;
++                for (const auto &room : arena.rooms)
++                    for (auto anchor : {room.center, room.entry, room.exit, room.objective})
++                        required |= planarDistance(p, anchor) < 4.f;
++            }
++            if (required)
++                continue;
++            for (auto cell : component) {
++                auto p = point(cell);
++                int x0 = std::max(0, int(std::floor((p.x - FloorTile * .5f - field.x) / field.step)));
++                int x1 =
++                    std::min(field.width - 1, int(std::ceil((p.x + FloorTile * .5f - field.x) / field.step)));
++                int z0 = std::max(0, int(std::floor((p.z - FloorTile * .5f - field.z) / field.step)));
++                int z1 =
++                    std::min(field.depth - 1, int(std::ceil((p.z + FloorTile * .5f - field.z) / field.step)));
++                for (int z = z0; z <= z1; ++z)
++                    for (int x = x0; x <= x1; ++x) {
++                        size_t i = size_t(z * field.width + x);
++                        if (field.heights[i] >= 0) {
++                            field.heights[i] = std::max(field.heights[i], 2.4f);
++                            field.boundaryHeights[i] = std::max(field.boundaryHeights[i], 2.4f);
++                        }
++                    }
++                changed = true;
++            }
++        }
++        if (!changed)
++            return;
++    }
++}
+ } // namespace
+ 
+ Vector3 CanyonTerrain::vertex(int ix, int iz, bool boundaryOnly) const {
+@@ -122,7 +222,14 @@ SegmentHit CanyonTerrain::trace(Vector3 from, Vector3 to, float radius, bool bou
+     return {};
+ }
+ 
+-void buildCanyon(Arena &arena, bool river) {
++void buildCanyonBoundary(Arena &arena, bool river, CanyonBoundaryStyle style) {
++    std::shared_ptr<CanyonTerrain> original;
++    if (style == CanyonBoundaryStyle::Organic) {
++        // Plan roads once on the established layout, then sculpt around their
++        // exact course. Graph/sockets and the outcrop RNG stream are retained.
++        buildCanyonBoundary(arena, river, CanyonBoundaryStyle::Classic);
++        original = arena.canyon;
++    }
+     auto field = std::make_shared<CanyonTerrain>();
+     Random rng(arena.visualSeed ^ 0x43414e594f4e5632ULL);
+     std::vector<Basin> basins;
+@@ -171,17 +278,28 @@ void buildCanyon(Arena &arena, bool river) {
+         trails.push_back({room.center, room.entry, 3.2f});
+         trails.push_back({room.center, room.exit, 3.2f});
+     }
++    bool sculpt = false;
+     auto distanceToFloor = [&](Vector3 p) {
+         float d = 10000;
+         for (const auto &b : basins) {
+             const float u = (p.x - b.center.x) / b.rx, v = (p.z - b.center.z) / b.rz;
+             const float angle = std::atan2(v, u);
+-            const float rim =
++            const float classic =
+                 1 + .085f * std::sin(3 * angle + b.phase) + .055f * std::sin(5 * angle - b.phase);
++            // Broad lobes, deep concave bays and smaller shoulders. The smooth
++            // bounded profile stays inside the existing room envelope; routes
++            // to sockets/objectives are unioned back in below.
++            const float shape = .95f * std::sin(2 * angle + b.phase) +
++                                .85f * std::sin(3 * angle - b.phase * .7f) +
++                                .4f * std::sin(5 * angle + b.phase * .3f);
++            const float rim = sculpt ? .91f + .19f * std::tanh(shape) : classic;
+             d = std::min(d, (std::sqrt(u * u + v * v) - rim) * std::min(b.rx, b.rz));
+         }
+         for (const auto &t : trails)
+             d = std::min(d, lineDistance(p, t.a, t.b) - t.radius);
++        if (sculpt)
++            for (const auto &r : rocks)
++                d = std::min(d, std::hypot(p.x - r.center.x, p.z - r.center.z) - std::max(r.rx, r.rz) - 3.2f);
+         return d;
+     };
+     for (auto &room : arena.rooms) {
+@@ -211,6 +329,7 @@ void buildCanyon(Arena &arena, bool river) {
+                                       {r.center.x + radius, r.height, r.center.z + radius}});
+         }
+     }
++    sculpt = style == CanyonBoundaryStyle::Organic;
+     field->x = std::floor((arena.bounds.min.x - 40) / field->step) * field->step;
+     field->z = std::floor((arena.bounds.min.z - 40) / field->step) * field->step;
+     field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;
+@@ -251,6 +370,32 @@ void buildCanyon(Arena &arena, bool river) {
+             });
+     }
+     field->heights.resize(size_t(field->width * field->depth));
++    // Reserve the complete old road and shoulders without relocating samples.
++    // Rasterize local segment bounds rather than scanning every road per vertex.
++    std::vector<float> protectedRoad(field->heights.size(), 100000.f);
++    if (original)
++        for (size_t i = 1; i < original->road.size(); ++i) {
++            const auto &a = original->road[i - 1], &b = original->road[i];
++            float radius = std::max(3.f, std::max(a.width, b.width) + 1.7f);
++            int x0 =
++                std::max(0, int(std::floor((std::min(a.position.x, b.position.x) - radius - 2 - field->x) /
++                                           field->step)));
++            int x1 = std::min(
++                field->width - 1,
++                int(std::ceil((std::max(a.position.x, b.position.x) + radius + 2 - field->x) / field->step)));
++            int z0 =
++                std::max(0, int(std::floor((std::min(a.position.z, b.position.z) - radius - 2 - field->z) /
++                                           field->step)));
++            int z1 = std::min(
++                field->depth - 1,
++                int(std::ceil((std::max(a.position.z, b.position.z) + radius + 2 - field->z) / field->step)));
++            for (int z = z0; z <= z1; ++z)
++                for (int x = x0; x <= x1; ++x) {
++                    Vector3 p{field->x + x * field->step, 0, field->z + z * field->step};
++                    auto &d = protectedRoad[size_t(z * field->width + x)];
++                    d = std::min(d, lineDistance(p, a.position, b.position) - radius);
++                }
++        }
+     field->boundaryHeights.resize(field->heights.size());
+     // Broad, planar cap facets subdivide exactly onto the collision lattice.
+     // A separate stream keeps this surface detail independent of trails/cover.
+@@ -265,13 +410,22 @@ void buildCanyon(Arena &arena, bool river) {
+     for (int z = 0; z < field->depth; ++z)
+         for (int x = 0; x < field->width; ++x) {
+             Vector3 p{field->x + x * field->step, 0, field->z + z * field->step};
+-            const float d = distanceToFloor(p);
++            const float d = std::min(distanceToFloor(p), protectedRoad[size_t(z * field->width + x)]);
+             const float crag =
+                 .65f * std::sin(p.x * .63f + p.z * .41f) + .4f * std::sin(p.z * .87f - p.x * .33f);
+             const float plateau = mesa.height(p.x, p.z);
+             // A short, irregular shoulder produces tall angular faces, rather
+             // than a broad ramp. The foot still starts outside the reserved floor.
+             float height = plateau * smooth(.35f, 2.8f + crag, d);
++            if (sculpt) {
++                // Keep the walkable isocontour linear across an entire lattice
++                // diagonal. A flat-zero/plateau jump snaps that contour toward
++                // grid vertices and turns a curved basin into repeated columns.
++                // The tiny floor collar rises at most WalkableHeight; the visual
++                // mesh still extrudes a steep cliff from this precise boundary.
++                float collar = std::clamp(CanyonTerrain::WalkableHeight + .1f * d, 0.f, .3f);
++                height = std::max(collar, plateau * smooth(1.8f, std::max(2.2f, 2.8f + crag), d));
++            }
+             if (field->riverKind == CanyonRiverKind::Boundary) {
+                 const auto water = field->riverSample(p);
+                 const float outward = -water.side;
+@@ -293,7 +447,7 @@ void buildCanyon(Arena &arena, bool river) {
+                         const float across =
+                             1 - smooth(span * .20f, span * .43f, std::abs(dot(local, tangent)));
+                         opening = std::max(opening, across * smooth(reach * .14f, reach * .32f,
+-                                                                  dot(local, field->riverOutward)));
++                                                                    dot(local, field->riverOutward)));
+                     }
+                     // Cliff headlands between openings protect passage seals;
+                     // only the exposed room front becomes a level, reachable bank.
+@@ -339,9 +493,46 @@ void buildCanyon(Arena &arena, bool river) {
+             }
+             field->heights[size_t(z * field->width + x)] = height;
+         }
++    // Boundary-river shore openings are already natural, authored by their
++    // river course. Keep those bank rooms intact rather than producing isolated
++    // sand pockets where an inward bay intersects the existing shore opening.
++    if (original && field->riverKind == CanyonRiverKind::Boundary)
++        for (int z = 0; z < field->depth; ++z)
++            for (int x = 0; x < field->width; ++x) {
++                const float px = field->x + x * field->step, pz = field->z + z * field->step;
++                bool bank = false;
++                // Include the full original cliff-to-bank shoulder, not just the
++                // room rectangle; a partial shoulder can leave a one-cell sand pocket.
++                constexpr float shoulderMargin = 6.f;
++                for (int room : field->riverRooms) {
++                    const auto &b = arena.rooms[size_t(room)].bounds;
++                    bank |= px >= b.min.x - shoulderMargin && px <= b.max.x + shoulderMargin &&
++                            pz >= b.min.z - shoulderMargin && pz <= b.max.z + shoulderMargin;
++                }
++                if (bank) {
++                    size_t i = size_t(z * field->width + x);
++                    field->heights[i] = original->heights[i];
++                    field->boundaryHeights[i] = original->boundaryHeights[i];
++                }
++            }
++    // Reuse the original interior channel, both banks and repaired fords.
++    // Sculpt only outside that influence corridor; do not invent new crossings.
++    if (original && field->riverKind == CanyonRiverKind::Interior)
++        for (int z = 0; z < field->depth; ++z)
++            for (int x = 0; x < field->width; ++x) {
++                Vector3 p{field->x + x * field->step, 0, field->z + z * field->step};
++                const auto water = field->riverSample(p);
++                if (water.distance < water.width + 8.5f) {
++                    size_t i = size_t(z * field->width + x);
++                    field->heights[i] = original->heights[i];
++                    field->boundaryHeights[i] = original->boundaryHeights[i];
++                }
++            }
+     arena.canyon = field;
+-    if (field->riverKind == CanyonRiverKind::Interior)
++    if (field->riverKind == CanyonRiverKind::Interior && !original)
+         connectInteriorRiver(arena, dryHeights);
++    if (original)
++        removeSmallPockets(arena, *original);
+     arena.floorCells.clear();
+     arena.floors.clear();
+     arena.obstacles.clear();
+@@ -369,6 +560,24 @@ void buildCanyon(Arena &arena, bool river) {
+                 }
+         }
+     arena.rebuildWalls();
+-    planCanyonRoad(arena);
++    if (original) {
++        field->road = original->road;
++        field->roadRooms = original->roadRooms;
++        field->roadPassages = original->roadPassages;
++    } else
++        planCanyonRoad(arena);
++}
++void buildCanyon(Arena &arena, bool river) {
++    CanyonBoundaryStyle style = CanyonBoundaryStyle::Classic;
++    if (const auto *setting = std::getenv("DEATHWARD_CANYON_BOUNDARY")) {
++        const std::string_view mode(setting);
++        if (mode == "classic")
++            style = CanyonBoundaryStyle::Classic;
++        else if (mode == "organic")
++            style = CanyonBoundaryStyle::Organic;
++        else
++            throw std::runtime_error("DEATHWARD_CANYON_BOUNDARY must be organic or classic");
++    }
++    buildCanyonBoundary(arena, river, style);
+ }
+ } // namespace dw
+diff --git a/tests/canyon_appearance_tests.cpp b/tests/canyon_appearance_tests.cpp
+index ea1c716..fae4c31 100644
+--- a/tests/canyon_appearance_tests.cpp
++++ b/tests/canyon_appearance_tests.cpp
+@@ -1,6 +1,8 @@
++#include "combat/Simulation.hpp"
+ #include "raylib.h"
+ #include "raymath.h"
+ #include "world/CanyonAppearance.hpp"
++#include "world/CanyonFacets.hpp"
+ #include "world/Dungeon.hpp"
+ #include <bit>
+ #include <chrono>
+@@ -20,14 +22,62 @@ uint64_t fingerprint(const CanyonTerrain &f) {
+         h = (h ^ std::bit_cast<uint32_t>(v)) * 1099511628211ULL;
+     return h;
+ }
++void wallOrderRegression() {
++    CanyonAppearance a, b;
++    a.surface.width = 32;
++    a.surface.depth = 8;
++    a.surface.step = 1;
++    a.surface.heights.assign(32 * 8, 8.f);
++    a.seed = 1866;
++    b = a;
++    std::vector<CanyonWallSpan> spans;
++    for (int x = 1; x < 17; ++x)
++        spans.push_back(
++            {{float(x), .12f, 3}, {float(x + 1), .12f, 3}, {float(x), 3, 3}, {float(x + 1), 3, 3}, 0});
++    appendCanyonFacets(a, spans);
++    std::reverse(spans.begin(), spans.end());
++    appendCanyonFacets(b, spans);
++    check(a.triangles.size() == b.triangles.size(), "wall order cannot fragment an open contour");
++    bool broad = false;
++    for (size_t i = 0; i < a.triangles.size(); ++i) {
++        const auto &t = a.triangles[i].vertices;
++        broad |= std::max({t[0].x, t[1].x, t[2].x}) - std::min({t[0].x, t[1].x, t[2].x}) > 1.5f;
++        for (int j = 0; j < 3; ++j)
++            check(distance(t[j], b.triangles[i].vertices[j]) < .00001f,
++                  "forward/reverse wall emission yields the same mesh");
++    }
++    check(broad, "connected wall faces span more than one lattice edge");
++    CanyonAppearance closed = a;
++    closed.triangles.clear();
++    std::vector<CanyonWallSpan> ring;
++    for (int i = 0; i < 16; ++i) {
++        float angle = -2 * Pi * i / 16, next = -2 * Pi * (i + 1) / 16;
++        Vector3 p{10 + std::cos(angle), .12f, 3 + std::sin(angle)},
++            q{10 + std::cos(next), .12f, 3 + std::sin(next)};
++        auto top = p, other = q;
++        top.y = other.y = 3;
++        ring.push_back({p, q, top, other, 0});
++    }
++    appendCanyonFacets(closed, ring);
++    for (const auto &face : closed.triangles) {
++        const auto &t = face.vertices;
++        auto normal = Vector3CrossProduct(sub(t[1], t[0]), sub(t[2], t[0]));
++        auto radial = sub(mul(add(add(t[0], t[1]), t[2]), 1.f / 3), {10, 0, 3});
++        radial.y = 0;
++        check(dot(normal, radial) > -.00001f, "closed narrow formations retain outward-facing walls");
++    }
++    std::cout << "FACET_REGRESSION reverse_order=PASS broad_faces=PASS closed_normals=PASS\n";
++}
+ void configuration() {
+     const auto path = std::filesystem::path(DEATHWARD_ASSET_DIR) / "visual/canyon.cfg";
+     const auto p = CanyonVisualParameters::load(path);
+-    check(p.enabled && p.terraces == 3, "production config enables three-tier presentation");
++    check(p.enabled && !p.formationCliffs && p.irregularFacets && p.terraces == 3,
++          "production config restores the previous geometry with face-only detail");
+     auto bad = std::filesystem::temp_directory_path() / "deathward-canyon-invalid.cfg";
+     for (const auto *line : {"terrace_count 0", "minimum_height -1", "maximum_height 0", "facet_variation 2",
+                              "composition_strength 1.1", "plateau_vegetation -1", "maximum_decorations 6001",
+-                             "terrace_count 2.5", "unknown 3", "enabled 2", "enabled 1\nenabled 0"}) {
++                             "terrace_count 2.5", "unknown 3", "enabled 2", "enabled 1\nenabled 0",
++                             "formation_cliffs 2", "formation_cliffs 0\nformation_cliffs 1"}) {
+         std::ofstream(bad) << "DEATHWARD_CANYON 1\n" << line << '\n';
+         bool rejected = false;
+         try {
+@@ -38,7 +88,7 @@ void configuration() {
+         check(rejected, "bad or duplicate visual parameters rejected");
+     }
+     std::filesystem::remove(bad);
+-    std::cout << "CONFIG validated_parameters=11 default_loaded=1\n";
++    std::cout << "CONFIG validated_parameters=13 default_loaded=1\n";
+ }
+ void narrowSupportRegression() {
+     CanyonAppearance f;
+@@ -51,6 +101,9 @@ void narrowSupportRegression() {
+     add({.331f, 1, .331f}, {.336f, 1, .336f}, {.336f, 1, .331f});
+     add({.35f, 0, .333f}, {.35f, 1, .333f}, {.35f, 1, .34f});
+     f.cellOffsets = {0, f.triangles.size()};
++    const auto tiny = f.trace({.334f, 3, .332f}, {.334f, -1, .332f});
++    check(tiny.hit && std::abs(tiny.t - .5f) < .00001f,
++          "visual rays hit small clipped cap triangles rather than falling through");
+     f.triangles.pop_back();
+     f.cellOffsets.back() = f.triangles.size();
+     check(!f.supports({.5f, 0, .5f}, .4f, .1f), "a tiny raised ledge cannot hide between footprint samples");
+@@ -140,6 +193,7 @@ void verify() {
+                 auto normal = Vector3CrossProduct(sub(b, a), sub(c, a));
+                 float area = std::sqrt(dot(normal, normal)) * .5f;
+                 float up = normal.y / std::max(.000001f, 2 * area);
++                check(up > -.8f, "rim relaxation never creates downward-facing cap fragments");
+                 if (up > .98f)
+                     flatArea += area;
+                 else if (std::abs(up) < .35f)
+@@ -153,6 +207,23 @@ void verify() {
+                   "broad flat caps and vertical walls dominate small bevels");
+             check(look.triangles.size() < size_t((look.surface.width - 1) * (look.surface.depth - 1) * 8),
+                   "bounded contour extrusion geometry");
++            for (int z = 1; z + 1 < arena.canyon->depth; z += 5)
++                for (int x = 1; x + 1 < arena.canyon->width; x += 5) {
++                    size_t cell = size_t(z * arena.canyon->width + x);
++                    if (arena.canyon->heights[cell] <= CanyonTerrain::WalkableHeight ||
++                        look.distanceToFloor[cell] < 1.5f)
++                        continue;
++                    auto p = arena.canyon->vertex(x, z);
++                    auto ray = look.trace({p.x, look.parameters.maxHeight + 1, p.z}, {p.x, -2, p.z});
++                    float y = look.parameters.maxHeight + 1 - (look.parameters.maxHeight + 3) * ray.t;
++                    check(ray.hit && y > CanyonTerrain::WalkableHeight &&
++                              y <= look.parameters.maxHeight + .001f,
++                          "deep solid terrain retains a complete bounded visible cap");
++                }
++            for (const auto &room : arena.rooms)
++                for (auto p : {room.center, room.entry, room.exit, room.objective})
++                    check(look.height(p.x, p.z) <= CanyonTerrain::WalkableHeight + .001f,
++                          "polygon cliff caps never cover room cores or sockets");
+             check(look.decorations.size() <= 2200, "cosmetic budget bounded");
+             for (size_t i = 0; i < look.decorations.size(); ++i) {
+                 const auto &a = look.decorations[i], &b = repeat.decorations[i];
+@@ -222,9 +293,45 @@ void verify() {
+               << " original_max=" << original.back() << " visual_max=" << visual.back()
+               << " appearance_mean_ms=" << elapsed / 12 << "\n";
+ }
++void sweep() {
++    int maps = 0;
++    size_t probes = 0;
++    for (uint64_t seed = 4; seed < 20; ++seed)
++        for (int floor : {0, 3}) {
++            Simulation run(seed, 1, {}, MissionTheme::Canyon, true, false, WitnessAccount::None, floor);
++            CanyonVisualParameters p;
++            p.candidatesPerRoom = 0;
++            auto look = buildCanyonAppearance(run.arena, p);
++            const auto &source = *run.arena.canyon;
++            for (int z = 1; z + 1 < source.depth; z += 13)
++                for (int x = 1; x + 1 < source.width; x += 13) {
++                    size_t cell = size_t(z * source.width + x);
++                    if (source.heights[cell] <= CanyonTerrain::WalkableHeight ||
++                        look.distanceToFloor[cell] < 1.5f)
++                        continue;
++                    auto at = source.vertex(x, z);
++                    auto ray = look.trace({at.x, p.maxHeight + 1, at.z}, {at.x, -2, at.z});
++                    check(ray.hit, "seed sweep retains visible solid caps");
++                    ++probes;
++                }
++            for (const auto &room : run.arena.rooms)
++                for (auto at : {room.center, room.entry, room.exit, room.objective})
++                    check(look.height(at.x, at.z) <= CanyonTerrain::WalkableHeight + .001f,
++                          "seed sweep leaves cores and sockets visible");
++            ++maps;
++            std::cout << "SWEEP seed=" << seed << " floor=" << floor << " rooms=" << run.arena.roomCount()
++                      << " triangles=" << look.triangles.size() << std::endl;
++        }
++    std::cout << "PASS seed sweep maps=" << maps << " cap_probes=" << probes << " floors=0,3\n";
++}
+ } // namespace
+-int main() {
++int main(int argc, char **argv) {
+     try {
++        if (argc == 2 && std::string_view(argv[1]) == "--sweep") {
++            sweep();
++            return 0;
++        }
++        wallOrderRegression();
+         configuration();
+         narrowSupportRegression();
+         displacedQueryRegression();
+diff --git a/tests/dungeon_tests.cpp b/tests/dungeon_tests.cpp
+index b3ccef4..69e3974 100644
+--- a/tests/dungeon_tests.cpp
++++ b/tests/dungeon_tests.cpp
+@@ -123,7 +123,10 @@ int main() {
+                         for(int index:room.passages) {
+                             const auto &p=arena.passages[size_t(index)];
+                             const int side=p.rooms[0]==int(&room-arena.rooms.data())?0:1;
+-                            verifyRoute(arena,room.objective,arena.doorApproach(index,side),.48f,"variable room passage");
++                            verifyRoute(arena, room.objective, arena.doorApproach(index, side), .48f,
++                                        "variable room passage count=" + std::to_string(count) + " seed=" +
++                                            std::to_string(seed) + " theme=" + std::to_string(int(theme)) +
++                                            " room=" + std::to_string(int(&room - arena.rooms.data())));
+                         }
+                     }
+                     check(powers>=1&&powers<=2&&int(arena.keys.size())>=powers,"variable floor retains rewards and sufficient keys");
+diff --git a/tests/western_assets_tests.cpp b/tests/western_assets_tests.cpp
+index 23e59bc..5205c55 100644
+--- a/tests/western_assets_tests.cpp
++++ b/tests/western_assets_tests.cpp
+@@ -143,9 +143,19 @@ void verifyVegetation(WesternScene &scene, const Arena &arena) {
+               "vegetation density never moves or removes rocks, debris, buildings or cover");
+         if (!density)
+             check(scene.vegetationCount() == 0, "zero vegetation removes every grass patch and cactus");
+-        if (density == 200)
+-            check(scene.vegetationCount() > baselinePlants,
+-                  "more vegetation adds plants beyond the original amount");
++        if (density == 200) {
++            const auto *look = scene.canyonAppearance();
++            const bool capped = look && int(scene.placements().size()) >= look->parameters.maxDecorations &&
++                                std::none_of(scene.placements().begin(), scene.placements().end(),
++                                             [](const auto &d) { return d.vegetationLevel > 100; });
++            check(scene.vegetationCount() > baselinePlants ||
++                      (capped && scene.vegetationCount() == baselinePlants),
++                  "more vegetation adds plants unless baseline already fills the hard instance budget");
++            if (capped)
++                std::cout << "Vegetation hard cap: " << scene.placements().size() << "/"
++                          << look->parameters.maxDecorations
++                          << " rendered instances; plants=" << baselinePlants << std::endl;
++        }
+         for (const auto &p : previous)
+             check(std::any_of(scene.placements().begin(), scene.placements().end(),
+                               [&](const auto &other) { return same(p, other); }),
+@@ -219,12 +229,21 @@ size_t verifyCanyon(WesternScene &scene) {
+             const Vector3 from{p.x, 30, p.z}, to{p.x, -4, p.z};
+             const auto hit =
+                 scene.canyonAppearance() ? scene.canyonAppearance()->trace(from, to) : field.trace(from, to);
+-            const auto meshHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
+-            if (!(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f))
++            const auto localHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
++            // An extruded cliff can overhang a ground/terrace chunk. Compare
++            // the global sampler with the nearest visible mesh surface, while
++            // still requiring the selected chunk's own cap probe to hit.
++            auto meshHit = localHit;
++            for (const auto &other : scene.terrainChunks()) {
++                auto candidate = GetRayCollisionMesh({from, {0, -1, 0}}, other.mesh, MatrixIdentity());
++                if (candidate.hit && (!meshHit.hit || candidate.distance < meshHit.distance))
++                    meshHit = candidate;
++            }
++            if (!(hit.hit && localHit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f))
+                 std::cerr << "Sampler seed=" << seed << " p=" << p.x << "," << p.z << " cpu=" << hit.hit
+                           << ":" << hit.t * 34 << " gpu=" << meshHit.hit << ":" << meshHit.distance
+                           << std::endl;
+-            check(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f,
++            check(hit.hit && localHit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f,
+                   "visual terrain sampler and rendered mesh agree across every chunk; gameplay field stays "
+                   "separate");
+         }

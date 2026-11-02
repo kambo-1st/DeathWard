@@ -1,0 +1,19 @@
+RIDGEBACK seed=7 floor=0 time=11.4 HP=100
+RIDGEBACK seed=7 floor=4 time=15.0333 HP=80
+RIDGEBACK seed=42 floor=0 time=10.9833 HP=100
+RIDGEBACK seed=42 floor=6 time=22.5667 HP=100
+RIDGEBACK seed=1866 floor=0 time=11.1833 HP=100
+RIDGEBACK seed=1866 floor=5 time=19.3333 HP=100
+POWDER FOREMAN seed=7 floor=0 time=6.93333 HP=100
+POWDER FOREMAN seed=7 floor=4 time=10.5167 HP=80
+POWDER FOREMAN seed=42 floor=0 time=7.51667 HP=80
+POWDER FOREMAN seed=42 floor=6 time=10.4833 HP=100
+POWDER FOREMAN seed=1866 floor=0 time=6.93333 HP=100
+POWDER FOREMAN seed=1866 floor=5 time=10.4833 HP=80
+STORM MARSHAL seed=7 floor=0 time=7.51667 HP=100
+STORM MARSHAL seed=7 floor=4 time=11.1167 HP=100
+STORM MARSHAL seed=42 floor=0 time=8.1 HP=100
+STORM MARSHAL seed=42 floor=6 time=11.1 HP=100
+STORM MARSHAL seed=1866 floor=0 time=7.51667 HP=100
+STORM MARSHAL seed=1866 floor=5 time=11.1 HP=100
+PASS canyon boss pool, phases, counterplay, cleanup and weak builds

@@ -1,0 +1,49 @@
+{
+  "base_commit": "b976baa",
+  "status": "Physical organic boundaries implemented; broader cliff art-direction work unfinished",
+  "checks": {
+    "boundary-tests": "PASS",
+    "geometry-tests": "PASS",
+    "gameplay-tests": "PASS",
+    "graphics-tests": "PASS",
+    "occlusion-tests": "PASS",
+    "boss-tests": "PASS"
+  },
+  "generation": {
+    "paired_maps": "14",
+    "classic_mean_ms": "376.237",
+    "organic_mean_ms": "757.285"
+  },
+  "geometry": {
+    "maps": "12",
+    "categories": "4",
+    "asset_roles": "5",
+    "candidates": "21972",
+    "collision_room_checks": "180",
+    "original_highland_median": "7.55863",
+    "visual_highland_median": "3.56827",
+    "original_max": "10.7415",
+    "visual_max": "6.8",
+    "appearance_mean_ms": "616.69"
+  },
+  "boundary_summary": "PASS organic boundaries maps=14 changed_vertices=12161 identical_road_samples=7447 clear_sockets=440 tutorial_maps=3",
+  "capture": {
+    "zoom": 160,
+    "projection": "perspective",
+    "fov": 45,
+    "resolution": [
+      1440,
+      900
+    ],
+    "base_seed": 1866,
+    "power_frames": 120,
+    "works_frames": 60
+  },
+  "remaining": [
+    "The repeated narrow cliff facets and room-wide terrace patterns remain unfinished. This is the playable-outline phase, not a claim of full visual reference fidelity.",
+    "Existing river-bank/channel influence regions retain their previous geometry; ordinary room boundaries are sculpted around them.",
+    "The established visual rock-height treatment remains separate from the taller canonical collision field.",
+    "Organic generation currently builds the classic layout once to preserve its roads, then rebuilds the boundary; this adds startup/floor-generation cost.",
+    "Only native Linux was validated; WASM checks remain waived."
+  ]
+}

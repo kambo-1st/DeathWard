@@ -1,0 +1,14 @@
+{
+  "baseline_commit": "b976baa",
+  "active_geometry": "Organic playable boundaries; earlier face experiments remain rejected.",
+  "experiments": [
+    "Local shelf masks and rim relaxation removed bands but retained narrow columns.",
+    "Broad-face retopology removed columns but produced panel-like cliffs and angular bases.",
+    "Added relief and silhouette variation still looked engineered; steep-face geometry regression failed."
+  ],
+  "remaining": [
+    "Broader cliff facets and localized terraces remain unfinished."
+  ],
+  "scope_resolution": "User authorized organic actual playable boundaries, retaining roads, exits and room graph.",
+  "current_report": "../canyon-organic-boundary/index.html"
+}

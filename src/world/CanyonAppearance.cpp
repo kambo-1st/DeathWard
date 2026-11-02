@@ -85,6 +85,41 @@ float routeDistance(Vector3 p, Vector3 a, Vector3 b) {
     auto v = sub(b, a);
     return distance(p, add(a, mul(v, std::clamp(dot(sub(p, a), v) / std::max(.001f, dot(v, v)), 0.f, 1.f))));
 }
+void indexSurface(CanyonAppearance &out) {
+    const auto &source=out.surface;
+    // A displaced triangle can cross the source lattice. Spatial queries and
+    // occlusion must use its real bounds rather than its original cell ID.
+    const int columns = source.width - 1, rows = source.depth - 1;
+    auto bounds = [&](const CanyonSurfaceTriangle &triangle) {
+        int left = columns - 1, right = 0, top = rows - 1, bottom = 0;
+        for (auto v : triangle.vertices) {
+            int x = std::clamp(int(std::floor((v.x - source.x) / source.step)), 0, columns - 1);
+            int z = std::clamp(int(std::floor((v.z - source.z) / source.step)), 0, rows - 1);
+            left = std::min(left, x);
+            right = std::max(right, x);
+            top = std::min(top, z);
+            bottom = std::max(bottom, z);
+        }
+        return std::array<int, 4>{left, right, top, bottom};
+    };
+    out.spatialOffsets.assign(size_t(columns * rows) + 1, 0);
+    for (const auto &triangle : out.triangles) {
+        auto b = bounds(triangle);
+        for (int z = b[2]; z <= b[3]; ++z)
+            for (int x = b[0]; x <= b[1]; ++x)
+                ++out.spatialOffsets[size_t(z * columns + x) + 1];
+    }
+    for (size_t i = 1; i < out.spatialOffsets.size(); ++i)
+        out.spatialOffsets[i] += out.spatialOffsets[i - 1];
+    out.spatialTriangles.resize(out.spatialOffsets.back());
+    auto cursor = out.spatialOffsets;
+    for (size_t i = 0; i < out.triangles.size(); ++i) {
+        auto b = bounds(out.triangles[i]);
+        for (int z = b[2]; z <= b[3]; ++z)
+            for (int x = b[0]; x <= b[1]; ++x)
+                out.spatialTriangles[cursor[size_t(z * columns + x)]++] = i;
+    }
+}
 } // namespace
 void CanyonVisualParameters::validate() const {
     auto range = [](float v, float a, float b) { return std::isfinite(v) && v >= a && v <= b; };
@@ -128,11 +163,11 @@ CanyonVisualParameters CanyonVisualParameters::load(const std::filesystem::path 
         if (key == "DEATHWARD_CANYON") {
             if (!(row >> version) || version != 1)
                 throw std::runtime_error("Invalid canyon visual version");
-        } else if (key == "enabled") {
+        } else if (key == "enabled" || key == "irregular_facets") {
             int v;
             if (!(row >> v) || (v != 0 && v != 1))
                 throw std::runtime_error("Invalid canyon enabled flag");
-            p.enabled = v;
+            (key == "enabled" ? p.enabled : p.irregularFacets) = v;
         } else if (key == "terrace_count" || key == "candidates_per_room" || key == "maximum_decorations") {
             int v;
             if (!(row >> v))
@@ -274,12 +309,16 @@ bool CanyonAppearance::supports(Vector3 p, float radius, float tolerance) const 
         for (int z = z0; z <= z1; ++z)
             for (int x = x0; x <= x1; ++x) {
                 size_t cell = size_t(z * (surface.width - 1) + x);
-                for (size_t i = queryBegin(cell); i < queryEnd(cell); ++i) {
+                const bool original = !supportTriangles.empty();
+                const auto &faces = original ? supportTriangles : triangles;
+                size_t begin = original ? supportOffsets[cell] : queryBegin(cell);
+                size_t end = original ? supportOffsets[cell + 1] : queryEnd(cell);
+                for (size_t i = begin; i < end; ++i) {
                     // Clip the actual triangle to the support square. This catches
                     // thin risers and bevels that fixed sample grids can step over.
                     std::array<Vector3, 32> a{}, b{};
-                    std::copy(triangles[queryTriangle(i)].vertices.begin(),
-                              triangles[queryTriangle(i)].vertices.end(), a.begin());
+                    const auto &face = faces[original ? supportIndices[i] : queryTriangle(i)].vertices;
+                    std::copy(face.begin(), face.end(), a.begin());
                     int count = 3;
                     for (int plane = 0; plane < 4 && count; ++plane) {
                         auto value = [&](Vector3 v) {
@@ -616,38 +655,7 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
                 v = displaced;
         }
     }
-    // A displaced triangle can cross the source lattice. Spatial queries and
-    // occlusion must use its real bounds rather than its original cell ID.
-    const int columns = source.width - 1, rows = source.depth - 1;
-    auto bounds = [&](const CanyonSurfaceTriangle &triangle) {
-        int left = columns - 1, right = 0, top = rows - 1, bottom = 0;
-        for (auto v : triangle.vertices) {
-            int x = std::clamp(int(std::floor((v.x - source.x) / source.step)), 0, columns - 1);
-            int z = std::clamp(int(std::floor((v.z - source.z) / source.step)), 0, rows - 1);
-            left = std::min(left, x);
-            right = std::max(right, x);
-            top = std::min(top, z);
-            bottom = std::max(bottom, z);
-        }
-        return std::array<int, 4>{left, right, top, bottom};
-    };
-    out.spatialOffsets.assign(size_t(columns * rows) + 1, 0);
-    for (const auto &triangle : out.triangles) {
-        auto b = bounds(triangle);
-        for (int z = b[2]; z <= b[3]; ++z)
-            for (int x = b[0]; x <= b[1]; ++x)
-                ++out.spatialOffsets[size_t(z * columns + x) + 1];
-    }
-    for (size_t i = 1; i < out.spatialOffsets.size(); ++i)
-        out.spatialOffsets[i] += out.spatialOffsets[i - 1];
-    out.spatialTriangles.resize(out.spatialOffsets.back());
-    auto cursor = out.spatialOffsets;
-    for (size_t i = 0; i < out.triangles.size(); ++i) {
-        auto b = bounds(out.triangles[i]);
-        for (int z = b[2]; z <= b[3]; ++z)
-            for (int x = b[0]; x <= b[1]; ++x)
-                out.spatialTriangles[cursor[size_t(z * columns + x)]++] = i;
-    }
+    indexSurface(out);
     // The sampled surface is useful for water/detail metadata only. The mesh
     // and all visual height/ray tests use the explicit caps and wall triangles.
     for (int z = 0; z < source.depth; ++z)
@@ -818,6 +826,62 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
         }
     std::stable_partition(out.decorations.begin(), out.decorations.end(),
                           [](const auto &d) { return !d.extraVegetation; });
+    if (p.irregularFacets && p.facets > 0) {
+        // Decoration placement uses the original surface. This final pass
+        // changes only wall interiors, retaining every original perimeter edge.
+        std::vector<CanyonSurfaceTriangle> detailed;
+        std::vector<size_t> offsets;
+        auto emit = [&](Vector3 a, Vector3 b, Vector3 c) {
+            auto n = cross(sub(b, a), sub(c, a));
+            if (dot(n, n) > 1e-10f)
+                detailed.push_back({{a, b, c}, true});
+        };
+        for (size_t cell = 0; cell + 1 < out.cellOffsets.size(); ++cell) {
+            offsets.push_back(detailed.size());
+            size_t i = out.cellOffsets[cell], end = out.cellOffsets[cell + 1];
+            while (i < end) {
+                const auto &first = out.triangles[i];
+                bool pair = i + 1 < end && first.rock && out.triangles[i + 1].rock &&
+                            distance(first.vertices[0], out.triangles[i + 1].vertices[0]) < .000001f &&
+                            distance(first.vertices[1], out.triangles[i + 1].vertices[2]) < .000001f;
+                if (pair) {
+                    auto ab = first.vertices[0], bt = first.vertices[1], at = first.vertices[2],
+                         bb = out.triangles[i + 1].vertices[1];
+                    auto normal = unit(cross(sub(bb, ab), sub(bt, ab)));
+                    auto mid = mul(add(at, bt), .5f);
+                    float rise = std::min(at.y - ab.y, bt.y - bb.y), width = distance(at, bt);
+                    if (std::abs(normal.y) < .35f && outcropWeight(mid) < .5f && rise > .3f && width > .25f) {
+                        int x = int(std::floor(mid.x * 1.7f)), z = int(std::floor(mid.z * 1.7f));
+                        float u = .28f + .44f * hash(x, z, out.seed ^ 0x4641434554ULL);
+                        float v = .28f + .44f * hash(x, z, out.seed ^ 0x484549474854ULL);
+                        auto lower = add(ab, mul(sub(bb, ab), u)), upper = add(at, mul(sub(bt, at), u));
+                        auto center = add(lower, mul(sub(upper, lower), v));
+                        float relief =
+                            std::min(width, rise) *
+                            (.08f + .12f * noise(mid.x / 2.5f, mid.z / 2.5f, out.seed ^ 0x524f434bULL)) *
+                            p.facets / .35f;
+                        relief = std::min(relief, rise * std::min(v, 1 - v) * .28f);
+                        center = add(center, mul(unit({-normal.x, 0, -normal.z}), relief));
+                        emit(ab, bb, center);
+                        emit(bb, bt, center);
+                        emit(bt, at, center);
+                        emit(at, ab, center);
+                        i += 2;
+                        continue;
+                    }
+                }
+                detailed.push_back(first);
+                ++i;
+            }
+        }
+        offsets.push_back(detailed.size());
+        out.supportTriangles = std::move(out.triangles);
+        out.supportOffsets = std::move(out.spatialOffsets);
+        out.supportIndices = std::move(out.spatialTriangles);
+        out.triangles = std::move(detailed);
+        out.cellOffsets = std::move(offsets);
+        indexSurface(out);
+    }
     return out;
 }
 } // namespace dw

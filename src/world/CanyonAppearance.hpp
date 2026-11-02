@@ -4,6 +4,7 @@
 namespace dw {
 struct CanyonVisualParameters {
     bool enabled = true;
+    bool irregularFacets = true;
     float minHeight = 2.4f, maxHeight = 6.8f, heightVariation = .85f;
     int terraces = 3;
     float terraceWidth = 1.4f, silhouette = .9f, facets = .35f;
@@ -41,6 +42,9 @@ struct CanyonAppearance {
     std::vector<size_t> cellOffsets;
     // Render order stays stable; these bins index the actual displaced triangles.
     std::vector<size_t> spatialOffsets, spatialTriangles;
+    // Decorative support keeps the pre-detail surface; aiming uses visible facets.
+    std::vector<CanyonSurfaceTriangle> supportTriangles;
+    std::vector<size_t> supportOffsets, supportIndices;
     size_t queryBegin(size_t cell) const {
         return spatialOffsets.empty() ? cellOffsets[cell] : spatialOffsets[cell];
     }

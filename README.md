@@ -2138,6 +2138,11 @@ per-record backlog. It can be rebuilt with `python3 scripts/isaac-reference/buil
 
 ### Extruded expedition canyon cliffs
 
+The current [cliff-face detail sample](docs/reports/canyon-face-detail/index.html)
+restores the committed canyon and changes only wall-interior facets. Set
+`irregular_facets 0` in `assets/visual/canyon.cfg` to restore the original faces.
+
+
 The canyon visual mesh uses explicit contour caps, narrow top chamfers and steep
 extruded walls. It does not interpolate broad heightmap slopes between terraces.
 The canonical collision terrain and room graph remain authoritative and unchanged;
