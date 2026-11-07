@@ -1,0 +1,14 @@
+{
+  "filesystem_files": 4156,
+  "inventory_files": 4156,
+  "missing": [],
+  "extra": [],
+  "kinds": {
+    "Models": 807,
+    "Text": 3174,
+    "Images": 116,
+    "Audio": 49,
+    "Other": 8,
+    "Fonts": 2
+  }
+}

@@ -5,6 +5,7 @@ namespace dw {
 struct CanyonVisualParameters {
     bool enabled = true;
     bool irregularFacets = true;
+    bool polygonFacets = true;
     float minHeight = 2.4f, maxHeight = 6.8f, heightVariation = .85f;
     int terraces = 3;
     float terraceWidth = 1.4f, silhouette = .9f, facets = .35f;
@@ -35,6 +36,8 @@ struct CanyonAppearance {
     CanyonTerrain surface;
     CanyonVisualParameters parameters;
     uint64_t seed = 0;
+    size_t cliffTopologyPatches=0, cliffTopologyFallbacks=0;
+    size_t cliffQuads=0, cliffNgons=0, cliffChips=0;
     std::vector<float> distanceToFloor, distanceToRock;
     std::vector<CanyonDecoration> decorations;
     // Separate polygon caps and extruded walls, indexed by original source cell.

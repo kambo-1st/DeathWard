@@ -1,0 +1,14 @@
+{
+  "inventory_files": 4156,
+  "filesystem_files": 4156,
+  "missing": [],
+  "extra": [],
+  "reviewed_screenshots": [
+    "previews/glb.png",
+    "previews/fbx.png"
+  ],
+  "fbx_camera_fit_verified": true,
+  "interactive_pid": 3996697,
+  "interactive_process_confirmed": true,
+  "limitations": "Unity runtime/material reconstruction, per-file visual acceptance and speaker playback remain outside verified scope."
+}

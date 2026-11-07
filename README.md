@@ -2138,7 +2138,87 @@ per-record backlog. It can be rebuilt with `python3 scripts/isaac-reference/buil
 
 ### Extruded expedition canyon cliffs
 
-The current [cliff-face detail sample](docs/reports/canyon-face-detail/index.html)
+**Archived and paused:** the [preservation guide](docs/canyon_prototype_archive.md),
+[checksum and launch records](docs/artifacts/canyon-prototype-2026-11-07/README.md)
+and [postmortem](docs/canyon_prototype_postmortem.md) document the stop point.
+The authored demo is runnable; the generalized plateau join and production New
+mode remain unfinished. The following entries are historical findings, including
+superseded results. Full raw reports are retained in the local archive.
+
+The [complete-volume plan](docs/canyon_rock_formations_plan.md) and
+[isolated rock-formation blockout](docs/reports/cliff-formations/index.html)
+record the next architecture experiment. It is debug-only; the regular game
+still uses the A-derived face pass.
+
+The latest [whole-wall review](docs/reports/cliff-formations/wall-review/index.html)
+records the shared plateau-body corrections and geometry checks. The
+[seeded case matrix](docs/reports/cliff-formations/phase4/index.html) contains
+12 native room cases: all twelve pass technical generation checks, recovering
+the seven rejected cases. Headless and rendered geometry/scenery hashes match.
+The [roof refinement comparisons](docs/reports/cliff-formations/visual-blend/index.html)
+show the new regional backing roof and retained rear land, using locked candidates
+and cameras. Primary-roof preservation checks pass; localized pointed facets and
+cap lips still require visual acceptance. Broader composition coverage, performance
+acceptance and production integration remain unfinished; the formations preview is
+not enabled in the regular game. The [latest checkpoint](docs/reports/cliff-formations/local-finish/index.html)
+adds checked rear-plane extensions in four rooms, a 147-room boundary inventory and
+four targeted native cases (one generated, three unchanged A fallbacks). The first
+controlled performance case fails both rollout limits: p95 frame time is 21.2%
+higher and the construction ratio is at least 7.42 times A. Production integration
+remains gated by those failures and unfinished visual/layout acceptance. The subsequent
+[optimization checkpoint](docs/reports/cliff-formations/optimization/index.html) reduces
+selected-section construction work by 46.1% while reproducing all twelve saved
+mesh/scenery hashes. Construction still exceeds the target; the [full goal](docs/reports/cliff-formations/goal-status.json),
+including visual/shared-join/gameplay acceptance and Old/New modes, remains unfinished and is now paused. The subsequent
+[boundary checkpoint](docs/reports/cliff-formations/boundary-refinement/README.md)
+repairs a detached core buttress and adds independent exact-arithmetic diagnostics.
+The three targeted terrain joins and cap/rear visual defects remain unaccepted;
+its fresh audit evidence is kept separate from the earlier binary reports. The
+[graded plateau trial](docs/reports/cliff-formations/graded-plateau/index.html) now
+merges cap backs into common land while protecting front roof strips. It remains
+opt-in and visually unaccepted: its raised rear/end interface, three assembled
+join failures and the broader performance/gameplay/mode gates remain open.
+The subsequent [retained-terrain blend trial](docs/reports/cliff-formations/plateau-collar/index.html)
+adds a rear/end transition, direct roof-shell extraction and checked simplification.
+Twelve default hashes remain identical and one of four trial cases passes final
+geometry checks. Its matched view still has a large central step and pointed facets;
+visual acceptance, neighbouring regions and production integration remain unfinished.
+The [boundary-trace continuation](docs/reports/cliff-formations/boundary-trace/index.html)
+replaces interior terrain-tile constraints with continuous ramps derived from the
+outer boundary. It retains the previous roof behind its own flag and preserves all
+twelve default hashes; broad visual, shared-region and production acceptance remain open.
+The [connected-region investigation](docs/reports/cliff-formations/connected-region/index.html)
+adds an interactive source-footprint viewer and shared-roof planning. Cap backs can
+reach highland spanning much of an expedition floor. All four whole-component trials
+reject, so coordinated chunks and shared height interfaces are the next construction
+step. The default twelve hashes and previous boundary-trial outcomes remain unchanged.
+The [shared-chunk continuation](docs/reports/cliff-formations/shared-chunks/README.md)
+adds a compact local height field on a common world grid, bounded chunk ownership
+and tested seam heights. All four native chunk trials still reject overlapping
+projected roof strips and retain A. Native joins, cap/facet visual acceptance,
+performance, gameplay and production Old / New selection remain unfinished.
+The [continuous chunk field](docs/reports/cliff-formations/continuous-chunks/README.md)
+now merges source footprints before assigning shared roof heights. All six exit-room
+body pieces pass closure and constructed-prism coverage, but their combined cap join
+still rejects. The other three bodies also reject; final chunk acceptance remains 0/4.
+The [shared-footprint and finite-link continuation](docs/reports/cliff-formations/finite-links/README.md)
+now passes all individual bodies in three cases (25 pieces). One shell and all combined
+cores still reject; numerical, visual, performance and production acceptance remain open.
+
+The selected [A refinement](docs/reports/cliff-a-refinement/index.html) is now
+enabled for cliff faces: mixed polygon planes and sparse chips, with the existing
+contours retained. Set `polygon_facets 0` in `assets/visual/canyon.cfg` to restore
+the preceding detail pass. The report includes the 160% captures and limitations.
+
+The [three-way cliff experiment](docs/reports/cliff-alternatives/index.html) compares
+A/B/C on the wall above the player, with full screenshots, wireframes and weighted
+evaluation. It uses a separate debug executable; no alternative has been adopted.
+
+The [cliff topology comparison](docs/reports/cliff-topology/index.html) shows the
+current wall-only detail pass: isolated before/after renders, wireframe, and
+regression evidence. Contours and gameplay boundaries stay fixed.
+
+The previous [cliff-face detail sample](docs/reports/canyon-face-detail/index.html)
 restores the committed canyon and changes only wall-interior facets. Set
 `irregular_facets 0` in `assets/visual/canyon.cfg` to restore the original faces.
 

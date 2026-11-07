@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-07",
+  "separate_cpp_app_implemented": true,
+  "target": "deathward_asset_browser",
+  "default_build_excluded": true,
+  "game_runtime_dependency": false,
+  "read_only_assets": true,
+  "inventory_files": 4156,
+  "inventory_matches_filesystem": true,
+  "inventory_errors": [],
+  "kinds": {
+    "Models": 807,
+    "Text": 3174,
+    "Images": 116,
+    "Audio": 49,
+    "Other": 8,
+    "Fonts": 2
+  },
+  "combined_folder_category_search_verified": true,
+  "rendered_smoke_exit_code": 0,
+  "rendered_preview_kinds": [
+    "FBX",
+    "GLB",
+    "image",
+    "text",
+    "font",
+    "audio waveform",
+    "Unity metadata",
+    "binary"
+  ],
+  "animated_source_fbx_render_verified": true,
+  "model_camera_fit": "Bounding sphere using limiting vertical/horizontal FOV and preview aspect, with 12% margin",
+  "interactive_launch": {
+    "pid": 3996697,
+    "argv": [
+      "/home/kambo/workspace/DeathWard/build/deathward_asset_browser",
+      "--select",
+      "bandit/Breathing Idle.fbx"
+    ],
+    "cwd": "/home/kambo/workspace/DeathWard",
+    "display": ":0",
+    "log": "/home/kambo/workspace/DeathWard/docs/reports/asset-browser/interactive.log"
+  },
+  "binary_sha256": "bedead3538482777d6b2d90b5050e77c4da9099446d54045149a45daa0837d42",
+  "source_sha256": {
+    "CMakeLists.txt": "3b29e15de5c1792595ce4d1d8eabda23f0673efa3789d4a1ca253e3acbc75078",
+    "tools/asset_browser/AssetInventory.cpp": "5664e99b3d158f54b29bc243cf6410e23c0260e20fc5bb57b3efab9eac53ef27",
+    "tools/asset_browser/FbxPreview.cpp": "23d09c71a900f3298d4d034b7e8c6e1a708ddba991943ac714cd5224bc420618",
+    "tools/asset_browser/main.cpp": "fc0bfd2a805539ff2581ce70f94651bd06cfd81ff85ba0882f6f8d951cb83360",
+    "tools/asset_browser/FbxPreview.hpp": "6167b99c9521d1805069374b2eac5d4fcd813f31fef6bedc0c73ba1338859c98",
+    "tools/asset_browser/AssetInventory.hpp": "841bfe66228dfa25e981ef5700dd6e8c0ab5184a8cfe684fb8039abffe638737",
+    "tools/asset_browser/third_party/ufbx.c": "4a956c26a708e40d82ecb0aeaee54da709d5ba7c144c9642174970059bda7e1d",
+    "tools/asset_browser/third_party/ufbx.h": "f787be529af577efc04f3e3e735844a08556718dbb613d1211c2b313d72895dc",
+    "docs/asset_browser.md": "8086ef1a000bae2188df17689a387b0d54955f2501141368583f6e7738649a90"
+  },
+  "screenshots": [
+    "previews/fbx.png",
+    "previews/glb.png",
+    "previews/image.png",
+    "previews/text.png",
+    "previews/font.png",
+    "previews/audio.png",
+    "previews/metadata.png",
+    "previews/binary.png",
+    "previews/fbx-animation.png"
+  ],
+  "remaining_limitations": [
+    "Unity prefab/material/scene/Animator files are inspected as text rather than executed as Unity runtime scenes",
+    "Unresolved or ambiguous external FBX textures remain untextured; no unrelated pack texture is guessed",
+    "Representative formats and source animation were rendered; every individual model/material/clip has not undergone visual acceptance",
+    "Actual speaker playback has not been verified; waveform inspection and optional playback controls are implemented"
+  ],
+  "interactive_window_verified": true,
+  "interactive_screenshot": "interactive.png"
+}

@@ -1,0 +1,10 @@
+{
+  "archive": "canyon-prototype-2026-11-07.tar.zst",
+  "bytes": 1293249421,
+  "verified_regular_files": 11500,
+  "missing_files": 0,
+  "mismatched_files": 0,
+  "source_assets_relative_symlink": true,
+  "portable_relocation_verified": true,
+  "development_status": "paused; generalized integration incomplete"
+}

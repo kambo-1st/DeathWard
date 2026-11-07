@@ -219,14 +219,19 @@ size_t verifyCanyon(WesternScene &scene) {
             const Vector3 from{p.x, 30, p.z}, to{p.x, -4, p.z};
             const auto hit =
                 scene.canyonAppearance() ? scene.canyonAppearance()->trace(from, to) : field.trace(from, to);
-            const auto meshHit = GetRayCollisionMesh({from, {0, -1, 0}}, chunk.mesh, MatrixIdentity());
-            if (!(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f))
-                std::cerr << "Sampler seed=" << seed << " p=" << p.x << "," << p.z << " cpu=" << hit.hit
-                          << ":" << hit.t * 34 << " gpu=" << meshHit.hit << ":" << meshHit.distance
-                          << std::endl;
-            check(hit.hit && meshHit.hit && std::abs(hit.t * 34 - meshHit.distance) < .003f,
-                  "visual terrain sampler and rendered mesh agree across every chunk; gameplay field stays "
-                  "separate");
+            const auto ownHit = GetRayCollisionMesh({from, {0,-1,0}},chunk.mesh,MatrixIdentity());
+            check(ownHit.hit,"Every chunk's cap probe hits that chunk's actual mesh");
+            // Broad facets can project across a renderer section boundary. The
+            // CPU query is global, so compare to the globally nearest mesh hit.
+            float closest=1000;
+            for(const auto& candidate:scene.terrainChunks()){
+                if(!segmentBox(from,to,candidate.bounds).hit)continue;
+                auto h=GetRayCollisionMesh({from,{0,-1,0}},candidate.mesh,MatrixIdentity());
+                if(h.hit)closest=std::min(closest,h.distance);
+            }
+            if(!(hit.hit && std::abs(hit.t*34-closest)<.003f))
+                std::cerr<<"Sampler seed="<<seed<<" p="<<p.x<<","<<p.z<<" cpu="<<hit.hit<<":"<<hit.t*34<<" nearest_mesh="<<closest<<std::endl;
+            check(hit.hit && std::abs(hit.t*34-closest)<.003f,"Visual terrain rays match the nearest hit across all rendered chunks; gameplay field stays separate");
         }
         // Exercise oblique rays through cliff faces and cover, not only vertical ground probes.
         // Keep reference rays off exact lattice seams: raylib's float barycentric

@@ -1,0 +1,7 @@
+{
+  "fixture": "whole.adapter.txt.margin-1.000000.xz",
+  "uncompressed_sha256": "6e243eb20dcbf92c9233a10607f962db841e889cc226f6b698b511188412dbd1",
+  "uncompressed_bytes": 2999317,
+  "compressed_bytes": 278384,
+  "expected_result": "rejected; generalized join unfinished"
+}

@@ -130,6 +130,8 @@ add_library(deathward_core
     src/combat/FrontierBoss.cpp
     src/world/CanyonTerrain.cpp
     src/world/CanyonAppearance.cpp
+    src/world/CliffWallTopology.cpp
+    src/world/CliffFacetRefinement.cpp
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
@@ -328,6 +330,14 @@ if(NOT EMSCRIPTEN)
     target_link_libraries(deathward_check_mechanics PRIVATE deathward_core raylib)
     add_executable(deathward_bake_navigation tools/bake_navigation.cpp)
     target_link_libraries(deathward_bake_navigation PRIVATE deathward_core raylib)
+    # Read-only native asset inspection; independent from the game and opt-in at build time.
+    add_library(deathward_asset_browser_fbx STATIC EXCLUDE_FROM_ALL tools/asset_browser/third_party/ufbx.c)
+    set_target_properties(deathward_asset_browser_fbx PROPERTIES C_STANDARD 99)
+    add_executable(deathward_asset_browser EXCLUDE_FROM_ALL
+        tools/asset_browser/main.cpp tools/asset_browser/AssetInventory.cpp tools/asset_browser/FbxPreview.cpp)
+    target_include_directories(deathward_asset_browser PRIVATE tools/asset_browser ${raylib_SOURCE_DIR}/src)
+    target_link_libraries(deathward_asset_browser PRIVATE raylib deathward_asset_browser_fbx)
+    target_compile_definitions(deathward_asset_browser PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
 endif()
 
 if(BUILD_TESTING)
@@ -397,9 +407,151 @@ if(BUILD_TESTING)
         src/render/TownScene.cpp src/render/PostProcess.cpp src/render/AnimalModels.cpp)
     target_link_libraries(deathward_cinematic_editor_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_cinematic_editor_tests)
+    # Render-only alternatives: a generated instrumented renderer, never used by deathward.
+    get_target_property(cliff_game_sources deathward SOURCES)
+    list(REMOVE_ITEM cliff_game_sources src/render/CanyonScene.cpp src/main.cpp)
+    # Keep the deterministic scene setup, then hand control to ordinary gameplay
+    # when explicitly requested in this isolated demo executable.
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" cliff_main)
+    set(cliff_case_setup [=[        if (smoke && std::getenv("DW_CLIFF_SEED")) {
+            const auto caseSeed = std::stoull(std::getenv("DW_CLIFF_SEED"));
+            const int caseFloor = std::getenv("DW_CLIFF_FLOOR") ? std::stoi(std::getenv("DW_CLIFF_FLOOR")) : 0;
+            const int caseRoom = std::getenv("DW_CLIFF_ROOM") ? std::stoi(std::getenv("DW_CLIFF_ROOM")) : 2;
+            game.seedText = std::to_string(caseSeed);
+            game.run = std::make_unique<dw::Simulation>(caseSeed, 1, game.campaign.data().world,
+                dw::MissionTheme::Canyon, true, false, dw::WitnessAccount::None, caseFloor, expeditionPacing);
+            if (caseRoom < 0 || caseRoom >= game.run->arena.roomCount()) throw std::runtime_error("Invalid cliff case room");
+            game.run->jumpDebug(caseRoom);
+            game.run->godMode = true;
+            game.run->debugScenario = true;
+            game.updateCamera(1);
+            std::cout << "CLIFF_CASE seed=" << caseSeed << " floor=" << caseFloor << " room=" << caseRoom
+                      << " profile_band=" << game.run->arena.profile.band << '\n';
+        }
+]=])
+    string(REPLACE "        bool artCompare = artPoc;"
+        "${cliff_case_setup}        bool artCompare = artPoc;" cliff_main "${cliff_main}")
+    string(REPLACE "        bool artCompare = artPoc;"
+        "        if (std::getenv(\"DW_CLIFF_INTERACTIVE\") && smoke && scene == \"profile-works\") {\n            smoke = false;\n            game.updateCamera(1);\n            SetWindowTitle(\"DeathWard | Interactive canyon formations demo\");\n            std::cout << \"CLIFF_INTERACTIVE ordinary_gameplay_input=enabled scripted_input=disabled\\n\" << std::flush;\n        }\n        bool artCompare = artPoc;"
+        cliff_main "${cliff_main}")
+    set(cliff_inspect_camera [=[
+            if (const auto inspection = std::getenv("DW_CLIFF_INSPECT_TARGET")) {
+                float x = 0, z = 0;
+                if (std::sscanf(inspection, "%f,%f", &x, &z) != 2) throw std::runtime_error("Invalid cliff inspection target");
+                const Vector3 target{x, 1.5f, z};
+                game.camera.target = target;
+                game.camera.position = dw::add(target, {14.375f, 18.75f, 14.375f});
+            }
+]=])
+    string(REPLACE "\n            BeginDrawing();\n"
+        "\n${cliff_inspect_camera}            BeginDrawing();\n" cliff_main "${cliff_main}")
+    # Record uncapped deterministic smoke frames after warm-up. This observes
+    # the same start/end boundary as the native game's benchmark mode.
+    string(REPLACE "        SetTargetFPS(benchmark ? 0 : 60);"
+        "        SetTargetFPS((benchmark || std::getenv(\"DW_CLIFF_FRAME_BENCH\")) ? 0 : 60);"
+        cliff_main "${cliff_main}")
+    string(REPLACE "            if (benchmark) {\n                timings.push_back"
+        "            if (std::getenv(\"DW_CLIFF_FRAME_BENCH\") && frame >= 120) std::cout << \"CLIFF_FRAME sample=\" << frame-120 << \" ms=\" << std::chrono::duration<double, std::milli>(end-start).count() << '\\n';\n            if (benchmark) {\n                timings.push_back"
+        cliff_main "${cliff_main}")
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/CliffExperimentMain.cpp"
+        "#include <cstdlib>\n#include <cstdio>\n${cliff_main}")
+    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/src/render/CanyonScene.cpp" cliff_scene)
+    string(REPLACE "canyonAppearance_ = buildCanyonAppearance(arena, parameters);"
+        "canyonAppearance_ = cliffExperimentAppearance(arena, parameters);" cliff_scene "${cliff_scene}")
+    string(REPLACE "void WesternScene::drawTerrainOutlines() {"
+        "void WesternScene::drawTerrainOutlines() { cliffExperimentWire();" cliff_scene "${cliff_scene}")
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/CliffExperimentScene.cpp"
+        "#include \"CliffExperiments.hpp\"\n${cliff_scene}")
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS src/render/CanyonScene.cpp src/main.cpp)
+    option(DEATHWARD_CLIFF_REGION_EXPERIMENT "Build connected plateau region experiment (local Boost headers)" OFF)
+    if(DEATHWARD_CLIFF_REGION_EXPERIMENT)
+        find_package(Boost REQUIRED)
+    endif()
+    option(DEATHWARD_CLIFF_BOOLEAN_EXPERIMENT "Build rejected experimental solid-union backend" OFF)
+    if(DEATHWARD_CLIFF_BOOLEAN_EXPERIMENT)
+        # Prototype boolean backend; independently checked after float emission.
+        # Normalize projected silhouettes with binary-scaled integer clipping.
+        # Decimal CrossSection scaling would perturb the actual core border.
+        set(MANIFOLD_CROSS_SECTION OFF CACHE BOOL "" FORCE)
+        set(MANIFOLD_CBIND OFF CACHE BOOL "" FORCE)
+        set(CLIPPER2_UTILS OFF CACHE BOOL "" FORCE)
+        set(CLIPPER2_EXAMPLES OFF CACHE BOOL "" FORCE)
+        set(CLIPPER2_TESTS OFF CACHE BOOL "" FORCE)
+        set(CLIPPER2_USINGZ OFF CACHE BOOL "" FORCE)
+        FetchContent_Declare(Clipper2
+            URL https://codeload.github.com/AngusJohnson/Clipper2/tar.gz/11ef6ca611a732e7d75fcc1b4abe89387523fa64
+            URL_HASH SHA256=edd52de5f99f65a26c537059365dab0d1f1456a6bf942d3e9f16fa9c524e3915
+            SOURCE_SUBDIR CPP
+        )
+        FetchContent_MakeAvailable(Clipper2)
+        set(MANIFOLD_TEST OFF CACHE BOOL "" FORCE)
+        set(MANIFOLD_PAR OFF CACHE BOOL "" FORCE)
+        set(MANIFOLD_STRICT OFF CACHE BOOL "" FORCE)
+        FetchContent_Declare(manifold
+            URL https://codeload.github.com/elalish/manifold/tar.gz/798d83c8d7fabcddd23c1617097b95ba40f2597c
+            URL_HASH SHA256=ed63e2079a0280e11b5de8e17c86d94906dfe1d22294041898d584357765c2e8
+        )
+        FetchContent_MakeAvailable(manifold)
+    endif()
+    add_executable(deathward_cliff_alternatives EXCLUDE_FROM_ALL ${cliff_game_sources}
+        "${CMAKE_CURRENT_BINARY_DIR}/CliffExperimentMain.cpp" "${CMAKE_CURRENT_BINARY_DIR}/CliffExperimentScene.cpp" tools/cliff_experiments/CliffExperiments.cpp tools/cliff_experiments/PrototypeGeometry.cpp tools/cliff_experiments/RockFormations.cpp tools/cliff_experiments/PlateauSurface.cpp tools/cliff_experiments/PlateauRoof.cpp tools/cliff_experiments/PlateauRegion.cpp tools/cliff_experiments/PlateauChunks.cpp tools/cliff_experiments/PlateauArrangement.cpp tools/cliff_experiments/PlateauTerrainJoin.cpp tools/cliff_experiments/PlateauConnectionAudit.cpp tools/cliff_experiments/FormationScenery.cpp tools/cliff_experiments/FormationComposition.cpp tools/cliff_experiments/FormationSections.cpp tools/cliff_experiments/FormationLocalFrame.cpp)
+    target_include_directories(deathward_cliff_alternatives PRIVATE tools/cliff_experiments)
+    target_link_libraries(deathward_cliff_alternatives PRIVATE deathward_core raylib)
+    deathward_assets(deathward_cliff_alternatives)
+    add_executable(deathward_formation_cases EXCLUDE_FROM_ALL
+        tools/cliff_experiments/FormationCases.cpp tools/cliff_experiments/FormationSections.cpp)
+    target_include_directories(deathward_formation_cases PRIVATE tools/cliff_experiments)
+    target_link_libraries(deathward_formation_cases PRIVATE deathward_core raylib)
+    # Headless copy of the native seeded preview path, including its audits and replay.
+    add_executable(deathward_formation_audit EXCLUDE_FROM_ALL tools/cliff_experiments/FormationAudit.cpp
+        tools/cliff_experiments/CliffExperiments.cpp tools/cliff_experiments/PrototypeGeometry.cpp
+        tools/cliff_experiments/RockFormations.cpp tools/cliff_experiments/PlateauSurface.cpp tools/cliff_experiments/PlateauRoof.cpp tools/cliff_experiments/PlateauRegion.cpp tools/cliff_experiments/PlateauChunks.cpp tools/cliff_experiments/PlateauArrangement.cpp
+        tools/cliff_experiments/PlateauTerrainJoin.cpp tools/cliff_experiments/PlateauConnectionAudit.cpp
+        tools/cliff_experiments/FormationScenery.cpp tools/cliff_experiments/FormationComposition.cpp
+        tools/cliff_experiments/FormationSections.cpp tools/cliff_experiments/FormationLocalFrame.cpp)
+    target_include_directories(deathward_formation_audit PRIVATE src tools/cliff_experiments)
+    target_link_libraries(deathward_formation_audit PRIVATE deathward_core raylib)
+    # Isolated topology experiment; production terrain never calls this code.
+    add_executable(deathward_cliff_topology_study tests/cliff_topology_study.cpp)
+    target_link_libraries(deathward_cliff_topology_study PRIVATE deathward_core raylib deathward_mission_lighting)
+    target_compile_definitions(deathward_cliff_topology_study PRIVATE DEATHWARD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
     add_executable(deathward_canyon_geometry_capture tests/canyon_geometry_capture.cpp)
     target_link_libraries(deathward_canyon_geometry_capture PRIVATE deathward_core raylib)
     target_compile_definitions(deathward_canyon_geometry_capture PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")
+    add_executable(deathward_cliff_facet_refinement_tests tests/cliff_facet_refinement_tests.cpp)
+    target_link_libraries(deathward_cliff_facet_refinement_tests PRIVATE deathward_core)
+    add_test(NAME cliff_facet_refinement COMMAND deathward_cliff_facet_refinement_tests)
+    add_executable(deathward_rock_formations_tests tests/rock_formations_tests.cpp
+        tools/cliff_experiments/RockFormations.cpp tools/cliff_experiments/PlateauSurface.cpp tools/cliff_experiments/PlateauRoof.cpp tools/cliff_experiments/PlateauRegion.cpp tools/cliff_experiments/PlateauChunks.cpp tools/cliff_experiments/PlateauArrangement.cpp tools/cliff_experiments/PlateauTerrainJoin.cpp tools/cliff_experiments/PlateauConnectionAudit.cpp tools/cliff_experiments/FormationScenery.cpp tools/cliff_experiments/FormationComposition.cpp tools/cliff_experiments/FormationSections.cpp tools/cliff_experiments/FormationLocalFrame.cpp)
+    target_include_directories(deathward_rock_formations_tests PRIVATE tools/cliff_experiments)
+    target_link_libraries(deathward_rock_formations_tests PRIVATE deathward_core raylib)
+    if(DEATHWARD_CLIFF_REGION_EXPERIMENT)
+        foreach(cliff_target deathward_cliff_alternatives deathward_formation_audit deathward_rock_formations_tests)
+            target_compile_definitions(${cliff_target} PRIVATE DEATHWARD_CLIFF_REGION_EXPERIMENT=1)
+            target_include_directories(${cliff_target} PRIVATE ${Boost_INCLUDE_DIRS})
+        endforeach()
+    endif()
+    if(DEATHWARD_CLIFF_BOOLEAN_EXPERIMENT)
+        foreach(cliff_target deathward_cliff_alternatives deathward_formation_audit deathward_rock_formations_tests)
+            target_compile_definitions(${cliff_target} PRIVATE DEATHWARD_CLIFF_BOOLEAN_EXPERIMENT=1)
+            target_sources(${cliff_target} PRIVATE tools/cliff_experiments/SolidBoolean.cpp tools/cliff_experiments/PreciseFragments.cpp tools/cliff_experiments/PlateauOwnership.cpp)
+            target_link_libraries(${cliff_target} PRIVATE manifold Clipper2)
+        endforeach()
+    endif()
+    if(DEATHWARD_CLIFF_BOOLEAN_EXPERIMENT)
+        get_target_property(terrain_join_sources deathward_formation_audit SOURCES)
+        list(REMOVE_ITEM terrain_join_sources tools/cliff_experiments/FormationAudit.cpp)
+        add_executable(deathward_terrain_join_replay EXCLUDE_FROM_ALL
+            tools/cliff_experiments/TerrainJoinReplay.cpp ${terrain_join_sources})
+        target_include_directories(deathward_terrain_join_replay PRIVATE src tools/cliff_experiments)
+        target_compile_definitions(deathward_terrain_join_replay PRIVATE DEATHWARD_CLIFF_BOOLEAN_EXPERIMENT=1)
+        if(DEATHWARD_CLIFF_REGION_EXPERIMENT)
+            target_compile_definitions(deathward_terrain_join_replay PRIVATE DEATHWARD_CLIFF_REGION_EXPERIMENT=1)
+            target_include_directories(deathward_terrain_join_replay PRIVATE ${Boost_INCLUDE_DIRS})
+        endif()
+        target_link_libraries(deathward_terrain_join_replay PRIVATE deathward_core raylib manifold Clipper2)
+    endif()
+    add_test(NAME rock_formations COMMAND deathward_rock_formations_tests)
     add_executable(deathward_canyon_appearance_tests tests/canyon_appearance_tests.cpp)
     target_link_libraries(deathward_canyon_appearance_tests PRIVATE deathward_core)
     target_compile_definitions(deathward_canyon_appearance_tests PRIVATE DEATHWARD_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets")

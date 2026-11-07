@@ -1,4 +1,6 @@
 #include "world/CanyonAppearance.hpp"
+#include "world/CliffWallTopology.hpp"
+#include <tuple>
 #include "world/Dungeon.hpp"
 #include <fstream>
 #include <map>
@@ -163,11 +165,13 @@ CanyonVisualParameters CanyonVisualParameters::load(const std::filesystem::path 
         if (key == "DEATHWARD_CANYON") {
             if (!(row >> version) || version != 1)
                 throw std::runtime_error("Invalid canyon visual version");
-        } else if (key == "enabled" || key == "irregular_facets") {
+        } else if (key == "enabled" || key == "irregular_facets" || key == "polygon_facets") {
             int v;
             if (!(row >> v) || (v != 0 && v != 1))
                 throw std::runtime_error("Invalid canyon enabled flag");
-            (key == "enabled" ? p.enabled : p.irregularFacets) = v;
+            (key == "enabled"          ? p.enabled
+             : key == "polygon_facets" ? p.polygonFacets
+                                       : p.irregularFacets) = v;
         } else if (key == "terrace_count" || key == "candidates_per_room" || key == "maximum_decorations") {
             int v;
             if (!(row >> v))
@@ -827,51 +831,122 @@ CanyonAppearance buildCanyonAppearance(const Arena &arena, const CanyonVisualPar
     std::stable_partition(out.decorations.begin(), out.decorations.end(),
                           [](const auto &d) { return !d.extraVegetation; });
     if (p.irregularFacets && p.facets > 0) {
-        // Decoration placement uses the original surface. This final pass
-        // changes only wall interiors, retaining every original perimeter edge.
+        // Only wall interiors change. Top/bottom contours and all non-wall triangles
+        // stay fixed. Connected faces share a 2D network rather than a fan per column.
+        using cliffDetail::Quad;
+        struct Face {
+            Quad q;
+            size_t triangle;
+        };
+        std::vector<Face> faces;
+        using Edge = std::array<int64_t, 6>;
+        auto edge = [](Vector3 a, Vector3 b) {
+            return Edge{std::llround(a.x * 1000), std::llround(a.y * 1000), std::llround(a.z * 1000),
+                        std::llround(b.x * 1000), std::llround(b.y * 1000), std::llround(b.z * 1000)};
+        };
+        std::map<Edge, std::vector<size_t>> starts;
+        std::map<Edge, int> ends;
+        auto protectedCover = [&](Vector3 at) {
+            for (const auto &room : arena.rooms)
+                for (const auto &box : room.obstacles)
+                    if (at.x >= box.min.x - source.step && at.x <= box.max.x + source.step &&
+                        at.z >= box.min.z - source.step && at.z <= box.max.z + source.step)
+                        return true;
+            return false;
+        };
+        for (size_t i = 0; i + 1 < out.triangles.size(); ++i) {
+            const auto &a = out.triangles[i], &b = out.triangles[i + 1];
+            if (!a.rock || !b.rock || !cliffDetail::near(a.vertices[0], b.vertices[0]) ||
+                !cliffDetail::near(a.vertices[1], b.vertices[2]))
+                continue;
+            Quad q{a.vertices[0], b.vertices[1], a.vertices[1], a.vertices[2]};
+            auto n = cliffDetail::normal(q);
+            auto mid = mul(add(q.at, q.bt), .5f);
+            if (std::abs(n.y) > (p.polygonFacets ? .65f : .35f) ||
+                std::min(q.at.y - q.ab.y, q.bt.y - q.bb.y) < .4f ||
+                distance(q.ab, q.bb) < (p.polygonFacets ? .001f : .1f) ||
+                (p.polygonFacets ? protectedCover(mid) : outcropWeight(mid) >= .5f))
+                continue;
+            starts[edge(q.ab, q.at)].push_back(faces.size());
+            ++ends[edge(q.bb, q.bt)];
+            faces.push_back({q, i});
+            ++i;
+        }
+        std::vector<bool> used(faces.size()), skip(out.triangles.size());
+        std::map<size_t, std::vector<CanyonSurfaceTriangle>> replacements;
+        std::vector<size_t> order;
+        for (size_t i = 0; i < faces.size(); ++i)
+            if (!ends.contains(edge(faces[i].q.ab, faces[i].q.at)))
+                order.push_back(i);
+        for (size_t i = 0; i < faces.size(); ++i)
+            order.push_back(i);
+        for (auto first : order) {
+            if (used[first])
+                continue;
+            std::vector<size_t> chain;
+            std::vector<Quad> patch;
+            size_t next = first;
+            float width = 0;
+            while (!used[next]) {
+                auto q = faces[next].q;
+                used[next] = true;
+                chain.push_back(next);
+                patch.push_back(q);
+                width += distance(q.ab, q.bb);
+                if (patch.size() >= (p.polygonFacets ? 64u : 12u))
+                    break;
+                auto it = starts.find(edge(q.bb, q.bt));
+                if (it == starts.end() || it->second.size() != 1)
+                    break;
+                next = it->second.front();
+                auto candidate = faces[next].q;
+                // Source clipping makes staircase contours with alternating 90-degree
+                // grid edges. They belong to one rock surface, not separate columns.
+                if (used[next] ||
+                    dot(cliffDetail::normal(patch.front()), cliffDetail::normal(candidate)) <
+                        (p.polygonFacets ? -.35f : .35f) ||
+                    width + distance(candidate.ab, candidate.bb) > (p.polygonFacets ? 32 : 11))
+                    break;
+            }
+            if (patch.size() < 3 && (patch.front().at.y - patch.front().ab.y < 1.f || width < .6f)) {
+                ++out.cliffTopologyFallbacks;
+                continue;
+            }
+            try {
+                const auto mid = patch.front().ab;
+                uint64_t localSeed = out.seed ^
+                                     uint64_t(int64_t(std::llround(mid.x * 1000))) * 0x9e3779b97f4a7c15ULL ^
+                                     uint64_t(int64_t(std::llround(mid.z * 1000))) * 0xbf58476d1ce4e5b9ULL;
+                auto mesh =
+                    p.polygonFacets
+                        ? cliffDetail::buildSelectedA(patch, localSeed, std::clamp(p.facets / .35f, 0.f, 1.f))
+                        : cliffDetail::build(patch, localSeed, std::clamp(p.facets / .35f, 0.f, 1.f));
+                out.cliffQuads += mesh.quads;
+                out.cliffNgons += mesh.ngons;
+                out.cliffChips += mesh.chips;
+                auto &replacement = replacements[faces[first].triangle];
+                for (auto t : mesh.triangles)
+                    replacement.push_back(
+                        {{mesh.vertices[t.a], mesh.vertices[t.b], mesh.vertices[t.c]}, true});
+                for (auto index : chain) {
+                    skip[faces[index].triangle] = true;
+                    skip[faces[index].triangle + 1] = true;
+                }
+                ++out.cliffTopologyPatches;
+            } catch (const std::runtime_error &) {
+                // Tiny/degenerate corners keep their original faces; never risk a gap.
+                ++out.cliffTopologyFallbacks;
+            }
+        }
         std::vector<CanyonSurfaceTriangle> detailed;
         std::vector<size_t> offsets;
-        auto emit = [&](Vector3 a, Vector3 b, Vector3 c) {
-            auto n = cross(sub(b, a), sub(c, a));
-            if (dot(n, n) > 1e-10f)
-                detailed.push_back({{a, b, c}, true});
-        };
         for (size_t cell = 0; cell + 1 < out.cellOffsets.size(); ++cell) {
             offsets.push_back(detailed.size());
-            size_t i = out.cellOffsets[cell], end = out.cellOffsets[cell + 1];
-            while (i < end) {
-                const auto &first = out.triangles[i];
-                bool pair = i + 1 < end && first.rock && out.triangles[i + 1].rock &&
-                            distance(first.vertices[0], out.triangles[i + 1].vertices[0]) < .000001f &&
-                            distance(first.vertices[1], out.triangles[i + 1].vertices[2]) < .000001f;
-                if (pair) {
-                    auto ab = first.vertices[0], bt = first.vertices[1], at = first.vertices[2],
-                         bb = out.triangles[i + 1].vertices[1];
-                    auto normal = unit(cross(sub(bb, ab), sub(bt, ab)));
-                    auto mid = mul(add(at, bt), .5f);
-                    float rise = std::min(at.y - ab.y, bt.y - bb.y), width = distance(at, bt);
-                    if (std::abs(normal.y) < .35f && outcropWeight(mid) < .5f && rise > .3f && width > .25f) {
-                        int x = int(std::floor(mid.x * 1.7f)), z = int(std::floor(mid.z * 1.7f));
-                        float u = .28f + .44f * hash(x, z, out.seed ^ 0x4641434554ULL);
-                        float v = .28f + .44f * hash(x, z, out.seed ^ 0x484549474854ULL);
-                        auto lower = add(ab, mul(sub(bb, ab), u)), upper = add(at, mul(sub(bt, at), u));
-                        auto center = add(lower, mul(sub(upper, lower), v));
-                        float relief =
-                            std::min(width, rise) *
-                            (.08f + .12f * noise(mid.x / 2.5f, mid.z / 2.5f, out.seed ^ 0x524f434bULL)) *
-                            p.facets / .35f;
-                        relief = std::min(relief, rise * std::min(v, 1 - v) * .28f);
-                        center = add(center, mul(unit({-normal.x, 0, -normal.z}), relief));
-                        emit(ab, bb, center);
-                        emit(bb, bt, center);
-                        emit(bt, at, center);
-                        emit(at, ab, center);
-                        i += 2;
-                        continue;
-                    }
-                }
-                detailed.push_back(first);
-                ++i;
+            for (size_t i = out.cellOffsets[cell]; i < out.cellOffsets[cell + 1]; ++i) {
+                if (auto it = replacements.find(i); it != replacements.end())
+                    detailed.insert(detailed.end(), it->second.begin(), it->second.end());
+                if (!skip[i])
+                    detailed.push_back(out.triangles[i]);
             }
         }
         offsets.push_back(detailed.size());

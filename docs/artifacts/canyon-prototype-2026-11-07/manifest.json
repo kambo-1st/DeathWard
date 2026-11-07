@@ -1,0 +1,30 @@
+{
+  "artifact": "canyon-prototype-2026-11-07",
+  "created_utc": "2026-11-07T17:39:42.263916+00:00",
+  "base_commit": "6d13c1a0b1592a228feb44ac7f86a56d364023b1",
+  "source_state": "dirty snapshot; tracked patch and untracked source are preserved",
+  "goal_status": "paused; incomplete",
+  "original_binary_sha256": "76f0a6a588c764834a5a4dcea723de9ef24a40baad0f7416ef9a829b1dff7f9c",
+  "original_binary_asset_path": "/home/kambo/workspace/DeathWard/assets",
+  "full_accepted_native_generalized_assemblies": 0,
+  "completed_separate_deliverable": "C++ asset browser source and verification included",
+  "unfinished": [
+    "generalized seamless plateau join",
+    "cap/facet visual acceptance",
+    "neighbouring-wall/world coverage",
+    "performance acceptance",
+    "gameplay/occlusion acceptance",
+    "production Old/New selection"
+  ],
+  "portable_verification": {
+    "packaged_launcher_exit": 0,
+    "relocated_launch_exit": 0,
+    "successful_relocated_asset_opens": 119,
+    "original_checkout_asset_access": false,
+    "snapshot_source_asset_access": false,
+    "runtime_sha256": "920f8b5f7375d0f49ed7207f16946b5684196107089a29812b59a92eb30d2a32",
+    "portable_relocation_pass": true
+  },
+  "runtime_platform": "Linux x86-64; native graphics/C++ runtime required",
+  "archived_reports": "Full canyon report tree, including failed and superseded trials"
+}

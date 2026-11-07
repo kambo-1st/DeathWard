@@ -1,0 +1,24 @@
+{
+  "status": "paused",
+  "stop_reason": "User cancelled further canyon work.",
+  "full_accepted_native_assemblies": 0,
+  "production_mode": "A",
+  "new_mode_accepted": false,
+  "latest_results": {
+    "fresh_optional_build": "pass: replay, rock tests, formation audit",
+    "fresh_optional_kernel_tests": "pass",
+    "projection_audit": "10138 integer witnesses pass; projection only",
+    "native_rectangular_join": "fallback",
+    "native_whole_source_join": "fallback",
+    "source_baseline": "Captured original selected surface also has open boundaries/vertex-link and intersection defects; reconstruction adds further defects. No final gate changed to accept these."
+  },
+  "unfinished": [
+    "Seamless full native terrain join",
+    "Cap lips/facets/rear-edge visual acceptance",
+    "Other core budgets and convex crossing",
+    "Neighbouring-wall/world closure",
+    "Controlled performance and gameplay/occlusion acceptance",
+    "Production Old/New selection and rollback"
+  ],
+  "artifacts": "visual-review contains original and explicitly rejected candidate GLBs; these are inspection artifacts."
+}

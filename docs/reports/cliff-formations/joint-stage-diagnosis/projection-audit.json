@@ -1,0 +1,16 @@
+{
+  "scope": "exact integer projection witnesses; not assembled acceptance",
+  "core_sha256": "38389e022c6cfa9db558608688ac3d66ef3aa307d9b32f58cec395ed68eb751c",
+  "projection_sha256": "9587b1679f33f09070fde4d4430145ab10b0fce6421f4b53a448ff1d000a5b2c",
+  "core_faces": 2134,
+  "projected_triangles": 1775,
+  "raw_rings": 39,
+  "normalized_rings": 3,
+  "binary_scale_bits": 40,
+  "input_vertices_exact": true,
+  "queries": 10138,
+  "boundary_rounding_witnesses": 21,
+  "boundary_rounding_bound_m": 1.8189894035458565e-12,
+  "failures": [],
+  "pass": true
+}

@@ -1,0 +1,2 @@
+SOURCE_BASELINE name=selected triangles=2211 open=351 nonmanifold=0 links=13 crossings=65 overlaps=0 degenerate=0 winding=0 accepted=false diagnostic_only=true
+SOURCE_BASELINE name=with-context triangles=2753 open=611 nonmanifold=0 links=73 crossings=111 overlaps=0 degenerate=0 winding=0 accepted=false diagnostic_only=true

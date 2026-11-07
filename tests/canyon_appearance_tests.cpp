@@ -23,11 +23,11 @@ uint64_t fingerprint(const CanyonTerrain &f) {
 void configuration() {
     const auto path = std::filesystem::path(DEATHWARD_ASSET_DIR) / "visual/canyon.cfg";
     const auto p = CanyonVisualParameters::load(path);
-    check(p.enabled && p.irregularFacets && p.terraces == 3, "production config enables three-tier presentation");
+    check(p.enabled && p.irregularFacets && p.polygonFacets && p.terraces == 3, "production config enables three-tier presentation");
     auto bad = std::filesystem::temp_directory_path() / "deathward-canyon-invalid.cfg";
     for (const auto *line : {"terrace_count 0", "minimum_height -1", "maximum_height 0", "facet_variation 2",
                              "composition_strength 1.1", "plateau_vegetation -1", "maximum_decorations 6001",
-                             "terrace_count 2.5", "unknown 3", "enabled 2", "enabled 1\nenabled 0", "irregular_facets 2"}) {
+                             "terrace_count 2.5", "unknown 3", "enabled 2", "enabled 1\nenabled 0", "irregular_facets 2", "polygon_facets 2"}) {
         std::ofstream(bad) << "DEATHWARD_CANYON 1\n" << line << '\n';
         bool rejected = false;
         try {
@@ -38,7 +38,7 @@ void configuration() {
         check(rejected, "bad or duplicate visual parameters rejected");
     }
     std::filesystem::remove(bad);
-    std::cout << "CONFIG validated_parameters=12 default_loaded=1\n";
+    std::cout << "CONFIG validated_parameters=13 default_loaded=1\n";
 }
 void narrowSupportRegression() {
     CanyonAppearance f;
@@ -147,6 +147,7 @@ void verify() {
                 else
                     bevelArea += area;
             }
+            std::cout << "TOPOLOGY patches=" << look.cliffTopologyPatches << " unchanged_corners=" << look.cliffTopologyFallbacks << " triangles=" << look.triangles.size() << " budget=" << (look.surface.width-1)*(look.surface.depth-1)*8 << std::endl;
             std::cout << "SURFACES seed=" << seed << " river=" << river << " caps=" << flatArea
                       << " walls=" << wallArea << " bevels=" << bevelArea << std::endl;
             check(flatArea > wallArea * .4 && wallArea > bevelArea * 2,
@@ -185,6 +186,8 @@ void verify() {
                       old.triangles.empty(),
                   "enabled0 restores original surface and dressing path");
             if (seed == 1866 && !river) {
+                check(look.cliffQuads>0 && look.cliffNgons>0 && look.cliffChips>0,"selected A mixed faces and chips are enabled");
+                std::cout<<"POLYGONS quads="<<look.cliffQuads<<" ngons="<<look.cliffNgons<<" chips="<<look.cliffChips<<std::endl;
                 auto plainParameters=CanyonVisualParameters{};plainParameters.irregularFacets=false;
                 auto plain=buildCanyonAppearance(arena,plainParameters);
                 check(plain.surface.heights==look.surface.heights,"face detail preserves every elevation");
