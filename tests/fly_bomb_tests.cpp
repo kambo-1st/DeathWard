@@ -29,7 +29,7 @@ void contactAndDeath() {
     const auto target=contact.spawnMonster(monsterId(25),{2,.85f,0});contact.findEnemy(target)->hp=500;
     contact.step({});
     check(!contact.findEnemy(fly)&&contact.stats.explosions==1&&contact.enemyBombs.empty(),"Contact detonates once immediately without a delayed duplicate");
-    check(contact.player.hp==87.5f&&contact.findEnemy(target)->hp==460,"Contact blast has base half-heart ratio and 40 enemy damage");
+    check(contact.player.hp==StartingHealth-1&&contact.findEnemy(target)->hp==460,"Contact blast has base half-heart ratio and 40 enemy damage");
     tick(contact,10);check(contact.stats.explosions==1,"Later ticks cannot repeat contact explosion");
 
     auto death=fixture();death.godMode=false;death.player.position={2.5f,.85f,0};
@@ -40,8 +40,8 @@ void contactAndDeath() {
     check(bomb.ordnance==monsterId(4,14)&&bomb.source==killed&&bomb.sourceMonster==monsterId(819),"Ordnance retains source and component identities");
     death.debugScenario=false;tick(death,1);
     check(death.roomClear&&death.enemyBombs.size()==1,"Last enemy death opens room without deleting the bomb");
-    tick(death,58);check(death.stats.explosions==0&&death.player.hp==100,"Death fuse affords the configured delay");
-    tick(death,3);check(death.stats.explosions==1&&death.player.hp==75&&death.enemyBombs.empty(),"Delayed blast survives clear and deals full-heart ratio once");
+    tick(death,58);check(death.stats.explosions==0&&death.player.hp==StartingHealth,"Death fuse affords the configured delay");
+    tick(death,3);check(death.stats.explosions==1&&death.player.hp==StartingHealth-2&&death.enemyBombs.empty(),"Delayed blast survives clear and deals full-heart ratio once");
     auto collateral=fixture();const auto doomed=collateral.spawnMonster(monsterId(819),{0,.85f,0});
     const auto victim=collateral.spawnMonster(monsterId(14),{1,.85f,0});collateral.findEnemy(victim)->hp=500;
     hit(collateral,doomed,24);tick(collateral,62);

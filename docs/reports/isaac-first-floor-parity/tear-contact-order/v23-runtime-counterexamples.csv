@@ -1,0 +1,11 @@
+case,scenario,native_supplied_pass_damage_target,current_birth_hp0,current_birth_hp1,current_birth_x,current_birth_z,current_birth_clock,current_odd_hp0,current_odd_hp1,current_next_main_hp0,current_next_main_hp1,first_step_damage_matches
+697,inside,npc0,10,10,0,0,0.0166667,6.5,10,6.5,10,0
+745,tangent,,10,10,0,0,0.0166667,6.5,10,6.5,10,1
+793,just_inside,npc0,10,10,0,0,0.0166667,6.5,10,6.5,10,0
+841,just_outside,,10,10,0,0,0.0166667,6.5,10,6.5,10,1
+889,swept_only,,10,10,0,0,0.0166667,10,10,10,10,1
+937,farther_first,npc1,10,10,0,0,0.0166667,10,6.5,10,6.5,0
+985,opposite_cells,npc0,10,10,0,0,0.0166667,6.5,10,6.5,10,0
+1033,vertical_pair,npc0,10,10,0,0,0.0166667,6.5,10,6.5,10,0
+1081,no_contact,,10,10,0,0,0.0166667,10,10,10,10,1
+1129,same_center,npc0,10,10,0,0,0.0166667,6.5,10,6.5,10,0

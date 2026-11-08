@@ -434,6 +434,8 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
     if(e.flash<=0&&poisoned)skin=ColorLerp(skin,{118,177,76,255},.6f);
     if(e.flash<=0&&burning)skin=ColorLerp(skin,{218,103,48,255},.55f);
     const bool frozen=e.affectedBy(EnemyStatus::Freeze);
+    const bool midas=e.statuses&&e.statuses->midas>0;
+    if(midas&&e.flash<=0)skin={225,175,61,255};
     if(e.flash<=0&&frozen)skin=ColorLerp(skin,{133,204,235,255},.65f);
     if (type == 884 && std::fmod(time, .7f) < .16f)
         skin = {240, 206, 65, 255};
@@ -471,7 +473,7 @@ inline void drawMonsterModel(const Enemy &e, const MonsterDefinition &d, bool dr
         DrawSphereEx(add(center,mul(side,.12f)),.15f,4,6,pink);
         DrawCylinderEx(add(center,{0,-.28f,0}),center,0,.23f,4,pink);
     }
-    if(frozen) {
+    if(frozen&&!midas) {
         // A still six-spoke frost mark is distinct from Fear's two strokes;
         // no opaque ice block hides the enemy silhouette or attack pose.
         const auto center=add(p,{0,r*2.3f,0});

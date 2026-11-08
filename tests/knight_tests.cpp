@@ -88,7 +88,7 @@ void hoppingAndCreep() {
     check(e.landingCreep->patches==1&&s.hazards.size()==1,"Land emits exactly one red footprint");
     const auto patch=s.hazards.front();check(near(patch.duration,125.f/30)&&near(patch.radius,2.5f),"source creep scale and lifetime preserved");
     hit(s,id,10000);s.enemies.clear();s.hazards={patch};s.player.position=patch.position;s.player.hurt=0;s.godMode=false;
-    tick(s);check(near(s.player.hp,87.5f),"red landing patch damages after owner death");
+    tick(s);check(near(s.player.hp,StartingHealth-1),"red landing patch damages after owner death");
     s.hazards.front().age=s.hazards.front().duration;s.player.hurt=0;const float hp=s.player.hp;tick(s);
     check(near(s.player.hp,hp),"fading footprint is harmless");
     auto blocked=fixture();blocked.player.position={8,.85f,0};

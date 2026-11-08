@@ -1,0 +1,91 @@
+{
+  "validated_at_utc": "2026-11-08T02:16:34Z",
+  "runtime_mechanics_fingerprint": "isaac-baseline-v14",
+  "native_update_cases": 96,
+  "native_update_states": 11184,
+  "native_blast_requests": 162,
+  "native_sound_requests": 156,
+  "maximum_native_update_numeric_difference": 0,
+  "native_mt_words_compared": 4200,
+  "whole_update_grounded_world_states": 288,
+  "historical_72_base_only_states_not_full_motion": true,
+  "native_regeneration_check": "passed",
+  "animation_metadata_check": "passed:five files",
+  "selected_test_suites_passed": 24,
+  "selected_tests_seconds": 16.29,
+  "application_build": "passed",
+  "graphical_inspections": {
+    "before": {
+      "frames": 70,
+      "screenshot": "before.png",
+      "viewed": true,
+      "half_hearts": 6,
+      "ammunition": 3,
+      "active_actors": 3,
+      "pending_spawns": 0,
+      "variants": [
+        3,
+        4,
+        18
+      ],
+      "landing_events_per_actor": 1
+    },
+    "after": {
+      "frames": 360,
+      "screenshot": "after.png",
+      "viewed": true,
+      "half_hearts": 4,
+      "ammunition": 3,
+      "active_actors": 1,
+      "variant": 18,
+      "golden_blasts": 2,
+      "golden_landing_events": 3,
+      "pending_spawns": 0,
+      "pending_blast": false
+    },
+    "god_mode": false
+  },
+  "source_troll_actors_enabled": [
+    3,
+    4,
+    18
+  ],
+  "source_actor_converting_resource_subtypes": [
+    3,
+    5,
+    6
+  ],
+  "source_production_room_rewards_enabled": false,
+  "full_actor_acceptance": false,
+  "universal_dodge_boost_and_immunity_retained": true,
+  "fully_accepted_broad_areas": 0,
+  "remaining_broad_areas": 6,
+  "source_actor_header_sha256": "e7b4ec1131c96e8389a1bc474f05ed1b748c9c2ee1504b6de8d4646e2f20ebcd",
+  "artifact_sha256": {
+    "README.md": "9b8bdba8b7549a8e1a9601c4ca89deed38a595516e2da8e48120c58b3701bc95",
+    "after-render.log": "673e158af0429ace2b135d5a58390a3f0cb1c802287163a2d1d5f42742d6cbd0",
+    "after.png": "302bcd113e3955dc6315ed163da63847cf5e70d44f551f9e9b26fb197e3fd706",
+    "animation-check.log": "ae28d98a0174b614822add9fd12e9b64f8a9bde8cd4b8997cd703bd26f92bee7",
+    "before-render.log": "ca2d2161d3e148632d34664d45bc7fb844bcf06e4b43fb1c0e4d94201088f367",
+    "before.png": "a765630fda544e0ec9b1a3f074e681ff4897aa686a71fa9e3fc3ed12023ff81b",
+    "bomb_update.asm": "cc065816d53e6fd44db576f290acc373fbe821ef982bda0a324629ec3a5cb0d9",
+    "hashed_direction.asm": "6abe2e57176a7831d546e1313d3cebe1b0f5d3198fc0c7be1af7f154500dabad",
+    "kernel-test.log": "ab5a3ab720b094e22b545867d03b2a98bcfa241f588e34376fae77a129b8dc49",
+    "layer_change.asm": "f30ff565fe7a0e348a7400ebf1cd24a4349722e3e6d3a51971b100b43b318e8f",
+    "layer_float_frame.asm": "97460f4196ae3804176f4efc02be2b49cc860439bec48fcf43f0e331950def29",
+    "layer_restart.asm": "9efdc72011b7cf4ab27125946361dc8706fa873a762d22c0ea26ee662c7545b3",
+    "layer_update.asm": "40c8dae5cfc7050c0833f2e7d0f15dd1bf8d586a3a7e4cc97b058d532948cca2",
+    "manifest.json": "ee101a9a0a30614b1ecf186bb696e1cd0696a94ba9b96a5d98d91010f6c71073",
+    "native-blast-requests.csv": "a58bf158ba93e95db69b338b7b900533cbf1ec9aa64d37fd45aa196d297b58e0",
+    "native-check.log": "cebb12c9b3f4df977d03317dcbb4475121b2ea78ccb8aef14ed390010c9d7ec3",
+    "native-grounded-motion.csv": "5e538bf1419cbe5f3d204b8e624ede19f313d57b919f6cdd02d5b38f22531237",
+    "native-sound-requests.csv": "443387df89c1a83cb4a42b21d1f009e90423254eba749927de42d439e904e68a",
+    "native-spawn-rng.csv": "925b49f2b0164d2aa5b9a35508ed4803791fc548d6888c911d9dc48584edb47e",
+    "native-updates.csv": "8689f1077a80f8ee26aaea8c6fae2f11fabef50a208a08e9cef635f2dedfbb62",
+    "selected-build.log": "1764c87ba4c42667fd345ec815481451877535649e6d75c2fb58330d4c6d1aaa",
+    "selected-tests.log": "7e95d51be1958fc4e449a8bf14467c6eef408a1a44df081e1d7b4b4f0cc468c1",
+    "sprite_play.asm": "075d1a7ecb58823e9f76acc7e908458d209d7e268614a29c6cf434cfeb0ba0c7",
+    "sprite_select.asm": "ba6d97cb25580d0c361e0607ecb3bea4fd50f34b6531aaf4dabd982fc99b4f18"
+  },
+  "application_sha256": "45fcd2e568666eca2dce4a0aab954511e5b7b73de143b5c2522fb8a78ccd1261"
+}

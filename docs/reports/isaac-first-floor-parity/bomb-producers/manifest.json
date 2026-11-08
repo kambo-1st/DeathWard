@@ -1,0 +1,76 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "spawn_intent_cases": 18,
+  "npc_parent_update_states": 1083,
+  "blast_intent_cases": 9,
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "floor": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06524",
+        "export": "0x10090de0"
+      },
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "nextafterf": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06550",
+        "export": "0x10052400"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 0,
+      "_libm_sse2_sin_precise": 0,
+      "_libm_sse2_pow_precise": 0,
+      "floor": 3612,
+      "nextafterf": 18
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "windows": [
+    {
+      "name": "voluntary_blast",
+      "start": "0x4f9e1a",
+      "end_exclusive": "0x4f9e8d",
+      "sha256": "d17c27fe84f4c109bea34bfa8a8092364a2080c00fd3532f9b944101636789ea"
+    },
+    {
+      "name": "mulliboom_death_blast",
+      "start": "0x4f9f31",
+      "end_exclusive": "0x4f9f86",
+      "sha256": "839f6a93a584ce0f52b9355e622005260b286bda4b14b93835c660c414136db2"
+    },
+    {
+      "name": "mulligoon_death_spawn",
+      "start": "0x4f9fd6",
+      "end_exclusive": "0x4fa044",
+      "sha256": "ba2c215a0f7a01e719e099301a5e0ab5a24d74db4f25d0089bd6ec55995f3760"
+    },
+    {
+      "name": "npc_parent_filter",
+      "start": "0x67b342",
+      "end_exclusive": "0x67b361",
+      "sha256": "231c1f1ccc422fd67ec72ebca5f3d372c2cade805774d52576a9c61a640b3bf8"
+    }
+  ],
+  "scope": "Original late Mulligoon death spawn branch executes global MT word generation and complete spawn arguments, stopping before Spawn. Full child Bomb::Update then runs with the captured InitSeed and a supplied dead16.1 parent pointer, using the existing native bomb fixture. Separate voluntary16.0/16.1 and death16.2 slices stop before BombDamage and capture40 damage/60radius/linecheck1/sourceNPC/flags4. Earlier projectile emission, complete NPC AI, whole Spawn allocation, blast recipient effects, global seed/call order and full actor acceptance are excluded. External child sound/blast endpoints are hosted exactly as documented in the troll-bomb fixture.",
+  "full_acceptance": false
+}

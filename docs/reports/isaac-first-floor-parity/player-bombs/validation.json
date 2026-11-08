@@ -1,0 +1,73 @@
+{
+  "validated_at_utc": "2026-11-08T01:27:15Z",
+  "runtime_mechanics_fingerprint": "isaac-baseline-v12",
+  "native_initialization_cases": 48,
+  "native_countdown_cases": 82,
+  "native_inheritance_cases": 6,
+  "native_free_motion_states": 72,
+  "native_base_radius_cases": 12,
+  "native_incoming_player_amount_cases": 21,
+  "native_entity_rng_shifts": [
+    4,
+    3,
+    17
+  ],
+  "native_regeneration_check": "passed",
+  "selected_test_suites_passed": 22,
+  "selected_tests_seconds": 17.27,
+  "application_build": "passed",
+  "graphical_inspections": {
+    "before": {
+      "frames": 75,
+      "screenshot": "before.png",
+      "viewed": true,
+      "half_hearts": 6,
+      "stock": 2,
+      "active_bombs": 1
+    },
+    "after": {
+      "frames": 120,
+      "screenshot": "after.png",
+      "viewed": true,
+      "half_hearts": 4,
+      "stock": 2,
+      "active_bombs": 0,
+      "damage_taken": 2
+    },
+    "initial_stock": 3,
+    "god_mode": false
+  },
+  "ordinary_bombs_enabled": true,
+  "troll_bombs_enabled": false,
+  "full_bomb_acceptance": false,
+  "universal_dodge_boost_and_immunity_retained": true,
+  "fully_accepted_broad_areas": 0,
+  "remaining_broad_areas": 6,
+  "artifact_sha256": {
+    "README.md": "65c1f2573918f8f5077c14720d8d4a49b7955ca6c4009caadc5c3615ca77bd12",
+    "after-render.log": "3c07ada8adde51262d635b854fd2765a74c7edb54342e77329114dc98f7fc0c5",
+    "after.png": "987355d2a18955dd5cb205647748fd4f3a9d2beaa92798927c283cbf6ef277e3",
+    "base_physics.asm": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0",
+    "before-render.log": "9fd5878a5c487b65f7a30eca3ab6713a260b14978d128cf7f8c274034e46bfb6",
+    "before.png": "ccde9d3172c5f91177b75a919ea94405acc5b5afcc17b1999e73611ea1875280",
+    "countdown.asm": "99b5cfea5f4082edd8a5138e5f6e370de249e0a639c5339a532db6431062e5b8",
+    "entity_seed_initialization.asm": "cf33c69592841dd53390d47dc0cb8fe32ca4538b24b3843df6d8c276f1a15ca8",
+    "explosion_call.asm": "28f75dfe309bb4dd4c577e7ba1f29fcb166c48b2b26efdc2f17bc83291eeddef",
+    "explosion_radius.asm": "efcaf83e43757daa23f32b958b98c03ba2ea279df78a57941ab5fffb97942dbd",
+    "incoming_player_amount.asm": "5ad5a316b8e1cd9547ddc8cd78679ebc28eec88dc8ed691c33f2b87ec7da820b",
+    "initialization.asm": "1007ec9ee7ef62033248bc288872e1ef559c2aff909ec0b059735a7b15b9943b",
+    "inventory_placement.asm": "336294780d9770ac05f23cc07ed5a711696e89fdd2d7194aca6b3b2b00787e3c",
+    "manifest.json": "d5722b2f647eaa98154d463784b6c00425cf684746f31a999693d29fbeedc3ce",
+    "native-base-radius.csv": "46ec5b4e2b516039d74ee5f88dae19ead62804dc9850f3c67f9af33eb4eabf13",
+    "native-check.log": "4c5eafb3cbaa97de6e124e770028778b6bd34381591a3c11aefae0b3d8219fc6",
+    "native-countdown.csv": "87205b9d2e9fe46fb00dcbfe42eb060b6f24b1a967929cdffac6ed02ac4eb98c",
+    "native-free-motion.csv": "c0b4a256c11a11ee32a959aac212663f568bb8649e02c93f114643745493ca71",
+    "native-inheritance.csv": "c59a61ebe150ee1a469b4fe6e09c9938849ed6271e75679e30b9a77f49859276",
+    "native-initialization.csv": "2dda6d1eb7c0f7701336326c063c9790a69e6cfeb7a53f70d0420e6778a81206",
+    "native-player-amount.csv": "b36ba162197e1657c3def8703eab6c4025181c72744044e93a31079bb8bebc30",
+    "radius_application.asm": "567aaabd5e92fec0b7a32f550b9e7dcc973582fd3861f5d003f74425fb414f44",
+    "selected-build.log": "9f0743fd183c36d29330a5b11a52ac1e725beeaf75753d1192d9ba1229a831e9",
+    "selected-tests.log": "be1ba458e6a00beeee5626f4d95610a89b58c3aa0be65005532f132e5c4b77f0"
+  },
+  "application_sha256": "844790cea4dedeb55ffdea9b0124ed54f6cdf90a047068104d51d30e39ac9cc7"
+}

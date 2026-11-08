@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 59: native_tear_collider
+1/4 Test #59: native_tear_collider .............   Passed    0.19 sec
+    Start 60: native_shot_placement
+2/4 Test #60: native_shot_placement ............   Passed    0.16 sec
+    Start 61: native_tear_birth
+3/4 Test #61: native_tear_birth ................   Passed    0.05 sec
+    Start 80: isaac_baseline
+4/4 Test #80: isaac_baseline ...................   Passed    2.44 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   2.84 sec

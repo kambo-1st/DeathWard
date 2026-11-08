@@ -94,7 +94,7 @@ void surfaceEffectsAndCollision() {
     check(std::none_of(impact.projectiles.begin(),impact.projectiles.end(),[&](const auto &p){return p.id==forward;}),
         "curved projectile is swept against cover instead of passing through it");
     auto contact=fixture();ready(contact,monsterId(15));contact.player.position={.9f,.85f,0};contact.godMode=false;tick(contact,1);
-    check(near(contact.player.hp,StartingHealth-12.5f),"body contact retains global hostile damage scaling");
+    check(near(contact.player.hp,StartingHealth-1),"body contact retains half-heart damage");
     auto finish=fixture();ready(finish,monsterId(872));finish.debugScenario=false;finish.clearRoomDebug();
     check(finish.roomClear&&finish.roomThreats()==0,"ordinary Cloggy is cleared with the room");
     std::cout<<"SURFACES tar_slow_only=1 ember_no_fire_patch=1 curved_cover_collision=1\n";

@@ -95,7 +95,7 @@ void childrenAndDeathCrosses() {
         else {
             check(death.hazards.size()==1&&death.hazards[0].kind==HazardKind::Tar&&death.hazards[0].damage==0,"Ink leaves slowing black creep at death position");
             death.godMode=false;death.player.position={0,.85f,0};death.projectiles.clear();death.step({});
-            check(death.player.hp==100&&death.player.slowTime>0,"Ink death creep slows without damage; death shots tested separately");
+            check(death.player.hp==StartingHealth&&death.player.slowTime>0,"Ink death creep slows without damage; death shots tested separately");
         }
     }
     std::cout<<"TUFF_ATTACKS armored_ink=1 exposed_sucker=1 body_spray=1 cardinal_ordinal_deaths=1 slowing_black_creep=1\n";

@@ -65,7 +65,7 @@ void movement() {
     for(const auto &h:final.hazards)check(h.radius>=.4f&&h.radius<=1&&near(h.duration,1)&&near(h.damage,10),"last form creep has random small radius and native30tick active life");
     for(int stage:{0,1}) {
         auto s=fixture();s.godMode=false;const auto id=spawn(s,stage);s.player.position=s.findEnemy(id)->position;tick(s);
-        check(stage==0?near(s.player.hp,100):s.player.hp<100,"only intact form has no contact damage");
+        check(stage==0?near(s.player.hp,StartingHealth):s.player.hp<StartingHealth,"only intact form has no contact damage");
     }
     auto a=fixture(),b=fixture();const auto ai=spawn(a,3),bi=spawn(b,3);tick(a,20);for(int n=0;n<40;++n)b.step({},1.f/60);
     check(distance(a.findEnemy(ai)->position,b.findEnemy(bi)->position)<.002f,"parent motion agrees at30/60Hz");

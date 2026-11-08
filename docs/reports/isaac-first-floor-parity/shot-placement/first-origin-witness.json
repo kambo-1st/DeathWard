@@ -1,0 +1,10 @@
+{
+  "case": "right",
+  "frame": 0,
+  "native_world_birth_x": 0,
+  "native_world_birth_z": 0,
+  "previous_fixed_forward_world_x": 0.7,
+  "world_comparison_tolerance": 0.0003,
+  "comparison": "passed:actual gameplay birth compared with native request/correction",
+  "scope": "Complete ordinary weapon method with supplied actor-birth boundary; full actor initialization/collision/live acceptance remains open"
+}

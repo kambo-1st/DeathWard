@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   3: expedition_economy
+1/5 Test   #3: expedition_economy ...............   Passed   29.25 sec
+    Start   8: expedition_destruction
+2/5 Test   #8: expedition_destruction ...........   Passed   47.76 sec
+    Start  28: player_dynamite
+3/5 Test  #28: player_dynamite ..................   Passed    0.94 sec
+    Start  59: regular_health_balance
+4/5 Test  #59: regular_health_balance ...........   Passed    0.44 sec
+    Start 124: core_contracts
+5/5 Test #124: core_contracts ...................   Passed    0.83 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  79.23 sec

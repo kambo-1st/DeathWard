@@ -1,0 +1,142 @@
+[ 11%] Built target glfw
+[ 14%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 81%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_particles
+[ 85%] Built target deathward_skinning
+[ 85%] Built target deathward_cloth
+[ 88%] Built target deathward_particles
+[ 92%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 92%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_destruction_tests
+[100%] Linking CXX executable deathward_destruction_tests
+[100%] Built target deathward_destruction_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_boss_tests
+[100%] Linking CXX executable deathward_monster_boss_tests
+[100%] Built target deathward_monster_boss_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_bloat_tests
+[100%] Linking CXX executable deathward_bloat_tests
+[100%] Built target deathward_bloat_tests
+[ 94%] Built target deathward_core
+[100%] Linking CXX executable deathward_player_motion_tests
+[100%] Built target deathward_player_motion_tests
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_player_health_tests
+[100%] Built target deathward_player_health_tests
+[ 94%] Built target deathward_core
+[ 94%] Linking CXX executable deathward_midas_freeze_tests
+[100%] Built target deathward_midas_freeze_tests
+[100%] Built target deathward_core
+[100%] Linking CXX executable deathward_blue_fly_tests
+[100%] Built target deathward_blue_fly_tests
+[ 94%] Built target deathward_core
+[ 94%] Linking CXX executable deathward_player_hurt_tests
+[100%] Built target deathward_player_hurt_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_duke_tests
+[100%] Built target deathward_duke_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monstro_tests
+[100%] Linking CXX executable deathward_monstro_tests
+[100%] Built target deathward_monstro_tests
+[100%] Built target deathward_room_award_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_source_resource_tests
+[100%] Linking CXX executable deathward_source_resource_tests
+[100%] Built target deathward_source_resource_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_heart_pickup_tests
+[100%] Linking CXX executable deathward_heart_pickup_tests
+[100%] Built target deathward_heart_pickup_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_source_coin_tests
+[100%] Linking CXX executable deathward_source_coin_tests
+[100%] Built target deathward_source_coin_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_coin_producer_tests
+[100%] Linking CXX executable deathward_coin_producer_tests
+[100%] Built target deathward_coin_producer_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_player_bomb_tests
+[100%] Linking CXX executable deathward_player_bomb_tests
+[100%] Built target deathward_player_bomb_tests
+[ 75%] Built target glfw
+[100%] Built target raylib
+[100%] Built target deathward_bomb_contact_tests
+[ 75%] Built target glfw
+[100%] Built target raylib
+[100%] Built target deathward_troll_bomb_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_blast_recipient_tests
+[ 94%] Linking CXX executable deathward_blast_recipient_tests
+[100%] Built target deathward_blast_recipient_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_bomb_producer_tests
+[100%] Linking CXX executable deathward_bomb_producer_tests
+[100%] Built target deathward_bomb_producer_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_isaac_baseline_tests
+[100%] Linking CXX executable deathward_isaac_baseline_tests
+[100%] Built target deathward_isaac_baseline_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_regular_health_tests
+[100%] Linking CXX executable deathward_regular_health_tests
+[100%] Built target deathward_regular_health_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_supplied_bomb_tests
+[100%] Linking CXX executable deathward_supplied_bomb_tests
+[100%] Built target deathward_supplied_bomb_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_fly_bomb_tests
+[100%] Linking CXX executable deathward_fly_bomb_tests
+[100%] Built target deathward_fly_bomb_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_bomb_tests
+[100%] Linking CXX executable deathward_enemy_bomb_tests
+[100%] Built target deathward_enemy_bomb_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_hornfel_tests
+[100%] Linking CXX executable deathward_hornfel_tests
+[100%] Built target deathward_hornfel_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_buzz_fly_tests
+[100%] Linking CXX executable deathward_buzz_fly_tests
+[100%] Built target deathward_buzz_fly_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_tainted_pooter_tests
+[100%] Linking CXX executable deathward_tainted_pooter_tests
+[100%] Built target deathward_tainted_pooter_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mulligan_tests
+[100%] Linking CXX executable deathward_mulligan_tests
+[100%] Built target deathward_mulligan_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_status_tests
+[100%] Linking CXX executable deathward_enemy_status_tests
+[100%] Built target deathward_enemy_status_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_freeze_tests
+[100%] Linking CXX executable deathward_enemy_freeze_tests
+[100%] Built target deathward_enemy_freeze_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_damage_status_tests
+[100%] Linking CXX executable deathward_damage_status_tests
+[100%] Built target deathward_damage_status_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_slow_tests
+[100%] Linking CXX executable deathward_enemy_slow_tests
+[100%] Built target deathward_enemy_slow_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_charm_tests
+[100%] Linking CXX executable deathward_enemy_charm_tests
+[100%] Built target deathward_enemy_charm_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_tests
+[ 94%] Linking CXX executable deathward_tests
+[100%] Built target deathward_tests

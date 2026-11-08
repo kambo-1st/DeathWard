@@ -1,0 +1,9 @@
+interpolation_enabled,transition_mode,transition_flag,dispatch
+0,0,0,player_update|player_collision
+0,0,4096,player_update|player_collision
+0,1,0,
+0,1,4096,player_update|player_collision
+1,0,0,
+1,0,4096,
+1,1,0,
+1,1,4096,

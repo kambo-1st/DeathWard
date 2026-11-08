@@ -1,0 +1,16 @@
+{
+  "status": "audit integrity checks passed; gameplay parity NOT accepted",
+  "preserved_inventory_files_hash_verified": 193,
+  "audit_input_files_hash_verified": 102,
+  "enemy_comparison_rows": 93,
+  "held_fire_intervals_ticks": {
+    "18": 13
+  },
+  "source_and_assets_tracked_diff": "empty",
+  "remaining": [
+    "matched native player and floor measurements",
+    "exact first-floor and unlock eligibility",
+    "gameplay implementation",
+    "complete nonvisual acceptance"
+  ]
+}

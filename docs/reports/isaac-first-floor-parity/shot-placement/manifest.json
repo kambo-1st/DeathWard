@@ -1,0 +1,124 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "emulator": "Unicorn2.1.4",
+  "whole_weapon_fire_cases": 192,
+  "whole_weapon_fire_sequence_states": 1080,
+  "world_births": 52,
+  "supplied_scatter_births": 70,
+  "supplied_scatter_input_sha256": "de9721eb895e17dcd33760c1cfd44eb27c76698c3842258bb287d8e9fb2867f8",
+  "native_empty_multishot_query_executed": true,
+  "native_tear_offset_constructor_stores_executed": true,
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 244,
+      "_libm_sse2_sin_precise": 244,
+      "_libm_sse2_pow_precise": 0
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "crt_import_counts": {},
+  "windows": [
+    {
+      "name": "weapon_fire",
+      "start": "0x959500",
+      "end_exclusive": "0x95c76b",
+      "raw_sha256": "27352c7d66bfd5515f369ba77fdc8089e7386fa9081688833fc47268852575fe"
+    },
+    {
+      "name": "multishot_params",
+      "start": "0x74a910",
+      "end_exclusive": "0x74aef0",
+      "raw_sha256": "510851c4d4e47deae319f3cb8c24a681ce28d43946830a2d825f148b4545ad5d"
+    },
+    {
+      "name": "shot_layout",
+      "start": "0x74aef0",
+      "end_exclusive": "0x74b43a",
+      "raw_sha256": "4f7e4fafc899050148b2097b225459a8fb7b86ee7afde1817cfa5d0e35c8f8a8"
+    },
+    {
+      "name": "layout_wrapper",
+      "start": "0x943a80",
+      "end_exclusive": "0x943ac9",
+      "raw_sha256": "c4306048103f192ac137ec084fd3640d71a11193d690e376e7229fb251bf5f1d"
+    },
+    {
+      "name": "player_position_origin",
+      "start": "0x95a261",
+      "end_exclusive": "0x95a2a8",
+      "raw_sha256": "44836e9b5bd10bb25173c63e0e7d34f33bfe2242977d11a4c5543f7e203afa11"
+    },
+    {
+      "name": "birth_tear_offset",
+      "start": "0x75770e",
+      "end_exclusive": "0x757747",
+      "raw_sha256": "a93b6e28d950c36fdeebdd18047e6f1c7b7db3e0952ee6c79a0bb7690e3a7a3c"
+    },
+    {
+      "name": "post_birth_correction",
+      "start": "0x94557f",
+      "end_exclusive": "0x94561b",
+      "raw_sha256": "016b7f3050d6bcc11763c49a4c136489f080989a43f69b06c083042951ab93b9"
+    },
+    {
+      "name": "constructor_offset_zero",
+      "start": "0x72090f",
+      "end_exclusive": "0x720923",
+      "raw_sha256": "ec4dae7c5e0d94901576af655cc6f6de541a879a6ab04a7df498e6f7cc272005"
+    },
+    {
+      "name": "initializer_offset_zero",
+      "start": "0x722d21",
+      "end_exclusive": "0x722d41",
+      "raw_sha256": "d29ec504f26be73e9c115fa092eed1d47870f32ad05a2fc7ca617ca16da5b01c"
+    },
+    {
+      "name": "weapon_init",
+      "start": "0x942db0",
+      "end_exclusive": "0x942dcc",
+      "raw_sha256": "c0d0462673d99359921746eb0181cc6bb8426fbd3df0bb56af9595f2d716cbff"
+    },
+    {
+      "name": "player_default_damage",
+      "start": "0x722b18",
+      "end_exclusive": "0x722b22",
+      "raw_sha256": "e114c7c12b208af35cd4df010e4c7c03028de68cf54ba5e6a4e16adeff0d5190"
+    },
+    {
+      "name": "base_collision_damage_setter",
+      "start": "0x5b6ba0",
+      "end_exclusive": "0x5b6bb4",
+      "raw_sha256": "099b8752c299ad5ebe3741112bd81a372e2b0013b7f7cd74cfc8d676d94e7a94"
+    },
+    {
+      "name": "tear_collision_damage_setter",
+      "start": "0x6500d0",
+      "end_exclusive": "0x6500ea",
+      "raw_sha256": "9152af5d3517d770f5e86fe50f7f5980aa7820582c524a585ca1f36fe7686bc2"
+    }
+  ],
+  "full_tear_actor_executed": false,
+  "scope": "Whole ordinary WeaponTears::Fire and its helpers with explicit Player::FireTear boundary supplying an unchanged-velocity/friction1 body. Native tear-offset addition and subsequent position correction execute original blocks. Initial body/flags/character/item metadata,full player/tear Update,collision and live scheduling remain unaccepted."
+}

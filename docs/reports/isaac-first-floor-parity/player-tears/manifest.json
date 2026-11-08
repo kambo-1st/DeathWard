@@ -1,0 +1,106 @@
+{
+  "version": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "method": "Unicorn 2.1.4 executing original x86/SSE; fixed raw RNG results; no instruction patches or native helper stubs",
+  "scope": "ordinary zero-flag birth jitter and flight arithmetic, base cached height/range and floor boundary; NOT whole-game timing, birth ordering, collision, item/flag or RNG-stream acceptance",
+  "windows": [
+    {
+      "name": "cache_defaults",
+      "start": "0x732d05",
+      "end_exclusive": "0x732d33",
+      "raw_sha256": "54ae8d4b26663dce941c62312b514ce3879165f1fe3b4967a56a3ecfd5dd75d3",
+      "listing_sha256": "6095eee20aa18d92b5c543ddfa1510ad1038a5d38c6d7a60c88294e1b5c8d374"
+    },
+    {
+      "name": "birth_jitter",
+      "start": "0x757908",
+      "end_exclusive": "0x75795b",
+      "raw_sha256": "c5fae9d7bb6290b0ab54b2747179fc34e74122c91cbc805506d0785602cc6833",
+      "listing_sha256": "903c56f7147461936a7b762ee1b951e59da865923bcde0dc1899e94d172047a7"
+    },
+    {
+      "name": "birth_acceleration_range",
+      "start": "0x75799f",
+      "end_exclusive": "0x7579d9",
+      "raw_sha256": "2c85c8f9b30e4bce9f6ce9233205e719ba758eb6d62e8ae69c96804b5edf209d",
+      "listing_sha256": "dcac3c315038d5cc73f9c5be824bd64f929825c5b84f8c9cc07959473e27ae38"
+    },
+    {
+      "name": "ordinary_flight",
+      "start": "0x64d5eb",
+      "end_exclusive": "0x64d64f",
+      "raw_sha256": "806364c03f0cd30042dabf5aebbd6f659e7d0ff8ac9a7b1ad9be982022a5c1b8",
+      "listing_sha256": "3db0a4d5a03bec4f38e7502d0e50facf7f5e623253bf0ec45fe5b1e73fa3532a"
+    },
+    {
+      "name": "floor_predicate",
+      "start": "0x64ab3a",
+      "end_exclusive": "0x64ab4b",
+      "raw_sha256": "5b2bed64113b32ff0583a96b4f2c7a8993d51043bd6a1b5fb19217f2967b883b",
+      "listing_sha256": "e9af15990c7b6c698f7b18ea082ef0619d0efc0c5f60dff1186297c96ca732e2"
+    },
+    {
+      "name": "ordinary_death",
+      "start": "0x64ac55",
+      "end_exclusive": "0x64ac6c",
+      "raw_sha256": "dd9b03f3412f41cbab32e977e7651fdf5f096e1b3bb9f3194ed203bbaf154926",
+      "listing_sha256": "cc551ec751eb7fecfbe008a5a78d1ee4d0048b97bc336f40dd54a56b89f9ed2f"
+    },
+    {
+      "name": "time_scale_retention",
+      "start": "0x65c960",
+      "end_exclusive": "0x65c98a",
+      "raw_sha256": "1e437a595421fcef0cb21856fb649db4f94646cfc06b7b72c0028fb1892e53b8",
+      "listing_sha256": "ee77d50d106e676e5643eb8b8abc50bf0b22ba07a134311b058007c0266a1ca8"
+    },
+    {
+      "name": "height_render_only",
+      "start": "0x6500f0",
+      "end_exclusive": "0x650144",
+      "raw_sha256": "c9d0adc711ecb7e9131cef9ec89a7e64b01571c7c375fb87e107122e51f8db9c",
+      "listing_sha256": "61f40ae8c06f03fd478976840439ef8d89dd57e8f0f4bf9f0c424f73528eb21d"
+    },
+    {
+      "name": "weapon_velocity",
+      "start": "0x95a2a8",
+      "end_exclusive": "0x95a32c",
+      "raw_sha256": "476e5460b00be9c4c19115c3df2da84d812e666c543a32fcb2bd25e2c74adb89",
+      "listing_sha256": "14e3ce6d00bb4693915d23c5a707caff16f2385ff149398c77eac2d1ae276e01"
+    }
+  ],
+  "births": [
+    {
+      "raw_rng": 0,
+      "initial_falling_speed": 0.0
+    },
+    {
+      "raw_rng": 1,
+      "initial_falling_speed": 4.6566129424663316e-11
+    },
+    {
+      "raw_rng": 65536,
+      "initial_falling_speed": 3.051757857974735e-06
+    },
+    {
+      "raw_rng": 16777216,
+      "initial_falling_speed": 0.0007812500116415322
+    },
+    {
+      "raw_rng": 2147483647,
+      "initial_falling_speed": 0.10000000149011612
+    },
+    {
+      "raw_rng": 4294967295,
+      "initial_falling_speed": 0.20000000298023224
+    }
+  ],
+  "trace_rows": 171,
+  "source_base_cache": {
+    "tear_height": -23.75,
+    "falling_speed_stat": 0,
+    "falling_acceleration": 0,
+    "tear_range": 260
+  },
+  "source_base_launch": "Weapon_Tears multiplies its direction by 10 native coordinate units before inheritance and shot-speed scaling; default shot speed is 1",
+  "omitted": "SetHeight room/render callbacks after its exact first logical store; ordinary flag eligibility is inspected source, not an emulated full collision/death lifecycle"
+}

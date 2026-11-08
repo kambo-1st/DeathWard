@@ -78,7 +78,7 @@ void trailsAndLifecycle() {
             near(h.duration,float(variant==1?20:150)/30),"distinct red and tar lifetimes fromsource");
         const auto count=s.hazards.size();damage(s,id);check(s.hazards.size()==count,"trail survives owner death");
         s.enemies.clear();s.hazards.clear();h.age=0;h.fadeAge=-1;s.hazards.push_back(h);s.godMode=false;s.player.hurt=0;s.player.position=h.position;
-        tick(s);check(variant==1?near(s.player.hp,87.5f):near(s.player.hp,100)&&s.player.slowTime>0,"red hurts; black slows without damage");
+        tick(s);check(variant==1?near(s.player.hp,StartingHealth-1):near(s.player.hp,StartingHealth)&&s.player.slowTime>0,"red hurts; black slows without damage");
         s.hazards.front().age=s.hazards.front().duration;s.player.slowTime=0;s.player.hurt=0;const auto hp=s.player.hp;tick(s);
         check(near(s.player.hp,hp)&&s.player.slowTime==0,"fading trail is harmless");tick(s,60);check(s.hazards.empty(),"fading trail removed");
     }
@@ -91,7 +91,7 @@ void trailsAndLifecycle() {
     check(s.findEnemy(id)->guts->ticks==pausedTick,"capacity release resumes already processed frame exactly once");
     auto plain=fixture();spawn(plain);tick(plain,60);check(plain.hazards.empty()&&plain.projectiles.empty(),"ordinary Guts has no trail or projectile");
     auto contact=fixture();auto cid=spawn(contact);contact.player.position={.8f,.85f,0};contact.godMode=false;tick(contact);
-    check(near(contact.player.hp,87.5f),"body contact maps source one to local12.5damage");
+    check(near(contact.player.hp,StartingHealth-1),"body contact removes one half-heart unit");
     auto &stunned=*contact.findEnemy(cid);stunned.state=EnemyState::Stunned;stunned.stateTime=1;const auto before=stunned.position;
     tick(contact,20);check(distance(before,stunned.position)<.01f&&stunned.guts->ticks==1,"stun pauses controller and motion");
     std::cout<<"TRAIL red20=1 tar150=1 damage12.5=1 tar_no_damage=1 owner_death=1 fade=1 capacity=1\n";

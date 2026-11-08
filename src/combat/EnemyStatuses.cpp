@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "combat/MidasFreeze.hpp"
 #include "combat/LobFlight.hpp"
 #include "combat/SourceTime.hpp"
 #include <limits>
@@ -41,6 +42,7 @@ bool Simulation::applyEnemyStatus(EntityId id,EnemyStatus status,int frames,floa
        (status==EnemyStatus::Poison&&!p->poison)||(status==EnemyStatus::Burn&&!p->burn)||
        (status==EnemyStatus::Shrink&&!p->shrink)||(status==EnemyStatus::Charm&&(!p->charm||(e->friendly&&!e->permanentCharmed))))return false;
     if(status==EnemyStatus::Charm&&e->permanentCharmed)return true;
+    if(status==EnemyStatus::Freeze&&e->statuses&&e->statuses->controlCooldown>0)return false;
     EnemyStatusRuntime probe;
     if(!statusCounter(probe,status))return false;
     if(!e->statuses) {
@@ -117,6 +119,46 @@ bool Simulation::applyEnemyStatus(EntityId id,EnemyStatus status,int frames,floa
     return true;
 }
 
+bool Simulation::applyMidasFreeze(EntityId id,int frames,bool goldenHeart) {
+    if(frames<=0||frames>18000)return false;
+    auto *e=findEnemy(id);const auto *definition=e?content->monster(e->monster):nullptr;
+    // Shared-body controllers and special type245 need their own propagation
+    // and morph contracts. Static room hazards/environment actors are outside
+    // this adapter; full native flag initialization remains an acceptance gap.
+    if(!e||!e->alive||e->kind!=EnemyKind::Monster||!definition||definition->roomHazard||
+       e->environment||e->segmentedEncounter||e->formation||e->componentOwner||e->railCarrier||e->monster.type==245)return false;
+    if(!e->statuses) {
+        auto &r=e->statuses.emplace();
+        const double time=std::max(0.,double(e->age)*30);
+        r.ticks=uint64_t(std::floor(time+.00001));r.clock=float(std::max(0.,time-double(r.ticks))/30);
+    }
+    auto &r=*e->statuses;
+    ControlFreezeState state{(r.freeze>0?0x20u:0u)|(r.midas>0?0x400u:0u),r.freeze,r.midas,r.controlCooldown};
+    const bool boss=e->bossKind!=BossKind::None||content->monsterBoss(e->monster);
+    const bool accepted=goldenHeart?sourceGoldenHeartMidas(state,frames,e->monster.type,boss):
+        sourceApplyMidas(state,frames,e->monster.type,boss);
+    r.controlCooldown=state.cooldown;
+    if(!accepted)return false;
+    if(r.freeze<=0) {
+        r.frozenPoseTime=e->animationTime();r.frozenSpeed=e->animationSpeed();
+        if(content->headShooter(e->monster)&&(!e->headShooter||!e->headShooter->initialized)) {
+            if(!e->headShooter)e->headShooter.emplace();
+            e->headShooter->tick=uint64_t(std::max(0.,std::floor(stats.duration*30+.00001)));
+            e->headShooter->angle=std::atan2(e->facing.z,e->facing.x);e->headShooter->initialized=true;
+        }
+    }
+    r.freeze=state.freeze;r.midas=state.midas;r.midasCoinsPaid=false;
+    return true;
+}
+
+void Simulation::dropMidasCoins(Enemy &enemy) {
+    if(!enemy.statuses||enemy.statuses->midas<=0||enemy.statuses->midasCoinsPaid||enemy.generation>0)return;
+    enemy.statuses->midasCoinsPaid=true;
+    const int count=sourceMidasDeathCoins(uint32_t(combatRng.next()));
+    for(int i=0;i<count&&moneyPickups.size()<1024;++i)
+        moneyPickups.push_back({enemy.position,1,0,true});
+}
+
 void Simulation::removeEnemyStatus(EntityId id,EnemyStatus status) {
     auto *e=findEnemy(id);if(!e||!e->statuses)return;
     auto *counter=statusCounter(*e->statuses,status);if(!counter)return;
@@ -180,7 +222,9 @@ void Simulation::updateMonsterStatuses(Enemy &e,float dt) {
             }
             if(profile&&profile->poison)tickDamageStatus(e,r.poison,*profile->poison);
             if(profile&&profile->burn)tickDamageStatus(e,r.burn,*profile->burn);
-            if(r.freeze>0)--r.freeze;
+            ControlFreezeState control{(r.freeze>0?0x20u:0u)|(r.midas>0?0x400u:0u),r.freeze,r.midas,r.controlCooldown};
+            sourceStepControlFreeze(control);
+            r.freeze=control.freeze;r.midas=control.midas;r.controlCooldown=control.cooldown;
             if(r.slow>0)--r.slow;
             if(r.fear>0&&!--r.fear)invalidateStatusPath(e,EnemyStatus::Fear);
             if(r.confusion>0&&!--r.confusion)invalidateStatusPath(e,EnemyStatus::Confusion);

@@ -78,7 +78,7 @@ void collisions() {
         check(s.stats.damageDealt==0,"blocked shot earns no enemy damage");
     }
     auto s=fixture();const auto child=crossingBody(s);s.godMode=false;s.player.position={0,.85f,0};tick(s);
-    check(near(s.player.hp,75),"swept contact is double parent damage with existing multiplier");
+    check(near(s.player.hp,StartingHealth-2),"swept contact is double parent damage with existing multiplier");
     const auto owner=s.findEnemy(child)->componentOwner;damage(s,child);
     check(s.findEnemy(child)->alive&&s.findEnemy(child)->maxHp==0,"ordinary damage cannot kill attack");
     const auto money=s.moneyPickups.size();damage(s,child,true);
@@ -131,7 +131,7 @@ void configuration() {
 }
 void startingKit() {
     auto s=fixture();s.godMode=false;s.player.position={0,.85f,10};const auto id=parent(s);
-    check(s.player.hp==100&&s.player.shotDamage==24,"default player unchanged");
+    check(s.player.hp==StartingHealth&&s.player.shotDamage==24,"default player unchanged");
     int frames=0;
     while(!s.dead&&s.roomThreats()&&frames<600) {
         Input input;if(const auto *e=s.findEnemy(id);e&&e->alive) {

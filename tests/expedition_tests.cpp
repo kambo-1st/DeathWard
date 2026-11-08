@@ -113,7 +113,8 @@ void journey(const std::filesystem::path &path) {
         inspect(run);
         // Debug travel heals by design, so set carry-over values after travel.
         run.jumpDebug(run.finalRoom());run.clearRoomDebug();
-        run.grant(ItemId::Ricochet);run.player.hp=37;run.player.shotDamage=11;run.player.nextRound=4;
+        run.tunePlayer(24,24); // Explicit legal carry-over capacity.
+        run.grant(ItemId::Ricochet);run.player.hp=7;run.player.shotDamage=11;run.player.nextRound=4;
         run.moneyCollected+=13;run.moneySpent+=2;run.keys=3;run.dynamite=2;run.stats.shots+=9;
         run.player.position=run.arena.exit;run.interact();
         const auto hp=run.player.hp;const auto items=run.items;const auto wallet=run.money();const auto stats=run.stats;

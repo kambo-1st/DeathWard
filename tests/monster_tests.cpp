@@ -132,8 +132,8 @@ void gunsAndArmor() {
     }
     check(frames == 56 && s.stats.projectiles == 2,
           "Horf repeats after28source frames including windup and recovery");
-    check(s.player.hp == StartingHealth - 12.5f && s.stats.damageTaken == 12.5f,
-          "Horf shots deal 25% more damage exactly once");
+    check(s.player.hp == StartingHealth - 1 && s.stats.damageTaken == 1,
+          "Horf shot removes one half-heart unit exactly once");
     auto c = fixture();
     ready(c, monsterId(15));
     tick(c, 36);
@@ -500,9 +500,9 @@ void movementAndProjectiles() {
           "Gaper begins with source force .498 times gain2 and world speed scale3");
     chase.player.position = add(chase.findEnemy(gaper)->position, {0, 0, .75f});
     tick(chase, 1);
-    check(chase.player.hp == StartingHealth - 10*EnemyDamageMultiplier, "Gaper uses its source-adapted contact damage");
+    check(chase.player.hp == StartingHealth - 1, "Gaper uses its source-adapted contact damage");
     tick(chase, 10);
-    check(chase.player.hp == StartingHealth - 10*EnemyDamageMultiplier, "contact damage still respects hurt invulnerability");
+    check(chase.player.hp == StartingHealth - 1, "contact damage still respects hurt invulnerability");
     auto mirror = fixture();
     auto id = mirror.spawnMonster(monsterId(53), {0, .85f, 0});
     tick(mirror,4); // Source initialization consumes one native frame.

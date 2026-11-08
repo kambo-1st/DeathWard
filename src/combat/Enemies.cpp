@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "combat/PlayerHurt.hpp"
 
 namespace dw {
 const Enemy *Simulation::findEnemy(EntityId id) const {
@@ -16,12 +17,19 @@ bool Simulation::chainActive(const Enemy &enemy) const {
 }
 
 bool Simulation::hurtPlayer(float damage, const Context &context, bool hostile) {
-    if (godMode || player.dodge > 0 || player.hurt > 0)
-        return false;
-    // Apply once at impact for enemy contact, shots and hazards, including split shots.
-    if (hostile)
-        damage *= EnemyDamageMultiplier;
-    player.hp -= damage;
+    if(!std::isfinite(damage)||damage<=0)return false;
+    return takeHeartDamage(std::max(1.f,damage/10),false,context,hostile);
+}
+bool Simulation::takeHeartDamage(float halves,bool redFirst,const Context &context,bool hostile) {
+    if(dead||finished||godMode||player.dodge>0||player.hurt>1e-6f||!std::isfinite(halves)||halves<=0||halves>1000000)return false;
+    // Retain room-effect recipients under event-queue pressure. Admission
+    // stalls damage rather than dropping an already-triggered black burst.
+    if(pendingHealthEvents_.size()+enemies.size()*12>65536)return false;
+    const int original=sourcePlayerRoundedDamage(halves);
+    if(original<=0)return false;
+    auto health=player.sourceHealth();health.damage(original,redFirst);
+    applyPlayerHealth(std::move(health));
+    const float damage=float(original);
     const auto *attacker=findEnemy(context.sourceEntity);
     if(hostile&&damage>0&&(context.championCoinLoss||(attacker&&attacker->champion==3))&&money()>0) {
         const auto lost=std::min<uint64_t>(money(),2+combatRng.bounded(3));
@@ -31,7 +39,7 @@ bool Simulation::hurtPlayer(float damage, const Context &context, bool hostile) 
     }
     audioCues.push(AudioCueKind::Hurt, player.position);
     stats.damageTaken += damage;
-    player.hurt = 0.45f;
+    player.hurt = sourcePlayerHurtCounter(original)/60.f;
     Event hit;
     hit.type = EventType::PlayerDamaged;
     hit.damage = damage;

@@ -20,11 +20,12 @@ void pools() {
     }
     // Skatole currently supplies only the Pooter reaction contract. Keep it
     // outside rewards until its other fly effects are ported, and reject any
-    // accidental pool leak. Every other registered item must remain obtainable.
+    // accidental pool leak. H17's explicit-grant 1up dependency is also outside
+    // natural pools until item/reward distributions are selected.
     const auto dependency=parseItemKey("isaac:collectible:9");
     check(!all.contains(dependency),"unfinished Skatole dependency stays outside natural pools");
     for(const auto &item:defaultMechanics()->items())
-        check(all.contains(item.id)==(item.id!=dependency),"all supported items obtainable across pools");
+        check(all.contains(item.id)==(item.id!=dependency&&item.id!=parseItemKey("isaac:collectible:11")),"all supported items obtainable across pools");
     check(itemPoolWeights(ItemPool::Armory)!=itemPoolWeights(ItemPool::Shop)&&
           itemPoolWeights(ItemPool::Boss)!=itemPoolWeights(ItemPool::Bargain),"destinations have distinct weights and membership");
 }
@@ -99,21 +100,21 @@ void transactions() {
     check(!exchange.shopOffers[3].sold,"service stock separate from shop stock");
     Simulation surgeon(1866,1,world,MissionTheme::Canyon);enterService(surgeon,RoomService::Surgeon);
     check(!surgeon.buyShop(0),"cannot pay for wasted healing at full HP");
-    surgeon.player.hp=25;check(surgeon.buyShop(0)&&surgeon.player.hp==85&&surgeon.money()==80,"explicit healing price and cap");
-    check(surgeon.buyShop(1)&&surgeon.player.maxHp==115&&surgeon.player.hp==100&&surgeon.money()==45,"finite expedition vitality improvement");
+    surgeon.player.hp=1;check(surgeon.buyShop(0)&&surgeon.player.hp==6&&surgeon.money()==80,"explicit healing price and cap");
+    check(surgeon.buyShop(1)&&surgeon.player.maxHp==8&&surgeon.player.hp==8&&surgeon.money()==45,"finite expedition vitality improvement");
     check(!surgeon.buyShop(1),"tonic not repeatable");
     Simulation deal(1866,1,world,MissionTheme::Canyon);enterService(deal,RoomService::Smuggler);
-    deal.rooms[size_t(deal.room)].offers={ItemId::Judas,ItemId::Cap};deal.player.hp=50;
-    check(deal.bargainMaxHealth(0)==64&&deal.serviceOffer(0).cost.find("36 MAX HP")!=std::string::npos,"exact preview includes Judas's extra tax");
-    check(deal.buyShop(0)&&deal.player.maxHp==64&&deal.player.hp==50&&deal.itemStacks(ItemId::Judas)==1,"preview agrees with actual cost");
+    deal.rooms[size_t(deal.room)].offers={ItemId::Judas,ItemId::Cap};deal.player.hp=3;
+    check(deal.bargainMaxHealth(0)==2&&deal.serviceOffer(0).cost.find("1 RED CONTAINER")!=std::string::npos,"exact preview includes Judas's extra tax");
+    check(deal.buyShop(0)&&deal.player.maxHp==2&&deal.player.hp==2&&deal.itemStacks(ItemId::Judas)==1,"preview agrees with actual cost");
     check(!deal.buyShop(1),"bargain alternatives mutually exclusive");
     deal.closeShop();deal.startBoss();deal.killAll();deal.step({});
     deal.floorExitRequested=true;check(deal.advanceFloor(),"advance after service purchase");
-    check(deal.player.maxHp==64&&deal.itemStacks(ItemId::Judas)==1,"health sacrifice and item persist between floors");
+    check(deal.player.maxHp==2&&deal.itemStacks(ItemId::Judas)==1,"health sacrifice and item persist between floors");
     enterService(deal,RoomService::Smuggler);deal.rooms[size_t(deal.room)].offers={ItemId::Judas,ItemId::Cap};
-    deal.player.maxHp=39;deal.player.hp=1;
+    deal.player.maxHp=1;deal.player.hp=1;
     check(!deal.buyShop(0)&&!deal.buyShop(1)&&deal.player.hp==1,"low maximum HP cannot create lethal menu transaction");
-    deal.player.maxHp=40;check(deal.buyShop(1)&&deal.player.maxHp==20&&deal.player.hp==1,"nonfatal exact lower boundary");
+    deal.player.maxHp=4;check(deal.buyShop(1)&&deal.player.maxHp==2&&deal.player.hp==1,"nonfatal exact lower boundary");
     Simulation reward(1866,1,{},MissionTheme::Canyon);reward.startBoss();reward.killAll();reward.step({});
     check(reward.rewardAvailable(reward.room),"defeated boss opens optional item choice");
     reward.player.position=reward.rewardPosition(reward.room);reward.interact();check(reward.rewardOpen,"boss reward approachable");

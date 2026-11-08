@@ -1,0 +1,127 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "manager_routing_cases": 24,
+  "alternate_dispatch_cases": 4,
+  "odd_skip_cases": 12,
+  "main_entity_gate_cases": 48,
+  "interpolation_option_loading": "87fdfe..87fe25:EnableInterpolation key,default true; full manager initialization/profile behavior unaccepted",
+  "extra_player_pass_cases": 8,
+  "ordinary_player_time_scale_cases": 1,
+  "bounded_player_update_states": 590,
+  "motion_input_sequences_sha256": "39f2a4db47b315d30245558f276e0e8821095161092bc162e2ff344b4d9fa41d",
+  "entity_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "ordinary_player_fixture": {
+    "id": "1",
+    "variant": "0",
+    "name": "Player",
+    "friction": "1",
+    "collisionMass": "5",
+    "collisionRadius": "10"
+  },
+  "entity_vtables": {
+    "player": "0xb4d4f0:Update74b8d0",
+    "npc": "0xb49398:Update69b140,interpolation6a8a40"
+  },
+  "target_outer_interval_seconds": 0.016666666666666666,
+  "gameplay_manager_state": 2,
+  "interpolation_flag": "0x4000",
+  "profiling_import_0xa064c0": [
+    "WINMM.dll",
+    "timeGetTime"
+  ],
+  "external_boundaries": "Main Game::Update, Player::Update, NPC::Update, NPC interpolation and player collision endpoints record dispatch and immediately return. The alternate Game update executes original instructions in its four probes. Its pause queries execute original code on supplied state; no gameplay endpoint behavior is accepted.",
+  "windows": [
+    [
+      "main_loop",
+      "0x88bd40",
+      "0x88bf10"
+    ],
+    [
+      "clock_provider",
+      "0x970040",
+      "0x9700a7"
+    ],
+    [
+      "odd_skip",
+      "0x8b0010",
+      "0x8b0068"
+    ],
+    [
+      "manager_dispatch",
+      "0x8b0284",
+      "0x8b0326"
+    ],
+    [
+      "phase_increment",
+      "0x8b05db",
+      "0x8b05e8"
+    ],
+    [
+      "game_counter",
+      "0x6ce598",
+      "0x6ce5e8"
+    ],
+    [
+      "alternate_update",
+      "0x6d0400",
+      "0x6d07c8"
+    ],
+    [
+      "pause_query",
+      "0x6d0380",
+      "0x6d03fb"
+    ],
+    [
+      "player_motion_call",
+      "0x74d659",
+      "0x74d68c"
+    ],
+    [
+      "player_hurt_tick",
+      "0x74ff9e",
+      "0x74ffaf"
+    ],
+    [
+      "room_manager_call",
+      "0x7c0590",
+      "0x7c05a3"
+    ],
+    [
+      "entity_main_gate",
+      "0x413714",
+      "0x41376f"
+    ],
+    [
+      "extra_player_pass",
+      "0x413ce8",
+      "0x413e4a"
+    ],
+    [
+      "player_time_scale",
+      "0x723f40",
+      "0x723f70"
+    ],
+    [
+      "room_time_scale",
+      "0x7a8ef0",
+      "0x7a915b"
+    ],
+    [
+      "player_base_call",
+      "0x74ca60",
+      "0x74ca67"
+    ],
+    [
+      "base_physics",
+      "0x686406",
+      "0x686497"
+    ],
+    [
+      "interpolation_option",
+      "0x87fdfe",
+      "0x87fe25"
+    ]
+  ],
+  "full_acceptance": false,
+  "remaining": "Full main-phase traversal, complete player movement/hurt/tear branch reachability, interpolation option/default behavior, actor initialization and matched live wall-clock capture. Bounded supplied entity gates and the extra player pass are verified; actor endpoints are intercepted."
+}

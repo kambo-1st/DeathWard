@@ -1,0 +1,38 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  57: monster_boss_components
+ 1/16 Test  #57: monster_boss_components ..........   Passed    1.17 sec
+      Start  58: bloat_boss_and_chargers
+ 2/16 Test  #58: bloat_boss_and_chargers ..........   Passed    1.56 sec
+      Start  59: native_player_motion
+ 3/16 Test  #59: native_player_motion .............   Passed    0.00 sec
+      Start  60: native_player_health
+ 4/16 Test  #60: native_player_health .............   Passed    0.00 sec
+      Start  61: native_midas_freeze
+ 5/16 Test  #61: native_midas_freeze ..............   Passed    0.00 sec
+      Start  62: native_blue_fly
+ 6/16 Test  #62: native_blue_fly ..................   Passed    0.00 sec
+      Start  63: native_player_hurt
+ 7/16 Test  #63: native_player_hurt ...............   Passed    0.00 sec
+      Start  64: native_monstro
+ 8/16 Test  #64: native_monstro ...................   Passed    0.35 sec
+      Start  65: isaac_baseline
+ 9/16 Test  #65: isaac_baseline ...................   Passed    1.93 sec
+      Start  66: regular_health_balance
+10/16 Test  #66: regular_health_balance ...........   Passed    0.36 sec
+      Start 105: first_floor_status_effects
+11/16 Test #105: first_floor_status_effects .......   Passed    0.64 sec
+      Start 106: first_floor_freeze_effect
+12/16 Test #106: first_floor_freeze_effect ........   Passed    0.71 sec
+      Start 107: first_floor_damage_statuses
+13/16 Test #107: first_floor_damage_statuses ......   Passed    1.08 sec
+      Start 108: first_floor_slow_effect
+14/16 Test #108: first_floor_slow_effect ..........   Passed    0.88 sec
+      Start 110: first_floor_charm_effect
+15/16 Test #110: first_floor_charm_effect .........   Passed    5.24 sec
+      Start 131: core_contracts
+16/16 Test #131: core_contracts ...................   Passed    0.37 sec
+
+100% tests passed, 0 tests failed out of 16
+
+Total Test time (real) =  14.31 sec

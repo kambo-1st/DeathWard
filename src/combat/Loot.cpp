@@ -67,7 +67,7 @@ void Simulation::updateMoney(float dt) {
     uint64_t collected = 0;
     for (auto &coin : moneyPickups) {
         coin.age += dt;
-        if (player.hp <= 0 || (coin.dropped && coin.age < .45f) ||
+        if (player.totalHealth() <= 0 || (coin.dropped && coin.age < .45f) ||
             distance(player.position, coin.position) > 1.25f ||
             !arena.clear(player.position, coin.position, .1f))
             continue;

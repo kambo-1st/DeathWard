@@ -1,0 +1,747 @@
+{
+  "10.0.0": {
+    "name": "Frowning Gaper",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Finish remaining champion types/pickups and applicable status/item integration. Eight champion types now have scoped40combination tests across these five; full cohort acceptance remains open.",
+      "Source mass and DeathWard projectile/blast recoil now have scoped tests. Native exact impulse/champion modifiers and remaining item/status interfaces are not claimed; finish applicable integration and full acceptance.",
+      "Finish mixed-cohort readability/occlusion, varied-build/terrain balance and controlled rendered performance; current scoped evidence is not full acceptance.",
+      "Saved wiki death-morph wording differs from installed source weighting; retain measured1.7.9bchance/choice.3Dphysical-route wake equivalence remains an adaptation."
+    ]
+  },
+  "10.1.0": {
+    "name": "Gaper",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Finish remaining champion types/pickups and applicable status/item integration. Eight champion types now have scoped40combination tests across these five; full cohort acceptance remains open.",
+      "Source mass and DeathWard projectile/blast recoil now have scoped tests. Native exact impulse/champion modifiers and remaining item/status interfaces are not claimed; finish applicable integration and full acceptance.",
+      "Finish mixed-cohort readability/occlusion, varied-build/terrain balance and controlled rendered performance; current scoped evidence is not full acceptance.",
+      "Fandom death-morph outcome weighting conflicts with preserved native evidence. Keep installed1.7.9bweights; full interactions remain open."
+    ]
+  },
+  "10.2.0": {
+    "name": "Flaming Gaper",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native status/control/champion/slow-clock and collision-mass/save fidelity.",
+      "Special source production/context coverage, crowded readability, balance and controlled performance."
+    ]
+  },
+  "11.0.0": {
+    "name": "Gusher",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Finish remaining champion types/pickups and applicable status/item integration. Eight champion types now have scoped40combination tests across these five; full cohort acceptance remains open.",
+      "Source mass and DeathWard projectile/blast recoil now have scoped tests. Native exact impulse/champion modifiers and remaining item/status interfaces are not claimed; finish applicable integration and full acceptance.",
+      "Finish mixed-cohort readability/occlusion, varied-build/terrain balance and controlled rendered performance; current scoped evidence is not full acceptance.",
+      "Magenta Gusher now has independently timed extra shots and scoped timer/freeze/capacity tests (docs/reports/isaac-enemy-port/headless/magenta/status.json). Native exact Magenta cadence, visuals and full champion acceptance remain open."
+    ]
+  },
+  "11.1.0": {
+    "name": "Pacer",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Finish remaining champion types/pickups and applicable status/item integration. Eight champion types now have scoped40combination tests across these five; full cohort acceptance remains open.",
+      "Source mass and DeathWard projectile/blast recoil now have scoped tests. Native exact impulse/champion modifiers and remaining item/status interfaces are not claimed; finish applicable integration and full acceptance.",
+      "Finish mixed-cohort readability/occlusion, varied-build/terrain balance and controlled rendered performance; current scoped evidence is not full acceptance."
+    ]
+  },
+  "12.0.0": {
+    "name": "Horf",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Finish remaining champion types/pickups and applicable status/item integration. Eight champion types now have scoped40combination tests across these five; full cohort acceptance remains open.",
+      "Source mass and DeathWard projectile/blast recoil now have scoped tests. Native exact impulse/champion modifiers and remaining item/status interfaces are not claimed; finish applicable integration and full acceptance.",
+      "Finish mixed-cohort readability/occlusion, varied-build/terrain balance and controlled rendered performance; current scoped evidence is not full acceptance."
+    ]
+  },
+  "13.0.0": {
+    "name": "Fly",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Skatole and other item/status/charm/controller interactions, special boss-parent branches, exact shared friction/time-scale/knockback integration and spawn-animation ordering remain unfinished.",
+      "Hard-mode Pooter speed10and Super Pooter speed8are recovered but not enabled. Normal-mode ordinary/Super Pooter now use the shared source-based controller; Tainted Pooter retains its older controller.",
+      "Projectile vertical motion/lifetime and native grid damage conversion are3D adaptations. Normal dung loot and special dung variants/item reactions are pending; this component currently supports the ordinary Fly transformation and physical destruction.",
+      "Broader varied-build balance, occlusion/readability and controlled rendered Linux/WASM performance are unaccepted. Determinism, probability sampling, collision and capacity checks are not full acceptance.",
+      "All653records and six gates remain required. Zero records are certified complete. Regular enemies and required dependencies retain priority over further boss/Hornfel work."
+    ]
+  },
+  "14.0.0": {
+    "name": "Pooter",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Skatole and other item/status/charm/controller interactions, special boss-parent branches, exact shared friction/time-scale/knockback integration and spawn-animation ordering remain unfinished.",
+      "Hard-mode Pooter speed10and Super Pooter speed8are recovered but not enabled. Normal-mode ordinary/Super Pooter now use the shared source-based controller; Tainted Pooter retains its older controller.",
+      "Projectile vertical motion/lifetime and native grid damage conversion are3D adaptations. Normal dung loot and special dung variants/item reactions are pending; this component currently supports the ordinary Fly transformation and physical destruction.",
+      "Broader varied-build balance, occlusion/readability and controlled rendered Linux/WASM performance are unaccepted. Determinism, probability sampling, collision and capacity checks are not full acceptance.",
+      "All653records and six gates remain required. Zero records are certified complete. Regular enemies and required dependencies retain priority over further boss/Hornfel work."
+    ]
+  },
+  "14.1.0": {
+    "name": "Super Pooter",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Tainted Pooter and Attack Fly remain prior partial controllers; implement them and other regular families before further boss work.",
+      "Full Skatole effects, native replacements/champions, hard-mode speeds, parent/controlled/charmed cases, common movement/time-scale integration and animation ordering remain pending.",
+      "Projectile vertical physics/lifetime, damage scale and room terrain are explicit3D adaptations. Full multi-build balance, occlusion and controlled rendered performance acceptance remains open.",
+      "All653records and all six gates remain required. Zero records certified complete."
+    ]
+  },
+  "15.0.0": {
+    "name": "Clotty",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Implement the relevant timed burning status and item producers (Fire Mind/Red Candle/Hot Bombs); this batch provides typed hits and real fire exposure, not the full item/status system.",
+      "Author flooded encounter environments/effects and normal gameplay routes; room gameplay flag alone is not a full flooded floor or Flush item.",
+      "Resolve Grilled burning/flooded immunity inheritance and native transformation HP retention with direct evidence; current family-wide interpretation and fraction policy are explicit adaptations.",
+      "Complete family item/status/numeric policies, dedicated Grilled Chest-equivalent routing and full mixed-room/floor visual/balance/performance acceptance. Current ordinary/conditional stage paths are enabled, not complete source-environment coverage."
+    ]
+  },
+  "15.1.0": {
+    "name": "Clot",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Implement or verify relevant fire immunity/transformation and flooded-room behavior; the typed fire channel exists, but complete family reactions still require verification.",
+      "Verify source HP/stageHP conversions, attack timing, tar landing behavior and all applicable item/status/team interactions.",
+      "Complete mixed-room/floor balance, all-angle visual acceptance and controlled native/WASM performance checks.",
+      "Complete family item/status/numeric policies, dedicated Grilled Chest-equivalent routing and full mixed-room/floor visual/balance/performance acceptance. Current ordinary/conditional stage paths are enabled, not complete source-environment coverage."
+    ]
+  },
+  "15.2.0": {
+    "name": "I.Blob",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Implement or verify relevant fire immunity/transformation and flooded-room behavior; the typed fire channel exists, but complete family reactions still require verification.",
+      "Verify source HP/stageHP conversions, attack timing, tar landing behavior and all applicable item/status/team interactions.",
+      "Complete mixed-room/floor balance, all-angle visual acceptance and controlled native/WASM performance checks.",
+      "Complete family item/status/numeric policies, dedicated Grilled Chest-equivalent routing and full mixed-room/floor visual/balance/performance acceptance. Current ordinary/conditional stage paths are enabled, not complete source-environment coverage."
+    ]
+  },
+  "15.3.0": {
+    "name": "Grilled Clotty",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Implement the relevant timed burning status and item producers (Fire Mind/Red Candle/Hot Bombs); this batch provides typed hits and real fire exposure, not the full item/status system.",
+      "Author flooded encounter environments/effects and normal gameplay routes; room gameplay flag alone is not a full flooded floor or Flush item.",
+      "Resolve Grilled burning/flooded immunity inheritance and native transformation HP retention with direct evidence; current family-wide interpretation and fraction policy are explicit adaptations.",
+      "Complete family item/status/numeric policies, dedicated Grilled Chest-equivalent routing and full mixed-room/floor visual/balance/performance acceptance. Current ordinary/conditional stage paths are enabled, not complete source-environment coverage."
+    ]
+  },
+  "16.0.0": {
+    "name": "Mulligan",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Exact native grid movement initial impulse, diagonal bias, adaptive search/cache, knockback/status and time-scale behavior remain unfinished.",
+      "Troll Bomb appearance state, animation-driven countdown, pushing/kicking and complete item/status behavior need further recovery; initialized count is known but wall-clock fuse is provisional.",
+      "Nonzero native NPC+bc6 counter lifecycle and its reduced Mulligan death offspring count remain unresolved.",
+      "Full charm, friendly, champion, item, appearance and hard-mode behavior is not certified.",
+      "Original generic body visuals retain existing silhouettes; eye/animation fidelity, all-angle readability, broad balance and controlled native/WASM performance acceptance remain open.",
+      "First-floor1%Mulliboom rules are validated as configured; this slice records actual first-floor Mulligan/Mulligoon and band1Mulliboom residents, not a first-floor1%Mulliboom witness."
+    ]
+  },
+  "16.1.0": {
+    "name": "Mulligoon",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Exact native grid movement initial impulse, diagonal bias, adaptive search/cache, knockback/status and time-scale behavior remain unfinished.",
+      "Troll Bomb appearance state, animation-driven countdown, pushing/kicking and complete item/status behavior need further recovery; initialized count is known but wall-clock fuse is provisional.",
+      "Nonzero native NPC+bc6 counter lifecycle and its reduced Mulligan death offspring count remain unresolved.",
+      "Full charm, friendly, champion, item, appearance and hard-mode behavior is not certified.",
+      "Original generic body visuals retain existing silhouettes; eye/animation fidelity, all-angle readability, broad balance and controlled native/WASM performance acceptance remain open.",
+      "First-floor1%Mulliboom rules are validated as configured; this slice records actual first-floor Mulligan/Mulligoon and band1Mulliboom residents, not a first-floor1%Mulliboom witness."
+    ]
+  },
+  "16.2.0": {
+    "name": "Mulliboom",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Exact native grid movement initial impulse, diagonal bias, adaptive search/cache, knockback/status and time-scale behavior remain unfinished.",
+      "Troll Bomb appearance state, animation-driven countdown, pushing/kicking and complete item/status behavior need further recovery; initialized count is known but wall-clock fuse is provisional.",
+      "Nonzero native NPC+bc6 counter lifecycle and its reduced Mulligan death offspring count remain unresolved.",
+      "Full charm, friendly, champion, item, appearance and hard-mode behavior is not certified.",
+      "Original generic body visuals retain existing silhouettes; eye/animation fidelity, all-angle readability, broad balance and controlled native/WASM performance acceptance remain open.",
+      "First-floor1%Mulliboom rules are validated as configured; this slice records actual first-floor Mulligan/Mulligoon and band1Mulliboom residents, not a first-floor1%Mulliboom witness."
+    ]
+  },
+  "17.1.0": {
+    "name": "Secret Room Keeper",
+    "implementation": "missing",
+    "unresolved": [
+      "Do not create extra trading people: retain one actual trader per room; use an appropriate non-trading Western prop/NPC adaptation.",
+      "Normal reward table includes nothing, coins, spiders and three conditional rare items; percentages are rounded in the article.",
+      "Implement/selective-damage and drop-event subscriptions; source article contains contradictory item-proc lists that require native verification.",
+      "Review Devil/Angel room chance and unavailable-item reward adaptations explicitly."
+    ]
+  },
+  "17.3.0": {
+    "name": "Special Shopkeeper",
+    "implementation": "missing",
+    "unresolved": [
+      "Do not create extra trading people: retain one actual trader per room; use an appropriate non-trading Western prop/NPC adaptation.",
+      "Special reward table includes nickel/sticky nickel, penny trinkets, rare Greed and nothing; unlock gating needs review.",
+      "Implement/selective-damage and drop-event subscriptions; source article contains contradictory item-proc lists that require native verification.",
+      "Review Devil/Angel room chance and unavailable-item reward adaptations explicitly."
+    ]
+  },
+  "18.0.0": {
+    "name": "Attack Fly",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Regular enemies remain first. Continue Tainted Pooter and other unfinished ordinary fly-family controllers, then the remaining regular roster. No boss-specific expansion in this slice.",
+      "Duke/Husk parent tether, large-child HP/scale and edge exceptions, Gurdy child currentHP reduction and Eternal Fly-derived variants remain separate pending policies. Retained disassembly preflight is not their implementation.",
+      "Full Skatole, charm/fear/confusion/control, native time-scale/integration, knockback and complete animation/frame parity remain unverified. Existing Hive and Moter parent controllers are not completed by fixing this child.",
+      "Broader encounter/build balance, all-angle occlusion and controlled rendered Linux/WASM performance remain open. All653records and six acceptance gates are still required; zero records certified complete."
+    ]
+  },
+  "22.0.0": {
+    "name": "Hive",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native pathfinder initial impulse, diagonal bias, adaptive cache/retry logic and full movement/status/time-scale equivalence remain incomplete.",
+      "Resolve nonzero signed offspring counterNPC+bc6 and full charm/friendly/champion/item/appear-event interactions. Current evidence establishes ordinary hostile zero-counter behavior only.",
+      "Holy/Tainted Hive, Mulligan variants, Nest and Prey still need their own regular-enemy/controller and dependency work. Do not treat this shared native function as proof those records are ported.",
+      "Broader encounter/build balance, all-angle threat readability and controlled rendered Linux/WASM performance remain unaccepted. All six gates and all653records remain required; zero complete ports certified.",
+      "Regular enemies remain the priority; further boss/Hornfel expansion is deferred."
+    ]
+  },
+  "29.0.0": {
+    "name": "Hopper",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Complete native special targeting/control/champion and all damage/status/item/fire-producer branches.",
+      "Complete all-angle mixed-room Linux/WASM visual acceptance, full-floor mixed-build balance and controlled rendered performance.",
+      "Audit source morph nested initialization; committed in-flight snapshot remains an explicit local 3D safety policy."
+    ]
+  },
+  "29.1.0": {
+    "name": "Trite",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native special-status/champion/control branches and exact RNG/update ordering remain open.",
+      "Native grid/collision parity and unusual geometry require further acceptance; real3D elevation and safe landing are adaptations.",
+      "Source Hopper replacement probability/unlock/context rules remain open; direct bands0-2 specialist weight2/cost2/cap2 is authored.",
+      "Full mixed-room balance, all-angle combat readability and controlled Linux/WASM performance remain open; no complete port claimed."
+    ]
+  },
+  "30.2.0": {
+    "name": "Sack",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native5.71%/1%replacement selection, hardmode/championgrowth, full status/friendly/player-controlled branches, damage-entry exceptions and exact RNG/timeScale/grid parity still require review.",
+      "Native audio/spriteevents beyondShoot metadata and exact rendered sprite-size/collider relationship are not reproduced. Sourcefree-position grid selection is adapted to3D landing.",
+      "Full combat readability, long-run balance and controlled Linux/WASM performance gates remain open; these records are in_progress, never complete based only on focused tests.",
+      "Visual inspection found natural Walking Boil obscured by foreground cliffs (existing outline visible) and a native Walking Gut body obscured by its broad opaque explosion. All six bodies are visible in isolated captures, but these mixed-room frames are not full readability passes."
+    ]
+  },
+  "33.0.0": {
+    "name": "Fire Place",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Implement enemy contact damage and fire-transform dependencies as source fire semantics, not decorative flames.",
+      "Review regular/hard reward chances (25%/10%) and health-type conversion for DeathWard.",
+      "Repentance+ explosive-locust exception is outside this baseline.",
+      "Audit remaining source damage/status/loot callbacks; supported flame/basic explosive paths do not establish all native exceptions.",
+      "Full ordinary placement, varied-build/human balance and rendered Linux/WASM performance acceptance remain open."
+    ]
+  },
+  "33.1.0": {
+    "name": "Red Fire Place",
+    "implementation": "missing",
+    "unresolved": [
+      "Implement enemy contact damage and fire-transform dependencies as source fire semantics, not decorative flames.",
+      "Review regular/hard reward chances (25%/10%) and health-type conversion for DeathWard.",
+      "Add selective damage, lifetime/room-entry state, projectile behavior and hazard visuals.",
+      "Repentance+ explosive-locust exception is outside this baseline."
+    ]
+  },
+  "33.2.0": {
+    "name": "Blue Fire Place",
+    "implementation": "missing",
+    "unresolved": [
+      "Implement enemy contact damage and fire-transform dependencies as source fire semantics, not decorative flames.",
+      "Review regular/hard reward chances (25%/10%) and health-type conversion for DeathWard.",
+      "Add selective damage, lifetime/room-entry state, projectile behavior and hazard visuals.",
+      "Repentance+ explosive-locust exception is outside this baseline."
+    ]
+  },
+  "33.3.0": {
+    "name": "Purple Fire Place",
+    "implementation": "missing",
+    "unresolved": [
+      "Implement enemy contact damage and fire-transform dependencies as source fire semantics, not decorative flames.",
+      "Review regular/hard reward chances (25%/10%) and health-type conversion for DeathWard.",
+      "Add selective damage, lifetime/room-entry state, projectile behavior and hazard visuals.",
+      "Repentance+ explosive-locust exception is outside this baseline."
+    ]
+  },
+  "44.1.0": {
+    "name": "Slide",
+    "implementation": "existing_unverified",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "54.0.0": {
+    "name": "Flaming Hopper",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Complete native special targeting/control/champion and all damage/status/item/fire-producer branches.",
+      "Complete all-angle mixed-room Linux/WASM visual acceptance, full-floor mixed-build balance and controlled rendered performance.",
+      "Audit source morph nested initialization; committed in-flight snapshot remains an explicit local 3D safety policy."
+    ]
+  },
+  "61.0.0": {
+    "name": "Sucker",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Exact native motion and shot speed, collision conversion and creep timing.",
+      "Skatole/item immunity and champion-specific semantics not implemented.",
+      "Independent floor routes and full six-gate acceptance remain pending."
+    ]
+  },
+  "61.1.0": {
+    "name": "Spit",
+    "implementation": "existing_unverified",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "61.5.0": {
+    "name": "Bulb",
+    "implementation": "existing_unverified",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "76.0.0": {
+    "name": "Blastocyst Small",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "77.0.0": {
+    "name": "Embryo",
+    "implementation": "existing_unverified",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "80.0.0": {
+    "name": "Moter",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Implement fly item/team reactions and validate joined-to-split presentation across terrain; elevated offspring placement passes.",
+      "Verify all six completion gates and unresolved source/DeathWard conversion details."
+    ]
+  },
+  "85.0.0": {
+    "name": "Spider",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native Appear lifecycle, thrown spider state6, Bursting Sack377neutral handling, friendly/player-control paths, fear/confusion/shrink, special range-override NPC+e88 and full status/item/champion interactions remain unfinished.",
+      "Exact native RNG, entity-time/friction integration, CheckLine/grid/cache semantics and nonrectangular source-room margins are not certified. Physical canyon navigation, legal birth placement and retained capacity are documented adaptations.",
+      "Strider814and SwarmSpider884use distinct controllers and are not implemented by this slice. Other shared-controller spider types, parent-specific thrown spawning and related spawner dependencies require separate reviews.",
+      "Original procedural visuals remain approximations. Full all-angle/crowd readability, broad balance, controlled native/WASM performance and all six acceptance gates remain open. Both exact IDs stay in_progress, not complete."
+    ]
+  },
+  "88.2.0": {
+    "name": "Walking Sack",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native5.71%/1%replacement selection, hardmode/championgrowth, full status/friendly/player-controlled branches, damage-entry exceptions and exact RNG/timeScale/grid parity still require review.",
+      "Native audio/spriteevents beyondShoot metadata and exact rendered sprite-size/collider relationship are not reproduced. Sourcefree-position grid selection is adapted to3D landing.",
+      "Full combat readability, long-run balance and controlled Linux/WASM performance gates remain open; these records are in_progress, never complete based only on focused tests.",
+      "Visual inspection found natural Walking Boil obscured by foreground cliffs (existing outline visible) and a native Walking Gut body obscured by its broad opaque explosion. All six bodies are visible in isolated captures, but these mixed-room frames are not full readability passes."
+    ]
+  },
+  "94.0.0": {
+    "name": "Big Spider",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native Appear lifecycle, thrown spider state6, Bursting Sack377neutral handling, friendly/player-control paths, fear/confusion/shrink, special range-override NPC+e88 and full status/item/champion interactions remain unfinished.",
+      "Exact native RNG, entity-time/friction integration, CheckLine/grid/cache semantics and nonrectangular source-room margins are not certified. Physical canyon navigation, legal birth placement and retained capacity are documented adaptations.",
+      "Strider814and SwarmSpider884use distinct controllers and are not implemented by this slice. Other shared-controller spider types, parent-specific thrown spawning and related spawner dependencies require separate reviews.",
+      "Original procedural visuals remain approximations. Full all-angle/crowd readability, broad balance, controlled native/WASM performance and all six acceptance gates remain open. Both exact IDs stay in_progress, not complete."
+    ]
+  },
+  "205.0.0": {
+    "name": "Nest",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Exact native evasion grid/status/item parity and source death counter+bc6.",
+      "Burning Basement Trite-to-Flaming-Hopper bug not ported.",
+      "Required child full acceptance, mixed-room balance, all-camera readability and measured rendering/performance.",
+      "Source-controlled timing/status/champion, spawn appearance, mass and complete item interactions. WASM checks waived by explicit user instruction."
+    ]
+  },
+  "206.0.0": {
+    "name": "Baby Long Legs",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Hardmode/Sack champion regen, full damage-flag filtering, status/friendly/player-control/BurstingSack branches and native grid/RNG/timeScale equivalence are not complete.",
+      "Whitecreep exact source dimensions/lifetime, full native free-position selection/overlap replacement radius, native audio and sprite events, and all parent-specific Spider thrown branches require further review.",
+      "Broad readability, long-run balance and controlled Linux/WASM performance acceptance remain open; all five records stay in_progress until six gates pass.",
+      "Thrown Spider/Strider status timers need the same detailed review as swimmer throwing; ordinary source throw/landing is covered, full native status parity is not."
+    ]
+  },
+  "206.1.0": {
+    "name": "Small Baby Long Legs",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Hardmode/Sack champion regen, full damage-flag filtering, status/friendly/player-control/BurstingSack branches and native grid/RNG/timeScale equivalence are not complete.",
+      "Whitecreep exact source dimensions/lifetime, full native free-position selection/overlap replacement radius, native audio and sprite events, and all parent-specific Spider thrown branches require further review.",
+      "Broad readability, long-run balance and controlled Linux/WASM performance acceptance remain open; all five records stay in_progress until six gates pass.",
+      "Thrown Spider/Strider status timers need the same detailed review as swimmer throwing; ordinary source throw/landing is covered, full native status parity is not."
+    ]
+  },
+  "207.0.0": {
+    "name": "Crazy Long Legs",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Hardmode/Sack champion regen, full damage-flag filtering, status/friendly/player-control/BurstingSack branches and native grid/RNG/timeScale equivalence are not complete.",
+      "Whitecreep exact source dimensions/lifetime, full native free-position selection/overlap replacement radius, native audio and sprite events, and all parent-specific Spider thrown branches require further review.",
+      "Broad readability, long-run balance and controlled Linux/WASM performance acceptance remain open; all five records stay in_progress until six gates pass.",
+      "Thrown Spider/Strider status timers need the same detailed review as swimmer throwing; ordinary source throw/landing is covered, full native status parity is not."
+    ]
+  },
+  "207.1.0": {
+    "name": "Small Crazy Long Legs",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Hardmode/Sack champion regen, full damage-flag filtering, status/friendly/player-control/BurstingSack branches and native grid/RNG/timeScale equivalence are not complete.",
+      "Whitecreep exact source dimensions/lifetime, full native free-position selection/overlap replacement radius, native audio and sprite events, and all parent-specific Spider thrown branches require further review.",
+      "Broad readability, long-run balance and controlled Linux/WASM performance acceptance remain open; all five records stay in_progress until six gates pass.",
+      "Thrown Spider/Strider status timers need the same detailed review as swimmer throwing; ordinary source throw/landing is covered, full native status parity is not."
+    ]
+  },
+  "208.0.0": {
+    "name": "Fatty",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "208.1.0": {
+    "name": "Pale Fatty",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "208.2.0": {
+    "name": "Flaming Fatty",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "210.0.0": {
+    "name": "Blubber",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "214.0.0": {
+    "name": "Level 2 Fly",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "215.0.0": {
+    "name": "Level 2 Spider",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "217.0.0": {
+    "name": "Dip",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Full status/charm/control, Dirty Mind and item163 conversion, other parent routes, native RNG/visual trail/sound event ordering, source mass effects, broad balance/performance.",
+      "Complete six validation gates, not only scoped behavior checks."
+    ]
+  },
+  "217.2.0": {
+    "name": "Brownie Corn",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Full fear/confusion/charm/control/Dirty Mind/item163 behavior, native shared mass/physics, cosmetic trail/audio/RNG ordering, bc6 death suppression meaning, alternate production, save persistence, full balance/performance and other acceptance gates. Native room-current counterforce8 has no canyon current-field equivalent. Wiki says identical to Corn, but installed522553/522587 doubles only variant1 ordinary impulse. XML mass/friction match. Fear branch separately doubles1or2. Discrepancy preserved.",
+      "Complete all six acceptance gates."
+    ]
+  },
+  "218.0.0": {
+    "name": "Wall Hugger",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "220.0.0": {
+    "name": "Squirt",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Full source status/control and mass response, bc6 suppression routes, global timing/RNG identity, all alternate producers, persistence, visual/audio fidelity, full balance/performance.",
+      "Complete six validation gates, not only scoped behavior checks."
+    ]
+  },
+  "222.0.0": {
+    "name": "Ring Fly",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Review and implement relevant fly item/status interactions; pinned source establishes Strange Attractor immunity, while other conversions must not be assumed.",
+      "Finish source HP conversion and complete assembly/collision/team behavior across mixed and constrained encounters.",
+      "Complete dedicated Tainted Mulligan parent encounter, all-angle visual checks, mixed-room balance and controlled Linux/WASM performance acceptance."
+    ]
+  },
+  "226.0.0": {
+    "name": "Skinny",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "226.2.0": {
+    "name": "Crispy",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "231.0.0": {
+    "name": "Nerve Ending",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "240.0.0": {
+    "name": "Wall Creep",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "242.0.0": {
+    "name": "Blind Creep",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "244.0.0": {
+    "name": "Round Worm",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "246.0.0": {
+    "name": "Ragling",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "246.1.0": {
+    "name": "Rag Man'S Ragling",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "248.0.0": {
+    "name": "Psychic Horf",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "249.0.0": {
+    "name": "Full Fly",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "250.0.0": {
+    "name": "Ticking Spider",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "255.0.0": {
+    "name": "Night Crawler",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "256.0.0": {
+    "name": "Dart Fly",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "257.0.0": {
+    "name": "Conjoined Fatty",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "276.0.0": {
+    "name": "Roundy",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "279.0.0": {
+    "name": "Black Globin's Head",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native grid/free-position/appearance/status/champion/control/item/slow-clock details.",
+      "Exact bomb versus generic radial and scripted damage policy during airborne births.",
+      "Full required-child acceptance and all-angle mixed-room readability.",
+      "Broader balance and measured rendering/performance."
+    ]
+  },
+  "280.0.0": {
+    "name": "Black Globin's Body",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Native grid/free-position/appearance/status/champion/control/item/slow-clock details.",
+      "Exact bomb versus generic radial and scripted damage policy during airborne births.",
+      "Full required-child acceptance and all-angle mixed-room readability.",
+      "Broader balance and measured rendering/performance."
+    ]
+  },
+  "281.0.0": {
+    "name": "Swarm",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "282.0.0": {
+    "name": "Mega Clotty",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "284.0.0": {
+    "name": "Cyclopia",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "289.0.0": {
+    "name": "Ulcer",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "291.1.0": {
+    "name": "Suction Pitfall",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "292.0.0": {
+    "name": "Movable TNT",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Implement push/contact collision, ignition, destruction chain limits and distinct Mine Crafter cube appearance.",
+      "Mine Crafter item-created routing must be separate from natural obstacle placement.",
+      "Audit remaining source damage/status/loot callbacks; supported flame/basic explosive paths do not establish all native exceptions.",
+      "Full ordinary placement, varied-build/human balance and rendered Linux/WASM performance acceptance remain open."
+    ]
+  },
+  "297.0.0": {
+    "name": "Blue Gaper",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "299.0.0": {
+    "name": "Greed Gaper",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "302.0.0": {
+    "name": "Stoney",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "305.0.0": {
+    "name": "Ministro",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "306.0.0": {
+    "name": "Portal",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "818.2.0": {
+    "name": "Coal Spider",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Bursting Sack377, full fear/confusion/charm/control/status and freeze behavior remain open. Stompy/Leo item pathways remain open.",
+      "Singe-specific coal impulse4.8, champion/status multipliers and full native mass/collision/reaction-order parity remain open.",
+      "Native grid class3/5/0 is adapted to continuous3D flying/grounded and high-altitude shot collision. Water amount>0.2 maps to existing flooded-room flag. Timing near landing hazards and grace clear frames needs broader validation.",
+      "Native environment damage-queue filtering before the coal controller, including flame eligibility and invincibility flags, needs additional caller analysis; delivered hits use the pinned manual wear order.",
+      "3D scale.1, sourceHPx3.2 for spiders, raw15HP for wear-based coal; radius.45 versus ordinary Spider.4, contact10 before shared damage multiplier. New faceted procedural art retains Original style, not source sprites.",
+      "Full authored art/readability approval, alternate production paths, persistence, broad balance and sustained native/WASM performance remain unaccepted."
+    ]
+  },
+  "868.0.0": {
+    "name": "Army Fly",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "869.0.0": {
+    "name": "Migraine",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "881.0.0": {
+    "name": "Needle",
+    "implementation": "missing",
+    "unresolved": [
+      "Review source-edition behavior and eligibility; existing definitions are not parity evidence."
+    ]
+  },
+  "884.0.0": {
+    "name": "Swarm Spider",
+    "implementation": "in_progress",
+    "unresolved": [
+      "Strider thrown state6, player-controlled rowing, confusion/fear/shrink branches and full native time-scale/grid/CheckLine semantics are not implemented by this normal hostile slice.",
+      "Swarm Bursting Sack inert behavior, nonzero-subtype group expansion, friendly/status/champion branches, complete native entity-collision/knockback equivalence and Jump sound258 adaptation remain open. Installed884.0.0 is the exact covered tuple.",
+      "Exact animation-frame integration/RNG parity, broad visual/crowd readability, balance and controlled native/WASM performance acceptance remain open. Both IDs remain in_progress, not complete."
+    ]
+  }
+}

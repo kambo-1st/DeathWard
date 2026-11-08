@@ -76,12 +76,12 @@ void sadAndLimits() {
 void hotAndPersistence() {
     auto s=fixture();const auto root=owner(s);s.godMode=false;s.player.position={0,.85f,0};
     s.throwEnemyBomb("hot",root,{0,.18f,0},{},true);tick(s);
-    check(near(s.player.hp,87.5f),"Armed Hot bomb contact deals hostile damage");s.player.position={20,.85f,20};
+    check(near(s.player.hp,StartingHealth-1),"Armed Hot bomb contact deals hostile damage");s.player.position={20,.85f,20};
     tick(s,91);check(s.enemyBombs.size()==1&&s.enemyBombs[0].detonated&&s.enemyBombs[0].effectAge>0,"Hot detonation creates persistent flame");
     damage(s,root,10000);s.clearRoom();
     check(s.enemyBombs.size()==1&&s.enemyBombs[0].detonated,"Owner death and room clear preserve actual lingering flame");
-    s.player.hp=100;s.player.hurt=0;s.player.position={0,.85f,0};tick(s);
-    check(near(s.player.hp,87.5f),"Remaining fire damages player after owner/room cleanup");
+    s.player.hp=StartingHealth;s.player.hurt=0;s.player.position={0,.85f,0};tick(s);
+    check(near(s.player.hp,StartingHealth-1),"Remaining fire damages player after owner/room cleanup");
     const auto age=s.enemyBombs[0].effectAge;s.enterRoom(1);s.player.position={60,.85f,0};tick(s,120);
     check(s.enemyBombs[0].effectAge==age,"Inactive room pauses active payload lifetime");
     s.enterRoom(0);s.player.position={20,.85f,20};tick(s,610);
@@ -94,10 +94,10 @@ void brimstone() {
         if(blocked){s.arena.obstacles={{{-2,0,2},{2,4,3}}};s.arena.rebuildWalls();}
         s.throwEnemyBomb("brimstone",root,{0,.18f,0},{},true);tick(s,90);
         check(s.stats.explosions==1&&s.enemyBombs.size()==1&&s.enemyBombs[0].detonated,"Brimstone leaves active beam payload");
-        check(near(s.player.hp,blocked?100:87.5f),"Cardinal beam hits unblocked player beyond blast radius and respects cover");
+        check(near(s.player.hp,blocked?StartingHealth:StartingHealth-1),"Cardinal beam hits unblocked player beyond blast radius and respects cover");
         const auto &b=s.enemyBombs[0];check(b.beamEnds.size()==4,"Four cardinal rays");
         for(auto end:b.beamEnds){auto d=sub(end,add(b.charge.position,{0,.67f,0}));check(std::min(std::abs(d.x),std::abs(d.z))<.001f,"Beam axes remain cardinal");}
-        if(!blocked){s.player.position={0,.85f,0};s.player.hp=100;s.player.hurt=0;tick(s);check(near(s.player.hp,87.5f),"Four overlapping beams share player hurt cooldown");}
+        if(!blocked){s.player.position={0,.85f,0};s.player.hp=StartingHealth;s.player.hurt=0;tick(s);check(near(s.player.hp,StartingHealth-1),"Four overlapping beams share player hurt cooldown");}
         tick(s,60);check(s.enemyBombs.empty(),"Finite beam lifetime retires payload");
     }
     std::cout<<"ENEMY_BOMB_BRIMSTONE cardinal=4 clipped_by_cover=1 shared_hurt_cooldown=1 finite_lifetime=1\n";

@@ -16,7 +16,9 @@ inline constexpr float DynamiteFuse = 2, DynamiteRange = 12, DynamiteRadius = 4.
 inline constexpr float DynamiteDamage = 100, DynamiteSelfDamage = 25;
 inline constexpr float DynamiteGravity = 18;
 inline constexpr uint64_t MaxMoney = 999999999;
-inline constexpr float StartingHealth = 100;
+// H01: starting red health is measured in half-heart units.
+inline constexpr int StartingRedHearts = 3;
+inline constexpr float StartingHealth = StartingRedHearts * 2;
 inline constexpr float RevolverDamage = 24;
 inline constexpr float EnemyDamageMultiplier = 1.25f;
 inline constexpr float EnemyMovementMultiplier = 1.10f;

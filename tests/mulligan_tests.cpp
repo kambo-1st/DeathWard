@@ -100,7 +100,7 @@ void boom() {
         if(shot)damage(s,id,s.findEnemy(id)->hp);
         else {tick(s,8);check(s.findEnemy(id)&&s.findEnemy(id)->alive,"proximity is sampled every five source frames");}
         tick(s,2);check(s.stats.kills==1&&s.stats.explosions==1&&s.enemyBombs.empty()&&s.stats.projectiles==0,"Mulliboom immediate blast has no delayed Troll fuse or contact shot");
-        check(near(s.player.hp,StartingHealth-10*EnemyDamageMultiplier),"one half-heart-converted blast hit, no contact double damage");
+        check(near(s.player.hp,StartingHealth-1),"one half-heart-converted blast hit, no contact double damage");
     }
     auto s=fixture();s.player.position={0,.85f,20};auto id=s.spawnMonster(monsterId(16,2),{0,.85f,0});tick(s,60);
     check(s.findEnemy(id)&&s.findEnemy(id)->position.z>4,"source-based pursuit moves rapidly toward target");

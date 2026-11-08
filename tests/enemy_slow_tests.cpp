@@ -127,7 +127,7 @@ void projectiles() {
     old.applyEnemyStatus(id,EnemyStatus::Slow,120);ticks(old);check(old.projectiles.front().sourceTimeScale==1,"existing projectiles do not acquire shooter's later Slow");
     auto damage=fixture();damage.godMode=false;id=spawn(damage,monsterId(12));damage.applyEnemyStatus(id,EnemyStatus::Slow,180);
     for(int n=0;n<150&&damage.player.hp==StartingHealth;++n)ticks(damage);
-    check(near(damage.player.hp,87.5f),"slowed projectile retains ordinary damage and hits standing player");
+    check(near(damage.player.hp,StartingHealth-1),"slowed projectile retains ordinary damage and hits standing player");
     std::cout<<"SLOW_PROJECTILES inherited_flag=1 rational_flight=1 partition=1 lifetime=1 owner_independent=1 selected_payload=1 damage=1\n";
 }
 void lifecycle() {

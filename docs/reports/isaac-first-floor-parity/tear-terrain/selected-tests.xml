@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="22"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="Ryzen"
+	time="84"
+	timestamp="2026-11-08T08:18:04"
+	>
+	<testcase name="item_builds" classname="item_builds" time="8.51943" status="run">
+		<system-out>chain 2 depth 1 effect -1: hazard capacity
+chain 15 depth 2 effect 1: chain event limit
+Pair matrix: 66 unordered pairs including duplicates; both orders and mouse/arrow inputs
+PASS six weapon mechanics, explicit interactions, duplicates, provenance, resource rules, input parity and saves
+</system-out>
+	</testcase>
+	<testcase name="mirror_behavior" classname="mirror_behavior" time="20.6859" status="run">
+		<system-out>MOVEMENT center_reflection=1 room_bounds=1 equal_hp=1 zero_contact=1 one_target=1
+SHOTS trigger_delay=1 cardinal=1 twin_cooldown=1 spread=1 ballistics=1 capacity=1 stun=1 aliasing=1
+TERRAIN ground_correction=1 flying_cover=1 bounded_search=1
+CONFIG immutable_reload=1 invalid_profiles=4
+NATURAL_MIRROR id=53.1 seed=3 floor=3 room=11
+NATURAL_MIRROR id=53.0 seed=12 floor=7 room=1
+PLACEMENT floors=77 rooms=776 late_band=1 shared_cap=1
+mirror behavior passed
+</system-out>
+	</testcase>
+	<testcase name="linked_head" classname="linked_head" time="0.273398" status="run">
+		<system-out>IDENTITY independent_hp=1 body_death=maw head_death=gusher red_cross=4 neck_harmless=1
+MOTION pursuit=1 global4=1 launch42=1 spring_order=1 return=1 cover=1 contact12.5=1
+LIFECYCLE required_birth_retry=1 prebirth_death=1 completion=1 red_cross_retry=1
+CONFIG shared_profile=1 immutable=1 voluntary_split=1 invalid_profiles=5
+STARTING_KIT variant=0 cover=0 seconds=3.26667 hp=87.5 threats=0 shots=11
+STARTING_KIT variant=0 cover=1 seconds=3.26667 hp=87.5 threats=0 shots=11
+STARTING_KIT variant=2 cover=0 seconds=2.53333 hp=100 threats=0 shots=9
+STARTING_KIT variant=2 cover=1 seconds=2.36667 hp=100 threats=0 shots=8
+PASS linked head family
+</system-out>
+	</testcase>
+	<testcase name="monster_boss_components" classname="monster_boss_components" time="1.25178" status="run">
+		<system-out>chain 0 depth 0 effect -1: monster offspring capacity
+PEEP_OWNERSHIP thresholds=2/3,1/3 cyan_start=2 capacity_retry=1 no_respawn=1 no_orphans=1
+PEEP_ATTACKS creep=1 ring=8 landing=12 locked_arc=1 yellow_size=.85 whole_contact=25
+PEEP_EYES wall_and_body_bounce=1 rocks=1 projectile_block=1 bomb_direction=1 contact=12.5
+PEEP_STAGE seed=0 floor=2 form=0 components=2 completion=1
+PEEP_STAGE seed=3 floor=1 form=2 components=2 completion=1
+PEEP_STAGE seed=9 floor=2 form=1 components=2 completion=1
+PEEP_CONFIG immutable=1 geometry_unchanged=1 ordinary_pools_unchanged=1 tutorial_unchanged=1
+PEEP_STARTING_KIT form=0 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=1 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=2 seconds=20.1333 hp=87.5 kills=1
+PASS Peep multipart encounter, owned eyes and stage routing
+</system-out>
+	</testcase>
+	<testcase name="bloat_boss_and_chargers" classname="bloat_boss_and_chargers" time="1.67274" status="run">
+		<system-out>BLOAT_LASERS down_pair=1 side_pair=1 no_up=1 immediate=1 owner_cleanup=1 cover=1
+BLOAT_ATTACK form=0 action=0 shots=0 summons=0 peak=1.3
+BLOAT_ATTACK form=0 action=1 shots=8 summons=0 peak=1.99841
+BLOAT_ATTACK form=0 action=2 shots=8 summons=0 peak=5.0987
+BLOAT_ATTACK form=3 action=0 shots=0 summons=2 peak=1.3
+BLOAT_ATTACK form=3 action=1 shots=2 summons=0 peak=1.99841
+BLOAT_ATTACK form=3 action=2 shots=3 summons=0 peak=5.0987
+CHARGER immediate_cardinal=1 locked_heading=1 untargeted_wander=1 los=1 collision_recovery=1
+BLOAT_STAGE seed=0 floor=5 band=3 form=0 completion=1
+BLOAT_STAGE seed=1 floor=5 band=2 form=0 completion=1
+BLOAT_STAGE seed=4 floor=4 band=2 form=3 completion=1
+BLOAT_STAGE seed=6 floor=3 band=3 form=3 completion=1
+BLOAT_STARTING_KIT form=0 hp=100 seconds=18.9333 kills=1
+BLOAT_STARTING_KIT form=3 hp=12.5 seconds=24.05 kills=4
+PASS Bloat forms, real lasers/ballistics, owned eyes and Chargers
+</system-out>
+	</testcase>
+	<testcase name="native_tear_collider" classname="native_tear_collider" time="0.196451" status="run">
+		<system-out>PASS tear collider:full native default radius applied to actual projectiles;1980 update/interpolation states and36 death intents;grazing hit/miss and legacy preservation;full target/grid/item/live acceptance remains open
+</system-out>
+	</testcase>
+	<testcase name="native_tear_terrain" classname="native_tear_terrain" time="1.65026" status="run">
+		<system-out>PASS tear terrain:1440 native grid cases,42 world obstacle hit/graze cases,3 legacy controls;continuous world geometry remains an adapter;native scheduling,entity-pair ordering and special flags remain open
+</system-out>
+	</testcase>
+	<testcase name="native_shot_placement" classname="native_shot_placement" time="0.154104" status="run">
+		<system-out>PASS shot placement:192 complete native weapon-method cases,1080 gameplay sequence states,52 actual births; full player/tear initialization,grid/flags/live acceptance remain open
+</system-out>
+	</testcase>
+	<testcase name="native_tear_birth" classname="native_tear_birth" time="0.0516588" status="run">
+		<system-out>PASS tear birth:960 native position cases,49 offset gates,168 bounded birth/interpolation states,70 moving world pellet births; full Tear::Update/placement/grid/live acceptance remains open
+</system-out>
+	</testcase>
+	<testcase name="native_player_fire" classname="native_player_fire" time="0.164572" status="run">
+		<system-out>PASS native firing:200 tick cases,360 gates,4800 sequence states,2880 world states; full birth/item/live acceptance remains open
+</system-out>
+	</testcase>
+	<testcase name="native_player_motion" classname="native_player_motion" time="0.00310565" status="run">
+		<system-out>PASS native player tears: 171 flight steps, 6 fixed RNG cases; live timing/flags/collision remain unaccepted
+PASS native player motion: 590 invocations, 7 scenarios; global clock, geometry and special branches remain unaccepted
+</system-out>
+	</testcase>
+	<testcase name="native_duke" classname="native_duke" time="0.404638" status="run">
+		<system-out>NATIVE_DUKE states=3144 births=4345 maximum_numeric_difference=0 releases=304 retained_graphics_rng=1
+PASS Duke world live/big/release/death payloads, capacity recovery, sourceHP and debug-clear isolation; full acceptance and production pool remain open
+</system-out>
+	</testcase>
+	<testcase name="native_monstro" classname="native_monstro" time="0.36788" status="run">
+		<system-out>PASS Monstro: 48 native decisions, 32 forces, 24 projectile payloads, ordinary actor integration and 3600-tick normal sequence; full acceptance and pool selection remain open
+</system-out>
+	</testcase>
+	<testcase name="native_player_bombs" classname="native_player_bombs" time="1.34922" status="run">
+		<system-out>chain 1 depth 1 effect -1: queue capacity
+chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+chain 4 depth 0 effect -1: queue capacity
+chain 5 depth 0 effect -1: queue capacity
+chain 6 depth 0 effect -1: queue capacity
+chain 7 depth 0 effect -1: queue capacity
+chain 8 depth 0 effect -1: queue capacity
+chain 9 depth 0 effect -1: queue capacity
+PASS native bomb calculations and baseline lifecycle/stock/queue/contact/troll/dodge/legacy checks; actor acceptance remains open
+</system-out>
+	</testcase>
+	<testcase name="native_blast_recipients" classname="native_blast_recipients" time="0.366985" status="run">
+		<system-out>NATIVE_BLAST cases=658 maximum_velocity_difference=0
+PASS source blast world recipients/impulse, cover, legacy geometry and retained dodge; full world acceptance remains open
+PASS real player/troll/Mulliboom blast producer boundary witnesses
+</system-out>
+	</testcase>
+	<testcase name="isaac_baseline" classname="isaac_baseline" time="2.39842" status="run">
+		<system-out>chain 1 depth 0 effect -1: queue capacity
+PASS Isaac baseline: starts, hearts, protection, cadence, cardinal aim, dodge, source HP, lifecycle, shop, wallet, floor travel; full parity remains unaccepted
+</system-out>
+	</testcase>
+	<testcase name="first_floor_freeze_effect" classname="first_floor_freeze_effect" time="0.749155" status="run">
+		<system-out>FREEZE_DURATION all_five=1 source_cap=1 negative_refresh=1 partition=1 modal=1
+FREEZE_PHYSICS partition=1 passive_friction=1 held_pose=1 no_animation_catchup=1 impulse=1 cover=1
+FREEZE_ATTACKS paused_horf_cast=1 current_aim=1 reload=1 pending_payload=1
+FREEZE_BOUNDARIES long_step_poll_phase=1 partial_frame=1 reapply_pose=1 explicit_thaw=1
+FREEZE_INTERACTIONS contact=1 ordinary_damage=1 other_statuses=1 same_id_morph=1 inactive_room=1
+FREEZE_CONTENT cap_and_motion=1 immutable_reload=1 opt_in=1 rejected_contracts=6
+First-floor freeze contracts passed
+</system-out>
+	</testcase>
+	<testcase name="first_floor_damage_statuses" classname="first_floor_damage_statuses" time="1.12715" status="run">
+		<system-out>DOT_TIMING all_five=1 poison_and_burn=1 rates_30_60_120=1 expiry_before_tick=1 six_ticks=1
+DOT_REAPPLY cap=1 extended=1 phase=1 strongest_damage=1 source_floor=1 source_snapshot=1
+DOT_COMBINATIONS independent=1 freeze=1 slow=1 modal=1 long_step=1 movement=1 inactive_room=1
+DOT_MORTALITY all_five=1 one_reward=1 morph=1 due_tick_backpressure=1 payload_snapshot=1 independent_retry=1
+DOT_CONFIG external=1 immutable_reload=1 opt_in=1 rejected_profiles=8 invalid_api=1
+First-floor Poison/Burn contracts passed
+</system-out>
+	</testcase>
+	<testcase name="first_floor_slow_effect" classname="first_floor_slow_effect" time="0.953806" status="run">
+		<system-out>SLOW_DURATION additive_uncapped=1 negative_assigns2=1 partition=1 animation_rate=1 pause=1
+SLOW_MOTION source_force_friction=1 displacement=1 partition=1 fear=1 freeze=1 cover=1
+SLOW_ATTACKS real_poll=1 logical_cooldown=1 logical_animation=1 due_check=1 wake_phase=1 expiry=1
+SLOW_PROJECTILES inherited_flag=1 rational_flight=1 partition=1 lifetime=1 owner_independent=1 selected_payload=1 damage=1
+SLOW_LIFECYCLE contacts=1 damage=1 morph=1 combined_freeze=1 room_storage=1
+SLOW_CONTENT actor_and_shot_scales=1 refresh=1 immutable_reload=1 opt_in=1 rejected_contracts=6
+First-floor Slow contracts passed
+</system-out>
+	</testcase>
+	<testcase name="first_floor_charm_effect" classname="first_floor_charm_effect" time="5.64249" status="run">
+		<system-out>chain 1 depth 1 effect -1: queue capacity
+CHARM_TIME max_refresh=1 no_cap=1 expiry_partition=1 duration_bounds=1 freeze_slow=1 room_threat=1 pause=1
+CHARM_TARGET weighted=1 dead_fallback=1 cover=1 ancestry=1 birth_age=1 pursuit=1
+CHARM_SHOTS independent_masks=1 npc_hp=1 player_hp=1 owner_lifetime=1 selected_payload=1 pacer=1
+CHARM_CONTACT reciprocal=1 native_curve=1 poll_cadence=1 queue_retry=1 cover=1 player_contact=1
+CHARM_COMBINATIONS fear_target=1 confusion=1 slow_shot=1 frozen_contact=1 swept_contact=1 poll15=1
+CHARM_LIFECYCLE morph=1 room_storage=1
+CHARM_PERMANENT affiliation=1 incoming_damage=1 player_safety=1 room_travel=1 targeting=1
+RECOIL mass=5 impulse=1 blast=1 cap=1 statuses=1 cover=1
+CHAMPIONS variants=8 identities=5 stats=1 contact=1 charm=1 creep=1 burst_retry=1 explosion=1 seeded=1
+CHARM_CONTENT tuning=1 immutable_reload=1 opt_in=1 rejected_contracts=9
+First-floor Charm contracts passed
+</system-out>
+	</testcase>
+	<testcase name="rock_spider_family" classname="rock_spider_family" time="35.737" status="run">
+		<system-out>MOTION reveal20=1 native_force=1 committed_heading=1 cycle48=1 partition=1 chase_wander=1
+DEATH four_subtypes=1 same_entity=1 no_extra_reward=1 overkill=1 fire_morph=1 burning=1 debug=1
+COAL retained_birth=1 matching_shape=1 bounce=1 per_hit_wear=1 explosive=1 flame=1 timed_decay=1 clear=1
+COLLISION walls=1 contact=1 height_classes=1
+CONFIG immutable=1 rejects_invalid=5
+NATURAL_ROCK 818.0.3 seed=0 floor=2 room=1
+NATURAL_ROCK 818.0.1 seed=0 floor=2 room=1
+NATURAL_ROCK 818.0.2 seed=2 floor=2 room=4
+NATURAL_ROCK 818.2.1 seed=13 floor=0 room=4
+NATURAL_ROCK 818.2.3 seed=21 floor=1 room=7
+NATURAL_ROCK 818.2.2 seed=22 floor=0 room=3
+PASS Rock Spider and Coal Spider
+</system-out>
+	</testcase>
+	<testcase name="core_contracts" classname="core_contracts" time="0.393127" status="run">
+		<system-out>chain 12 depth 3 effect -1: chain event limit
+chain 2 depth 1 effect -1: generation limit
+PASS 3D swept collisions
+PASS five items and composed effects
+PASS continuous fire and sixth-shot effects
+PASS player health, damage and item tuning
+PASS mouse routes, interactions and keyboard override
+PASS bounded chains and cleanup
+PASS independent seeded RNG streams
+PASS persistence, recovery, consequences and revisits
+PASS full expedition progression
+PASS cheat clears, stress cleanup, room restart and repeatable boss
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,7 @@
+state,endpoint,actor,flags_at_call
+ordinary,player_update,0,16384
+ordinary,player_collision,0,16384
+ordinary,npc_interpolation,1,0
+paused_counter,none,,
+room_transition,none,,
+game_transition,none,,

@@ -1,0 +1,106 @@
+{
+  "version": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "rows": 1096,
+  "cases": 13,
+  "method": "Native AddMidas/AddFreeze, native immunity/duration/metadata/unlinked-propagation helpers; native bounded timer blocks. SetColor(0x68a380) alone is intercepted with native five-argument cleanup.",
+  "fixture": "Synthetic unlinked NPC, original NPC vtable, type/boss metadata/raw flags specified by case; empty-inventory ordinary player EntityRef. Metadata is supplied fixture data, not acceptance of any boss controller.",
+  "golden_scope": "Native cooldown-reset block then AddMidas; query selection/world burst is outside this trace.",
+  "death_coin_scope": "Original modulo-helper tail and ordinary Isaac +1 block with supplied raw RNG. Global RNG/nearest-player query/spawn physics excluded; Keeper branch excluded.",
+  "unverified": [
+    "live scheduling/physics",
+    "all actor immunity initialization",
+    "linked propagation/controllers",
+    "type245 gameplay morph",
+    "Midas damage propagation",
+    "world drop physics and RNG stream",
+    "item duration modifiers",
+    "full actor acceptance"
+  ],
+  "windows": [
+    {
+      "name": "apply_midas",
+      "start": "0x685990",
+      "end_exclusive": "0x685ad3",
+      "raw_sha256": "1f41dac90a998ef838e538bb583405d147df862f984695048b461fc502d62273",
+      "listing_sha256": "db828897d78f24d9613d5d57acea22cb275fdc3bf52fbc0900db79cb270bfdf8"
+    },
+    {
+      "name": "apply_ordinary_freeze",
+      "start": "0x685080",
+      "end_exclusive": "0x6851b3",
+      "raw_sha256": "7be9755b90a11cfc706437e99654245e39ee053cdaf6a37b07fa845e1ae01bbd",
+      "listing_sha256": "95d09717904440a0d6fa0c37ae9812946e6ed8cd5b8b95a1ff6fbe1b4f2356ab"
+    },
+    {
+      "name": "status_immunity",
+      "start": "0x684b00",
+      "end_exclusive": "0x684bae",
+      "raw_sha256": "b2d205d3979b8d6c646d837dd6489da98e09e8173428312fb075fa9d9148ed62",
+      "listing_sha256": "f0602981d6243bd7bdbdadd015347d8eef34dfd1631aff78a06f684d63aa5f28"
+    },
+    {
+      "name": "source_duration",
+      "start": "0x685020",
+      "end_exclusive": "0x68507b",
+      "raw_sha256": "d5a8561855374eb62cf6ed197ecad52f580625c29e36abe6c18c757b7b77d05d",
+      "listing_sha256": "42efbd798027b4c16c27a959c25b5fff21675735516c5ea2edd3840e325726ef"
+    },
+    {
+      "name": "freeze_timer",
+      "start": "0x686757",
+      "end_exclusive": "0x68678d",
+      "raw_sha256": "07956b38d26acfb17c3af020b169abbc7f71b36d6901936c79502c35aadfb320",
+      "listing_sha256": "424fb46afb631fa6e457e661c7fc3dff2a3f7b416b21e866b1d9fe0dbb3527c8"
+    },
+    {
+      "name": "midas_timer",
+      "start": "0x6869dc",
+      "end_exclusive": "0x686a13",
+      "raw_sha256": "f9de6d6c9122b573a764499751097d7784a68f730b3653c7bcb25f871c19015f",
+      "listing_sha256": "0c960b4281c3a3577e6a1dc8a5373647e18f16018b1f1b42f32cf385fc77ffa8"
+    },
+    {
+      "name": "control_cooldown",
+      "start": "0x686d68",
+      "end_exclusive": "0x686d79",
+      "raw_sha256": "7d197d2032783b8b53302cbca83a23e379c6ea2f944e4cbd6779ab08f575938c",
+      "listing_sha256": "36e5218b70e405057fa59345ca6c1e1d9cea2e7b1a18aaad79cd5559cbaf2859"
+    },
+    {
+      "name": "golden_heart_reset",
+      "start": "0x78c740",
+      "end_exclusive": "0x78c76a",
+      "raw_sha256": "2ace8c37639b4c5064c61e7ddf5dfa556fcd641fb4ae900a3e054dfa375b510f",
+      "listing_sha256": "c10178afcac9067b0cf9af091a9a91c9fb66148f625dde8d61efcf87a87f386f"
+    },
+    {
+      "name": "midas_death_drop",
+      "start": "0x69e7f8",
+      "end_exclusive": "0x69e8d0",
+      "raw_sha256": "d10c5cb2d883864418c7abb96d885a48f071b969c199f6110da746b394edd452",
+      "listing_sha256": "849a16ba0f9aabc946480837e07088cae4db3fd4515a25a63bdf45a9f27b8f65"
+    },
+    {
+      "name": "bounded_rng",
+      "start": "0x659230",
+      "end_exclusive": "0x659248",
+      "raw_sha256": "8c7883d700c719912e72eeeb023500d9e403ab1a02b5401605e78e4a448e388c",
+      "listing_sha256": "5f7efcaf094848a4aa44fa097efb0f3667b039201ab6a4a6f30d4ca19e7f9a26"
+    },
+    {
+      "name": "npc_metadata_query",
+      "start": "0x68f570",
+      "end_exclusive": "0x68f577",
+      "raw_sha256": "5ace578a55bc52ff0cb860c5e6e8f79d982d98c9f345b30bfee2aa1e9822bb8c",
+      "listing_sha256": "6308ac6e25de99111d21627ed7d3aa38059ea1244c991fc524530bebe483cf5e"
+    },
+    {
+      "name": "frozen_ai_predicate",
+      "start": "0x69b0b0",
+      "end_exclusive": "0x69b0d6",
+      "raw_sha256": "4c7b41783be365a43c5a07a032885aed606bc6178e8aeb884e53fa2ffda7aec8",
+      "listing_sha256": "fc5422da1047c901bbd59e893307172469a71c3e0891f1d98f341746c1884a08"
+    }
+  ]
+}

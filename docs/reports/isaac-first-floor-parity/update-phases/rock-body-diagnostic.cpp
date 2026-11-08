@@ -1,0 +1,4 @@
+#define main rock_test_main
+#include "tests/rock_spider_tests.cpp"
+#undef main
+int main(){for(float height:{-60.f,-20.f}){auto s=fixture();auto id=spawn(s);auto &e=*s.findEnemy(id);e.rockSpider->initialized=true;e.rockSpider->height=height;e.lift=-height*.1f;Event shot;shot.position={-1,.85f+e.lift,0};shot.direction={1,0,0};shot.speed=120;shot.damage=1;s.queueRoot(shot);s.drainEvents();std::cout<<"BEFORE h="<<height<<" hp="<<e.hp<<" lift="<<e.lift<<" shots="<<s.projectiles.size();for(auto &p:s.projectiles)std::cout<<" p="<<p.position.x<<','<<p.position.y<<','<<p.position.z<<" v="<<p.velocity.x<<','<<p.velocity.y<<','<<p.velocity.z;std::cout<<'\n';tick(s);std::cout<<"AFTER h="<<height<<" hp="<<e.hp<<" lift="<<e.lift<<" x="<<e.position.x<<" y="<<e.position.y<<" shots="<<s.projectiles.size()<<'\n';}}

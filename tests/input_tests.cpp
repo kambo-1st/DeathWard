@@ -16,6 +16,39 @@ constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
 }
+void startingHeartsInputCheck(const std::filesystem::path &directory) {
+    dw::Game game(directory/"starting-hearts.save");game.debug=true;game.seedText="42";
+    game.themeChoice=dw::ThemeChoice::Canyon;game.launch(true);
+    check(game.run&&game.error.empty(),"H01 actual game launch succeeds");auto &run=*game.run;
+    check(run.player.hp==6&&run.player.maxHp==6&&run.player.baseHealth==6&&run.player.shotDamage==24,
+          "H01 actual launch uses six half-heart units without changing shot damage");
+    game.updateCamera(10);dw::Renderer renderer;
+    std::filesystem::create_directories("artifacts");
+    const auto capture=[&](const char *path) {
+        BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+        check(ExportImage(image,path),"capture actual H01 heart HUD");UnloadImage(image);EndDrawing();
+    };
+    capture("artifacts/h01-starting-hearts.png");
+    game.perform(dw::Action::HealthUp);check(run.player.baseHealth==8,"health debug step is one red heart");
+    game.perform(dw::Action::ResetPlayer);
+    check(run.player.hp==6&&run.player.maxHp==6&&game.playerHealth==6,"restore defaults returns to three full red hearts");
+    auto originalArena=run.arena;const auto originalPosition=run.player.position;
+    run.arena=dw::Arena{};run.arena.bounds={{-100,-1,-100},{100,8,100}};
+    for(auto &room:run.arena.rooms) {room.bounds=run.arena.bounds;room.center={0,0,0};}
+    run.enemies.clear();run.hazards.clear();run.debugScenario=true;run.godMode=false;run.player.position={0,.85f,0};
+    dw::Hazard hazard;hazard.kind=dw::HazardKind::Creep;hazard.position=run.player.position;
+    hazard.delay=0;hazard.radius=10;hazard.duration=2;hazard.damage=10;run.hazards.push_back(hazard);
+    const auto before=run.player.position;
+    mouseEvent(KeyDown,KEY_W);mouseEvent(KeyDown,KEY_SPACE);game.update(dw::Tick);
+    check(run.player.dodge>0&&run.player.hp==6&&dw::distance(before,run.player.position)>6*dw::Tick,
+          "H01 actual keyboard dodge retains boost and immunity to existing hostile damage");
+    mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_SPACE);
+    for(int i=0;i<30&&run.player.hp==6;++i)game.update(dw::Tick);
+    check(run.player.hp==5&&!run.dead,"H01 one damage unit leaves two full red hearts and one half heart");
+    run.arena=std::move(originalArena);run.player.position=originalPosition;run.hazards.clear();game.updateCamera(10);
+    capture("artifacts/h01-half-heart.png");
+    std::cout<<"PASS H01 launch/reset:three full red hearts;six half-heart units;half-heart loss;24 damage and universal keyboard dodge preserved\n";
+}
 void hudInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"hud.save");
     game.debug=false;game.seedText="1866";game.themeChoice=dw::ThemeChoice::Canyon;game.launch();
@@ -109,7 +142,7 @@ void keyboardInputCheck(const std::filesystem::path &directory) {
     focus(dw::Action::ThemeCanyon);key(KEY_ENTER);
     focus(dw::Action::Launch);key(KEY_ENTER);
     check(game.run&&game.screen==dw::Screen::Expedition,"keyboard setup launches a canyon expedition");
-    auto &run=*game.run;
+    auto &run=*game.run;run.tunePlayer(24,dw::RevolverDamage); // Explicit legal bomb-test capacity.
     game.updateCamera(10);
     check(game.pointerOverControls(),"cursor stays parked over the minimap");
     const int ammo=run.dynamite;game.accumulator=0;
@@ -150,10 +183,10 @@ void keyboardInputCheck(const std::filesystem::path &directory) {
     key(KEY_E);check(gate->locked,"E cannot unlock a door without its key");
     run.keys=1;key(KEY_E);check(!gate->locked&&run.keys==0,"E opens a locked door and spends exactly one key");
     run.jumpDebug(run.arena.shopRoom);run.clearRoomDebug();run.moneyCollected=100;
-    run.player.hp=40;run.player.position=run.arena.rooms[size_t(run.room)].objective;run.player.position.y=.85f;
+    run.player.hp=4;run.player.position=run.arena.rooms[size_t(run.room)].objective;run.player.position.y=.85f;
     key(KEY_E);check(run.shopOpen,"E opens a nearby shop");
     focus(dw::Action::BuyShop0);key(KEY_ENTER);
-    check(run.shopOffers[0].sold&&run.player.hp==80,"Enter buys the focused medicine offer");
+    check(run.shopOffers[0].sold&&run.player.hp==6,"Enter buys the focused medicine offer");
     const auto shopTime=run.stats.duration;
     mouseEvent(KeyDown,KEY_B);mouseEvent(KeyDown,KEY_E);frame();
     mouseEvent(KeyUp,KEY_B);mouseEvent(KeyUp,KEY_E);frame();
@@ -381,7 +414,7 @@ void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme the
     const auto merchant = run.arena.rooms[size_t(run.room)].objective;
     run.player.position =
         dw::add(merchant, dw::mul(dw::unit(dw::sub(run.arena.rooms[size_t(run.room)].center, merchant)), 4));
-    run.player.hp = 55;
+    run.player.hp = 3;
     game.updateCamera(10);
     dw::Renderer renderer;
     const dw::Game::SceneryPicker picker = [&](const auto &simulation, const auto &camera, Ray ray) {
@@ -435,7 +468,7 @@ void shopInputCheck(const std::filesystem::path &directory, dw::MissionTheme the
               run.stats.duration == duration && run.stats.shots == 0 && run.dynamite == 3,
           "the trade window captures gameplay mouse/key input and freezes the world");
     click(330, 535);
-    check(run.player.hp == 95 && run.money() == 90 && run.shopOffers[0].sold,
+    check(run.player.hp == 5 && run.money() == 90 && run.shopOffers[0].sold,
           "the medicine buy button heals and charges its displayed price");
     click(630, 535);
     check(run.money() == 65 && run.items.size() == 1 && game.campaign.data().pending->moneySpent == 35,
@@ -932,7 +965,7 @@ void economyInputCheck(const std::filesystem::path &directory) {
     for(auto service:{RoomService::Exchange,RoomService::Surgeon,RoomService::Smuggler}) {
         run.arena.rooms[size_t(site)].service=service;run.rooms[size_t(site)].serviceSold={false,false};
         run.rooms[size_t(site)].offers={ItemId::Judas,ItemId::Cap};
-        run.jumpDebug(site);run.keys=2;run.dynamite=3;run.moneyCollected=100;run.moneySpent=0;run.player.hp=50;
+        run.jumpDebug(site);run.keys=2;run.dynamite=3;run.moneyCollected=100;run.moneySpent=0;run.player.hp=2;
         const auto target=run.arena.rooms[size_t(site)].objective;
         bool placed=false;for(int n=0;n<16;++n) {
             const auto p=add(target,rotateY({0,0,4},float(n)*Pi/8));
@@ -947,8 +980,8 @@ void economyInputCheck(const std::filesystem::path &directory) {
         if(service==RoomService::Exchange)key(KEY_ONE);else click(425,572);
         check(run.rooms[size_t(site)].serviceSold[0],"keyboard or mouse accepts displayed trade");
         if(service==RoomService::Exchange)check(run.keys==0&&run.dynamite==6,"native exchange spends exact resources");
-        if(service==RoomService::Surgeon)check(run.player.hp==100&&run.money()==80,"native surgeon charges exact healing price");
-        if(service==RoomService::Smuggler)check(run.player.maxHp==64&&run.items.size()==1,"native bargain includes Judas health loss");
+        if(service==RoomService::Surgeon)check(run.player.hp==6&&run.money()==80,"native surgeon charges exact healing price");
+        if(service==RoomService::Smuggler)check(run.player.maxHp==2&&run.items.size()==1,"native bargain includes Judas health loss");
         key(KEY_ESCAPE);check(!run.shopOpen&&!game.paused,"Escape leaves service without opening pause");
     }
     run.startBoss();run.killAll();run.step({});run.player.position=run.rewardPosition(run.room);game.updateCamera(10);
@@ -1032,6 +1065,10 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if(mode.empty()||mode=="--starting-hearts-only") {
+            startingHeartsInputCheck(directory);
+            if(mode=="--starting-hearts-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
         if(mode.empty()||mode=="--supplied-bomb-only") {
             suppliedBombInputCheck(directory);
             if(mode=="--supplied-bomb-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
@@ -1540,8 +1577,8 @@ int main(int argc, char **argv) {
               "audio controls never fire or resume the simulation");
         click(1214, 329);
         click(1214, 424);
-        check(game.run->player.maxHp == dw::StartingHealth + 25 &&
-                  game.run->player.hp == dw::StartingHealth + 25 &&
+        check(game.run->player.maxHp == dw::StartingHealth + 2 &&
+                  game.run->player.hp == dw::StartingHealth + 2 &&
                   game.run->player.shotDamage == dw::RevolverDamage + 4 && game.paused,
               "pause controls adjust health and damage immediately without resuming");
         click(1156, 329);
@@ -1551,7 +1588,7 @@ int main(int argc, char **argv) {
               "pause controls can lower health and damage");
         pressKey(KEY_EQUAL);
         pressKey(KEY_KP_ADD, true);
-        check(game.run->player.maxHp == dw::StartingHealth + 25 &&
+        check(game.run->player.maxHp == dw::StartingHealth + 2 &&
                   game.run->player.shotDamage == dw::RevolverDamage + 4,
               "keyboard and keypad stat controls work while paused");
         click(1050, 494);
@@ -1564,14 +1601,14 @@ int main(int argc, char **argv) {
         pressKey(KEY_MINUS);
         pressKey(KEY_EQUAL, true);
         check(game.run->player.shotDamage == dw::RevolverDamage - 4 &&
-                  game.run->player.maxHp == dw::StartingHealth + 25 && !game.debugPanelOpen,
+                  game.run->player.maxHp == dw::StartingHealth + 2 && !game.debugPanelOpen,
               "live stat hotkeys work while the cheat overlay stays hidden");
         pressKey(KEY_F1);
         pressKey(KEY_EQUAL);
         game.perform(dw::Action::HealthUp);
         pressKey(KEY_HOME);
         check(game.run->player.shotDamage == dw::RevolverDamage - 4 &&
-                  game.run->player.maxHp == dw::StartingHealth + 25,
+                  game.run->player.maxHp == dw::StartingHealth + 2,
               "stat shortcuts and actions are disabled with cheats off");
         pressKey(KEY_F1);
         pressKey(KEY_HOME);
@@ -1762,8 +1799,8 @@ int main(int argc, char **argv) {
         game.perform(dw::Action::Hub);
         game.selectHub(dw::HubKind::Frontier);
         game.launch();
-        check(game.run->player.hp == dw::StartingHealth + 25 &&
-                  game.run->player.maxHp == dw::StartingHealth + 25 &&
+        check(game.run->player.hp == dw::StartingHealth + 2 &&
+                  game.run->player.maxHp == dw::StartingHealth + 2 &&
                   game.run->player.shotDamage == dw::RevolverDamage + 4 && game.run->items.empty(),
               "player settings survive mission completion and hub travel without retaining item penalties");
         pressKey(KEY_HOME);

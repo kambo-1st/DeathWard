@@ -1,0 +1,76 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start   8: expedition_destruction
+ 1/35 Test   #8: expedition_destruction ...........   Passed   40.20 sec
+      Start  57: monster_boss_components
+ 2/35 Test  #57: monster_boss_components ..........   Passed    1.18 sec
+      Start  58: bloat_boss_and_chargers
+ 3/35 Test  #58: bloat_boss_and_chargers ..........   Passed    1.52 sec
+      Start  59: native_player_motion
+ 4/35 Test  #59: native_player_motion .............   Passed    0.00 sec
+      Start  60: native_player_health
+ 5/35 Test  #60: native_player_health .............   Passed    0.00 sec
+      Start  61: native_midas_freeze
+ 6/35 Test  #61: native_midas_freeze ..............   Passed    0.00 sec
+      Start  62: native_blue_fly
+ 7/35 Test  #62: native_blue_fly ..................   Passed    0.00 sec
+      Start  63: native_player_hurt
+ 8/35 Test  #63: native_player_hurt ...............   Passed    0.00 sec
+      Start  64: native_duke
+ 9/35 Test  #64: native_duke ......................   Passed    0.37 sec
+      Start  65: native_monstro
+10/35 Test  #65: native_monstro ...................   Passed    0.36 sec
+      Start  66: native_room_awards
+11/35 Test  #66: native_room_awards ...............   Passed    0.01 sec
+      Start  67: source_resources
+12/35 Test  #67: source_resources .................   Passed    0.37 sec
+      Start  68: source_heart_pickups
+13/35 Test  #68: source_heart_pickups .............   Passed    0.21 sec
+      Start  69: source_coins
+14/35 Test  #69: source_coins .....................   Passed    0.25 sec
+      Start  70: source_coin_producers
+15/35 Test  #70: source_coin_producers ............   Passed    0.25 sec
+      Start  71: native_player_bombs
+16/35 Test  #71: native_player_bombs ..............   Passed    1.22 sec
+      Start  72: native_bomb_contacts
+17/35 Test  #72: native_bomb_contacts .............   Passed    0.01 sec
+      Start  73: native_troll_bombs
+18/35 Test  #73: native_troll_bombs ...............   Passed    0.02 sec
+      Start  74: native_blast_recipients
+19/35 Test  #74: native_blast_recipients ..........   Passed    0.34 sec
+      Start  75: source_bomb_producers
+20/35 Test  #75: source_bomb_producers ............   Passed    0.28 sec
+      Start  76: isaac_baseline
+21/35 Test  #76: isaac_baseline ...................   Passed    1.94 sec
+      Start  77: regular_health_balance
+22/35 Test  #77: regular_health_balance ...........   Passed    0.34 sec
+      Start  84: supplied_bombs
+23/35 Test  #84: supplied_bombs ...................   Passed    0.46 sec
+      Start  85: fly_bombs
+24/35 Test  #85: fly_bombs ........................   Passed    7.57 sec
+      Start  86: enemy_bomb_payloads
+25/35 Test  #86: enemy_bomb_payloads ..............   Passed    0.49 sec
+      Start  90: hornfel_boss
+26/35 Test  #90: hornfel_boss .....................   Passed    3.74 sec
+      Start  99: buzzing_flies
+27/35 Test  #99: buzzing_flies ....................   Passed   27.44 sec
+      Start 100: tainted_pooter_impacts
+28/35 Test #100: tainted_pooter_impacts ...........   Passed    0.25 sec
+      Start 106: mulligan_family
+29/35 Test #106: mulligan_family ..................   Passed   53.80 sec
+      Start 116: first_floor_status_effects
+30/35 Test #116: first_floor_status_effects .......   Passed    0.66 sec
+      Start 117: first_floor_freeze_effect
+31/35 Test #117: first_floor_freeze_effect ........   Passed    0.70 sec
+      Start 118: first_floor_damage_statuses
+32/35 Test #118: first_floor_damage_statuses ......   Passed    1.06 sec
+      Start 119: first_floor_slow_effect
+33/35 Test #119: first_floor_slow_effect ..........   Passed    0.90 sec
+      Start 121: first_floor_charm_effect
+34/35 Test #121: first_floor_charm_effect .........   Passed    5.26 sec
+      Start 142: core_contracts
+35/35 Test #142: core_contracts ...................   Passed    0.38 sec
+
+100% tests passed, 0 tests failed out of 35
+
+Total Test time (real) = 151.58 sec

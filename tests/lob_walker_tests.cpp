@@ -76,7 +76,7 @@ void blast() {
     s.findEnemy(other)->state=EnemyState::Stunned;s.findEnemy(other)->stateTime=10;
     auto &lob=s.projectiles.front();lob.position={0,.23f,0};lob.velocity={0,-1,0};lob.radius=.22f;
     s.godMode=false;s.player.position={0,.85f,3};tick(s,2);
-    check(s.stats.explosions==1&&near(s.findEnemy(id)->hp,128)&&near(s.findEnemy(other)->hp,340)&&near(s.player.hp,75),"blast source immunity, friendly fire, player scaling, once");
+    check(s.stats.explosions==1&&near(s.findEnemy(id)->hp,128)&&near(s.findEnemy(other)->hp,340)&&near(s.player.hp,StartingHealth-2),"blast source immunity, friendly fire, player scaling, once");
     auto pressure=fixture(lib);spawn(pressure);tick(pressure,12);pressure.enemies.clear();
     pressure.projectiles.front().position={0,.23f,0};pressure.projectiles.front().velocity={0,-1,0};pressure.projectiles.front().radius=.22f;
     pressure.limits.queuedEvents=0;pressure.debugScenario=false;tick(pressure,2);

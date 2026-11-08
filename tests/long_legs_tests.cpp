@@ -95,7 +95,7 @@ void sacks() {
  check(thrown&&landed&&child,"Sack throws Spider through state6and lands into normal controller");
  check(s.findEnemy(child)->spider&&!s.findEnemy(child)->swimmer,"Spider landing initializes own controller");
  auto contact=fixture(lib);contact.godMode=false;const auto sack=contact.spawnMonster(monsterId(30,2),contact.player.position);tick(contact,10);
- check(near(contact.player.hp,100),"Sack deals no contact damage");hit(contact,sack,1000);tick(contact);check(contact.livingEnemies()==0,"lethal damage prevents regeneration");
+ check(near(contact.player.hp,StartingHealth),"Sack deals no contact damage");hit(contact,sack,1000);tick(contact);check(contact.livingEnemies()==0,"lethal damage prevents regeneration");
  std::cout<<"PASS Sack growth/reset, swell, thrown Spider landing, noncontact and lethal damage\n";
 }
 void movementAndConfig() {

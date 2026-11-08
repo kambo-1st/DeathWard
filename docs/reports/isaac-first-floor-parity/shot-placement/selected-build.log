@@ -1,0 +1,102 @@
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_item_build_tests
+[100%] Linking CXX executable deathward_item_build_tests
+[100%] Built target deathward_item_build_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_mirror_tests
+[100%] Linking CXX executable deathward_mirror_tests
+[100%] Built target deathward_mirror_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_linked_head_tests
+[100%] Linking CXX executable deathward_linked_head_tests
+[100%] Built target deathward_linked_head_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monster_boss_tests
+[100%] Linking CXX executable deathward_monster_boss_tests
+[100%] Built target deathward_monster_boss_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_bloat_tests
+[100%] Linking CXX executable deathward_bloat_tests
+[100%] Built target deathward_bloat_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_shot_placement_tests
+[100%] Built target deathward_shot_placement_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_tear_birth_tests
+[100%] Built target deathward_tear_birth_tests
+[ 95%] Built target deathward_core
+[100%] Built target deathward_player_fire_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_player_motion_tests
+[100%] Linking CXX executable deathward_player_motion_tests
+[100%] Built target deathward_player_motion_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_duke_tests
+[100%] Linking CXX executable deathward_duke_tests
+[100%] Built target deathward_duke_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_monstro_tests
+[ 95%] Linking CXX executable deathward_monstro_tests
+[100%] Built target deathward_monstro_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_player_bomb_tests
+[100%] Linking CXX executable deathward_player_bomb_tests
+[100%] Built target deathward_player_bomb_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_blast_recipient_tests
+[100%] Linking CXX executable deathward_blast_recipient_tests
+[100%] Built target deathward_blast_recipient_tests
+[100%] Built target deathward_core
+[100%] Built target deathward_isaac_baseline_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_freeze_tests
+[100%] Linking CXX executable deathward_enemy_freeze_tests
+[100%] Built target deathward_enemy_freeze_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_damage_status_tests
+[100%] Linking CXX executable deathward_damage_status_tests
+[100%] Built target deathward_damage_status_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_slow_tests
+[100%] Linking CXX executable deathward_enemy_slow_tests
+[100%] Built target deathward_enemy_slow_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_charm_tests
+[ 95%] Linking CXX executable deathward_enemy_charm_tests
+[100%] Built target deathward_enemy_charm_tests
+[ 95%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_rock_spider_tests
+[ 95%] Linking CXX executable deathward_rock_spider_tests
+[100%] Built target deathward_rock_spider_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_tests
+[100%] Linking CXX executable deathward_tests
+[100%] Built target deathward_tests
+Consolidate compiler generated dependencies of target glfw
+[ 10%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 13%] Built target raylib
+[ 79%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_skinning
+[ 82%] Built target deathward_cloth
+[ 86%] Built target deathward_particles
+[ 89%] Built target deathward_skinning
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+[ 93%] Built target deathward_mission_lighting
+[ 93%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 93%] Linking CXX executable deathward
+[100%] Built target deathward
+[ 10%] Built target glfw
+[ 13%] Built target raylib
+[ 79%] Built target deathward_core
+[ 82%] Built target deathward_skinning
+[ 86%] Built target deathward_cloth
+[ 89%] Built target deathward_particles
+[ 93%] Built target deathward_mission_lighting
+[ 93%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward_input_tests
+[ 93%] Linking CXX executable deathward_input_tests
+[100%] Built target deathward_input_tests

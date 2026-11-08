@@ -84,7 +84,7 @@ void splitImpacts() {
     }
     for(bool immune:{false,true}) {
         auto q=fixture();q.godMode=immune;q.player.position={0,.85f,1};rootShot(q);tick(q,4);
-        check(q.stats.projectiles==3&&q.projectiles.size()==2&&near(q.player.hp,immune?StartingHealth:87.5f),"native death flag also splits on player collision, including invulnerability");
+        check(q.stats.projectiles==3&&q.projectiles.size()==2&&near(q.player.hp,immune?StartingHealth:StartingHealth-1),"native death flag also splits on player collision, including invulnerability");
     }
     for(int mode=0;mode<3;++mode) {
         auto q=fixture();wall(q);const auto parent=rootShot(q);

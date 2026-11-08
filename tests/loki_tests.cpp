@@ -70,7 +70,7 @@ void teleport() {
     const auto pos=e->position;const auto timer=e->stateTime;s.enterRoom(1);tick(s,40);s.enterRoom(0);
     e=s.findEnemy(id);check(e&&distance(e->position,pos)<.001f&&near(e->stateTime,timer),"inactive room preserves teleport recovery");
     auto contact=fixture();contact.godMode=false;auto body=contact.spawnMonster(monsterId(69),{0,.85f,0});contact.findEnemy(body)->cooldown=1000;
-    contact.player.position=contact.findEnemy(body)->position;tick(contact);check(near(contact.player.hp,75),"whole-heart contact maps to25 once");
+    contact.player.position=contact.findEnemy(body)->position;tick(contact);check(near(contact.player.hp,StartingHealth-2),"whole-heart contact removes two half-heart units");
     std::cout<<"LOKI_TELEPORT absent_immunity=1 grounded_vulnerability=1 landing_revalidation=1 inactive_pause=1 contact=25\n";
 }
 void summonsAndCompletion() {

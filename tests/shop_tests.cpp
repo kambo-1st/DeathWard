@@ -88,11 +88,11 @@ void purchases() {
     check(run.stats.duration == duration && run.stats.shots == 0 &&
               distance(position, run.player.position) == 0,
           "shop menus freeze simulation, firing, movement and timers");
-    run.player.hp = 75;
-    check(run.buyShop(0) && run.player.hp == 100 && run.money() == 90 && run.moneySpent == 10,
+    run.player.hp = 5;
+    check(run.buyShop(0) && run.player.hp == 6 && run.money() == 90 && run.moneySpent == 10,
           "medicine charges once and heals up to the maximum");
-    run.player.hp = 20;
-    check(!run.buyShop(0) && run.player.hp == 20 && run.money() == 90, "sold medicine cannot be repurchased");
+    run.player.hp = 2;
+    check(!run.buyShop(0) && run.player.hp == 2 && run.money() == 90, "sold medicine cannot be repurchased");
     check(run.buyShop(1) && run.itemStacks(run.shopOffers[1].item) == 1 && run.money() == 65,
           "buying a power-up applies its actual item effect and deducts its price");
     check(run.buyShop(2) && run.items.size() == 2 && run.money() == 40 && run.moneySpent == 60 &&
@@ -135,7 +135,7 @@ void saving(const std::filesystem::path &directory) {
         run.moneyPickups = {{run.player.position, 5, 1, false}};
         run.step({});
         approach(run);
-        run.player.hp = 50;
+        run.player.hp = 3;
         check(run.buyShop(0) && run.buyShop(1) && run.money() == 70,
               "purchases use saved and newly earned money");
         store.checkpoint(run.summary());

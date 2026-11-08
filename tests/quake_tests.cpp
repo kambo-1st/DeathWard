@@ -41,16 +41,16 @@ void cadenceAndAxes() {
 }
 void contactsAndCover() {
     auto s=fixture();quake(s);s.player.position={0,.85f,4};ticks(s,210);
-    check(s.player.hp==100-10*EnemyDamageMultiplier,"Actual wave front hurts a grounded player once");
-    ticks(s,30);check(s.player.hp==100-10*EnemyDamageMultiplier,"Rendered trail does not multiply front damage");
+    check(s.player.hp==StartingHealth-1,"Actual wave front hurts a grounded player once");
+    ticks(s,30);check(s.player.hp==StartingHealth-1,"Rendered trail does not multiply front damage");
     auto high=fixture();quake(high);high.player.position={0,4,4};ticks(high,210);
-    check(high.player.hp==100,"Ground wave cannot hit a high airborne actor");
+    check(high.player.hp==StartingHealth,"Ground wave cannot hit a high airborne actor");
     auto wall=fixture();quake(wall);wall.arena.boundaryWalls={{{-5,-1,2},{5,8,2.2f}}};wall.arena.rebuildWalls();
     wall.player.position={0,.85f,2.4f};ticks(wall,210);
-    check(wall.player.hp==100&&wall.hazards.empty(),"Swept collision stops at solid cover without damaging through it");
+    check(wall.player.hp==StartingHealth&&wall.hazards.empty(),"Swept collision stops at solid cover without damaging through it");
     auto corridor=fixture();quake(corridor);corridor.arena.rooms[0].bounds={{-3,-1,-3},{3,8,3}};
     corridor.player.position={0,.85f,3.1f};ticks(corridor,210);
-    check(corridor.player.hp==100&&corridor.hazards.empty(),"Wave does not attack outside its active room");
+    check(corridor.player.hp==StartingHealth&&corridor.hazards.empty(),"Wave does not attack outside its active room");
     std::cout<<"QUAKE_CONTACT base_player_damage=10 multiplied_at_impact=1 one_front_hit=1 vertical_clearance=1 wall_cover=1 corridor_stop=1\n";
 }
 void demolitionAndPersistence() {
@@ -63,7 +63,7 @@ void demolitionAndPersistence() {
         auto gate=[&]()->const Breakable&{return *std::find_if(s.arena.breakables.begin(),s.arena.breakables.end(),[](auto &p){return p.id==1;});};
         auto rock=[&]()->const Breakable&{return *std::find_if(s.arena.breakables.begin(),s.arena.breakables.end(),[](auto &p){return p.id==2;});};
         check(gate().destroyed&&gate().paid&&!rock().destroyed,"First wave opens only the first wall independent of vector order");
-        check(s.player.hp==100&&s.dynamite==bombs&&s.stats.kills==0&&s.stats.explosions==0,"Opening wall preserves cover snapshot, player inventory and kill/explosion accounting");
+        check(s.player.hp==StartingHealth&&s.dynamite==bombs&&s.stats.kills==0&&s.stats.explosions==0,"Opening wall preserves cover snapshot, player inventory and kill/explosion accounting");
         check(s.arena.keys.size()==1&&s.moneyPickups.size()==1,"Optional cache analogue pays once on opening");
         s.player.position={12,.85f,12};ticks(s,180);
         check(rock().destroyed&&s.arena.keys.size()==1,"Later wave reaches the next obstruction without duplicate cache payout");

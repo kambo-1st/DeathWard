@@ -1,0 +1,2227 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "vcruntime_sha256": "2fa6efc053203460a23d3a25158f227d895d2dadc63acc1a372da97c3a4281c3",
+  "trees": [
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    },
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    },
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    },
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    },
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    },
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    },
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    },
+    {
+      "width": 1200.0,
+      "height": 720.0,
+      "step": 80.0,
+      "columns": 15,
+      "rows": 9,
+      "buckets": 135
+    }
+  ],
+  "cases": 2016,
+  "event_observations": 5040,
+  "whole_collision_manager": true,
+  "whole_tear_and_npc_handlers": true,
+  "whole_damage_application": false,
+  "whole_zero_flag_tear_die": true,
+  "nonordinary_death_effects_accepted": false,
+  "complete_actor_creation": false,
+  "full_game_scheduler": false,
+  "unresolved_import_guard": [
+    {
+      "name": "alSourcePlay",
+      "iat": "0xa06308",
+      "unmapped_sentinel": "0xdead0000"
+    },
+    {
+      "name": "alGetSourcei",
+      "iat": "0xa0630c",
+      "unmapped_sentinel": "0xdead0004"
+    },
+    {
+      "name": "alSourceStop",
+      "iat": "0xa06310",
+      "unmapped_sentinel": "0xdead0008"
+    },
+    {
+      "name": "alGenBuffers",
+      "iat": "0xa06314",
+      "unmapped_sentinel": "0xdead000c"
+    },
+    {
+      "name": "alSourceQueueBuffers",
+      "iat": "0xa06318",
+      "unmapped_sentinel": "0xdead0010"
+    },
+    {
+      "name": "alSourcePause",
+      "iat": "0xa0631c",
+      "unmapped_sentinel": "0xdead0014"
+    },
+    {
+      "name": "alSourceUnqueueBuffers",
+      "iat": "0xa06320",
+      "unmapped_sentinel": "0xdead0018"
+    },
+    {
+      "name": "alcMakeContextCurrent",
+      "iat": "0xa06324",
+      "unmapped_sentinel": "0xdead001c"
+    },
+    {
+      "name": "alcDestroyContext",
+      "iat": "0xa06328",
+      "unmapped_sentinel": "0xdead0020"
+    },
+    {
+      "name": "alcOpenDevice",
+      "iat": "0xa0632c",
+      "unmapped_sentinel": "0xdead0024"
+    },
+    {
+      "name": "alcCreateContext",
+      "iat": "0xa06330",
+      "unmapped_sentinel": "0xdead0028"
+    },
+    {
+      "name": "alcCloseDevice",
+      "iat": "0xa06334",
+      "unmapped_sentinel": "0xdead002c"
+    },
+    {
+      "name": "alListener3f",
+      "iat": "0xa06338",
+      "unmapped_sentinel": "0xdead0030"
+    },
+    {
+      "name": "alSourcei",
+      "iat": "0xa0633c",
+      "unmapped_sentinel": "0xdead0034"
+    },
+    {
+      "name": "alcProcessContext",
+      "iat": "0xa06340",
+      "unmapped_sentinel": "0xdead0038"
+    },
+    {
+      "name": "alGetSourcef",
+      "iat": "0xa06344",
+      "unmapped_sentinel": "0xdead003c"
+    },
+    {
+      "name": "alGenSources",
+      "iat": "0xa06348",
+      "unmapped_sentinel": "0xdead0040"
+    },
+    {
+      "name": "alGetError",
+      "iat": "0xa0634c",
+      "unmapped_sentinel": "0xdead0044"
+    },
+    {
+      "name": "alDeleteBuffers",
+      "iat": "0xa06350",
+      "unmapped_sentinel": "0xdead0048"
+    },
+    {
+      "name": "alListenerfv",
+      "iat": "0xa06354",
+      "unmapped_sentinel": "0xdead004c"
+    },
+    {
+      "name": "alDeleteSources",
+      "iat": "0xa06358",
+      "unmapped_sentinel": "0xdead0050"
+    },
+    {
+      "name": "alSource3f",
+      "iat": "0xa0635c",
+      "unmapped_sentinel": "0xdead0054"
+    },
+    {
+      "name": "alSourcef",
+      "iat": "0xa06360",
+      "unmapped_sentinel": "0xdead0058"
+    },
+    {
+      "name": "alBufferData",
+      "iat": "0xa06364",
+      "unmapped_sentinel": "0xdead005c"
+    },
+    {
+      "name": "SteamInternal_ContextInit",
+      "iat": "0xa066ac",
+      "unmapped_sentinel": "0xdead0060"
+    },
+    {
+      "name": "SteamAPI_GetHSteamPipe",
+      "iat": "0xa066b0",
+      "unmapped_sentinel": "0xdead0064"
+    },
+    {
+      "name": "SteamAPI_GetHSteamUser",
+      "iat": "0xa066b4",
+      "unmapped_sentinel": "0xdead0068"
+    },
+    {
+      "name": "SteamInternal_CreateInterface",
+      "iat": "0xa066b8",
+      "unmapped_sentinel": "0xdead006c"
+    },
+    {
+      "name": "SteamAPI_RegisterCallback",
+      "iat": "0xa066bc",
+      "unmapped_sentinel": "0xdead0070"
+    },
+    {
+      "name": "SteamAPI_RegisterCallResult",
+      "iat": "0xa066c0",
+      "unmapped_sentinel": "0xdead0074"
+    },
+    {
+      "name": "SteamAPI_UnregisterCallResult",
+      "iat": "0xa066c4",
+      "unmapped_sentinel": "0xdead0078"
+    },
+    {
+      "name": "SteamAPI_RunCallbacks",
+      "iat": "0xa066c8",
+      "unmapped_sentinel": "0xdead007c"
+    },
+    {
+      "name": "SteamAPI_Shutdown",
+      "iat": "0xa066cc",
+      "unmapped_sentinel": "0xdead0080"
+    },
+    {
+      "name": "SteamAPI_Init",
+      "iat": "0xa066d0",
+      "unmapped_sentinel": "0xdead0084"
+    },
+    {
+      "name": "SteamAPI_UnregisterCallback",
+      "iat": "0xa066d4",
+      "unmapped_sentinel": "0xdead0088"
+    },
+    {
+      "name": "wglDeleteContext",
+      "iat": "0xa062f0",
+      "unmapped_sentinel": "0xdead008c"
+    },
+    {
+      "name": "wglCreateContext",
+      "iat": "0xa062f4",
+      "unmapped_sentinel": "0xdead0090"
+    },
+    {
+      "name": "wglShareLists",
+      "iat": "0xa062f8",
+      "unmapped_sentinel": "0xdead0094"
+    },
+    {
+      "name": "wglGetProcAddress",
+      "iat": "0xa062fc",
+      "unmapped_sentinel": "0xdead0098"
+    },
+    {
+      "name": "wglMakeCurrent",
+      "iat": "0xa06300",
+      "unmapped_sentinel": "0xdead009c"
+    },
+    {
+      "name": "timeEndPeriod",
+      "iat": "0xa064b4",
+      "unmapped_sentinel": "0xdead00a0"
+    },
+    {
+      "name": "timeGetDevCaps",
+      "iat": "0xa064b8",
+      "unmapped_sentinel": "0xdead00a4"
+    },
+    {
+      "name": "timeBeginPeriod",
+      "iat": "0xa064bc",
+      "unmapped_sentinel": "0xdead00a8"
+    },
+    {
+      "name": "lua_close",
+      "iat": "0xa06150",
+      "unmapped_sentinel": "0xdead00ac"
+    },
+    {
+      "name": "lua_rawset",
+      "iat": "0xa06154",
+      "unmapped_sentinel": "0xdead00b0"
+    },
+    {
+      "name": "lua_iscfunction",
+      "iat": "0xa06158",
+      "unmapped_sentinel": "0xdead00b4"
+    },
+    {
+      "name": "lua_getfield",
+      "iat": "0xa0615c",
+      "unmapped_sentinel": "0xdead00b8"
+    },
+    {
+      "name": "lua_typename",
+      "iat": "0xa06160",
+      "unmapped_sentinel": "0xdead00bc"
+    },
+    {
+      "name": "lua_toboolean",
+      "iat": "0xa06164",
+      "unmapped_sentinel": "0xdead00c0"
+    },
+    {
+      "name": "lua_setmetatable",
+      "iat": "0xa06168",
+      "unmapped_sentinel": "0xdead00c4"
+    },
+    {
+      "name": "lua_compare",
+      "iat": "0xa0616c",
+      "unmapped_sentinel": "0xdead00c8"
+    },
+    {
+      "name": "lua_settop",
+      "iat": "0xa06170",
+      "unmapped_sentinel": "0xdead00cc"
+    },
+    {
+      "name": "luaopen_debug",
+      "iat": "0xa06174",
+      "unmapped_sentinel": "0xdead00d0"
+    },
+    {
+      "name": "luaL_openlibs",
+      "iat": "0xa06178",
+      "unmapped_sentinel": "0xdead00d4"
+    },
+    {
+      "name": "luaL_tolstring",
+      "iat": "0xa0617c",
+      "unmapped_sentinel": "0xdead00d8"
+    },
+    {
+      "name": "luaL_requiref",
+      "iat": "0xa06180",
+      "unmapped_sentinel": "0xdead00dc"
+    },
+    {
+      "name": "luaopen_coroutine",
+      "iat": "0xa06184",
+      "unmapped_sentinel": "0xdead00e0"
+    },
+    {
+      "name": "luaL_argerror",
+      "iat": "0xa06188",
+      "unmapped_sentinel": "0xdead00e4"
+    },
+    {
+      "name": "lua_pushnil",
+      "iat": "0xa0618c",
+      "unmapped_sentinel": "0xdead00e8"
+    },
+    {
+      "name": "lua_len",
+      "iat": "0xa06190",
+      "unmapped_sentinel": "0xdead00ec"
+    },
+    {
+      "name": "lua_rawget",
+      "iat": "0xa06194",
+      "unmapped_sentinel": "0xdead00f0"
+    },
+    {
+      "name": "lua_gettop",
+      "iat": "0xa06198",
+      "unmapped_sentinel": "0xdead00f4"
+    },
+    {
+      "name": "lua_pushnumber",
+      "iat": "0xa0619c",
+      "unmapped_sentinel": "0xdead00f8"
+    },
+    {
+      "name": "luaL_checknumber",
+      "iat": "0xa061a0",
+      "unmapped_sentinel": "0xdead00fc"
+    },
+    {
+      "name": "lua_getstack",
+      "iat": "0xa061a4",
+      "unmapped_sentinel": "0xdead0100"
+    },
+    {
+      "name": "luaopen_math",
+      "iat": "0xa061a8",
+      "unmapped_sentinel": "0xdead0104"
+    },
+    {
+      "name": "lua_pushstring",
+      "iat": "0xa061ac",
+      "unmapped_sentinel": "0xdead0108"
+    },
+    {
+      "name": "lua_touserdata",
+      "iat": "0xa061b0",
+      "unmapped_sentinel": "0xdead010c"
+    },
+    {
+      "name": "lua_pushfstring",
+      "iat": "0xa061b4",
+      "unmapped_sentinel": "0xdead0110"
+    },
+    {
+      "name": "lua_atpanic",
+      "iat": "0xa061b8",
+      "unmapped_sentinel": "0xdead0114"
+    },
+    {
+      "name": "lua_getglobal",
+      "iat": "0xa061bc",
+      "unmapped_sentinel": "0xdead0118"
+    },
+    {
+      "name": "lua_isstring",
+      "iat": "0xa061c0",
+      "unmapped_sentinel": "0xdead011c"
+    },
+    {
+      "name": "luaopen_string",
+      "iat": "0xa061c4",
+      "unmapped_sentinel": "0xdead0120"
+    },
+    {
+      "name": "lua_callk",
+      "iat": "0xa061c8",
+      "unmapped_sentinel": "0xdead0124"
+    },
+    {
+      "name": "lua_rawgetp",
+      "iat": "0xa061cc",
+      "unmapped_sentinel": "0xdead0128"
+    },
+    {
+      "name": "luaL_loadbufferx",
+      "iat": "0xa061d0",
+      "unmapped_sentinel": "0xdead012c"
+    },
+    {
+      "name": "lua_tolstring",
+      "iat": "0xa061d4",
+      "unmapped_sentinel": "0xdead0130"
+    },
+    {
+      "name": "lua_isuserdata",
+      "iat": "0xa061d8",
+      "unmapped_sentinel": "0xdead0134"
+    },
+    {
+      "name": "lua_pushboolean",
+      "iat": "0xa061dc",
+      "unmapped_sentinel": "0xdead0138"
+    },
+    {
+      "name": "lua_newstate",
+      "iat": "0xa061e0",
+      "unmapped_sentinel": "0xdead013c"
+    },
+    {
+      "name": "lua_setglobal",
+      "iat": "0xa061e4",
+      "unmapped_sentinel": "0xdead0140"
+    },
+    {
+      "name": "lua_newuserdata",
+      "iat": "0xa061e8",
+      "unmapped_sentinel": "0xdead0144"
+    },
+    {
+      "name": "luaL_newstate",
+      "iat": "0xa061ec",
+      "unmapped_sentinel": "0xdead0148"
+    },
+    {
+      "name": "luaL_checkinteger",
+      "iat": "0xa061f0",
+      "unmapped_sentinel": "0xdead014c"
+    },
+    {
+      "name": "luaL_error",
+      "iat": "0xa061f4",
+      "unmapped_sentinel": "0xdead0150"
+    },
+    {
+      "name": "lua_rawsetp",
+      "iat": "0xa061f8",
+      "unmapped_sentinel": "0xdead0154"
+    },
+    {
+      "name": "luaopen_utf8",
+      "iat": "0xa061fc",
+      "unmapped_sentinel": "0xdead0158"
+    },
+    {
+      "name": "lua_setfield",
+      "iat": "0xa06200",
+      "unmapped_sentinel": "0xdead015c"
+    },
+    {
+      "name": "lua_gettable",
+      "iat": "0xa06204",
+      "unmapped_sentinel": "0xdead0160"
+    },
+    {
+      "name": "luaopen_base",
+      "iat": "0xa06208",
+      "unmapped_sentinel": "0xdead0164"
+    },
+    {
+      "name": "lua_type",
+      "iat": "0xa0620c",
+      "unmapped_sentinel": "0xdead0168"
+    },
+    {
+      "name": "lua_rawequal",
+      "iat": "0xa06210",
+      "unmapped_sentinel": "0xdead016c"
+    },
+    {
+      "name": "lua_rotate",
+      "iat": "0xa06214",
+      "unmapped_sentinel": "0xdead0170"
+    },
+    {
+      "name": "luaL_checklstring",
+      "iat": "0xa06218",
+      "unmapped_sentinel": "0xdead0174"
+    },
+    {
+      "name": "lua_getmetatable",
+      "iat": "0xa0621c",
+      "unmapped_sentinel": "0xdead0178"
+    },
+    {
+      "name": "lua_absindex",
+      "iat": "0xa06220",
+      "unmapped_sentinel": "0xdead017c"
+    },
+    {
+      "name": "lua_pushlstring",
+      "iat": "0xa06224",
+      "unmapped_sentinel": "0xdead0180"
+    },
+    {
+      "name": "lua_getinfo",
+      "iat": "0xa06228",
+      "unmapped_sentinel": "0xdead0184"
+    },
+    {
+      "name": "lua_copy",
+      "iat": "0xa0622c",
+      "unmapped_sentinel": "0xdead0188"
+    },
+    {
+      "name": "luaopen_table",
+      "iat": "0xa06230",
+      "unmapped_sentinel": "0xdead018c"
+    },
+    {
+      "name": "luaL_loadfilex",
+      "iat": "0xa06234",
+      "unmapped_sentinel": "0xdead0190"
+    },
+    {
+      "name": "lua_gc",
+      "iat": "0xa06238",
+      "unmapped_sentinel": "0xdead0194"
+    },
+    {
+      "name": "lua_pcallk",
+      "iat": "0xa0623c",
+      "unmapped_sentinel": "0xdead0198"
+    },
+    {
+      "name": "lua_pushinteger",
+      "iat": "0xa06240",
+      "unmapped_sentinel": "0xdead019c"
+    },
+    {
+      "name": "lua_pushcclosure",
+      "iat": "0xa06244",
+      "unmapped_sentinel": "0xdead01a0"
+    },
+    {
+      "name": "luaL_unref",
+      "iat": "0xa06248",
+      "unmapped_sentinel": "0xdead01a4"
+    },
+    {
+      "name": "lua_rawgeti",
+      "iat": "0xa0624c",
+      "unmapped_sentinel": "0xdead01a8"
+    },
+    {
+      "name": "lua_createtable",
+      "iat": "0xa06250",
+      "unmapped_sentinel": "0xdead01ac"
+    },
+    {
+      "name": "luaL_ref",
+      "iat": "0xa06254",
+      "unmapped_sentinel": "0xdead01b0"
+    },
+    {
+      "name": "lua_pushvalue",
+      "iat": "0xa06258",
+      "unmapped_sentinel": "0xdead01b4"
+    },
+    {
+      "name": "InitializeSListHead",
+      "iat": "0xa0602c",
+      "unmapped_sentinel": "0xdead01b8"
+    },
+    {
+      "name": "IsProcessorFeaturePresent",
+      "iat": "0xa06030",
+      "unmapped_sentinel": "0xdead01bc"
+    },
+    {
+      "name": "TerminateProcess",
+      "iat": "0xa06034",
+      "unmapped_sentinel": "0xdead01c0"
+    },
+    {
+      "name": "GetProcessTimes",
+      "iat": "0xa06038",
+      "unmapped_sentinel": "0xdead01c4"
+    },
+    {
+      "name": "SetUnhandledExceptionFilter",
+      "iat": "0xa0603c",
+      "unmapped_sentinel": "0xdead01c8"
+    },
+    {
+      "name": "GetNumaProcessorNode",
+      "iat": "0xa06040",
+      "unmapped_sentinel": "0xdead01cc"
+    },
+    {
+      "name": "GetNumaHighestNodeNumber",
+      "iat": "0xa06044",
+      "unmapped_sentinel": "0xdead01d0"
+    },
+    {
+      "name": "VirtualUnlock",
+      "iat": "0xa06048",
+      "unmapped_sentinel": "0xdead01d4"
+    },
+    {
+      "name": "GetLargePageMinimum",
+      "iat": "0xa0604c",
+      "unmapped_sentinel": "0xdead01d8"
+    },
+    {
+      "name": "VirtualQuery",
+      "iat": "0xa06050",
+      "unmapped_sentinel": "0xdead01dc"
+    },
+    {
+      "name": "VirtualFree",
+      "iat": "0xa06054",
+      "unmapped_sentinel": "0xdead01e0"
+    },
+    {
+      "name": "VirtualAlloc",
+      "iat": "0xa06058",
+      "unmapped_sentinel": "0xdead01e4"
+    },
+    {
+      "name": "UnhandledExceptionFilter",
+      "iat": "0xa0605c",
+      "unmapped_sentinel": "0xdead01e8"
+    },
+    {
+      "name": "GetModuleHandleW",
+      "iat": "0xa06060",
+      "unmapped_sentinel": "0xdead01ec"
+    },
+    {
+      "name": "CreateEventW",
+      "iat": "0xa06064",
+      "unmapped_sentinel": "0xdead01f0"
+    },
+    {
+      "name": "WaitForSingleObjectEx",
+      "iat": "0xa06068",
+      "unmapped_sentinel": "0xdead01f4"
+    },
+    {
+      "name": "InitializeCriticalSectionAndSpinCount",
+      "iat": "0xa0606c",
+      "unmapped_sentinel": "0xdead01f8"
+    },
+    {
+      "name": "IsDebuggerPresent",
+      "iat": "0xa06070",
+      "unmapped_sentinel": "0xdead01fc"
+    },
+    {
+      "name": "GetCurrentProcessorNumber",
+      "iat": "0xa06074",
+      "unmapped_sentinel": "0xdead0200"
+    },
+    {
+      "name": "FlsFree",
+      "iat": "0xa06078",
+      "unmapped_sentinel": "0xdead0204"
+    },
+    {
+      "name": "FlsSetValue",
+      "iat": "0xa0607c",
+      "unmapped_sentinel": "0xdead0208"
+    },
+    {
+      "name": "FlsAlloc",
+      "iat": "0xa06080",
+      "unmapped_sentinel": "0xdead020c"
+    },
+    {
+      "name": "GetSystemTimeAsFileTime",
+      "iat": "0xa06084",
+      "unmapped_sentinel": "0xdead0210"
+    },
+    {
+      "name": "K32GetProcessMemoryInfo",
+      "iat": "0xa06088",
+      "unmapped_sentinel": "0xdead0214"
+    },
+    {
+      "name": "GetNumaNodeProcessorMask",
+      "iat": "0xa0608c",
+      "unmapped_sentinel": "0xdead0218"
+    },
+    {
+      "name": "WriteConsoleA",
+      "iat": "0xa06090",
+      "unmapped_sentinel": "0xdead021c"
+    },
+    {
+      "name": "GetEnvironmentVariableA",
+      "iat": "0xa06094",
+      "unmapped_sentinel": "0xdead0220"
+    },
+    {
+      "name": "GetStdHandle",
+      "iat": "0xa06098",
+      "unmapped_sentinel": "0xdead0224"
+    },
+    {
+      "name": "SetThreadExecutionState",
+      "iat": "0xa0609c",
+      "unmapped_sentinel": "0xdead0228"
+    },
+    {
+      "name": "ResetEvent",
+      "iat": "0xa060a0",
+      "unmapped_sentinel": "0xdead022c"
+    },
+    {
+      "name": "GetSystemInfo",
+      "iat": "0xa060a4",
+      "unmapped_sentinel": "0xdead0230"
+    },
+    {
+      "name": "SetEvent",
+      "iat": "0xa060a8",
+      "unmapped_sentinel": "0xdead0234"
+    },
+    {
+      "name": "TlsFree",
+      "iat": "0xa060ac",
+      "unmapped_sentinel": "0xdead0238"
+    },
+    {
+      "name": "TlsAlloc",
+      "iat": "0xa060b0",
+      "unmapped_sentinel": "0xdead023c"
+    },
+    {
+      "name": "CreateThread",
+      "iat": "0xa060b4",
+      "unmapped_sentinel": "0xdead0240"
+    },
+    {
+      "name": "RaiseException",
+      "iat": "0xa060b8",
+      "unmapped_sentinel": "0xdead0244"
+    },
+    {
+      "name": "TerminateThread",
+      "iat": "0xa060bc",
+      "unmapped_sentinel": "0xdead0248"
+    },
+    {
+      "name": "WaitForSingleObject",
+      "iat": "0xa060c0",
+      "unmapped_sentinel": "0xdead024c"
+    },
+    {
+      "name": "QueryPerformanceCounter",
+      "iat": "0xa060c4",
+      "unmapped_sentinel": "0xdead0250"
+    },
+    {
+      "name": "QueryPerformanceFrequency",
+      "iat": "0xa060c8",
+      "unmapped_sentinel": "0xdead0254"
+    },
+    {
+      "name": "SetThreadPriority",
+      "iat": "0xa060cc",
+      "unmapped_sentinel": "0xdead0258"
+    },
+    {
+      "name": "LockFileEx",
+      "iat": "0xa060d0",
+      "unmapped_sentinel": "0xdead025c"
+    },
+    {
+      "name": "UnlockFileEx",
+      "iat": "0xa060d4",
+      "unmapped_sentinel": "0xdead0260"
+    },
+    {
+      "name": "TlsGetValue",
+      "iat": "0xa060d8",
+      "unmapped_sentinel": "0xdead0264"
+    },
+    {
+      "name": "GetLastError",
+      "iat": "0xa060dc",
+      "unmapped_sentinel": "0xdead0268"
+    },
+    {
+      "name": "FindClose",
+      "iat": "0xa060e0",
+      "unmapped_sentinel": "0xdead026c"
+    },
+    {
+      "name": "FindNextFileW",
+      "iat": "0xa060e4",
+      "unmapped_sentinel": "0xdead0270"
+    },
+    {
+      "name": "GetFullPathNameW",
+      "iat": "0xa060e8",
+      "unmapped_sentinel": "0xdead0274"
+    },
+    {
+      "name": "FindFirstFileW",
+      "iat": "0xa060ec",
+      "unmapped_sentinel": "0xdead0278"
+    },
+    {
+      "name": "DeleteCriticalSection",
+      "iat": "0xa060f0",
+      "unmapped_sentinel": "0xdead027c"
+    },
+    {
+      "name": "InitializeCriticalSection",
+      "iat": "0xa060f4",
+      "unmapped_sentinel": "0xdead0280"
+    },
+    {
+      "name": "LeaveCriticalSection",
+      "iat": "0xa060f8",
+      "unmapped_sentinel": "0xdead0284"
+    },
+    {
+      "name": "EnterCriticalSection",
+      "iat": "0xa060fc",
+      "unmapped_sentinel": "0xdead0288"
+    },
+    {
+      "name": "TryEnterCriticalSection",
+      "iat": "0xa06100",
+      "unmapped_sentinel": "0xdead028c"
+    },
+    {
+      "name": "FreeLibrary",
+      "iat": "0xa06104",
+      "unmapped_sentinel": "0xdead0290"
+    },
+    {
+      "name": "GetFileAttributesA",
+      "iat": "0xa06108",
+      "unmapped_sentinel": "0xdead0294"
+    },
+    {
+      "name": "GetCurrentDirectoryA",
+      "iat": "0xa0610c",
+      "unmapped_sentinel": "0xdead0298"
+    },
+    {
+      "name": "GetModuleHandleA",
+      "iat": "0xa06110",
+      "unmapped_sentinel": "0xdead029c"
+    },
+    {
+      "name": "GetCurrentProcessId",
+      "iat": "0xa06114",
+      "unmapped_sentinel": "0xdead02a0"
+    },
+    {
+      "name": "GetProcAddress",
+      "iat": "0xa06118",
+      "unmapped_sentinel": "0xdead02a4"
+    },
+    {
+      "name": "GetLocalTime",
+      "iat": "0xa0611c",
+      "unmapped_sentinel": "0xdead02a8"
+    },
+    {
+      "name": "CloseHandle",
+      "iat": "0xa06120",
+      "unmapped_sentinel": "0xdead02ac"
+    },
+    {
+      "name": "LoadLibraryA",
+      "iat": "0xa06124",
+      "unmapped_sentinel": "0xdead02b0"
+    },
+    {
+      "name": "CreateFileA",
+      "iat": "0xa06128",
+      "unmapped_sentinel": "0xdead02b4"
+    },
+    {
+      "name": "GetCurrentThreadId",
+      "iat": "0xa0612c",
+      "unmapped_sentinel": "0xdead02b8"
+    },
+    {
+      "name": "GetCurrentProcess",
+      "iat": "0xa06130",
+      "unmapped_sentinel": "0xdead02bc"
+    },
+    {
+      "name": "CreateDirectoryA",
+      "iat": "0xa06134",
+      "unmapped_sentinel": "0xdead02c0"
+    },
+    {
+      "name": "Sleep",
+      "iat": "0xa06138",
+      "unmapped_sentinel": "0xdead02c4"
+    },
+    {
+      "name": "GlobalUnlock",
+      "iat": "0xa0613c",
+      "unmapped_sentinel": "0xdead02c8"
+    },
+    {
+      "name": "GlobalLock",
+      "iat": "0xa06140",
+      "unmapped_sentinel": "0xdead02cc"
+    },
+    {
+      "name": "GlobalAlloc",
+      "iat": "0xa06144",
+      "unmapped_sentinel": "0xdead02d0"
+    },
+    {
+      "name": "TlsSetValue",
+      "iat": "0xa06148",
+      "unmapped_sentinel": "0xdead02d4"
+    },
+    {
+      "name": "BringWindowToTop",
+      "iat": "0xa06374",
+      "unmapped_sentinel": "0xdead02d8"
+    },
+    {
+      "name": "SetCapture",
+      "iat": "0xa06378",
+      "unmapped_sentinel": "0xdead02dc"
+    },
+    {
+      "name": "SetCursor",
+      "iat": "0xa0637c",
+      "unmapped_sentinel": "0xdead02e0"
+    },
+    {
+      "name": "SetFocus",
+      "iat": "0xa06380",
+      "unmapped_sentinel": "0xdead02e4"
+    },
+    {
+      "name": "ClipCursor",
+      "iat": "0xa06384",
+      "unmapped_sentinel": "0xdead02e8"
+    },
+    {
+      "name": "TranslateMessage",
+      "iat": "0xa06388",
+      "unmapped_sentinel": "0xdead02ec"
+    },
+    {
+      "name": "GetClientRect",
+      "iat": "0xa0638c",
+      "unmapped_sentinel": "0xdead02f0"
+    },
+    {
+      "name": "PeekMessageA",
+      "iat": "0xa06390",
+      "unmapped_sentinel": "0xdead02f4"
+    },
+    {
+      "name": "ReleaseCapture",
+      "iat": "0xa06394",
+      "unmapped_sentinel": "0xdead02f8"
+    },
+    {
+      "name": "SetForegroundWindow",
+      "iat": "0xa06398",
+      "unmapped_sentinel": "0xdead02fc"
+    },
+    {
+      "name": "ShowCursor",
+      "iat": "0xa0639c",
+      "unmapped_sentinel": "0xdead0300"
+    },
+    {
+      "name": "SetCursorPos",
+      "iat": "0xa063a0",
+      "unmapped_sentinel": "0xdead0304"
+    },
+    {
+      "name": "GetCursorPos",
+      "iat": "0xa063a4",
+      "unmapped_sentinel": "0xdead0308"
+    },
+    {
+      "name": "DefWindowProcA",
+      "iat": "0xa063a8",
+      "unmapped_sentinel": "0xdead030c"
+    },
+    {
+      "name": "LoadIconA",
+      "iat": "0xa063ac",
+      "unmapped_sentinel": "0xdead0310"
+    },
+    {
+      "name": "GetActiveWindow",
+      "iat": "0xa063b0",
+      "unmapped_sentinel": "0xdead0314"
+    },
+    {
+      "name": "MessageBoxA",
+      "iat": "0xa063b4",
+      "unmapped_sentinel": "0xdead0318"
+    },
+    {
+      "name": "GetWindowLongA",
+      "iat": "0xa063b8",
+      "unmapped_sentinel": "0xdead031c"
+    },
+    {
+      "name": "LoadImageA",
+      "iat": "0xa063bc",
+      "unmapped_sentinel": "0xdead0320"
+    },
+    {
+      "name": "SendMessageA",
+      "iat": "0xa063c0",
+      "unmapped_sentinel": "0xdead0324"
+    },
+    {
+      "name": "SetWindowPos",
+      "iat": "0xa063c4",
+      "unmapped_sentinel": "0xdead0328"
+    },
+    {
+      "name": "GetSystemMetrics",
+      "iat": "0xa063c8",
+      "unmapped_sentinel": "0xdead032c"
+    },
+    {
+      "name": "SetWindowLongA",
+      "iat": "0xa063cc",
+      "unmapped_sentinel": "0xdead0330"
+    },
+    {
+      "name": "OpenClipboard",
+      "iat": "0xa063d0",
+      "unmapped_sentinel": "0xdead0334"
+    },
+    {
+      "name": "CloseClipboard",
+      "iat": "0xa063d4",
+      "unmapped_sentinel": "0xdead0338"
+    },
+    {
+      "name": "EmptyClipboard",
+      "iat": "0xa063d8",
+      "unmapped_sentinel": "0xdead033c"
+    },
+    {
+      "name": "GetClipboardData",
+      "iat": "0xa063dc",
+      "unmapped_sentinel": "0xdead0340"
+    },
+    {
+      "name": "SetClipboardData",
+      "iat": "0xa063e0",
+      "unmapped_sentinel": "0xdead0344"
+    },
+    {
+      "name": "SendInput",
+      "iat": "0xa063e4",
+      "unmapped_sentinel": "0xdead0348"
+    },
+    {
+      "name": "GetMessageTime",
+      "iat": "0xa063e8",
+      "unmapped_sentinel": "0xdead034c"
+    },
+    {
+      "name": "RegisterClassA",
+      "iat": "0xa063ec",
+      "unmapped_sentinel": "0xdead0350"
+    },
+    {
+      "name": "MapVirtualKeyA",
+      "iat": "0xa063f0",
+      "unmapped_sentinel": "0xdead0354"
+    },
+    {
+      "name": "TrackMouseEvent",
+      "iat": "0xa063f4",
+      "unmapped_sentinel": "0xdead0358"
+    },
+    {
+      "name": "ClientToScreen",
+      "iat": "0xa063f8",
+      "unmapped_sentinel": "0xdead035c"
+    },
+    {
+      "name": "SystemParametersInfoA",
+      "iat": "0xa063fc",
+      "unmapped_sentinel": "0xdead0360"
+    },
+    {
+      "name": "GetDC",
+      "iat": "0xa06400",
+      "unmapped_sentinel": "0xdead0364"
+    },
+    {
+      "name": "ReleaseDC",
+      "iat": "0xa06404",
+      "unmapped_sentinel": "0xdead0368"
+    },
+    {
+      "name": "EnumDisplayDevicesA",
+      "iat": "0xa06408",
+      "unmapped_sentinel": "0xdead036c"
+    },
+    {
+      "name": "EnumDisplaySettingsExA",
+      "iat": "0xa0640c",
+      "unmapped_sentinel": "0xdead0370"
+    },
+    {
+      "name": "ChangeDisplaySettingsExA",
+      "iat": "0xa06410",
+      "unmapped_sentinel": "0xdead0374"
+    },
+    {
+      "name": "EnumDisplaySettingsA",
+      "iat": "0xa06414",
+      "unmapped_sentinel": "0xdead0378"
+    },
+    {
+      "name": "GetMessageA",
+      "iat": "0xa06418",
+      "unmapped_sentinel": "0xdead037c"
+    },
+    {
+      "name": "RegisterDeviceNotificationA",
+      "iat": "0xa0641c",
+      "unmapped_sentinel": "0xdead0380"
+    },
+    {
+      "name": "GetRawInputDeviceInfoA",
+      "iat": "0xa06420",
+      "unmapped_sentinel": "0xdead0384"
+    },
+    {
+      "name": "UnregisterClassA",
+      "iat": "0xa06424",
+      "unmapped_sentinel": "0xdead0388"
+    },
+    {
+      "name": "UnregisterDeviceNotification",
+      "iat": "0xa06428",
+      "unmapped_sentinel": "0xdead038c"
+    },
+    {
+      "name": "CreateWindowExA",
+      "iat": "0xa0642c",
+      "unmapped_sentinel": "0xdead0390"
+    },
+    {
+      "name": "RegisterClassExA",
+      "iat": "0xa06430",
+      "unmapped_sentinel": "0xdead0394"
+    },
+    {
+      "name": "GetRawInputDeviceList",
+      "iat": "0xa06434",
+      "unmapped_sentinel": "0xdead0398"
+    },
+    {
+      "name": "AdjustWindowRectEx",
+      "iat": "0xa06438",
+      "unmapped_sentinel": "0xdead039c"
+    },
+    {
+      "name": "GetKeyState",
+      "iat": "0xa0643c",
+      "unmapped_sentinel": "0xdead03a0"
+    },
+    {
+      "name": "DispatchMessageA",
+      "iat": "0xa06440",
+      "unmapped_sentinel": "0xdead03a4"
+    },
+    {
+      "name": "GetMenu",
+      "iat": "0xa06444",
+      "unmapped_sentinel": "0xdead03a8"
+    },
+    {
+      "name": "LoadCursorA",
+      "iat": "0xa06448",
+      "unmapped_sentinel": "0xdead03ac"
+    },
+    {
+      "name": "DestroyWindow",
+      "iat": "0xa0644c",
+      "unmapped_sentinel": "0xdead03b0"
+    },
+    {
+      "name": "WindowFromPoint",
+      "iat": "0xa06450",
+      "unmapped_sentinel": "0xdead03b4"
+    },
+    {
+      "name": "ShowWindow",
+      "iat": "0xa06454",
+      "unmapped_sentinel": "0xdead03b8"
+    },
+    {
+      "name": "SetClassLongA",
+      "iat": "0xa06458",
+      "unmapped_sentinel": "0xdead03bc"
+    },
+    {
+      "name": "GetAsyncKeyState",
+      "iat": "0xa0645c",
+      "unmapped_sentinel": "0xdead03c0"
+    },
+    {
+      "name": "SetPixelFormat",
+      "iat": "0xa06010",
+      "unmapped_sentinel": "0xdead03c4"
+    },
+    {
+      "name": "GetDeviceCaps",
+      "iat": "0xa06014",
+      "unmapped_sentinel": "0xdead03c8"
+    },
+    {
+      "name": "DeleteDC",
+      "iat": "0xa06018",
+      "unmapped_sentinel": "0xdead03cc"
+    },
+    {
+      "name": "DescribePixelFormat",
+      "iat": "0xa0601c",
+      "unmapped_sentinel": "0xdead03d0"
+    },
+    {
+      "name": "SwapBuffers",
+      "iat": "0xa06020",
+      "unmapped_sentinel": "0xdead03d4"
+    },
+    {
+      "name": "CreateDCA",
+      "iat": "0xa06024",
+      "unmapped_sentinel": "0xdead03d8"
+    },
+    {
+      "name": "OpenProcessToken",
+      "iat": "0xa06000",
+      "unmapped_sentinel": "0xdead03dc"
+    },
+    {
+      "name": "LookupPrivilegeValueA",
+      "iat": "0xa06004",
+      "unmapped_sentinel": "0xdead03e0"
+    },
+    {
+      "name": "AdjustTokenPrivileges",
+      "iat": "0xa06008",
+      "unmapped_sentinel": "0xdead03e4"
+    },
+    {
+      "name": "SHFileOperationA",
+      "iat": "0xa0636c",
+      "unmapped_sentinel": "0xdead03e8"
+    },
+    {
+      "name": "CoInitializeEx",
+      "iat": "0xa0669c",
+      "unmapped_sentinel": "0xdead03ec"
+    },
+    {
+      "name": "CoInitialize",
+      "iat": "0xa066a0",
+      "unmapped_sentinel": "0xdead03f0"
+    },
+    {
+      "name": "CoUninitialize",
+      "iat": "0xa066a4",
+      "unmapped_sentinel": "0xdead03f4"
+    },
+    {
+      "name": "?_Pninc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAEPADXZ",
+      "iat": "0xa06260",
+      "unmapped_sentinel": "0xdead03f8"
+    },
+    {
+      "name": "?setstate@?$basic_ios@DU?$char_traits@D@std@@@std@@QAEXH_N@Z",
+      "iat": "0xa06264",
+      "unmapped_sentinel": "0xdead03fc"
+    },
+    {
+      "name": "??0?$basic_ios@DU?$char_traits@D@std@@@std@@IAE@XZ",
+      "iat": "0xa06268",
+      "unmapped_sentinel": "0xdead0400"
+    },
+    {
+      "name": "??0?$basic_iostream@DU?$char_traits@D@std@@@std@@QAE@PAV?$basic_streambuf@DU?$char_traits@D@std@@@1@@Z",
+      "iat": "0xa0626c",
+      "unmapped_sentinel": "0xdead0404"
+    },
+    {
+      "name": "??1?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAE@XZ",
+      "iat": "0xa06270",
+      "unmapped_sentinel": "0xdead0408"
+    },
+    {
+      "name": "?_Lock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAEXXZ",
+      "iat": "0xa06274",
+      "unmapped_sentinel": "0xdead040c"
+    },
+    {
+      "name": "?showmanyc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAE_JXZ",
+      "iat": "0xa06278",
+      "unmapped_sentinel": "0xdead0410"
+    },
+    {
+      "name": "?uflow@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHXZ",
+      "iat": "0xa0627c",
+      "unmapped_sentinel": "0xdead0414"
+    },
+    {
+      "name": "?xsgetn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAE_JPAD_J@Z",
+      "iat": "0xa06280",
+      "unmapped_sentinel": "0xdead0418"
+    },
+    {
+      "name": "?xsputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAE_JPBD_J@Z",
+      "iat": "0xa06284",
+      "unmapped_sentinel": "0xdead041c"
+    },
+    {
+      "name": "?setbuf@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEPAV12@PAD_J@Z",
+      "iat": "0xa06288",
+      "unmapped_sentinel": "0xdead0420"
+    },
+    {
+      "name": "?sync@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEHXZ",
+      "iat": "0xa0628c",
+      "unmapped_sentinel": "0xdead0424"
+    },
+    {
+      "name": "?imbue@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MAEXABVlocale@2@@Z",
+      "iat": "0xa06290",
+      "unmapped_sentinel": "0xdead0428"
+    },
+    {
+      "name": "??1?$basic_ios@DU?$char_traits@D@std@@@std@@UAE@XZ",
+      "iat": "0xa06294",
+      "unmapped_sentinel": "0xdead042c"
+    },
+    {
+      "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@P6AAAV01@AAV01@@Z@Z",
+      "iat": "0xa06298",
+      "unmapped_sentinel": "0xdead0430"
+    },
+    {
+      "name": "?_Unlock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@UAEXXZ",
+      "iat": "0xa0629c",
+      "unmapped_sentinel": "0xdead0434"
+    },
+    {
+      "name": "?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@XZ",
+      "iat": "0xa062a0",
+      "unmapped_sentinel": "0xdead0438"
+    },
+    {
+      "name": "?_Osfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEXXZ",
+      "iat": "0xa062a4",
+      "unmapped_sentinel": "0xdead043c"
+    },
+    {
+      "name": "??0?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAE@XZ",
+      "iat": "0xa062a8",
+      "unmapped_sentinel": "0xdead0440"
+    },
+    {
+      "name": "?sputc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHD@Z",
+      "iat": "0xa062ac",
+      "unmapped_sentinel": "0xdead0444"
+    },
+    {
+      "name": "?widen@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEDD@Z",
+      "iat": "0xa062b0",
+      "unmapped_sentinel": "0xdead0448"
+    },
+    {
+      "name": "?put@?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV12@D@Z",
+      "iat": "0xa062b4",
+      "unmapped_sentinel": "0xdead044c"
+    },
+    {
+      "name": "?sputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAE_JPBD_J@Z",
+      "iat": "0xa062b8",
+      "unmapped_sentinel": "0xdead0450"
+    },
+    {
+      "name": "?uncaught_exception@std@@YA_NXZ",
+      "iat": "0xa062bc",
+      "unmapped_sentinel": "0xdead0454"
+    },
+    {
+      "name": "?_Xlength_error@std@@YAXPBD@Z",
+      "iat": "0xa062c0",
+      "unmapped_sentinel": "0xdead0458"
+    },
+    {
+      "name": "??5?$basic_istream@DU?$char_traits@D@std@@@std@@QAEAAV01@AA_K@Z",
+      "iat": "0xa062c4",
+      "unmapped_sentinel": "0xdead045c"
+    },
+    {
+      "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QAEAAV01@K@Z",
+      "iat": "0xa062c8",
+      "unmapped_sentinel": "0xdead0460"
+    },
+    {
+      "name": "??1?$basic_iostream@DU?$char_traits@D@std@@@std@@UAE@XZ",
+      "iat": "0xa062cc",
+      "unmapped_sentinel": "0xdead0464"
+    },
+    {
+      "name": "?_Xout_of_range@std@@YAXPBD@Z",
+      "iat": "0xa062d0",
+      "unmapped_sentinel": "0xdead0468"
+    },
+    {
+      "name": "?_Xbad_alloc@std@@YAXXZ",
+      "iat": "0xa062d4",
+      "unmapped_sentinel": "0xdead046c"
+    },
+    {
+      "name": "?_Ipfx@?$basic_istream@DU?$char_traits@D@std@@@std@@QAE_N_N@Z",
+      "iat": "0xa062d8",
+      "unmapped_sentinel": "0xdead0470"
+    },
+    {
+      "name": "?snextc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHXZ",
+      "iat": "0xa062dc",
+      "unmapped_sentinel": "0xdead0474"
+    },
+    {
+      "name": "?sbumpc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHXZ",
+      "iat": "0xa062e0",
+      "unmapped_sentinel": "0xdead0478"
+    },
+    {
+      "name": "?sgetc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QAEHXZ",
+      "iat": "0xa062e4",
+      "unmapped_sentinel": "0xdead047c"
+    },
+    {
+      "name": "_Thrd_yield",
+      "iat": "0xa062e8",
+      "unmapped_sentinel": "0xdead0480"
+    },
+    {
+      "name": "SymGetLineFromAddr",
+      "iat": "0xa06688",
+      "unmapped_sentinel": "0xdead0484"
+    },
+    {
+      "name": "SymFromAddr",
+      "iat": "0xa0668c",
+      "unmapped_sentinel": "0xdead0488"
+    },
+    {
+      "name": "SymSetOptions",
+      "iat": "0xa06690",
+      "unmapped_sentinel": "0xdead048c"
+    },
+    {
+      "name": "SymInitialize",
+      "iat": "0xa06694",
+      "unmapped_sentinel": "0xdead0490"
+    },
+    {
+      "name": "BCryptGenRandom",
+      "iat": "0xa06680",
+      "unmapped_sentinel": "0xdead0494"
+    },
+    {
+      "name": "_except_handler4_common",
+      "iat": "0xa06468",
+      "unmapped_sentinel": "0xdead0498"
+    },
+    {
+      "name": "_setjmp3",
+      "iat": "0xa0646c",
+      "unmapped_sentinel": "0xdead049c"
+    },
+    {
+      "name": "strchr",
+      "iat": "0xa06470",
+      "unmapped_sentinel": "0xdead04a0"
+    },
+    {
+      "name": "__current_exception_context",
+      "iat": "0xa06474",
+      "unmapped_sentinel": "0xdead04a4"
+    },
+    {
+      "name": "__current_exception",
+      "iat": "0xa06478",
+      "unmapped_sentinel": "0xdead04a8"
+    },
+    {
+      "name": "memchr",
+      "iat": "0xa0647c",
+      "unmapped_sentinel": "0xdead04ac"
+    },
+    {
+      "name": "_CxxThrowException",
+      "iat": "0xa06480",
+      "unmapped_sentinel": "0xdead04b0"
+    },
+    {
+      "name": "memset",
+      "iat": "0xa06484",
+      "unmapped_sentinel": "0xdead04b4"
+    },
+    {
+      "name": "memcpy",
+      "iat": "0xa06488",
+      "unmapped_sentinel": "0xdead04b8"
+    },
+    {
+      "name": "longjmp",
+      "iat": "0xa0648c",
+      "unmapped_sentinel": "0xdead04bc"
+    },
+    {
+      "name": "strstr",
+      "iat": "0xa06490",
+      "unmapped_sentinel": "0xdead04c0"
+    },
+    {
+      "name": "memmove",
+      "iat": "0xa06494",
+      "unmapped_sentinel": "0xdead04c4"
+    },
+    {
+      "name": "__std_type_info_name",
+      "iat": "0xa06498",
+      "unmapped_sentinel": "0xdead04c8"
+    },
+    {
+      "name": "__std_terminate",
+      "iat": "0xa0649c",
+      "unmapped_sentinel": "0xdead04cc"
+    },
+    {
+      "name": "__CxxFrameHandler3",
+      "iat": "0xa064a0",
+      "unmapped_sentinel": "0xdead04d0"
+    },
+    {
+      "name": "__std_exception_destroy",
+      "iat": "0xa064a4",
+      "unmapped_sentinel": "0xdead04d4"
+    },
+    {
+      "name": "__std_exception_copy",
+      "iat": "0xa064a8",
+      "unmapped_sentinel": "0xdead04d8"
+    },
+    {
+      "name": "_purecall",
+      "iat": "0xa064ac",
+      "unmapped_sentinel": "0xdead04dc"
+    },
+    {
+      "name": "ceil",
+      "iat": "0xa0651c",
+      "unmapped_sentinel": "0xdead04e0"
+    },
+    {
+      "name": "ldexp",
+      "iat": "0xa06520",
+      "unmapped_sentinel": "0xdead04e4"
+    },
+    {
+      "name": "floor",
+      "iat": "0xa06524",
+      "unmapped_sentinel": "0xdead04e8"
+    },
+    {
+      "name": "copysignf",
+      "iat": "0xa06528",
+      "unmapped_sentinel": "0xdead04ec"
+    },
+    {
+      "name": "_fdclass",
+      "iat": "0xa0652c",
+      "unmapped_sentinel": "0xdead04f0"
+    },
+    {
+      "name": "_libm_sse2_acos_precise",
+      "iat": "0xa06530",
+      "unmapped_sentinel": "0xdead04f4"
+    },
+    {
+      "name": "_CIfmod",
+      "iat": "0xa06534",
+      "unmapped_sentinel": "0xdead04f8"
+    },
+    {
+      "name": "_libm_sse2_sqrt_precise",
+      "iat": "0xa06538",
+      "unmapped_sentinel": "0xdead04fc"
+    },
+    {
+      "name": "roundf",
+      "iat": "0xa06544",
+      "unmapped_sentinel": "0xdead0500"
+    },
+    {
+      "name": "_libm_sse2_log_precise",
+      "iat": "0xa06548",
+      "unmapped_sentinel": "0xdead0504"
+    },
+    {
+      "name": "modf",
+      "iat": "0xa0654c",
+      "unmapped_sentinel": "0xdead0508"
+    },
+    {
+      "name": "nextafterf",
+      "iat": "0xa06550",
+      "unmapped_sentinel": "0xdead050c"
+    },
+    {
+      "name": "_CIatan2",
+      "iat": "0xa06554",
+      "unmapped_sentinel": "0xdead0510"
+    },
+    {
+      "name": "_libm_sse2_asin_precise",
+      "iat": "0xa06558",
+      "unmapped_sentinel": "0xdead0514"
+    },
+    {
+      "name": "_libm_sse2_atan_precise",
+      "iat": "0xa0655c",
+      "unmapped_sentinel": "0xdead0518"
+    },
+    {
+      "name": "__setusermatherr",
+      "iat": "0xa06560",
+      "unmapped_sentinel": "0xdead051c"
+    },
+    {
+      "name": "_libm_sse2_log10_precise",
+      "iat": "0xa06564",
+      "unmapped_sentinel": "0xdead0520"
+    },
+    {
+      "name": "_libm_sse2_exp_precise",
+      "iat": "0xa0656c",
+      "unmapped_sentinel": "0xdead0524"
+    },
+    {
+      "name": "_get_initial_narrow_environment",
+      "iat": "0xa06574",
+      "unmapped_sentinel": "0xdead0528"
+    },
+    {
+      "name": "_register_thread_local_exe_atexit_callback",
+      "iat": "0xa06578",
+      "unmapped_sentinel": "0xdead052c"
+    },
+    {
+      "name": "_controlfp_s",
+      "iat": "0xa0657c",
+      "unmapped_sentinel": "0xdead0530"
+    },
+    {
+      "name": "_initterm",
+      "iat": "0xa06580",
+      "unmapped_sentinel": "0xdead0534"
+    },
+    {
+      "name": "_initterm_e",
+      "iat": "0xa06584",
+      "unmapped_sentinel": "0xdead0538"
+    },
+    {
+      "name": "_set_app_type",
+      "iat": "0xa06588",
+      "unmapped_sentinel": "0xdead053c"
+    },
+    {
+      "name": "_wassert",
+      "iat": "0xa0658c",
+      "unmapped_sentinel": "0xdead0540"
+    },
+    {
+      "name": "abort",
+      "iat": "0xa06590",
+      "unmapped_sentinel": "0xdead0544"
+    },
+    {
+      "name": "_seh_filter_exe",
+      "iat": "0xa06594",
+      "unmapped_sentinel": "0xdead0548"
+    },
+    {
+      "name": "_cexit",
+      "iat": "0xa06598",
+      "unmapped_sentinel": "0xdead054c"
+    },
+    {
+      "name": "_exit",
+      "iat": "0xa0659c",
+      "unmapped_sentinel": "0xdead0550"
+    },
+    {
+      "name": "_crt_atexit",
+      "iat": "0xa065a0",
+      "unmapped_sentinel": "0xdead0554"
+    },
+    {
+      "name": "_errno",
+      "iat": "0xa065a4",
+      "unmapped_sentinel": "0xdead0558"
+    },
+    {
+      "name": "exit",
+      "iat": "0xa065a8",
+      "unmapped_sentinel": "0xdead055c"
+    },
+    {
+      "name": "_invalid_parameter_noinfo_noreturn",
+      "iat": "0xa065ac",
+      "unmapped_sentinel": "0xdead0560"
+    },
+    {
+      "name": "_beginthreadex",
+      "iat": "0xa065b0",
+      "unmapped_sentinel": "0xdead0564"
+    },
+    {
+      "name": "terminate",
+      "iat": "0xa065b4",
+      "unmapped_sentinel": "0xdead0568"
+    },
+    {
+      "name": "__p___argc",
+      "iat": "0xa065b8",
+      "unmapped_sentinel": "0xdead056c"
+    },
+    {
+      "name": "perror",
+      "iat": "0xa065bc",
+      "unmapped_sentinel": "0xdead0570"
+    },
+    {
+      "name": "_register_onexit_function",
+      "iat": "0xa065c0",
+      "unmapped_sentinel": "0xdead0574"
+    },
+    {
+      "name": "_initialize_onexit_table",
+      "iat": "0xa065c4",
+      "unmapped_sentinel": "0xdead0578"
+    },
+    {
+      "name": "_c_exit",
+      "iat": "0xa065c8",
+      "unmapped_sentinel": "0xdead057c"
+    },
+    {
+      "name": "_initialize_narrow_environment",
+      "iat": "0xa065cc",
+      "unmapped_sentinel": "0xdead0580"
+    },
+    {
+      "name": "_configure_narrow_argv",
+      "iat": "0xa065d0",
+      "unmapped_sentinel": "0xdead0584"
+    },
+    {
+      "name": "__p___argv",
+      "iat": "0xa065d4",
+      "unmapped_sentinel": "0xdead0588"
+    },
+    {
+      "name": "_set_errno",
+      "iat": "0xa065d8",
+      "unmapped_sentinel": "0xdead058c"
+    },
+    {
+      "name": "_strdup",
+      "iat": "0xa06624",
+      "unmapped_sentinel": "0xdead0590"
+    },
+    {
+      "name": "strpbrk",
+      "iat": "0xa06628",
+      "unmapped_sentinel": "0xdead0594"
+    },
+    {
+      "name": "ispunct",
+      "iat": "0xa0662c",
+      "unmapped_sentinel": "0xdead0598"
+    },
+    {
+      "name": "tolower",
+      "iat": "0xa06630",
+      "unmapped_sentinel": "0xdead059c"
+    },
+    {
+      "name": "_strnicmp",
+      "iat": "0xa06634",
+      "unmapped_sentinel": "0xdead05a0"
+    },
+    {
+      "name": "strncpy",
+      "iat": "0xa06638",
+      "unmapped_sentinel": "0xdead05a4"
+    },
+    {
+      "name": "isdigit",
+      "iat": "0xa0663c",
+      "unmapped_sentinel": "0xdead05a8"
+    },
+    {
+      "name": "strncmp",
+      "iat": "0xa06640",
+      "unmapped_sentinel": "0xdead05ac"
+    },
+    {
+      "name": "iswspace",
+      "iat": "0xa06644",
+      "unmapped_sentinel": "0xdead05b0"
+    },
+    {
+      "name": "strncpy_s",
+      "iat": "0xa06648",
+      "unmapped_sentinel": "0xdead05b4"
+    },
+    {
+      "name": "toupper",
+      "iat": "0xa0664c",
+      "unmapped_sentinel": "0xdead05b8"
+    },
+    {
+      "name": "strcat_s",
+      "iat": "0xa06650",
+      "unmapped_sentinel": "0xdead05bc"
+    },
+    {
+      "name": "strcpy_s",
+      "iat": "0xa06654",
+      "unmapped_sentinel": "0xdead05c0"
+    },
+    {
+      "name": "isspace",
+      "iat": "0xa06658",
+      "unmapped_sentinel": "0xdead05c4"
+    },
+    {
+      "name": "strtoull",
+      "iat": "0xa064c8",
+      "unmapped_sentinel": "0xdead05c8"
+    },
+    {
+      "name": "mbstowcs_s",
+      "iat": "0xa064cc",
+      "unmapped_sentinel": "0xdead05cc"
+    },
+    {
+      "name": "wcstombs_s",
+      "iat": "0xa064d0",
+      "unmapped_sentinel": "0xdead05d0"
+    },
+    {
+      "name": "strtol",
+      "iat": "0xa064d4",
+      "unmapped_sentinel": "0xdead05d4"
+    },
+    {
+      "name": "atoi",
+      "iat": "0xa064d8",
+      "unmapped_sentinel": "0xdead05d8"
+    },
+    {
+      "name": "atof",
+      "iat": "0xa064dc",
+      "unmapped_sentinel": "0xdead05dc"
+    },
+    {
+      "name": "_fileno",
+      "iat": "0xa065e0",
+      "unmapped_sentinel": "0xdead05e0"
+    },
+    {
+      "name": "fread",
+      "iat": "0xa065e4",
+      "unmapped_sentinel": "0xdead05e4"
+    },
+    {
+      "name": "fwrite",
+      "iat": "0xa065e8",
+      "unmapped_sentinel": "0xdead05e8"
+    },
+    {
+      "name": "fseek",
+      "iat": "0xa065ec",
+      "unmapped_sentinel": "0xdead05ec"
+    },
+    {
+      "name": "_get_osfhandle",
+      "iat": "0xa065f0",
+      "unmapped_sentinel": "0xdead05f0"
+    },
+    {
+      "name": "ftell",
+      "iat": "0xa065f4",
+      "unmapped_sentinel": "0xdead05f4"
+    },
+    {
+      "name": "__p__commode",
+      "iat": "0xa065f8",
+      "unmapped_sentinel": "0xdead05f8"
+    },
+    {
+      "name": "__stdio_common_vfprintf",
+      "iat": "0xa065fc",
+      "unmapped_sentinel": "0xdead05fc"
+    },
+    {
+      "name": "fflush",
+      "iat": "0xa06600",
+      "unmapped_sentinel": "0xdead0600"
+    },
+    {
+      "name": "__acrt_iob_func",
+      "iat": "0xa06604",
+      "unmapped_sentinel": "0xdead0604"
+    },
+    {
+      "name": "fopen",
+      "iat": "0xa06608",
+      "unmapped_sentinel": "0xdead0608"
+    },
+    {
+      "name": "_set_fmode",
+      "iat": "0xa0660c",
+      "unmapped_sentinel": "0xdead060c"
+    },
+    {
+      "name": "__stdio_common_vsscanf",
+      "iat": "0xa06610",
+      "unmapped_sentinel": "0xdead0610"
+    },
+    {
+      "name": "__stdio_common_vsprintf",
+      "iat": "0xa06614",
+      "unmapped_sentinel": "0xdead0614"
+    },
+    {
+      "name": "__stdio_common_vsprintf_s",
+      "iat": "0xa06618",
+      "unmapped_sentinel": "0xdead0618"
+    },
+    {
+      "name": "fclose",
+      "iat": "0xa0661c",
+      "unmapped_sentinel": "0xdead061c"
+    },
+    {
+      "name": "strftime",
+      "iat": "0xa06660",
+      "unmapped_sentinel": "0xdead0620"
+    },
+    {
+      "name": "_gmtime64",
+      "iat": "0xa06664",
+      "unmapped_sentinel": "0xdead0624"
+    },
+    {
+      "name": "_time64",
+      "iat": "0xa06668",
+      "unmapped_sentinel": "0xdead0628"
+    },
+    {
+      "name": "_mkgmtime64",
+      "iat": "0xa0666c",
+      "unmapped_sentinel": "0xdead062c"
+    },
+    {
+      "name": "_localtime64",
+      "iat": "0xa06670",
+      "unmapped_sentinel": "0xdead0630"
+    },
+    {
+      "name": "qsort",
+      "iat": "0xa06678",
+      "unmapped_sentinel": "0xdead0634"
+    },
+    {
+      "name": "_callnewh",
+      "iat": "0xa064f8",
+      "unmapped_sentinel": "0xdead0638"
+    },
+    {
+      "name": "free",
+      "iat": "0xa064fc",
+      "unmapped_sentinel": "0xdead063c"
+    },
+    {
+      "name": "calloc",
+      "iat": "0xa06500",
+      "unmapped_sentinel": "0xdead0640"
+    },
+    {
+      "name": "malloc",
+      "iat": "0xa06504",
+      "unmapped_sentinel": "0xdead0644"
+    },
+    {
+      "name": "_set_new_mode",
+      "iat": "0xa06508",
+      "unmapped_sentinel": "0xdead0648"
+    },
+    {
+      "name": "realloc",
+      "iat": "0xa0650c",
+      "unmapped_sentinel": "0xdead064c"
+    },
+    {
+      "name": "getenv",
+      "iat": "0xa064e4",
+      "unmapped_sentinel": "0xdead0650"
+    },
+    {
+      "name": "remove",
+      "iat": "0xa064ec",
+      "unmapped_sentinel": "0xdead0654"
+    },
+    {
+      "name": "_access",
+      "iat": "0xa064f0",
+      "unmapped_sentinel": "0xdead0658"
+    },
+    {
+      "name": "_configthreadlocale",
+      "iat": "0xa06514",
+      "unmapped_sentinel": "0xdead065c"
+    }
+  ],
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 26888,
+      "_libm_sse2_sin_precise": 26888,
+      "_libm_sse2_pow_precise": 0
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "boundaries": {
+    "NPC_TakeDamage_6ac370": "Record complete request;return supplied accepted boolean without HP mutation.",
+    "timeGetTime": "Profiling OS clock returns0;gameplay clocks not replaced.",
+    "CRT_memory": "Inherited allocator/memory boundaries."
+  },
+  "windows": [
+    {
+      "name": "tree_constructor_arguments",
+      "start": "0x412a42",
+      "end_exclusive": "0x412bca",
+      "raw_sha256": "c90745c8c878a89f89fae13406bc7716b690ea839b604fcdbff5bd2fea7d8d8e"
+    },
+    {
+      "name": "tree_constructor",
+      "start": "0x416880",
+      "end_exclusive": "0x41697c",
+      "raw_sha256": "cf2cbbfaeaf866d27c9cc968be9ed04b2497ad090772f1173b87de4bfd8db927"
+    },
+    {
+      "name": "whole_collision_manager",
+      "start": "0x414f80",
+      "end_exclusive": "0x4157e3",
+      "raw_sha256": "d2b3610aac47d8dc97d11773bfc53024f267047383354805d5c225988d83511b"
+    },
+    {
+      "name": "whole_tree_cross_pairs",
+      "start": "0x416f10",
+      "end_exclusive": "0x41713e",
+      "raw_sha256": "6f206c9b3461efe772d747cbfc542bd9bfc200f9a951bcea30fb4d5912955779"
+    },
+    {
+      "name": "whole_circle_pair",
+      "start": "0x689cf0",
+      "end_exclusive": "0x68a2c0",
+      "raw_sha256": "4976d05d3a7f44f464b16e8b5ae1f65876861c43179d0b3c11b106e351f3b1fd"
+    },
+    {
+      "name": "whole_pair_dispatch",
+      "start": "0x689840",
+      "end_exclusive": "0x68997b",
+      "raw_sha256": "a473272e7fdd295dfc9f4d8e8fae7db92a80c7c4bb2c989292bb57c83affc525"
+    },
+    {
+      "name": "collision_phase_gate",
+      "start": "0x414724",
+      "end_exclusive": "0x414731",
+      "raw_sha256": "d58350cb987547e267f6f01244012f7ebb4a66482ec3ed2ef2e955492ca51050"
+    },
+    {
+      "name": "whole_tear_collision",
+      "start": "0x64dcd0",
+      "end_exclusive": "0x6500cc",
+      "raw_sha256": "b43abe6a5816bcb9f37e70f4b8ed185aff1ff1ce6ba3be0d1c64173c2a31f3a5"
+    },
+    {
+      "name": "whole_npc_collision",
+      "start": "0x6a3970",
+      "end_exclusive": "0x6a648b",
+      "raw_sha256": "67ab24d06f45d81db4777e966cf79e21da0a56354c466604e673781fa934fbd9"
+    },
+    {
+      "name": "damage_call",
+      "start": "0x64e939",
+      "end_exclusive": "0x64e969",
+      "raw_sha256": "089b1d88dd904ce8541f8c27f82f26442cd3c6f3993d97b4cbacc02db82f494f"
+    },
+    {
+      "name": "tear_consumed",
+      "start": "0x650049",
+      "end_exclusive": "0x65008f",
+      "raw_sha256": "c753acb63bda31d6afc7a8e874793c292a9bf9bd7fa33198ab350e94cda51440"
+    }
+  ],
+  "scope": "Full native collision pass with original80-unit spatial buckets,unit-axis ordinary tear/two supplied Gaper-shaped NPC bodies,empty inventory/callbacks and optional supplied grid body. NPC damage application,nonordinary death effects,actor/configXML creation,eligible reachable flags/items,scheduler/live timing/global world calibration remain unaccepted. Runtime remainsv23;this is research,not enabled collision ordering.",
+  "full_acceptance": false
+}

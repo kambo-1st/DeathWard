@@ -85,7 +85,7 @@ void terrainAndLifecycle() {
     auto stun=fixture();auto st=spawn(stun);launch(stun,st);stun.findEnemy(st)->state=EnemyState::Stunned;stun.findEnemy(st)->stateTime=2;
     tick(stun,60);check(!state(stun,st).airborne&&!stun.arena.blocked(stun.findEnemy(st)->position,.5f)&&stun.findEnemy(st)->state==EnemyState::Stunned,"local stun reaches legal ground before waiting");
     auto contact=fixture();contact.godMode=false;contact.player.position={0,.85f,0};spawn(contact);tick(contact);
-    check(contact.player.hp<100,"grounded Trite deals contact damage");
+    check(contact.player.hp<StartingHealth,"grounded Trite deals contact damage");
     auto death=fixture();auto victim=spawn(death);launch(death,victim);Event hit;hit.type=EventType::Damage;hit.target=victim;hit.damage=1000;death.queueRoot(hit);death.drainEvents();tick(death,60);
     check(death.stats.kills==1&&death.roomThreats()==0&&death.stats.projectiles==0,"death resolves exactly one threat without a pending jump or children");
 }

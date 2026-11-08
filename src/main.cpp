@@ -308,7 +308,7 @@ int main(int argc, char **argv) {
                          " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
                          "black-creek"
                          ", frontier or redstone\n  --smoke              "
-                         "Render a scripted scene, then exit\n  --scene NAME         combat, hub, key, "
+                         "Render a scripted scene, then exit\n  --scene NAME         combat, health, hub, key, "
                          "power, reward, empty, cheats, "
                          "boss, summary, demolition, demolition-open, demolition-run,\n"
                          "                      build-bank, build-shrapnel, build-return, build-braid,\n"
@@ -392,7 +392,7 @@ int main(int argc, char **argv) {
     if(enemyCount!=1&&!enemyScene) {std::cerr<<"--enemy-count requires an isolated enemy capture\n";return 2;}
     if((enemyFlooded||!enemyFires.empty())&&!enemyScene){std::cerr<<"Fire/flood probes require an isolated enemy capture\n";return 2;}
     if (!enemyScene && scene != "combat" && scene != "hub" && scene != "key" && scene != "power" && scene != "reward" &&
-        scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats" &&
+        scene != "health" && scene != "boss" && scene != "summary" && scene != "empty" && scene != "cheats" &&
         scene != "demolition" && scene != "demolition-open" && scene != "demolition-run" &&
         scene != "build-bank" && scene != "build-shrapnel" && scene != "build-return" && scene != "build-braid" &&
         scene != "ridgeback" && scene != "ridgeback-late" && scene != "ridgeback-fight" &&
@@ -715,6 +715,24 @@ int main(int argc, char **argv) {
                     game.run->rooms[size_t(probeRoom)].plates={{{at.x,.85f,at.z},false}};
                 }
             }
+            if(smoke&&scene=="health") {
+                auto &run=*game.run;run.godMode=true;run.player.hp=3;
+                run.collectHeart(dw::HeartKind::Rotten,2);
+                run.collectHeart(dw::HeartKind::Soul,3);
+                run.collectHeart(dw::HeartKind::Bone,1);
+                run.collectHeart(dw::HeartKind::Black,2);
+                run.collectHeart(dw::HeartKind::Eternal,1);
+                run.collectHeart(dw::HeartKind::Golden,2);
+                run.addBrokenHearts(1);run.refillRottenHeartFlies();
+                int index=0;
+                for(auto kind:{dw::HeartKind::Red,dw::HeartKind::Soul,dw::HeartKind::Black,
+                    dw::HeartKind::Bone,dw::HeartKind::Eternal,dw::HeartKind::Golden,dw::HeartKind::Rotten}) {
+                    for(int attempt=0;attempt<32;++attempt) {
+                        const auto point=dw::add(run.player.position,dw::rotateY({3.f+.2f*attempt,0,0},float(index)*.8f));
+                        if(run.spawnHeartPickup(kind,point)){++index;break;}
+                    }
+                }
+            }
             if(smoke&&scene.starts_with("service-")) {
                 int at=-1;for(int i=0;i<game.run->arena.roomCount();++i)
                     if(game.run->arena.rooms[size_t(i)].kind==dw::RoomKind::Service){at=i;break;}
@@ -723,7 +741,7 @@ int main(int argc, char **argv) {
                     scene=="service-surgeon"?dw::RoomService::Surgeon:dw::RoomService::Smuggler;
                 game.run->rooms[size_t(at)].offers={dw::ItemId::Judas,dw::ItemId::Cap};
                 game.run->jumpDebug(at);game.run->player.position=game.run->arena.rooms[size_t(at)].objective;
-                game.run->keys=2;game.run->moneyCollected=100;game.run->player.hp=50;game.run->openShop();
+                game.run->keys=2;game.run->moneyCollected=100;game.run->player.hp=2;game.run->openShop();
             }
             if(smoke&&scene=="boss-reward") {
                 game.run->startBoss();game.run->killAll();game.run->clearRoom();

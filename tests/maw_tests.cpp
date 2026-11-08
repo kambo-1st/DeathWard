@@ -28,7 +28,7 @@ void pullAndInput() {
     check(normal.player.position.z<7&&normal.player.position.z>6,"Normal Maw actually pulls an idle player");
     check(broken.player.position.z<normal.player.position.z-1,"Broken Maw has stronger active attraction");
     check(normal.stats.projectiles==0&&broken.stats.projectiles==0&&normal.roomThreats()==0,"Attractors emit no shots and do not seal combat");
-    check(normal.findEnemy(id)->hp==320&&normal.player.hp==100,"Source HP conversion and no body-contact damage");
+    check(normal.findEnemy(id)->hp==320&&normal.player.hp==StartingHealth,"Source HP conversion and no body-contact damage");
     damage(normal,id);check(normal.findEnemy(id)->alive&&normal.findEnemy(id)->hp==320,"Ordinary damage cannot destroy Maw");
     for(bool dodge:{false,true}) {
         auto s=fixture();maw(s,236);Input input;input.movement={0,0,1};input.dodge=dodge;ticks(s,30,input);

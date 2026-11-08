@@ -1,0 +1,24 @@
+00725930 push 8
+00725932 mov byte ptr [ecx + 0x12b0], 1
+00725939 call 0x725af0
+0072593e mov eax, dword ptr [0xbfd65c]
+00725943 cmp dword ptr [eax + 0x101904], 2
+0072594a je 0x725960
+0072594c mov dword ptr [eax + 0x101904], 1
+00725956 mov dword ptr [eax + 0x10190c], 2
+00725960 ret 
+00725961 int3 
+00725962 int3 
+00725963 int3 
+00725964 int3 
+00725965 int3 
+00725966 int3 
+00725967 int3 
+00725968 int3 
+00725969 int3 
+0072596a int3 
+0072596b int3 
+0072596c int3 
+0072596d int3 
+0072596e int3 
+0072596f int3 

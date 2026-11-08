@@ -1,0 +1,94 @@
+id,name,source_xml_identity_match,source_base_hp,source_stage_hp,source_stage1_hp,source_collision_damage_scalar,source_collision_radius_units,source_boss_flag,source_room_libraries,source_basement_default_spawn_rows,dw_registered,dw_opening_pool_candidate,dw_stage1_hp,hp_ratio_dw_to_source,adaptation_relative_to_3_2,source_body_hits_at_3_5,dw_body_hits_at_24,dw_registry_speed_descriptive_not_measured,dw_radius_world_units,dw_registry_cooldown_not_full_AI,dw_registry_windup_not_full_AI,legacy_ledger_implementation,unresolved_count
+10.0.0,Frowning Gaper,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,304,True,True,32.0,3.2,1.0,3,2,12.0,0.6000000238,2.400000095,0.0,in_progress,4
+10.1.0,Gaper,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,257,True,True,32.0,3.2,1.0,3,2,9.960000038,0.6000000238,2.400000095,0.0,in_progress,4
+10.2.0,Flaming Gaper,exact,9.0,0.0,9.0,1,13,0,03.burning basement.stb,0,True,False,28.80000114,3.2000001266666667,1.0000000395833333,3,2,10.95600033,0.6000000238,2.400000095,0.0,in_progress,2
+11.0.0,Gusher,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,149,True,True,32.0,3.2,1.0,3,2,6.0,0.6000000238,1.5,0.0,in_progress,4
+11.1.0,Pacer,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,125,True,True,32.0,3.2,1.0,3,2,6.0,0.6000000238,1.5,0.0,in_progress,3
+12.0.0,Horf,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,316,True,True,32.0,3.2,1.0,3,2,0.0,0.6499999762,0.9333333373,0.1333333403,in_progress,3
+13.0.0,Fly,exact,3.0,0.0,3.0,0,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,170,True,True,9.600000381,3.2000001269999996,1.0000000396874997,1,1,1.0,0.4499999881,1.0,0.0,in_progress,5
+14.0.0,Pooter,exact,8.0,0.0,8.0,0,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,199,True,True,25.60000038,3.2000000475,1.00000001484375,3,2,1.0,0.4499999881,1.166666627,0.200000003,in_progress,5
+14.1.0,Super Pooter,exact,8.0,0.0,8.0,0,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,8,True,True,25.60000038,3.2000000475,1.00000001484375,3,2,1.0,0.5,1.166666627,0.200000003,in_progress,4
+15.0.0,Clotty,exact,15.0,0.0,15.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,71,True,False,80.0,5.333333333333333,1.6666666666666665,5,4,1.799999952,0.6000000238,2.400000095,0.5500000119,in_progress,4
+15.1.0,Clot,exact,15.0,0.0,15.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,21,True,False,80.0,5.333333333333333,1.6666666666666665,5,4,1.799999952,0.6000000238,2.400000095,0.5500000119,in_progress,4
+15.2.0,I.Blob,exact,15.0,0.0,15.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,10,True,False,96.0,6.4,2.0,5,4,1.700000048,0.6499999762,2.799999952,0.6999999881,in_progress,4
+15.3.0,Grilled Clotty,exact,20.0,0.0,20.0,1,13,0,03.burning basement.stb,0,True,True,96.0,4.8,1.4999999999999998,6,4,3.0,0.6000000238,2.400000095,0.6499999762,in_progress,4
+16.0.0,Mulligan,exact,13.0,0.0,13.0,0,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,92,True,True,41.60000229,3.200000176153846,1.0000000550480768,4,2,2.0,0.6000000238,2.400000095,0.5500000119,in_progress,6
+16.1.0,Mulligoon,exact,13.0,0.0,13.0,0,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,28,True,False,41.60000229,3.200000176153846,1.0000000550480768,4,2,2.0,0.6499999762,2.400000095,0.6999999881,in_progress,6
+16.2.0,Mulliboom,exact,13.0,0.0,13.0,0,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,26,True,False,41.60000229,3.200000176153846,1.0000000550480768,4,2,3.200000048,0.6000000238,2.400000095,0.6999999881,in_progress,6
+17.1.0,Secret Room Keeper,exact,5.0,0.0,5.0,0,1,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,1,False,False,,,,2,,,,,,missing,4
+17.3.0,Special Shopkeeper,exact,5.0,0.0,5.0,0,1,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,2,False,False,,,,2,,,,,,missing,4
+18.0.0,Attack Fly,exact,5.0,0.0,5.0,1,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,460,True,True,16.0,3.2,1.0,2,1,1.0,0.4499999881,1.0,0.0,in_progress,4
+22.0.0,Hive,exact,20.0,0.0,20.0,0,13,0,01.basement.stb;03.burning basement.stb,1,True,True,64.0,3.2,1.0,6,3,1.5,0.6999999881,2.5,0.1333333403,in_progress,5
+29.0.0,Hopper,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,219,True,True,32.0,3.2,1.0,3,2,3.5,0.6000000238,2.400000095,0.5500000119,in_progress,3
+29.1.0,Trite,exact,10.0,0.0,10.0,1,13,0,02.cellar.stb;03.burning basement.stb,0,True,True,32.0,3.2,1.0,3,2,6.0,0.5,2.099999905,0.5500000119,in_progress,4
+30.2.0,Sack,exact,20.0,0.0,20.0,0,13,0,02.cellar.stb,0,True,True,64.0,3.2,1.0,6,3,0.0,0.400000006,1.0,1.0,in_progress,4
+33.0.0,Fire Place,exact,5.0,0.0,5.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,42,True,False,5.0,1.0,0.3125,2,1,0.0,0.6499999762,1.0,0.0,in_progress,5
+33.1.0,Red Fire Place,exact,5.0,0.0,5.0,1,13,0,03.burning basement.stb,0,False,False,,,,2,,,,,,missing,4
+33.2.0,Blue Fire Place,exact,5.0,0.0,5.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,6,False,False,,,,2,,,,,,missing,4
+33.3.0,Purple Fire Place,exact,5.0,0.0,5.0,1,13,0,02.cellar.stb,0,False,False,,,,2,,,,,,missing,4
+44.1.0,Slide,exact,100.0,0.0,100.0,1,13,0,02.cellar.stb,0,True,False,1.0,0.01,0.0031249999999999997,29,1,0.0,0.6499999762,3.0,0.8000000119,existing_unverified,1
+54.0.0,Flaming Hopper,exact,20.0,0.0,20.0,1,13,0,01.basement.stb;03.burning basement.stb,1,True,True,64.0,3.2,1.0,6,3,6.0,0.6000000238,1.600000024,0.4499999881,in_progress,3
+61.0.0,Sucker,exact,10.0,0.0,10.0,1,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,25,True,False,32.0,3.2,1.0,3,2,1.799999952,0.5,2.0,0.6000000238,in_progress,3
+61.1.0,Spit,exact,10.0,0.0,10.0,1,17,0,02.cellar.stb;03.burning basement.stb,0,True,False,48.0,4.8,1.4999999999999998,3,2,1.799999952,0.5,2.0,0.6000000238,existing_unverified,1
+61.5.0,Bulb,exact,10.0,2.0,12.0,0,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,18,True,False,48.0,4.0,1.25,4,2,2.5,0.4499999881,2.0,0.6000000238,existing_unverified,1
+76.0.0,Blastocyst Small,exact,30.0,0.0,30.0,1,20,1,01.basement.stb;02.cellar.stb;03.burning basement.stb,2,False,False,,,,9,,,,,,missing,1
+77.0.0,Embryo,exact,12.0,0.0,12.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,53,True,False,40.0,3.3333333333333335,1.0416666666666667,4,2,3.0,0.4499999881,2.400000095,0.5500000119,existing_unverified,1
+80.0.0,Moter,exact,10.0,0.0,10.0,1,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,49,True,False,72.0,7.2,2.25,3,3,3.0,0.5,2.0,0.6000000238,in_progress,2
+85.0.0,Spider,exact,6.5,0.0,6.5,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,38,True,True,20.80000114,3.2000001753846155,1.0000000548076922,2,1,3.5,0.400000006,2.400000095,0.5500000119,in_progress,4
+88.2.0,Walking Sack,exact,20.0,0.0,20.0,1,13,0,02.cellar.stb,0,True,True,64.0,3.2,1.0,6,3,2.0,0.400000006,1.0,1.0,in_progress,4
+94.0.0,Big Spider,exact,20.0,0.0,20.0,1,13,0,02.cellar.stb;03.burning basement.stb,0,True,True,64.0,3.2,1.0,6,3,3.5,0.400000006,2.400000095,0.5500000119,in_progress,4
+205.0.0,Nest,exact,20.0,0.0,20.0,0,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,5,True,True,64.0,3.2,1.0,6,3,1.5,0.6999999881,4.333333492,0.1333333403,in_progress,4
+206.0.0,Baby Long Legs,exact,16.0,4.0,20.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,8,True,True,64.0,3.2,1.0,6,3,2.0,0.400000006,1.0,1.0,in_progress,4
+206.1.0,Small Baby Long Legs,exact,12.0,4.0,16.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,7,True,True,51.20000076,3.2000000475,1.00000001484375,5,3,2.0,0.400000006,1.0,1.0,in_progress,4
+207.0.0,Crazy Long Legs,exact,16.0,4.0,20.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,6,True,True,64.0,3.2,1.0,6,3,2.0,0.400000006,1.0,1.0,in_progress,4
+207.1.0,Small Crazy Long Legs,exact,12.0,4.0,16.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,12,True,True,51.20000076,3.2000000475,1.00000001484375,5,3,2.0,0.400000006,1.0,1.0,in_progress,4
+208.0.0,Fatty,exact,20.0,0.0,20.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,174,False,False,,,,6,,,,,,missing,1
+208.1.0,Pale Fatty,exact,20.0,0.0,20.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,1,False,False,,,,6,,,,,,missing,1
+208.2.0,Flaming Fatty,exact,18.0,0.0,18.0,1,13,0,03.burning basement.stb,0,False,False,,,,6,,,,,,missing,1
+210.0.0,Blubber,exact,16.0,0.0,16.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,1,False,False,,,,5,,,,,,missing,1
+214.0.0,Level 2 Fly,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,63,False,False,,,,3,,,,,,missing,1
+215.0.0,Level 2 Spider,exact,13.0,0.0,13.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,30,False,False,,,,4,,,,,,missing,1
+217.0.0,Dip,exact,3.0,1.0,4.0,1,9,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,330,True,True,12.80000019,3.2000000475,1.00000001484375,2,1,2.0,0.400000006,1.0,0.0,in_progress,2
+217.2.0,Brownie Corn,exact,3.0,0.0,3.0,1,9,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,6,True,True,9.600000381,3.2000001269999996,1.0000000396874997,1,1,2.0,0.400000006,1.0,0.0,in_progress,2
+218.0.0,Wall Hugger,exact,100.0,0.0,100.0,1,16,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,43,False,False,,,,29,,,,,,missing,1
+218.0.1,Wall Hugger,same type/variant numeric fallback; subtype behavior not established,100.0,0.0,100.0,1,16,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,5,False,False,,,,29,,,,,,unrecorded,0
+218.0.2,Wall Hugger,same type/variant numeric fallback; subtype behavior not established,100.0,0.0,100.0,1,16,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,2,False,False,,,,29,,,,,,unrecorded,0
+218.0.3,Wall Hugger,same type/variant numeric fallback; subtype behavior not established,100.0,0.0,100.0,1,16,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,5,False,False,,,,29,,,,,,unrecorded,0
+218.0.4,Wall Hugger,same type/variant numeric fallback; subtype behavior not established,100.0,0.0,100.0,1,16,0,01.basement.stb;03.burning basement.stb,1,False,False,,,,29,,,,,,unrecorded,0
+220.0.0,Squirt,exact,15.0,6.0,21.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,33,True,True,67.20000458,3.200000218095238,1.0000000681547618,6,3,3.0,0.6499999762,2.0,0.0,in_progress,2
+222.0.0,Ring Fly,exact,5.0,0.0,5.0,1,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,174,True,True,32.0,6.4,2.0,2,2,2.599999905,0.349999994,2.0,0.5,in_progress,3
+226.0.0,Skinny,exact,10.0,4.0,14.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,86,False,False,,,,4,,,,,,missing,1
+226.2.0,Crispy,exact,12.0,4.0,16.0,1,13,0,03.burning basement.stb,0,False,False,,,,5,,,,,,missing,1
+231.0.0,Nerve Ending,exact,20.0,0.0,20.0,1,13,0,01.basement.stb;03.burning basement.stb,1,False,False,,,,6,,,,,,missing,1
+240.0.0,Wall Creep,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,11,False,False,,,,3,,,,,,missing,1
+242.0.0,Blind Creep,exact,10.0,0.0,10.0,1,13,0,02.cellar.stb,0,False,False,,,,3,,,,,,missing,1
+244.0.0,Round Worm,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,180,False,False,,,,3,,,,,,missing,1
+246.0.0,Ragling,exact,13.0,0.0,13.0,1,13,0,02.cellar.stb,0,False,False,,,,4,,,,,,missing,1
+246.1.0,Rag Man'S Ragling,exact,30.0,0.0,30.0,1,13,0,01.basement.stb;03.burning basement.stb,1,False,False,,,,9,,,,,,missing,1
+248.0.0,Psychic Horf,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,6,False,False,,,,3,,,,,,missing,1
+249.0.0,Full Fly,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,30,False,False,,,,3,,,,,,missing,1
+250.0.0,Ticking Spider,exact,13.0,0.0,13.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,6,False,False,,,,4,,,,,,missing,1
+255.0.0,Night Crawler,exact,35.0,0.0,35.0,1,13,0,02.cellar.stb,0,False,False,,,,10,,,,,,missing,1
+256.0.0,Dart Fly,exact,5.0,0.0,5.0,1,17,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,93,False,False,,,,2,,,,,,missing,1
+257.0.0,Conjoined Fatty,exact,20.0,0.0,20.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,4,False,False,,,,6,,,,,,missing,1
+276.0.0,Roundy,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,24,False,False,,,,3,,,,,,missing,1
+279.0.0,Black Globin's Head,exact,20.0,0.0,20.0,2,13,0,02.cellar.stb,0,True,False,64.0,3.2,1.0,6,3,10.0,0.6000000238,1.0,0.0,in_progress,4
+280.0.0,Black Globin's Body,exact,10.0,0.0,10.0,1,13,0,02.cellar.stb,0,True,False,32.0,3.2,1.0,3,2,6.0,0.6000000238,1.0,0.0,in_progress,4
+281.0.0,Swarm,exact,5.0,0.0,5.0,1,14,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,45,False,False,,,,2,,,,,,missing,1
+282.0.0,Mega Clotty,exact,20.0,0.0,20.0,1,13,0,02.cellar.stb,0,False,False,,,,6,,,,,,missing,1
+284.0.0,Cyclopia,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,85,False,False,,,,3,,,,,,missing,1
+289.0.0,Ulcer,exact,10.0,0.0,10.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,38,False,False,,,,3,,,,,,missing,1
+291.1.0,Suction Pitfall,exact,0.0,0.0,0.0,0,30,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,5,False,False,,,,,,,,,,missing,1
+292.0.0,Movable TNT,exact,4.0,0.0,4.0,0,20,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,8,True,False,4.0,1.0,0.3125,2,1,0.0,1.0,1.0,0.0,in_progress,4
+297.0.0,Blue Gaper,exact,16.0,2.0,18.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,2,False,False,,,,6,,,,,,missing,1
+299.0.0,Greed Gaper,exact,9.0,0.0,9.0,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,1,False,False,,,,3,,,,,,missing,1
+302.0.0,Stoney,exact,50.0,0.0,50.0,0,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,81,False,False,,,,15,,,,,,missing,1
+305.0.0,Ministro,exact,9.0,2.0,11.0,1,13,0,01.basement.stb;03.burning basement.stb,80,False,False,,,,4,,,,,,missing,1
+306.0.0,Portal,exact,9.0,5.0,14.0,0,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,67,False,False,,,,4,,,,,,missing,1
+818.2.0,Coal Spider,exact,15.0,0.0,15.0,1,13,0,03.burning basement.stb,0,True,True,48.0,3.2,1.0,5,2,3.5,0.4499999881,2.400000095,0.5500000119,in_progress,6
+868.0.0,Army Fly,exact,5.0,0.0,5.0,1,14,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,222,False,False,,,,2,,,,,,missing,1
+869.0.0,Migraine,exact,16.0,0.0,16.0,1,13,0,02.cellar.stb,0,False,False,,,,5,,,,,,missing,1
+881.0.0,Needle,exact,10.0,2.0,12.0,1,14,0,01.basement.stb;03.burning basement.stb,1,False,False,,,,4,,,,,,missing,1
+884.0.0,Swarm Spider,exact,4.5,0.2,4.7,1,13,0,02.cellar.stb;03.burning basement.stb,0,True,True,15.03999996,3.1999999914893613,0.9999999973404253,2,1,4.5,0.400000006,1.0,0.200000003,in_progress,3
+884.0.2,Swarm Spider,same type/variant numeric fallback; subtype behavior not established,4.5,0.2,4.7,1,13,0,02.cellar.stb;03.burning basement.stb,0,False,False,,,,2,,,,,,unrecorded,0
+884.0.4,Swarm Spider,same type/variant numeric fallback; subtype behavior not established,4.5,0.2,4.7,1,13,0,01.basement.stb;02.cellar.stb;03.burning basement.stb,1,False,False,,,,2,,,,,,unrecorded,0

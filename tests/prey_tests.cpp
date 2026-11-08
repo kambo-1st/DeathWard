@@ -88,7 +88,7 @@ void spawning() {
  pending.limits.enemies=3;tick(pending);check(pending.livingEnemies()==3&&!pending.roomClear,"all retained children resume");
  auto overkill=fixture();id=overkill.spawnMonster(monsterId(817),{0,.85f,0});damage(overkill,id,109);tick(overkill);check(overkill.livingEnemies()==0,"source-20scaled overkill suppresses children");
  auto contact=fixture();contact.player.position={0,.85f,0};contact.spawnMonster(monsterId(810),{0,.85f,0});tick(contact);
- check(near(contact.player.hp,StartingHealth-10*EnemyDamageMultiplier),"Small Leech contact uses half-heart conversion");
+ check(near(contact.player.hp,StartingHealth-1),"Small Leech contact uses half-heart conversion");
  auto harmless=fixture();harmless.spawnMonster(monsterId(817),harmless.player.position);tick(harmless);check(near(harmless.player.hp,StartingHealth),"Prey body is harmless");
  std::cout<<"PASS Prey health, live/death offspring, population, retained births, overkill and contacts\n";
 }

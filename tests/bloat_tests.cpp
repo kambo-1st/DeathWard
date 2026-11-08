@@ -34,7 +34,7 @@ void lasers() {
         auto s=fixture();const auto id=bloat(s);s.findEnemy(id)->cooldown=1000;s.player.position=player;s.godMode=false;
         ticks(s,1);const bool beam=player.z==8?player.x==0:player.z==.4f;
         check(s.hazards.size()==(beam?2u:0u),"two instantaneous beams below/along sides, none above or off-axis");
-        check(s.player.hp==(beam?87.5f:100.f),"near-instant paired beam damages once, not once per socket");
+        check(s.player.hp==(beam?StartingHealth-1:StartingHealth),"near-instant paired beam damages once, not once per socket");
         for(const auto &h:s.hazards) {
             check(h.kind==HazardKind::Beam&&h.delay==0&&h.ownerBound&&h.context.sourceEntity==id,"real owned beam has no hidden telegraph delay");
             check(h.position.z>=h.origin.z-.001f,"no beam ever points upward");
@@ -48,7 +48,7 @@ void lasers() {
     s.arena.obstacles.push_back({{-3,0,4},{3,3,5}});s.arena.rebuildWalls();ticks(s,1);
     check(s.hazards.size()==2,"aligned visible player triggers laser before cover");
     for(const auto &h:s.hazards)check(h.position.z<4,"beam endpoint clips against actual cover volume");
-    s.godMode=false;s.player.position={0,.85f,8};ticks(s,10);check(s.player.hp==100,"cover protects player from laser");
+    s.godMode=false;s.player.position={0,.85f,8};ticks(s,10);check(s.player.hp==StartingHealth,"cover protects player from laser");
     std::cout<<"BLOAT_LASERS down_pair=1 side_pair=1 no_up=1 immediate=1 owner_cleanup=1 cover=1\n";
     auto pair=fixture();const auto first=bloat(pair);const auto second=pair.spawnMonster(monsterId(68),{12,.85f,0},0,-1,BossForm::Cyan);
     pair.findEnemy(first)->cooldown=pair.findEnemy(second)->cooldown=1000;ticks(pair,1);
@@ -81,7 +81,7 @@ void attacks() {
         if(form==BossForm::Green&&attack==1) {
             s.godMode=false;float projectilePeak=0;
             for(int i=0;i<100;++i){for(const auto &shot:s.projectiles)projectilePeak=std::max(projectilePeak,shot.position.y);ticks(s,1);}
-            check(projectilePeak>2.5f&&s.projectiles.empty()&&s.player.hp==75,"real arcing shots land/explode and apply one hostile damage multiplier");
+            check(projectilePeak>2.5f&&s.projectiles.empty()&&s.player.hp==StartingHealth-2,"real arcing shots land/explode and apply one hostile damage multiplier");
             check(s.findEnemy(id)->hp==1440,"hostile blast preserves current no-friendly-fire policy");
         }
         if(form==BossForm::Green&&attack==0) {
@@ -135,12 +135,24 @@ void startingKit() {
             const auto *boss=s.findEnemy(id);Input in;in.fire=true;in.aim=boss->position;
             const auto desired=add(boss->position,{std::sin(float(tick)*.025f)*5,0,-10});
             in.movement=unit(horizontal(sub(desired,s.player.position)));
+            // Three-heart health requires the bot to avoid the marked landing
+            // area, rather than waiting until an arcing projectile touches it.
+            for(const auto &p:s.projectiles)if(p.hostile&&p.gravity>0&&p.blastRadius>0) {
+                const float h=std::max(0.f,p.position.y-.22f);
+                const float until=(p.velocity.y+std::sqrt(p.velocity.y*p.velocity.y+2*p.gravity*h))/p.gravity;
+                const auto landing=add(p.position,mul(horizontal(p.velocity),until));
+                const auto away=horizontal(sub(s.player.position,landing));
+                if(until<.9f&&length(away)<p.blastRadius+2) {
+                    in.movement=length(away)>.1f?unit(away):Vector3{1,0,0};
+                    if(until<.2f)in.dodge=true;
+                }
+            }
             if((boss->hop.active&&planarDistance(boss->hop.end,s.player.position)<3)||
                 std::any_of(s.projectiles.begin(),s.projectiles.end(),[&](const auto &p){return p.hostile&&distance(p.position,s.player.position)<3;}))in.dodge=true;
             s.step(in);
         }
         std::cout<<"BLOAT_STARTING_KIT form="<<int(form)<<" hp="<<s.player.hp<<" seconds="<<s.stats.duration<<" kills="<<s.stats.kills<<'\n';
-        check(!s.dead&&!s.findEnemy(id)&&s.player.hp>0,"starting 100HP/24-damage kit defeats boss without items/bombs/invulnerability");
+        check(!s.dead&&!s.findEnemy(id)&&s.player.hp>0,"starting 6 half-heart units/24-damage kit defeats boss without items/bombs/invulnerability");
     }
 }
 }

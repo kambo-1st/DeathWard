@@ -72,7 +72,7 @@ void retentionAndLifecycle() {
     check(!dead.findEnemy(id)&&dead.stats.kills==1&&dead.roomClear,"death cancels un-emitted attacks and resolves ordinary threat once");
     dead.limits.projectiles=64;tick(dead,60);check(dead.stats.projectiles==0,"dead attacker cannot emit a delayed ring");
     auto contact=fixture();id=spawn(contact);contact.godMode=false;contact.player.position=contact.findEnemy(id)->position;tick(contact);
-    check(near(contact.player.hp,StartingHealth-20*EnemyDamageMultiplier),"source full-heart contact conversion");
+    check(near(contact.player.hp,StartingHealth-2),"source full-heart contact conversion");
     std::cout<<"PASS whole-ring capacity retention, bounded cycle, stun, room suspension, death and full-heart contact\n";
 }
 void configAndPlacement() {

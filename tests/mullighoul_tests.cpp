@@ -70,7 +70,7 @@ void collision() {
  auto wall=fixture();wall.godMode=false;wall.arena.obstacles.push_back({{-2,0,3},{2,4,4}});wall.arena.rebuildWalls();
  Event shot;shot.hostile=true;shot.position=shot.origin={0,1.15f,8};shot.direction=unit(Vector3{0,-1.5f,-30});shot.speed=length(Vector3{0,-1.5f,-30});
  shot.damage=10;shot.projectileGravity=9;shot.projectileFlightRetention=.9f;shot.projectileRadius=.25f;shot.noWallCollision=true;
- wall.queueRoot(shot);wall.drainEvents();tick(wall,20);check(near(wall.player.hp,StartingHealth-10*EnemyDamageMultiplier),"Willo projectile passes cover and still hits player");
+ wall.queueRoot(shot);wall.drainEvents();tick(wall,20);check(near(wall.player.hp,StartingHealth-1),"Willo projectile passes cover and still hits player");
  auto ordinary=fixture();ordinary.godMode=false;ordinary.arena=wall.arena;shot.noWallCollision=false;ordinary.queueRoot(shot);ordinary.drainEvents();tick(ordinary,20);
  check(near(ordinary.player.hp,StartingHealth),"ordinary projectiles retain wall collision");
  auto fly=fixture();fly.arena.obstacles.push_back({{-20,0,-2},{20,4,2}});fly.arena.rebuildWalls();id=fly.spawnMonster(monsterId(808),{0,.85f,-10});bool crossed=false;

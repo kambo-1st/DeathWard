@@ -96,7 +96,7 @@ void damageAndReplacement() {
  damage(fire,id,3,DamageKind::Flame);check(near(fire.findEnemy(id)->hp,9.04f),"player flame remains damaging");damage(fire,id,20);check(!fire.findEnemy(id)->alive,"physical damage kills Swarm normally");
  for(int type:{814,884}) {
   auto contact=fixture();contact.godMode=false;id=contact.spawnMonster(monsterId(type),contact.player.position);tick(contact);
-  check(near(contact.player.hp,StartingHealth-10*EnemyDamageMultiplier),"contact preserves existing damage scaling");
+  check(near(contact.player.hp,StartingHealth-1),"contact preserves existing damage scaling");
   auto stun=fixture();id=stun.spawnMonster(monsterId(type),{0,.85f,0});tick(stun,40);auto *e=stun.findEnemy(id);e->state=EnemyState::Stunned;e->stateTime=.2f;tick(stun,2);check(length(stun.findEnemy(id)->velocity)<.001f,"stun interrupts variant movement");
  }
  auto wet=fixture();wet.arena.profile.band=1;wet.arena.profile.variant=FloorVariant::Flooded;wet.arena.profile.sourceStage=3;

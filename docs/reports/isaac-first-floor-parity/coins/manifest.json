@@ -1,0 +1,94 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "coin_values": 7,
+  "wallet_cases": 35,
+  "lucky_counter_cases": 6,
+  "sticky_damage_cases": 40,
+  "golden_predicate_cases": 335,
+  "golden_native_power_cases": 1201,
+  "golden_complete_decision_cases": 4804,
+  "minimum_positive_roll_seed": 138818461,
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 0,
+      "_libm_sse2_sin_precise": 0,
+      "_libm_sse2_pow_precise": 4804
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "windows": [
+    {
+      "name": "coin_value",
+      "start": "0x6be800",
+      "end_exclusive": "0x6be824",
+      "raw_sha256": "e5f03fef4331cc80084053e80e2d4770e25a73ae5478cb1da3bc700216790aea"
+    },
+    {
+      "name": "add_coins",
+      "start": "0x725740",
+      "end_exclusive": "0x72580d",
+      "raw_sha256": "182a58d955ff91c6325408d5b8c505e0cd44dcb148df42eff2a68be8062900f8"
+    },
+    {
+      "name": "lucky_counter",
+      "start": "0x776b60",
+      "end_exclusive": "0x776b7d",
+      "raw_sha256": "7e770b69d971cfed254afc3b853612a629ff24b6c7beb9f55ee5e66e97e25790"
+    },
+    {
+      "name": "lucky_collision",
+      "start": "0x6c0924",
+      "end_exclusive": "0x6c097b",
+      "raw_sha256": "a6c4245e936f63a18919266d8178163f22f82614758f07e5aa410d929d1f9773"
+    },
+    {
+      "name": "sticky_collision",
+      "start": "0x6bf087",
+      "end_exclusive": "0x6bf0bd",
+      "raw_sha256": "2b7244b9c18ac254ff4ee2171f77d58b73cce4857232ca6e76f6a73fc9f00e0a"
+    },
+    {
+      "name": "pickup_damage",
+      "start": "0x6c3060",
+      "end_exclusive": "0x6c3192",
+      "raw_sha256": "20e8407a9c0b52b820e83d5aacb9fba5111364248b43eb3891305cef42fe2bbd"
+    },
+    {
+      "name": "golden_respawn",
+      "start": "0x6c25d6",
+      "end_exclusive": "0x6c26cc",
+      "raw_sha256": "18a5077765db5327de74b8b36ea4d6f1f48efa4e863cc13c05cfea62355cb54b"
+    },
+    {
+      "name": "pickup_initial_counter",
+      "start": "0x6b706a",
+      "end_exclusive": "0x6b7074",
+      "raw_sha256": "f254c35ccc5b1a4d982a4900e56f0d17f2b1799c6010b1ea76869abe5ce286a0"
+    }
+  ],
+  "scope": "Whole native ordinary AddCoins and coin getter; bounded lucky counter/cache-dirty writes before cache rebuild; sticky TakeDamage until return or before animation call; supplied-threshold predicate and complete native golden power/RNG/comparison with linked original local UCRT. No numeric helpers replaced. Full coin collision and world callbacks excluded.",
+  "golden_power_scope": "Original .98 float base/counter conversion, linked original double power and float narrowing execute for counts0..1200, including the native minimum positive roll. Room/free-position/seed/spawn paths remain unexecuted.",
+  "full_acceptance": false
+}

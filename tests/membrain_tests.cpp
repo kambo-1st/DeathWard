@@ -59,7 +59,7 @@ void movementAndCapacity() {
     const auto position=r.pendingShots.front().position;tick(s,8);check(r.pendingShots.size()==8&&r.volleys==0,"capacity retry does not duplicate packet");
     s.limits.projectiles=8;tick(s);check(s.projectiles.size()==8&&r.volleys==1&&distance(s.projectiles[0].position,position)<.001f,"pending origin retained until release");
     auto contact=fixture();auto cid=spawn(contact);contact.godMode=false;contact.player.position=contact.findEnemy(cid)->position;tick(contact);
-    check(near(contact.player.hp,75),"contact2 converts20 then shared multiplier25");
+    check(near(contact.player.hp,StartingHealth-2),"contact2 removes two half-heart units");
     std::cout<<"MOVEMENT render_partition=1 whole_packet_backpressure=1 contact25=1\n";
 }
 void cyst() {

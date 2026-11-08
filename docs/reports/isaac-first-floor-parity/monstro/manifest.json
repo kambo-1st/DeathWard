@@ -1,0 +1,141 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "dispatch": {
+    "type": 20,
+    "index": 8,
+    "case": "0x6997a8",
+    "controller": "0x45bec0"
+  },
+  "source_entity_xml": {
+    "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+    "sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+    "attributes": {
+      "anm2path": "020.000_Monstro.anm2",
+      "baseHP": "250",
+      "boss": "1",
+      "bossID": "1",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "50",
+      "collisionRadius": "40",
+      "friction": "1",
+      "id": "20",
+      "name": "#MONSTRO",
+      "numGridCollisionPoints": "12",
+      "portrait": "2",
+      "shadowSize": "56",
+      "stageHP": "0",
+      "variant": "0"
+    }
+  },
+  "decision_cases": 48,
+  "force_cases": 32,
+  "projectile_payload_cases": 24,
+  "windows": [
+    {
+      "name": "ordinary_and_shared_ai",
+      "start": "0x45bec0",
+      "end_exclusive": "0x45dd3b",
+      "raw_sha256": "16efd761e06a9e4e67927c351af636025bb400f78a27b6d9acfdc73bb5b50c8e",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "boss_projectile_constructor",
+      "start": "0x6a3420",
+      "end_exclusive": "0x6a3963",
+      "raw_sha256": "428fe119680fe26468831026bce8b491de60ecdcaa87b46014112d433343c2d1",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "projectile_params_constructor",
+      "start": "0x430d70",
+      "end_exclusive": "0x430ed4",
+      "raw_sha256": "b278354bf9ce09d95e692e82d9561e329cc2ac2c22351893d245816dea91bfea",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "target_position",
+      "start": "0x695a30",
+      "end_exclusive": "0x695e30",
+      "raw_sha256": "81dc5fcfd18e826ed5ff9b2f6055f797373ed863ef51f0a4638969f2d9e573ef",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "normalize_vector",
+      "start": "0x962560",
+      "end_exclusive": "0x9625b0",
+      "raw_sha256": "80d6c7ad48635237a01cd9b38939c455b9c286166895e5d1bf85d495853b75b6",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "ordinary_physics",
+      "start": "0x686406",
+      "end_exclusive": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "collision_property_binding",
+      "start": "0x80548c",
+      "end_exclusive": "0x8054aa",
+      "raw_sha256": "af49d28c101550483989c16e54bca1c9ea1200ae1e64c109e26357c69f0d7c7c",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "entity_collision_getter",
+      "start": "0x412230",
+      "end_exclusive": "0x412237",
+      "raw_sha256": "569ab28f82993f07287833ff42b4deea118c1d42dd7987fabf11244144d9393e",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "entity_collision_setter",
+      "start": "0x4273c0",
+      "end_exclusive": "0x4273d0",
+      "raw_sha256": "90d77e8943e62d932994f0939917b7e825d62ac6eaae0891574a20b44d82f294",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "grid_collision_getter",
+      "start": "0x432f40",
+      "end_exclusive": "0x432f47",
+      "raw_sha256": "f0b8b0eac78df31a613f1cc6bb7462c8faa3a678f053241dc04b3a7c0dc2b2ab",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    },
+    {
+      "name": "grid_collision_setter",
+      "start": "0x43dcc0",
+      "end_exclusive": "0x43dcd0",
+      "raw_sha256": "b41f4df0a19754a89b3795e27b6c3d58d423ff62eda3b8cd48c1a7208b5c9690",
+      "scope": "bounded linear disassembly; helper windows may end before their full function"
+    }
+  ],
+  "collision_properties": {
+    "entity": {
+      "offset": "0x180",
+      "getter": "0x412230",
+      "setter": "0x4273c0",
+      "name": "0xb51a84"
+    },
+    "grid": {
+      "offset": "0x17c",
+      "getter": "0x432f40",
+      "setter": "0x43dcc0",
+      "name": "0xb519c0"
+    },
+    "scope": "Pinned property-registration and getter/setter disassembly identify fields, not complete collision handling."
+  },
+  "executed_scope": "Supplied RNG words after the native call; original modulo/subtype remapping. Native ordinary-controller common friction prefix followed by bounded small-hop or large-jump force update with supplied target/vector/timeScale1. Original sqrt and vector-normalization helpers execute; no helper/interception substitutions.",
+  "capture_claims_runtime_acceptance": false,
+  "full_actor_accepted": false,
+  "remaining": [
+    "complete native state/animation callback ordering",
+    "room grid target selection and collision-class mapping",
+    "boss projectile birth/physics and global RNG stream",
+    "champion variants and all nonordinary branches",
+    "live timing and spatial calibration",
+    "damage/status/death and room-clear contracts",
+    "Basement pool unlock/exclusion/selection conditions and production integration"
+  ]
+}

@@ -1,0 +1,30 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  10: expedition
+1/5 Test  #10: expedition .......................   Passed   12.09 sec
+    Start  28: player_dynamite
+2/5 Test  #28: player_dynamite ..................***Failed    0.25 sec
+FAIL ground dynamite explodes after two seconds and can hurt a player who stays nearby
+
+    Start  29: mission_shop
+3/5 Test  #29: mission_shop .....................   Passed    2.13 sec
+    Start  59: regular_health_balance
+4/5 Test  #59: regular_health_balance ...........***Failed    0.13 sec
+FAIL player100HP24damage unchanged
+
+    Start 124: core_contracts
+5/5 Test #124: core_contracts ...................***Failed    0.24 sec
+PASS 3D swept collisions
+FAIL: one existing damage unit leaves five half-heart units after dodge expires
+Test files: "/tmp/deathward-tests-705709687807753"
+
+
+40% tests passed, 3 tests failed out of 5
+
+Total Test time (real) =  14.86 sec
+
+The following tests FAILED:
+	 28 - player_dynamite (Failed)
+	 59 - regular_health_balance (Failed)
+	124 - core_contracts (Failed)
+Errors while running CTest

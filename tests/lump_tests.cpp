@@ -97,7 +97,7 @@ void capacityAndCompletion() {
     check(!finish.roomClear&&finish.roomThreats()==1,"buried live enemy still gates completion");
     damage(finish,k,1000,true);tick(finish,3);check(finish.roomClear&&finish.enemies.empty()&&finish.stats.kills==1,"execution removes buried body and clears once without offspring");
     auto contact=fixture();const auto c=spawn(contact);contact.godMode=false;contact.player.position=contact.findEnemy(c)->position;tick(contact);
-    check(near(contact.player.hp,87.5f),"contact1 becomes10 then shared1.25 damage");
+    check(near(contact.player.hp,StartingHealth-1),"contact1 becomes10 then shared1.25 damage");
     std::cout<<"CAPACITY whole_volley=1 frozen_aim=1 completion=1 contact=12.5\n";
 }
 void configuration() {

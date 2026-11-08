@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 59: native_tear_birth
+1/4 Test #59: native_tear_birth ................   Passed    0.05 sec
+    Start 60: native_player_fire
+2/4 Test #60: native_player_fire ...............   Passed    0.16 sec
+    Start 61: native_player_motion
+3/4 Test #61: native_player_motion .............   Passed    0.00 sec
+    Start 78: isaac_baseline
+4/4 Test #78: isaac_baseline ...................   Passed    2.40 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   2.62 sec

@@ -358,7 +358,8 @@ void Simulation::startPractice(int batch) {
         if(!placed)throw std::runtime_error("Cannot place practice enemy safely");
     }
     moneyPickups.clear();
-    items.clear();player.baseHealth=player.maxHp=player.hp=StartingHealth;player.shotDamage=RevolverDamage;
+    blueFlies.clear();heartPickups.clear();pendingHealthEvents_.clear();
+    items.clear();player.setSourceHealth(SourcePlayerHealth{});player.baseHealth=StartingHealth;player.shotDamage=RevolverDamage;
     player.hurt=player.fireCooldown=player.dodge=player.dodgeCooldown=0;
     stats={};roomClear=false;rooms[size_t(room)].cleared=false;rooms[size_t(room)].rewardTaken=true;
     rewardOpen=shopOpen=finished=dead=godMode=debugScenario=false;messageTime=0;

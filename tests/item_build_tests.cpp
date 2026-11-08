@@ -115,7 +115,7 @@ void capAndProvenance() {
     check(cap.stats.explosions==1,"piercing and return hits do not reset the per-projectile cap trigger");
     auto risk=fixture();risk.godMode=false;risk.grant(ItemId::Cap);const auto target=enemy(risk,{1.3f,.85f,0},1000);
     primary(risk);tick(risk,2);
-    check(near(risk.player.hp,93)&&near(risk.findEnemy(target)->hp,973.2f),"small cap blast has direct damage tax and real self-damage");
+    check(near(risk.player.hp,StartingHealth-1)&&near(risk.findEnemy(target)->hp,973.2f),"small cap blast has direct damage tax and real self-damage");
     auto ghost=fixture();ghost.grant(ItemId::Ghost);ghost.grant(ItemId::Cap);
     enemy(ghost,{3,.85f,0},1);enemy(ghost,{3,.85f,1},1);rootShot(ghost,{.7f,.85f,0});tick(ghost,10);
     check(ghost.stats.ghosts>=2,"direct and explosive kills both produce ghosts");
@@ -135,7 +135,7 @@ void braid() {
     check(run.dynamite==2&&run.hazards.size()==1&&run.hazards[0].blastDamage==70&&near(run.hazards[0].radius,3.3f),"braid spends one stick and reduces primary blast");
     tick(run,121);check(run.stats.explosions==1&&run.hazards.size()==2,"main charge leaves exactly two timed children");
     for(const auto &h:run.hazards)check(h.secondary&&h.braidCopies==0&&h.blastDamage==35&&h.age<h.delay,"children inherit power but cannot reproduce");
-    check(run.player.hp==82,"braid primary self damage follows its snapshot");
+    check(run.player.hp==StartingHealth-2,"braid primary self damage follows its snapshot");
     const float age=run.hazards.front().age;run.rewardOpen=true;tick(run,30);run.rewardOpen=false;
     check(run.hazards.front().age==age,"secondary fuse pauses in modals");
     run.clearRoom();check(run.hazards.size()==2,"ordinary room clear preserves player ordnance");

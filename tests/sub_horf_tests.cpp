@@ -93,7 +93,7 @@ void championStats() {
         auto *e=s.findEnemy(id);check(near(e->hp,44.8f*p.hp)&&near(e->radius,.65f*p.collision)&&near(e->championVisual,p.visual/p.collision),"champion source HP conversion and footprints");
         if(friendly)check(s.applyEnemyStatus(id,EnemyStatus::Charm,-1),"permanent Charm applies to every champion");
         s.godMode=false;s.player.position=e->position;tick(s);
-        check(near(s.player.hp,friendly?100.f:100.f-10*p.damage*EnemyDamageMultiplier),"champion contact damage and friendly player immunity");
+        check(near(s.player.hp,friendly?StartingHealth:StartingHealth-std::round(p.damage)),"champion contact damage and friendly player immunity");
         e=s.findEnemy(id);check(near(length(e->velocity),0),"speed modifiers never create autonomous SubHorf walking");
     }
     check(!defaultMechanics()->monster(monsterId(812,1)),"separate Tainted SubHorf not silently enabled");
@@ -170,7 +170,7 @@ void championDeaths() {
     check(child!=0,"friendly split child exists");split.limits.projectiles=0;hit(split,child,10000);check(split.findEnemy(child)->headShooter->pendingShots.front().projectileIgnoresPlayer&&split.stats.kills==0,"friendly descendant death shot preserves player immunity and no hostile reward");
     auto skull=fixture();id=spawn(skull);skull.makeChampion(id,23);auto other=spawn(skull);skull.findEnemy(other)->position={8,.85f,0};hit(skull,id,10000);check(skull.stats.kills==2&&skull.stats.projectiles==2,"Skull chain kills preserve one shot and reward per body");
     auto orange=fixture();id=spawn(orange);orange.makeChampion(id,3);orange.godMode=false;orange.moneyCollected=10;orange.player.position={0,.85f,5};orange.findEnemy(id)->facing={0,0,1};hit(orange,id,10000);
-    check(orange.projectiles.front().context.championCoinLoss,"own death shot snapshots Orange coin-loss trait");orange.enemies.clear();tick(orange,15);check(orange.player.hp<100&&orange.moneySpent>=2&&orange.moneySpent<=4,"Orange death shot removes coins after owner cleanup");
+    check(orange.projectiles.front().context.championCoinLoss,"own death shot snapshots Orange coin-loss trait");orange.enemies.clear();tick(orange,15);check(orange.player.hp<StartingHealth&&orange.moneySpent>=2&&orange.moneySpent<=4,"Orange death shot removes coins after owner cleanup");
     auto pulse=fixture();id=spawn(pulse);pulse.makeChampion(id,21);for(int n=0;n<8;++n){hit(pulse,id,.01f);tick(pulse,10);}int count=0;for(const auto &e:pulse.enemies)count+=e.alive&&e.summoner==id&&e.monster==monsterId(18);check(count==5,"Pulsating fly population is capped");
     auto crown=fixture();id=spawn(crown);crown.makeChampion(id,22);other=spawn(crown);crown.findEnemy(other)->position={8,.85f,0};tick(crown);check(crown.findEnemy(other)->crowned&&crown.findEnemy(other)->champion<0,"Crown colors ordinary neighbor without champion stats");hit(crown,id,10000);tick(crown);check(!crown.findEnemy(other)->crowned,"Crown effect ends with parent");
     std::cout<<"SUB_HORF_CHAMPION_DEATHS types=26 affiliation_scenarios=52 revival=1 own_plus_volley=9 split=2 permanent_charm_children=1 orbit_release=1 skull_chain=1 fly_cap=5 crown=1\n";

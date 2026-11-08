@@ -64,7 +64,7 @@ void shooter() {
     auto death=fixture(content.load(text));const auto d=add(death,14);
     while(death.findEnemy(d)->state!=EnemyState::Windup&&death.stats.duration<.3)tick(death);
     kill(death,d);tick(death,60);check(death.stats.projectiles==0,"death cancels pending shot");
-    auto harm=fixture(content.load(text));harm.godMode=false;add(harm,14);tick(harm,65);check(near(harm.player.hp,87.5f),"physical Pooter shot applies hostile damage once");
+    auto harm=fixture(content.load(text));harm.godMode=false;add(harm,14);tick(harm,65);check(near(harm.player.hp,StartingHealth-1),"physical Pooter shot applies hostile damage once");
 }
 void transformationAndDung() {
     Content config;auto text=replace(config.original,"dung_morph 13.0.0 14.0.0 1000","dung_morph 13.0.0 14.0.0 1");
@@ -114,7 +114,7 @@ void superPooter() {
     auto harm=fixture(lib);spawn(harm);for(int i=0;i<60&&harm.projectiles.empty();++i)tick(harm);
     check(harm.projectiles.size()==2,"physical damage fixture emits pair");
     harm.godMode=false;harm.player.position=dw::add(harm.projectiles.front().position,mul(harm.projectiles.front().velocity,1.f/60));
-    tick(harm);check(near(harm.player.hp,87.5f),"Super Pooter impact applies hostile damage multiplier once");
+    tick(harm);check(near(harm.player.hp,StartingHealth-1),"Super Pooter impact applies hostile damage multiplier once");
     for(int mode=0;mode<3;++mode) {
         auto limited=fixture(lib);const auto owner=spawn(limited);
         if(mode==0)limited.limits.projectiles=1;
@@ -184,7 +184,7 @@ void attackFly() {
     check(distance(diagonal.findEnemy(d)->buzz->target,cached)<.001f,"target remains cached between source third frames");
     tick(diagonal,2);check(distance(diagonal.findEnemy(d)->buzz->target,diagonal.player.position)<.001f,"target refresh follows current player on third frame");
     auto persistent=fixture();persistent.godMode=false;const auto p=add(persistent,18);persistent.player.position=persistent.findEnemy(p)->position;
-    tick(persistent);check(near(persistent.player.hp,87.5f)&&persistent.findEnemy(p)&&persistent.stats.kills==0,"ordinary contact damages once without consuming fly");
+    tick(persistent);check(near(persistent.player.hp,StartingHealth-1)&&persistent.findEnemy(p)&&persistent.stats.kills==0,"ordinary contact damages once without consuming fly");
 
     const auto skatole=parseItemKey("isaac:collectible:9");
     for(float health:{1.f,16.f}) {
@@ -212,7 +212,7 @@ void attackFly() {
     for(bool immune:{false,true}) {
         auto s=liveHive();const auto id=s.enemies[0].id;s.godMode=immune;s.player.position=s.enemies[0].position;
         tick(s);check(!s.findEnemy(id)&&s.stats.kills==1&&s.roomThreats()==0,"live Hive child expires once even on invulnerable contact and after parent removal");
-        check(near(s.player.hp,immune?StartingHealth:87.5f),"live child uses ordinary contact damage");
+        check(near(s.player.hp,immune?StartingHealth:StartingHealth-1),"live child uses ordinary contact damage");
         check(s.moneyPickups.empty(),"summoned contact death does not farm money");
     }
     auto limited=liveHive();const auto id=limited.enemies[0].id;limited.player.position=limited.enemies[0].position;limited.limits.queuedEvents=0;

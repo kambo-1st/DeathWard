@@ -1,0 +1,51 @@
+{
+  "verified_at_utc": "2026-11-08T08:14:57Z",
+  "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
+  "tracked_runtime_code_matches_HEAD": true,
+  "new_parity_code_absent": true,
+  "tracked_files_restored": 48,
+  "new_code_files_archived": 80,
+  "report_evidence_files_in_snapshot": 655,
+  "recovery_archive": "/home/kambo/.local/share/deathward/recovery/isaac-parity-20261108T080628Z/pre-revert-parity.tar.gz",
+  "recovery_archive_sha256": "42171909a523f0659e7899e9993ac6183f9fa04c942fd5d6d5c0c51719637be0",
+  "application_build": "passed",
+  "application_sha256": "fe4cbdbca07ac95ddbe0777e4254a9203ab2c3e68cff11ce50a9f7feb0c4b46a",
+  "tests": {
+    "passed": 2,
+    "names": [
+      "core_contracts",
+      "regular_health_balance"
+    ],
+    "seconds": 0.76
+  },
+  "render_smoke": {
+    "passed": true,
+    "scene": "empty",
+    "theme": "canyon",
+    "frames": 8,
+    "command": "build/deathward --smoke --scene empty --theme canyon --frames 8 --save /tmp/deathward-reverted-baseline-save"
+  },
+  "universal_dodge_retained": true,
+  "default_player_hp": 100,
+  "default_player_damage": 24,
+  "unrelated_canyon_and_asset_browser_preserved": true,
+  "selected_difference": null,
+  "manual_difference_selection_required": true,
+  "automatic_goal_status": "paused",
+  "staging_or_commit_or_push_performed": false,
+  "code_history_rewritten": false,
+  "evidence_sha256": {
+    "configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "smoke.log": "36ead56457cd3d2087225c4b4b88b648da8a2536adc70f74080ec637b65e30f2",
+    "build.log": "16aaaa18217b2171debd3bceee783b3c563105efddbab60d8dd99789d9578744",
+    "tests.log": "78cac14fe76f67350080e9e87e57c4a3db878c8c9f1266e0392e7fe38db7bf8b"
+  },
+  "report_sha256": {
+    "AGENTS.md": "e90aa3c0986306087e0a7c17ac5bd722a57f4771851d225e33d2fe3ec61f20bf",
+    "docs/isaac_first_floor_implementation.md": "eccdbb916de43cd0ee2eaa9ff2946d85ea1a77d1231a8e9db72e1d821b603e1c",
+    "docs/isaac_first_floor_differences.md": "5f460e04e53747320539eb53dabf5cadcff498260624a7817035b9360f84eee9",
+    "docs/reports/isaac-first-floor-parity/manual-differences.json": "bd2d57a42e812ad5cee82050d73652d11b6ba1d6f4681ebd37d62655b6fe4249",
+    "docs/reports/isaac-first-floor-parity/goal-status.json": "5e3eab5f78f98087cc805ad9d9ab12794b2ff9167708847c3da98274d49dda2e"
+  },
+  "report_updated_at_utc": "2026-11-08T08:17:57Z"
+}

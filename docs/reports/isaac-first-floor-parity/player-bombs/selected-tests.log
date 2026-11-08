@@ -1,0 +1,50 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  57: monster_boss_components
+ 1/22 Test  #57: monster_boss_components ..........   Passed    1.29 sec
+      Start  58: bloat_boss_and_chargers
+ 2/22 Test  #58: bloat_boss_and_chargers ..........   Passed    1.72 sec
+      Start  59: native_player_motion
+ 3/22 Test  #59: native_player_motion .............   Passed    0.00 sec
+      Start  60: native_player_health
+ 4/22 Test  #60: native_player_health .............   Passed    0.00 sec
+      Start  61: native_midas_freeze
+ 5/22 Test  #61: native_midas_freeze ..............   Passed    0.00 sec
+      Start  62: native_blue_fly
+ 6/22 Test  #62: native_blue_fly ..................   Passed    0.00 sec
+      Start  63: native_player_hurt
+ 7/22 Test  #63: native_player_hurt ...............   Passed    0.00 sec
+      Start  64: native_monstro
+ 8/22 Test  #64: native_monstro ...................   Passed    0.37 sec
+      Start  65: native_room_awards
+ 9/22 Test  #65: native_room_awards ...............   Passed    0.01 sec
+      Start  66: source_resources
+10/22 Test  #66: source_resources .................   Passed    0.39 sec
+      Start  67: source_heart_pickups
+11/22 Test  #67: source_heart_pickups .............   Passed    0.23 sec
+      Start  68: source_coins
+12/22 Test  #68: source_coins .....................   Passed    0.27 sec
+      Start  69: source_coin_producers
+13/22 Test  #69: source_coin_producers ............   Passed    0.26 sec
+      Start  70: native_player_bombs
+14/22 Test  #70: native_player_bombs ..............   Passed    0.42 sec
+      Start  71: isaac_baseline
+15/22 Test  #71: isaac_baseline ...................   Passed    2.12 sec
+      Start  72: regular_health_balance
+16/22 Test  #72: regular_health_balance ...........   Passed    0.38 sec
+      Start 111: first_floor_status_effects
+17/22 Test #111: first_floor_status_effects .......   Passed    0.73 sec
+      Start 112: first_floor_freeze_effect
+18/22 Test #112: first_floor_freeze_effect ........   Passed    0.74 sec
+      Start 113: first_floor_damage_statuses
+19/22 Test #113: first_floor_damage_statuses ......   Passed    1.18 sec
+      Start 114: first_floor_slow_effect
+20/22 Test #114: first_floor_slow_effect ..........   Passed    0.96 sec
+      Start 116: first_floor_charm_effect
+21/22 Test #116: first_floor_charm_effect .........   Passed    5.76 sec
+      Start 137: core_contracts
+22/22 Test #137: core_contracts ...................   Passed    0.42 sec
+
+100% tests passed, 0 tests failed out of 22
+
+Total Test time (real) =  17.27 sec

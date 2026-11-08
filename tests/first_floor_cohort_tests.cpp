@@ -19,7 +19,7 @@ Simulation fixture(unsigned seed,std::shared_ptr<const MechanicsLibrary> content
 void startingKit() {
     for(unsigned seed=0;seed<8;++seed) {
         auto s=fixture(seed);s.debugScenario=false;s.godMode=false;s.dynamite=0;
-        check(s.player.hp==100&&s.player.shotDamage==24,"preserve starting health100/damage24");
+        check(s.player.hp==StartingHealth&&s.player.shotDamage==24,"preserve starting health6/damage24");
         for(size_t n=0;n<Cohort.size();++n)check(s.spawnMonster(Cohort[n],{float(n)*4-8,.85f,-4}),"cohort spawn admitted");
         int frames=0;
         for(;frames<3600&&!s.dead&&!s.roomClear;++frames) {

@@ -103,7 +103,7 @@ void throwAndMotion() {
  check(near(impulse.findEnemy(id)->velocity.x,4.5f),"walking attack coasts with.75retention and no new force");
  for(int type:{30,88}) {
   auto s=fixture();s.godMode=false;id=s.spawnMonster(monsterId(type),s.player.position);tick(s,2);
-  check(type==30?near(s.player.hp,100):s.player.hp<100,"only walking family has contact damage");
+  check(type==30?near(s.player.hp,StartingHealth):s.player.hp<StartingHealth,"only walking family has contact damage");
  }
  std::cout<<"PASS walking movement/collision/contact, population gating, high throws and independent wet children\n";
 }
@@ -143,7 +143,7 @@ void flightAndBlast() {
  s.findEnemy(other)->state=EnemyState::Stunned;s.findEnemy(other)->stateTime=10;
  s.projectiles.front().position={0,.25f,0};s.projectiles.front().velocity={0,-1,0};
  s.godMode=false;s.player.position={0,.85f,3};tick(s,2);
- check(s.stats.explosions==1&&near(s.findEnemy(id)->hp,64)&&near(s.findEnemy(other)->hp,340)&&near(s.player.hp,75),
+ check(s.stats.explosions==1&&near(s.findEnemy(id)->hp,64)&&near(s.findEnemy(other)->hp,340)&&near(s.player.hp,StartingHealth-2),
        "real Gut blast preserves owner, harms neighbor/player once, with existing hostile scaling");
  auto pending=fixture(lib);id=pending.spawnMonster(monsterId(30,1),{0,.85f,0});pending.findEnemy(id)->hp=64;tick(pending,26);
  pending.enemies.clear();pending.projectiles.front().position={0,.25f,0};pending.projectiles.front().velocity={0,-1,0};

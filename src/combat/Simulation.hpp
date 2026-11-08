@@ -1,6 +1,7 @@
 #pragma once
 #include "audio/AudioState.hpp"
 #include "combat/Monsters.hpp"
+#include "combat/PlayerHealth.hpp"
 #include "content/Mechanics.hpp"
 #include "core/Types.hpp"
 #include "world/Campaign.hpp"
@@ -270,6 +271,8 @@ struct DamageStatusRuntime {
     std::optional<StatusDamageTick> pending;
 };
 struct EnemyStatusRuntime {
+    int midas=0,controlCooldown=0;
+    bool midasCoinsPaid=false;
     int fear=0,confusion=0,freeze=0,slow=0,shrink=0,charm=0;
     EntityId charmTarget=0;
     uint64_t charmFrame=0,charmLastPoll=~uint64_t(0);
@@ -612,6 +615,29 @@ struct Player {
     Vector3 pullTarget{};
     float pullTime = 0;
     float slowTime = 0;
+    // Half-heart units. Red HP/capacity stay in hp/maxHp for existing consumers.
+    int soulHearts = 0;
+    int eternalHearts = 0, goldenHearts = 0, boneHearts = 0, brokenHearts = 0, rottenHearts = 0;
+    uint32_t blackHeartMask = 0, boneHeartMask = 0;
+    // hp/maxHp remain the canonical red fields for existing consumers.
+    // A transient integer snapshot feeds native health operations; no second
+    // stored health bar can drift out of sync with existing consumers.
+    SourcePlayerHealth sourceHealth() const {
+        SourcePlayerHealth result;
+        result.maxRed=int(maxHp);result.red=int(hp);result.soul=soulHearts;
+        result.eternal=eternalHearts;result.golden=goldenHearts;result.bone=boneHearts;
+        result.broken=brokenHearts;result.rotten=rottenHearts;
+        result.blackMask=blackHeartMask;result.boneMask=boneHeartMask;
+        return result;
+    }
+    void setSourceHealth(const SourcePlayerHealth &health) {
+        maxHp=float(health.maxRed);hp=float(health.red);soulHearts=health.soul;
+        eternalHearts=health.eternal;goldenHearts=health.golden;boneHearts=health.bone;
+        brokenHearts=health.broken;rottenHearts=health.rotten;
+        blackHeartMask=health.blackMask;boneHeartMask=health.boneMask;
+    }
+    float redHealthCapacity() const { return maxHp+2*boneHearts; }
+    float totalHealth() const { return std::max(0.f,hp)+std::max(0,soulHearts)+std::max(0,boneHearts); }
     std::optional<PlayerLaunch> launch;
 };
 enum class ProjectileKind { Bullet, Hook, Homing, SplitShot, BurstShot, Tar, Flame, ReturningHead, Rock, Ember, Brown, Yellow, Ipecac, Bone, Green, DarkBone };
@@ -1017,6 +1043,17 @@ struct ServiceOffer {
     std::string name, description, cost;
 };
 
+enum class HeartKind { Red, Soul, Black, Eternal, Golden, Bone, Rotten, Blended, Scared };
+struct HeartPickup {Vector3 position{};HeartKind kind=HeartKind::Red;int amount=2,room=0;};
+struct BlueFlyRuntime {
+    EntityId id=0,target=0;
+    Vector3 position{},previous{},nativeVelocity{};
+    float damage=7,orbitPhase=0;
+    uint32_t initSeed=0;
+    int room=-1;
+    bool alive=true,orbiting=false;
+    std::optional<Event> pendingHit;
+};
 class Simulation {
   public:
     Simulation(uint64_t seed, uint64_t runId, const WorldState &world,
@@ -1127,6 +1164,17 @@ class Simulation {
     void killAll();
     void clearRoomDebug();
     void jumpDebug(int index, bool restart = false);
+    bool collectHeart(HeartKind kind,int amount);
+    bool addBrokenHearts(int amount);
+    bool addRedContainers(int halfHearts,bool fill=true);
+    bool payHealthCost(int redContainers,int soulHalfHearts=6);
+    bool canPayHealthCost(int redContainers,int soulHalfHearts=6) const;
+    bool spawnHeartPickup(HeartKind kind,Vector3 position,int amount=0);
+    std::vector<HeartPickup> heartPickups;
+    std::vector<BlueFlyRuntime> blueFlies;
+    void refillRottenHeartFlies();
+    bool applyMidasFreeze(EntityId id,int frames,bool goldenHeart=false);
+    bool takeHeartDamage(float halves,bool redFirst=false,const Context &context={},bool hostile=true);
     void healDebug();
     void tunePlayer(float baseHealth, float shotDamage);
     void startStress();
@@ -1486,6 +1534,17 @@ class Simulation {
     void payBreakables();
     void addHazard(Hazard hazard);
     void clearHazards(bool preservePlayer = false);
+    void rebalanceBlueFlyOrbit();
+    void updateBlueFlies(float dt);
+    float blueFlyClock_=0;
+    uint32_t blueFlyFrame_=0;
+    int reviveRoom_=0;
+    bool tryRevivePlayer();
+    void dropMidasCoins(Enemy &enemy);
+    std::deque<Event> pendingHealthEvents_;
+    void flushPlayerHealthEvents();
+    void applyPlayerHealth(SourcePlayerHealth health);
+    void updateHeartPickups();
     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);
     float enemyDamage(const Enemy &enemy, const Event &event) const;
     void updateHost(Enemy &enemy,float dt);

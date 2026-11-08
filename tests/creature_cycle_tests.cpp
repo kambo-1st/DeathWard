@@ -39,7 +39,7 @@ void bouncer(){
     s.limits.projectiles=200;s.projectiles.clear();ticks(s,1);check(!s.findEnemy(id),"corpse retires after complete retained volley");
     s=fixture();id=spawn(s,822);ticks(s,1);s.findEnemy(id)->creature->inflated=true;s.findEnemy(id)->creature->phase=2;
     s.godMode=false;s.player.position=s.findEnemy(id)->position;ticks(s,3);
-    check(s.stats.kills==1&&s.player.hp<100,"inflated player contact kills Bouncer once and damages player");
+    check(s.stats.kills==1&&s.player.hp<StartingHealth,"inflated player contact kills Bouncer once and damages player");
     s=fixture();id=spawn(s,822);ticks(s,1);s.findEnemy(id)->creature->inflated=true;s.findEnemy(id)->creature->phase=2;
     s.findEnemy(id)->hp=s.findEnemy(id)->maxHp=100000;
     int reflections=0;
@@ -77,7 +77,7 @@ void gas(){
     Event blast;blast.type=EventType::Explosion;blast.position=s.hazards.front().position;blast.radius=1;blast.damage=0;s.queueRoot(blast);s.drainEvents();
     const auto before=s.stats.explosions;ticks(s,4);check(s.stats.explosions>before,"explosion ignites gas cloud");
     s=fixture();id=spawn(s,874);ticks(s,1);s.player.position=s.findEnemy(id)->position;s.godMode=false;
-    ticks(s,6);check(s.stats.kills==1&&s.player.hp<100&&s.stats.explosions>0,"contact detonates body and clouds once");
+    ticks(s,6);check(s.stats.kills==1&&s.player.hp<StartingHealth&&s.stats.explosions>0,"contact detonates body and clouds once");
     s=fixture();id=spawn(s,874);ticks(s,4);s.limits.queuedEvents=0;
     s.hazards.front().gasIgnited=true;ticks(s,2);check(!s.hazards.empty()&&s.hazards.front().gasIgnited,"ignited gas retained under queue pressure");
     s.limits.queuedEvents=4096;ticks(s,3);check(s.stats.explosions>0,"retained gas later detonates");
@@ -118,7 +118,7 @@ void startingKitAndPlacement(){
             const auto radial=unit(horizontal(s.player.position));Input in;in.movement={-radial.z,0,radial.x};s.step(in);
         }
         check(s.player.hp>0&&(!s.findEnemy(id)||!s.findEnemy(id)->alive),"starting kit can defeat each new ordinary creature");
-        check(near(s.player.maxHp,100)&&near(s.player.shotDamage,24),"starting kit defaults preserved");
+        check(near(s.player.maxHp,StartingHealth)&&near(s.player.shotDamage,24),"starting kit defaults preserved");
         std::cout<<"CREATURE_STARTING_KIT id="<<kind<<" seconds="<<n*Tick<<" hp="<<s.player.hp<<'\n';
     }
     std::set<MonsterId> found;
@@ -133,7 +133,7 @@ void startingKitAndPlacement(){
     check(found.size()==4,"all four creatures naturally reachable");
     for(int seed=0;seed<8;++seed) {
         Simulation s(seed,1,{},MissionTheme::Canyon,true,false);s.startPractice(4);
-        check(s.enemies.size()==5&&!s.godMode&&near(s.player.hp,100)&&near(s.player.shotDamage,24),"practice4 provides five ordinary starting-kit targets");
+        check(s.enemies.size()==5&&!s.godMode&&near(s.player.hp,StartingHealth)&&near(s.player.shotDamage,24),"practice4 provides five ordinary starting-kit targets");
         for(const auto &e:s.enemies)check(!s.arena.blocked(e.position,e.radius)&&!s.arena.path(s.player.position,e.position,e.radius).empty(),"practice4 actors are legal and reachable");
     }
 }

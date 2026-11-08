@@ -1,0 +1,49 @@
+{
+  "source_body_definitions": 12,
+  "entity_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "cases": 658,
+  "damage_intents": 437,
+  "runtime_type_checks": 398,
+  "vcruntime": {
+    "path": "/mnt/c/Windows/SysWOW64/vcruntime140.dll",
+    "sha256": "2fa6efc053203460a23d3a25158f227d895d2dadc63acc1a372da97c3a4281c3",
+    "image_base": "0x10000000",
+    "rt_dynamic_cast": "0x100048d0",
+    "iat": "0xa06464"
+  },
+  "windows": [
+    {
+      "name": "circle_filter",
+      "start": "0x415960",
+      "end_exclusive": "0x4159c1",
+      "sha256": "3fd7cee5fb88ceb4622e8d71c8ecd413dbb97bff1aad8f39be763c9d24009ddc"
+    },
+    {
+      "name": "recipient_filter",
+      "start": "0x6d1833",
+      "end_exclusive": "0x6d19af",
+      "sha256": "ddbe2b8754c1555f2e6f99bb47995909ccc5f424e635bbf4b260c6f110fe576f"
+    },
+    {
+      "name": "impulse",
+      "start": "0x6d19af",
+      "end_exclusive": "0x6d1b50",
+      "sha256": "341223d7368511c6f22dd1179b3faaf919d26d429f1314687ad567155c0b1362"
+    },
+    {
+      "name": "ordinary_impulse",
+      "start": "0x6d1c7f",
+      "end_exclusive": "0x6d1d47",
+      "sha256": "e305a816bb50740152717ed791da16c374ebf4a8795209c05d2070f27b2455e6"
+    },
+    {
+      "name": "damage_dispatch",
+      "start": "0x6d1ec7",
+      "end_exclusive": "0x6d20d4",
+      "sha256": "a0512661d8f9fcaf1cb9a96c79e0eaac3754bbd64418cca1f23241d3bc171894"
+    }
+  ],
+  "scope": "Original post-tree circle filter and original ordinary null-source and supplied empty-flag player/bomb/NPC-source BombDamage recipient processing, stopping before virtual TakeDamage or after skipping the recipient. Actual NPC/player vtables and original local x86 VCRUNTIME __RTDynamicCast execute without instruction patches or query/math/type-check replacement. One supplied broadphase candidate, null source except eighteen explicit source cases, no tear flags, line check disabled, no callbacks/items, supplied mass/radius/collision state. Broadphase tree construction, line-of-sight, source/bomb/item/special-recipient effects, actual health mutation, world recipient enumeration/grid/modifiers and full blast acceptance remain open.",
+  "full_acceptance": false
+}

@@ -38,7 +38,7 @@ void allProfiles(){
     }
     check(count==155,"all reviewed regular identities have explicit health scope");
     auto a=fixture(original),b=fixture(half);
-    check(near(a.player.maxHp,100)&&near(b.player.maxHp,100)&&near(a.player.shotDamage,24)&&near(b.player.shotDamage,24),"player100HP24damage unchanged");
+    check(near(a.player.maxHp,6)&&near(b.player.maxHp,6)&&near(a.player.shotDamage,24)&&near(b.player.shotDamage,24),"enemy health control preserves H01 six half-heart units and24 player damage");
     for(auto id:{monsterId(10),monsterId(23),monsterId(822),monsterId(24)}){
         auto first=a.spawnMonster(id,{0,.85f,0}),second=b.spawnMonster(id,{0,.85f,0});
         check(near(b.findEnemy(second)->hp,a.findEnemy(first)->hp*.5f),"real spawn scales once");

@@ -45,7 +45,7 @@ std::string Simulation::shopUnavailable(int index) const {
     const auto &offer = shopOffers[size_t(index)];
     if (offer.sold)
         return "SOLD OUT";
-    if (offer.kind == ShopOfferKind::Medicine && player.hp >= player.maxHp)
+    if (offer.kind == ShopOfferKind::Medicine && player.hp >= player.redHealthCapacity())
         return "HEALTH FULL";
     if (offer.kind == ShopOfferKind::Power && items.size() >= 256)
         return "INVENTORY FULL";
@@ -67,9 +67,9 @@ bool Simulation::buyShop(int index) {
         audioCues.push(AudioCueKind::Pickup, player.position);
         announce("Three sticks of dynamite. Mind the fuse.");
     } else if (offer.kind == ShopOfferKind::Medicine) {
-        player.hp = std::min(player.maxHp, player.hp + 40);
+        collectHeart(HeartKind::Red,2);
         audioCues.push(AudioCueKind::Pickup, player.position);
-        announce("Field medicine / restored up to 40 health.");
+        announce("Field medicine / restored up to one red heart.");
     } else
         grant(offer.item);
     checkpointNeeded = true;

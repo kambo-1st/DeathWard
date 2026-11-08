@@ -1,0 +1,152 @@
+{
+  "captured_at_utc": "2026-11-07T20:34:52.222816+00:00",
+  "status": "scoped native arithmetic and DW integration passed; full six-area goal remains active",
+  "mechanics_fingerprint": "f1f4d3f3ad241a95-isaac-baseline-v2",
+  "source_executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_code_execution": {
+    "motion_states": 590,
+    "tear_states": 171,
+    "method": "isolated Unicorn 2.1.4 x86/SSE execution; no helper replacement or instruction patches",
+    "not_a_live_game_recording": true
+  },
+  "cpp_trace_checks": "passed",
+  "ctest_suites": [
+    "native_player_motion",
+    "isaac_baseline",
+    "regular_health_balance",
+    "core_contracts"
+  ],
+  "ctest_result": "4 passed, 0 failed",
+  "application_build": "passed; includes fractional debug damage display fix",
+  "graphical_smoke": "8 frames; passed; HUD inspected; inspection god mode; not flight/timing acceptance",
+  "enabled_changes": [
+    "ordinary acceleration/stopping/turning inertia",
+    "previous-velocity root-shot inheritance",
+    "ordinary native tear launch conversion, birth jitter arithmetic and damped flight/floor death",
+    "separate graphical tear height and ordinary planar target hits",
+    "retained universal dodge with 3.4x boost relative to new base terminal speed"
+  ],
+  "remaining": [
+    "live scheduler/birth-order and spatial calibration",
+    "native collision radii/geometry, controls, ice/status/item exceptions",
+    "native RNG stream and complete tear/weapon flags",
+    "remaining six heart families, pickup/damage/transition rules",
+    "first-floor eligibility, source enemies/bosses and statuses including Pooter Freeze",
+    "complete reachable item/equipment/stat/active/pocket/trinket interactions",
+    "source room/layout/generation/reward/economy and complete-floor acceptance"
+  ],
+  "input_files": {
+    "CMakeLists.txt": {
+      "bytes": 65141,
+      "sha256": "6508f23bc1ea65338ff52647db7034165c1a01dbd4c2f34dd6fa1f7d62e84b1a"
+    },
+    "scripts/isaac-reference/analyze-player-motion.py": {
+      "bytes": 7399,
+      "sha256": "421b2de46399b28bee436361025f65a63b349e7829ae583a1c455016c1366257"
+    },
+    "scripts/isaac-reference/analyze-player-tears.py": {
+      "bytes": 4737,
+      "sha256": "ecc26a44320907ec3eeee0ca02de6c0f77a15d4443b1e1027553d86f40cba844"
+    },
+    "src/combat/CanyonBoss.cpp": {
+      "bytes": 7971,
+      "sha256": "cf878b449eb1f095a90c1595413b49b3ba9ba92266228d723cfbf4e3bc1a939e"
+    },
+    "src/combat/Charging.cpp": {
+      "bytes": 9191,
+      "sha256": "d054e1630afdf87d0914ef8fff1326374b70d91a8a8c29c01baa40a53b04b6f7"
+    },
+    "src/combat/Dynamite.cpp": {
+      "bytes": 8019,
+      "sha256": "8886bd0147cf5098da9214401f46b7bb1e54d83597d6b936cbe2d1eac5a6c3bf"
+    },
+    "src/combat/Encounters.cpp": {
+      "bytes": 18281,
+      "sha256": "b5ba92895cf5321de25f036c642b144f438270711730617d5653276124788cf4"
+    },
+    "src/combat/Enemies.cpp": {
+      "bytes": 33641,
+      "sha256": "f527f2e141378c5c59960c66082b9cf2269dff48b9984b83e0cb5d3afa5eba70"
+    },
+    "src/combat/Loot.cpp": {
+      "bytes": 4611,
+      "sha256": "2cf5222c97a5f52d38302f5f709323e6b8ac8ef479df759712b7a01a7ebd9393"
+    },
+    "src/combat/Monsters.cpp": {
+      "bytes": 54075,
+      "sha256": "22fc26e87b0626dc69d9d15af7a56865f8dda152b706541333055159db421216"
+    },
+    "src/combat/PlayerMotion.hpp": {
+      "bytes": 2124,
+      "sha256": "06d75fee2e143f85e27cfa80e2cdb41c75d8151696b044d5c6beb533749d3acf"
+    },
+    "src/combat/PlayerTear.hpp": {
+      "bytes": 2242,
+      "sha256": "2671d6ace3347bcfa070d52eef18d7203886f54e53b1d524e777799d7f7f4305"
+    },
+    "src/combat/Services.cpp": {
+      "bytes": 4474,
+      "sha256": "d1f73e75877e8ff0b36411eab081ec86df9c56d421e01cc53a887f492ff8c85f"
+    },
+    "src/combat/Shop.cpp": {
+      "bytes": 3690,
+      "sha256": "c88860ad8f6bc4cae47691a9beb639ea17d523569e3139acff623677cd4bae08"
+    },
+    "src/combat/Simulation.cpp": {
+      "bytes": 80232,
+      "sha256": "2d00b0db5098ab9e24d0a55127bdc4449d87e96e3e3a53c3e6da15998e3c2fce"
+    },
+    "src/combat/Simulation.hpp": {
+      "bytes": 63345,
+      "sha256": "d4255676f262902e7f3c2c6539ac9e58d373d42aae9e89bb9d4fd537de989d53"
+    },
+    "src/combat/SuppliedBombs.cpp": {
+      "bytes": 6322,
+      "sha256": "b1f52506bc75a3e0f345eb466e8589c06ba1102be1cb92a2656d0c88a03cc3c3"
+    },
+    "src/content/Mechanics.cpp": {
+      "bytes": 294398,
+      "sha256": "342a699746f1c0a64bec00cd4a750382eb089931c2c7333a9c8a27c136edad49"
+    },
+    "src/content/Mechanics.hpp": {
+      "bytes": 59113,
+      "sha256": "bd1c7ee75b7fd3776811c2d29c3564bd2967eae171c27e6572fbd9718556da52"
+    },
+    "src/core/Game.cpp": {
+      "bytes": 56558,
+      "sha256": "af772ef02d3455d7756a4468ba1293b4a3c5f2f4eed50b597c6a7e9079425e44"
+    },
+    "src/core/Game.hpp": {
+      "bytes": 6911,
+      "sha256": "fc7fddddaa9417ed3d11610a873d3b0ad0eb70cfbe8313d09ed24849afc60ac4"
+    },
+    "src/core/Types.hpp": {
+      "bytes": 5908,
+      "sha256": "e5983bf53c8d8239f6ef4beff688d8d541e7e5a90de353fbfb0b3f4cb602a6ce"
+    },
+    "src/items/Items.cpp": {
+      "bytes": 5694,
+      "sha256": "8506face55a2060851daa8a97a0c7c1cca9e352225e495cdcd51d984397a7f5c"
+    },
+    "src/items/Items.hpp": {
+      "bytes": 482,
+      "sha256": "5dadbdd61c6b48324d379e01395d902ab025bd31ef9bcf7cab51dc71d5b6c9d2"
+    },
+    "src/render/Renderer.cpp": {
+      "bytes": 129687,
+      "sha256": "53c25a3afa272d294476a4999bc93282f0a3b71e02ad4ccd2ee82f83fb1463f0"
+    },
+    "tests/isaac_baseline_tests.cpp": {
+      "bytes": 12924,
+      "sha256": "40c87bdbceef660f172d578abf0fe9e8a6dd3b95a22047c7396c7e0e89263007"
+    },
+    "tests/player_motion_tests.cpp": {
+      "bytes": 3787,
+      "sha256": "c74213cabdaec0c015d54fdf6f9ec8315de0e1eb2772a511e9ffa095302b4680"
+    },
+    "tools/isaac_first_floor_probe.cpp": {
+      "bytes": 3325,
+      "sha256": "e63093d3dcb3e27d11fb5feab2bc897306b578b1f803937b60a8a88d28fbb018"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start   7: item_builds
+ 1/22 Test   #7: item_builds ......................   Passed    8.52 sec
+      Start  52: mirror_behavior
+ 2/22 Test  #52: mirror_behavior ..................   Passed   20.69 sec
+      Start  53: linked_head
+ 3/22 Test  #53: linked_head ......................   Passed    0.27 sec
+      Start  57: monster_boss_components
+ 4/22 Test  #57: monster_boss_components ..........   Passed    1.25 sec
+      Start  58: bloat_boss_and_chargers
+ 5/22 Test  #58: bloat_boss_and_chargers ..........   Passed    1.67 sec
+      Start  59: native_tear_collider
+ 6/22 Test  #59: native_tear_collider .............   Passed    0.20 sec
+      Start  60: native_tear_terrain
+ 7/22 Test  #60: native_tear_terrain ..............   Passed    1.65 sec
+      Start  61: native_shot_placement
+ 8/22 Test  #61: native_shot_placement ............   Passed    0.15 sec
+      Start  62: native_tear_birth
+ 9/22 Test  #62: native_tear_birth ................   Passed    0.05 sec
+      Start  63: native_player_fire
+10/22 Test  #63: native_player_fire ...............   Passed    0.16 sec
+      Start  64: native_player_motion
+11/22 Test  #64: native_player_motion .............   Passed    0.00 sec
+      Start  69: native_duke
+12/22 Test  #69: native_duke ......................   Passed    0.40 sec
+      Start  70: native_monstro
+13/22 Test  #70: native_monstro ...................   Passed    0.37 sec
+      Start  76: native_player_bombs
+14/22 Test  #76: native_player_bombs ..............   Passed    1.35 sec
+      Start  79: native_blast_recipients
+15/22 Test  #79: native_blast_recipients ..........   Passed    0.37 sec
+      Start  81: isaac_baseline
+16/22 Test  #81: isaac_baseline ...................   Passed    2.40 sec
+      Start 122: first_floor_freeze_effect
+17/22 Test #122: first_floor_freeze_effect ........   Passed    0.75 sec
+      Start 123: first_floor_damage_statuses
+18/22 Test #123: first_floor_damage_statuses ......   Passed    1.13 sec
+      Start 124: first_floor_slow_effect
+19/22 Test #124: first_floor_slow_effect ..........   Passed    0.95 sec
+      Start 126: first_floor_charm_effect
+20/22 Test #126: first_floor_charm_effect .........   Passed    5.64 sec
+      Start 128: rock_spider_family
+21/22 Test #128: rock_spider_family ...............   Passed   35.74 sec
+      Start 147: core_contracts
+22/22 Test #147: core_contracts ...................   Passed    0.39 sec
+
+100% tests passed, 0 tests failed out of 22
+
+Total Test time (real) =  84.12 sec

@@ -71,7 +71,7 @@ void liveContactAndRetention() {
         if(invulnerable){child(s,owner)->state=EnemyState::Stunned;child(s,owner)->stateTime=1;}
         tick(s);
         check(!s.findEnemy(kid)&&s.stats.kills==1,"live spider expires on touch, even when player cannot take damage");
-        check(near(s.player.hp,StartingHealth-(invulnerable?0:10*EnemyDamageMultiplier)),"only vulnerable player takes source contact damage");
+        check(near(s.player.hp,StartingHealth-(invulnerable?0:1)),"only vulnerable player takes source contact damage");
     }
     auto pending=fixture(1866,lib);auto owner=spawn(pending);pending.limits.enemies=1;startAttack(pending,owner);tick(pending,10);
     check(!child(pending,owner)&&pending.findEnemy(owner)->evader->attackFrame==4,"capacity stalls the birth event instead of dropping it");

@@ -34,7 +34,7 @@ void impacts() {
         check(std::abs(s.findEnemy(id)->hp-hp*s.content->champion(variant)->hp)<.001f,"batch2 champion HP scaling");
         s.findEnemy(id)->championTrail=100; // Isolate body contact from Green creep.
         s.godMode=false;s.player.position=s.findEnemy(id)->position;s.step({},1.f/120);
-        check(s.player.hp==100,"Pooter and Mulligan champions retain harmless body contact");
+        check(s.player.hp==StartingHealth,"Pooter and Mulligan champions retain harmless body contact");
     }
     std::cout<<"BATCH2_IMPACT identities=5 momentum=1 masses=1 champion_eligibility=1\n";
 }
@@ -72,7 +72,7 @@ void naturalAndPractice() {
         }
         if(seed<8) {
             s.startBatch2Practice();check(s.enemies.size()==5&&s.roomThreats()==5&&!s.godMode&&s.items.empty(),"practice has exact baseline mixed cohort");
-            check(s.player.hp==100&&s.player.shotDamage==24&&!s.roomClear,"practice preserves starting-kit combat");
+            check(s.player.hp==StartingHealth&&s.player.shotDamage==24&&!s.roomClear,"practice preserves starting-kit combat");
             std::set<MonsterId> actual;for(const auto &e:s.enemies)actual.insert(e.monster);check(actual==std::set<MonsterId>(ids.begin(),ids.end()),"practice contains correct five identities");
         }
     }

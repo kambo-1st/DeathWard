@@ -97,7 +97,7 @@ void collision() {
     auto s=fixture();s.arena.obstacles.push_back({{-25,0,2},{25,8,3}});s.arena.rebuildWalls();s.player.position={0,.85f,10};auto id=spawn(s);
     for(int n=0;n<200;++n){tick(s);const auto &e=*s.findEnemy(id);check(!s.arena.blocked(e.position,e.radius),"skitter collision never enters solid obstacle");}
     auto contact=fixture();contact.godMode=false;id=contact.spawnMonster(monsterId(818,0,1),contact.player.position);tick(contact);
-    check(near(contact.player.hp,StartingHealth-10*EnemyDamageMultiplier),"disguised rock still has contact damage");
+    check(near(contact.player.hp,StartingHealth-1),"disguised rock still has contact damage");
     for(float height:{-60.f,-20.f}) {
         auto air=fixture();id=spawn(air);auto &e=*air.findEnemy(id);
         e.rockSpider->initialized=true;e.rockSpider->height=height;e.lift=-height*.1f;

@@ -27,7 +27,7 @@ void movement() {
         Input move;move.movement={1,0,0};s.step(move,1.f/30);
         check(near(e.position.x,6-s.player.position.x)&&e.velocity.x<0,"movement follows reflected position, not arbitrary spawn offset");
         s.player.position={3,.85f,4};s.player.hurt=0;tick(s,20);
-        check(near(e.position.x,3)&&near(e.position.z,4)&&near(s.player.hp,100),"center overlap has no contact damage or body displacement");
+        check(near(e.position.x,3)&&near(e.position.z,4)&&near(s.player.hp,StartingHealth),"center overlap has no contact damage or body displacement");
         check(s.projectiles.empty(),"movement alone never creates attacks");
         s.player.position={80,.85f,12};tick(s);
         check(e.position.x>=-50+e.radius,"open exits do not permit mirroring outside active room");

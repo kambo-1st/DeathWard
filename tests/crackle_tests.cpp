@@ -57,25 +57,25 @@ void pulses() {
     const auto splasher=spawn(s,monsterId(238),{0,.85f,3});stun(s,splasher);s.findEnemy(splasher)->hp=s.findEnemy(splasher)->maxHp=200;
     s.godMode=false;s.player.position={3,.85f,0};impact(s,source);
     std::erase_if(s.enemies,[&](const auto &e){return e.id==source;});
-    tick(s,7);check(near(s.player.hp,100)&&near(s.findEnemy(victim)->hp,200),"jets do not damage before age2");tick(s);
-    check(near(s.player.hp,87.5f)&&near(s.findEnemy(victim)->hp,168)&&near(s.findEnemy(splasher)->hp,168)&&near(s.findEnemy(immune)->hp,128),"first pulse: player conversion, NPC damage, Splasher vulnerability, Gurgle immunity after source removal");
-    tick(s,3);s.player.hurt=0;tick(s);check(near(s.player.hp,75)&&near(s.findEnemy(victim)->hp,168),"second pulse atage4 and localNPC contact cooldown");
+    tick(s,7);check(near(s.player.hp,StartingHealth)&&near(s.findEnemy(victim)->hp,200),"jets do not damage before age2");tick(s);
+    check(near(s.player.hp,StartingHealth-1)&&near(s.findEnemy(victim)->hp,168)&&near(s.findEnemy(splasher)->hp,168)&&near(s.findEnemy(immune)->hp,128),"first pulse: player conversion, NPC damage, Splasher vulnerability, Gurgle immunity after source removal");
+    tick(s,3);s.player.hurt=0;tick(s);check(near(s.player.hp,StartingHealth-2)&&near(s.findEnemy(victim)->hp,168),"second pulse atage4 and localNPC contact cooldown");
     s.player.position={0,.85f,0};tick(s,5);s.player.position={3,.85f,0};s.player.hurt=0;tick(s);
-    check(near(s.player.hp,75),"fading jet after age4 is visual only");
+    check(near(s.player.hp,StartingHealth-2),"fading jet after age4 is visual only");
 }
 void geometryAndPressure() {
     auto wall=fixture();auto id=spawn(wall);stun(wall,id);wall.player.position={6,.85f,0};wall.godMode=false;
     wall.arena.walls.push_back({{2,-1,-2},{2.1f,6,2}});impact(wall,id);tick(wall,15);
-    check(near(wall.player.hp,100)&&wall.fireWaves[0].rays[0].stopped&&near(wall.fireWaves[0].rays[0].length,0),"thin cover stops propagation without jumping to other side");
+    check(near(wall.player.hp,StartingHealth)&&wall.fireWaves[0].rays[0].stopped&&near(wall.fireWaves[0].rays[0].length,0),"thin cover stops propagation without jumping to other side");
     auto pit=fixture();id=spawn(pit);stun(pit,id);pit.player.position={6,.85f,0};pit.godMode=false;pit.arena.rails.emplace();pit.arena.rails->pits.push_back({{2,-3,-2},{4,0,2}});
-    impact(pit,id);tick(pit,12);check(pit.player.hp<100&&pit.fireWaves[0].rays[0].length>=9,"source jet generators cross pits, unlike continuous boss fire mode");
+    impact(pit,id);tick(pit,12);check(pit.player.hp<StartingHealth&&pit.fireWaves[0].rays[0].length>=9,"source jet generators cross pits, unlike continuous boss fire mode");
     auto pressure=fixture();id=spawn(pressure);stun(pressure,id);pressure.limits.fireWaves=0;impact(pressure,id);tick(pressure,5);
     check(pressure.fireWaves.empty()&&pressure.projectiles.size()==1&&pressure.projectiles[0].impactPending,"full burst capacity retains carrier");
     pressure.limits.fireWaves=32;tick(pressure);check(pressure.projectiles.empty()&&pressure.fireWaves.size()==1,"one burst after capacity recovery");
     auto pulse=fixture();id=spawn(pulse);stun(pulse,id);const auto target=spawn(pulse,monsterId(10),{3,.85f,0});stun(pulse,target);pulse.findEnemy(target)->hp=pulse.findEnemy(target)->maxHp=200;
     pulse.player.position={3,.85f,0};pulse.godMode=false;impact(pulse,id);tick(pulse,4);pulse.limits.queuedEvents=0;tick(pulse,4);
-    check(near(pulse.player.hp,100)&&near(pulse.findEnemy(target)->hp,200)&&pulse.fireWaves[0].jets[0].pulses==0,"full event queue retains whole damaging pulse");
-    pulse.limits.queuedEvents=256;tick(pulse);check(near(pulse.player.hp,87.5f)&&near(pulse.findEnemy(target)->hp,168),"pulse resumes once without partial/repeated player hit");
+    check(near(pulse.player.hp,StartingHealth)&&near(pulse.findEnemy(target)->hp,200)&&pulse.fireWaves[0].jets[0].pulses==0,"full event queue retains whole damaging pulse");
+    pulse.limits.queuedEvents=256;tick(pulse);check(near(pulse.player.hp,StartingHealth-1)&&near(pulse.findEnemy(target)->hp,168),"pulse resumes once without partial/repeated player hit");
     const auto age=pulse.fireWaves[0].age;pulse.room=1;tick(pulse,15);pulse.room=0;check(near(pulse.fireWaves[0].age,age),"inactive room pauses jets");
 }
 void configAndPlacement() {

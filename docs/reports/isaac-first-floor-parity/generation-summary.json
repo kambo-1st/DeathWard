@@ -1,0 +1,24 @@
+{
+  "runtime_monsters": 221,
+  "runtime_items": 13,
+  "opening_pool_ids": 30,
+  "comparison_ids": 93,
+  "missing_definitions_in_candidate_superset": 47,
+  "fire_intervals": {
+    "18": 13
+  },
+  "player": {
+    "hp": 100.0,
+    "max_hp": 100.0,
+    "keys": 0.0,
+    "dynamite": 3.0,
+    "money": 0.0,
+    "items": 0.0,
+    "god_mode": 0.0
+  },
+  "library_counts": {
+    "01.basement.stb": 1181,
+    "02.cellar.stb": 1148,
+    "03.burning basement.stb": 1311
+  }
+}

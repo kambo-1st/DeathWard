@@ -80,7 +80,7 @@ void integration() {
     check(e&&e->smallMaggot->turns==turns,"room re-entry preserves the independent controller");
     damage(a,ia,2,DamageKind::Flame);damage(a,ia,3,DamageKind::Burning);check(near(a.findEnemy(ia)->hp,27),"Small Maggot remains fire vulnerable");
     auto contact=fixture();contact.godMode=false;spawn(contact);contact.player.position={.7f,.85f,0};tick(contact);
-    check(near(contact.player.hp,StartingHealth-10*EnemyDamageMultiplier),"contact uses source base10 and unchanged global multiplier");
+    check(near(contact.player.hp,StartingHealth-1),"contact uses source base10 and half-heart units");
     auto clear=fixture();auto parent=clear.spawnMonster(monsterId(10,3,3),{-8,.85f,0});auto child=spawn(clear);
     clear.findEnemy(child)->summoner=parent;clear.debugScenario=false;clear.rooms[0].cleared=false;
     damage(clear,parent,1000);tick(clear);check(!clear.roomClear&&clear.roomThreats()==1,"owned maggot survives parent and retains room threat");

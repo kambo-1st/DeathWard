@@ -1,0 +1,169 @@
+{
+  "version": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "emulator": "Unicorn 2.1.4",
+  "rows": 293,
+  "cases": 28,
+  "scope": "Ordinary Isaac with empty inventory: nine health-add APIs, bounded health-mutation slice of TakeDamage and ordinary eternal floor conversion. These captures establish scoped arithmetic, not full native gameplay acceptance. DW integration is documented separately.",
+  "fixture": "Type 0 Isaac, six red halves initially, empty collectibles/trinkets/effects/modifier tree, zero game modifiers, disabled achievements, unregistered HUD actor; zero-filled item metadata for empty-inventory queries.",
+  "interceptions": [
+    "0x740084 -> 0x7400b7: record black-heart UseActiveItem(35) intent; skip world damage and sound.",
+    "0x74022f -> 0x7402be: record bone-break visual intent; skip particles/TLS RNG/sound.",
+    "0x78c350: record golden burst count, return with native callee stack cleanup; skip coin/world spawning.",
+    "0x90dd70: record health animation ID and return with native stack cleanup; skip sprite playback."
+  ],
+  "damage_entry": "0x73feb6, integer half-heart amount local, default flags or low flag 0x20; source prechecks/float conversion and prior local calculations are outside this fixture.",
+  "damage_exit": "0x74074c, before death/revival and remaining callbacks.",
+  "floor_scope": "0x76a71f-0x76a789: ordinary eternal conversion only; not whole native floor transition.",
+  "static_effect_findings": {
+    "black_base_damage": "0x5a189c-0x5a18ac: 40 * (1 + collectible 262 count + trinket 48 count); empty inventory = 40. Target filtering and payload are disassembled, not executed here.",
+    "golden_coins": "0x78c606-0x78c617: native RNG uint modulo 6 + 3 per burst (3-8). Spawn physics and global RNG stream remain unverified.",
+    "golden_status": "0x78c6e7 loads query radius 80; 0x78c75a supplies 180 to 0x685990. Distinct Midas freeze, not ordinary freeze; eligibility/duration adjustments remain open."
+  },
+  "unverified": [
+    "whole TakeDamage flags and preconditions",
+    "hit cooldown",
+    "effect payloads and RNG",
+    "golden coin counts/physics",
+    "black burst enemy damage",
+    "world pickups",
+    "complete floor-transition effects",
+    "items/other characters",
+    "live game captures"
+  ],
+  "windows": [
+    {
+      "name": "add_max_red",
+      "start": "0x724d50",
+      "end_exclusive": "0x724f00",
+      "raw_sha256": "39b4254176ecf9f4d039d2064d18f90e625ee35ddf7725a2cf6b43284ef0b1d4",
+      "listing_sha256": "f9edbfa38ad5ef736221017e5b4f882aa20bb9370e8204e01d275fe43b913d88"
+    },
+    {
+      "name": "add_red",
+      "start": "0x724f00",
+      "end_exclusive": "0x725050",
+      "raw_sha256": "548b074b8129e4179968459422f7a5e36577fa873dc75d434e86c5538be3b195",
+      "listing_sha256": "da23bfc17b8b0d2bfe91d65950d6936e2464083fd498d3ffe4d3776d35a64e31"
+    },
+    {
+      "name": "add_eternal",
+      "start": "0x7250a0",
+      "end_exclusive": "0x725130",
+      "raw_sha256": "5d8ca535c594fc8434cae1c32009fa85af3f07af446654fe70979bdc0fb67034",
+      "listing_sha256": "d13a8f7c02362a990635435d873896089bb5ce7168ad237be253d662f7ceed1c"
+    },
+    {
+      "name": "add_soul",
+      "start": "0x725130",
+      "end_exclusive": "0x725380",
+      "raw_sha256": "84158f8fcfec42fc5021a49f0a3c148d93b422d4cf51829ea1bf35332cdbb49f",
+      "listing_sha256": "dd94ccf95df1411ba2186238fdb91061bab771269e0f067d2810049ce5a51f00"
+    },
+    {
+      "name": "add_black",
+      "start": "0x725380",
+      "end_exclusive": "0x725540",
+      "raw_sha256": "06eec851a8762fef7d995ab43190f6e0512712d828aaa1828342aa6af04a6a9f",
+      "listing_sha256": "fde48ade7b7650ce0237e32409ff5bb60f834f712b6957ae28df98ecd650ff15"
+    },
+    {
+      "name": "black_queries",
+      "start": "0x725540",
+      "end_exclusive": "0x725600",
+      "raw_sha256": "211d4c9eb0ef75d14dae0d9f0c319080eff9964b6332dd9b260879cd60ca204f",
+      "listing_sha256": "5925c509393fae492d295d8f33d4b02e0cfdae40a85595d457c6ab0e023d89a9"
+    },
+    {
+      "name": "add_golden",
+      "start": "0x78be00",
+      "end_exclusive": "0x78bf20",
+      "raw_sha256": "01bcd7781296f8b9f7bf31a2780ab52d29b7890ab87697b921deb4793318aa01",
+      "listing_sha256": "50d80851b2596d1a86b23a12f0ae118b53c276ca3c0fb9928662f06d17dfe488"
+    },
+    {
+      "name": "red_rotten_reconcile",
+      "start": "0x78bf20",
+      "end_exclusive": "0x78c000",
+      "raw_sha256": "4f3729defad8246af3716d44ee15012eeb5d53bcba25896007c4ad91ffb90d5e",
+      "listing_sha256": "8a20407bbc3dfad13f9b46d94ed0db521ebddcd648ad99a30ba4adad58be8f1f"
+    },
+    {
+      "name": "golden_reconcile",
+      "start": "0x78c810",
+      "end_exclusive": "0x78c870",
+      "raw_sha256": "7df7d8f2c47addac9b74aa727865144dea0010d06092ec55287c7d129bb4933b",
+      "listing_sha256": "72457181ff81a8b6ae439becfbcd56e8f4b8c254c604f4d3c701bc5b1b0eb1ea"
+    },
+    {
+      "name": "add_bone",
+      "start": "0x78c870",
+      "end_exclusive": "0x78ca00",
+      "raw_sha256": "78e8a118c03cddfb387bec568fc42c856a985a049c82ebbaa963dc3969f02c60",
+      "listing_sha256": "f9076d652fcecf797f06012ccbd871aecd3c782d8aef702ebf86ae840c93c42c"
+    },
+    {
+      "name": "bone_order_reconcile",
+      "start": "0x78cb90",
+      "end_exclusive": "0x78cc70",
+      "raw_sha256": "1bd5a9b7aa04413aeaf8b0cef4d2eed2145641eb1204cb417304cf2e337bdeb4",
+      "listing_sha256": "8504e573f4184e6e17cf5e2aa2a6e2e756cbf83f87a9f6db57868730dbe6c4be"
+    },
+    {
+      "name": "health_capacity",
+      "start": "0x78cc70",
+      "end_exclusive": "0x78cea0",
+      "raw_sha256": "ecb1e019ceb1f3b04c4271d83ac3b81f4a6a6247b87d86ff225b0c101a12d9f1",
+      "listing_sha256": "f815807e5fcf5b5c7a8d5e8287122a72ec7d89d37fc5c2d5d2e6cd3b7bd645d9"
+    },
+    {
+      "name": "add_broken",
+      "start": "0x794390",
+      "end_exclusive": "0x794420",
+      "raw_sha256": "b7d757e8b50462e0cec0b1aa804f00d4f7b338e2ddffd6ab5b2356f55258f576",
+      "listing_sha256": "3e83ea8a8197482a298f07766ef8d7929d63ee1c4b15beb7e6f84fb81f342693"
+    },
+    {
+      "name": "add_rotten",
+      "start": "0x794930",
+      "end_exclusive": "0x794ac0",
+      "raw_sha256": "a298b441edf3d20ed31d89dd5ac69d4ab031def381e294f65b1570affd1a52b2",
+      "listing_sha256": "7a1445a067439b61fc69a7d3127cd08e58b41d3737bb3a246bb5de7c8dcaf6e3"
+    },
+    {
+      "name": "damage_health_slice",
+      "start": "0x73feb6",
+      "end_exclusive": "0x74074c",
+      "raw_sha256": "f8b6b5c918a02a623328ee1e3e5cc4941928e2222a54c94b50763dcc92cb6500",
+      "listing_sha256": "bbbd26bd7c8184e6fc16ba6e405e0ce8e10d8c87dc345f7bc82c4db41778fa1e"
+    },
+    {
+      "name": "eternal_floor_conversion",
+      "start": "0x76a71f",
+      "end_exclusive": "0x76a789",
+      "raw_sha256": "e762b6a64eead96b6977ec84658982cd8ee13cbc897582be916641f922c4bd27",
+      "listing_sha256": "589b4dbbfb8e3688a6bc413987ffd3726670cb620723ff1fa81c181794bfd5a9"
+    },
+    {
+      "name": "black_burst_ordinary",
+      "start": "0x5a1841",
+      "end_exclusive": "0x5a19f1",
+      "raw_sha256": "2b39a8179ef20583cbb602d5dee6330a320c4b905bdeef14a3fa1be4e409248b",
+      "listing_sha256": "0ebcb05c59c86f970d99db7d633949ddfbbac0c96c08f02e8ea231f455d0f55e"
+    },
+    {
+      "name": "golden_burst_world",
+      "start": "0x78c350",
+      "end_exclusive": "0x78c810",
+      "raw_sha256": "cd3bbd63afb7bf521e16232d7559bcf0b31345e660a0e4888d7bcd36bc475b14",
+      "listing_sha256": "848f62496bb6123759ed69f9575d1f6e5579da66ca8cdffec42d53626a8291eb"
+    },
+    {
+      "name": "midas_freeze_entry",
+      "start": "0x685990",
+      "end_exclusive": "0x685ad3",
+      "raw_sha256": "1f41dac90a998ef838e538bb583405d147df862f984695048b461fc502d62273",
+      "listing_sha256": "db828897d78f24d9613d5d57acea22cb275fdc3bf52fbc0900db79cb270bfdf8"
+    }
+  ]
+}

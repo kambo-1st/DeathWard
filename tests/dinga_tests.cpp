@@ -32,7 +32,7 @@ void dips() {
     for(int n=0;n<200&&e.slide->phase!=0;++n)tick(a);check(e.slide->phase==0,"Dip waits after speed drops below1");
     e.velocity={30,0,0};tick(a);check(e.position.x>0||e.velocity.x>0,"external push survives controller");
     auto c=fixture();auto z=spawn(c,217);c.godMode=false;c.player.position=c.findEnemy(z)->position;tick(c);
-    check(near(c.player.hp,87.5f),"Dip contact damage12.5");
+    check(near(c.player.hp,StartingHealth-1),"Dip contact removes one half-heart unit");
     std::cout<<"DIP random_dash=1 friction=1 rest=1 push=1 stage_HP=1 contact12.5=1\n";
 }
 void squirt() {

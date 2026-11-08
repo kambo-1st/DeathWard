@@ -1,0 +1,58 @@
+{
+  "target": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "counter_cases": 24,
+  "tick_states": 193,
+  "windows": [
+    {
+      "name": "round_damage",
+      "start": "0x73d701",
+      "end_exclusive": "0x73d719",
+      "sha256": "b31ff9974f2e7d5dee849c779df226c5de398fb566a623bb6f9676e1f3437374",
+      "executed": true
+    },
+    {
+      "name": "ordinary_counter",
+      "start": "0x740cfe",
+      "end_exclusive": "0x740d4b",
+      "sha256": "446e067428dc686ec6300b6fca7b850924458a43b369d57dfcdd3ff6d44270ad",
+      "executed": true
+    },
+    {
+      "name": "counter_tick",
+      "start": "0x74ff9e",
+      "end_exclusive": "0x74ffaf",
+      "sha256": "70ae8ee308e2b388d46cff23c73168d1631bf40b7b11d5afa748dc530417e181",
+      "executed": true
+    },
+    {
+      "name": "integer_min",
+      "start": "0x417c60",
+      "end_exclusive": "0x417c6a",
+      "sha256": "76814de85c816abe36ffa97d1fe01fcf2f72d934a42078c15be8420161d58269",
+      "executed": true
+    },
+    {
+      "name": "damage_counter_guard",
+      "start": "0x73d963",
+      "end_exclusive": "0x73d98a",
+      "sha256": "0cfb25ba12b6ab6d8e209d17202e49016f7d40ccc313c889c3b205befbcc9639",
+      "executed": false
+    },
+    {
+      "name": "early_counter_override",
+      "start": "0x7415d6",
+      "end_exclusive": "0x741614",
+      "sha256": "1bc803a6a6eae507b4bd9ccca58a43afc8133854f1c8282503fe6d2b8ee88bf2",
+      "executed": false
+    }
+  ],
+  "scope": "Original damage rounding, bounded ordinary post-health counter assignment and isolated positive-counter decrement. Real integer-min helper executes. Supplied original amount; no health modifiers or world effects in these windows.",
+  "remaining": [
+    "whole damage entry and flags",
+    "item and special-state counter overrides",
+    "damage reduction original-versus-final amount integration",
+    "live callback frequency and scheduler/wall-clock calibration",
+    "complete collision ordering"
+  ]
+}

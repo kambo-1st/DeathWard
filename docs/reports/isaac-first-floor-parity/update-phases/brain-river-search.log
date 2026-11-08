@@ -1,0 +1,22 @@
+NATURAL_BRAIN seed=600 floor=6 room=4 band=3 river=0
+PROGRESS seed=600 candidates=18
+NATURAL_BRAIN seed=651 floor=6 room=3 band=3 river=0
+NATURAL_BRAIN seed=651 floor=6 room=11 band=3 river=0
+PROGRESS seed=700 candidates=33
+NATURAL_BRAIN seed=715 floor=6 room=7 band=3 river=0
+NATURAL_BRAIN seed=775 floor=4 room=12 band=3 river=0
+PROGRESS seed=800 candidates=48
+NATURAL_BRAIN seed=834 floor=7 room=9 band=3 river=0
+NATURAL_BRAIN seed=879 floor=6 room=3 band=3 river=0
+NATURAL_BRAIN seed=882 floor=6 room=1 band=3 river=0
+NATURAL_BRAIN seed=885 floor=3 room=10 band=3 river=0
+PROGRESS seed=900 candidates=69
+NATURAL_BRAIN seed=936 floor=3 room=3 band=3 river=0
+NATURAL_BRAIN seed=979 floor=6 room=2 band=3 river=0
+NATURAL_BRAIN seed=979 floor=6 room=8 band=3 river=0
+PROGRESS seed=1000 candidates=84
+NATURAL_BRAIN seed=1042 floor=6 room=7 band=3 river=0
+NATURAL_BRAIN seed=1080 floor=6 room=11 band=3 river=0
+PROGRESS seed=1100 candidates=104
+NATURAL_BRAIN seed=1105 floor=6 room=9 band=3 river=1
+COMPLETE candidates=105

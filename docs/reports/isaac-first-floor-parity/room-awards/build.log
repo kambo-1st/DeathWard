@@ -1,0 +1,4 @@
+Consolidate compiler generated dependencies of target deathward_room_award_tests
+Building CXX object CMakeFiles/deathward_room_award_tests.dir/tests/room_award_tests.cpp.o
+Linking CXX executable deathward_room_award_tests
+Built target deathward_room_award_tests

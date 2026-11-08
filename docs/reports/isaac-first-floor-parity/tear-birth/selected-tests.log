@@ -1,0 +1,44 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start   7: item_builds
+ 1/19 Test   #7: item_builds ......................   Passed    6.83 sec
+      Start  52: mirror_behavior
+ 2/19 Test  #52: mirror_behavior ..................   Passed   20.74 sec
+      Start  53: linked_head
+ 3/19 Test  #53: linked_head ......................   Passed    0.28 sec
+      Start  57: monster_boss_components
+ 4/19 Test  #57: monster_boss_components ..........   Passed    1.28 sec
+      Start  58: bloat_boss_and_chargers
+ 5/19 Test  #58: bloat_boss_and_chargers ..........   Passed    1.66 sec
+      Start  59: native_tear_birth
+ 6/19 Test  #59: native_tear_birth ................   Passed    0.05 sec
+      Start  60: native_player_fire
+ 7/19 Test  #60: native_player_fire ...............   Passed    0.17 sec
+      Start  61: native_player_motion
+ 8/19 Test  #61: native_player_motion .............   Passed    0.00 sec
+      Start  66: native_duke
+ 9/19 Test  #66: native_duke ......................   Passed    0.42 sec
+      Start  67: native_monstro
+10/19 Test  #67: native_monstro ...................   Passed    0.37 sec
+      Start  73: native_player_bombs
+11/19 Test  #73: native_player_bombs ..............   Passed    1.40 sec
+      Start  76: native_blast_recipients
+12/19 Test  #76: native_blast_recipients ..........   Passed    0.38 sec
+      Start  78: isaac_baseline
+13/19 Test  #78: isaac_baseline ...................   Passed    2.41 sec
+      Start 119: first_floor_freeze_effect
+14/19 Test #119: first_floor_freeze_effect ........   Passed    0.76 sec
+      Start 120: first_floor_damage_statuses
+15/19 Test #120: first_floor_damage_statuses ......   Passed    1.17 sec
+      Start 121: first_floor_slow_effect
+16/19 Test #121: first_floor_slow_effect ..........   Passed    0.97 sec
+      Start 123: first_floor_charm_effect
+17/19 Test #123: first_floor_charm_effect .........   Passed    5.76 sec
+      Start 125: rock_spider_family
+18/19 Test #125: rock_spider_family ...............   Passed   37.04 sec
+      Start 144: core_contracts
+19/19 Test #144: core_contracts ...................   Passed    0.42 sec
+
+100% tests passed, 0 tests failed out of 19
+
+Total Test time (real) =  82.15 sec

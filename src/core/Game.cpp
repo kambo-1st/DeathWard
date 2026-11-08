@@ -367,9 +367,9 @@ void Game::perform(Action action) {
             if (debug && run && !run->dead && !run->finished) {
                 float health = playerHealth, damage = playerDamage;
                 if (action == Action::HealthDown)
-                    health -= 25;
+                    health -= 2;
                 if (action == Action::HealthUp)
-                    health += 25;
+                    health += 2;
                 if (action == Action::DamageDown)
                     damage -= 4;
                 if (action == Action::DamageUp)

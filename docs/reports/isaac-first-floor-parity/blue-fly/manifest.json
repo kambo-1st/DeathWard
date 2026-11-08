@@ -1,0 +1,139 @@
+{
+  "version": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_motion_states": 318,
+  "native_motion_cases": 6,
+  "native_orbit_angles": 36,
+  "native_target_scores": 64,
+  "native_damage_cases": 5,
+  "native_special_kill_branches": 22,
+  "method": "Bounded original x86/SSE with native sqrt and native ordinary physics. Numeric helpers execute unmodified. Special-kill branch fixture stops before NPC Kill/world effects.",
+  "scope": "Steering with supplied goals, timeScale1/base friction1, native free-motion endpoint; orbit angle before external fmod/cos/sin; target score with supplied distances/HP/ordinary flags; spawn damage before item modifiers.",
+  "xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "source_entity": {
+    "anm2path": "003.043_Attack Fly.anm2",
+    "baseHP": "0",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionInterval": "14",
+    "collisionMass": "3",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "3",
+    "name": "Attack Fly",
+    "numGridCollisionPoints": "12",
+    "shadowSize": "8",
+    "stageHP": "0",
+    "tags": "cansacrifice fly",
+    "variant": "43"
+  },
+  "static_findings": [
+    "Blue-fly Update dispatch calls0x5f7340. Ordinary target radius200, RNG modulo3 poll then IsFrame(13,InitSeed), target flags13.",
+    "No-target orbit group1 uses radii35/30, ordinary angular rate.045, group angle offset.5; target acquisition removes the fly from that orbit group.",
+    "Ordinary entity contact queues stored collision damage and removes the fly; special NPC kills, subtype behavior and item modifiers exist separately.",
+    "Collision radius13 and friction1 are XML attributes. Init variant43 takes grid collision class0; XML alone does not prove AI."
+  ],
+  "not_executed": [
+    "world target enumeration/filtering",
+    "orbit membership initialization and imported trigonometry",
+    "whole blue-fly update ordering/physics/collision",
+    "spawn/removal and room callbacks",
+    "global RNG",
+    "item/cache-refresh modifiers",
+    "live timing or full acceptance"
+  ],
+  "windows": [
+    {
+      "name": "ordinary_ai",
+      "start": "0x5f7340",
+      "end_exclusive": "0x5f75f3",
+      "raw_sha256": "1530ac4e26b5e70d2af65eef4175602d953504bcd409b88447ea976e4bd16283",
+      "listing_sha256": "2598212c54ecacf0891d04fb7a387d71f808e11b8d4bf50ce1f699b5ad96b975"
+    },
+    {
+      "name": "motion",
+      "start": "0x5f7539",
+      "end_exclusive": "0x5f75ed",
+      "raw_sha256": "d82ac0ab1cbf6847b00b619c447caedb8f3415cebe041fbe9846201ad114a02c",
+      "listing_sha256": "1201653e0620dea3f43ce76b97403856d7accb445063ea4f2da5684ba3220024"
+    },
+    {
+      "name": "physics",
+      "start": "0x686406",
+      "end_exclusive": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf",
+      "listing_sha256": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0"
+    },
+    {
+      "name": "orbit_angle",
+      "start": "0x5f50aa",
+      "end_exclusive": "0x5f510b",
+      "raw_sha256": "558d3dd9cd95fc4bdafb793b56a4e39269e0f47fe4aa093518dbbf8d341ffb4d",
+      "listing_sha256": "52f48d093186cb0ff7f3a9dd8a761c6044dcca9df5bc805ac7ba985c5490def0"
+    },
+    {
+      "name": "orbit_position",
+      "start": "0x5f521e",
+      "end_exclusive": "0x5f5274",
+      "raw_sha256": "029ec8d0d962df1366de503e4993213a6221306b52d3d11639174462c278e8e7",
+      "listing_sha256": "4c2fb312254ed9bcec7327aa9b98dd27ffbc5fcddc636450e9f2958066664854"
+    },
+    {
+      "name": "target_score",
+      "start": "0x5f6d7a",
+      "end_exclusive": "0x5f6de0",
+      "raw_sha256": "403e73dcb2e5d4a1076eb8b9810b7e8e7d73de3e41764dcab7a97d2d8d6ef85b",
+      "listing_sha256": "311ed233c054396bf0431ee3faa927239d24119c43434ebc3daceb0ec9074381"
+    },
+    {
+      "name": "target_filters",
+      "start": "0x5f6b47",
+      "end_exclusive": "0x5f6e50",
+      "raw_sha256": "dacd18471a51120affc064012f65f34450db922e3259edb198f9e1c996b97365",
+      "listing_sha256": "419da5cac01078775611dda80af0e38557851da44cddc9114624139cf21acef2"
+    },
+    {
+      "name": "initial_damage",
+      "start": "0x5f0ced",
+      "end_exclusive": "0x5f0d1e",
+      "raw_sha256": "639798fda55f14c3dbfc4460799c02e44e5752a15097103c83e8e29de9b53748",
+      "listing_sha256": "e32adabb4746ff9402842487c024c330b8d3e083be798d0f98b3f5ae55a6ca61"
+    },
+    {
+      "name": "contact_damage",
+      "start": "0x608b14",
+      "end_exclusive": "0x608b94",
+      "raw_sha256": "b59c0a5fee508cc09b8c9c396ad2c4bb97956d92e4c4f4a7e41af273100af95d",
+      "listing_sha256": "990b10be2ae479473f9f2bd5afcf3c1128c3b11b1b036ad5ddbd42c91591f660"
+    },
+    {
+      "name": "special_kill_branch",
+      "start": "0x6089cf",
+      "end_exclusive": "0x608b00",
+      "raw_sha256": "e4f0f430e05b6a6c1fb1e64f21630b80c4692e7514daa8c1937678b12cb8aba5",
+      "listing_sha256": "72dce879cdd9931672dd4d04b48d8ffc5a38407d141504160b7804662c42ce0f"
+    },
+    {
+      "name": "npc_kill",
+      "start": "0x695560",
+      "end_exclusive": "0x6955f5",
+      "raw_sha256": "1ead07b87308fb7d4fc76de9cc7d54230488935594a729cb165f6cdf26abea42",
+      "listing_sha256": "f2a3873fe80c2b25f61687a178d6b882da23a21278e17a9c95a918765b391d8b"
+    },
+    {
+      "name": "lua_kill_remove_binding",
+      "start": "0x8604fd",
+      "end_exclusive": "0x860516",
+      "raw_sha256": "dada6160528f9678909cf92fe90e7138f718a7f1c7914443c5c0c80b6c41b91f",
+      "listing_sha256": "eaf605f27d49ee9898edbd66e57a412fe2be29b57609e65953d1c74d5997edd3"
+    },
+    {
+      "name": "ordinary_consumption",
+      "start": "0x6089f1",
+      "end_exclusive": "0x608a40",
+      "raw_sha256": "63b6425ed31221a199c33f6f25549c71890c4b31370335327ed1fff5a4da9aa4",
+      "listing_sha256": "6ba435625d6217078c1077a7d5f2007f32cf220c386b6e887b422211e8741b96"
+    }
+  ]
+}

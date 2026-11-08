@@ -27,7 +27,7 @@ void cycle(){
  hit(s,id,4,DamageKind::Crush);check(near(s.findEnemy(id)->hp,44),"closed armor rejects crush");hit(s,id,4,DamageKind::Burning);check(near(s.findEnemy(id)->hp,40),"burning bypass");
  frame(s,id,70);tick(s,2);check(s.findEnemy(id)->host->frame==-1&&s.findEnemy(id)->host->cooldown==7,"71frame cycle and retained idle cooldown");
  check(s.stats.projectiles==0&&s.stats.explosions==0,"rock pulse never masquerades as bullet or bomb");
- auto c=fixture();c.godMode=false;c.player.position={0,.85f,0};c.spawnMonster(monsterId(27,3),c.player.position);tick(c,2);check(c.player.hp<100,"Hard Host has source contact damage");
+ auto c=fixture();c.godMode=false;c.player.position={0,.85f,0};c.spawnMonster(monsterId(27,3),c.player.position);tick(c,2);check(c.player.hp<StartingHealth,"Hard Host has source contact damage");
 }
 void stepping(){
  auto s=fixture();slam(s);auto &w=s.hazards[0];const auto start=w.position;
@@ -51,7 +51,7 @@ void damageAndTerrain(){
   const auto bombs=s.dynamite;tick(s,4);
   check(s.arena.breakables[reversed?1:0].destroyed&&!s.arena.breakables[reversed?0:1].destroyed,"thin first obstacle consumed, later rock retained independent of vector order");
   check(s.hazards.empty()&&s.dynamite==bombs&&s.stats.explosions==0,"destructive wave stops without spending bomb inventory");
-  check(s.player.hp==100-10*EnemyDamageMultiplier,"crush pulse uses native no-entity-line-check through nearby impacted cover");
+  check(s.player.hp==StartingHealth-1,"crush pulse uses native no-entity-line-check through nearby impacted cover");
   check(s.findEnemy(owner)->alive,"owner excluded from crush pulse");
  }
  auto s=fixture();slam(s);auto victim=s.spawnMonster(monsterId(13),{0,.85f,5});s.findEnemy(victim)->hp=s.findEnemy(victim)->maxHp=100;s.findEnemy(victim)->state=EnemyState::Stunned;s.findEnemy(victim)->stateTime=10;

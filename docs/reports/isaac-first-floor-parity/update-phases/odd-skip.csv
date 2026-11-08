@@ -1,0 +1,13 @@
+phase,interpolation_enabled,early_return,phase_after
+0,0,False,0
+0,1,False,0
+1,0,True,2
+1,1,False,1
+2,0,False,2
+2,1,False,2
+3,0,True,4
+3,1,False,3
+60,0,False,60
+60,1,False,60
+61,0,True,62
+61,1,False,61

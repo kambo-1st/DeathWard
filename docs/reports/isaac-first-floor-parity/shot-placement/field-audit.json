@@ -1,0 +1,12 @@
+{
+  "audited_at_utc": "2026-11-08T06:32:04Z",
+  "all_numeric_csvs_unchanged": true,
+  "csv_sha256": {
+    "native-supplied-scatter.csv": "e2b77d4ca8cdbf6063b75e09dba76efc88573de5c840aa56c86f3e4ce9331908",
+    "native-placement.csv": "40a4891ec518c645b66687ac24e769bdb7b07c8de436fd726074989b73ae6a00",
+    "native-world-births.csv": "fd487266120caa293c9d6687062154e86542848af7ec012de0daab0c4834e825",
+    "native-world-frames.csv": "51425bf0c66f9a9b7d1474c5492f7d2c5f32a0dd8938ec0e2ea4a83cdb70b13b"
+  },
+  "correction": "6500d0 is a collision-damage setter,not visual scale. Ordinary cached damage3.5 now supplied; visual scale370/374 separate; no runtime attack damage edits.",
+  "historical_v20_correction": "tear-birth/README.md and validation.json retain original README hash with dated notice"
+}

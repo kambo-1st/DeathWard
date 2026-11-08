@@ -1,0 +1,17 @@
+64/145 Testing: native_duke
+64/145 Test: native_duke
+Command: "/home/kambo/workspace/DeathWard/build/deathward_duke_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_duke" start time: Nov 08 04:50 CET
+Output:
+----------------------------------------------------------
+NATIVE_DUKE states=3144 births=4345 maximum_numeric_difference=0 releases=304 retained_graphics_rng=1
+PASS Duke world live/big/release/death payloads, capacity recovery, sourceHP and debug-clear isolation; full acceptance and production pool remain open
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"native_duke" end time: Nov 08 04:50 CET
+"native_duke" time elapsed: 00:00:00
+----------------------------------------------------------
+

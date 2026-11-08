@@ -1,0 +1,5 @@
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_contact_order_probe
+[100%] Building CXX object CMakeFiles/deathward_contact_order_probe.dir/tools/isaac_contact_order_probe.cpp.o
+[100%] Linking CXX executable deathward_contact_order_probe
+[100%] Built target deathward_contact_order_probe

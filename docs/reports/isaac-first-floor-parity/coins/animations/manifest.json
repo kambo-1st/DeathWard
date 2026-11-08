@@ -1,0 +1,157 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/repentance.a",
+      "sha256": "b58a2c74f49f106be54021961b5bb11a8428861e125d7430efa24ded652187ea",
+      "previously_pinned": true
+    },
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources-dlc3/gfx/005.027_Golden Penny.anm2",
+      "archive": "resources/packed/repentance.a",
+      "path": "docs/reports/isaac-first-floor-parity/coins/animations/005.027_Golden Penny.anm2",
+      "sha256": "82286971453095bbe74fb08a3751705b2e543ebd762896d5a712c7eea5f65e2e",
+      "checksum": "0x7176bf51",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "3/22/2021 6:51:44 AM",
+        "Version": "109",
+        "Fps": "45"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "30",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "33",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "23"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "AppearFast",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "23"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Reappear",
+            "FrameNum": "24",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "16"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "resources/gfx/005.025_Sticky Nickel.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/coins/animations/005.025_Sticky Nickel.anm2",
+      "sha256": "d3bc56d27e0d8fda0876f6272ea6723bea1c6d857bc1efc77a933fceb0f5be8d",
+      "checksum": "0xb44b1060",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "23.09.2015 02:08:47",
+        "Version": "107",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "DropSound",
+          "Id": "0"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Idle",
+            "FrameNum": "30",
+            "Loop": "true"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "19",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "9"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Collect",
+            "FrameNum": "14",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Touched",
+            "FrameNum": "12",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

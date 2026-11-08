@@ -112,7 +112,7 @@ bool Simulation::placeDynamite() {
     return deployDynamite(charge);
 }
 void Simulation::kickDynamiteOnContact(Vector3 previousPosition) {
-    if (dead || finished || shopOpen || rewardOpen || player.hp <= 0)
+    if (dead || finished || shopOpen || rewardOpen || player.totalHealth() <= 0)
         return;
     const Vector3 movement{player.position.x - previousPosition.x, 0, player.position.z - previousPosition.z};
     const float travelSquared = dot(movement, movement);
@@ -142,7 +142,7 @@ void Simulation::kickDynamiteOnContact(Vector3 previousPosition) {
     }
 }
 bool Simulation::deployDynamite(Hazard charge) {
-    if (dead || finished || shopOpen || rewardOpen || player.hp <= 0 || dynamiteCooldown > 0)
+    if (dead || finished || shopOpen || rewardOpen || player.totalHealth() <= 0 || dynamiteCooldown > 0)
         return false;
     if (dynamite <= 0) {
         announce("Out of dynamite. The shop sells a refill pack.");

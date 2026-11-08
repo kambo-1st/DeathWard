@@ -1,0 +1,114 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start   8: expedition_destruction
+ 1/54 Test   #8: expedition_destruction ...........   Passed   47.28 sec
+      Start  29: mission_shop
+ 2/54 Test  #29: mission_shop .....................   Passed    2.11 sec
+      Start  40: brain
+ 3/54 Test  #40: brain ............................   Passed    1.11 sec
+      Start  44: guts_family
+ 4/54 Test  #44: guts_family ......................   Passed   84.06 sec
+      Start  46: leech_behavior
+ 5/54 Test  #46: leech_behavior ...................   Passed    5.44 sec
+      Start  48: adult_leech
+ 6/54 Test  #48: adult_leech ......................   Passed    0.57 sec
+      Start  49: dip_variants
+ 7/54 Test  #49: dip_variants .....................   Passed    1.92 sec
+      Start  51: membrain_family
+ 8/54 Test  #51: membrain_family ..................   Passed    1.68 sec
+      Start  52: mirror_behavior
+ 9/54 Test  #52: mirror_behavior ..................   Passed   19.50 sec
+      Start  53: linked_head
+10/54 Test  #53: linked_head ......................   Passed    0.27 sec
+      Start  55: monster_hopping
+11/54 Test  #55: monster_hopping ..................   Passed    1.48 sec
+      Start  57: monster_boss_components
+12/54 Test  #57: monster_boss_components ..........   Passed    1.21 sec
+      Start  58: bloat_boss_and_chargers
+13/54 Test  #58: bloat_boss_and_chargers ..........   Passed    1.60 sec
+      Start  59: native_player_fire
+14/54 Test  #59: native_player_fire ...............   Passed    0.16 sec
+      Start  60: native_player_motion
+15/54 Test  #60: native_player_motion .............   Passed    0.00 sec
+      Start  61: native_player_health
+16/54 Test  #61: native_player_health .............   Passed    0.00 sec
+      Start  62: native_midas_freeze
+17/54 Test  #62: native_midas_freeze ..............   Passed    0.00 sec
+      Start  63: native_blue_fly
+18/54 Test  #63: native_blue_fly ..................   Passed    0.00 sec
+      Start  64: native_player_hurt
+19/54 Test  #64: native_player_hurt ...............   Passed    0.00 sec
+      Start  65: native_duke
+20/54 Test  #65: native_duke ......................   Passed    0.40 sec
+      Start  66: native_monstro
+21/54 Test  #66: native_monstro ...................   Passed    0.36 sec
+      Start  67: native_room_awards
+22/54 Test  #67: native_room_awards ...............   Passed    0.01 sec
+      Start  68: source_resources
+23/54 Test  #68: source_resources .................   Passed    0.38 sec
+      Start  69: source_heart_pickups
+24/54 Test  #69: source_heart_pickups .............   Passed    0.22 sec
+      Start  70: source_coins
+25/54 Test  #70: source_coins .....................   Passed    0.27 sec
+      Start  71: source_coin_producers
+26/54 Test  #71: source_coin_producers ............   Passed    0.27 sec
+      Start  72: native_player_bombs
+27/54 Test  #72: native_player_bombs ..............   Passed    1.32 sec
+      Start  73: native_bomb_contacts
+28/54 Test  #73: native_bomb_contacts .............   Passed    0.01 sec
+      Start  74: native_troll_bombs
+29/54 Test  #74: native_troll_bombs ...............   Passed    0.02 sec
+      Start  75: native_blast_recipients
+30/54 Test  #75: native_blast_recipients ..........   Passed    0.36 sec
+      Start  76: source_bomb_producers
+31/54 Test  #76: source_bomb_producers ............   Passed    0.30 sec
+      Start  77: isaac_baseline
+32/54 Test  #77: isaac_baseline ...................   Passed    2.30 sec
+      Start  78: regular_health_balance
+33/54 Test  #78: regular_health_balance ...........   Passed    0.37 sec
+      Start  85: supplied_bombs
+34/54 Test  #85: supplied_bombs ...................   Passed    0.50 sec
+      Start  86: fly_bombs
+35/54 Test  #86: fly_bombs ........................   Passed    7.96 sec
+      Start  87: enemy_bomb_payloads
+36/54 Test  #87: enemy_bomb_payloads ..............   Passed    0.48 sec
+      Start  91: hornfel_boss
+37/54 Test  #91: hornfel_boss .....................   Passed    3.64 sec
+      Start 100: buzzing_flies
+38/54 Test #100: buzzing_flies ....................   Passed   28.29 sec
+      Start 101: tainted_pooter_impacts
+39/54 Test #101: tainted_pooter_impacts ...........   Passed    0.28 sec
+      Start 105: leper_flesh
+40/54 Test #105: leper_flesh ......................   Passed    3.36 sec
+      Start 106: leper_family
+41/54 Test #106: leper_family .....................   Passed    1.76 sec
+      Start 107: mulligan_family
+42/54 Test #107: mulligan_family ..................   Passed   57.87 sec
+      Start 108: spider_family
+43/54 Test #108: spider_family ....................   Passed    1.01 sec
+      Start 117: first_floor_status_effects
+44/54 Test #117: first_floor_status_effects .......   Passed    0.71 sec
+      Start 118: first_floor_freeze_effect
+45/54 Test #118: first_floor_freeze_effect ........   Passed    0.77 sec
+      Start 119: first_floor_damage_statuses
+46/54 Test #119: first_floor_damage_statuses ......   Passed    1.15 sec
+      Start 120: first_floor_slow_effect
+47/54 Test #120: first_floor_slow_effect ..........   Passed    0.96 sec
+      Start 122: first_floor_charm_effect
+48/54 Test #122: first_floor_charm_effect .........   Passed    5.60 sec
+      Start 124: rock_spider_family
+49/54 Test #124: rock_spider_family ...............   Passed   36.28 sec
+      Start 125: spider_variants
+50/54 Test #125: spider_variants ..................   Passed   11.92 sec
+      Start 133: tainted_hopper
+51/54 Test #133: tainted_hopper ...................   Passed    9.17 sec
+      Start 137: willo_and_mullighoul
+52/54 Test #137: willo_and_mullighoul .............   Passed    6.70 sec
+      Start 138: prey_and_small_leech
+53/54 Test #138: prey_and_small_leech .............   Passed   31.86 sec
+      Start 143: core_contracts
+54/54 Test #143: core_contracts ...................   Passed    0.41 sec
+
+100% tests passed, 0 tests failed out of 54
+
+Total Test time (real) = 385.66 sec

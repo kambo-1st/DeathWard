@@ -298,14 +298,14 @@ void externalItemsAndSnapshots() {
     const auto path=p.root/"campaign.save";CampaignStore store(path);const auto runId=store.begin(1866,"mechanics test");
     auto summary=left.summary();summary.id=runId;summary.mechanicsFingerprint=a->fingerprint();store.checkpoint(summary);
     CampaignStore reloaded(path);check(reloaded.data().pending->items==left.items&&reloaded.data().pending->mechanicsFingerprint==a->fingerprint(),"namespaced IDs and rules fingerprint survive save v7 even without package registration in global library");
-    auto bargain=fixture(a);bargain.rooms[0].offers[0]=ItemId::Judas;
-    check(near(bargain.bargainMaxHealth(0),64),"bargain includes external pickup-health rule");
+    auto bargain=fixture(a);bargain.tunePlayer(10,24);bargain.rooms[0].offers[0]=ItemId::Judas;
+    check(near(bargain.bargainMaxHealth(0),6),"bargain includes external pickup-health rule");
     auto changedHealth=std::ifstream(p.root/"items.mechanics");
     std::string items((std::istreambuf_iterator<char>(changedHealth)),{});changedHealth.close();
     items.replace(items.find("pickup_health 0.8"),17,"pickup_health 0.5");
     std::ofstream(p.root/"items.mechanics")<<items;
-    auto editedBargain=fixture(MechanicsLibrary::load(p.root));editedBargain.rooms[0].offers[0]=ItemId::Judas;
-    check(near(editedBargain.bargainMaxHealth(0),40),"bargain preview follows an edited data value");
+    auto editedBargain=fixture(MechanicsLibrary::load(p.root));editedBargain.tunePlayer(10,24);editedBargain.rooms[0].offers[0]=ItemId::Judas;
+    check(near(editedBargain.bargainMaxHealth(0),4),"bargain preview follows an edited data value");
 }
 void legacyInventory() {
     Pack p;const auto path=p.root/"legacy.save";

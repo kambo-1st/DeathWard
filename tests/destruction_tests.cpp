@@ -6,6 +6,7 @@ namespace {
 void check(bool ok,const std::string &msg){if(!ok)throw std::runtime_error(msg);}
 Simulation fixture() {
     Simulation run(1,1,{},MissionTheme::Mine,true,false,WitnessAccount::None,0,ExpeditionPacing::Classic);
+    run.tunePlayer(24,RevolverDamage); // Existing blast/cover fixture health budget.
     run.arena=Arena{};run.arena.bounds={{-30,-1,-30},{30,8,30}};
     for(auto &r:run.arena.rooms)r.bounds=run.arena.bounds;
     for(auto &r:run.rooms)r.residents.clear();
@@ -33,12 +34,12 @@ void snapshot() {
         auto id=run.spawn(EnemyKind::Gunman,{1,.85f,.5f});
         run.findEnemy(id)->hp=run.findEnemy(id)->maxHp=500;
         blast(run,{-2,.85f,0});
-        check(run.findEnemy(id)->hp==500&&run.player.hp==100,"cover protects enemy/player for the entire first blast");
+        check(run.findEnemy(id)->hp==500&&run.player.hp==24,"cover protects enemy/player for the entire first blast");
         for(const auto &p:run.arena.breakables)
             check(p.destroyed==(p.id==1),"pre-blast cover protects the second prop independent of iteration order");
         check(run.arena.sight({-2,.85f,0},{1,.85f,0})&&!run.arena.blocked({0,.85f,0},.48f),"destruction removes sight and movement collision together");
         blast(run,{-2,.85f,0});
-        check(run.findEnemy(id)->hp==400&&run.player.hp==75,"later blast sees changed geometry and damages both recipients");
+        check(run.findEnemy(id)->hp==400&&run.player.hp==21,"later blast sees changed geometry and damages both recipients");
         check(std::all_of(run.arena.breakables.begin(),run.arena.breakables.end(),[](const auto &p){return p.destroyed&&p.paid;}),"props transition and pay once");
         const size_t loot=run.moneyPickups.size();blast(run,{-2,.85f,0});
         check(run.moneyPickups.size()==loot,"repeated blast cannot duplicate rewards");

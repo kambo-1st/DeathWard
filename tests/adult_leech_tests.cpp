@@ -81,7 +81,7 @@ void determinismAndLimits() {
     const auto origin=r.pendingShots[0].position;tick(s,10);s.limits.projectiles=12;tick(s);
     check(r.wallRings==1&&s.projectiles.size()==12&&distance(s.projectiles[0].position,origin)<.001f,"exact packet released once with retained origin");
     auto contact=fixture();auto id2=spawn(contact);contact.godMode=false;contact.player.position=contact.findEnemy(id2)->position;tick(contact);
-    check(near(contact.player.hp,75),"contact2 converts to25 after shared multiplier");
+    check(near(contact.player.hp,StartingHealth-2),"contact2 removes two half-heart units after shared multiplier");
     s.debugScenario=false;damage(s,id,10000,false,true);tick(s,3);
     check(s.enemies.empty()&&!s.roomClear,"fired lob shots survive owner death and still gate clear");
     tick(s,90);check(s.roomClear&&s.enemies.empty(),"room clears after remaining shots land without offspring");

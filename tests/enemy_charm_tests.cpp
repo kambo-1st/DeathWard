@@ -88,7 +88,7 @@ void shots() {
     check(s.findEnemy(target)&&near(s.findEnemy(target)->hp,12.8f),"emitted shot preserves NPC damage and policy after source expiry/death");
     auto player=fixture();player.godMode=false;id=spawn(player,monsterId(12));player.player.position={7,.85f,0};
     player.applyEnemyStatus(id,EnemyStatus::Charm,180);ticks(player,35);
-    check(near(player.player.hp,StartingHealth-10*EnemyDamageMultiplier),"temporary Charm projectile fallback still harms player");
+    check(near(player.player.hp,StartingHealth-1),"temporary Charm projectile fallback still harms player");
     for(bool before:{true,false}) {
         auto pending=fixture();id=spawn(pending,monsterId(11));auto &e=*pending.findEnemy(id);
         e.headless->initialized=true;e.headless->cooldown=0;e.velocity={3,0,0};pending.limits.projectiles=0;
@@ -128,7 +128,7 @@ void contact() {
     wall.applyEnemyStatus(a,EnemyStatus::Charm,30);ticks(wall);check(near(wall.findEnemy(b)->hp,32),"cover blocks NPC contact");
     auto player=fixture();player.godMode=false;a=spawn(player,monsterId(12));player.applyEnemyStatus(a,EnemyStatus::Charm,90);
     player.player.position=player.findEnemy(a)->position;ticks(player);
-    check(near(player.player.hp,StartingHealth-10*EnemyDamageMultiplier),"temporary Charm is not friendly contact immunity");
+    check(near(player.player.hp,StartingHealth-1),"temporary Charm is not friendly contact immunity");
     std::cout<<"CHARM_CONTACT reciprocal=1 native_curve=1 poll_cadence=1 queue_retry=1 cover=1 player_contact=1\n";
 }
 void combinations() {
@@ -251,7 +251,7 @@ void champions() {
         check(near(body->championVisual*body->radius,radius*p->visual),"visual and collision scales independent");
         check(!s.makeChampion(id,variant)&&!s.makeChampion(id,25),"no stacking or unsupported champion type");
         s.godMode=false;s.player.position=body->position;ticks(s);
-        check(near(s.player.hp,StartingHealth-10*p->damage*EnemyDamageMultiplier),"champion contact damage policy");
+        check(near(s.player.hp,StartingHealth-std::round(p->damage)),"champion contact damage policy");
         s.applyEnemyStatus(id,EnemyStatus::Charm,-1);const auto hp=s.player.hp;s.player.hurt=0;ticks(s);
         check(near(s.player.hp,hp),"converted champion remains safe to player");
     }

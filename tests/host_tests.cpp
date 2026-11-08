@@ -38,7 +38,7 @@ void armor(){
     tick(s,160);check(s.findEnemy(id)->host->delay==0,"idle delay decays in seven-frame checks");
     for(auto key:{monsterId(27),monsterId(27,1),monsterId(204),monsterId(247),monsterId(859)}) {
         auto c=fixture();auto body=c.spawnMonster(key,c.player.position);c.godMode=false;tick(c,2);
-        check((c.player.hp<100)==(key.type!=27),"only mobile/floating Hosts inflict contact damage");check(c.findEnemy(body)!=nullptr,"contact does not remove Host");
+        check((c.player.hp<StartingHealth)==(key.type!=27),"only mobile/floating Hosts inflict contact damage");check(c.findEnemy(body)!=nullptr,"contact does not remove Host");
     }
 }
 void volleys(){

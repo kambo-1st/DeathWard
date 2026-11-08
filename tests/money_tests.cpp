@@ -70,7 +70,7 @@ void placement() {
 void collection() {
     auto run = fixture();
     const auto point = run.player.position;
-    run.player.hp = 40;
+    run.player.hp = 5;
     run.moneyPickups.push_back({point, 3, 1, false});
     run.moneyPickups.push_back({point, 5, 1, false});
     run.audioCues.clear();
@@ -79,7 +79,7 @@ void collection() {
     check(run.money() == 8 && run.moneyCollected == 8 && run.moneyPickups.empty() &&
               run.summary().moneyCollected == 8 && run.checkpointNeeded,
           "walking onto piles collects their value and requests a checkpoint");
-    check(run.player.hp == 40 && run.stats.kills == 0, "money never heals the player or awards a kill");
+    check(run.player.hp == 5 && run.stats.kills == 0, "money never heals the player or awards a kill");
     check(std::count_if(run.audioCues.cues().begin(), run.audioCues.cues().end(),
                         [](const auto &cue) { return cue.kind == AudioCueKind::Pickup; }) == 2,
           "collecting money emits pickup audio");

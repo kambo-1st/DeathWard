@@ -11,7 +11,14 @@
 
 - Target installed **The Binding of Isaac: Repentance 1.7.9b**. Resolve numeric wiki conflicts against its preserved XML; use measured native behavior for AI conflicts. XML attributes alone do not prove AI behavior.
 - Keep source base HP and stage HP separate from DeathWard conversions and adaptation factors. Preserve the current starting balance until a requested playtest adjustment; document deviations rather than changing source values to hide them.
-- The audited regular-enemy HP control is `regular_health_multiplier` in `assets/mechanics/regular_enemy_health.mechanics`. Its default is `1`; `.75` means 25% less HP. Use the shared calculation for spawning, champions, offspring and HP-dependent lifecycle rules. Keep player defaults (100 HP / 24 damage), attack damage and bosses separate.
+- The audited regular-enemy HP control is `regular_health_multiplier` in `assets/mechanics/regular_enemy_health.mechanics`. Its default is `1`; `.75` means 25% less HP. Use the shared calculation for spawning, champions, offspring and HP-dependent lifecycle rules. The selected H01 starting default is 6 red half-heart units / 24 damage; keep attack damage and bosses separate. H02–H18 are now selected, including incoming damage and healing conversion.
 - An expedition floor is mapped to a source stage; do not insert the expedition floor number directly into the source Stage HP formula.
 - Registry presence or a wiki description match does not constitute full enemy acceptance. Preserve explicit gaps and scope verification by enemy and behavior.
 - Whenever stopping work or ending a work turn, state what remains unfinished. Update the relevant persisted progress report when the remaining work changes; distinguish verified research from enabled gameplay and full acceptance.
+
+## Manual difference selection for Isaac comparisons
+
+- The bulk Isaac parity implementation was reverted at the user's request. The automatic parity goal is paused.
+- Consult `docs/isaac_first_floor_implementation.md` for the current state, difference selection register, historical research and recovery archive.
+- Implement comparison differences only after the user explicitly selects them (a named range is a valid selection). An archived plan, historical checklist or earlier broad parity objective does not authorize automatic implementation or resuming the bulk effort.
+- H01 is implemented. The user has now explicitly selected H02–H18; implement that range and preserve universal dodge, including its speed boost and immunity. All differences outside H01–H18 remain unselected.

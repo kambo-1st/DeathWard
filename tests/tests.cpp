@@ -49,6 +49,31 @@ void testCollision() {
           "fast projectile cannot tunnel through sphere");
     check(dw::segmentSphere({0, 3, 5}, {0, 3, -5}, {0, 1, 0}, 0.5f) > 1, "sphere collision respects height");
 }
+void testStartingRedHearts() {
+    for(auto theme:{dw::MissionTheme::Mine,dw::MissionTheme::Canyon}) {
+        dw::Simulation fresh(42,1,{},theme);
+        check(fresh.player.hp==6&&fresh.player.maxHp==6&&fresh.player.baseHealth==6,
+              "H01 starts fresh expeditions at three filled red hearts/six half-heart units");
+        check(fresh.player.shotDamage==24&&fresh.dynamite==3,
+              "H01 does not select damage or starting-resource differences");
+        fresh.tunePlayer(6,24);
+        check(fresh.player.hp==6&&fresh.player.maxHp==6,"launch tuning accepts six half-heart units");
+        fresh.jumpDebug(fresh.finalRoom());fresh.clearRoomDebug();fresh.player.hp=5;fresh.floorExitRequested=true;
+        check(fresh.advanceFloor()&&fresh.player.hp==5&&fresh.player.maxHp==6&&fresh.player.baseHealth==6,
+              "H01 does not refill injured red health when transferring to another floor");
+    }
+    dw::Simulation tutorial(42,1,{},dw::MissionTheme::Canyon,true,true);
+    check(tutorial.player.hp==6&&tutorial.player.maxHp==6,"The Lost Survey shares H01's starting health");
+    auto run=fixture();run.arena.walls.clear();run.enemies.clear();run.hazards.clear();
+    run.player.position={0,.85f,0};run.godMode=false;
+    dw::Hazard hazard;hazard.kind=dw::HazardKind::Creep;hazard.position={0,.85f,0};
+    hazard.delay=0;hazard.duration=3;hazard.radius=10;hazard.damage=10;run.hazards.push_back(hazard);
+    dw::Input dodge;dodge.dodge=true;dodge.movement={1,0,0};run.step(dodge);
+    check(run.player.dodge>0&&run.player.hp==6&&run.player.position.x>6*dw::Tick,
+          "H01 retains universal dodge immunity and movement boost");
+    for(int i=0;i<30&&run.player.hp==6;++i)run.step({});
+    check(run.player.hp==5&&!run.dead,"one existing damage unit leaves five half-heart units after dodge expires");
+}
 void testItems() {
     {
         auto run = fixture();
@@ -69,13 +94,14 @@ void testItems() {
     }
     {
         auto run = fixture();
+        run.tunePlayer(10,dw::RevolverDamage);
         run.grant(dw::ItemId::Judas);
         run.spawn(dw::EnemyKind::Rusher, {0, 0.85f, 0});
         run.spawn(dw::EnemyKind::Rusher, {0, 0.85f, -2});
         fire(run, {0, 0.85f, 4}, {0, 0, -1}, 100, true);
         tick(run, 22);
         check(run.stats.kills == 2, "last round penetrates two enemies");
-        check(run.player.maxHp == 80, "Judas applies its health cost to the 100 starting health");
+        check(run.player.maxHp == 8, "Judas applies its health cost to the ten half-heart units");
     }
     {
         auto run = fixture();
@@ -128,19 +154,14 @@ void testItems() {
 }
 void testPlayerTuning() {
     auto run = fixture();
-    run.tunePlayer(200, 48);
-    run.player.hp = 100;
+    run.tunePlayer(20,48);run.player.hp=10;
     run.grant(dw::ItemId::Judas);
-    run.tunePlayer(400, 20);
-    check(run.player.maxHp == 320 && run.player.hp == 200 && run.player.shotDamage == 20,
-          "health tuning preserves the injured fraction and applies existing item penalties");
-    run.grant(dw::ItemId::Judas);
-    run.tunePlayer(500, 20);
-    check(run.player.maxHp == 320 && run.player.hp == 250,
-          "item penalties still stack after tuning without accumulating additional tuning penalties");
-    run.tunePlayer(200, 20);
-    run.healDebug();
-    check(run.player.hp == 128, "the heal shortcut fills the adjusted effective maximum");
+    run.tunePlayer(24,20);
+    check(run.player.maxHp==18&&run.player.hp==11&&run.player.shotDamage==20,
+          "health tuning preserves injured fraction within whole-half units and applies container rounding");
+    run.grant(dw::ItemId::Judas);run.tunePlayer(22,20);
+    check(run.player.maxHp==12&&run.player.hp==9,"stacked item costs reconcile against typed capacity");
+    run.healDebug();check(run.player.hp==12,"heal fills adjusted red capacity");
 
     run.arena.walls.clear();
     dw::Input input;
@@ -170,13 +191,13 @@ void testPlayerTuning() {
     check(run.projectiles.back().ghost && run.projectiles.back().damage == 20,
           "ghost bullets honor damage below the original 48-point floor");
     run.tunePlayer(-100, 9000);
-    check(run.player.baseHealth == 25 && run.player.shotDamage == 500 && run.player.hp > 0,
+    check(run.player.baseHealth == 1 && run.player.shotDamage == 500 && run.player.hp > 0,
           "tuning clamps health and damage to playable bounds");
     run.tunePlayer(9000, -100);
-    check(run.player.baseHealth == 2000 && run.player.shotDamage == 1,
+    check(run.player.baseHealth == 24 && run.player.shotDamage == 1,
           "the opposite tuning bounds are enforced");
     run.tunePlayer(std::numeric_limits<float>::quiet_NaN(), 48);
-    check(run.player.baseHealth == 2000 && run.player.shotDamage == 1,
+    check(run.player.baseHealth == 24 && run.player.shotDamage == 1,
           "invalid tuning cannot poison player stats");
     run.finishDebug(false);
     run.tunePlayer(200, 48);
@@ -184,7 +205,7 @@ void testPlayerTuning() {
 }
 void testContinuousFire() {
     auto run = fixture();
-    check(run.player.hp == 100 && run.player.maxHp == 100, "new expeditions start at 100 HP");
+    check(run.player.hp == 6 && run.player.maxHp == 6, "new expeditions start with six red half-heart units");
     run.arena.walls.clear();
     run.grant(dw::ItemId::Judas);
     dw::Input input;
@@ -341,7 +362,7 @@ void testCampaign(const std::filesystem::path &path) {
     check(restart.data().history.size() == 1, "resolve is idempotent");
     id = restart.begin(456);
     dw::Simulation next(456, id, restart.data().world);
-    check(next.items.empty() && next.player.maxHp == 100, "temporary items and health costs reset");
+    check(next.items.empty() && next.player.maxHp == 6, "temporary items reset and new expeditions start with three red hearts");
     next.finishDebug(true);
     next.altarDestroyed = true;
     auto won = restart.resolve(next.summary(), dw::EndReason::Victory);
@@ -439,10 +460,10 @@ void testLoop() {
     run.godMode = true;
     int powers = 0;
     for (int room = 0; room < run.arena.roomCount(); ++room) {
-        run.player.hp = 30;
+        run.player.hp = 1;
         run.player.position = run.arena.rooms[size_t(room)].center;
         run.enterRoom(room);
-        check(run.player.hp == 30, "entering any room preserves the player's wounded health");
+        check(run.player.hp == 1, "entering any room preserves the player's wounded health");
         const auto before = run.items.size();
         if (run.arena.rooms[size_t(room)].kind == dw::RoomKind::Power) {
             check(run.roomClear && !run.rewardOpen,
@@ -464,7 +485,7 @@ void testLoop() {
             check(run.roomClear && run.livingEnemies() == 0 && !run.rewardOpen && run.items.size() == before,
                   "empty and shop rooms stay peaceful without enemies or free power rewards");
             run.enterRoom(room);
-            check(run.player.hp == 30 && run.stats.rooms == cleared,
+            check(run.player.hp == 1 && run.stats.rooms == cleared,
                   "revisiting a peaceful room preserves health and room completion");
         } else {
             check(run.livingEnemies() > 0, "one enemy group is present immediately on room entry");
@@ -472,7 +493,7 @@ void testLoop() {
             tick(run, 1);
             check(run.roomClear && !run.rewardOpen && run.items.size() == before,
                   "defeating the single group immediately opens doors without granting an item");
-            check(run.player.hp == 30, "killing the last enemy and clearing the room never heals");
+            check(run.player.hp == 1, "killing the last enemy and clearing the room never heals");
             const auto cleared = run.stats.rooms;
             tick(run, 600);
             check(run.livingEnemies() == 0 && run.stats.rooms == cleared,
@@ -512,6 +533,8 @@ int main() {
         std::filesystem::create_directories(directory);
         testCollision();
         std::cout << "PASS 3D swept collisions\n";
+        testStartingRedHearts();
+        std::cout << "PASS H01 starting red hearts and retained universal dodge\n";
         testItems();
         std::cout << "PASS five items and composed effects\n";
         testContinuousFire();

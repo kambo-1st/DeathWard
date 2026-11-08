@@ -34,7 +34,7 @@ void producer() {
     ticks(s,1);check(s.familiars.empty()&&allies(s)==0,"No item means no familiar or ally");
     s.grant(shadow);s.grant(shadow);ticks(s,1);
     check(s.familiars.size()==1&&allies(s)==1,"Duplicate copies retain one contact producer");
-    check(s.player.maxHp==100&&s.player.shotDamage==24,"Shadow pickup preserves character defaults");
+    check(s.player.maxHp==StartingHealth&&s.player.shotDamage==24,"Shadow pickup preserves character defaults");
     const auto familiar=s.familiars[0].id;
     for(int n=0;n<360;++n) {
         int i=0;for(auto &e:s.enemies)if(e.friendly){e.position={-16+float(i%4)*3,.85f,-16+float(i/4)*3};e.state=EnemyState::Stunned;e.stateTime=100;++i;}
@@ -66,7 +66,7 @@ void chargeAndContact() {
     s=fixture();const auto friendly=ally(s);const auto hostile=enemy(s,{2,.85f,0});
     ticks(s,12);check(s.findEnemy(hostile)->hp<1000&&s.findEnemy(friendly)->hp<64,"Contact harms both sides");
     check(near(s.findEnemy(hostile)->hp,972.16f)&&near(s.findEnemy(friendly)->hp,60.8f),"Independent allied and hostile contact conversions");
-    check(s.player.hp==100&&near(s.stats.damageDealt,27.84f),"Ally damage is not player damage or damage-dealt credit");
+    check(s.player.hp==StartingHealth&&near(s.stats.damageDealt,27.84f),"Ally damage is not player damage or damage-dealt credit");
     std::cout<<"SHADOW_CONTACT enemy_damage=27.84 ally_damage=3.2 player_damage=0 cardinal_target=1\n";
 }
 void incoming() {
@@ -93,7 +93,7 @@ void projectilesAndRewards() {
     s.findEnemy(id)->state=EnemyState::Stunned;s.findEnemy(id)->stateTime=100;
     Event shot;shot.position=shot.origin={0,.85f,-5};shot.direction={0,0,1};shot.damage=10;shot.speed=10;shot.hostile=true;
     s.queueRoot(shot);s.drainEvents();ticks(s,35);
-    check(near(s.findEnemy(id)->hp,60.8f)&&s.player.hp==100&&s.projectiles.empty(),"Ally intercepts nearest hostile shot before player");
+    check(near(s.findEnemy(id)->hp,60.8f)&&s.player.hp==StartingHealth&&s.projectiles.empty(),"Ally intercepts nearest hostile shot before player");
     s=fixture();const auto explosiveAlly=ally(s);s.findEnemy(explosiveAlly)->state=EnemyState::Stunned;s.findEnemy(explosiveAlly)->stateTime=100;
     auto explosive=shot;explosive.position=explosive.origin={0,.85f,-2};explosive.damage=1000;
     explosive.projectileKind=ProjectileKind::Ipecac;explosive.projectileBlastRadius=2;explosive.projectileBlastDamage=20;
@@ -144,7 +144,7 @@ void floorAndJournal() {
     check(allies(s)==1&&s.familiars.size()==1,"Floor-exit fixture has a live ally and producer");
     const auto fingerprint=s.content->fingerprint();
     s.floorExitRequested=true;check(s.advanceFloor(),"A companion does not prevent floor advancement");
-    check(s.floor==1&&s.itemStacks(shadow)==1&&s.player.maxHp==100&&s.player.shotDamage==24,
+    check(s.floor==1&&s.itemStacks(shadow)==1&&s.player.maxHp==StartingHealth&&s.player.shotDamage==24,
         "Namespaced item and character defaults survive floor transition");
     check(allies(s)==0&&s.familiars.empty()&&s.content->fingerprint()==fingerprint,
         "Floor transition expires room actors while preserving the mechanics snapshot");

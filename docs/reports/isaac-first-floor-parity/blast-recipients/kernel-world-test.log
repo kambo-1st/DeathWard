@@ -1,0 +1,18 @@
+73/144 Testing: native_blast_recipients
+73/144 Test: native_blast_recipients
+Command: "/home/kambo/workspace/DeathWard/build/deathward_blast_recipient_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_blast_recipients" start time: Nov 08 03:56 CET
+Output:
+----------------------------------------------------------
+NATIVE_BLAST cases=658 maximum_velocity_difference=0
+PASS source blast world recipients/impulse, cover, legacy geometry and retained dodge; full world acceptance remains open
+PASS real player/troll/Mulliboom blast producer boundary witnesses
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"native_blast_recipients" end time: Nov 08 03:56 CET
+"native_blast_recipients" time elapsed: 00:00:00
+----------------------------------------------------------
+

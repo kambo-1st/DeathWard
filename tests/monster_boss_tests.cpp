@@ -82,7 +82,7 @@ void patternsAndJump() {
     check(std::abs(yellow.findEnemy(b)->radius/normal.findEnemy(a)->radius-.85f)<.001f,"yellow is 15 percent smaller");
     ticks(normal,120);ticks(yellow,120);check(!yellow.hazards.empty()&&yellow.hazards.size()<20,"yellow has bounded continuously refreshed creep");
     auto contact=fixture();contact.godMode=false;const auto c=peep(contact);contact.player.position={0,.85f,0};contact.findEnemy(c)->cooldown=1000;ticks(contact,1);
-    check(contact.player.hp==75,"whole-heart source contact adapts to twice ordinary contact, multiplier applied once");
+    check(contact.player.hp==StartingHealth-2,"whole-heart source contact adapts to twice ordinary contact, multiplier applied once");
     std::cout<<"PEEP_ATTACKS creep=1 ring=8 landing=12 locked_arc=1 yellow_size=.85 whole_contact=25\n";
 }
 void eyeMotionAndBlocking() {
@@ -105,7 +105,7 @@ void eyeMotionAndBlocking() {
     Event shot;shot.position={-4,.85f,0};shot.direction={1,0,0};shot.damage=100;shot.speed=26;s.queueRoot(shot);s.drainEvents();ticks(s,20);
     check(s.projectiles.empty()&&s.findEnemy(owner)->hp==bossHp&&s.findEnemy(eye)->hp==hp,"real player bullet stops at invulnerable eye");
     s.godMode=false;s.player.hurt=0;s.player.position=s.findEnemy(eye)->position;ticks(s,1);
-    check(s.player.hp==87.5f,"eye deals ordinary contact damage");
+    check(s.player.hp==StartingHealth-1,"eye deals ordinary contact damage");
     std::cout<<"PEEP_EYES wall_and_body_bounce=1 rocks=1 projectile_block=1 bomb_direction=1 contact=12.5\n";
 }
 void stageAndCompletion() {
@@ -179,7 +179,7 @@ void startingKit() {
             s.step(in);
         }
         std::cout<<"PEEP_STARTING_KIT form="<<int(form)<<" seconds="<<s.stats.duration<<" hp="<<s.player.hp<<" kills="<<s.stats.kills<<'\n';
-        check(!s.dead&&!s.findEnemy(id)&&s.player.hp>0&&s.stats.duration<150,"unmodified 100 HP / 24-damage kit defeats each form without bombs or invulnerability");
+        check(!s.dead&&!s.findEnemy(id)&&s.player.hp>0&&s.stats.duration<150,"unmodified 6 half-heart units / 24-damage kit defeats each form without bombs or invulnerability");
     }
 }
 }

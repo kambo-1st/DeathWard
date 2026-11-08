@@ -1,26 +1,55 @@
 {
   "bands": [
     {
-      "seed": 22,
+      "seed": 9,
       "floor": 5,
-      "room": 6,
+      "room": 5,
       "band": 2
     },
     {
-      "seed": 2,
-      "floor": 5,
-      "room": 6,
+      "seed": 1105,
+      "floor": 6,
+      "room": 9,
       "band": 3
     }
   ],
   "river": {
-    "seed": 101,
+    "seed": 1105,
     "floor": 6,
     "room": 9,
     "band": 3
   },
-  "source": "native-focused-4.txt",
-  "scope": "Actual generated residents in both approved bands, source controller activation, and 240 simulation ticks in a naturally populated interior-river room. All coordinates use zero-based floor/room indices.",
-  "river_discovery": "river-search-1.txt",
-  "validated_by": "native-focused-final.txt"
+  "source": "../../isaac-first-floor-parity/update-phases/brain-check.log",
+  "scope": "Actual naturally generated residents in both approved bands; all existing runtime/legal-placement checks and240 simulation ticks in an interior-river room retained. Zero-based floor/room indices.",
+  "discovery": "../../isaac-first-floor-parity/update-phases/brain-river-search.log",
+  "previous_checkpoint": {
+    "bands": [
+      {
+        "seed": 22,
+        "floor": 5,
+        "room": 6,
+        "band": 2
+      },
+      {
+        "seed": 2,
+        "floor": 5,
+        "room": 6,
+        "band": 3
+      }
+    ],
+    "river": {
+      "seed": 101,
+      "floor": 6,
+      "room": 9,
+      "band": 3
+    },
+    "source": "native-focused-4.txt",
+    "scope": "Actual generated residents in both approved bands, source controller activation, and 240 simulation ticks in a naturally populated interior-river room. All coordinates use zero-based floor/room indices.",
+    "river_discovery": "river-search-1.txt",
+    "validated_by": "native-focused-final.txt"
+  },
+  "full_enemy_acceptance": false,
+  "historical_after_parity_rollback": true,
+  "current_runtime_witnesses_verified_after_rollback": false,
+  "rollback_note": "Preserved evidence from the reverted parity attempt. The committed baseline witnesses are retained under previous_checkpoint. No current-runtime acceptance is claimed by this record."
 }

@@ -65,7 +65,7 @@ void healthAndMotion() {
     const auto start=s.findEnemy(id)->position;s.player.position={-20,.85f,-20};tick(s,20);
     check(s.findEnemy(id)->position.x<start.x&&s.findEnemy(id)->position.z>start.z,"Player movement does not steer a Boom Fly");
     auto contact=fixture();contact.player.position={0,.85f,0};contact.godMode=false;contact.spawnMonster(monsterId(25,6),{0,.85f,0});contact.step({});
-    check(near(contact.player.hp,75)&&contact.stats.explosions==0,"Tainted has doubled contact damage and does not contact-detonate");
+    check(near(contact.player.hp,StartingHealth-2)&&contact.stats.explosions==0,"Tainted has doubled contact damage and does not contact-detonate");
     auto cover=fixture();cover.arena.obstacles={{{-1,0,-1},{1,2,1}}};cover.arena.rebuildWalls();
     const auto high=cover.spawnMonster(monsterId(25),{-4,.85f,-4});cover.findEnemy(high)->facing=unit({1,0,1});float peak=0;
     for(int n=0;n<180;++n){cover.step({});const auto &e=*cover.findEnemy(high);peak=std::max(peak,e.position.y);check(!sphereBox(e.position,e.radius,cover.arena.obstacles[0]),"Diagonal flyer stays above interior cover");}
@@ -103,7 +103,7 @@ void deathPatterns() {
     }
     auto collateral=fixture();collateral.godMode=false;collateral.player.position={2.5f,.85f,0};
     const auto root=collateral.spawnMonster(monsterId(25),{}),victim=collateral.spawnMonster(monsterId(14),{1,.85f,0});collateral.findEnemy(victim)->hp=500;
-    kill(collateral,root);check(near(collateral.findEnemy(victim)->hp,400)&&near(collateral.player.hp,75),"Actual immediate explosion uses configured enemy/player damage");
+    kill(collateral,root);check(near(collateral.findEnemy(victim)->hp,400)&&near(collateral.player.hp,StartingHealth-2),"Actual immediate explosion uses configured enemy/player damage");
     auto ordinary=fixture();kill(ordinary,ordinary.spawnMonster(monsterId(25),{}),true);check(ordinary.stats.explosions==1,"Non-debug execution preserves death attack");
     auto demolition=fixture();Breakable prop;prop.id=1;prop.room=0;prop.kind=BreakableKind::CrackedRock;
     prop.bounds={{1,0,-.5f},{1.5f,1.5f,.5f}};prop.health=1;demolition.arena.breakables.push_back(prop);demolition.arena.rebuildWalls();

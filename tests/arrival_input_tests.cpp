@@ -99,8 +99,8 @@ int main() {
                 click(850,691);check(!game.journalVisible(),"journal close button resumes play");
             }
             game.run->jumpDebug(game.run->finalRoom());game.run->clearRoomDebug();
-            game.run->player.hp=37;game.run->player.position=game.run->arena.exit;game.run->interact();frame();
-            if(floor+1<floors)check(game.screen==Screen::Expedition&&game.run->player.hp==37,"floor transition preserves health and expedition screen");
+            game.run->player.hp=5;game.run->player.position=game.run->arena.exit;game.run->interact();frame();
+            if(floor+1<floors)check(game.screen==Screen::Expedition&&game.run->player.hp==5,"floor transition preserves health and expedition screen");
         }
         check(game.screen==Screen::Summary&&game.lastSummary.evidence.size()==4,"final exit resolves all four sites");
         capture("rourke-summary");game.perform(Action::Hub);frame();

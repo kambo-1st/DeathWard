@@ -1,0 +1,112 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start   8: expedition_destruction
+ 1/53 Test   #8: expedition_destruction ...........   Passed   42.93 sec
+      Start  29: mission_shop
+ 2/53 Test  #29: mission_shop .....................   Passed    1.90 sec
+      Start  40: brain
+ 3/53 Test  #40: brain ............................   Passed    1.04 sec
+      Start  44: guts_family
+ 4/53 Test  #44: guts_family ......................   Passed   85.33 sec
+      Start  46: leech_behavior
+ 5/53 Test  #46: leech_behavior ...................   Passed    5.48 sec
+      Start  48: adult_leech
+ 6/53 Test  #48: adult_leech ......................   Passed    0.60 sec
+      Start  49: dip_variants
+ 7/53 Test  #49: dip_variants .....................   Passed    1.89 sec
+      Start  51: membrain_family
+ 8/53 Test  #51: membrain_family ..................   Passed    1.69 sec
+      Start  52: mirror_behavior
+ 9/53 Test  #52: mirror_behavior ..................   Passed   19.95 sec
+      Start  53: linked_head
+10/53 Test  #53: linked_head ......................   Passed    0.29 sec
+      Start  55: monster_hopping
+11/53 Test  #55: monster_hopping ..................   Passed    1.50 sec
+      Start  57: monster_boss_components
+12/53 Test  #57: monster_boss_components ..........   Passed    1.24 sec
+      Start  58: bloat_boss_and_chargers
+13/53 Test  #58: bloat_boss_and_chargers ..........   Passed    1.62 sec
+      Start  59: native_player_motion
+14/53 Test  #59: native_player_motion .............   Passed    0.00 sec
+      Start  60: native_player_health
+15/53 Test  #60: native_player_health .............   Passed    0.00 sec
+      Start  61: native_midas_freeze
+16/53 Test  #61: native_midas_freeze ..............   Passed    0.00 sec
+      Start  62: native_blue_fly
+17/53 Test  #62: native_blue_fly ..................   Passed    0.00 sec
+      Start  63: native_player_hurt
+18/53 Test  #63: native_player_hurt ...............   Passed    0.00 sec
+      Start  64: native_duke
+19/53 Test  #64: native_duke ......................   Passed    0.39 sec
+      Start  65: native_monstro
+20/53 Test  #65: native_monstro ...................   Passed    0.37 sec
+      Start  66: native_room_awards
+21/53 Test  #66: native_room_awards ...............   Passed    0.01 sec
+      Start  67: source_resources
+22/53 Test  #67: source_resources .................   Passed    0.38 sec
+      Start  68: source_heart_pickups
+23/53 Test  #68: source_heart_pickups .............   Passed    0.22 sec
+      Start  69: source_coins
+24/53 Test  #69: source_coins .....................   Passed    0.26 sec
+      Start  70: source_coin_producers
+25/53 Test  #70: source_coin_producers ............   Passed    0.26 sec
+      Start  71: native_player_bombs
+26/53 Test  #71: native_player_bombs ..............   Passed    1.32 sec
+      Start  72: native_bomb_contacts
+27/53 Test  #72: native_bomb_contacts .............   Passed    0.01 sec
+      Start  73: native_troll_bombs
+28/53 Test  #73: native_troll_bombs ...............   Passed    0.02 sec
+      Start  74: native_blast_recipients
+29/53 Test  #74: native_blast_recipients ..........   Passed    0.37 sec
+      Start  75: source_bomb_producers
+30/53 Test  #75: source_bomb_producers ............   Passed    0.31 sec
+      Start  76: isaac_baseline
+31/53 Test  #76: isaac_baseline ...................   Passed    2.32 sec
+      Start  77: regular_health_balance
+32/53 Test  #77: regular_health_balance ...........   Passed    0.38 sec
+      Start  84: supplied_bombs
+33/53 Test  #84: supplied_bombs ...................   Passed    0.49 sec
+      Start  85: fly_bombs
+34/53 Test  #85: fly_bombs ........................   Passed    8.13 sec
+      Start  86: enemy_bomb_payloads
+35/53 Test  #86: enemy_bomb_payloads ..............   Passed    0.48 sec
+      Start  90: hornfel_boss
+36/53 Test  #90: hornfel_boss .....................   Passed    3.79 sec
+      Start  99: buzzing_flies
+37/53 Test  #99: buzzing_flies ....................   Passed   29.68 sec
+      Start 100: tainted_pooter_impacts
+38/53 Test #100: tainted_pooter_impacts ...........   Passed    0.27 sec
+      Start 104: leper_flesh
+39/53 Test #104: leper_flesh ......................   Passed    3.41 sec
+      Start 105: leper_family
+40/53 Test #105: leper_family .....................   Passed    1.79 sec
+      Start 106: mulligan_family
+41/53 Test #106: mulligan_family ..................   Passed   57.04 sec
+      Start 107: spider_family
+42/53 Test #107: spider_family ....................   Passed    0.99 sec
+      Start 116: first_floor_status_effects
+43/53 Test #116: first_floor_status_effects .......   Passed    0.70 sec
+      Start 117: first_floor_freeze_effect
+44/53 Test #117: first_floor_freeze_effect ........   Passed    0.74 sec
+      Start 118: first_floor_damage_statuses
+45/53 Test #118: first_floor_damage_statuses ......   Passed    1.18 sec
+      Start 119: first_floor_slow_effect
+46/53 Test #119: first_floor_slow_effect ..........   Passed    1.00 sec
+      Start 121: first_floor_charm_effect
+47/53 Test #121: first_floor_charm_effect .........   Passed    5.80 sec
+      Start 123: rock_spider_family
+48/53 Test #123: rock_spider_family ...............   Passed   39.46 sec
+      Start 124: spider_variants
+49/53 Test #124: spider_variants ..................   Passed   13.35 sec
+      Start 132: tainted_hopper
+50/53 Test #132: tainted_hopper ...................   Passed   10.84 sec
+      Start 136: willo_and_mullighoul
+51/53 Test #136: willo_and_mullighoul .............   Passed    7.32 sec
+      Start 137: prey_and_small_leech
+52/53 Test #137: prey_and_small_leech .............   Passed   34.10 sec
+      Start 142: core_contracts
+53/53 Test #142: core_contracts ...................   Passed    0.42 sec
+
+100% tests passed, 0 tests failed out of 53
+
+Total Test time (real) = 393.11 sec

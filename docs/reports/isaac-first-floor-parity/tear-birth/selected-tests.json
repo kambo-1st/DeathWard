@@ -1,0 +1,21 @@
+[
+  "item_builds",
+  "mirror_behavior",
+  "linked_head",
+  "monster_boss_components",
+  "bloat_boss_and_chargers",
+  "native_tear_birth",
+  "native_player_fire",
+  "native_player_motion",
+  "native_duke",
+  "native_monstro",
+  "native_player_bombs",
+  "native_blast_recipients",
+  "isaac_baseline",
+  "first_floor_freeze_effect",
+  "first_floor_damage_statuses",
+  "first_floor_slow_effect",
+  "first_floor_charm_effect",
+  "rock_spider_family",
+  "core_contracts"
+]

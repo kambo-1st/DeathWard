@@ -74,7 +74,7 @@ void terrainAndLifecycle() {
     phase(s,id,MushroomPhase::Revealed);check(s.stats.projectiles==4,"normal Mushroom does not require line of sight");tick(s,30);
     for(const auto &p:s.projectiles)if(p.velocity.z>20)check(p.position.z<3,"physical shots stopped by terrain");
     s.findEnemy(id)->position.x=1;s.findEnemy(id)->velocity={5,0,0};tick(s);check(near(s.findEnemy(id)->position.x,0)&&near(length(s.findEnemy(id)->velocity),0),"anchored position returns after shove");
-    auto c=fixture(lib);c.godMode=false;c.player.position={0,.85f,0};spawn(c);tick(c);check(c.player.hp<100,"contact damages while closed");
+    auto c=fixture(lib);c.godMode=false;c.player.position={0,.85f,0};spawn(c);tick(c);check(c.player.hp<StartingHealth,"contact damages while closed");
     auto death=fixture(lib);id=spawn(death);phase(death,id,MushroomPhase::Reveal);hit(death,id,1000);tick(death,160);
     check(death.stats.projectiles==0&&death.stats.kills==1&&death.roomThreats()==0,"death cancels unissued burst and room threat");
     auto pause=fixture(lib);id=spawn(pause);phase(pause,id,MushroomPhase::Reveal);tick(pause,2);

@@ -174,7 +174,7 @@ void lifecycleAndKit() {
     damage(child,childId,10000,true);tick(child);check(child.roomThreats()==0,"last offspring death releases room threat");
     for(const auto [variant,subtype]:{std::pair{0,0},std::pair{1,0},std::pair{1,1},std::pair{3,0}}) {
         auto fight=fixture();fight.godMode=false;fight.player.position={10,.85f,6};
-        check(near(fight.player.hp,100)&&near(fight.player.shotDamage,24),"unchanged starting equipment");
+        check(near(fight.player.hp,StartingHealth)&&near(fight.player.shotDamage,24),"unchanged starting equipment");
         const auto id=spawn(fight,variant,subtype);int frames=0;
         while(frames<2400&&!fight.dead&&fight.roomThreats()) {
             Input input;const auto *e=fight.findEnemy(id);

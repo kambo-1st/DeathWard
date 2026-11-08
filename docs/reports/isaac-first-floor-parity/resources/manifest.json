@@ -1,0 +1,67 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "collection_cases": 48,
+  "floor_flag_cases": 8,
+  "coin_value_cases": 7,
+  "windows": [
+    {
+      "name": "key_collection",
+      "start": "0x6c098e",
+      "end_exclusive": "0x6c0b78",
+      "raw_sha256": "fb84afa1fa0688d9de9bf6d3815572401e36c20cb96f6c6f2340b2ca6919fd8e"
+    },
+    {
+      "name": "bomb_collection",
+      "start": "0x6c0b81",
+      "end_exclusive": "0x6c0cf5",
+      "raw_sha256": "89d01fc789eb14d61e28d5a114b120a5f852da4a233186d1a05179edbb770dcc"
+    },
+    {
+      "name": "add_keys",
+      "start": "0x7258c0",
+      "end_exclusive": "0x725930",
+      "raw_sha256": "c96b3d0ba903e0d9b45726d45cba4e6c2aa429b804369b11a02cf74fab36760a"
+    },
+    {
+      "name": "add_bombs",
+      "start": "0x725810",
+      "end_exclusive": "0x7258c0",
+      "raw_sha256": "28b08a8bdbc1a6a341ed67be7c827f200f99784128a5ff5cc686dbd01d35e7d8"
+    },
+    {
+      "name": "add_golden_key",
+      "start": "0x725930",
+      "end_exclusive": "0x725970",
+      "raw_sha256": "1b16be653e5167481f898983a645b29aa245a1a0a02518d5b38c6a78946acef4"
+    },
+    {
+      "name": "add_golden_bomb",
+      "start": "0x78b1d0",
+      "end_exclusive": "0x78b210",
+      "raw_sha256": "dfd539730675705efa313fbda9ebacde1e2aa143f359aec9d659194572070093"
+    },
+    {
+      "name": "conditional_floor_flags",
+      "start": "0x76ae77",
+      "end_exclusive": "0x76ae92",
+      "raw_sha256": "3ff03f012e9844eff00c20e60a2ba4e46cd5e2d9ef217193c305782f822ba5d3"
+    },
+    {
+      "name": "coin_value",
+      "start": "0x6be800",
+      "end_exclusive": "0x6be824",
+      "raw_sha256": "e5f03fef4331cc80084053e80e2d4770e25a73ae5478cb1da3bc700216790aea"
+    }
+  ],
+  "scope": "Admitted ordinary key/bomb collision branches, with actual AddKeys/AddBombs/AddGolden resource APIs and co-op bookkeeping running native instructions. No numeric helpers replaced. Collision prechecks, post-collection effects and world lifetime excluded. Conditional floor word-clear is bounded: argument0 clears, argument1 preserves; caller semantics not proved by this slice. Coin values are a getter, not collection/lifecycle evidence.",
+  "fixture": "Same synthetic ordinary one-player/empty-inventory fixture as room-awards. Challenge0. Resource counts0,1,98,99 and golden flags0/1. Hosted memory imports only.",
+  "full_acceptance": false,
+  "remaining": [
+    "native collision eligibility at caps/duplicate golden resources",
+    "source timers, movement and room seed/placement",
+    "charged-key active slots",
+    "troll and giga bomb actors",
+    "coin special effects and lifecycle",
+    "live floor caller verification and full-floor acceptance"
+  ]
+}

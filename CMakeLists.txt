@@ -135,6 +135,7 @@ add_library(deathward_core
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
+    src/combat/PlayerHealth.cpp
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
     src/combat/Shop.cpp
@@ -705,6 +706,23 @@ if(BUILD_TESTING)
     add_executable(deathward_bloat_tests tests/bloat_tests.cpp)
     target_link_libraries(deathward_bloat_tests PRIVATE deathward_core)
     add_test(NAME bloat_boss_and_chargers COMMAND deathward_bloat_tests)
+    add_executable(deathward_player_hurt_tests tests/player_hurt_tests.cpp)
+    target_link_libraries(deathward_player_hurt_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_player_hurt_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_SOURCE_DIR}")
+    add_test(NAME native_player_hurt COMMAND deathward_player_hurt_tests)
+    add_executable(deathward_health_gameplay_tests tests/health_gameplay_tests.cpp)
+    target_link_libraries(deathward_health_gameplay_tests PRIVATE deathward_core)
+    add_test(NAME heart_gameplay COMMAND deathward_health_gameplay_tests)
+    foreach(health_effect IN ITEMS blue_fly midas_freeze)
+        add_executable(deathward_${health_effect}_tests tests/${health_effect}_tests.cpp)
+        target_link_libraries(deathward_${health_effect}_tests PRIVATE deathward_core)
+        target_compile_definitions(deathward_${health_effect}_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_SOURCE_DIR}")
+        add_test(NAME native_${health_effect} COMMAND deathward_${health_effect}_tests)
+    endforeach()
+    add_executable(deathward_player_health_tests tests/player_health_tests.cpp)
+    target_link_libraries(deathward_player_health_tests PRIVATE deathward_core)
+    target_compile_definitions(deathward_player_health_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_SOURCE_DIR}")
+    add_test(NAME native_player_health COMMAND deathward_player_health_tests)
     add_executable(deathward_regular_health_tests tests/regular_health_tests.cpp)
     target_link_libraries(deathward_regular_health_tests PRIVATE deathward_core)
     add_test(NAME regular_health_balance COMMAND deathward_regular_health_tests)

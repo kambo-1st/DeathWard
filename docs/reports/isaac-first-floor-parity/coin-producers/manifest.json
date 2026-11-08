@@ -1,0 +1,115 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "floor": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06524",
+        "export": "0x10090de0"
+      },
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 128,
+      "_libm_sse2_sin_precise": 128,
+      "_libm_sse2_pow_precise": 0,
+      "floor": 1320
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "gate_cases": 40,
+  "timeline_states": 451,
+  "emission_cases": 128,
+  "animation_metadata_sha256": "7cd5d8f7e73eb75fa4b9e7cdca19a0b2e511c1b76784a059476b03074d986891",
+  "windows": [
+    {
+      "name": "pickup_update_order",
+      "start": "0x6bb274",
+      "end_exclusive": "0x6bb48a",
+      "sha256": "801d70d340974485df95425d06a3e554822d24e8351e6e87692e23f16fd7562e"
+    },
+    {
+      "name": "appearance_gate",
+      "start": "0x6bb8c5",
+      "end_exclusive": "0x6bba3b",
+      "sha256": "8ec4d96a553fe4b44d482e886f1a9ecfd73cc29b29c8ed6ae4f4764f7569ae11"
+    },
+    {
+      "name": "layer_update",
+      "start": "0x403d60",
+      "end_exclusive": "0x403e21",
+      "sha256": "9e5c57befaf51f4437d96b33395eb65be521afd7a09d435794b023b9c62d2440"
+    },
+    {
+      "name": "layer_set_frame",
+      "start": "0x403b00",
+      "end_exclusive": "0x403bf4",
+      "sha256": "d7b0aafb8e8d37475d136d4cce63297a70c349f4e706180fca4ccb90e50fb3d1"
+    },
+    {
+      "name": "layer_events",
+      "start": "0x403a90",
+      "end_exclusive": "0x403afd",
+      "sha256": "a5f6a83a3eb9d5f3b60a5274fc5763ab6768b489f4373c83897b625457e6c4df"
+    },
+    {
+      "name": "is_playing",
+      "start": "0x405640",
+      "end_exclusive": "0x405693",
+      "sha256": "1fa58095e2927f2c1d7807fd306a57347edb02ad20b8db3544e3effa98da2898"
+    },
+    {
+      "name": "event_query",
+      "start": "0x405e90",
+      "end_exclusive": "0x405f2b",
+      "sha256": "c3d1aba882afd0e6b49175bd5b2c2c58525b4e810b114a8dbec37e1d857b098b"
+    },
+    {
+      "name": "golden_emission",
+      "start": "0x78c606",
+      "end_exclusive": "0x78c6dd",
+      "sha256": "15f211c78f05873b5dd0de4236eaf138300114cf9d89c3ef51e70cb27344009c"
+    },
+    {
+      "name": "golden_direction",
+      "start": "0x6c3450",
+      "end_exclusive": "0x6c3645",
+      "sha256": "62e6acc3528e8dd5ed0bb048f09e03bdd462b2382c750425e2c81938f5c0d21d"
+    },
+    {
+      "name": "midas_emission",
+      "start": "0x69e86e",
+      "end_exclusive": "0x69e8d0",
+      "sha256": "191717e0dd7917a6e978158f6201ef49259a5a55178223531d0281bd79b436c0"
+    },
+    {
+      "name": "unit_direction",
+      "start": "0x659290",
+      "end_exclusive": "0x6592ef",
+      "sha256": "d692c335c6eb08e51ecd9a1de076cea055dc56d03b47126c5913845e1fb314b1"
+    }
+  ],
+  "scope": "Native sprite frame advance, event-mask calculation, animation-name/playing/event queries and pickup collision gate with minimal parsed metadata and no render layers. Only sound endpoint and Play(Idle) presentation/state reset are hosted; no frame/event/collision decisions replaced. Native emission arithmetic and linked original trig execute with supplied unsigned words; global RNG, room ray queries and whole spawn/physics ordering excluded.",
+  "correction": "Native Pickup::Update calls base entity update at6bb276 before damping at6bb472; damping carries into the next invocation. Earlier synthetic scared-motion sequence applied these blocks in reversed order and is superseded for runtime acceptance.",
+  "golden_subtype": "Golden-heart Spawn uses subtype0 (resolve random coin), Midas Spawn uses explicit penny subtype1.",
+  "full_acceptance": false
+}

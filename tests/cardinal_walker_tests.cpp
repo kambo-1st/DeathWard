@@ -53,7 +53,7 @@ void geometryAndLifecycle() {
 }
 void contactAndStartingKit() {
     auto s=fixture();s.godMode=false;spawn(s);s.player.position={0,.85f,0};tick(s);
-    check(near(s.player.hp,StartingHealth-10*EnemyDamageMultiplier),"source contact converts through shared hostile damage multiplier");
+    check(near(s.player.hp,StartingHealth-1),"source contact converts through half-heart conversion");
     const float hp=s.player.hp;tick(s,5);check(near(s.player.hp,hp),"player invulnerability prevents contact damage every frame");
     auto duel=fixture();duel.godMode=false;duel.player.position={0,.85f,8};const auto id=spawn(duel);int frames=0;
     while(duel.roomThreats()&&!duel.dead&&frames<1800) {

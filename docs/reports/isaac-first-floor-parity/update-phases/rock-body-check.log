@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  76: isaac_baseline
+1/2 Test  #76: isaac_baseline ...................   Passed    2.52 sec
+    Start 123: rock_spider_family
+2/2 Test #123: rock_spider_family ...............   Passed   39.49 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  42.02 sec

@@ -1,0 +1,135 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "blended_cases": 78,
+  "red_quantity_cases": 4,
+  "scared_prediction_cases": 12,
+  "scared_drive_cases": 180,
+  "historical_synthetic_order_motion_cases": 360,
+  "scared_ordered_motion_cases": 720,
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 756,
+      "_libm_sse2_sin_precise": 756,
+      "_libm_sse2_pow_precise": 0
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "pickup_damping_cases": 6,
+  "windows": [
+    {
+      "name": "blended_collection",
+      "start": "0x6bf6be",
+      "end_exclusive": "0x6bf83c",
+      "raw_sha256": "43de2a380e14681e399d8a35716a9489fa5ec9ce6523bb2d17c5534278a0861f"
+    },
+    {
+      "name": "red_pickup_dispatch",
+      "start": "0x6bf412",
+      "end_exclusive": "0x6bf436",
+      "raw_sha256": "0e9c98be3b5c71e97db3d7a3452c6dfc1ecdcbd8b41228841e679b78acd974c6"
+    },
+    {
+      "name": "red_pickup_collection",
+      "start": "0x6bfa0c",
+      "end_exclusive": "0x6bfc16",
+      "raw_sha256": "94c07774d7e14d7402207298dbc32e6f68c950f2533733f6715f0208293f039a"
+    },
+    {
+      "name": "scared_target_and_drive",
+      "start": "0x6bada1",
+      "end_exclusive": "0x6bb186",
+      "raw_sha256": "46c2ac89670c4272d08a90d848e515bc65d538980fda850e043602c51bd25098"
+    },
+    {
+      "name": "pickup_damping",
+      "start": "0x6bb460",
+      "end_exclusive": "0x6bb48a",
+      "raw_sha256": "2c14095c30b60c577ed1fc9ca867e11fe88d6aae0bf4eeb78eb965e5a0a743fb"
+    },
+    {
+      "name": "ordinary_physics",
+      "start": "0x686406",
+      "end_exclusive": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf"
+    },
+    {
+      "name": "can_pick_red",
+      "start": "0x786d30",
+      "end_exclusive": "0x786d80",
+      "raw_sha256": "0423a4f69d941501d8598acf8ab62abe071ca43b575182e6632df33a83a2dce2"
+    },
+    {
+      "name": "can_pick_soul",
+      "start": "0x786d80",
+      "end_exclusive": "0x786e60",
+      "raw_sha256": "f9e823037706cbb4fa09a11d24cdae87f3a66aa5543f4f515c771277f9e68362"
+    }
+  ],
+  "source_xml": {
+    "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+    "sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+    "entities": [
+      {
+        "anm2path": "005.020_Scared Heart.anm2",
+        "baseHP": "0",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "0",
+        "collisionMass": "3",
+        "collisionRadius": "12",
+        "friction": "1",
+        "id": "5",
+        "name": "Scared Heart",
+        "numGridCollisionPoints": "24",
+        "shadowSize": "17",
+        "stageHP": "0",
+        "subtype": "9",
+        "variant": "10"
+      },
+      {
+        "anm2path": "005.019_Blended Heart.anm2",
+        "baseHP": "0",
+        "boss": "0",
+        "champion": "0",
+        "collisionDamage": "0",
+        "collisionMass": "3",
+        "collisionRadius": "12",
+        "friction": "1",
+        "id": "5",
+        "name": "Blended Heart",
+        "numGridCollisionPoints": "24",
+        "shadowSize": "17",
+        "stageHP": "0",
+        "subtype": "10",
+        "variant": "10"
+      }
+    ]
+  },
+  "blended_scope": "Ordinary empty-inventory Isaac admitted blended branch, real CanPickRed/CanPickSoul and AddRed/AddSoul calls, stopped before presentation/refusal continuations. Collision prechecks and item modifiers excluded.",
+  "scared_scope": "Supplied predicted threat delta, global/creation frame and init seed. Native distance cutoff/local xorshift/strength/sqrt/normalization execute before external trigonometry. World target enumeration, imported trig, animations and whole update excluded.",
+  "scared_complete_motion_scope": "Historical360 sequence applied damping before base physics. Preserved only as a synthetic calculation reference, superseded for runtime ordering/acceptance by native-scared-ordered-motion.csv.",
+  "scared_ordered_motion_scope": "Native callsite6bb276 establishes base physics before damping6bb472. Original linked UCRT drive, force/current-friction addition, base physics and next-tick damping execute with incoming friction1 or.965, supplied target/velocity, timeScale1. World enumeration/collision, global clock/seeds and full live update remain excluded.",
+  "full_acceptance": false
+}

@@ -1,0 +1,4 @@
+BEFORE h=-60 hp=38.4 lift=6 shots=1 p=-1,6.85,0 v=120,0,0
+AFTER h=-60 hp=38.4 lift=6 x=0 y=0.85 shots=1
+BEFORE h=-20 hp=38.4 lift=2 shots=1 p=-1,2.85,0 v=120,0,0
+AFTER h=-20 hp=37.4 lift=2 x=0 y=0.85 shots=0

@@ -1,0 +1,452 @@
+asset,animation,length,drop_frame,tick,frame,playing,event_mask,collision,sound_calls,idle_calls
+005.027_Golden Penny.anm2,Appear,33,23,0,0.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,1,1.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,2,2.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,3,3.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,4,4.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,5,5.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,6,6.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,7,7.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,8,8.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,9,9.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,10,10.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,11,11.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,12,12.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,13,13.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,14,14.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,15,15.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,16,16.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,17,17.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,18,18.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,19,19.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,20,20.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,21,21.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,22,22.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Appear,33,23,23,23.0,1,1,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,24,24.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,25,25.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,26,26.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,27,27.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,28,28.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,29,29.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,30,30.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,31,31.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,32,32.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Appear,33,23,33,0.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Appear,33,23,34,1.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Appear,33,23,35,2.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Appear,33,23,36,3.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Appear,33,23,37,4.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Appear,33,23,38,5.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Appear,33,23,39,6.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Appear,33,23,40,7.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,0,0.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,1,1.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,2,2.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,3,3.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,4,4.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,5,5.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,6,6.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,7,7.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,8,8.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,9,9.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,10,10.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,11,11.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,12,12.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,13,13.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,14,14.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,15,15.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,16,16.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,17,17.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,18,18.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,19,19.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,20,20.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,21,21.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,22,22.0,1,0,0,0,0
+005.027_Golden Penny.anm2,AppearFast,24,23,23,23.0,1,1,4,1,0
+005.027_Golden Penny.anm2,AppearFast,24,23,24,0.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,25,1.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,26,2.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,27,3.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,28,4.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,29,5.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,30,6.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,31,7.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,32,8.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,33,9.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,34,10.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,35,11.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,36,12.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,37,13.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,38,14.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,39,15.0,1,0,4,1,1
+005.027_Golden Penny.anm2,AppearFast,24,23,40,16.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,0,0.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,1,1.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,2,2.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,3,3.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,4,4.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,5,5.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,6,6.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,7,7.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,8,8.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,9,9.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,10,10.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,11,11.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,12,12.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,13,13.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,14,14.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,15,15.0,1,0,0,0,0
+005.027_Golden Penny.anm2,Reappear,24,16,16,16.0,1,1,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,17,17.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,18,18.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,19,19.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,20,20.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,21,21.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,22,22.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,23,23.0,1,0,4,1,0
+005.027_Golden Penny.anm2,Reappear,24,16,24,0.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,25,1.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,26,2.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,27,3.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,28,4.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,29,5.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,30,6.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,31,7.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,32,8.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,33,9.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,34,10.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,35,11.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,36,12.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,37,13.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,38,14.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,39,15.0,1,0,4,1,1
+005.027_Golden Penny.anm2,Reappear,24,16,40,16.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,0,0.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,1,1.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,2,2.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,3,3.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,4,4.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,5,5.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,6,6.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,7,7.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,8,8.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,9,9.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,10,10.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,11,11.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,12,12.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,13,13.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,14,14.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,15,15.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,16,16.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,17,17.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,18,18.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,19,19.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,20,20.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,21,21.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,22,22.0,1,0,0,0,0
+005.021_Penny.anm2,Appear,33,23,23,23.0,1,1,4,1,0
+005.021_Penny.anm2,Appear,33,23,24,24.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,25,25.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,26,26.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,27,27.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,28,28.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,29,29.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,30,30.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,31,31.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,32,32.0,1,0,4,1,0
+005.021_Penny.anm2,Appear,33,23,33,0.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,34,1.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,35,2.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,36,3.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,37,4.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,38,5.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,39,6.0,1,0,4,1,1
+005.021_Penny.anm2,Appear,33,23,40,7.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,0,0.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,1,1.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,2,2.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,3,3.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,4,4.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,5,5.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,6,6.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,7,7.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,8,8.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,9,9.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,10,10.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,11,11.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,12,12.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,13,13.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,14,14.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,15,15.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,16,16.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,17,17.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,18,18.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,19,19.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,20,20.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,21,21.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,22,22.0,1,0,0,0,0
+005.021_Penny.anm2,AppearFast,24,23,23,23.0,1,1,4,1,0
+005.021_Penny.anm2,AppearFast,24,23,24,0.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,25,1.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,26,2.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,27,3.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,28,4.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,29,5.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,30,6.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,31,7.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,32,8.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,33,9.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,34,10.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,35,11.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,36,12.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,37,13.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,38,14.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,39,15.0,1,0,4,1,1
+005.021_Penny.anm2,AppearFast,24,23,40,16.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,0,0.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,1,1.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,2,2.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,3,3.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,4,4.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,5,5.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,6,6.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,7,7.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,8,8.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,9,9.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,10,10.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,11,11.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,12,12.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,13,13.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,14,14.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,15,15.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,16,16.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,17,17.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,18,18.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,19,19.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,20,20.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,21,21.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,22,22.0,1,0,0,0,0
+005.022_Nickel.anm2,Appear,33,23,23,23.0,1,1,4,1,0
+005.022_Nickel.anm2,Appear,33,23,24,24.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,25,25.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,26,26.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,27,27.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,28,28.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,29,29.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,30,30.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,31,31.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,32,32.0,1,0,4,1,0
+005.022_Nickel.anm2,Appear,33,23,33,0.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,34,1.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,35,2.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,36,3.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,37,4.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,38,5.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,39,6.0,1,0,4,1,1
+005.022_Nickel.anm2,Appear,33,23,40,7.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,0,0.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,1,1.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,2,2.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,3,3.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,4,4.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,5,5.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,6,6.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,7,7.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,8,8.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,9,9.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,10,10.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,11,11.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,12,12.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,13,13.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,14,14.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,15,15.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,16,16.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,17,17.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,18,18.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,19,19.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,20,20.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,21,21.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,22,22.0,1,0,0,0,0
+005.023_Dime.anm2,Appear,33,23,23,23.0,1,1,4,1,0
+005.023_Dime.anm2,Appear,33,23,24,24.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,25,25.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,26,26.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,27,27.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,28,28.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,29,29.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,30,30.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,31,31.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,32,32.0,1,0,4,1,0
+005.023_Dime.anm2,Appear,33,23,33,0.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,34,1.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,35,2.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,36,3.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,37,4.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,38,5.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,39,6.0,1,0,4,1,1
+005.023_Dime.anm2,Appear,33,23,40,7.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,0,0.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,1,1.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,2,2.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,3,3.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,4,4.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,5,5.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,6,6.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,7,7.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,8,8.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,9,9.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,10,10.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,11,11.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,12,12.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,13,13.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,14,14.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,15,15.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,16,16.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,17,17.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,18,18.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,19,19.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,20,20.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,21,21.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,22,22.0,1,0,0,0,0
+005.024_Double Penny.anm2,Appear,33,23,23,23.0,1,1,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,24,24.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,25,25.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,26,26.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,27,27.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,28,28.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,29,29.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,30,30.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,31,31.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,32,32.0,1,0,4,1,0
+005.024_Double Penny.anm2,Appear,33,23,33,0.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,34,1.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,35,2.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,36,3.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,37,4.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,38,5.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,39,6.0,1,0,4,1,1
+005.024_Double Penny.anm2,Appear,33,23,40,7.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,0,0.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,1,1.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,2,2.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,3,3.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,4,4.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,5,5.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,6,6.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,7,7.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,8,8.0,1,0,0,0,0
+005.025_Sticky Nickel.anm2,Appear,19,9,9,9.0,1,1,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,10,10.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,11,11.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,12,12.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,13,13.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,14,14.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,15,15.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,16,16.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,17,17.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,18,18.0,1,0,4,1,0
+005.025_Sticky Nickel.anm2,Appear,19,9,19,0.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,20,1.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,21,2.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,22,3.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,23,4.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,24,5.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,25,6.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,26,7.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,27,8.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,28,9.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,29,10.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,30,11.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,31,12.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,32,13.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,33,14.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,34,15.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,35,16.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,36,17.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,37,18.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,38,19.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,39,20.0,1,0,4,1,1
+005.025_Sticky Nickel.anm2,Appear,19,9,40,21.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,0,0.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,1,1.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,2,2.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,3,3.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,4,4.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,5,5.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,6,6.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,7,7.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,8,8.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,9,9.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,10,10.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,11,11.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,12,12.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,13,13.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,14,14.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,15,15.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,16,16.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,17,17.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,18,18.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,19,19.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,20,20.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,21,21.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,22,22.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,Appear,33,23,23,23.0,1,1,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,24,24.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,25,25.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,26,26.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,27,27.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,28,28.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,29,29.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,30,30.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,31,31.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,32,32.0,1,0,4,1,0
+005.026_Lucky Penny.anm2,Appear,33,23,33,0.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,34,1.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,35,2.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,36,3.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,37,4.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,38,5.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,39,6.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,Appear,33,23,40,7.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,0,0.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,1,1.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,2,2.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,3,3.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,4,4.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,5,5.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,6,6.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,7,7.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,8,8.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,9,9.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,10,10.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,11,11.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,12,12.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,13,13.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,14,14.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,15,15.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,16,16.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,17,17.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,18,18.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,19,19.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,20,20.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,21,21.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,22,22.0,1,0,0,0,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,23,23.0,1,1,4,1,0
+005.026_Lucky Penny.anm2,AppearFast,24,23,24,0.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,25,1.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,26,2.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,27,3.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,28,4.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,29,5.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,30,6.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,31,7.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,32,8.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,33,9.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,34,10.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,35,11.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,36,12.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,37,13.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,38,14.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,39,15.0,1,0,4,1,1
+005.026_Lucky Penny.anm2,AppearFast,24,23,40,16.0,1,0,4,1,1

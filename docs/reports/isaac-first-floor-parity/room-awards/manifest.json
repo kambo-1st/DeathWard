@@ -1,0 +1,137 @@
+{
+  "baseline": "Installed Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "award_cases": 2196,
+  "pickup_cases": 4144,
+  "windows": [
+    {
+      "name": "award_selector",
+      "start": "0x7b82b0",
+      "end_exclusive": "0x7b8b0a",
+      "raw_sha256": "2da70a8f235674e2d2c1f8ee06b87d6d94e9cd6ee85ad4197260eda4cf658c41"
+    },
+    {
+      "name": "award_spawn",
+      "start": "0x7b8b10",
+      "end_exclusive": "0x7baf7a",
+      "raw_sha256": "0f5e8796eeec6b25ad54fe8c0bc439b09667e3d36e47353b6528a8dd1fa0faf3"
+    },
+    {
+      "name": "pickup_resolver",
+      "start": "0x6b48b0",
+      "end_exclusive": "0x6b6a7c",
+      "raw_sha256": "33ac6d8a2c76aaf5862c2a1369992e95275c357c007e4abbd88a32e0772b0a05"
+    },
+    {
+      "name": "weighted_picker",
+      "start": "0x489420",
+      "end_exclusive": "0x4895b8",
+      "raw_sha256": "cbfd36c38a0567c4742263c20538c972ecd5b2212fe8e3ae302c748244f749b0"
+    },
+    {
+      "name": "clear_callsite",
+      "start": "0x7c31a7",
+      "end_exclusive": "0x7c31e2",
+      "raw_sha256": "82a709c18601ab3601cc4e1622305aa3307a1a5e7364ebd1e262835ee98d92bc"
+    },
+    {
+      "name": "natural_clear_callsite",
+      "start": "0x7ae343",
+      "end_exclusive": "0x7ae39d",
+      "raw_sha256": "4382a812ce4280b805f99139577abfd7fc4c637e9652c998b18665572418bc13"
+    },
+    {
+      "name": "lua_award_binding",
+      "start": "0x808d12",
+      "end_exclusive": "0x808d1c",
+      "raw_sha256": "8bdf2925dc405b9b8c92d0739874e25c2bf766f7430229995935c1bf03715813"
+    }
+  ],
+  "award_scope": "Whole native selector, one empty-inventory ordinary Isaac; supplied nonzero room RNG seed, shifts5/9/7, Luck input and prevent-none flag. No RNG/numeric/game-query helpers substituted.",
+  "pickup_scope": "Whole native variant/subtype resolver for supplied heart/coin/key/bomb variants and pickup seed, input subtype0 and caller flags1/0, supplied ordinary room type1. Other game fields are synthetic zero defaults except the explicitly initialized fixture fields. Represented achievement bytes are toggled explicitly; this does not prove a complete native floor, fresh-save or fully unlocked profile.",
+  "represented_achievement_bytes": {
+    "rotten": "0x1e7",
+    "scared": "0x194",
+    "half_soul": "0x6d",
+    "bone": "0x1d3",
+    "golden_heart": "0x12c",
+    "sticky_nickel": "0x13c",
+    "lucky_penny": "0x13e",
+    "golden_penny": "0x2b1",
+    "charged_key": "0x199",
+    "golden_bomb": "0x12e"
+  },
+  "memory_import_boundaries": {
+    "endpoints": {
+      "0x9ddd15": "free",
+      "0x9ec14c": "memcpy",
+      "0x9ec152": "memset",
+      "0x9ec176": "free",
+      "0x9ec17c": "malloc",
+      "0x9ec358": "memmove"
+    },
+    "calls": {
+      "malloc": 3108,
+      "memmove": 3108,
+      "free": 3108
+    },
+    "scope": "Only malloc/free/memcpy/memmove/memset are hosted. All native RNG, weighted outcome, subtype branches and game queries run original instructions. Low-memory accesses are rejected except actual FS:[0] exception bookkeeping."
+  },
+  "award_variants_seen": [
+    0,
+    10,
+    20,
+    30,
+    40,
+    50,
+    69,
+    70,
+    300,
+    350
+  ],
+  "pickup_outputs_seen": {
+    "10": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "20": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      7
+    ],
+    "30": [
+      1,
+      2,
+      4
+    ],
+    "40": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "capture_claims_gameplay_acceptance": false,
+  "remaining": [
+    "source room seed mapping and full award-spawn modifiers/placement",
+    "card/pill/trinket/chest/sack contents and interaction rules",
+    "pickup physical creation, timers, motion and collision",
+    "complete unlock profiles and reachable item/trinket modifiers",
+    "production generation and matched native full-floor acceptance"
+  ]
+}

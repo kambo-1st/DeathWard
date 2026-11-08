@@ -1,0 +1,590 @@
+{
+  "version": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "emulator": "Unicorn 2.1.4",
+  "method": "Native x86/SSE blocks, native sqrt/vector/item-query helpers, zeroed empty collectible effects; no instruction patches, import hooks or game process",
+  "scope": "ordinary grounded player motion per invocation and ordinary movement inheritance; NOT whole-game or collision/timing acceptance",
+  "omitted": "control/character/item/status branches before normalized input, presentation-only angle update, post-motion item actions, collision/world integration and global scheduling",
+  "windows": [
+    {
+      "name": "input_normalization",
+      "start": "0x74211c",
+      "end_exclusive": "0x74215c",
+      "raw_sha256": "b3e039290781a9288a41c3183999ccd0c0a241cfe9b7549720deff77d231b852",
+      "listing_sha256": "bcb2ff5bfe139b9cd1c592c3dbbb25e9ce47b60069b99c40259f77ee3485b1d0"
+    },
+    {
+      "name": "speed_and_direction",
+      "start": "0x742369",
+      "end_exclusive": "0x7423fb",
+      "raw_sha256": "dba8b9ef99fa7d8b3c2edbf367d26c7238f012fcd655fcc0ea7243e56c6c099f",
+      "listing_sha256": "c56f605dd7bbd9e33a5d8887d9f6fc246971004b94d7d5273bd71e9f6684c800"
+    },
+    {
+      "name": "ordinary_velocity",
+      "start": "0x742453",
+      "end_exclusive": "0x742830",
+      "raw_sha256": "b2060e4d407e5fd064baa089d748e86cbf1e682cdd497d6953cdb6f896b50096",
+      "listing_sha256": "c3a0949782007ecaa3152565b71f01e3a801ec45667e54557b502077db774a59"
+    },
+    {
+      "name": "no_additional_friction_item",
+      "start": "0x742830",
+      "end_exclusive": "0x7428ee",
+      "raw_sha256": "1c976edfb5429d392f428d97ab2c0661c4be7c46141fded4c2c9b4104484d662",
+      "listing_sha256": "b14f66d2383e75522b31a8f3b002a7e524bd7917a93220c997337f489ee43df4"
+    },
+    {
+      "name": "sqrt_helper",
+      "start": "0x4228c0",
+      "end_exclusive": "0x4228df",
+      "raw_sha256": "41b0f7bbb545470d67f3100e0f3b0ad1cfbdd4b47b4334a7cb3502c43d3e2b3c",
+      "listing_sha256": "dd1bd8f96677b992175bbb1753029d878324bb6d25cb81c48f6077a01b6a73fa"
+    },
+    {
+      "name": "empty_item_query",
+      "start": "0x88b600",
+      "end_exclusive": "0x88b631",
+      "raw_sha256": "a8347fec9f5687273037728686815e0a766b1ed332d4e6146875ba690106710e",
+      "listing_sha256": "a37036b43a1402656cd8e552092fa9f7e37e18e034e666862fb6fb6a4231bce2"
+    },
+    {
+      "name": "normalize",
+      "start": "0x9624f0",
+      "end_exclusive": "0x96254c",
+      "raw_sha256": "32a37d544f724a8369cf806bfb16bf6b9372c7b5438f5fb6998e71fb9810892d",
+      "listing_sha256": "c9872a05dbc559174d5c0fc2a48c1c2cc394de119b975dae45ca3bb2d966e691"
+    },
+    {
+      "name": "resize",
+      "start": "0x962860",
+      "end_exclusive": "0x9628c7",
+      "raw_sha256": "4af895a71d8418411c43fd01dfd1bd2829b378fdd716167d16a62b6ca8568d63",
+      "listing_sha256": "5880bd265a048a4ba325486e34c369119a965f7bd6d869c6a5b9cec89ff2e6cd"
+    },
+    {
+      "name": "inheritance",
+      "start": "0x76ff80",
+      "end_exclusive": "0x7701d4",
+      "raw_sha256": "5325096e08ed709e1fb3de4941da5ecd293df0063cacc2712140e4387c531dbf",
+      "listing_sha256": "54383e385d3a63f25a446250b751422f9b78a21bb6a2d1b6fb1edf8bec69e574"
+    },
+    {
+      "name": "slippery_timer",
+      "start": "0x74d378",
+      "end_exclusive": "0x74d3aa",
+      "raw_sha256": "a1567ed43afe2d8591022cb005ec97561c2eecab964d8e7bc32dc19774023030",
+      "listing_sha256": "af48cf0bd9cb263b5e2839b0159cd7cb66dfe0ca5cbb1bfafd329a4051968dc0"
+    }
+  ],
+  "trace_rows": 590,
+  "cases": 7,
+  "inheritance_cases": [
+    {
+      "velocity": [
+        4,
+        0
+      ],
+      "direction": [
+        1,
+        0
+      ],
+      "inherited": [
+        4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        4,
+        0
+      ],
+      "direction": [
+        0,
+        1
+      ],
+      "inherited": [
+        4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        4,
+        0
+      ],
+      "direction": [
+        -1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        4,
+        0
+      ],
+      "direction": [
+        0,
+        -1
+      ],
+      "inherited": [
+        4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        4,
+        0
+      ],
+      "direction": [
+        1,
+        1
+      ],
+      "inherited": [
+        4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        4,
+        0
+      ],
+      "direction": [
+        0,
+        0
+      ],
+      "inherited": [
+        4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        -4,
+        0
+      ],
+      "direction": [
+        1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        -4,
+        0
+      ],
+      "direction": [
+        0,
+        1
+      ],
+      "inherited": [
+        -4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        -4,
+        0
+      ],
+      "direction": [
+        -1,
+        0
+      ],
+      "inherited": [
+        -4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        -4,
+        0
+      ],
+      "direction": [
+        0,
+        -1
+      ],
+      "inherited": [
+        -4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        -4,
+        0
+      ],
+      "direction": [
+        1,
+        1
+      ],
+      "inherited": [
+        -2.4000000953674316,
+        2.4000000953674316
+      ]
+    },
+    {
+      "velocity": [
+        -4,
+        0
+      ],
+      "direction": [
+        0,
+        0
+      ],
+      "inherited": [
+        -4.800000190734863,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        4
+      ],
+      "direction": [
+        1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        4.800000190734863
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        4
+      ],
+      "direction": [
+        0,
+        1
+      ],
+      "inherited": [
+        0.0,
+        4.800000190734863
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        4
+      ],
+      "direction": [
+        -1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        4.800000190734863
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        4
+      ],
+      "direction": [
+        0,
+        -1
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        4
+      ],
+      "direction": [
+        1,
+        1
+      ],
+      "inherited": [
+        0.0,
+        4.800000190734863
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        4
+      ],
+      "direction": [
+        0,
+        0
+      ],
+      "inherited": [
+        0.0,
+        4.800000190734863
+      ]
+    },
+    {
+      "velocity": [
+        2,
+        3
+      ],
+      "direction": [
+        1,
+        0
+      ],
+      "inherited": [
+        2.4000000953674316,
+        3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        2,
+        3
+      ],
+      "direction": [
+        0,
+        1
+      ],
+      "inherited": [
+        2.4000000953674316,
+        3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        2,
+        3
+      ],
+      "direction": [
+        -1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        2,
+        3
+      ],
+      "direction": [
+        0,
+        -1
+      ],
+      "inherited": [
+        2.4000000953674316,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        2,
+        3
+      ],
+      "direction": [
+        1,
+        1
+      ],
+      "inherited": [
+        2.4000000953674316,
+        3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        2,
+        3
+      ],
+      "direction": [
+        0,
+        0
+      ],
+      "inherited": [
+        2.4000000953674316,
+        3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        -2,
+        -3
+      ],
+      "direction": [
+        1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        -3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        -2,
+        -3
+      ],
+      "direction": [
+        0,
+        1
+      ],
+      "inherited": [
+        -2.4000000953674316,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        -2,
+        -3
+      ],
+      "direction": [
+        -1,
+        0
+      ],
+      "inherited": [
+        -2.4000000953674316,
+        -3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        -2,
+        -3
+      ],
+      "direction": [
+        0,
+        -1
+      ],
+      "inherited": [
+        -2.4000000953674316,
+        -3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        -2,
+        -3
+      ],
+      "direction": [
+        1,
+        1
+      ],
+      "inherited": [
+        0.5999996662139893,
+        -0.6000003814697266
+      ]
+    },
+    {
+      "velocity": [
+        -2,
+        -3
+      ],
+      "direction": [
+        0,
+        0
+      ],
+      "inherited": [
+        -2.4000000953674316,
+        -3.6000001430511475
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        0
+      ],
+      "direction": [
+        1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        0
+      ],
+      "direction": [
+        0,
+        1
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        0
+      ],
+      "direction": [
+        -1,
+        0
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        0
+      ],
+      "direction": [
+        0,
+        -1
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        0
+      ],
+      "direction": [
+        1,
+        1
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "velocity": [
+        0,
+        0
+      ],
+      "direction": [
+        0,
+        0
+      ],
+      "inherited": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "clock_scope": "Native invocations have no assigned wall-clock duration in these fixtures. Establish scheduler cadence before claiming real-time movement equivalence.",
+  "spatial_scope": "Native coordinates only; the DW unit conversion is a separate adaptation."
+}

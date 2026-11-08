@@ -84,8 +84,8 @@ void fireContactAndPartition() {
             "30/120Hz partitions preserve ordinary movement and animation cadence");
     }
     auto s=fixture();s.godMode=false;auto id=spawn(s);s.player.position={.9f,.85f,0};tick(s);
-    check(near(s.player.hp,StartingHealth-10*EnemyDamageMultiplier),"source-adapted contact base10 retains global damage multiplier");tick(s,3);
-    check(near(s.player.hp,StartingHealth-10*EnemyDamageMultiplier),"player hurt invulnerability prevents repeated contact damage");
+    check(near(s.player.hp,StartingHealth-1),"source-adapted contact base10 retains half-heart conversion");tick(s,3);
+    check(near(s.player.hp,StartingHealth-1),"player hurt invulnerability prevents repeated contact damage");
     std::cout<<"DAMAGE fire_vulnerable=3 no_ignition=1 no_trail=1 contact_base10_global_multiplier=1 partition30_120=1\n";
 }
 void externalProfiles() {

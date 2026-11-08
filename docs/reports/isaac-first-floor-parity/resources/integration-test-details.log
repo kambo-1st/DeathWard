@@ -1,0 +1,366 @@
+Start testing: Nov 08 00:36 CET
+----------------------------------------------------------
+57/136 Testing: monster_boss_components
+57/136 Test: monster_boss_components
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monster_boss_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"monster_boss_components" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+chain 0 depth 0 effect -1: monster offspring capacity
+PEEP_OWNERSHIP thresholds=2/3,1/3 cyan_start=2 capacity_retry=1 no_respawn=1 no_orphans=1
+PEEP_ATTACKS creep=1 ring=8 landing=12 locked_arc=1 yellow_size=.85 whole_contact=25
+PEEP_EYES wall_and_body_bounce=1 rocks=1 projectile_block=1 bomb_direction=1 contact=12.5
+PEEP_STAGE seed=0 floor=2 form=0 components=2 completion=1
+PEEP_STAGE seed=3 floor=1 form=2 components=2 completion=1
+PEEP_STAGE seed=9 floor=2 form=1 components=2 completion=1
+PEEP_CONFIG immutable=1 geometry_unchanged=1 ordinary_pools_unchanged=1 tutorial_unchanged=1
+PEEP_STARTING_KIT form=0 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=1 seconds=19.45 hp=87.5 kills=1
+PEEP_STARTING_KIT form=2 seconds=20.1333 hp=87.5 kills=1
+PASS Peep multipart encounter, owned eyes and stage routing
+<end of output>
+Test time =   1.22 sec
+----------------------------------------------------------
+Test Passed.
+"monster_boss_components" end time: Nov 08 00:36 CET
+"monster_boss_components" time elapsed: 00:00:01
+----------------------------------------------------------
+
+58/136 Testing: bloat_boss_and_chargers
+58/136 Test: bloat_boss_and_chargers
+Command: "/home/kambo/workspace/DeathWard/build/deathward_bloat_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"bloat_boss_and_chargers" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+BLOAT_LASERS down_pair=1 side_pair=1 no_up=1 immediate=1 owner_cleanup=1 cover=1
+BLOAT_ATTACK form=0 action=0 shots=0 summons=0 peak=1.3
+BLOAT_ATTACK form=0 action=1 shots=8 summons=0 peak=1.99841
+BLOAT_ATTACK form=0 action=2 shots=8 summons=0 peak=5.0987
+BLOAT_ATTACK form=3 action=0 shots=0 summons=2 peak=1.3
+BLOAT_ATTACK form=3 action=1 shots=2 summons=0 peak=1.99841
+BLOAT_ATTACK form=3 action=2 shots=3 summons=0 peak=5.0987
+CHARGER immediate_cardinal=1 locked_heading=1 untargeted_wander=1 los=1 collision_recovery=1
+BLOAT_STAGE seed=0 floor=5 band=3 form=0 completion=1
+BLOAT_STAGE seed=1 floor=5 band=2 form=0 completion=1
+BLOAT_STAGE seed=4 floor=4 band=2 form=3 completion=1
+BLOAT_STAGE seed=6 floor=3 band=3 form=3 completion=1
+BLOAT_STARTING_KIT form=0 hp=100 seconds=18.9333 kills=1
+BLOAT_STARTING_KIT form=3 hp=12.5 seconds=24.05 kills=4
+PASS Bloat forms, real lasers/ballistics, owned eyes and Chargers
+<end of output>
+Test time =   1.60 sec
+----------------------------------------------------------
+Test Passed.
+"bloat_boss_and_chargers" end time: Nov 08 00:36 CET
+"bloat_boss_and_chargers" time elapsed: 00:00:01
+----------------------------------------------------------
+
+59/136 Testing: native_player_motion
+59/136 Test: native_player_motion
+Command: "/home/kambo/workspace/DeathWard/build/deathward_player_motion_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_player_motion" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS native player tears: 171 flight steps, 6 fixed RNG cases; live timing/flags/collision remain unaccepted
+PASS native player motion: 590 invocations, 7 scenarios; global clock, geometry and special branches remain unaccepted
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"native_player_motion" end time: Nov 08 00:36 CET
+"native_player_motion" time elapsed: 00:00:00
+----------------------------------------------------------
+
+60/136 Testing: native_player_health
+60/136 Test: native_player_health
+Command: "/home/kambo/workspace/DeathWard/build/deathward_player_health_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_player_health" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS native health: 293 transitions / 28 cases; full damage flags, world-effect fidelity and acceptance remain open
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"native_player_health" end time: Nov 08 00:36 CET
+"native_player_health" time elapsed: 00:00:00
+----------------------------------------------------------
+
+61/136 Testing: native_midas_freeze
+61/136 Test: native_midas_freeze
+Command: "/home/kambo/workspace/DeathWard/build/deathward_midas_freeze_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_midas_freeze" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS native Midas: 1096 control states, 13 cases, 11 RNG cases; actor eligibility/linked propagation/live clock remain open
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"native_midas_freeze" end time: Nov 08 00:36 CET
+"native_midas_freeze" time elapsed: 00:00:00
+----------------------------------------------------------
+
+62/136 Testing: native_blue_fly
+62/136 Test: native_blue_fly
+Command: "/home/kambo/workspace/DeathWard/build/deathward_blue_fly_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_blue_fly" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS blue fly: 318 native motion, 36 angle, 64 score, 5 damage and 104 refill cases; global RNG, imported trig, collision/ordering/items/live acceptance remain open
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"native_blue_fly" end time: Nov 08 00:36 CET
+"native_blue_fly" time elapsed: 00:00:00
+----------------------------------------------------------
+
+63/136 Testing: native_player_hurt
+63/136 Test: native_player_hurt
+Command: "/home/kambo/workspace/DeathWard/build/deathward_player_hurt_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_player_hurt" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS player hurt: 24 original-damage/counter cases and 193 tick states; full entry/items/live scheduler unaccepted
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"native_player_hurt" end time: Nov 08 00:36 CET
+"native_player_hurt" time elapsed: 00:00:00
+----------------------------------------------------------
+
+64/136 Testing: native_monstro
+64/136 Test: native_monstro
+Command: "/home/kambo/workspace/DeathWard/build/deathward_monstro_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_monstro" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS Monstro: 48 native decisions, 32 forces, 24 projectile payloads, ordinary actor integration and 3600-tick normal sequence; full acceptance and pool selection remain open
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"native_monstro" end time: Nov 08 00:36 CET
+"native_monstro" time elapsed: 00:00:00
+----------------------------------------------------------
+
+65/136 Testing: native_room_awards
+65/136 Test: native_room_awards
+Command: "/home/kambo/workspace/DeathWard/build/deathward_room_award_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"native_room_awards" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS 2196 native room-award choices/RNG endpoints and 4144 pickup choices; production spawning, all modifiers and full acceptance remain open
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"native_room_awards" end time: Nov 08 00:36 CET
+"native_room_awards" time elapsed: 00:00:00
+----------------------------------------------------------
+
+66/136 Testing: source_resources
+66/136 Test: source_resources
+Command: "/home/kambo/workspace/DeathWard/build/deathward_source_resource_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"source_resources" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+PASS 48 native resource comparisons and collection/spending/room/floor/legacy checks; physical source acceptance remains open
+<end of output>
+Test time =   0.38 sec
+----------------------------------------------------------
+Test Passed.
+"source_resources" end time: Nov 08 00:36 CET
+"source_resources" time elapsed: 00:00:00
+----------------------------------------------------------
+
+67/136 Testing: isaac_baseline
+67/136 Test: isaac_baseline
+Command: "/home/kambo/workspace/DeathWard/build/deathward_isaac_baseline_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"isaac_baseline" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+chain 1 depth 0 effect -1: queue capacity
+PASS Isaac baseline: starts, hearts, protection, cadence, cardinal aim, dodge, source HP, lifecycle, shop, wallet, floor travel; full parity remains unaccepted
+<end of output>
+Test time =   2.00 sec
+----------------------------------------------------------
+Test Passed.
+"isaac_baseline" end time: Nov 08 00:36 CET
+"isaac_baseline" time elapsed: 00:00:02
+----------------------------------------------------------
+
+68/136 Testing: regular_health_balance
+68/136 Test: regular_health_balance
+Command: "/home/kambo/workspace/DeathWard/build/deathward_regular_health_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"regular_health_balance" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+REGULAR_HEALTH identities=155 stages=13 source_preserved=1 spawn=1 champion=1 player_unchanged=1 stage_growth=1
+REGULAR_HEALTH_LIFECYCLE regrowth_floor=1 boil_growth=1 overkill=1 offspring_once=1
+PASS regular health balance
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"regular_health_balance" end time: Nov 08 00:36 CET
+"regular_health_balance" time elapsed: 00:00:00
+----------------------------------------------------------
+
+107/136 Testing: first_floor_status_effects
+107/136 Test: first_floor_status_effects
+Command: "/home/kambo/workspace/DeathWard/build/deathward_enemy_status_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_status_effects" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+LIFETIME cap120=1 additive=1 extended_refresh=1 partition=1 stun=1 pause=1
+HORF acquisition_block=1 committed_shot_preserved=1 current_aim=1
+HEADLESS suppression=1 timer_continues=1 pacer_unchanged=1 selected_payload_retained=1
+MOVEMENT all_four_evade=1 partition=1 cached_random_target=1 player_independent=1 fear_precedence=1
+PHYSICS source_impulse_friction=1 cover=1 contact_retained=1
+CONTENT external_runtime_values=1 immutable_reload=1 rejected_contracts=7
+MORTALITY same_id_morph=1 independent_expiry=1 final_kill=1 inactive_room_pause=1
+First-floor status contracts passed
+<end of output>
+Test time =   0.68 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_status_effects" end time: Nov 08 00:36 CET
+"first_floor_status_effects" time elapsed: 00:00:00
+----------------------------------------------------------
+
+108/136 Testing: first_floor_freeze_effect
+108/136 Test: first_floor_freeze_effect
+Command: "/home/kambo/workspace/DeathWard/build/deathward_enemy_freeze_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_freeze_effect" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+FREEZE_DURATION all_five=1 source_cap=1 negative_refresh=1 partition=1 modal=1
+FREEZE_PHYSICS partition=1 passive_friction=1 held_pose=1 no_animation_catchup=1 impulse=1 cover=1
+FREEZE_ATTACKS paused_horf_cast=1 current_aim=1 reload=1 pending_payload=1
+FREEZE_BOUNDARIES long_step_poll_phase=1 partial_frame=1 reapply_pose=1 explicit_thaw=1
+FREEZE_INTERACTIONS contact=1 ordinary_damage=1 other_statuses=1 same_id_morph=1 inactive_room=1
+FREEZE_CONTENT cap_and_motion=1 immutable_reload=1 opt_in=1 rejected_contracts=6
+First-floor freeze contracts passed
+<end of output>
+Test time =   0.70 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_freeze_effect" end time: Nov 08 00:36 CET
+"first_floor_freeze_effect" time elapsed: 00:00:00
+----------------------------------------------------------
+
+109/136 Testing: first_floor_damage_statuses
+109/136 Test: first_floor_damage_statuses
+Command: "/home/kambo/workspace/DeathWard/build/deathward_damage_status_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_damage_statuses" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+DOT_TIMING all_five=1 poison_and_burn=1 rates_30_60_120=1 expiry_before_tick=1 six_ticks=1
+DOT_REAPPLY cap=1 extended=1 phase=1 strongest_damage=1 source_floor=1 source_snapshot=1
+DOT_COMBINATIONS independent=1 freeze=1 slow=1 modal=1 long_step=1 movement=1 inactive_room=1
+DOT_MORTALITY all_five=1 one_reward=1 morph=1 due_tick_backpressure=1 payload_snapshot=1 independent_retry=1
+DOT_CONFIG external=1 immutable_reload=1 opt_in=1 rejected_profiles=8 invalid_api=1
+First-floor Poison/Burn contracts passed
+<end of output>
+Test time =   1.09 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_damage_statuses" end time: Nov 08 00:36 CET
+"first_floor_damage_statuses" time elapsed: 00:00:01
+----------------------------------------------------------
+
+110/136 Testing: first_floor_slow_effect
+110/136 Test: first_floor_slow_effect
+Command: "/home/kambo/workspace/DeathWard/build/deathward_enemy_slow_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_slow_effect" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+SLOW_DURATION additive_uncapped=1 negative_assigns2=1 partition=1 animation_rate=1 pause=1
+SLOW_MOTION source_force_friction=1 displacement=1 partition=1 fear=1 freeze=1 cover=1
+SLOW_ATTACKS real_poll=1 logical_cooldown=1 logical_animation=1 due_check=1 wake_phase=1 expiry=1
+SLOW_PROJECTILES inherited_flag=1 rational_flight=1 partition=1 lifetime=1 owner_independent=1 selected_payload=1 damage=1
+SLOW_LIFECYCLE contacts=1 damage=1 morph=1 combined_freeze=1 room_storage=1
+SLOW_CONTENT actor_and_shot_scales=1 refresh=1 immutable_reload=1 opt_in=1 rejected_contracts=6
+First-floor Slow contracts passed
+<end of output>
+Test time =   0.90 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_slow_effect" end time: Nov 08 00:36 CET
+"first_floor_slow_effect" time elapsed: 00:00:00
+----------------------------------------------------------
+
+112/136 Testing: first_floor_charm_effect
+112/136 Test: first_floor_charm_effect
+Command: "/home/kambo/workspace/DeathWard/build/deathward_enemy_charm_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"first_floor_charm_effect" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+chain 1 depth 1 effect -1: queue capacity
+CHARM_TIME max_refresh=1 no_cap=1 expiry_partition=1 duration_bounds=1 freeze_slow=1 room_threat=1 pause=1
+CHARM_TARGET weighted=1 dead_fallback=1 cover=1 ancestry=1 birth_age=1 pursuit=1
+CHARM_SHOTS independent_masks=1 npc_hp=1 player_hp=1 owner_lifetime=1 selected_payload=1 pacer=1
+CHARM_CONTACT reciprocal=1 native_curve=1 poll_cadence=1 queue_retry=1 cover=1 player_contact=1
+CHARM_COMBINATIONS fear_target=1 confusion=1 slow_shot=1 frozen_contact=1 swept_contact=1 poll15=1
+CHARM_LIFECYCLE morph=1 room_storage=1
+CHARM_PERMANENT affiliation=1 incoming_damage=1 player_safety=1 room_travel=1 targeting=1
+RECOIL mass=5 impulse=1 blast=1 cap=1 statuses=1 cover=1
+CHAMPIONS variants=8 identities=5 stats=1 contact=1 charm=1 creep=1 burst_retry=1 explosion=1 seeded=1
+CHARM_CONTENT tuning=1 immutable_reload=1 opt_in=1 rejected_contracts=9
+First-floor Charm contracts passed
+<end of output>
+Test time =   5.36 sec
+----------------------------------------------------------
+Test Passed.
+"first_floor_charm_effect" end time: Nov 08 00:36 CET
+"first_floor_charm_effect" time elapsed: 00:00:05
+----------------------------------------------------------
+
+133/136 Testing: core_contracts
+133/136 Test: core_contracts
+Command: "/home/kambo/workspace/DeathWard/build/deathward_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"core_contracts" start time: Nov 08 00:36 CET
+Output:
+----------------------------------------------------------
+chain 12 depth 3 effect -1: chain event limit
+chain 2 depth 1 effect -1: generation limit
+PASS 3D swept collisions
+PASS five items and composed effects
+PASS continuous fire and sixth-shot effects
+PASS player health, damage and item tuning
+PASS mouse routes, interactions and keyboard override
+PASS bounded chains and cleanup
+PASS independent seeded RNG streams
+PASS persistence, recovery, consequences and revisits
+PASS full expedition progression
+PASS cheat clears, stress cleanup, room restart and repeatable boss
+<end of output>
+Test time =   0.39 sec
+----------------------------------------------------------
+Test Passed.
+"core_contracts" end time: Nov 08 00:36 CET
+"core_contracts" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 08 00:36 CET

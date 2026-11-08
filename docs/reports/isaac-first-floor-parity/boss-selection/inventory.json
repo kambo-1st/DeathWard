@@ -1,0 +1,228 @@
+{
+  "source_hashes": {
+    "bosspools.xml": "8e3f794d8951344bd9f96f463cfbb2644b6fa10d27689d31ba80e27dcced4017",
+    "bossportraits.xml": "826cc8bee76599409b3563047b65c677fb30fa09eedb90875bda17b95536451a",
+    "entities2.xml": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75"
+  },
+  "pool": "basement",
+  "entries": [
+    {
+      "source_pool_boss_id": 1,
+      "name": "Monstro",
+      "source_weight": "1",
+      "portrait_achievement": null,
+      "bodies": [
+        {
+          "monster": "20.0.0",
+          "base_hp": 250.0,
+          "stage_hp": 0.0,
+          "registered": true,
+          "controller_declaration": "boss_monstro",
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 17,
+      "name": "Gemini",
+      "source_weight": "1",
+      "portrait_achievement": null,
+      "bodies": [
+        {
+          "monster": "79.0.0",
+          "base_hp": 140.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        },
+        {
+          "monster": "79.10.0",
+          "base_hp": 140.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 2,
+      "name": "Larry Jr.",
+      "source_weight": "1",
+      "portrait_achievement": null,
+      "bodies": [
+        {
+          "monster": "19.0.0",
+          "base_hp": 22.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 44,
+      "name": "Dingle",
+      "source_weight": "1",
+      "portrait_achievement": null,
+      "bodies": [
+        {
+          "monster": "261.0.0",
+          "base_hp": 300.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 64,
+      "name": "Dangle",
+      "source_weight": "0.25",
+      "portrait_achievement": "346",
+      "bodies": [
+        {
+          "monster": "261.1.0",
+          "base_hp": 375.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 56,
+      "name": "Gurglings",
+      "source_weight": "1",
+      "portrait_achievement": null,
+      "bodies": [
+        {
+          "monster": "237.1.0",
+          "base_hp": 60.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 65,
+      "name": "Turdling",
+      "source_weight": "0.25",
+      "portrait_achievement": "346",
+      "bodies": [
+        {
+          "monster": "237.2.0",
+          "base_hp": 50.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 20,
+      "name": "Steven",
+      "source_weight": "0.25",
+      "portrait_achievement": "16",
+      "bodies": [
+        {
+          "monster": "79.1.0",
+          "base_hp": 140.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        },
+        {
+          "monster": "79.11.0",
+          "base_hp": 140.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 13,
+      "name": "Duke of Flies",
+      "source_weight": "1",
+      "portrait_achievement": null,
+      "bodies": [
+        {
+          "monster": "67.0.0",
+          "base_hp": 110.0,
+          "stage_hp": 0.0,
+          "registered": true,
+          "controller_declaration": "boss_duke",
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 60,
+      "name": "Little Horn",
+      "source_weight": "1",
+      "portrait_achievement": "346",
+      "bodies": [
+        {
+          "monster": "404.0.0",
+          "base_hp": 200.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    },
+    {
+      "source_pool_boss_id": 84,
+      "name": "Baby Plum",
+      "source_weight": "1",
+      "portrait_achievement": "347",
+      "bodies": [
+        {
+          "monster": "908.0.0",
+          "base_hp": 234.0,
+          "stage_hp": 0.0,
+          "registered": false,
+          "controller_declaration": null,
+          "full_acceptance": false
+        }
+      ],
+      "encounter_total_hp": null,
+      "selection_and_spawn_layout_accepted": false
+    }
+  ],
+  "entries_count": 11,
+  "pool_enabled_in_gameplay": false,
+  "native_selection_accepted": false,
+  "scope": "Exact preserved Basement fragment and bossID-to-entity XML mapping. The full preserved bosspools.xml is not well-formed for ElementTree (mismatched later pool tag); this audit parses the intact bounded Basement fragment and never changes reference data. Registry/controller declarations are inventory only, not behavior acceptance. Native unlock/first-encounter/champion/replacement/boss-history/RNG selection and room-layout multiplicity are unverified. Portrait achievement fields are metadata, not proof of the selector gate. XML body HP is not encounter-total HP."
+}

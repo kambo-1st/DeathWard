@@ -87,9 +87,13 @@ bool Simulation::advanceFloor() {
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
     next.player.dodgeMoving=false;
     next.player.launch.reset();
+    auto nextHealth=next.player.sourceHealth();nextHealth.newFloor();
+    next.applyPlayerHealth(std::move(nextHealth));
     const auto entranceRooms=next.stats.rooms;next.stats=stats;next.stats.rooms+=entranceRooms;
     next.roomEnteredAt=next.stats.duration;
     for(auto &progress:next.rooms)for(auto &enemy:progress.residents)enemy.observedShots=next.stats.shots;
+    next.blueFlies=blueFlies;
+    for(auto &fly:next.blueFlies){fly.id=next.nextEntity_++;fly.room=-1;}
     next.items=items;next.keys=keys;next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
     next.moneyCollected=moneyCollected;next.moneySpent=moneySpent;
     next.rescued=rescued;next.altarDestroyed=altarDestroyed;next.evidence=evidence;
@@ -175,8 +179,10 @@ void Simulation::grant(const ItemKey &item) {
     items.push_back(item);
     audioCues.push(AudioCueKind::Pickup, player.position);
     if (definition->pickupHealthMultiplier != 1) {
-        player.maxHp = std::max(definition->pickupHealthFloor, player.maxHp * definition->pickupHealthMultiplier);
-        player.hp = std::min(player.hp, player.maxHp);
+        auto health=player.sourceHealth();
+        const int minimum=2*int(std::floor(std::clamp(definition->pickupHealthFloor,2.f,24.f)/2));
+        const int target=player.maxHp>0?std::max(minimum,2*int(std::floor(player.maxHp*definition->pickupHealthMultiplier/2))):0;
+        health.addMaxRed(target-health.maxRed);applyPlayerHealth(std::move(health));
     }
     Event e;
     e.type = EventType::Pickup;
@@ -187,15 +193,20 @@ void Simulation::grant(const ItemKey &item) {
 void Simulation::tunePlayer(float baseHealth, float shotDamage) {
     if (dead || finished || !std::isfinite(baseHealth) || !std::isfinite(shotDamage))
         return;
-    baseHealth = std::clamp(baseHealth, 25.0f, 2000.0f);
-    shotDamage = std::clamp(shotDamage, 1.0f, 500.0f);
-    if (baseHealth != player.baseHealth) {
-        const float healthFraction = std::clamp(player.hp / player.maxHp, 0.0f, 1.0f);
-        player.baseHealth = baseHealth;
-        player.maxHp = baseHealth;
-        for (const auto &owned:items) if(const auto *def=content->item(owned);def&&def->pickupHealthMultiplier!=1)
-            player.maxHp = std::max(def->pickupHealthFloor, player.maxHp * def->pickupHealthMultiplier);
-        player.hp = player.maxHp * healthFraction;
+    baseHealth = std::clamp(std::round(baseHealth),1.f,24.f);
+    shotDamage = std::clamp(shotDamage,1.f,500.f);
+    if(baseHealth!=player.baseHealth) {
+        const float capacity=player.redHealthCapacity();
+        const float fraction=capacity>0?std::clamp(player.hp/capacity,0.f,1.f):0;
+        player.baseHealth=baseHealth;
+        int target=int(baseHealth);
+        for(const auto &owned:items)if(const auto *def=content->item(owned);def&&def->pickupHealthMultiplier!=1) {
+            const int minimum=2*int(std::floor(std::clamp(def->pickupHealthFloor,2.f,24.f)/2));
+            target=std::max(minimum,2*int(std::floor(target*def->pickupHealthMultiplier/2)));
+        }
+        auto health=player.sourceHealth();health.addMaxRed(target-health.maxRed);
+        health.addRed(int(std::round(health.redCapacity()*fraction))-health.red);
+        applyPlayerHealth(std::move(health));
     }
     player.shotDamage = shotDamage;
 }
@@ -228,6 +239,7 @@ void Simulation::chooseReward(int index) {
 }
 void Simulation::enterRoom(int index) {
     resetPlayerLaunch();
+    if(roomClear)reviveRoom_=room;
     for(auto &e:enemies)if(e.alive&&e.permanentCharmed)charmFollowers_.push_back(std::move(e));
     std::erase_if(enemies,[](const Enemy &e){return e.permanentCharmed;});
     saveAdaptiveChains();
@@ -262,7 +274,7 @@ void Simulation::enterRoom(int index) {
     player.pullTime = 0;
     player.velocity = {};
     player.shootPose = 0;
-    queue_.clear();
+    queue_.clear();pendingHealthEvents_.clear();
     chains.clear();
     chains=std::move(progress.adaptiveChains);
     visuals.clear();
@@ -291,6 +303,7 @@ void Simulation::clearRoom() {
         return;
     progress.cleared = roomClear = true;
     roomClearedAt=stats.duration;
+    refillRottenHeartFlies();
     audioCues.push(AudioCueKind::RoomClear, player.position);
     if (room == finalRoom() && !surveyTutorial && arena.theme == MissionTheme::Canyon)
         bossKilled = true;
@@ -394,7 +407,7 @@ void Simulation::killAll() {
 }
 void Simulation::healDebug() {
     resetPlayerLaunch();
-    player.hp = player.maxHp;
+    auto health=player.sourceHealth();health.addRed(health.redCapacity());applyPlayerHealth(std::move(health));
     player.hurt = player.dodge = player.dodgeCooldown = player.fireCooldown = 0;
     player.pullTime = 0;
     player.velocity = {};
@@ -420,7 +433,7 @@ void Simulation::clearRoomDebug() {
     std::erase_if(pendingEnemyBombs,[&](const auto &bomb){return bomb.room==room;});
     std::erase_if(fireWaves,[&](const auto &burst){return burst.room==room;});
     player.pullTime = 0;
-    queue_.clear();
+    queue_.clear();pendingHealthEvents_.clear();
     chains.clear();
     visuals.clear();
     particleBursts.clear();
@@ -485,7 +498,7 @@ void Simulation::startStress() {
     rooms[size_t(room)].segmented.clear();
     rooms[size_t(room)].hornfel.reset();
     player.pullTime = 0;
-    queue_.clear();
+    queue_.clear();pendingHealthEvents_.clear();
     chains.clear();
     for (int i = 0; i < ItemCount; ++i)
         if (!itemStacks(ItemId(i)))
@@ -567,7 +580,8 @@ void Simulation::finishDebug(bool victory) {
         bossKilled = true;
         finished = true;
     } else {
-        player.hp = 0;
+        auto health=player.sourceHealth();health.red=health.soul=health.bone=health.eternal=health.rotten=0;
+        player.setSourceHealth(health);
         if (!dead)
             audioCues.push(AudioCueKind::PlayerDeath, player.position);
         dead = true;
@@ -878,6 +892,7 @@ void Simulation::process(const Event &e) {
             const bool lastBossBody=!target->bossGroup||std::none_of(enemies.begin(),enemies.end(),[&](const auto &body){
                 return body.alive&&body.bossGroup==target->bossGroup;
             });
+            dropMidasCoins(*target);
             if(!target->segmentedEncounter&&lastBossBody)dropMoney(*target);
             audioCues.push(AudioCueKind::EnemyDeath, target->position);
             if (target->kind == EnemyKind::Monster && !e.execution)
@@ -1419,6 +1434,8 @@ void Simulation::step(const Input &input, float dt) {
     }
     collectKeys();
     updateMoney(dt);
+    updateHeartPickups();
+    updateBlueFlies(dt);
     // After the room transition, each actor advances either its idle or combat
     // clock exactly once. Ambient animation never runs attacks or summons.
     for (auto &progress : rooms)
@@ -1446,6 +1463,10 @@ void Simulation::step(const Input &input, float dt) {
     updateFireWaves(dt);
     updateBreakables(dt);
     drainEvents();
+    if(!pendingHealthEvents_.empty()) {
+        flushPlayerHealthEvents();
+        drainEvents();
+    }
     flushMonsterSpawns();
     for (auto &v : visuals)
         v.life -= dt;
@@ -1460,7 +1481,8 @@ void Simulation::step(const Input &input, float dt) {
             std::none_of(enemies.begin(),enemies.end(),[&](const auto &body){return body.alive&&body.bossGroup==e.bossGroup;}));
     });
     collectChains();
-    if (player.hp <= 0) {
+    if (player.totalHealth() <= 0) {
+        if(tryRevivePlayer())return;
         audioCues.push(AudioCueKind::PlayerDeath, player.position);
         dead = true;
         return;

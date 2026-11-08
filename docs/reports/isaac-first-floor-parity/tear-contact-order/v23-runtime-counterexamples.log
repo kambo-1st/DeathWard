@@ -1,0 +1,1 @@
+Compared 10 supplied stationary-circle scenarios; 6 first-step differences against the supplied native collision pass. Runtime ordering remains unaccepted. Body separation/clock/calibration differences are not isolated by this diagnostic.

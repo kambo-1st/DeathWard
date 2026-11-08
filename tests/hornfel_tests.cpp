@@ -104,7 +104,7 @@ void decoys() {
         s.player.position=s.findEnemy(id)->position;s.godMode=false;
         const float before=s.player.hp;tick(s);
         check(!s.findEnemy(id),"walking into a decoy consumes its body");
-        check(near(before-s.player.hp,25),"whole-heart contact uses existing hostile conversion once");
+        check(near(before-s.player.hp,2),"whole-heart contact uses existing hostile conversion once");
         tick(s);check(h.decoysDestroyed==1&&s.enemyBombs.size()==6,"contact death uses the same once-only blast and six-bomb aftermath");
     }
     {
@@ -301,9 +301,9 @@ void chargeSequence() {
     for(int n=0;n<3600&&h.state!=HornfelState::Charging;++n)tick(s);
     const auto &route=s.arena.rails->paths[size_t(h.cart.route)];
     h.cart.distance=route.length()-.001f;h.repeatsLeft=1;h.nativeVelocity=40;
-    s.player.position=route.sample(route.length()*.5f).position;s.player.position.y=.85f;s.player.hp=100;s.player.hurt=0;s.godMode=false;
+    s.player.position=route.sample(route.length()*.5f).position;s.player.position.y=.85f;s.player.hp=StartingHealth;s.player.hurt=0;s.godMode=false;
     s.enemyBombs.clear();s.pendingEnemyBombs.clear();tick(s);
-    check(h.repeatsLeft==0&&h.cart.distance==0&&s.player.hp==100,"instant repeat does not damage along teleport chord");
+    check(h.repeatsLeft==0&&h.cart.distance==0&&s.player.hp==StartingHealth,"instant repeat does not damage along teleport chord");
     s.godMode=true;s.player.position={0,.85f,0};
     for(int n=0;n<3600&&h.state!=HornfelState::Recovering;++n)tick(s);
     s.limits.projectiles=0;tick(s,160);
@@ -330,19 +330,19 @@ void fireWaves() {
     check(near(s.fireWaves.front().age,age),"inactive room pauses existing fire");
     hit(s,h.owner,10000,true);s.clearRoom();check(s.fireWaves.size()==1,"already emitted fire survives producer death and ordinary clear");
     s.godMode=false;s.player.position={2,.85f,0};s.player.hurt=0;tick(s);
-    check(s.player.hp<100,"actual fire trail harms the player after owner loss");
+    check(s.player.hp<StartingHealth,"actual fire trail harms the player after owner loss");
     s.godMode=true;s.player.position={10,.85f,10};tick(s,360);check(s.fireWaves.empty(),"bounded fire waves expire");
 
     Pack wallPack;auto wall=fixture(wallPack.charge(0));wall.rooms[0].hornfel->clock=1000;
     wall.arena.boundaryWalls.push_back({{2,-1,-3},{2.1f,4,3}});wall.arena.rebuildWalls();wall.player.position={3,.85f,0};wall.godMode=false;
     Event e;e.position=e.origin={0,2,0};e.direction={0,-1,0};e.speed=1;e.projectileGravity=12;e.hostile=true;e.fireWave={6,12,.45f,2.5f,10};
     wall.queueRoot(e);wall.drainEvents();tick(wall,120);
-    check(wall.player.hp==100&&wall.fireWaves.size()==1&&wall.fireWaves[0].rays[0].stopped&&wall.fireWaves[0].rays[0].length<2,"fire stops at thin cover without damage through it");
+    check(wall.player.hp==StartingHealth&&wall.fireWaves.size()==1&&wall.fireWaves[0].rays[0].stopped&&wall.fireWaves[0].rays[0].length<2,"fire stops at thin cover without damage through it");
 
     Pack pitPack;auto pit=fixture(pitPack.charge(0));pit.rooms[0].hornfel->clock=1000;
     pit.arena.rails->pits.push_back({{2,-3,-3},{4,0,3}});pit.player.position={5,.85f,0};pit.godMode=false;
     pit.queueRoot(e);pit.drainEvents();tick(pit,120);
-    check(pit.player.hp==100&&pit.fireWaves.size()==1&&pit.fireWaves[0].rays[0].stopped&&pit.fireWaves[0].rays[0].length<2,"ground fire stops at a pit instead of jumping to the far bank");
+    check(pit.player.hp==StartingHealth&&pit.fireWaves.size()==1&&pit.fireWaves[0].rays[0].stopped&&pit.fireWaves[0].rays[0].length<2,"ground fire stops at a pit instead of jumping to the far bank");
 
     Pack reactPack;auto reactive=fixture(reactPack.charge(0));reactive.rooms[0].hornfel->clock=1000;
     const auto clotty=reactive.spawnMonster(monsterId(15),{3,.85f,0});

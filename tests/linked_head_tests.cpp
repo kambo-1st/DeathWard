@@ -77,7 +77,7 @@ void motionAndAttack() {
     check(!cover.findEnemy(ch)->linkedHead->throws&&!sphereBox(cover.findEnemy(cb)->position,.65f,cover.arena.obstacles[0]),
           "cover blocks acquisition and grounded body movement");
     auto contact=fixture();const auto [tb,th]=pair(contact);contact.godMode=false;contact.player.position=contact.findEnemy(tb)->position;
-    tick(contact);check(near(contact.player.hp,87.5f),"body/head contact uses normal one-unit damage with shared multiplier once");
+    tick(contact);check(near(contact.player.hp,StartingHealth-1),"body/head contact uses normal one-unit damage with shared multiplier once");
     std::cout<<"MOTION pursuit=1 global4=1 launch42=1 spring_order=1 return=1 cover=1 contact12.5=1\n";
 }
 void capacityAndCompletion() {
@@ -129,7 +129,7 @@ void startingKit() {
         for(auto &room:s.arena.rooms){room.bounds=s.arena.bounds;room.floors={{{-30,-.4f,-30},{30,0,30}}};}
         if(cover)s.arena.obstacles.push_back({{2,0,2},{4,3,5}});
         s.arena.rebuildWalls();const auto id=s.spawnMonster(monsterId(35,variant),{0,.85f,0});int frames=0;
-        check(near(s.player.hp,100),"starting-kit health unchanged");
+        check(near(s.player.hp,StartingHealth),"starting-kit health unchanged");
         while(s.roomThreats()&&!s.dead&&frames<2400) {
             const auto *target=s.findEnemy(id);
             if(!target||!target->alive) {

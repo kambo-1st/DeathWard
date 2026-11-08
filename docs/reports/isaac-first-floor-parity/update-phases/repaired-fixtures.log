@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 48: adult_leech
+1/4 Test #48: adult_leech ......................   Passed    0.68 sec
+    Start 49: dip_variants
+2/4 Test #49: dip_variants .....................   Passed    2.12 sec
+    Start 51: membrain_family
+3/4 Test #51: membrain_family ..................   Passed    1.94 sec
+    Start 53: linked_head
+4/4 Test #53: linked_head ......................   Passed    0.34 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   5.09 sec

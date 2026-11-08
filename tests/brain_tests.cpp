@@ -89,11 +89,11 @@ void creepAndLifecycle() {
     auto s=intervals(0,false);intervals(4,false);intervals(0,true);intervals(4,true);
     auto h=s.hazards.back();
     check(near(h.radius,2.46f)&&near(h.damage,10)&&near(h.duration,125.f/30)&&near(h.fadeDuration,40.f/30),"source-derived independent creep profile");
-    s.hazards.clear();s.enemies.clear();s.godMode=false;s.player.hp=100;s.player.hurt=0;
+    s.hazards.clear();s.enemies.clear();s.godMode=false;s.player.hp=StartingHealth;s.player.hurt=0;
     h.age=0;h.position={0,.85f,0};s.hazards.push_back(h);s.player.position={0,.85f,0};tick(s);
-    check(near(s.player.hp,87.5f),"creep damage is half Brain body contact, after shared multiplier");
+    check(near(s.player.hp,StartingHealth-1),"creep damage is half Brain body contact, after shared multiplier");
     s.player.hurt=0;s.hazards.front().age=s.hazards.front().duration;tick(s);
-    check(near(s.player.hp,87.5f)&&s.hazards.front().fadeAge>=0,"expired creep becomes harmless while visible");
+    check(near(s.player.hp,StartingHealth-1)&&s.hazards.front().fadeAge>=0,"expired creep becomes harmless while visible");
     tick(s,90);check(s.hazards.empty(),"fade removes expired patch");
     auto survival=fixture();survival.debugScenario=false;auto sid=spawn(survival);
     const auto remaining=survival.spawnMonster(monsterId(21),{50,.85f,50});
@@ -104,7 +104,7 @@ void creepAndLifecycle() {
     damage(survival,remaining);tick(survival);
     check(survival.roomClear&&!survival.hazards.empty()&&survival.hazards.front().fadeAge==0,
           "last enemy death automatically clears room and starts harmless fade");
-    survival.godMode=false;survival.player.position=survival.hazards.front().position;tick(survival);check(near(survival.player.hp,100),"cleared-room fade cannot hurt player");
+    survival.godMode=false;survival.player.position=survival.hazards.front().position;tick(survival);check(near(survival.player.hp,StartingHealth),"cleared-room fade cannot hurt player");
     tick(survival,90);check(survival.hazards.empty(),"cleared room finishes creep fade");
     auto cap=fixture();auto capid=spawn(cap);cap.limits.hazards=0;tick(cap,80);
     auto &r=*cap.findEnemy(capid)->brain;check(r.pendingCreep&&r.creepPatches==0,"full hazard capacity retains one due patch");
@@ -118,7 +118,7 @@ void creepAndLifecycle() {
 }
 void contactAndKit() {
     auto s=fixture();s.godMode=false;spawn(s);s.player.position={0,.85f,0};tick(s);
-    check(near(s.player.hp,75),"source double contact converts to25");tick(s,5);check(near(s.player.hp,75),"contact respects player invulnerability");
+    check(near(s.player.hp,StartingHealth-2),"source double contact removes two half-heart units");tick(s,5);check(near(s.player.hp,StartingHealth-2),"contact respects player invulnerability");
     auto fight=fixture();fight.godMode=false;fight.player.position={0,.85f,8};const auto id=spawn(fight);int frames=0;
     while(fight.roomThreats()&&!fight.dead&&frames<1800) {
         Input input;input.fire=true;

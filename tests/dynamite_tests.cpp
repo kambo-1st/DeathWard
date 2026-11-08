@@ -14,6 +14,7 @@ void tick(Simulation &run, int n) {
 }
 Simulation fixture() {
     Simulation run(1866, 1, {});
+    run.tunePlayer(24,RevolverDamage); // Bomb damage tests retain their explicitly supplied health budget.
     run.arena = Arena{};
     run.rooms.resize(run.arena.rooms.size());
     run.arena.bounds = {{-25, -1, -25}, {25, 8, 25}};
@@ -55,7 +56,7 @@ void fuseAndDamage() {
     tick(run, 4);
     check(run.stats.explosions == 1 && run.findEnemy(near)->hp == 50 && run.findEnemy(far)->hp == 150,
           "one detonation deals 100 damage only inside its blast radius");
-    check(run.player.hp == 100 && run.hazards.empty() && run.chains.empty() && run.stats.shots == 0,
+    check(run.player.hp == 24 && run.hazards.empty() && run.chains.empty() && run.stats.shots == 0,
           "throwing keeps the revolver independent and reclaims the hazard chain");
     check(run.combatRng.state == combat && run.rewardRng.state == rewards,
           "throwing, bouncing and damage do not consume gameplay RNG");
@@ -90,6 +91,7 @@ void collisionAndCover() {
 void groundPlacement() {
     for (auto theme : {MissionTheme::Mine, MissionTheme::Canyon}) {
         Simulation run(1866, 1, {}, theme);
+        run.tunePlayer(24,RevolverDamage); // Existing self-damage contract uses a100-unit budget.
         const auto player = run.player.position;
         check(run.placeDynamite() && run.dynamite == 2, "ground placement consumes one charge");
         const auto placed = run.hazards.front().position;
@@ -102,7 +104,7 @@ void groundPlacement() {
         check(run.stats.explosions == 0 && distance(run.hazards.front().position, placed) == 0,
               "a placed charge stays exactly still throughout its fuse");
         tick(run, 4);
-        check(run.stats.explosions == 1 && run.player.hp == 75 && run.hazards.empty(),
+        check(run.stats.explosions == 1 && run.player.hp == 21 && run.hazards.empty(),
               "ground dynamite explodes after two seconds and can hurt a player who stays nearby");
     }
     auto run = fixture();
@@ -117,7 +119,7 @@ void groundPlacement() {
     walking.placeDynamite = false;
     for (int i = 0; i < 122; ++i)
         run.step(walking);
-    check(run.player.hp == 100 && run.stats.explosions == 1 && run.dynamite == 2,
+    check(run.player.hp == 24 && run.stats.explosions == 1 && run.dynamite == 2,
           "the player can keep moving away from a placed charge and escape the explosion");
 }
 void walk(Simulation &run, Vector3 direction, int count) {
@@ -158,7 +160,7 @@ void kicking() {
     tick(run, 52);
     check(run.stats.explosions == 0, "the original fuse does not explode early");
     tick(run, 5);
-    check(run.stats.explosions == 1 && run.findEnemy(near)->hp == 50 && run.player.hp == 100 &&
+    check(run.stats.explosions == 1 && run.findEnemy(near)->hp == 50 && run.player.hp == 24 &&
               run.hazards.empty() && run.chains.empty() && run.combatRng.state == rng,
           "the nudged charge detonates at its new position on the original fuse with normal damage");
 
@@ -169,7 +171,7 @@ void kicking() {
     check(late.stats.explosions == 0 && !late.hazards.front().settled,
           "late contact can still nudge a charge");
     tick(late, 4);
-    check(late.stats.explosions == 1 && late.player.hp == 75 && late.hazards.empty(),
+    check(late.stats.explosions == 1 && late.player.hp == 21 && late.hazards.empty(),
           "a late nudge does not postpone the explosion or protect a nearby player");
 
     auto thrown = fixture();
@@ -281,7 +283,7 @@ void selfDamageAndGuards() {
         if (protection == 2)
             run.player.dodge = .3f;
         tick(run, 5);
-        check(run.player.hp == (protection == 0 ? 75 : 100),
+        check(run.player.hp == (protection == 0 ? 21 : 24),
               "own blast deals 25 damage, respecting dodge and invulnerability");
     }
     auto run = fixture();

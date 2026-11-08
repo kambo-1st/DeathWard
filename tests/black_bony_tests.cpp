@@ -47,7 +47,7 @@ void explosion() {
     for(bool execution:{false,true}) {
         auto s=fixture();const auto id=spawn(s);s.godMode=false;s.player.position={0,.85f,3};
         const auto witness=s.spawnMonster(monsterId(10),{3,.85f,0});s.findEnemy(witness)->hp=s.findEnemy(witness)->maxHp=200;
-        kill(s,id,execution);check(s.stats.explosions==1&&near(s.player.hp,75)&&near(s.findEnemy(witness)->hp,72),"source damage conversion, player damage and friendly fire");
+        kill(s,id,execution);check(s.stats.explosions==1&&near(s.player.hp,StartingHealth-2)&&near(s.findEnemy(witness)->hp,72),"source damage conversion, player damage and friendly fire");
         kill(s,id,execution);check(s.stats.explosions==1&&s.stats.kills==1,"duplicate lethal input cannot repeat blast or kill");
     }
     {auto s=fixture();const auto id=spawn(s);s.godMode=false;s.player.position={0,.85f,3};s.arena.walls.push_back({{-2,0,1},{2,4,2}});kill(s,id);check(s.player.hp==StartingHealth,"line-check shields player behind real cover");}

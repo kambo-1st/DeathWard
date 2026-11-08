@@ -1,0 +1,113 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "whole_contact_cases": 6552,
+  "grace_decrement_cases": 9,
+  "windows": [
+    {
+      "name": "circle_dispatch",
+      "start": "0x68a2c0",
+      "end_exclusive": "0x68a32c",
+      "sha256": "0095d736592c4163c8010fa710fbe1c032d88c07e2a26ab6d8ca6da2e8619680"
+    },
+    {
+      "name": "circle_response",
+      "start": "0x689cf0",
+      "end_exclusive": "0x68a2c0",
+      "sha256": "4976d05d3a7f44f464b16e8b5ae1f65876861c43179d0b3c11b106e351f3b1fd"
+    },
+    {
+      "name": "callback_admission",
+      "start": "0x689840",
+      "end_exclusive": "0x68997b",
+      "sha256": "a473272e7fdd295dfc9f4d8e8fae7db92a80c7c4bb2c989292bb57c83affc525"
+    },
+    {
+      "name": "bomb_player_contact",
+      "start": "0x67e8e1",
+      "end_exclusive": "0x67e9c2",
+      "sha256": "1c72e9c2a96ec35e41b001deea76f97c67390608c1d1aef04fe17d2888ba48e8"
+    },
+    {
+      "name": "bomb_secondary_response",
+      "start": "0x67f025",
+      "end_exclusive": "0x67f0d9",
+      "sha256": "5c661e3bc5de71678a36d7a9f3eaed6b3f164ee536cf337ddc9cbac2d750f58b"
+    },
+    {
+      "name": "player_contact",
+      "start": "0x7553e0",
+      "end_exclusive": "0x755ed4",
+      "sha256": "5c8f8d4a0bce6be302ae7cf742e42f821a0c2dd3ed0b633d791192087bd3bfa2"
+    },
+    {
+      "name": "contact_grace_decrement",
+      "start": "0x67dccf",
+      "end_exclusive": "0x67dce3",
+      "sha256": "71e31de0cc5d1b68903a101b59dfd8a8547fac0031514cf325958c9ee92d2a39"
+    },
+    {
+      "name": "mass_query",
+      "start": "0x689640",
+      "end_exclusive": "0x6897b3",
+      "sha256": "9dda5d43b95ddd93216d34f053c606c79d0485710fe131cabbe8df6ae5d169b0"
+    },
+    {
+      "name": "grid_rejection",
+      "start": "0x683650",
+      "end_exclusive": "0x68384d",
+      "sha256": "dc203c0246c9f13493283a7844433185916babd49c1879e353186a2c42278233"
+    },
+    {
+      "name": "troll_conversion",
+      "start": "0x6ba6dc",
+      "end_exclusive": "0x6ba7cd",
+      "sha256": "aa60d148d3e2b7ae733606f918fde50d3ffc9f06b4d82c9702a8e1c4e5fb2c83"
+    },
+    {
+      "name": "global_rng",
+      "start": "0x6c3d50",
+      "end_exclusive": "0x6c3eb1",
+      "sha256": "a45c271bc5b8f4ebe1423fa432598f39022dcaf3fd0173a8542ab5c4552fbdf7"
+    }
+  ],
+  "scope": "Whole native circle dispatcher/response68a2c0 with actual player and bomb vtables, both original HandleCollision methods, disabled native Lua callback registry, original item/flag/mass/grid queries and local SSE sqrt. No calculation/query/callback replacement or patched instructions. Ordinary Isaac1.0 and bomb4.0, source XML radii10/16 and masses5/6, both body scales1, classes4, no mods/items/status/entity flags. Two origins, thirteen offsets, seven player and three bomb velocities, three grace counters, two argument orders. Empty grid point list and one supplied far-offset sample point inside a synthetic solid grid test the real rejection branches; neither proves production actor grid samples or room geometry. Counter decrement captured separately; native global scheduler/update/contact ordering and full actor acceptance remain open.",
+  "imports_hosted": {},
+  "full_acceptance": false,
+  "pickup_conversion_intent_cases": 42,
+  "entity_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "entity_configurations": {
+    "player": {
+      "anm2path": "001.000_Player.anm2",
+      "baseHP": "10",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "5",
+      "collisionRadius": "10",
+      "friction": "1",
+      "id": "1",
+      "name": "Player",
+      "numGridCollisionPoints": "40",
+      "shadowSize": "16",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    "bomb": {
+      "anm2path": "004.000_Bomb.anm2",
+      "baseHP": "0",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "0",
+      "collisionMass": "6",
+      "collisionRadius": "16",
+      "friction": "1",
+      "id": "4",
+      "name": "Bomb",
+      "numGridCollisionPoints": "12",
+      "shadowSize": "13",
+      "stageHP": "0",
+      "variant": "0"
+    }
+  },
+  "pickup_conversion_scope": "Original Pickup::Update branch plus original global MT seed/init/next code. Supplied global MT seed, pickup subtype, position and nonzero incoming velocity. Stop before Spawn API; no actor spawned or removed. Ordinary/double/golden/giga subtypes do not convert here. Troll3/super5/golden-troll6 spawn variants3/4/18 with zero velocity and no parent, consuming one global RNG word, not their InitSeed. Full update, global seed mapping and actors remain open."
+}

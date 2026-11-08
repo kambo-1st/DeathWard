@@ -60,7 +60,7 @@ void collision() {
  id=river.spawnMonster(monsterId(85),{0,.85f,-6});river.player.position={0,.85f,6};
  for(int n=0;n<240;++n){tick(river);const auto &body=*river.findEnemy(id);check(!f.waterBlocked(body.position)&&!river.arena.blocked(body.position,body.radius),"ordinary Spider never swims across a river");}
  auto contact=fixture();contact.godMode=false;id=contact.spawnMonster(monsterId(85),contact.player.position);tick(contact);
- check(near(contact.player.hp,StartingHealth-10*EnemyDamageMultiplier),"contact maps source half-heart through existing multiplier");
+ check(near(contact.player.hp,StartingHealth-1),"contact maps source half-heart through existing multiplier");
  auto fire=fixture();id=fire.spawnMonster(monsterId(85),{0,.85f,0});fire.addFire({0,.85f,0},2,2,30,true,false);tick(fire,2);check(!fire.findEnemy(id)||!fire.findEnemy(id)->alive,"ordinary Spider remains vulnerable to fire");
  auto stun=fixture();id=stun.spawnMonster(monsterId(85),{0,.85f,0});tick(stun,40);auto *e=stun.findEnemy(id);e->state=EnemyState::Stunned;e->stateTime=.3f;tick(stun,2);
  check(!stun.findEnemy(id)->spider->targetReady&&length(stun.findEnemy(id)->velocity)<.001f,"stun cancels committed movement");

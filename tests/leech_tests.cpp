@@ -63,7 +63,7 @@ void deathAndChild() {
         auto s=fixture();const auto id=spawn(s,variant);tick(s);s.godMode=false;s.player.position={0,.85f,3};
         const auto witness=s.spawnMonster(monsterId(10),{3,.85f,0});s.findEnemy(witness)->hp=s.findEnemy(witness)->maxHp=200;
         kill(s,id,execution);
-        check(s.stats.explosions==unsigned(variant>0)&&near(s.player.hp,variant?75:100),"variant death explosion is immediate with full-heart conversion");
+        check(s.stats.explosions==unsigned(variant>0)&&near(s.player.hp,variant?StartingHealth-2:StartingHealth),"variant death explosion is immediate with full-heart conversion");
         check(near(s.findEnemy(witness)->hp,variant?72:200),"death blast deals128 friendly-fire damage");
         check(std::none_of(s.enemies.begin(),s.enemies.end(),[](const auto &e){return e.alive&&e.monster==monsterId(96);}),"Holy Leech never leaves an orbiting fly behind");
         kill(s,id,execution);check(s.stats.explosions==unsigned(variant>0),"duplicate lethal input cannot duplicate explosion");
@@ -82,12 +82,12 @@ void deathAndChild() {
      check(s.stats.explosions==1&&!s.findEnemy(id)&&s.roomClear,"capacity release resolves once before room clear");}
     {auto s=fixture();const auto id=spawn(s,2);tick(s,3);kill(s,id,true,true);tick(s,3);check(s.stats.explosions==0&&s.enemies.empty(),"debug clear also removes Holy dependency safely");}
     {auto s=fixture();const auto id=spawn(s,1);s.godMode=false;s.player.position={0,.85f,3};s.arena.walls.push_back({{-2,0,1},{2,4,2}});kill(s,id);
-     check(near(s.player.hp,100),"real wall shields player from blast");}
+     check(near(s.player.hp,StartingHealth),"real wall shields player from blast");}
     std::cout<<"DEATH immediate=1 friendly_fire=1 one_blast=1 retained_payload=1 orbiter_birth=1 orbiter_cleanup=1 debug_cleanup=1 line_check=1\n";
 }
 void contact() {
     auto s=fixture();const auto id=spawn(s);s.godMode=false;s.player.position=s.findEnemy(id)->position;tick(s);
-    check(near(s.player.hp,75),"full-heart contact is20 before shared1.25multiplier");tick(s);check(near(s.player.hp,75),"player invulnerability prevents per-frame contact damage");
+    check(near(s.player.hp,StartingHealth-2),"full-heart contact is20 before shared1.25multiplier");tick(s);check(near(s.player.hp,StartingHealth-2),"player invulnerability prevents per-frame contact damage");
     std::cout<<"CONTACT damage=25 invulnerability=1\n";
 }
 void configuration() {

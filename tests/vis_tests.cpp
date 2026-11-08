@@ -70,15 +70,15 @@ void beamRules() {
     auto cover=fixture();const auto cid=spawn(cover);prepareShot(cover,cid);
     cover.player.position={10,.85f,0};cover.godMode=false;
     cover.arena.obstacles.push_back({{5,0,-4},{6,5,4}});cover.arena.rebuildWalls();tick(cover,10);
-    check(!cover.hazards.empty()&&cover.hazards.front().position.x<5&&near(cover.player.hp,100),"solid canyon cover clips beam and protects player");
+    check(!cover.hazards.empty()&&cover.hazards.front().position.x<5&&near(cover.player.hp,StartingHealth),"solid canyon cover clips beam and protects player");
     auto hit=fixture();const auto hid=spawn(hit);prepareShot(hit,hid);hit.player.position={10,.85f,0};hit.godMode=false;tick(hit,2);
-    check(near(hit.player.hp,87.5f),"player uses source1 mapped to12.5 with existing combat multiplier");
+    check(near(hit.player.hp,StartingHealth-1),"player loses one source half-heart unit");
     auto life=fixture();const auto lid=spawn(life);prepareShot(life,lid);tick(life,32);
     check(life.hazards.size()==1&&life.hazards.front().fadeAge<0&&life.hazards.front().ownedBeam->pulses==16,
         "32 active frames include sixteen two-frame damage pulses");
     tick(life);check(life.hazards.front().fadeAge>=0,"expiry begins visible fade");
     life.player.position={10,.85f,0};life.godMode=false;tick(life,18);
-    check(life.hazards.empty()&&near(life.player.hp,100),"nineteen-frame expiry fade is harmless and removed");
+    check(life.hazards.empty()&&near(life.player.hp,StartingHealth),"nineteen-frame expiry fade is harmless and removed");
     auto killed=fixture();const auto kid=spawn(killed);prepareShot(killed,kid);tick(killed);damage(killed,kid);tick(killed);
     check(killed.hazards.size()==1&&killed.hazards.front().fadeAge>=0,"owner death starts harmless fade");tick(killed,20);
     check(killed.hazards.empty(),"orphan beam cleaned up");
@@ -117,7 +117,7 @@ void configuration() {
 void startingKit() {
     for(int variant:{0,1,3}) {
         auto s=fixture();s.godMode=false;s.player.position={0,.85f,10};const auto id=spawn(s,variant);
-        check(s.player.hp==100&&s.player.shotDamage==24,"unchanged default player kit");
+        check(s.player.hp==StartingHealth&&s.player.shotDamage==24,"unchanged default player kit");
         int frames=0;
         while(!s.dead&&s.roomThreats()&&frames<600) {
             Input input;

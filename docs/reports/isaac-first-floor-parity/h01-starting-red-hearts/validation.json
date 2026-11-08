@@ -1,0 +1,90 @@
+{
+  "validated_at_utc": "2026-11-08T09:19:12Z",
+  "selected_difference": "H01",
+  "status": "implemented",
+  "scope": "Starting red health/HUD and launch/reset/tuning support only",
+  "starting_red_half_heart_units": 6,
+  "starting_full_red_hearts": 3,
+  "player_damage": 24,
+  "starting_dynamite": 3,
+  "universal_dodge_boost_and_immunity_retained": true,
+  "other_differences_selected": false,
+  "automatic_bulk_goal_status": "paused",
+  "reference": {
+    "path": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/players.xml",
+    "sha256": "d9bd5db8a1ea970f77a5f5cdec7809fc047aebfd6ccf9088921f5bf2faef3edd",
+    "player_id": 0,
+    "name": "#ISAAC_NAME",
+    "hp": 6
+  },
+  "selected_targets_build": "passed",
+  "passed_suites": [
+    "core_contracts",
+    "regular_health_balance",
+    "player_dynamite",
+    "mission_shop",
+    "expedition",
+    "expedition_destruction",
+    "expedition_economy"
+  ],
+  "suite_evidence": {
+    "final_5_suites": "final-tests.log",
+    "expedition": "floor-tests.log",
+    "mission_shop": "initial-tests.log:mission_shop passed;three other initial failures were corrected and rerun"
+  },
+  "actual_game_inputs": {
+    "starting_hearts": "passed:launch/reset/one-half-heart loss/keyboard dodge",
+    "keyboard": "passed:existing hub/menus/bombs/camera/doors/trades/rewards/exit input"
+  },
+  "images_viewed": [
+    "starting-hearts.png",
+    "half-heart.png"
+  ],
+  "performance_acceptance": false,
+  "full_typed_health_or_damage_parity": false,
+  "limitation": "Existing damage/healing/item amounts are unconverted;current hostile attacks can exceed six starting units.",
+  "application_sha256": "5a386e2c4465290566f5b7ce6bba2b2e16e4f12880e7230789431450fad9a65d",
+  "input_test_binary_sha256": "ba42a66d1dc1773c66ba2483df232108a0275c23ca59d852ddb9fcc5b45d9cf7",
+  "core_test_binary_sha256": "c20e609055cdbf9a8c40f33711f36c0241ca7586834dcc88e6a9024643513396",
+  "production_files_changed": [
+    "src/core/Types.hpp",
+    "src/core/Game.cpp",
+    "src/combat/Simulation.cpp",
+    "src/render/Renderer.cpp"
+  ],
+  "source_sha256": {
+    "src/core/Types.hpp": "1a649561d353ffe02234ae1323b9ed39d335875c96b999dc11419ece9edc09a5",
+    "src/core/Game.cpp": "44fcad745e1e16ae55368ee732a4eb7c09dcbce33494aa29586760c9632fc559",
+    "src/combat/Simulation.cpp": "03eb5ebbd737202b4a1269ae192d5353acab48a343d4caf5e7e4081d10d883f2",
+    "src/render/Renderer.cpp": "e1311de869b98ede58a463da10810e6f3b1d2ebb167fafe3399b5f57357d7c85",
+    "tests/tests.cpp": "ebc020967327fdf9e8428dce7e3036ee0daf2fff622fcd34cf5da9bcb55e4021",
+    "tests/input_tests.cpp": "f00370bf3cbc71a512a5adcbe3f7ecb7f4de2487fff09332b87ec87d4989e163",
+    "tests/regular_health_tests.cpp": "9e177a11e301987e6fee7117df554ca6f07f9b27c117d8a482a60660c48b43ac",
+    "tests/dynamite_tests.cpp": "77ad6a487525a8ad64326b09a9e1f39e977a10253d1a343d534477ec88ccf753",
+    "tests/shop_tests.cpp": "669a965bede812e32f3413b87d3179d580f84e0d5a4653665a6583bf3c7e979e",
+    "tests/expedition_tests.cpp": "4f263c61396343d78d2eb4ae81a636b7aa5f455c92efb18514739d635865a4d3",
+    "tests/expedition_economy_tests.cpp": "90140562efdcdf0b3c3d89443fb1392c8da8b761072d4c1f00a5aa7d2f73e267",
+    "tests/destruction_tests.cpp": "00e203950bda0d7789b9ba5fb1306fda201aa60a66643631d6dad8b9673d915b",
+    "AGENTS.md": "7f02b763b9a871d4e4b77a333cafa0ecb5fbf0f58d9253c3a257c25f689dcd90"
+  },
+  "report_sha256": {
+    "docs/isaac_first_floor_implementation.md": "9de1f660d8000fd34b78c8fe0b3f4eed35a95aeb785bdafd3e783a0fd67b8498",
+    "docs/reports/isaac-first-floor-parity/manual-differences.json": "91ecf94edeeee8a2a4e8fd5233cd3a45e4d83f0a83bcadb365071fc63f34df8d",
+    "docs/reports/isaac-first-floor-parity/goal-status.json": "a35fae93b2208f55b47c8af17b369b8639a3543ea6a49ec79486b6b8f880e4ca"
+  },
+  "artifact_sha256": {
+    "README.md": "77f1302be7a29b50d9dbc96f2fcf66a8acd66d261e1d01545179c667f4cfd044",
+    "application-build.log": "9213261d1c0b6ac9f7c9fd77426cce46f7276bf13d2a4c39632ba293aa73c6f4",
+    "carry-build.log": "2cf439956565df075ecf6139b625364021520ca74c7229a760e958df801b47af",
+    "final-tests.log": "75d7e5aa75603b9eeaf89090c521fe988ce8eef83e3eacf73e1a37d8b70eb5e6",
+    "floor-tests.log": "34a267db0e705c2d79a214a4f87784976ac2442d3285c0430e061337f685d4fc",
+    "half-heart.png": "41097689bd0ce743a0b80b551bc29414b549f95ff5a5cee5aae872cecaa778b1",
+    "hud-build.log": "422d241fdfd2fcac40f3f2730bda554fe1698e562ad3a3432f7c3db6fe590822",
+    "initial-tests.log": "b53fb43d1c39d8649f01585420a3d3e12c1ae0ec88529cab97cbdcb9bcb89f27",
+    "integration-build.log": "50a01961df28f0e8201f804ccce49074fcf732f3c2e35e3ecf5257fb8269d4a2",
+    "keyboard-input.log": "c469484f204f8cd3b414e0b12bdfc2451b54374a25eac1e99c1f8ea695b813e8",
+    "starting-hearts-input.log": "aedf1f2e58f4b5ca851e2e34c2b111a52b568fe07f01899f9dc39af2fb8c3335",
+    "starting-hearts.png": "26bc90b8ab74bc44f9a77a1258368f0efdfa33c585a184e28c65593d93b9a383",
+    "test-fix-build.log": "d69bf135d329f3d0dd263b0c1b166674f914a6210e39b3893b7348de08c7a64b"
+  }
+}

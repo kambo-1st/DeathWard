@@ -30,7 +30,7 @@ bool Simulation::createSuppliedBomb(Enemy &supplier,bool deathDrop) {
     return false; // Retry; never put mandatory supply inside cover or across a closed gate.
 }
 bool Simulation::takeNearbySuppliedBomb() {
-    if(carriedBomb()||dead||finished||shopOpen||rewardOpen||player.hp<=0)return false;
+    if(carriedBomb()||dead||finished||shopOpen||rewardOpen||player.totalHealth()<=0)return false;
     for(auto &bomb:suppliedBombs) {
         if(bomb.room!=room||bomb.state!=SuppliedBombState::Pickup||
             planarDistance(player.position,bomb.charge.position)>bomb.rules.pickupRadius||

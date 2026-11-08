@@ -1,6 +1,101 @@
 #include "combat/Simulation.hpp"
+#include "combat/BlueFly.hpp"
 
 namespace dw {
+void Simulation::rebalanceBlueFlyOrbit() {
+    const int count=int(std::count_if(blueFlies.begin(),blueFlies.end(),[](const auto &fly){return fly.alive&&fly.orbiting;}));
+    int index=0;
+    for(auto &fly:blueFlies)if(fly.alive&&fly.orbiting)fly.orbitPhase=2*Pi*float(index++)/std::max(1,count);
+}
+void Simulation::refillRottenHeartFlies() {
+    if(dead||finished||player.totalHealth()<=0)return;
+    const int owned=int(std::count_if(blueFlies.begin(),blueFlies.end(),[](const auto &fly){return fly.alive;}));
+    const int count=sourceRottenFlyDeficit(player.rottenHearts,owned);
+    for(int i=0;i<count;++i) {
+        BlueFlyRuntime fly;fly.id=nextEntity_++;fly.position=fly.previous=player.position;
+        fly.initSeed=uint32_t(combatRng.next());fly.room=room;
+        fly.damage=sourceBlueFlyDamage(content->resolve(items,player.shotDamage,30,false)[BuildStat::Damage]);
+        blueFlies.push_back(fly);
+    }
+    if(count)checkpointNeeded=true;
+}
+void Simulation::updateBlueFlies(float dt) {
+    for(auto &fly:blueFlies)if(fly.room!=room) {
+        if(fly.pendingHit)fly.alive=false;
+        fly.pendingHit.reset();
+        fly.position=fly.previous=player.position;fly.nativeVelocity={};fly.target=0;
+        fly.orbiting=false;fly.room=room;
+    }
+    blueFlyClock_+=dt;
+    while(blueFlyClock_>=1.f/30-1e-6f) {
+        blueFlyClock_=std::max(0.f,blueFlyClock_-1.f/30);++blueFlyFrame_;
+        const size_t updating=blueFlies.size();
+        for(size_t index=0;index<updating;++index) {
+            auto &fly=blueFlies[index];
+            if(!fly.alive)continue;
+            if(fly.pendingHit) {
+                if(queueRoot(*fly.pendingHit)) {
+                    fly.pendingHit.reset();fly.alive=false;fly.orbiting=false;rebalanceBlueFlyOrbit();
+                    drainEvents();
+                }
+                continue;
+            }
+            auto *target=findEnemy(fly.target);
+            if(target&&!target->alive)target=nullptr;
+            if(!target)fly.target=0;
+            const uint32_t roll=uint32_t(combatRng.next());
+            // The native target helper validates a retained target only when
+            // the outer one-in-three poll runs; new acquisition also needs
+            // the global frame/InitSeed gate.
+            if(roll%3==0&&target&&!companionTarget(*target)){target=nullptr;fly.target=0;}
+            if(!target&&sourceBlueFlyPoll(blueFlyFrame_,fly.initSeed,roll)) {
+                float best=0;
+                for(auto &candidate:enemies)if(companionTarget(candidate)) {
+                    const float a=distance(horizontal(fly.position),horizontal(candidate.position))*10;
+                    const float b=distance(horizontal(player.position),horizontal(candidate.position))*10;
+                    if(a>200&&b>=200)continue;
+                    const float score=sourceBlueFlyTargetScore(a,b,candidate.hp);
+                    if(score>best){best=score;target=&candidate;}
+                }
+                if(target)fly.target=target->id;
+            }
+            const bool orbiting=target==nullptr;
+            if(orbiting!=fly.orbiting) {fly.orbiting=orbiting;rebalanceBlueFlyOrbit();}
+            const auto goal=target?target->position:add(player.position,mul(sourceBlueFlyOrbit(fly.orbitPhase,blueFlyFrame_),.1f));
+            fly.previous=fly.position;
+            fly.nativeVelocity=sourceBlueFlyMotion(fly.nativeVelocity,mul(horizontal(sub(goal,fly.position)),10));
+            fly.position=add(fly.position,mul(fly.nativeVelocity,.1f));fly.position.y=player.position.y;
+            // Native Init uses grid collision class0 and XML radius13.
+            // Sweep the logical plane, independently of the floating visual.
+            Enemy *contact=nullptr;float first=2;
+            for(auto &candidate:enemies)if(companionTarget(candidate)) {
+                const float at=segmentSphere(horizontal(fly.previous),horizontal(fly.position),horizontal(candidate.position),1.3f+candidate.radius);
+                if(at<first&&at<=1){first=at;contact=&candidate;}
+            }
+            if(contact) {
+                bool weak=false;
+                const bool directKill=contact->kind==EnemyKind::Monster&&sourceBlueFlyInstakill(contact->monster);
+                if(directKill||enemyProjectileHit(*contact,fly.previous,fly.position,1.3f,weak)<=1) {
+                    Event hit;hit.type=EventType::Damage;hit.target=contact->id;hit.damage=fly.damage;
+                    hit.execution=directKill;
+                    if(directKill)hit.damage=std::max(1.f,contact->hp);
+                    hit.position=fly.position;hit.origin=fly.previous;hit.direction=unit(horizontal(fly.nativeVelocity));
+                    hit.weakPointHit=weak;hit.context.sourceEntity=fly.id;hit.context.damageSource=DamageSource::Ally;
+                    // Keep the selected fly/contact under queue pressure.
+                    if(!queueRoot(hit)){fly.pendingHit=hit;fly.nativeVelocity={};continue;}
+                }
+                fly.alive=false;fly.orbiting=false;rebalanceBlueFlyOrbit();
+                effectVisual(fly.position,.3f,0,.2f);
+                // Native contact damage/Kill is synchronous: a later fly
+                // must observe an actor killed by an earlier contact.
+                // Do not retain fly/enemy references across event dispatch.
+                drainEvents();
+            }
+        }
+        std::erase_if(blueFlies,[](const auto &fly){return !fly.alive;});
+    }
+}
+
 bool Simulation::companionTarget(const Enemy &e) const {
     const auto *d=content->monster(e.monster);
     return e.alive&&!e.dyingEggy()&&!e.friendly&&(!d||!d->roomHazard)&&

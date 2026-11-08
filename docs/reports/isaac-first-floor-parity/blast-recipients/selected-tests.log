@@ -1,0 +1,70 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start   8: expedition_destruction
+ 1/32 Test   #8: expedition_destruction ...........   Passed   43.43 sec
+      Start  57: monster_boss_components
+ 2/32 Test  #57: monster_boss_components ..........   Passed    1.26 sec
+      Start  58: bloat_boss_and_chargers
+ 3/32 Test  #58: bloat_boss_and_chargers ..........   Passed    1.63 sec
+      Start  59: native_player_motion
+ 4/32 Test  #59: native_player_motion .............   Passed    0.00 sec
+      Start  60: native_player_health
+ 5/32 Test  #60: native_player_health .............   Passed    0.00 sec
+      Start  61: native_midas_freeze
+ 6/32 Test  #61: native_midas_freeze ..............   Passed    0.00 sec
+      Start  62: native_blue_fly
+ 7/32 Test  #62: native_blue_fly ..................   Passed    0.00 sec
+      Start  63: native_player_hurt
+ 8/32 Test  #63: native_player_hurt ...............   Passed    0.00 sec
+      Start  64: native_monstro
+ 9/32 Test  #64: native_monstro ...................   Passed    0.36 sec
+      Start  65: native_room_awards
+10/32 Test  #65: native_room_awards ...............   Passed    0.01 sec
+      Start  66: source_resources
+11/32 Test  #66: source_resources .................   Passed    0.38 sec
+      Start  67: source_heart_pickups
+12/32 Test  #67: source_heart_pickups .............   Passed    0.22 sec
+      Start  68: source_coins
+13/32 Test  #68: source_coins .....................   Passed    0.25 sec
+      Start  69: source_coin_producers
+14/32 Test  #69: source_coin_producers ............   Passed    0.25 sec
+      Start  70: native_player_bombs
+15/32 Test  #70: native_player_bombs ..............   Passed    1.29 sec
+      Start  71: native_bomb_contacts
+16/32 Test  #71: native_bomb_contacts .............   Passed    0.01 sec
+      Start  72: native_troll_bombs
+17/32 Test  #72: native_troll_bombs ...............   Passed    0.02 sec
+      Start  73: native_blast_recipients
+18/32 Test  #73: native_blast_recipients ..........   Passed    0.36 sec
+      Start  74: source_bomb_producers
+19/32 Test  #74: source_bomb_producers ............   Passed    0.30 sec
+      Start  75: isaac_baseline
+20/32 Test  #75: isaac_baseline ...................   Passed    2.00 sec
+      Start  76: regular_health_balance
+21/32 Test  #76: regular_health_balance ...........   Passed    0.37 sec
+      Start  83: supplied_bombs
+22/32 Test  #83: supplied_bombs ...................   Passed    0.49 sec
+      Start  84: fly_bombs
+23/32 Test  #84: fly_bombs ........................   Passed    8.01 sec
+      Start  85: enemy_bomb_payloads
+24/32 Test  #85: enemy_bomb_payloads ..............   Passed    0.48 sec
+      Start  89: hornfel_boss
+25/32 Test  #89: hornfel_boss .....................   Passed    3.72 sec
+      Start 105: mulligan_family
+26/32 Test #105: mulligan_family ..................   Passed   56.24 sec
+      Start 115: first_floor_status_effects
+27/32 Test #115: first_floor_status_effects .......   Passed    0.67 sec
+      Start 116: first_floor_freeze_effect
+28/32 Test #116: first_floor_freeze_effect ........   Passed    0.72 sec
+      Start 117: first_floor_damage_statuses
+29/32 Test #117: first_floor_damage_statuses ......   Passed    1.11 sec
+      Start 118: first_floor_slow_effect
+30/32 Test #118: first_floor_slow_effect ..........   Passed    0.93 sec
+      Start 120: first_floor_charm_effect
+31/32 Test #120: first_floor_charm_effect .........   Passed    5.46 sec
+      Start 141: core_contracts
+32/32 Test #141: core_contracts ...................   Passed    0.40 sec
+
+100% tests passed, 0 tests failed out of 32
+
+Total Test time (real) = 130.39 sec

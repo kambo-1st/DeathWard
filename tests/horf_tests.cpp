@@ -39,9 +39,9 @@ void rangeCoverAndDamage() {
     s.arena.walls.clear();acquire(s,id);s.arena.walls.push_back({{-2,-1,1},{2,5,1.1f}});tick(s,14);
     check(s.stats.projectiles==1&&s.projectiles.empty(),"committed shot hits new intervening cover, no remote damage");
     auto damage=fixture();damage.godMode=false;const auto d=ready(damage);acquire(damage,d);tick(damage,40);
-    check(near(damage.player.hp,87.5f),"existing hostile damage conversion occurs once");
+    check(near(damage.player.hp,StartingHealth-1),"half-heart damage conversion occurs once");
     auto contact=fixture();contact.godMode=false;const auto c=ready(contact);contact.player.position=contact.findEnemy(c)->position;tick(contact);
-    check(near(contact.player.hp,87.5f),"grounded head has contact damage");
+    check(near(contact.player.hp,StartingHealth-1),"grounded head has contact damage");
 }
 void interruptionAndPressure() {
     auto dead=fixture();auto id=ready(dead);acquire(dead,id);Event hit;hit.type=EventType::Damage;hit.target=id;hit.damage=32;
@@ -76,7 +76,7 @@ void flightAndPassiveMotion() {
         auto damage=fixture();damage.godMode=false;damage.player.position.z=range;
         const auto d=ready(damage);acquire(damage,d);
         for(int n=0;n<100&&damage.player.hp==StartingHealth;++n)tick(damage);
-        check(near(damage.player.hp,StartingHealth-12.5f),"compressed aimed arc hits the standing player throughout acquisition range");
+        check(near(damage.player.hp,StartingHealth-1),"compressed aimed arc hits the standing player throughout acquisition range");
     }
     Vector3 final{};
     for(int hz:{30,60,120}) {

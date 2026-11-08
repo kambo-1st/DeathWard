@@ -1,0 +1,20 @@
+{
+  "updated_at_utc": "2026-11-08T10:17:38+00:00",
+  "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
+  "scope": "Existing enemy acceptance gaps reproduced during the selected H02\u2013H18 health audit; not new enemy implementations.",
+  "failed_on_both_baseline_and_health_build": [
+    "adult_leech",
+    "brain",
+    "dinga_family",
+    "dip_variants",
+    "hardy_family",
+    "knight_lifecycle",
+    "linked_head",
+    "membrain_family",
+    "resident_enemies",
+    "rock_spider_family"
+  ],
+  "full_enemy_acceptance": false,
+  "evidence": "../isaac-first-floor-parity/h02-h18-health/baseline-tests.log",
+  "current_validation": "../isaac-first-floor-parity/h02-h18-health/validation.json"
+}

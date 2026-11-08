@@ -1,0 +1,135 @@
+{
+  "baseline": "Installed Repentance1.7.9b",
+  "scope": "Highest available DLC override before base animation metadata. No sprite artwork imported.",
+  "sources": [
+    {
+      "archive": "resources/packed/afterbirthp.a",
+      "sha256": "2ce8f89c72e8a0f40835636c88e1e03314dabf450edc7740e518423f7c8951d9",
+      "previously_pinned": true
+    }
+  ],
+  "files": [
+    {
+      "source": "resources/gfx/020.000_Monstro.anm2",
+      "archive": "resources/packed/afterbirthp.a",
+      "path": "docs/reports/isaac-first-floor-parity/monstro/animations/020.000_Monstro.anm2",
+      "sha256": "beb6ed07af17795e70decece7f423da2ad8a55dc70a9c2458d35db2ea1df5af1",
+      "checksum": "0x5cfdead8",
+      "info": {
+        "CreatedBy": "robot",
+        "CreatedOn": "03-May-19 4:09:38 PM",
+        "Version": "110",
+        "Fps": "30"
+      },
+      "events": [
+        {
+          "Name": "BloodStart",
+          "Id": "0"
+        },
+        {
+          "Name": "Explosion",
+          "Id": "1"
+        },
+        {
+          "Name": "Shoot",
+          "Id": "2"
+        },
+        {
+          "Name": "Land",
+          "Id": "3"
+        },
+        {
+          "Name": "Jump",
+          "Id": "4"
+        }
+      ],
+      "animations": [
+        {
+          "attributes": {
+            "Name": "Appear",
+            "FrameNum": "26",
+            "Loop": "false"
+          },
+          "triggers": []
+        },
+        {
+          "attributes": {
+            "Name": "Death",
+            "FrameNum": "78",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "0",
+              "AtFrame": "12"
+            },
+            {
+              "EventId": "1",
+              "AtFrame": "77"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "JumpDown",
+            "FrameNum": "64",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "3",
+              "AtFrame": "32"
+            },
+            {
+              "EventId": "2",
+              "AtFrame": "34"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "JumpUp",
+            "FrameNum": "15",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "4",
+              "AtFrame": "10"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Taunt",
+            "FrameNum": "66",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "2",
+              "AtFrame": "21"
+            }
+          ]
+        },
+        {
+          "attributes": {
+            "Name": "Walk",
+            "FrameNum": "45",
+            "Loop": "false"
+          },
+          "triggers": [
+            {
+              "EventId": "4",
+              "AtFrame": "6"
+            },
+            {
+              "EventId": "3",
+              "AtFrame": "22"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

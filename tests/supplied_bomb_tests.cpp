@@ -35,7 +35,7 @@ void supplyAndTake() {
     take(s);const auto carried=s.carriedBomb()->id;
     check(s.carriedBomb()->sourceIdentity()==monsterId(4,13)&&s.dynamite==0,"Taking changes identity without inventory charge");
     ticks(s,150);check(s.suppliedBombs.size()==2&&s.carriedBomb()->id==carried,"Replacement arrives after taking while prior bomb is still held");
-    for(int n=0;n<35&&s.stats.explosions==0;++n)s.step({});check(!s.carriedBomb()&&s.stats.explosions==1&&s.player.hp==75,"Held bomb expires and hurts holder without hostile multiplier");
+    for(int n=0;n<35&&s.stats.explosions==0;++n)s.step({});check(!s.carriedBomb()&&s.stats.explosions==1&&s.player.hp==StartingHealth-3,"Held bomb expires and hurts holder without hostile multiplier");
     check(s.dynamite==0&&s.stats.shots==0&&s.findEnemy(id)->alive,"No inventory, ordinary shot or supplier damage side effect");
     std::cout<<"SUPPLY_STOCK unlit_wait=1 pickup_5_41=1 armed_4_13=1 replenish_before_explosion=1 held_fuse=1 zero_inventory=1\n";
 }

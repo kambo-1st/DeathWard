@@ -1,0 +1,89 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "emulator": "Unicorn 2.1.4",
+  "position_cases": 960,
+  "offset_gate_cases": 49,
+  "bounded_birth_states": 168,
+  "supplied_scatter_births": 70,
+  "manager_append_gate_cases": 9,
+  "birth_update_dispatch_target": "0x642990",
+  "birth_update_return": "0x757b53",
+  "ordinary_flight_gate": "zero flags reaches0x64d5eb with native helpers",
+  "entity_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "friction": 1,
+  "windows": [
+    {
+      "name": "offset_gate",
+      "start": "0x959dee",
+      "end_exclusive": "0x959e39",
+      "raw_sha256": "269c3e67af1c7bde2d7b28ff9aa763b32daa3b70b9b0432af0c2c75bbe72677e"
+    },
+    {
+      "name": "offset_next_emission",
+      "start": "0x95c1e5",
+      "end_exclusive": "0x95c213",
+      "raw_sha256": "a540c0a50c6215795e0c61a906631b970b9a3fc9da3ed76ddf09e2c2411049b3"
+    },
+    {
+      "name": "post_spawn_offset",
+      "start": "0x94557f",
+      "end_exclusive": "0x94561b",
+      "raw_sha256": "016b7f3050d6bcc11763c49a4c136489f080989a43f69b06c083042951ab93b9"
+    },
+    {
+      "name": "birth_update_dispatch",
+      "start": "0x757b10",
+      "end_exclusive": "0x757b53",
+      "raw_sha256": "f1316ffebe4e41dfd059d80ba4d72b4a635743038b35508f9823cdf4abaa714a"
+    },
+    {
+      "name": "birth_movement_rewind",
+      "start": "0x757b53",
+      "end_exclusive": "0x757b84",
+      "raw_sha256": "9d3dbe9c1e45e17a8774a5308d2c1afc650bf0d976fd5637597645e159f5dd0a"
+    },
+    {
+      "name": "ordinary_flight_gate",
+      "start": "0x64d43b",
+      "end_exclusive": "0x64d52e",
+      "raw_sha256": "cf7773ea4919d693dbf053f6641e56afbc9c7e002e6cfc2680373483e329476c"
+    },
+    {
+      "name": "ordinary_flight",
+      "start": "0x64d5eb",
+      "end_exclusive": "0x64d64a",
+      "raw_sha256": "a6331805cf314a674e679a940b4e83092749fc9a7292d604d249be0bc87f3043"
+    },
+    {
+      "name": "base_physics",
+      "start": "0x686406",
+      "end_exclusive": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf"
+    },
+    {
+      "name": "tear_interpolation",
+      "start": "0x653380",
+      "end_exclusive": "0x653df9",
+      "raw_sha256": "088690b6a0b19f684e098cd62889b4d7714fa45c4aa379b331e150cad74c0a9b"
+    },
+    {
+      "name": "scale_setter",
+      "start": "0x6500d0",
+      "end_exclusive": "0x6500ea",
+      "raw_sha256": "9152af5d3517d770f5e86fe50f7f5980aa7820582c524a585ca1f36fe7686bc2"
+    },
+    {
+      "name": "manager_last_entity_snapshot",
+      "start": "0x4135db",
+      "end_exclusive": "0x413600",
+      "raw_sha256": "b8a1daf9dcf4fd1266d45c05b97bee9b0a9be045c397340b5ab7a7b6e9066d30"
+    },
+    {
+      "name": "manager_loop_termination",
+      "start": "0x413c9a",
+      "end_exclusive": "0x413cab",
+      "raw_sha256": "14529a8417ac7454d4d884b21ff48755708044e7869d072d0d5ffcd19f1978e8"
+    }
+  ],
+  "scope": "Supplied ordinary birth position, bounded base/flight and caller rewind, plus whole zero-flag interpolation in a supplied grid-free empty room. Full Tear::Update, spawn placement/initialization/flags, manager birth ordering, live timing and item/child paths remain unaccepted."
+}

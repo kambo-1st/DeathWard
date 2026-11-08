@@ -104,7 +104,7 @@ void avoidanceAndIntegration() {
     auto same=fixture();auto b=spawn(same,3);spawn(same,3,{3,.85f,0});auto f=spawn(same,2,{-3,.85f,0});same.findEnemy(f)->friendly=true;tick(same,2);
     check(same.findEnemy(b)->rottenGaper->avoid==0,"brood excludes same subtype and different friendliness");
     auto contact=fixture();contact.godMode=false;auto c=spawn(contact,1);contact.player.position={.9f,.85f,0};tick(contact);
-    check(near(contact.player.hp,StartingHealth-10*EnemyDamageMultiplier),"contact preserves source10 and global damage multiplier");
+    check(near(contact.player.hp,StartingHealth-1),"contact preserves source10 and half-heart conversion");
     damage(contact,c,2,DamageKind::Flame);check(near(contact.findEnemy(c)->hp,74.8f),"Rotten remains fire vulnerable");
     e=s.findEnemy(parent);const auto at=e->position;const auto counter=e->rottenGaper->spawnCounter;e->state=EnemyState::Stunned;e->stateTime=.1f;tick(s,3);
     check(distance(at,s.findEnemy(parent)->position)<.001f&&s.findEnemy(parent)->rottenGaper->spawnCounter==counter,"stun pauses parent motion and summoning");

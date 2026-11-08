@@ -16,6 +16,16 @@ constexpr Color Ink{17, 23, 26, 255}, Panel{26, 34, 36, 245}, Border{62, 72, 70,
 std::string number(uint64_t n) {
     return std::to_string(n);
 }
+void redHeart(float x,float y,float health,float sx,float sy,Color fill={222,65,62,255},Color empty={79,37,40,255}) {
+    constexpr std::array<const char *,6> rows{{"01100110","11111111","11111111","01111110","00111100","00011000"}};
+    const float filled=std::clamp(health,0.f,2.f)*4;
+    for(size_t row=0;row<rows.size();++row)for(int col=0;col<8;++col)if(rows[row][col]=='1') {
+        const Rectangle pixel{(x+float(col)*3)*sx,(y+float(row)*3)*sy,3*sx,3*sy};
+        DrawRectangleRec(pixel,empty);
+        const float width=std::clamp(filled-float(col),0.f,1.f);
+        if(width>0)DrawRectangleRec({pixel.x,pixel.y,pixel.width*width,pixel.height},fill);
+    }
+}
 std::string timeLabel(double seconds) {
     int s = int(seconds);
     return std::to_string(s / 60) + ":" + (s % 60 < 10 ? "0" : "") + std::to_string(s % 60);
@@ -1033,6 +1043,28 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
             }
         }
     }
+    for(const auto &pickup:run.heartPickups)if(pickup.room==run.room) {
+        Color color=Rust;
+        switch(pickup.kind) {
+        case HeartKind::Soul:color={112,164,220,255};break;
+        case HeartKind::Black:color={73,52,87,255};break;
+        case HeartKind::Eternal:color=Paper;break;
+        case HeartKind::Golden:color=Gold;break;
+        case HeartKind::Bone:color={215,197,163,255};break;
+        case HeartKind::Rotten:color={116,153,66,255};break;
+        default:break;
+        }
+        auto point=pickup.position;point.y=.55f+.08f*std::sin(float(run.stats.duration)*3);
+        shadow(point,.4f);
+        DrawSphere(add(point,{-.14f,.08f,0}),.22f,color);
+        DrawSphere(add(point,{.14f,.08f,0}),.22f,color);
+        DrawCubeV(add(point,{0,-.1f,0}),{.36f,.35f,.25f},color);
+    }
+    for(const auto &fly:run.blueFlies) {
+        DrawSphere(fly.position,.14f,{78,141,205,255});
+        DrawSphere(add(fly.position,{-.14f,.1f,0}),.1f,ColorAlpha(Paper,.6f));
+        DrawSphere(add(fly.position,{.14f,.1f,0}),.1f,ColorAlpha(Paper,.6f));
+    }
     for (const auto &coin : run.moneyPickups) {
         if (distance(run.player.position, coin.position) > 60)
             continue;
@@ -1813,13 +1845,40 @@ Action Renderer::expedition(const Game &game) {
         text("ROOM CLEAR",440,38,14,Teal);
     }
     panel(24, 674, 344, 64, Panel);
-    text("HEALTH", 41, 686, 12, Muted);
-    text(std::to_string(int(std::max(0.0f, run.player.hp))) + " / " + std::to_string(int(run.player.maxHp)),
-         264, 685, 14, Paper);
-    panel(41, 709, 310, 9, Ink);
-    DrawRectangle(int(41 * sx_), int(709 * sy_),
-                  int(310 * sx_ * std::clamp(run.player.hp / run.player.maxHp, 0.0f, 1.0f)), int(9 * sy_),
-                  run.player.hp < run.player.maxHp * 0.3f ? Rust : Teal);
+    text("HEARTS",41,686,12,Muted);
+    std::ostringstream health;health<<std::fixed<<std::setprecision(1)<<run.player.totalHealth()/2;
+    text(health.str(),304,685,14,Paper);
+    const auto &hp=run.player;
+    const int redSlots=int(std::ceil(hp.maxHp/2));
+    const int protectiveSlots=(hp.soulHearts+1)/2+hp.boneHearts;
+    int soul=hp.soulHearts,bone=0;
+    for(int slot=0;slot<redSlots+protectiveSlots+hp.brokenHearts&&slot<12;++slot) {
+        const float x=41+slot*26;
+        Color color{222,65,62,255},empty{79,37,40,255};
+        float filled=0;
+        if(slot<redSlots) {
+            filled=hp.hp-slot*2;
+            if(slot>=int(std::ceil(hp.hp/2))-hp.rottenHearts)color={116,153,66,255};
+        } else if(slot<redSlots+protectiveSlots) {
+            const int protective=slot-redSlots;
+            if(hp.boneHeartMask&(1u<<protective)) {
+                color={222,65,62,255};empty={221,211,185,255};
+                filled=hp.hp-hp.maxHp-2*bone++;
+            } else {
+                const int soulSlot=protective-bone;
+                color=hp.blackHeartMask&(1u<<soulSlot)?Color{83,67,91,255}:Color{112,164,220,255};
+                empty={34,43,59,255};filled=std::min(2,soul);soul-=std::min(2,soul);
+            }
+        } else {color={121,68,74,255};empty=color;filled=2;}
+        redHeart(x,705,filled,sx_,sy_,color,empty);
+        if(slot>=redSlots+protectiveSlots)DrawLine(int((x+12)*sx_),int(706*sy_),int((x+8)*sx_),int(722*sy_),Ink);
+        const int occupiedRed=int(std::ceil(std::min(hp.hp,hp.maxHp)/2));
+        const bool gold=slot<redSlots?slot<occupiedRed&&slot>=occupiedRed+protectiveSlots-hp.goldenHearts:
+            slot<redSlots+protectiveSlots&&slot-redSlots>=occupiedRed+protectiveSlots-hp.goldenHearts-occupiedRed;
+        if(gold)DrawRectangleLinesEx({(x-1)*sx_,703*sy_,25*sx_,21*sy_},sx_,Gold);
+        if(hp.eternalHearts>0&&slot==std::max(0,redSlots-1))
+            redHeart(x+12,705,1,sx_,sy_,Paper,Color{0,0,0,0});
+    }
     Action controls = Action::None;
     if (!game.paused && !game.buildOpen && !run.rewardOpen && !run.shopOpen && !run.dead) {
         const auto control=[&](Action action,const std::string &label,Rectangle r,bool primary=false) {
@@ -1896,7 +1955,7 @@ Action Renderer::expedition(const Game &game) {
             text(medicine ? "SUPPLIES" : item.rarity, x + 18, 298, 12,
                  !medicine && offer.item == ItemId::Judas ? Rust : Gold);
             wrap(medicine ? "Field Medicine" : item.name, x + 18, 335, 235, 25, Paper);
-            wrap(medicine ? "Restore up to 40 health. Maximum health stays the same." : item.description,
+            wrap(medicine ? "Restore up to one red heart. Empty red containers stay available." : item.description,
                  x + 18, 410, 237, 15, Muted);
             text(std::to_string(offer.price) + " COINS", x + 18, 488, 16, Gold);
             const auto unavailable = run.shopUnavailable(i);
@@ -1942,7 +2001,7 @@ Action Renderer::expedition(const Game &game) {
         if (game.debug && !run.dead) {
             panel(895, 240, 361, 318, Panel);
             text("PLAYER SETTINGS", 915, 263, 22, Gold);
-            text("BASE HEALTH", 915, 309, 13, Muted);
+            text("BASE HEALTH / HALF HEARTS", 915, 309, 13, Muted);
             text(std::to_string(int(run.player.baseHealth)), 915, 333, 25, Paper);
             if (button(Action::HealthDown, "-", 1134, 307, 44, 44))
                 return Action::HealthDown;

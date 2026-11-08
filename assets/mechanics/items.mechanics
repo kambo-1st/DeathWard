@@ -7,8 +7,8 @@ item "dw:collectible:1" "Split Lead" "STRANGE" "Hits split into two smaller shot
 hook split per_copy
 end
 
-item "dw:collectible:2" "Judas Bullet" "CURSED" "Every sixth primary shot gains six pierces per copy. Lose 20% maximum health per copy."
-pickup_health 0.8 10
+item "dw:collectible:2" "Judas Bullet" "CURSED" "Every sixth primary shot gains six pierces per copy. Lose 20% of red capacity per copy, rounded down to full containers (at least one)."
+pickup_health 0.8 2
 end
 
 item "dw:collectible:3" "Powder of Jericho" "STRANGE" "Kills explode; explosion kills can explode again. Free blasts cannot open hard cover."
@@ -44,4 +44,9 @@ end
 # Enemy-interaction dependency only. No natural pool until its other fly effects
 # are implemented; existing loadouts and reward distributions remain unchanged.
 item "isaac:collectible:9" "Skatole" "STRANGE" "Pooters and Super Pooters stop shooting."
+end
+
+# H17 health dependency. Explicit grants/inspection only; natural item-pool
+# parity is unselected and other revival items remain unaccepted.
+item "isaac:collectible:11" "1up!" "STRANGE" "One extra life. Return to a safe room with filled red containers, or half a soul heart without red containers."
 end

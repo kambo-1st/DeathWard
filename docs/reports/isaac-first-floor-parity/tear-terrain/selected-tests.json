@@ -1,0 +1,117 @@
+{
+  "tests": 22,
+  "failures": 0,
+  "elapsed_seconds": 84.12,
+  "cases": [
+    {
+      "name": "item_builds",
+      "status": "run",
+      "seconds": 8.51943
+    },
+    {
+      "name": "mirror_behavior",
+      "status": "run",
+      "seconds": 20.6859
+    },
+    {
+      "name": "linked_head",
+      "status": "run",
+      "seconds": 0.273398
+    },
+    {
+      "name": "monster_boss_components",
+      "status": "run",
+      "seconds": 1.25178
+    },
+    {
+      "name": "bloat_boss_and_chargers",
+      "status": "run",
+      "seconds": 1.67274
+    },
+    {
+      "name": "native_tear_collider",
+      "status": "run",
+      "seconds": 0.196451
+    },
+    {
+      "name": "native_tear_terrain",
+      "status": "run",
+      "seconds": 1.65026
+    },
+    {
+      "name": "native_shot_placement",
+      "status": "run",
+      "seconds": 0.154104
+    },
+    {
+      "name": "native_tear_birth",
+      "status": "run",
+      "seconds": 0.0516588
+    },
+    {
+      "name": "native_player_fire",
+      "status": "run",
+      "seconds": 0.164572
+    },
+    {
+      "name": "native_player_motion",
+      "status": "run",
+      "seconds": 0.00310565
+    },
+    {
+      "name": "native_duke",
+      "status": "run",
+      "seconds": 0.404638
+    },
+    {
+      "name": "native_monstro",
+      "status": "run",
+      "seconds": 0.36788
+    },
+    {
+      "name": "native_player_bombs",
+      "status": "run",
+      "seconds": 1.34922
+    },
+    {
+      "name": "native_blast_recipients",
+      "status": "run",
+      "seconds": 0.366985
+    },
+    {
+      "name": "isaac_baseline",
+      "status": "run",
+      "seconds": 2.39842
+    },
+    {
+      "name": "first_floor_freeze_effect",
+      "status": "run",
+      "seconds": 0.749155
+    },
+    {
+      "name": "first_floor_damage_statuses",
+      "status": "run",
+      "seconds": 1.12715
+    },
+    {
+      "name": "first_floor_slow_effect",
+      "status": "run",
+      "seconds": 0.953806
+    },
+    {
+      "name": "first_floor_charm_effect",
+      "status": "run",
+      "seconds": 5.64249
+    },
+    {
+      "name": "rock_spider_family",
+      "status": "run",
+      "seconds": 35.737
+    },
+    {
+      "name": "core_contracts",
+      "status": "run",
+      "seconds": 0.393127
+    }
+  ]
+}

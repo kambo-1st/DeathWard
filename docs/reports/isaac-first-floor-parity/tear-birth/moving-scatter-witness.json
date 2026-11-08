@@ -1,0 +1,10 @@
+{
+  "frame": 20,
+  "pellet": 2,
+  "native_offset": -0.19999980926513672,
+  "native_expected_world_x": 6.399852371215821,
+  "old_muzzle_world_x_inferred_from_supplied_native_inputs": 6.5347450781890535,
+  "native_world_x_correction": -0.13489270697323263,
+  "world_comparison_passed_with_tolerance": 0.0003,
+  "scope": "Native supplied muzzle/spread fixture; the world comparison checks this birth position within tolerance. Initial source muzzle placement, whole Actor and live timing remain unaccepted."
+}

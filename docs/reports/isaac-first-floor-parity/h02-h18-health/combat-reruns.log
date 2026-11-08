@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 58: bloat_boss_and_chargers
+1/2 Test #58: bloat_boss_and_chargers ..........   Passed    1.75 sec
+    Start 66: charger_variants
+2/2 Test #66: charger_variants .................   Passed   23.02 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  24.77 sec

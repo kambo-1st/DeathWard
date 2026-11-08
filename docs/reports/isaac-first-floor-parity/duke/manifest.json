@@ -1,0 +1,134 @@
+{
+  "source_entity": {
+    "anm2path": "067.000_The Duke of Flies.anm2",
+    "baseHP": "110",
+    "boss": "1",
+    "bossID": "13",
+    "champion": "0",
+    "collisionDamage": "1",
+    "collisionMass": "30",
+    "collisionRadius": "35",
+    "friction": "1",
+    "id": "67",
+    "name": "#THE_DUKE_OF_FLIES",
+    "numGridCollisionPoints": "12",
+    "portrait": "32",
+    "shadowSize": "34",
+    "stageHP": "0",
+    "variant": "0"
+  },
+  "tiny_fly_effect33": {
+    "anm2path": "1000.033_Tiny Fly.anm2",
+    "baseHP": "0",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "0",
+    "collisionMass": "0",
+    "collisionRadius": "0",
+    "friction": "1",
+    "id": "1000",
+    "name": "Tiny Fly",
+    "numGridCollisionPoints": "0",
+    "shadowSize": "0",
+    "stageHP": "0",
+    "variant": "33"
+  },
+  "entity_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "matrix_cases": 2064,
+  "sequence_cases": 6,
+  "states": 3144,
+  "npc_births": 4345,
+  "cohort_release_intents": 304,
+  "math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "floor": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06524",
+        "export": "0x10090de0"
+      },
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 9690,
+      "_libm_sse2_sin_precise": 9690,
+      "_libm_sse2_pow_precise": 0,
+      "floor": 0
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "vcruntime_sha256": "2fa6efc053203460a23d3a25158f227d895d2dadc63acc1a372da97c3a4281c3",
+  "vcruntime_mapping": "0x11000000 with ordinary PE base relocation; __RTDynamicCast import resolved to original export",
+  "external_boundaries": {
+    "Spawn422e20": "Records complete request and provides typed NPC/effect body with documented XML-like base fields and weak-reference tree; NPC list/counter registration is fixture world input, not full Spawn acceptance.",
+    "Audio888de0": "Records request, no audio device.",
+    "EffectUpdate": "0x5bdf00",
+    "Color68a380": "Graphics endpoint only; no color layers hosted.",
+    "timeGetTime": "WINMM.dll import0xa064c0; OS profiling clock returns0; no game clock replaced."
+  },
+  "windows": [
+    {
+      "name": "controller",
+      "start": "0x45dd40",
+      "end_exclusive": "0x45f5a8",
+      "sha256": "c7b0117a998c437b2c623bb62594869bfc3ee90c5a419e0d1d0adae15077d72b"
+    },
+    {
+      "name": "cohort",
+      "start": "0x6a6f60",
+      "end_exclusive": "0x6a70a0",
+      "sha256": "ebbc3c25971abeeb3c8ac0618e559767da6dda2b79b24c9491b4f855da81df37"
+    },
+    {
+      "name": "npc_order",
+      "start": "0x69b66e",
+      "end_exclusive": "0x69b6f7",
+      "sha256": "cccf0e4f072c100e0c05cb4942ce9d163168b9b7fed00e93cd01c50ff1485efd"
+    },
+    {
+      "name": "child_pursuit",
+      "start": "0x4f68ef",
+      "end_exclusive": "0x4f6a3a",
+      "sha256": "a610273c7205c68d4761df24ff99a55d3dc53262a7cbc29847b6395565dc35bb"
+    },
+    {
+      "name": "child_edge",
+      "start": "0x4f6d93",
+      "end_exclusive": "0x4f6e2e",
+      "sha256": "339e0d9077df7532535f43e80f64b882fa4a111d5c38cec74ffbb54d491776ea"
+    },
+    {
+      "name": "effect_dispatch",
+      "start": "0x5be281",
+      "end_exclusive": "0x5be2b8",
+      "sha256": "1d0ea96b8c2907393c1e699e5f89541dbb94694e0ab4d979012e7acff9da6f02"
+    },
+    {
+      "name": "tiny_fly_effect33",
+      "start": "0x5d8968",
+      "end_exclusive": "0x5d93f2",
+      "sha256": "baf9dda8d1d688d05da5c956229305a3aa1c99fbd3577f5e2ee5704c8fc25504"
+    }
+  ],
+  "scope": "Whole original ordinary67.0.0 AI function, original rectangle room clamp, original cohort collection/weak references and runtime type checks, original sprite animation selection, original MT and UCRT numeric exports. Optional bounded base-physics block runs after AI, matching the preserved normal NPC call order. Synthetic rectangular room, supplied ordinary cohort/room population, no items/status/mods; cosmetic query lists empty. Offspring AI/Spawn allocation, full NPC update/sprite advancement, real room geometry/flags/cosmetic population and global call order remain open.",
+  "full_acceptance": false
+}

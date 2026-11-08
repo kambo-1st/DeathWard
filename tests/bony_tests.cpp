@@ -43,7 +43,7 @@ void acquisition() {
     }
     {auto s=fixture(lib);auto id=spawn(s);s.player.position={1.99f,.85f,10};waitWindup(s,id);}
     {auto s=fixture(lib);spawn(s);s.arena.walls.push_back({{-3,0,4},{3,4,5}});tick(s,120);check(s.stats.projectiles==0,"wall blocks acquisition even with perfect alignment");}
-    {auto s=fixture(lib);auto id=spawn(s);waitWindup(s,id);s.godMode=false;tick(s,45);check(near(s.player.hp,StartingHealth-12.5f),"real bone collision applies current hostile damage conversion once");}
+    {auto s=fixture(lib);auto id=spawn(s);waitWindup(s,id);s.godMode=false;tick(s,45);check(near(s.player.hp,StartingHealth-1),"real bone collision applies current hostile damage conversion once");}
     {auto s=fixture(lib);auto id=spawn(s);waitWindup(s,id);s.arena.walls.push_back({{-3,0,4},{3,4,5}});s.godMode=false;tick(s,45);check(near(s.player.hp,StartingHealth)&&s.projectiles.empty(),"bone respects cover inserted after acquisition");}
 }
 void movementAndRouting() {

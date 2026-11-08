@@ -1,0 +1,42 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  57: monster_boss_components
+ 1/18 Test  #57: monster_boss_components ..........   Passed    1.22 sec
+      Start  58: bloat_boss_and_chargers
+ 2/18 Test  #58: bloat_boss_and_chargers ..........   Passed    1.60 sec
+      Start  59: native_player_motion
+ 3/18 Test  #59: native_player_motion .............   Passed    0.00 sec
+      Start  60: native_player_health
+ 4/18 Test  #60: native_player_health .............   Passed    0.00 sec
+      Start  61: native_midas_freeze
+ 5/18 Test  #61: native_midas_freeze ..............   Passed    0.00 sec
+      Start  62: native_blue_fly
+ 6/18 Test  #62: native_blue_fly ..................   Passed    0.00 sec
+      Start  63: native_player_hurt
+ 7/18 Test  #63: native_player_hurt ...............   Passed    0.00 sec
+      Start  64: native_monstro
+ 8/18 Test  #64: native_monstro ...................   Passed    0.36 sec
+      Start  65: native_room_awards
+ 9/18 Test  #65: native_room_awards ...............   Passed    0.01 sec
+      Start  66: source_resources
+10/18 Test  #66: source_resources .................   Passed    0.38 sec
+      Start  67: isaac_baseline
+11/18 Test  #67: isaac_baseline ...................   Passed    2.00 sec
+      Start  68: regular_health_balance
+12/18 Test  #68: regular_health_balance ...........   Passed    0.36 sec
+      Start 107: first_floor_status_effects
+13/18 Test #107: first_floor_status_effects .......   Passed    0.68 sec
+      Start 108: first_floor_freeze_effect
+14/18 Test #108: first_floor_freeze_effect ........   Passed    0.70 sec
+      Start 109: first_floor_damage_statuses
+15/18 Test #109: first_floor_damage_statuses ......   Passed    1.09 sec
+      Start 110: first_floor_slow_effect
+16/18 Test #110: first_floor_slow_effect ..........   Passed    0.90 sec
+      Start 112: first_floor_charm_effect
+17/18 Test #112: first_floor_charm_effect .........   Passed    5.36 sec
+      Start 133: core_contracts
+18/18 Test #133: core_contracts ...................   Passed    0.39 sec
+
+100% tests passed, 0 tests failed out of 18
+
+Total Test time (real) =  15.07 sec

@@ -1,0 +1,105 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "floor": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06524",
+        "export": "0x10090de0"
+      },
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "nextafterf": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06550",
+        "export": "0x10052400"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 90,
+      "_libm_sse2_sin_precise": 90,
+      "_libm_sse2_pow_precise": 0,
+      "floor": 39666,
+      "nextafterf": 288
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "cases": 96,
+  "update_states": 11184,
+  "blast_requests": 162,
+  "sound_requests": 156,
+  "animation_metadata_sha256": "824fd6695679dec37afcc7699e1d74664fe4aff007f416bb08b07f0113140303",
+  "windows": [
+    {
+      "name": "bomb_update",
+      "start": "0x67ae90",
+      "end_exclusive": "0x67e290",
+      "sha256": "77d9d92f85d41656f4e0511478f48bcc8984f0c932ce6e00324e33422c415892"
+    },
+    {
+      "name": "sprite_play",
+      "start": "0x4054f0",
+      "end_exclusive": "0x405566",
+      "sha256": "bcc226fc74f0e6a6cc43964cf514c46ab58f011c8a85b0ec492adfcf9c0bf7ff"
+    },
+    {
+      "name": "sprite_select",
+      "start": "0x405740",
+      "end_exclusive": "0x4057f8",
+      "sha256": "752a3167e3b368d3069190652332c955d9dc248c8bd27bc791ecd55d0d719253"
+    },
+    {
+      "name": "layer_change",
+      "start": "0x403740",
+      "end_exclusive": "0x403813",
+      "sha256": "aee9dc402c6ef81ecd1b5838e7d98a25cb8af844f3c2f29836125bba77bf42da"
+    },
+    {
+      "name": "layer_restart",
+      "start": "0x405330",
+      "end_exclusive": "0x4053b0",
+      "sha256": "14111dc6481847f33847e52b5b1765e6d726bd569c2b9c653ee995f3cff415cc"
+    },
+    {
+      "name": "layer_update",
+      "start": "0x403d60",
+      "end_exclusive": "0x403e21",
+      "sha256": "9e5c57befaf51f4437d96b33395eb65be521afd7a09d435794b023b9c62d2440"
+    },
+    {
+      "name": "layer_float_frame",
+      "start": "0x403c00",
+      "end_exclusive": "0x403d00",
+      "sha256": "c971534a27b705c4003a5bb2ae94d7be1c45760059a47b55000f3de67ca4358c"
+    },
+    {
+      "name": "hashed_direction",
+      "start": "0x6592f0",
+      "end_exclusive": "0x659398",
+      "sha256": "b2c802f7b9f1945250521177eaf6bb0c71cec83e96516ff6c57ef8e9120320d6"
+    }
+  ],
+  "scope": "Whole original Bomb::Update plus BaseEntity physics and native sprite selection/restart/frame/event updates, with parsed ANM2 metadata but no render layers. Supplied ordinary active/alive/configuration flags, friction/timeScale1, InitSeed and target position/velocity; original entity seed initialization and bomb numeric initialization. Ordinary Isaac, no mods/items/statuses/other entities/grid samples. Actual one-player target selection executes. Only Audio::Play and Game::BombExplosionEffects endpoints are hosted: audio records requests; explosions record payloads and leave target health/world unchanged. Native post-explosion state, removal, super chasing and golden repeat RNG/arithmetic continue unchanged. Actual original UCRT floor/nextafterf/trig are linked. Actor contacts, room grid, whole blast recipient effects, global scheduler/seed mapping, modifiers and live acceptance remain open.",
+  "correction": "Base physics alone is not full grounded bomb motion. Bomb::Update applies0.95 velocity damping AFTER movement, then another0.5 when squared damped speed is below1, before fuse/explosion and super post-physics steering. Earlier72 base-only states remain valid for that bounded block, not complete runtime motion.",
+  "full_acceptance": false,
+  "whole_update_grounded_motion_states": 288,
+  "native_mt_words": 4200
+}

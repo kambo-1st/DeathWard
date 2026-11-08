@@ -232,7 +232,7 @@ int main() {
         }
         dw::Simulation travel(1866, 1, {});
         travel.godMode = travel.debugScenario = true;
-        travel.player.hp = 100;
+        travel.player.hp = 5;
         travel.clearRoom();
         const int passageIndex = travel.arena.rooms[0].passages.front();
         const auto &passage = travel.arena.passages[size_t(passageIndex)];

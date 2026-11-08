@@ -82,7 +82,7 @@ void contactAndDamage() {
     }
     auto ordinary=fixture();ordinary.godMode=false;auto id=spawn(ordinary,monsterId(12));ordinary.applyEnemyStatus(id,EnemyStatus::Shrink,30);
     ordinary.removeEnemyStatus(id,EnemyStatus::Shrink);ordinary.player.position=ordinary.findEnemy(id)->position;ticks(ordinary);
-    check(ordinary.player.hp==StartingHealth-10*EnemyDamageMultiplier&&ordinary.findEnemy(id)->alive,"removed Shrink restores ordinary contact immediately");
+    check(ordinary.player.hp==StartingHealth-1&&ordinary.findEnemy(id)->alive,"removed Shrink restores ordinary contact immediately");
     auto pending=fixture();pending.godMode=false;id=spawn(pending,monsterId(11));pending.applyEnemyStatus(id,EnemyStatus::Shrink,1);
     pending.limits.queuedEvents=0;pending.player.position=pending.findEnemy(id)->position;ticks(pending,3);
     check(pending.findEnemy(id)->statuses->squashed&&pending.stats.kills==0&&pending.player.hp==StartingHealth,"bounded queue retains squash intent without harming player");

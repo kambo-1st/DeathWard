@@ -1,0 +1,129 @@
+{
+  "captured_at_utc": "2026-11-07T19:45:08.238424+00:00",
+  "status": "implemented baseline subset verified in DeathWard; full native gameplay parity unfinished",
+  "base_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
+  "uncommitted_changes": true,
+  "enabled_launch": "standard Canyon, non-Classic pacing, default Game::launch/--expedition",
+  "accepted_exceptions": [
+    "graphics",
+    "universal dodge movement and immunity"
+  ],
+  "player_start": {
+    "hp": 6.0,
+    "max_hp": 6.0,
+    "keys": 0.0,
+    "dynamite": 1.0,
+    "money": 0.0,
+    "items": 0.0,
+    "god_mode": 0.0
+  },
+  "damage": 3.5,
+  "held_fire_intervals_ticks": {
+    "22": 10
+  },
+  "observed_rate_per_second": 2.727272727272727,
+  "mechanics_fingerprint": "f1f4d3f3ad241a95-isaac-baseline-v1",
+  "tests": {
+    "isaac_baseline": "passed",
+    "regular_health_balance": "passed",
+    "core_contracts": "passed"
+  },
+  "native_application_build": "passed",
+  "graphical_smoke": {
+    "baseline_canyon": "passed; 3 heart icons and 1 bomb inspected",
+    "legacy_mine": "passed",
+    "inspection_god_mode": true
+  },
+  "mechanics_asset_changes": false,
+  "remaining": [
+    "native movement/projectile/collision/invulnerability calibration",
+    "source-specific damage flags and amounts beyond provisional adapter",
+    "remaining heart types and world pickups/drop rules",
+    "eligible first-floor enemies and source bosses",
+    "complete reachable item/active/pocket/trinket/stat/Luck interactions",
+    "room generation/layouts/eligibility and native rewards/economy",
+    "matched native traces and complete floor/persistence/performance acceptance"
+  ],
+  "input_files": {
+    "CMakeLists.txt": {
+      "bytes": 64783,
+      "sha256": "a844297d8883933664fe9f1959aa1403cde2e9500e7eca14c74c3a152a374954"
+    },
+    "src/combat/CanyonBoss.cpp": {
+      "bytes": 7971,
+      "sha256": "cf878b449eb1f095a90c1595413b49b3ba9ba92266228d723cfbf4e3bc1a939e"
+    },
+    "src/combat/Dynamite.cpp": {
+      "bytes": 8019,
+      "sha256": "8886bd0147cf5098da9214401f46b7bb1e54d83597d6b936cbe2d1eac5a6c3bf"
+    },
+    "src/combat/Encounters.cpp": {
+      "bytes": 18281,
+      "sha256": "b5ba92895cf5321de25f036c642b144f438270711730617d5653276124788cf4"
+    },
+    "src/combat/Enemies.cpp": {
+      "bytes": 33641,
+      "sha256": "f527f2e141378c5c59960c66082b9cf2269dff48b9984b83e0cb5d3afa5eba70"
+    },
+    "src/combat/Loot.cpp": {
+      "bytes": 4611,
+      "sha256": "2cf5222c97a5f52d38302f5f709323e6b8ac8ef479df759712b7a01a7ebd9393"
+    },
+    "src/combat/Monsters.cpp": {
+      "bytes": 54075,
+      "sha256": "22fc26e87b0626dc69d9d15af7a56865f8dda152b706541333055159db421216"
+    },
+    "src/combat/Services.cpp": {
+      "bytes": 4474,
+      "sha256": "d1f73e75877e8ff0b36411eab081ec86df9c56d421e01cc53a887f492ff8c85f"
+    },
+    "src/combat/Shop.cpp": {
+      "bytes": 3690,
+      "sha256": "c88860ad8f6bc4cae47691a9beb639ea17d523569e3139acff623677cd4bae08"
+    },
+    "src/combat/Simulation.cpp": {
+      "bytes": 77041,
+      "sha256": "570eb77ebe5e97bdc3a13e2491cf9dd7be5bdb0cfa643b643c937ba1d4cec73d"
+    },
+    "src/combat/Simulation.hpp": {
+      "bytes": 62862,
+      "sha256": "b31598a63d9e1283a00dc214cd36777aff4d62cfa52ec7180f37b222f6a9acf1"
+    },
+    "src/combat/SuppliedBombs.cpp": {
+      "bytes": 6322,
+      "sha256": "b1f52506bc75a3e0f345eb466e8589c06ba1102be1cb92a2656d0c88a03cc3c3"
+    },
+    "src/content/Mechanics.cpp": {
+      "bytes": 294398,
+      "sha256": "a85766e55a4b245027caaf69c24d58c6d452c057995874384615140e78cff8f0"
+    },
+    "src/content/Mechanics.hpp": {
+      "bytes": 59113,
+      "sha256": "bd1c7ee75b7fd3776811c2d29c3564bd2967eae171c27e6572fbd9718556da52"
+    },
+    "src/core/Game.cpp": {
+      "bytes": 56563,
+      "sha256": "d468b9b3fa2fb0d5f9890806b08e6264b4e779e0428cb9f92f38ac4fcaba46a2"
+    },
+    "src/core/Game.hpp": {
+      "bytes": 6911,
+      "sha256": "fc7fddddaa9417ed3d11610a873d3b0ad0eb70cfbe8313d09ed24849afc60ac4"
+    },
+    "src/core/Types.hpp": {
+      "bytes": 5908,
+      "sha256": "e5983bf53c8d8239f6ef4beff688d8d541e7e5a90de353fbfb0b3f4cb602a6ce"
+    },
+    "src/render/Renderer.cpp": {
+      "bytes": 129541,
+      "sha256": "30970ad5b9ef2c6d110e63a66513441fd25c1100a03dc134b8e1d4fa42dc3201"
+    },
+    "tests/isaac_baseline_tests.cpp": {
+      "bytes": 10275,
+      "sha256": "f2379f06255696267be30bac1c197ce74d2aabdf29b9f94a571f44e20e6b25d9"
+    },
+    "tools/isaac_first_floor_probe.cpp": {
+      "bytes": 3079,
+      "sha256": "23f42aae9e24b0d4a36a2d709ec23827adff35eed19f3f688a7aefe2388bde2e"
+    }
+  }
+}

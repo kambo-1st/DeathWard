@@ -1,0 +1,43 @@
+{
+  "checked_at_utc": "2026-11-07T21:11:12Z",
+  "native_capture_reproduction": "passed",
+  "native_cpp_transitions": 293,
+  "native_cpp_cases": 28,
+  "focused_ctest_suites": 5,
+  "focused_ctest_result": "passed",
+  "application_build": "passed",
+  "typed_health_gameplay_enabled": true,
+  "full_health_acceptance": false,
+  "dodge_boost_and_immunity_regression": "passed",
+  "mechanics_version": "isaac-baseline-v3",
+  "graphical_smoke": "passed: 8 frames, --scene health, seven world pickups and typed HUD; inspection god mode; rendering only, not combat or performance acceptance",
+  "input_sha256": {
+    "scripts/isaac-reference/analyze-player-health.py": "65469eca65d12893589a194352e9cd789d17a437674aebf5e7af4f324a427f97",
+    "src/combat/PlayerHealth.hpp": "f1b5da8c1e36a2607892d5e6e2b4707fef40b4f9a40f97c96338a6991c99a8ec",
+    "src/combat/Simulation.hpp": "9af3656482123d488905f62a16babe68407b703f2cc1a4b5c41b9334346cdb54",
+    "src/combat/Simulation.cpp": "771f837a5f3b82df8909b08d44ffd2ca46c1c50e799ffe9ad0f06ea5e78bb657",
+    "src/combat/Enemies.cpp": "a57a9225bbc74dffd132dcc707165b45b3600f1ca8bb958b551c0a0968b64969",
+    "src/combat/Shop.cpp": "3c1de4c10c77b03ac84e9d959d353f428b9a5b36fc47b3a75a1b9f1f1ed5bdff",
+    "src/combat/Encounters.cpp": "2b3526435f417c3aa1216d359556641e03d465c7db14c0de5d9f7c81a0b66ce2",
+    "src/content/Mechanics.cpp": "0540c3794beb9f87d49efb448596e77be721b06157017eddd45ef5e9693b76e9",
+    "src/render/Renderer.cpp": "651ffe0f6df35de1f7a6677db5a94c625b6f32faa47243e85c4a76b817ef9f17",
+    "src/main.cpp": "d98ed24796ea240813d35b4905041c02e1de011a9c113c1bed112790dd089f78",
+    "tests/player_health_tests.cpp": "e3c5be759d57a64ce6c317cd12f5dce78a090ff1e902537b652a4091fb965ec6",
+    "tests/isaac_baseline_tests.cpp": "d2da830c9b3bcb7fffebc1fc731e5a9d9436c0d061f8cad51a5a884f8a03efaf",
+    "docs/reports/isaac-first-floor-parity/player-health/native-health.csv": "a0d0b0f6fdfea7abc4f781b3ae30f1c498cb9b80a0e2c57ba10ebaa2b9ba21bf",
+    "docs/reports/isaac-first-floor-parity/player-health/manifest.json": "9366e3f6033dffa3cbb82163592986a1554d345cc944b6686fbb25dacbadad0c"
+  },
+  "application_sha256": "b653a9e996ab6259edc7bee77a4b1abe3364471a6f2c2279dd6e4d1f59cf6527",
+  "hud_sha256": "c8d2a595b9989724fb5dd78ff20ae1d9006938daf3753fec90282879efa13614",
+  "open_health_requirements": [
+    "Midas freeze and death coin rules",
+    "rotten room-clear flies",
+    "full source incoming damage flags and target eligibility",
+    "black item/trinket modifiers",
+    "native pickup selection and reward/drop tables",
+    "native gold and pickup physics/RNG/timing/subtypes",
+    "source health costs/upgrades and item interactions",
+    "live native comparison and full acceptance"
+  ],
+  "capture_scope": "Bounded native health mutation and eternal conversion plus nine add APIs, synthetic empty-inventory actor, four explicitly intercepted effect endpoints. Separate effect constants are static disassembly findings."
+}

@@ -1,0 +1,51 @@
+{
+  "version": "Repentance 1.7.9b",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_cases": 104,
+  "executed_scope": "0x76e60c-0x76e626/0x76e62b, positive-deficit branch and AddBlueFlies argument assembly; stop before the call.",
+  "fixture": "Ordinary player, valid 24-half red capacity; supplied count of already owned blue flies in ESI. World entity enumeration and the AddBlueFlies call are not executed.",
+  "static_findings": [
+    "Upstream query requests familiar type3/variant43 and counts only those whose player pointer matches the current player.",
+    "Only a positive 2*rotten - owned deficit requests new flies. Existing excess flies are not removed by this block.",
+    "AddBlueFlies queries trinket94; a positive count doubles requested quantity before spawning familiar3.43. The native family update/attack and room callback trigger are not established by these arithmetic traces."
+  ],
+  "capture_claims_runtime_acceptance": false,
+  "full_acceptance": false,
+  "next_work": [
+    "confirm all refill callback triggers",
+    "verify the integrated actor against whole native initialization/orbit/target/contact/removal behavior",
+    "native inventory/room/floor persistence comparison",
+    "native item/trinket modifiers",
+    "source RNG, collision and live scheduling acceptance"
+  ],
+  "windows": [
+    {
+      "name": "owned_query_and_refill",
+      "start": "0x76e5b2",
+      "end_exclusive": "0x76e62b",
+      "raw_sha256": "386f8d56c954f45c2c94d3fc7b419c6cf19329f0285ae05de736d818b0a0ae08",
+      "listing_sha256": "6a2934abeb1513e68e34efca6efa1da9dacbcf527e271f59b0b32d7c95c9272c"
+    },
+    {
+      "name": "add_blue_flies",
+      "start": "0x725cc0",
+      "end_exclusive": "0x725da0",
+      "raw_sha256": "2874a39c4fe78c0341fafd18ec5479e72d205b04fe7e368831317a7cd2f3d8b0",
+      "listing_sha256": "cbcdc66bc646e5ee4a1002835060c7f93936df22a8176ba76133657e94a0690e"
+    },
+    {
+      "name": "player_callback_entry",
+      "start": "0x76e140",
+      "end_exclusive": "0x76e19a",
+      "raw_sha256": "1fcaa3f9a433abdd325bc4f65aa285ca059ff279e70889b750e202450b802778",
+      "listing_sha256": "c11de4ca905e814683348662afb6966bc65a77ecca6155d98d91a45e8c3069c9"
+    },
+    {
+      "name": "players_callback",
+      "start": "0x91aa70",
+      "end_exclusive": "0x91ab5e",
+      "raw_sha256": "7e01f5df96124259de3faa712f422e87a70f418df2d6fb5fc7919fa37f354fee",
+      "listing_sha256": "81dadb0b7388c1ecd6befb5e54cd7eb4b56edf955fe5bf4234720497e18f9c47"
+    }
+  ]
+}
