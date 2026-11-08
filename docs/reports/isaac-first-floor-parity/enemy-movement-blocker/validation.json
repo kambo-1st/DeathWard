@@ -1,0 +1,105 @@
+{
+  "recorded_at_utc": "2026-11-08T18:03:26.250801+00:00",
+  "status": "relative movement candidate implemented and tested privately; full native movement acceptance pending; live HP acceptance held",
+  "production_enemy_movement_corrected": false,
+  "production_hp_changed": false,
+  "current_runtime_measurements": [
+    {
+      "id": "10.0",
+      "peak_current_world_speed": 14.4,
+      "last_half_second_mean_current_world_speed": 14.399979999999992,
+      "accepted_player_world_speed": 4.8,
+      "peak_enemy_player_ratio": 3.0
+    },
+    {
+      "id": "10.1",
+      "peak_current_world_speed": 9.95991,
+      "last_half_second_mean_current_world_speed": 9.959910000000002,
+      "accepted_player_world_speed": 4.8,
+      "peak_enemy_player_ratio": 2.0749812500000004
+    },
+    {
+      "id": "12.0",
+      "peak_current_world_speed": 0.0,
+      "last_half_second_mean_current_world_speed": 0.0,
+      "accepted_player_world_speed": 4.8,
+      "peak_enemy_player_ratio": 0.0
+    },
+    {
+      "id": "14.0",
+      "peak_current_world_speed": 4.96983,
+      "last_half_second_mean_current_world_speed": 2.4202940333333327,
+      "accepted_player_world_speed": 4.8,
+      "peak_enemy_player_ratio": 1.0353812500000001
+    },
+    {
+      "id": "85.0",
+      "peak_current_world_speed": 26.9789,
+      "last_half_second_mean_current_world_speed": 19.35215966666667,
+      "accepted_player_world_speed": 4.8,
+      "peak_enemy_player_ratio": 5.620604166666666
+    }
+  ],
+  "native_player_execution": {
+    "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+    "held_invocations": 360,
+    "native_player_held_velocity_per_invocation": 4.414238452911377,
+    "last_sixty_min": 4.414238452911377,
+    "last_sixty_max": 4.414238452911377,
+    "scope": "Original bounded player velocity instructions, not complete live actor timing or collision acceptance"
+  },
+  "derived_native_reference_ratios": [
+    {
+      "id": "10.1.0",
+      "native_open_chase_steady_velocity_per_NPC_invocation": 3.319999972979227,
+      "ratio_to_bounded_native_player_at_ordinary_target_clocks": 0.3760558031011608,
+      "scope": "derived from pinned native open-route recurrence and ordinary dispatch clocks; not live timing/geometry/full actor acceptance"
+    },
+    {
+      "id": "10.0.0",
+      "native_open_chase_steady_velocity_per_NPC_invocation": 4.800000190734862,
+      "ratio_to_bounded_native_player_at_ordinary_target_clocks": 0.5436951630432492,
+      "scope": "derived from pinned native open-route recurrence and ordinary dispatch clocks; not live timing/geometry/full actor acceptance"
+    }
+  ],
+  "full_native_acceptance": false,
+  "source_hashes": {
+    "src/combat/Gapers.cpp": "adb13de7049e032e6b467a6b07af23aa54088ebf052e751dc72a182bf4da6120",
+    "src/combat/GroundPursuit.cpp": "18d8121f1411b0d8b1ec6c321b69357ee83ea6937c838c08819098a7dfdb82a5",
+    "assets/mechanics/gapers.mechanics": "ba8152209d0c7acb8344c508f76fe8a2ff2dab6580cd3624ecf729b798833fbb",
+    "src/combat/PlayerAttributes.hpp": "37bd86b8a879d2c2adb0b39fb89d0802afd2c9fdb4c926ccca9f3f8f0ba259b2",
+    "src/combat/Simulation.hpp": "2f9552570cb315129499e4f9bf0827782cfc1fdb8f71f2c711ba2cbcff0d8b8e"
+  },
+  "remaining": [
+    "Correct and verify shared movement conversion before live HP review",
+    "Per-actor movement/burst and native/live timing/geometry/NPC projectile calibration",
+    "Resume HP encounter acceptance only after movement; remaining roster/boss units still open"
+  ],
+  "artifacts_sha256": {
+    "current-motion-probe.cpp": "037851f7264474e3931d6e6b92f8539beea20e8d84c6f67c93cadd732963aed4",
+    "README.md": "be363f94967ebec835c8ee486daac2269e11980851586b37365ef2020e993a99",
+    "current-motion.csv": "333a85ada9b62276c42be870f544ac6fa66e1e4d3561088be5092b485964a70b",
+    "native-player-probe.json": "966fb2b1d7e30a07d1cf8cbad96290d4f12bfefe11faf8151c1e9fda511ac1bb"
+  },
+  "candidate": {
+    "enabled": "movement-review only",
+    "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/candidate/README.md",
+    "native_player_step": 4.414238452911377,
+    "native_player_target_hz": 60,
+    "native_npc_target_hz": 30,
+    "world_scale": 0.018123171381291516,
+    "gaper_ratios": [
+      0.3760558031,
+      0.5436952028
+    ],
+    "tests": "7 focused suites pass; 840 paired open-space Simulation steps",
+    "independent_native_acceptance": false,
+    "production_gameplay_changed": false,
+    "hp_damage_changed": false,
+    "limits": [
+      "Bounded original player instructions and static native controller evidence; not complete live actor traces",
+      "Pooter/Spider similarity tests preserve existing port behavior; do not prove that behavior matches native AI",
+      "Projectile speed, geometry, collision, live scheduling and other enemies remain unaccepted"
+    ]
+  }
+}

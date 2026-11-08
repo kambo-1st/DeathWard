@@ -1,0 +1,20 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  86: buzzing_flies
+1/7 Test  #86: buzzing_flies ....................   Passed   29.39 sec
+    Start  94: spider_family
+2/7 Test  #94: spider_family ....................   Passed    1.00 sec
+    Start  97: gaper_family
+3/7 Test  #97: gaper_family .....................   Passed    0.36 sec
+    Start 131: player_speed_attribute
+4/7 Test #131: player_speed_attribute ...........   Passed    0.50 sec
+    Start 132: canonical_shooting_integration
+5/7 Test #132: canonical_shooting_integration ...   Passed    1.21 sec
+    Start 133: enemy_movement_calibration
+6/7 Test #133: enemy_movement_calibration .......   Passed    0.22 sec
+    Start 134: damage_health_calibration
+7/7 Test #134: damage_health_calibration ........   Passed    3.53 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) =  36.22 sec

@@ -35,7 +35,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Accepted independent shooting is integrated. Next: measured native firing/travel/tile-scale comparison and separately selected coordinated Damage/HP/DPS calibration. Luck, native cache/item/actor and earlier acceptance gaps remain open; bulk goal stays paused.",
+  "next_work": "Validate relative movement candidate against native actor traces, especially Spider/Pooter; audit enemy projectile conversion and geometry. HP acceptance remains held. Private candidate available; no production rollout.",
   "historical_latest_research": {
     "native_contact_cases": 2016,
     "observed_events": 5040,
@@ -86,7 +86,18 @@
     "S04",
     "S07",
     "S08",
-    "S09"
+    "S09",
+    "S01",
+    "S03",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05",
+    "E06",
+    "E07",
+    "E08",
+    "E09"
   ],
   "manually_selected_health_enabled": true,
   "manual_selection_implementation_status": "scoped gameplay verified; full native acceptance unfinished",
@@ -120,5 +131,21 @@
     "native_full_acceptance": false,
     "evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json"
   },
-  "manually_selected_shooting_enabled": true
+  "manually_selected_shooting_enabled": true,
+  "damage_health_checkpoint": {
+    "status": "live review blocked on enemy movement; body-count evidence retained",
+    "production_enabled": false,
+    "human_acceptance": "not assessable while enemies too fast",
+    "interactive_executable": "/home/kambo/.local/share/deathward/reviews/damage-health-retry-20261108T175053Z/deathward_damage_health_review",
+    "evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/validation.json",
+    "death_retry_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/death-retry/validation.json",
+    "movement_blocker_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json"
+  },
+  "enemy_movement_checkpoint": {
+    "status": "relative movement candidate implemented and tested privately; full native movement acceptance pending; live HP acceptance held",
+    "scope": "encounter roster conversion and native movement verification first",
+    "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json",
+    "corrected_candidate_enabled": false,
+    "candidate_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/candidate/README.md"
+  }
 }

@@ -1,0 +1,9 @@
+id,previous_peak,corrected_peak,corrected_final,player_pace
+10.0,14.4,2.60973,2.60973,4.8
+10.1,9.95991,1.80506,1.80506,4.8
+11.0,5.99052,1.08569,1.03768,4.8
+11.1,5.99052,1.08569,1.0758,4.8
+12.0,0,0,0,4.8
+14.0,4.97078,0.900857,0.900857,4.8
+85.0,26.9789,4.88943,0.228125,4.8
+PASS movement-only scope, HP/attack preservation, 840 paired fixed steps, source-derived Gaper ratios and stun stopping

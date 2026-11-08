@@ -1,0 +1,17 @@
+{
+  "executable": "/home/kambo/.local/share/deathward/reviews/enemy-movement-20261108T182013Z/deathward_enemy_movement_review",
+  "argv": [
+    "/home/kambo/.local/share/deathward/reviews/enemy-movement-20261108T182013Z/deathward_enemy_movement_review",
+    "--movement-review",
+    "--body",
+    "2",
+    "--mechanics",
+    "/home/kambo/.local/share/deathward/reviews/enemy-movement-20261108T182013Z/movement-review-mechanics"
+  ],
+  "pid": 505997,
+  "log": "/home/kambo/.local/share/deathward/reviews/enemy-movement-20261108T182013Z/interactive.log",
+  "title": "DeathWard | Enemy movement review",
+  "initial": "corrected Gaper, live AI, production HP/damage",
+  "asset_dependency": "compiled development asset path in this checkout",
+  "process_alive_at_check": true
+}

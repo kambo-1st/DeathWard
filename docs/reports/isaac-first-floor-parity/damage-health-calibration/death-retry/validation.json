@@ -1,0 +1,15 @@
+{
+  "verified_at_utc": "2026-11-08T17:50:53.316373+00:00",
+  "change": "review remains visible after death; F8 or Enter reconstructs same selected test",
+  "scope": "review tool only; normal game death flow unchanged",
+  "checks": "Both damage modes and both scenarios survive beyond ordinary death-summary timeout; F8/Enter request restart; retry restores full health, clean projectiles and selected balance/scenario/body; all 18 Game body-hit cases still pass.",
+  "preserved_executable": "/home/kambo/.local/share/deathward/reviews/damage-health-retry-20261108T175053Z/deathward_damage_health_review",
+  "binary_sha256": "085d25d0f5c86605f5416a271d3958ae487dcf4f85e204bfb6be548cade24bcf",
+  "tool_sha256": "d282f46babae6420fe0f19ba0722abd10914e109bdac830e63f16b9a2ea11445",
+  "remaining": "Human damage/HP verdict, remaining roster/boss unit policy and production rollout, full native acceptance.",
+  "artifacts_sha256": {
+    "build.log": "5bd8572be50a1048b03f8c6c6d861f5fc9a13d4075046142bc8e353e10e97e05",
+    "checks.log": "a27a12bc0891482311b4ca5046bf52368579add217a719c3e8a420d257da63f0",
+    "measurements.csv": "b7b18007b3c90287209046e476e83ff762dd16176fb417f5dc794316a963a2d4"
+  }
+}

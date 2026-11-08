@@ -285,8 +285,8 @@
       "deathward_baseline": "24",
       "original_assessment": "Not a shared scale with enemy HP.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false,
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
       "recommendation": {
         "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
         "decision": "Yes, with an HP-unit reconciliation",
@@ -301,7 +301,10 @@
         "acceptance_check": "Compare source base/stage HP, explicit DeathWard conversion and effective projectile damage per representative enemy; verify shots to kill and actual time to kill. Keep regular_health_multiplier at 1 during calibration.",
         "implementation_authorized_by_review": false,
         "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
-      }
+      },
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "S02",
@@ -337,8 +340,8 @@
       "deathward_baseline": "Nominal 82.759; measured-cadence arithmetic **80**",
       "original_assessment": "Different attack/HP economy. This is arithmetic, not a real-combat DPS test.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false,
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
       "recommendation": {
         "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
         "decision": "Validate; do not add a separate DPS knob",
@@ -353,7 +356,10 @@
         "acceptance_check": "Report continuous-fire DPS separately from discrete shots to kill, travel time, missed/blocked shots, first-shot latency and boss vulnerable windows.",
         "implementation_authorized_by_review": false,
         "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
-      }
+      },
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "S04",
@@ -870,8 +876,11 @@
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E02",
@@ -880,8 +889,11 @@
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E03",
@@ -890,8 +902,11 @@
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E04",
@@ -900,8 +915,11 @@
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E05",
@@ -910,8 +928,11 @@
       "deathward_baseline": "Body HP 9.6; hits at 24 damage: 1",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E06",
@@ -920,8 +941,11 @@
       "deathward_baseline": "Body HP 25.6; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E07",
@@ -930,8 +954,11 @@
       "deathward_baseline": "Body HP 16; hits at 24 damage: 1",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E08",
@@ -940,8 +967,11 @@
       "deathward_baseline": "Body HP 20.8; hits at 24 damage: 1",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E09",
@@ -950,8 +980,11 @@
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
     },
     {
       "id": "E10",
@@ -1300,8 +1333,9 @@
       "deathward_baseline": "Generic \u00d71.10 tuning remains; dedicated controllers can differ.",
       "original_assessment": "",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "priority movement audit: conversion mismatch reproduced; correction not yet enabled",
+      "selected": true,
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/README.md"
     },
     {
       "id": "E12",
@@ -1713,7 +1747,19 @@
     "S04",
     "S07",
     "S08",
-    "S09"
+    "S09",
+    "S01",
+    "S03",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05",
+    "E06",
+    "E07",
+    "E08",
+    "E09",
+    "E11"
   ],
   "stat_recommendation_review": {
     "updated_at_utc": "2026-11-08T14:55:05+00:00",
@@ -1856,5 +1902,29 @@
       "native_full_acceptance": false,
       "evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json"
     }
+  },
+  "damage_health_checkpoint": {
+    "status": "live review blocked on enemy movement; body-count evidence retained",
+    "production_enabled": false,
+    "human_acceptance": "not assessable while enemies too fast",
+    "interactive_executable": "/home/kambo/.local/share/deathward/reviews/damage-health-retry-20261108T175053Z/deathward_damage_health_review",
+    "evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/validation.json",
+    "necessary_dependencies": [
+      "Pacer 11.1.0 HP conversion for selected Gaper morphs",
+      "selected Gaper overkill threshold HP-unit conversion"
+    ],
+    "death_retry_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/death-retry/validation.json",
+    "movement_blocker_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json"
+  },
+  "enemy_movement_checkpoint": {
+    "status": "live HP review blocked on enemy/player movement calibration",
+    "scope": "encounter roster conversion and native movement verification first",
+    "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json",
+    "corrected_candidate_enabled": false
+  },
+  "enemy_movement_candidate_checkpoint": {
+    "status": "relative movement candidate implemented and tested privately; full native movement acceptance pending; live HP acceptance held",
+    "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/candidate/README.md",
+    "does_not_certify_native_ai": true
   }
 }

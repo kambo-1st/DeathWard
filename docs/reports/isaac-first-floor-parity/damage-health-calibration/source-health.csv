@@ -1,0 +1,11 @@
+id,source_base_hp,source_stage_hp,role
+10.0.0,10,0,selected_body
+10.1.0,10,0,selected_body
+11.0.0,10,0,selected_body
+12.0.0,10,0,selected_body
+13.0.0,3,0,selected_body
+14.0.0,8,0,selected_body
+18.0.0,5,0,selected_body
+85.0.0,6.5,0,selected_body
+29.0.0,10,0,selected_body
+11.1.0,10,0,morph_dependency

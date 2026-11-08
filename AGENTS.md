@@ -31,3 +31,11 @@
 ## Canonical attributes scope
 
 - The user selected steps 1 and 2: the seven-attribute data/adapter model and its Speed movement consumer. Canonical Speed now drives ordinary walking through an explicit accepted-feel calibration; base pace, stopping and dodge are preserved. Runtime health remains in existing player fields; combined source attributes are a transient snapshot. Speed is enabled in ordinary gameplay. The user subsequently selected Tears, Shot Speed and Range wiring: the user accepted the base comparison and authorized continuation. Their independent consumers are now enabled in normal expeditions and the tutorial. Exact native counter/actor/cache/calibration acceptance remains open. The temporary cadence/travel coupling and artificial three-shot expectation are removed; increased stats may produce more simultaneous shots. Preserve the Faster review choice and eight-direction controls. Do not treat this work as authorization for bulk stat, damage/HP, item or save changes.
+
+## Selected damage/HP calibration
+
+- The user selected joint S01/S03 and E01–E09 HP-only calibration. A private review tool uses 3.5 damage and direct source HP, leaving production damage/HP and the regular-health multiplier unchanged. Pacer HP and selected Gaper overkill conversions are explicit necessary morph-unit dependencies. Human encounter acceptance and a consistent remaining-roster/boss unit policy are required before global rollout. No AI, spawning, boss or drop redesign is selected. See `docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md`.
+
+## Current blocking priority
+
+- The user explicitly requires enemy movement to be corrected/verified before resuming live HP balancing. The Gaper/player scale mismatch is reproduced in `docs/reports/isaac-first-floor-parity/enemy-movement-blocker/README.md`. HP body-count research remains valid, but live HP acceptance is on hold. Do not compensate for fast enemies by changing HP, and do not claim a corrected movement candidate is enabled until it has actually been implemented and verified.

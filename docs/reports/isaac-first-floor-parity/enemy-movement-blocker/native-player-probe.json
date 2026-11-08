@@ -1,0 +1,8 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "held_invocations": 360,
+  "native_player_held_velocity_per_invocation": 4.414238452911377,
+  "last_sixty_min": 4.414238452911377,
+  "last_sixty_max": 4.414238452911377,
+  "scope": "Original bounded player velocity instructions, not complete live actor timing or collision acceptance"
+}

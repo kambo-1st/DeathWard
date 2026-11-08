@@ -285,10 +285,16 @@ add_executable(deathward_projectile_review EXCLUDE_FROM_ALL tools/projectile_rev
     src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp
     src/render/CanyonScene.cpp src/render/TownScene.cpp)
 target_link_libraries(deathward_projectile_review PRIVATE deathward_core raylib)
+add_executable(deathward_damage_health_review EXCLUDE_FROM_ALL tools/damage_health_review.cpp
+    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
+    src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp
+    src/render/CanyonScene.cpp src/render/TownScene.cpp)
+target_link_libraries(deathward_damage_health_review PRIVATE deathward_core raylib)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
 deathward_assets(deathward_movement_review)
 deathward_assets(deathward_projectile_review)
+deathward_assets(deathward_damage_health_review)
 if(EMSCRIPTEN)
     set_target_properties(deathward PROPERTIES OUTPUT_NAME index SUFFIX ".html")
     target_link_options(deathward PRIVATE
@@ -945,6 +951,12 @@ if(BUILD_TESTING)
     add_executable(deathward_canonical_shooting_tests tests/canonical_shooting_integration_tests.cpp)
     target_link_libraries(deathward_canonical_shooting_tests PRIVATE deathward_core)
     add_test(NAME canonical_shooting_integration COMMAND deathward_canonical_shooting_tests)
+    add_executable(deathward_enemy_movement_calibration_tests tests/enemy_movement_calibration_tests.cpp)
+    target_link_libraries(deathward_enemy_movement_calibration_tests PRIVATE deathward_core)
+    add_test(NAME enemy_movement_calibration COMMAND deathward_enemy_movement_calibration_tests)
+    add_executable(deathward_damage_health_tests tests/damage_health_calibration_tests.cpp)
+    target_link_libraries(deathward_damage_health_tests PRIVATE deathward_core)
+    add_test(NAME damage_health_calibration COMMAND deathward_damage_health_tests)
     add_executable(deathward_enemy_tests tests/enemy_tests.cpp)
     target_link_libraries(deathward_enemy_tests PRIVATE deathward_core)
     add_test(NAME enemy_behaviors COMMAND deathward_enemy_tests)

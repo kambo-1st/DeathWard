@@ -1,0 +1,10 @@
+{
+  "reference": "installed Repentance 1.7.9b preserved XML",
+  "file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/entities2.xml",
+  "sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "rows": 10,
+  "source_damage": 3.5,
+  "damage_scope": "documented ordinary baseline encoded in canonical attributes; not a fresh complete native damage pipeline capture",
+  "pacer_scope": "Necessary HP-unit dependency of selected Gaper morphs, not an AI selection",
+  "morph_overkill_source_hp": 25
+}
