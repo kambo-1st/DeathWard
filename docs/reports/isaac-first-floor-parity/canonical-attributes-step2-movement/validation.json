@@ -1,0 +1,58 @@
+{
+  "verified_at_utc": "2026-11-08T16:35:34.984184+00:00",
+  "scope": "step 2: canonical Speed movement consumer",
+  "status": "movement consumer enabled; focused checks pass; exact native fidelity unverified",
+  "movement_consumer_enabled": true,
+  "other_scalar_consumers_enabled": false,
+  "health_authority": "existing typed player fields; transient combined snapshot only",
+  "accepted_base_walking_preserved": true,
+  "mapping": "explicit proportional accepted-feel calibration; not native acceleration/cache/cap formulas",
+  "existing_slow_ratio_scales_with_speed": true,
+  "dodge_and_controls_preserved": true,
+  "production_projectile_integration": false,
+  "save_format_changed": false,
+  "native_full_acceptance": false,
+  "passed_suites": [
+    "player_attributes_contract",
+    "player_speed_attribute",
+    "core_contracts",
+    "heart_gameplay",
+    "regular_health_balance"
+  ],
+  "game_checks": [
+    "movement verifier at 30/60/144 input partitions",
+    "projectile review verifier",
+    "Mine/Canyon arrows",
+    "keyboard integration"
+  ],
+  "source_sha256": {
+    "src/combat/PlayerAttributes.hpp": "540312655f63d623930158863dcd04d6fcca8455c23ef7eb14450a3aba534a50",
+    "src/combat/Simulation.hpp": "5cc06c818cbb571d9a8df8ec48607852bfe41fbf93d247afa2a8748487f7aeab",
+    "src/combat/Simulation.cpp": "35e48f0c1c930d57ee10ddbd6ab357bc83bf1fff8649fb2182a0286d410ec05c",
+    "tools/movement_review.cpp": "318afd1a6e2d1949519e24bacb32ec541ee37f709ca4649f4da1479714ffe2de",
+    "tools/projectile_review.cpp": "1fc36075871e69ffc2c97548bfa652ca3680052affe865c9215568532203b9d5",
+    "tests/player_speed_tests.cpp": "89d51f8ce8067b527698fb1e8bad7db065cc740e326cb2b04de729824d543de2",
+    "CMakeLists.txt": "f0ab63f99db1d83751ae9e817c7a02aaa9f0b47f0df6f0a99fd5cda7e9900741"
+  },
+  "application_sha256": "a69f73802eb9eb0b4b20c1d25fab5c01f178189fe86cd75dc1c962e000390c4b",
+  "artifact_sha256": {
+    "configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "regression.log": "b358fdec6768b5fa2e81c41d9047c7e0b3774a0bb77f9c06d6b16a09a9c866b0",
+    "movement.csv": "66e0e1f997c22dc61f3dbe1f6f29064e70e973ce1936db0e8efee987c15ded6b",
+    "README.md": "81a875e5699e7d3c4f47052b44600a16a022664289d00ebe0bcc2a53eafc9bde",
+    "projectile-regression.csv": "fe97090a67310c25aa4adee519ecc9148ad46b9ae7b992fe975d96c0a9421e9f",
+    "game-input.log": "8588687f5eeec39a380a45e3f89525010ce6ddfdd147ff3a1cc54ce23e6d47a0",
+    "build.log": "be4d2d5e1b531daae6ab19c313662b0d0b276fe0085af7d963314ed6de36f105",
+    "initial-build.log": "2992015713746aec2060470278200f2864463c5aec1c9d2f4dc29a6c8da7a80e",
+    "projectile-regression.log": "40a265f7e8e6225cbd4794ec69e71f675a15ad789f424b5f15c90be246c2a804",
+    "keyboard-input.log": "c469484f204f8cd3b414e0b12bdfc2451b54374a25eac1e99c1f8ea695b813e8",
+    "arrow-input.log": "59f9d628723cdec36177fea9aadd31c7f15996bfc312e8c35375832317376c9f"
+  },
+  "remaining": [
+    "Step 3 independent Tears/Shot Speed/Range consumers and human review",
+    "Faster review production integration",
+    "Source-unit damage/HP/DPS reconciliation",
+    "Luck, source cache/modifier/cap formulas and later persistence/HUD",
+    "Native movement/clock/tile/slow/actor/hit geometry and prior health/enemy acceptance gaps"
+  ]
+}

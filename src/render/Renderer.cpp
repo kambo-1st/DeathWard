@@ -1297,7 +1297,11 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
     }
     if (run.player.dodge > 0)
         DrawSphereWires(run.player.position, 0.9f, 5, 8, Teal);
-    for (const auto &p : run.projectiles) {
+    for (const auto &projectile : run.projectiles) {
+        const auto &p=projectile;
+        auto drawPosition=p.position;
+        if(p.playerFlight)drawPosition.y=reviewTearVisualY(*p.playerFlight,p.position.y);
+        const float visualRadius=p.playerFlight?p.radius*2:p.radius;
         if(p.flightRetention>0)shadow(p.position,p.radius*1.4f);
         Color color = p.hostile     ? (p.bounces > 0 ? Color{204, 132, 232, 255} : Rust)
                       : p.ghost     ? Teal
@@ -1315,9 +1319,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if (p.kind == ProjectileKind::DarkBone) color={92,86,70,255};
         if(p.tint.a)color=p.tint;
         if(!p.hostile&&p.attack.capDamage>0&&!p.capSpent)color={248,166,75,255};
-        if(!p.hostile&&p.attack.rail)projectileMesh(p.position,p.radius,color,unit(p.velocity),3.5f);
-        else if(p.kind==ProjectileKind::Bone||p.kind==ProjectileKind::DarkBone)projectileMesh(p.position,p.radius,color,unit(p.velocity),2.8f);
-        else projectileMesh(p.position, p.radius, color);
+        if(!p.hostile&&p.attack.rail)projectileMesh(drawPosition,p.radius,color,unit(p.velocity),3.5f);
+        else if(p.kind==ProjectileKind::Bone||p.kind==ProjectileKind::DarkBone)projectileMesh(drawPosition,p.radius,color,unit(p.velocity),2.8f);
+        else projectileMesh(drawPosition, visualRadius, color);
     }
     // Keep triangles and lines in separate batches. Alternating for each projectile
     // creates thousands of tiny draw calls during a chain explosion.
@@ -1336,8 +1340,10 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if (p.kind == ProjectileKind::Bone) color={229,214,176,255};
         if (p.kind == ProjectileKind::DarkBone) color={92,86,70,255};
         if(p.tint.a)color=p.tint;
-        Vector3 tail = sub(p.position, mul(unit(p.velocity), p.hostile ? 0.35f : p.attack.rail?1.f:0.6f));
-        DrawLine3D(tail, p.position, color);
+        auto drawPosition=p.position;
+        if(p.playerFlight)drawPosition.y=reviewTearVisualY(*p.playerFlight,p.position.y);
+        Vector3 tail = sub(drawPosition, mul(unit(p.velocity), p.hostile ? 0.35f : p.attack.rail?1.f:0.6f));
+        DrawLine3D(tail, drawPosition, color);
         if (p.kind == ProjectileKind::Hook) {
             DrawLine3D(p.origin, p.position, Gold);
             DrawSphereWires(p.position, 0.3f, 4, 6, Paper);

@@ -1,0 +1,27 @@
+Consolidate compiler generated dependencies of target glfw
+[ 11%] Built target glfw
+Consolidate compiler generated dependencies of target raylib
+[ 14%] Built target raylib
+Consolidate compiler generated dependencies of target deathward_core
+[ 85%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_cloth
+Consolidate compiler generated dependencies of target deathward_mission_lighting
+Consolidate compiler generated dependencies of target deathward_particles
+Consolidate compiler generated dependencies of target deathward_skinning
+[ 88%] Built target deathward_cloth
+[ 88%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_particles
+[ 92%] Built target deathward_skinning
+[ 92%] Built target deathward_runtime_assets
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/render/PostProcess.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/tools/movement_review.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/render/Renderer.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/render/AnimalModels.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/core/Game.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/core/GameQuest.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/render/WesternScene.cpp.o
+[ 96%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/render/PlayerModel.cpp.o
+[100%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/render/CanyonScene.cpp.o
+[100%] Building CXX object CMakeFiles/deathward_movement_review.dir/src/render/TownScene.cpp.o
+[100%] Linking CXX executable deathward_movement_review
+[100%] Built target deathward_movement_review

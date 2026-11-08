@@ -1,0 +1,175 @@
+{
+  "verified_at_utc": "2026-11-08T16:51:57.708381+00:00",
+  "status": "human-accepted base integrated into normal expeditions; focused checks pass",
+  "human_acceptance": "base build accepted",
+  "previous_accepted_projectile_feel": "Faster; retained as base Shot Speed calibration",
+  "production_shooting_enabled": true,
+  "native_full_acceptance": false,
+  "consumers": {
+    "Tears": "nominal rate interval with fixed-step held-fire overshoot carry; not full native counter",
+    "Shot_Speed": "independent calibrated launch multiplier",
+    "Range": "independent fixed tile-distance conversion; no per-room or three-shot cap"
+  },
+  "temporary_travel_time_cadence_coupling_removed": true,
+  "separate_review_world_speed_field_removed": true,
+  "base_peak_active_shots": 4,
+  "engineering_calibration": {
+    "base_source_tears_per_second": 2.727272727272727,
+    "base_source_shot_speed": 1,
+    "adapted_base_launch_speed": 8,
+    "base_source_range_tiles": 6.5,
+    "adapted_base_reach": 11,
+    "source_coordinates_per_tile": 40,
+    "world_units_per_source_coordinate": 0.04230769230769231,
+    "source_clock_assumptions_live_verified": false
+  },
+  "verified": {
+    "independent_preset_cases": [
+      {
+        "mode": "independent_preset_0",
+        "input_fps": "30",
+        "direction": "shots_22",
+        "last_observed_distance": "10.8",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_0",
+        "input_fps": "60",
+        "direction": "shots_22",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_0",
+        "input_fps": "144",
+        "direction": "shots_22",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_1",
+        "input_fps": "30",
+        "direction": "shots_44",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_1",
+        "input_fps": "60",
+        "direction": "shots_44",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_1",
+        "input_fps": "144",
+        "direction": "shots_44",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_2",
+        "input_fps": "30",
+        "direction": "shots_22",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "12"
+      },
+      {
+        "mode": "independent_preset_2",
+        "input_fps": "60",
+        "direction": "shots_22",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "12"
+      },
+      {
+        "mode": "independent_preset_2",
+        "input_fps": "144",
+        "direction": "shots_22",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "12"
+      },
+      {
+        "mode": "independent_preset_3",
+        "input_fps": "30",
+        "direction": "shots_22",
+        "last_observed_distance": "22",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_3",
+        "input_fps": "60",
+        "direction": "shots_22",
+        "last_observed_distance": "22",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "independent_preset_3",
+        "input_fps": "144",
+        "direction": "shots_22",
+        "last_observed_distance": "22",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "8"
+      }
+    ],
+    "fps_input_partitions": [
+      30,
+      60,
+      144
+    ],
+    "eight_direction_game_cases": 48,
+    "source_flight_rows": 171,
+    "additional": [
+      "six launch speeds keep same Tears count/reach",
+      "zero shooting stats disable safely",
+      "idle time cannot bank shots",
+      "stationary target/cover and two-hit checks",
+      "independent movement and dodge",
+      "five focused suites",
+      "Mine/Canyon arrow and keyboard integration"
+    ]
+  },
+  "preserved_executable": "/home/kambo/.local/share/deathward/reviews/canonical-shooting-20261108T165157Z/deathward_projectile_review",
+  "binary_sha256": "c9aeb0c56a2febf8bfd1c14659189c6d7b389514f6c63a30378d321b93b7a7aa",
+  "source_sha256": {
+    "src/combat/PlayerAttributes.hpp": "964d6180310435a637dd64dd952b8de8034b12d91623ea86521b1bbe48206a45",
+    "src/combat/Simulation.hpp": "9c069613544befe67817c4f55bdba0593d1478f53a8ead9050679cce68f73401",
+    "src/combat/Simulation.cpp": "6501ebcd3ec11ed1560400ec1325404c23ac5ae0730ec48cf4af502ae6e84f0d",
+    "tools/projectile_review.cpp": "bf168c5d70a5817a8c2170cc7109e41120630762bcddb6bc1f21269c45ba35c5"
+  },
+  "application_sha256": "59efaeac1dade63b197aaeb3972850cbd8a3510308b36b85fbae4b681b6a024b",
+  "remaining": [
+    "Human independent-shooting review before production integration",
+    "Complete native firing counter/birth/emission/transition scheduling and live calibration",
+    "Native item/flags/actor/hit geometry and source cache formulas",
+    "Damage/HP/DPS, Luck and prior health/enemy acceptance gaps"
+  ],
+  "interactive_launch": {
+    "pid": 491253,
+    "title": "DeathWard | Independent shooting stats",
+    "preset": "Base build"
+  },
+  "artifact_sha256": {
+    "regression.log": "acd8ff388fd48015a351a142879f2b81a179b1f0a268f0bbcd4443410140b475",
+    "shooting-checks.log": "a9b6435efe17da82c9987bb14032bea154265588160f01736782c802fc230723",
+    "README.md": "18f74be8032a39e5a2526f6e5a9285e28086a0993d399cf16cc767a5de4e3343",
+    "movement.log": "8588687f5eeec39a380a45e3f89525010ce6ddfdd147ff3a1cc54ce23e6d47a0",
+    "build.log": "8b68c851d7b2aa1a39b69e7eb5b8e80468994a7598da19e3145ad715abc8fe4b",
+    "ui-build.log": "852d0a3ac88597efa911f40d00a6047ca92574a38b1a7f88b80b89744496c657",
+    "keyboard.log": "c469484f204f8cd3b414e0b12bdfc2451b54374a25eac1e99c1f8ea695b813e8",
+    "review.png": "25045d66c1eb08c92520190d7f9c6b12ea223d3bf4c1bcd9c29ee852f77b42a0",
+    "arrows.log": "59f9d628723cdec36177fea9aadd31c7f15996bfc312e8c35375832317376c9f",
+    "measurements.csv": "0b09cf7bf553d19c6822edc57142625154897a89e3d2281031bafa3036d1a853"
+  },
+  "production_integration_evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json"
+}

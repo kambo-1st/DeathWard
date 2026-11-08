@@ -8,7 +8,8 @@
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
     "graphics",
-    "universal dodge with movement boost and immunity"
+    "universal dodge with movement boost and immunity",
+    "current eight-direction firing and existing mouse/keyboard controls"
   ],
   "uncommitted_parity_attempt_enabled": false,
   "existing_committed_enemy_work": "Preserved at baseline HEAD;not declared fully accepted.",
@@ -34,7 +35,7 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Remaining selected-health native flags, item/revival exceptions and visual acceptance are detailed in the H02\u2013H18 report. Other comparison IDs remain unselected; do not resume the bulk goal.",
+  "next_work": "Accepted independent shooting is integrated. Next: measured native firing/travel/tile-scale comparison and separately selected coordinated Damage/HP/DPS calibration. Luck, native cache/item/actor and earlier acceptance gaps remain open; bulk goal stays paused.",
   "historical_latest_research": {
     "native_contact_cases": 2016,
     "observed_events": 5040,
@@ -80,9 +81,44 @@
     "H15",
     "H16",
     "H17",
-    "H18"
+    "H18",
+    "S02",
+    "S04",
+    "S07",
+    "S08",
+    "S09"
   ],
   "manually_selected_health_enabled": true,
   "manual_selection_implementation_status": "scoped gameplay verified; full native acceptance unfinished",
-  "manual_health_validation": "docs/reports/isaac-first-floor-parity/h02-h18-health/validation.json"
+  "manual_health_validation": "docs/reports/isaac-first-floor-parity/h02-h18-health/validation.json",
+  "retained_firing_controls": "User requires current eight-direction firing and existing mouse/keyboard controls; no four-direction replacement or input remapping.",
+  "stat_review_checkpoint": {
+    "status": "selected 4.8 walking pace integrated; focused checks pass",
+    "human_acceptance": "option 2 preferred by user; continuation authorized integration",
+    "candidate_enabled": "normal expedition walking default",
+    "evidence": "docs/reports/isaac-first-floor-parity/movement-review-s04-walking/validation.json",
+    "interactive_executable": "/home/kambo/.local/share/deathward/reviews/movement-s04-walking-20261108T150808Z/deathward_movement_review",
+    "inertia_added": false,
+    "baseline_walk_speed": 6,
+    "candidate_walk_speed": 4.8,
+    "verified_native_speed": false,
+    "production_walk_speed": 4.8,
+    "integration_evidence": "docs/reports/isaac-first-floor-parity/movement-review-s04-walking/integration/validation.json"
+  },
+  "projectile_review_checkpoint": {
+    "status": "human-accepted base integrated into normal expeditions; focused checks pass",
+    "human_acceptance": "base build accepted",
+    "production_enabled": true,
+    "native_full_acceptance": false,
+    "evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json"
+  },
+  "canonical_attribute_contract": "docs/reports/isaac-first-floor-parity/canonical-attributes-contract.json",
+  "canonical_attributes_checkpoint": {
+    "status": "human-accepted base integrated into normal expeditions; focused checks pass",
+    "human_acceptance": "base build accepted",
+    "production_enabled": true,
+    "native_full_acceptance": false,
+    "evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json"
+  },
+  "manually_selected_shooting_enabled": true
 }

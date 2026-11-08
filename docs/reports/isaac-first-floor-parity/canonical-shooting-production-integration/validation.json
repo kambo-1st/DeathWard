@@ -1,0 +1,90 @@
+{
+  "verified_at_utc": "2026-11-08T17:10:34.069371+00:00",
+  "status": "human-accepted base integrated into normal expeditions; focused checks pass",
+  "human_acceptance": "base is good; user authorized continuation",
+  "production_shooting_enabled": true,
+  "tutorial_shooting_enabled": true,
+  "native_full_acceptance": false,
+  "independent_consumers_enabled": [
+    "Health (existing typed model)",
+    "Speed",
+    "Tears",
+    "Shot Speed",
+    "Range"
+  ],
+  "scalar_consumers_pending": [
+    "Damage",
+    "Luck"
+  ],
+  "source_damage_value": 3.5,
+  "current_attack_damage": 24,
+  "enemy_hp_changed": false,
+  "regular_health_multiplier_changed": false,
+  "accepted_controls_preserved": [
+    "universal dodge",
+    "eight-direction mouse/keyboard firing"
+  ],
+  "compatibility_checks": [
+    "split remaining distance and life",
+    "outward/return-leg separation and catch",
+    "Scatter authored range exception independent of Shot Speed",
+    "66 authored weapon pair lifecycles",
+    "production/historical modes and stats survive floor changes",
+    "shotless Ghost inherits primary specification"
+  ],
+  "passed_suites": [
+    "player_attributes_contract",
+    "player_speed_attribute",
+    "canonical_shooting_integration",
+    "core_contracts",
+    "heart_gameplay",
+    "regular_health_balance",
+    "item_builds (explicit historical units)",
+    "expedition"
+  ],
+  "game_input_checks": [
+    "shooting verifier",
+    "movement verifier",
+    "Mine/Canyon arrows",
+    "keyboard integration"
+  ],
+  "source_sha256": {
+    "src/combat/PlayerShooting.hpp": "6af5d9c02a81e29d862eb67d3f8e0458653d639aadf7cbe75461ecb7b9648ca9",
+    "src/combat/PlayerAttributes.hpp": "37bd86b8a879d2c2adb0b39fb89d0802afd2c9fdb4c926ccca9f3f8f0ba259b2",
+    "src/combat/Simulation.hpp": "2f9552570cb315129499e4f9bf0827782cfc1fdb8f71f2c711ba2cbcff0d8b8e",
+    "src/combat/Simulation.cpp": "595dd5c2a1cd752089ee818a16b236303f110a968f852d39775c1631bd916267",
+    "src/items/Items.hpp": "63c9d0cbd69f9d30ffba741257e5d6615e2ea9142a2a37d18ddb99f9c3243fbf",
+    "src/items/Items.cpp": "404e3d17cfdd3995e288e9fe8b00ad0b63df169e1796949bcd1417ed5b9d322e",
+    "tests/canonical_shooting_integration_tests.cpp": "b8877477215aae21db2fff52a24ad48057129761bd84846bad09f0ab982858f4",
+    "tests/item_build_tests.cpp": "6ee28b1bd7deb188ca453f48ba5b6e0acb203587ccb74a1af5ec940a225a5ccb",
+    "tests/player_speed_tests.cpp": "e14d12a27e70f512e7c5bd9669459b1e2768edd6a5313ef342e78e881a1cff2f",
+    "tests/tests.cpp": "04dce1f1b9ed2c1c24ed28eea8947e22dac1461ad973367d217afcbb5013ac15",
+    "tools/movement_review.cpp": "5067029d6d9494813545bad7943b1fc4d2507ad5abaef0ab19b705036f1e6b9d",
+    "tools/projectile_review.cpp": "dba12e01ee7f7b353f9b3a9321f99cf9a1063ca1d7cf67e26400cd7f0079f82f",
+    "CMakeLists.txt": "b215cf0381fb526eaa54ccca2cde8642da1a4814e9b1c4675fb5eaf21ce50457"
+  },
+  "application_sha256": "3677fff78d52ad8934dc5c10d3d15fd0fcc08da0dec043a3f24e422249dd4213",
+  "preserved_application": "/home/kambo/.local/share/deathward/reviews/canonical-shooting-integrated-20261108T171034Z/deathward",
+  "preservation_scope": "Executable only; assets use the checkout/build asset lookup. Not a standalone portable art package.",
+  "remaining": [
+    "Live Isaac firing/travel/tile-scale calibration and full native counter/actor acceptance",
+    "Coordinated source Damage and enemy HP/hits-to-kill/DPS",
+    "Luck consumers and native cache/modifier/item formulas",
+    "Prior health/enemy/height/hit-geometry acceptance gaps"
+  ],
+  "artifact_sha256": {
+    "configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "regression.log": "05a6f3e394eefaf578e3eaf8a59a0d66b50aab7880de2fcdfc75969c583d61ec",
+    "floor-mode-checks.log": "25ea14f3499794dc5a0f0ea0ed1ea8cecec37e0af464b00b0ed6e66e94ff7b02",
+    "movement.csv": "66e0e1f997c22dc61f3dbe1f6f29064e70e973ce1936db0e8efee987c15ded6b",
+    "README.md": "515cdfe9f1dffc07f778f27358f0b7d1a14d914b07a27ec7353e19a32a708575",
+    "movement.log": "8588687f5eeec39a380a45e3f89525010ce6ddfdd147ff3a1cc54ce23e6d47a0",
+    "build.log": "3f9afd4009af346af07608faa3c7f96502b751ce9efd2966eee2ab7a5c1d6e96",
+    "keyboard.log": "c469484f204f8cd3b414e0b12bdfc2451b54374a25eac1e99c1f8ea695b813e8",
+    "initial-build.log": "d6cfd4135112b8d7e9c597aaf7ac1061f0ebf04ab115a7f8128daa3016cba06b",
+    "contracts.log": "f5cb85485b9c26cecfe24109baf56da090b475a0a1198eb34cafca6e5e72301a",
+    "arrows.log": "59f9d628723cdec36177fea9aadd31c7f15996bfc312e8c35375832317376c9f",
+    "shooting.log": "a9b6435efe17da82c9987bb14032bea154265588160f01736782c802fc230723",
+    "shooting.csv": "0b09cf7bf553d19c6822edc57142625154897a89e3d2281031bafa3036d1a853"
+  }
+}

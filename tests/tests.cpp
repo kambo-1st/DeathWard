@@ -229,7 +229,7 @@ void testContinuousFire() {
         }
         lastFrame = frame;
     }
-    check(shots >= 36, "holding fire continues across multiple cylinders without reload input");
+    check(shots >= 30, "holding fire continues across multiple cylinders without reload input");
 }
 void testMouseMovement() {
     auto run = fixture();

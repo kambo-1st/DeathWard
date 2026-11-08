@@ -286,7 +286,22 @@
       "original_assessment": "Not a shared scale with enemy HP.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes, with an HP-unit reconciliation",
+        "priority": "P0",
+        "rationale": "Port Isaac damage balance, not just the number 3.5. Current enemy conversions are not uniform. A damage-only replacement can make encounters much slower than Isaac.",
+        "dependencies_requiring_explicit_selection": [
+          "S02",
+          "S03",
+          "E01\u2013E10 health-only scope",
+          "selected boss HP-only scope"
+        ],
+        "acceptance_check": "Compare source base/stage HP, explicit DeathWard conversion and effective projectile damage per representative enemy; verify shots to kill and actual time to kill. Keep regular_health_multiplier at 1 during calibration.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S02",
@@ -295,8 +310,25 @@
       "deathward_baseline": "Resolved cooldown 0.29 s: nominal 3.448/s; measured **18 fixed ticks / shot = 0.30 s = 3.333/s**",
       "original_assessment": "Thirteen measured intervals in the DW fixture; no native side-by-side firing capture yet.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/player-fire/README.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "accepted canonical consumer enabled in normal expeditions; full native acceptance open",
+      "selected": true,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes; port the ordinary firing counter",
+        "priority": "P0",
+        "rationale": "Attack speed is a direct combat-balance control. Prefer the measured native counter/gate and fractional carry over an approximate seconds-per-shot constant.",
+        "dependencies_requiring_explicit_selection": [
+          "S03",
+          "damage/HP calibration decision"
+        ],
+        "acceptance_check": "Measure first-shot latency and repeated emission timestamps, held/released input, short taps and fractional upgraded rates. Ordinary native MaxFireDelay 10 gives 30/11 shots/s; do not confuse the 30 Hz firing gate with 60 Hz player movement.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "review_scope_note": "User explicitly requested slow firing in the isolated fixed-reach preview. Preview cadence override enabled; native firing-counter port and normal-expedition integration remain unselected/unaccepted.",
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/README.md",
+      "full_native_acceptance": false,
+      "human_acceptance": "base accepted"
     },
     {
       "id": "S03",
@@ -306,7 +338,22 @@
       "original_assessment": "Different attack/HP economy. This is arithmetic, not a real-combat DPS test.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Validate; do not add a separate DPS knob",
+        "priority": "P0",
+        "rationale": "DPS is derived from effective damage, emitted projectiles and cadence. Matching a display value does not establish kill-time balance.",
+        "dependencies_requiring_explicit_selection": [
+          "S01",
+          "S02",
+          "S16",
+          "enemy HP and defence rules"
+        ],
+        "acceptance_check": "Report continuous-fire DPS separately from discrete shots to kill, travel time, missed/blocked shots, first-shot latency and boss vulnerable windows.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S04",
@@ -315,8 +362,25 @@
       "deathward_baseline": "Hardcoded 6 world units/s; diagonal input normalized",
       "original_assessment": "`1.0` and `6` have different units. Exact speed/inertia parity is unproven.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/player-motion/README.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "canonical Speed movement enabled at accepted baseline; focused checks pass; native acceleration/cap/live calibration open",
+      "selected": true,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes to isolated speed calibration; preserve stopping initially",
+        "priority": "P1",
+        "rationale": "Calibrate traversal speed first without adding sliding or changing controls. Native Speed 1.0 is not one world unit/s; source-to-world and timing conversion must be verified. Evaluate any S05 stopping difference separately.",
+        "dependencies_requiring_explicit_selection": [
+          "S11/S12 only if their behavior or shared coordinate scale must change; no implicit authorization"
+        ],
+        "acceptance_check": "Match acceleration, steady travel, diagonals, stopping and turning in a calibrated room. Repeat with retained dodge and terrain/door collisions; do not silently change its timing or immunity.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "implementation_scope": "Ordinary expedition walking defaults to 4.8 units/s. Immediate stopping, absolute dodge speed/immunity, firing controls and projectile/enemy stats preserved.",
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/canonical-attributes-step2-movement/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Matched live native speed/stopping calibration and full first-floor combat acceptance; later stages remain separate selections.",
+      "human_acceptance": "preferred pace: option 2 (4.8 units/s)"
     },
     {
       "id": "S05",
@@ -326,7 +390,26 @@
       "original_assessment": "Cannot be certified by comparing one speed number.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/player-motion/README.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T14:55:05+00:00",
+        "decision": "Verify actual stopping first; defer any inertia change",
+        "priority": "P1",
+        "rationale": "The user questions whether Isaac has perceptible movement inertia. The bounded native trace retains velocity after release, but it does not establish live stopping distance or justify adding a glide effect. Preserve current responsiveness until a matched comparison demonstrates a difference.",
+        "dependencies_requiring_explicit_selection": [
+          "S04",
+          "S12",
+          "S13",
+          "S14"
+        ],
+        "acceptance_check": "Measure live reference and baseline release-to-stop distance/time at matched room scale and input. Do not infer world-space stopping or seconds from per-call velocity damping alone. Show any demonstrated correction as an isolated candidate; require human acceptance before integration.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "user_feedback": {
+        "recorded_at_utc": "2026-11-08T14:55:05+00:00",
+        "note": "User doubts that Isaac movement has noticeable inertia; no added glide was requested."
+      }
     },
     {
       "id": "S06",
@@ -335,8 +418,23 @@
       "deathward_baseline": "Free mouse aim plus directional controls",
       "original_assessment": "Broader aiming options are mechanical.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "retained exception; user requires current eight-direction firing and mouse/keyboard controls",
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:37:48+00:00",
+        "decision": "No change; preserve the current eight-direction firing and controls",
+        "priority": "Retained exception",
+        "rationale": "The user explicitly requires the current firing mechanism for isometric mouse/keyboard gameplay. Combat-balance work must fit these retained controls.",
+        "dependencies_requiring_explicit_selection": [],
+        "acceptance_check": "Regression-check existing mouse/keyboard aiming and all eight firing directions before and after any selected damage, cadence, movement, range or hitbox change. Do not quantize aiming to four directions or alter the current input mapping.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "user_decision": {
+        "recorded_at_utc": "2026-11-08T10:37:48+00:00",
+        "decision": "Keep the existing eight-direction firing mechanism and mouse/keyboard controls unchanged.",
+        "scope": "Accepted control exception only; no new firing implementation or other stat change is authorized."
+      }
     },
     {
       "id": "S07",
@@ -345,8 +443,29 @@
       "deathward_baseline": "26 world units/s",
       "original_assessment": "Native launch velocity and one spatial scale must be measured.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/shot-placement/README.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "accepted canonical consumer enabled in normal expeditions; full native acceptance open",
+      "selected": true,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes, together with range and flight",
+        "priority": "P0",
+        "rationale": "Bullet travel speed controls hit reliability and reaction time. Native Shot Speed 1.0 and DeathWard 26 world units/s are different representations.",
+        "dependencies_requiring_explicit_selection": [
+          "S08",
+          "S09",
+          "S11",
+          "S12",
+          "S15"
+        ],
+        "acceptance_check": "Measure launch displacement per source invocation and travel time over known distances, including movement inheritance. Establish units and clocks before choosing a world speed; do not replace 26 with 1.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "implementation_scope": "Ordinary empty-build primary shots only; native flight/birth arithmetic, explicit .1 spatial/30Hz tear-clock adapter, prior-player velocity inheritance; preserve walking/dodge/aim/damage/cadence and collision rules.",
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Normal-expedition integration, matched native calibration, full actor/flags/items/RNG/hit geometry acceptance.",
+      "human_acceptance": "base accepted"
     },
     {
       "id": "S08",
@@ -355,8 +474,27 @@
       "deathward_baseline": "Speed/lifetime instead of native Range; 3.2-second lifetime",
       "original_assessment": "Maximum straight unobstructed lifetime travel is **83.2 world units**. This is not an Isaac Range conversion.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/player-tears/README.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "accepted canonical consumer enabled in normal expeditions; full native acceptance open",
+      "selected": true,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes; a central combat-balance priority",
+        "priority": "P0",
+        "rationale": "Native Range must control real projectile reach. Displayed 6.5, nominal native range state and actual traveled distance are not interchangeable.",
+        "dependencies_requiring_explicit_selection": [
+          "S07",
+          "S09",
+          "S12"
+        ],
+        "acceptance_check": "Compare ground expiry and reachable distance at rest and while moving, across shot speeds and representative range upgrades. Do not substitute a 6.5-world-unit distance cap or retain 83.2-unit reach without comparison.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "implementation_scope": "Ordinary empty-build primary shots only; native flight/birth arithmetic, explicit .1 spatial/30Hz tear-clock adapter, prior-player velocity inheritance; preserve walking/dodge/aim/damage/cadence and collision rules.",
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Normal-expedition integration, matched native calibration, full actor/flags/items/RNG/hit geometry acceptance.",
+      "human_acceptance": "base accepted"
     },
     {
       "id": "S09",
@@ -365,8 +503,28 @@
       "deathward_baseline": "Straight base player bullets; separate 3D NPC lob/arc rules",
       "original_assessment": "Base trajectory is different; inherited motion needs matched captures.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/tear-birth/README.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "accepted canonical consumer enabled in normal expeditions; full native acceptance open",
+      "selected": true,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes for logical flight and inheritance",
+        "priority": "P0",
+        "rationale": "Logical height/fall and inherited velocity affect range, hit timing and moving fire. The gunshot visual may remain DeathWard art while the combat trajectory follows the source contract.",
+        "dependencies_requiring_explicit_selection": [
+          "S07",
+          "S08",
+          "S12",
+          "S15"
+        ],
+        "acceptance_check": "Verify ordinary birth, height/fall, expiry and previous-player-velocity inheritance, including opposing/transverse motion. Keep rendered height distinct from logical targeting and leave unselected global collision-order work explicit.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "implementation_scope": "Ordinary empty-build primary shots only; native flight/birth arithmetic, explicit .1 spatial/30Hz tear-clock adapter, prior-player velocity inheritance; preserve walking/dodge/aim/damage/cadence and collision rules.",
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Normal-expedition integration, matched native calibration, full actor/flags/items/RNG/hit geometry acceptance.",
+      "human_acceptance": "base accepted"
     },
     {
       "id": "S10",
@@ -376,7 +534,20 @@
       "original_assessment": "Missing a shared luck calculation/consumer system.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Defer until a selected luck-dependent mechanic",
+        "priority": "P2",
+        "rationale": "A stored zero Luck value without a real consumer would add no gameplay value. Luck must affect only the specific native rolls that use it.",
+        "dependencies_requiring_explicit_selection": [
+          "P04/P06/P09 as applicable",
+          "S21"
+        ],
+        "acceptance_check": "Implement and test a selected producer and consumer together, including negative/positive values and deterministic rolls. Do not apply one universal luck multiplier to all randomness.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S11",
@@ -386,7 +557,21 @@
       "original_assessment": "Scale and collision topology not calibrated.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes; calibrate movement and damage hulls",
+        "priority": "P0",
+        "rationale": "Player hit size changes effective difficulty, hit frequency and room traversal. An XML radius alone is not proof of the complete native hitbox.",
+        "dependencies_requiring_explicit_selection": [
+          "S12",
+          "S04/S05 movement contract",
+          "S15"
+        ],
+        "acceptance_check": "Establish the source movement/contact/projectile hull rules and a common spatial scale, then measure edge hits and near misses against representative enemies, walls and hazards.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S12",
@@ -396,7 +581,21 @@
       "original_assessment": "Renderer and gameplay differences must be separated.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes to logical/visual separation; no literal Y copy",
+        "priority": "P0",
+        "rationale": "DeathWard can retain its 3D player height and terrain appearance. Aim and hit eligibility must use an explicit combat-space contract so model height does not create unintended immunity or misses.",
+        "dependencies_requiring_explicit_selection": [
+          "S09",
+          "S11",
+          "S15"
+        ],
+        "acceptance_check": "Compare target eligibility and floor/terrain occlusion at different rendered heights. Document intended elevation behavior; do not flatten the rendered world or blindly copy a native height coordinate. Preserve current firing directions and mouse/keyboard aim mapping.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S13",
@@ -406,7 +605,21 @@
       "original_assessment": "Configured dash speed is 20.4 world units/s before collision. Extra mechanic.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "retained exception",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "No native removal; keep the accepted dodge exception",
+        "priority": "Retained exception",
+        "rationale": "The user explicitly requires universal dodge, including boost and immunity. It must survive all other stat and movement changes.",
+        "dependencies_requiring_explicit_selection": [
+          "S04",
+          "S05",
+          "S14"
+        ],
+        "acceptance_check": "Retain current duration/cooldown/boost unless a separate balance adjustment is selected. Measure comparisons without dodge to isolate source balance, and separately verify normal gameplay with dodge enabled.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S14",
@@ -416,7 +629,23 @@
       "original_assessment": "Native effect comparison missing.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes, after the movement contract",
+        "priority": "P1",
+        "rationale": "Slow changes combat survivability. A blanket 3.2/6 speed ratio cannot establish all source effect rules.",
+        "dependencies_requiring_explicit_selection": [
+          "S04",
+          "S05",
+          "S13",
+          "selected slow sources"
+        ],
+        "acceptance_check": "Calibrate each applicable player slow effect, duration and stacking separately; check movement inertia, expiry, immunity and retained dodge. NPC Slow evidence alone does not establish player slow.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      },
+      "review_scope_note": "Existing slow ratio now follows canonical Speed as part of movement wiring; default slow pace preserved. Native effect-specific slow rules remain unselected."
     },
     {
       "id": "S15",
@@ -426,7 +655,21 @@
       "original_assessment": "No proven common scale or full native size formula.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/tear-collider/README.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes, with combat geometry and projectile flight",
+        "priority": "P0",
+        "rationale": "Projectile hit size affects accuracy and effective damage output. A literal radius swap before calibrating actors and geometry can create a large unintended buff.",
+        "dependencies_requiring_explicit_selection": [
+          "S07\u2013S09",
+          "S11",
+          "S12"
+        ],
+        "acceptance_check": "Use the ordinary initialized native collider evidence, then verify edge contacts, walls and body eligibility. Keep visual size separate. Do not silently promote provisional scale 0.1 or archived radius 0.7 to fully accepted geometry.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S16",
@@ -436,7 +679,20 @@
       "original_assessment": "Same count only; not full attack parity.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "No baseline code change; verify the existing one-shot count",
+        "priority": "Verify only",
+        "rationale": "Both baselines emit one ordinary projectile per trigger. This is already the desired count and is not a reason to rewrite firing or remove upgrades.",
+        "dependencies_requiring_explicit_selection": [
+          "S02",
+          "selected multishot items later"
+        ],
+        "acceptance_check": "Check one root projectile per ordinary emission and distinguish a trigger from emitted pellets. Upgraded count/ownership rules remain separate item work.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S17",
@@ -446,7 +702,20 @@
       "original_assessment": "Equal absence only. Item behavior still differs.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "No baseline code change; defer item-specific differences",
+        "priority": "Verify only",
+        "rationale": "The starting build already has zero piercing and bounces. Equal absence at baseline does not certify the upgraded effects.",
+        "dependencies_requiring_explicit_selection": [
+          "P09",
+          "P14 for selected items"
+        ],
+        "acceptance_check": "Assert default zeros; audit piercing, bounce, consumption and item combinations only when their corresponding content is selected.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S18",
@@ -456,7 +725,20 @@
       "original_assessment": "Equal absence only.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "No baseline code change; defer item-specific differences",
+        "priority": "Verify only",
+        "rationale": "The starting build already has no homing or return behavior. There is no useful base-stat replacement to make here.",
+        "dependencies_requiring_explicit_selection": [
+          "P09",
+          "P14 for selected items"
+        ],
+        "acceptance_check": "Keep default homing/return at zero and test their absence. Do not call the existing authored homing/return upgrades native implementations.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S19",
@@ -466,7 +748,20 @@
       "original_assessment": "Equal absence only. These are DeathWard-specific modifier interfaces.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "No baseline code change; retain zero modifiers",
+        "priority": "Verify only",
+        "rationale": "Default explosive, rail and scatter modifiers are inactive. Changing or deleting authored upgrades is an item-design/catalog decision.",
+        "dependencies_requiring_explicit_selection": [
+          "P09",
+          "P14 for selected items"
+        ],
+        "acceptance_check": "Verify no hidden base explosion, self-damage, extra pellet or rail effect. Native upgraded behavior requires its own selected item contracts.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S20",
@@ -476,7 +771,21 @@
       "original_assessment": "Additional state; no blanket base sixth-shot damage bonus is assumed.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "No standalone baseline removal; decide with the items",
+        "priority": "Defer item rules",
+        "rationale": "The counter alone does not give the unupgraded player a reload penalty or universal sixth-shot bonus. Removing it now could break authored powers without fixing baseline combat.",
+        "dependencies_requiring_explicit_selection": [
+          "P09",
+          "P14",
+          "S02 emission semantics"
+        ],
+        "acceptance_check": "Prove all six base shots have identical damage/cadence and advance the counter once per root emission. Review sixth-shot gameplay with the selected item rules; revolver visuals can remain cosmetic.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S21",
@@ -486,7 +795,24 @@
       "original_assessment": "Not a port of all native stat formulas. `BuildStat::Speed` is projectile speed, not player movement.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes, incrementally; before expanding native item effects",
+        "priority": "P1",
+        "rationale": "Correct base numbers will drift again if stat composition, caps or units differ. Movement Speed, Shot Speed, fire delay/rate and Range must be distinct.",
+        "dependencies_requiring_explicit_selection": [
+          "S01",
+          "S02",
+          "S07",
+          "S08",
+          "S10",
+          "selected P09/P14 content"
+        ],
+        "acceptance_check": "Preserve the data-driven architecture where useful, but test source additive/multiplicative order, caps, acquisition/removal/stacking and snapshot behavior for selected stats/items. BuildStat::Speed currently means projectile speed, not player movement.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S22",
@@ -496,7 +822,21 @@
       "original_assessment": "Missing; enum/catalog infrastructure does not implement the mechanic.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes, later, with an explicitly selected active item",
+        "priority": "P2",
+        "rationale": "Active items and charging are important to the Isaac loop, but a slot without usable content or a partial D6 without working rerolls is not a finished feature.",
+        "dependencies_requiring_explicit_selection": [
+          "P11",
+          "P10 for D6/pedestal rerolls",
+          "relevant room-clear and battery rules"
+        ],
+        "acceptance_check": "Start with a bounded slot/use/charge contract and one selected active. Specify unlock-dependent starting D6 rather than granting it unconditionally; test charge carry, swap, duplicate use and room-clear eligibility.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "S23",
@@ -506,7 +846,22 @@
       "original_assessment": "Missing corresponding active content/complete rules.",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
       "status": "not selected",
-      "selected": false
+      "selected": false,
+      "recommendation": {
+        "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
+        "decision": "Yes, later; separate pocket consumables from trinkets",
+        "priority": "P2",
+        "rationale": "Cards/runes/pills and trinkets have different use, swap/drop and capacity rules. Generic item identifiers are not functional slots.",
+        "dependencies_requiring_explicit_selection": [
+          "P12",
+          "P13",
+          "S21",
+          "selected actual content"
+        ],
+        "acceptance_check": "Select the pocket and trinket subscopes explicitly, then prove pickup, capacity, use/drop/swap, floor carry and one real item in each selected system. Do not add starting consumables or a full catalog implicitly.",
+        "implementation_authorized_by_review": false,
+        "basis": "Isaac combat balance is the priority; graphics, universal dodge and the existing eight-direction mouse/keyboard firing mechanism are retained exceptions. Local pinned evidence and current code inform these recommendations; complete native acceptance is not asserted."
+      }
     },
     {
       "id": "E01",
@@ -1331,7 +1686,8 @@
   ],
   "accepted_exceptions": [
     "graphics",
-    "universal dodge including movement boost and immunity"
+    "universal dodge including movement boost and immunity",
+    "current eight-direction firing and existing mouse/keyboard controls"
   ],
   "shop_upgrade_count_placement_native_verified": false,
   "selected_differences": [
@@ -1352,6 +1708,153 @@
     "H15",
     "H16",
     "H17",
-    "H18"
-  ]
+    "H18",
+    "S02",
+    "S04",
+    "S07",
+    "S08",
+    "S09"
+  ],
+  "stat_recommendation_review": {
+    "updated_at_utc": "2026-11-08T14:55:05+00:00",
+    "code_baseline_commit": "3ad25797",
+    "goal": "Port Isaac combat balance, especially bullet range, enemy HP, attack speed, hitboxes and actual kill times, while preserving existing eight-direction mouse/keyboard firing and universal dodge.",
+    "target": "Repentance 1.7.9b; ordinary Isaac Normal Basement I comparison",
+    "scope": "Recommendations only; no new S gameplay implementation selected. S06 current eight-direction firing/mouse-keyboard controls and S13 universal dodge are accepted retained exceptions.",
+    "implementation_enabled": false,
+    "priority_order": [
+      "Freeze the current baseline and unit contract",
+      "Movement-only calibration and early human acceptance",
+      "Bullet speed/flight/range and human acceptance",
+      "Firing cadence and human acceptance",
+      "Coordinated damage/enemy-HP balance and human acceptance",
+      "Hitboxes/cover and repeat affected earlier checks",
+      "Selected item/stat/slot features, then integrated first-floor acceptance"
+    ],
+    "accepted_control_exceptions": [
+      "current eight-direction firing and existing mouse/keyboard controls",
+      "universal dodge with boost and immunity"
+    ],
+    "implementation_review_gates": [
+      {
+        "stage": 0,
+        "name": "Freeze the baseline and unit contract",
+        "scope": "No balance changes",
+        "human_check": "Play the current controls in the fixed comparison room; agree the camera/zoom, reference distances and baseline feel.",
+        "automated_check": "Record distance per second, room-crossing time, diagonal speed, dodge distance/duration, firing intervals and current reach. Keep source units, world units, per-invocation values and seconds explicit.",
+        "gate": "Baseline accepted before replacement movement is integrated."
+      },
+      {
+        "stage": 1,
+        "name": "Movement first, with a review after each component",
+        "scope": "Explicitly selected S04 speed calibration first. S05 is verification-first: no inertia/glide implementation without a measured live-reference difference and its own human review. S14 follows separately when selected.",
+        "human_check": "Walk straight and diagonally, click to walk, stop/reverse, dodge, fire while moving and rotate the camera. Compare baseline and candidate with identical room, camera and spawn.",
+        "automated_check": "Compare distance/room fraction per real second, crossing time, acceleration, stopping distance and dodge. Check 30/60/144 render FPS at fixed simulation timing and prevent source/world-scale or 30/60 Hz double application.",
+        "gate": "User approves movement speed and feel before any dependent projectile/combat rollout."
+      },
+      {
+        "stage": 2,
+        "name": "Bullet speed, flight and effective range",
+        "scope": "Explicitly selected S07, then coherent S08/S09 flight/range work",
+        "human_check": "Shoot stationary targets at short, medium and maximum range in all eight directions, both standing and moving. Check that shots reach the intended distance and expire where expected.",
+        "automated_check": "Measure travel time, final reachable distance, logical ground expiry and inherited velocity. Record unavoidable coupling between speed, flight and reach rather than hiding it with an unselected compensation.",
+        "gate": "User approves travel/reach in the isolated demo before damage balancing is integrated."
+      },
+      {
+        "stage": 3,
+        "name": "Attack speed only",
+        "scope": "Explicitly selected S02; S03 remains a measurement",
+        "human_check": "Hold and tap mouse/keyboard fire against a stationary target; review cadence, first-shot response and release/repress behavior with existing eight-direction controls.",
+        "automated_check": "Measure emission intervals and first-shot latency. Keep HP and damage unchanged in this intermediate demo; do not interpret its temporary kill times as the final balance.",
+        "gate": "User approves firing rhythm and input response."
+      },
+      {
+        "stage": 4,
+        "name": "Damage and enemy HP as a coordinated balance change",
+        "scope": "Explicitly selected S01 plus named enemy/boss HP-only subscopes; S03 verification",
+        "human_check": "Fight a small fixed roster, then a short room encounter, with the approved movement/range/cadence. Judge shots to kill, encounter length and damage pressure.",
+        "automated_check": "Use an agreed source-to-DeathWard unit convention; compare discrete hits and actual kill times, source-stage HP, incoming health losses and selected boss vulnerable windows. Do not alter the regular-health multiplier to conceal mismatches.",
+        "gate": "User approves the small combat set before expanding to the floor roster; no AI/spawn/room redesign is implied."
+      },
+      {
+        "stage": 5,
+        "name": "Hitboxes and cover, one rule at a time",
+        "scope": "Explicitly selected S11/S12/S15; keep rendered art and input mapping separate",
+        "human_check": "Review obvious hits, edge hits, near misses, walls/cover and targets at different rendered heights. Repeat a short movement check if navigation clearance changes.",
+        "automated_check": "Compare movement versus damage hulls, projectile radius, terrain occlusion and all eight retained directions. Preserve the previously agreed coordinate scale.",
+        "gate": "User approves hit fairness; any change to scale, movement or effective projectile timing reopens the relevant earlier review."
+      },
+      {
+        "stage": 6,
+        "name": "Selected stat/item interactions and additional slots",
+        "scope": "Explicitly selected S21; S10 with a real consumer; S22/S23 with their selected content/dependencies",
+        "human_check": "Review one upgrade or usable item at a time, including acquiring/removing it and moving between rooms/floors.",
+        "automated_check": "Verify composition/caps, stacking and item-specific behavior. Verify existing S16\u2013S19 defaults without redundant rewrites; treat S20 gameplay changes as item decisions.",
+        "gate": "User approves each selected feature; no bulk catalog or unrelated stat work follows automatically."
+      },
+      {
+        "stage": 7,
+        "name": "Integrated first-floor playtest and production acceptance",
+        "scope": "Only the individually accepted changes",
+        "human_check": "Play a complete first floor with the baseline kit, then selected upgrades. Review range, kill times, pressure, controls and dodge in actual connected rooms.",
+        "automated_check": "Run the relevant integration/regression checks and retain fixed-seed evidence; keep already reproduced baseline failures and full native acceptance gaps explicit.",
+        "gate": "Production acceptance follows this review; a final floor playtest supplements rather than replaces all earlier gates."
+      }
+    ],
+    "review_rules": {
+      "reason": "User reports prior excessively fast movement was caught too late.",
+      "review_plan_authorizes_implementation": false,
+      "one_behavior_change_per_candidate": true,
+      "interactive_comparison_required_before_human_review": true,
+      "baseline_room_camera_zoom_and_spawn_fixed": true,
+      "dependent_integration_waits_for_human_acceptance": true,
+      "automated_pass_is_not_human_acceptance": true,
+      "silence_is_not_approval": true,
+      "repeat_earlier_review_after_affecting_changes": true,
+      "preserve_eight_direction_mouse_keyboard_controls": true,
+      "preserve_universal_dodge_boost_and_immunity": true
+    },
+    "inertia_clarification": {
+      "native_evidence": "590 preserved per-invocation native motion states rechecked; release retains velocity in the bounded fixture.",
+      "not_established": "Noticeable live-game glide, effective release-to-stop distance/time, whole-game collision and timing.",
+      "implementation_decision": "Current baseline stopping remains unchanged. Do not add a glide effect on the strength of the bounded trace alone."
+    },
+    "baseline_checkpoint": {
+      "status": "baseline responsiveness accepted; user requests slower walking",
+      "human_acceptance": "accepted as comparison baseline",
+      "candidate_enabled": false,
+      "evidence": "docs/reports/isaac-first-floor-parity/movement-review-baseline/validation.json",
+      "interactive_executable": "/home/kambo/.local/share/deathward/reviews/movement-baseline-20261108T145628Z/deathward_movement_review",
+      "inertia_added": false,
+      "feedback": "it feels good, but in Isaac base movement is slower"
+    },
+    "walking_candidate_checkpoint": {
+      "status": "selected 4.8 walking pace integrated; focused checks pass",
+      "human_acceptance": "option 2 preferred by user; continuation authorized integration",
+      "candidate_enabled": "normal expedition walking default",
+      "evidence": "docs/reports/isaac-first-floor-parity/movement-review-s04-walking/validation.json",
+      "interactive_executable": "/home/kambo/.local/share/deathward/reviews/movement-s04-walking-20261108T150808Z/deathward_movement_review",
+      "inertia_added": false,
+      "baseline_walk_speed": 6,
+      "candidate_walk_speed": 4.8,
+      "verified_native_speed": false,
+      "production_walk_speed": 4.8,
+      "integration_evidence": "docs/reports/isaac-first-floor-parity/movement-review-s04-walking/integration/validation.json"
+    },
+    "projectile_checkpoint": {
+      "status": "human-accepted base integrated into normal expeditions; focused checks pass",
+      "human_acceptance": "base build accepted",
+      "production_enabled": true,
+      "native_full_acceptance": false,
+      "evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json"
+    },
+    "canonical_attribute_contract": "docs/reports/isaac-first-floor-parity/canonical-attributes-contract.json",
+    "canonical_attributes_checkpoint": {
+      "status": "human-accepted base integrated into normal expeditions; focused checks pass",
+      "human_acceptance": "base build accepted",
+      "production_enabled": true,
+      "native_full_acceptance": false,
+      "evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json"
+    }
+  }
 }

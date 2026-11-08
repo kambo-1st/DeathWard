@@ -9,6 +9,9 @@ void check(bool ok,const std::string &message){if(!ok)throw std::runtime_error(m
 bool near(float a,float b,float eps=.001f){return std::abs(a-b)<eps;}
 Simulation fixture() {
     Simulation run(1866,1,{},MissionTheme::Mine,true,false,WitnessAccount::None,0,ExpeditionPacing::Classic);
+    // Historical authored-unit contracts; production canonical integration has
+    // separate coverage in canonical_shooting_integration.
+    run.canonicalShooting=false;
     run.arena=Arena{};run.arena.bounds={{-45,-1,-45},{45,8,45}};
     run.rooms.resize(run.arena.rooms.size());
     for(auto &r:run.arena.rooms){r.bounds=run.arena.bounds;r.center={0,.85f,0};}

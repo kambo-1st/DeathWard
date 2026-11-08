@@ -1,5 +1,6 @@
 #include "combat/Simulation.hpp"
 #include "combat/LobFlight.hpp"
+#include "combat/PlayerShooting.hpp"
 #include "combat/SourceTime.hpp"
 #include "items/Items.hpp"
 #include "items/ItemPools.hpp"
@@ -82,6 +83,7 @@ bool Simulation::advanceFloor() {
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content);
+    next.canonicalShooting=canonicalShooting;
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
@@ -719,6 +721,15 @@ void Simulation::createProjectile(const Event &event) {
         if(!event.attack)p.attack.bounces+=event.bounces;
         p.damage=p.attack.damage;p.radius=p.attack.radius;p.life=p.attack.life;
         p.velocity=mul(unit(event.direction),p.attack.speed);
+        if(p.attack.canonicalFlight) {
+            p.playerFlight.emplace();
+            p.playerFlight->fallingSpeed=sourceTearBirthFallingSpeed(uint32_t(combatRng.next()));
+            p.velocity=add(p.velocity,p.attack.inheritedVelocity);
+            auto reference=*p.playerFlight;int frames=0;
+            while(!sourceTearGrounded(reference)&&frames<120){sourceTearFlightFrame(reference);++frames;}
+            const float flightSeconds=p.attack.maxDistance/std::max(.01f,p.attack.speed);
+            p.playerFlight->reviewClockScale=(frames/30.f)/std::max(Tick,flightSeconds);
+        }
         p.bounces=p.attack.bounces;p.pierce=p.attack.pierce;
         p.returning=event.returning&&p.attack.returnRange>0;
         if(p.returning)p.bounces=0;
@@ -965,11 +976,17 @@ void Simulation::collectChains() {
     }
 }
 void Simulation::updatePlayer(const Input &input, float dt) {
+    const float walkSpeed = player.walkingSpeed();
+    const auto shooting = canonicalShooting ? AcceptedPlayerShooting.resolve(player.attributes)
+                                           : ResolvedPlayerShooting{0,0,0};
     const Vector3 previousPosition = player.position;
     playerStepStart_=previousPosition;
     player.aim = input.aimDirection ? add(player.position, mul(*input.aimDirection, 10)) : input.aim;
     player.aim.y = input.aimDirection ? player.position.y : std::max(player.position.y,input.aim.y);
-    player.fireCooldown = std::max(0.0f, player.fireCooldown - dt);
+    // Retain fractional interval overshoot only while holding canonical fire;
+    // idle time cannot bank extra shots. Legacy firing retains its old gate.
+    const bool carryFireTime=canonicalShooting&&input.fire&&shooting.enabled()&&player.fireCooldown>0;
+    player.fireCooldown=carryFireTime?player.fireCooldown-dt:std::max(0.0f,player.fireCooldown-dt);
     dynamiteCooldown = std::max(0.0f, dynamiteCooldown - dt);
     player.dodgeCooldown = std::max(0.0f, player.dodgeCooldown - dt);
     player.hurt = std::max(0.0f, player.hurt - dt);
@@ -1003,7 +1020,7 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         }
         if (!movePath_.empty()) {
             Vector3 offset = sub(movePath_[waypoint_], player.position);
-            movement = mul(unit(offset), std::min(1.0f, length(offset) / (6 * dt)));
+            movement = walkSpeed > 0 ? mul(unit(offset), std::min(1.0f, length(offset) / (walkSpeed * dt))) : Vector3{};
         }
     }
     if (input.dodge && player.dodgeCooldown <= 0) {
@@ -1016,11 +1033,18 @@ void Simulation::updatePlayer(const Input &input, float dt) {
     }
     if (length(movement) > 1)
         movement = unit(movement);
-    if (player.dodge > 0) {
+    const bool dodgeFrame = player.dodge > 0;
+    if (dodgeFrame) {
         movement = mul(player.dodgeDirection, 3.4f);
         player.dodge -= dt;
     }
-    auto playerVelocity=add(mul(movement,player.slowTime>0&&player.dodge<=0?3.2f:6),statueAttraction(player.position,false));
+    // S04 walking calibration must not weaken the accepted universal dodge.
+    // Retain the existing slow ratio at Speed 1, and apply Speed consistently
+    // to ordinary slowed walking. The last boosted slow tick retains its
+    // existing absolute exception, as does every other dodge tick.
+    const float slowWalkSpeed=walkSpeed*(3.2f/Player::AcceptedWalkingPace);
+    const float moveSpeed=player.slowTime>0&&player.dodge<=0?(dodgeFrame?3.2f:slowWalkSpeed):(dodgeFrame?6.f:walkSpeed);
+    auto playerVelocity=add(mul(movement,moveSpeed),statueAttraction(player.position,false));
     if(player.launch){player.position.y=player.launch->baseY;playerVelocity=add(playerVelocity,player.launch->impulse);}
     player.position = arena.move(player.position,mul(playerVelocity,dt),0.48f);
     if (player.pullTime > 0) {
@@ -1072,8 +1096,10 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         placeDynamite();
     else if (!holdingBomb&&input.dynamiteTarget)
         throwDynamite(*input.dynamiteTarget);
-    if (!holdingBomb&&input.fire && player.fireCooldown <= 0 && !input.dynamiteTarget && !input.placeDynamite) {
+    if (!holdingBomb&&input.fire && player.fireCooldown <= (canonicalShooting?1e-6f:0.f) &&
+        (!canonicalShooting||shooting.enabled()) && !input.dynamiteTarget && !input.placeDynamite) {
         player.shootPose = 0.32f;
+        const float fireOvershoot=canonicalShooting?std::min(0.f,player.fireCooldown):0.f;
         player.fireCooldown = primaryCadence(*this);
         ++stats.shots;
         audioCues.push(AudioCueKind::Shot, player.position);
@@ -1081,7 +1107,8 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         e.direction = unit(sub(player.aim, player.position));
         e.damage = player.shotDamage;
         e.lastRound = player.nextRound == 6;
-        e.attack=playerAttack(*this,e.damage,e.lastRound);
+        e.attack=primaryPlayerAttack(*this,e.damage,e.lastRound);
+        if(canonicalShooting)player.fireCooldown+=fireOvershoot;
         player.nextRound = player.nextRound % 6 + 1;
         // One root per trigger pull: pellet count must not multiply chain budgets
         // or advance the cylinder. Descendants carry the resolved specification.
@@ -1091,6 +1118,10 @@ void Simulation::updatePlayer(const Input &input, float dt) {
         for(int i=0;i<pellets;++i) {
             e.direction=rotateY(aim,(float(i)-float(pellets-1)*.5f)*(e.attack->rail?.16f:.14f));
             e.position=add(player.position,mul(e.direction,.7f));
+            if(canonicalShooting) {
+                e.position=player.position; // ordinary source producer requests owner center
+                e.attack->inheritedVelocity=reviewTearInheritance(player.velocity,e.direction);
+            }
             if(!arena.clear(player.position,e.position,e.attack->radius))e.position=player.position;
             e.origin=e.position;
             accept(e);
@@ -1188,10 +1219,18 @@ void Simulation::updateProjectiles(float dt) {
             continue;
         }
         float remaining = dt;
+        if(p.playerFlight) {
+            // Keep the native-shaped visual descent, stretched over the
+            // selected reach. It must not shorten slow shots' travel distance.
+            advancePlayerTear(*p.playerFlight,dt*p.playerFlight->reviewClockScale,timeScale);
+        }
         for (int step = 0; step < 8 && remaining > 0.00001f && p.alive; ++step) {
             if(!p.hostile&&!p.returning&&p.attack.returnRange>0&&p.traveled>=p.attack.returnRange-.001f)
                 beginReturn(p);
+            if(p.attack.canonicalFlight&&!p.returning&&p.traveled>=p.attack.maxDistance-1e-5f){p.alive=false;break;}
             float slice=remaining;
+            if(p.attack.canonicalFlight&&!p.returning)
+                slice=std::min(slice,(p.attack.maxDistance-p.traveled)/std::max(.01f,length(p.velocity)*timeScale));
             if(p.sourcePlanarMotion)slice=std::min(slice,std::max(.000001f,1.f/30-p.planarClock));
             if(!p.hostile&&!p.returning&&p.attack.returnRange>0)
                 slice=std::min(slice,(p.attack.returnRange-p.traveled)/std::max(.01f,length(p.velocity)));
@@ -1292,6 +1331,7 @@ void Simulation::updateProjectiles(float dt) {
             event.weakPointHit = weakPointHit;
             if(!p.hostile) {
                 event.attack=p.attack;event.projectile=p.id;event.remainingLife=p.life;
+                if(p.attack.canonicalFlight)event.remainingDistance=std::max(0.f,p.attack.maxDistance-p.traveled);
                 event.remainingBounces=p.bounces;event.remainingPierce=std::max(0,p.pierce-1);
                 event.returning=p.returning;
             }

@@ -1,0 +1,18 @@
+{
+  "created_at_utc": "2026-11-08T15:40:16.233374+00:00",
+  "reason": "User reports review enemies take too long to kill. Interactive targets were 1000 HP.",
+  "interactive_target_hp": 48,
+  "normal_hit_damage": 24,
+  "verified_normal_hits_to_kill": 2,
+  "checks": "Full existing projectile verifier passes plus first-shot remaining HP 24 and second-shot death in baseline and candidate modes.",
+  "production_enemy_hp_changed": false,
+  "source_sha256": "d700e95b3c7d1284bcf1bcb2cea91f063794a7df001219f7ded11bea8aa314ac",
+  "binary_sha256": "1cb49afbf5b8aeef9048be8d524533449f1af90bc1f64451cb433bf60d6da347",
+  "preserved_executable": "/home/kambo/.local/share/deathward/reviews/projectile-s07-s09-targets-20261108T154016Z/deathward_projectile_review",
+  "artifacts_sha256": {
+    "build.log": "acf5b5393f7859170691767a5f197f496fa43ccf6eee28800826287c9332d4b5",
+    "checks.log": "cd0683634091a667ba8673877114df85ead3ca67d152cc5c11cf13667e85f4dd",
+    "measurements.csv": "0f0b788c4cc3556b2f27933553f36c0ba7d5705157b5c13d0fe3477b10835719"
+  },
+  "remaining": "Human projectile A/B verdict, live calibration, production projectile integration and later combat stages; prior acceptance gaps remain."
+}

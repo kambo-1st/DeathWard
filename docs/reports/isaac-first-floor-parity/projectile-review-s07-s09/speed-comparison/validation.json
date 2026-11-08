@@ -1,0 +1,136 @@
+{
+  "created_at_utc": "2026-11-08T15:55:22.679266+00:00",
+  "status": "10/11/12 comparison ready; checks pass; final human selection pending",
+  "human_feedback": "User likes revised feel and asks to compare 10, 11 and 12 units/s.",
+  "human_acceptance": "revised feel liked; final speed selection pending",
+  "production_projectile_change_enabled": false,
+  "native_full_acceptance": false,
+  "keys": {
+    "1": 10,
+    "2": 11,
+    "3": 12
+  },
+  "initial_speed": 12,
+  "fixed_parameters": {
+    "room_width": 24,
+    "max_distance": 11,
+    "life": 0.88,
+    "visual_radius": 0.28,
+    "collision_radius": 0.14,
+    "target_hp": 48,
+    "damage": 24,
+    "walking": 4.8,
+    "dodge_speed": 20.4,
+    "cadence": "unchanged"
+  },
+  "verified": {
+    "new_speed_stream_cases": [
+      {
+        "mode": "speed_choice_10",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "8.50001",
+        "observed_alive_seconds": "4",
+        "launch_speed": "10"
+      },
+      {
+        "mode": "speed_choice_10",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "8.66668",
+        "observed_alive_seconds": "4",
+        "launch_speed": "10"
+      },
+      {
+        "mode": "speed_choice_10",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "8.66668",
+        "observed_alive_seconds": "3.98333",
+        "launch_speed": "10"
+      },
+      {
+        "mode": "speed_choice_11",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "9.35",
+        "observed_alive_seconds": "4",
+        "launch_speed": "11"
+      },
+      {
+        "mode": "speed_choice_11",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "9.53334",
+        "observed_alive_seconds": "4",
+        "launch_speed": "11"
+      },
+      {
+        "mode": "speed_choice_11",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "9.53334",
+        "observed_alive_seconds": "3.98333",
+        "launch_speed": "11"
+      },
+      {
+        "mode": "speed_choice_12",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "10.2",
+        "observed_alive_seconds": "4",
+        "launch_speed": "12"
+      },
+      {
+        "mode": "speed_choice_12",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "10.4",
+        "observed_alive_seconds": "4",
+        "launch_speed": "12"
+      },
+      {
+        "mode": "speed_choice_12",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "10.4",
+        "observed_alive_seconds": "3.98333",
+        "launch_speed": "12"
+      }
+    ],
+    "each_speed_peak_active_projectiles": 3,
+    "partitions": [
+      30,
+      60,
+      144
+    ],
+    "earlier_projectile_verifier": "passes with current binary: 171 native rows, 48 eight-direction stationary shots, inheritance, range/cover, two-hit targets, dodge, normal preview default disabled",
+    "full_regression_suites": "not repeated for review-speed selector; prior room-calibration evidence retained"
+  },
+  "preserved_executable": "/home/kambo/.local/share/deathward/reviews/projectile-speeds-20261108T155522Z/deathward_projectile_review",
+  "binary_sha256": "05f4dc335df48151cc9a282a968cd2fb954c0b0defe9759e1cb5e6fdfa4cd97f",
+  "source_sha256": {
+    "src/combat/Simulation.hpp": "56e644dfaf81829fba901c9bc17064ac93da4668f8c12f963451a9dca8639482",
+    "src/combat/Simulation.cpp": "f05e6aeaf8b7f612d132a41378660688f8f0dad2fbd0faa65eb4bb372762c459",
+    "tools/projectile_review.cpp": "d6a35ee8ee1af6a43f5be454e18292c3d967224556175473acfaa19b2adf93d3"
+  },
+  "remaining": [
+    "Final human choice of 10, 11 or 12 units/s",
+    "Matched live native calibration and normal expedition projectile integration",
+    "Native actor/flags/item/RNG/hit geometry and subsequent combat stages",
+    "Prior health/enemy acceptance gaps"
+  ],
+  "interactive_launch": {
+    "pid": 475835,
+    "title": "DeathWard | Projectile speed, range and flight A/B"
+  },
+  "artifact_sha256": {
+    "final-build.log": "fd2b970d485b5782cb65cd378c2674044ed6131832e1f6b20109c13086b94825",
+    "README.md": "1e2269e4233896ddba2aed5bd67bb7ec819a1a2ba18fe12bc204d13a75da574f",
+    "capture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comparison.png": "becf50fea9b36fbecb3bc6e55c48f1f1d87910c1d1a3b1b69c55976567fd8c10",
+    "build.log": "e05335c2d0387eb3cce290b84d88d1e1c4e812e0951cbee1a2f1af0756912301",
+    "checks.log": "c65d695fdc97de02f321d3187396bdde5ee9a53c943c2a6c746a5e864cafef0f",
+    "measurements.csv": "99f96113e96ae1bd31f0cb4c8c317bab8ab21e8133cbbc2eca500137d187082b"
+  }
+}

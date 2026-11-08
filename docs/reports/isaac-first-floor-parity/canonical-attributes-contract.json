@@ -1,0 +1,44 @@
+{
+  "recorded_at_utc": "2026-11-08T16:18:08.284968+00:00",
+  "user_intent": "Reuse Isaac canonical seven attributes and balancing; avoid ad hoc world-unit controls.",
+  "attributes": [
+    "Health",
+    "Speed",
+    "Tears",
+    "Damage",
+    "Range",
+    "Shot Speed",
+    "Luck"
+  ],
+  "hud_table": "0-7 indicator bins, not gameplay attribute values",
+  "documented_ordinary_baseline": {
+    "red_hearts": 3,
+    "Speed": 1.0,
+    "Tears_per_second_approx": 2.73,
+    "Damage": 3.5,
+    "Range_display_tiles": 6.5,
+    "Shot_Speed": 1.0,
+    "Luck": 0
+  },
+  "full_live_baseline_verified": false,
+  "independent_consumers_required": true,
+  "review_cadence_coupling_is_canonical": false,
+  "range_must_not_shorten_when_only_shot_speed_changes": true,
+  "coordinate_and_tile_adapter_required": true,
+  "baseline_three_shots_and_half_room_are_not_automatic_upgrade_caps": true,
+  "damage_enemy_hp_joint_reconciliation_required": true,
+  "gameplay_changed_by_report": false,
+  "implementation_status": "Health/Speed enabled; independent Tears/Shot Speed/Range accepted and enabled in normal expeditions; Damage/Luck consumers and full native fidelity pending",
+  "retained_exceptions": [
+    "universal dodge",
+    "eight-direction mouse/keyboard firing"
+  ],
+  "remaining": [
+    "Live Isaac firing/travel/tile-scale calibration and full native counter/actor acceptance",
+    "Coordinated source Damage and enemy HP/hits-to-kill/DPS",
+    "Luck consumers and native cache/modifier/item formulas",
+    "Prior health/enemy/height/hit-geometry acceptance gaps"
+  ],
+  "implementation_evidence": "docs/reports/isaac-first-floor-parity/canonical-shooting-production-integration/validation.json",
+  "review_cadence_coupling_removed": true
+}

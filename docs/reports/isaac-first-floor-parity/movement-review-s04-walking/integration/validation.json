@@ -1,0 +1,43 @@
+{
+  "verified_at_utc": "2026-11-08T15:23:35.142254+00:00",
+  "status": "human-selected walking pace integrated; focused checks pass; full native parity unverified",
+  "normal_expedition_walk_speed": 4.8,
+  "previous_walk_speed": 6,
+  "dodge_speed": 20.4,
+  "inertia_added": false,
+  "retained_eight_direction_firing": true,
+  "native_speed_verified": false,
+  "game_input_default_sample": {
+    "simulation_seconds": 1,
+    "distance": 4.8
+  },
+  "passed_checks": [
+    "actual Game default walking and A/B input verifier",
+    "Mine/Canyon arrows",
+    "keyboard Game integration",
+    "core_contracts",
+    "heart_gameplay",
+    "regular_health_balance"
+  ],
+  "source_sha256": {
+    "src/combat/Simulation.hpp": "1b4dab2bfb63bce34f68029bc9837acf4b338361fcbb4ed4247b059d29cb15ba",
+    "src/combat/Simulation.cpp": "04b295378eb2fabbf89fe64cd46caae836f5fe92bd3928a30055bdbdd357db6a",
+    "tools/movement_review.cpp": "56e7a069b04736f00c4a09f552ced6abab056356255ff90ddc5d737b53188f7d"
+  },
+  "binary_sha256": "51600b182fa82bca44ad91b0be3dcacf061bd261812275dc66b3b49668b633b6",
+  "artifact_sha256": {
+    "regression.log": "82113a1256de274b79a02ffafd0116a6a835206caa520385c4bbd54c6fbbba9a",
+    "README.md": "7815373913b87daae96b23502ec45c2fee7fd68992b235e913b09a8e21f80227",
+    "game-input.log": "8588687f5eeec39a380a45e3f89525010ce6ddfdd147ff3a1cc54ce23e6d47a0",
+    "build.log": "c8811914fee7fdb3728d20ce0f777094bf0d3df9ea4ea625ee0546579c5d975f",
+    "keyboard-input.log": "c469484f204f8cd3b414e0b12bdfc2451b54374a25eac1e99c1f8ea695b813e8",
+    "arrow-input.log": "59f9d628723cdec36177fea9aadd31c7f15996bfc312e8c35375832317376c9f",
+    "measurements.csv": "66e0e1f997c22dc61f3dbe1f6f29064e70e973ce1936db0e8efee987c15ded6b"
+  },
+  "remaining": [
+    "Matched live Isaac speed/stopping calibration",
+    "Human first-floor combat acceptance",
+    "Later individually selected projectile/cadence/damage/HP/hitbox stages",
+    "Existing health and enemy acceptance gaps"
+  ]
+}

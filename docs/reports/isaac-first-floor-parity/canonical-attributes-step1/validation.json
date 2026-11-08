@@ -1,0 +1,31 @@
+{
+  "verified_at_utc": "2026-11-08T16:26:03.146744+00:00",
+  "scope": "step 1: standalone canonical attributes and explicit conversion boundary only",
+  "status": "implemented; focused contract tests pass; gameplay wiring pending",
+  "source_model_enabled_in_gameplay": false,
+  "production_gameplay_changed": false,
+  "save_format_changed": false,
+  "native_full_acceptance": false,
+  "documented_baseline_encoded": true,
+  "default_calibration_supplied": false,
+  "test": "player_attributes_contract passed",
+  "source_sha256": {
+    "src/combat/PlayerAttributes.hpp": "d4e927f41d9be89f162b363035d1482670ad169703dae17d8a8b34c85ef4826b",
+    "tests/player_attributes_tests.cpp": "311b1d10de1d7425d1d94b875b221a24204dd22d3064ee57b48abd66bbab4904",
+    "CMakeLists.txt": "315a2d23377945ce294ffe2e5cbd71cb2972f53e15a0980d9fac6bd2e2f6157e"
+  },
+  "artifact_sha256": {
+    "configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "README.md": "d1dd8e92f1cf3939a3138ee96bf4e14cbef9dcd42fa52f2cf26f95ff8a85e5f7",
+    "build.log": "f8cc7f9a58056072784477c573db576d5038b8460304d59e73d47f93f17b2c3f",
+    "checks.log": "790934111bc4feac8f541f44aabedbfec38a1f134bd1245d30b4f2e39c9f8953"
+  },
+  "remaining": [
+    "Step 2 movement wiring and calibration",
+    "Step 3 independent Tears/Shot Speed/Range consumers and human check",
+    "Accepted projectile production integration",
+    "Coordinated source-unit damage/HP/DPS balancing",
+    "Luck, source cache/upgrade formulas and persistence/HUD wiring",
+    "Full native and previous health/enemy acceptance gaps"
+  ]
+}

@@ -274,8 +274,21 @@ function(deathward_assets target)
 endfunction()
 
 add_executable(deathward src/main.cpp src/core/FrontEnd.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/editor/TownEditorNavigation.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp src/core/GameQuest.cpp)
+# Isolated human-review room. Production movement/input code is reused unchanged.
+add_executable(deathward_movement_review EXCLUDE_FROM_ALL tools/movement_review.cpp
+    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
+    src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp
+    src/render/CanyonScene.cpp src/render/TownScene.cpp)
+target_link_libraries(deathward_movement_review PRIVATE deathward_core raylib)
+add_executable(deathward_projectile_review EXCLUDE_FROM_ALL tools/projectile_review.cpp
+    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
+    src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp
+    src/render/CanyonScene.cpp src/render/TownScene.cpp)
+target_link_libraries(deathward_projectile_review PRIVATE deathward_core raylib)
 target_link_libraries(deathward PRIVATE deathward_core raylib)
 deathward_assets(deathward)
+deathward_assets(deathward_movement_review)
+deathward_assets(deathward_projectile_review)
 if(EMSCRIPTEN)
     set_target_properties(deathward PROPERTIES OUTPUT_NAME index SUFFIX ".html")
     target_link_options(deathward PRIVATE
@@ -922,6 +935,16 @@ if(BUILD_TESTING)
     add_executable(deathward_tests tests/tests.cpp)
     target_link_libraries(deathward_tests PRIVATE deathward_core)
     add_test(NAME core_contracts COMMAND deathward_tests)
+    # Step 1 only: standalone attribute contract, with no gameplay dependency.
+    add_executable(deathward_player_attributes_tests tests/player_attributes_tests.cpp)
+    target_include_directories(deathward_player_attributes_tests PRIVATE src)
+    add_test(NAME player_attributes_contract COMMAND deathward_player_attributes_tests)
+    add_executable(deathward_player_speed_tests tests/player_speed_tests.cpp)
+    target_link_libraries(deathward_player_speed_tests PRIVATE deathward_core)
+    add_test(NAME player_speed_attribute COMMAND deathward_player_speed_tests)
+    add_executable(deathward_canonical_shooting_tests tests/canonical_shooting_integration_tests.cpp)
+    target_link_libraries(deathward_canonical_shooting_tests PRIVATE deathward_core)
+    add_test(NAME canonical_shooting_integration COMMAND deathward_canonical_shooting_tests)
     add_executable(deathward_enemy_tests tests/enemy_tests.cpp)
     target_link_libraries(deathward_enemy_tests PRIVATE deathward_core)
     add_test(NAME enemy_behaviors COMMAND deathward_enemy_tests)

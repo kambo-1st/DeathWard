@@ -2,6 +2,8 @@
 #include "audio/AudioState.hpp"
 #include "combat/Monsters.hpp"
 #include "combat/PlayerHealth.hpp"
+#include "combat/PlayerAttributes.hpp"
+#include "combat/PlayerTear.hpp"
 #include "content/Mechanics.hpp"
 #include "core/Types.hpp"
 #include "world/Campaign.hpp"
@@ -608,6 +610,11 @@ struct Player {
     float shootPose = 0;
     bool dodgeMoving = false;
     float baseHealth = StartingHealth, shotDamage = RevolverDamage;
+    // Step 2 wires Speed only. Other scalar consumers remain separate work.
+    // Existing health fields below remain the sole runtime health authority.
+    SourcePlayerStats attributes;
+    static constexpr float AcceptedWalkingPace = 4.8f;
+    float walkingSpeed() const { return WalkingPace(AcceptedWalkingPace).worldSpeed(attributes); }
     float hp = StartingHealth, maxHp = StartingHealth, fireCooldown = 0, dodge = 0, dodgeCooldown = 0,
           hurt = 0;
     Vector3 dodgeDirection{0, 0, -1};
@@ -630,6 +637,12 @@ struct Player {
         result.blackMask=blackHeartMask;result.boneMask=boneHeartMask;
         return result;
     }
+    SourcePlayerAttributes sourceAttributes() const {
+        SourcePlayerAttributes result;
+        static_cast<SourcePlayerStats &>(result) = attributes;
+        result.health = sourceHealth();
+        return result;
+    }
     void setSourceHealth(const SourcePlayerHealth &health) {
         maxHp=float(health.maxRed);hp=float(health.red);soulHearts=health.soul;
         eternalHearts=health.eternal;goldenHearts=health.golden;boneHearts=health.bone;
@@ -649,6 +662,9 @@ struct AttackSpec {
     float homingTurn = 0, returnRange = 0, capDamage = 0, capRadius = 0, capSelfDamage = 0;
     int bounces = 0, pierce = 0;
     bool scatter = false, rail = false;
+    bool canonicalFlight = false;
+    float maxDistance = 0;
+    Vector3 inheritedVelocity{};
 };
 struct Projectile {
     EntityId id = 0;
@@ -664,6 +680,7 @@ struct Projectile {
     std::vector<EntityId> hitEntities;
     AttackSpec attack;
     bool returning = false, phaseSpent = false, capSpent = false;
+    std::optional<PlayerTearFlight> playerFlight;
     float traveled = 0, guidanceTime = 0;
     EntityId guidedTarget = 0;
     float angularVelocity = 0; // Radians/second about world up, independent of shooter lifetime.
@@ -742,6 +759,7 @@ struct Event {
     bool playerDamageHostile = false;
     std::optional<AttackSpec> attack;
     float remainingLife = 3.2f;
+    float remainingDistance = -1; // Canonical split descendants share the remaining outward budget.
     int remainingBounces = 0, remainingPierce = 0;
     bool returning = false, explosiveHit = false, compactBlast = false;
     EntityId projectile = 0;
@@ -1098,6 +1116,9 @@ class Simulation {
     bool godMode = false, rewardOpen = false, roomClear = false, finished = false, dead = false;
     bool rescued = false, altarDestroyed = false, bossKilled = false, checkpointNeeded = false;
     bool followup = false, debugScenario = false;
+    // Accepted canonical shooting is the expedition default. Legacy mode is
+    // retained explicitly for historical fixtures and comparisons.
+    bool canonicalShooting = true;
     bool surveyTutorial = false, surveyRecovered = false, letterOpen = false;
     bool floorExitRequested = false;
     StoryRoom storyOpen = StoryRoom::None;

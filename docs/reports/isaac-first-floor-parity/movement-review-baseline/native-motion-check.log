@@ -1,0 +1,1 @@
+{"pass": true, "check": true, "trace_rows": 590, "cases": 7, "native_helpers_stubbed": 0, "scope": "ordinary grounded player motion per invocation and ordinary movement inheritance; NOT whole-game or collision/timing acceptance"}

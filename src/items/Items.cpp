@@ -1,4 +1,5 @@
 #include "items/Items.hpp"
+#include "combat/PlayerShooting.hpp"
 
 namespace dw {
 namespace {
@@ -21,6 +22,8 @@ void split(Simulation &run,const Event &e,const ItemKey &owner) {
         auto &spec=*shot.attack;
         spec.damage=e.damage*(spec.scatter?.65f:.8f);
         spec.life=std::min(spec.life,e.remainingLife);
+        if(spec.canonicalFlight&&e.remainingDistance>=0)
+            spec.maxDistance=std::max(0.f,e.remainingDistance-distance(shot.position,e.position));
         if(e.attack) {spec.bounces=e.remainingBounces;spec.pierce=e.remainingPierce;}
         spec.radius=std::max(.06f,spec.radius*.85f);
         shot.damage=spec.damage;shot.target=e.target;shot.explosiveHit=false;
@@ -40,7 +43,8 @@ void ghost(Simulation &run,const Event &e,const ItemKey &owner) {
     shot.ghost=true;shot.returning=false;shot.explosiveHit=false;
     // Shotless kills (dynamite/barrels) repeat one current weapon projectile.
     // Bullet-derived explosions instead preserve the actual birth specification.
-    shot.attack=e.attack?*e.attack:playerAttack(run,run.player.shotDamage,e.lastRound);
+    if(!e.attack&&run.canonicalShooting&&!AcceptedPlayerShooting.resolve(run.player.attributes).enabled())return;
+    shot.attack=e.attack?*e.attack:primaryPlayerAttack(run,run.player.shotDamage,e.lastRound);
     shot.damage=shot.attack->damage;shot.direction=e.attack?e.attack->heading:unit(e.direction);
     shot.demolition=Demolition::Soft;shot.playerDamage=0;
     emitItem(run,shot,e,owner);
@@ -64,11 +68,32 @@ AttackSpec playerAttack(const Simulation &run,float damage,bool sixth,float spee
     spec.pierce=int(b[BuildStat::Pierce]);spec.bounces=int(b[BuildStat::Bounces]);
     spec.scatter=b[BuildStat::Scatter]>0;spec.rail=b[BuildStat::Rail]>0;return spec;
 }
+AttackSpec primaryPlayerAttack(const Simulation &run,float damage,bool sixth) {
+    auto spec=playerAttack(run,damage,sixth);
+    if(!run.canonicalShooting)return spec;
+    const auto source=AcceptedPlayerShooting.resolve(run.player.attributes);
+    const auto empty=run.content->resolve({},damage,26,false);
+    const float authoredSpeed=spec.speed,authoredLife=spec.life;
+    spec.canonicalFlight=true;
+    spec.speed*=source.launchSpeed/empty[BuildStat::Speed];
+    spec.maxDistance=source.reach;
+    // Scatter is an authored DW short-range weapon, not a native cache rule.
+    // Preserve its explicit distance budget, scaled only by canonical Range.
+    if(spec.scatter)spec.maxDistance=authoredSpeed*authoredLife*(run.player.attributes.rangeTiles/6.5f);
+    if(spec.returnRange>0)
+        spec.returnRange=std::min(spec.maxDistance,spec.returnRange*(run.player.attributes.rangeTiles/6.5f));
+    const float totalBudget=spec.maxDistance+(spec.returnRange>0?spec.returnRange:0);
+    spec.life=totalBudget/std::max(.01f,spec.speed)+2*Tick;
+    return spec;
+}
 int primaryPellets(const Simulation &run) {
     return int(run.content->resolve(run.items,run.player.shotDamage,26,false)[BuildStat::Pellets]);
 }
 float primaryCadence(const Simulation &run) {
-    return run.content->resolve(run.items,run.player.shotDamage,26,false)[BuildStat::Cadence];
+    const float authored=run.content->resolve(run.items,run.player.shotDamage,26,false)[BuildStat::Cadence];
+    if(!run.canonicalShooting)return authored;
+    const float baseline=run.content->resolve({},run.player.shotDamage,26,false)[BuildStat::Cadence];
+    return AcceptedPlayerShooting.resolve(run.player.attributes).intervalSeconds*authored/baseline;
 }
 std::span<const ItemDefinition> itemDefinitions() { return defaultMechanics()->items(); }
 const ItemDefinition &itemDefinition(const ItemKey &key,const MechanicsLibrary &content) {

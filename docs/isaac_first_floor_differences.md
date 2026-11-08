@@ -12,6 +12,8 @@ This is an initial evidence-backed differences report, not an implementation or 
 
 This report preserves the **pre-change** audit and its captured numbers. Track subsequent enabled changes and remaining gaps in [the implementation progress report](isaac_first_floor_implementation.md). The user explicitly requested retaining **universal dodge**, including its movement and immunity, as an exception to the nonvisual 1:1 target. Its audit row records the original difference; it is no longer a removal requirement.
 
+**Later control decision:** S06 is a retained exception. Keep the current eight-direction firing mechanism and existing mouse/keyboard controls for isometric gameplay. The original firing-direction audit below is historical and is not a requirement to replace these controls.
+
 ## Comparison contract
 
 The baseline is regular **Isaac, Normal difficulty, Basement I**, before collecting items. DeathWard means a fresh, non-tutorial **Canyon expedition, floor index 0, Compact pacing**, default player settings, no god mode, no starting powers. A floor is part of an expedition; it is not the entire expedition.

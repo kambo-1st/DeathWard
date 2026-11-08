@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  37: source_projectile_motion
+1/4 Test  #37: source_projectile_motion .........   Passed    0.24 sec
+    Start  60: heart_gameplay
+2/4 Test  #60: heart_gameplay ...................   Passed    1.67 sec
+    Start  64: regular_health_balance
+3/4 Test  #64: regular_health_balance ...........   Passed    0.42 sec
+    Start 129: core_contracts
+4/4 Test #129: core_contracts ...................   Passed    0.79 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   3.14 sec

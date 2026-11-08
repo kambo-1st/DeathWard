@@ -1,0 +1,222 @@
+{
+  "created_at_utc": "2026-11-08T16:09:51.335757+00:00",
+  "status": "slow firing and fixed half-room reach ready; checks pass; human verdict pending",
+  "human_acceptance": "pending",
+  "requested_behavior": "Slow firing; independently fixed half-room maximum reach; no units/s metrics in demo.",
+  "production_projectile_change_enabled": false,
+  "native_full_acceptance": false,
+  "keys": {
+    "1": "Slow",
+    "2": "Steady",
+    "3": "Faster"
+  },
+  "initial_choice": "Steady",
+  "cadence": "review override: max(existing cadence, nominal full travel time/3 + one simulation tick)",
+  "range": "half shorter room side minus one world unit; authoritative traveled-distance cap",
+  "life": "full nominal travel time plus two safety ticks, rather than fixed .88 seconds",
+  "visual_flight": "native-shaped falling curve normalized over full nominal travel duration; not native wall-clock parity",
+  "target_fixture_fix": [
+    "valid freeze request required to succeed",
+    "status-aware static source monster kind replaces legacy Rusher",
+    "unhit witnesses checked stationary"
+  ],
+  "verified": {
+    "stream_cases": [
+      {
+        "mode": "speed_choice_3",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "3"
+      },
+      {
+        "mode": "speed_choice_3",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "3"
+      },
+      {
+        "mode": "speed_choice_3",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "3"
+      },
+      {
+        "mode": "speed_choice_5",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "10.9167",
+        "observed_alive_seconds": "8",
+        "launch_speed": "5"
+      },
+      {
+        "mode": "speed_choice_5",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "5"
+      },
+      {
+        "mode": "speed_choice_5",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "5"
+      },
+      {
+        "mode": "speed_choice_8",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "speed_choice_8",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "8",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "speed_choice_8",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "10.9333",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "8"
+      },
+      {
+        "mode": "speed_choice_10",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "10"
+      },
+      {
+        "mode": "speed_choice_10",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "10"
+      },
+      {
+        "mode": "speed_choice_10",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "10"
+      },
+      {
+        "mode": "speed_choice_11",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "11"
+      },
+      {
+        "mode": "speed_choice_11",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "11"
+      },
+      {
+        "mode": "speed_choice_11",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "11"
+      },
+      {
+        "mode": "speed_choice_12",
+        "input_fps": "30",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "12"
+      },
+      {
+        "mode": "speed_choice_12",
+        "input_fps": "60",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "8",
+        "launch_speed": "12"
+      },
+      {
+        "mode": "speed_choice_12",
+        "input_fps": "144",
+        "direction": "sustained_peak_3",
+        "last_observed_distance": "11",
+        "observed_alive_seconds": "7.98333",
+        "launch_speed": "12"
+      }
+    ],
+    "each_choice_peak_active_shots": 3,
+    "visible_pace_cardinal_diagonal_reach_checks": "same boundary within one simulation observation tick",
+    "native_flight_rows": 171,
+    "eight_direction_game_cases": 48,
+    "other_checks": [
+      "inheritance",
+      "range and cover",
+      "two-hit targets",
+      "dodge speed and immunity",
+      "normal expedition preview disabled"
+    ]
+  },
+  "engineering_parameters": {
+    "visible_pace_values": [
+      3,
+      5,
+      8
+    ],
+    "room_width": 24,
+    "range_cap": 11,
+    "visual_radius": 0.28,
+    "collision_radius": 0.14,
+    "walking": 4.8,
+    "dodge_speed": 20.4,
+    "damage": 24,
+    "target_hp": 48
+  },
+  "preserved_executable": "/home/kambo/.local/share/deathward/reviews/projectile-fixed-reach-20261108T160951Z/deathward_projectile_review",
+  "binary_sha256": "23c4ef38f0e336e1e08d56038b05aba77ae0a31134c8f45d566a5712a30f8707",
+  "source_sha256": {
+    "src/combat/Simulation.cpp": "4b23c6171d714cc45e3d3b9b5fc667b07228c033cb3f1610c13297b64c90f128",
+    "src/combat/PlayerTear.hpp": "6c272b5399716461f5b0f1edd3ae5fef01b63a6ecf2fb6763dd1e7f4f5571e4b",
+    "tools/projectile_review.cpp": "0bbea80b31c1de2577bb5f69e7210705f2ad62f43b97269aaa01f37d0d04302d"
+  },
+  "remaining": [
+    "Human verdict on slow firing and fixed reach",
+    "Live Isaac calibration and normal expedition integration",
+    "Full native actor/flags/items/RNG/hit geometry and later combat stages",
+    "Prior health/enemy acceptance gaps"
+  ],
+  "interactive_launch": {
+    "pid": 480572,
+    "title": "DeathWard | Projectile speed, range and flight A/B"
+  },
+  "artifact_sha256": {
+    "final-build.log": "68878c2a4674fbae59a54fc8e7e808723327bcc13b4bb229317535eafcb48ea4",
+    "README.md": "8717b43faa8d71e1019c2063fd7dffe93683b4582494d9871174604e4bef6149",
+    "build.log": "7741d62e15c47cd516dd98949bf82d22e3f430a789e50a111ccb7f0c814f255b",
+    "review.png": "b3e7fe37d4e07c5b7c5750adff763e62771c6ed3f0db4a67d1a67e15cd30e7e6",
+    "checks.log": "40a265f7e8e6225cbd4794ec69e71f675a15ad789f424b5f15c90be246c2a804",
+    "measurements.csv": "fe97090a67310c25aa4adee519ecc9148ad46b9ae7b992fe975d96c0a9421e9f"
+  }
+}
