@@ -1046,7 +1046,25 @@ void Simulation::updatePlayer(const Input &input, float dt) {
     const float moveSpeed=player.slowTime>0&&player.dodge<=0?(dodgeFrame?3.2f:slowWalkSpeed):(dodgeFrame?6.f:walkSpeed);
     auto playerVelocity=add(mul(movement,moveSpeed),statueAttraction(player.position,false));
     if(player.launch){player.position.y=player.launch->baseY;playerVelocity=add(playerVelocity,player.launch->impulse);}
-    player.position = arena.move(player.position,mul(playerVelocity,dt),0.48f);
+    if(nativePlayerMovement&&!dodgeFrame&&player.slowTime<=0&&!player.launch&&player.pullTime<=0) {
+        auto &reference=*nativePlayerMovement;reference.clock+=dt;
+        while(reference.clock+1e-6f>=1.f/60) {
+            reference.clock=std::max(0.f,reference.clock-1.f/60);
+            reference.body.integrate();
+            const auto before=player.position;
+            player.position=arena.move(before,mul(reference.body.velocity,reference.worldScale),.48f);
+            // Feed realized collision displacement back into the ordinary
+            // native recurrence; do not let an invisible blocked velocity bank.
+            reference.body.velocity=mul(horizontal(sub(player.position,before)),1/reference.worldScale);
+            reference.body.velocity=player.attributes.speed>0?
+                native_motion::playerSteering(reference.body.velocity,movement,player.attributes.speed):Vector3{};
+        }
+    } else {
+        // Universal dodge and exceptional forces retain their accepted rules.
+        // Native empty-build movement does not certify these adaptations.
+        if(nativePlayerMovement)nativePlayerMovement->reset();
+        player.position = arena.move(player.position,mul(playerVelocity,dt),0.48f);
+    }
     if (player.pullTime > 0) {
         if (player.dodge > 0 || !arena.sight(player.position, player.pullTarget))
             player.pullTime = 0;

@@ -1,0 +1,32 @@
+{
+  "players": [
+    {
+      "vy": -5.605194e-45,
+      "vx": -5.605194e-45,
+      "y": 308.188477,
+      "type": 1,
+      "address": 891978672,
+      "x": 569.5522,
+      "speed": 1
+    }
+  ],
+  "phase": 720095,
+  "base": 12845056,
+  "top": 140,
+  "right": 580,
+  "shape": 1,
+  "pid": 29964,
+  "grid_width": 15,
+  "left": 60,
+  "state": 2,
+  "method": "OpenProcess QUERY_INFORMATION|VM_READ only; no writes, injected code or input",
+  "entity_count": 1,
+  "grid_height": 9,
+  "bottom": 420,
+  "game": 618557472,
+  "manager": 599793696,
+  "room": 583409824,
+  "world_frame": 519,
+  "captured_at_utc": "2026-11-08T19:01:28.578516+00:00",
+  "note": "Read-only live snapshot; separate timed sample had no gameplay progression. Room bounds observation does not verify active walking."
+}

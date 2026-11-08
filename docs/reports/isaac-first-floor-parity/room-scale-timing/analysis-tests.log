@@ -1,0 +1,12 @@
+test_30_motion_is_not_doubled_by_60_outer_loop (test_live_motion_analysis.LiveMotionAnalysis) ... ok
+test_60_motion_is_measured_from_positions (test_live_motion_analysis.LiveMotionAnalysis) ... ok
+test_idle_gameplay_does_not_verify_walking (test_live_motion_analysis.LiveMotionAnalysis) ... ok
+test_paused_loop_does_not_verify_walking (test_live_motion_analysis.LiveMotionAnalysis) ... ok
+test_phase_crossing_reads_are_excluded (test_live_motion_analysis.LiveMotionAnalysis) ... ok
+test_position_changes_without_gameplay_frames_are_not_accepted (test_live_motion_analysis.LiveMotionAnalysis) ... ok
+test_wall_velocity_is_not_unimpeded_motion (test_live_motion_analysis.LiveMotionAnalysis) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.038s
+
+OK

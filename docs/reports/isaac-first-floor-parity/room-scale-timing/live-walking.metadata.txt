@@ -1,0 +1,1 @@
+pid=29964,base=12845056,game=618557472,manager=599793696,room=583409824,player=891978672,state=2,shape=1,grid_width=15,grid_height=9,left=60,top=140,right=580,bottom=420,speed=1,character=0,stopwatch_hz=10000000

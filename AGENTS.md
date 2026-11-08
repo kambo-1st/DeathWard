@@ -39,3 +39,7 @@
 ## Current blocking priority
 
 - The user explicitly requires enemy movement to be corrected/verified before resuming live HP balancing. The Gaper/player scale mismatch is reproduced in `docs/reports/isaac-first-floor-parity/enemy-movement-blocker/README.md`. HP body-count research remains valid, but live HP acceptance is on hold. Do not compensate for fast enemies by changing HP, and do not claim a corrected movement candidate is enabled until it has actually been implemented and verified.
+
+- An explicit native-player review adapter now exists; see `docs/reports/isaac-first-floor-parity/native-motion-reference/README.md`. Its bounded native recurrence and actual Simulation traces pass. Normal expeditions still use the accepted responsive movement. The review display still uses an adapted spatial anchor, so do not claim independently verified source room-crossing speed or full NPC/native acceptance. Resolve live timing, geometry and per-actor trajectories before promoting it or reopening HP acceptance.
+
+- Step1 reference verification now includes live normal-room geometry (520×280,13×7 native40-coordinate interior cells) and ordinary horizontal base-Isaac timing (about60 player movement steps/30 world updates per second). See `docs/reports/isaac-first-floor-parity/room-scale-timing/README.md`. Do not keep describing that scoped timing as unmeasured. Shared review scale/geometry has not been applied; collider/stopping/other-shape and NPC acceptance remain open.

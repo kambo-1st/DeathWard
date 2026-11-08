@@ -1,0 +1,18 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 131: player_speed_attribute
+1/6 Test #131: player_speed_attribute ...........   Passed    0.55 sec
+    Start 132: canonical_shooting_integration
+2/6 Test #132: canonical_shooting_integration ...   Passed    1.35 sec
+    Start 133: native_player_adapter
+3/6 Test #133: native_player_adapter ............   Passed    0.26 sec
+    Start 134: native_motion_reference
+4/6 Test #134: native_motion_reference ..........   Passed    0.00 sec
+    Start 135: enemy_movement_calibration
+5/6 Test #135: enemy_movement_calibration .......   Passed    0.25 sec
+    Start 136: damage_health_calibration
+6/6 Test #136: damage_health_calibration ........   Passed    4.03 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   6.45 sec

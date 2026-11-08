@@ -1,0 +1,270 @@
+{
+  "input": "docs/reports/isaac-first-floor-parity/room-scale-timing/live-walking.csv",
+  "sample_rows": 7705,
+  "stable_sample_rows": 7700,
+  "torn_or_phase_crossing_rows_excluded": 5,
+  "elapsed_seconds": 119.9897991,
+  "outer_phase_hz_over_whole_capture": 60.021768967192145,
+  "world_frame_advance": 932.0,
+  "active_gameplay_windows": 1957,
+  "active_gameplay_world_hz_median": 29.817555037435437,
+  "active_gameplay_outer_hz_median": 60.019240453654,
+  "steady_walking_segments": [
+    {
+      "native_coordinates_per_outer_phase": 4.393139629049111,
+      "fitted_outer_hz": 60.386880559031496,
+      "fitted_world_hz": 30.484881856100916,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        4.401628,
+        4.414052
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 0.9959598508657076,
+      "axis": "x",
+      "start_seconds": 3.1144842,
+      "end_seconds": 3.6790677,
+      "samples": 37,
+      "native_cached_velocity": 4.410960567567567,
+      "fitted_native_coordinates_per_second": 266.1229637266712,
+      "effective_motion_invocations_per_second": 60.33220194335702,
+      "world_frames": 17.0,
+      "displacement": 145.5661
+    },
+    {
+      "native_coordinates_per_outer_phase": -4.4031057623049215,
+      "fitted_outer_hz": 59.15905192016918,
+      "fitted_world_hz": 29.19964861809588,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        -4.412301,
+        -4.401121
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 0.9988704684195819,
+      "axis": "x",
+      "start_seconds": 4.8325106,
+      "end_seconds": 5.0952945,
+      "samples": 18,
+      "native_cached_velocity": -4.408084833333334,
+      "fitted_native_coordinates_per_second": -263.3754721338787,
+      "effective_motion_invocations_per_second": 59.748276653450375,
+      "world_frames": 7.0,
+      "displacement": -66.12020000000001
+    },
+    {
+      "native_coordinates_per_outer_phase": 4.376846724116081,
+      "fitted_outer_hz": 59.735806007467005,
+      "fitted_world_hz": 29.644251115220715,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        4.401546,
+        4.414026
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 0.9922504873954731,
+      "axis": "x",
+      "start_seconds": 9.3242509,
+      "end_seconds": 9.856398,
+      "samples": 35,
+      "native_cached_velocity": 4.411030057142857,
+      "fitted_native_coordinates_per_second": 262.41938247009546,
+      "effective_motion_invocations_per_second": 59.491633262656016,
+      "world_frames": 16.0,
+      "displacement": 141.15140000000002
+    },
+    {
+      "native_coordinates_per_outer_phase": -4.328744988833058,
+      "fitted_outer_hz": 60.44014843486144,
+      "fitted_world_hz": 29.723115400646844,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        -4.413466,
+        -4.401454
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 0.9816418372543638,
+      "axis": "x",
+      "start_seconds": 11.1353591,
+      "end_seconds": 11.5072137,
+      "samples": 25,
+      "native_cached_velocity": -4.40969896,
+      "fitted_native_coordinates_per_second": -263.24242756100244,
+      "effective_motion_invocations_per_second": 59.696235491096296,
+      "world_frames": 11.0,
+      "displacement": -97.01299999999998
+    },
+    {
+      "native_coordinates_per_outer_phase": 4.483648593648292,
+      "fitted_outer_hz": 56.62563546173937,
+      "fitted_world_hz": 29.30311886695273,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        4.401506,
+        4.413364
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 1.016721935455473,
+      "axis": "x",
+      "start_seconds": 12.819113,
+      "end_seconds": 13.2025721,
+      "samples": 26,
+      "native_cached_velocity": 4.409906423076923,
+      "fitted_native_coordinates_per_second": 255.62037050042466,
+      "effective_motion_invocations_per_second": 57.96503280948776,
+      "world_frames": 11.0,
+      "displacement": 92.59989999999999
+    },
+    {
+      "native_coordinates_per_outer_phase": -4.38600620506634,
+      "fitted_outer_hz": 60.20126767110926,
+      "fitted_world_hz": 29.98295781280138,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        -4.414126,
+        -4.401527
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 0.9942288543205279,
+      "axis": "x",
+      "start_seconds": 14.5061072,
+      "end_seconds": 15.1298486,
+      "samples": 41,
+      "native_cached_velocity": -4.411465414634146,
+      "fitted_native_coordinates_per_second": -264.7206848025496,
+      "effective_motion_invocations_per_second": 60.00742608666774,
+      "world_frames": 18.0,
+      "displacement": -163.22169999999997
+    },
+    {
+      "native_coordinates_per_outer_phase": -4.413693239281789,
+      "fitted_outer_hz": 56.87500750156164,
+      "fitted_world_hz": 29.65573107843909,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        -4.412385,
+        -4.401686
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 1.0011178957411335,
+      "axis": "x",
+      "start_seconds": 20.3154381,
+      "end_seconds": 20.6109995,
+      "samples": 20,
+      "native_cached_velocity": -4.4087647,
+      "fitted_native_coordinates_per_second": -254.63770633343617,
+      "effective_motion_invocations_per_second": 57.75715504468546,
+      "world_frames": 8.0,
+      "displacement": -66.12416999999999
+    },
+    {
+      "native_coordinates_per_outer_phase": 4.413515470712382,
+      "fitted_outer_hz": 59.83848191868677,
+      "fitted_world_hz": 29.917462234020157,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        4.401686,
+        4.414238
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 1.0001525759295606,
+      "axis": "x",
+      "start_seconds": 24.8252984,
+      "end_seconds": 26.0412378,
+      "samples": 79,
+      "native_cached_velocity": 4.41284217721519,
+      "fitted_native_coordinates_per_second": 264.27414187504155,
+      "effective_motion_invocations_per_second": 59.88751268730325,
+      "world_frames": 37.0,
+      "displacement": 322.1349
+    }
+  ],
+  "live_steady_motion_measured": true,
+  "status": "steady live motion observed; inspect identity/geometry and segment agreement",
+  "limitations": [
+    "ReadProcessMemory is observational and not an atomic whole-game snapshot; phase-crossing rows filtered",
+    "Only observed actor/session/room; no claim for all characters/items/statuses",
+    "No exact input-release time is recorded; no live stopping acceptance from these rows",
+    "Outer phase rate alone is not player movement frequency"
+  ]
+}

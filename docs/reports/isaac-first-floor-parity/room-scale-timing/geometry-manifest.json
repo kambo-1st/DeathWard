@@ -1,0 +1,49 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "live_snapshot_sha256": "d7743d3d3c37281ef2574dcbb5a016edd3002a3ff91816864411bb84ef31e3c4",
+  "shape": 1,
+  "grid_width": 15,
+  "grid_height": 9,
+  "cell_spacing": 40.0,
+  "grid_origin": [
+    40,
+    120.0
+  ],
+  "stored_interior_bounds": [
+    60,
+    140,
+    580,
+    420
+  ],
+  "interior_size": [
+    520.0,
+    280.0
+  ],
+  "interior_cells": [
+    13,
+    7
+  ],
+  "grid_positions_executed": 135,
+  "clamp_cases_executed": 14,
+  "windows": [
+    {
+      "name": "grid-position",
+      "start": "0x7a4687",
+      "end": "0x7a46b5",
+      "raw_sha256": "5f2651fa3b7b5907379781a436b4cc3564f41db8186805871614dfb12979622a"
+    },
+    {
+      "name": "room-clamp",
+      "start": "0x7cec10",
+      "end": "0x7cef13",
+      "raw_sha256": "ad04dc63010ae76abdf7077b9cc31b91f2c36757e00e93f64f0fe3d3ffbb2efd"
+    }
+  ],
+  "method": "Original native grid path coordinate arithmetic and full ordinary room clamp; real live room fields supplied from read-only snapshot; no stubbed helpers or patched instructions",
+  "not_verified": [
+    "Full room generation and all room shapes",
+    "Player/entity wall radius and corner collision",
+    "Active gameplay elapsed movement timing",
+    "DeathWard spatial rollout"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "recorded_at_utc": "2026-11-08T18:38:20.610823+00:00",
+  "status": "bounded native reference and private ordinary-player adapter verified; full native movement acceptance pending",
+  "native_exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_base_speed_write": {
+    "address": "0x722b66",
+    "field": "Player+0x14ac",
+    "executed_value": 1.0,
+    "scope": "original baseline initialization write, not full character/item cache recomputation"
+  },
+  "native_bounded_states": 1840,
+  "native_cases": 10,
+  "simulation_player_states": 2760,
+  "simulation_player_cases_including_two_transforms": 14,
+  "focused_suites_passed": 6,
+  "actual_game_input_fps": [
+    30,
+    60,
+    144
+  ],
+  "actual_game_144fps_held_ticks": 89,
+  "native_helpers_stubbed": 0,
+  "native_room_crossing_speed_verified": false,
+  "full_native_acceptance": false,
+  "production_default_changed": false,
+  "hp_damage_changed": false,
+  "enabled_gameplay": "explicit private nativePlayerMovement adapter only",
+  "review_display_scale": "previous accepted-pace anchor; source geometry not verified",
+  "evidence": "README.md",
+  "remaining": [
+    "Full Player/NPC branch reachability and initialization",
+    "Live timing and source room/collider spatial reference",
+    "NPC integration/steering ordering and matched native AI trajectories",
+    "Spider/Pooter target/idle/pause/RNG sequences",
+    "Enemy projectiles, wider roster, production rollout and HP acceptance"
+  ],
+  "artifact_sha256": {
+    "review-build.log": "8b138916cd9f0b9f655cf1e0b86cda62be0a6e6a56283eeacb03fda3578b2412",
+    "gaper-arrived.asm": "4a17dc3bad917964c723ad3969c886006238b91419c3bd5166a42d3dceec3e33",
+    "launch.json": "d291dcd160196dd7786ba1b078ac15c15684e98c8187ea75cb1a20efc357250b",
+    "README.md": "7993fa5a7313af0a79407d13a282b6e8c049c41e43eeadaa64f7a311941ceb3a",
+    "game-input.log": "c2fb30f4116a9153e2926fd92e28a4e0b66efe5060a059ccb6b61e23c845bfc7",
+    "build.log": "ad10702efc3703cd862a997bb43c58c44f9e338c502f949b0320190bb29be054",
+    "base-speed-init.asm": "76079ac6ac543c9a601a3a7fae93bd1e47ff950bf151129c575ce3c98572ae12",
+    "native-traces.csv": "c804bf21e1e3ffe0f2e30b1485c16b9407ea650fb95099230383a8405e5abf58",
+    "gaper-moving.asm": "5b0692b90e3493598818c3e21a6a6b62ba8690ab143938a99b8acb33e701aa69",
+    "capture-check.log": "d093e6965af1181f208f0375bd60842b927719ac39d2d73d1040f74cdb86d3b7",
+    "review.png": "36166470c6dd5340e20666c1bd27f4911baaedfdf74ec295d7a2652831e8b9f9",
+    "tests.log": "ded0d814cadf1c2e00e142532769dffa8e369427c3842eef393061d75e218228",
+    "base.asm": "cd088f1420b1906d59112e7a72f92a7b8c8298ed3175d8a9d3891a071f2e69f0",
+    "spider-impulse.asm": "cbf6df77259395677de7d941d777dc0214bde1385367f3277ab08fc542ddeb44",
+    "manifest.json": "3d25e956d2aa82f3090d5e31a98de938ce0320a99612108ae14adee5c576a349",
+    "game-input.csv": "ff83dd5fb017fc0f399137a587b530878f5dcccc1e94127a2a5e3ad2d2a7569d",
+    "gaper-blocked.asm": "ba40b1939df538d5969f0fd6a9bd734fe26b53864dd774eb95808104f08069a4",
+    "spider-retention.asm": "8b8b1276eae7192cdd0ed766eda02f2b5ef92da8846919eb2d9a0fe816a6599e"
+  }
+}

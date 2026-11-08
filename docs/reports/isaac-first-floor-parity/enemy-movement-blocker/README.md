@@ -28,3 +28,7 @@ Still unfinished: corrected and verified relative movement for the encounter ros
 ## Subsequent candidate checkpoint
 
 [Private movement review](candidate/README.md) now applies a source-derived player-relative conversion to the selected controllers. Seven suites pass, including preservation of production HP/attacks and open-space trajectory similarity. This is not independent native AI acceptance: Spider/Pooter behavior, live timing, projectiles and geometry remain unverified. The Gaper chase ratios are derived from pinned native arithmetic and bounded native player execution. No complete live Isaac actor comparison has been performed.
+
+## Native player reference follow-up
+
+[The new native reference](../native-motion-reference/README.md) executes the original baseline Speed write (1.0), then verifies 1,840 bounded source physics/steering states. An explicit private player adapter matches 2,760 Simulation states, including native stopping inertia. Source geometry, full NPC timing/AI and projectile calibration remain unfinished; the review display still uses an adapted scale. HP acceptance stays held.

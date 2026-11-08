@@ -1,0 +1,67 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "base_speed_cache_write": {
+    "address": "0x722b66",
+    "field": "Player+0x14ac",
+    "executed_value": 1.0,
+    "scope": "original baseline initialization write, not full character/item cache recomputation"
+  },
+  "rows": 1840,
+  "cases": 10,
+  "windows": [
+    {
+      "name": "base-speed-init",
+      "start": "0x722b66",
+      "end": "0x722b70",
+      "sha256": "abcb8f35d15de9e31714922b93baf2f2f333170b2ba638aff549862985e26411"
+    },
+    {
+      "name": "base",
+      "start": "0x686406",
+      "end": "0x686497",
+      "sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf"
+    },
+    {
+      "name": "gaper-moving",
+      "start": "0x7a4704",
+      "end": "0x7a47dd",
+      "sha256": "6a5ff302eeddbe498f6ebedfe79af666d8639855e0eec2fe4dbce0f1db6be7f0"
+    },
+    {
+      "name": "gaper-arrived",
+      "start": "0x7a47dd",
+      "end": "0x7a47f5",
+      "sha256": "b662ac7cf5187d3131b92e0b71f8cdc0c95d1a0045f7398781f9c6aa6b33ac38"
+    },
+    {
+      "name": "gaper-blocked",
+      "start": "0x7a46db",
+      "end": "0x7a46f5",
+      "sha256": "0121493fe0d3f1946c228598105806e49bb3bc72267a6b520e82495506b699e3"
+    },
+    {
+      "name": "spider-impulse",
+      "start": "0x518508",
+      "end": "0x518578",
+      "sha256": "1fbd2dc358a5c538beb9ef9dbd3bc2f2252575e82782bd8644b6c891e5ecf3db"
+    },
+    {
+      "name": "spider-retention",
+      "start": "0x5183a5",
+      "end": "0x5183cd",
+      "sha256": "c5b25256317e205ed96ddea68eaa46a63740f41b6b6c8f7370e740e23b9d7ad3"
+    }
+  ],
+  "method": "original mapped x86/SSE and native sqrt/vector helpers; no instruction patches or stubbed helpers",
+  "scope": "bounded ordinary physics and steering arithmetic; targets/path results supplied",
+  "not_verified": [
+    "complete Player/NPC update reachability",
+    "Spider idle/target/RNG/stop controller",
+    "Pooter controller",
+    "navigation/collision",
+    "complete live scheduling and wall-clock",
+    "source room/world geometry"
+  ],
+  "player_clock": "ordinary target dispatch60/s from earlier bounded routing evidence; not a live measurement",
+  "npc_clock": "ordinary target dispatch30/s from earlier bounded routing evidence; not a live measurement"
+}

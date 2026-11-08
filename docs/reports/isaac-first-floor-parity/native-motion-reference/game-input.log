@@ -1,0 +1,5 @@
+render_fps,held_native_ticks,held_distance,expected_distance,coast_native_ticks,coast_distance,expected_coast_distance
+30,90,6.53144,6.53145,60,7.19967,7.19969
+60,90,6.53144,6.53145,60,7.19967,7.19969
+144,89,6.45144,6.45145,60,7.11967,7.11969
+PASS native reference Game keyboard movement and stopping at 30/60/144 render FPS; world/room scale remains an adaptation

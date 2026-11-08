@@ -4,6 +4,7 @@
 #include "combat/PlayerHealth.hpp"
 #include "combat/PlayerAttributes.hpp"
 #include "combat/PlayerTear.hpp"
+#include "combat/reference/NativeMotion.hpp"
 #include "content/Mechanics.hpp"
 #include "core/Types.hpp"
 #include "world/Campaign.hpp"
@@ -1119,6 +1120,9 @@ class Simulation {
     // Accepted canonical shooting is the expedition default. Legacy mode is
     // retained explicitly for historical fixtures and comparisons.
     bool canonicalShooting = true;
+    // Private native-reference review only; normal expeditions retain accepted controls.
+    // No save field or automatic gameplay enablement. Explicit spatial conversion required.
+    std::optional<native_motion::PlayerAdapter> nativePlayerMovement;
     bool surveyTutorial = false, surveyRecovered = false, letterOpen = false;
     bool floorExitRequested = false;
     StoryRoom storyOpen = StoryRoom::None;

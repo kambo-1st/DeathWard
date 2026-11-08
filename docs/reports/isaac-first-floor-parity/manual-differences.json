@@ -395,7 +395,7 @@
       "deathward_baseline": "Input-driven velocity, collision response and additional launch/pull state",
       "original_assessment": "Cannot be certified by comparing one speed number.",
       "evidence": "[Archived research](reports/isaac-first-floor-parity/player-motion/README.md)",
-      "status": "not selected",
+      "status": "private native stopping-curve reference implemented and checked; normal gameplay unchanged; full live acceptance open",
       "selected": false,
       "recommendation": {
         "reviewed_at_utc": "2026-11-08T14:55:05+00:00",
@@ -415,7 +415,9 @@
       "user_feedback": {
         "recorded_at_utc": "2026-11-08T14:55:05+00:00",
         "note": "User doubts that Isaac movement has noticeable inertia; no added glide was requested."
-      }
+      },
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/native-motion-reference/README.md",
+      "production_implementation_selected": false
     },
     {
       "id": "S06",
@@ -1233,8 +1235,12 @@
       "deathward_baseline": "DW uses two-metre tiles and variable room extents; Compact starts at half-extents 5\u20137 tiles. No single approved source-unit transform has been established.",
       "original_assessment": "",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "not selected",
-      "selected": false
+      "status": "selected normal-room geometry and ordinary horizontal live timing verified; shared conversion/generation rollout pending",
+      "selected": true,
+      "implementation_scope": "Read-only normal-room geometry and effective movement timing verification only; no generator, room, collider or conversion rollout",
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
+      "full_native_acceptance": false,
+      "remaining": "Apply shared scale in the selected review; full wall/collider/other-shape acceptance is separate."
     },
     {
       "id": "R07",
@@ -1333,9 +1339,9 @@
       "deathward_baseline": "Generic \u00d71.10 tuning remains; dedicated controllers can differ.",
       "original_assessment": "",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "priority movement audit: conversion mismatch reproduced; correction not yet enabled",
+      "status": "private relative movement candidate implemented; native arithmetic reference checked; production unchanged; full per-actor acceptance open",
       "selected": true,
-      "implementation_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/README.md"
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/candidate/README.md"
     },
     {
       "id": "E12",
@@ -1759,7 +1765,8 @@
     "E07",
     "E08",
     "E09",
-    "E11"
+    "E11",
+    "R06"
   ],
   "stat_recommendation_review": {
     "updated_at_utc": "2026-11-08T14:55:05+00:00",
@@ -1926,5 +1933,170 @@
     "status": "relative movement candidate implemented and tested privately; full native movement acceptance pending; live HP acceptance held",
     "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/candidate/README.md",
     "does_not_certify_native_ai": true
+  },
+  "native_motion_reference_checkpoint": {
+    "status": "bounded native reference and private ordinary-player adapter verified; full native movement acceptance pending",
+    "evidence": "docs/reports/isaac-first-floor-parity/native-motion-reference/README.md",
+    "review_scale_still_adapted": true,
+    "full_native_acceptance": false
+  },
+  "current_delivery_summary": {
+    "recorded_at_utc": "2026-11-08T19:07:21.046658+00:00",
+    "total_entries": 123,
+    "scoped_production_enabled": {
+      "count": 22,
+      "ids": [
+        "H01",
+        "H02",
+        "H03",
+        "H04",
+        "H05",
+        "H06",
+        "H07",
+        "H08",
+        "H09",
+        "H10",
+        "H11",
+        "H12",
+        "H13",
+        "H14",
+        "H16",
+        "H17",
+        "H18",
+        "S02",
+        "S04",
+        "S07",
+        "S08",
+        "S09"
+      ]
+    },
+    "private_review_only": {
+      "count": 14,
+      "ids": [
+        "S01",
+        "S03",
+        "S05",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E11",
+        "R06"
+      ]
+    },
+    "retained_exceptions": {
+      "count": 3,
+      "ids": [
+        "H15",
+        "S06",
+        "S13"
+      ]
+    },
+    "pending_or_unselected": {
+      "count": 84,
+      "ids": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "E10",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16",
+        "P17",
+        "P18",
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R16",
+        "R17",
+        "R18",
+        "R19",
+        "R20",
+        "R21",
+        "R22",
+        "R23",
+        "S10",
+        "S11",
+        "S12",
+        "S14",
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S23",
+        "X01",
+        "X02",
+        "X03"
+      ]
+    },
+    "fully_accepted_broad_areas": 0,
+    "total_broad_areas": 6,
+    "completion_percentage": null,
+    "scope": "Entry counts are delivery status, not equal effort, verified native fidelity, or a count of confirmed mismatches. Pending rows may include existing baseline behavior and verification-only requirements. Review work does not select or authorize production rollout."
+  },
+  "room_scale_timing_checkpoint": {
+    "status": "selected step1 verified for native shape1 geometry and ordinary horizontal base-Isaac live motion; shared spatial rollout pending",
+    "evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
+    "selected_scope": "verify normal-room dimensions and effective timing only; no generation/room rollout",
+    "geometry_verified": true,
+    "active_live_player_timing_verified": true,
+    "requested_step1_scope_verified": true
   }
 }

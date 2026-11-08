@@ -1,0 +1,18 @@
+{
+  "pid": 509777,
+  "executable": "/home/kambo/.local/share/deathward/reviews/native-player-reference-20261108T183620Z/deathward_native_player_review",
+  "argv": [
+    "/home/kambo/.local/share/deathward/reviews/native-player-reference-20261108T183620Z/deathward_native_player_review",
+    "--native-player-reference",
+    "--body",
+    "2",
+    "--mechanics",
+    "/home/kambo/.local/share/deathward/reviews/native-player-reference-20261108T183620Z/mechanics"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/native-player-reference-20261108T183620Z/interactive.log",
+  "initial": "corrected Gaper conversion plus native ordinary player curve; shared adapted review scale",
+  "source_room_geometry_accepted": false,
+  "portable_release": false,
+  "exec_session_id": 42381,
+  "process_alive_at_check": true
+}
