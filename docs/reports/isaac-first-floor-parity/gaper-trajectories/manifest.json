@@ -1,0 +1,236 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "source_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "source_bodies": [
+    {
+      "anm2path": "010.000_Frowning Gaper.anm2",
+      "baseHP": "10",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "hasFloorAlts": "true",
+      "id": "10",
+      "name": "#FROWNING_GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "0",
+      "reroll": "true",
+      "shadowSize": "16",
+      "stageHP": "0",
+      "variant": "0"
+    },
+    {
+      "anm2path": "010.001_Gaper.anm2",
+      "baseHP": "10",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "hasFloorAlts": "true",
+      "id": "10",
+      "name": "#GAPER",
+      "numGridCollisionPoints": "12",
+      "portrait": "1",
+      "reroll": "true",
+      "shadowSize": "14",
+      "stageHP": "0",
+      "variant": "1"
+    }
+  ],
+  "samples": 1630,
+  "cases": [
+    {
+      "name": "ordinary-long",
+      "variant": 1,
+      "frames": 90,
+      "initial_velocity_before_first_physics": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ordinary-short",
+      "variant": 1,
+      "frames": 90,
+      "initial_velocity_before_first_physics": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ordinary-near-arrival",
+      "variant": 1,
+      "frames": 60,
+      "initial_velocity_before_first_physics": [
+        2,
+        0
+      ]
+    },
+    {
+      "name": "ordinary-zero-arrival",
+      "variant": 1,
+      "frames": 60,
+      "initial_velocity_before_first_physics": [
+        2,
+        0
+      ]
+    },
+    {
+      "name": "ordinary-turn",
+      "variant": 1,
+      "frames": 90,
+      "initial_velocity_before_first_physics": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ordinary-reverse",
+      "variant": 1,
+      "frames": 90,
+      "initial_velocity_before_first_physics": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ordinary-moving-target",
+      "variant": 1,
+      "frames": 90,
+      "initial_velocity_before_first_physics": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ordinary-blocked",
+      "variant": 1,
+      "frames": 60,
+      "initial_velocity_before_first_physics": [
+        2,
+        0
+      ]
+    },
+    {
+      "name": "frowning-open-route",
+      "variant": 0,
+      "frames": 90,
+      "initial_velocity_before_first_physics": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "frowning-awake-turn",
+      "variant": 0,
+      "frames": 90,
+      "initial_velocity_before_first_physics": [
+        0,
+        0
+      ]
+    }
+  ],
+  "windows": [
+    {
+      "name": "npc-base-call",
+      "start": "0x69b6c9",
+      "end": "0x69b6f7",
+      "raw_sha256": "8b4efc87f4592be2ed338f39d9b7d59558e9e2e275585c004fa78d76774d7bea",
+      "executed": false
+    },
+    {
+      "name": "npc-ai-call",
+      "start": "0x69b7be",
+      "end": "0x69b7c5",
+      "raw_sha256": "2d4e45b6fe87f4cbd4da43c5912881e5b18753ded660b027fec8fe39a38872ba",
+      "executed": false
+    },
+    {
+      "name": "gaper-dispatch",
+      "start": "0x699ffb",
+      "end": "0x69a002",
+      "raw_sha256": "64a345da13016f3ad6392b26f9614fe20408742447648293109e9335c1000549",
+      "executed": false
+    },
+    {
+      "name": "physics",
+      "start": "0x686406",
+      "end": "0x686497",
+      "raw_sha256": "8aa58bee7866dda1c899c521ab22f0ae7ac378a07817f277bb1ff1e08ab7e2cf",
+      "executed": true
+    },
+    {
+      "name": "interpolation",
+      "start": "0x68827a",
+      "end": "0x6882f1",
+      "raw_sha256": "4aa8b0fa2439cd3ea1227838b55bfb46ec64cfe345bd7cf63f1198a00185e9e7",
+      "executed": true
+    },
+    {
+      "name": "restore",
+      "start": "0x8b02e2",
+      "end": "0x8b0301",
+      "raw_sha256": "9bc46c54f704aa1df50651e7f07d913252068c53d8518d630cbe560858755c8b",
+      "executed": true
+    },
+    {
+      "name": "force-normal",
+      "start": "0x4f7edf",
+      "end": "0x4f7ee9",
+      "raw_sha256": "87d5d15ddd247258eed8b4b8e7d1a79cf9cbe6f862fdae589274091e08758b53",
+      "executed": true
+    },
+    {
+      "name": "force-closed",
+      "start": "0x4f7e48",
+      "end": "0x4f7e52",
+      "raw_sha256": "64cceb4c22737ced37ceef41b0ac84ea77ccc24e7249879f8f618ff95881c4b4",
+      "executed": true
+    },
+    {
+      "name": "force-awake",
+      "start": "0x4f7ed3",
+      "end": "0x4f7edd",
+      "raw_sha256": "b1a91eb7a4f8d393cd021b08190d47af630b1a92fe9f828d9e8ddc00e9eeeebc",
+      "executed": true
+    },
+    {
+      "name": "direct-target",
+      "start": "0x7a3dfc",
+      "end": "0x7a3f08",
+      "raw_sha256": "6e87421395ce1b67a293e4f935984f48455c7b6f5228043c2052cc73cdadc36b",
+      "executed": true
+    },
+    {
+      "name": "pursuit",
+      "start": "0x7a46c1",
+      "end": "0x7a47f5",
+      "raw_sha256": "d4c9006738a87ece430a4a74a07c1839ee08f45a815197a7353a90d2179b2990",
+      "executed": true
+    },
+    {
+      "name": "blocked",
+      "start": "0x7a46db",
+      "end": "0x7a46f5",
+      "raw_sha256": "0121493fe0d3f1946c228598105806e49bb3bc72267a6b520e82495506b699e3",
+      "executed": true
+    }
+  ],
+  "method": "original unpatched native physics, force writes, direct-target selection/route steering, alternate interpolation and Manager restoration; native sqrt executes; no helper hooks",
+  "time_origin": "first main physics/AI update is time0; interpolation and next main samples then alternate at nominal1/60",
+  "supplied_boundaries": [
+    "unobstructed target coordinates or absent route; direct-line result supplied true, native750 threshold and target selection executed",
+    "normal status/timeScale1/baseFriction1",
+    "closed then awake force schedule for frowning-open-route; pre-awake state for awake-turn"
+  ],
+  "not_verified": [
+    "Full native FindGridPath/terrain grid",
+    "Frowning overlay/initialization scheduling",
+    "Complete NPC update reachability and live NPC wall-clock",
+    "Collision, status/champion branches, damage/lifecycle"
+  ]
+}

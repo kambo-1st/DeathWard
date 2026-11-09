@@ -1,0 +1,91 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "runtime_sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+  "animation_evaluations": 72,
+  "route_decisions": 64,
+  "route_cases": 6,
+  "windows": [
+    {
+      "name": "ordinary-early-bypass",
+      "start": "0x69b5a0",
+      "end": "0x69b5d5",
+      "executed": true,
+      "raw_sha256": "f7424c549aa706cc1fcd7e00a8cdfc4ce2fef942abea3166bc7e3cab80b44022"
+    },
+    {
+      "name": "early-special-base",
+      "start": "0x69b6aa",
+      "end": "0x69b6f7",
+      "executed": false,
+      "raw_sha256": "6c4069d3eb533761c50f95ae13109c83157a6f7d367f97dc29fdc0a0f5df784c"
+    },
+    {
+      "name": "ready-state-bypass",
+      "start": "0x69be56",
+      "end": "0x69be64",
+      "executed": true,
+      "raw_sha256": "1af3faed837d9a287562277273529ff3f4d1f73a773a3241e53752245ad1f865"
+    },
+    {
+      "name": "ordinary-ai-call",
+      "start": "0x69ce88",
+      "end": "0x69ce99",
+      "executed": false,
+      "raw_sha256": "025684df61055050d7b0122a0cd06e748894193c1d8cf4d2b06192493d7f76d7"
+    },
+    {
+      "name": "late-base-call",
+      "start": "0x69f887",
+      "end": "0x69f8ae",
+      "executed": false,
+      "raw_sha256": "e67da9fb3db4a38f9cbbfb78353937ebdaf9f8b7ff548909d2d475af28c8ee62"
+    },
+    {
+      "name": "base-animation",
+      "start": "0x6860e7",
+      "end": "0x68618c",
+      "executed": true,
+      "raw_sha256": "24de3fd0aee3196d85f7bce5e9dcf7c119cddb6608ee9b281a2db7bbed79e22e"
+    },
+    {
+      "name": "grid-search",
+      "start": "0x7a4383",
+      "end": "0x7a451e",
+      "executed": true,
+      "raw_sha256": "a37249d8ca217aa83d31f12625196a75f5638f43ee242f6f067533c232f4f84a"
+    },
+    {
+      "name": "grid-choice-steering",
+      "start": "0x7a4570",
+      "end": "0x7a47f5",
+      "executed": true,
+      "raw_sha256": "f0a26e1c08af5d55479c7a0877e781554a4f7775f34a1b7c626fd5cc289d2a3a"
+    },
+    {
+      "name": "queue-pop",
+      "start": "0x7a7aa0",
+      "end": "0x7a7bb0",
+      "executed": true,
+      "raw_sha256": "74dbcb34e004876ae5f194f1a9fae7182921610e9241a1274138bd67629b2980"
+    },
+    {
+      "name": "queue-push",
+      "start": "0x7a7bb0",
+      "end": "0x7a7c30",
+      "executed": true,
+      "raw_sha256": "6a6554c3097ddc558aea583c7268bcf2254be8f4a5fbb8efc61b17fcb7b0635d"
+    }
+  ],
+  "gameplay_changes": false,
+  "method": "unpatched native activation/base-animation blocks and grid flood/gradient search; native queue helpers execute in preallocated scratch storage",
+  "supplied_boundaries": [
+    "ordinary healthy state4; timeScale1,.5 or sprite suppression flag",
+    "AI-gate then base-animation sequence follows scoped wrapper branch evidence; intervening wrapper logic is not executed",
+    "15x9 room dimensions, interior13x7, grid costs0/1000 and target/start cell indices",
+    "fresh search per grid decision; scratch vector capacity preallocated; allocation/deallocation excluded",
+    "NPC footprint expansion, native grid mask generation, direct-line/cache/RNG setup excluded",
+    "grid-only approaches stop one cell from target; direct final arrival is excluded",
+    "no collision, continuous position integration or live NPC timing"
+  ],
+  "full_native_acceptance": false
+}

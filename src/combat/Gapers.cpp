@@ -7,6 +7,7 @@ void Simulation::updateGaper(Enemy &e,float dt) {
     if(!e.gaper)e.gaper=GaperRuntime{};
     auto &r=*e.gaper;
     const float timeScale=enemyTimeScale(e);
+    const bool nativeHead=nativeGaperPursuit&&p.frowning;
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.fireContactCooldown=std::max(0.f,e.fireContactCooldown-dt);
     r.momentum=mul(horizontal(e.velocity),1/(p.scale*30));
     if(e.state==EnemyState::Stunned) {
@@ -20,7 +21,7 @@ void Simulation::updateGaper(Enemy &e,float dt) {
             r.frameReady=true;++r.ticks;
             const int animationFrames=advanceSourceFrames(r.animationFraction,timeScale);
             if(r.initialized) {
-                if(p.frowning&&r.wakeStarted)r.headFrame=std::min(p.headFrames-1,r.headFrame+advanceSourceFrames(r.headFraction,timeScale));
+                if(p.frowning&&r.wakeStarted&&!nativeHead)r.headFrame=std::min(p.headFrames-1,r.headFrame+advanceSourceFrames(r.headFraction,timeScale));
                 else if(!p.frowning)r.headFrame=(r.headFrame+advanceSourceFrames(r.headFraction,timeScale))%p.headFrames;
             } else r.initialized=true;
             // Walk selection precedes this tick's steering. The native .1
@@ -38,10 +39,26 @@ void Simulation::updateGaper(Enemy &e,float dt) {
             } else {
                 const auto target=confusedTarget(e);
                 const auto before=r.momentum;float retention=1;
-                r.directPath=stepGroundPursuit(e,p,r.momentum,r.destination,r.force,&retention,&target);
+                r.directPath=stepGroundPursuit(e,p,r.momentum,r.destination,r.force,&retention,&target,nativeGaperPursuit);
                 r.momentum=slowEnemyMotion(e,before,r.momentum,retention);
             }
-            if(p.frowning&&r.directPath&&!r.wakeStarted)r.wakeStarted=true;
+            if(nativeHead) {
+                // Native AI reads the old frame for force, then may restart
+                // frame0; the ordinary later base update advances the overlay.
+                if(r.directPath&&r.headFrame<=0) {
+                    r.headFrame=0;r.headFraction=0;r.wakeStarted=r.headPlaying=true;
+                }
+                if(r.headPlaying) {
+                    const float current=float(r.headFrame)+r.headFraction;
+                    const float next=current+timeScale;
+                    if(std::floor(next)>=p.headFrames) {
+                        if(current<p.headFrames-1){r.headFrame=p.headFrames-1;r.headFraction=0;}
+                        r.headPlaying=false;
+                    } else {
+                        r.headFrame=int(std::floor(next));r.headFraction=next-r.headFrame;
+                    }
+                }
+            } else if(p.frowning&&r.directPath&&!r.wakeStarted)r.wakeStarted=true;
             r.eyeOpenness=p.frowning?float(r.headFrame)/float(p.headFrames-1):1;
             e.awakened=p.frowning&&r.headFrame>0;
             e.state=EnemyState::Ready;e.stateTime=0;e.cooldown=0;

@@ -1235,12 +1235,12 @@
       "deathward_baseline": "DW uses two-metre tiles and variable room extents; Compact starts at half-extents 5\u20137 tiles. No single approved source-unit transform has been established.",
       "original_assessment": "",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "selected normal-room geometry and ordinary horizontal live timing verified; shared conversion/generation rollout pending",
+      "status": "verified normal-room reference integrated in private geometric review; production generation and full collision acceptance pending",
       "selected": true,
-      "implementation_scope": "Read-only normal-room geometry and effective movement timing verification only; no generator, room, collider or conversion rollout",
-      "implementation_evidence": "docs/reports/isaac-first-floor-parity/room-scale-timing/README.md",
+      "implementation_scope": "Verified standard room geometry/timing plus explicitly authorized private shared-conversion review; no production generation/room/collider rollout",
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/source-room-review/README.md",
       "full_native_acceptance": false,
-      "remaining": "Apply shared scale in the selected review; full wall/collider/other-shape acceptance is separate."
+      "remaining": "Human/private review, full collisions/other shapes and production rollout."
     },
     {
       "id": "R07",
@@ -1339,9 +1339,68 @@
       "deathward_baseline": "Generic \u00d71.10 tuning remains; dedicated controllers can differ.",
       "original_assessment": "",
       "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "private relative movement candidate implemented; native arithmetic reference checked; production unchanged; full per-actor acceptance open",
+      "status": "private Gaper routing/activation and ordinary Spider/Pooter bounded motion corrected; full roster/AI acceptance open",
       "selected": true,
-      "implementation_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/candidate/README.md"
+      "implementation_evidence": "docs/reports/isaac-first-floor-parity/gaper-trajectories/README.md",
+      "remaining": "Verify enemy projectile timing/speed beginning with Pooter/Horf, then human pressure review. Private Gaper routing/activation and bounded ordinary Spider/Pooter movement now compared; source RNG/acquisition/global scheduling/terrain/body collision/status/variants and production acceptance remain open. HP acceptance held.",
+      "activation_checkpoint": {
+        "status": "six native activation-helper cases verified under supplied cadence; six DeathWard navigation scenarios pass; native scheduler/pathfinding remain open",
+        "evidence": "docs/reports/isaac-first-floor-parity/frowning-activation/README.md",
+        "native_cases": 6,
+        "native_gate_evaluations": 288,
+        "physical_navigation_cases": 6,
+        "physical_actor_steps": 5400,
+        "gameplay_changes": false,
+        "full_native_acceptance": false
+      },
+      "scheduler_routing_checkpoint": {
+        "status": "ordinary NPC branch order identified;72 native base-animation evaluations and64 exact grid-reference waypoint decisions pass; private routing integration pending",
+        "evidence": "docs/reports/isaac-first-floor-parity/gaper-scheduler-routing/README.md",
+        "native_animation_evaluations": 72,
+        "native_grid_cases": 6,
+        "native_grid_decisions": 64,
+        "reference_port_enabled_in_gameplay": false,
+        "full_wrapper_executed": false,
+        "full_native_acceptance": false
+      },
+      "grid_lines_checkpoint": {
+        "status": "native mask classification/ordinary line reference verified; bounded private geometric-room Gaper grid routing enabled; human/full actor acceptance open",
+        "evidence": "docs/reports/isaac-first-floor-parity/gaper-grid-lines/README.md",
+        "native_classification_cases": 55,
+        "native_line_cases": 288,
+        "simulation_integration_cases": 64,
+        "direct_routes": 36,
+        "adjacent_grid_routes": 27,
+        "sealed_absent_routes": 1,
+        "private_gameplay_enabled": true,
+        "production_defaults_changed": false,
+        "full_native_acceptance": false
+      },
+      "frowning_phase_checkpoint": {
+        "status": "private Frowning post-AI/base-animation state corrected; six native cases/288 actual Simulation phase states pass; full actor acceptance open",
+        "evidence": "docs/reports/isaac-first-floor-parity/frowning-phase-review/README.md",
+        "native_cases": 6,
+        "compared_states": 288,
+        "private_gameplay_enabled": true,
+        "production_defaults_changed": false,
+        "full_native_acceptance": false
+      },
+      "spider_pooter_checkpoint": {
+        "status": "private ordinary Spider burst/idle phase and Pooter phase/edge thresholds corrected; bounded native movement comparisons pass; full AI acceptance open",
+        "evidence": "docs/reports/isaac-first-floor-parity/spider-pooter-movement/README.md",
+        "spider_native_idle_gates": 16,
+        "spider_native_states": 48,
+        "pooter_native_states": 144,
+        "physics_hz": [
+          30,
+          60,
+          120
+        ],
+        "private_gameplay_enabled": true,
+        "production_defaults_changed": false,
+        "native_rng_replay_verified": false,
+        "full_native_acceptance": false
+      }
     },
     {
       "id": "E12",
@@ -2098,5 +2157,73 @@
     "geometry_verified": true,
     "active_live_player_timing_verified": true,
     "requested_step1_scope_verified": true
+  },
+  "source_room_review_checkpoint": {
+    "status": "private geometric room/movement review implemented and tested; human/full NPC acceptance pending",
+    "evidence": "docs/reports/isaac-first-floor-parity/source-room-review/README.md",
+    "production_defaults_changed": false
+  },
+  "gaper_trajectory_checkpoint": {
+    "status": "ordinary/Frowning supplied-route trajectories verified at fixed60Hz; two private pursuit corrections enabled; full actor acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/gaper-trajectories/README.md",
+    "production_defaults_changed": false
+  },
+  "frowning_activation_checkpoint": {
+    "status": "six native activation-helper cases verified under supplied cadence; six DeathWard navigation scenarios pass; native scheduler/pathfinding remain open",
+    "evidence": "docs/reports/isaac-first-floor-parity/frowning-activation/README.md",
+    "native_cases": 6,
+    "native_gate_evaluations": 288,
+    "physical_navigation_cases": 6,
+    "physical_actor_steps": 5400,
+    "gameplay_changes": false,
+    "full_native_acceptance": false
+  },
+  "gaper_scheduler_routing_checkpoint": {
+    "status": "ordinary NPC branch order identified;72 native base-animation evaluations and64 exact grid-reference waypoint decisions pass; private routing integration pending",
+    "evidence": "docs/reports/isaac-first-floor-parity/gaper-scheduler-routing/README.md",
+    "native_animation_evaluations": 72,
+    "native_grid_cases": 6,
+    "native_grid_decisions": 64,
+    "reference_port_enabled_in_gameplay": false,
+    "full_wrapper_executed": false,
+    "full_native_acceptance": false
+  },
+  "gaper_grid_lines_checkpoint": {
+    "status": "native mask classification/ordinary line reference verified; bounded private geometric-room Gaper grid routing enabled; human/full actor acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/gaper-grid-lines/README.md",
+    "native_classification_cases": 55,
+    "native_line_cases": 288,
+    "simulation_integration_cases": 64,
+    "direct_routes": 36,
+    "adjacent_grid_routes": 27,
+    "sealed_absent_routes": 1,
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "full_native_acceptance": false
+  },
+  "frowning_phase_checkpoint": {
+    "status": "private Frowning post-AI/base-animation state corrected; six native cases/288 actual Simulation phase states pass; full actor acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/frowning-phase-review/README.md",
+    "native_cases": 6,
+    "compared_states": 288,
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "full_native_acceptance": false
+  },
+  "spider_pooter_movement_checkpoint": {
+    "status": "private ordinary Spider burst/idle phase and Pooter phase/edge thresholds corrected; bounded native movement comparisons pass; full AI acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/spider-pooter-movement/README.md",
+    "spider_native_idle_gates": 16,
+    "spider_native_states": 48,
+    "pooter_native_states": 144,
+    "physics_hz": [
+      30,
+      60,
+      120
+    ],
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "native_rng_replay_verified": false,
+    "full_native_acceptance": false
   }
 }

@@ -1,0 +1,11 @@
+{
+  "launched_at_utc": "2026-11-09T19:40:11.068382+00:00",
+  "pid": 578905,
+  "command": "build/deathward_damage_health_review --source-room-review --body 8",
+  "interactive": true,
+  "bounded_frames": false,
+  "initial_body": "Spider",
+  "switch_to_pooter": "press [ once",
+  "human_acceptance": false,
+  "scope": "private movement candidate; full AI/RNG/collision/projectile acceptance and production rollout remain unfinished"
+}

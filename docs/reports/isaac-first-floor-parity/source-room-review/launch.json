@@ -1,0 +1,18 @@
+{
+  "executable": "/home/kambo/.local/share/deathward/reviews/source-room-20261108T193051Z/deathward_source_room_review",
+  "argv": [
+    "/home/kambo/.local/share/deathward/reviews/source-room-20261108T193051Z/deathward_source_room_review",
+    "--source-room-review",
+    "--body",
+    "2",
+    "--mechanics",
+    "/home/kambo/.local/share/deathward/reviews/source-room-20261108T193051Z/mechanics"
+  ],
+  "initial": "13x7 source-equivalent room, geometric native-player curve, corrected Gaper conversion",
+  "portable_release": false,
+  "asset_dependency": "compiled development asset path in checkout",
+  "pid": null,
+  "exec_session_id": 61684,
+  "process_alive_at_check": false,
+  "last_launch_exit_code": 0
+}

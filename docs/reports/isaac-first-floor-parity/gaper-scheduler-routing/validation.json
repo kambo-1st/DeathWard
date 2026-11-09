@@ -1,0 +1,68 @@
+{
+  "recorded_at_utc": "2026-11-08T20:39:43.296813+00:00",
+  "status": "ordinary NPC branch order identified;72 native base-animation evaluations and64 exact grid-reference waypoint decisions pass; private routing integration pending",
+  "evidence": "docs/reports/isaac-first-floor-parity/gaper-scheduler-routing/README.md",
+  "native_animation_evaluations": 72,
+  "native_grid_cases": 6,
+  "native_grid_decisions": 64,
+  "reference_port_enabled_in_gameplay": false,
+  "full_wrapper_executed": false,
+  "full_native_acceptance": false,
+  "production_defaults_changed": false,
+  "focused_ctest_suites_passed": 4,
+  "remaining": [
+    "native obstacle mask/direct-line behavior",
+    "private native grid routing integration and phase-aligned activation",
+    "full NPC wrapper/live cadence/collision/status acceptance",
+    "Spider/Pooter and enemy projectiles",
+    "human review and production rollout; HP held"
+  ],
+  "artifact_sha256": {
+    "README.md": "27fecac51c627fb5f444324db2bef48f786fac451e7d6ff025b1d148cd0c50d6",
+    "base-animation.asm": "06fc7ccdd62092959ce8f2660a609d381c4d251fcf8e0b977d57f91428dcc8e4",
+    "build.log": "e6e9f6380d18844f7b1788b6ff1a2417b2ad243dbb53410e1f9cad46780e84f9",
+    "capture-check.log": "3234d8a634ae2fa699c863cd038193069117de0553fbdd2651b6a488b454529c",
+    "ctest.log": "ee0e9bc8934bbbfe2fa7fc6bb41c27d15bfce324ef992796d258a7c5a9e2a0cd",
+    "early-special-base.asm": "6b5f99ff7a6864c8f14281ee3212d7587d0061f8e57791f28fa0867ab57dd848",
+    "grid-choice-steering.asm": "93c2e3b365695b476fe2b36685ccad4396b1b01819db33587d2ac26006880455",
+    "grid-search.asm": "7368da3e1f439bda6f6a18465c68b5f05ab2cf19a7495147538a99e4ca7823db",
+    "late-base-call.asm": "5a91f065a2cb47eb8685ee06d94e05a5180cdb18c99bbd49957b23b4a48c0b6c",
+    "manifest.json": "28c7ee0f6aa88cf0deeb6b70639d84fc5c22a9129285fb7762e431f0a444d27b",
+    "native-animation.csv": "99f7e1376593f8b3e12df26660843d28223a4e7a95a2dd0167f07d2fff0c848b",
+    "native-routes.csv": "f8597221568b3412966e45d58849cb43972f12f9c7126b028e8f096efbe2cfc3",
+    "ordinary-ai-call.asm": "56bc25c385de6d201e36ceebf100b1a0c79aed9a7ae5a29393826b7cbb7d4331",
+    "ordinary-early-bypass.asm": "4174dacad2295d2404a0564a63341f3d6e9c16e01f85c6e07d62afa5c2e60a2f",
+    "queue-pop.asm": "2f2f47ca3b43d9eb8685cdc003f0de4fbf17433f98e8c1c51d027a916a5f0c1f",
+    "queue-push.asm": "5d68222ec6c287cffdea355a117b3fc8d2b8baa0ee2807dcfab1cf797427e6bb",
+    "ready-state-bypass.asm": "68718155b6590fc8bf7be27dc26c625004a1cec131eae9fad18b977b0985e085",
+    "reference-test.log": "ebd63f0d8a25e97a575ea2a6f5a9125639ae122dbd4578145d170ec02f2fbda9"
+  },
+  "source_sha256": {
+    "scripts/isaac-reference/capture-gaper-scheduler-routing.py": "b48a00358d18bd9704dd7e2dc69b35a74dfe8377116ac7512be2e6b18a180e9d",
+    "scripts/isaac-reference/capture-frowning-activation.py": "a24cc53e729f8b4d79545f6d1daec92d83a9ea361b323578290d1ff1a4925abb",
+    "src/combat/reference/NativeGridPath.hpp": "aaa313a2806c5acc20bf2b188ef00594547d0e7c4593d1118a83fb044cbb083e",
+    "tests/gaper_trajectory_tests.cpp": "af2ccd50b2ae45d9a6e3f855a8ac23b63afbf6cbbcfd8bba4c10f3438d9b68c4"
+  },
+  "subsequent_private_grid_checkpoint": {
+    "status": "native mask classification/ordinary line reference verified; bounded private geometric-room Gaper grid routing enabled; human/full actor acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/gaper-grid-lines/README.md",
+    "native_classification_cases": 55,
+    "native_line_cases": 288,
+    "simulation_integration_cases": 64,
+    "direct_routes": 36,
+    "adjacent_grid_routes": 27,
+    "sealed_absent_routes": 1,
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "full_native_acceptance": false
+  },
+  "subsequent_frowning_phase_checkpoint": {
+    "status": "private Frowning post-AI/base-animation state corrected; six native cases/288 actual Simulation phase states pass; full actor acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/frowning-phase-review/README.md",
+    "native_cases": 6,
+    "compared_states": 288,
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "full_native_acceptance": false
+  }
+}

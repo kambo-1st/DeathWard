@@ -1,0 +1,112 @@
+{
+  "recorded_at_utc": "2026-11-08T20:08:05.075874+00:00",
+  "status": "ordinary/Frowning supplied-route trajectories verified at fixed60Hz; two private pursuit corrections enabled; full actor acceptance open",
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_reference_samples": 1630,
+  "cases": 10,
+  "actual_simulation_transitions_compared": 1620,
+  "native_methods": "unpatched force writes, clear-target selection, steering, base physics, half-step interpolation and Manager position restoration",
+  "supplied_boundaries": [
+    "clear-line result/absent route and target coordinate sequences",
+    "healthy status/timeScale1/no champion modifiers",
+    "Frowning force/activation schedule or pre-awake state"
+  ],
+  "legacy_differences": {
+    "valid_zero_distance_arrival_world_position_error": 0.0929441,
+    "slow_moving_target_world_position_error": 0.345703
+  },
+  "strict_60hz_bounds": {
+    "world_position_error": 0.002,
+    "world_interval_velocity_error": 0.005
+  },
+  "smaller_step_stress": {
+    "physics_hz": 120,
+    "strict_initial_result": "near-arrival failed strict60Hz bounds",
+    "observed_max_world_position_error": 0.00549984,
+    "observed_max_world_interval_velocity_error": 0.129845,
+    "native_pixel_position_error": 0.1099968,
+    "accepted_stress_bound_native_pixels": 0.25,
+    "stress_is_strict_native_equivalence": false,
+    "interpretation": "world-float substep accumulation near the1-native-coordinate arrival threshold differs; retained as a bounded numerical stress result, without changing runtime thresholds"
+  },
+  "focused_tests_covered": 13,
+  "game_input_render_fps": [
+    30,
+    60,
+    144
+  ],
+  "private_gameplay_enabled": "nativeGaperPursuit true only in corrected source-room review",
+  "production_defaults_changed": false,
+  "hp_changed": false,
+  "player_speed_changed": false,
+  "hit_geometry_changed": false,
+  "full_native_acceptance": false,
+  "remaining": [
+    "Full native FindGridPath and obstacle routing",
+    "Frowning overlay/spawn initialization scheduling",
+    "Native collision/contact and live NPC timing",
+    "Status/champion exceptions, Flaming Gaper and lifecycle",
+    "Spider/Pooter and enemy projectile calibration",
+    "Human review, production rollout and HP acceptance"
+  ],
+  "artifact_sha256": {
+    "force-normal.asm": "39cd5176d65f106dfa7f3159ad396ac38d45a5687e79753e1ea9dfbbda02f770",
+    "configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "physics.asm": "035054a3500e4dc5441eda46f54769021ec855ee07cf72d401fc5dc5a4f6b812",
+    "restore.asm": "46f69560787066f604308a15ecf2c38af7e59bfed511042cde2a1649a188293a",
+    "README.md": "31db171f2bdab845d73479d913678bb00cefd0d7e00391918008bf7e28bc5b37",
+    "targeted-tests.log": "2a2b5ad25631147cdc3184a371c74631306d3238761054457ea2770a8789140c",
+    "npc-ai-call.asm": "ba7d7236e2a97a364d16f25a186c6069810a1a1c9b0d30743a0acbea88c5c4b6",
+    "blocked.asm": "ba40b1939df538d5969f0fd6a9bd734fe26b53864dd774eb95808104f08069a4",
+    "capture.log": "ceded7f46f706c3a1f257b24dc0cbfffd5d23a7eec3b81384ae67cc5636bdb9f",
+    "game-input.log": "380acdd9912416eb343cdb9fc7549f1295dd41403680047cfb0154b8f73aa0f5",
+    "build.log": "5a5a7fadd33cc20ccdf40ba433a42690d8da31d68a48edd7666c84ef87bc2e1d",
+    "gaper-dispatch.asm": "79f01e450bce159d170f5cd2eddaef6ab21d377abf3334f35de3762fd6e5db29",
+    "initial-contact-confound.log": "b59a4c63e639a70fd23caf2ed36635eda7782af5e5bdce1e9a878ce92223f849",
+    "direct-target.asm": "ff902c390632dbdd59f56c8cdd5e403d292f9d87c616c48ee271acbaab52c602",
+    "capture-check.log": "7bef46529deff384491bcefe2f2d17ddf3554f65a0413dd575241323ba528263",
+    "force-closed.asm": "12317c02f584ecb62d3ee1dec80c8df81221644c2168b1689eb53ec1b5c24a95",
+    "initial-regression.log": "f7dbfc91ec43277e825df7f5ca40c89b679a2a117598366c747561fc73eb02da",
+    "interpolation.asm": "0296cab775167bec85d298d26b6ac25bfbaa8454a98a4710ac6a1a7883764260",
+    "legacy-comparison.log": "199e1837fa38ba5a0581c1c4f6791f99ce1419fe5cca765cbe63e323189d806f",
+    "pursuit.asm": "9ad1b3ffae685dd4cf0881f2f5e68377b4f7b075fe112f443b83a6189b92a844",
+    "npc-base-call.asm": "c7728a3c4a874805fc44edc325238093757eb78efe7f36536ced29927b3b4097",
+    "native-trajectories.csv": "b3f36a5349d4c578087c5850b438400b91801282c465626b988da2b193d6d893",
+    "manifest.json": "b02ac5cfe8cc568f869faafb05351e0004f1dd459e72a5e99d049b67506dee10",
+    "game-input.csv": "c518e35b52bbe1ffb5b75c3bfb4dac68e39ce91873c0ce4792395b6a9c4f2c82",
+    "force-awake.asm": "f03ee87c1d4012a1fa41e13cc61059f07ca9480455f568592a73be2f00e0b3c9"
+  },
+  "subsequent_activation_checkpoint": {
+    "status": "six native activation-helper cases verified under supplied cadence; six DeathWard navigation scenarios pass; native scheduler/pathfinding remain open",
+    "evidence": "docs/reports/isaac-first-floor-parity/frowning-activation/README.md",
+    "native_cases": 6,
+    "native_gate_evaluations": 288,
+    "physical_navigation_cases": 6,
+    "physical_actor_steps": 5400,
+    "gameplay_changes": false,
+    "full_native_acceptance": false
+  },
+  "subsequent_scheduler_routing_checkpoint": {
+    "status": "ordinary NPC branch order identified;72 native base-animation evaluations and64 exact grid-reference waypoint decisions pass; private routing integration pending",
+    "evidence": "docs/reports/isaac-first-floor-parity/gaper-scheduler-routing/README.md",
+    "native_animation_evaluations": 72,
+    "native_grid_cases": 6,
+    "native_grid_decisions": 64,
+    "reference_port_enabled_in_gameplay": false,
+    "full_wrapper_executed": false,
+    "full_native_acceptance": false
+  },
+  "subsequent_private_grid_checkpoint": {
+    "status": "native mask classification/ordinary line reference verified; bounded private geometric-room Gaper grid routing enabled; human/full actor acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/gaper-grid-lines/README.md",
+    "native_classification_cases": 55,
+    "native_line_cases": 288,
+    "simulation_integration_cases": 64,
+    "direct_routes": 36,
+    "adjacent_grid_routes": 27,
+    "sealed_absent_routes": 1,
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "full_native_acceptance": false
+  }
+}

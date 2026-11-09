@@ -1,0 +1,105 @@
+{
+  "recorded_at_utc": "2026-11-09T19:32:09.293357+00:00",
+  "status": "private ordinary Spider burst/idle phase and Pooter phase/edge thresholds corrected; bounded native movement comparisons pass; full AI acceptance open",
+  "evidence": "docs/reports/isaac-first-floor-parity/spider-pooter-movement/README.md",
+  "spider_native_idle_gates": 16,
+  "spider_native_states": 48,
+  "pooter_native_states": 144,
+  "physics_hz": [
+    30,
+    60,
+    120
+  ],
+  "private_gameplay_enabled": true,
+  "production_defaults_changed": false,
+  "native_rng_replay_verified": false,
+  "full_native_acceptance": false,
+  "unique_focused_suites_covered_and_passing": 9,
+  "initial_ctest": {
+    "passed": 8,
+    "failed": 1,
+    "failure": "old dung shot test15-tick deadline; impact reproduced at17 ticks with review flag off/on"
+  },
+  "targeted_rerun": {
+    "buzzing_flies": "passed after bounded impact wait; projectile unchanged"
+  },
+  "legacy_comparison_expected_failure": true,
+  "legacy_max_errors": {
+    "spider_position": 0.224508,
+    "pooter_position": 0.319573,
+    "pooter_wander": 0.162816
+  },
+  "candidate_60hz_max_errors": {
+    "spider_position": 6.67572e-06,
+    "pooter_position": 3.08879e-05,
+    "pooter_wander": 0
+  },
+  "candidate_120hz_max_errors": {
+    "spider_position": 1.52588e-05,
+    "pooter_position": 9.84192e-05,
+    "pooter_wander": 0
+  },
+  "source_rng_verified": false,
+  "human_visual_acceptance": false,
+  "game_input_render_fps": [
+    30,
+    60,
+    144
+  ],
+  "rendered_smoke_frames_each": 60,
+  "hp_changed": false,
+  "player_speed_changed": false,
+  "remaining": [
+    "enemy projectile timing/speed",
+    "native Spider acquisition/RNG/prediction/clamp/status",
+    "native Pooter RNG/global/live scheduling and special cases",
+    "terrain/body collision, source-radius policy, variants/champions/lifecycle",
+    "human acceptance/production rollout and HP acceptance"
+  ],
+  "artifact_sha256": {
+    "README.md": "81e4a6b0bd7c8b0d6b4cf330623ac16d6bee1c260c549ed94a709e23756de68b",
+    "build-final.log": "20fb95af16684e249d9efc9750c621dec9ae0793e745ae9457080085184ce947",
+    "build-initial.log": "1f8e3cce76ef7da13b69630a51a40cc107eb05a1dfc6c0f3c00a22da95ac6411",
+    "buzz-rerun.log": "d86fce7caa612493aa3fd68a646243035632bcd14aec89a52119301bc8ad1a97",
+    "capture-check.log": "62ba7acd68fd3ce4428420fe15aa7148a06b7b595b224d3bec6fbeef502effc6",
+    "comparison-120hz.log": "10a7247515c070d1bd5d0924f0773722d5d790cee106809eabdc637fae013ed1",
+    "comparison-30hz.log": "cecc82c5ac0812cb8d4f4eda947b07e3f64799940a3620475e807dd91d369118",
+    "comparison-60hz.log": "5abcb8d8279c4eedff2b374f9a27413e73107f09c07fd85455cd545623fcd262",
+    "configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "ctest-initial.log": "6476cef742e3c20ba46a1a273b91326b265762ac403a8fe0cd3e6c380ba3c109",
+    "dung-shot-timing.log": "8f79c104e143f2cce18415c757b0bee7d1e121a217e2c6ccdfd9ca311787014d",
+    "game-input.log": "380acdd9912416eb343cdb9fc7549f1295dd41403680047cfb0154b8f73aa0f5",
+    "initial-boundary-confound.csv": "6ebdaaf3e7dc2b8434aafe73e090a808e12d3eb8264d2b5673142d2395a9080a",
+    "initial-boundary-confound.log": "3eaf7348dd1a9668c25c460974832186afde4e5e3041be2401b0e52a57ddd309",
+    "initial-fixture.log": "c7e5cf005cfeb0cc90efd9d0c208400eba8bf7b63d0c26c0c6a034fa7fbba442",
+    "legacy-comparison.log": "e7944c3c5ea275b78f241643238896df5ceb8ef5412701f57ba5e0ca67c13d72",
+    "manifest.json": "0ba5126e7f8700d311795453b6d810b58f0e3aaee3be66213ae6982f0be3f526",
+    "pooter-cooldown.asm": "689b4a11b06035a6e31e8d8cb5a3de6dab9e60bcca5fb0362fa796c67a9a838b",
+    "pooter-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pooter-native.csv": "e8bf652eee12f241b8b5dea2b8e7cfe594432e7a5383e15b320156c10e968ca6",
+    "pooter-pursuit.asm": "16442d90ae141cf07d3776f9be974d7b0be097262b21e508ba71fc6d4c6e0781",
+    "pooter-review.png": "8a386cef13e739e68d06d711be49e7316c11c4dcee67c1dd44e5e314388edfb9",
+    "pooter-wander.asm": "dccd65b2790cc222e2a4b00ceef670bf13684030f48d404c5b646d7d00ab468f",
+    "spider-counter.asm": "5be44ca9c263a37c405a2a32c4df1f3f616cc63adcbbca53dc82f13ce07ff18a",
+    "spider-gates.csv": "b3113bc56276d07eff02d720bbeb86de7cc7964e33704d2528d2940dc2f2903a",
+    "spider-idle.asm": "5a3abd563d76cda5cda992a5ec154b0d86c66113e8f6c3fa5f6c25ae60ede616",
+    "spider-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "spider-native.csv": "f023db838f6da3a14183b2c18a2027f275a703614d2d730102ad248365c1ab2c",
+    "spider-retention.asm": "8b8b1276eae7192cdd0ed766eda02f2b5ef92da8846919eb2d9a0fe816a6599e",
+    "spider-review.png": "430fed0b0dd8d6598431c14baa88f1edb7cae6d7d5f25e9dd386cd733c534d20",
+    "spider-stop-impulse.asm": "eb1161ce24cd44f33226c039adc8eb5c5bb603f9a6ffdacc8aaf13e149aa051c",
+    "interactive-launch.json": "f269f6223855576a9e0e5a79d02f0f38b61bf9d215614ae96f4262c19b6af64d"
+  },
+  "source_sha256": {
+    "scripts/isaac-reference/capture-spider-pooter-movement.py": "c0a3ec3c4476bd6e69891e7ba869565a8663cf98ca73368a39bee2b7ef462e31",
+    "src/combat/Spiders.cpp": "a497fd20680f56f65f3aad92e33f415a0e876cfc19c9ead261447a8b8530b312",
+    "src/combat/BuzzFlies.cpp": "c5300bd3a656bc164e48517b3411f5a657f140992df3ea00d613e8f543c7f6b3",
+    "src/combat/SourceTime.hpp": "5fbe2b9f91ccd43c08eab44bb3e057f8160e5f8e8a0e3802bddb2d07a46b9fa7",
+    "src/combat/Simulation.hpp": "82cff7aa13ea269db5e44fdc7e6c56cf8957295d832cf88946fa30cf6d086064",
+    "tests/spider_pooter_movement_tests.cpp": "46e2f4b30a664ef04631550d1318f6ddecf46f9e74ca3cbba94f20b9f2982579",
+    "tests/buzz_fly_tests.cpp": "fbb2ea62abdb788a2cd7045880b9a9a31bc57b2adba8177b8aba26667cbb18ac",
+    "tools/damage_health_review.cpp": "dbd2758779fee3d4583ae10e097159f532d58b18cd366abf259d336982bc68ad",
+    "CMakeLists.txt": "56b94b19dcaa30b4896669819357316dfa8229ea1f3cfb8eca0737b192037678"
+  },
+  "interactive_launch": "interactive-launch.json"
+}

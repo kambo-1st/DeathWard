@@ -340,7 +340,7 @@ struct GaperRuntime {
     float clock=0,eyeOpenness=0,walkPhase=0,force=0;
     float animationFraction=0,headFraction=0;
     int ticks=0,headFrame=0,walkFrame=0;
-    bool initialized=false,frameReady=false,wakeStarted=false,directPath=false;
+    bool initialized=false,frameReady=false,wakeStarted=false,directPath=false,headPlaying=false;
     Vector3 momentum{},destination{};
 };
 struct BlackGlobinRuntime {
@@ -1123,6 +1123,8 @@ class Simulation {
     // Private native-reference review only; normal expeditions retain accepted controls.
     // No save field or automatic gameplay enablement. Explicit spatial conversion required.
     std::optional<native_motion::PlayerAdapter> nativePlayerMovement;
+    bool nativeBurstWanderReview = false; // private Spider/Pooter motion phase and source-room edge candidate
+    bool nativeGaperPursuit = false; // private clear-route trajectory review, no save/default rollout
     bool surveyTutorial = false, surveyRecovered = false, letterOpen = false;
     bool floorExitRequested = false;
     StoryRoom storyOpen = StoryRoom::None;
@@ -1343,7 +1345,7 @@ class Simulation {
     void updateHardy(Enemy &enemy,float dt);
     void updateDanny(Enemy &enemy,float dt);
     void updateGaper(Enemy &enemy,float dt);
-    bool stepGroundPursuit(Enemy &enemy,const GroundPursuitDefinition &profile,Vector3 &momentum,Vector3 &destination,float force,float *appliedRetention=nullptr,const Vector3 *target=nullptr);
+    bool stepGroundPursuit(Enemy &enemy,const GroundPursuitDefinition &profile,Vector3 &momentum,Vector3 &destination,float force,float *appliedRetention=nullptr,const Vector3 *target=nullptr,bool nativeDirect=false);
     void updateBlackGlobin(Enemy &enemy,float dt);
     void blackGlobinDamageBrood(Enemy &enemy);
     void blackGlobinDeath(Enemy &enemy);

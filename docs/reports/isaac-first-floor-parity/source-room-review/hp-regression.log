@@ -1,0 +1,21 @@
+PASS death/retry: both balances and scenarios, summary timeout held, F8/Enter restart, clean health and preserved selection
+mode,id,name,hp,damage,expected_body_hits,actual_body_hits,shots_fired,body_end_seconds,offspring_alive
+current,10.0,Frowning Gaper,32,24,2,2,3,1.05,1
+current,10.1,Gaper,32,24,2,2,3,1.05,1
+current,11.0,Gusher,32,24,2,2,3,1.05,0
+current,12.0,Horf,32,24,2,2,3,1.05,0
+current,13.0,Fly,9.6,24,1,1,2,0.7,0
+current,14.0,Pooter,25.6,24,2,2,3,1.06667,0
+current,18.0,Attack Fly,16,24,1,1,2,0.7,0
+current,85.0,Spider,20.8,24,1,1,2,0.7,0
+current,29.0,Hopper,32,24,2,2,3,1.05,0
+source,10.0,Frowning Gaper,10,3.5,3,3,4,1.41667,1
+source,10.1,Gaper,10,3.5,3,3,4,1.41667,1
+source,11.0,Gusher,10,3.5,3,3,4,1.41667,0
+source,12.0,Horf,10,3.5,3,3,4,1.41667,0
+source,13.0,Fly,3,3.5,1,1,2,0.7,0
+source,14.0,Pooter,8,3.5,3,3,4,1.43333,0
+source,18.0,Attack Fly,5,3.5,2,2,3,1.06667,0
+source,85.0,Spider,6.5,3.5,2,2,3,1.06667,0
+source,29.0,Hopper,10,3.5,3,3,4,1.41667,0
+PASS actual Game primary projectiles: nine bodies in both unit modes; body identity/death separate from offspring; accepted movement/shooting unchanged

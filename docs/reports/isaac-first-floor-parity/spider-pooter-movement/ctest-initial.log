@@ -1,0 +1,50 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  86: buzzing_flies
+1/9 Test  #86: buzzing_flies ....................***Failed   30.24 sec
+chain 1 depth 0 effect -1: queue capacity
+chain 2 depth 0 effect -1: queue capacity
+chain 3 depth 0 effect -1: queue capacity
+chain 4 depth 0 effect -1: queue capacity
+chain 5 depth 0 effect -1: queue capacity
+chain 6 depth 0 effect -1: queue capacity
+chain 7 depth 0 effect -1: queue capacity
+chain 8 depth 0 effect -1: queue capacity
+BUZZ path=21.8698 side=1.36487
+NATURAL_SUPER_POOTER seed=4 floor=0 room=1 band=0
+NATURAL_SUPER_POOTER seed=22 floor=2 room=5 band=1
+NATURAL_SUPER_POOTER seed=10 floor=3 room=3 band=2
+NATURAL_SUPER_POOTER seed=5 floor=4 room=8 band=3
+PASS Super Pooter source pair, timing, health, atomic capacity, Skatole dependency, death, configuration and stage placement
+NATURAL_ATTACK_FLY seed=2 floor=0 room=1 band=0
+NATURAL_ATTACK_FLY seed=11 floor=2 room=2 band=1
+NATURAL_ATTACK_FLY seed=33 floor=4 room=7 band=2
+NATURAL_ATTACK_FLY seed=4 floor=6 room=7 band=3
+PASS Attack Fly native pursuit/asymmetry, health, contact, item morph, real live/death Hive routes, capacity, configuration and stage placement
+DUNG_MORPHS trials=1000 updates=30 transformed=34
+FAIL ordinary player shot damages dung without requiring bomb
+
+    Start  94: spider_family
+2/9 Test  #94: spider_family ....................   Passed    1.03 sec
+    Start 103: first_floor_status_effects
+3/9 Test #103: first_floor_status_effects .......   Passed    0.74 sec
+    Start 133: spider_pooter_movement
+4/9 Test #133: spider_pooter_movement ...........   Passed    0.36 sec
+    Start 134: spider_pooter_movement_30hz
+5/9 Test #134: spider_pooter_movement_30hz ......   Passed    0.37 sec
+    Start 135: spider_pooter_movement_120hz
+6/9 Test #135: spider_pooter_movement_120hz .....   Passed    0.36 sec
+    Start 136: gaper_trajectories
+7/9 Test #136: gaper_trajectories ...............   Passed    1.19 sec
+    Start 137: gaper_trajectories_substeps
+8/9 Test #137: gaper_trajectories_substeps ......   Passed    1.24 sec
+    Start 138: source_room_review
+9/9 Test #138: source_room_review ...............   Passed    0.20 sec
+
+89% tests passed, 1 tests failed out of 9
+
+Total Test time (real) =  35.72 sec
+
+The following tests FAILED:
+	 86 - buzzing_flies (Failed)
+Errors while running CTest

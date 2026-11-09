@@ -1,0 +1,7 @@
+source_click screen=996.852,696.355 position=20.9595,7.00289 target=20.9809,7.0029 error=0.0213776 route=0
+PASS source room mouse arrival and source-equivalent bounded fixture
+render_fps,held_native_ticks,held_distance,expected_distance,coast_native_ticks,coast_distance,expected_coast_distance
+30,90,18.0196,18.0196,60,19.8632,19.8632
+60,90,18.0196,18.0196,60,19.8632,19.8632
+144,89,17.7989,17.7989,60,19.6425,19.6425
+PASS native reference Game keyboard movement and stopping at 30/60/144 render FPS; colliders, exceptional states and full NPC fidelity remain unaccepted

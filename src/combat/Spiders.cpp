@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "combat/SourceTime.hpp"
 
 namespace dw {
 void Simulation::updateSpider(Enemy &e,float dt) {
@@ -38,9 +39,8 @@ void Simulation::updateSpider(Enemy &e,float dt) {
         at.z=axis(at.z,bounds.min.z,bounds.max.z,std::max(e.radius,top),std::max(e.radius,bottom));
         at.y=.85f;return at;
     };
-    r.clock+=dt;
-    while(r.clock+1e-6f>=1.f/30) {
-        r.clock=std::max(0.f,r.clock-1.f/30);
+    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,nativeBurstWanderReview&&e.monster==monsterId(85));
+    for(int sourceUpdate=0;sourceUpdate<sourceUpdates;++sourceUpdate) {
         if(!r.initialized){r.initialized=true;r.counter=0;continue;}
         if(r.targetReady) {
             --r.counter;

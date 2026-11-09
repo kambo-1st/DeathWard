@@ -72,3 +72,7 @@ python3 scripts/isaac-reference/analyze-live-motion.py CAPTURE.csv --output ANAL
 The PowerShell reader must run on Windows while the pinned game is already open. Use a new output file and a bounded duration. For a valid active sample, focus/unpause the existing empty room as base Isaac at Speed1, walk left/right and release a few times. The reader sends no controls. No new expedition or save reset is required.
 
 Still unfinished: measured full wall-to-wall/from-rest trips, native player collision clearance and exact live release-to-stop behavior; direct vertical live motion and other room shapes. Applying a shared conversion to the review is the subsequent integration step, not part of this geometry investigation. Full NPC phase/AI behavior, enemy projectiles, production rollout and damage/HP acceptance remain open.
+
+## Subsequent private integration
+
+[The geometric room review](../source-room-review/README.md) now applies one source tile per existing floor tile in a13×7 interior. It uses the native player curve and selected NPC conversion, with native traces and live pace checks. This does not complete collider/NPC/projectile acceptance or enable production rollout.

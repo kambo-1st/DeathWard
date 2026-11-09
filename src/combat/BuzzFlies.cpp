@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "combat/SourceTime.hpp"
 
 namespace dw {
 void Simulation::updateBuzzFly(Enemy &e,float dt) {
@@ -32,9 +33,8 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         if(e.stateTime<=0)e.state=EnemyState::Ready;
         return;
     }
-    r.clock+=dt;
-    while(r.clock+1e-6f>=1.f/30) {
-        r.clock=std::max(0.f,r.clock-1.f/30);++r.tick;
+    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,nativeBurstWanderReview&&e.monster==monsterId(14));
+    for(int sourceUpdate=0;sourceUpdate<sourceUpdates;++sourceUpdate) {++r.tick;
         if(r.healingTicks>0) {
             e.hp=std::min(e.maxHp,e.hp+e.maxHp/float(r.healingDivisor));--r.healingTicks;
         }
@@ -126,10 +126,15 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
         if(r.tick%3==2) {
             const auto &bounds=arena.rooms[size_t(room)].bounds;
             const float margin=std::min(p.edgeMargin,std::min(bounds.max.x-bounds.min.x,bounds.max.z-bounds.min.z)*.25f);
-            if(e.position.x<bounds.min.x+margin)r.wander.x+=p.edge;
-            else if(e.position.x>bounds.max.x-margin)r.wander.x-=p.edge;
-            if(e.position.z<bounds.min.z+margin)r.wander.z+=p.edge;
-            else if(e.position.z>bounds.max.z-margin)r.wander.z-=p.edge;
+            const bool sourceRoom=nativeBurstWanderReview&&e.monster==monsterId(14)&&
+                std::abs(bounds.min.x)<.001f&&std::abs(bounds.min.z)<.001f&&
+                std::abs(bounds.max.x-26)<.001f&&std::abs(bounds.max.z-14)<.001f;
+            const float left=sourceRoom?1:bounds.min.x+margin,right=sourceRoom?24:bounds.max.x-margin;
+            const float top=sourceRoom?4.5f:bounds.min.z+margin,bottom=sourceRoom?14:bounds.max.z-margin;
+            if(e.position.x<left)r.wander.x+=p.edge;
+            else if(e.position.x>right)r.wander.x-=p.edge;
+            if(e.position.z<top)r.wander.z+=p.edge;
+            else if(e.position.z>bottom)r.wander.z-=p.edge;
             // AddVelocity divides its impulse by current friction before the
             // common movement update applies friction. Pooter's cooldown slows
             // existing momentum without suppressing the same-frame buzz force.

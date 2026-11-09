@@ -1,0 +1,71 @@
+{
+  "recorded_at_utc": "2026-11-08T19:32:43.058802+00:00",
+  "status": "private geometric room/movement review implemented and tested; human/full NPC acceptance pending",
+  "source_geometry": [
+    13,
+    7
+  ],
+  "native_cell_spacing": 40,
+  "world_floor_tile": 2,
+  "world_per_native_coordinate": 0.05,
+  "world_interior": [
+    26,
+    14
+  ],
+  "native_origin": [
+    60,
+    140
+  ],
+  "world_origin": [
+    0,
+    0
+  ],
+  "verified_floor_cells": 91,
+  "native_player_simulation_trace_states": 1380,
+  "source_player_target_hz": 60,
+  "world_target_hz": 30,
+  "geometrically_converted_live_player_pace": 13.2137,
+  "actual_player_steady_pace": 13.2426,
+  "ordinary_gaper_player_ratio": 0.376054,
+  "awake_gaper_player_ratio": 0.543693,
+  "focused_suites_covered_and_passing_after_targeted_fixture_repair": 7,
+  "game_input_render_fps": [
+    30,
+    60,
+    144
+  ],
+  "mouse_route_error": 0.0213776,
+  "damage_health_game_body_cases_preserved": 18,
+  "production_defaults_changed": false,
+  "production_mechanics_changed": false,
+  "hp_changed": false,
+  "player_ballistics_recalibrated": false,
+  "npc_projectiles_recalibrated": false,
+  "full_native_acceptance": false,
+  "human_acceptance": "pending",
+  "click_arrival_adaptation": "reset native review momentum on completed mouse route; preserve native keyboard curve",
+  "remaining": [
+    "Human review of new spatial reference",
+    "Full per-enemy trajectories/targeting/pause/prediction and integration order",
+    "Collider/clearance and hostile shot timing/range",
+    "Player ballistic adaptations and wider roster",
+    "Other room shapes, production rollout and HP acceptance"
+  ],
+  "checkpoint_commit_before_followup": "ebde5c62",
+  "artifact_sha256": {
+    "configure.log": "1402cfcaeb600baf9de674d2f2a28f1f33bb72fce70437264a2a7c5927c93426",
+    "hp-regression.log": "a27a12bc0891482311b4ca5046bf52368579add217a719c3e8a420d257da63f0",
+    "hp-regression.csv": "b7b18007b3c90287209046e476e83ff762dd16176fb417f5dc794316a963a2d4",
+    "launch.json": "7e76113f1a95bcbc2a6af636c08f208ad61ebe9a0b163efcfdbdbc829e20dfc8",
+    "README.md": "aa271b7615a615e8b55c9dfe289b97f2ee41acae0b350d22d3c7199654e5c930",
+    "initial-focused-tests.log": "ffd647b8fe07da6e8a0da07fead01ddaecc8278b38cbb4d7f063347354ddddfa",
+    "game-input.log": "380acdd9912416eb343cdb9fc7549f1295dd41403680047cfb0154b8f73aa0f5",
+    "build.log": "c408be6eb48f2320fa60ee3d0e5a3b5e679c79acde8f38c28cf1fa119064be31",
+    "render.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-targeted-tests.log": "ca9caa4a8af3c6c28f0238f6eb209a35371a1b6a554f49176fdf842b52490d1e",
+    "review.png": "4aa442a4fec7b27090bc0dc9d7decb884da37e69baa735fe8ac94cb498e22122",
+    "game-input.csv": "c518e35b52bbe1ffb5b75c3bfb4dac68e39ce91873c0ce4792395b6a9c4f2c82"
+  },
+  "gaper_trajectory_followup_evidence": "docs/reports/isaac-first-floor-parity/gaper-trajectories/README.md",
+  "private_gaper_route_corrections_enabled": true
+}

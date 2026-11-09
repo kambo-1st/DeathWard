@@ -1,0 +1,65 @@
+{
+  "recorded_at_utc": "2026-11-08T21:42:03.666707+00:00",
+  "status": "private Frowning post-AI/base-animation state corrected; six native cases/288 actual Simulation phase states pass; full actor acceptance open",
+  "evidence": "docs/reports/isaac-first-floor-parity/frowning-phase-review/README.md",
+  "native_cases": 6,
+  "compared_states": 288,
+  "private_gameplay_enabled": true,
+  "production_defaults_changed": false,
+  "full_native_acceptance": false,
+  "focused_ctest_suites_passed": 5,
+  "previous_trajectory_transitions": 1620,
+  "continuous_navigation_cases": 6,
+  "game_input_render_fps": [
+    30,
+    60,
+    144
+  ],
+  "cover_capture_frames": 240,
+  "human_visual_acceptance": false,
+  "hp_changed": false,
+  "player_speed_changed": false,
+  "remaining": [
+    "Spider burst/idle and Pooter wandering verification",
+    "enemy projectile timing",
+    "human Gaper review",
+    "native mask generation/cache/full wrapper/live cadence/collision/status/champion/lifecycle",
+    "production rollout and HP acceptance"
+  ],
+  "artifact_sha256": {
+    "README.md": "abac988c1585236b2c17057bb1c082709c5c07deb246ae2d501a724bfb92a520",
+    "before.log": "2425f0b4418b8d9f2b8ad5d4001b248e8e2736c330f98cb96d58a9c91a662a99",
+    "build.log": "9e9baa68831235944bcd4276e6ec60ecc88227f86b20c0a736203231e65d95a9",
+    "capture-check.log": "db1c025f7a2411a9edba2435826b5eda528bac61a05e8f0f5561c01c024c3a50",
+    "cover-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cover-review.png": "10bf0c98573dfd59196dcb60cb616b096f094a853b55333752c9167b47bdccc0",
+    "ctest.log": "87e647c514243fff09a6964f6560b6fd0895f87afab37600216f1e45a2297414",
+    "game-input.log": "380acdd9912416eb343cdb9fc7549f1295dd41403680047cfb0154b8f73aa0f5",
+    "integration.log": "62690f89fbda2a7902da94b403b46a6cbc2606d4e6217c734f4ba3b161b7ddc3",
+    "manifest.json": "9a93b9231165d26f121f19c9d9146f0eb2e0ed627fe7852bce2e85cabe31425f",
+    "native-phases.csv": "24fe6a71c08a213e80ab3d40b467e9a7018310ce3d3d712267e977e5f101e587",
+    "after.log": "4d6ab82edb0cab482e25f1ef32aa04a2d5512d7a64d9beb497fd743096a25c9e"
+  },
+  "source_sha256": {
+    "scripts/isaac-reference/capture-frowning-phases.py": "ee1669547ce9125befd487bcd843afc0b52bb8dcb5f566c7666c2aba31b3b056",
+    "src/combat/Simulation.hpp": "ae7fe7ea7f4ae0450e31e53e6e6e347e39461c5a5de957f277b416ab66b3d7a8",
+    "src/combat/Gapers.cpp": "db907ff9e76a5c361c7ad414f21855c3d528bbd5ecb1cb015cdd8f0359116f45",
+    "tests/gaper_trajectory_tests.cpp": "07067b83ac7abd762866e34a6625ff972b17bb04a84280c5b423d20a9f869bfa"
+  },
+  "subsequent_spider_pooter_checkpoint": {
+    "status": "private ordinary Spider burst/idle phase and Pooter phase/edge thresholds corrected; bounded native movement comparisons pass; full AI acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/spider-pooter-movement/README.md",
+    "spider_native_idle_gates": 16,
+    "spider_native_states": 48,
+    "pooter_native_states": 144,
+    "physics_hz": [
+      30,
+      60,
+      120
+    ],
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "native_rng_replay_verified": false,
+    "full_native_acceptance": false
+  }
+}

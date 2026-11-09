@@ -1,0 +1,4 @@
+physics_hz=60
+spider gates=16 states=48 max_position_error=6.67572e-06
+pooter states=144 max_position_error=3.08879e-05 max_wander_error=0
+PASS bounded Spider burst/idle and Pooter wandering; source RNG/acquisition/collision/live scheduling remain open

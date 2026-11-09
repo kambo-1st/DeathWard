@@ -25,7 +25,8 @@ inline void require(bool ok,const char *why){if(!ok)throw std::runtime_error(why
 // stay untouched. Change the coordinate conversion inside the recurrence, not
 // its resulting velocity (which is fed back into native momentum next tick).
 inline std::shared_ptr<const MechanicsLibrary> makePack(const MechanicsLibrary &original,
-                                                       const std::filesystem::path &destination) {
+                                                       const std::filesystem::path &destination,double worldScale=WorldScale) {
+    require(std::isfinite(worldScale)&&worldScale>0&&worldScale<=1,"valid explicit movement conversion");
     require(!std::filesystem::exists(destination),"movement destination must be new");
     std::filesystem::create_directories(destination);
     const std::regex profile(R"(^(\s*(gaper|headless)\s+(\S+)\s+\S+\s+)(\S+)(.*)$)");
@@ -39,7 +40,7 @@ inline std::shared_ptr<const MechanicsLibrary> makePack(const MechanicsLibrary &
             if((std::regex_match(line,m,profile)||std::regex_match(line,m,simple))&&selected(parseMonsterId(m[3].str()))) {
                 const auto id=parseMonsterId(m[3].str());
                 require(std::abs(std::stod(m[4].str())-PreviousScale)<1e-8,"unexpected previous movement conversion");
-                std::ostringstream row;row<<m[1].str()<<std::setprecision(12)<<WorldScale<<m[5].str();
+                std::ostringstream row;row<<m[1].str()<<std::setprecision(12)<<worldScale<<m[5].str();
                 line=row.str();changed=true;patched.insert(id);
             }
             out<<line<<'\n';

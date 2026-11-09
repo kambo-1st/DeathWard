@@ -1,0 +1,30 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "mask_cases": 55,
+  "line_cases": 288,
+  "windows": [
+    {
+      "name": "collision-lookup",
+      "sha256": "1b5e553a3343a5b3dd8cbaae5c047299be168ff9a847cba15aa459fd5d71a169",
+      "executed": true
+    },
+    {
+      "name": "check-line",
+      "sha256": "a14faca63cd003562f7641b258a607d5932a9b84f6c3f0fec9c1a5e44cfab5a5",
+      "executed": true
+    },
+    {
+      "name": "caller-options",
+      "sha256": "2f9ccc669d22bff8a3a1acf1bc7385561585f51f9853f0958bcb5c5f102ea589",
+      "executed": false
+    }
+  ],
+  "method": "original unpatched collision lookup and complete mode0 CheckLine with native sqrt and cookie checks; no helper hooks",
+  "supplied_boundaries": [
+    "normal room dimensions15x9 and supplied0/1000 or experimental positive costs",
+    "optional synthetic grid-object collision field, no native object construction",
+    "mode0 with thresholds0/900; no ignored solids or special room config",
+    "native mask generation, cache/status/full pathfinder and continuous collision excluded"
+  ],
+  "full_native_acceptance": false
+}

@@ -1,0 +1,51 @@
+{
+  "recorded_at_utc": "2026-11-08T20:26:20.546757+00:00",
+  "status": "six native activation-helper cases verified under supplied cadence; six DeathWard navigation scenarios pass; native scheduler/pathfinding remain open",
+  "evidence": "docs/reports/isaac-first-floor-parity/frowning-activation/README.md",
+  "native_cases": 6,
+  "native_gate_evaluations": 288,
+  "physical_navigation_cases": 6,
+  "physical_actor_steps": 5400,
+  "gameplay_changes": false,
+  "full_native_acceptance": false,
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "focused_suites_passed": 4,
+  "production_defaults_changed": false,
+  "remaining": [
+    "native NPC animation cadence/order",
+    "native obstructed route execution",
+    "Slow/status/champion/lifecycle and contacts",
+    "Spider/Pooter and enemy projectile timing",
+    "live/human acceptance and production rollout; HP held"
+  ],
+  "artifact_sha256": {
+    "README.md": "bf9d911fee198099a80290977e49436e0f569bcfb1142457ae637d7a8e9fea66",
+    "advance-animation.asm": "c663fca4912534675b569b6dd0e0286e3eeb2ac565885c23f04f51edc88de33a",
+    "build.log": "e6e9f6380d18844f7b1788b6ff1a2417b2ad243dbb53410e1f9cad46780e84f9",
+    "ctest.log": "3e28ccdb0854a52a63294402dfd9b84292edc24447e35976a1d9fa0fcb19ceb3",
+    "initialize-head.asm": "02bf02c82ccf18075066b3f0cfba72eb16e2b67622de45669d30676746c7936e",
+    "manifest.json": "8834ea80cee2d2a92fdb4b5874cfb0264b98a2b5d6586536291d5b7790eb47a3",
+    "native-activation.csv": "9fb5390dd3c1748ea2c06ed5b77edfb4ca6026c12ffd6cb525cb7fda8b40d52a",
+    "navigation.log": "507e80a606c733cdafabd4c5b161887d3dbb4672804f1d55007f5549c27e9a0c",
+    "overlay-frame.asm": "c1520ec9dc722934e0f5b4cd824e8b6197db6a3cbaff80143d70d5af818510ed",
+    "play-overlay.asm": "298272c78cf4034d2e94ea73f2f6b7d701e3961e3d2540c70f56daeefd5503a6",
+    "select-force.asm": "15861f7a5c28778f4b07265c6c02351e1b1c1fa6ea7121cb3f0b4a2a715dee74",
+    "set-animation.asm": "78e73035407e1a5dcaa265f9fc8d4db8cb6e9f2ba726738c5167fee3be609c00",
+    "set-frame.asm": "cb81d4e13aef2e882d2b837798fa8fdde7768fe7a0ccc55372799b29a76c5740",
+    "set-overlay.asm": "9cfca94b4578021991898d854fff8a3b5c25b99d36a162bc9cb73591a89b8800",
+    "update-sprite.asm": "efa045e323391f102d86ffeb5beb458c35eafee1d3d359e35d0ce1fa8d5f93ed",
+    "wake-gate.asm": "83a436fc3adb059d7b4da141b3b8624e7ab94047165883df5d45faedfb189d92"
+  },
+  "script_sha256": "a24cc53e729f8b4d79545f6d1daec92d83a9ea361b323578290d1ff1a4925abb",
+  "test_source_sha256": "67c82c37b7c03733a855eb913f9aa3516067266db3e37e7ce34c7b3e188352fa",
+  "subsequent_scheduler_routing_checkpoint": {
+    "status": "ordinary NPC branch order identified;72 native base-animation evaluations and64 exact grid-reference waypoint decisions pass; private routing integration pending",
+    "evidence": "docs/reports/isaac-first-floor-parity/gaper-scheduler-routing/README.md",
+    "native_animation_evaluations": 72,
+    "native_grid_cases": 6,
+    "native_grid_decisions": 64,
+    "reference_port_enabled_in_gameplay": false,
+    "full_wrapper_executed": false,
+    "full_native_acceptance": false
+  }
+}

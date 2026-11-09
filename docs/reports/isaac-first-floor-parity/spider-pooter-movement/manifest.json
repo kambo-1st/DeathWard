@@ -1,0 +1,88 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "source_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "source_bodies": [
+    {
+      "anm2path": "014.000_Pooter.anm2",
+      "baseHP": "8",
+      "boss": "0",
+      "champion": "1",
+      "collisionDamage": "0",
+      "collisionMass": "4",
+      "collisionRadius": "17",
+      "friction": "1",
+      "gridCollision": "walls",
+      "id": "14",
+      "name": "#POOTER",
+      "numGridCollisionPoints": "4",
+      "portrait": "6",
+      "reroll": "true",
+      "shadowSize": "11",
+      "stageHP": "0",
+      "tags": "fly",
+      "variant": "0"
+    },
+    {
+      "anm2path": "085.000_Spider.anm2",
+      "baseHP": "6.5",
+      "boss": "0",
+      "champion": "0",
+      "collisionDamage": "1",
+      "collisionMass": "5",
+      "collisionRadius": "13",
+      "friction": "1",
+      "id": "85",
+      "name": "#SPIDER",
+      "numGridCollisionPoints": "12",
+      "portrait": "53",
+      "reroll": "true",
+      "shadowSize": "11",
+      "stageHP": "0",
+      "tags": "spider",
+      "variant": "0"
+    }
+  ],
+  "spider_idle_gates": 16,
+  "spider_update_states": 48,
+  "pooter_update_states": 144,
+  "windows": [
+    {
+      "name": "spider-idle",
+      "sha256": "b6019199849dffb5ac9c310cf7bb8a151a00f76569448f64f70a42ab1e86f1a9"
+    },
+    {
+      "name": "spider-counter",
+      "sha256": "bdd35ced4f16a110ba2996daaed0fff0becd2cdc967683b773230bf7110991ed"
+    },
+    {
+      "name": "spider-stop-impulse",
+      "sha256": "f6fa25efc8870924185b64136d43a410840c3bf33450d413ad97fca1bb5ed8dd"
+    },
+    {
+      "name": "spider-retention",
+      "sha256": "c5b25256317e205ed96ddea68eaa46a63740f41b6b6c8f7370e740e23b9d7ad3"
+    },
+    {
+      "name": "pooter-cooldown",
+      "sha256": "ca31f6e0c89f4f34351f9f93c3aaedbe77b3a71e1fda8796b8dea7a36ac90390"
+    },
+    {
+      "name": "pooter-pursuit",
+      "sha256": "392283d6c613605d3e57202660fbc8b5c01a3118c5cab1074f6073b977acdb60"
+    },
+    {
+      "name": "pooter-wander",
+      "sha256": "e45970ec0016d64a2b0d994c2b289934b496566681a17feae26d9ce27dfb9f9d"
+    }
+  ],
+  "method": "original native counter/stop/impulse, pursuit, cooldown, wander/edge, velocity helper and base physics instructions; no patched code or helper stubs",
+  "supplied_boundaries": [
+    "Spider initialized state, destination, starting counter/momentum; acquisition RNG/line/clamp excluded",
+    "Pooter normal state, target1000/280, wander.2/.1, velocity2/1 except right -4/1 and bottom2/-2; cooldown0/35",
+    "Pooter random outcomes/directions generated with DW SplitMix64 seed123456; native RNG distribution/replay NOT verified",
+    "source global frame1..24 supplied; fourth-frame jitter path entered after supplied random direction; third-frame cadence executes",
+    "AI then base physics state comparisons; no continuous terrain/entity collision or live NPC cadence",
+    "Pooter attacks/morphs/items/statuses/champions excluded"
+  ],
+  "full_native_acceptance": false
+}

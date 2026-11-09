@@ -1,0 +1,30 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 131: player_speed_attribute
+1/7 Test #131: player_speed_attribute ...........   Passed    0.50 sec
+    Start 132: canonical_shooting_integration
+2/7 Test #132: canonical_shooting_integration ...   Passed    1.19 sec
+    Start 133: source_room_review
+3/7 Test #133: source_room_review ...............***Failed    0.19 sec
+native_scaled_live_pace=13.2137 actual_steady_player=13.2426
+10.0 chase/player=0.543693
+10.1 chase/player=0.376054
+-11.8573 != 20.4
+absolute universal dodge retained
+
+    Start 134: native_player_adapter
+4/7 Test #134: native_player_adapter ............   Passed    0.21 sec
+    Start 135: native_motion_reference
+5/7 Test #135: native_motion_reference ..........   Passed    0.00 sec
+    Start 136: enemy_movement_calibration
+6/7 Test #136: enemy_movement_calibration .......   Passed    0.22 sec
+    Start 137: damage_health_calibration
+7/7 Test #137: damage_health_calibration ........   Passed    3.42 sec
+
+86% tests passed, 1 tests failed out of 7
+
+Total Test time (real) =   5.75 sec
+
+The following tests FAILED:
+	133 - source_room_review (Failed)
+Errors while running CTest

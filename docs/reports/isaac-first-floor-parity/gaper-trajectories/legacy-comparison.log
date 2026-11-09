@@ -1,0 +1,11 @@
+ordinary-long,max_position_error=0.000127792,max_interval_velocity_error=0.00052619
+ordinary-short,max_position_error=1.14838e-05,max_interval_velocity_error=0.000129475
+ordinary-near-arrival,max_position_error=5.72205e-06,max_interval_velocity_error=0.000103012
+ordinary-zero-arrival,max_position_error=0.0929441,max_interval_velocity_error=1.04997
+ordinary-turn,max_position_error=2.67199e-05,max_interval_velocity_error=0.000116521
+ordinary-reverse,max_position_error=5.34058e-05,max_interval_velocity_error=0.000113964
+ordinary-moving-target,max_position_error=0.345703,max_interval_velocity_error=1.40138
+ordinary-blocked,max_position_error=1.23978e-05,max_interval_velocity_error=0.00011456
+frowning-open-route,max_position_error=7.43866e-05,max_interval_velocity_error=0.000434399
+frowning-awake-turn,max_position_error=1.19495e-05,max_interval_velocity_error=0.000154178
+actual Gaper trajectories must match original main/interpolation reference

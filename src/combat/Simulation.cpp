@@ -1015,8 +1015,13 @@ void Simulation::updatePlayer(const Input &input, float dt) {
             interact();
         }
         while (!movePath_.empty() && distance(player.position, movePath_[waypoint_]) < 0.04f) {
-            if (++waypoint_ == movePath_.size())
+            if (++waypoint_ == movePath_.size()) {
                 cancelMove();
+                // Click-to-move is a DeathWard control adaptation. Complete its
+                // arrival without carrying native keyboard coasting past the
+                // clicked destination. Ordinary key release keeps native motion.
+                if(nativePlayerMovement)nativePlayerMovement->reset();
+            }
         }
         if (!movePath_.empty()) {
             Vector3 offset = sub(movePath_[waypoint_], player.position);

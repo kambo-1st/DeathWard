@@ -1,0 +1,3 @@
+spider gates=16 states=48 max_position_error=0.224508
+pooter states=144 max_position_error=0.319573 max_wander_error=0.162816
+native Spider/Pooter bounded motion comparison

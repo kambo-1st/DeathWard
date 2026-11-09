@@ -89,7 +89,10 @@ void transformationAndDung() {
     auto blast=fixture();dung(blast);check(!blast.arena.sight({0,.85f,-3},{0,.85f,3}),"intact dung blocks shots");
     Event bomb;bomb.type=EventType::Explosion;bomb.position={0,.85f,-2};bomb.radius=4;bomb.damage=80;bomb.demolition=Demolition::SpentDynamite;
     blast.queueRoot(bomb);blast.drainEvents();check(blast.arena.breakables[0].destroyed&&blast.arena.sight({0,.85f,-3},{0,.85f,3}),"bomb destroys dung and opens collision");
-    auto shot=fixture();dung(shot);shot.player.position={0,.85f,-3};Input fire;fire.fire=true;fire.aim={0,.85f,0};shot.step(fire);tick(shot,15);
+    auto shot=fixture();dung(shot);shot.player.position={0,.85f,-3};Input fire;fire.fire=true;fire.aim={0,.85f,0};shot.step(fire);
+    // Accepted player shot travel reaches this prop after17 ticks. Wait for
+    // the impact within a bounded flight window rather than the old15-tick pace.
+    for(int frame=0;frame<60&&shot.arena.breakables[0].health==4;++frame)tick(shot);
     check(shot.arena.breakables[0].health<4&&!shot.arena.breakables[0].destroyed,"ordinary player shot damages dung without requiring bomb");
 }
 void superPooter() {

@@ -4,6 +4,7 @@
 #include "rlgl.h"
 #include "damage_health_calibration.hpp"
 #include "enemy_movement_calibration.hpp"
+#include "source_room_reference.hpp"
 #include <chrono>
 #include <fstream>
 #include <iomanip>
@@ -13,8 +14,10 @@
 
 using namespace dw;
 namespace {
-bool movementReview=false,nativePlayerReview=false;
+bool movementReview=false,nativePlayerReview=false,sourceRoomReview=false,coverReview=false;
 constexpr Vector3 Spawn{0,.85f,0};
+Vector3 reviewCentre(){return sourceRoomReview?source_room_review::Centre:Spawn;}
+float reviewScale(){return sourceRoomReview?source_room_review::Scale:float(movement_review::WorldScale);}
 
 constexpr Color Paper{236,226,201,255},Panel{26,34,36,248},Teal{112,204,180,255},Gold{224,168,86,255};
 void require(bool ok,const char *why){if(!ok)throw std::runtime_error(why);}
@@ -41,17 +44,19 @@ std::unique_ptr<Game> fixture(const std::filesystem::path &save,std::shared_ptr<
             {{-12.5f,0,-12},{-12,2,12}},{{12,0,-12},{12.5f,2,12}}};
     }
     auto &room=a.rooms[0];room.bounds={{-12,-1,-12},{12,5,12}};room.center=room.entry=Spawn;room.floors=a.floors;room.kind=RoomKind::Empty;
-    room.objective=room.exit={1000,0,1000};a.entrance=Spawn;a.exit=a.miners=a.altar={1000,0,1000};a.rebuildWalls();
+    room.objective=room.exit={1000,0,1000};if(sourceRoomReview)source_room_review::configure(a,open);if(coverReview&&!open){a.obstacles={{{12,0,2},{14,3,12}}};}a.entrance=reviewCentre();a.exit=a.miners=a.altar={1000,0,1000};a.rebuildWalls();
     run.rooms.assign(1,{});run.rooms[0].visited=true;
     run.enemies.clear();run.projectiles.clear();run.hazards.clear();run.moneyPickups.clear();
     run.heartPickups.clear();run.blueFlies.clear();run.items.clear();run.stats={};
-    run.player=Player{};run.canonicalShooting=true;run.player.shotDamage=source&&!movementReview?run.player.attributes.damage:RevolverDamage;run.player.attributes.speed=1;run.player.position=Spawn;run.player.aim={0,.85f,-10};
+    run.player=Player{};run.canonicalShooting=true;run.player.shotDamage=source&&!movementReview?run.player.attributes.damage:RevolverDamage;run.player.attributes.speed=1;run.player.position=reviewCentre();run.player.aim={0,.85f,-10};
     run.room=0;run.roomClear=false;run.debugScenario=true;run.godMode=false;
     run.dead=run.finished=run.floorExitRequested=run.rewardOpen=run.shopOpen=false;
     run.message.clear();run.messageTime=0;run.audioCues.clear();run.checkpointNeeded=false;
     game->campaign.begin(42,"Damage and health review",ExpeditionPacing::Compact);
     game->screen=Screen::Expedition;game->paused=game->slow=game->sandstorm=false;game->error.clear();
-    if(nativePlayerReview)run.nativePlayerMovement.emplace(float(movement_review::WorldScale));
+    if(nativePlayerReview)run.nativePlayerMovement.emplace(reviewScale());
+    run.nativeGaperPursuit=sourceRoomReview&&source;
+    run.nativeBurstWanderReview=sourceRoomReview&&source;
     game->updateCamera(10);
     return game;
 }
@@ -62,7 +67,9 @@ constexpr Vector3 PlayerStart{-8,.85f,0},BodyStart{-2,.85f,0};
 Case setup(Game &game,bool encounter,int index) {
     releaseKeys();PlayAutomationEvent({0,5,{MOUSE_BUTTON_RIGHT,0,0,0}});PlayAutomationEvent({0,5,{MOUSE_BUTTON_LEFT,0,0,0}});
     auto &run=*game.run;run.arena.profile.sourceStage=1;
-    run.player.position=PlayerStart;run.player.aim=BodyStart;
+    const auto origin=horizontal(reviewCentre());
+    run.player.position=add(PlayerStart,origin);run.player.aim=add(BodyStart,origin);
+    if(coverReview){run.player.position={23,.85f,7};run.player.aim={3,.85f,7};}
     // Frame the empty fixture before spawning actors, so camera preparation
     // cannot advance enemies or hurt the player before the comparison starts.
     key(2,KEY_PAGE_DOWN);for(int n=0;n<10;++n)game.update(.1f);key(1,KEY_PAGE_DOWN);game.updateCamera(10);
@@ -71,10 +78,10 @@ Case setup(Game &game,bool encounter,int index) {
     if(encounter) {
         const std::array<int,5> roster{0,1,3,5,7};
         const std::array<Vector3,5> positions{{{-1,.85f,-4},{1,.85f,4},{6,.85f,-4},{6,.85f,4},{4,.85f,0}}};
-        for(int n=0;n<5;++n)require(run.spawnMonster(damage_review::Bodies[size_t(roster[n])].id,positions[n])!=0,"spawn live review encounter");
+        for(int n=0;n<5;++n)require(run.spawnMonster(damage_review::Bodies[size_t(roster[n])].id,add(positions[n],origin))!=0,"spawn live review encounter");
     } else {
         result.identity=damage_review::Bodies[size_t(index)].id;
-        result.body=run.spawnMonster(result.identity,BodyStart);require(result.body!=0,"spawn real calibration body");
+        result.body=run.spawnMonster(result.identity,coverReview?Vector3{3,.85f,7}:add(BodyStart,origin));require(result.body!=0,"spawn real calibration body");
         auto *e=run.findEnemy(result.body);result.lastHp=e->hp;
         if(!movementReview){e->state=EnemyState::Stunned;e->stateTime=10000;e->velocity={};}
     }
@@ -104,7 +111,7 @@ void verify(const TemporaryDirectory &temporary,std::shared_ptr<const MechanicsL
         releaseKeys();auto game=fixture(temporary.path/("verify"+std::to_string(serial++)+".save"),candidate?source:current,candidate,true);
         auto result=setup(*game,false,index);const auto &body=damage_review::Bodies[size_t(index)];
         const float hp=result.lastHp,damage=game->run->player.shotDamage;const auto start=game->run->stats.duration;
-        const auto at=GetWorldToScreen(BodyStart,game->camera);
+        const auto at=GetWorldToScreen(add(BodyStart,horizontal(reviewCentre())),game->camera);
         PlayAutomationEvent({0,7,{int(at.x),int(at.y),0,0}});PlayAutomationEvent({0,6,{MOUSE_BUTTON_RIGHT,0,0,0}});
         int hitCount=0;
         for(int n=0;n<300&&!result.ended;++n) {
@@ -148,19 +155,31 @@ void verifyNativePlayerGame(const TemporaryDirectory &temporary,std::shared_ptr<
         key(2,KEY_D);for(int frame=0;frame<fps*3/2;++frame)game->update(1.f/fps);releaseKeys();
         auto &run=*game->run;const int heldTicks=int(std::lround(run.stats.duration/Tick));
         native_motion::Body expected;for(int n=0;n<heldTicks;++n)expected.playerStep({1,0,0});
-        const float held=planarDistance(Spawn,run.player.position),wanted=expected.position.x*float(movement_review::WorldScale);
+        const float held=planarDistance(reviewCentre(),run.player.position),wanted=expected.position.x*reviewScale();
         require(std::abs(held-wanted)<.003f,"actual Game keyboard acceleration matches executed native reference");
         const float heldDuration=run.stats.duration;
         for(int frame=0;frame<fps;++frame)game->update(1.f/fps);
         const int coastTicks=int(std::lround((run.stats.duration-heldDuration)/Tick));
         for(int n=0;n<coastTicks;++n)expected.playerStep({});
-        const float coast=planarDistance(Spawn,run.player.position),wantedCoast=expected.position.x*float(movement_review::WorldScale);
+        const float coast=planarDistance(reviewCentre(),run.player.position),wantedCoast=expected.position.x*reviewScale();
         require(std::abs(coast-wantedCoast)<.003f&&coast>held,"actual Game native stopping matches reference coasting");
         require(game->error.empty()&&run.player.hp==6&&!run.godMode,"real Game reference has no errors or artificial health");
         rows<<fps<<','<<heldTicks<<','<<held<<','<<wanted<<','<<coastTicks<<','<<coast<<','<<wantedCoast<<'\n';
     }
+    if(sourceRoomReview) {
+        releaseKeys();auto click=fixture(temporary.path/"source-click.save",library,false,false);
+        const Vector3 destination{21,.85f,7};click->updateCamera(10);const auto screen=GetWorldToScreen({destination.x,0,destination.z},click->camera);
+        PlayAutomationEvent({0,7,{int(screen.x),int(screen.y),0,0}});PlayAutomationEvent({0,6,{MOUSE_BUTTON_LEFT,0,0,0}});click->update(Tick);
+        PlayAutomationEvent({0,5,{MOUSE_BUTTON_LEFT,0,0,0}});
+        const auto routeTarget=click->run->moveDestination();require(bool(routeTarget),"source room click creates a route");
+        for(int n=0;n<360;++n)click->update(Tick);
+        const auto clicked=click->run->player.position;
+        std::cout<<"source_click screen="<<screen.x<<','<<screen.y<<" position="<<clicked.x<<','<<clicked.z<<" target="<<routeTarget->x<<','<<routeTarget->z<<" error="<<planarDistance(clicked,*routeTarget)<<" route="<<bool(click->run->moveDestination())<<'\n';
+        require(click->error.empty()&&planarDistance(click->run->player.position,*routeTarget)<.15f&&!click->run->moveDestination(),"source room keeps mouse route arrival");
+        std::cout<<"PASS source room mouse arrival and source-equivalent bounded fixture\n";
+    }
     if(!output.empty()){std::ofstream file(output);file<<rows.str();require(bool(file),"write native Game input measurements");}
-    std::cout<<rows.str()<<"PASS native reference Game keyboard movement and stopping at 30/60/144 render FPS; world/room scale remains an adaptation\n";
+    std::cout<<rows.str()<<"PASS native reference Game keyboard movement and stopping at 30/60/144 render FPS; colliders, exceptional states and full NPC fidelity remain unaccepted\n";
 }
 void overlay(const Game &game,bool candidate,bool encounter,int index,const Case &state) {
     const float sx=GetScreenWidth()/1280.f,sy=GetScreenHeight()/800.f;
@@ -175,8 +194,8 @@ void overlay(const Game &game,bool candidate,bool encounter,int index,const Case
     if(movementReview) {
         panel(24,24,885,145);text(candidate?"CORRECTED RELATIVE MOVEMENT":"PREVIOUS MOVEMENT",38,36,22,Gold);
         text(encounter?"Encounter: five enemies":std::string("Movement check: ")+damage_review::Bodies[size_t(index)].name,38,70,18);
-        text(nativePlayerReview?"Native player curve | shared review scale; room geometry still adapted":"Responsive player curve | HP and player firing unchanged",38,101,16);
-        text("Review candidate | enemy projectiles and room/body geometry still need calibration",38,136,13,Gold);
+        text(nativePlayerReview?(sourceRoomReview?"13 x 7 tiles | native player curve | one shared tile conversion":"Native player curve | shared review scale; room geometry still adapted"):"Responsive player curve | HP and player firing unchanged",38,101,16);
+        text(coverReview?"Cover routing candidate | physical clearance retained | full native AI still pending":sourceRoomReview?"Review only | firing, hit sizes, enemy shots and full AI acceptance still pending":"Review candidate | enemy projectiles and room/body geometry still need calibration",38,136,13,Gold);
         panel(964,22,292,165);text("MOVEMENT REVIEW",978,35,17,Gold);
         text("1 Previous / 2 Corrected",978,66,14);text("3: native / responsive player",978,89,12);text("T: one enemy / encounter",978,109,12);
         text("[ / ]: enemy | F8: reset",978,132,12);text("Enter: restart after death",978,154,12);
@@ -202,8 +221,10 @@ int main(int argc,char **argv) {
     std::filesystem::path capture,output,mechanics;
     try {
         for(int i=1;i<argc;++i){std::string arg=argv[i];
-            if(arg=="--native-player-reference"){movementReview=true;nativePlayerReview=true;}
+            if(arg=="--source-room-review"){sourceRoomReview=true;movementReview=true;nativePlayerReview=true;}
+            else if(arg=="--native-player-reference"){movementReview=true;nativePlayerReview=true;}
             else if(arg=="--movement-review")movementReview=true;
+            else if(arg=="--cover-review")coverReview=true;
             else if(arg=="--verify")verification=true;
             else if(arg=="--current")candidate=false;
             else if(arg=="--encounter")encounter=true;
@@ -212,9 +233,10 @@ int main(int argc,char **argv) {
             else if(arg=="--capture"&&i+1<argc)capture=argv[++i];
             else if(arg=="--measurements"&&i+1<argc)output=argv[++i];
             else if(arg=="--mechanics"&&i+1<argc)mechanics=argv[++i];
-            else if(arg=="--help"){std::cout<<"Damage/health review: 1 Current, 2 Source; T lab/live encounter; [ ] select body; F8 reset. --movement-review --native-player-reference (3 toggles player curve) --verify --measurements PATH --current --encounter --body 1..9 --frames N --capture PATH --mechanics PATH\n";return 0;}
+            else if(arg=="--help"){std::cout<<"Damage/health review: 1 Current, 2 Source; T lab/live encounter; [ ] select body; F8 reset. --source-room-review [--cover-review] --movement-review --native-player-reference (3 toggles player curve) --verify --measurements PATH --current --encounter --body 1..9 --frames N --capture PATH --mechanics PATH\n";return 0;}
             else throw std::runtime_error("Unknown/incomplete option: "+arg);
         }
+        require(!coverReview||(sourceRoomReview&&!encounter),"cover review requires --source-room-review and a single enemy");
         require(index>=0&&index<9,"body must be 1 through 9");
         require(!movementReview||(index!=4&&index!=6&&index!=8),"movement candidate supports Gapers, Gusher, Horf, Pooter and Spider");require(capture.empty()||frames>0,"capture requires bounded frames");
         SetTraceLogLevel(LOG_WARNING);SetConfigFlags(FLAG_WINDOW_RESIZABLE|(verification?FLAG_WINDOW_HIDDEN:0));
@@ -224,7 +246,7 @@ int main(int argc,char **argv) {
             mechanics=std::filesystem::exists(snapshot)?snapshot:sourceAssetDirectory()/"mechanics";
         }
         TemporaryDirectory temporary;auto current=MechanicsLibrary::load(mechanics);
-        auto source=movementReview?movement_review::makePack(*current,temporary.path/"movement-mechanics"):
+        auto source=movementReview?movement_review::makePack(*current,temporary.path/"movement-mechanics",reviewScale()):
             damage_review::makeSourcePack(*current,temporary.path/"source-mechanics");
         if(verification&&nativePlayerReview){verifyNativePlayerGame(temporary,source,output);CloseWindow();return 0;}
         require(!movementReview||!verification,"use dedicated movement calibration test for motion verification");
@@ -236,7 +258,7 @@ int main(int argc,char **argv) {
                 const bool nativeToggle=movementReview&&IsKeyPressed(KEY_THREE);
                 if(nativeToggle)nativePlayerReview=!nativePlayerReview;
                 const bool one=IsKeyPressed(KEY_ONE),two=IsKeyPressed(KEY_TWO),toggle=IsKeyPressed(KEY_T),left=IsKeyPressed(KEY_LEFT_BRACKET),right=IsKeyPressed(KEY_RIGHT_BRACKET);
-                if(one)candidate=false;if(two)candidate=true;if(toggle)encounter=!encounter;
+                if(one)candidate=false;if(two)candidate=true;if(toggle){coverReview=false;encounter=!encounter;}
                 if(left||right) {
                     do {index=(index+(left?8:1))%9;}
                     while(movementReview&&(index==4||index==6||index==8));
@@ -249,7 +271,16 @@ int main(int argc,char **argv) {
                 require(game->error.empty(),game->error.c_str());if(game->screen!=Screen::Expedition)break;
                 if(!encounter&&!state.ended){const auto *e=game->run->findEnemy(state.body);const bool ended=!e||!e->alive||e->monster!=state.identity;
                     if(ended||(e&&e->hp<state.lastHp-.0001f))++state.hits;if(e&&!ended)state.lastHp=e->hp;state.ended=ended;}
-                BeginDrawing();auto action=renderer.draw(*game);if(!game->paused&&!game->controlsOpen&&!game->buildOpen)overlay(*game,candidate,encounter,index,state);
+                BeginDrawing();auto action=renderer.draw(*game);
+                if(sourceRoomReview){
+                    BeginMode3D(game->camera);
+                    if(coverReview){DrawCube({13,1.5f,7},2,3,10,{115,78,56,255});DrawCubeWires({13,1.5f,7},2,3,10,{220,176,122,255});}
+                    const Color line{224,203,159,90};
+                    for(int x=0;x<=13;++x)DrawLine3D({x*FloorTile,.025f,0},{x*FloorTile,.025f,source_room_review::Depth},line);
+                    for(int z=0;z<=7;++z)DrawLine3D({0,.025f,z*FloorTile},{source_room_review::Width,.025f,z*FloorTile},line);
+                    EndMode3D();
+                }
+                if(!game->paused&&!game->controlsOpen&&!game->buildOpen)overlay(*game,candidate,encounter,index,state);
                 if(frames&&frame==frames-1&&!capture.empty()){rlDrawRenderBatchActive();auto pic=LoadImageFromScreen();require(ExportImage(pic,capture.string().c_str()),"save capture");UnloadImage(pic);}
                 EndDrawing();game->perform(action);
             }

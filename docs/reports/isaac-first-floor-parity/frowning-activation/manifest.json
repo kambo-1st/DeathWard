@@ -1,0 +1,91 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "runtime_sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+  "animation_sha256": "18f1029f102add01b756e8adb8fe44368d3298df343913ff6023cc158082bf81",
+  "cases": 6,
+  "samples": 288,
+  "windows": [
+    {
+      "name": "initialize-head",
+      "start": "0x4f6fd2",
+      "end": "0x4f6ffc",
+      "raw_sha256": "2349c0fb8e160b4a7919d0440b7b48ddc6a82dd68308ad8de65d8d5223717798"
+    },
+    {
+      "name": "select-force",
+      "start": "0x4f7e45",
+      "end": "0x4f7f0c",
+      "raw_sha256": "1b846f346edeee8da881c1df805f1dc475d6acbd22c83467dcc2515328860570"
+    },
+    {
+      "name": "wake-gate",
+      "start": "0x4f80ed",
+      "end": "0x4f812f",
+      "raw_sha256": "1b0b497f3b0525f922604751978d37ffb4506d10e9a174cda9cce3f5bec9a0df"
+    },
+    {
+      "name": "set-overlay",
+      "start": "0x405bb0",
+      "end": "0x405c69",
+      "raw_sha256": "6b3b8de6ec67be460dad19fecd3aef132938664ab7ed7348ff7e6916377955e8"
+    },
+    {
+      "name": "set-animation",
+      "start": "0x403740",
+      "end": "0x403814",
+      "raw_sha256": "2d3c4a5b581bae52d4d7d627ca2481a0cb7471ef349279fa1f3523537b6e95ce"
+    },
+    {
+      "name": "set-frame",
+      "start": "0x403c00",
+      "end": "0x403ce5",
+      "raw_sha256": "904d82b54d0258b2bb891ad29ef9046cf6039396e6e49a58491992448319e0ad"
+    },
+    {
+      "name": "play-overlay",
+      "start": "0x405a00",
+      "end": "0x405a77",
+      "raw_sha256": "462816855f76e211996cac7c95411cb86288dbb21bed3fbe7b707cfc270835b9"
+    },
+    {
+      "name": "overlay-frame",
+      "start": "0x405d10",
+      "end": "0x405d21",
+      "raw_sha256": "13b28a1838aa29d37debffb30f3b1ea42408727157c52a9a1b35d62deda83310"
+    },
+    {
+      "name": "advance-animation",
+      "start": "0x403d60",
+      "end": "0x403e21",
+      "raw_sha256": "9e5c57befaf51f4437d96b33395eb65be521afd7a09d435794b023b9c62d2440"
+    },
+    {
+      "name": "update-sprite",
+      "start": "0x403e30",
+      "end": "0x403e50",
+      "raw_sha256": "958205cbd51256a75614380c434a8cf2fef4a80430ae6e149781b187e930b2b5"
+    }
+  ],
+  "method": "Original x86 instructions, real mapped UCRT floor/nextafterf; IAT binding only, no patched code or helper stubs",
+  "supplied_boundaries": [
+    "minimal Head animation metadata:20 nonlooping frames, no events; visual layers omitted",
+    "healthy type10 variant0, default sprite speed1 or experimental.5",
+    "direct-path flag supplied, not calculated by native FindGridPath",
+    "one explicit Sprite.Update AFTER each AI gate evaluation; this cadence/order is supplied",
+    "UCRT initial data without DLL initialization; masked FPU0x27f and MXCSR0x1f80"
+  ],
+  "verified": [
+    "initial Head frame0 is stopped",
+    "force selection reads integer overlay frame before wake gate",
+    "clear path starts/restarts Head if integer frame<=0",
+    "Head continues without a direct path once playing and stops at frame19",
+    "repeated clear path with supplied.5 animation step restarts frame0 each evaluation"
+  ],
+  "not_verified": [
+    "whole NPC animation scheduling and live activation timing",
+    "native terrain/grid navigation",
+    "full status/Slow behavior",
+    "render layers, collision and complete enemy acceptance"
+  ],
+  "gameplay_changes": false
+}

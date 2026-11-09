@@ -1,0 +1,65 @@
+{
+  "recorded_at_utc": "2026-11-08T20:55:14.401307+00:00",
+  "status": "native mask classification/ordinary line reference verified; bounded private geometric-room Gaper grid routing enabled; human/full actor acceptance open",
+  "evidence": "docs/reports/isaac-first-floor-parity/gaper-grid-lines/README.md",
+  "native_classification_cases": 55,
+  "native_line_cases": 288,
+  "simulation_integration_cases": 64,
+  "direct_routes": 36,
+  "adjacent_grid_routes": 27,
+  "sealed_absent_routes": 1,
+  "private_gameplay_enabled": true,
+  "production_defaults_changed": false,
+  "full_native_acceptance": false,
+  "focused_suites_passed": 5,
+  "continuous_navigation_cases": 6,
+  "game_input_render_fps": [
+    30,
+    60,
+    144
+  ],
+  "cover_render_frames": 120,
+  "user_visual_acceptance": false,
+  "hp_changed": false,
+  "player_speed_changed": false,
+  "remaining": [
+    "human cover candidate review",
+    "phase-aligned Frowning activation",
+    "native mask generation/cache/status/full wrapper/live cadence/collision",
+    "Spider/Pooter and enemy shots",
+    "production rollout and HP acceptance"
+  ],
+  "artifact_sha256": {
+    "README.md": "7c96ae224055a4ad55f08763a847bd822e153bcecac60ba045d18a2a2d706e87",
+    "build.log": "824ec72e96948c9da567c2b2c256599dc3ef3e72250832cb060d05a917a90e76",
+    "caller-options.asm": "66868ed2d99678e1d4b7585502b866893ce2013dc8b257ef9bbd4862b2efe6ca",
+    "capture-check.log": "88840bdf023b32a54c46ebd3e2ab4869d823fa54053ed8a40f718a2d2e212570",
+    "check-line.asm": "b5e6b6bc789379586ffff90a31e42b6b8f948104bc8f3e48f8fdf2ea61aabf55",
+    "collision-lookup.asm": "89bc60f7bb56c2d96591855456f760675a69e43beb13cadc14235c2fd00a62a6",
+    "cover-launch.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "cover-review.png": "db270f3307c808aacddfc838d0f55ea21fd92a18ebcb68003d09845a100f322e",
+    "ctest.log": "e1aaa5a44b5eea52f866002e3f685593b9a6da7e4fd85017e81a2a3efc46a88c",
+    "game-input.log": "380acdd9912416eb343cdb9fc7549f1295dd41403680047cfb0154b8f73aa0f5",
+    "integration.log": "660d9b8b36eb04dab961a97a93b15d0a479d62a9abfd1dbf81738ba6b5404197",
+    "manifest.json": "d3fbed8f32fb32ee4a3940f43100863bd32c7d5ec99ba415a8b931915618bf74",
+    "native-lines.csv": "c8f1828e8f2171ebec28968e297963f7750c7f84fbab358943c22e035b6b8999",
+    "native-masks.csv": "0b62e0a225e82ce84fa8939aaa52ab611faa3d3a266fff78690ab816716debf1",
+    "status-ctest.log": "ba8815f11e9b6cdc7176d01b6c1a9bb82b7805d8e0a7ce648aa328be533ebfd4"
+  },
+  "source_sha256": {
+    "scripts/isaac-reference/capture-gaper-grid-lines.py": "41147f1fe1efe14b9406c8e594acb39df17b2ab3f73c51f64bbf5a58590fd59c",
+    "src/combat/reference/NativeGridPath.hpp": "d7785042554033cffa2453c412015e4ca4b242e430796f1a8566828d03008ac9",
+    "src/combat/GroundPursuit.cpp": "7f54110c5ab53bb5ba95c74026d048c90049dff1c0cb764af2376335bb6f7c2b",
+    "tests/gaper_trajectory_tests.cpp": "1a7fd3f9ba4cb2bf428c5d95e522d6b7e3dea830a38b3ec5bf086b00050cde3a",
+    "tools/damage_health_review.cpp": "166ba29def723a4f04c40f4a65fe30568e4b9a22ce00c51f29bf180c99315337"
+  },
+  "subsequent_frowning_phase_checkpoint": {
+    "status": "private Frowning post-AI/base-animation state corrected; six native cases/288 actual Simulation phase states pass; full actor acceptance open",
+    "evidence": "docs/reports/isaac-first-floor-parity/frowning-phase-review/README.md",
+    "native_cases": 6,
+    "compared_states": 288,
+    "private_gameplay_enabled": true,
+    "production_defaults_changed": false,
+    "full_native_acceptance": false
+  }
+}

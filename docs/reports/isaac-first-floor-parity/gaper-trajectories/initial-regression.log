@@ -1,0 +1,46 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start  90: black_globin_family
+ 1/12 Test  #90: black_globin_family ..............   Passed    3.00 sec
+      Start  97: gaper_family
+ 2/12 Test  #97: gaper_family .....................   Passed    0.35 sec
+      Start 100: headless_family
+ 3/12 Test #100: headless_family ..................   Passed    0.46 sec
+      Start 131: player_speed_attribute
+ 4/12 Test #131: player_speed_attribute ...........   Passed    0.50 sec
+      Start 132: canonical_shooting_integration
+ 5/12 Test #132: canonical_shooting_integration ...   Passed    1.20 sec
+      Start 133: gaper_trajectories
+ 6/12 Test #133: gaper_trajectories ...............   Passed    0.17 sec
+      Start 134: gaper_trajectories_substeps
+ 7/12 Test #134: gaper_trajectories_substeps ......***Failed    0.16 sec
+ordinary-long,max_position_error=0.000295639,max_interval_velocity_error=0.00114417
+ordinary-short,max_position_error=0.000348692,max_interval_velocity_error=0.000166631
+ordinary-near-arrival,max_position_error=0.00549984,max_interval_velocity_error=0.129845
+ordinary-zero-arrival,max_position_error=0.000157356,max_interval_velocity_error=0.000137329
+ordinary-turn,max_position_error=4.20293e-05,max_interval_velocity_error=0.000230284
+ordinary-reverse,max_position_error=6.86646e-05,max_interval_velocity_error=0.000228405
+ordinary-moving-target,max_position_error=4.95177e-05,max_interval_velocity_error=0.000320673
+ordinary-blocked,max_position_error=7.24792e-05,max_interval_velocity_error=0.000160247
+frowning-open-route,max_position_error=0.000188828,max_interval_velocity_error=0.000823736
+frowning-awake-turn,max_position_error=7.64428e-05,max_interval_velocity_error=0.00029729
+actual Gaper trajectories must match original main/interpolation reference
+
+      Start 135: source_room_review
+ 8/12 Test #135: source_room_review ...............   Passed    0.20 sec
+      Start 136: native_player_adapter
+ 9/12 Test #136: native_player_adapter ............   Passed    0.23 sec
+      Start 137: native_motion_reference
+10/12 Test #137: native_motion_reference ..........   Passed    0.00 sec
+      Start 138: enemy_movement_calibration
+11/12 Test #138: enemy_movement_calibration .......   Passed    0.22 sec
+      Start 139: damage_health_calibration
+12/12 Test #139: damage_health_calibration ........   Passed    3.74 sec
+
+92% tests passed, 1 tests failed out of 12
+
+Total Test time (real) =  10.24 sec
+
+The following tests FAILED:
+	134 - gaper_trajectories_substeps (Failed)
+Errors while running CTest

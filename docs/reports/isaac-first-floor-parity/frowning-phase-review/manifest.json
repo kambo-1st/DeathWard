@@ -1,0 +1,14 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "runtime_sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+  "cases": 6,
+  "evaluations": 288,
+  "method": "original initialization/AI gates and actual ordinary base-animation interval, with real UCRT helpers; no patches or helper stubs",
+  "supplied_boundaries": [
+    "direct-path flag",
+    "entity timeScale1 or.5; not native Slow status acceptance",
+    "minimal20-frame Head metadata without visual layers",
+    "ordinary AI-then-base order from scoped wrapper evidence; intervening wrapper logic excluded"
+  ],
+  "full_native_acceptance": false
+}
