@@ -1,0 +1,77 @@
+{
+  "recorded_at_utc": "2026-11-09T20:42:32.589473+00:00",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "delivery": "D01",
+  "main_game_enabled": true,
+  "human_acceptance": "pending",
+  "native_movement_parity": false,
+  "new_enemy_balance_changes": false,
+  "build": "passed",
+  "ctest": {
+    "balance_preset_contract": "passed",
+    "player_speed_attribute": "passed"
+  },
+  "actual_game_input_mode": {
+    "mode": "--balance-only",
+    "exit_code": 0,
+    "log": "game-input.log",
+    "verified_movement_ratio": 0.8,
+    "covers": [
+      "HUD/pause path",
+      "modal input capture",
+      "export/load/remember",
+      "preservation of injuries/items/wallet/keys/room progress/RNG",
+      "invalid load isolation",
+      "path paste/cancel",
+      "death and summary retry",
+      "floor transfer",
+      "fresh session remembered preset",
+      "corrupt startup preset rejection/recovery"
+    ]
+  },
+  "input_regressions": [
+    {
+      "mode": "--hud-only",
+      "exit_code": 0,
+      "log": "hud-only.log"
+    },
+    {
+      "mode": "--keyboard-only",
+      "exit_code": 0,
+      "log": "keyboard-only.log"
+    },
+    {
+      "mode": "--arrows-only",
+      "exit_code": 0,
+      "log": "arrows-only.log"
+    }
+  ],
+  "fresh_application_processes": [
+    {
+      "case": "explicit-preset",
+      "exit_code": 0,
+      "balance": [
+        "BALANCE speed=0.8 revision=de261b68e4100043 profile=custom"
+      ],
+      "log": "explicit-preset.log"
+    },
+    {
+      "case": "remembered-preset",
+      "exit_code": 0,
+      "balance": [
+        "BALANCE speed=0.8 revision=de261b68e4100043 profile=custom"
+      ],
+      "log": "remembered-preset.log"
+    }
+  ],
+  "initial_cli_error": "Unsupported --no-audio flag; corrected to existing --mute before successful application checks",
+  "screenshots_inspected": [
+    "tuning-custom.png",
+    "death-retry.png"
+  ],
+  "remaining": [
+    "D01 human acceptance",
+    "D02 source-scale walking and later deliveries",
+    "full first-floor parity"
+  ]
+}

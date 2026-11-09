@@ -128,6 +128,7 @@ Game::Game(const std::filesystem::path &save, HubKind initialHub) : campaign(sav
         reloadTownObjects();
     snapCamera();
     newSeed();
+    initializeBalance();
 }
 std::filesystem::path Game::hubDirectory() const {
     return TownScene::assetDirectory(activeHub);
@@ -208,41 +209,23 @@ void Game::launch(bool freeMission) {
     auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world,
                                                   theme, visualSettings.canyonRiver,search,
                                                   account?WitnessAccount::Rourke:WitnessAccount::None,0,expeditionPacing);
-    candidate->tunePlayer(playerHealth, playerDamage);
-    campaign.begin(seed, candidate->summary().expedition, expeditionPacing);
-    run = std::move(candidate);
-    buildOpen=false;
+    startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
-    checkpoint();
     if(search)run->announce("THE LOST SURVEY / Recover Bell's records from the near camp.",6);
-    walkingToQuest_=false;
-    ++audioContext;
-    audioCues.clear();
-    missionMenu = walkingToMission = false;
-    town.stop();
-    screen = Screen::Expedition;
-    deathTime = 0;
-    paused = false;
-    accumulator = 0;
-    error.clear();
-    resetArmed = false;
-    cameraZoom_ = cameraZoomTarget_;
-    snapCamera();
-    resetPointerInput();
 }
 void Game::checkpoint() {
     if (run && run->checkpointNeeded) {
-        campaign.checkpoint(run->summary());
+        campaign.checkpoint(configuredSummary());
         run->checkpointNeeded = false;
     }
 }
 void Game::finish(EndReason reason) {
     if (!run)
         return;
-    lastSummary = campaign.resolve(run->summary(), reason);
+    lastSummary = campaign.resolve(configuredSummary(), reason);
     run.reset();
-    buildOpen=false;
+    buildOpen=balanceOpen=balancePathEditing=false;
     ++audioContext;
     audioCues.clear();
     town.reset();
@@ -273,11 +256,32 @@ void Game::close() {
 }
 void Game::perform(Action action) {
     try {
+        if(balanceOpen&&action!=Action::None&&action!=Action::Quit&&
+           (action<Action::CloseBalance||action>Action::EditBalancePath))return;
+        if(balanceOpen&&action!=Action::None)balancePathEditing=false;
         if(buildOpen&&action!=Action::CloseBuild&&action!=Action::Quit)return;
         if(controlsOpen && action!=Action::CloseControls && action!=Action::Quit)return;
         if(letterVisible()&&action!=Action::CloseLetter&&action!=Action::Quit)return;
         if(journalVisible()&&action!=Action::CloseJournal&&action!=Action::JournalPrevious&&action!=Action::JournalNext&&action!=Action::Quit)return;
         switch (action) {
+        case Action::OpenBalance:
+            if(!run||(!run->dead&&!run->finished)) {
+                balanceOpen=true;balancePathEditing=false;resetPointerInput();accumulator=0;
+            }
+            break;
+        case Action::CloseBalance:
+            balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
+        case Action::SpeedDown:
+        case Action::SpeedUp:
+            setPlayerSpeed(std::clamp(std::round(balancePreset.playerSpeed*100+(action==Action::SpeedUp?10:-10))/100,
+                                      BalancePreset::MinSpeed,BalancePreset::MaxSpeed));break;
+        case Action::ResetBalance:resetBalance();break;
+        case Action::ExportBalance:exportBalancePreset();break;
+        case Action::LoadBalance:loadBalancePreset(balanceFile);break;
+        case Action::RememberBalance:rememberBalancePreset();break;
+        case Action::EditBalancePath:
+            balancePathBeforeEdit_=balanceFile;balancePathEditing=true;break;
+        case Action::RetryExpedition:retryExpedition();break;
         case Action::InspectBuild:
             if(run&&!run->dead&&(paused||(!run->shopOpen&&!run->rewardOpen))) {buildOpen=true;resetPointerInput();}
             break;
@@ -705,6 +709,7 @@ void Game::updateCamera(float dt) {
     camera.position = add(camera.target, cameraOffset());
 }
 bool Game::pointerOverControls() const {
+    if(balanceOpen)return true;
     if(controlsOpen||buildOpen||journalVisible()||letterVisible())return true;
     const Vector2 mouse = GetMousePosition();
     const float x = mouse.x * 1280.0f / float(GetScreenWidth());
@@ -723,7 +728,7 @@ bool Game::pointerOverControls() const {
     const bool live=run&&!paused&&!run->dead&&!run->rewardOpen&&!run->shopOpen;
     return (run&&(run->surveyTutorial||run->testimony())&&x>=964&&x<=1256&&y>=22&&y<=153)||
            (live&&(over(expeditionHud::Dynamite)||over(expeditionHud::DynamiteMode)||
-               over(expeditionHud::Dodge)||over(expeditionHud::Pause)||
+               over(expeditionHud::Dodge)||over(expeditionHud::Pause)||over(expeditionHud::Tuning)||
                (ownedItemTypes()>0&&over(expeditionHud::items(ownedItemTypes())))))||
            (x >= 1040 && x <= 1256 && y >= 170 && y <= 362) ||
            (debug && debugPanelOpen && x >= 24 && x <= 539 && y >= 133 && y <= 592);
@@ -744,6 +749,8 @@ std::string Game::expeditionNotice() const {
     return visible?run->message:run->demolitionHint();
 }
 Game::Menu Game::menuContext() const {
+    if(balanceOpen)return Menu::Balance;
+    if(run&&run->dead&&canRetryExpedition())return Menu::Death;
     if(controlsOpen)return Menu::Controls;
     if(buildOpen)return Menu::Build;
     if(journalVisible())return Menu::Journal;
@@ -761,6 +768,9 @@ Game::Menu Game::menuContext() const {
 }
 std::vector<Action> Game::menuActions() const {
     const auto context=menuContext();
+    if(context==Menu::Balance)return {Action::CloseBalance,Action::SpeedDown,Action::SpeedUp,
+        Action::ResetBalance,Action::ExportBalance,Action::LoadBalance,Action::RememberBalance,Action::EditBalancePath};
+    if(context==Menu::Death)return {Action::RetryExpedition};
     if(context==Menu::Controls)return {Action::CloseControls};
     if(context==Menu::Build)return {Action::CloseBuild};
     if(context==Menu::Journal) {
@@ -771,7 +781,7 @@ std::vector<Action> Game::menuActions() const {
     if(context==Menu::Dialogue)return {Action::QuestNext,Action::QuestCancel};
     if(context==Menu::HubPause||context==Menu::ExpeditionPause) {
         std::vector<Action> result;result.reserve(32);
-        result.push_back(Action::Resume);result.push_back(Action::Controls);
+        result.push_back(Action::Resume);result.push_back(Action::Controls);result.push_back(Action::OpenBalance);
         if(screen==Screen::Hub) {
             result.insert(result.end(),{Action::EditTown,Action::Quit,Action::TravelHub,
                 secondaryTravelHub(activeHub)==HubKind::Redstone?Action::TravelRedstone:Action::TravelFrontier});
@@ -806,7 +816,10 @@ std::vector<Action> Game::menuActions() const {
         if(inspectedHistory())return {Action::Hub,Action::Previous,Action::Next};
         return {Action::Hub};
     }
-    if(context==Menu::Summary)return {Action::Hub,Action::History};
+    if(context==Menu::Summary) {
+        if(canRetryExpedition())return {Action::RetryExpedition,Action::Hub,Action::History};
+        return {Action::Hub,Action::History};
+    }
     return {};
 }
 Action Game::keyboardFocus() const {
@@ -822,6 +835,7 @@ bool Game::updateMenuInput() {
     if(actions.empty())return false;
     menuArrowsHeld_=true;
     resetPointerInput();
+    if(balanceOpen&&IsKeyPressed(KEY_ESCAPE)) {perform(Action::CloseBalance);return true;}
     if(buildOpen&&(IsKeyPressed(KEY_ESCAPE)||IsKeyPressed(KEY_TAB))) {perform(Action::CloseBuild);return true;}
     if(controlsOpen&&IsKeyPressed(KEY_ESCAPE)) {perform(Action::CloseControls);return true;}
     if(paused&&!controlsOpen&&IsKeyPressed(KEY_H)) {perform(Action::Controls);return true;}
@@ -847,11 +861,11 @@ bool Game::updateMenuInput() {
         perform(keyboardFocus_);
         return true;
     }
-    return controlsOpen||buildOpen;
+    return controlsOpen||buildOpen||balanceOpen;
 }
 std::optional<Vector2> Game::floorExitMarker() const {
     if(screen!=Screen::Expedition||!run||run->dead||run->room!=run->finalRoom()||!run->roomClear||
-        paused||controlsOpen||buildOpen||journalVisible()||letterVisible()||run->shopOpen||run->rewardOpen)return std::nullopt;
+        paused||controlsOpen||buildOpen||balanceOpen||journalVisible()||letterVisible()||run->shopOpen||run->rewardOpen)return std::nullopt;
     const auto projected=GetWorldToScreen(add(run->arena.exit,{0,4.2f,0}),camera);
     // Clear of the title, minimap and bottom controls, including at close zoom.
     return Vector2{std::clamp(projected.x*1280.f/GetScreenWidth(),150.f,850.f),
@@ -973,6 +987,7 @@ void Game::updateHub(float dt) {
 }
 void Game::update(float dt, const SceneryPicker &pickScenery) {
     try {
+        if(updateBalanceInput())return;
         if(updateMenuInput())return;
         if(journalVisible()) {
             resetPointerInput();checkpoint();

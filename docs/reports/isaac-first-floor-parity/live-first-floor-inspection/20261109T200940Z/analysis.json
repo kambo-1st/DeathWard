@@ -1,0 +1,21 @@
+{
+  "input": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/live-first-floor-inspection/20261109T200940Z/motion.csv",
+  "sample_rows": 321,
+  "stable_sample_rows": 320,
+  "torn_or_phase_crossing_rows_excluded": 1,
+  "elapsed_seconds": 4.988772999999999,
+  "outer_phase_hz_over_whole_capture": 59.934577099419045,
+  "world_frame_advance": 150.0,
+  "active_gameplay_windows": 262,
+  "active_gameplay_world_hz_median": 29.834056722736246,
+  "active_gameplay_outer_hz_median": 60.05300684819607,
+  "steady_walking_segments": [],
+  "live_steady_motion_measured": false,
+  "status": "live movement not measured; paused/idle samples do not verify player speed",
+  "limitations": [
+    "ReadProcessMemory is observational and not an atomic whole-game snapshot; phase-crossing rows filtered",
+    "Only observed actor/session/room; no claim for all characters/items/statuses",
+    "No exact input-release time is recorded; no live stopping acceptance from these rows",
+    "Outer phase rate alone is not player movement frequency"
+  ]
+}

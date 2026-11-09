@@ -1,0 +1,35 @@
+Start testing: Nov 09 21:37 CET
+----------------------------------------------------------
+131/146 Testing: balance_preset_contract
+131/146 Test: balance_preset_contract
+Command: "/home/kambo/workspace/DeathWard/build/deathward_balance_preset_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"balance_preset_contract" start time: Nov 09 21:37 CET
+Output:
+----------------------------------------------------------
+PASS preset round-trip, 19 rejection cases, invalid-export protection and atomic replacement failure
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"balance_preset_contract" end time: Nov 09 21:37 CET
+"balance_preset_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+132/146 Testing: player_speed_attribute
+132/146 Test: player_speed_attribute
+Command: "/home/kambo/workspace/DeathWard/build/deathward_player_speed_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"player_speed_attribute" start time: Nov 09 21:37 CET
+Output:
+----------------------------------------------------------
+PASS canonical Speed movement, click route/arrival, zero/reversal, independent stats, retained dodge, health snapshot and floor transfer
+<end of output>
+Test time =   0.58 sec
+----------------------------------------------------------
+Test Passed.
+"player_speed_attribute" end time: Nov 09 21:37 CET
+"player_speed_attribute" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 09 21:37 CET

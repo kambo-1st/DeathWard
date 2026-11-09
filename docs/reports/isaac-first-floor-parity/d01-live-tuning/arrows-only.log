@@ -1,0 +1,4 @@
+BALANCE speed=1 revision=187724dbf7ccbd85 profile=reference-partial
+PASS mine arrow fire, diagonals, rotated camera, strafing, short taps, mouse fallback and modal guards
+BALANCE speed=1 revision=187724dbf7ccbd85 profile=reference-partial
+PASS canyon arrow fire, diagonals, rotated camera, strafing, short taps, mouse fallback and modal guards

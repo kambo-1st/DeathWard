@@ -1,5 +1,6 @@
 #pragma once
 #include "combat/Simulation.hpp"
+#include "core/BalancePreset.hpp"
 #include "core/VisualSettings.hpp"
 #include "core/VisualStyle.hpp"
 #include "world/Animals.hpp"
@@ -79,7 +80,17 @@ enum class Action {
     Controls,
     CloseControls,
     InspectBuild,
-    CloseBuild
+    CloseBuild,
+    OpenBalance,
+    CloseBalance,
+    SpeedDown,
+    SpeedUp,
+    ResetBalance,
+    ExportBalance,
+    LoadBalance,
+    RememberBalance,
+    EditBalancePath,
+    RetryExpedition
 };
 class Game {
   public:
@@ -107,6 +118,18 @@ class Game {
     bool journalOpen = false;
     bool controlsOpen = false;
     bool buildOpen = false;
+    bool balanceOpen = false, balancePathEditing = false;
+    BalancePreset balancePreset;
+    std::optional<BalancePreset> nextBalancePreset;
+    std::filesystem::path balanceDirectory;
+    std::string balanceFile, balanceNotice;
+    void setPlayerSpeed(float speed);
+    void resetBalance();
+    void exportBalancePreset();
+    void loadBalancePreset(const std::filesystem::path &path);
+    void rememberBalancePreset();
+    bool canRetryExpedition() const;
+    void retryExpedition();
     int journalIndex = 0;
     bool journalVisible() const { return journalOpen||(run&&run->storyOpen!=StoryRoom::None); }
     std::vector<StoryEvidence> journalEntries() const;
@@ -167,7 +190,7 @@ class Game {
     bool standStillQueued_ = false;
     bool cancelFireHeld_ = false;
     Action keyboardFocus_ = Action::None;
-    enum class Menu { None, Controls, Build, Journal, Letter, Dialogue, HubPause, ExpeditionPause, Missions, Shop, Reward, History, Summary };
+    enum class Menu { None, Controls, Build, Journal, Letter, Dialogue, HubPause, ExpeditionPause, Missions, Shop, Reward, History, Summary, Balance, Death };
     Menu keyboardMenu_ = Menu::None;
     bool menuArrowsHeld_ = false;
     Menu menuContext() const;
@@ -197,6 +220,21 @@ class Game {
     void checkpoint();
     void updateHub(float dt);
     void newSeed();
+    struct RetrySetup {
+        uint64_t seed;
+        MissionTheme theme;
+        bool river, tutorial;
+        WitnessAccount account;
+        ExpeditionPacing pacing;
+    };
+    std::optional<RetrySetup> retrySetup_;
+    std::string balanceRestoreError_, balancePathBeforeEdit_;
+    void initializeBalance();
+    void applyBalance(BalancePreset preset);
+    void archiveBalance(const BalancePreset &preset) const;
+    void startExpedition(std::unique_ptr<Simulation> candidate, bool retry = false);
+    RunSummary configuredSummary() const;
+    bool updateBalanceInput();
     ArrivalQuest arrival_;
     std::vector<QuestLine> questDialogue_;
     size_t questLine_ = 0;

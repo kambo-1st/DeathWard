@@ -1,0 +1,19 @@
+{
+  "launched_at_utc": "2026-11-09T20:42:57.837756+00:00",
+  "argv": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "1866",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d01/campaign.save"
+  ],
+  "cwd": "/home/kambo/workspace/DeathWard",
+  "executable_sha256": "b850c42ccbb779ce99422c900912b345a78c3c0e8fa85a550877afb11a87bcc9",
+  "process": "587548 build/deathward --expedition --seed 1866 --save /home/kambo/.local/share/deathward/reviews/first-floor-d01/campaign.save",
+  "running_when_checked": true,
+  "session_id": 64336,
+  "source_parity_claim": false,
+  "human_acceptance": "pending",
+  "preset_directory": "/home/kambo/.local/share/deathward/reviews/first-floor-d01/campaign.save.balance"
+}

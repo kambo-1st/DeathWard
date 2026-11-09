@@ -2,6 +2,7 @@
 #include "render/Renderer.hpp"
 #include "rlgl.h"
 #include <chrono>
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
 
@@ -15,6 +16,103 @@ constexpr unsigned MouseUp = 5, MouseDown = 6, MousePosition = 7, MouseWheel = 8
 constexpr unsigned KeyUp = 1, KeyDown = 2;
 void mouseEvent(unsigned type, int first, int second = 0) {
     PlayAutomationEvent({0, type, {first, second, 0, 0}});
+}
+void balanceInputCheck(const std::filesystem::path &directory) {
+    const auto save=directory/"balance.save";
+    dw::Game game(save);game.debug=false;game.seedText="1866";
+    game.themeChoice=dw::ThemeChoice::Canyon;game.launch(true);
+    check(game.run&&game.error.empty(),"main game direct expedition launch");
+    game.run->godMode=true;game.updateCamera(10);dw::Renderer renderer;
+    auto frame=[&] {
+        game.update(dw::Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);
+    };
+    auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    auto click=[&](int x,int y) {
+        mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();
+        mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();
+    };
+    auto capture=[&](const char *name) {
+        std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();
+        auto image=LoadImageFromScreen();check(ExportImage(image,name),"capture tuning UI");UnloadImage(image);EndDrawing();
+    };
+    auto &run=*game.run;
+    check(run.player.attributes.speed==1&&run.player.shotDamage==24&&run.player.hp==6,"D01 preserves baseline combat");
+    const auto start=run.player.position;
+    const auto walk=[&] {
+        mouseEvent(KeyDown,KEY_W);
+        for(int i=0;i<6;++i)frame();
+        mouseEvent(KeyUp,KEY_W);frame();
+        return dw::distance(start,run.player.position);
+    };
+    const float baseline=walk();check(baseline>.1f,"actual keyboard walking moves in starting room");
+    run.player.position=start;run.player.velocity={};
+    click(374,642);check(game.balanceOpen&&!game.paused,"live HUD opens tuning without a debug flag");
+    const auto duration=run.stats.duration;const auto position=run.player.position;
+    const auto shots=run.stats.shots;const auto rng=run.combatRng.state;
+    mouseEvent(KeyDown,KEY_W);mouseEvent(KeyDown,KEY_UP);frame();
+    check(run.stats.duration==duration&&run.stats.shots==shots&&dw::distance(position,run.player.position)==0,
+          "tuning panel freezes gameplay and captures movement/fire keys");
+    mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_UP);frame();
+    click(460,190);click(460,190);
+    check(std::abs(run.player.attributes.speed-.8f)<1e-6f&&run.combatRng.state==rng,"Speed buttons apply without advancing combat RNG");
+    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v1:")!=std::string::npos,"checkpoint identifies active tuning revision");
+    check(std::filesystem::exists(game.balanceDirectory/"revisions"/(game.balancePreset.revision()+".json")),"checkpoint revision retains its resolved preset");
+    capture("artifacts/d01-tuning-custom.png");
+    click(320,520);check(std::filesystem::exists(game.balanceFile),"export button writes JSON");
+    std::filesystem::copy_file(game.balanceFile,"artifacts/d01-speed-080.json",std::filesystem::copy_options::overwrite_existing);
+    click(900,520);check(game.nextBalancePreset&&game.nextBalancePreset->playerSpeed==.8f,"remember button persists next-expedition preset");
+    key(KEY_ESCAPE);check(!game.balanceOpen&&!game.paused,"Escape returns directly to gameplay");
+    const float tuned=walk();
+    check(std::abs(tuned/baseline-.8f)<.01f,"main Game keyboard movement immediately follows live Speed ratio");
+    key(KEY_ESCAPE);check(game.paused,"normal pause still works");
+    click(1150,140);check(game.balanceOpen&&game.paused,"pause menu also opens tuning");
+    run.player.hp=5;run.grant(dw::ItemId::Ricochet);run.keys=2;run.moneyCollected=11;
+    const auto items=run.items;const auto rooms=run.stats.rooms;const auto health=run.player.hp;
+    const auto money=run.money();const auto runSeed=run.expedition.seed;
+    click(850,190);check(run.player.attributes.speed==1,"reset reference changes Speed only");
+    click(590,520);
+    check(run.player.attributes.speed==.8f&&run.player.hp==health&&run.items==items&&run.keys==2&&
+          run.money()==money&&run.stats.rooms==rooms&&run.expedition.seed==runSeed,
+          "preset load preserves injuries, inventory, wallet, keys, room progress and seed");
+    const auto previous=game.balancePreset.revision();
+    const auto invalid=directory/"invalid.json";{std::ofstream out(invalid);out<<"{\"resolved\":{\"player_speed\":99}}";}
+    const auto exportPath=game.balanceFile;game.balanceFile=invalid.string();game.perform(dw::Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==previous&&run.player.attributes.speed==.8f,
+          "invalid live load rejects atomically without changing active Speed");
+    game.balanceFile=exportPath;game.perform(dw::Action::LoadBalance);check(game.error.empty(),"valid load recovers from invalid input");
+    game.setPlayerSpeed(.7f);check(game.nextBalancePreset->playerSpeed==.8f,"live edit does not silently change remembered next-expedition settings");
+    game.setPlayerSpeed(.8f);
+    // Exercise the actual keyboard path editor, including paste and Escape restoration.
+    click(600,440);check(game.balancePathEditing,"preset path is editable");
+    SetClipboardText(invalid.string().c_str());mouseEvent(KeyDown,KEY_LEFT_CONTROL);key(KEY_V);mouseEvent(KeyUp,KEY_LEFT_CONTROL);frame();
+    check(game.balanceFile==invalid.string(),"path editor supports pasting an arbitrary preset path");
+    key(KEY_ESCAPE);check(!game.balancePathEditing&&game.balanceFile==exportPath,"Escape restores uncommitted path edit");
+    key(KEY_ESCAPE);check(!game.balanceOpen&&game.paused,"tuning returns to the originating pause menu");key(KEY_ESCAPE);
+    const auto history=game.campaign.data().history.size();
+    run.finishDebug(false);key(KEY_ENTER);
+    check(game.run&&!game.run->dead&&game.screen==dw::Screen::Expedition&&game.run->expedition.seed==runSeed,
+          "Enter after death retries the same expedition directly");
+    check(game.campaign.data().history.size()==history+1&&game.run->player.attributes.speed==.8f&&game.run->player.hp==6,
+          "retry resolves death once, retains active Speed and starts with normal health");
+    game.run->finishDebug(false);game.finish(dw::EndReason::Death);
+    capture("artifacts/d01-death-retry.png");
+    check(game.keyboardFocus()==dw::Action::RetryExpedition,"death summary defaults to retry");key(KEY_ENTER);
+    check(game.run&&!game.run->dead&&game.run->expedition.seed==runSeed,"summary Enter restarts without visiting the hub");
+    game.run->jumpDebug(game.run->finalRoom());game.run->clearRoomDebug();game.run->floorExitRequested=true;
+    check(game.run->advanceFloor()&&game.run->player.attributes.speed==.8f,"preset Speed survives actual floor transfer");
+    game.close();renderer.unload();
+    dw::Game fresh(save);fresh.themeChoice=dw::ThemeChoice::Canyon;fresh.seedText="1866";fresh.launch(true);
+    check(fresh.error.empty()&&fresh.run->player.attributes.speed==.8f,"fresh Game session auto-loads remembered preset for next expedition");
+    check(fresh.run->player.hp==6&&fresh.run->player.shotDamage==24&&fresh.run->items.empty(),"preset is configuration, not old inventory or damage changes");
+    fresh.resetBalance();fresh.rememberBalancePreset();fresh.close();
+    dw::Game restored(save);restored.themeChoice=dw::ThemeChoice::Canyon;restored.launch(true);
+    check(restored.run->player.attributes.speed==1,"reference reset and remember round-trip to a new session");restored.close();
+    {std::ofstream out(restored.balanceDirectory/"next.json");out<<"broken";}
+    dw::Game broken(save);check(!broken.error.empty(),"corrupt remembered preset is reported, not silently accepted");
+    bool rejected=false;try{broken.launch(true);}catch(const std::exception &){rejected=true;}
+    check(rejected&&!broken.run&&!broken.campaign.data().pending,"incompatible remembered preset cannot silently launch defaults");
+    broken.resetBalance();broken.rememberBalancePreset();broken.launch(true);check(broken.run!=nullptr,"reference reset recovers invalid saved configuration");broken.close();
+    std::cout<<"PASS D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence\n";
 }
 void startingHeartsInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"starting-hearts.save");game.debug=true;game.seedText="42";
@@ -1065,6 +1163,10 @@ int main(int argc, char **argv) {
         SetTargetFPS(0);
         SetExitKey(KEY_NULL);
         const std::string mode = argc > 1 ? argv[1] : "";
+        if(mode.empty()||mode=="--balance-only") {
+            balanceInputCheck(directory);
+            if(mode=="--balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
         if(mode.empty()||mode=="--starting-hearts-only") {
             startingHeartsInputCheck(directory);
             if(mode=="--starting-hearts-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}

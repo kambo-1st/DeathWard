@@ -1,0 +1,7 @@
+BALANCE speed=1 revision=187724dbf7ccbd85 profile=reference-partial
+BALANCE speed=0.8 revision=de261b68e4100043 profile=custom
+BALANCE speed=0.8 revision=de261b68e4100043 profile=custom
+BALANCE speed=0.8 revision=de261b68e4100043 profile=custom
+BALANCE speed=1 revision=187724dbf7ccbd85 profile=reference-partial
+BALANCE speed=1 revision=187724dbf7ccbd85 profile=reference-partial
+PASS D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence

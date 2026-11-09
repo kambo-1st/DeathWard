@@ -1,0 +1,4 @@
+Read-only memory capture with ordinary Enter/A/D input; no process writes.
+pid=29964,base=12845056,game=618557472,manager=599793696,room=583409824,player=891978576,state=2,shape=1,grid_width=15,grid_height=9,left=60,top=140,right=580,bottom=420,speed=1,character=0,stopwatch_hz=10000000,samples=321,stop=duration,method=VM_READ only; no writes, injected code, suspension or game-file edits; normal keyboard input supplied by separate guarded thread
+A=True,D=True
+pause_key_sent=True

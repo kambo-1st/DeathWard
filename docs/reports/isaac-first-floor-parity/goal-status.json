@@ -35,7 +35,49 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Verify enemy projectile timing/speed beginning with Pooter/Horf, then human pressure review. Private Gaper routing/activation and bounded ordinary Spider/Pooter movement now compared; source RNG/acquisition/global scheduling/terrain/body collision/status/variants and production acceptance remain open. HP acceptance held.",
+  "next_work": "D01 is implemented in the main game; developer verification passes and human acceptance is pending. Playtest live Speed 1 to 0.8, export/remember/relaunch and retry. Next selectable delivery is D02 source-scale walking. D02-D20 and full first-floor parity remain unfinished; the bulk effort stays paused.",
+  "first_floor_delivery_plan_checkpoint": {
+    "recorded_date": "2026-11-09",
+    "status": "D01 selected and implemented in main game; developer checks pass; human acceptance pending",
+    "report": "docs/isaac_first_floor_delivery_plan.md",
+    "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
+    "cumulative_gameplay_integration_required": true,
+    "human_test_per_delivery_required": true,
+    "live_tuning_for_every_new_tunable_required": true,
+    "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
+    "preset_export_and_fresh_launch_reload_required": true,
+    "explicit_application_boundaries_required": true,
+    "next_proposed_delivery": "D02",
+    "new_gameplay_implemented": true,
+    "new_bulk_selection": false,
+    "selected_deliveries": [
+      "D01"
+    ],
+    "human_acceptance": "pending",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/d01-live-tuning/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/d01-live-tuning/validation.json"
+  },
+  "first_floor_requirements_checkpoint": {
+    "recorded_date": "2026-11-09",
+    "status": "requirements inventoried against current code and preserved reports; gameplay unchanged",
+    "report": "docs/isaac_first_floor_implementation.md#current-direction-first-floor-requirements-in-the-base-game",
+    "future_delivery_location": "base game",
+    "live_source_inspection_report": "docs/reports/isaac-first-floor-parity/live-first-floor-inspection/README.md",
+    "live_source_access_verified": true,
+    "fresh_ordinary_movement_capture_verified": true,
+    "live_capture_scope": "character 0, Speed 1, normal room geometry and bounded steady horizontal movement; source stage/difficulty/unlocks/floor generation/enemies not established",
+    "proposed_profile": "Repentance 1.7.9b, ordinary Isaac, Normal, Basement I",
+    "unresolved_scope_choices": [
+      "recorded unlock profile",
+      "Basement I alone or all alternate opening floor variants",
+      "any explicitly deferred reachable content"
+    ],
+    "source_floor_eligibility_manifest_complete": false,
+    "source_shop_treasure_count_placement_rules_verified": false,
+    "full_floor_gameplay_accepted": false,
+    "new_gameplay_selection": false,
+    "earlier_estimate_scope": "2-4 hours was a rough first baseline combat-pass estimate, not a validated whole-floor estimate"
+  },
   "historical_latest_research": {
     "native_contact_cases": 2016,
     "observed_events": 5040,
@@ -45,7 +87,7 @@
     "source_damage_application_accepted": false,
     "scope": "Archived research and reverted runtime;not current gameplay acceptance."
   },
-  "last_status_report_utc": "2026-11-08T08:08:31Z",
+  "last_status_report_utc": "2026-11-09T20:42:32.589473+00:00",
   "selected_difference": "H01",
   "manual_difference_selection_required": true,
   "difference_register": "docs/reports/isaac-first-floor-parity/manual-differences.json",

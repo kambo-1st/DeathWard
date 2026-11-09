@@ -34,6 +34,7 @@ FetchContent_MakeAvailable(raylib)
 target_compile_definitions(raylib PRIVATE MA_NO_NULL)
 
 add_library(deathward_core
+    src/core/BalancePreset.cpp
     src/content/ContentId.cpp
     src/content/Mechanics.cpp
     src/content/EncounterVariants.cpp
@@ -273,20 +274,20 @@ function(deathward_assets target)
     endforeach()
 endfunction()
 
-add_executable(deathward src/main.cpp src/core/FrontEnd.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/editor/TownEditorNavigation.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp src/core/GameQuest.cpp)
+add_executable(deathward src/main.cpp src/core/FrontEnd.cpp src/audio/AudioSystem.cpp src/audio/MusicDirector.cpp src/cinematic/CinematicAudio.cpp src/editor/CinematicEditor.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/editor/TownEditorNavigation.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp src/core/Game.cpp src/core/GameTuning.cpp src/core/GameQuest.cpp)
 # Isolated human-review room. Production movement/input code is reused unchanged.
 add_executable(deathward_movement_review EXCLUDE_FROM_ALL tools/movement_review.cpp
-    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
+    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameTuning.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
     src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp
     src/render/CanyonScene.cpp src/render/TownScene.cpp)
 target_link_libraries(deathward_movement_review PRIVATE deathward_core raylib)
 add_executable(deathward_projectile_review EXCLUDE_FROM_ALL tools/projectile_review.cpp
-    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
+    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameTuning.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
     src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp
     src/render/CanyonScene.cpp src/render/TownScene.cpp)
 target_link_libraries(deathward_projectile_review PRIVATE deathward_core raylib)
 add_executable(deathward_damage_health_review EXCLUDE_FROM_ALL tools/damage_health_review.cpp
-    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
+    src/render/PostProcess.cpp src/core/Game.cpp src/core/GameTuning.cpp src/core/GameQuest.cpp src/render/Renderer.cpp
     src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp
     src/render/CanyonScene.cpp src/render/TownScene.cpp)
 target_link_libraries(deathward_damage_health_review PRIVATE deathward_core raylib)
@@ -408,7 +409,7 @@ if(BUILD_TESTING)
     add_executable(deathward_save_slot_tests tests/save_slot_tests.cpp)
     target_link_libraries(deathward_save_slot_tests PRIVATE deathward_core)
     add_test(NAME save_slots COMMAND deathward_save_slot_tests)
-    add_executable(deathward_arrival_input_tests tests/arrival_input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
+    add_executable(deathward_arrival_input_tests tests/arrival_input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/core/GameTuning.cpp src/core/GameQuest.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_arrival_input_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_arrival_input_tests)
     add_executable(deathward_arrival_quest_tests tests/arrival_quest_tests.cpp)
@@ -946,6 +947,9 @@ if(BUILD_TESTING)
     target_include_directories(deathward_player_attributes_tests PRIVATE src)
     add_test(NAME player_attributes_contract COMMAND deathward_player_attributes_tests)
     add_executable(deathward_player_speed_tests tests/player_speed_tests.cpp)
+    add_executable(deathward_balance_preset_tests tests/balance_preset_tests.cpp)
+    target_link_libraries(deathward_balance_preset_tests PRIVATE deathward_core)
+    add_test(NAME balance_preset_contract COMMAND deathward_balance_preset_tests)
     target_link_libraries(deathward_player_speed_tests PRIVATE deathward_core)
     add_test(NAME player_speed_attribute COMMAND deathward_player_speed_tests)
     add_executable(deathward_canonical_shooting_tests tests/canonical_shooting_integration_tests.cpp)
@@ -990,7 +994,7 @@ if(BUILD_TESTING)
     target_link_libraries(deathward_room_graph_tests PRIVATE deathward_core)
     add_test(NAME generated_room_graphs COMMAND deathward_room_graph_tests)
     # Run explicitly when a graphics display is available; keep CTest headless.
-    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/Renderer.cpp src/core/Game.cpp src/core/GameQuest.cpp)
+    add_executable(deathward_occlusion_tests tests/occlusion_tests.cpp src/render/PostProcess.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/TownScene.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/Renderer.cpp src/core/Game.cpp src/core/GameTuning.cpp src/core/GameQuest.cpp)
     target_link_libraries(deathward_occlusion_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_occlusion_tests)
     add_executable(deathward_post_process_tests tests/post_process_tests.cpp src/render/PostProcess.cpp)
@@ -999,7 +1003,7 @@ if(BUILD_TESTING)
     add_executable(deathward_editor_tests tests/editor_tests.cpp src/render/AnimalModels.cpp src/render/PostProcess.cpp src/editor/TownEditor.cpp src/editor/TownEditorAnimals.cpp src/editor/TownEditorNavigation.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_editor_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_editor_tests)
-    add_executable(deathward_input_tests tests/input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/core/GameQuest.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
+    add_executable(deathward_input_tests tests/input_tests.cpp src/render/PostProcess.cpp src/core/Game.cpp src/core/GameTuning.cpp src/core/GameQuest.cpp src/render/Renderer.cpp src/render/PlayerModel.cpp src/render/AnimalModels.cpp src/render/WesternScene.cpp src/render/CanyonScene.cpp src/render/TownScene.cpp)
     target_link_libraries(deathward_input_tests PRIVATE deathward_core raylib)
     deathward_assets(deathward_input_tests)
     add_executable(deathward_player_model_tests tests/player_model_tests.cpp src/render/PlayerModel.cpp)

@@ -1,0 +1,84 @@
+{
+  "input": "/home/kambo/workspace/DeathWard/docs/reports/isaac-first-floor-parity/live-first-floor-inspection/20261109T201021Z/motion.csv",
+  "sample_rows": 578,
+  "stable_sample_rows": 577,
+  "torn_or_phase_crossing_rows_excluded": 1,
+  "elapsed_seconds": 8.9868966,
+  "outer_phase_hz_over_whole_capture": 59.97621025260266,
+  "world_frame_advance": 261.0,
+  "active_gameplay_windows": 514,
+  "active_gameplay_world_hz_median": 29.76138478007543,
+  "active_gameplay_outer_hz_median": 59.90767647717473,
+  "steady_walking_segments": [
+    {
+      "native_coordinates_per_outer_phase": 4.408940171619961,
+      "fitted_outer_hz": 59.70772443743394,
+      "fitted_world_hz": 29.801888333503065,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        4.400619,
+        4.414146
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 0.99942948964595,
+      "axis": "x",
+      "start_seconds": 2.3884897,
+      "end_seconds": 3.0464876,
+      "samples": 43,
+      "native_cached_velocity": 4.411456953488372,
+      "fitted_native_coordinates_per_second": 263.82451092262886,
+      "effective_motion_invocations_per_second": 59.80439426344371,
+      "world_frames": 19.0,
+      "displacement": 172.0424
+    },
+    {
+      "native_coordinates_per_outer_phase": -4.3854691919191895,
+      "fitted_outer_hz": 57.22310009086968,
+      "fitted_world_hz": 29.15430575651139,
+      "speed_stat_range": [
+        1.0,
+        1.0
+      ],
+      "native_cached_velocity_range": [
+        -4.411901,
+        -4.400305
+      ],
+      "time_scale_range": [
+        1.0,
+        1.0
+      ],
+      "friction_range": [
+        1.0,
+        1.0
+      ],
+      "motion_steps_per_outer_phase": 0.9948929560247697,
+      "axis": "x",
+      "start_seconds": 4.0901089,
+      "end_seconds": 4.3531373,
+      "samples": 18,
+      "native_cached_velocity": -4.407980944444445,
+      "fitted_native_coordinates_per_second": -255.80691782979994,
+      "effective_motion_invocations_per_second": 58.03267324742038,
+      "world_frames": 7.0,
+      "displacement": -61.70240000000001
+    }
+  ],
+  "live_steady_motion_measured": true,
+  "status": "steady live motion observed; inspect identity/geometry and segment agreement",
+  "limitations": [
+    "ReadProcessMemory is observational and not an atomic whole-game snapshot; phase-crossing rows filtered",
+    "Only observed actor/session/room; no claim for all characters/items/statuses",
+    "No exact input-release time is recorded; no live stopping acceptance from these rows",
+    "Outer phase rate alone is not player movement frequency"
+  ]
+}

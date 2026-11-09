@@ -1,0 +1,9 @@
+{
+  "format": "deathward.balance",
+  "schema_version": 1,
+  "compatibility": {"contract": "d01-speed-v1", "content_version": "deathward-m1-61", "mechanics_fingerprint": "2ccd5b1c274a302e"},
+  "reference": {"source": "The Binding of Isaac: Repentance 1.7.9b", "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6", "coverage": "Speed configuration only; native balance pending", "player_speed": 1, "walking_pace_at_speed_one": 4.8},
+  "resolved": {"player_speed": 0.8},
+  "overrides": {"player_speed": 0.8},
+  "exceptions": {"isometric": true, "eight_direction_controls": true, "universal_dodge": true, "immediate_stopping": true}
+}

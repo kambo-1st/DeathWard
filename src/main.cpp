@@ -57,6 +57,8 @@ int main(int argc, char **argv) {
     std::filesystem::path editorDirectory;
     std::filesystem::path sequenceFile;
     std::filesystem::path slotsDirectory;
+    std::filesystem::path balancePresetPath;
+    std::string expeditionSeedText;
     std::optional<float> cinematicTime;
     std::string screenshot, scene = "combat";
     std::optional<dw::MonsterId> enemyScene;
@@ -92,6 +94,15 @@ int main(int argc, char **argv) {
         std::string arg = argv[i];
         if (arg == "--save" && i + 1 < argc) {
             save = argv[++i]; explicitSave = true;
+        }
+        else if (arg == "--balance-preset" && i + 1 < argc)
+            balancePresetPath = argv[++i];
+        else if (arg == "--seed" && i + 1 < argc) {
+            expeditionSeedText=argv[++i];uint64_t seedValue=0;
+            const auto parsed=std::from_chars(expeditionSeedText.data(),expeditionSeedText.data()+expeditionSeedText.size(),seedValue);
+            if(parsed.ec!=std::errc{}||parsed.ptr!=expeditionSeedText.data()+expeditionSeedText.size()) {
+                std::cerr<<"--seed needs an unsigned whole number\n";return 2;
+            }
         }
         else if (arg == "--full-experience")
             fullExperience = true;
@@ -305,6 +316,8 @@ int main(int argc, char **argv) {
         } else if (arg == "--help") {
             std::cout << "DeathWard\n  --practice-batch4     Play Bouncer/Quakey/Gas Dwarf/two Clacks\n  --practice-batch3     Play the five Charger-family enemies\n  --practice-batch2     Play Fly/Pooter/Attack Fly/Spider/Mulligan practice encounter\n  --expedition         Start directly in a playable expedition\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
+                         " --balance-preset PATH  Load and remember a Speed tuning preset\n "
+                         " --seed NUMBER        Repeatable expedition seed\n "
                          " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
                          "black-creek"
                          ", frontier or redstone\n  --smoke              "
@@ -488,10 +501,15 @@ int main(int argc, char **argv) {
             return 0;
         }
         dw::Game game(save, initialHub);
+        if(!balancePresetPath.empty()) {
+            game.loadBalancePreset(balancePresetPath);
+            game.rememberBalancePreset();
+        }
         game.sandstorm = sandstorm || game.arrivalActive();
         game.themeChoice = themeChoice;
         game.expeditionPacing = expeditionPacing;
         if (smoke || benchmark) game.seedText = "1866";
+        if(!expeditionSeedText.empty())game.seedText=expeditionSeedText;
         game.audioSettings = audioSettings; game.visualSettings = visualSettings; game.audioStatus = audioStatus;
         game.visualStyle = styleChoice.value_or(dw::VisualStyle::Original);
         auto savedAudioSettings = audioSettings;
@@ -1388,7 +1406,7 @@ int main(int argc, char **argv) {
             audioFrame.dt = GetFrameTime();
             audioFrame.context = game.audioContext;
             audioFrame.music = editing || filming ? dw::MusicScene::Silent : game.musicScene();
-            audioFrame.paused = editing || filming || game.paused || game.buildOpen || game.letterVisible() || game.journalVisible() ||
+            audioFrame.paused = editing || filming || game.paused || game.buildOpen || game.balanceOpen || game.letterVisible() || game.journalVisible() ||
                                 (game.screen != dw::Screen::Hub && game.screen != dw::Screen::Expedition);
             audioFrame.environment = game.activeHub == dw::HubKind::Redstone
                                          ? dw::AudioEnvironment::Canyon

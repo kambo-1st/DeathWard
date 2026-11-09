@@ -76,5 +76,6 @@ class Renderer {
     void debugPanel(const Game &game);
     void dungeonMap(const Game &game);
     Action audioPanel(const Game &game);
+    Action balancePanel(const Game &game);
 };
 } // namespace dw

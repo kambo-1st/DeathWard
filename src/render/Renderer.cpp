@@ -1899,6 +1899,7 @@ Action Renderer::expedition(const Game &game) {
         if(run.player.dodgeCooldown>0)
             DrawRectangleRec({dodge.x*sx_,(dodge.y+dodge.height-3)*sy_,dodge.width*sx_*(1-std::clamp(run.player.dodgeCooldown/1.1f,0.f,1.f)),3*sy_},Teal);
         if(control(Action::Pause,"PAUSE",expeditionHud::Pause))controls=Action::Pause;
+        if(control(Action::OpenBalance,"TUNE SPEED",expeditionHud::Tuning))controls=Action::OpenBalance;
         if(const auto action=buildStrip(game);action!=Action::None)controls=action;
     }
     const auto warning=run.demolitionWarning();
@@ -2025,6 +2026,8 @@ Action Renderer::expedition(const Game &game) {
             text("Applies now and to later missions this session.", 915, 532, 11, Muted);
         }
     }
+    if(run.dead&&game.canRetryExpedition()&&button(Action::RetryExpedition,"RETRY EXPEDITION [ENTER]",420,650,440,48,true))
+        return Action::RetryExpedition;
     return controls;
 }
 Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
@@ -2081,6 +2084,8 @@ Action Renderer::summary(const Game &game, const RunSummary &s, bool history) {
     if (button(Action::Hub, std::string("RETURN TO ") + hubShortName(game.activeHub), 60,
                740, 341, 42, true))
         return Action::Hub;
+    if(!history&&game.canRetryExpedition()&&button(Action::RetryExpedition,"RETRY SAME SEED [ENTER]",415,740,430,42,true))
+        return Action::RetryExpedition;
     if (history) {
         text(std::to_string(game.historyIndex + 1) + " / " +
                  std::to_string(game.campaign.data().history.size()),
@@ -2164,6 +2169,44 @@ Action Renderer::audioPanel(const Game &game) {
         return Action::AudioTest;
     return Action::None;
 }
+Action Renderer::balancePanel(const Game &game) {
+    const auto decimal=[](float n){std::ostringstream out;out<<std::fixed<<std::setprecision(2)<<n;return out.str();};
+    panel(0,0,1280,800,{8,12,16,235});panel(170,60,940,680,Panel);
+    text("EXPEDITION TUNING",205,86,30,Gold);
+    text(game.balancePreset.custom()?"CUSTOM / SPEED":"REFERENCE / PARTIAL",800,96,15,Teal);
+    text("Change Speed, resume and feel it immediately. Dodge and firing controls stay the same.",205,132,15,Paper);
+    text("SPEED",205,181,18,Muted);text(decimal(game.balancePreset.playerSpeed),296,172,32,Paper);
+    if(button(Action::SpeedDown,"- 0.10",405,169,118,45))return Action::SpeedDown;
+    if(button(Action::SpeedUp,"+ 0.10",535,169,118,45))return Action::SpeedUp;
+    if(button(Action::ResetBalance,"RESET SPEED TO 1.00",675,169,400,45))return Action::ResetBalance;
+    text("Reference 1.00  /  editor range 0.10 - 2.00  /  applied on the next movement step",205,228,13,Muted);
+    text("CURRENT BUILD / READ ONLY",205,266,16,Gold);
+    if(game.run) {
+        const auto &run=*game.run;const auto &s=run.player.attributes;
+        const auto shot=primaryPlayerAttack(run,run.player.shotDamage,run.player.nextRound==6);
+        text("Health: "+decimal(run.player.totalHealth())+" half-heart units",205,300,14,Paper);
+        text("Next-shot damage: "+decimal(shot.damage)+"  /  source base: 3.50",620,300,14,Paper);
+        text("Firing rate: "+decimal(1/primaryCadence(run))+" / second",205,328,14,Paper);
+        text("Range stat: "+decimal(s.rangeTiles)+" tiles  /  adapted",620,328,14,Paper);
+        text("Shot Speed stat: "+decimal(s.shotSpeed)+"  /  adapted",205,356,14,Paper);
+        text("Luck: "+decimal(s.luck)+"  /  effects pending",620,356,14,Muted);
+    } else text("Start an expedition to see the current build. The remembered preset applies at launch.",205,315,15,Paper);
+    text("PRESET FILE / JSON / SPEED ONLY",205,395,14,Gold);
+    auto path=game.balanceFile;
+    if(path.size()>98)path="..."+path.substr(path.size()-95);
+    if(button(Action::EditBalancePath,path.empty()?"Click to enter a preset path":path,205,421,870,38,game.balancePathEditing))
+        return Action::EditBalancePath;
+    text(game.balancePathEditing?"Editing: Ctrl+A clear / Ctrl+V paste / Ctrl+C copy / Enter done / Esc cancel":"Click the path to edit it. Export and Load use this file.",205,468,12,Muted);
+    if(button(Action::ExportBalance,"EXPORT",205,500,260,42))return Action::ExportBalance;
+    if(button(Action::LoadBalance,"LOAD AND APPLY",480,500,260,42))return Action::LoadBalance;
+    if(button(Action::RememberBalance,"USE NEXT EXPEDITION",755,500,320,42))return Action::RememberBalance;
+    text("Next expedition: Speed "+decimal(game.nextBalancePreset?game.nextBalancePreset->playerSpeed:1)+
+         (game.nextBalancePreset?" / remembered across restarts":" / default"),205,563,15,Teal);
+    wrap(game.error.empty()?game.balanceNotice:game.error,205,596,870,15,game.error.empty()?Paper:Rust);
+    text("Source movement and full first-floor parity are still pending.",205,684,13,Muted);
+    if(button(Action::CloseBalance,"BACK [ESC]",790,674,285,42,true))return Action::CloseBalance;
+    return Action::None;
+}
 Action Renderer::draw(const Game &game) {
     keyboardFocus_=game.keyboardFocus();
     visualStyle = game.visualStyle;
@@ -2202,7 +2245,8 @@ Action Renderer::draw(const Game &game) {
         break;
     }
     if (game.paused && (game.screen == Screen::Hub || game.screen == Screen::Expedition)) {
-        if(game.run&&button(Action::InspectBuild,"INSPECT BUILD",915,124,321,34))action=Action::InspectBuild;
+        if(game.run&&button(Action::InspectBuild,"BUILD",915,124,150,34))action=Action::InspectBuild;
+        if(button(Action::OpenBalance,"TUNING",game.run?1080.f:915.f,124,game.run?156.f:321.f,34))action=Action::OpenBalance;
         if(button(Action::Controls,"KEYBOARD CONTROLS [H]",915,170,321,42))action=Action::Controls;
         const auto audioAction = audioPanel(game);
         if (audioAction != Action::None)
@@ -2247,6 +2291,7 @@ Action Renderer::draw(const Game &game) {
         panel(380,778,520,20,Panel);
         text("Tab / arrows select    Enter confirm    Esc back",394,783,12,Teal);
     }
+    if(game.balanceOpen)return balancePanel(game);
     if(game.buildOpen)return buildDetails(game);
     if(game.controlsOpen) {
         panel(0,0,1280,800,{8,12,16,235});panel(235,80,810,650,Panel);
