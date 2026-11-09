@@ -86,6 +86,10 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
     if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
        dimensions.minGapTiles<4||dimensions.maxGapTiles<dimensions.minGapTiles||dimensions.maxGapTiles>16)
         throw std::invalid_argument("Invalid floor dimensions");
+    if(!std::isfinite(dimensions.routeLengthScale)||dimensions.routeLengthScale<.25f||dimensions.routeLengthScale>2)
+        throw std::invalid_argument("Route length must be between 25% and 200%");
+    if(!std::isfinite(dimensions.roomSizeScale)||dimensions.roomSizeScale<.75f||dimensions.roomSizeScale>1.5f)
+        throw std::invalid_argument("Room size must be between 75% and 150%");
     Random layout(seed ^ 0x4c41594f55544d31ULL);
     std::set<std::pair<int, int>> usedSizes;
     const auto graph = generateRoomGraph(seed,tutorial,requestedRooms);
@@ -162,9 +166,19 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             if(seed&1)halfX*=2;else halfZ*=2;
         }
         if(boss&&profile.bossRails){halfX=profile.bossRails->width;halfZ=profile.bossRails->height;}
+        float envelopeHalfX=float(halfX),envelopeHalfZ=float(halfZ);
+        if(!boss) {
+            envelopeHalfX=std::max(5.f,halfX*dimensions.roomSizeScale);
+            envelopeHalfZ=std::max(5.f,halfZ*dimensions.roomSizeScale);
+            // Canyon basins already accept continuous dimensions. Keep fine
+            // edits here; the mine's tile floor still needs integer half-spans.
+            halfX=std::max(5,int(std::lround(envelopeHalfX)));
+            halfZ=std::max(5,int(std::lround(envelopeHalfZ)));
+            if(theme!=MissionTheme::Canyon){envelopeHalfX=float(halfX);envelopeHalfZ=float(halfZ);}
+        }
         room.bounds = {
-            {room.center.x - float(halfX) * FloorTile, 0, room.center.z - float(halfZ) * FloorTile},
-            {room.center.x + float(halfX) * FloorTile, 3, room.center.z + float(halfZ) * FloorTile}};
+            {room.center.x - envelopeHalfX * FloorTile, 0, room.center.z - envelopeHalfZ * FloorTile},
+            {room.center.x + envelopeHalfX * FloorTile, 3, room.center.z + envelopeHalfZ * FloorTile}};
         // Cycle a seeded sequence of footprints so every expedition has visible shape variety.
         room.shape = profile.active() && boss ? 1 : (int(seed % 4) + i) % 4;
         if(boss&&profile.bossRails)room.shape=0;
@@ -203,14 +217,16 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             room.objective = sites[layout.bounded(uint32_t(sites.size()))];
         room.bossSpawn = room.center;
     }
-    if(dimensions.shorterCorridors||profile.doubleBossRoom||profile.bossRails) {
+    const bool compactSpacing=dimensions.roomSizeScale!=1||dimensions.shorterCorridors||profile.doubleBossRoom||profile.bossRails;
+    if(compactSpacing||dimensions.routeLengthScale!=1) {
         // Repack whole rows/columns after choosing each room's footprint. This
         // preserves the graph and cardinal entrances without crossing trails.
         // A separate stream leaves sizes, shapes and objectives unchanged in the
         // corridors-only trial. Larger boss envelopes retain the space they need.
         Random spacing(seed^0x434f525249444f52ULL);
         auto compactAxis=[&](bool xAxis) {
-            std::map<int,int> extents,positions{{0,0}};
+            std::map<int,int> extents;
+            std::map<int,float> positions{{0,0}};
             for(size_t i=0;i<rooms.size();++i) {
                 const auto &r=rooms[i];const auto cell=graph.cells[i];
                 const int coordinate=xAxis?cell.first:cell.second;
@@ -218,8 +234,13 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
                 extents[coordinate]=std::max(extents[coordinate],int(std::lround(width/(2*FloorTile))));
             }
             auto gap=[&](int a,int b) {
-                return extents.at(a)+extents.at(b)+dimensions.minGapTiles+
-                    int(spacing.bounded(uint32_t(dimensions.maxGapTiles-dimensions.minGapTiles+1)));
+                const auto &original=xAxis?xs:zs;
+                const int baseGap=compactSpacing?dimensions.minGapTiles+
+                    int(spacing.bounded(uint32_t(dimensions.maxGapTiles-dimensions.minGapTiles+1))):
+                    original.at(b)-original.at(a)-extents.at(a)-extents.at(b);
+                float scaledGap=baseGap*dimensions.routeLengthScale;
+                if(theme!=MissionTheme::Canyon)scaledGap=std::max(1.f,std::round(scaledGap));
+                return extents.at(a)+extents.at(b)+scaledGap;
             };
             for(int i=1;i<=extents.rbegin()->first;++i)positions[i]=positions.at(i-1)+gap(i-1,i);
             for(int i=-1;i>=extents.begin()->first;--i)positions[i]=positions.at(i+1)-gap(i,i+1);

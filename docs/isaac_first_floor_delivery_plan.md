@@ -1,6 +1,6 @@
 # First floor: small playable deliveries
 
-Updated: 2026-11-09. **D01 is implemented in the main game and developer-verified; human acceptance is pending. D02–D20 remain planned.** See [D01 delivery and checks](reports/isaac-first-floor-parity/d01-live-tuning/README.md). Existing selected features and evidence remain recorded in [the implementation report](isaac_first_floor_implementation.md).
+Updated: 2026-11-09. **D01 committed (`809beb75`).** D02 retains the original canyon visuals/corridors and accepted walking, with larger defaults, 1% room-size/route-length controls and minimum/maximum controls before generation, applied together using **Apply map changes**, plus an immediately previewed default zoom that exports/reloads with presets. The user explicitly requires unrestricted test resizing: current-floor encounters/rewards regenerate while player/build and expedition identity remain. See [current scope](reports/isaac-first-floor-parity/d02-room-scale/README.md). Exact native spatial acceptance and D03–D20 remain open.
 
 ## What every delivery must provide
 
@@ -85,4 +85,4 @@ Record: delivery ID and selected differences; source profile/case; exact main-ga
 
 Discrete rules such as heart amounts, eligible identities, counts in a fixed capture, prices and ordinary hit counts must match exactly. Timing/trajectory comparisons use source update cadence and declared numerical/measurement tolerances recorded before reviewing the result. Do not widen tolerances or change source values to hide a failure. A subjective playtest complements these checks; it does not replace them.
 
-**Next:** human D01 review, then D02 source-scale walking when selected. **Unfinished:** D01 human acceptance and D02–D20; the exact source profile and floor-I manifest; extending live configuration to later selected mechanics; coherent production parity and complete-floor acceptance. Existing partial health/stat/actor work remains available for reuse. D01 does not resume bulk implementation.
+**Next:** review restored visuals, accepted walking, pending map edits, Apply, 1% size/route adjustment and configurable ranges in the main game. **Unfinished:** human acceptance; exact source-equivalent spatial/clearance and floor-generation rules; D03–D20. Live resizing is an unrestricted testing regeneration, not full preservation of an already played floor. Later deliveries remain manually selected; the bulk effort stays paused.

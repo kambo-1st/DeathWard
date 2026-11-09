@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "D01 is implemented in the main game; developer verification passes and human acceptance is pending. Playtest live Speed 1 to 0.8, export/remember/relaunch and retry. Next selectable delivery is D02 source-scale walking. D02-D20 and full first-floor parity remain unfinished; the bulk effort stays paused.",
+  "next_work": "Review default zoom preview/export/reload in the main game. Exact native spatial acceptance and D03-D20 remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-09",
-    "status": "D01 selected and implemented in main game; developer checks pass; human acceptance pending",
+    "status": "D01 committed; D02 map Apply/route and default zoom controls enabled; focused developer checks pass, human zoom review pending",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,15 +47,16 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "D02",
+    "next_proposed_delivery": "Human D02 review before further selection",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
-      "D01"
+      "D01",
+      "D02"
     ],
-    "human_acceptance": "pending",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/d01-live-tuning/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/d01-live-tuning/validation.json"
+    "human_acceptance": "Apply/route controls positively acknowledged; default zoom awaits review; native spatial acceptance remains open",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/d02-room-scale/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/d02-room-scale/validation.json"
   },
   "first_floor_requirements_checkpoint": {
     "recorded_date": "2026-11-09",

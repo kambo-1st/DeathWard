@@ -1,0 +1,2 @@
+BALANCE speed=1 room_size=1 routes=1 revision=a34f9564dd7ab5e2 profile=reference-partial
+PASS keyboard hub/setup, menus/settings, bombs over HUD, directed throws, camera, doors, trades, rewards and evidence-gated floor exits

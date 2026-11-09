@@ -131,7 +131,7 @@ class WesternScene {
     int vegetationDensity_ = 100;
     std::vector<const WesternPlacement *> occluders_;
     const Arena *lastArena_ = nullptr;
-    uint64_t lastSeed_ = 0;
+    uint64_t lastSeed_ = 0, lastLayoutSignature_ = 0;
     MissionTheme lastTheme_ = MissionTheme::Mine;
     bool attempted_ = false;
     PlayerOcclusion occlusion_;

@@ -48,8 +48,10 @@ FloorDimensions ExpeditionPlan::dimensionsOnFloor(int floor) const {
     if(floorCount==1)result.smallerRooms=false;
     const int span=std::max(1,floorCount-1);
     if(result.smallerRooms) {
-        result.minHalfTiles=5+floor/span;
-        result.maxHalfTiles=7+3*floor/span;
+        // Keep the established canyon/room generator and corridor widths.
+        // The larger compact-room pool is the user's selected D02 adjustment.
+        result.minHalfTiles=6+floor/span;
+        result.maxHalfTiles=8+2*floor/span;
     }
     result.minGapTiles=4+2*floor/span;
     result.maxGapTiles=8+4*floor/span;

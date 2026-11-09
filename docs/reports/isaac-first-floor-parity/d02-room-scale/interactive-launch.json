@@ -1,0 +1,9 @@
+{
+  "recorded_utc": "2026-11-09T22:03:53.451231+00:00",
+  "command": "build/deathward --expedition --seed 1866 --mute --save /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save",
+  "process": "612322 build/deathward --expedition --seed 1866 --mute --save /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save",
+  "session_id": 8515,
+  "interactive": true,
+  "mute": true,
+  "executable_sha256": "d72ada3fbd0144085bd1f5ecb6df6fc8f3969833e289a00188ec0831b285972d"
+}

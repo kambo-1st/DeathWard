@@ -1575,8 +1575,9 @@ Action Renderer::hub(const Game &game) {
             if (button(Action::ToggleCanyonRiver, game.visualSettings.canyonRiver ? "RIVER ON" : "RIVER OFF", 748, 480, 260, 34))
                 return Action::ToggleCanyonRiver;
         }
-        if (button(Action::CycleExpeditionPacing, expeditionPacingName(game.expeditionPacing), 270, 480, 460, 34))
+        if (button(Action::CycleExpeditionPacing, expeditionPacingName(game.expeditionPacing), 270, 480, 300, 34))
             return Action::CycleExpeditionPacing;
+        if(button(Action::OpenBalance,"SIZE / TUNING",585,480,145,34))return Action::OpenBalance;
         if (button(Action::Launch, game.offeredTheme() == MissionTheme::Canyon ? "LEAVE FOR THE CANYON"
                                                                : "LEAVE FOR THE MINE",
                    270, 529, 738, 59, true))
@@ -1899,7 +1900,7 @@ Action Renderer::expedition(const Game &game) {
         if(run.player.dodgeCooldown>0)
             DrawRectangleRec({dodge.x*sx_,(dodge.y+dodge.height-3)*sy_,dodge.width*sx_*(1-std::clamp(run.player.dodgeCooldown/1.1f,0.f,1.f)),3*sy_},Teal);
         if(control(Action::Pause,"PAUSE",expeditionHud::Pause))controls=Action::Pause;
-        if(control(Action::OpenBalance,"TUNE SPEED",expeditionHud::Tuning))controls=Action::OpenBalance;
+        if(control(Action::OpenBalance,"TUNING",expeditionHud::Tuning))controls=Action::OpenBalance;
         if(const auto action=buildStrip(game);action!=Action::None)controls=action;
     }
     const auto warning=run.demolitionWarning();
@@ -2171,40 +2172,65 @@ Action Renderer::audioPanel(const Game &game) {
 }
 Action Renderer::balancePanel(const Game &game) {
     const auto decimal=[](float n){std::ostringstream out;out<<std::fixed<<std::setprecision(2)<<n;return out.str();};
-    panel(0,0,1280,800,{8,12,16,235});panel(170,60,940,680,Panel);
+    panel(0,0,1280,800,{8,12,16,235});panel(170,60,940,710,Panel);
     text("EXPEDITION TUNING",205,86,30,Gold);
-    text(game.balancePreset.custom()?"CUSTOM / SPEED":"REFERENCE / PARTIAL",800,96,15,Teal);
-    text("Change Speed, resume and feel it immediately. Dodge and firing controls stay the same.",205,132,15,Paper);
+    text(game.balanceDraft.custom()?"CUSTOM PRESET":"REFERENCE / PARTIAL",800,96,15,Teal);
+    text("Speed and default zoom apply immediately. Map edits wait for APPLY MAP CHANGES.",205,132,15,Paper);
     text("SPEED",205,181,18,Muted);text(decimal(game.balancePreset.playerSpeed),296,172,32,Paper);
     if(button(Action::SpeedDown,"- 0.10",405,169,118,45))return Action::SpeedDown;
     if(button(Action::SpeedUp,"+ 0.10",535,169,118,45))return Action::SpeedUp;
     if(button(Action::ResetBalance,"RESET SPEED TO 1.00",675,169,400,45))return Action::ResetBalance;
-    text("Reference 1.00  /  editor range 0.10 - 2.00  /  applied on the next movement step",205,228,13,Muted);
-    text("CURRENT BUILD / READ ONLY",205,266,16,Gold);
+    text("DEFAULT ZOOM",205,229,14,Gold);text(decimal(game.balancePreset.defaultZoomPercent)+"%",380,225,20,Paper);
+    if(button(Action::DefaultZoomDown,"- 1%",490,220,90,28))return Action::DefaultZoomDown;
+    if(button(Action::DefaultZoomUp,"+ 1%",590,220,90,28))return Action::DefaultZoomUp;
+    if(button(Action::DefaultZoomCurrent,"USE CURRENT",700,220,180,28))return Action::DefaultZoomCurrent;
+    if(button(Action::DefaultZoomReset,"RESET 160%",895,220,180,28))return Action::DefaultZoomReset;
+    text("ROOM SIZE",205,266,16,Gold);text(decimal(game.balanceDraft.roomSizeScale*100)+"%",330,263,20,Paper);
+    if(button(Action::RoomSizeDown,"- 1%",475,253,118,38))return Action::RoomSizeDown;
+    if(button(Action::RoomSizeUp,"+ 1%",610,253,118,38))return Action::RoomSizeUp;
+    text("75 - 150% / fine canyon sizing",750,265,13,Muted);
+    const auto [minimum,maximum]=game.roomSizeRange();
+    text("MIN "+std::to_string(minimum*2)+" TILES",205,310,14,Paper);
+    if(button(Action::RoomMinDown,"-",355,299,44,34))return Action::RoomMinDown;
+    if(button(Action::RoomMinUp,"+",407,299,44,34))return Action::RoomMinUp;
+    text("MAX "+std::to_string(maximum*2)+" TILES",495,310,14,Paper);
+    if(button(Action::RoomMaxDown,"-",645,299,44,34))return Action::RoomMaxDown;
+    if(button(Action::RoomMaxUp,"+",697,299,44,34))return Action::RoomMaxUp;
+    if(button(Action::RoomRangeAuto,"AUTO RANGE",795,299,280,34))return Action::RoomRangeAuto;
+    text("ROUTE LENGTH",205,353,16,Gold);text(decimal(game.balanceDraft.routeLengthScale*100)+"%",380,350,20,Paper);
+    if(button(Action::RouteLengthDown,"- 1%",540,342,118,34))return Action::RouteLengthDown;
+    if(button(Action::RouteLengthUp,"+ 1%",675,342,118,34))return Action::RouteLengthUp;
+    text("25 - 200% / width unchanged",810,353,12,Muted);
+    if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,389,350,40))return Action::ApplyMapChanges;
+    text(game.hasPendingMapChanges()?"PENDING / map has not changed":"APPLIED / no pending map changes",585,402,15,
+         game.hasPendingMapChanges()?Gold:Teal);
+    text(game.run?"Apply regenerates this floor for testing: encounters/pickups reset; player/build retained.":
+                 "Apply saves map settings before generation. Range is before room size %.",205,441,12,Muted);
     if(game.run) {
         const auto &run=*game.run;const auto &s=run.player.attributes;
         const auto shot=primaryPlayerAttack(run,run.player.shotDamage,run.player.nextRound==6);
-        text("Health: "+decimal(run.player.totalHealth())+" half-heart units",205,300,14,Paper);
-        text("Next-shot damage: "+decimal(shot.damage)+"  /  source base: 3.50",620,300,14,Paper);
-        text("Firing rate: "+decimal(1/primaryCadence(run))+" / second",205,328,14,Paper);
-        text("Range stat: "+decimal(s.rangeTiles)+" tiles  /  adapted",620,328,14,Paper);
-        text("Shot Speed stat: "+decimal(s.shotSpeed)+"  /  adapted",205,356,14,Paper);
-        text("Luck: "+decimal(s.luck)+"  /  effects pending",620,356,14,Muted);
-    } else text("Start an expedition to see the current build. The remembered preset applies at launch.",205,315,15,Paper);
-    text("PRESET FILE / JSON / SPEED ONLY",205,395,14,Gold);
+        text("Health: "+decimal(run.player.totalHealth())+" half-hearts",205,463,13,Paper);
+        text("Next damage: "+decimal(shot.damage)+" / source 3.50",510,463,13,Paper);
+        text("Tears: "+decimal(1/primaryCadence(run))+"/s",900,463,13,Paper);
+        text("Range: "+decimal(s.rangeTiles)+" tiles / adapted    Shot Speed: "+decimal(s.shotSpeed)+" / adapted    Luck: "+decimal(s.luck),205,483,12,Muted);
+    }
+    text("PRESET FILE / JSON / SPEED + ZOOM + MAP SETTINGS",205,507,12,Gold);
     auto path=game.balanceFile;
     if(path.size()>98)path="..."+path.substr(path.size()-95);
-    if(button(Action::EditBalancePath,path.empty()?"Click to enter a preset path":path,205,421,870,38,game.balancePathEditing))
+    if(button(Action::EditBalancePath,path.empty()?"Click to enter a preset path":path,205,525,870,34,game.balancePathEditing))
         return Action::EditBalancePath;
-    text(game.balancePathEditing?"Editing: Ctrl+A clear / Ctrl+V paste / Ctrl+C copy / Enter done / Esc cancel":"Click the path to edit it. Export and Load use this file.",205,468,12,Muted);
-    if(button(Action::ExportBalance,"EXPORT",205,500,260,42))return Action::ExportBalance;
-    if(button(Action::LoadBalance,"LOAD AND APPLY",480,500,260,42))return Action::LoadBalance;
-    if(button(Action::RememberBalance,"USE NEXT EXPEDITION",755,500,320,42))return Action::RememberBalance;
+    text(game.balancePathEditing?"Editing: Ctrl+A clear / Ctrl+V paste / Ctrl+C copy / Enter done / Esc cancel":"Click the path to edit it. Export and Load use this file.",205,566,12,Muted);
+    if(button(Action::ExportBalance,"EXPORT",205,586,260,38))return Action::ExportBalance;
+    if(button(Action::LoadBalance,"LOAD PRESET",480,586,260,38))return Action::LoadBalance;
+    if(button(Action::RememberBalance,"USE NEXT EXPEDITION",755,586,320,38))return Action::RememberBalance;
     text("Next expedition: Speed "+decimal(game.nextBalancePreset?game.nextBalancePreset->playerSpeed:1)+
-         (game.nextBalancePreset?" / remembered across restarts":" / default"),205,563,15,Teal);
-    wrap(game.error.empty()?game.balanceNotice:game.error,205,596,870,15,game.error.empty()?Paper:Rust);
-    text("Source movement and full first-floor parity are still pending.",205,684,13,Muted);
-    if(button(Action::CloseBalance,"BACK [ESC]",790,674,285,42,true))return Action::CloseBalance;
+         " / rooms "+decimal((game.nextBalancePreset?game.nextBalancePreset->roomSizeScale:1)*100)+"%"+
+         " / routes "+decimal((game.nextBalancePreset?game.nextBalancePreset->routeLengthScale:1)*100)+"%"+
+         " / zoom "+decimal(game.nextBalancePreset?game.nextBalancePreset->defaultZoomPercent:BalancePreset::ReferenceZoom)+"%"+
+         (game.nextBalancePreset?" / remembered":" / default"),205,640,12,Teal);
+    wrap(game.error.empty()?game.balanceNotice:game.error,205,666,870,14,game.error.empty()?Paper:Rust);
+    text("Source movement and full first-floor parity are still pending.",205,731,12,Muted);
+    if(button(Action::CloseBalance,"BACK [ESC]",790,718,285,34,true))return Action::CloseBalance;
     return Action::None;
 }
 Action Renderer::draw(const Game &game) {

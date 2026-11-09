@@ -1,0 +1,41 @@
+{
+  "status": "default zoom implemented; focused developer checks passed; human zoom review pending",
+  "d01_commit": "809beb75",
+  "current_scope": "larger original canyon rooms; pending size/range and route-length draft with explicit Apply; unrestricted current-floor testing regeneration; original walking and corridor width; default zoom previews immediately and exports/loads/remembers with presets",
+  "native_geometry_enabled": false,
+  "walking_pace_at_speed_one": 4.8,
+  "corridor_width": 8,
+  "preset_contract": "d02-view-v4",
+  "tested_controls": "size/route +/-1%, min/max, automatic range, Apply, export/load/remember; default zoom +/-1%, Use current, Reset 160%",
+  "regeneration_resets": [
+    "current-floor encounters",
+    "pickups and reward/completion/lock state",
+    "active projectiles/bombs/hazards and transient room effects"
+  ],
+  "remaining": [
+    "human acceptance of default zoom and broader presentation/tuning; Apply/route controls positively acknowledged",
+    "native spatial equivalence/clearance with retained irregular rooms",
+    "complete preservation of played-floor state during resize (testing regeneration intentionally resets floor encounters/rewards)",
+    "D03-D20"
+  ],
+  "previous_checks": {
+    "expedition_pacing": "pass; pacing/themes, paths/spawns and scaled custom ranges",
+    "balance_preset_contract": "pass; Speed/size/range round-trip, D01 migration and rejection checks",
+    "player_speed_attribute": "pass; accepted walking, stopping and dodge",
+    "main_game_input": "pass; 1% growth, min/max, no expedition-ID/timer/HP/speed change, export/load/retry/floor transfer, unrestricted later-floor combat-room resize with injured/upgraded player and currency preserved",
+    "keyboard_and_hud": "pass before removal of the resize restriction; those input paths unchanged",
+    "fresh_process_reload": "pass; custom size 1.25, range 14-18 tiles and Speed .8 (before restriction removal; serialization unchanged)"
+  },
+  "tests": {
+    "expedition_pacing": "pass; original pacing/theme checks plus route 25/99/100/101/200%, monotonic spacing across 100%, unchanged room sizes and gate widths, walkable paths, combined scale/range/route extremes",
+    "balance_preset_contract": "pass; schema 4 zoom and Speed/map round-trips, schema 1/2/3 migrations, invalid bounds/metadata/overrides rejected",
+    "player_speed_attribute": "pass; accepted walking, stopping and dodge",
+    "main_game_input": "pass; actual buttons stage changes; Speed/reset and export/remember do not apply drafts; closing retains pending settings; Apply commits once; no-op Apply does not regenerate; load stages map; invalid load preserves active/draft; later-floor unrestricted regen retains injured player/build/currency/identity; floor/retry/fresh-session and pre-generation settings; zoom +/-1%, range limits, Use current, Reset 160%, actual camera preview, map-draft isolation, load, reset-Speed isolation, retry after temporary wheel zoom and remembered fresh-session zoom verified",
+    "keyboard_and_hud": "passed for preceding Apply/route build; not rerun for zoom; new zoom buttons exercised in actual Game/Renderer input suite",
+    "fresh_process_reload": "pass; two separate main-game processes restore Speed .8, room scale 1.25, range 7-9, route scale .65 and default zoom 125; zoom-fresh-reload.json",
+    "visual_inspection": "updated tuning.png inspected; zoom row and remembered summary fit without overlap",
+    "diff_check": "pass"
+  },
+  "recorded_utc": "2026-11-09T22:03:43.463995+00:00",
+  "executable_sha256": "d72ada3fbd0144085bd1f5ecb6df6fc8f3969833e289a00188ec0831b285972d"
+}

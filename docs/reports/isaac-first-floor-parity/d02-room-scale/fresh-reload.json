@@ -1,0 +1,11 @@
+{
+  "save_directory": "/tmp/deathward-d02-live-reload-3b038m",
+  "first_exit": 0,
+  "second_exit": 0,
+  "first": [
+    "BALANCE speed=0.8 room_size=1.25 revision=eb2f6f3c6340ef95 profile=custom"
+  ],
+  "remembered": [
+    "BALANCE speed=0.8 room_size=1.25 revision=eb2f6f3c6340ef95 profile=custom"
+  ]
+}

@@ -1,0 +1,2 @@
+BALANCE speed=1 room_size=1 revision=f74383c8bbfa8202 profile=reference-partial
+PASS compact HUD hitboxes, mouse controls, build inspection, modal guards and warning priority

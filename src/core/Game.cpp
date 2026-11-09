@@ -208,7 +208,11 @@ void Game::launch(bool freeMission) {
     const auto theme = search||account?MissionTheme::Canyon:resolveTheme(themeChoice, seed);
     auto candidate = std::make_unique<Simulation>(seed, campaign.data().nextRunId, campaign.data().world,
                                                   theme, visualSettings.canyonRiver,search,
-                                                  account?WitnessAccount::Rourke:WitnessAccount::None,0,expeditionPacing);
+                                                  account?WitnessAccount::Rourke:WitnessAccount::None,0,expeditionPacing,defaultMechanics(),
+                                                  nextBalancePreset?nextBalancePreset->roomSizeScale:1,
+                                                  nextBalancePreset?nextBalancePreset->roomMinHalfTiles:0,
+                                                  nextBalancePreset?nextBalancePreset->roomMaxHalfTiles:0,
+                                                  nextBalancePreset?nextBalancePreset->routeLengthScale:1);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -271,6 +275,27 @@ void Game::perform(Action action) {
             break;
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
+        case Action::RoomRangeAuto:setRoomSizeRange(0,0);break;
+        case Action::RoomMinDown:case Action::RoomMinUp:case Action::RoomMaxDown:case Action::RoomMaxUp: {
+            auto [lo,hi]=roomSizeRange();
+            if(action==Action::RoomMinDown)lo=std::max(5,lo-1);
+            if(action==Action::RoomMinUp)lo=std::min(hi,lo+1);
+            if(action==Action::RoomMaxDown)hi=std::max(lo,hi-1);
+            if(action==Action::RoomMaxUp)hi=std::min(10,hi+1);
+            setRoomSizeRange(lo,hi);break;
+        }
+        case Action::RoomSizeDown:
+        case Action::RoomSizeUp:
+            setRoomSize(std::clamp(std::round(balanceDraft.roomSizeScale*100+(action==Action::RoomSizeUp?1:-1))/100,.75f,1.5f));break;
+        case Action::RouteLengthDown:case Action::RouteLengthUp:
+            setRouteLength(std::clamp(std::round(balanceDraft.routeLengthScale*100+(action==Action::RouteLengthUp?1:-1))/100,.25f,2.f));break;
+        case Action::ApplyMapChanges:applyMapChanges();break;
+        case Action::DefaultZoomDown:case Action::DefaultZoomUp:
+            setDefaultZoom(std::clamp(std::round(balancePreset.defaultZoomPercent)+(action==Action::DefaultZoomUp?1:-1),
+                                     BalancePreset::MinZoom,BalancePreset::MaxZoom));break;
+        case Action::DefaultZoomCurrent:
+            setDefaultZoom(std::clamp(std::round(cameraZoomPercent()),BalancePreset::MinZoom,BalancePreset::MaxZoom));break;
+        case Action::DefaultZoomReset:setDefaultZoom(BalancePreset::ReferenceZoom);break;
         case Action::SpeedDown:
         case Action::SpeedUp:
             setPlayerSpeed(std::clamp(std::round(balancePreset.playerSpeed*100+(action==Action::SpeedUp?10:-10))/100,
@@ -768,7 +793,7 @@ Game::Menu Game::menuContext() const {
 }
 std::vector<Action> Game::menuActions() const {
     const auto context=menuContext();
-    if(context==Menu::Balance)return {Action::CloseBalance,Action::SpeedDown,Action::SpeedUp,
+    if(context==Menu::Balance)return {Action::CloseBalance,Action::SpeedDown,Action::SpeedUp,Action::RoomSizeDown,Action::RoomSizeUp,Action::RoomMinDown,Action::RoomMinUp,Action::RoomMaxDown,Action::RoomMaxUp,Action::RoomRangeAuto,Action::RouteLengthDown,Action::RouteLengthUp,Action::ApplyMapChanges,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,
         Action::ResetBalance,Action::ExportBalance,Action::LoadBalance,Action::RememberBalance,Action::EditBalancePath};
     if(context==Menu::Death)return {Action::RetryExpedition};
     if(context==Menu::Controls)return {Action::CloseControls};
@@ -799,7 +824,7 @@ std::vector<Action> Game::menuActions() const {
     }
     if(context==Menu::Missions) {
         std::vector<Action> result{Action::Launch,Action::ThemeSeeded,Action::ThemeMine,Action::ThemeCanyon,
-            Action::NewSeed,Action::CycleExpeditionPacing};
+            Action::NewSeed,Action::OpenBalance,Action::CycleExpeditionPacing};
         if(offeredTheme()==MissionTheme::Canyon)result.push_back(Action::ToggleCanyonRiver);
         result.push_back(Action::CloseMissions);
         return result;

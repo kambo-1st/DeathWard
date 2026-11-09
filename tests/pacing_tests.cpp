@@ -44,13 +44,17 @@ int main() {
                         road=road||!run.arena.canyon->road.empty();
                     }
                     paths(run.arena);
+                    for(const auto &passage:run.arena.passages) {
+                        const auto gate=sub(passage.gates[0].max,passage.gates[0].min);
+                        check(std::abs(std::max(gate.x,gate.z)-8.f)<.001f,"larger rooms retain original eight-unit-wide gates/corridors");
+                    }
                     const auto dims=run.expedition.dimensionsOnFloor(0);
                     for(int i=0;i<run.arena.roomCount();++i) {
                         const auto &room=run.arena.rooms[size_t(i)];
                         const auto width=sub(room.bounds.max,room.bounds.min);
                         if(dims.smallerRooms) {
                             if(room.kind==RoomKind::Boss)check(width.x>=32&&width.z>=32,"compact boss retains maneuvering room");
-                            else check(width.x>=20&&width.x<=28&&width.z>=20&&width.z<=28,"ordinary opening rooms use 20-28 metre envelopes");
+                            else check(width.x>=24&&width.x<=32&&width.z>=24&&width.z<=32,"larger ordinary opening rooms use 24-32 metre envelopes");
                         }
                         run.arena.sealRoom(i);
                         for(const auto &enemy:run.roomEnemies(i)) {
@@ -83,6 +87,46 @@ int main() {
                             check(distance(sub(a.bounds.max,a.bounds.min),sub(b.bounds.max,b.bounds.min))<.001f&&a.shape==b.shape,"corridor trial preserves room dimensions and shapes");
                             check(distance(sub(a.objective,a.center),sub(b.objective,b.center))<.001f,"corridor trial preserves relative objectives");
                         }
+                    }
+                }
+        for(auto theme:{MissionTheme::Mine,MissionTheme::Canyon})for(float scale:{.75f,1.25f,1.5f})for(float route:{.25f,1.f,2.f}) {
+            Simulation resized(1866,1,{},theme,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),scale,7,9,route);
+            check(resized.roomSizeScale==scale,"size setting reaches generation");paths(resized.arena);
+            for(const auto &passage:resized.arena.passages) {
+                const auto gate=sub(passage.gates[0].max,passage.gates[0].min);
+                check(std::abs(std::max(gate.x,gate.z)-8.f)<.001f,"resizing never narrows corridor gates");
+            }
+            for(const auto &room:resized.arena.rooms)if(room.kind!=RoomKind::Boss) {
+                const auto size=sub(room.bounds.max,room.bounds.min);
+                const float lo=4*(theme==MissionTheme::Canyon?std::max(5.f,7*scale):float(std::max(5,int(std::lround(7*scale))))),
+                            hi=4*(theme==MissionTheme::Canyon?9*scale:float(std::lround(9*scale)));
+                check(size.x>=lo&&size.x<=hi&&size.z>=lo&&size.z<=hi,"chosen min/max applied before size multiplier");
+            }
+            check(std::abs(resized.player.walkingSpeed()-4.8f)<.001f,"room scale does not alter player pace");
+        }
+        for(auto theme:{MissionTheme::Mine,MissionTheme::Canyon})
+            for(auto pacing:{ExpeditionPacing::Growing,ExpeditionPacing::Compact})
+                for(auto routeSeed:{0ULL,1866ULL}) {
+                    seed=routeSeed;
+                    Simulation baseline(seed,1,{},theme,true,false,WitnessAccount::None,0,pacing);
+                    float previousSpan=0;
+                    for(float route:{.25f,.99f,1.f,1.01f,2.f}) {
+                        Simulation changed(seed,1,{},theme,true,false,WitnessAccount::None,0,pacing,defaultMechanics(),1,0,0,route);
+                        paths(changed.arena);
+                        float span=0;
+                        for(size_t i=0;i<changed.arena.rooms.size();++i) {
+                            const auto &a=baseline.arena.rooms[i],&b=changed.arena.rooms[i];
+                            check(distance(sub(a.bounds.max,a.bounds.min),sub(b.bounds.max,b.bounds.min))<.001f&&a.shape==b.shape,
+                                  "route length preserves room sizes and shape selection");
+                        }
+                        for(const auto &p:changed.arena.passages) {
+                            span+=distance(changed.arena.rooms[size_t(p.rooms[0])].center,changed.arena.rooms[size_t(p.rooms[1])].center);
+                            const auto gate=sub(p.gates[0].max,p.gates[0].min);
+                            check(std::abs(std::max(gate.x,gate.z)-8.f)<.001f,"route length preserves wide gates");
+                        }
+                        check(span>=previousSpan-.001f,"route length never reverses or switches spacing at 100 percent");
+                        if(theme==MissionTheme::Canyon)check(span>previousSpan,"one-percent canyon route changes alter room separation");
+                        previousSpan=span;
                     }
                 }
         check(riverKinds.contains(CanyonRiverKind::Boundary)&&riverKinds.contains(CanyonRiverKind::Interior)&&road,

@@ -1,0 +1,9 @@
+BALANCE speed=1 room_size=1 routes=1 revision=a34f9564dd7ab5e2 profile=reference-partial
+BALANCE speed=0.8 room_size=1 routes=1 revision=7213326c2b7cf7a4 profile=custom
+BALANCE speed=0.8 room_size=1 routes=1 revision=7213326c2b7cf7a4 profile=custom
+BALANCE speed=0.8 room_size=1.25 routes=0.65 revision=a4a21da94d3cb4c5 profile=custom
+BALANCE speed=0.8 room_size=1.25 routes=0.65 revision=a4a21da94d3cb4c5 profile=custom
+BALANCE speed=1 room_size=1.25 routes=0.65 revision=daf4b92d2ee71025 profile=custom
+BALANCE speed=1 room_size=1 routes=1 revision=a34f9564dd7ab5e2 profile=reference-partial
+BALANCE speed=1 room_size=1.1 routes=1.5 revision=2d447b3b069b7043 profile=custom
+PASS staged map Apply and route persistence; D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence

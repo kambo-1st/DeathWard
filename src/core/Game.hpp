@@ -83,6 +83,20 @@ enum class Action {
     CloseBuild,
     OpenBalance,
     CloseBalance,
+    RoomRangeAuto,
+    RoomMinDown,
+    RoomMinUp,
+    RoomMaxDown,
+    RoomMaxUp,
+    RoomSizeDown,
+    RoomSizeUp,
+    RouteLengthDown,
+    RouteLengthUp,
+    ApplyMapChanges,
+    DefaultZoomDown,
+    DefaultZoomUp,
+    DefaultZoomCurrent,
+    DefaultZoomReset,
     SpeedDown,
     SpeedUp,
     ResetBalance,
@@ -119,11 +133,18 @@ class Game {
     bool controlsOpen = false;
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false;
-    BalancePreset balancePreset;
+    BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;
     std::filesystem::path balanceDirectory;
     std::string balanceFile, balanceNotice;
     void setPlayerSpeed(float speed);
+    void setDefaultZoom(float percent);
+    void setRoomSize(float scale);
+    void setRouteLength(float scale);
+    bool hasPendingMapChanges() const;
+    void applyMapChanges();
+    void setRoomSizeRange(int minimum, int maximum);
+    std::pair<int,int> roomSizeRange() const;
     void resetBalance();
     void exportBalancePreset();
     void loadBalancePreset(const std::filesystem::path &path);
@@ -207,7 +228,7 @@ class Game {
     bool placeDynamiteQueued_ = false;
     std::optional<std::pair<int, int>> doorQueued_;
     float mouseMoveCooldown_ = 0;
-    float cameraZoom_ = 100.0f / 160.0f, cameraZoomTarget_ = cameraZoom_;
+    float cameraZoom_ = 100.0f / BalancePreset::ReferenceZoom, cameraZoomTarget_ = cameraZoom_;
     float cameraYaw_ = 0, cameraPitch_ = 0;
     bool cameraDragging_ = false;
     Vector2 cameraDragPosition_{};
@@ -231,6 +252,7 @@ class Game {
     std::string balanceRestoreError_, balancePathBeforeEdit_;
     void initializeBalance();
     void applyBalance(BalancePreset preset);
+    void useDefaultZoom();
     void archiveBalance(const BalancePreset &preset) const;
     void startExpedition(std::unique_ptr<Simulation> candidate, bool retry = false);
     RunSummary configuredSummary() const;

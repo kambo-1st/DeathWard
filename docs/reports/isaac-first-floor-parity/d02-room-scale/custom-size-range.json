@@ -1,0 +1,9 @@
+{
+  "format": "deathward.balance",
+  "schema_version": 2,
+  "compatibility": {"contract": "d02-room-size-v2", "content_version": "deathward-m1-61", "mechanics_fingerprint": "2ccd5b1c274a302e"},
+  "reference": {"source": "The Binding of Isaac: Repentance 1.7.9b", "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6", "coverage": "Speed and room-size configuration; native balance pending", "player_speed": 1, "walking_pace_at_speed_one": 4.8, "room_size_scale": 1, "room_size_baseline": "larger-compact-v1"},
+  "resolved": {"player_speed": 0.8, "room_size_scale": 1.25, "room_min_half_tiles": 7, "room_max_half_tiles": 9},
+  "overrides": {"player_speed": 0.8, "room_size_scale": 1.25, "room_min_half_tiles": 7, "room_max_half_tiles": 9},
+  "exceptions": {"isometric": true, "eight_direction_controls": true, "universal_dodge": true, "immediate_stopping": true}
+}

@@ -40,6 +40,8 @@ struct FloorDimensions {
     int minHalfTiles = 6, maxHalfTiles = 10;
     bool smallerRooms = false, shorterCorridors = false;
     int minGapTiles = 4, maxGapTiles = 8;
+    float routeLengthScale = 1; // Scales separation between rooms, never corridor width.
+    float roomSizeScale = 1; // Ordinary room envelopes only; gates/bosses keep their sizes.
 };
 const char *accountName(WitnessAccount account);
 const char *storyRoomName(StoryRoom room);

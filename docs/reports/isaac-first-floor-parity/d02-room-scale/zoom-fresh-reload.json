@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "empty",
+      "--frames",
+      "3",
+      "--mute",
+      "--seed",
+      "1866",
+      "--save",
+      "/tmp/deathward-zoom-reload-s8ybao65/campaign.save",
+      "--balance-preset",
+      "artifacts/d02-size-range.json"
+    ],
+    "exit_code": 0,
+    "balance": [
+      "BALANCE speed=0.8 room_size=1.25 routes=0.65 zoom=125 revision=4868a0ea43f7f54b profile=custom"
+    ],
+    "resolved": {
+      "player_speed": 0.8,
+      "room_size_scale": 1.25,
+      "room_min_half_tiles": 7,
+      "room_max_half_tiles": 9,
+      "route_length_scale": 0.65,
+      "default_zoom_percent": 125
+    }
+  },
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "empty",
+      "--frames",
+      "3",
+      "--mute",
+      "--seed",
+      "1866",
+      "--save",
+      "/tmp/deathward-zoom-reload-s8ybao65/campaign.save"
+    ],
+    "exit_code": 0,
+    "balance": [
+      "BALANCE speed=0.8 room_size=1.25 routes=0.65 zoom=125 revision=4868a0ea43f7f54b profile=custom"
+    ],
+    "resolved": {
+      "player_speed": 0.8,
+      "room_size_scale": 1.25,
+      "room_min_half_tiles": 7,
+      "room_max_half_tiles": 9,
+      "route_length_scale": 0.65,
+      "default_zoom_percent": 125
+    }
+  }
+]

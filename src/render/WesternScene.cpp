@@ -4,6 +4,7 @@
 #include "render/ShaderPlatform.hpp"
 #include "rlgl.h"
 #include <fstream>
+#include <bit>
 #include <set>
 
 namespace dw {
@@ -223,7 +224,12 @@ void WesternScene::prepare(const Arena &arena) {
         load();
     if (!loaded() && !arena.canyon)
         return;
-    if (lastArena_ != &arena || lastSeed_ != arena.visualSeed || lastTheme_ != arena.theme ||
+    // A live resize retains the expedition seed and Arena address. Mine rooms
+    // have no terrain pointer to invalidate their geometry cache.
+    uint64_t layoutSignature=14695981039346656037ULL;
+    for(const auto &room:arena.rooms)for(float coordinate:{room.bounds.min.x,room.bounds.min.z,room.bounds.max.x,room.bounds.max.z})
+        {layoutSignature^=std::bit_cast<uint32_t>(coordinate);layoutSignature*=1099511628211ULL;}
+    if (lastLayoutSignature_!=layoutSignature || lastArena_ != &arena || lastSeed_ != arena.visualSeed || lastTheme_ != arena.theme ||
         terrainField_ != arena.canyon) {
         generate(arena);
         std::vector<Box> groundRocks;
@@ -241,6 +247,7 @@ void WesternScene::prepare(const Arena &arena) {
         applyVegetationDensity();
         lastArena_ = &arena;
         lastSeed_ = arena.visualSeed;
+        lastLayoutSignature_=layoutSignature;
         lastTheme_ = arena.theme;
         if (arena.canyon) {
             int triangles = terrainBase_.triangleCount;

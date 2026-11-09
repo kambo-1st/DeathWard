@@ -1,0 +1,19 @@
+{
+  "recorded_utc": "2026-11-09T22:10:00.185579+00:00",
+  "cause": "Export was saved under first-floor-d02; restarted game used first-floor-d01 and its export.json did not exist.",
+  "source": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+  "restored_path": "/home/kambo/.local/share/deathward/reviews/first-floor-d01/campaign.save.balance/export.json",
+  "source_unchanged": true,
+  "sha256": "3c459e40dfc2299b17ac2578b945c1975ad6c23d51aafb63e7acec321acc6d19",
+  "resolved": {
+    "player_speed": 1,
+    "room_size_scale": 1.1,
+    "room_min_half_tiles": 7,
+    "room_max_half_tiles": 9,
+    "route_length_scale": 0.3,
+    "default_zoom_percent": 165
+  },
+  "verification": "PASS production preset loader: Speed=1 rooms=1.1 range=7-9 routes=0.3 zoom=165 revision=1485259103a8cec3",
+  "code_changes_required": false,
+  "remaining": "In the already-running game, Load preset and Apply map changes; Use next expedition to remember it. Native spatial acceptance and later deliveries remain open."
+}

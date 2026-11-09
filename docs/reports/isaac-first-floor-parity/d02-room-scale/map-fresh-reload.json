@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "empty",
+      "--frames",
+      "3",
+      "--mute",
+      "--seed",
+      "1866",
+      "--save",
+      "/tmp/deathward-map-reload-0rtx56sz/campaign.save",
+      "--balance-preset",
+      "artifacts/d02-size-range.json"
+    ],
+    "exit_code": 0,
+    "balance": [
+      "BALANCE speed=0.8 room_size=1.25 routes=0.65 revision=a4a21da94d3cb4c5 profile=custom"
+    ]
+  },
+  {
+    "command": [
+      "build/deathward",
+      "--smoke",
+      "--scene",
+      "empty",
+      "--frames",
+      "3",
+      "--mute",
+      "--seed",
+      "1866",
+      "--save",
+      "/tmp/deathward-map-reload-0rtx56sz/campaign.save"
+    ],
+    "exit_code": 0,
+    "balance": [
+      "BALANCE speed=0.8 room_size=1.25 routes=0.65 revision=a4a21da94d3cb4c5 profile=custom"
+    ]
+  }
+]

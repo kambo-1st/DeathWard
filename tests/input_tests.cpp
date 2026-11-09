@@ -55,12 +55,52 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_UP);frame();
     click(460,190);click(460,190);
     check(std::abs(run.player.attributes.speed-.8f)<1e-6f&&run.combatRng.state==rng,"Speed buttons apply without advancing combat RNG");
-    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v1:")!=std::string::npos,"checkpoint identifies active tuning revision");
+    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v4:")!=std::string::npos,"checkpoint identifies active tuning revision");
     check(std::filesystem::exists(game.balanceDirectory/"revisions"/(game.balancePreset.revision()+".json")),"checkpoint revision retains its resolved preset");
+    check(run.canResizeRooms(),"untouched starting room permits live resizing");
+    const auto id=run.summary().id, nextId=game.campaign.data().nextRunId;
+    const auto historyBefore=game.campaign.data().history.size();
+    const float width=run.arena.rooms[0].bounds.max.x-run.arena.rooms[0].bounds.min.x;
+    const auto oldTerrain=run.arena.canyon.get();const auto oldRevision=game.balancePreset.revision();
+    click(665,270);
+    check(game.hasPendingMapChanges()&&game.balanceDraft.roomSizeScale==1.01f&&run.roomSizeScale==1&&
+          run.arena.canyon.get()==oldTerrain&&game.balancePreset.revision()==oldRevision,
+          "size edit stays pending and leaves current geometry/checkpoint configuration intact");
+    click(730,357);check(game.balanceDraft.routeLengthScale==1.01f&&run.routeLengthScale==1,"route edit uses one-percent pending steps");
+    click(535,234);check(game.balancePreset.defaultZoomPercent==159&&std::abs(game.cameraZoomPercent()-159)<.001f,"default zoom decreases by one percent and previews immediately");
+    click(635,234);check(game.balancePreset.defaultZoomPercent==160,"default zoom increases by one percent");
+    game.setDefaultZoom(67);game.perform(dw::Action::DefaultZoomDown);check(game.balancePreset.defaultZoomPercent==67,"default zoom lower limit");
+    game.setDefaultZoom(285);game.perform(dw::Action::DefaultZoomUp);check(game.balancePreset.defaultZoomPercent==285,"default zoom upper limit");
+    click(970,234);check(std::abs(game.cameraZoomPercent()-160)<.001f,"reset zoom previews original 160 percent");
+    game.setPlayerSpeed(.7f);game.resetBalance();game.setPlayerSpeed(.8f);
+    check(run.arena.canyon.get()==oldTerrain&&game.hasPendingMapChanges(),"live Speed edits and reset never apply pending map settings");
+    key(KEY_ESCAPE);mouseEvent(MousePosition,600,400);frame();mouseEvent(MouseWheel,0,-2);frame();frame();game.updateCamera(10);
+    const float currentZoom=std::round(game.cameraZoomPercent());
+    check(currentZoom<160&&game.balancePreset.defaultZoomPercent==160,"mouse wheel changes only the temporary view");
+    click(374,642);click(780,234);
+    check(game.balancePreset.defaultZoomPercent==currentZoom&&std::abs(game.cameraZoomPercent()-currentZoom)<.001f,"Use current captures the actual view as the default");
+    check(run.arena.canyon.get()==oldTerrain&&game.hasPendingMapChanges(),"zoom controls never apply pending map changes");
+    game.setDefaultZoom(145);
+    check(game.balanceOpen&&game.hasPendingMapChanges(),"closing and reopening tuning retains pending map edits");
+    const auto applyTime=run.stats.duration;
+    click(375,409);
+    check(!game.hasPendingMapChanges()&&run.roomSizeScale==1.01f&&run.routeLengthScale==1.01f,"Apply commits all pending map fields together");
+    const auto appliedTerrain=run.arena.canyon.get();click(375,409);
+    check(run.arena.canyon.get()==appliedTerrain,"Apply with no changes never regenerates the floor");
+    check(run.arena.rooms[0].bounds.max.x-run.arena.rooms[0].bounds.min.x>width,"room grows visibly");
+    check(run.summary().id==id&&run.stats.duration==applyTime&&game.campaign.data().nextRunId==nextId&&
+          game.campaign.data().history.size()==historyBefore&&run.player.hp==6&&std::abs(run.player.walkingSpeed()-4.8f*.8f)<.001f,
+          "live resize preserves expedition identity, time, history, health and accepted walking speed");
+    click(535,270);click(590,357);click(375,409);check(run.roomSizeScale==1&&run.routeLengthScale==1,"size can be reduced without restarting");
+    click(720,315);check(run.roomMinHalfTiles==0&&game.balanceDraft.roomMaxHalfTiles==9,"range control stays pending");
+    click(375,409);check(run.roomMinHalfTiles==6&&run.roomMaxHalfTiles==9,"Apply regenerates selected range");
+    click(925,315);click(375,409);check(run.roomMinHalfTiles==0&&run.roomMaxHalfTiles==0,"automatic range restored");
+    run.player.position=start;run.player.velocity={};
+    capture("artifacts/d02-live-size-panel.png");
     capture("artifacts/d01-tuning-custom.png");
-    click(320,520);check(std::filesystem::exists(game.balanceFile),"export button writes JSON");
+    click(320,605);check(std::filesystem::exists(game.balanceFile),"export button writes JSON");
     std::filesystem::copy_file(game.balanceFile,"artifacts/d01-speed-080.json",std::filesystem::copy_options::overwrite_existing);
-    click(900,520);check(game.nextBalancePreset&&game.nextBalancePreset->playerSpeed==.8f,"remember button persists next-expedition preset");
+    click(900,605);check(game.nextBalancePreset&&game.nextBalancePreset->playerSpeed==.8f,"remember button persists next-expedition preset");
     key(KEY_ESCAPE);check(!game.balanceOpen&&!game.paused,"Escape returns directly to gameplay");
     const float tuned=walk();
     check(std::abs(tuned/baseline-.8f)<.01f,"main Game keyboard movement immediately follows live Speed ratio");
@@ -69,50 +109,83 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     run.player.hp=5;run.grant(dw::ItemId::Ricochet);run.keys=2;run.moneyCollected=11;
     const auto items=run.items;const auto rooms=run.stats.rooms;const auto health=run.player.hp;
     const auto money=run.money();const auto runSeed=run.expedition.seed;
-    click(850,190);check(run.player.attributes.speed==1,"reset reference changes Speed only");
-    click(590,520);
-    check(run.player.attributes.speed==.8f&&run.player.hp==health&&run.items==items&&run.keys==2&&
+    click(850,190);check(run.player.attributes.speed==1&&game.balancePreset.defaultZoomPercent==145,"reset reference changes Speed only");
+    game.setDefaultZoom(160);
+    click(590,605);
+    check(std::abs(game.cameraZoomPercent()-145)<.001f&&run.player.attributes.speed==.8f&&run.player.hp==health&&run.items==items&&run.keys==2&&
           run.money()==money&&run.stats.rooms==rooms&&run.expedition.seed==runSeed,
           "preset load preserves injuries, inventory, wallet, keys, room progress and seed");
-    const auto previous=game.balancePreset.revision();
+    const auto previous=game.balancePreset.revision(),previousDraft=game.balanceDraft.revision();
     const auto invalid=directory/"invalid.json";{std::ofstream out(invalid);out<<"{\"resolved\":{\"player_speed\":99}}";}
     const auto exportPath=game.balanceFile;game.balanceFile=invalid.string();game.perform(dw::Action::LoadBalance);
-    check(!game.error.empty()&&game.balancePreset.revision()==previous&&run.player.attributes.speed==.8f,
+    check(!game.error.empty()&&game.balancePreset.revision()==previous&&game.balanceDraft.revision()==previousDraft&&run.player.attributes.speed==.8f,
           "invalid live load rejects atomically without changing active Speed");
     game.balanceFile=exportPath;game.perform(dw::Action::LoadBalance);check(game.error.empty(),"valid load recovers from invalid input");
     game.setPlayerSpeed(.7f);check(game.nextBalancePreset->playerSpeed==.8f,"live edit does not silently change remembered next-expedition settings");
     game.setPlayerSpeed(.8f);
     // Exercise the actual keyboard path editor, including paste and Escape restoration.
-    click(600,440);check(game.balancePathEditing,"preset path is editable");
+    click(600,540);check(game.balancePathEditing,"preset path is editable");
     SetClipboardText(invalid.string().c_str());mouseEvent(KeyDown,KEY_LEFT_CONTROL);key(KEY_V);mouseEvent(KeyUp,KEY_LEFT_CONTROL);frame();
     check(game.balanceFile==invalid.string(),"path editor supports pasting an arbitrary preset path");
     key(KEY_ESCAPE);check(!game.balancePathEditing&&game.balanceFile==exportPath,"Escape restores uncommitted path edit");
     key(KEY_ESCAPE);check(!game.balanceOpen&&game.paused,"tuning returns to the originating pause menu");key(KEY_ESCAPE);
     const auto history=game.campaign.data().history.size();
+    mouseEvent(MousePosition,600,400);frame();mouseEvent(MouseWheel,0,-2);frame();frame();game.updateCamera(10);
+    check(game.cameraZoomPercent()<140&&game.balancePreset.defaultZoomPercent==145,"temporary wheel zoom does not replace the saved default before retry");
     run.finishDebug(false);key(KEY_ENTER);
     check(game.run&&!game.run->dead&&game.screen==dw::Screen::Expedition&&game.run->expedition.seed==runSeed,
           "Enter after death retries the same expedition directly");
-    check(game.campaign.data().history.size()==history+1&&game.run->player.attributes.speed==.8f&&game.run->player.hp==6,
+    check(game.campaign.data().history.size()==history+1&&game.run->player.attributes.speed==.8f&&game.run->player.hp==6&&std::abs(game.cameraZoomPercent()-145)<.001f,
           "retry resolves death once, retains active Speed and starts with normal health");
     game.run->finishDebug(false);game.finish(dw::EndReason::Death);
     capture("artifacts/d01-death-retry.png");
     check(game.keyboardFocus()==dw::Action::RetryExpedition,"death summary defaults to retry");key(KEY_ENTER);
     check(game.run&&!game.run->dead&&game.run->expedition.seed==runSeed,"summary Enter restarts without visiting the hub");
+    game.setRoomSizeRange(7,9);game.setRoomSize(1.25f);game.setRouteLength(.65f);game.setDefaultZoom(125);game.rememberBalancePreset();game.exportBalancePreset();
+    check(game.run->roomSizeScale==1&&game.run->routeLengthScale==1,"export and remember do not apply pending map to current floor");
+    game.setRoomSize(1);game.setRoomSizeRange(0,0);game.setRouteLength(1);
+    const auto beforeLoad=game.run->arena.canyon.get();game.loadBalancePreset(game.balanceFile);
+    check(game.hasPendingMapChanges()&&game.run->arena.canyon.get()==beforeLoad&&game.balanceDraft.routeLengthScale==.65f,
+          "loading exported map stages its settings without regeneration");
+    game.applyMapChanges();
+    std::filesystem::copy_file(game.balanceFile,"artifacts/d02-size-range.json",std::filesystem::copy_options::overwrite_existing);
     game.run->jumpDebug(game.run->finalRoom());game.run->clearRoomDebug();game.run->floorExitRequested=true;
     check(game.run->advanceFloor()&&game.run->player.attributes.speed==.8f,"preset Speed survives actual floor transfer");
+    check(game.run->routeLengthScale==.65f&&game.run->roomSizeScale==1.25f&&game.run->roomMinHalfTiles==7&&game.run->roomMaxHalfTiles==9,"size range survives floor transition");
+    game.run->grant(dw::ItemId::Ricochet);game.run->keys=2;game.run->moneyCollected=11;
+    game.run->jumpDebug(game.run->finalRoom());game.run->player.hp=5;
+    const auto resizeItems=game.run->items;const auto resizeId=game.run->summary().id;
+    const auto resizeRoom=game.run->room,resizeFloor=game.run->floor;
+    game.perform(dw::Action::RoomSizeDown);game.perform(dw::Action::ApplyMapChanges);
+    check(game.error.empty()&&game.run->roomSizeScale==1.24f&&game.run->room==resizeRoom&&game.run->floor==resizeFloor&&
+          game.run->summary().id==resizeId&&game.run->player.hp==5&&game.run->items==resizeItems&&game.run->keys==2&&game.run->moneyCollected==11,
+          "testing resize after exploration/on later floor preserves player, inventory, currency and current expedition/room");
+    check(game.run->livingEnemies()>0,"testing resize regenerates current room encounters");
+    game.setRoomSize(1.25f);game.applyMapChanges();
     game.close();renderer.unload();
     dw::Game fresh(save);fresh.themeChoice=dw::ThemeChoice::Canyon;fresh.seedText="1866";fresh.launch(true);
     check(fresh.error.empty()&&fresh.run->player.attributes.speed==.8f,"fresh Game session auto-loads remembered preset for next expedition");
+    check(fresh.run->routeLengthScale==.65f&&fresh.run->roomSizeScale==1.25f&&fresh.run->roomMinHalfTiles==7&&fresh.run->roomMaxHalfTiles==9&&std::abs(fresh.cameraZoomPercent()-125)<.001f,"fresh session loads size/range before generation");
     check(fresh.run->player.hp==6&&fresh.run->player.shotDamage==24&&fresh.run->items.empty(),"preset is configuration, not old inventory or damage changes");
+    fresh.run->finishDebug(false);fresh.retryExpedition();
+    check(fresh.run->routeLengthScale==.65f&&fresh.run->roomSizeScale==1.25f&&std::abs(fresh.cameraZoomPercent()-125)<.001f,"retry retains applied route and room settings");
     fresh.resetBalance();fresh.rememberBalancePreset();fresh.close();
     dw::Game restored(save);restored.themeChoice=dw::ThemeChoice::Canyon;restored.launch(true);
-    check(restored.run->player.attributes.speed==1,"reference reset and remember round-trip to a new session");restored.close();
+    check(restored.run->player.attributes.speed==1&&restored.balancePreset.defaultZoomPercent==125,"reference reset and remember round-trip to a new session");restored.close();
     {std::ofstream out(restored.balanceDirectory/"next.json");out<<"broken";}
     dw::Game broken(save);check(!broken.error.empty(),"corrupt remembered preset is reported, not silently accepted");
     bool rejected=false;try{broken.launch(true);}catch(const std::exception &){rejected=true;}
     check(rejected&&!broken.run&&!broken.campaign.data().pending,"incompatible remembered preset cannot silently launch defaults");
     broken.resetBalance();broken.rememberBalancePreset();broken.launch(true);check(broken.run!=nullptr,"reference reset recovers invalid saved configuration");broken.close();
-    std::cout<<"PASS D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence\n";
+    dw::Game setup(directory/"map-setup.save");setup.themeChoice=dw::ThemeChoice::Canyon;
+    setup.setRoomSize(1.1f);setup.setRouteLength(1.5f);
+    check(!setup.nextBalancePreset&&!std::filesystem::exists(setup.balanceDirectory/"next.json"),"pre-generation edits remain unsaved until explicit apply/remember");
+    setup.setDefaultZoom(175);
+    check(setup.nextBalancePreset&&setup.nextBalancePreset->roomSizeScale==1&&setup.nextBalancePreset->routeLengthScale==1,
+          "pre-generation zoom edit saves zoom without leaking pending map settings");
+    setup.applyMapChanges();setup.launch(true);
+    check(setup.run->roomSizeScale==1.1f&&setup.run->routeLengthScale==1.5f&&std::abs(setup.cameraZoomPercent()-175)<.001f,"Apply before generation configures actual next expedition");setup.close();
+    std::cout<<"PASS default zoom controls/export/load/retry, staged map Apply and route persistence; D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence\n";
 }
 void startingHeartsInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"starting-hearts.save");game.debug=true;game.seedText="42";
@@ -2041,7 +2114,7 @@ int main(int argc, char **argv) {
         check(game.expeditionPacing==dw::ExpeditionPacing::Growing,"pacing changes only while choosing an expedition");
         game.launch();
         check(game.run->arena.roomCount()==9&&game.campaign.data().pending->pacing==dw::ExpeditionPacing::Growing,"selected pacing reaches gameplay and initial save");
-        check(std::abs(cameraDistance() - widestDistance) < 0.01f, "new expeditions retain session zoom");
+        check(std::abs(game.cameraZoomPercent() - game.balancePreset.defaultZoomPercent) < 0.01f, "new expeditions restore the configured default zoom");
         check(dw::distance(retainedAngle, cameraAngle()) < .0001f,
               "new expeditions retain session camera rotation");
         game.run->player.hp = 0;

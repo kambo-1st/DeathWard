@@ -10,10 +10,17 @@
 
 namespace dw {
 Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, MissionTheme theme,
-                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library)
-    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),
+                       bool canyonRiver, bool tutorial, WitnessAccount account, int level, ExpeditionPacing pacing, std::shared_ptr<const MechanicsLibrary> library, float requestedRoomScale, int roomMinimum, int roomMaximum, float requestedRouteScale)
+    : content(library ? std::move(library) : defaultMechanics()), expedition(seed,tutorial,account,pacing),floor(level),roomSizeScale(requestedRoomScale),routeLengthScale(requestedRouteScale),roomMinHalfTiles(roomMinimum),roomMaxHalfTiles(roomMaximum),
       arena(expedition.floorSeed(level), theme, canyonRiver, tutorial, expedition.storyAt(level),
-            expedition.roomsOnFloor(level),expedition.dimensionsOnFloor(level),
+            expedition.roomsOnFloor(level),[&]{auto dimensions=expedition.dimensionsOnFloor(level);
+                dimensions.roomSizeScale=roomSizeScale;dimensions.routeLengthScale=routeLengthScale;
+                if(roomMinHalfTiles||roomMaxHalfTiles) {
+                    if(roomMinHalfTiles<5||roomMaxHalfTiles<roomMinHalfTiles||roomMaxHalfTiles>10)
+                        throw std::invalid_argument("Room range must be 10-20 tiles, minimum no larger than maximum");
+                    dimensions.smallerRooms=true;dimensions.minHalfTiles=roomMinHalfTiles;dimensions.maxHalfTiles=roomMaxHalfTiles;
+                }
+                return dimensions;}(),
             theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{}),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
@@ -78,11 +85,66 @@ bool Simulation::storySeen() const {
 bool Simulation::canUseFloorExit() const {
     return room==finalRoom()&&roomClear&&(!surveyTutorial||surveyRecovered)&&storySeen();
 }
+bool Simulation::canResizeRooms() const {
+    return !arena.rooms.empty(); // Explicit testing control; exploration/combat do not lock it.
+}
+void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScale) {
+    if(scale==roomSizeScale&&minimum==roomMinHalfTiles&&maximum==roomMaxHalfTiles&&routeScale==routeLengthScale)return;
+    if(!canResizeRooms())throw std::runtime_error("No floor to resize");
+    Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,surveyTutorial,
+                    expedition.account,floor,expedition.pacing,content,scale,minimum,maximum,routeScale);
+    const int targetRoom=std::clamp(room,0,next.finalRoom());
+    next.items=items;next.keys=keys;next.powerUpsTaken=powerUpsTaken;
+    next.dynamite=dynamite;next.dynamiteCooldown=dynamiteCooldown;
+    next.moneyCollected=moneyCollected;next.moneySpent=moneySpent;
+    next.rescued=rescued;next.altarDestroyed=altarDestroyed;next.evidence=evidence;
+    next.surveyRecovered=surveyRecovered;
+    const auto &oldBounds=arena.rooms[size_t(room)].bounds,&newBounds=next.arena.rooms[size_t(targetRoom)].bounds;
+    const Vector3 wanted{
+        newBounds.min.x+(player.position.x-oldBounds.min.x)*(newBounds.max.x-newBounds.min.x)/(oldBounds.max.x-oldBounds.min.x),
+        player.position.y,
+        newBounds.min.z+(player.position.z-oldBounds.min.z)*(newBounds.max.z-newBounds.min.z)/(oldBounds.max.z-oldBounds.min.z)};
+    auto safe=[&](Vector3 point) {
+        if(next.arena.roomAt(point)!=targetRoom||next.arena.blocked(point,.48f))return false;
+        for(const auto &enemy:next.roomEnemies(targetRoom))if(enemy.alive&&distance(point,enemy.position)<enemy.radius+1.5f)return false;
+        return true;
+    };
+    auto position=wanted;float best=std::numeric_limits<float>::infinity();
+    if(safe(wanted))best=0;
+    for(auto cell:next.arena.floorCells) {
+        const Vector3 point{(cell.first+.5f)*FloorTile,player.position.y,(cell.second+.5f)*FloorTile};
+        const float score=distance(point,wanted);
+        if(score<best&&safe(point)) {best=score;position=point;}
+    }
+    if(!std::isfinite(best)) {
+        // A crowded test room may lack enemy clearance; retain terrain safety.
+        for(auto cell:next.arena.floorCells) {
+            const Vector3 point{(cell.first+.5f)*FloorTile,player.position.y,(cell.second+.5f)*FloorTile};
+            const float score=distance(point,wanted);
+            if(score<best&&next.arena.roomAt(point)==targetRoom&&!next.arena.blocked(point,.48f)){best=score;position=point;}
+        }
+    }
+    if(!std::isfinite(best))throw std::runtime_error("Resized room has no safe player position");
+    next.player=player;next.player.position=position;next.player.aim=add(position,sub(player.aim,player.position));
+    next.enterRoom(targetRoom);
+    next.player.velocity={};next.player.launch.reset();next.player.pullTime=0;
+    next.stats=stats;next.roomEnteredAt=stats.duration;
+    for(auto &progress:next.rooms)for(auto &enemy:progress.residents)enemy.observedShots=stats.shots;
+    for(auto &enemy:next.enemies)enemy.observedShots=stats.shots;
+    next.blueFlies=blueFlies;for(auto &fly:next.blueFlies){fly.id=next.nextEntity_++;fly.room=-1;}
+    next.charmFollowers_=charmFollowers_;
+    for(const auto &enemy:enemies)if(enemy.alive&&enemy.permanentCharmed)next.charmFollowers_.push_back(enemy);
+    for(auto &enemy:next.charmFollowers_){enemy.id=next.nextEntity_++;enemy.summoner=enemy.componentOwner=0;}
+    next.restoreCharmFollowers();next.dead=dead;next.finished=finished;
+    next.godMode=godMode;next.limits=limits;next.canonicalShooting=canonicalShooting;
+    next.audioEpoch=audioEpoch+1;next.checkpointNeeded=true;
+    *this=std::move(next); // Same expedition ID, seed, timer and player; no campaign restart/consequences.
+}
 bool Simulation::advanceFloor() {
     if(!floorExitRequested||lastFloor()||dead||!canUseFloorExit())return false;
     // Construct first: a load failure leaves the previous floor and player intact.
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
-                    expedition.pacing,content);
+                    expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale);
     next.canonicalShooting=canonicalShooting;
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;

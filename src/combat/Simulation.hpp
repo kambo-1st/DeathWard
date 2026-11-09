@@ -1079,10 +1079,12 @@ class Simulation {
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics());
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1);
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
+    float roomSizeScale = 1, routeLengthScale = 1;
+    int roomMinHalfTiles = 0, roomMaxHalfTiles = 0;
     Player player;
     Arena arena;
     Stats stats;
@@ -1136,6 +1138,8 @@ class Simulation {
     bool storySeen() const;
     bool canUseFloorExit() const;
     bool advanceFloor();
+    bool canResizeRooms() const;
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }
