@@ -1,6 +1,6 @@
 # D02 — original canyon presentation, larger and adjustable rooms
 
-D01 is committed as `809beb75`. The user rejected the first D02 candidate's straight borders, narrow connectors and faster walking. Those changes were removed. The selected implementation retains the original canyon generator, eight-unit-wide gates/trails, accepted 4.8 base walking pace, immediate stopping, universal dodge and existing firing/HP/damage rules.
+D01 is committed as `809beb75`; the room/route/zoom tuning implementation and recovery report are committed as `a10e08c0`. The user rejected the first D02 candidate's straight borders, narrow connectors and faster walking. Those changes were removed. The selected implementation retains the original canyon generator, eight-unit-wide gates/trails, accepted 4.8 base walking pace, immediate stopping, universal dodge and existing firing/HP/damage rules.
 
 The user subsequently required dynamic size, configurable minimum/maximum before generation, small adjustments, unrestricted resizing for testing, an explicit Apply button and adjustable connection-route length. These are implemented in the main game's tuning panel.
 
@@ -34,6 +34,18 @@ build/deathward --expedition --seed 1866 --mute --save /home/kambo/.local/share/
 2. Open TUNING, adjust room size/MIN/MAX and ROUTE LENGTH. The map stays unchanged until **APPLY MAP CHANGES**. Apply, close the panel and walk the resized room/connection. This works later in the expedition too, with the displayed testing reset behavior.
 3. Set DEFAULT ZOOM (or use the current view), export/use-next-expedition, then launch again: size, range, route length, Speed and default zoom reload. Loading a preset previews its zoom while map edits remain staged. Configuration is separate from inventory/gameplay saves.
 
+## Load an exported preset from the CLI
+
+Use this one-line command from the repository root:
+
+```sh
+build/deathward --expedition --seed 1866 --mute --save /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save --balance-preset /home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json
+```
+
+`--balance-preset` loads the complete configuration before generating the expedition and remembers it for subsequent launches using the same `--save` path. Export alone writes a file; it does not select that file for startup. Inside an existing expedition, **LOAD PRESET** previews Speed/zoom and stages map changes until **APPLY MAP CHANGES**.
+
+On 2026-11-10, actual main-game startup reported Speed 1, room scale 1.1, route scale 0.3 and zoom 165. The remembered configuration also matches the exported range of 7–9 half-tiles (14–18 full tiles). See `cli-preset-load.json`. The user positively acknowledged this CLI workflow; full native geometry/gameplay acceptance remains open.
+
 ## Implementation and validation
 
 Schema 4 / contract `d02-view-v4` stores size/range/route length, Speed and `default_zoom_percent`, with immutable provenance and explicit overrides. Schema 1–3 files remain loadable; new exports use schema 4. The 160% camera reference is DeathWard framing, not a claim about Isaac camera parity. Range fields are integer half-spans (`room_min_half_tiles`, `room_max_half_tiles`); zero/zero means automatic pacing. Invalid, reversed, fractional or out-of-range values are rejected before applying. The rejected walking-timing schema is not accepted as this room-size schema.
@@ -46,8 +58,10 @@ See `validation.json` and adjacent build/test/capture records for current verifi
 
 `source-shapes.json` and `scripts/isaac-reference/capture-source-room-shapes.py` retain the pinned executable's 12 room shapes: normal 13×7; narrow 13×3/5×7; doubled 13×14/5×14/26×7/26×3; large 26×14; four L orientations with a 13×7 quadrant removed. These remain research, not enabled canyon masks. Chapter-template presence is not proof of floor-I eligibility/frequencies.
 
-Unfinished: human acceptance of the restored presentation, Apply flow, route/size controls and default zoom; exact source-equivalent area/traversal/clearance under the retained irregular canyon style; exact source room/door/content-generation rules and D03–D20. Full state-preserving resizing of an already played floor is not implemented: the requested unrestricted testing control regenerates that floor's encounters and rewards. The original D02 exact-geometry objective is not complete.
+Unfinished: broader gameplay/visual acceptance beyond the positively acknowledged tuning and CLI workflow; exact source-equivalent area/traversal/clearance under the retained irregular canyon style; exact source room/door/content-generation rules and D03–D20. Full state-preserving resizing of an already played floor is not implemented: the requested unrestricted testing control regenerates that floor's encounters and rewards. The original D02 exact-geometry objective is not complete.
 
 ## Preset path recovery (2026-11-09)
 
 The reported `first-floor-d01/campaign.save.balance/export.json` was absent. The export was intact under `first-floor-d02`, and the subsequent launch used the D01 save path. An identical copy was restored at the requested D01 path without changing the original; the production preset loader accepts it. Settings: Speed 1, room size 110%, range 14–18 tiles, routes 30%, default zoom 165%. See `preset-path-recovery.json`. No loader/code change was needed. Load this file, Apply its pending map changes, and Use next expedition to remember it. Preset directories remain tied to the selected campaign/save path; use one consistent save path for review launches. Broader native spatial acceptance and later deliveries remain open.
+
+Next proposed delivery: **D03**, independent live Tears, Shot Speed and Range controls with preset persistence and shooting review in the main game. Existing independent consumers are already enabled; preserve the accepted baseline, eight-direction firing and universal dodge while verifying the selected source-flight/collision gaps. D03 is proposed, not newly authorized by this documentation checkpoint.

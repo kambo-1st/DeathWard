@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Review default zoom preview/export/reload in the main game. Exact native spatial acceptance and D03-D20 remain open.",
+  "next_work": "When selected, D03 shooting controls/review in the main game, preserving the accepted walking, map/zoom settings, eight-direction firing and universal dodge. Exact native spatial acceptance and D03-D20 remain open.",
   "first_floor_delivery_plan_checkpoint": {
-    "recorded_date": "2026-11-09",
-    "status": "D01 committed; D02 map Apply/route and default zoom controls enabled; focused developer checks pass, human zoom review pending",
+    "recorded_date": "2026-11-10",
+    "status": "D01 and scoped D02 map/route/default-zoom tuning committed; CLI preset loading verified and positively acknowledged; exact native spatial parity remains open",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,16 +47,17 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "Human D02 review before further selection",
+    "next_proposed_delivery": "D03: independent live Tears/Shot Speed/Range controls, export/reload and main-game shooting review; awaiting selection",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
       "D01",
       "D02"
     ],
-    "human_acceptance": "Apply/route controls positively acknowledged; default zoom awaits review; native spatial acceptance remains open",
+    "human_acceptance": "Apply/route controls and CLI preset workflow positively acknowledged; broader gameplay and native spatial acceptance remain open",
     "implementation_report": "docs/reports/isaac-first-floor-parity/d02-room-scale/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/d02-room-scale/validation.json"
+    "validation": "docs/reports/isaac-first-floor-parity/d02-room-scale/validation.json",
+    "implementation_commit": "a10e08c0"
   },
   "first_floor_requirements_checkpoint": {
     "recorded_date": "2026-11-09",

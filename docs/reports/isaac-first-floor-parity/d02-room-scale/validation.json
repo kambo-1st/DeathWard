@@ -1,5 +1,5 @@
 {
-  "status": "default zoom implemented; focused developer checks passed; human zoom review pending",
+  "status": "implementation committed; focused developer checks and actual 165% CLI preset loading pass; broader gameplay acceptance remains open",
   "d01_commit": "809beb75",
   "current_scope": "larger original canyon rooms; pending size/range and route-length draft with explicit Apply; unrestricted current-floor testing regeneration; original walking and corridor width; default zoom previews immediately and exports/loads/remembers with presets",
   "native_geometry_enabled": false,
@@ -13,7 +13,7 @@
     "active projectiles/bombs/hazards and transient room effects"
   ],
   "remaining": [
-    "human acceptance of default zoom and broader presentation/tuning; Apply/route controls positively acknowledged",
+    "broader gameplay/visual acceptance beyond positively acknowledged tuning and CLI workflow",
     "native spatial equivalence/clearance with retained irregular rooms",
     "complete preservation of played-floor state during resize (testing regeneration intentionally resets floor encounters/rewards)",
     "D03-D20"
@@ -34,8 +34,10 @@
     "keyboard_and_hud": "passed for preceding Apply/route build; not rerun for zoom; new zoom buttons exercised in actual Game/Renderer input suite",
     "fresh_process_reload": "pass; two separate main-game processes restore Speed .8, room scale 1.25, range 7-9, route scale .65 and default zoom 125; zoom-fresh-reload.json",
     "visual_inspection": "updated tuning.png inspected; zoom row and remembered summary fit without overlap",
-    "diff_check": "pass"
+    "diff_check": "pass",
+    "user_preset_cli": "pass; actual main-game startup with exported 165% zoom, 110% rooms and 30% routes; remembered configuration matches; cli-preset-load.json"
   },
   "recorded_utc": "2026-11-09T22:03:43.463995+00:00",
-  "executable_sha256": "d72ada3fbd0144085bd1f5ecb6df6fc8f3969833e289a00188ec0831b285972d"
+  "executable_sha256": "d72ada3fbd0144085bd1f5ecb6df6fc8f3969833e289a00188ec0831b285972d",
+  "implementation_commit": "a10e08c0"
 }

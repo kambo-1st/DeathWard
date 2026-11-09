@@ -1,6 +1,6 @@
 # First floor: small playable deliveries
 
-Updated: 2026-11-09. **D01 committed (`809beb75`).** D02 retains the original canyon visuals/corridors and accepted walking, with larger defaults, 1% room-size/route-length controls and minimum/maximum controls before generation, applied together using **Apply map changes**, plus an immediately previewed default zoom that exports/reloads with presets. The user explicitly requires unrestricted test resizing: current-floor encounters/rewards regenerate while player/build and expedition identity remain. See [current scope](reports/isaac-first-floor-parity/d02-room-scale/README.md). Exact native spatial acceptance and D03–D20 remain open.
+Updated: 2026-11-10. **D01 committed (`809beb75`); current D02 tuning committed (`a10e08c0`).** D02 retains the original canyon visuals/corridors and accepted walking, with larger defaults, 1% room-size/route-length controls and minimum/maximum controls before generation, applied together using **Apply map changes**, plus an immediately previewed default zoom that exports/reloads with presets. The user explicitly requires unrestricted test resizing: current-floor encounters/rewards regenerate while player/build and expedition identity remain. See [current scope](reports/isaac-first-floor-parity/d02-room-scale/README.md). The user positively acknowledged CLI preset loading (165% zoom verified). **Next proposed: D03 shooting controls and review.** Exact native spatial acceptance and D03–D20 remain open.
 
 ## What every delivery must provide
 
@@ -46,7 +46,7 @@ Every handoff includes one round-trip test: change a newly delivered value, obse
 
 ## Delivery sequence
 
-D01 is **implemented / human review pending**. Other rows remain **planned**. Rows marked `a, b, …` are families of individually reviewed small deliveries, not one large batch.
+D01 and the scoped D02 map/route/zoom tuning are **implemented and committed**. The original D02 exact source-geometry objective remains **open**; the user retained the original canyon presentation and accepted walking pace. D03 is the **next proposed delivery**, with no new selection implied. Other rows remain **planned**. Rows marked `a, b, …` are families of individually reviewed small deliveries, not one large batch.
 
 | ID | Visible delivery in the normal expedition | Human check and pass condition | Source/dependency gate |
 | --- | --- | --- | --- |
@@ -85,4 +85,4 @@ Record: delivery ID and selected differences; source profile/case; exact main-ga
 
 Discrete rules such as heart amounts, eligible identities, counts in a fixed capture, prices and ordinary hit counts must match exactly. Timing/trajectory comparisons use source update cadence and declared numerical/measurement tolerances recorded before reviewing the result. Do not widen tolerances or change source values to hide a failure. A subjective playtest complements these checks; it does not replace them.
 
-**Next:** review restored visuals, accepted walking, pending map edits, Apply, 1% size/route adjustment and configurable ranges in the main game. **Unfinished:** human acceptance; exact source-equivalent spatial/clearance and floor-generation rules; D03–D20. Live resizing is an unrestricted testing regeneration, not full preservation of an already played floor. Later deliveries remain manually selected; the bulk effort stays paused.
+**Next proposed: D03 — shooting controls and review in the main game.** Expose independent Tears, Shot Speed and Range controls through the existing consumers, export/load them, and verify actual cadence/travel/expiry while standing and moving. Preserve the accepted walking pace, chosen map/zoom preset, eight-direction firing and universal dodge. The short review is: change Tears and inspect cadence; change Shot Speed/Range separately and inspect travel/reach; export/relaunch/load and confirm the same result. D03 requires user selection before implementation. **Unfinished:** full gameplay/visual acceptance; exact source-equivalent spatial/clearance and floor-generation rules; D03–D20. Live resizing is an unrestricted testing regeneration, not full preservation of an already played floor. Later deliveries remain manually selected; the bulk effort stays paused.
