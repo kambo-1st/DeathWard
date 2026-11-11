@@ -1,5 +1,6 @@
 #include "core/Game.hpp"
 #include "render/Renderer.hpp"
+#include "items/Items.hpp"
 #include "rlgl.h"
 #include <chrono>
 #include <fstream>
@@ -55,7 +56,7 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_UP);frame();
     click(460,190);click(460,190);
     check(std::abs(run.player.attributes.speed-.8f)<1e-6f&&run.combatRng.state==rng,"Speed buttons apply without advancing combat RNG");
-    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v4:")!=std::string::npos,"checkpoint identifies active tuning revision");
+    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v5:")!=std::string::npos,"checkpoint identifies active tuning revision");
     check(std::filesystem::exists(game.balanceDirectory/"revisions"/(game.balancePreset.revision()+".json")),"checkpoint revision retains its resolved preset");
     check(run.canResizeRooms(),"untouched starting room permits live resizing");
     const auto id=run.summary().id, nextId=game.campaign.data().nextRunId;
@@ -186,6 +187,94 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     setup.applyMapChanges();setup.launch(true);
     check(setup.run->roomSizeScale==1.1f&&setup.run->routeLengthScale==1.5f&&std::abs(setup.cameraZoomPercent()-175)<.001f,"Apply before generation configures actual next expedition");setup.close();
     std::cout<<"PASS default zoom controls/export/load/retry, staged map Apply and route persistence; D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence\n";
+}
+void shootingBalanceInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto save=directory/"shooting-balance.save";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="1866";
+    BalancePreset chosen{1,defaultMechanics()->fingerprint(),1.1f,7,9,.3f,165};
+    const auto file=directory/"shooting.json";chosen.save(file);game.loadBalancePreset(file);game.rememberBalancePreset();game.launch(true);
+    auto &run=*game.run;run.godMode=true;game.updateCamera(10);Renderer renderer;
+    const auto near=[&](float a,float b,const char *message){check(std::abs(a-b)<.001f,message);};
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"shooting UI has no error");};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    near(run.player.attributes.tearsPerSecond,BalancePreset::ReferenceTears,"migrated starting Tears baseline");
+    near(run.player.walkingSpeed(),4.8f,"shooting controls preserve accepted walk");near(game.cameraZoomPercent(),165,"chosen zoom retained");
+    click(374,642);click(850,143);check(game.balanceOpen&&game.balanceShootingOpen,"actual HUD opens shooting tab");
+    game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto duration=run.stats.duration,shots=double(run.stats.shots);
+    click(855,189);near(run.player.attributes.tearsPerSecond,BalancePreset::ReferenceTears+.1f,"Tears plus changes only rate");
+    click(710,189);check(run.player.attributes.tearsPerSecond==BalancePreset::ReferenceTears,"opposite Tears steps preserve the exact baseline");
+    click(855,189);
+    near(run.player.attributes.shotSpeed,1,"Tears does not change shot speed");near(run.player.attributes.rangeTiles,6.5f,"Tears does not change range");
+    click(855,268);near(run.player.attributes.shotSpeed,1.05f,"Shot Speed plus uses a small independent step");
+    click(855,348);near(run.player.attributes.rangeTiles,6.75f,"Range plus uses quarter-tile steps");
+    check(run.arena.canyon.get()==terrain&&run.stats.duration==duration&&run.stats.shots==shots&&game.hasPendingMapChanges(),
+          "shooting edits preserve pending map, floor, timer and emission count");
+    // Tabs expose only their visible actions to keyboard navigation.
+    for(int i=0;i<20&&game.keyboardFocus()!=Action::ShotSpeedDown;++i)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ShotSpeedDown,"shooting control reachable by keyboard");key(KEY_ENTER);
+    near(run.player.attributes.shotSpeed,1,"keyboard activates focused shooting control");
+    click(380,441);near(run.player.attributes.tearsPerSecond,BalancePreset::ReferenceTears,"reset restores exact 30/11 baseline");
+    near(run.player.attributes.rangeTiles,6.5f,"reset restores base range");
+    check(game.balanceDraft.roomSizeScale==1.2f&&run.roomSizeScale==1.1f,"shooting reset does not apply or discard map draft");
+    // Fire through actual Game input in the generated main-game room.
+    key(KEY_ESCAPE);run.player.position=run.arena.rooms[0].center;run.player.position.y=.85f;run.player.velocity={};run.player.fireCooldown=0;
+    game.updateCamera(10);mouseEvent(KeyDown,KEY_RIGHT);frame();mouseEvent(KeyUp,KEY_RIGHT);frame();
+    check(!run.projectiles.empty(),"actual Game shooting creates a projectile");click(374,642);
+    const auto old=run.projectiles.front();const float wait=run.player.fireCooldown;
+    check(wait>0,"shooting edit fixture has an active firing wait");
+    game.setShooting(5,2,13);game.setShooting(4,1.5f,8);
+    check(run.player.fireCooldown==wait&&run.projectiles.front().id==old.id&&run.projectiles.front().life==old.life&&
+          run.projectiles.front().attack.speed==old.attack.speed&&run.projectiles.front().attack.maxDistance==old.attack.maxDistance&&
+          distance(run.projectiles.front().velocity,old.velocity)==0,
+          "repeated edits keep current cooldown and existing projectile birth/lifecycle state");
+    const auto shotCount=run.stats.shots;key(KEY_ESCAPE);mouseEvent(KeyDown,KEY_RIGHT);frame();
+    check(run.stats.shots==shotCount,"changing Tears does not grant an immediate extra shot");
+    for(int i=0;i<80&&run.stats.shots==shotCount;++i)frame();mouseEvent(KeyUp,KEY_RIGHT);frame();
+    check(run.stats.shots==shotCount+1,"next shot follows the retained firing wait");
+    const auto &born=run.projectiles.back();near(born.attack.speed,12,"new projectile uses edited shot speed");
+    near(born.attack.maxDistance,11.f*8/6.5f,"new projectile uses edited range");near(born.damage,24,"D03 leaves damage unchanged");
+    click(374,642);
+    run.grant(ItemId::Rail);const auto before=primaryPlayerAttack(run,run.player.shotDamage,false);const float cadence=primaryCadence(run);
+    game.setShooting(2,3,4);const auto after=primaryPlayerAttack(run,run.player.shotDamage,false);
+    near(after.speed,before.speed*2,"owned speed modifier applied once to new base");near(after.maxDistance,before.maxDistance*.5f,"Range remains independent with owned weapon");
+    near(primaryCadence(run),cadence*2,"owned cadence modifier applied once to edited Tears");
+    check(run.itemStacks(ItemId::Rail)==1&&after.damage==before.damage,"editing retains owned build and damage");
+    game.setShooting(4,1.5f,8);game.setPlayerSpeed(.9f);game.setDefaultZoom(165);
+    click(320,605);click(900,605);
+    const auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(exported.tearsPerSecond==4&&exported.shotSpeed==1.5f&&exported.rangeTiles==8&&exported.roomSizeScale==1.2f,
+          "actual export/remember includes shooting and still-pending map settings");
+    game.resetShooting();game.setDefaultZoom(160);click(590,605);
+    near(run.player.attributes.tearsPerSecond,4,"load restores Tears");near(run.player.attributes.shotSpeed,1.5f,"load restores Shot Speed");
+    near(run.player.attributes.rangeTiles,8,"load restores Range");near(game.cameraZoomPercent(),165,"load retains chosen view");
+    check(run.arena.canyon.get()==terrain&&game.hasPendingMapChanges(),"load applies shooting but stages map changes");
+    const auto active=game.balancePreset.revision(),draft=game.balanceDraft.revision();const float invalidWait=run.player.fireCooldown;
+    auto bytes=exported.json();auto at=bytes.find("\"shot_speed\": 1.5");check(at!=bytes.npos,"invalid shooting mutation exists");
+    bytes.replace(at,std::string("\"shot_speed\": 1.5").size(),"\"shot_speed\": 99");
+    const auto invalid=directory/"shooting-invalid.json";{std::ofstream out(invalid);out<<bytes;}
+    game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==active&&game.balanceDraft.revision()==draft&&run.player.fireCooldown==invalidWait,
+          "invalid shooting load changes neither active/draft settings nor firing state");
+    game.balanceFile=file.string();game.perform(Action::LoadBalance);check(game.error.empty(),"valid shooting load recovers");
+    std::filesystem::create_directories("artifacts");
+    std::filesystem::copy_file(file,"artifacts/d03-shooting-preset.json",std::filesystem::copy_options::overwrite_existing);
+    BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+    check(ExportImage(image,"artifacts/d03-shooting-panel.png"),"capture main-game shooting controls");UnloadImage(image);EndDrawing();
+    game.applyMapChanges();check(run.player.attributes.tearsPerSecond==4&&run.player.attributes.shotSpeed==1.5f&&run.player.attributes.rangeTiles==8,
+          "Apply map retains shooting settings");
+    key(KEY_ESCAPE);run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;
+    check(run.advanceFloor()&&run.player.attributes.tearsPerSecond==4&&run.player.attributes.shotSpeed==1.5f&&run.player.attributes.rangeTiles==8,
+          "shooting settings survive actual floor travel");
+    run.finishDebug(false);game.retryExpedition();
+    check(game.run->player.attributes.tearsPerSecond==4&&game.run->player.attributes.shotSpeed==1.5f&&game.run->player.attributes.rangeTiles==8&&
+          game.run->player.hp==6&&game.run->items.empty(),"retry uses current shooting config with fresh normal player");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
+    check(fresh.run->player.attributes.tearsPerSecond==4&&fresh.run->player.attributes.shotSpeed==1.5f&&fresh.run->player.attributes.rangeTiles==8&&
+          fresh.run->roomSizeScale==1.2f&&fresh.cameraZoomPercent()==165,"remembered shooting/map/view applied before fresh expedition");fresh.close();
+    std::cout<<"PASS D03 actual Game/Renderer tabs, buttons and keyboard; independent shooting, old bullets/cooldown, owned modifiers, invalid-load isolation, export/load, Apply, floor/retry/fresh-session persistence\n";
 }
 void startingHeartsInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"starting-hearts.save");game.debug=true;game.seedText="42";
@@ -1239,6 +1328,10 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--balance-only") {
             balanceInputCheck(directory);
             if(mode=="--balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--shooting-balance-only") {
+            shootingBalanceInputCheck(directory);
+            if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
         if(mode.empty()||mode=="--starting-hearts-only") {
             startingHeartsInputCheck(directory);

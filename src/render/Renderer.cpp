@@ -1,6 +1,7 @@
 #include "render/Renderer.hpp"
 #include "core/ExpeditionHud.hpp"
 #include "items/Items.hpp"
+#include "combat/PlayerShooting.hpp"
 #include "render/MonsterVisuals.hpp"
 #include "render/WorldPalette.hpp"
 #include "raymath.h"
@@ -2175,46 +2176,74 @@ Action Renderer::balancePanel(const Game &game) {
     panel(0,0,1280,800,{8,12,16,235});panel(170,60,940,710,Panel);
     text("EXPEDITION TUNING",205,86,30,Gold);
     text(game.balanceDraft.custom()?"CUSTOM PRESET":"REFERENCE / PARTIAL",800,96,15,Teal);
-    text("Speed and default zoom apply immediately. Map edits wait for APPLY MAP CHANGES.",205,132,15,Paper);
-    text("SPEED",205,181,18,Muted);text(decimal(game.balancePreset.playerSpeed),296,172,32,Paper);
-    if(button(Action::SpeedDown,"- 0.10",405,169,118,45))return Action::SpeedDown;
-    if(button(Action::SpeedUp,"+ 0.10",535,169,118,45))return Action::SpeedUp;
-    if(button(Action::ResetBalance,"RESET SPEED TO 1.00",675,169,400,45))return Action::ResetBalance;
-    text("DEFAULT ZOOM",205,229,14,Gold);text(decimal(game.balancePreset.defaultZoomPercent)+"%",380,225,20,Paper);
-    if(button(Action::DefaultZoomDown,"- 1%",490,220,90,28))return Action::DefaultZoomDown;
-    if(button(Action::DefaultZoomUp,"+ 1%",590,220,90,28))return Action::DefaultZoomUp;
-    if(button(Action::DefaultZoomCurrent,"USE CURRENT",700,220,180,28))return Action::DefaultZoomCurrent;
-    if(button(Action::DefaultZoomReset,"RESET 160%",895,220,180,28))return Action::DefaultZoomReset;
-    text("ROOM SIZE",205,266,16,Gold);text(decimal(game.balanceDraft.roomSizeScale*100)+"%",330,263,20,Paper);
-    if(button(Action::RoomSizeDown,"- 1%",475,253,118,38))return Action::RoomSizeDown;
-    if(button(Action::RoomSizeUp,"+ 1%",610,253,118,38))return Action::RoomSizeUp;
-    text("75 - 150% / fine canyon sizing",750,265,13,Muted);
-    const auto [minimum,maximum]=game.roomSizeRange();
-    text("MIN "+std::to_string(minimum*2)+" TILES",205,310,14,Paper);
-    if(button(Action::RoomMinDown,"-",355,299,44,34))return Action::RoomMinDown;
-    if(button(Action::RoomMinUp,"+",407,299,44,34))return Action::RoomMinUp;
-    text("MAX "+std::to_string(maximum*2)+" TILES",495,310,14,Paper);
-    if(button(Action::RoomMaxDown,"-",645,299,44,34))return Action::RoomMaxDown;
-    if(button(Action::RoomMaxUp,"+",697,299,44,34))return Action::RoomMaxUp;
-    if(button(Action::RoomRangeAuto,"AUTO RANGE",795,299,280,34))return Action::RoomRangeAuto;
-    text("ROUTE LENGTH",205,353,16,Gold);text(decimal(game.balanceDraft.routeLengthScale*100)+"%",380,350,20,Paper);
-    if(button(Action::RouteLengthDown,"- 1%",540,342,118,34))return Action::RouteLengthDown;
-    if(button(Action::RouteLengthUp,"+ 1%",675,342,118,34))return Action::RouteLengthUp;
-    text("25 - 200% / width unchanged",810,353,12,Muted);
-    if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,389,350,40))return Action::ApplyMapChanges;
-    text(game.hasPendingMapChanges()?"PENDING / map has not changed":"APPLIED / no pending map changes",585,402,15,
-         game.hasPendingMapChanges()?Gold:Teal);
-    text(game.run?"Apply regenerates this floor for testing: encounters/pickups reset; player/build retained.":
-                 "Apply saves map settings before generation. Range is before room size %.",205,441,12,Muted);
-    if(game.run) {
-        const auto &run=*game.run;const auto &s=run.player.attributes;
-        const auto shot=primaryPlayerAttack(run,run.player.shotDamage,run.player.nextRound==6);
-        text("Health: "+decimal(run.player.totalHealth())+" half-hearts",205,463,13,Paper);
-        text("Next damage: "+decimal(shot.damage)+" / source 3.50",510,463,13,Paper);
-        text("Tears: "+decimal(1/primaryCadence(run))+"/s",900,463,13,Paper);
-        text("Range: "+decimal(s.rangeTiles)+" tiles / adapted    Shot Speed: "+decimal(s.shotSpeed)+" / adapted    Luck: "+decimal(s.luck),205,483,12,Muted);
+    if(button(Action::BalanceWorldTab,"MAP / MOVEMENT / VIEW",205,128,420,30,!game.balanceShootingOpen))return Action::BalanceWorldTab;
+    if(button(Action::BalanceShootingTab,"SHOOTING",645,128,430,30,game.balanceShootingOpen))return Action::BalanceShootingTab;
+    if(!game.balanceShootingOpen) {
+        text("SPEED",205,181,18,Muted);text(decimal(game.balancePreset.playerSpeed),296,172,32,Paper);
+        if(button(Action::SpeedDown,"- 0.10",405,169,118,45))return Action::SpeedDown;
+        if(button(Action::SpeedUp,"+ 0.10",535,169,118,45))return Action::SpeedUp;
+        if(button(Action::ResetBalance,"RESET SPEED TO 1.00",675,169,400,45))return Action::ResetBalance;
+        text("DEFAULT ZOOM",205,229,14,Gold);text(decimal(game.balancePreset.defaultZoomPercent)+"%",380,225,20,Paper);
+        if(button(Action::DefaultZoomDown,"- 1%",490,220,90,28))return Action::DefaultZoomDown;
+        if(button(Action::DefaultZoomUp,"+ 1%",590,220,90,28))return Action::DefaultZoomUp;
+        if(button(Action::DefaultZoomCurrent,"USE CURRENT",700,220,180,28))return Action::DefaultZoomCurrent;
+        if(button(Action::DefaultZoomReset,"RESET 160%",895,220,180,28))return Action::DefaultZoomReset;
+        text("ROOM SIZE",205,266,16,Gold);text(decimal(game.balanceDraft.roomSizeScale*100)+"%",330,263,20,Paper);
+        if(button(Action::RoomSizeDown,"- 1%",475,253,118,38))return Action::RoomSizeDown;
+        if(button(Action::RoomSizeUp,"+ 1%",610,253,118,38))return Action::RoomSizeUp;
+        text("75 - 150% / fine canyon sizing",750,265,13,Muted);
+        const auto [minimum,maximum]=game.roomSizeRange();
+        text("MIN "+std::to_string(minimum*2)+" TILES",205,310,14,Paper);
+        if(button(Action::RoomMinDown,"-",355,299,44,34))return Action::RoomMinDown;
+        if(button(Action::RoomMinUp,"+",407,299,44,34))return Action::RoomMinUp;
+        text("MAX "+std::to_string(maximum*2)+" TILES",495,310,14,Paper);
+        if(button(Action::RoomMaxDown,"-",645,299,44,34))return Action::RoomMaxDown;
+        if(button(Action::RoomMaxUp,"+",697,299,44,34))return Action::RoomMaxUp;
+        if(button(Action::RoomRangeAuto,"AUTO RANGE",795,299,280,34))return Action::RoomRangeAuto;
+        text("ROUTE LENGTH",205,353,16,Gold);text(decimal(game.balanceDraft.routeLengthScale*100)+"%",380,350,20,Paper);
+        if(button(Action::RouteLengthDown,"- 1%",540,342,118,34))return Action::RouteLengthDown;
+        if(button(Action::RouteLengthUp,"+ 1%",675,342,118,34))return Action::RouteLengthUp;
+        text("25 - 200% / width unchanged",810,353,12,Muted);
+        if(button(Action::ApplyMapChanges,"APPLY MAP CHANGES",205,389,350,40))return Action::ApplyMapChanges;
+        text(game.hasPendingMapChanges()?"PENDING / map has not changed":"APPLIED / no pending map changes",585,402,15,
+             game.hasPendingMapChanges()?Gold:Teal);
+        text(game.run?"Apply regenerates this floor for testing: encounters/pickups reset; player/build retained.":
+                     "Apply saves map settings before generation. Range is before room size %.",205,441,12,Muted);
+        if(game.run) {
+            const auto &run=*game.run;const auto &s=run.player.attributes;
+            const auto shot=primaryPlayerAttack(run,run.player.shotDamage,run.player.nextRound==6);
+            text("Health: "+decimal(run.player.totalHealth())+" half-hearts",205,463,13,Paper);
+            text("Next damage: "+decimal(shot.damage)+" / source 3.50",510,463,13,Paper);
+            text("Tears: "+decimal(1/primaryCadence(run))+"/s",900,463,13,Paper);
+            text("Range: "+decimal(s.rangeTiles)+" tiles / adapted    Shot Speed: "+decimal(s.shotSpeed)+" / adapted    Luck: "+decimal(s.luck),205,483,12,Muted);
+        }
+    } else {
+        const auto &preset=game.balancePreset;
+        text("TEARS",205,183,18,Gold);text(decimal(preset.tearsPerSecond)+" /s",400,174,28,Paper);
+        if(button(Action::TearsDown,"- 0.10",650,169,130,40))return Action::TearsDown;
+        if(button(Action::TearsUp,"+ 0.10",795,169,130,40))return Action::TearsUp;
+        text("More shots per second. Reference 2.73 / editor range 0.10 - 10.00.",205,220,14,Muted);
+        text("SHOT SPEED",205,262,18,Gold);text(decimal(preset.shotSpeed),400,253,28,Paper);
+        if(button(Action::ShotSpeedDown,"- 0.05",650,248,130,40))return Action::ShotSpeedDown;
+        if(button(Action::ShotSpeedUp,"+ 0.05",795,248,130,40))return Action::ShotSpeedUp;
+        text("Faster travel, same reach. Reference 1.00 / editor range 0.10 - 3.00.",205,299,14,Muted);
+        text("RANGE",205,341,18,Gold);text(decimal(preset.rangeTiles)+" tiles",400,332,28,Paper);
+        if(button(Action::RangeDown,"- 0.25",650,327,130,40))return Action::RangeDown;
+        if(button(Action::RangeUp,"+ 0.25",795,327,130,40))return Action::RangeUp;
+        text("Farther travel, same speed. Reference 6.50 / editor range 0.50 - 20.00.",205,378,14,Muted);
+        text("New shots use edits. Current firing wait finishes; shots already flying keep their settings.",205,400,12,Muted);
+        if(button(Action::ResetShooting,"RESET SHOOTING BASE",205,423,350,36))return Action::ResetShooting;
+        if(game.run) {
+            const auto &run=*game.run;const auto shot=primaryPlayerAttack(run,run.player.shotDamage,run.player.nextRound==6);
+            const auto base=AcceptedPlayerShooting.resolve(SourcePlayerStats{});
+            text("Next volley: "+decimal(1/primaryCadence(run))+" /s  |  "+std::to_string(primaryPellets(run))+" projectile(s)",585,434,14,Teal);
+            text("With upgrades: Shot Speed "+decimal(shot.speed/base.launchSpeed)+" / Range "+decimal(shot.maxDistance/base.reach*6.5f)+
+                 " tiles (adapted) / Damage "+decimal(shot.damage),205,472,13,Paper);
+        }
+        text(game.hasPendingMapChanges()?"Map draft still pending on the MAP / MOVEMENT / VIEW tab.":
+             "Base settings shown above. Owned upgrades continue to apply.",205,492,12,Muted);
     }
-    text("PRESET FILE / JSON / SPEED + ZOOM + MAP SETTINGS",205,507,12,Gold);
+    text("PRESET FILE / JSON / PLAYER + SHOOTING + VIEW + MAP",205,507,12,Gold);
     auto path=game.balanceFile;
     if(path.size()>98)path="..."+path.substr(path.size()-95);
     if(button(Action::EditBalancePath,path.empty()?"Click to enter a preset path":path,205,525,870,34,game.balancePathEditing))
@@ -2228,7 +2257,10 @@ Action Renderer::balancePanel(const Game &game) {
          " / routes "+decimal((game.nextBalancePreset?game.nextBalancePreset->routeLengthScale:1)*100)+"%"+
          " / zoom "+decimal(game.nextBalancePreset?game.nextBalancePreset->defaultZoomPercent:BalancePreset::ReferenceZoom)+"%"+
          (game.nextBalancePreset?" / remembered":" / default"),205,640,12,Teal);
-    wrap(game.error.empty()?game.balanceNotice:game.error,205,666,870,14,game.error.empty()?Paper:Rust);
+    const auto remembered=game.nextBalancePreset.value_or(BalancePreset{});
+    text("Next shooting: Tears "+decimal(remembered.tearsPerSecond)+" / Shot Speed "+decimal(remembered.shotSpeed)+
+         " / Range "+decimal(remembered.rangeTiles)+" tiles",205,657,12,Teal);
+    wrap(game.error.empty()?game.balanceNotice:game.error,205,682,870,14,game.error.empty()?Paper:Rust);
     text("Source movement and full first-floor parity are still pending.",205,731,12,Muted);
     if(button(Action::CloseBalance,"BACK [ESC]",790,718,285,34,true))return Action::CloseBalance;
     return Action::None;

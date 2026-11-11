@@ -11,7 +11,7 @@ void Game::initializeBalance() {
         if(std::filesystem::exists(next)) {
             auto preset=BalancePreset::load(next,balancePreset.mechanicsFingerprint);
             balancePreset=preset;nextBalancePreset=preset;
-            balanceNotice="Remembered Speed, zoom and map settings loaded for expedition start.";
+            balanceNotice="Remembered player, shooting, zoom and map settings loaded for expedition start.";
         }
     } catch(const std::exception &e) {
         balanceRestoreError_=std::string("Remembered preset could not load: ")+e.what();
@@ -33,17 +33,33 @@ void Game::applyBalance(BalancePreset preset) {
     if(resize)run->resizeRooms(preset.roomSizeScale,preset.roomMinHalfTiles,preset.roomMaxHalfTiles,preset.routeLengthScale); // Constructs first; an invalid/unsafe edit leaves the expedition intact.
     if(!run){preset.save(balanceDirectory/"next.json");nextBalancePreset=preset;}
     balancePreset=std::move(preset);balanceDraft.playerSpeed=balancePreset.playerSpeed;
+    balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
+    balanceDraft.rangeTiles=balancePreset.rangeTiles;
     balanceDraft.defaultZoomPercent=balancePreset.defaultZoomPercent;balanceRestoreError_.clear();
     if(resize){resetPointerInput();snapCamera();++audioContext;audioCues.clear();}
     if(zoomChanged)useDefaultZoom();
     if(run) {
         run->player.attributes.speed=balancePreset.playerSpeed;
+        // New shots resolve these base attributes with owned-item modifiers.
+        // Leave existing projectile birth specs and the current cooldown intact.
+        run->player.attributes.tearsPerSecond=balancePreset.tearsPerSecond;
+        run->player.attributes.shotSpeed=balancePreset.shotSpeed;
+        run->player.attributes.rangeTiles=balancePreset.rangeTiles;
         run->checkpointNeeded=true;checkpoint();
     }
     error.clear();balanceNotice="Applied. Walking uses this Speed on the next movement step.";
 }
 void Game::setPlayerSpeed(float speed) {
     auto candidate=balancePreset;candidate.playerSpeed=speed;applyBalance(std::move(candidate));
+}
+void Game::setShooting(float tears,float shotSpeed,float rangeTiles) {
+    auto preset=balancePreset;preset.tearsPerSecond=tears;preset.shotSpeed=shotSpeed;preset.rangeTiles=rangeTiles;
+    applyBalance(std::move(preset));
+    balanceNotice="Shooting applied to new shots. Current firing wait and flying shots stay as they were.";
+}
+void Game::resetShooting() {
+    setShooting(BalancePreset::ReferenceTears,BalancePreset::ReferenceShotSpeed,BalancePreset::ReferenceRange);
+    balanceNotice="Shooting reset to the accepted base. Movement, zoom and map settings retained.";
 }
 void Game::useDefaultZoom() {
     cameraZoom_=cameraZoomTarget_=100.f/balancePreset.defaultZoomPercent;snapCamera();
@@ -89,17 +105,18 @@ void Game::resetBalance() {
 }
 void Game::exportBalancePreset() {
     balanceDraft.save(std::filesystem::path(balanceFile));
-    balanceNotice=hasPendingMapChanges()?"Exported selected settings. Current map still awaits APPLY MAP CHANGES.":"Exported Speed, zoom and map settings. Use for next expedition to remember them.";
+    balanceNotice=hasPendingMapChanges()?"Exported selected settings. Current map still awaits APPLY MAP CHANGES.":"Exported player, shooting, zoom and map settings. Use for next expedition to remember them.";
     error.clear();
 }
 void Game::loadBalancePreset(const std::filesystem::path &path) {
     auto candidate=BalancePreset::load(path,defaultMechanics()->fingerprint());
     const auto filename=path.string();
     auto live=balancePreset;live.playerSpeed=candidate.playerSpeed;live.defaultZoomPercent=candidate.defaultZoomPercent;
+    live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;
     applyBalance(std::move(live));useDefaultZoom();
     balanceDraft=std::move(candidate);balanceFile=filename;
-    balanceNotice=hasPendingMapChanges()?"Loaded. Speed and zoom applied; map settings await APPLY MAP CHANGES.":
-        "Loaded Speed/zoom. Map settings already match. Use next expedition to remember this preset.";
+    balanceNotice=hasPendingMapChanges()?"Loaded. Player/shooting settings applied; map settings await APPLY MAP CHANGES.":
+        "Loaded player/shooting settings. Map settings already match. Use next expedition to remember this preset.";
 }
 void Game::rememberBalancePreset() {
     archiveBalance(balanceDraft);
@@ -110,7 +127,7 @@ void Game::rememberBalancePreset() {
 }
 RunSummary Game::configuredSummary() const {
     auto summary=run->summary();
-    summary.mechanicsFingerprint+="/balance-v4:"+balancePreset.revision();
+    summary.mechanicsFingerprint+="/balance-v5:"+balancePreset.revision();
     return summary;
 }
 void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
@@ -119,6 +136,9 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     preset.validate();archiveBalance(preset);
     candidate->tunePlayer(playerHealth,playerDamage);
     candidate->player.attributes.speed=preset.playerSpeed;
+    candidate->player.attributes.tearsPerSecond=preset.tearsPerSecond;
+    candidate->player.attributes.shotSpeed=preset.shotSpeed;
+    candidate->player.attributes.rangeTiles=preset.rangeTiles;
     const RetrySetup setup{candidate->expedition.seed,candidate->arena.theme,visualSettings.canyonRiver,
                            candidate->surveyTutorial,candidate->expedition.account,candidate->expedition.pacing};
     campaign.begin(setup.seed,candidate->summary().expedition,setup.pacing);
@@ -129,7 +149,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
 }
 bool Game::canRetryExpedition() const {
@@ -142,7 +162,7 @@ void Game::retryExpedition() {
     auto candidate=std::make_unique<Simulation>(setup.seed,campaign.data().nextRunId,campaign.data().world,
         setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale);
     startExpedition(std::move(candidate),true);
-    balanceNotice="Retried the same expedition seed with the applied Speed, zoom and map settings.";
+    balanceNotice="Retried the same expedition seed with the applied player, shooting, zoom and map settings.";
 }
 bool Game::updateBalanceInput() {
     if(!balanceOpen)return false;

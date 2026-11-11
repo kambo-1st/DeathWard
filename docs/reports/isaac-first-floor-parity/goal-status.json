@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "When selected, D03 shooting controls/review in the main game, preserving the accepted walking, map/zoom settings, eight-direction firing and universal dodge. Exact native spatial acceptance and D03-D20 remain open.",
+  "next_work": "D04 Gaper is next selectable following accepted D03 shooting controls; not selected. Exact native spatial/shooting acceptance and D04-D20 remain open.",
   "first_floor_delivery_plan_checkpoint": {
-    "recorded_date": "2026-11-10",
-    "status": "D01 and scoped D02 map/route/default-zoom tuning committed; CLI preset loading verified and positively acknowledged; exact native spatial parity remains open",
+    "recorded_date": "2026-11-11",
+    "status": "D01/D02 committed; scoped D03 shooting controls integrated, developer-verified and accepted by user; exact chosen preset backed up; full native shooting acceptance pending",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,17 +47,31 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "D03: independent live Tears/Shot Speed/Range controls, export/reload and main-game shooting review; awaiting selection",
+    "next_proposed_delivery": "D04: correctly moving Gaper in an ordinary generated encounter; awaiting explicit selection",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
       "D01",
-      "D02"
+      "D02",
+      "D03"
     ],
-    "human_acceptance": "Apply/route controls and CLI preset workflow positively acknowledged; broader gameplay and native spatial acceptance remain open",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/d02-room-scale/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/d02-room-scale/validation.json",
-    "implementation_commit": "a10e08c0"
+    "human_acceptance": "D02 workflow accepted; scoped D03 delivery accepted on 2026-11-11 with selected preset backup; full native acceptance remains open",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/d03-shooting/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/d03-shooting/validation.json",
+    "previous_committed_delivery": {
+      "id": "D02",
+      "commit": "a10e08c0"
+    },
+    "d03_scope": {
+      "enabled": "independent live Tears/Shot Speed/Range controls, exact baseline reset, upgrade-aware display, schema-5 export/load/remember and schemas 1-4 migration",
+      "calibration": "accepted-independent-v1; existing 8-world-unit launch and 11-world-unit baseline reach unchanged",
+      "cooldown_transition": "current wait finishes; new attacks resolve edited bases; emitted projectiles retain birth state",
+      "human_review": "accepted scoped delivery on 2026-11-11",
+      "full_native_shooting_accepted": false,
+      "damage_hp_changed": false,
+      "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
+    },
+    "implementation_checkpoint": "D03 commit containing this report and the exact user preset backup"
   },
   "first_floor_requirements_checkpoint": {
     "recorded_date": "2026-11-09",

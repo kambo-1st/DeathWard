@@ -30,6 +30,13 @@ int main() {
             const auto loaded=BalancePreset::load(file,"fixture-content");
             check(loaded.defaultZoomPercent==zoom&&loaded.revision()==p.revision(),"default zoom round-trips with independent Speed/map settings");
         }
+        for(float tears:{.1f,BalancePreset::ReferenceTears,2.827f,4.f,10.f})
+            for(float speed:{.1f,1.f,1.5f,3.f})for(float range:{.5f,6.5f,8.f,20.f}) {
+                BalancePreset p{1,"fixture-content",1.1f,7,9,.3f,165,tears,speed,range};p.save(file);
+                const auto loaded=BalancePreset::load(file,"fixture-content");
+                check(loaded.tearsPerSecond==tears&&loaded.shotSpeed==speed&&loaded.rangeTiles==range&&loaded.revision()==p.revision(),
+                      "shooting and 165 percent view/map preset round-trip including exact default rate");
+            }
         const auto legacy=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d01-live-tuning/speed-080.json","2ccd5b1c274a302e");
         check(legacy.playerSpeed==.8f&&legacy.roomSizeScale==1&&legacy.roomMinHalfTiles==0&&legacy.defaultZoomPercent==160,"D01 migration preserves speed and selects automatic room sizes");
@@ -40,15 +47,20 @@ int main() {
         const auto v3=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d02-room-scale/custom-map.json","2ccd5b1c274a302e");
         check(v3.routeLengthScale==.65f&&v3.defaultZoomPercent==160,"schema 3 migration retains route length and defaults zoom to 160 percent");
+        const auto v4=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d02-room-scale/custom-map-zoom.json","2ccd5b1c274a302e");
+        check(v4.defaultZoomPercent==125&&v4.tearsPerSecond==BalancePreset::ReferenceTears&&v4.shotSpeed==1&&v4.rangeTiles==6.5f,
+              "schema 4 migration retains view/map settings and accepted shooting baseline");
+        BalancePreset shots{1,"fixture-content",1,0,0,1,160,4,1.5f,8};
         BalancePreset zoomPreset{1,"fixture-content",1,0,0,1,125};
         BalancePreset routePreset{1,"fixture-content",1,0,0,.65f};
         BalancePreset custom{.8f,"fixture-content"};custom.save(file);
         const auto valid=custom.json();
         std::vector<std::string> invalid{
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 4","\"schema_version\": 5"),
-            replaceOne(valid,"\"schema_version\": 4","\"schema_version\": 4, \"schema_version\": 4"),
-            replaceOne(valid,"d02-view-v4","future-contract"),
+            replaceOne(valid,"\"schema_version\": 5","\"schema_version\": 6"),
+            replaceOne(valid,"\"schema_version\": 5","\"schema_version\": 5, \"schema_version\": 5"),
+            replaceOne(valid,"d03-shooting-v5","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),
@@ -72,6 +84,17 @@ int main() {
             replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": 285.01"),
             replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": 126"),
             replaceOne(zoomPreset.json(),"\"default_zoom_percent\": 125","\"default_zoom_percent\": NaN"),
+            replaceOne(shots.json(),"\"tears_per_second\": 4","\"tears_per_second\": 0"),
+            replaceOne(shots.json(),"\"tears_per_second\": 4","\"tears_per_second\": 10.01"),
+            replaceOne(shots.json(),"\"tears_per_second\": 4","\"tears_per_second\": 3.5"),
+            replaceOne(shots.json(),"\"shot_speed\": 1.5","\"shot_speed\": 0.09"),
+            replaceOne(shots.json(),"\"shot_speed\": 1.5","\"shot_speed\": 3.01"),
+            replaceOne(shots.json(),"\"shot_speed\": 1.5","\"shot_speed\": 2"),
+            replaceOne(shots.json(),"\"range_tiles\": 8","\"range_tiles\": 0.49"),
+            replaceOne(shots.json(),"\"range_tiles\": 8","\"range_tiles\": 20.01"),
+            replaceOne(shots.json(),"\"range_tiles\": 8","\"range_tiles\": 7"),
+            replaceOne(shots.json(),"\"tears_per_second\": 4","\"tears_per_second\": NaN"),
+            replaceOne(valid,"accepted-independent-v1","unverified-new-calibration"),
             std::string(65537,' ')
         };
         for(const auto &bad:invalid) {

@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "test_directory": "/tmp/deathward-d03-cli-_q72u7s_",
+  "processes": [
+    {
+      "case": "custom-export",
+      "exit_code": 0,
+      "command": [
+        "build/deathward",
+        "--smoke",
+        "--scene",
+        "empty",
+        "--frames",
+        "3",
+        "--mute",
+        "--seed",
+        "1866",
+        "--save",
+        "/tmp/deathward-d03-cli-_q72u7s_/campaign.save",
+        "--balance-preset",
+        "artifacts/d03-shooting-preset.json"
+      ],
+      "balance": "BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 revision=0b42c9daeceec7fc profile=custom",
+      "remembered": {
+        "player_speed": 0.9,
+        "room_size_scale": 1.2,
+        "room_min_half_tiles": 7,
+        "room_max_half_tiles": 9,
+        "route_length_scale": 0.3,
+        "default_zoom_percent": 165,
+        "tears_per_second": 4,
+        "shot_speed": 1.5,
+        "range_tiles": 8
+      }
+    },
+    {
+      "case": "remembered",
+      "exit_code": 0,
+      "command": [
+        "build/deathward",
+        "--smoke",
+        "--scene",
+        "empty",
+        "--frames",
+        "3",
+        "--mute",
+        "--seed",
+        "1866",
+        "--save",
+        "/tmp/deathward-d03-cli-_q72u7s_/campaign.save"
+      ],
+      "balance": "BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 revision=0b42c9daeceec7fc profile=custom",
+      "remembered": {
+        "player_speed": 0.9,
+        "room_size_scale": 1.2,
+        "room_min_half_tiles": 7,
+        "room_max_half_tiles": 9,
+        "route_length_scale": 0.3,
+        "default_zoom_percent": 165,
+        "tears_per_second": 4,
+        "shot_speed": 1.5,
+        "range_tiles": 8
+      }
+    },
+    {
+      "case": "user-schema4",
+      "exit_code": 0,
+      "command": [
+        "build/deathward",
+        "--smoke",
+        "--scene",
+        "empty",
+        "--frames",
+        "3",
+        "--mute",
+        "--seed",
+        "1866",
+        "--save",
+        "/tmp/deathward-d03-cli-_q72u7s_/legacy.save",
+        "--balance-preset",
+        "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+      ],
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.3 zoom=165 tears=2.72727 shot_speed=1 range=6.5 revision=fd0ea428e90a12c9 profile=custom",
+      "remembered": {
+        "player_speed": 1,
+        "room_size_scale": 1.1,
+        "room_min_half_tiles": 7,
+        "room_max_half_tiles": 9,
+        "route_length_scale": 0.3,
+        "default_zoom_percent": 165,
+        "tears_per_second": 2.7272727,
+        "shot_speed": 1,
+        "range_tiles": 6.5
+      }
+    }
+  ],
+  "user_export_sha256_before_and_after": "3c459e40dfc2299b17ac2578b945c1975ad6c23d51aafb63e7acec321acc6d19",
+  "user_export_unchanged": true
+}

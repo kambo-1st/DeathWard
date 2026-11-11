@@ -1,0 +1,9 @@
+BALANCE speed=1 room_size=1 routes=1 zoom=160 tears=2.72727 shot_speed=1 range=6.5 revision=d0d3929830006f3c profile=reference-partial
+BALANCE speed=0.8 room_size=1 routes=1 zoom=145 tears=2.72727 shot_speed=1 range=6.5 revision=e5d353c6daee2e0a profile=custom
+BALANCE speed=0.8 room_size=1 routes=1 zoom=145 tears=2.72727 shot_speed=1 range=6.5 revision=e5d353c6daee2e0a profile=custom
+BALANCE speed=0.8 room_size=1.25 routes=0.65 zoom=125 tears=2.72727 shot_speed=1 range=6.5 revision=436b30459d4b3eb9 profile=custom
+BALANCE speed=0.8 room_size=1.25 routes=0.65 zoom=125 tears=2.72727 shot_speed=1 range=6.5 revision=436b30459d4b3eb9 profile=custom
+BALANCE speed=1 room_size=1.25 routes=0.65 zoom=125 tears=2.72727 shot_speed=1 range=6.5 revision=35103c0861f43de1 profile=custom
+BALANCE speed=1 room_size=1 routes=1 zoom=160 tears=2.72727 shot_speed=1 range=6.5 revision=d0d3929830006f3c profile=reference-partial
+BALANCE speed=1 room_size=1.1 routes=1.5 zoom=175 tears=2.72727 shot_speed=1 range=6.5 revision=9483d30777b5b11b profile=custom
+PASS default zoom controls/export/load/retry, staged map Apply and route persistence; D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence

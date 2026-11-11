@@ -275,6 +275,19 @@ void Game::perform(Action action) {
             break;
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
+        case Action::BalanceWorldTab:balanceShootingOpen=false;break;
+        case Action::BalanceShootingTab:balanceShootingOpen=true;break;
+        case Action::TearsDown:case Action::TearsUp:
+            setShooting(std::clamp(balancePreset.tearsPerSecond+(action==Action::TearsUp?.1f:-.1f),
+                                  BalancePreset::MinTears,BalancePreset::MaxTears),balancePreset.shotSpeed,balancePreset.rangeTiles);break;
+        case Action::ShotSpeedDown:case Action::ShotSpeedUp:
+            setShooting(balancePreset.tearsPerSecond,std::clamp(std::round((balancePreset.shotSpeed+(action==Action::ShotSpeedUp?.05f:-.05f))*100)/100,
+                        BalancePreset::MinShotSpeed,BalancePreset::MaxShotSpeed),balancePreset.rangeTiles);break;
+        case Action::RangeDown:case Action::RangeUp:
+            setShooting(balancePreset.tearsPerSecond,balancePreset.shotSpeed,
+                        std::clamp(std::round((balancePreset.rangeTiles+(action==Action::RangeUp?.25f:-.25f))*100)/100,
+                                   BalancePreset::MinRange,BalancePreset::MaxRange));break;
+        case Action::ResetShooting:resetShooting();break;
         case Action::RoomRangeAuto:setRoomSizeRange(0,0);break;
         case Action::RoomMinDown:case Action::RoomMinUp:case Action::RoomMaxDown:case Action::RoomMaxUp: {
             auto [lo,hi]=roomSizeRange();
@@ -793,8 +806,17 @@ Game::Menu Game::menuContext() const {
 }
 std::vector<Action> Game::menuActions() const {
     const auto context=menuContext();
-    if(context==Menu::Balance)return {Action::CloseBalance,Action::SpeedDown,Action::SpeedUp,Action::RoomSizeDown,Action::RoomSizeUp,Action::RoomMinDown,Action::RoomMinUp,Action::RoomMaxDown,Action::RoomMaxUp,Action::RoomRangeAuto,Action::RouteLengthDown,Action::RouteLengthUp,Action::ApplyMapChanges,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,
-        Action::ResetBalance,Action::ExportBalance,Action::LoadBalance,Action::RememberBalance,Action::EditBalancePath};
+    if(context==Menu::Balance) {
+        std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab};
+        const std::vector<Action> page=balanceShootingOpen?
+            std::vector<Action>{Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
+            std::vector<Action>{Action::SpeedDown,Action::SpeedUp,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,
+                Action::RoomSizeDown,Action::RoomSizeUp,Action::RoomMinDown,Action::RoomMinUp,Action::RoomMaxDown,Action::RoomMaxUp,Action::RoomRangeAuto,
+                Action::RouteLengthDown,Action::RouteLengthUp,Action::ApplyMapChanges,Action::ResetBalance};
+        actions.insert(actions.end(),page.begin(),page.end());
+        actions.insert(actions.end(),{Action::ExportBalance,Action::LoadBalance,Action::RememberBalance,Action::EditBalancePath});
+        return actions;
+    }
     if(context==Menu::Death)return {Action::RetryExpedition};
     if(context==Menu::Controls)return {Action::CloseControls};
     if(context==Menu::Build)return {Action::CloseBuild};

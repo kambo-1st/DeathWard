@@ -19,7 +19,7 @@
 
 namespace dw {
 namespace {
-constexpr const char *Contract = "d02-view-v4";
+constexpr const char *Contract = "d03-shooting-v5";
 constexpr const char *Source = "The Binding of Isaac: Repentance 1.7.9b";
 constexpr const char *SourceHash = "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6";
 // Deliberately bounded JSON for this schema (objects, strings, finite numbers,
@@ -139,6 +139,12 @@ std::string numericText(float value) {
 }
 }
 void BalancePreset::validate() const {
+    if(!std::isfinite(tearsPerSecond)||tearsPerSecond<MinTears||tearsPerSecond>MaxTears)
+        throw std::runtime_error("Tears must be between 0.10 and 10.00 shots per second");
+    if(!std::isfinite(shotSpeed)||shotSpeed<MinShotSpeed||shotSpeed>MaxShotSpeed)
+        throw std::runtime_error("Shot Speed must be between 0.10 and 3.00");
+    if(!std::isfinite(rangeTiles)||rangeTiles<MinRange||rangeTiles>MaxRange)
+        throw std::runtime_error("Range must be between 0.50 and 20.00 tiles");
     if(!std::isfinite(defaultZoomPercent)||defaultZoomPercent<MinZoom||defaultZoomPercent>MaxZoom)
         throw std::runtime_error("Default zoom must be between 67% and 285%");
     if(!std::isfinite(playerSpeed)||playerSpeed<MinSpeed||playerSpeed>MaxSpeed)
@@ -154,17 +160,22 @@ void BalancePreset::validate() const {
 }
 std::string BalancePreset::json() const {
     validate();std::ostringstream out;out.imbue(std::locale::classic());out<<std::setprecision(9);
-    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 4,\n"
+    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 5,\n"
        <<"  \"compatibility\": {\"contract\": "<<quoted(Contract)<<", \"content_version\": "<<quoted(ContentVersion)
        <<", \"mechanics_fingerprint\": "<<quoted(mechanicsFingerprint)<<"},\n"
        <<"  \"reference\": {\"source\": "<<quoted(Source)<<", \"executable_sha256\": "<<quoted(SourceHash)
-       <<", \"coverage\": \"Speed, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160},\n"
-       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<"},\n  \"overrides\": {";
-    if(playerSpeed!=1)out<<"\"player_speed\": "<<numericText(playerSpeed);
-    if(roomSizeScale!=1)out<<(playerSpeed!=1?", ":"")<<"\"room_size_scale\": "<<numericText(roomSizeScale);
-    if(roomMinHalfTiles)out<<(playerSpeed!=1||roomSizeScale!=1?", ":"")<<"\"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles;
-    if(routeLengthScale!=1)out<<(playerSpeed!=1||roomSizeScale!=1||roomMinHalfTiles?", ":"")<<"\"route_length_scale\": "<<numericText(routeLengthScale);
-    if(defaultZoomPercent!=ReferenceZoom)out<<(playerSpeed!=1||roomSizeScale!=1||roomMinHalfTiles||routeLengthScale!=1?", ":"")<<"\"default_zoom_percent\": "<<numericText(defaultZoomPercent);
+       <<", \"coverage\": \"Player, shooting, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160, \"tears_per_second\": "<<numericText(ReferenceTears)<<", \"shot_speed\": 1, \"range_tiles\": 6.5, \"shooting_calibration\": \"accepted-independent-v1\"},\n"
+       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<", \"tears_per_second\": "<<numericText(tearsPerSecond)<<", \"shot_speed\": "<<numericText(shotSpeed)<<", \"range_tiles\": "<<numericText(rangeTiles)<<"},\n  \"overrides\": {";
+    bool comma=false;
+    const auto field=[&](const char *key,float value){out<<(comma?", ":"")<<quoted(key)<<": "<<numericText(value);comma=true;};
+    if(playerSpeed!=1)field("player_speed",playerSpeed);
+    if(roomSizeScale!=1)field("room_size_scale",roomSizeScale);
+    if(roomMinHalfTiles){field("room_min_half_tiles",float(roomMinHalfTiles));field("room_max_half_tiles",float(roomMaxHalfTiles));}
+    if(routeLengthScale!=1)field("route_length_scale",routeLengthScale);
+    if(defaultZoomPercent!=ReferenceZoom)field("default_zoom_percent",defaultZoomPercent);
+    if(tearsPerSecond!=ReferenceTears)field("tears_per_second",tearsPerSecond);
+    if(shotSpeed!=ReferenceShotSpeed)field("shot_speed",shotSpeed);
+    if(rangeTiles!=ReferenceRange)field("range_tiles",rangeTiles);
     out<<"},\n  \"exceptions\": {\"isometric\": true, \"eight_direction_controls\": true, \"universal_dodge\": true, \"immediate_stopping\": true}\n}\n";
     return out.str();
 }
@@ -200,10 +211,10 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     root.keys({"format","schema_version","compatibility","reference","resolved","overrides","exceptions"});
     root.at("format").equal("deathward.balance");
     const auto version=root.at("schema_version").numeric();
-    if(version!=1&&version!=2&&version!=3&&version!=4)throw std::runtime_error("Unsupported balance preset schema");
+    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5)throw std::runtime_error("Unsupported balance preset schema");
     const bool legacy=version==1;
     const auto &compat=root.at("compatibility");compat.keys({"contract","content_version","mechanics_fingerprint"});
-    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":Contract);compat.at("content_version").equal(ContentVersion);
+    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":Contract);compat.at("content_version").equal(ContentVersion);
     compat.at("mechanics_fingerprint").equal(fingerprint.c_str());
     const auto &ref=root.at("reference");
     if(legacy)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one"});
@@ -211,20 +222,36 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
         if(version==2)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline"});
         else {
             if(version==3)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale"});
-            else {ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent"});
+            else {
+                if(version==4)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent"});
+                else {
+                    ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","shooting_calibration"});
+                    ref.at("shooting_calibration").equal("accepted-independent-v1");
+                    if(float(ref.at("tears_per_second").numeric())!=ReferenceTears||ref.at("shot_speed").numeric()!=ReferenceShotSpeed||ref.at("range_tiles").numeric()!=ReferenceRange)
+                        throw std::runtime_error("Reference shooting values cannot be overridden");
+                }
                 if(ref.at("default_zoom_percent").numeric()!=ReferenceZoom)throw std::runtime_error("Reference zoom cannot be overridden");}
             if(ref.at("route_length_scale").numeric()!=1)throw std::runtime_error("Reference route length cannot be overridden");}
         ref.at("room_size_baseline").equal("larger-compact-v1");
         if(ref.at("room_size_scale").numeric()!=1)throw std::runtime_error("Reference room size cannot be overridden");}
     ref.at("source").equal(Source);ref.at("executable_sha256").equal(SourceHash);
-    ref.at("coverage").equal(legacy?"Speed configuration only; native balance pending":version==2?"Speed and room-size configuration; native balance pending":version==3?"Speed and map configuration; native balance pending":"Speed, map and camera configuration; native balance pending");
+    ref.at("coverage").equal(legacy?"Speed configuration only; native balance pending":version==2?"Speed and room-size configuration; native balance pending":version==3?"Speed and map configuration; native balance pending":version==4?"Speed, map and camera configuration; native balance pending":"Player, shooting, map and camera configuration; native balance pending");
     if(ref.at("player_speed").numeric()!=1||ref.at("walking_pace_at_speed_one").numeric()!=4.8)
         throw std::runtime_error("Reference values cannot be overridden; edit resolved and overrides");
     const auto &resolved=root.at("resolved");
     if(legacy)resolved.keys({"player_speed"});
     else if(version==2)resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles"});
     else if(version==3)resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale"});
-    else resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent"});
+    else if(version==4)resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent"});
+    else resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles"});
+    const double tears=version<5?ReferenceTears:resolved.at("tears_per_second").numeric();
+    const double shotSpeed=version<5?ReferenceShotSpeed:resolved.at("shot_speed").numeric();
+    const double range=version<5?ReferenceRange:resolved.at("range_tiles").numeric();
+    if(tears<.1||tears>MaxTears||shotSpeed<.1||shotSpeed>MaxShotSpeed||range<MinRange||range>MaxRange)
+        throw std::runtime_error("Shooting values outside the supported tuning ranges");
+    // The nominal 30/11 rate is stored as a float. Its shortest JSON decimal
+    // must classify as the same baseline, rather than a phantom override.
+    const bool customTears=float(tears)!=ReferenceTears;
     const double zoom=version<4?ReferenceZoom:resolved.at("default_zoom_percent").numeric();
     if(zoom<MinZoom||zoom>MaxZoom)throw std::runtime_error("Default zoom must be between 67% and 285%");
     const double routeScale=version<3?1:resolved.at("route_length_scale").numeric();
@@ -238,7 +265,7 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     const double speed=resolved.at("player_speed").numeric();
     if(speed<.1||speed>2)throw std::runtime_error("Speed must be between 0.10 and 2.00");
     const auto &overrides=root.at("overrides");
-    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)))
+    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)+customTears+(shotSpeed!=ReferenceShotSpeed)+(range!=ReferenceRange)))
         throw std::runtime_error("Unexpected preset overrides");
     if(speed!=1&&overrides.at("player_speed").numeric()!=speed)throw std::runtime_error("Resolved Speed and override disagree");
     if(!legacy&&roomScale!=1&&overrides.at("room_size_scale").numeric()!=roomScale)throw std::runtime_error("Resolved room size and override disagree");
@@ -248,9 +275,15 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
         throw std::runtime_error("Resolved route length and override disagree");
     if(zoom!=ReferenceZoom&&overrides.at("default_zoom_percent").numeric()!=zoom)
         throw std::runtime_error("Resolved default zoom and override disagree");
+    if(customTears&&overrides.at("tears_per_second").numeric()!=tears)
+        throw std::runtime_error("Resolved Tears and override disagree");
+    if(shotSpeed!=ReferenceShotSpeed&&overrides.at("shot_speed").numeric()!=shotSpeed)
+        throw std::runtime_error("Resolved Shot Speed and override disagree");
+    if(range!=ReferenceRange&&overrides.at("range_tiles").numeric()!=range)
+        throw std::runtime_error("Resolved Range and override disagree");
     const auto &exceptions=root.at("exceptions");exceptions.keys({"isometric","eight_direction_controls","universal_dodge","immediate_stopping"});
     for(const auto &[name,entry]:exceptions.fields)
         if(entry.kind!=Json::Boolean||!entry.flag)throw std::runtime_error("Retained control exception cannot change: "+name);
-    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom)};preset.validate();return preset;
+    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom),float(tears),float(shotSpeed),float(range)};preset.validate();return preset;
 }
 } // namespace dw

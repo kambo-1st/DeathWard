@@ -316,7 +316,7 @@ int main(int argc, char **argv) {
         } else if (arg == "--help") {
             std::cout << "DeathWard\n  --practice-batch4     Play Bouncer/Quakey/Gas Dwarf/two Clacks\n  --practice-batch3     Play the five Charger-family enemies\n  --practice-batch2     Play Fly/Pooter/Attack Fly/Spider/Mulligan practice encounter\n  --expedition         Start directly in a playable expedition\n  --editor             Open the 3D town editor\n  --town DIRECTORY     "
                          "Town pack to edit (with --editor)\n  --save PATH          Separate campaign file\n "
-                         " --balance-preset PATH  Load and remember Speed + zoom + map settings\n "
+                         " --balance-preset PATH  Load and remember player/shooting/view/map settings\n "
                          " --seed NUMBER        Repeatable expedition seed\n "
                          " --theme NAME         seeded, mine or canyon (default)\n  --hub NAME           "
                          "black-creek"

@@ -1,0 +1,20 @@
+{
+  "recorded_at_utc": "2026-11-11T16:58:25.371586+00:00",
+  "source": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json",
+  "local_backup": "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/backups/export-20261111T165825370317Z.json",
+  "repository_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json",
+  "sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "byte_identical": true,
+  "resolved": {
+    "player_speed": 1,
+    "room_size_scale": 1.1,
+    "room_min_half_tiles": 7,
+    "room_max_half_tiles": 9,
+    "route_length_scale": 0.26,
+    "default_zoom_percent": 165,
+    "tears_per_second": 1.9272734,
+    "shot_speed": 0.9,
+    "range_tiles": 6.5
+  },
+  "acceptance": "User accepted the scoped D03 delivery and requested commit plus preset backup; full native parity remains unaccepted."
+}

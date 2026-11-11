@@ -1,0 +1,34 @@
+{
+  "launched_at_utc": "2026-11-10T06:26:31.370735+00:00",
+  "pid": 655557,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "1866",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "log": "/tmp/deathward-d03-interactive.log",
+  "original_export_sha256": "3c459e40dfc2299b17ac2578b945c1975ad6c23d51aafb63e7acec321acc6d19",
+  "human_verdict": "pending",
+  "process_alive_at_verification": true,
+  "balance_log": [
+    "BALANCE speed=1 room_size=1.1 routes=0.3 zoom=165 tears=2.72727 shot_speed=1 range=6.5 revision=fd0ea428e90a12c9 profile=custom"
+  ],
+  "remembered_resolved": {
+    "player_speed": 1,
+    "room_size_scale": 1.1,
+    "room_min_half_tiles": 7,
+    "room_max_half_tiles": 9,
+    "route_length_scale": 0.3,
+    "default_zoom_percent": 165,
+    "tears_per_second": 2.7272727,
+    "shot_speed": 1,
+    "range_tiles": 6.5
+  },
+  "original_export_unchanged": true
+}

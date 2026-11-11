@@ -1,0 +1,81 @@
+{
+  "delivery": "D03",
+  "recorded_at_utc": "2026-11-10T06:26:58.036107+00:00",
+  "status": "scoped main-game controls/integration developer-verified and accepted by user; full native acceptance pending",
+  "build": "passed main game and all executed test/verification targets",
+  "checks": [
+    {
+      "name": "CTest focused suites",
+      "result": "4/4 passed",
+      "log": "core-tests.log"
+    },
+    {
+      "name": "D03 actual Game/Renderer controls, birth/cooldown, owned modifiers, rejection, roundtrip and lifecycle",
+      "result": "passed final build",
+      "log": "input-tests.log"
+    },
+    {
+      "name": "D01/D02 controls and map/view/preset regression",
+      "result": "passed",
+      "log": "d02-regression.log"
+    },
+    {
+      "name": "Existing bounded native-flight arithmetic and actual Game trajectory checks",
+      "result": "passed 171 native states, eight directions, 30/60/144 partitions, inheritance, targets/walls, dodge, independent consumers",
+      "log": "flight-verification.log",
+      "measurements": "shooting-measurements.csv"
+    },
+    {
+      "name": "Separate main-executable processes",
+      "result": "custom export reload, remembered reload and user schema-4 migration passed",
+      "evidence": "cli-verification.json"
+    },
+    {
+      "name": "Interactive main-game launch with original user export",
+      "result": "running with zoom 165 and baseline shooting; export unchanged",
+      "evidence": "interactive-launch.json"
+    },
+    {
+      "name": "UI screenshot inspection",
+      "result": "two tabs and preset actions fit without overlap",
+      "evidence": "shooting-panel.png"
+    },
+    {
+      "name": "git diff --check",
+      "result": "passed"
+    },
+    {
+      "name": "Accepted user preset backup loads in main executable",
+      "result": "passed; source and both backups byte-identical; loaded and remembered settings match",
+      "evidence": "preset-backup-verification.json"
+    }
+  ],
+  "source_target": "The Binding of Isaac: Repentance 1.7.9b",
+  "native_1_to_1_accepted": false,
+  "human_verdict": "accepted scoped D03 delivery on 2026-11-11; user requested commit and exact preset backup",
+  "accepted_adaptations": {
+    "walking_at_speed_one": 4.8,
+    "shot_launch_at_speed_one": 8,
+    "reach_at_range_6_5": 11,
+    "tears_baseline": "30/11",
+    "immediate_stopping": true,
+    "eight_direction_controls": true,
+    "universal_dodge": true
+  },
+  "preset_schema": 5,
+  "older_schemas_supported": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "damage_and_enemy_hp_changed": false,
+  "next_selectable": "D04 Gaper; unselected",
+  "unfinished": [
+    "exact native shared spatial/clearance calibration",
+    "full firing-counter, emission, actor/flag/child, collision/height and source modifier/cache acceptance",
+    "D02 source generator/content rules",
+    "D04-D20 and complete first-floor acceptance"
+  ],
+  "preset_backup": "preset-backup.json"
+}

@@ -1,0 +1,4 @@
+BALANCE speed=1 room_size=1.1 routes=0.3 zoom=165 tears=2.72727 shot_speed=1 range=6.5 revision=fd0ea428e90a12c9 profile=custom
+BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 revision=0b42c9daeceec7fc profile=custom
+BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 revision=0b42c9daeceec7fc profile=custom
+PASS D03 actual Game/Renderer tabs, buttons and keyboard; independent shooting, old bullets/cooldown, owned modifiers, invalid-load isolation, export/load, Apply, floor/retry/fresh-session persistence

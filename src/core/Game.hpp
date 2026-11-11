@@ -83,6 +83,15 @@ enum class Action {
     CloseBuild,
     OpenBalance,
     CloseBalance,
+    BalanceWorldTab,
+    BalanceShootingTab,
+    TearsDown,
+    TearsUp,
+    ShotSpeedDown,
+    ShotSpeedUp,
+    RangeDown,
+    RangeUp,
+    ResetShooting,
     RoomRangeAuto,
     RoomMinDown,
     RoomMinUp,
@@ -132,12 +141,14 @@ class Game {
     bool journalOpen = false;
     bool controlsOpen = false;
     bool buildOpen = false;
-    bool balanceOpen = false, balancePathEditing = false;
+    bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
     BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;
     std::filesystem::path balanceDirectory;
     std::string balanceFile, balanceNotice;
     void setPlayerSpeed(float speed);
+    void setShooting(float tears, float shotSpeed, float rangeTiles);
+    void resetShooting();
     void setDefaultZoom(float percent);
     void setRoomSize(float scale);
     void setRouteLength(float scale);
