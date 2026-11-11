@@ -1,0 +1,5 @@
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 revision=4686f21ccc499665 profile=custom
+D05 natural seed=0 room=5 travelled=0.968236
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=0.65 pooter_movement=1 pooter_shot=1 pooter_delay=1 revision=e0418e66a077ffcb profile=custom
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=0.65 pooter_movement=1 pooter_shot=1 pooter_delay=1 revision=e0418e66a077ffcb profile=custom
+PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence

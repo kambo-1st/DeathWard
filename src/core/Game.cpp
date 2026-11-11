@@ -275,8 +275,29 @@ void Game::perform(Action action) {
             break;
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
-        case Action::BalanceWorldTab:balanceShootingOpen=false;break;
-        case Action::BalanceShootingTab:balanceShootingOpen=true;break;
+        case Action::BalanceWorldTab:balanceShootingOpen=balanceEnemiesOpen=false;break;
+        case Action::BalanceShootingTab:balanceShootingOpen=true;balanceEnemiesOpen=false;break;
+        case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceChasersTab:balancePooterOpen=false;break;
+        case Action::BalancePooterTab:balancePooterOpen=true;break;
+        case Action::PooterMovementDown:case Action::PooterMovementUp:
+            setPooterTuning(std::clamp(std::round((balancePreset.pooterMovementMultiplier+(action==Action::PooterMovementUp?.05f:-.05f))*100)/100,
+                           BalancePreset::MinPooterMovement,BalancePreset::MaxPooterMovement),balancePreset.pooterShotSpeedMultiplier,balancePreset.pooterAttackIntervalMultiplier);break;
+        case Action::PooterShotDown:case Action::PooterShotUp:
+            setPooterTuning(balancePreset.pooterMovementMultiplier,std::clamp(std::round((balancePreset.pooterShotSpeedMultiplier+(action==Action::PooterShotUp?.05f:-.05f))*100)/100,
+                           BalancePreset::MinPooterShotSpeed,BalancePreset::MaxPooterShotSpeed),balancePreset.pooterAttackIntervalMultiplier);break;
+        case Action::PooterDelayDown:case Action::PooterDelayUp:
+            setPooterTuning(balancePreset.pooterMovementMultiplier,balancePreset.pooterShotSpeedMultiplier,std::clamp(std::round((balancePreset.pooterAttackIntervalMultiplier+(action==Action::PooterDelayUp?.05f:-.05f))*100)/100,
+                           BalancePreset::MinPooterInterval,BalancePreset::MaxPooterInterval));break;
+        case Action::ResetPooter:setPooterTuning(1,1,1);break;
+        case Action::GaperMovementDown:case Action::GaperMovementUp:
+            setGaperMovement(std::clamp(std::round((balancePreset.gaperMovementMultiplier+(action==Action::GaperMovementUp?.05f:-.05f))*100)/100,
+                                       BalancePreset::MinGaperMovement,BalancePreset::MaxGaperMovement));break;
+        case Action::GaperMovementReset:setGaperMovement(BalancePreset::ReferenceGaperMovement);break;
+        case Action::SpiderMovementDown:case Action::SpiderMovementUp:
+            setSpiderMovement(std::clamp(std::round((balancePreset.spiderMovementMultiplier+(action==Action::SpiderMovementUp?.05f:-.05f))*100)/100,
+                                        BalancePreset::MinSpiderMovement,BalancePreset::MaxSpiderMovement));break;
+        case Action::SpiderMovementReset:setSpiderMovement(BalancePreset::ReferenceSpiderMovement);break;
         case Action::TearsDown:case Action::TearsUp:
             setShooting(std::clamp(balancePreset.tearsPerSecond+(action==Action::TearsUp?.1f:-.1f),
                                   BalancePreset::MinTears,BalancePreset::MaxTears),balancePreset.shotSpeed,balancePreset.rangeTiles);break;
@@ -807,8 +828,13 @@ Game::Menu Game::menuContext() const {
 std::vector<Action> Game::menuActions() const {
     const auto context=menuContext();
     if(context==Menu::Balance) {
-        std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab};
-        const std::vector<Action> page=balanceShootingOpen?
+        std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceEnemiesTab};
+        if(balanceEnemiesOpen){actions.push_back(Action::BalanceChasersTab);actions.push_back(Action::BalancePooterTab);}
+        const std::vector<Action> page=balanceEnemiesOpen&&balancePooterOpen?
+            std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
+            balanceEnemiesOpen?
+            std::vector<Action>{Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:
+            balanceShootingOpen?
             std::vector<Action>{Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
             std::vector<Action>{Action::SpeedDown,Action::SpeedUp,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,
                 Action::RoomSizeDown,Action::RoomSizeUp,Action::RoomMinDown,Action::RoomMinUp,Action::RoomMaxDown,Action::RoomMaxUp,Action::RoomRangeAuto,

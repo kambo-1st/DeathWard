@@ -1,0 +1,14 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  97: gaper_family
+1/4 Test  #97: gaper_family .....................   Passed    0.51 sec
+    Start 103: first_floor_status_effects
+2/4 Test #103: first_floor_status_effects .......   Passed    1.12 sec
+    Start 137: gaper_gameplay
+3/4 Test #137: gaper_gameplay ...................   Passed    1.03 sec
+    Start 138: gaper_trajectories
+4/4 Test #138: gaper_trajectories ...............   Passed    1.83 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   4.50 sec

@@ -1,0 +1,30 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start 139: pooter_gameplay
+      Start  86: buzzing_flies
+      Start 138: spider_gameplay
+      Start 137: gaper_gameplay
+ 1/12 Test #137: gaper_gameplay ...................   Passed    1.33 sec
+      Start 133: canonical_shooting_integration
+ 2/12 Test #138: spider_gameplay ..................   Passed    1.80 sec
+      Start 134: spider_pooter_movement
+ 3/12 Test #134: spider_pooter_movement ...........   Passed    0.76 sec
+      Start 135: spider_pooter_movement_30hz
+ 4/12 Test #135: spider_pooter_movement_30hz ......   Passed    0.78 sec
+      Start 136: spider_pooter_movement_120hz
+ 5/12 Test #133: canonical_shooting_integration ...   Passed    2.43 sec
+      Start 132: player_speed_attribute
+ 6/12 Test #136: spider_pooter_movement_120hz .....   Passed    0.72 sec
+      Start 131: balance_preset_contract
+ 7/12 Test #131: balance_preset_contract ..........   Passed    0.31 sec
+      Start  37: source_projectile_motion
+ 8/12 Test #132: player_speed_attribute ...........   Passed    0.94 sec
+      Start  34: monster_flight
+ 9/12 Test  #37: source_projectile_motion .........   Passed    0.53 sec
+10/12 Test  #34: monster_flight ...................   Passed    3.42 sec
+11/12 Test #139: pooter_gameplay ..................   Passed   14.24 sec
+12/12 Test  #86: buzzing_flies ....................   Passed   47.72 sec
+
+100% tests passed, 0 tests failed out of 12
+
+Total Test time (real) =  47.73 sec

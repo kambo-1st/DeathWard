@@ -324,7 +324,11 @@ Vector3 Simulation::slowEnemyMotion(const Enemy &e,Vector3 before,Vector3 after,
 void Simulation::stepFearMotion(Enemy &e,Vector3 &momentum) {
     const auto *profile=content->enemyStatuses(e.monster);
     if(!profile||!profile->fear||!e.statuses||e.railCarrier)return;
-    const auto &p=*profile->fear;auto &r=e.statuses->flee;
+    auto p=*profile->fear;auto &r=e.statuses->flee;
+    if(tunedGaper(e)) {
+        p.scale=GaperMovementScale;
+        p.wanderForce*=*gaperMovementMultiplier;p.pathForce*=*gaperMovementMultiplier;
+    }
     // Headless .75 friction precedes EvadeTarget, but AddVelocity divides by
     // accumulated friction; the impulse cancels that factor. Gaper applies
     // .8 after EvadeTarget, damping both old momentum and the new impulse.

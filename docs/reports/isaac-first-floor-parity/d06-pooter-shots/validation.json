@@ -1,0 +1,74 @@
+{
+  "recorded_at_utc": "2026-11-11T18:32:30.400882+00:00",
+  "delivery": "D06",
+  "status": "developer checks passed; scoped human playtest accepted",
+  "application_sha256": "0a2c55516a430273324b47978c644597d16bdf20e2a5bae6620967553fa22e23",
+  "enabled_scope": "ordinary Pooter14.0.0 wandering and attacks in normal Game expeditions",
+  "source_native_comparisons": {
+    "movement_states": 144,
+    "movement_partition_comparisons": 432,
+    "physics_hz": [
+      30,
+      60,
+      120
+    ],
+    "movement_max_position_error_world": 2.07739e-05,
+    "movement_position_bound_world": 0.002,
+    "interval_cases": 490,
+    "cooldown_cases": 36,
+    "shot_vectors": 4,
+    "flight_updates": 31,
+    "flight_partition_comparisons": 93,
+    "full_native_acceptance": false
+  },
+  "regression": {
+    "passed": 12,
+    "failed": 0,
+    "seconds": 47.73,
+    "log": "regression.log"
+  },
+  "main_game_ui": {
+    "passed": true,
+    "log": "input-tests.log",
+    "natural_seed": 69,
+    "natural_room_index": 2,
+    "shots_observed": 6,
+    "wander_travel_world": 1.03576,
+    "coverage": [
+      "mouse and keyboard controls",
+      "current attack/wait/bullet retention",
+      "future attacks use edits",
+      "reset/export/load/invalid rejection",
+      "pending map preserved",
+      "map regeneration",
+      "floor descent",
+      "retry",
+      "fresh Game"
+    ],
+    "test_only_god_mode": true
+  },
+  "prior_delivery_ui_regressions": [
+    "d03-ui-regression.log",
+    "d04-ui-regression.log",
+    "d05-ui-regression.log"
+  ],
+  "cli": {
+    "cases": 4,
+    "status": "passed",
+    "record": "cli-verification.json"
+  },
+  "accepted_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "accepted_external_preset_unchanged": true,
+  "player_hp_damage_controls_changed": false,
+  "mechanics_assets_changed": false,
+  "human_d06_accepted": true,
+  "full_native_actor_accepted": false,
+  "next_selectable": "D07; not selected",
+  "human_acceptance_record": "human-acceptance.json",
+  "checkpoint_deliveries": [
+    "D04",
+    "D05",
+    "D06"
+  ],
+  "checkpoint": "Included in the containing commit"
+}

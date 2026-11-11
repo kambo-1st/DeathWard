@@ -3,7 +3,14 @@
 
 namespace dw {
 void Simulation::updateGaper(Enemy &e,float dt) {
-    const auto &p=*content->gaper(e.monster);
+    auto p=*content->gaper(e.monster);
+    const bool tuned=tunedGaper(e);
+    if(tuned) {
+        p.scale=GaperMovementScale;
+        // Source force and friction remain in immutable content. This explicit
+        // live override changes pursuit drive, preserving existing momentum.
+        p.force*=*gaperMovementMultiplier;p.awakeForce*=*gaperMovementMultiplier;
+    }
     if(!e.gaper)e.gaper=GaperRuntime{};
     auto &r=*e.gaper;
     const float timeScale=enemyTimeScale(e);
@@ -39,7 +46,7 @@ void Simulation::updateGaper(Enemy &e,float dt) {
             } else {
                 const auto target=confusedTarget(e);
                 const auto before=r.momentum;float retention=1;
-                r.directPath=stepGroundPursuit(e,p,r.momentum,r.destination,r.force,&retention,&target,nativeGaperPursuit);
+                r.directPath=stepGroundPursuit(e,p,r.momentum,r.destination,r.force,&retention,&target,nativeGaperPursuit||tuned);
                 r.momentum=slowEnemyMotion(e,before,r.momentum,retention);
             }
             if(nativeHead) {

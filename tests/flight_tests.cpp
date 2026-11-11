@@ -82,12 +82,18 @@ void riversAndOffspring() {
 void combatElevation() {
     for(bool arrows:{false,true}) {
         auto s=fixture();cover(s);const auto root=s.spawnMonster(monsterId(13),{0,.85f,0});
+        // Isolate visible-body collision from the Fly dodging slower accepted
+        // shots; pursuit and flight steering have their own cases above.
+        s.findEnemy(root)->state=EnemyState::Stunned;s.findEnemy(root)->stateTime=3;
         Input input;input.fire=true;input.aim=s.findEnemy(root)->position;
         if(arrows)input.aimDirection=Vector3{0,0,-1};
         s.step(input);
         check(!s.projectiles.empty()&&s.projectiles.front().velocity.y>0,"mouse and arrows shoot toward real airborne hitbox");
         check(std::abs(s.projectiles.front().velocity.x)<.00001f,"elevation assistance preserves arrow horizontal bearing");
-        tick(s,35);check(!s.findEnemy(root),"elevated Fly can be killed through its visible body");
+        // Accepted player shots travel at 8 world units/s. The old 35-tick
+        // deadline expired before a shot could cross this eight-unit fixture.
+        for(int n=0;n<120&&s.findEnemy(root)&&!s.projectiles.empty();++n)tick(s,1);
+        check(!s.findEnemy(root),"elevated Fly can be killed through its visible body");
     }
     auto shooter=fixture();cover(shooter);shooter.godMode=false;
     const auto id=shooter.spawnMonster(monsterId(14),{0,.85f,0});shooter.findEnemy(id)->cooldown=0;

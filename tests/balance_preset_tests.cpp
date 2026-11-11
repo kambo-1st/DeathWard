@@ -51,6 +51,36 @@ int main() {
             "docs/reports/isaac-first-floor-parity/d02-room-scale/custom-map-zoom.json","2ccd5b1c274a302e");
         check(v4.defaultZoomPercent==125&&v4.tearsPerSecond==BalancePreset::ReferenceTears&&v4.shotSpeed==1&&v4.rangeTiles==6.5f,
               "schema 4 migration retains view/map settings and accepted shooting baseline");
+        const auto v5=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json","2ccd5b1c274a302e");
+        check(v5.gaperMovementMultiplier==1&&v5.defaultZoomPercent==165&&v5.shotSpeed==.9f&&v5.tearsPerSecond==1.9272734f&&v5.routeLengthScale==.26f,
+              "D03 accepted preset migration retains user settings and adds reference Gaper movement");
+        for(float movement:{.1f,.5f,.95f,1.f,1.05f,2.f}) {
+            auto preset=v5;preset.gaperMovementMultiplier=movement;preset.save(file);
+            const auto loaded=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(loaded.gaperMovementMultiplier==movement&&loaded.revision()==preset.revision(),"Gaper overrides round-trip at bounds and small steps");
+        }
+        const auto v6=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d04-gaper-movement/custom-gaper.json","2ccd5b1c274a302e");
+        check(v6.gaperMovementMultiplier==.65f&&v6.spiderMovementMultiplier==1&&v6.defaultZoomPercent==165,
+              "D04 schema6 migration retains Gaper override and adds Spider reference");
+        for(float movement:{.1f,.5f,.95f,1.f,1.05f,2.f}) {
+            auto preset=v6;preset.spiderMovementMultiplier=movement;preset.save(file);
+            const auto loaded=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(loaded.spiderMovementMultiplier==movement&&loaded.gaperMovementMultiplier==.65f&&loaded.revision()==preset.revision(),
+                  "Spider overrides round-trip independently from Gaper and player");
+        }
+        const auto v7=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d05-spider-movement/custom-spider.json","2ccd5b1c274a302e");
+        check(v7.spiderMovementMultiplier==.65f&&v7.pooterMovementMultiplier==1&&v7.pooterShotSpeedMultiplier==1&&v7.pooterAttackIntervalMultiplier==1,
+              "D05 migration preserves prior enemy tuning and supplies reference Pooter settings");
+        for(float movement:{.1f,.65f,1.f,2.f})for(float speed:{.1f,.95f,1.f,2.f})for(float delay:{.25f,1.f,1.05f,2.f}) {
+            auto p=v7;p.pooterMovementMultiplier=movement;p.pooterShotSpeedMultiplier=speed;p.pooterAttackIntervalMultiplier=delay;p.save(file);
+            check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==p.revision(),"independent Pooter settings round-trip at bounds");
+        }
+        auto pooter=v7;pooter.mechanicsFingerprint="fixture-content";pooter.pooterMovementMultiplier=.75f;pooter.pooterShotSpeedMultiplier=.65f;pooter.pooterAttackIntervalMultiplier=1.5f;
+        auto spider=v5;spider.mechanicsFingerprint="fixture-content";spider.spiderMovementMultiplier=.75f;
+        auto gaper=v5;gaper.mechanicsFingerprint="fixture-content";gaper.gaperMovementMultiplier=.75f;
         BalancePreset shots{1,"fixture-content",1,0,0,1,160,4,1.5f,8};
         BalancePreset zoomPreset{1,"fixture-content",1,0,0,1,125};
         BalancePreset routePreset{1,"fixture-content",1,0,0,.65f};
@@ -58,9 +88,9 @@ int main() {
         const auto valid=custom.json();
         std::vector<std::string> invalid{
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 5","\"schema_version\": 6"),
-            replaceOne(valid,"\"schema_version\": 5","\"schema_version\": 5, \"schema_version\": 5"),
-            replaceOne(valid,"d03-shooting-v5","future-contract"),
+            replaceOne(valid,"\"schema_version\": 8","\"schema_version\": 9"),
+            replaceOne(valid,"\"schema_version\": 8","\"schema_version\": 8, \"schema_version\": 8"),
+            replaceOne(valid,"d06-pooter-v8","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),
@@ -95,6 +125,26 @@ int main() {
             replaceOne(shots.json(),"\"range_tiles\": 8","\"range_tiles\": 7"),
             replaceOne(shots.json(),"\"tears_per_second\": 4","\"tears_per_second\": NaN"),
             replaceOne(valid,"accepted-independent-v1","unverified-new-calibration"),
+            replaceOne(gaper.json(),"\"gaper_movement_multiplier\": 0.75","\"gaper_movement_multiplier\": 0.09"),
+            replaceOne(gaper.json(),"\"gaper_movement_multiplier\": 0.75","\"gaper_movement_multiplier\": 2.01"),
+            replaceOne(gaper.json(),"\"gaper_movement_multiplier\": 0.75","\"gaper_movement_multiplier\": 0.8"),
+            replaceOne(gaper.json(),"\"gaper_movement_multiplier\": 0.75","\"gaper_movement_multiplier\": NaN"),
+            replaceOne(gaper.json(),"player-relative-v1","unverified-calibration"),
+            replaceOne(spider.json(),"\"spider_movement_multiplier\": 0.75","\"spider_movement_multiplier\": 0.09"),
+            replaceOne(spider.json(),"\"spider_movement_multiplier\": 0.75","\"spider_movement_multiplier\": 2.01"),
+            replaceOne(spider.json(),"\"spider_movement_multiplier\": 0.75","\"spider_movement_multiplier\": 0.8"),
+            replaceOne(spider.json(),"\"spider_movement_multiplier\": 0.75","\"spider_movement_multiplier\": NaN"),
+            replaceOne(spider.json(),"player-relative-burst-v1","unverified-calibration"),
+            replaceOne(pooter.json(),"\"pooter_movement_multiplier\": 0.75","\"pooter_movement_multiplier\": 0.09"),
+            replaceOne(pooter.json(),"\"pooter_movement_multiplier\": 0.75","\"pooter_movement_multiplier\": 2.01"),
+            replaceOne(pooter.json(),"\"pooter_movement_multiplier\": 0.75","\"pooter_movement_multiplier\": 0.8"),
+            replaceOne(pooter.json(),"\"pooter_shot_speed_multiplier\": 0.65","\"pooter_shot_speed_multiplier\": 0.09"),
+            replaceOne(pooter.json(),"\"pooter_shot_speed_multiplier\": 0.65","\"pooter_shot_speed_multiplier\": 2.01"),
+            replaceOne(pooter.json(),"\"pooter_shot_speed_multiplier\": 0.65","\"pooter_shot_speed_multiplier\": NaN"),
+            replaceOne(pooter.json(),"\"pooter_attack_interval_multiplier\": 1.5","\"pooter_attack_interval_multiplier\": 0.24"),
+            replaceOne(pooter.json(),"\"pooter_attack_interval_multiplier\": 1.5","\"pooter_attack_interval_multiplier\": 2.01"),
+            replaceOne(pooter.json(),"\"pooter_attack_interval_multiplier\": 1.5","\"pooter_attack_interval_multiplier\": 1.4"),
+            replaceOne(pooter.json(),"player-relative-mode0-v1","unverified-calibration"),
             std::string(65537,' ')
         };
         for(const auto &bad:invalid) {

@@ -1,0 +1,38 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start 138: spider_gameplay
+      Start 137: gaper_gameplay
+      Start  86: buzzing_flies
+      Start 134: spider_pooter_movement
+ 1/12 Test #134: spider_pooter_movement ...........   Passed    0.65 sec
+      Start 136: spider_pooter_movement_120hz
+ 2/12 Test #137: gaper_gameplay ...................   Passed    1.20 sec
+      Start 135: spider_pooter_movement_30hz
+ 3/12 Test #136: spider_pooter_movement_120hz .....   Passed    0.64 sec
+      Start 133: canonical_shooting_integration
+ 4/12 Test #138: spider_gameplay ..................   Passed    1.73 sec
+      Start 132: player_speed_attribute
+ 5/12 Test #135: spider_pooter_movement_30hz ......   Passed    0.67 sec
+      Start  34: monster_flight
+ 6/12 Test #132: player_speed_attribute ...........   Passed    0.89 sec
+      Start 131: balance_preset_contract
+ 7/12 Test  #34: monster_flight ...................***Failed    0.89 sec
+FLIGHT_COVER peak=2.85 safe_path_points=3
+FLIGHT_OFFSPRING water_births=0 land_births=8 samples=16
+FAIL: elevated Fly can be killed through its visible body
+
+      Start  37: source_projectile_motion
+ 8/12 Test #131: balance_preset_contract ..........   Passed    0.29 sec
+      Start 139: pooter_gameplay
+ 9/12 Test  #37: source_projectile_motion .........   Passed    0.54 sec
+10/12 Test #133: canonical_shooting_integration ...   Passed    2.19 sec
+11/12 Test #139: pooter_gameplay ..................   Passed   13.34 sec
+12/12 Test  #86: buzzing_flies ....................   Passed   49.06 sec
+
+92% tests passed, 1 tests failed out of 12
+
+Total Test time (real) =  49.07 sec
+
+The following tests FAILED:
+	 34 - monster_flight (Failed)
+Errors while running CTest

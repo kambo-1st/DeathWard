@@ -1,0 +1,32 @@
+{
+  "launched_at_utc": "2026-11-11T17:30:48.048534+00:00",
+  "pid": 723325,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "57",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d04/campaign.save",
+    "--balance-preset",
+    "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+  ],
+  "log": "/tmp/deathward-d04-interactive.log",
+  "previous_user_process_running_before_launch": false,
+  "human_verdict": "pending",
+  "startup_verified": true,
+  "balance_log": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 revision=ef3a51b10a97b1ca profile=custom",
+  "remembered_resolved": {
+    "player_speed": 1,
+    "room_size_scale": 1.1,
+    "room_min_half_tiles": 7,
+    "room_max_half_tiles": 9,
+    "route_length_scale": 0.26,
+    "default_zoom_percent": 165,
+    "tears_per_second": 1.9272734,
+    "shot_speed": 0.9,
+    "range_tiles": 6.5,
+    "gaper_movement_multiplier": 1
+  }
+}

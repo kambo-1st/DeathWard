@@ -1302,8 +1302,9 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         const auto &p=projectile;
         auto drawPosition=p.position;
         if(p.playerFlight)drawPosition.y=reviewTearVisualY(*p.playerFlight,p.position.y);
+        if(p.pooterFlight)drawPosition.y=std::max(p.radius,p.position.y+(-p.pooterFlight->height-23)*.03f);
         const float visualRadius=p.playerFlight?p.radius*2:p.radius;
-        if(p.flightRetention>0)shadow(p.position,p.radius*1.4f);
+        if(p.flightRetention>0||p.pooterFlight)shadow(p.position,p.radius*1.4f);
         Color color = p.hostile     ? (p.bounces > 0 ? Color{204, 132, 232, 255} : Rust)
                       : p.ghost     ? Teal
                       : p.lastRound ? Paper
@@ -1343,6 +1344,7 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         if(p.tint.a)color=p.tint;
         auto drawPosition=p.position;
         if(p.playerFlight)drawPosition.y=reviewTearVisualY(*p.playerFlight,p.position.y);
+        if(p.pooterFlight)drawPosition.y=std::max(p.radius,p.position.y+(-p.pooterFlight->height-23)*.03f);
         Vector3 tail = sub(drawPosition, mul(unit(p.velocity), p.hostile ? 0.35f : p.attack.rail?1.f:0.6f));
         DrawLine3D(tail, drawPosition, color);
         if (p.kind == ProjectileKind::Hook) {
@@ -2176,9 +2178,55 @@ Action Renderer::balancePanel(const Game &game) {
     panel(0,0,1280,800,{8,12,16,235});panel(170,60,940,710,Panel);
     text("EXPEDITION TUNING",205,86,30,Gold);
     text(game.balanceDraft.custom()?"CUSTOM PRESET":"REFERENCE / PARTIAL",800,96,15,Teal);
-    if(button(Action::BalanceWorldTab,"MAP / MOVEMENT / VIEW",205,128,420,30,!game.balanceShootingOpen))return Action::BalanceWorldTab;
-    if(button(Action::BalanceShootingTab,"SHOOTING",645,128,430,30,game.balanceShootingOpen))return Action::BalanceShootingTab;
-    if(!game.balanceShootingOpen) {
+    if(button(Action::BalanceWorldTab,"MAP / MOVEMENT / VIEW",205,128,420,30,!game.balanceShootingOpen&&!game.balanceEnemiesOpen))return Action::BalanceWorldTab;
+    if(button(Action::BalanceShootingTab,"SHOOTING",645,128,240,30,game.balanceShootingOpen))return Action::BalanceShootingTab;
+    if(button(Action::BalanceEnemiesTab,"ENEMIES",905,128,170,30,game.balanceEnemiesOpen))return Action::BalanceEnemiesTab;
+    if(game.balanceEnemiesOpen) {
+        if(button(Action::BalanceChasersTab,"GAPER / SPIDER",645,175,240,28,!game.balancePooterOpen))return Action::BalanceChasersTab;
+        if(button(Action::BalancePooterTab,"POOTER",905,175,170,28,game.balancePooterOpen))return Action::BalancePooterTab;
+    }
+    if(game.balanceEnemiesOpen&&game.balancePooterOpen) {
+        const auto &p=game.balancePreset;
+        text("ORDINARY POOTER",205,185,22,Gold);
+        const auto row=[&](const char *label,float value,float y,Action down,Action up){
+            text(label,205,y+14,18,Paper);text(decimal(value*100)+"%",450,y+6,28,Paper);
+            if(button(down,"- 5%",650,y,130,40))return down;
+            if(button(up,"+ 5%",795,y,130,40))return up;
+            return Action::None;
+        };
+        auto action=row("MOVEMENT",p.pooterMovementMultiplier,224,Action::PooterMovementDown,Action::PooterMovementUp);if(action!=Action::None)return action;
+        action=row("SHOT SPEED",p.pooterShotSpeedMultiplier,288,Action::PooterShotDown,Action::PooterShotUp);if(action!=Action::None)return action;
+        action=row("ATTACK DELAY",p.pooterAttackIntervalMultiplier,352,Action::PooterDelayDown,Action::PooterDelayUp);if(action!=Action::None)return action;
+        text("Movement/shot speed: 10 - 200%. Delay: 25 - 200%; higher means longer waits.",205,408,13,Muted);
+        bool pending=false;
+        if(game.run)for(const auto &e:game.run->enemies)if(e.alive&&e.monster==monsterId(14)&&e.buzz) {
+            const auto &r=*e.buzz;
+            pending|=(r.attackFrame>=0&&std::abs(r.attackShotSpeed-7*Simulation::GaperMovementScale*30*p.pooterShotSpeedMultiplier)>.0001f)||
+                     (e.cooldown>0&&r.attackIntervalMultiplier!=p.pooterAttackIntervalMultiplier);
+        }
+        text(pending?"PENDING for active attacks/waits; shot settings apply when the next attack starts.":
+             "APPLIED for next attacks. Movement uses the next steering tick.",205,434,13,pending?Gold:Teal);
+        if(button(Action::ResetPooter,"RESET POOTER TO 100%",205,465,370,36))return Action::ResetPooter;
+        const auto next=game.nextBalancePreset.value_or(BalancePreset{});
+        text("Next: "+decimal(next.pooterMovementMultiplier*100)+" / "+decimal(next.pooterShotSpeedMultiplier*100)+" / "+decimal(next.pooterAttackIntervalMultiplier*100)+"%",600,478,13,Teal);
+    } else if(game.balanceEnemiesOpen) {
+        text("ORDINARY GAPER",205,185,22,Gold);
+        text("MOVEMENT",205,238,18,Paper);
+        text(decimal(game.balancePreset.gaperMovementMultiplier*100)+"%",400,230,28,Paper);
+        if(button(Action::GaperMovementDown,"- 5%",650,224,130,40))return Action::GaperMovementDown;
+        if(button(Action::GaperMovementUp,"+ 5%",795,224,130,40))return Action::GaperMovementUp;
+        text("100% reference: pursuit at about 38% of base player pace.",205,278,14,Teal);
+        text("ORDINARY SPIDER",205,309,22,Gold);
+        text("BURST MOVEMENT",205,353,18,Paper);
+        text(decimal(game.balancePreset.spiderMovementMultiplier*100)+"%",450,345,28,Paper);
+        if(button(Action::SpiderMovementDown,"- 5%",650,339,130,40))return Action::SpiderMovementDown;
+        if(button(Action::SpiderMovementUp,"+ 5%",795,339,130,40))return Action::SpiderMovementUp;
+        text("10 - 200%. Next steering tick; momentum, burst targets and pause timing retained.",205,392,14,Muted);
+        if(button(Action::GaperMovementReset,"RESET GAPER MOVEMENT TO 100%",205,423,490,36))return Action::GaperMovementReset;
+        text("Next: Gaper "+decimal(game.nextBalancePreset?game.nextBalancePreset->gaperMovementMultiplier*100:100)+"%",720,435,14,Teal);
+        if(button(Action::SpiderMovementReset,"RESET SPIDER MOVEMENT TO 100%",205,465,490,36))return Action::SpiderMovementReset;
+        text("Next: Spider "+decimal(game.nextBalancePreset?game.nextBalancePreset->spiderMovementMultiplier*100:100)+"%",720,477,14,Teal);
+    } else if(!game.balanceShootingOpen) {
         text("SPEED",205,181,18,Muted);text(decimal(game.balancePreset.playerSpeed),296,172,32,Paper);
         if(button(Action::SpeedDown,"- 0.10",405,169,118,45))return Action::SpeedDown;
         if(button(Action::SpeedUp,"+ 0.10",535,169,118,45))return Action::SpeedUp;
@@ -2243,7 +2291,7 @@ Action Renderer::balancePanel(const Game &game) {
         text(game.hasPendingMapChanges()?"Map draft still pending on the MAP / MOVEMENT / VIEW tab.":
              "Base settings shown above. Owned upgrades continue to apply.",205,492,12,Muted);
     }
-    text("PRESET FILE / JSON / PLAYER + SHOOTING + VIEW + MAP",205,507,12,Gold);
+    text("PRESET FILE / JSON / PLAYER + SHOOTING + ENEMIES + VIEW + MAP",205,507,12,Gold);
     auto path=game.balanceFile;
     if(path.size()>98)path="..."+path.substr(path.size()-95);
     if(button(Action::EditBalancePath,path.empty()?"Click to enter a preset path":path,205,525,870,34,game.balancePathEditing))

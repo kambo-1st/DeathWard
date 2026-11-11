@@ -1,0 +1,48 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "initial_height": -23.0,
+  "initial_falling_speed": -3.0,
+  "falling_acceleration": 0.10000000149011612,
+  "flight_updates": 31,
+  "shot_vectors": 4,
+  "cooldown_cases": 36,
+  "interval_cases": 490,
+  "attack_frames": 14,
+  "shoot_frame": 6,
+  "cooldown_frames": 35,
+  "animation_metadata_sha256": "af79da521bc10bd67af3ed382a5c870eeb9b20903cca5a38fd0cbfd6368907c6",
+  "windows": [
+    {
+      "name": "shot_speed",
+      "sha256": "6f2964d296a06ab79060fb7af8014788adb352257d179a1f5db9302240657c3a"
+    },
+    {
+      "name": "cooldown",
+      "sha256": "7680f16c4e9bcc43f9cc19cfdb04a9adc5797cc05cbc53532726a53f5b2fd67e"
+    },
+    {
+      "name": "flight",
+      "sha256": "e36d0d4128d9429273b807db099763ca63eae641b49ffaf016bafbeec05a697b"
+    },
+    {
+      "name": "landing",
+      "sha256": "9224930639935777f25083e5729fdbba126b3b9fade598fc54530dcda2a3c116"
+    },
+    {
+      "name": "mode0",
+      "sha256": "bd9d69c64f4a639736f22d71b0ca8a86a9f118d28483e220c21e1861af2d903f"
+    },
+    {
+      "name": "interval",
+      "sha256": "5abbc415e7321a85438a1b3d78e92b65061b8b88f655ceda5e70774dc97eb4db"
+    }
+  ],
+  "supplied_boundaries": [
+    "resolved target delta; Normal difficulty branch selected",
+    "initialized projectile, unit friction/time; no collision flags",
+    "ordinary one-update cooldown age advance",
+    "global frame and entity index; interval helper eligibility preconditions supplied",
+    "animation cadence from preserved ANM2 metadata; full NPC animation scheduler not executed"
+  ],
+  "full_native_acceptance": false
+}

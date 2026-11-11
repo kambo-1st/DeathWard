@@ -1,0 +1,28 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  34: monster_flight
+1/2 Test  #34: monster_flight ...................***Failed    0.73 sec
+FLIGHT_COVER peak=2.85 safe_path_points=3
+FLIGHT_OFFSPRING water_births=0 land_births=8 samples=16
+FAIL: elevated Fly can be killed through its visible body
+
+    Start 139: pooter_gameplay
+2/2 Test #139: pooter_gameplay ..................***Failed   11.03 sec
+PASS native wandering states=144 hz=30 max_position_error=4.62925e-06
+PASS native wandering states=144 hz=60 max_position_error=1.19442e-05
+PASS native wandering states=144 hz=120 max_position_error=2.07739e-05
+PASS source gates=490 cooldown cases=36 shot vectors=4 windup/recovery and safe live boundaries
+PASS emitted flight states=31 hz=30
+PASS emitted flight states=31 hz=60
+PASS emitted flight states=31 hz=120
+FAIL source-speed Pooter projectile reaches ground player from elevated cover
+
+
+0% tests passed, 2 tests failed out of 2
+
+Total Test time (real) =  11.76 sec
+
+The following tests FAILED:
+	 34 - monster_flight (Failed)
+	139 - pooter_gameplay (Failed)
+Errors while running CTest

@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "scoped_health_and_accepted_speed_shooting_enabled_plus_private_damage_health_and_native_movement_reviews",
+  "implementation_state": "scoped_health_accepted_speed_shooting_and_D04_D05_D06_ordinary_enemy_movement_and_pooter_shots_enabled_plus_private_damage_health_reviews",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "D04 Gaper is next selectable following accepted D03 shooting controls; not selected. Exact native spatial/shooting acceptance and D04-D20 remain open.",
+  "next_work": "D07 damage, enemy HP and incoming hits is next selectable, not yet selected. Scoped D06 playtest accepted. Full native actor and floor coverage remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-11",
-    "status": "D01/D02 committed; scoped D03 shooting controls integrated, developer-verified and accepted by user; exact chosen preset backed up; full native shooting acceptance pending",
+    "status": "D04\u2013D06 main-game enemy deliveries developer-verified and scoped playtests acknowledged; full native acceptance remains open",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,20 +47,23 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "D04: correctly moving Gaper in an ordinary generated encounter; awaiting explicit selection",
+    "next_proposed_delivery": "D07 damage, enemy HP and incoming hits; requires explicit selection",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
       "D01",
       "D02",
-      "D03"
+      "D03",
+      "D04",
+      "D05",
+      "D06"
     ],
-    "human_acceptance": "D02 workflow accepted; scoped D03 delivery accepted on 2026-11-11 with selected preset backup; full native acceptance remains open",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/d03-shooting/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/d03-shooting/validation.json",
+    "human_acceptance": "D02 workflow and scoped D03 accepted; D04/D05 positively acknowledged; D06 accepted after seed69 playtest and commit requested; full native acceptance remains open",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/validation.json",
     "previous_committed_delivery": {
-      "id": "D02",
-      "commit": "a10e08c0"
+      "id": "D03",
+      "commit": "16ec148d"
     },
     "d03_scope": {
       "enabled": "independent live Tears/Shot Speed/Range controls, exact baseline reset, upgrade-aware display, schema-5 export/load/remember and schemas 1-4 migration",
@@ -71,7 +74,59 @@
       "damage_hp_changed": false,
       "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
     },
-    "implementation_checkpoint": "D03 commit containing this report and the exact user preset backup"
+    "implementation_checkpoint": "D04\u2013D06 source, tests, evidence and acceptance in the containing checkpoint commit",
+    "d04_scope": {
+      "enemy": "10.1.0 ordinary Gaper",
+      "status": "enabled, developer-verified and positively acknowledged",
+      "reference": "pinned 1.7.9b trajectory samples and accepted-player-relative scale",
+      "hp_damage_changed": false,
+      "full_native_enemy_accepted": false,
+      "preset_schema": 6,
+      "handoff_seed": 57,
+      "handoff_room_displayed": 2,
+      "report": "docs/reports/isaac-first-floor-parity/d04-gaper-movement/README.md",
+      "human_review": "positive acknowledgment: user said ok, nice do the next; full native acceptance remains open",
+      "native_samples": 1260,
+      "translated_comparisons": 3780
+    },
+    "d05_scope": {
+      "enemy": "85.0.0 ordinary Spider",
+      "status": "enabled, developer-verified and positively acknowledged",
+      "reference": "preserved native burst/idle states and newly executed native player-velocity lead",
+      "hp_damage_changed": false,
+      "full_native_enemy_accepted": false,
+      "preset_schema": 7,
+      "handoff_seed": 0,
+      "handoff_room_displayed": 6,
+      "report": "docs/reports/isaac-first-floor-parity/d05-spider-movement/README.md",
+      "native_samples": 48,
+      "translated_partition_comparisons": 288,
+      "native_idle_gates": 16,
+      "native_target_lead_cases": 6,
+      "human_review": "positive acknowledgment: nice greate, nextPLS!; full native acceptance remains open"
+    },
+    "d06_scope": {
+      "enemy": "14.0.0 ordinary Pooter",
+      "status": "main-game movement and shots enabled; developer checks pass; scoped human playtest accepted",
+      "reference": "pinned 1.7.9b bounded movement, attack gates/delay, shot speed and mode-0 flight",
+      "hp_damage_changed": false,
+      "full_native_enemy_accepted": false,
+      "preset_schema": 8,
+      "handoff_seed": 69,
+      "handoff_room_displayed": 3,
+      "report": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/README.md",
+      "native_movement_states": 144,
+      "partition_movement_comparisons": 432,
+      "native_interval_cases": 490,
+      "native_cooldown_cases": 36,
+      "native_shot_vectors": 4,
+      "native_flight_updates": 31,
+      "partition_flight_comparisons": 93,
+      "focused_suites_passed": 12,
+      "cli_launch_cases": 4,
+      "human_review": "accepted: ok, nice commit! after seed69 main-game launch",
+      "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/human-acceptance.json"
+    }
   },
   "first_floor_requirements_checkpoint": {
     "recorded_date": "2026-11-09",
@@ -201,11 +256,12 @@
     "movement_blocker_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json"
   },
   "enemy_movement_checkpoint": {
-    "status": "relative movement candidate implemented and tested privately; full native movement acceptance pending; live HP acceptance held",
+    "status": "D04\u2013D06 ordinary Gaper/Spider/Pooter movement and ordinary Pooter shots enabled, developer-verified and scoped playtest accepted; full native acceptance remains open; production HP awaits D07 selection",
     "scope": "encounter roster conversion and native movement verification first",
     "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json",
-    "corrected_candidate_enabled": false,
-    "candidate_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/candidate/README.md"
+    "corrected_candidate_enabled": true,
+    "candidate_evidence": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/README.md",
+    "enabled_scope": "ordinary Gaper10.1.0, Spider85.0.0, Pooter14.0.0 movement and Pooter attacks; source-relative scale with retained canyon physical geometry and aimed collision"
   },
   "native_motion_reference_checkpoint": {
     "status": "bounded native reference and private ordinary-player adapter verified; full native movement acceptance pending",
@@ -214,10 +270,10 @@
     "full_native_acceptance": false
   },
   "current_delivery_summary": {
-    "recorded_at_utc": "2026-11-08T19:07:21.046658+00:00",
+    "recorded_at_utc": "2026-11-11T19:33:21.383515+00:00",
     "total_entries": 123,
     "scoped_production_enabled": {
-      "count": 22,
+      "count": 24,
       "ids": [
         "H01",
         "H02",
@@ -240,11 +296,15 @@
         "S04",
         "S07",
         "S08",
-        "S09"
-      ]
+        "S09",
+        "E11",
+        "E12"
+      ],
+      "E11_scope": "ordinary Gaper10.1.0, Spider85.0.0 and Pooter14.0.0 movement; full native actor acceptance open",
+      "E12_scope": "ordinary Pooter14.0.0 attack timing only; other actors/full native scheduler acceptance open"
     },
     "private_review_only": {
-      "count": 14,
+      "count": 13,
       "ids": [
         "S01",
         "S03",
@@ -258,7 +318,6 @@
         "E07",
         "E08",
         "E09",
-        "E11",
         "R06"
       ]
     },
@@ -271,7 +330,7 @@
       ]
     },
     "pending_or_unselected": {
-      "count": 84,
+      "count": 83,
       "ids": [
         "B01",
         "B02",
@@ -296,7 +355,6 @@
         "C08",
         "C09",
         "E10",
-        "E12",
         "E13",
         "E14",
         "E15",

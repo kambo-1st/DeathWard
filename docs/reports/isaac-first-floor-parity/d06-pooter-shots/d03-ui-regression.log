@@ -1,0 +1,4 @@
+BALANCE speed=1 room_size=1.1 routes=0.3 zoom=165 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 revision=46726f93573c22f4 profile=custom
+BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 revision=4fdcec7647e9398d profile=custom
+BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 revision=4fdcec7647e9398d profile=custom
+PASS D03 actual Game/Renderer tabs, buttons and keyboard; independent shooting, old bullets/cooldown, owned modifiers, invalid-load isolation, export/load, Apply, floor/retry/fresh-session persistence

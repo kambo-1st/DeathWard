@@ -11,6 +11,9 @@ struct BalancePreset {
     static constexpr float ReferenceTears = 30.f/11.f, MinTears = .1f, MaxTears = 10;
     static constexpr float ReferenceShotSpeed = 1, MinShotSpeed = .1f, MaxShotSpeed = 3;
     static constexpr float ReferenceRange = 6.5f, MinRange = .5f, MaxRange = 20;
+    static constexpr float ReferenceGaperMovement = 1, MinGaperMovement = .1f, MaxGaperMovement = 2;
+    static constexpr float ReferenceSpiderMovement = 1, MinSpiderMovement = .1f, MaxSpiderMovement = 2;
+    static constexpr float MinPooterMovement=.1f, MaxPooterMovement=2, MinPooterShotSpeed=.1f, MaxPooterShotSpeed=2, MinPooterInterval=.25f, MaxPooterInterval=2;
     float playerSpeed = ReferenceSpeed;
     std::string mechanicsFingerprint;
     float roomSizeScale = 1;
@@ -18,7 +21,10 @@ struct BalancePreset {
     float routeLengthScale = 1;
     float defaultZoomPercent = ReferenceZoom;
     float tearsPerSecond = ReferenceTears, shotSpeed = ReferenceShotSpeed, rangeTiles = ReferenceRange;
-    bool custom() const { return playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange; }
+    float gaperMovementMultiplier = ReferenceGaperMovement;
+    float spiderMovementMultiplier = ReferenceSpiderMovement;
+    float pooterMovementMultiplier=1, pooterShotSpeedMultiplier=1, pooterAttackIntervalMultiplier=1;
+    bool custom() const { return playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

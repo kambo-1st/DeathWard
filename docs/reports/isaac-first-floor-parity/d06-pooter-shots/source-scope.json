@@ -1,0 +1,44 @@
+{
+  "source": "installed Repentance1.7.9b, Normal, ordinary14.0.0",
+  "native_exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "source_hp": {
+    "base": 8,
+    "stage": 0
+  },
+  "retained_dw_hp_conversion": 3.2,
+  "regular_health_multiplier": 1,
+  "retained_dw_base_hp": 25.6,
+  "retained_player_damage": 24,
+  "retained_incoming_authored_damage": 10,
+  "incoming_half_heart_units": 1,
+  "world_per_native_coordinate": 0.018123171381291516,
+  "source_shot_speed_per_update": 7,
+  "native_updates_per_second": 30,
+  "converted_shot_speed": 3.805865990071218,
+  "native_acquisition_range": 200,
+  "converted_acquisition_range": 3.6246342762583033,
+  "source_delay_updates": 35,
+  "source_acquisition_poll_updates": 7,
+  "source_attack_animation_frames": 14,
+  "source_shoot_frame": 6,
+  "mode0": {
+    "initial_height": -23,
+    "initial_falling_speed": -3,
+    "acceleration_field": 0.1,
+    "additional_common_acceleration": 0.1,
+    "falling_retention": 0.9,
+    "strict_landing_height": -5,
+    "landing_update": 31
+  },
+  "physical_adaptations": {
+    "body_radius": 0.45,
+    "shot_radius": 0.22,
+    "retained_3d_aim": true,
+    "sprite_height_conversion": 0.03,
+    "visual_height_separate_from_aimed_collision": true,
+    "canyon_edge_mapping": true,
+    "movement_safety_cap_retained": true
+  },
+  "full_native_acceptance": false
+}

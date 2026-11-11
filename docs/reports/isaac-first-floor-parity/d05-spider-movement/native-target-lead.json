@@ -1,0 +1,15 @@
+{
+  "exe_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "window_sha256": "7748e4e7bf40c9fbed642070182b3cf5feb61f5dff029040f52a64b9b1f2d844",
+  "cases": 6,
+  "method": "Unmodified native 0x517f60..0x517fb3 instructions; stop before room clamp",
+  "supplied": [
+    "resolved target position and per-player-step velocity",
+    "game/room pointer storage"
+  ],
+  "unresolved": [
+    "native target acquisition and RNG",
+    "room clamp and geometry",
+    "status branches and full actor wrapper"
+  ]
+}

@@ -137,6 +137,9 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
     for(auto &enemy:next.charmFollowers_){enemy.id=next.nextEntity_++;enemy.summoner=enemy.componentOwner=0;}
     next.restoreCharmFollowers();next.dead=dead;next.finished=finished;
     next.godMode=godMode;next.limits=limits;next.canonicalShooting=canonicalShooting;
+    next.gaperMovementMultiplier=gaperMovementMultiplier;
+    next.spiderMovementMultiplier=spiderMovementMultiplier;
+    next.pooterTuning=pooterTuning;
     next.audioEpoch=audioEpoch+1;next.checkpointNeeded=true;
     *this=std::move(next); // Same expedition ID, seed, timer and player; no campaign restart/consequences.
 }
@@ -146,6 +149,9 @@ bool Simulation::advanceFloor() {
     Simulation next(expedition.seed,runId_,startingWorld_,arena.theme,canyonRiver_,false,expedition.account,floor+1,
                     expedition.pacing,content,roomSizeScale,roomMinHalfTiles,roomMaxHalfTiles,routeLengthScale);
     next.canonicalShooting=canonicalShooting;
+    next.gaperMovementMultiplier=gaperMovementMultiplier;
+    next.spiderMovementMultiplier=spiderMovementMultiplier;
+    next.pooterTuning=pooterTuning;
     const auto spawn=next.player;
     next.player=player;next.player.position=spawn.position;next.player.aim=spawn.aim;next.player.facing=spawn.facing;
     next.player.velocity={};next.player.shootPose=next.player.dodge=next.player.pullTime=next.player.hurt=0;
@@ -745,6 +751,7 @@ void Simulation::createProjectile(const Event &event) {
     p.damageKind = event.damageKind;
     p.gravity=event.projectileGravity;p.blastRadius=event.projectileBlastRadius;p.blastDamage=event.projectileBlastDamage;
     p.flightRetention=event.projectileFlightRetention;p.blastPlayerDamage=event.projectileBlastPlayerDamage;
+    if(event.pooterFlight)p.pooterFlight.emplace();
     p.sourceTimeScale=std::isfinite(event.projectileTimeScale)?std::clamp(event.projectileTimeScale,.05f,1.f):1;
     p.fireWave=event.fireWave;
     p.sourceBurst=event.projectileBurst;
@@ -1265,6 +1272,16 @@ void Simulation::updateProjectiles(float dt) {
         p.previous = p.position;
         const float timeScale=p.sourceTimeScale;
         p.life -= dt*timeScale;
+        bool pooterLanded=false;
+        if(p.pooterFlight) {
+            auto &f=*p.pooterFlight;
+            // Reuse the endpoint-exact native recurrence without coupling
+            // sprite height to the retained aimed player/terrain hit tests.
+            float up=-f.fallingSpeed*30;
+            f.height-=advanceLobHeight(up,.2f*900,.9f,dt);
+            f.fallingSpeed=-up/30;f.clock+=dt;
+            if(f.clock+1e-6f>=1.f/30){f.clock=std::max(0.f,f.clock-1.f/30);pooterLanded=f.height>-5;}
+        }
         float lobTravelY=0;
         if(p.flightRetention>0)lobTravelY=advanceLobHeight(p.velocity.y,p.gravity*timeScale,sourceTimeRetention(p.flightRetention,timeScale),dt)*timeScale/dt;
         else if(p.gravity>0)p.velocity.y-=p.gravity*dt*timeScale;
@@ -1484,6 +1501,7 @@ void Simulation::updateProjectiles(float dt) {
             if(!p.alive)p.physicalImpact=true;
             updateSourcePlanarMotion(p,slice*best);
         }
+        if(pooterLanded)p.alive=false;
     }
     for (auto &p : projectiles)
         if (!p.alive) {

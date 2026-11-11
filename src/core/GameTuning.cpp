@@ -11,7 +11,7 @@ void Game::initializeBalance() {
         if(std::filesystem::exists(next)) {
             auto preset=BalancePreset::load(next,balancePreset.mechanicsFingerprint);
             balancePreset=preset;nextBalancePreset=preset;
-            balanceNotice="Remembered player, shooting, zoom and map settings loaded for expedition start.";
+            balanceNotice="Remembered player, enemy, view and map settings loaded for expedition start.";
         }
     } catch(const std::exception &e) {
         balanceRestoreError_=std::string("Remembered preset could not load: ")+e.what();
@@ -35,6 +35,11 @@ void Game::applyBalance(BalancePreset preset) {
     balancePreset=std::move(preset);balanceDraft.playerSpeed=balancePreset.playerSpeed;
     balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
     balanceDraft.rangeTiles=balancePreset.rangeTiles;
+    balanceDraft.gaperMovementMultiplier=balancePreset.gaperMovementMultiplier;
+    balanceDraft.spiderMovementMultiplier=balancePreset.spiderMovementMultiplier;
+    balanceDraft.pooterMovementMultiplier=balancePreset.pooterMovementMultiplier;
+    balanceDraft.pooterShotSpeedMultiplier=balancePreset.pooterShotSpeedMultiplier;
+    balanceDraft.pooterAttackIntervalMultiplier=balancePreset.pooterAttackIntervalMultiplier;
     balanceDraft.defaultZoomPercent=balancePreset.defaultZoomPercent;balanceRestoreError_.clear();
     if(resize){resetPointerInput();snapCamera();++audioContext;audioCues.clear();}
     if(zoomChanged)useDefaultZoom();
@@ -45,6 +50,9 @@ void Game::applyBalance(BalancePreset preset) {
         run->player.attributes.tearsPerSecond=balancePreset.tearsPerSecond;
         run->player.attributes.shotSpeed=balancePreset.shotSpeed;
         run->player.attributes.rangeTiles=balancePreset.rangeTiles;
+        run->gaperMovementMultiplier=balancePreset.gaperMovementMultiplier;
+        run->spiderMovementMultiplier=balancePreset.spiderMovementMultiplier;
+        run->pooterTuning=PooterTuning{balancePreset.pooterMovementMultiplier,balancePreset.pooterShotSpeedMultiplier,balancePreset.pooterAttackIntervalMultiplier};
         run->checkpointNeeded=true;checkpoint();
     }
     error.clear();balanceNotice="Applied. Walking uses this Speed on the next movement step.";
@@ -60,6 +68,19 @@ void Game::setShooting(float tears,float shotSpeed,float rangeTiles) {
 void Game::resetShooting() {
     setShooting(BalancePreset::ReferenceTears,BalancePreset::ReferenceShotSpeed,BalancePreset::ReferenceRange);
     balanceNotice="Shooting reset to the accepted base. Movement, zoom and map settings retained.";
+}
+void Game::setGaperMovement(float multiplier) {
+    auto preset=balancePreset;preset.gaperMovementMultiplier=multiplier;applyBalance(std::move(preset));
+    balanceNotice="Gaper movement applied at its next steering tick; existing momentum settles naturally.";
+}
+void Game::setSpiderMovement(float multiplier) {
+    auto preset=balancePreset;preset.spiderMovementMultiplier=multiplier;applyBalance(std::move(preset));
+    balanceNotice="Spider drive applies at its next steering tick; current burst target and pause timing are retained.";
+}
+void Game::setPooterTuning(float movement,float shotSpeed,float interval) {
+    auto preset=balancePreset;preset.pooterMovementMultiplier=movement;preset.pooterShotSpeedMultiplier=shotSpeed;
+    preset.pooterAttackIntervalMultiplier=interval;applyBalance(std::move(preset));
+    balanceNotice="Pooter movement: next steering tick. Shot speed/delay: next attack; current attacks and flying shots retained.";
 }
 void Game::useDefaultZoom() {
     cameraZoom_=cameraZoomTarget_=100.f/balancePreset.defaultZoomPercent;snapCamera();
@@ -105,7 +126,7 @@ void Game::resetBalance() {
 }
 void Game::exportBalancePreset() {
     balanceDraft.save(std::filesystem::path(balanceFile));
-    balanceNotice=hasPendingMapChanges()?"Exported selected settings. Current map still awaits APPLY MAP CHANGES.":"Exported player, shooting, zoom and map settings. Use for next expedition to remember them.";
+    balanceNotice=hasPendingMapChanges()?"Exported selected settings. Current map still awaits APPLY MAP CHANGES.":"Exported player, enemy, view and map settings. Use next expedition to remember them.";
     error.clear();
 }
 void Game::loadBalancePreset(const std::filesystem::path &path) {
@@ -113,10 +134,15 @@ void Game::loadBalancePreset(const std::filesystem::path &path) {
     const auto filename=path.string();
     auto live=balancePreset;live.playerSpeed=candidate.playerSpeed;live.defaultZoomPercent=candidate.defaultZoomPercent;
     live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;
+    live.gaperMovementMultiplier=candidate.gaperMovementMultiplier;
+    live.spiderMovementMultiplier=candidate.spiderMovementMultiplier;
+    live.pooterMovementMultiplier=candidate.pooterMovementMultiplier;
+    live.pooterShotSpeedMultiplier=candidate.pooterShotSpeedMultiplier;
+    live.pooterAttackIntervalMultiplier=candidate.pooterAttackIntervalMultiplier;
     applyBalance(std::move(live));useDefaultZoom();
     balanceDraft=std::move(candidate);balanceFile=filename;
-    balanceNotice=hasPendingMapChanges()?"Loaded. Player/shooting settings applied; map settings await APPLY MAP CHANGES.":
-        "Loaded player/shooting settings. Map settings already match. Use next expedition to remember this preset.";
+    balanceNotice=hasPendingMapChanges()?"Loaded. Player/enemy/view applied; map settings await APPLY MAP CHANGES.":
+        "Loaded player/enemy/view settings. Map already matches. Use next expedition to remember.";
 }
 void Game::rememberBalancePreset() {
     archiveBalance(balanceDraft);
@@ -127,7 +153,7 @@ void Game::rememberBalancePreset() {
 }
 RunSummary Game::configuredSummary() const {
     auto summary=run->summary();
-    summary.mechanicsFingerprint+="/balance-v5:"+balancePreset.revision();
+    summary.mechanicsFingerprint+="/balance-v8:"+balancePreset.revision();
     return summary;
 }
 void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
@@ -139,6 +165,9 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     candidate->player.attributes.tearsPerSecond=preset.tearsPerSecond;
     candidate->player.attributes.shotSpeed=preset.shotSpeed;
     candidate->player.attributes.rangeTiles=preset.rangeTiles;
+    candidate->gaperMovementMultiplier=preset.gaperMovementMultiplier;
+    candidate->spiderMovementMultiplier=preset.spiderMovementMultiplier;
+    candidate->pooterTuning=PooterTuning{preset.pooterMovementMultiplier,preset.pooterShotSpeedMultiplier,preset.pooterAttackIntervalMultiplier};
     const RetrySetup setup{candidate->expedition.seed,candidate->arena.theme,visualSettings.canyonRiver,
                            candidate->surveyTutorial,candidate->expedition.account,candidate->expedition.pacing};
     campaign.begin(setup.seed,candidate->summary().expedition,setup.pacing);
@@ -149,7 +178,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
 }
 bool Game::canRetryExpedition() const {
@@ -162,7 +191,7 @@ void Game::retryExpedition() {
     auto candidate=std::make_unique<Simulation>(setup.seed,campaign.data().nextRunId,campaign.data().world,
         setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale);
     startExpedition(std::move(candidate),true);
-    balanceNotice="Retried the same expedition seed with the applied player, shooting, zoom and map settings.";
+    balanceNotice="Retried the same expedition seed with the applied player, enemy, view and map settings.";
 }
 bool Game::updateBalanceInput() {
     if(!balanceOpen)return false;

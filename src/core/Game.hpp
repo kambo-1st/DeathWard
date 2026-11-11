@@ -85,6 +85,16 @@ enum class Action {
     CloseBalance,
     BalanceWorldTab,
     BalanceShootingTab,
+    BalanceEnemiesTab,
+    BalanceChasersTab,
+    BalancePooterTab,
+    PooterMovementDown, PooterMovementUp, PooterShotDown, PooterShotUp, PooterDelayDown, PooterDelayUp, ResetPooter,
+    GaperMovementDown,
+    GaperMovementUp,
+    GaperMovementReset,
+    SpiderMovementDown,
+    SpiderMovementUp,
+    SpiderMovementReset,
     TearsDown,
     TearsUp,
     ShotSpeedDown,
@@ -142,6 +152,7 @@ class Game {
     bool controlsOpen = false;
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
+    bool balanceEnemiesOpen = false, balancePooterOpen = false;
     BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;
     std::filesystem::path balanceDirectory;
@@ -149,6 +160,9 @@ class Game {
     void setPlayerSpeed(float speed);
     void setShooting(float tears, float shotSpeed, float rangeTiles);
     void resetShooting();
+    void setGaperMovement(float multiplier);
+    void setSpiderMovement(float multiplier);
+    void setPooterTuning(float movement,float shotSpeed,float interval);
     void setDefaultZoom(float percent);
     void setRoomSize(float scale);
     void setRouteLength(float scale);

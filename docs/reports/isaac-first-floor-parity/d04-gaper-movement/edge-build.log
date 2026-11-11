@@ -1,0 +1,41 @@
+[ 11%] Built target glfw
+[ 14%] Built target raylib
+[ 14%] Building CXX object CMakeFiles/deathward_core.dir/src/combat/GroundPursuit.cpp.o
+[ 14%] Built target deathward_runtime_assets
+[ 14%] Linking CXX static library libdeathward_core.a
+[ 77%] Built target deathward_core
+[ 88%] Built target deathward_mission_lighting
+[ 88%] Built target deathward_cloth
+[ 88%] Built target deathward_skinning
+[ 92%] Built target deathward_particles
+Consolidate compiler generated dependencies of target deathward_input_tests
+[ 96%] Linking CXX executable deathward_input_tests
+[100%] Built target deathward_input_tests
+Consolidate compiler generated dependencies of target deathward_core
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_gaper_gameplay_tests
+[100%] Linking CXX executable deathward_gaper_gameplay_tests
+[100%] Built target deathward_gaper_gameplay_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_gaper_trajectory_tests
+[100%] Linking CXX executable deathward_gaper_trajectory_tests
+[100%] Built target deathward_gaper_trajectory_tests
+[ 94%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_gaper_tests
+[ 94%] Linking CXX executable deathward_gaper_tests
+[100%] Built target deathward_gaper_tests
+[100%] Built target deathward_core
+Consolidate compiler generated dependencies of target deathward_enemy_status_tests
+[100%] Linking CXX executable deathward_enemy_status_tests
+[100%] Built target deathward_enemy_status_tests
+[ 11%] Built target glfw
+[ 14%] Built target raylib
+[ 77%] Built target deathward_core
+[ 85%] Built target deathward_skinning
+[ 85%] Built target deathward_cloth
+[ 88%] Built target deathward_particles
+[ 92%] Built target deathward_mission_lighting
+[ 92%] Built target deathward_runtime_assets
+Consolidate compiler generated dependencies of target deathward
+[ 92%] Linking CXX executable deathward
+[100%] Built target deathward

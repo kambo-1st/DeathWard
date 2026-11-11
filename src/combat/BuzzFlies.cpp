@@ -3,7 +3,19 @@
 
 namespace dw {
 void Simulation::updateBuzzFly(Enemy &e,float dt) {
-    const auto &p=*content->buzzFly(e.monster);
+    auto p=*content->buzzFly(e.monster);
+    const bool tuned=tunedPooter(e);
+    if(tuned) {
+        const float authoredScale=p.scale;
+        p.scale=GaperMovementScale;
+        p.pursuit*=pooterTuning->movement;p.jitter*=pooterTuning->movement;p.edge*=pooterTuning->movement;
+        p.speedCap*=p.scale/authoredScale*pooterTuning->movement;
+        if(p.shot) {
+            p.shot->range*=p.scale/authoredScale;
+            p.shot->speed*=p.scale/authoredScale*pooterTuning->shotSpeed;
+            p.shot->cooldownFrames=std::max(1,int(std::round(p.shot->cooldownFrames*pooterTuning->attackInterval)));
+        }
+    }
     if(!e.buzz)e.buzz=BuzzFlyRuntime{};
     auto &r=*e.buzz;
     auto requestContactDeath=[&] {
@@ -21,7 +33,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
     e.age+=dt;e.flash=std::max(0.f,e.flash-dt);e.fireContactCooldown=std::max(0.f,e.fireContactCooldown-dt);
     const bool suppressed=p.suppressor&&!e.friendly&&itemStacks(*p.suppressor)>0;
     const bool itemMorph=p.morphItem&&!e.friendly&&itemStacks(*p.morphItem)>0;
-    if(!suppressed) {
+    if(!suppressed&&!tuned) {
         e.cooldown=std::max(0.f,e.cooldown-dt);
         // A source delay such as 63 frames must not miss the next seven-frame
         // acquisition check because repeated float subtraction leaves dust.
@@ -29,11 +41,12 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
     }
     e.lift=0;
     if(e.state==EnemyState::Stunned) {
+        if(tuned&&!suppressed)e.cooldown=std::max(0.f,e.cooldown-dt);
         r.attackFrame=-1;r.fired=false;r.clock=0;r.momentum={};e.velocity={};e.stateTime-=dt;
         if(e.stateTime<=0)e.state=EnemyState::Ready;
         return;
     }
-    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,nativeBurstWanderReview&&e.monster==monsterId(14));
+    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||(nativeBurstWanderReview&&e.monster==monsterId(14)));
     for(int sourceUpdate=0;sourceUpdate<sourceUpdates;++sourceUpdate) {++r.tick;
         if(r.healingTicks>0) {
             e.hp=std::min(e.maxHp,e.hp+e.maxHp/float(r.healingDivisor));--r.healingTicks;
@@ -78,9 +91,11 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
                     // Reserve the whole volley before any member is queued;
                     // each root event also needs a chain slot.
                     if(queue_.size()+count<=limits.queuedEvents&&projectiles.size()+size_t(queued)+count<=limits.projectiles&&limits.eventsPerChain>0) {
+                        // Retain 3D aiming for elevated canyon flyers. Flat
+                        // encounters use the verified native planar direction.
                         auto aim=unit(sub(player.position,e.position));if(length(aim)<.001f)aim=e.facing;
                         for(size_t i=0;i<count;++i) {
-                            auto velocity=mul(aim,s.speed);
+                            auto velocity=mul(aim,tuned&&r.attackShotSpeed>0?r.attackShotSpeed:s.speed);
                             if(p.paired||!p.volley.empty()) {
                                 const auto v=p.volley.empty()?Vector2{p.pairForward,i==0?p.pairSide:-p.pairSide}:p.volley[i];
                                 velocity={s.speed*(v.x*aim.x-v.y*aim.z),velocity.y,
@@ -90,6 +105,7 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
                             shot.position=shot.origin=e.position;shot.direction=unit(velocity);
                             shot.speed=length(velocity);shot.damage=s.damage;shot.projectileLife=s.life;
                             shot.projectileRadius=p.shotRadius;shot.projectileSplit=p.impactSplit;
+                            shot.pooterFlight=tuned;
                             if(p.impactSplit)shot.projectileKind=ProjectileKind::SplitShot;
                             queueRoot(shot);
                         }
@@ -103,9 +119,15 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
                 planarDistance(e.position,player.position)<s.range&&arena.sight(e.position,player.position)) {
                 r.attackFrame=0;r.fired=false;e.state=EnemyState::Windup;e.stateTime=float(s.attackFrames)/30;
                 e.cooldown=float(s.cooldownFrames)/30;e.target=player.position;
+                if(tuned){r.attackShotSpeed=s.speed;r.attackIntervalMultiplier=pooterTuning->attackInterval;}
                 audioCues.push(AudioCueKind::Warning,e.position);
             }
-            if(!suppressed&&e.cooldown>0){friction*=p.cooldownRetention;r.wander=mul(r.wander,p.cooldownWander);}
+            if(!suppressed&&e.cooldown>0){
+                friction*=p.cooldownRetention;r.wander=mul(r.wander,p.cooldownWander);
+                // Native Pooter checks acquisition first, then decrements its
+                // delay (including the update that starts an attack).
+                if(tuned){e.cooldown=std::max(0.f,e.cooldown-1.f/30);if(e.cooldown<.00001f)e.cooldown=0;}
+            }
         }
         if(p.chase) {
             const auto &c=*p.chase;
@@ -129,8 +151,10 @@ void Simulation::updateBuzzFly(Enemy &e,float dt) {
             const bool sourceRoom=nativeBurstWanderReview&&e.monster==monsterId(14)&&
                 std::abs(bounds.min.x)<.001f&&std::abs(bounds.min.z)<.001f&&
                 std::abs(bounds.max.x-26)<.001f&&std::abs(bounds.max.z-14)<.001f;
-            const float left=sourceRoom?1:bounds.min.x+margin,right=sourceRoom?24:bounds.max.x-margin;
-            const float top=sourceRoom?4.5f:bounds.min.z+margin,bottom=sourceRoom?14:bounds.max.z-margin;
+            // Source normal room is x60..580/y140..420; edge thresholds
+            // x80/540/y230/420. Preserve those offsets in adapted canyon rooms.
+            const float left=sourceRoom?1:bounds.min.x+(tuned?20*p.scale:margin),right=sourceRoom?24:bounds.max.x-(tuned?40*p.scale:margin);
+            const float top=sourceRoom?4.5f:bounds.min.z+(tuned?90*p.scale:margin),bottom=sourceRoom?14:bounds.max.z-(tuned?0:margin);
             if(e.position.x<left)r.wander.x+=p.edge;
             else if(e.position.x>right)r.wander.x-=p.edge;
             if(e.position.z<top)r.wander.z+=p.edge;

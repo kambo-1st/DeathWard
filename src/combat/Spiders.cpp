@@ -3,7 +3,10 @@
 
 namespace dw {
 void Simulation::updateSpider(Enemy &e,float dt) {
-    const auto &p=*content->spider(e.monster);if(!e.spider)e.spider=SpiderRuntime{};
+    auto p=*content->spider(e.monster);
+    const bool tuned=tunedSpider(e);
+    if(tuned){p.scale=GaperMovementScale;p.force*=*spiderMovementMultiplier;}
+    if(!e.spider)e.spider=SpiderRuntime{};
     auto &r=*e.spider;e.age+=dt;e.flash=std::max(0.f,e.flash-dt);
     auto requestContactDeath=[&] {
         if(std::any_of(queue_.begin(),queue_.end(),[&](const auto &event){return event.type==EventType::Damage&&event.target==e.id&&event.execution;}))return;
@@ -39,7 +42,7 @@ void Simulation::updateSpider(Enemy &e,float dt) {
         at.z=axis(at.z,bounds.min.z,bounds.max.z,std::max(e.radius,top),std::max(e.radius,bottom));
         at.y=.85f;return at;
     };
-    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,nativeBurstWanderReview&&e.monster==monsterId(85));
+    const int sourceUpdates=sourceControllerUpdates(r.clock,dt,tuned||(nativeBurstWanderReview&&e.monster==monsterId(85)));
     for(int sourceUpdate=0;sourceUpdate<sourceUpdates;++sourceUpdate) {
         if(!r.initialized){r.initialized=true;r.counter=0;continue;}
         if(r.targetReady) {
@@ -53,7 +56,9 @@ void Simulation::updateSpider(Enemy &e,float dt) {
         } else if(r.counter++>=p.idleFrames) {
             const float range=combatRng.real(p.rangeMinimum,p.rangeMaximum)*p.scale;
             if(planarDistance(e.position,player.position)<range&&arena.sight(e.position,player.position)) {
-                r.destination=clamped(add(player.position,mul(horizontal(player.velocity),p.prediction/30)),
+                // Native prediction reads the player's per-60Hz-step velocity;
+                // DW stores units/second. NPC steering itself remains 30Hz.
+                r.destination=clamped(add(player.position,mul(horizontal(player.velocity),p.prediction/(tuned?60:30))),
                     e.radius,e.radius,e.radius,e.radius);
                 r.targetReady=true;r.pursuing=true;
             } else {

@@ -1,0 +1,9 @@
+PASS native Spider states=48 hz=30 offset=0,0 max_error=6.18398e-07
+PASS native Spider states=48 hz=30 offset=30,-17 max_error=1.90735e-06
+PASS native Spider states=48 hz=60 offset=0,0 max_error=1.07288e-06
+PASS native Spider states=48 hz=60 offset=30,-17 max_error=1.14441e-05
+PASS native Spider states=48 hz=120 offset=0,0 max_error=1.07288e-06
+PASS native Spider states=48 hz=120 offset=30,-17 max_error=2.86102e-05
+PASS idle gates=16 native lead cases=6 committed bursts, pauses and far wandering
+PASS live drive, unselected actors, sight/cover, blocked burst recovery, stun and contact
+PASS D05 main-game Spider integration

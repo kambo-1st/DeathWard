@@ -1,0 +1,49 @@
+{
+  "source": "The Binding of Isaac: Repentance 1.7.9b",
+  "enemy": "85.0.0",
+  "xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "xml": {
+    "anm2path": "085.000_Spider.anm2",
+    "baseHP": "6.5",
+    "boss": "0",
+    "champion": "0",
+    "collisionDamage": "1",
+    "collisionMass": "5",
+    "collisionRadius": "13",
+    "friction": "1",
+    "id": "85",
+    "name": "#SPIDER",
+    "numGridCollisionPoints": "12",
+    "portrait": "53",
+    "reroll": "true",
+    "shadowSize": "11",
+    "stageHP": "0",
+    "tags": "spider",
+    "variant": "0"
+  },
+  "source_force": 6,
+  "source_retention": 0.6,
+  "source_idle_threshold": 14,
+  "source_prediction_player_steps": 10,
+  "source_acquisition_range": [
+    100,
+    200
+  ],
+  "source_wander_range": [
+    70,
+    110
+  ],
+  "source_arrival": 14,
+  "source_stuck_speed": 3,
+  "controller_hz": 30,
+  "player_hz": 60,
+  "movement_scale": 0.018123171381291516,
+  "reference_burst_steady_world_speed": 4.89325627294871,
+  "reference_burst_player_speed_ratio": 1.0194283901976477,
+  "retained_world_body_radius": 0.4,
+  "retained_hp": 20.8,
+  "retained_hp_conversion": 3.2,
+  "retained_player_damage": 24,
+  "source_stage_hp_changed": false,
+  "full_native_acceptance": false
+}

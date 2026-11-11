@@ -257,6 +257,8 @@ struct BuzzFlyRuntime {
     bool diesOnContact=false,targetReady=false;
     float contactRetention=1;
     int healingTicks=0,healingDivisor=60;
+    float attackIntervalMultiplier=1;
+    float attackShotSpeed=0; // D06 latches the next attack's projectile tuning.
 };
 struct EvaderRuntime {
     float clock=0, cooldown=0;
@@ -667,6 +669,12 @@ struct AttackSpec {
     float maxDistance = 0;
     Vector3 inheritedVelocity{};
 };
+struct PooterBulletFlight {
+    float height=-23, fallingSpeed=-3, clock=0;
+};
+struct PooterTuning {
+    float movement=1, shotSpeed=1, attackInterval=1;
+};
 struct Projectile {
     EntityId id = 0;
     Vector3 position{}, previous{}, origin{}, velocity{};
@@ -682,6 +690,7 @@ struct Projectile {
     AttackSpec attack;
     bool returning = false, phaseSpent = false, capSpent = false;
     std::optional<PlayerTearFlight> playerFlight;
+    std::optional<PooterBulletFlight> pooterFlight;
     float traveled = 0, guidanceTime = 0;
     EntityId guidedTarget = 0;
     float angularVelocity = 0; // Radians/second about world up, independent of shooter lifetime.
@@ -750,6 +759,7 @@ struct Event {
     float projectileGravity=0,projectileBlastRadius=0,projectileBlastDamage=0;
     float projectileFlightRetention=0,projectileRadius=0,projectileBlastPlayerDamage=-1;
     float projectileTimeScale=1;
+    bool pooterFlight=false; // Native height lifetime; retained 3D aimed collision is independent of sprite height.
     std::optional<ProjectileSplitDefinition> projectileSplit;
     std::optional<ProjectileBurstDefinition> projectileBurst;
     std::optional<HostileHomingDefinition> projectileHoming;
@@ -1127,6 +1137,18 @@ class Simulation {
     std::optional<native_motion::PlayerAdapter> nativePlayerMovement;
     bool nativeBurstWanderReview = false; // private Spider/Pooter motion phase and source-room edge candidate
     bool nativeGaperPursuit = false; // private clear-route trajectory review, no save/default rollout
+    // Game enables D04 for ordinary 10.1.0. Empty retains authored units for
+    // historical/reference fixtures. Anchor to accepted base walking, not the
+    // player's current Speed stat: pinned player steady step * 60 Hz.
+    static constexpr float GaperMovementScale = float(Player::AcceptedWalkingPace / (4.414238452911377 * 60));
+    std::optional<float> gaperMovementMultiplier;
+    bool tunedGaper(const Enemy &e) const { return gaperMovementMultiplier && e.monster==monsterId(10,1); }
+    // D05 shares D04's fixed base-player anchor. The override changes drive,
+    // not perception, the committed destination, idle timing or current velocity.
+    std::optional<float> spiderMovementMultiplier;
+    bool tunedSpider(const Enemy &e) const { return spiderMovementMultiplier && e.monster==monsterId(85); }
+    std::optional<PooterTuning> pooterTuning;
+    bool tunedPooter(const Enemy &e) const { return pooterTuning && e.monster==monsterId(14); }
     bool surveyTutorial = false, surveyRecovered = false, letterOpen = false;
     bool floorExitRequested = false;
     StoryRoom storyOpen = StoryRoom::None;

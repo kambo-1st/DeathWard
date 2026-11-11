@@ -1,0 +1,15 @@
+{
+  "recorded_at_utc": "2026-11-11T19:33:21.383515+00:00",
+  "delivery": "D06",
+  "user_verdict": "accepted scoped main-game playtest; commit requested",
+  "user_message": "ok, nice commit!",
+  "preceding_request": "ok, lets run it!",
+  "application_sha256": "0a2c55516a430273324b47978c644597d16bdf20e2a5bae6620967553fa22e23",
+  "seed": 69,
+  "displayed_room": 3,
+  "launch_log": "/tmp/deathward-d06-20261111T193028Z.log",
+  "scope": "ordinary Pooter movement/shots with accepted player/map/view preset and cumulative D04/D05 movement",
+  "full_native_actor_accepted": false,
+  "damage_hp_rollout_authorized": false,
+  "next_selectable": "D07"
+}

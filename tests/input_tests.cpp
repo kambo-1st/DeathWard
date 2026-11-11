@@ -56,7 +56,7 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_UP);frame();
     click(460,190);click(460,190);
     check(std::abs(run.player.attributes.speed-.8f)<1e-6f&&run.combatRng.state==rng,"Speed buttons apply without advancing combat RNG");
-    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v5:")!=std::string::npos,"checkpoint identifies active tuning revision");
+    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v8:")!=std::string::npos,"checkpoint identifies active tuning revision");
     check(std::filesystem::exists(game.balanceDirectory/"revisions"/(game.balancePreset.revision()+".json")),"checkpoint revision retains its resolved preset");
     check(run.canResizeRooms(),"untouched starting room permits live resizing");
     const auto id=run.summary().id, nextId=game.campaign.data().nextRunId;
@@ -275,6 +275,218 @@ void shootingBalanceInputCheck(const std::filesystem::path &directory) {
     check(fresh.run->player.attributes.tearsPerSecond==4&&fresh.run->player.attributes.shotSpeed==1.5f&&fresh.run->player.attributes.rangeTiles==8&&
           fresh.run->roomSizeScale==1.2f&&fresh.cameraZoomPercent()==165,"remembered shooting/map/view applied before fresh expedition");fresh.close();
     std::cout<<"PASS D03 actual Game/Renderer tabs, buttons and keyboard; independent shooting, old bullets/cooldown, owned modifiers, invalid-load isolation, export/load, Apply, floor/retry/fresh-session persistence\n";
+}
+void gaperBalanceInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/
+        "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"gaper.save",file=directory/"gaper-export.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="57";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.run->gaperMovementMultiplier==1,"normal Game enables ordinary Gaper conversion from old preset");
+    auto &run=*game.run;run.godMode=true;Renderer renderer;
+    check(run.player.attributes.tearsPerSecond==1.9272734f&&run.player.attributes.shotSpeed==.9f&&
+          run.player.walkingSpeed()==4.8f&&game.cameraZoomPercent()==165&&run.routeLengthScale==.26f,
+          "D04 preserves accepted player/shooting/map/view preset");
+    int room=-1;EntityId actor=0;
+    for(int i=1;i<run.finalRoom()&&room<0;++i)for(const auto &e:run.roomEnemies(i))
+        if(e.monster==monsterId(10,1)&&e.champion<0){room=i;actor=e.id;break;}
+    check(room>0,"actual expedition naturally contains an ordinary Gaper");
+    Vector3 position{};bool found=false;
+    for(auto cell:run.arena.floorCells) {
+        const Vector3 point{(cell.first+.5f)*FloorTile,.85f,(cell.second+.5f)*FloorTile};
+        if(run.arena.roomAt(point)!=room||run.arena.blocked(point,.48f))continue;
+        bool safe=true;for(const auto &e:run.roomEnemies(room))if(e.alive&&distance(e.position,point)<6)safe=false;
+        if(safe){position=point;found=true;break;}
+    }
+    check(found,"natural encounter has a safe player observation point");
+    run.player.position=position;run.enterRoom(room);game.updateCamera(10);
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"Gaper UI has no error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    click(374,642);click(995,143);check(game.balanceOpen&&game.balanceEnemiesOpen&&!game.balanceShootingOpen,"Enemies tab opens via actual HUD");
+    game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto at=run.findEnemy(actor)->position;
+    const auto velocity=run.findEnemy(actor)->velocity;const float hp=run.findEnemy(actor)->hp;const auto count=run.stats.shots;
+    click(710,244);check(run.gaperMovementMultiplier==.95f,"Gaper movement uses 5 percent steps");
+    for(int i=0;i<20&&game.keyboardFocus()!=Action::GaperMovementUp;++i)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::GaperMovementUp,"visible Gaper control reachable by keyboard");key(KEY_ENTER);
+    check(run.gaperMovementMultiplier==1,"keyboard restores reference drive");
+    game.setGaperMovement(.5f);
+    check(distance(at,run.findEnemy(actor)->position)==0&&distance(velocity,run.findEnemy(actor)->velocity)==0&&
+          run.findEnemy(actor)->hp==hp&&run.stats.shots==count&&run.arena.canyon.get()==terrain&&game.hasPendingMapChanges(),
+          "live edit retains position, momentum, HP, emissions and pending map");
+    key(KEY_ESCAPE);for(int n=0;n<10;++n)frame();
+    check(run.findEnemy(actor)&&std::abs(run.findEnemy(actor)->gaper->force-.249f)<.0001f,
+          "naturally generated ordinary actor consumes edited drive on real Game updates");
+    check(!run.arena.blocked(run.findEnemy(actor)->position,run.findEnemy(actor)->radius),"natural actor remains on physical floor");
+    const float beforePursuit=planarDistance(run.findEnemy(actor)->position,run.player.position);
+    std::cout<<"D04_CHASE target="<<run.player.position.x<<','<<run.player.position.z<<" actor="<<actor<<" start_distance="<<beforePursuit<<'\n';
+    std::cout<<"D04_ROUTE target_blocked_for_gaper="<<run.arena.blocked(run.player.position,.6f)
+             <<" player_route="<<run.arena.path(run.findEnemy(actor)->position,run.player.position,.48f).size()
+             <<" gaper_route="<<run.arena.path(run.findEnemy(actor)->position,run.player.position,.6f).size()
+             <<" center_route="<<run.arena.path(run.findEnemy(actor)->position,run.arena.rooms[room].center,.6f).size()<<'\n';
+    for(int n=0;n<600;++n) {
+        game.update(Tick);
+        if(n%120==119) {
+            const auto *e=run.findEnemy(actor);
+            std::cout<<"D04_CHASE step="<<n+1<<" actor="<<e->position.x<<','<<e->position.z<<" target="<<run.player.position.x<<','<<run.player.position.z
+                     <<" velocity="<<e->velocity.x<<','<<e->velocity.z<<" path="<<e->path.size()<<" direct="<<e->gaper->directPath<<" duration="<<run.stats.duration<<'\n';
+        }
+        for(const auto &e:run.enemies)if(e.alive&&e.monster==monsterId(10,1))
+            check(!run.arena.blocked(e.position,e.radius),"natural Gaper crowd respects canyon cover during pursuit");
+    }
+    check(planarDistance(run.findEnemy(actor)->position,run.player.position)<beforePursuit-1,
+          "natural Gaper makes sustained progress through the generated encounter");
+    click(374,642);click(400,441);check(run.gaperMovementMultiplier==1,"reset restores source-derived reference");
+    game.setGaperMovement(.65f);click(320,605);click(900,605);
+    auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(exported.gaperMovementMultiplier==.65f&&exported.tearsPerSecond==1.9272734f&&exported.roomSizeScale==1.2f,
+          "Export/Remember retains chosen shooting and pending map with Gaper override");
+    game.setGaperMovement(1);click(590,605);check(run.gaperMovementMultiplier==.65f&&game.hasPendingMapChanges(),"load restores Gaper setting without applying map draft");
+    const auto revision=game.balancePreset.revision();const auto draft=game.balanceDraft.revision();
+    auto bad=exported.json();auto offset=bad.find("\"gaper_movement_multiplier\": 0.65");check(offset!=bad.npos,"invalid Gaper fixture field exists");
+    bad.replace(offset,std::string("\"gaper_movement_multiplier\": 0.65").size(),"\"gaper_movement_multiplier\": 99");
+    const auto invalid=directory/"invalid-gaper.json";{std::ofstream out(invalid);out<<bad;}
+    game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.gaperMovementMultiplier==.65f,
+          "invalid movement load rejected without partial configuration/state change");
+    game.balanceFile=file.string();game.perform(Action::LoadBalance);check(game.error.empty(),"valid reload recovers");
+    std::filesystem::create_directories("artifacts");
+    std::filesystem::copy_file(file,"artifacts/d04-gaper-preset.json",std::filesystem::copy_options::overwrite_existing);
+    BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+    check(ExportImage(image,"artifacts/d04-gaper-panel.png"),"capture Enemies tuning tab");UnloadImage(image);EndDrawing();
+    game.applyMapChanges();check(run.gaperMovementMultiplier==.65f,"map regeneration keeps Gaper override");
+    key(KEY_ESCAPE);run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;
+    check(run.advanceFloor()&&run.gaperMovementMultiplier==.65f,"ordinary floor descent keeps Gaper override");
+    run.finishDebug(false);game.retryExpedition();
+    check(game.run->gaperMovementMultiplier==.65f&&game.run->player.hp==6,"death retry preserves movement setting and restores ordinary start");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
+    check(fresh.run->gaperMovementMultiplier==.65f&&fresh.run->player.attributes.tearsPerSecond==1.9272734f&&fresh.cameraZoomPercent()==165,
+          "fresh expedition restores Gaper movement and accepted shooting/view");fresh.close();
+    std::cout<<"PASS D04 main Game natural actor + UI mouse/keyboard, drive transition, preserved player settings, preset roundtrip/rejection, map/floor/retry/fresh-session persistence\n";
+}
+void spiderBalanceInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/
+        "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"spider.save",file=directory/"spider-export.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="0";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.run->spiderMovementMultiplier==1&&game.run->gaperMovementMultiplier==1,"main Game enables both selected ordinary movement consumers");
+    auto &run=*game.run;run.godMode=true;Renderer renderer;
+    check(run.player.attributes.tearsPerSecond==1.9272734f&&run.player.attributes.shotSpeed==.9f&&
+          run.player.walkingSpeed()==4.8f&&game.cameraZoomPercent()==165&&run.routeLengthScale==.26f,"D05 preserves accepted player/shooting/map/view preset");
+    int room=-1;EntityId actor=0;
+    for(int i:{5})for(const auto &e:run.roomEnemies(i))
+        if(e.monster==monsterId(85)&&e.champion<0){room=i;actor=e.id;break;}
+    check(room>0,"generated expedition contains ordinary Spider");run.jumpDebug(room);
+    auto *e=run.findEnemy(actor);const auto initial=e->position;bool positioned=false;
+    for(int n=0;n<16;++n) {
+        const auto point=add(initial,rotateY({1.6f,0,0},float(n)*Pi/8));
+        if(!run.arena.blocked(point,.48f)&&run.arena.sight(initial,point)&&run.arena.roomAt(point)==room){run.player.position=point;positioned=true;break;}
+    }
+    check(positioned,"natural Spider has legal nearby player approach");game.updateCamera(10);
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D05 UI has no error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    click(374,642);click(995,143);check(game.balanceEnemiesOpen,"actual Enemies tab opens");
+    game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto at=e->position,velocity=e->velocity;
+    const float hp=e->hp;const auto shots=run.stats.shots;
+    click(710,359);check(run.spiderMovementMultiplier==.95f&&run.gaperMovementMultiplier==1,"Spider adjustment independent from Gaper");
+    for(int n=0;n<24&&game.keyboardFocus()!=Action::SpiderMovementUp;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::SpiderMovementUp,"Spider drive keyboard navigation");key(KEY_ENTER);
+    check(run.spiderMovementMultiplier==1,"keyboard restores Spider reference");game.setSpiderMovement(.5f);
+    check(distance(e->position,at)==0&&distance(e->velocity,velocity)==0&&e->hp==hp&&run.stats.shots==shots&&
+          run.arena.canyon.get()==terrain&&game.hasPendingMapChanges(),"live edit retains actor/player/map state while paused");
+    key(KEY_ESCAPE);bool burst=false,idle=false;float travelled=0;Vector3 previous=e->position;
+    for(int n=0;n<600;++n) {
+        game.update(Tick);e=run.findEnemy(actor);check(e&&e->alive,"natural actor remains available");
+        burst|=e->spider&&e->spider->targetReady;idle|=burst&&e->spider&&!e->spider->targetReady;
+        travelled+=planarDistance(previous,e->position);previous=e->position;
+        for(const auto &body:run.enemies)if(body.alive&&body.monster==monsterId(85))
+            check(!run.arena.blocked(body.position,body.radius),"natural Spider crowd respects generated canyon terrain");
+    }
+    check(burst&&idle&&travelled>.5f,"real Game updates execute burst and idle with visible motion");
+    std::cout<<"D05 natural seed="<<game.seedText<<" room="<<room<<" travelled="<<travelled<<'\n';
+    click(374,642);click(400,483);check(run.spiderMovementMultiplier==1,"Spider reset button");
+    game.setSpiderMovement(.65f);click(320,605);click(900,605);
+    const auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(exported.spiderMovementMultiplier==.65f&&exported.gaperMovementMultiplier==1&&exported.roomSizeScale==1.2f&&exported.defaultZoomPercent==165,
+          "Spider export and remember includes pending map and accepted settings");
+    game.setSpiderMovement(1);click(590,605);check(run.spiderMovementMultiplier==.65f&&game.hasPendingMapChanges(),"load restores Spider drive and stages map");
+    const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();
+    auto bad=exported.json();const auto offset=bad.find("\"spider_movement_multiplier\": 0.65");check(offset!=bad.npos,"invalid Spider fixture exists");
+    bad.replace(offset,std::string("\"spider_movement_multiplier\": 0.65").size(),"\"spider_movement_multiplier\": 99");
+    const auto invalid=directory/"invalid-spider.json";{std::ofstream out(invalid);out<<bad;}
+    game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.spiderMovementMultiplier==.65f,
+          "bad Spider preset has no partial effects");game.balanceFile=file.string();game.perform(Action::LoadBalance);
+    std::filesystem::create_directories("artifacts");std::filesystem::copy_file(file,"artifacts/d05-spider-preset.json",std::filesystem::copy_options::overwrite_existing);
+    BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+    check(ExportImage(image,"artifacts/d05-spider-panel.png"),"capture Spider tuning panel");UnloadImage(image);EndDrawing();
+    game.applyMapChanges();check(run.spiderMovementMultiplier==.65f&&run.gaperMovementMultiplier==1,"regeneration retains independent enemy settings");
+    key(KEY_ESCAPE);run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;
+    check(run.advanceFloor()&&run.spiderMovementMultiplier==.65f,"descent keeps Spider tuning");run.finishDebug(false);game.retryExpedition();
+    check(game.run->spiderMovementMultiplier==.65f&&game.run->player.hp==6,"retry restores normal hearts and selected Spider tuning");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
+    check(fresh.run->spiderMovementMultiplier==.65f&&fresh.run->gaperMovementMultiplier==1&&fresh.cameraZoomPercent()==165&&fresh.run->player.attributes.tearsPerSecond==1.9272734f,
+          "fresh Game restores independent enemy and accepted user settings");fresh.close();
+    std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
+}
+void pooterBalanceInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/
+        "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"pooter.save",file=directory/"pooter-export.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.run->pooterTuning&&game.run->pooterTuning->movement==1,"main Game enables selected Pooter from old preset");
+    auto &run=*game.run;run.godMode=true;Renderer renderer;const int room=2;
+    check(run.player.walkingSpeed()==4.8f&&run.player.attributes.tearsPerSecond==1.9272734f&&game.cameraZoomPercent()==165&&run.routeLengthScale==.26f,
+          "D06 retains accepted player/shooting/map/view settings");
+    EntityId actor=0;for(const auto &body:run.roomEnemies(room))if(body.monster==monsterId(14)&&body.champion<0)actor=body.id;
+    check(actor!=0,"natural adjacent encounter contains ordinary Pooter");run.jumpDebug(room);auto *e=run.findEnemy(actor);const auto initial=e->position;bool found=false;
+    for(int n=0;n<16;++n){const auto point=add(initial,rotateY({2,0,0},float(n)*Pi/8));if(!run.arena.blocked(point,.48f)&&run.arena.sight(initial,point)&&run.arena.roomAt(point)==room){run.player.position=point;found=true;break;}}
+    check(found,"legal nearby player approach in actual canyon");
+    for(int n=0;n<180&&(!e->buzz||e->buzz->attackFrame<0);++n){game.update(Tick);e=run.findEnemy(actor);}
+    check(e->buzz&&e->buzz->attackFrame>=0,"natural Pooter acquires player through actual Game updates");game.updateCamera(10);
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D06 UI has no error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    click(374,642);click(995,143);click(995,189);check(game.balanceEnemiesOpen&&game.balancePooterOpen,"Pooter page accessible through actual HUD");
+    game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto position=e->position,velocity=e->velocity;
+    const auto attackSpeed=e->buzz->attackShotSpeed;const auto delay=e->cooldown;const auto attackFrame=e->buzz->attackFrame;const auto hp=e->hp;
+    click(710,244);click(710,308);click(850,372);
+    check(run.pooterTuning->movement==.95f&&run.pooterTuning->shotSpeed==.95f&&run.pooterTuning->attackInterval==1.05f,"independent 5 percent UI controls");
+    for(int n=0;n<24&&game.keyboardFocus()!=Action::PooterMovementUp;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::PooterMovementUp,"Pooter keyboard focus");key(KEY_ENTER);check(run.pooterTuning->movement==1,"Pooter keyboard action consumed");
+    game.setPooterTuning(.5f,.65f,1.5f);
+    check(e->cooldown==delay&&e->buzz->attackFrame==attackFrame&&e->buzz->attackShotSpeed==attackSpeed&&e->hp==hp&&distance(e->position,position)==0&&distance(e->velocity,velocity)==0&&run.arena.canyon.get()==terrain&&game.hasPendingMapChanges(),
+          "live Pooter edits preserve committed attack, wait, momentum, HP and staged terrain");
+    const auto prior=run.stats.projectiles;key(KEY_ESCAPE);bool sawOriginal=false,sawCustom=false;float travelled=0;Vector3 previous=e->position;
+    for(int n=0;n<600;++n) {
+        game.update(Tick);e=run.findEnemy(actor);check(e&&e->alive,"natural Pooter retained");travelled+=planarDistance(previous,e->position);previous=e->position;
+        check(!run.arena.flightBlocked(e->position,e->radius,room),"natural Pooter uses retained full body against canyon boundaries");
+        for(const auto &shot:run.projectiles)if(shot.context.sourceEntity==actor){check(shot.pooterFlight.has_value(),"natural shots use source mode0 lifetime");
+            sawOriginal|=std::abs(length(shot.velocity)-attackSpeed)<.0001f;sawCustom|=std::abs(length(shot.velocity)-7*Simulation::GaperMovementScale*30*.65f)<.0001f;}
+    }
+    check(run.stats.projectiles>=prior+3&&sawOriginal&&sawCustom&&travelled>.1f,"generated main-game Pooter wanders, fires retained attack, then fires tuned attacks");
+    std::cout<<"D06 natural seed=69 room=2 shots="<<run.stats.projectiles-prior<<" travelled="<<travelled<<'\n';
+    click(374,642);click(400,483);check(run.pooterTuning->movement==1&&run.pooterTuning->shotSpeed==1&&run.pooterTuning->attackInterval==1,"reset all Pooter controls");
+    game.setPooterTuning(.5f,.65f,1.5f);click(320,605);click(900,605);
+    const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.pooterMovementMultiplier==.5f&&exported.pooterShotSpeedMultiplier==.65f&&exported.pooterAttackIntervalMultiplier==1.5f&&exported.roomSizeScale==1.2f&&exported.defaultZoomPercent==165,"all Pooter fields export with pending map/view");
+    game.setPooterTuning(1,1,1);click(590,605);check(run.pooterTuning->shotSpeed==.65f&&game.hasPendingMapChanges(),"reload updates Pooter without applying map draft");
+    const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();auto bad=exported.json();const auto offset=bad.find("\"pooter_attack_interval_multiplier\": 1.5");check(offset!=bad.npos,"invalid Pooter fixture field");
+    bad.replace(offset,std::string("\"pooter_attack_interval_multiplier\": 1.5").size(),"\"pooter_attack_interval_multiplier\": 99");const auto invalid=directory/"invalid-pooter.json";{std::ofstream out(invalid);out<<bad;}
+    game.balanceFile=invalid.string();game.perform(Action::LoadBalance);check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.pooterTuning->attackInterval==1.5f,"invalid Pooter preset has no partial effects");
+    game.balanceFile=file.string();game.perform(Action::LoadBalance);std::filesystem::create_directories("artifacts");std::filesystem::copy_file(file,"artifacts/d06-pooter-preset.json",std::filesystem::copy_options::overwrite_existing);
+    BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();check(ExportImage(image,"artifacts/d06-pooter-panel.png"),"capture Pooter controls");UnloadImage(image);EndDrawing();
+    game.applyMapChanges();check(run.pooterTuning->shotSpeed==.65f&&run.pooterTuning->attackInterval==1.5f,"map regeneration retains Pooter tuning");key(KEY_ESCAPE);
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;check(run.advanceFloor()&&run.pooterTuning->movement==.5f,"floor descent retains Pooter tuning");
+    run.finishDebug(false);game.retryExpedition();check(game.run->pooterTuning->shotSpeed==.65f&&game.run->player.hp==6,"retry retains Pooter tuning and normal starting health");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);check(fresh.run->pooterTuning->movement==.5f&&fresh.run->pooterTuning->shotSpeed==.65f&&fresh.run->pooterTuning->attackInterval==1.5f&&fresh.cameraZoomPercent()==165&&fresh.run->player.attributes.tearsPerSecond==1.9272734f,"fresh session loads all selected settings");fresh.close();
+    std::cout<<"PASS D06 main Game natural encounter, UI controls, safe attack edits, export/load/rejection and map/floor/retry/fresh-session persistence\n";
 }
 void startingHeartsInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"starting-hearts.save");game.debug=true;game.seedText="42";
@@ -1332,6 +1544,18 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--pooter-balance-only") {
+            pooterBalanceInputCheck(directory);
+            if(mode=="--pooter-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--spider-balance-only") {
+            spiderBalanceInputCheck(directory);
+            if(mode=="--spider-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--gaper-balance-only") {
+            gaperBalanceInputCheck(directory);
+            if(mode=="--gaper-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
         if(mode.empty()||mode=="--starting-hearts-only") {
             startingHeartsInputCheck(directory);

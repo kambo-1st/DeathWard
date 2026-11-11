@@ -1,0 +1,60 @@
+{
+  "delivery": "D04",
+  "recorded_at_utc": "2026-11-11T17:29:36.598492+00:00",
+  "status": "implemented in main game; developer checks passed; human and full native acceptance pending",
+  "selected_enemy": "10.1.0 ordinary Gaper",
+  "main_game_enabled": true,
+  "human_verdict": "pending",
+  "full_native_enemy_accepted": false,
+  "source": "source-scope.json",
+  "native_samples": 1260,
+  "native_cases": 8,
+  "translated_placements": 3,
+  "comparisons": 3780,
+  "position_bound": 0.002,
+  "interval_velocity_bound": 0.005,
+  "observed_max_position_error": 0.000404358,
+  "observed_max_interval_velocity_error": 0.00132161,
+  "unique_focused_suites_passed": 7,
+  "actual_game_input": [
+    "new Enemies tab, mouse/keyboard and natural Gaper consumer",
+    "600-step generated-room edge pursuit with footprint checks",
+    "existing D03 shooting tab regression",
+    "invalid-load isolation and pending-map preservation",
+    "export/load, Apply, floor descent, retry and fresh-session settings"
+  ],
+  "cli_verification": "cli-verification.json",
+  "schema": 6,
+  "supported_legacy_schemas": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_mechanics_changed": false,
+  "hp_damage_changed": false,
+  "handoff": {
+    "seed": 57,
+    "floor_displayed": 1,
+    "room_displayed": 2,
+    "adjacent_to_entrance": true,
+    "residents": {
+      "10.1.0": 6,
+      "12.0.0": 1
+    },
+    "champions": 0,
+    "preset": "../d03-shooting/user-preset-2026-11-11.json",
+    "existing_user_window_replaced": false,
+    "opened_in_main_game": true
+  },
+  "remaining": [
+    "human D04 encounter review",
+    "native shared spatial scale/body/hit geometry",
+    "native terrain masks/cache/full actor scheduling",
+    "complete status/champion/morph/offspring behavior",
+    "D05 and later first-floor deliveries; live HP acceptance held"
+  ],
+  "next_selectable": "D05 Spider after D04 human review and explicit selection",
+  "interactive_launch": "interactive-launch.json"
+}

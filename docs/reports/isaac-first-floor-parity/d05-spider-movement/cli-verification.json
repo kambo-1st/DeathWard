@@ -1,0 +1,106 @@
+{
+  "status": "passed",
+  "test_directory": "/tmp/deathward-d05-cli-04egw5oh",
+  "processes": [
+    {
+      "case": "accepted-v5",
+      "command": [
+        "build/deathward",
+        "--smoke",
+        "--scene",
+        "empty",
+        "--frames",
+        "3",
+        "--mute",
+        "--seed",
+        "0",
+        "--save",
+        "/tmp/deathward-d05-cli-04egw5oh/accepted.save",
+        "--balance-preset",
+        "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+      ],
+      "exit_code": 0,
+      "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 revision=eee65615d7a2d499 profile=custom",
+      "resolved": {
+        "player_speed": 1,
+        "room_size_scale": 1.1,
+        "room_min_half_tiles": 7,
+        "room_max_half_tiles": 9,
+        "route_length_scale": 0.26,
+        "default_zoom_percent": 165,
+        "tears_per_second": 1.9272734,
+        "shot_speed": 0.9,
+        "range_tiles": 6.5,
+        "gaper_movement_multiplier": 1,
+        "spider_movement_multiplier": 1
+      }
+    },
+    {
+      "case": "custom-v7",
+      "command": [
+        "build/deathward",
+        "--smoke",
+        "--scene",
+        "empty",
+        "--frames",
+        "3",
+        "--mute",
+        "--seed",
+        "0",
+        "--save",
+        "/tmp/deathward-d05-cli-04egw5oh/custom.save",
+        "--balance-preset",
+        "artifacts/d05-spider-preset.json"
+      ],
+      "exit_code": 0,
+      "balance": "BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=0.65 revision=17ca0367f65c67b3 profile=custom",
+      "resolved": {
+        "player_speed": 1,
+        "room_size_scale": 1.2,
+        "room_min_half_tiles": 7,
+        "room_max_half_tiles": 9,
+        "route_length_scale": 0.26,
+        "default_zoom_percent": 165,
+        "tears_per_second": 1.9272734,
+        "shot_speed": 0.9,
+        "range_tiles": 6.5,
+        "gaper_movement_multiplier": 1,
+        "spider_movement_multiplier": 0.65
+      }
+    },
+    {
+      "case": "remembered-v7",
+      "command": [
+        "build/deathward",
+        "--smoke",
+        "--scene",
+        "empty",
+        "--frames",
+        "3",
+        "--mute",
+        "--seed",
+        "0",
+        "--save",
+        "/tmp/deathward-d05-cli-04egw5oh/custom.save"
+      ],
+      "exit_code": 0,
+      "balance": "BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=0.65 revision=17ca0367f65c67b3 profile=custom",
+      "resolved": {
+        "player_speed": 1,
+        "room_size_scale": 1.2,
+        "room_min_half_tiles": 7,
+        "room_max_half_tiles": 9,
+        "route_length_scale": 0.26,
+        "default_zoom_percent": 165,
+        "tears_per_second": 1.9272734,
+        "shot_speed": 0.9,
+        "range_tiles": 6.5,
+        "gaper_movement_multiplier": 1,
+        "spider_movement_multiplier": 0.65
+      }
+    }
+  ],
+  "external_export_sha256_before": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "external_export_sha256_after": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "external_export_unchanged": true
+}
