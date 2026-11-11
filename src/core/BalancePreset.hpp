@@ -16,6 +16,8 @@ struct BalancePreset {
     static constexpr float MinPooterMovement=.1f, MaxPooterMovement=2, MinPooterShotSpeed=.1f, MaxPooterShotSpeed=2, MinPooterInterval=.25f, MaxPooterInterval=2;
     static constexpr float ReferenceDamage=3.5f, MinDamage=.1f, MaxDamage=50;
     static constexpr float ReferenceRegularHealth=1, MinRegularHealth=.05f, MaxRegularHealth=4;
+    static constexpr float MinHeartAppearanceSpeed=.25f, MaxHeartAppearanceSpeed=4;
+    static constexpr float ReferenceLuck=0, MinLuck=-3, MaxLuck=20;
     float playerSpeed = ReferenceSpeed;
     std::string mechanicsFingerprint;
     float roomSizeScale = 1;
@@ -27,7 +29,12 @@ struct BalancePreset {
     float spiderMovementMultiplier = ReferenceSpiderMovement;
     float pooterMovementMultiplier=1, pooterShotSpeedMultiplier=1, pooterAttackIntervalMultiplier=1;
     float playerDamage=ReferenceDamage, regularHealthMultiplier=ReferenceRegularHealth;
-    bool custom() const { return playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
+    bool sourceCombatRoom = true; // First-floor recorded formation; staged map setting.
+    bool redHeartClearRewards=true;
+    float playerLuck=ReferenceLuck;
+    float redHeartAppearanceSpeed=1;
+    int roomHeartLayouts=1; // Staged: 0 off, 1 source heart layers, 2 full/half test pair.
+    bool custom() const { return roomHeartLayouts!=1 || redHeartAppearanceSpeed!=1 || !redHeartClearRewards || playerLuck!=ReferenceLuck || !sourceCombatRoom || playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

@@ -1,0 +1,4 @@
+HEART seed=69 room=3 subtype=1 healed=2
+HEART seed=1 room=2 subtype=2 healed=1
+HEART seed=355 room=3 subtype=5 healed=4
+PASS capacity/backpressure, room ownership, committed edits, no retroactive rewards, unsupported families, Luck and floor/config boundaries

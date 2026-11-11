@@ -1,0 +1,21 @@
+{
+  "pid": 754800,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "69",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d08/campaign.save",
+    "--balance-preset",
+    "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/first-floor-d08/interactive.log",
+  "seed": 69,
+  "room_displayed": 3,
+  "normal_damage": true,
+  "active_enemy_ai": true,
+  "source_template": "1.47.0",
+  "human_verdict": "pending"
+}

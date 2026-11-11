@@ -1,0 +1,18 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start  60: heart_gameplay
+1/6 Test  #60: heart_gameplay ...................   Passed    3.17 sec
+    Start  63: native_player_health
+2/6 Test  #63: native_player_health .............   Passed    0.00 sec
+    Start 131: balance_preset_contract
+3/6 Test #131: balance_preset_contract ..........   Passed    0.45 sec
+    Start 137: red_heart_reward_reference
+4/6 Test #137: red_heart_reward_reference .......   Passed    0.01 sec
+    Start 138: red_heart_reward_gameplay
+5/6 Test #138: red_heart_reward_gameplay ........   Passed    3.09 sec
+    Start 139: source_combat_room
+6/6 Test #139: source_combat_room ...............   Passed    9.59 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  16.32 sec

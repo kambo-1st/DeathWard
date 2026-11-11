@@ -1056,10 +1056,23 @@ void Renderer::drawWorld(const Simulation &run, const Camera3D &camera, bool col
         default:break;
         }
         auto point=pickup.position;point.y=.55f+.08f*std::sin(float(run.stats.duration)*3);
-        shadow(point,.4f);
-        DrawSphere(add(point,{-.14f,.08f,0}),.22f,color);
-        DrawSphere(add(point,{.14f,.08f,0}),.22f,color);
-        DrawCubeV(add(point,{0,-.1f,0}),{.36f,.35f,.25f},color);
+        float scale=1;
+        if(pickup.timing.phase==RedHeartTiming::Phase::Appear) {
+            const float descent=1-std::min(1.f,pickup.timing.frame/RedHeartTiming::DropFrame);
+            point.y+=1.2f*descent; // Canyon presentation; native sprite art is not imported.
+        } else if(pickup.timing.phase==RedHeartTiming::Phase::Collect) {
+            const float progress=pickup.timing.frame/RedHeartTiming::CollectFrames;
+            point.y+=progress*.6f;scale=1-progress;color=ColorAlpha(color,scale);
+        }
+        shadow(point,.4f*scale);
+        const auto heart=[&](Vector3 at,bool half) {
+            DrawSphere(add(at,{-.14f*scale,.08f*scale,0}),.22f*scale,color);
+            if(!half)DrawSphere(add(at,{.14f*scale,.08f*scale,0}),.22f*scale,color);
+            DrawCubeV(add(at,{half?-.09f*scale:0.f,-.1f*scale,0}),{(half?.18f:.36f)*scale,.35f*scale,.25f*scale},color);
+        };
+        if(pickup.kind==HeartKind::Red&&pickup.amount==4) {
+            heart(add(point,{-.28f,0,0}),false);heart(add(point,{.28f,0,.22f}),false);
+        } else heart(point,pickup.kind==HeartKind::Red&&pickup.amount==1);
     }
     for(const auto &fly:run.blueFlies) {
         DrawSphere(fly.position,.14f,{78,141,205,255});
@@ -2178,7 +2191,8 @@ Action Renderer::balancePanel(const Game &game) {
     panel(0,0,1280,800,{8,12,16,235});panel(170,60,940,710,Panel);
     text("EXPEDITION TUNING",205,86,30,Gold);
     text(game.balanceDraft.custom()?"CUSTOM PRESET":"REFERENCE / PARTIAL",800,96,15,Teal);
-    if(button(Action::BalanceWorldTab,"MAP / MOVEMENT / VIEW",205,128,420,30,!game.balanceShootingOpen&&!game.balanceEnemiesOpen&&!game.balanceCombatOpen))return Action::BalanceWorldTab;
+    if(button(Action::BalanceWorldTab,"MAP / MOVEMENT / VIEW",205,128,300,30,!game.balanceShootingOpen&&!game.balanceEnemiesOpen&&!game.balanceCombatOpen&&!game.balanceRewardsOpen))return Action::BalanceWorldTab;
+    if(button(Action::BalanceRewardsTab,"REWARDS",525,128,100,30,game.balanceRewardsOpen))return Action::BalanceRewardsTab;
     if(button(Action::BalanceShootingTab,"SHOOTING",645,128,130,30,game.balanceShootingOpen))return Action::BalanceShootingTab;
     if(button(Action::BalanceCombatTab,"COMBAT",795,128,90,30,game.balanceCombatOpen))return Action::BalanceCombatTab;
     if(button(Action::BalanceEnemiesTab,"ENEMIES",905,128,170,30,game.balanceEnemiesOpen))return Action::BalanceEnemiesTab;
@@ -2186,7 +2200,47 @@ Action Renderer::balancePanel(const Game &game) {
         if(button(Action::BalanceChasersTab,"GAPER / SPIDER",645,175,240,28,!game.balancePooterOpen))return Action::BalanceChasersTab;
         if(button(Action::BalancePooterTab,"POOTER",905,175,170,28,game.balancePooterOpen))return Action::BalancePooterTab;
     }
-    if(game.balanceCombatOpen) {
+    if(game.balanceRewardsOpen) {
+        if(button(Action::BalanceClearHeartsTab,"AFTER CLEAR",650,175,200,28,!game.balanceRoomHeartsOpen))return Action::BalanceClearHeartsTab;
+        if(button(Action::BalanceRoomHeartsTab,"ROOM LAYOUTS",875,175,200,28,game.balanceRoomHeartsOpen))return Action::BalanceRoomHeartsTab;
+        if(game.balanceRoomHeartsOpen) {
+            const int mode=game.balanceDraft.roomHeartLayouts;
+            text("HEARTS IN ROOM LAYOUTS",205,184,22,Gold);
+            text("Already present on entry. Full hearts heal 2 halves; half hearts heal 1.",205,221,14,Paper);
+            if(button(Action::RoomHeartsOff,"OFF",205,250,150,40,mode==0))return Action::RoomHeartsOff;
+            if(button(Action::RoomHeartsSource,"SOURCE LAYOUTS",375,250,300,40,mode==1))return Action::RoomHeartsSource;
+            if(button(Action::RoomHeartsTest,"FULL + HALF TEST",695,250,380,40,mode==2))return Action::RoomHeartsTest;
+            text("Source layouts: some rooms contain hearts; many contain none.",205,312,14,Muted);
+            text("Full + half test: puts both in one nearby room. This is a testing override.",205,338,14,Muted);
+            text("Opening floor only. Room-clear rewards keep their separate settings.",205,364,14,Teal);
+            std::string locations;
+            if(game.run)for(int i=0;i<game.run->arena.roomCount();++i) {
+                if(std::any_of(game.run->heartPickups.begin(),game.run->heartPickups.end(),[&](const auto &h){return h.placedInLayout&&h.room==i;}))
+                    locations+=(locations.empty()?"":", ")+std::to_string(i+1);
+            }
+            text(locations.empty()?"Current floor: no uncollected layout hearts.":"Current floor: layout hearts in room(s) "+locations,205,395,14,Paper);
+            if(button(Action::ApplyMapChanges,game.hasPendingMapChanges()?"APPLY MAP CHANGES":"MAP SETTINGS APPLIED",205,427,420,40,game.hasPendingMapChanges()))return Action::ApplyMapChanges;
+            text("Apply resets floor encounters/pickups; keeps your player and build.",205,480,13,Muted);
+        } else {
+        const auto &p=game.balancePreset;
+        text("RED HEARTS AFTER ROOM CLEAR",205,184,22,Gold);
+        if(button(Action::ToggleRedHeartRewards,p.redHeartClearRewards?"ENABLED":"DISABLED",205,224,300,40))return Action::ToggleRedHeartRewards;
+        text("Applies to future first clears on the opening floor.",535,238,14,Teal);
+        text("LUCK",205,300,18,Paper);text(decimal(p.playerLuck),400,290,28,Paper);
+        if(button(Action::RewardLuckDown,"- 1",650,284,130,40))return Action::RewardLuckDown;
+        if(button(Action::RewardLuckUp,"+ 1",795,284,130,40))return Action::RewardLuckUp;
+        text("Luck affects future reward rolls (source range 0-10). Existing rolls stay fixed.",205,338,13,Muted);
+        text("APPEAR SPEED",205,379,18,Paper);text(decimal(p.redHeartAppearanceSpeed)+"x",465,371,24,Paper);
+        if(button(Action::HeartAppearanceDown,"- 0.05",650,363,130,40))return Action::HeartAppearanceDown;
+        if(button(Action::HeartAppearanceUp,"+ 0.05",795,363,130,40))return Action::HeartAppearanceUp;
+        text("New hearts only. Base: 1x; faster appearance makes them collectible sooner.",205,422,13,Teal);
+        text("Full / half / double red hearts. Other reward families are still pending.",205,445,13,Muted);
+        if(button(Action::ResetRewardLuck,"RESET LUCK",205,465,250,36))return Action::ResetRewardLuck;
+        if(button(Action::ResetHeartAppearance,"RESET APPEAR SPEED",475,465,300,36))return Action::ResetHeartAppearance;
+        const auto next=game.nextBalancePreset.value_or(BalancePreset{});
+        text("Next: Luck "+decimal(next.playerLuck)+" / appear "+decimal(next.redHeartAppearanceSpeed)+"x",795,478,12,Teal);
+        }
+    } else if(game.balanceCombatOpen) {
         const auto &p=game.balancePreset;
         text("DAMAGE AND ENEMY HEALTH",205,185,22,Gold);
         text("DAMAGE",205,238,18,Paper);text(decimal(p.playerDamage),450,230,28,Paper);
@@ -2279,14 +2333,11 @@ Action Renderer::balancePanel(const Game &game) {
              game.hasPendingMapChanges()?Gold:Teal);
         text(game.run?"Apply regenerates this floor for testing: encounters/pickups reset; player/build retained.":
                      "Apply saves map settings before generation. Range is before room size %.",205,441,12,Muted);
-        if(game.run) {
-            const auto &run=*game.run;const auto &s=run.player.attributes;
-            const auto shot=primaryPlayerAttack(run,run.player.shotDamage,run.player.nextRound==6);
-            text("Health: "+decimal(run.player.totalHealth())+" half-hearts",205,463,13,Paper);
-            text("Next damage: "+decimal(shot.damage)+" / source 3.50",510,463,13,Paper);
-            text("Tears: "+decimal(1/primaryCadence(run))+"/s",900,463,13,Paper);
-            text("Range: "+decimal(s.rangeTiles)+" tiles / adapted    Shot Speed: "+decimal(s.shotSpeed)+" / adapted    Luck: "+decimal(s.luck),205,483,12,Muted);
-        }
+        if(button(Action::ToggleSourceCombatRoom,game.balanceDraft.sourceCombatRoom?"SOURCE COMBAT ROOM: ON":"SOURCE COMBAT ROOM: OFF",205,462,380,34))return Action::ToggleSourceCombatRoom;
+        std::string sourceRoom="Opening floor / two Gapers / pending until Apply";
+        if(game.run)for(size_t i=0;i<game.run->arena.rooms.size();++i)
+            if(game.run->arena.rooms[i].sourceCombatTemplate>=0)sourceRoom="Active: room "+std::to_string(i+1)+" / two Gapers";
+        text(sourceRoom,610,474,13,Teal);
     } else {
         const auto &preset=game.balancePreset;
         text("TEARS",205,183,18,Gold);text(decimal(preset.tearsPerSecond)+" /s",400,174,28,Paper);

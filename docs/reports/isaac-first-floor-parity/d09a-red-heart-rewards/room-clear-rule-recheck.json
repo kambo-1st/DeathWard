@@ -1,0 +1,31 @@
+{
+  "target": "installed The Binding of Isaac: Repentance 1.7.9b",
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "method": "Fresh read-only isolated native execution using NativeAwards from preserved pre-revert archive; installed EXE mapped into Unicorn; original selector, RNG and game queries execute with explicit ordinary empty-inventory fixture inputs. No installed file/process writes.",
+  "natural_clear_callsite": "0x7ae398 -> 0x7b8b10",
+  "ordinary_selector": "0x7b82b0",
+  "selector_cases_reexecuted": 2196,
+  "exact_variants_and_rng_endpoints_match": true,
+  "heart_outcomes_in_boundary_biased_matrix": 357,
+  "matrix_is_frequency_estimate": false,
+  "cpp_reference_check": "PASS 2196 native award choices/RNG endpoints and 1036 heart subtype choices",
+  "baseline_scope": "Normal, ordinary Isaac, Luck0, no reward-modifying inventory; bands before replacement and subtype resolution",
+  "initial_family_percentages": {
+    "none": 22,
+    "card_pill_trinket": 8,
+    "coin": 15,
+    "heart": 15,
+    "key": 20,
+    "bomb": 15,
+    "chest": 5
+  },
+  "public_cross_check": "https://bindingofisaacrebirth.wiki.gg/wiki/Room_Clear_Awards",
+  "gameplay_changes": false,
+  "full_native_acceptance": false,
+  "remaining": [
+    "Preplaced room hearts",
+    "Other heart outcomes and eligible producers",
+    "Complete reward families and modifiers",
+    "Native seed, placement, physical lifecycle and matched live encounter acceptance"
+  ]
+}

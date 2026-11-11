@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start   8: expedition_destruction
+1/9 Test   #8: expedition_destruction ...........   Passed   71.96 sec
+    Start  10: expedition
+2/9 Test  #10: expedition .......................   Passed   20.68 sec
+    Start  20: canyon_rivers
+3/9 Test  #20: canyon_rivers ....................   Passed   22.67 sec
+    Start 131: balance_preset_contract
+4/9 Test #131: balance_preset_contract ..........   Passed    0.39 sec
+    Start 137: source_combat_room
+5/9 Test #137: source_combat_room ...............   Passed    9.47 sec
+    Start 138: combat_balance_gameplay
+6/9 Test #138: combat_balance_gameplay ..........   Passed    8.03 sec
+    Start 139: gaper_gameplay
+7/9 Test #139: gaper_gameplay ...................   Passed    1.36 sec
+    Start 140: spider_gameplay
+8/9 Test #140: spider_gameplay ..................   Passed    2.40 sec
+    Start 141: pooter_gameplay
+9/9 Test #141: pooter_gameplay ..................   Passed   15.04 sec
+
+100% tests passed, 0 tests failed out of 9
+
+Total Test time (real) = 152.01 sec

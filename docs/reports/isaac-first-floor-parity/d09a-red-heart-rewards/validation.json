@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "recorded_at_utc": "2026-11-11T20:38:46.148123+00:00",
+  "target": "Repentance 1.7.9b ordinary Normal room, bounded red-heart outcome slice",
+  "native_selector_cases": 2196,
+  "native_heart_resolver_cases": 1036,
+  "source_evidence": "source-evidence.json",
+  "focused_suites_passed": 6,
+  "suites": [
+    "red_heart_reward_reference",
+    "red_heart_reward_gameplay",
+    "source_combat_room",
+    "balance_preset_contract",
+    "heart_gameplay",
+    "native_player_health"
+  ],
+  "actual_game_ui_modes_passed": 5,
+  "actual_game_natural_mouse_fire_reward_verified": true,
+  "cli_cases_passed": 4,
+  "regression_log": "regression.log",
+  "ui_logs": [
+    "input-tests.log",
+    "ui-regressions.log"
+  ],
+  "cli_log": "cli-verification.json",
+  "user_export_and_backup_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": "pending",
+  "full_native_seed_profile_actor_physics_acceptance": false,
+  "next_proposed_delivery": "D09b ordinary coins/reward-drop policy; not selected or started",
+  "commit_state": "D08 and D09a remain in working tree; latest committed delivery D07 56743a72"
+}

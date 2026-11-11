@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "recorded_at_utc": "2026-11-11T20:15:19.771297+00:00",
+  "source_template": "Basement normal 1.47.0",
+  "source_extraction": "source-template.json",
+  "generation_cases": 28,
+  "real_simulation_encounter_loop": true,
+  "game_ui_modes_passed": 5,
+  "cli_cases_passed": 4,
+  "focused_suites_passed": 9,
+  "regression_log": "regression.log",
+  "ui_logs": [
+    "input-tests.log",
+    "ui-regressions.log"
+  ],
+  "cli_log": "cli-verification.json",
+  "build_targets": [
+    "deathward",
+    "deathward_input_tests",
+    "deathward_source_combat_room_tests"
+  ],
+  "retained_user_export_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "human_acceptance": "pending",
+  "full_native_geometry_pressure_acceptance": false,
+  "next_proposed_delivery": "D09a ordinary heart pickups/reward eligibility; not selected or started"
+}

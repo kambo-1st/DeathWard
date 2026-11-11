@@ -113,6 +113,13 @@ enum class Action {
     RouteLengthDown,
     RouteLengthUp,
     ApplyMapChanges,
+    ToggleSourceCombatRoom,
+    BalanceRewardsTab, BalanceRoomHeartsTab, BalanceClearHeartsTab,
+    RoomHeartsOff, RoomHeartsSource, RoomHeartsTest,
+    ToggleRedHeartRewards,
+    RewardLuckDown,
+    RewardLuckUp,
+    ResetRewardLuck, HeartAppearanceDown, HeartAppearanceUp, ResetHeartAppearance,
     DefaultZoomDown,
     DefaultZoomUp,
     DefaultZoomCurrent,
@@ -153,7 +160,7 @@ class Game {
     bool controlsOpen = false;
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
-    bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false;
+    bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false, balanceRewardsOpen = false, balanceRoomHeartsOpen = false;
     BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;
     std::filesystem::path balanceDirectory;
@@ -170,6 +177,10 @@ class Game {
     void setRouteLength(float scale);
     bool hasPendingMapChanges() const;
     void applyMapChanges();
+    void setSourceCombatRoom(bool enabled);
+    void setRoomHeartLayouts(int mode);
+    void setRedHeartAppearanceSpeed(float speed);
+    void setRedHeartRewards(bool enabled,float luck);
     void setRoomSizeRange(int minimum, int maximum);
     std::pair<int,int> roomSizeRange() const;
     void resetBalance();

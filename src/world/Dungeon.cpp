@@ -1,4 +1,5 @@
 #include "world/Dungeon.hpp"
+#include "world/SourceCombatRoom.hpp"
 #include <map>
 #include <queue>
 
@@ -81,7 +82,7 @@ bool connectedFloor(const Arena &arena, Box bounds, float radius) {
 } // namespace
 
 Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tutorial, StoryRoom story,
-             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile)
+             int requestedRooms, FloorDimensions dimensions, FloorProfile floorProfile, bool sourceCombatRoom)
     : visualSeed(seed), theme(missionTheme), profile(floorProfile) {
     if(dimensions.minHalfTiles<5||dimensions.maxHalfTiles<dimensions.minHalfTiles||dimensions.maxHalfTiles>10||
        dimensions.minGapTiles<4||dimensions.maxGapTiles<dimensions.minGapTiles||dimensions.maxGapTiles>16)
@@ -463,6 +464,17 @@ Arena::Arena(uint64_t seed, MissionTheme missionTheme, bool canyonRiver, bool tu
             exit=rooms.back().exit=add(rooms.back().center,mul(unit(sub(rooms.back().center,rooms.back().objective)),2.f));
     }
     if(profile.active())allocateServices();
+    if(sourceCombatRoom&&!tutorial&&theme==MissionTheme::Canyon&&profile.active()&&profile.floor==0) {
+        // Keep story, key, shop and service roles. Prefer the earliest available combat room.
+        int chosen=-1;
+        for(int i=1;i<roomCount()-1;++i) {
+            const auto &r=rooms[size_t(i)];
+            if(r.kind!=RoomKind::Combat||r.story!=StoryRoom::None||
+               std::any_of(keys.begin(),keys.end(),[&](const auto &k){return k.room==i;}))continue;
+            if(chosen<0||r.depth<rooms[size_t(chosen)].depth)chosen=i;
+        }
+        if(chosen>=0)rooms[size_t(chosen)].sourceCombatTemplate=BasementGaperTemplate;
+    }
     rebuildWalls();
     if (theme == MissionTheme::Canyon)
         buildCanyon(*this, canyonRiver);

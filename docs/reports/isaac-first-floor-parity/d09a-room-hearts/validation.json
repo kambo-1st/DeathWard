@@ -1,0 +1,47 @@
+{
+  "status": "implemented and developer-verified; human/native acceptance pending",
+  "selected_scope": "Full and half red hearts already placed in opening-floor layouts",
+  "source_stb_sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "source_templates": 433,
+  "heart_slots": 23,
+  "weighted_choices": 28,
+  "source_extraction_check_passed": true,
+  "suites_passed": [
+    "room_heart_layouts",
+    "balance_preset_contract",
+    "source_combat_room",
+    "red_heart_reward_gameplay",
+    "red_heart_reward_reference",
+    "red_heart_timing_reference"
+  ],
+  "actual_game_ui_modes_passed": [
+    "--room-hearts-only",
+    "--red-heart-rewards-only"
+  ],
+  "size_seed_placement_cases": 12,
+  "bounded_source_witness_scan_seeds": 37,
+  "source_scan_is_native_frequency_measurement": false,
+  "cli_cases_passed": 5,
+  "accepted_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "source_layout_mode_default": 1,
+  "test_pair_mode_is_override": true,
+  "normal_handoff": {
+    "seed": 33,
+    "room_displayed": 6,
+    "layout_template": 270,
+    "heart_subtypes": [
+      1,
+      2
+    ]
+  },
+  "full_native_acceptance": false,
+  "human_acceptance": false,
+  "coins_selected": false,
+  "remaining": [
+    "Human full/half layout-heart review",
+    "Native floor/template eligibility and selection frequency",
+    "Native descriptor seeds, source grid obstacles and physical placement/lifecycle",
+    "Other heart variants and eligible producers",
+    "Matched native encounter and complete first-floor economy"
+  ]
+}

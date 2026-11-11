@@ -78,7 +78,8 @@ void planBoundaryRiver(const Arena &arena, CanyonTerrain &field) {
         std::vector<int> rooms;
         for (int i = 0; i < int(arena.rooms.size()); ++i)
             if (dot(arena.rooms[size_t(i)].center, outward) >= outer - .1f &&
-                !(arena.profile.active()&&arena.rooms[size_t(i)].kind==RoomKind::Boss))
+                !(arena.profile.active()&&arena.rooms[size_t(i)].kind==RoomKind::Boss)&&
+                arena.rooms[size_t(i)].sourceCombatTemplate<0)
                 rooms.push_back(i);
         if(rooms.empty())continue;
         std::stable_sort(rooms.begin(), rooms.end(), [&](int a, int b) {
@@ -126,6 +127,10 @@ void planInteriorRiver(const Arena &arena, CanyonTerrain &field) {
     // The entrance has at least two ordinary exits. Following two existing links
     // gives the trial a continuous three-basin region, visible on arrival.
     auto links = arena.rooms[0].passages;
+    std::erase_if(links,[&](int index) {
+        const auto &p=arena.passages[size_t(index)];
+        return arena.rooms[size_t(p.rooms[0]==0?p.rooms[1]:p.rooms[0])].sourceCombatTemplate>=0;
+    });
     if (links.size() < 2)
         return;
     for (size_t i = links.size(); i > 1; --i)

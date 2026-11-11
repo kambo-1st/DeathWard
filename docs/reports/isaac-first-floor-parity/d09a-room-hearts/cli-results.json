@@ -1,0 +1,32 @@
+[
+  {
+    "name": "v5",
+    "exit_code": 0,
+    "room_hearts": 1,
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=83ebacd3f3542e8d profile=custom"
+  },
+  {
+    "name": "v12",
+    "exit_code": 0,
+    "room_hearts": 1,
+    "balance": "BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=0.5 luck=5 room_hearts=1 source_room=1 revision=528d574afc0079a8 profile=custom"
+  },
+  {
+    "name": "v13-pair",
+    "exit_code": 0,
+    "room_hearts": 2,
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=2 source_room=1 revision=497606f1ea2d1dd8 profile=custom"
+  },
+  {
+    "name": "remembered",
+    "exit_code": 0,
+    "room_hearts": 2,
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=2 source_room=1 revision=497606f1ea2d1dd8 profile=custom"
+  },
+  {
+    "name": "off",
+    "exit_code": 0,
+    "room_hearts": 0,
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=0 source_room=1 revision=d1c4feb71db8f5bc profile=custom"
+  }
+]

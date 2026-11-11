@@ -1,0 +1,21 @@
+{
+  "pid": 759765,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "69",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d09a/campaign.save",
+    "--balance-preset",
+    "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/first-floor-d09a/interactive.log",
+  "seed": 69,
+  "room_displayed": 3,
+  "normal_damage": true,
+  "active_enemy_ai": true,
+  "expected_natural_reward": "Full red heart, subtype 1, at Luck 0",
+  "human_verdict": "pending"
+}

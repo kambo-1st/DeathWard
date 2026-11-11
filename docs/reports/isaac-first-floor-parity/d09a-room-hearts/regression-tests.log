@@ -1,0 +1,10 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+    Start 140: red_heart_reward_gameplay
+1/2 Test #140: red_heart_reward_gameplay ........   Passed    8.93 sec
+    Start 141: source_combat_room
+2/2 Test #141: source_combat_room ...............   Passed    9.80 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  18.74 sec

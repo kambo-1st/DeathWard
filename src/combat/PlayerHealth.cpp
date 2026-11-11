@@ -116,11 +116,21 @@ bool Simulation::spawnHeartPickup(HeartKind kind,Vector3 position,int amount) {
     const int index=arena.roomAt(position);if(index<0)return false;
     heartPickups.push_back({position,kind,amount,index});checkpointNeeded=true;return true;
 }
-void Simulation::updateHeartPickups() {
+void Simulation::updateHeartPickups(float dt) {
     flushPlayerHealthEvents();
-    std::erase_if(heartPickups,[&](const auto &pickup) {
-        return pickup.room==room&&distance(player.position,pickup.position)<1&&
-            arena.clear(player.position,pickup.position,.1f)&&collectHeart(pickup.kind,pickup.amount);
+    std::erase_if(heartPickups,[&](auto &pickup) {
+        if(pickup.room!=room)return false;
+        pickup.timing.advance(dt);
+        if(pickup.timing.phase==RedHeartTiming::Phase::Gone)return true;
+        if(!pickup.timing.collectible()||distance(player.position,pickup.position)>=1||
+           !arena.clear(player.position,pickup.position,.1f)||!collectHeart(pickup.kind,pickup.amount))return false;
+        // Health changes once at admission; the source-duration collection
+        // presentation cannot pay again, including after leaving/re-entering.
+        if(pickup.sourceSubtype){pickup.timing.collect();return false;}
+        return true; // Existing directly placed typed-health fixtures stay idle.
     });
+    // A deferred actor is born after this update, with no retroactive age.
+    deliverRoomHearts(room);
+    deliverRedHeartClearAward();
 }
 } // namespace dw

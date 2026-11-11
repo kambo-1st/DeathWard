@@ -1,0 +1,35 @@
+
+MODE --balance-only
+BALANCE speed=1 room_size=1 routes=1 zoom=160 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=4b4cb3d859e50512 profile=reference-partial
+BALANCE speed=0.8 room_size=1 routes=1 zoom=145 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=57e161bbd2b8e7b4 profile=custom
+BALANCE speed=0.8 room_size=1 routes=1 zoom=145 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=57e161bbd2b8e7b4 profile=custom
+BALANCE speed=0.8 room_size=1.25 routes=0.65 zoom=125 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=cf56f0a52f194bcd profile=custom
+BALANCE speed=0.8 room_size=1.25 routes=0.65 zoom=125 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=cf56f0a52f194bcd profile=custom
+BALANCE speed=1 room_size=1.25 routes=0.65 zoom=125 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=8609af621541afd3 profile=custom
+BALANCE speed=1 room_size=1 routes=1 zoom=160 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=4b4cb3d859e50512 profile=reference-partial
+BALANCE speed=1 room_size=1.1 routes=1.5 zoom=175 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=9cef4ef031a53925 profile=custom
+PASS default zoom controls/export/load/retry, staged map Apply and route persistence; D01 actual Game/Renderer controls, live movement, export/load/remember, invalid-load isolation, state preservation, death/summary retry and floor/session persistence
+EXIT 0
+
+MODE --shooting-balance-only
+BALANCE speed=1 room_size=1.1 routes=0.3 zoom=165 tears=2.72727 shot_speed=1 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=e57de8831819564b profile=custom
+BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=e4a902ab642acdc8 profile=custom
+BALANCE speed=0.9 room_size=1.2 routes=0.3 zoom=165 tears=4 shot_speed=1.5 range=8 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=e4a902ab642acdc8 profile=custom
+PASS D03 actual Game/Renderer tabs, buttons and keyboard; independent shooting, old bullets/cooldown, owned modifiers, invalid-load isolation, export/load, Apply, floor/retry/fresh-session persistence
+EXIT 0
+
+MODE --combat-balance-only
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=1 revision=d3171d66bdd65644 profile=custom
+D07 natural Gaper seed=69 room=2 body_hits=3
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=7 regular_hp=0.75 source_room=1 revision=5831b1a0585bd1b7 profile=custom
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=7 regular_hp=0.75 source_room=1 revision=5831b1a0585bd1b7 profile=custom
+PASS D07 main Game natural hit count, mouse/keyboard controls, proportional living HP, birth/wait retention, reset/export/load/invalid isolation and map/floor/retry/fresh-session persistence
+EXIT 0
+
+MODE --pooter-balance-only
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 source_room=0 revision=9e53b4cc469339f4 profile=custom
+D06 natural seed=69 room=2 shots=6 travelled=1.03576
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=0.5 pooter_shot=0.65 pooter_delay=1.5 damage=3.5 regular_hp=1 source_room=0 revision=e009850f0a556790 profile=custom
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=0.5 pooter_shot=0.65 pooter_delay=1.5 damage=3.5 regular_hp=1 source_room=0 revision=e009850f0a556790 profile=custom
+PASS D06 main Game natural encounter, UI controls, safe attack edits, export/load/rejection and map/floor/retry/fresh-session persistence
+EXIT 0

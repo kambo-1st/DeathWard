@@ -212,7 +212,9 @@ void Game::launch(bool freeMission) {
                                                   nextBalancePreset?nextBalancePreset->roomSizeScale:1,
                                                   nextBalancePreset?nextBalancePreset->roomMinHalfTiles:0,
                                                   nextBalancePreset?nextBalancePreset->roomMaxHalfTiles:0,
-                                                  nextBalancePreset?nextBalancePreset->routeLengthScale:1);
+                                                  nextBalancePreset?nextBalancePreset->routeLengthScale:1,
+                                                  nextBalancePreset?nextBalancePreset->sourceCombatRoom:true,
+                                                  nextBalancePreset?nextBalancePreset->roomHeartLayouts:1);
     startExpedition(std::move(candidate));
     if(search&&arrivalStage()==ArrivalStage::Trail)ArrivalQuest::advance(campaign,ArrivalStage::Trail);
     if(account&&arrivalStage()==ArrivalStage::RourkeTrail)ArrivalQuest::advance(campaign,ArrivalStage::RourkeTrail);
@@ -275,10 +277,23 @@ void Game::perform(Action action) {
             break;
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
-        case Action::BalanceWorldTab:balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceShootingTab:balanceShootingOpen=true;balanceEnemiesOpen=balanceCombatOpen=false;break;
-        case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
-        case Action::BalanceCombatTab:balanceCombatOpen=true;balanceShootingOpen=balanceEnemiesOpen=false;break;
+        case Action::BalanceWorldTab:balanceRewardsOpen=balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
+        case Action::BalanceShootingTab:balanceShootingOpen=true;balanceEnemiesOpen=balanceRewardsOpen=balanceCombatOpen=false;break;
+        case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=balanceRewardsOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceRewardsTab:balanceRewardsOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
+        case Action::BalanceRoomHeartsTab:balanceRoomHeartsOpen=true;break;
+        case Action::BalanceClearHeartsTab:balanceRoomHeartsOpen=false;break;
+        case Action::RoomHeartsOff:setRoomHeartLayouts(0);break;
+        case Action::RoomHeartsSource:setRoomHeartLayouts(1);break;
+        case Action::RoomHeartsTest:setRoomHeartLayouts(2);break;
+        case Action::ToggleRedHeartRewards:setRedHeartRewards(!balancePreset.redHeartClearRewards,balancePreset.playerLuck);break;
+        case Action::RewardLuckDown:case Action::RewardLuckUp:
+            setRedHeartRewards(balancePreset.redHeartClearRewards,std::clamp(balancePreset.playerLuck+(action==Action::RewardLuckUp?1.f:-1.f),BalancePreset::MinLuck,BalancePreset::MaxLuck));break;
+        case Action::HeartAppearanceDown:case Action::HeartAppearanceUp:
+            setRedHeartAppearanceSpeed(std::clamp(balancePreset.redHeartAppearanceSpeed+(action==Action::HeartAppearanceUp?.05f:-.05f),BalancePreset::MinHeartAppearanceSpeed,BalancePreset::MaxHeartAppearanceSpeed));break;
+        case Action::ResetHeartAppearance:setRedHeartAppearanceSpeed(1);break;
+        case Action::ResetRewardLuck:setRedHeartRewards(balancePreset.redHeartClearRewards,BalancePreset::ReferenceLuck);break;
+        case Action::BalanceCombatTab:balanceCombatOpen=true;balanceShootingOpen=balanceEnemiesOpen=balanceRewardsOpen=false;break;
         case Action::CombatDamageDown:case Action::CombatDamageUp:
             setCombatBalance(std::clamp(std::round((balancePreset.playerDamage+(action==Action::CombatDamageUp?.1f:-.1f))*10)/10,
                              BalancePreset::MinDamage,BalancePreset::MaxDamage),balancePreset.regularHealthMultiplier);break;
@@ -331,6 +346,7 @@ void Game::perform(Action action) {
             setRoomSize(std::clamp(std::round(balanceDraft.roomSizeScale*100+(action==Action::RoomSizeUp?1:-1))/100,.75f,1.5f));break;
         case Action::RouteLengthDown:case Action::RouteLengthUp:
             setRouteLength(std::clamp(std::round(balanceDraft.routeLengthScale*100+(action==Action::RouteLengthUp?1:-1))/100,.25f,2.f));break;
+        case Action::ToggleSourceCombatRoom:setSourceCombatRoom(!balanceDraft.sourceCombatRoom);break;
         case Action::ApplyMapChanges:applyMapChanges();break;
         case Action::DefaultZoomDown:case Action::DefaultZoomUp:
             setDefaultZoom(std::clamp(std::round(balancePreset.defaultZoomPercent)+(action==Action::DefaultZoomUp?1:-1),
@@ -837,9 +853,13 @@ Game::Menu Game::menuContext() const {
 std::vector<Action> Game::menuActions() const {
     const auto context=menuContext();
     if(context==Menu::Balance) {
-        std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceCombatTab,Action::BalanceEnemiesTab};
+        std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceCombatTab,Action::BalanceEnemiesTab,Action::BalanceRewardsTab};
         if(balanceEnemiesOpen){actions.push_back(Action::BalanceChasersTab);actions.push_back(Action::BalancePooterTab);}
-        const std::vector<Action> page=balanceCombatOpen?
+        const std::vector<Action> page=balanceRewardsOpen&&balanceRoomHeartsOpen?
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::RoomHeartsOff,Action::RoomHeartsSource,Action::RoomHeartsTest,Action::ApplyMapChanges}:
+            balanceRewardsOpen?
+            std::vector<Action>{Action::BalanceClearHeartsTab,Action::BalanceRoomHeartsTab,Action::ToggleRedHeartRewards,Action::RewardLuckDown,Action::RewardLuckUp,Action::ResetRewardLuck,Action::HeartAppearanceDown,Action::HeartAppearanceUp,Action::ResetHeartAppearance}:
+            balanceCombatOpen?
             std::vector<Action>{Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
             balanceEnemiesOpen&&balancePooterOpen?
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
@@ -849,7 +869,7 @@ std::vector<Action> Game::menuActions() const {
             std::vector<Action>{Action::TearsDown,Action::TearsUp,Action::ShotSpeedDown,Action::ShotSpeedUp,Action::RangeDown,Action::RangeUp,Action::ResetShooting}:
             std::vector<Action>{Action::SpeedDown,Action::SpeedUp,Action::DefaultZoomDown,Action::DefaultZoomUp,Action::DefaultZoomCurrent,Action::DefaultZoomReset,
                 Action::RoomSizeDown,Action::RoomSizeUp,Action::RoomMinDown,Action::RoomMinUp,Action::RoomMaxDown,Action::RoomMaxUp,Action::RoomRangeAuto,
-                Action::RouteLengthDown,Action::RouteLengthUp,Action::ApplyMapChanges,Action::ResetBalance};
+                Action::RouteLengthDown,Action::RouteLengthUp,Action::ApplyMapChanges,Action::ToggleSourceCombatRoom,Action::ResetBalance};
         actions.insert(actions.end(),page.begin(),page.end());
         actions.insert(actions.end(),{Action::ExportBalance,Action::LoadBalance,Action::RememberBalance,Action::EditBalancePath});
         return actions;

@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Implement selected D08 recorded source combat room in the main game; native actor/geometry/item/floor coverage remains open.",
+  "next_work": "Human preplaced full/half heart check, then propose matched native placement/collection comparison. Other heart outcomes/producers and coins remain unselected; native template selection/seed/grid/lifecycle acceptance open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-11",
-    "status": "D07 developer-verified and scoped playtest accepted; D08 selected next",
+    "status": "D07 committed; selected D09a preplaced full/half heart delivery enabled and developer-verified; human/native acceptance pending",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,7 +47,7 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "D08 recorded source combat room, explicitly selected",
+    "next_proposed_delivery": "Human preplaced-heart review, then matched native placement/collection comparison; coins remain unselected",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
@@ -58,14 +58,15 @@
       "D05",
       "D06",
       "D07",
-      "D08"
+      "D08",
+      "D09a"
     ],
-    "human_acceptance": "D02 workflow and scoped D03 accepted; D04/D05 positively acknowledged; D06 accepted after seed69 playtest and commit requested; full native acceptance remains open; D07 selected and awaiting human verdict; D07 accepted and commit requested",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/d07-damage-health/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/d07-damage-health/validation.json",
+    "human_acceptance": "D02 workflow, D03, D04/D05 acknowledgments and D06/D07/D08 scoped playtests accepted; D09a human verdict pending. Full native acceptance remains open. D09a producer positively acknowledged; new timing continuation awaits human review.",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/d09a-room-hearts/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/d09a-room-hearts/validation.json",
     "previous_committed_delivery": {
-      "id": "D04\u2013D06",
-      "commit": "50f44a47"
+      "id": "D07",
+      "commit": "56743a72"
     },
     "d03_scope": {
       "enabled": "independent live Tears/Shot Speed/Range controls, exact baseline reset, upgrade-aware display, schema-5 export/load/remember and schemas 1-4 migration",
@@ -76,7 +77,7 @@
       "damage_hp_changed": false,
       "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
     },
-    "implementation_checkpoint": "D07 source/tests/reports/acceptance in containing commit",
+    "implementation_checkpoint": "D08/D09a implementation in working tree; latest committed delivery D07 56743a72",
     "d04_scope": {
       "enemy": "10.1.0 ordinary Gaper",
       "status": "enabled, developer-verified and positively acknowledged",
@@ -151,7 +152,79 @@
       "boss_hp_changed": false,
       "full_native_acceptance": false,
       "report": "docs/reports/isaac-first-floor-parity/d07-damage-health/README.md",
-      "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d07-damage-health/human-acceptance.json"
+      "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d07-damage-health/human-acceptance.json",
+      "commit": "56743a72"
+    },
+    "d08_scope": {
+      "status": "enabled and scoped human playtest accepted; full native acceptance open",
+      "source_template": "Basement normal 1.47.0",
+      "roster": [
+        "10.1.0",
+        "10.1.0"
+      ],
+      "generation_cases": 28,
+      "schema": 10,
+      "handoff_seed": 69,
+      "handoff_room_displayed": 3,
+      "source_geometry_adapted": true,
+      "source_selection_policy_adapted": true,
+      "full_native_acceptance": false,
+      "report": "docs/reports/isaac-first-floor-parity/d08-source-room/README.md",
+      "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d08-source-room/human-acceptance.json"
+    },
+    "d09a_scope": {
+      "status": "ordinary red-heart producer enabled; developer checks pass; human review pending",
+      "source_heart_subtypes": [
+        1,
+        2,
+        5
+      ],
+      "healing_halves": [
+        2,
+        1,
+        4
+      ],
+      "luck_consumer": "ordinary first-clear selector, source clamp 0..10",
+      "default_luck": 0,
+      "schema": 11,
+      "native_selector_cases": 2196,
+      "native_heart_resolver_cases": 1036,
+      "source_seed_and_placement_adapted": true,
+      "full_native_acceptance": false,
+      "handoff_seed": 69,
+      "handoff_room_displayed": 3,
+      "report": "docs/reports/isaac-first-floor-parity/d09a-red-heart-rewards/README.md"
+    },
+    "d09a_timing_scope": {
+      "enabled": true,
+      "appearance_frames": 33,
+      "collection_gate_frame": 25,
+      "collection_frames": 12,
+      "adapter_hz": 30,
+      "native_gate_cases": 40,
+      "native_appearance_states": 2115,
+      "native_collection_cleanup_states": 48,
+      "preset_schema": 12,
+      "full_native_acceptance": false,
+      "human_review_pending": true
+    },
+    "d09a_room_hearts_scope": {
+      "enabled": true,
+      "selected_types": [
+        "full red",
+        "half red"
+      ],
+      "source_templates": 433,
+      "source_heart_stacks": 23,
+      "source_weighted_choices": 28,
+      "source_pool_is_full_native_floor_selection": false,
+      "normal_handoff_seed": 33,
+      "normal_handoff_room_displayed": 6,
+      "testing_pair_is_override": true,
+      "preset_schema": 13,
+      "map_edits_staged_until_apply": true,
+      "full_native_acceptance": false,
+      "human_review_pending": true
     }
   },
   "first_floor_requirements_checkpoint": {

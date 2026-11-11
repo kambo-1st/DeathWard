@@ -1,0 +1,42 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "target": "Repentance 1.7.9b, ordinary Isaac, Normal, no reward-modifying items/trinkets",
+  "preserved_evidence_sha256": {
+    "docs/reports/isaac-first-floor-parity/room-awards/native-awards.csv": "d89fab7250594fafd9d78d2a2cda770dd370d675787f511e990a7269fa9a6a09",
+    "docs/reports/isaac-first-floor-parity/room-awards/native-pickups.csv": "7d67dc16fef2fce8429856fa7b11ef7cd34910a2165c80d7f56127d1f9d7a3ac",
+    "docs/reports/isaac-first-floor-parity/room-awards/award_selector.asm": "f5132020448ccc277d64e378639d35e061b29b8f632e25306763790e3a9200c2",
+    "docs/reports/isaac-first-floor-parity/room-awards/award_spawn.asm": "cb0863174cd02cf6ce4814c432d8b708c69f821565478c797ba2a5d4a171aa70",
+    "docs/reports/isaac-first-floor-parity/room-awards/pickup_resolver.asm": "d6d157ab6e4b9a0caad127e78f62376f22769a09986067a70faa4ad6530627f1"
+  },
+  "source_red_quantities": {
+    "1": 2,
+    "2": 1,
+    "5": 4,
+    "9": 2
+  },
+  "enabled_subtypes": [
+    1,
+    2,
+    5
+  ],
+  "native_selector_cases": 2196,
+  "native_heart_resolver_cases": 1036,
+  "production_rare_heart_gates": {
+    "rotten": false,
+    "scared": false,
+    "halfSoul": false,
+    "bone": false,
+    "goldenHeart": false
+  },
+  "gate_scope": "Explicit represented reference inputs; not certification of a complete fresh-save or unlocked profile.",
+  "seed_adapter": "Independent SplitMix64 of DW floor seed xor 0x4845415254415744 xor ((room index+1)*0x9e3779b97f4a7c15), low 32 bits, zero maps to 1.",
+  "pickup_seed": "Next native 5/9/7 xorshift after ordinary selector; extra draw visible at 7b903a..7b9064.",
+  "placement": "Room center, then nearest reachable legal DW floor cell; source placement and actor birth/physics are not accepted.",
+  "recovery_archive_sha256": "42171909a523f0659e7899e9993ac6183f9fa04c942fd5d6d5c0c51719637be0",
+  "limits": [
+    "Live native floor/descriptor seed mapping and full spawn wrapper unaccepted.",
+    "Only ordinary opening-floor red-heart clear rewards enabled.",
+    "Other family/subtype decisions are retained as unsupported, not rerolled or converted.",
+    "Full appearance timing, collision/physics, modifier/unlock profile and complete reward/economy parity remain open."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "native_math": {
+    "path": "/mnt/c/Windows/SysWOW64/ucrtbase.dll",
+    "sha256": "e4f8f92eef00ff6a0c6d418af756a59d5a4b818d0d1de0d96cc193b4d6759432",
+    "image_base": "0x10000000",
+    "links": {
+      "floor": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06524",
+        "export": "0x10090de0"
+      },
+      "_libm_sse2_sin_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa0653c",
+        "export": "0x10093a60"
+      },
+      "_libm_sse2_pow_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06540",
+        "export": "0x10092be0"
+      },
+      "_libm_sse2_cos_precise": {
+        "contract": "api-ms-win-crt-math-l1-1-0.dll",
+        "iat": "0xa06568",
+        "export": "0x100905d0"
+      }
+    },
+    "calls": {
+      "_libm_sse2_cos_precise": 0,
+      "_libm_sse2_sin_precise": 0,
+      "_libm_sse2_pow_precise": 0,
+      "floor": 6867
+    },
+    "x87_control_word": "0x027f",
+    "mxcsr": "0x1f80",
+    "scope": "Original local x86 UCRT numeric instructions for finite ordinary inputs. Loader-style IAT resolution in emulated memory only; no host math or instruction substitutions. DLL initialization/OS error paths and live process loader selection are not claimed."
+  },
+  "gate_cases": 40,
+  "timeline_states": 2115,
+  "collection_states": 48,
+  "animation_metadata_sha256": "d227d9abc6bc63f9f80b60129bcc3a116e4b84ef9dcb453869cd9cc14850910d",
+  "windows": [
+    {
+      "name": "appearance_gate",
+      "start": "0x6bb8c5",
+      "end_exclusive": "0x6bba3b",
+      "sha256": "8ec4d96a553fe4b44d482e886f1a9ecfd73cc29b29c8ed6ae4f4764f7569ae11"
+    },
+    {
+      "name": "layer_update",
+      "start": "0x403d60",
+      "end_exclusive": "0x403e21",
+      "sha256": "9e5c57befaf51f4437d96b33395eb65be521afd7a09d435794b023b9c62d2440"
+    },
+    {
+      "name": "pickup_initial_counter",
+      "start": "0x6b706a",
+      "end_exclusive": "0x6b7074",
+      "sha256": "f254c35ccc5b1a4d982a4900e56f0d17f2b1799c6010b1ea76869abe5ce286a0"
+    },
+    {
+      "name": "pickup_initial_appearance",
+      "start": "0x6b7bf2",
+      "end_exclusive": "0x6b7c11",
+      "sha256": "3ac473053438732953a9f859fc219caf12279068dd22f39a934d9df857b4b4fa"
+    },
+    {
+      "name": "pickup_collection_tail",
+      "start": "0x6c25a2",
+      "end_exclusive": "0x6c25d6",
+      "sha256": "a1c54b643f63f1cd7491b6608782bc361a2b17c2b77787a737c6d00253a8f174"
+    },
+    {
+      "name": "pickup_update_order",
+      "start": "0x6bb274",
+      "end_exclusive": "0x6bb48a",
+      "sha256": "801d70d340974485df95425d06a3e554822d24e8351e6e87692e23f16fd7562e"
+    },
+    {
+      "name": "pickup_animation_cleanup",
+      "start": "0x6bb8a1",
+      "end_exclusive": "0x6bb8c5",
+      "sha256": "9755f0487e79aad6a80a73b726a1dbbab2517b561ee30a6f1752873a59283eda"
+    }
+  ],
+  "scope": "Original native layer frame/event advance and pickup appearance collision gate for variant10 with parsed installed full/half/double-heart metadata. Sound endpoint and Play(Idle) state reset hosted. Supplied initial Appear/collision state and frame invocation; Collect frames and cleanup gate execute with supplied consumed flag and virtual Remove endpoint. Complete factory, room scheduler and physical/health eligibility not executed.",
+  "full_acceptance": false
+}

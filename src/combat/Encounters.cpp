@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "world/SourceCombatRoom.hpp"
 #include <stdexcept>
 
 namespace dw {
@@ -188,7 +189,7 @@ void Simulation::prepareRoomEnemies(int index) {
     // Required components must exist in resident rooms before the player enters.
     // Retain births that cannot yet fit instead of discarding this room's queue.
     flushMonsterSpawns();
-    if(arena.theme==MissionTheme::Canyon&&arena.profile.active()&&!surveyTutorial) {
+    if(arena.theme==MissionTheme::Canyon&&arena.profile.active()&&!surveyTutorial&&arena.rooms[size_t(index)].sourceCombatTemplate<0) {
         Random champions(seed_^uint64_t(index+1)*0x9e3779b97f4a7c15ULL);
         for(auto &body:enemies)if(championEligible(body.monster)&&champions.bounded(10000)<unsigned(content->championChance())) {
             std::vector<int> pool;for(int k=0;k<26;++k)if(const auto *p=content->champion(k);p&&arena.profile.sourceStage>=p->firstStage&&championTypeEligible(body.monster,k))pool.push_back(k);
@@ -209,6 +210,14 @@ void Simulation::spawnRoomEnemies() {
     const auto &layout = arena.rooms[size_t(room)];
     if (layout.kind == RoomKind::Empty || layout.kind == RoomKind::Power || layout.kind == RoomKind::Shop || layout.kind==RoomKind::Service)
         return;
+    if(layout.sourceCombatTemplate==BasementGaperTemplate) {
+        for(int slot=0;slot<2;++slot) {
+            const auto at=sourceCombatSpawn(layout,slot);
+            if(arena.blocked(at,.8f)||!roomSpawnClear(at,.8f)||!spawnMonster(monsterId(10,1),at))
+                throw std::runtime_error("Recorded combat-room placement is obstructed");
+        }
+        return;
+    }
     if(surveyTutorial) {
         Random placement(seed_ ^ 0x5455544f5249414cULL ^ uint64_t(room));
         // Existing canyon creatures, limited to readable basic behaviors.

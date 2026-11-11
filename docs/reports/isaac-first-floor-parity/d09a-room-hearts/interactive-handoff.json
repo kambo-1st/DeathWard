@@ -1,0 +1,26 @@
+{
+  "pid": 773069,
+  "argv": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "33",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d09a-room-hearts/campaign.save",
+    "--balance-preset",
+    "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/first-floor-d09a-room-hearts/interactive.log",
+  "normal_damage": true,
+  "active_enemy_ai": true,
+  "room_heart_layouts": 1,
+  "testing_pair_override": false,
+  "seed": 33,
+  "room_displayed": 6,
+  "expected_preplaced_subtypes": [
+    1,
+    2
+  ],
+  "human_acceptance": false
+}

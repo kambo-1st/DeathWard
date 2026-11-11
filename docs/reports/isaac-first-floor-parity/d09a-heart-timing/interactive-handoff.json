@@ -1,0 +1,19 @@
+{
+  "pid": 766346,
+  "argv": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "69",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d09a-timing/campaign.save",
+    "--balance-preset",
+    "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+  ],
+  "save_path": "/home/kambo/.local/share/deathward/reviews/first-floor-d09a-timing/campaign.save",
+  "log": "/home/kambo/.local/share/deathward/reviews/first-floor-d09a-timing/interactive.log",
+  "normal_damage": true,
+  "active_enemy_ai": true,
+  "human_acceptance": false
+}

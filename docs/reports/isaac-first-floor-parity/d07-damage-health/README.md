@@ -66,4 +66,6 @@ Schema **9**, contract `d07-combat-v9`, exports/loads/remembers `player_damage` 
 
 **Human D07 verdict: accepted** ("nice its good, commit and hurtrpy up for a next item"). See [acceptance record](human-acceptance.json). Full native damage flags, item/cache ordering, accuracy/collision, source geometry and per-actor AI/status/lifecycle acceptance are still open. Other authored HP adaptations and boss combat balance are explicitly retained, not hidden behind a parity claim. No complete first-floor fidelity is claimed.
 
-**Next selected delivery: D08 — one complete recorded source combat room inside the expedition.** D08 is selected; its actual enemy/template dependencies still require verification. D07 is included in the containing checkpoint commit; no push is part of this delivery. The automatic bulk-parity goal remains paused.
+**Next selected delivery: D08 — one complete recorded source combat room inside the expedition.** D08 is selected; its actual enemy/template dependencies still require verification. D07 is committed as `56743a72`; no push is part of this delivery. The automatic bulk-parity goal remains paused.
+
+D08 follow-up: the current enabled formation changes seed-69 room 3 to two Gapers. Disable **SOURCE COMBAT ROOM** and apply map changes to reproduce this historical D07 roster. See [D08](../d08-source-room/README.md).

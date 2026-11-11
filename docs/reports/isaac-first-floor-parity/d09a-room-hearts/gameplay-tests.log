@@ -1,0 +1,7 @@
+PASS preplaced full/half healing, refusal, combat admission, initial idle, revisit, separate clear rewards and regeneration boundaries; witness room=6
+PASS 12 size/seed placement cases, gate/cache separation, capacity recovery and blocked-position fallback
+SOURCE seed=1 room=3 subtype=1 layout=86
+SOURCE seed=33 room=6 subtype=1 layout=270
+SOURCE seed=33 room=6 subtype=2 layout=270
+SOURCE seed=37 room=5 subtype=1 layout=247
+PASS source-layer generation witnesses across 37 seeds (not a native selection-frequency benchmark)

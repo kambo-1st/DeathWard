@@ -1,5 +1,7 @@
 # Blended and scared heart pickups: implemented adapter, full acceptance open
 
+**Historical pre-revert research.** The selected current producer is [D09a ordinary red-heart clear rewards](../d09a-red-heart-rewards/README.md); other archived implementations below are not thereby restored or enabled.
+
 Target: installed Repentance 1.7.9b, ordinary Isaac, Normal, empty inventory. This checkpoint adds the two missing heart pickup behaviors and an explicit source subtype placement API. **Source random drops and room-clear reward spawning remain disabled.** Universal dodge retains its movement boost and immunity.
 
 ## Native evidence

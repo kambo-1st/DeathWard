@@ -136,6 +136,8 @@ add_library(deathward_core
     src/world/CanyonRiver.cpp
     src/world/CanyonRoad.cpp
     src/world/RoomGraph.cpp
+    src/combat/RedHeartRewards.cpp
+    src/combat/RoomHearts.cpp
     src/combat/PlayerHealth.cpp
     src/combat/Simulation.cpp
     src/combat/Loot.cpp
@@ -961,6 +963,23 @@ if(BUILD_TESTING)
     add_test(NAME spider_pooter_movement COMMAND deathward_spider_pooter_movement_tests)
     add_test(NAME spider_pooter_movement_30hz COMMAND deathward_spider_pooter_movement_tests --substeps 1)
     add_test(NAME spider_pooter_movement_120hz COMMAND deathward_spider_pooter_movement_tests --substeps 4)
+    add_executable(deathward_red_heart_reward_reference_tests tests/red_heart_reward_reference_tests.cpp)
+    target_include_directories(deathward_red_heart_reward_reference_tests PRIVATE src)
+    target_compile_definitions(deathward_red_heart_reward_reference_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME red_heart_reward_reference COMMAND deathward_red_heart_reward_reference_tests)
+    add_executable(deathward_red_heart_timing_reference_tests tests/red_heart_timing_reference_tests.cpp)
+    target_include_directories(deathward_red_heart_timing_reference_tests PRIVATE src)
+    target_compile_definitions(deathward_red_heart_timing_reference_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")
+    add_test(NAME red_heart_timing_reference COMMAND deathward_red_heart_timing_reference_tests)
+    add_executable(deathward_room_heart_tests tests/room_heart_tests.cpp)
+    target_link_libraries(deathward_room_heart_tests PRIVATE deathward_core)
+    add_test(NAME room_heart_layouts COMMAND deathward_room_heart_tests)
+    add_executable(deathward_red_heart_reward_tests tests/red_heart_reward_tests.cpp)
+    target_link_libraries(deathward_red_heart_reward_tests PRIVATE deathward_core)
+    add_test(NAME red_heart_reward_gameplay COMMAND deathward_red_heart_reward_tests)
+    add_executable(deathward_source_combat_room_tests tests/source_combat_room_tests.cpp)
+    target_link_libraries(deathward_source_combat_room_tests PRIVATE deathward_core)
+    add_test(NAME source_combat_room COMMAND deathward_source_combat_room_tests)
     add_executable(deathward_combat_balance_gameplay_tests tests/combat_balance_gameplay_tests.cpp)
     target_link_libraries(deathward_combat_balance_gameplay_tests PRIVATE deathward_core)
     add_test(NAME combat_balance_gameplay COMMAND deathward_combat_balance_gameplay_tests)

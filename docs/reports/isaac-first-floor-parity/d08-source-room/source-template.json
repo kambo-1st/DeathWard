@@ -1,0 +1,73 @@
+{
+  "source": "The Binding of Isaac: Repentance 1.7.9b",
+  "file": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb",
+  "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "parsed_templates": 1181,
+  "fully_consumed_bytes": 553404,
+  "room": {
+    "index": 47,
+    "type": 1,
+    "variant": 47,
+    "subtype": 0,
+    "name": "",
+    "difficulty": 1,
+    "weight": 1.0,
+    "width": 13,
+    "height": 7,
+    "shape": 1,
+    "doors": [
+      {
+        "x": 6,
+        "y": -1,
+        "enabled": true
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "enabled": true
+      },
+      {
+        "x": -1,
+        "y": 3,
+        "enabled": true
+      },
+      {
+        "x": 13,
+        "y": 3,
+        "enabled": true
+      }
+    ],
+    "spawns": [
+      {
+        "x": 5,
+        "y": 3,
+        "entries": [
+          {
+            "type": 10,
+            "variant": 1,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        ]
+      },
+      {
+        "x": 7,
+        "y": 3,
+        "entries": [
+          {
+            "type": 10,
+            "variant": 1,
+            "subtype": 0,
+            "weight": 1.0
+          }
+        ]
+      }
+    ]
+  },
+  "evidence": "Positive-weight, difficulty-1, standard normal-room entry in the installed Basement library; no extra cover, props, pickups or hazards in the spawn stacks.",
+  "limits": [
+    "Not evidence of native random floor selection frequency, unlock filters or a live seed capture.",
+    "Four allowed door slots are capabilities; actual connected doors depend on the floor graph.",
+    "DW guarantees this formation in one opening-floor room; that selection policy, custom canyon shape/scale, NPC RNG and current rewards are adaptations."
+  ]
+}

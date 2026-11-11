@@ -29,12 +29,14 @@ void Game::archiveBalance(const BalancePreset &preset) const {
 void Game::applyBalance(BalancePreset preset) {
     preset.validate();archiveBalance(preset); // No partial runtime update on validation/write failure.
     const bool zoomChanged=preset.defaultZoomPercent!=balancePreset.defaultZoomPercent;
-    const bool resize=run&&(preset.roomSizeScale!=run->roomSizeScale||preset.roomMinHalfTiles!=run->roomMinHalfTiles||preset.roomMaxHalfTiles!=run->roomMaxHalfTiles||preset.routeLengthScale!=run->routeLengthScale);
-    if(resize)run->resizeRooms(preset.roomSizeScale,preset.roomMinHalfTiles,preset.roomMaxHalfTiles,preset.routeLengthScale); // Constructs first; an invalid/unsafe edit leaves the expedition intact.
+    const bool resize=run&&(preset.roomSizeScale!=run->roomSizeScale||preset.roomMinHalfTiles!=run->roomMinHalfTiles||preset.roomMaxHalfTiles!=run->roomMaxHalfTiles||preset.routeLengthScale!=run->routeLengthScale||preset.sourceCombatRoom!=run->sourceCombatRoom||preset.roomHeartLayouts!=run->roomHeartLayouts);
+    if(resize)run->resizeRooms(preset.roomSizeScale,preset.roomMinHalfTiles,preset.roomMaxHalfTiles,preset.routeLengthScale,preset.sourceCombatRoom,preset.roomHeartLayouts); // Constructs first; an invalid/unsafe edit leaves the expedition intact.
     if(!run){preset.save(balanceDirectory/"next.json");nextBalancePreset=preset;}
     balancePreset=std::move(preset);balanceDraft.playerSpeed=balancePreset.playerSpeed;
     balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
     balanceDraft.rangeTiles=balancePreset.rangeTiles;
+    balanceDraft.redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
+    balanceDraft.redHeartClearRewards=balancePreset.redHeartClearRewards;balanceDraft.playerLuck=balancePreset.playerLuck;
     balanceDraft.playerDamage=balancePreset.playerDamage;balanceDraft.regularHealthMultiplier=balancePreset.regularHealthMultiplier;
     balanceDraft.gaperMovementMultiplier=balancePreset.gaperMovementMultiplier;
     balanceDraft.spiderMovementMultiplier=balancePreset.spiderMovementMultiplier;
@@ -47,6 +49,8 @@ void Game::applyBalance(BalancePreset preset) {
     if(run) {
         run->applyCombatBalance(balancePreset.playerDamage,balancePreset.regularHealthMultiplier);
         playerDamage=run->player.shotDamage;
+        run->redHeartAppearanceSpeed=balancePreset.redHeartAppearanceSpeed;
+        run->redHeartClearRewards=balancePreset.redHeartClearRewards;run->player.attributes.luck=balancePreset.playerLuck;
         run->player.attributes.speed=balancePreset.playerSpeed;
         // New shots resolve these base attributes with owned-item modifiers.
         // Leave existing projectile birth specs and the current cooldown intact.
@@ -106,7 +110,7 @@ bool Game::hasPendingMapChanges() const {
     return balanceDraft.roomSizeScale!=balancePreset.roomSizeScale||
         balanceDraft.roomMinHalfTiles!=balancePreset.roomMinHalfTiles||
         balanceDraft.roomMaxHalfTiles!=balancePreset.roomMaxHalfTiles||
-        balanceDraft.routeLengthScale!=balancePreset.routeLengthScale;
+        balanceDraft.routeLengthScale!=balancePreset.routeLengthScale||balanceDraft.sourceCombatRoom!=balancePreset.sourceCombatRoom||balanceDraft.roomHeartLayouts!=balancePreset.roomHeartLayouts;
 }
 void Game::setRoomSizeRange(int minimum,int maximum) {
     auto preset=balanceDraft;preset.roomMinHalfTiles=minimum;preset.roomMaxHalfTiles=maximum;preset.validate();
@@ -119,6 +123,22 @@ void Game::setRoomSize(float scale) {
 void Game::setRouteLength(float scale) {
     auto preset=balanceDraft;preset.routeLengthScale=scale;preset.validate();
     balanceDraft=std::move(preset);error.clear();balanceNotice="Map settings pending. Press APPLY MAP CHANGES when ready.";
+}
+void Game::setRedHeartAppearanceSpeed(float speed) {
+    auto preset=balancePreset;preset.redHeartAppearanceSpeed=speed;applyBalance(std::move(preset));
+    balanceNotice="Appearance speed applies to newly spawned red hearts. Existing hearts keep their birth timing.";
+}
+void Game::setRedHeartRewards(bool enabled,float luck) {
+    auto preset=balancePreset;preset.redHeartClearRewards=enabled;preset.playerLuck=luck;applyBalance(std::move(preset));
+    balanceNotice="Reward settings apply to future first clears. Existing rolls, pickups and cleared rooms stay as they were.";
+}
+void Game::setRoomHeartLayouts(int mode) {
+    auto candidate=balanceDraft;candidate.roomHeartLayouts=mode;candidate.validate();balanceDraft=std::move(candidate);error.clear();
+    balanceNotice="Room hearts pending. APPLY MAP CHANGES resets current-floor encounters and pickups; player/build retained.";
+}
+void Game::setSourceCombatRoom(bool enabled) {
+    balanceDraft.sourceCombatRoom=enabled;error.clear();
+    balanceNotice="Opening-floor formation pending. Press APPLY MAP CHANGES; current-floor encounters will reset.";
 }
 void Game::applyMapChanges() {
     if(!hasPendingMapChanges()){balanceNotice="Map settings are already applied.";return;}
@@ -141,6 +161,7 @@ void Game::loadBalancePreset(const std::filesystem::path &path) {
     const auto filename=path.string();
     auto live=balancePreset;live.playerSpeed=candidate.playerSpeed;live.defaultZoomPercent=candidate.defaultZoomPercent;
     live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;
+    live.redHeartAppearanceSpeed=candidate.redHeartAppearanceSpeed;live.redHeartClearRewards=candidate.redHeartClearRewards;live.playerLuck=candidate.playerLuck;
     live.playerDamage=candidate.playerDamage;live.regularHealthMultiplier=candidate.regularHealthMultiplier;
     live.gaperMovementMultiplier=candidate.gaperMovementMultiplier;
     live.spiderMovementMultiplier=candidate.spiderMovementMultiplier;
@@ -161,7 +182,7 @@ void Game::rememberBalancePreset() {
 }
 RunSummary Game::configuredSummary() const {
     auto summary=run->summary();
-    summary.mechanicsFingerprint+="/balance-v9:"+balancePreset.revision();
+    summary.mechanicsFingerprint+="/balance-v13:"+balancePreset.revision();
     return summary;
 }
 void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
@@ -171,6 +192,8 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     candidate->tunePlayer(playerHealth,playerDamage);
     candidate->applyCombatBalance(preset.playerDamage,preset.regularHealthMultiplier);
     playerDamage=candidate->player.shotDamage;
+    candidate->redHeartAppearanceSpeed=preset.redHeartAppearanceSpeed;
+    candidate->redHeartClearRewards=preset.redHeartClearRewards;candidate->player.attributes.luck=preset.playerLuck;
     candidate->player.attributes.speed=preset.playerSpeed;
     candidate->player.attributes.tearsPerSecond=preset.tearsPerSecond;
     candidate->player.attributes.shotSpeed=preset.shotSpeed;
@@ -188,7 +211,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
 }
 bool Game::canRetryExpedition() const {
@@ -199,7 +222,7 @@ void Game::retryExpedition() {
     const auto setup=*retrySetup_;
     if(run)finish(EndReason::Death); // Resolve consequences once; never reset the campaign.
     auto candidate=std::make_unique<Simulation>(setup.seed,campaign.data().nextRunId,campaign.data().world,
-        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale);
+        setup.theme,setup.river,setup.tutorial,setup.account,0,setup.pacing,defaultMechanics(),balancePreset.roomSizeScale,balancePreset.roomMinHalfTiles,balancePreset.roomMaxHalfTiles,balancePreset.routeLengthScale,balancePreset.sourceCombatRoom,balancePreset.roomHeartLayouts);
     startExpedition(std::move(candidate),true);
     balanceNotice="Retried the same expedition seed with the applied player, enemy, view and map settings.";
 }

@@ -1,0 +1,3795 @@
+{
+  "source": "reference/isaac-repentance-1.7.9b/extracted/repentance/resources-dlc3/rooms/01.basement.stb",
+  "sha256": "524406fcb10c6275995292c0bd024cfc43d3d30c32b233e55d4d514573d963b0",
+  "target": "Installed Repentance 1.7.9b",
+  "filter": "type1, positive weight, difficulty1-5, shape1, 13x7; includes templates with zero heart slots",
+  "template_count": 433,
+  "heart_slot_count": 23,
+  "choice_count": 28,
+  "scope": "Heart layer only. DW independently samples these source template weights per eligible canyon room; native floor selection, full template actors/grid, unlock filters and descriptor RNG are not certified.",
+  "templates": [
+    {
+      "index": 0,
+      "variant": 0,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1,
+      "variant": 1,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 2,
+      "variant": 2,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 3,
+      "variant": 3,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 4,
+      "variant": 4,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 5,
+      "variant": 5,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 6,
+      "variant": 6,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 7,
+      "variant": 7,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 8,
+      "variant": 8,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 9,
+      "variant": 9,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 10,
+      "variant": 10,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 11,
+      "variant": 11,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 12,
+      "variant": 12,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 13,
+      "variant": 13,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 14,
+      "variant": 14,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 15,
+      "variant": 15,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 16,
+      "variant": 16,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 17,
+      "variant": 17,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 18,
+      "variant": 18,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 19,
+      "variant": 19,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 20,
+      "variant": 20,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 21,
+      "variant": 21,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 22,
+      "variant": 22,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 23,
+      "variant": 23,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 24,
+      "variant": 24,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 25,
+      "variant": 25,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 26,
+      "variant": 26,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 27,
+      "variant": 27,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 28,
+      "variant": 28,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 29,
+      "variant": 29,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 30,
+      "variant": 30,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 31,
+      "variant": 31,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 32,
+      "variant": 32,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 33,
+      "variant": 33,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 34,
+      "variant": 34,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 35,
+      "variant": 35,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 36,
+      "variant": 36,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 37,
+      "variant": 37,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 38,
+      "variant": 38,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 39,
+      "variant": 39,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 40,
+      "variant": 40,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 41,
+      "variant": 41,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 42,
+      "variant": 42,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 43,
+      "variant": 43,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 44,
+      "variant": 44,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 45,
+      "variant": 45,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 46,
+      "variant": 46,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 47,
+      "variant": 47,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 48,
+      "variant": 48,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 49,
+      "variant": 49,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 50,
+      "variant": 50,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 51,
+      "variant": 51,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 52,
+      "variant": 52,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 53,
+      "variant": 53,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 54,
+      "variant": 54,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 55,
+      "variant": 55,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 56,
+      "variant": 56,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 57,
+      "variant": 57,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 58,
+      "variant": 58,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 59,
+      "variant": 59,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 60,
+      "variant": 60,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 61,
+      "variant": 61,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 62,
+      "variant": 62,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 63,
+      "variant": 63,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 64,
+      "variant": 64,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 65,
+      "variant": 65,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 66,
+      "variant": 66,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 67,
+      "variant": 67,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 68,
+      "variant": 68,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 69,
+      "variant": 69,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 70,
+      "variant": 70,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 71,
+      "variant": 71,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 72,
+      "variant": 72,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 73,
+      "variant": 73,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 74,
+      "variant": 74,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 75,
+      "variant": 75,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 76,
+      "variant": 76,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 77,
+      "variant": 77,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 78,
+      "variant": 78,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 79,
+      "variant": 79,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 80,
+      "variant": 80,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 81,
+      "variant": 81,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 82,
+      "variant": 82,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 83,
+      "variant": 83,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 84,
+      "variant": 84,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 85,
+      "variant": 85,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 86,
+      "variant": 86,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 6,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 87,
+      "variant": 87,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 88,
+      "variant": 88,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 89,
+      "variant": 89,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 90,
+      "variant": 90,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 91,
+      "variant": 91,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 5,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 92,
+      "variant": 92,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 93,
+      "variant": 93,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 94,
+      "variant": 94,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 95,
+      "variant": 95,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 96,
+      "variant": 96,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 97,
+      "variant": 97,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 98,
+      "variant": 98,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 99,
+      "variant": 99,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 100,
+      "variant": 100,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 101,
+      "variant": 101,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 102,
+      "variant": 102,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 103,
+      "variant": 103,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 104,
+      "variant": 104,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 105,
+      "variant": 105,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 106,
+      "variant": 106,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 107,
+      "variant": 107,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 108,
+      "variant": 108,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 109,
+      "variant": 109,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 110,
+      "variant": 110,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 111,
+      "variant": 111,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 112,
+      "variant": 112,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 113,
+      "variant": 113,
+      "subtype": 0,
+      "difficulty": 2,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 114,
+      "variant": 114,
+      "subtype": 0,
+      "difficulty": 2,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 115,
+      "variant": 115,
+      "subtype": 0,
+      "difficulty": 2,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 172,
+      "variant": 172,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 173,
+      "variant": 173,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 174,
+      "variant": 174,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 175,
+      "variant": 175,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 177,
+      "variant": 177,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 178,
+      "variant": 178,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 179,
+      "variant": 179,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 180,
+      "variant": 180,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 181,
+      "variant": 181,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 182,
+      "variant": 182,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 183,
+      "variant": 183,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 184,
+      "variant": 184,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 185,
+      "variant": 185,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 186,
+      "variant": 186,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 191,
+      "variant": 191,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 192,
+      "variant": 192,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 193,
+      "variant": 193,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 194,
+      "variant": 194,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 203,
+      "variant": 203,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 204,
+      "variant": 204,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 205,
+      "variant": 205,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 206,
+      "variant": 206,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 207,
+      "variant": 207,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 208,
+      "variant": 208,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 209,
+      "variant": 209,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 210,
+      "variant": 210,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 211,
+      "variant": 211,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 212,
+      "variant": 212,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 213,
+      "variant": 213,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 6,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 6,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 214,
+      "variant": 214,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 215,
+      "variant": 215,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 5,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 216,
+      "variant": 216,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 217,
+      "variant": 217,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 218,
+      "variant": 218,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 219,
+      "variant": 219,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 220,
+      "variant": 220,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 0,
+          "y": 0,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 0.5
+            },
+            {
+              "type": 5,
+              "variant": 20,
+              "subtype": 0,
+              "weight": 0.5
+            }
+          ]
+        },
+        {
+          "x": 5,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 221,
+      "variant": 221,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 222,
+      "variant": 222,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 224,
+      "variant": 224,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 225,
+      "variant": 225,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 226,
+      "variant": 226,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 227,
+      "variant": 227,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 6,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 228,
+      "variant": 228,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 229,
+      "variant": 229,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 230,
+      "variant": 230,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 231,
+      "variant": 231,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 232,
+      "variant": 232,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 233,
+      "variant": 233,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 234,
+      "variant": 234,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 235,
+      "variant": 235,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 236,
+      "variant": 236,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 237,
+      "variant": 237,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 238,
+      "variant": 238,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 239,
+      "variant": 239,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 240,
+      "variant": 240,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 241,
+      "variant": 241,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 242,
+      "variant": 242,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 243,
+      "variant": 243,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 244,
+      "variant": 244,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 245,
+      "variant": 245,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 246,
+      "variant": 246,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 247,
+      "variant": 247,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 2,
+          "y": 0,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 11,
+          "y": 6,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 253,
+      "variant": 253,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 254,
+      "variant": 254,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 255,
+      "variant": 255,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 256,
+      "variant": 256,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 257,
+      "variant": 257,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 263,
+      "variant": 263,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 264,
+      "variant": 264,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 265,
+      "variant": 265,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 266,
+      "variant": 266,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 267,
+      "variant": 267,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 268,
+      "variant": 268,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 269,
+      "variant": 269,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 270,
+      "variant": 270,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 0,
+          "y": 0,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 12,
+          "y": 6,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 271,
+      "variant": 271,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 272,
+      "variant": 272,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 273,
+      "variant": 273,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 6,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 274,
+      "variant": 274,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 275,
+      "variant": 275,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 276,
+      "variant": 276,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 6,
+          "y": 0,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 6,
+          "y": 6,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 0,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 277,
+      "variant": 277,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 278,
+      "variant": 278,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 279,
+      "variant": 279,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 280,
+      "variant": 280,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 281,
+      "variant": 281,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 282,
+      "variant": 282,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 283,
+      "variant": 283,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 284,
+      "variant": 284,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 285,
+      "variant": 285,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 286,
+      "variant": 286,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 287,
+      "variant": 287,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 288,
+      "variant": 288,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 289,
+      "variant": 289,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 290,
+      "variant": 290,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 291,
+      "variant": 291,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 292,
+      "variant": 292,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 495,
+      "variant": 495,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 496,
+      "variant": 496,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 497,
+      "variant": 497,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 498,
+      "variant": 498,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 499,
+      "variant": 499,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 500,
+      "variant": 500,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 501,
+      "variant": 501,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 502,
+      "variant": 502,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 503,
+      "variant": 503,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 504,
+      "variant": 504,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 505,
+      "variant": 505,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 506,
+      "variant": 506,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 507,
+      "variant": 507,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 508,
+      "variant": 508,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 509,
+      "variant": 509,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 510,
+      "variant": 510,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 511,
+      "variant": 511,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 512,
+      "variant": 512,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 513,
+      "variant": 513,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 514,
+      "variant": 514,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 547,
+      "variant": 547,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 548,
+      "variant": 548,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 549,
+      "variant": 549,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 550,
+      "variant": 550,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 551,
+      "variant": 551,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 552,
+      "variant": 552,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 553,
+      "variant": 553,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 554,
+      "variant": 554,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 627,
+      "variant": 627,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 628,
+      "variant": 628,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 629,
+      "variant": 629,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 630,
+      "variant": 630,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 631,
+      "variant": 631,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 632,
+      "variant": 632,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 633,
+      "variant": 633,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 634,
+      "variant": 634,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 636,
+      "variant": 636,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 637,
+      "variant": 637,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 638,
+      "variant": 638,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 639,
+      "variant": 639,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 640,
+      "variant": 640,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 641,
+      "variant": 641,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 642,
+      "variant": 642,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 644,
+      "variant": 644,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 645,
+      "variant": 645,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 646,
+      "variant": 646,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 647,
+      "variant": 647,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 659,
+      "variant": 659,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 660,
+      "variant": 660,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 661,
+      "variant": 661,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 662,
+      "variant": 662,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 663,
+      "variant": 663,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 664,
+      "variant": 664,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 665,
+      "variant": 665,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 666,
+      "variant": 666,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 668,
+      "variant": 668,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 669,
+      "variant": 669,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 670,
+      "variant": 670,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 671,
+      "variant": 671,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 672,
+      "variant": 672,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 674,
+      "variant": 674,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 675,
+      "variant": 675,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 676,
+      "variant": 676,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 677,
+      "variant": 677,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 678,
+      "variant": 678,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 679,
+      "variant": 679,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 680,
+      "variant": 680,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 681,
+      "variant": 681,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 682,
+      "variant": 682,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 683,
+      "variant": 683,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 684,
+      "variant": 684,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 685,
+      "variant": 685,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 748,
+      "variant": 748,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 759,
+      "variant": 759,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 760,
+      "variant": 760,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 761,
+      "variant": 761,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 762,
+      "variant": 762,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 763,
+      "variant": 763,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 764,
+      "variant": 764,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 765,
+      "variant": 765,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 766,
+      "variant": 766,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 767,
+      "variant": 767,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 791,
+      "variant": 791,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 792,
+      "variant": 792,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 793,
+      "variant": 793,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 795,
+      "variant": 795,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 837,
+      "variant": 837,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 838,
+      "variant": 838,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 839,
+      "variant": 839,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 840,
+      "variant": 840,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 841,
+      "variant": 841,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 842,
+      "variant": 842,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 843,
+      "variant": 843,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 844,
+      "variant": 844,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 845,
+      "variant": 845,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 846,
+      "variant": 846,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 847,
+      "variant": 847,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 848,
+      "variant": 848,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 849,
+      "variant": 849,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 850,
+      "variant": 850,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 851,
+      "variant": 851,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 852,
+      "variant": 852,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 897,
+      "variant": 897,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.10000000149011612,
+      "slots": [
+        {
+          "x": 5,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 3,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 3,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 898,
+      "variant": 898,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.10000000149011612,
+      "slots": []
+    },
+    {
+      "index": 900,
+      "variant": 900,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.10000000149011612,
+      "slots": []
+    },
+    {
+      "index": 901,
+      "variant": 901,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.10000000149011612,
+      "slots": []
+    },
+    {
+      "index": 902,
+      "variant": 902,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.10000000149011612,
+      "slots": []
+    },
+    {
+      "index": 903,
+      "variant": 903,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.10000000149011612,
+      "slots": [
+        {
+          "x": 5,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 4,
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 4,
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 904,
+      "variant": 904,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.10000000149011612,
+      "slots": []
+    },
+    {
+      "index": 909,
+      "variant": 909,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 910,
+      "variant": 910,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 911,
+      "variant": 911,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 912,
+      "variant": 912,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 913,
+      "variant": 913,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 914,
+      "variant": 914,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 915,
+      "variant": 915,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 916,
+      "variant": 916,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 917,
+      "variant": 917,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 918,
+      "variant": 918,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 919,
+      "variant": 919,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 920,
+      "variant": 920,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 921,
+      "variant": 921,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 922,
+      "variant": 922,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 923,
+      "variant": 923,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 924,
+      "variant": 924,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 925,
+      "variant": 925,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 926,
+      "variant": 926,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 927,
+      "variant": 927,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 929,
+      "variant": 929,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 940,
+      "variant": 940,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 941,
+      "variant": 941,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 942,
+      "variant": 942,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 943,
+      "variant": 943,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 944,
+      "variant": 944,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 945,
+      "variant": 945,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 946,
+      "variant": 946,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": [
+        {
+          "x": 6,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 40,
+              "subtype": 0,
+              "weight": 0.33333298563957214
+            },
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 2,
+              "weight": 0.33333298563957214
+            },
+            {
+              "type": 5,
+              "variant": 69,
+              "subtype": 0,
+              "weight": 0.33333298563957214
+            }
+          ]
+        },
+        {
+          "x": 9,
+          "y": 3,
+          "choices": [
+            {
+              "type": 5,
+              "variant": 40,
+              "subtype": 0,
+              "weight": 0.33333298563957214
+            },
+            {
+              "type": 5,
+              "variant": 10,
+              "subtype": 2,
+              "weight": 0.33333298563957214
+            },
+            {
+              "type": 5,
+              "variant": 69,
+              "subtype": 0,
+              "weight": 0.33333298563957214
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 947,
+      "variant": 947,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 948,
+      "variant": 948,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 949,
+      "variant": 949,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 970,
+      "variant": 970,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 971,
+      "variant": 971,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 972,
+      "variant": 972,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 974,
+      "variant": 974,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 977,
+      "variant": 977,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 978,
+      "variant": 978,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 980,
+      "variant": 980,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 981,
+      "variant": 981,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 985,
+      "variant": 985,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 987,
+      "variant": 987,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1007,
+      "variant": 1007,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1008,
+      "variant": 1008,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1009,
+      "variant": 1009,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1010,
+      "variant": 1010,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1011,
+      "variant": 1011,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1016,
+      "variant": 1016,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1017,
+      "variant": 1017,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1021,
+      "variant": 1021,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1022,
+      "variant": 1022,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1024,
+      "variant": 1024,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1025,
+      "variant": 1025,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1026,
+      "variant": 1026,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1030,
+      "variant": 1030,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1031,
+      "variant": 1031,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1032,
+      "variant": 1032,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1040,
+      "variant": 1040,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1042,
+      "variant": 1042,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1048,
+      "variant": 1048,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1049,
+      "variant": 1049,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1050,
+      "variant": 1050,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1051,
+      "variant": 1051,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1052,
+      "variant": 1052,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1053,
+      "variant": 1053,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1057,
+      "variant": 1057,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1059,
+      "variant": 1059,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1061,
+      "variant": 1061,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1062,
+      "variant": 1062,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1065,
+      "variant": 1065,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1070,
+      "variant": 1070,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1071,
+      "variant": 1071,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1072,
+      "variant": 1072,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1073,
+      "variant": 1073,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1075,
+      "variant": 1075,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1076,
+      "variant": 1076,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1077,
+      "variant": 1077,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1078,
+      "variant": 1078,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1079,
+      "variant": 1079,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1082,
+      "variant": 1082,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1084,
+      "variant": 1084,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1085,
+      "variant": 1085,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1086,
+      "variant": 1086,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1087,
+      "variant": 1087,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1088,
+      "variant": 1088,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1089,
+      "variant": 1089,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1090,
+      "variant": 1090,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1091,
+      "variant": 1091,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1092,
+      "variant": 1092,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1093,
+      "variant": 1093,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1124,
+      "variant": 1124,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.5,
+      "slots": []
+    },
+    {
+      "index": 1125,
+      "variant": 1125,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1126,
+      "variant": 1126,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1127,
+      "variant": 1127,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1128,
+      "variant": 1128,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 0.25,
+      "slots": []
+    },
+    {
+      "index": 1129,
+      "variant": 1129,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1130,
+      "variant": 1130,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1137,
+      "variant": 1137,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1139,
+      "variant": 1139,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1141,
+      "variant": 1141,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1142,
+      "variant": 1142,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1144,
+      "variant": 1144,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1146,
+      "variant": 1146,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1147,
+      "variant": 1147,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1148,
+      "variant": 1148,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1149,
+      "variant": 1149,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1150,
+      "variant": 1150,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1153,
+      "variant": 1153,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1154,
+      "variant": 1154,
+      "subtype": 0,
+      "difficulty": 1,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1155,
+      "variant": 1155,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1156,
+      "variant": 1156,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1159,
+      "variant": 1159,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    },
+    {
+      "index": 1160,
+      "variant": 1160,
+      "subtype": 0,
+      "difficulty": 5,
+      "weight": 1.0,
+      "slots": []
+    }
+  ]
+}

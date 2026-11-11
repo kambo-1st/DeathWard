@@ -56,7 +56,7 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_UP);frame();
     click(460,190);click(460,190);
     check(std::abs(run.player.attributes.speed-.8f)<1e-6f&&run.combatRng.state==rng,"Speed buttons apply without advancing combat RNG");
-    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v9:")!=std::string::npos,"checkpoint identifies active tuning revision");
+    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v11:")!=std::string::npos,"checkpoint identifies active tuning revision");
     check(std::filesystem::exists(game.balanceDirectory/"revisions"/(game.balancePreset.revision()+".json")),"checkpoint revision retains its resolved preset");
     check(run.canResizeRooms(),"untouched starting room permits live resizing");
     const auto id=run.summary().id, nextId=game.campaign.data().nextRunId;
@@ -434,6 +434,153 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void roomHeartsInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"room-hearts.save",file=directory/"room-hearts-export.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.run->roomHeartLayouts==1&&game.error.empty(),"main game enables selected source heart layers after preset migration");
+    auto &run=*game.run;Renderer renderer;run.godMode=true;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"room-heart UI has no error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"capture room-heart check");UnloadImage(im);EndDrawing();};
+    click(374,642);click(575,143);click(975,189);check(game.balanceRoomHeartsOpen,"room layouts page opens by mouse");
+    const auto terrain=run.arena.canyon.get();const auto before=run.heartPickups.size();click(880,270);
+    check(game.balanceDraft.roomHeartLayouts==2&&run.roomHeartLayouts==1&&game.hasPendingMapChanges()&&run.arena.canyon.get()==terrain&&run.heartPickups.size()==before,"layout edit stages without touching pickups or terrain");
+    click(330,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());check(exported.roomHeartLayouts==2&&exported.defaultZoomPercent==165&&exported.roomSizeScale==1.1f,"pending layout mode exports with accepted settings");
+    game.setRoomHeartLayouts(0);click(590,605);check(game.balanceDraft.roomHeartLayouts==2&&run.roomHeartLayouts==1,"loading stages map layout mode");
+    const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();auto bad=exported.json();auto at=bad.find("\"room_heart_layouts\": 2");check(at!=bad.npos,"invalid layout fixture exists");bad.replace(at,std::string("\"room_heart_layouts\": 2").size(),"\"room_heart_layouts\": 9");
+    const auto invalid=directory/"invalid-room-hearts.json";{std::ofstream out(invalid);out<<bad;}game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.arena.canyon.get()==terrain,"invalid layout preset has no partial effect");game.balanceFile=file.string();game.perform(Action::LoadBalance);
+    click(400,447);check(run.roomHeartLayouts==2&&!game.hasPendingMapChanges()&&run.heartPickups.size()==2,"Apply regenerates current floor with full and half layout actors");
+    check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f&&run.player.attributes.tearsPerSecond==1.9272734f&&run.routeLengthScale==.26f,"accepted movement/shooting/view/map remain");
+    capture("artifacts/d09a-room-hearts-panel.png");game.rememberBalancePreset();game.exportBalancePreset();std::filesystem::copy_file(file,"artifacts/d09a-room-hearts-preset.json",std::filesystem::copy_options::overwrite_existing);key(KEY_ESCAPE);
+    // Rejected configuration deliberately pauses Game; successful loading does
+    // not implicitly resume combat. Resume through normal keyboard input.
+    if(game.paused)key(KEY_ESCAPE);check(!game.paused&&!game.balanceOpen,"resume after rejected-preset recovery");
+    const auto full=run.heartPickups[0],half=run.heartPickups[1];check(full.amount==2&&half.amount==1&&!run.rooms[size_t(full.room)].visited,"actors exist before first visit");
+    run.jumpDebug(full.room);for(auto &e:run.enemies){e.state=EnemyState::Stunned;e.stateTime=1000;}check(run.livingEnemies()>0&&!run.roomClear,"room not cleared before placed heart collection");
+    run.player.position=add(full.position,{0,0,3});game.updateCamera(10);frame();capture("artifacts/d09a-room-hearts-both.png");
+    run.player.position=full.position;frame();check(run.player.hp==6&&run.heartPickups.size()==2,"full health refuses preplaced full heart");
+    auto health=run.player.sourceHealth();health.addRed(-3);run.player.setSourceHealth(health);frame();check(run.player.hp==5,"full layout pickup heals two halves immediately");
+    run.player.position=half.position;frame();check(run.player.hp==6,"half layout pickup heals one half immediately");for(int n=0;n<30;++n)frame();check(run.heartPickups.empty(),"collection effects expire");
+    run.jumpDebug(0);run.jumpDebug(full.room);frame();check(run.heartPickups.empty(),"revisit never respawns consumed layout actors");
+    click(374,642);click(575,143);click(975,189);
+    for(int n=0;n<30&&game.keyboardFocus()!=Action::RoomHeartsOff;++n)key(KEY_TAB);check(game.keyboardFocus()==Action::RoomHeartsOff,"layout choice accessible by keyboard");key(KEY_ENTER);
+    check(game.balanceDraft.roomHeartLayouts==0&&run.roomHeartLayouts==2&&run.heartPickups.empty(),"keyboard selection remains staged after exploration");
+    game.setRedHeartAppearanceSpeed(4);check(run.heartPickups.empty()&&game.balanceDraft.roomHeartLayouts==0,"live appearance edit cannot respawn placed hearts or erase map draft");
+    game.setRoomHeartLayouts(2);game.setRedHeartAppearanceSpeed(1);game.rememberBalancePreset();key(KEY_ESCAPE);
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;check(run.advanceFloor()&&run.roomHeartLayouts==2&&run.heartPickups.empty(),"next floor retains setting but no wrong-stage source hearts");
+    run.finishDebug(false);game.retryExpedition();check(game.run->roomHeartLayouts==2&&game.run->heartPickups.size()==2,"retry regenerates selected opening-floor layout");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.launch(true);check(fresh.run->roomHeartLayouts==2&&fresh.run->heartPickups.size()==2&&fresh.cameraZoomPercent()==165,"fresh application loads remembered layout setting");fresh.close();
+    std::cout<<"PASS main Game preplaced full/half, mouse/keyboard controls, staged apply/export/load/reject, combat collection/revisit, floors/retry and fresh launch\n";
+}
+void redHeartRewardsInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"red-hearts.save",file=directory/"red-hearts-export.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.run->redHeartClearRewards&&game.run->player.attributes.luck==0,"main Game enables D09a with migrated baseline Luck");
+    auto &run=*game.run;run.godMode=true;Renderer renderer;
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D09 UI without errors");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    const auto capture=[&](const char *file){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();check(ExportImage(image,file),"capture D09 handoff");UnloadImage(image);EndDrawing();};
+    run.jumpDebug(2);check(run.livingEnemies()==2,"ordinary generated D08 witness has two Gapers");
+    // Hold AI for deterministic input verification, retaining natural generation,
+    // actual Game mouse primary fire, death/morph/clear and reward production.
+    for(int body=0;body<10&&!run.roomClear;++body) {
+        Enemy *target=nullptr;for(auto &e:run.enemies)if(e.alive){e.state=EnemyState::Stunned;e.stateTime=1000;if(!target)target=&e;}
+        if(!target){frame();continue;}
+        const auto id=target->id;const auto identity=target->monster;
+        run.player.position=add(target->position,{0,0,3});check(!run.arena.blocked(run.player.position,.48f),"legal aligned firing point");game.updateCamera(10);
+        const auto pixel=GetWorldToScreen(add(target->position,{0,.25f,0}),game.camera);mouseEvent(MousePosition,int(pixel.x),int(pixel.y));frame();mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);
+        for(int n=0;n<700&&!run.roomClear;++n){frame();target=run.findEnemy(id);if(!target||!target->alive||target->monster!=identity)break;}
+        mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();
+    }
+    check(run.roomClear&&run.heartPickups.size()==1&&run.heartPickups[0].amount==2&&run.heartPickups[0].sourceSubtype==1,"actual Game mouse-fire clear produces the expected full red heart");
+    capture("artifacts/d09a-timed-heart-birth.png");const auto pickup=run.heartPickups[0];run.player.position=pickup.position;
+    const auto birthFrame=run.heartPickups[0].timing.frame;
+    click(374,642);click(575,143);click(850,383);
+    check(std::abs(run.redHeartAppearanceSpeed-1.05f)<.0001f&&run.heartPickups[0].timing.appearanceSpeed==1,"mouse appearance edit changes future births, retains current actor");
+    const auto pausedFrame=run.heartPickups[0].timing.frame;for(int n=0;n<15;++n)frame();
+    check(run.heartPickups[0].timing.frame==pausedFrame&&pausedFrame>=birthFrame,"tuning pause freezes birth clock");
+    for(int n=0;n<30&&game.keyboardFocus()!=Action::ResetHeartAppearance;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetHeartAppearance,"appearance reset reachable with keyboard");key(KEY_ENTER);
+    check(run.redHeartAppearanceSpeed==1,"keyboard appearance reset");key(KEY_ESCAPE);
+    for(int n=0;n<70;++n)frame();capture("artifacts/d09a-timed-heart-idle.png");
+    check(run.heartPickups.size()==1&&run.player.hp==6,"full health refuses pickup in actual Game");
+    auto health=run.player.sourceHealth();health.addRed(-2);run.player.setSourceHealth(health);frame();
+    check(run.heartPickups.size()==1&&run.player.hp==6&&run.heartPickups[0].timing.phase==RedHeartTiming::Phase::Collect,"natural heart heals immediately at admission and starts collection effect");
+    capture("artifacts/d09a-timed-heart-collection.png");for(int n=0;n<30;++n)frame();check(run.heartPickups.empty(),"collection presentation expires");
+    const auto award=*run.rooms[2].redHeartAward;run.jumpDebug(0);run.jumpDebug(2);frame();check(run.heartPickups.empty(),"collected natural reward stays collected on revisit");
+    click(374,642);click(575,143);check(game.balanceOpen&&game.balanceRewardsOpen,"Rewards tab via actual mouse");
+    game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();click(350,244);click(850,304);
+    check(!run.redHeartClearRewards&&run.player.attributes.luck==1&&game.hasPendingMapChanges()&&run.arena.canyon.get()==terrain,"reward switch and Luck live, map still staged");
+    for(int n=0;n<30&&game.keyboardFocus()!=Action::ResetRewardLuck;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ResetRewardLuck,"reward reset reachable with keyboard");key(KEY_ENTER);check(run.player.attributes.luck==0&&!run.redHeartClearRewards,"Luck reset leaves reward switch alone");
+    game.setRedHeartRewards(true,5);game.setRedHeartAppearanceSpeed(.5f);click(330,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(exported.redHeartAppearanceSpeed==.5f&&exported.redHeartClearRewards&&exported.playerLuck==5&&exported.roomSizeScale==1.2f&&exported.defaultZoomPercent==165,"reward settings and staged map exported together");
+    game.setRedHeartRewards(false,-3);game.setRedHeartAppearanceSpeed(4);click(590,605);check(run.redHeartAppearanceSpeed==.5f&&run.redHeartClearRewards&&run.player.attributes.luck==5&&game.hasPendingMapChanges(),"valid load applies rewards only to future clears");
+    check(run.rooms[2].redHeartAward->pickupSeed==award.pickupSeed&&run.heartPickups.empty(),"editing/loading never rerolls paid room");
+    const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();auto bad=exported.json();const auto offset=bad.find("\"player_luck\": 5");check(offset!=bad.npos,"invalid Luck fixture field");
+    bad.replace(offset,std::string("\"player_luck\": 5").size(),"\"player_luck\": 21");const auto invalid=directory/"invalid-red-hearts.json";{std::ofstream out(invalid);out<<bad;}
+    game.balanceFile=invalid.string();game.perform(Action::LoadBalance);check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.arena.canyon.get()==terrain,"invalid reward config has no partial effect");
+    game.balanceFile=file.string();game.perform(Action::LoadBalance);capture("artifacts/d09a-timing-panel.png");game.rememberBalancePreset();
+    std::filesystem::copy_file(file,"artifacts/d09a-timing-preset.json",std::filesystem::copy_options::overwrite_existing);
+    game.applyMapChanges();check(run.redHeartAppearanceSpeed==.5f&&run.redHeartClearRewards&&run.player.attributes.luck==5&&!run.rooms[2].redHeartAward,"map testing reset retains config and resets reward history");key(KEY_ESCAPE);
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();check(!run.rooms[size_t(run.finalRoom())].redHeartAward,"boss uses separate existing reward policy");run.floorExitRequested=true;
+    check(run.advanceFloor()&&run.redHeartAppearanceSpeed==.5f&&run.redHeartClearRewards&&run.player.attributes.luck==5,"floor descent retains config");
+    run.finishDebug(false);game.retryExpedition();check(game.run->redHeartAppearanceSpeed==.5f&&game.run->redHeartClearRewards&&game.run->player.attributes.luck==5&&game.run->player.hp==6,"death retry retains reward settings");game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.launch(true);
+    check(fresh.run->redHeartAppearanceSpeed==.5f&&fresh.run->redHeartClearRewards&&fresh.run->player.attributes.luck==5&&fresh.cameraZoomPercent()==165&&fresh.run->player.attributes.tearsPerSecond==1.9272734f,"fresh application retains rewards and accepted base");fresh.close();
+    std::cout<<"PASS D09a actual Game natural heart through mouse-fire clear, full-health refusal/healing/revisit, reward UI, pending map, export/load/reject, floor/retry/new-session persistence\n";
+}
+void sourceCombatRoomInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"source-room.save",file=directory/"source-room-export.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    check(game.run&&game.error.empty(),"D08 ordinary main Game launch");auto &run=*game.run;Renderer renderer;
+    auto sourceIndex=[&]{for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceCombatTemplate==47)return i;return -1;};
+    check(sourceIndex()>0&&run.roomEnemies(sourceIndex()).size()==2,"main Game generates exact source roster");
+    check(game.cameraZoomPercent()==165&&run.player.walkingSpeed()==4.8f&&run.player.attributes.tearsPerSecond==1.9272734f&&run.routeLengthScale==.26f,"accepted view/walking/shooting/map retained");
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D08 UI without error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    click(374,642);check(game.balanceOpen,"open tuning through actual HUD");
+    const auto terrain=run.arena.canyon.get(),identity=terrain;const auto expeditionId=run.summary().id;
+    click(390,480);check(!game.balanceDraft.sourceCombatRoom&&run.sourceCombatRoom&&game.hasPendingMapChanges()&&run.arena.canyon.get()==identity,"click stages toggle without regeneration");
+    for(int n=0;n<30&&game.keyboardFocus()!=Action::ToggleSourceCombatRoom;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::ToggleSourceCombatRoom,"source toggle accessible by keyboard");key(KEY_ENTER);
+    check(game.balanceDraft.sourceCombatRoom&&!game.hasPendingMapChanges(),"keyboard restores active setting");click(390,480);
+    click(330,605);const auto exported=BalancePreset::load(file,run.content->fingerprint());
+    check(!exported.sourceCombatRoom&&exported.defaultZoomPercent==165&&exported.roomSizeScale==1.1f,"export retains pending switch plus accepted settings");
+    game.setSourceCombatRoom(true);click(590,605);check(!game.balanceDraft.sourceCombatRoom&&run.sourceCombatRoom&&game.hasPendingMapChanges(),"load stages source-room setting");
+    const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();auto bad=exported.json();const auto offset=bad.find("\"source_combat_room\": false");
+    check(offset!=bad.npos,"invalid toggle fixture field");bad.replace(offset,std::string("\"source_combat_room\": false").size(),"\"source_combat_room\": 1");
+    const auto invalid=directory/"invalid-source.json";{std::ofstream out(invalid);out<<bad;}
+    game.balanceFile=invalid.string();game.perform(Action::LoadBalance);
+    check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.arena.canyon.get()==terrain,"invalid toggle rejects without partial publication");
+    game.balanceFile=file.string();game.perform(Action::LoadBalance);run.player.hp=4;
+    click(370,408);check(!run.sourceCombatRoom&&sourceIndex()<0&&!game.hasPendingMapChanges()&&run.summary().id==expeditionId&&run.player.hp==4,"Apply switches generation without resetting player/identity");
+    game.rememberBalancePreset();run.finishDebug(false);game.retryExpedition();
+    check(!game.run->sourceCombatRoom&&game.cameraZoomPercent()==165,"retry keeps disabled switch and view");
+    game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="69";fresh.launch(true);
+    check(fresh.run&&!fresh.run->sourceCombatRoom,"fresh application loads remembered source-room setting");
+    fresh.setSourceCombatRoom(true);fresh.applyMapChanges();check(fresh.run->sourceCombatRoom,"reenable in running expedition");
+    fresh.balanceFile=file.string();fresh.exportBalancePreset();fresh.rememberBalancePreset();
+    Renderer preview;fresh.perform(Action::OpenBalance);
+    std::filesystem::create_directories("artifacts");BeginDrawing();preview.draw(fresh);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();
+    check(ExportImage(image,"artifacts/d08-source-room-panel.png"),"capture source-room tuning");UnloadImage(image);EndDrawing();
+    std::filesystem::copy_file(file,"artifacts/d08-source-room-preset.json",std::filesystem::copy_options::overwrite_existing);
+    fresh.close();preview.unload();
+    std::cout<<"PASS D08 actual Game/Renderer mouse/keyboard, pending Apply, export/load, invalid rejection, retry, remembered fresh session\n";
+}
 void combatBalanceInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
@@ -498,7 +645,8 @@ void pooterBalanceInputCheck(const std::filesystem::path &directory) {
         "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"pooter.save",file=directory/"pooter-export.json";
     Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
-    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    // Retain the D06 generated Pooter witness; D08 deliberately replaces this room.
+    game.loadBalancePreset(source);game.setSourceCombatRoom(false);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
     check(game.run&&game.run->pooterTuning&&game.run->pooterTuning->movement==1,"main Game enables selected Pooter from old preset");
     auto &run=*game.run;run.godMode=true;Renderer renderer;const int room=2;
     check(run.player.walkingSpeed()==4.8f&&run.player.attributes.tearsPerSecond==1.9272734f&&game.cameraZoomPercent()==165&&run.routeLengthScale==.26f,
@@ -1602,6 +1750,18 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--room-hearts-only") {
+            roomHeartsInputCheck(directory);
+            if(mode=="--room-hearts-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--red-heart-rewards-only") {
+            redHeartRewardsInputCheck(directory);
+            if(mode=="--red-heart-rewards-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--source-combat-room-only") {
+            sourceCombatRoomInputCheck(directory);
+            if(mode=="--source-combat-room-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
         if(mode.empty()||mode=="--combat-balance-only") {
             combatBalanceInputCheck(directory);

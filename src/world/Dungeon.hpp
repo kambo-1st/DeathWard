@@ -22,6 +22,11 @@ struct RoomGraph {
     int powerRooms = 1;
 };
 RoomGraph generateRoomGraph(uint64_t seed, bool tutorial = false, int rooms = RoomCount);
+struct RoomHeartSpawn {
+    Vector3 preferred{};
+    uint32_t pickupSeed=0;
+    int x=0,y=0,sourceSubtype=0,subtype=0;
+};
 struct RoomLayout {
     Box bounds;
     Vector3 center{}, entry{}, exit{}, objective{}, bossSpawn{};
@@ -33,6 +38,9 @@ struct RoomLayout {
     // Room-wide condition (e.g. a future Flush effect). A river crossing is
     // not automatically a flooded room: dry banks must remain dry gameplay.
     bool flooded = false;
+    int sourceCombatTemplate = -1; // Recorded opening-floor encounter, -1 = generated pool.
+    int sourceHeartTemplate=-1; // Heart layer only; not a full source encounter.
+    std::vector<RoomHeartSpawn> heartSpawns;
     Vector3 reward{};
     std::vector<int> passages;
     std::vector<Box> floors, obstacles;
@@ -106,7 +114,7 @@ struct Arena {
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
                    bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount,
-                   FloorDimensions dimensions = {}, FloorProfile profile = {});
+                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false);
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;

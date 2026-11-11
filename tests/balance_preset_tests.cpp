@@ -37,6 +37,20 @@ int main() {
                 check(loaded.tearsPerSecond==tears&&loaded.shotSpeed==speed&&loaded.rangeTiles==range&&loaded.revision()==p.revision(),
                       "shooting and 165 percent view/map preset round-trip including exact default rate");
             }
+        for(float appearance:{.25f,.5f,1.f,1.05f,4.f}) {
+            BalancePreset p{1,"fixture-content"};p.redHeartAppearanceSpeed=appearance;p.save(file);
+            check(BalancePreset::load(file,"fixture-content").redHeartAppearanceSpeed==appearance,"heart appearance override survives export/load");
+        }
+        const auto v11=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d09a-red-heart-rewards/preset.json","2ccd5b1c274a302e");
+        check(v11.redHeartAppearanceSpeed==1&&v11.defaultZoomPercent==165&&v11.playerLuck==5,"v11 migrates appearance without losing selected settings");
+        for(int mode:{0,1,2}) {
+            BalancePreset p{1,"fixture-content"};p.roomHeartLayouts=mode;p.save(file);
+            check(BalancePreset::load(file,"fixture-content").roomHeartLayouts==mode,"room-heart mode export/load");
+        }
+        const auto v12=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d09a-heart-timing/test-preset.json","2ccd5b1c274a302e");
+        check(v12.roomHeartLayouts==1&&v12.redHeartAppearanceSpeed==.5f&&v12.defaultZoomPercent==165,"v12 migration retains timing/view and enables selected layout hearts");
         const auto legacy=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d01-live-tuning/speed-080.json","2ccd5b1c274a302e");
         check(legacy.playerSpeed==.8f&&legacy.roomSizeScale==1&&legacy.roomMinHalfTiles==0&&legacy.defaultZoomPercent==160,"D01 migration preserves speed and selects automatic room sizes");
@@ -59,6 +73,23 @@ int main() {
             auto preset=v5;preset.gaperMovementMultiplier=movement;preset.save(file);
             const auto loaded=BalancePreset::load(file,"2ccd5b1c274a302e");
             check(loaded.gaperMovementMultiplier==movement&&loaded.revision()==preset.revision(),"Gaper overrides round-trip at bounds and small steps");
+        }
+        check(v5.sourceCombatRoom,"older presets migrate with selected D08 enabled");
+        for(bool enabled:{false,true}) {
+            auto p=v5;p.sourceCombatRoom=enabled;p.save(file);
+            const auto loaded=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(loaded.sourceCombatRoom==enabled&&loaded.revision()==p.revision(),"source room switch round-trips");
+        }
+        const auto v9=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d07-damage-health/custom-combat.json","2ccd5b1c274a302e");
+        check(v9.sourceCombatRoom&&v9.playerDamage==7&&v9.regularHealthMultiplier==.75f,"schema9 migrates combat plus source room");
+        const auto v10=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d08-source-room/preset.json","2ccd5b1c274a302e");
+        check(v10.redHeartClearRewards&&v10.playerLuck==0&&v10.sourceCombatRoom&&v10.defaultZoomPercent==165,"schema10 migration preserves accepted settings and enables selected red hearts");
+        for(bool enabled:{false,true})for(float luck:{-3.f,0.f,1.f,10.f,20.f}) {
+            auto p=v10;p.redHeartClearRewards=enabled;p.playerLuck=luck;p.sourceCombatRoom=false;p.save(file);
+            const auto loaded=BalancePreset::load(file,"2ccd5b1c274a302e");
+            check(loaded.redHeartClearRewards==enabled&&loaded.playerLuck==luck&&loaded.revision()==p.revision(),"reward fields round-trip alongside independent map switch");
         }
         const auto v6=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d04-gaper-movement/custom-gaper.json","2ccd5b1c274a302e");
@@ -94,8 +125,19 @@ int main() {
         BalancePreset zoomPreset{1,"fixture-content",1,0,0,1,125};
         BalancePreset routePreset{1,"fixture-content",1,0,0,.65f};
         BalancePreset custom{.8f,"fixture-content"};custom.save(file);
+        auto appearance=custom;appearance.redHeartAppearanceSpeed=.5f;
+        auto layouts=custom;layouts.roomHeartLayouts=2;
         const auto valid=custom.json();
         std::vector<std::string> invalid{
+            replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 3"),
+            replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 1.5"),
+            replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": false"),
+            replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 0"),
+            replaceOne(valid,"basement-normal-1to5-heart-layer-v1","invalid-policy"),
+            replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 0"),
+            replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 4.01"),
+            replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 2"),
+            replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": NaN"),
             replaceOne(combat.json(),"\"player_damage\": 7","\"player_damage\": 0"),
             replaceOne(combat.json(),"\"player_damage\": 7","\"player_damage\": 50.01"),
             replaceOne(combat.json(),"\"player_damage\": 7","\"player_damage\": 6"),
@@ -103,10 +145,17 @@ int main() {
             replaceOne(combat.json(),"\"regular_health_multiplier\": 0.75","\"regular_health_multiplier\": 4.01"),
             replaceOne(combat.json(),"\"regular_health_multiplier\": 0.75","\"regular_health_multiplier\": 0.7"),
             replaceOne(combat.json(),"source-damage-internal-hp-v1","incorrect-damage-units"),
+            replaceOne(valid,"\"source_combat_room\": true","\"source_combat_room\": 1"),
+            replaceOne(valid,"basement-1.47.0-canyon-v1","unsupported-template"),
+            replaceOne(valid,"\"red_heart_clear_rewards\": true","\"red_heart_clear_rewards\": 1"),
+            replaceOne(valid,"ordinary-normal-rare-gates-off-v1","unsupported-reward-policy"),
+            replaceOne(valid,"\"player_luck\": 0","\"player_luck\": 21"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 9","\"schema_version\": 10"),
-            replaceOne(valid,"\"schema_version\": 9","\"schema_version\": 9, \"schema_version\": 9"),
-            replaceOne(valid,"d07-combat-v9","future-contract"),
+            replaceOne(valid,"\"schema_version\": 13","\"schema_version\": 14"),
+            replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
+            replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
+            replaceOne(valid,"\"schema_version\": 13","\"schema_version\": 13, \"schema_version\": 13"),
+            replaceOne(valid,"d09a-room-hearts-v13","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

@@ -1,0 +1,60 @@
+#pragma once
+#include <algorithm>
+#include <cstdint>
+#include <stdexcept>
+
+namespace dw {
+// Repentance1.7.9b room reward/pickup RNG shift triplet at a08c44.
+// Supplied nonzero seeds are required. Native room/floor seed mapping is separate.
+struct SourceAwardRng {
+    uint32_t state;
+    uint32_t next(){if(!state)throw std::invalid_argument("Source award RNG requires a nonzero seed");state^=state>>5;state^=state<<9;state^=state>>7;return state;}
+    uint32_t bounded(uint32_t maximum){return next()%maximum;}
+    float unit(){return float(next())*0x1.fffffcp-33f;}
+};
+// Entire ordinary empty-inventory selector at7b82b0. All represented source
+// items/trinkets are absent; this is not the complete modified award system.
+inline int sourceOrdinaryRoomAward(SourceAwardRng &rng,float luck=0,bool preventNone=false) {
+    float score=rng.unit();score+=rng.unit()*std::clamp(luck,0.f,10.f)*.1f;
+    if(preventNone&&score<=.22f)score=std::clamp(score/.22f,0.f,1.f)*.7799f+.2201f;
+    if(score<=.22f)return 0;
+    int variant;
+    if(score<.3f)variant=rng.bounded(3)==0?300:(rng.next()&1)?70:350;
+    else if(score<.45f)variant=20;
+    else if(score<.6f)variant=10;
+    else if(score<.8f)variant=30;
+    else if(score<.95f)variant=40;
+    else variant=50;
+    rng.bounded(15); // Source consumes this even without the battery trinket.
+    if(rng.bounded(50)==0)variant=69;
+    return variant;
+}
+// These are explicit achievement-gate inputs, not a complete save/unlock profile.
+struct SourcePickupGates {
+    bool rotten=false,scared=false,halfSoul=false,bone=false,goldenHeart=false;
+    static SourcePickupGates representedEnabled(){return {true,true,true,true,true};}
+};
+struct SourcePickupChoice {int variant=0,subtype=0;bool resolved=false;};
+// Native6b48b0 scoped ordinary room/type1, ordinary Isaac, empty inventory,
+// Normal mode, input subtype0. No world actor/collection acceptance is implied.
+inline SourcePickupChoice sourceOrdinaryPickup(uint32_t seed,int variant,SourcePickupGates gates={}) {
+    SourceAwardRng rng{seed};int subtype=1;
+    if(variant==10) {
+        if(rng.bounded(2)==0)subtype=2;
+        if(rng.bounded(20)==0)subtype=5;
+        if(rng.bounded(50)==0&&gates.rotten)subtype=12;
+        if(rng.bounded(100)==0&&gates.scared)subtype=9;
+        if(rng.bounded(100)==0)subtype=10;
+        if(rng.bounded(50)==0)subtype=4;
+        if(rng.bounded(10)==0) {
+            subtype=3;
+            if(rng.bounded(4)==0&&gates.halfSoul)subtype=8;
+            if(rng.bounded(20)==0&&gates.bone)subtype=11;
+            if(rng.bounded(20)==0)subtype=6;
+            rng.bounded(5); // Forgotten/Soul player-type override is absent here.
+        }
+        if(rng.bounded(160)==0&&gates.goldenHeart)subtype=7;
+    } else return {variant,0}; // Unresolved families are not rerolled or substituted.
+    return {variant,subtype,true};
+}
+} // namespace dw

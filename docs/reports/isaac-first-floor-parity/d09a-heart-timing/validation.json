@@ -1,0 +1,35 @@
+{
+  "status": "developer checks passed; main-game timing handoff ready; human timing review pending",
+  "selected_scope": "Ordinary full/half/double red-heart appearance and collection timing only",
+  "native_gate_cases": 40,
+  "native_appearance_states": 2115,
+  "native_collection_cleanup_states": 48,
+  "focused_suites_passed": [
+    "red_heart_timing_reference",
+    "red_heart_reward_reference",
+    "red_heart_reward_gameplay",
+    "source_combat_room",
+    "balance_preset_contract",
+    "heart_gameplay",
+    "native_player_health"
+  ],
+  "runtime_frame_rates": [
+    30,
+    60,
+    120
+  ],
+  "cli_cases_passed": 4,
+  "accepted_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "native_manifest": "manifest.json",
+  "full_native_acceptance": false,
+  "human_acceptance": false,
+  "coins_selected": false,
+  "remaining": [
+    "Human timing review",
+    "Complete native factory/scheduler/physical contact/room-transition lifecycle",
+    "Placement/collision and matched live encounter",
+    "Other heart outcomes, profiles/modifiers and eligible producers"
+  ],
+  "development_note": "An intermediate build invocation named nonexistent target deathward_heart_tests after successful main targets; corrected to deathward_health_gameplay_tests and deathward_player_health_tests, both built and tested successfully. Existing unrelated Hardies.cpp misleading-indentation warning remains.",
+  "actual_game_ui_passed": true
+}

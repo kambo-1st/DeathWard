@@ -1,5 +1,7 @@
 # Room rewards: native calculations, production generation unfinished
 
+**Historical pre-revert research.** The selected current producer is [D09a ordinary red-heart clear rewards](../d09a-red-heart-rewards/README.md); other archived implementations below are not thereby restored or enabled.
+
 Target: installed Repentance 1.7.9b, ordinary Isaac, Normal, an ordinary room and empty inventory. [SourceRoomRewards.hpp](../../../../src/combat/SourceRoomRewards.hpp) now implements source room-award selection and scoped heart/coin/key/bomb subtype selection. **These calculations are not connected to production room-clear spawning yet.** Existing DeathWard loot generation remains an open difference; no source reward or whole-room acceptance is claimed.
 
 ## Verified native execution

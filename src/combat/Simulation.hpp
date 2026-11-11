@@ -1,4 +1,5 @@
 #pragma once
+#include "combat/RedHeartTiming.hpp"
 #include "audio/AudioState.hpp"
 #include "combat/Monsters.hpp"
 #include "combat/PlayerHealth.hpp"
@@ -1041,8 +1042,16 @@ struct MonsterSpawn {
     float championCharm=0;
     bool childContactDeath=false; // Captured live-birth policy, never inherited by death offspring.
 };
+struct RedHeartClearAward {
+    uint32_t seed=0,pickupSeed=0;
+    float luck=0;
+    int variant=0,subtype=0;
+    bool pending=false,delivered=false;
+};
 struct RoomProgress {
     bool visited = false, cleared = false, rewardTaken = false, bossPaid = false;
+    std::optional<RedHeartClearAward> redHeartAward;
+    std::vector<bool> roomHeartsDelivered;
     std::array<ItemKey, 2> offers{};
     std::array<bool,2> serviceSold{};
     // The active room uses Simulation::enemies; other rooms keep their actual group here.
@@ -1073,7 +1082,7 @@ struct ServiceOffer {
 };
 
 enum class HeartKind { Red, Soul, Black, Eternal, Golden, Bone, Rotten, Blended, Scared };
-struct HeartPickup {Vector3 position{};HeartKind kind=HeartKind::Red;int amount=2,room=0;};
+struct HeartPickup {Vector3 position{};HeartKind kind=HeartKind::Red;int amount=2,room=0;int sourceSubtype=0;RedHeartTiming timing{};bool placedInLayout=false;};
 struct BlueFlyRuntime {
     EntityId id=0,target=0;
     Vector3 position{},previous{},nativeVelocity{};
@@ -1089,11 +1098,13 @@ class Simulation {
                MissionTheme theme = MissionTheme::Mine, bool canyonRiver = true, bool tutorial = false,
                WitnessAccount account = WitnessAccount::None, int floor = 0,
                ExpeditionPacing pacing = ExpeditionPacing::Compact,
-               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1);
+               std::shared_ptr<const MechanicsLibrary> content = defaultMechanics(), float roomSizeScale = 1, int roomMinHalfTiles = 0, int roomMaxHalfTiles = 0, float routeLengthScale = 1, bool sourceCombatRoom = false, int roomHeartLayouts = 0);
     std::shared_ptr<const MechanicsLibrary> content;
     ExpeditionPlan expedition;
     int floor = 0;
     float roomSizeScale = 1, routeLengthScale = 1;
+    bool sourceCombatRoom = false;
+    int roomHeartLayouts=0; // 0 off, 1 source pickup-layer pool, 2 explicit full/half test.
     int roomMinHalfTiles = 0, roomMaxHalfTiles = 0;
     Player player;
     Arena arena;
@@ -1148,6 +1159,8 @@ class Simulation {
     std::optional<float> spiderMovementMultiplier;
     bool tunedSpider(const Enemy &e) const { return spiderMovementMultiplier && e.monster==monsterId(85); }
     std::optional<PooterTuning> pooterTuning;
+    float redHeartAppearanceSpeed=1; // Snapshotted when an ordinary red-heart actor is admitted.
+    bool redHeartClearRewards=false; // Game enables selected D09a; legacy fixtures retain generation.
     bool tunedPooter(const Enemy &e) const { return pooterTuning && e.monster==monsterId(14); }
     bool surveyTutorial = false, surveyRecovered = false, letterOpen = false;
     bool floorExitRequested = false;
@@ -1161,7 +1174,7 @@ class Simulation {
     bool canUseFloorExit() const;
     bool advanceFloor();
     bool canResizeRooms() const;
-    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1);
+    void resizeRooms(float scale, int minimum = 0, int maximum = 0, float routeScale = 1, std::optional<bool> sourceRoom = std::nullopt, std::optional<int> heartLayouts = std::nullopt);
     int finalRoom() const { return arena.roomCount()-1; }
     Vector3 surveyPosition() const { return arena.rooms.back().objective; }
     bool canReturn() const { return lastFloor()&&canUseFloorExit(); }
@@ -1598,7 +1611,11 @@ class Simulation {
     std::deque<Event> pendingHealthEvents_;
     void flushPlayerHealthEvents();
     void applyPlayerHealth(SourcePlayerHealth health);
-    void updateHeartPickups();
+    void updateHeartPickups(float dt);
+    void prepareRoomHearts();
+    void deliverRoomHearts(int index);
+    void resolveRedHeartClearAward();
+    void deliverRedHeartClearAward();
     bool hurtPlayer(float damage, const Context &context = {}, bool hostile = true);
     float enemyDamage(const Enemy &enemy, const Event &event) const;
     void updateHost(Enemy &enemy,float dt);

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "v5",
+    "exit_code": 0,
+    "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 source_room=1 revision=a55d9b5dee5d2b91 profile=custom"
+  },
+  {
+    "name": "v11",
+    "exit_code": 0,
+    "balance": "BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=5 source_room=1 revision=af1c44578ef0bf90 profile=custom"
+  },
+  {
+    "name": "v12",
+    "exit_code": 0,
+    "balance": "BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=0.5 luck=5 source_room=1 revision=b7d6c9e4671cacb4 profile=custom"
+  },
+  {
+    "name": "remembered",
+    "exit_code": 0,
+    "balance": "BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=0.5 luck=5 source_room=1 revision=b7d6c9e4671cacb4 profile=custom"
+  }
+]

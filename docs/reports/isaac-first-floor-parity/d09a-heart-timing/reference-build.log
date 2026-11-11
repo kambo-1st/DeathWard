@@ -1,0 +1,4 @@
+Consolidate compiler generated dependencies of target deathward_red_heart_timing_reference_tests
+[100%] Building CXX object CMakeFiles/deathward_red_heart_timing_reference_tests.dir/tests/red_heart_timing_reference_tests.cpp.o
+[100%] Linking CXX executable deathward_red_heart_timing_reference_tests
+[100%] Built target deathward_red_heart_timing_reference_tests

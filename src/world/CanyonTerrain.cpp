@@ -185,6 +185,7 @@ void buildCanyon(Arena &arena, bool river) {
         return d;
     };
     for (auto &room : arena.rooms) {
+        const size_t previousRocks=rocks.size();
         const int desired = arena.profile.active() ? (room.kind==RoomKind::Boss?0:arena.profile.outcrops+int(rng.bounded(2))) : 3+int(rng.bounded(3));
         for (int attempt = 0; attempt < 180 && int(room.obstacles.size()) < desired; ++attempt) {
             Outcrop r{{rng.real(room.bounds.min.x + 4, room.bounds.max.x - 4), 0,
@@ -210,7 +211,10 @@ void buildCanyon(Arena &arena, bool river) {
             room.obstacles.push_back({{r.center.x - radius, 0, r.center.z - radius},
                                       {r.center.x + radius, r.height, r.center.z + radius}});
         }
+        if(room.sourceCombatTemplate>=0)rocks.resize(previousRocks);
     }
+    // The recorded room has no cover. Remove its outcrops before baking terrain.
+    for(auto &room:arena.rooms)if(room.sourceCombatTemplate>=0)room.obstacles.clear();
     field->x = std::floor((arena.bounds.min.x - 40) / field->step) * field->step;
     field->z = std::floor((arena.bounds.min.z - 40) / field->step) * field->step;
     field->width = int(std::ceil((arena.bounds.max.x + 40 - field->x) / field->step)) + 1;

@@ -14,7 +14,7 @@ void Arena::prepareBreakables(uint64_t seed) {
     std::vector<int> candidates;
     for (int i = 1; i < roomCount()-1; ++i)
         if ((rooms[size_t(i)].kind == RoomKind::Combat || rooms[size_t(i)].kind == RoomKind::Empty) &&
-            rooms[size_t(i)].story == StoryRoom::None)
+            rooms[size_t(i)].story == StoryRoom::None && rooms[size_t(i)].sourceCombatTemplate<0)
             candidates.push_back(i);
     for (size_t i = 0; i < candidates.size(); ++i)
         std::swap(candidates[i], candidates[i + rng.bounded(uint32_t(candidates.size()-i))]);
