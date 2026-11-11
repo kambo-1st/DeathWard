@@ -1,0 +1,86 @@
+{
+  "recorded_at_utc": "2026-11-11T19:54:39.094825+00:00",
+  "delivery": "D07",
+  "status": "developer checks passed; scoped human playtest accepted",
+  "application_sha256": "122e77202e0a66e4a27767ca8f936c47f18a71f71149d70c703d09c3681af847",
+  "core_regression": {
+    "passed": 14,
+    "failed": 0,
+    "log": "regression.log"
+  },
+  "actual_game_ui_modes": [
+    {
+      "mode": "combat-balance",
+      "exit_code": 0,
+      "log": "combat-balance-input.log"
+    },
+    {
+      "mode": "shooting-balance",
+      "exit_code": 0,
+      "log": "shooting-balance-input.log"
+    },
+    {
+      "mode": "balance",
+      "exit_code": 0,
+      "log": "balance-input.log"
+    },
+    {
+      "mode": "gaper-balance",
+      "exit_code": 0,
+      "log": "gaper-balance-input.log"
+    },
+    {
+      "mode": "spider-balance",
+      "exit_code": 0,
+      "log": "spider-balance-input.log"
+    },
+    {
+      "mode": "pooter-balance",
+      "exit_code": 0,
+      "log": "pooter-balance-input.log"
+    },
+    {
+      "mode": "starting-hearts",
+      "exit_code": 0,
+      "log": "starting-hearts-input.log"
+    }
+  ],
+  "cli_launches": 4,
+  "cli_evidence": "cli-verification.json",
+  "primary_projectile_body_cases": 9,
+  "natural_game_mouse_body_case": {
+    "seed": 69,
+    "room_index": 2,
+    "identity": "10.1.0",
+    "hits": 3,
+    "ai_stunned_for_counting": true
+  },
+  "regular_source_xml_profiles_verified": 155,
+  "registered_unit_inventory": 221,
+  "health_profile_test_stages": [
+    1,
+    4,
+    7,
+    13
+  ],
+  "paired_gaper_morph_seeds": 128,
+  "new_tunables": [
+    "player_damage",
+    "regular_health_multiplier"
+  ],
+  "schema": 9,
+  "regular_hp_default": 1,
+  "source_base_damage": 3.5,
+  "internal_base_damage": 11.2,
+  "internal_hp_units_per_source": 3.2,
+  "source_constants_or_mechanics_files_changed": false,
+  "accepted_external_export_unchanged": true,
+  "accepted_external_export_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "existing_steering_shooting_dodge_controls_retained": true,
+  "incoming_half_heart_conversion_retained": true,
+  "human_d07_accepted": true,
+  "full_native_damage_actor_cache_item_acceptance": false,
+  "uncommitted": false,
+  "next_selectable": "D08 selected; implementation follows checkpoint",
+  "human_acceptance_record": "human-acceptance.json"
+}

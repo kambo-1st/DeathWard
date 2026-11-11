@@ -2178,14 +2178,36 @@ Action Renderer::balancePanel(const Game &game) {
     panel(0,0,1280,800,{8,12,16,235});panel(170,60,940,710,Panel);
     text("EXPEDITION TUNING",205,86,30,Gold);
     text(game.balanceDraft.custom()?"CUSTOM PRESET":"REFERENCE / PARTIAL",800,96,15,Teal);
-    if(button(Action::BalanceWorldTab,"MAP / MOVEMENT / VIEW",205,128,420,30,!game.balanceShootingOpen&&!game.balanceEnemiesOpen))return Action::BalanceWorldTab;
-    if(button(Action::BalanceShootingTab,"SHOOTING",645,128,240,30,game.balanceShootingOpen))return Action::BalanceShootingTab;
+    if(button(Action::BalanceWorldTab,"MAP / MOVEMENT / VIEW",205,128,420,30,!game.balanceShootingOpen&&!game.balanceEnemiesOpen&&!game.balanceCombatOpen))return Action::BalanceWorldTab;
+    if(button(Action::BalanceShootingTab,"SHOOTING",645,128,130,30,game.balanceShootingOpen))return Action::BalanceShootingTab;
+    if(button(Action::BalanceCombatTab,"COMBAT",795,128,90,30,game.balanceCombatOpen))return Action::BalanceCombatTab;
     if(button(Action::BalanceEnemiesTab,"ENEMIES",905,128,170,30,game.balanceEnemiesOpen))return Action::BalanceEnemiesTab;
     if(game.balanceEnemiesOpen) {
         if(button(Action::BalanceChasersTab,"GAPER / SPIDER",645,175,240,28,!game.balancePooterOpen))return Action::BalanceChasersTab;
         if(button(Action::BalancePooterTab,"POOTER",905,175,170,28,game.balancePooterOpen))return Action::BalancePooterTab;
     }
-    if(game.balanceEnemiesOpen&&game.balancePooterOpen) {
+    if(game.balanceCombatOpen) {
+        const auto &p=game.balancePreset;
+        text("DAMAGE AND ENEMY HEALTH",205,185,22,Gold);
+        text("DAMAGE",205,238,18,Paper);text(decimal(p.playerDamage),450,230,28,Paper);
+        if(button(Action::CombatDamageDown,"- 0.10",650,224,130,40))return Action::CombatDamageDown;
+        if(button(Action::CombatDamageUp,"+ 0.10",795,224,130,40))return Action::CombatDamageUp;
+        text("Reference 3.50. New attacks use edits; flying shots keep their damage.",205,278,14,Teal);
+        text("REGULAR ENEMY HP",205,334,18,Paper);text(decimal(p.regularHealthMultiplier*100)+"%",450,326,28,Paper);
+        if(button(Action::RegularHealthDown,"- 5%",650,320,130,40))return Action::RegularHealthDown;
+        if(button(Action::RegularHealthUp,"+ 5%",795,320,130,40))return Action::RegularHealthUp;
+        text("APPLIED to living enemies and new spawns; remaining HP fraction retained.",205,373,13,Teal);
+        text("5 - 400%. Boss HP and player hearts stay unchanged.",205,397,13,Muted);
+        if(game.run) {
+            const auto &r=*game.run;
+            const auto shot=primaryPlayerAttack(r,r.player.shotDamage,false);
+            text("Ordinary damage with owned upgrades: "+decimal(shot.damage/CombatHealthUnitsPerSource),205,423,14,Paper);
+            text("Gaper/Spider contact or Pooter shot: half a heart; hurt immunity retained.",205,446,13,Muted);
+        }
+        if(button(Action::ResetCombat,"RESET DAMAGE / HP",205,465,370,36))return Action::ResetCombat;
+        const auto next=game.nextBalancePreset.value_or(BalancePreset{});
+        text("Next: "+decimal(next.playerDamage)+" damage / "+decimal(next.regularHealthMultiplier*100)+"% HP",600,478,13,Teal);
+    } else if(game.balanceEnemiesOpen&&game.balancePooterOpen) {
         const auto &p=game.balancePreset;
         text("ORDINARY POOTER",205,185,22,Gold);
         const auto row=[&](const char *label,float value,float y,Action down,Action up){

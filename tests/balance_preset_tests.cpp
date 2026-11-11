@@ -78,6 +78,15 @@ int main() {
             auto p=v7;p.pooterMovementMultiplier=movement;p.pooterShotSpeedMultiplier=speed;p.pooterAttackIntervalMultiplier=delay;p.save(file);
             check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==p.revision(),"independent Pooter settings round-trip at bounds");
         }
+        const auto v8=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d06-pooter-shots/custom-pooter.json","2ccd5b1c274a302e");
+        check(v8.playerDamage==3.5f&&v8.regularHealthMultiplier==1&&v8.pooterShotSpeedMultiplier==.65f&&v8.defaultZoomPercent==165,
+              "schema8 migration enables selected damage baseline and retains prior settings");
+        for(float damage:{.1f,3.5f,7.f,50.f})for(float hp:{.05f,.75f,1.f,4.f}) {
+            auto p=v8;p.playerDamage=damage;p.regularHealthMultiplier=hp;p.save(file);
+            check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==p.revision(),"damage/HP round-trip independently at bounds");
+        }
+        auto combat=v8;combat.mechanicsFingerprint="fixture-content";combat.playerDamage=7;combat.regularHealthMultiplier=.75f;
         auto pooter=v7;pooter.mechanicsFingerprint="fixture-content";pooter.pooterMovementMultiplier=.75f;pooter.pooterShotSpeedMultiplier=.65f;pooter.pooterAttackIntervalMultiplier=1.5f;
         auto spider=v5;spider.mechanicsFingerprint="fixture-content";spider.spiderMovementMultiplier=.75f;
         auto gaper=v5;gaper.mechanicsFingerprint="fixture-content";gaper.gaperMovementMultiplier=.75f;
@@ -87,10 +96,17 @@ int main() {
         BalancePreset custom{.8f,"fixture-content"};custom.save(file);
         const auto valid=custom.json();
         std::vector<std::string> invalid{
+            replaceOne(combat.json(),"\"player_damage\": 7","\"player_damage\": 0"),
+            replaceOne(combat.json(),"\"player_damage\": 7","\"player_damage\": 50.01"),
+            replaceOne(combat.json(),"\"player_damage\": 7","\"player_damage\": 6"),
+            replaceOne(combat.json(),"\"regular_health_multiplier\": 0.75","\"regular_health_multiplier\": 0.049"),
+            replaceOne(combat.json(),"\"regular_health_multiplier\": 0.75","\"regular_health_multiplier\": 4.01"),
+            replaceOne(combat.json(),"\"regular_health_multiplier\": 0.75","\"regular_health_multiplier\": 0.7"),
+            replaceOne(combat.json(),"source-damage-internal-hp-v1","incorrect-damage-units"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 8","\"schema_version\": 9"),
-            replaceOne(valid,"\"schema_version\": 8","\"schema_version\": 8, \"schema_version\": 8"),
-            replaceOne(valid,"d06-pooter-v8","future-contract"),
+            replaceOne(valid,"\"schema_version\": 9","\"schema_version\": 10"),
+            replaceOne(valid,"\"schema_version\": 9","\"schema_version\": 9, \"schema_version\": 9"),
+            replaceOne(valid,"d07-combat-v9","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

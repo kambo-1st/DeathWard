@@ -1,0 +1,34 @@
+Internal ctest changing into directory: /home/kambo/workspace/DeathWard/build
+Test project /home/kambo/workspace/DeathWard/build
+      Start 140: pooter_gameplay
+      Start 137: combat_balance_gameplay
+      Start 139: spider_gameplay
+      Start 138: gaper_gameplay
+ 1/14 Test #138: gaper_gameplay ...................   Passed    1.26 sec
+      Start 133: canonical_shooting_integration
+ 2/14 Test #139: spider_gameplay ..................   Passed    1.73 sec
+      Start 147: damage_health_calibration
+ 3/14 Test #133: canonical_shooting_integration ...   Passed    2.04 sec
+      Start  92: leper_family
+ 4/14 Test #137: combat_balance_gameplay ..........   Passed    6.18 sec
+      Start  90: black_globin_family
+ 5/14 Test  #92: leper_family .....................   Passed    2.88 sec
+      Start 132: player_speed_attribute
+ 6/14 Test #132: player_speed_attribute ...........   Passed    0.87 sec
+      Start  60: heart_gameplay
+ 7/14 Test #147: damage_health_calibration ........   Passed    6.35 sec
+      Start 120: adaptive_armor
+ 8/14 Test #120: adaptive_armor ...................   Passed    0.34 sec
+      Start 131: balance_preset_contract
+ 9/14 Test #131: balance_preset_contract ..........   Passed    0.29 sec
+      Start  64: regular_health_balance
+10/14 Test  #64: regular_health_balance ...........   Passed    0.44 sec
+      Start  63: native_player_health
+11/14 Test  #63: native_player_health .............   Passed    0.00 sec
+12/14 Test  #60: heart_gameplay ...................   Passed    2.20 sec
+13/14 Test  #90: black_globin_family ..............   Passed    3.92 sec
+14/14 Test #140: pooter_gameplay ..................   Passed   12.79 sec
+
+100% tests passed, 0 tests failed out of 14
+
+Total Test time (real) =  12.79 sec

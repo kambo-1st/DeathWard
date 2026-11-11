@@ -1,0 +1,11 @@
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 revision=dc1c0be7d1c5eefa profile=custom
+D04_CHASE target=-19,-45 actor=2 start_distance=24.2898
+D04_ROUTE target_blocked_for_gaper=1 player_route=1 gaper_route=0 center_route=1
+D04_CHASE step=120 actor=0.552577,-56.3175 target=-19,-45 velocity=-0.524722,0.66925 path=1 direct=0 duration=2.23333
+D04_CHASE step=240 actor=-0.706825,-55.6036 target=-19,-45 velocity=-0.676203,0.571747 path=1 direct=0 duration=4.23333
+D04_CHASE step=360 actor=-2.28965,-54.8176 target=-19,-45 velocity=-0.778427,0.45639 path=1 direct=0 duration=6.23333
+D04_CHASE step=480 actor=-3.85995,-53.9278 target=-19,-45 velocity=-0.786939,0.441971 path=1 direct=0 duration=8.23333
+D04_CHASE step=600 actor=-5.46449,-53.1373 target=-19,-45 velocity=-0.810041,0.383148 path=1 direct=0 duration=10.2333
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=0.65 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 revision=0924dcde7bcab592 profile=custom
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=0.65 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 revision=0924dcde7bcab592 profile=custom
+PASS D04 main Game natural actor + UI mouse/keyboard, drive transition, preserved player settings, preset roundtrip/rejection, map/floor/retry/fresh-session persistence

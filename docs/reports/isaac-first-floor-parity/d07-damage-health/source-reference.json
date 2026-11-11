@@ -1,0 +1,33 @@
+{
+  "recorded_at_utc": "2026-11-11T19:47:25.643755+00:00",
+  "source": "Repentance1.7.9b installed preserved XML",
+  "entities_xml_sha256": "81204e8ed292f7039a4ffcfdc9b3487915d2ed439fd29a9cb28ce1d8063cad75",
+  "registered_identities": 221,
+  "audited_regulars": 155,
+  "regular_source_base_stage_mismatches": [],
+  "regular_xml_missing": [],
+  "native_baseline_damage": 3.5,
+  "damage_evidence": "Previously established canonical ordinary-Isaac baseline; this checkpoint does not execute the full native damage/cache pipeline",
+  "internal_units_per_source_hp": 3.2,
+  "ordinary_primary_internal_damage": 11.2,
+  "baseline_regular_hp_multiplier": 1,
+  "selected_body_hp": {
+    "10.1.0": {
+      "source": 10,
+      "internal": 32,
+      "ordinary_body_hits": 3
+    },
+    "85.0.0": {
+      "source": 6.5,
+      "internal": 20.8,
+      "ordinary_body_hits": 2
+    },
+    "14.0.0": {
+      "source": 8,
+      "internal": 25.6,
+      "ordinary_body_hits": 3
+    }
+  },
+  "policy": "Retain all authored HP/threshold/effect units and adaptation factors; adapt canonical Damage into the same internal unit. Regular multiplier remains an independent immutable override. Bosses, nonmember regulars, hazards and custom legacy actors retain their HP. Global primary baseline changes consistently for all targets; unselected actor/boss/item difficulty is not source-accepted.",
+  "native_full_acceptance": false
+}

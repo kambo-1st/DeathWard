@@ -284,8 +284,8 @@
       "native_requirement_original_audit": "3.5 documented",
       "deathward_baseline": "24",
       "original_assessment": "Not a shared scale with enemy HP.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "recommendation": {
         "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
@@ -304,7 +304,9 @@
       },
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "S02",
@@ -339,8 +341,8 @@
       "native_requirement_original_audit": "About 9.545, before accuracy/defense/effects",
       "deathward_baseline": "Nominal 82.759; measured-cadence arithmetic **80**",
       "original_assessment": "Different attack/HP economy. This is arithmetic, not a real-combat DPS test.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "recommendation": {
         "reviewed_at_utc": "2026-11-08T10:34:37+00:00",
@@ -359,7 +361,9 @@
       },
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "S04",
@@ -877,12 +881,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 10; hits at 3.5 damage: 3",
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E02",
@@ -890,12 +896,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 10; hits at 3.5 damage: 3",
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E03",
@@ -903,12 +911,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 10; hits at 3.5 damage: 3",
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E04",
@@ -916,12 +926,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 10; hits at 3.5 damage: 3",
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E05",
@@ -929,12 +941,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 3; hits at 3.5 damage: 1",
       "deathward_baseline": "Body HP 9.6; hits at 24 damage: 1",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E06",
@@ -942,12 +956,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 8; hits at 3.5 damage: 3",
       "deathward_baseline": "Body HP 25.6; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E07",
@@ -955,12 +971,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 5; hits at 3.5 damage: 2",
       "deathward_baseline": "Body HP 16; hits at 24 damage: 1",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E08",
@@ -968,12 +986,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP **6.5**; hits at 3.5 damage: 2",
       "deathward_baseline": "Body HP 20.8; hits at 24 damage: 1",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E09",
@@ -981,12 +1001,14 @@
       "native_requirement_original_audit": "XML stage-1 body HP 10; hits at 3.5 damage: 3",
       "deathward_baseline": "Body HP 32; hits at 24 damage: 2",
       "original_assessment": "Body HP / simple hit counts only; full AI, eligibility and encounter acceptance are separate.",
-      "evidence": "[Original audit](isaac_first_floor_differences.md)",
-      "status": "joint source-unit private review checked; live acceptance held on enemy movement; production unchanged",
+      "evidence": "[D07 implementation and verification](reports/isaac-first-floor-parity/d07-damage-health/README.md)",
+      "status": "enabled_scoped_main_game",
       "selected": true,
       "implementation_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/README.md",
       "full_native_acceptance": false,
-      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance."
+      "remaining": "Human encounter verdict, consistent remaining-roster/boss unit policy before global rollout and full native acceptance.",
+      "implementation_scope": "D07 canonical Damage3.5 adapted to retained internal HP units \u00d73.2; source HP/adaptation factors remain separate. Body-hit relationships enabled; full native damage/item/cache/actor acceptance remains open.",
+      "human_acceptance": "scoped D07 playtest accepted; full native acceptance remains open"
     },
     {
       "id": "E10",
@@ -2225,5 +2247,6 @@
     "production_defaults_changed": false,
     "native_rng_replay_verified": false,
     "full_native_acceptance": false
-  }
+  },
+  "latest_delivery": "D07 accepted and commit requested; D08 selected next"
 }

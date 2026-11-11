@@ -1,0 +1,19 @@
+Test: combat_balance_gameplay
+Command: "/home/kambo/workspace/DeathWard/build/deathward_combat_balance_gameplay_tests"
+Directory: /home/kambo/workspace/DeathWard/build
+"combat_balance_gameplay" start time: Nov 11 20:48 CET
+Output:
+----------------------------------------------------------
+BODY 10.0 hp=32 damage=11.2 hits=3 steps=63
+BODY 10.1 hp=32 damage=11.2 hits=3 steps=63
+BODY 11.0 hp=32 damage=11.2 hits=3 steps=63
+BODY 12.0 hp=32 damage=11.2 hits=3 steps=63
+BODY 13.0 hp=9.6 damage=11.2 hits=1 steps=21
+BODY 14.0 hp=25.6 damage=11.2 hits=3 steps=65
+BODY 18.0 hp=16 damage=11.2 hits=2 steps=43
+BODY 85.0 hp=20.8 damage=11.2 hits=2 steps=43
+BODY 29.0 hp=32 damage=11.2 hits=3 steps=63
+PASS health profiles=155 stages=4 live fractions/champions/residents/brood/morphs/offspring; Gusher=49 Pacer=17
+PASS birth damage/current wait/items/independent shooting/atomic rejection/half hearts/hurt window/dodge
+PASS D07 combat balance
+<end of output>

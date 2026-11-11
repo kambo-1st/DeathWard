@@ -2987,6 +2987,17 @@ std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::load(const std::filesy
     }
     std::ostringstream hex;hex<<std::hex<<hash;lib->fingerprint_=hex.str();return lib;
 }
+std::shared_ptr<const MechanicsLibrary> MechanicsLibrary::withRegularHealthMultiplier(float multiplier) const {
+    require(std::isfinite(multiplier)&&multiplier>=.05f&&multiplier<=4,"Regular health multiplier must be between 0.05 and 4");
+    auto next=std::make_shared<MechanicsLibrary>(*this);
+    const float ratio=multiplier/regularHealthMultiplier_;
+    for(const auto id:regularHealthIds_) {
+        next->monsters_[monsterIndex_.at(id)].hp*=ratio;
+        next->stageHealth_.at(id).scale*=ratio;
+    }
+    next->regularHealthMultiplier_=multiplier;
+    return next;
+}
 const MonsterDeathRule *MechanicsLibrary::deathRule(MonsterId id) const {
     const auto found=deathBindings_.find(id);
     return found==deathBindings_.end()?nullptr:&deaths_.at(found->second);

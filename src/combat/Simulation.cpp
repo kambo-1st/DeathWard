@@ -260,6 +260,33 @@ void Simulation::grant(const ItemKey &item) {
     announce(definition->name,2);
     checkpointNeeded = true;
 }
+void Simulation::applyCombatBalance(float sourceDamage,float healthMultiplier) {
+    if(!std::isfinite(sourceDamage)||sourceDamage<.1f||sourceDamage>50)
+        throw std::invalid_argument("Damage must be between 0.1 and 50");
+    // Build/validate the complete immutable snapshot before changing any actor.
+    auto next=healthMultiplier==content->regularHealthMultiplier()?content:content->withRegularHealthMultiplier(healthMultiplier);
+    if(next!=content) {
+        const float ratio=healthMultiplier/content->regularHealthMultiplier();
+        const auto scale=[&](Enemy &e) {
+            if(!content->regularHealthMember(e.monster))return;
+            e.hp*=ratio;e.maxHp*=ratio;
+            if(e.blackGlobin)e.blackGlobin->lastEmissionHP*=ratio;
+            // Retain normalized past pressure for HP-dependent armor. Pending
+            // attacks and status damage keep their already selected damage.
+            if(e.adaptiveArmor) {
+                e.adaptiveArmor->recentDps*=ratio;
+                for(auto &amount:e.adaptiveArmor->history)amount*=ratio;
+            }
+        };
+        for(auto &e:enemies)scale(e);
+        for(auto &r:rooms)for(auto &e:r.residents)scale(e);
+        for(auto &e:charmFollowers_)scale(e);
+        content=std::move(next);
+    }
+    player.attributes.damage=sourceDamage;
+    player.shotDamage=sourceDamage*CombatHealthUnitsPerSource;
+    checkpointNeeded=true;
+}
 void Simulation::tunePlayer(float baseHealth, float shotDamage) {
     if (dead || finished || !std::isfinite(baseHealth) || !std::isfinite(shotDamage))
         return;

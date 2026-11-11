@@ -14,6 +14,8 @@ struct BalancePreset {
     static constexpr float ReferenceGaperMovement = 1, MinGaperMovement = .1f, MaxGaperMovement = 2;
     static constexpr float ReferenceSpiderMovement = 1, MinSpiderMovement = .1f, MaxSpiderMovement = 2;
     static constexpr float MinPooterMovement=.1f, MaxPooterMovement=2, MinPooterShotSpeed=.1f, MaxPooterShotSpeed=2, MinPooterInterval=.25f, MaxPooterInterval=2;
+    static constexpr float ReferenceDamage=3.5f, MinDamage=.1f, MaxDamage=50;
+    static constexpr float ReferenceRegularHealth=1, MinRegularHealth=.05f, MaxRegularHealth=4;
     float playerSpeed = ReferenceSpeed;
     std::string mechanicsFingerprint;
     float roomSizeScale = 1;
@@ -24,7 +26,8 @@ struct BalancePreset {
     float gaperMovementMultiplier = ReferenceGaperMovement;
     float spiderMovementMultiplier = ReferenceSpiderMovement;
     float pooterMovementMultiplier=1, pooterShotSpeedMultiplier=1, pooterAttackIntervalMultiplier=1;
-    bool custom() const { return playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
+    float playerDamage=ReferenceDamage, regularHealthMultiplier=ReferenceRegularHealth;
+    bool custom() const { return playerDamage != ReferenceDamage || regularHealthMultiplier != ReferenceRegularHealth || playerSpeed != ReferenceSpeed || roomSizeScale != 1 || roomMinHalfTiles != 0 || routeLengthScale != 1 || defaultZoomPercent != ReferenceZoom || tearsPerSecond != ReferenceTears || shotSpeed != ReferenceShotSpeed || rangeTiles != ReferenceRange || gaperMovementMultiplier != ReferenceGaperMovement || spiderMovementMultiplier != ReferenceSpiderMovement || pooterMovementMultiplier != 1 || pooterShotSpeedMultiplier != 1 || pooterAttackIntervalMultiplier != 1; }
     void validate() const;
     std::string json() const;
     std::string revision() const;

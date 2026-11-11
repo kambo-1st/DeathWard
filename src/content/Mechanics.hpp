@@ -1058,6 +1058,9 @@ class MechanicsLibrary {
     const BoomFlyDefinition *boomFly(MonsterId id) const;
     float monsterHealth(MonsterId id,int sourceStage) const;
     const StageHealthDefinition *stageHealth(MonsterId id) const;
+    // Immutable runtime override. Fingerprint identifies the authored files;
+    // the balance preset revision records this separately from their source values.
+    std::shared_ptr<const MechanicsLibrary> withRegularHealthMultiplier(float multiplier) const;
     float regularHealthMultiplier() const {return regularHealthMultiplier_;}
     float regularHealthAdjustment(MonsterId id) const {return regularHealthIds_.contains(id)?regularHealthMultiplier_:1.f;}
     bool regularHealthMember(MonsterId id) const {return regularHealthIds_.contains(id);}

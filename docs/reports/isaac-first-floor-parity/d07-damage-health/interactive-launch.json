@@ -1,0 +1,24 @@
+{
+  "recorded_at_utc": "2026-11-11T19:55:15.611247+00:00",
+  "pid": 748499,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "69",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d07/campaign.save",
+    "--balance-preset",
+    "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+  ],
+  "log": "/tmp/deathward-d07-interactive.log",
+  "running_after_seconds": 4,
+  "balance": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 revision=dc1c0be7d1c5eefa profile=custom",
+  "seed": 69,
+  "displayed_room": 3,
+  "naturally_generated_encounter": "four ordinary Gapers and one Pooter",
+  "god_mode": false,
+  "human_review": "pending",
+  "application_sha256": "122e77202e0a66e4a27767ca8f936c47f18a71f71149d70c703d09c3681af847"
+}

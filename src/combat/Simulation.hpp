@@ -613,7 +613,7 @@ struct Player {
     float shootPose = 0;
     bool dodgeMoving = false;
     float baseHealth = StartingHealth, shotDamage = RevolverDamage;
-    // Step 2 wires Speed only. Other scalar consumers remain separate work.
+    // Main Game wires Speed, shooting and Damage through the selected adapters.
     // Existing health fields below remain the sole runtime health authority.
     SourcePlayerStats attributes;
     static constexpr float AcceptedWalkingPace = 4.8f;
@@ -1230,6 +1230,7 @@ class Simulation {
     bool takeHeartDamage(float halves,bool redFirst=false,const Context &context={},bool hostile=true);
     void healDebug();
     void tunePlayer(float baseHealth, float shotDamage);
+    void applyCombatBalance(float sourceDamage,float regularHealthMultiplier);
     void startStress();
     void interact();
     void openShop();

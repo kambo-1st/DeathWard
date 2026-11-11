@@ -1,0 +1,5 @@
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 revision=dc1c0be7d1c5eefa profile=custom
+D06 natural seed=69 room=2 shots=6 travelled=1.03576
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=0.5 pooter_shot=0.65 pooter_delay=1.5 damage=3.5 regular_hp=1 revision=92198dbedea6c7f6 profile=custom
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=0.5 pooter_shot=0.65 pooter_delay=1.5 damage=3.5 regular_hp=1 revision=92198dbedea6c7f6 profile=custom
+PASS D06 main Game natural encounter, UI controls, safe attack edits, export/load/rejection and map/floor/retry/fresh-session persistence

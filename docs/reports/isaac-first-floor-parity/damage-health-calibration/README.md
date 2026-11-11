@@ -1,3 +1,5 @@
+**Historical private review. D07 now enables the scoped main-game damage/HP relationship using the retained internal unit; see [current D07 handoff](../d07-damage-health/README.md). The conversion-1 private pack below is not loaded in production.**
+
 **Live HP acceptance is on hold: [enemy movement blocker](../enemy-movement-blocker/README.md). Body-count checks remain scoped evidence.**
 
 # S01 / S03 + E01–E09: joint damage and HP review

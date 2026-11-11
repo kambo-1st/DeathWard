@@ -3,7 +3,7 @@
   "status": "paused",
   "paused_at_utc": "2026-11-08T08:08:31Z",
   "pause_reason": "User stopped the bulk effort,requested rollback and manual selection of each specific future difference.",
-  "implementation_state": "scoped_health_accepted_speed_shooting_and_D04_D05_D06_ordinary_enemy_movement_and_pooter_shots_enabled_plus_private_damage_health_reviews",
+  "implementation_state": "scoped_health_speed_shooting_D04_D06_enemy_movement_and_D07_damage_hp_enabled_D07_scoped_accepted_D08_selected",
   "baseline_commit": "28023a49dbd8712820ba6953219cfdb7866bdcb6",
   "automatic_implementation_authorized": false,
   "accepted_exceptions": [
@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "D07 damage, enemy HP and incoming hits is next selectable, not yet selected. Scoped D06 playtest accepted. Full native actor and floor coverage remain open.",
+  "next_work": "Implement selected D08 recorded source combat room in the main game; native actor/geometry/item/floor coverage remains open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-11",
-    "status": "D04\u2013D06 main-game enemy deliveries developer-verified and scoped playtests acknowledged; full native acceptance remains open",
+    "status": "D07 developer-verified and scoped playtest accepted; D08 selected next",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,7 +47,7 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "D07 damage, enemy HP and incoming hits; requires explicit selection",
+    "next_proposed_delivery": "D08 recorded source combat room, explicitly selected",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
@@ -56,14 +56,16 @@
       "D03",
       "D04",
       "D05",
-      "D06"
+      "D06",
+      "D07",
+      "D08"
     ],
-    "human_acceptance": "D02 workflow and scoped D03 accepted; D04/D05 positively acknowledged; D06 accepted after seed69 playtest and commit requested; full native acceptance remains open",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/validation.json",
+    "human_acceptance": "D02 workflow and scoped D03 accepted; D04/D05 positively acknowledged; D06 accepted after seed69 playtest and commit requested; full native acceptance remains open; D07 selected and awaiting human verdict; D07 accepted and commit requested",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/d07-damage-health/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/d07-damage-health/validation.json",
     "previous_committed_delivery": {
-      "id": "D03",
-      "commit": "16ec148d"
+      "id": "D04\u2013D06",
+      "commit": "50f44a47"
     },
     "d03_scope": {
       "enabled": "independent live Tears/Shot Speed/Range controls, exact baseline reset, upgrade-aware display, schema-5 export/load/remember and schemas 1-4 migration",
@@ -74,7 +76,7 @@
       "damage_hp_changed": false,
       "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
     },
-    "implementation_checkpoint": "D04\u2013D06 source, tests, evidence and acceptance in the containing checkpoint commit",
+    "implementation_checkpoint": "D07 source/tests/reports/acceptance in containing commit",
     "d04_scope": {
       "enemy": "10.1.0 ordinary Gaper",
       "status": "enabled, developer-verified and positively acknowledged",
@@ -126,6 +128,30 @@
       "cli_launch_cases": 4,
       "human_review": "accepted: ok, nice commit! after seed69 main-game launch",
       "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d06-pooter-shots/human-acceptance.json"
+    },
+    "d07_scope": {
+      "status": "enabled, developer-verified and scoped playtest accepted",
+      "source_damage": 3.5,
+      "internal_damage": 11.2,
+      "internal_units_per_source_hp": 3.2,
+      "regular_hp_multiplier": 1,
+      "regular_hp_runtime_override": true,
+      "preserve_living_hp_fraction": true,
+      "schema": 9,
+      "regular_xml_source_profiles_verified": 155,
+      "registered_unit_policy_inventory": 221,
+      "baseline_body_hits": {
+        "Gaper": 3,
+        "Spider": 2,
+        "Pooter": 3
+      },
+      "focused_suites_passed": 14,
+      "game_ui_modes_passed": 7,
+      "cli_cases": 4,
+      "boss_hp_changed": false,
+      "full_native_acceptance": false,
+      "report": "docs/reports/isaac-first-floor-parity/d07-damage-health/README.md",
+      "human_acceptance_record": "docs/reports/isaac-first-floor-parity/d07-damage-health/human-acceptance.json"
     }
   },
   "first_floor_requirements_checkpoint": {
@@ -173,7 +199,7 @@
   "selected_difference_scope": "Three full red starting hearts/six half-heart health units;preserve dodge;no other differences.",
   "selected_difference_verified_at_utc": "2026-11-08T09:19:12Z",
   "selected_difference_report": "docs/reports/isaac-first-floor-parity/h01-starting-red-hearts/README.md",
-  "current_implementation_state": "Scoped H01-H18 health (H15 retained), accepted S02/S04/S07-S09 consumers; private source HP/damage and movement references; full native acceptance open",
+  "current_implementation_state": "Scoped H01-H18 health, S01-S04/S07-S09 consumers, E01-E09 body damage/HP and D04-D06 movement/shots enabled; human D07 and full native acceptance open",
   "current_starting_red_half_heart_units": 6,
   "current_starting_red_hearts": 3,
   "selected_differences": [
@@ -247,16 +273,17 @@
   },
   "manually_selected_shooting_enabled": true,
   "damage_health_checkpoint": {
-    "status": "live review blocked on enemy movement; body-count evidence retained",
-    "production_enabled": false,
-    "human_acceptance": "not assessable while enemies too fast",
-    "interactive_executable": "/home/kambo/.local/share/deathward/reviews/damage-health-retry-20261108T175053Z/deathward_damage_health_review",
-    "evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/validation.json",
+    "status": "D07 enabled and scoped playtest accepted; full native acceptance open",
+    "production_enabled": true,
+    "human_acceptance": "accepted D07 encounter playtest",
+    "interactive_executable": "build/deathward",
+    "evidence": "docs/reports/isaac-first-floor-parity/d07-damage-health/validation.json",
     "death_retry_evidence": "docs/reports/isaac-first-floor-parity/damage-health-calibration/death-retry/validation.json",
-    "movement_blocker_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json"
+    "movement_blocker_evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json",
+    "historical_review_executable": "/home/kambo/.local/share/deathward/reviews/damage-health-retry-20261108T175053Z/deathward_damage_health_review"
   },
   "enemy_movement_checkpoint": {
-    "status": "D04\u2013D06 ordinary Gaper/Spider/Pooter movement and ordinary Pooter shots enabled, developer-verified and scoped playtest accepted; full native acceptance remains open; production HP awaits D07 selection",
+    "status": "D04\u2013D06 movement and Pooter shots enabled, developer-verified and scoped playtest accepted; D07 damage/HP now enabled; full native acceptance open",
     "scope": "encounter roster conversion and native movement verification first",
     "evidence": "docs/reports/isaac-first-floor-parity/enemy-movement-blocker/validation.json",
     "corrected_candidate_enabled": true,
@@ -270,10 +297,10 @@
     "full_native_acceptance": false
   },
   "current_delivery_summary": {
-    "recorded_at_utc": "2026-11-11T19:33:21.383515+00:00",
+    "recorded_at_utc": "2026-11-11T19:54:14.190987+00:00",
     "total_entries": 123,
     "scoped_production_enabled": {
-      "count": 24,
+      "count": 35,
       "ids": [
         "H01",
         "H02",
@@ -298,17 +325,9 @@
         "S08",
         "S09",
         "E11",
-        "E12"
-      ],
-      "E11_scope": "ordinary Gaper10.1.0, Spider85.0.0 and Pooter14.0.0 movement; full native actor acceptance open",
-      "E12_scope": "ordinary Pooter14.0.0 attack timing only; other actors/full native scheduler acceptance open"
-    },
-    "private_review_only": {
-      "count": 13,
-      "ids": [
+        "E12",
         "S01",
         "S03",
-        "S05",
         "E01",
         "E02",
         "E03",
@@ -317,7 +336,16 @@
         "E06",
         "E07",
         "E08",
-        "E09",
+        "E09"
+      ],
+      "E11_scope": "ordinary Gaper10.1.0, Spider85.0.0 and Pooter14.0.0 movement; full native actor acceptance open",
+      "E12_scope": "ordinary Pooter14.0.0 attack timing only; other actors/full native scheduler acceptance open",
+      "D07_scope": "Canonical ordinary Damage/shared HP units and selected body relationships, with source values/adaptations separate; full actor/item/cache/DPS acceptance pending"
+    },
+    "private_review_only": {
+      "count": 2,
+      "ids": [
+        "S05",
         "R06"
       ]
     },

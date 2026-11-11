@@ -12,6 +12,10 @@ namespace dw {
 // source meanings, independently of rendering, room size and simulation clocks.
 // Runtime health remains in its existing authority; the six scalar attributes
 // can be stored without creating a second mutable health state.
+// Damage/HP retain the existing internal unit across regulars, bosses and effects.
+// Source values and per-actor adaptation factors stay separate from this conversion.
+inline constexpr float CombatHealthUnitsPerSource = 3.2f;
+inline constexpr float ReferencePlayerDamage = 3.5f;
 struct SourcePlayerStats {
     float speed = 1;
     float tearsPerSecond = 30.f / 11.f;

@@ -275,9 +275,17 @@ void Game::perform(Action action) {
             break;
         case Action::CloseBalance:
             balanceOpen=balancePathEditing=false;accumulator=0;resetPointerInput();break;
-        case Action::BalanceWorldTab:balanceShootingOpen=balanceEnemiesOpen=false;break;
-        case Action::BalanceShootingTab:balanceShootingOpen=true;balanceEnemiesOpen=false;break;
-        case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceWorldTab:balanceShootingOpen=balanceEnemiesOpen=balanceCombatOpen=false;break;
+        case Action::BalanceShootingTab:balanceShootingOpen=true;balanceEnemiesOpen=balanceCombatOpen=false;break;
+        case Action::BalanceEnemiesTab:balanceEnemiesOpen=true;balanceShootingOpen=balanceCombatOpen=false;balancePooterOpen=false;break;
+        case Action::BalanceCombatTab:balanceCombatOpen=true;balanceShootingOpen=balanceEnemiesOpen=false;break;
+        case Action::CombatDamageDown:case Action::CombatDamageUp:
+            setCombatBalance(std::clamp(std::round((balancePreset.playerDamage+(action==Action::CombatDamageUp?.1f:-.1f))*10)/10,
+                             BalancePreset::MinDamage,BalancePreset::MaxDamage),balancePreset.regularHealthMultiplier);break;
+        case Action::RegularHealthDown:case Action::RegularHealthUp:
+            setCombatBalance(balancePreset.playerDamage,std::clamp(std::round((balancePreset.regularHealthMultiplier+(action==Action::RegularHealthUp?.05f:-.05f))*100)/100,
+                             BalancePreset::MinRegularHealth,BalancePreset::MaxRegularHealth));break;
+        case Action::ResetCombat:setCombatBalance(BalancePreset::ReferenceDamage,BalancePreset::ReferenceRegularHealth);break;
         case Action::BalanceChasersTab:balancePooterOpen=false;break;
         case Action::BalancePooterTab:balancePooterOpen=true;break;
         case Action::PooterMovementDown:case Action::PooterMovementUp:
@@ -439,9 +447,10 @@ void Game::perform(Action action) {
                     damage += 4;
                 if (action == Action::ResetPlayer) {
                     health = StartingHealth;
-                    damage = RevolverDamage;
+                    damage = BalancePreset::ReferenceDamage*CombatHealthUnitsPerSource;
                 }
                 run->tunePlayer(health, damage);
+                setCombatBalance(std::clamp(damage/CombatHealthUnitsPerSource,BalancePreset::MinDamage,BalancePreset::MaxDamage),balancePreset.regularHealthMultiplier);
                 playerHealth = run->player.baseHealth;
                 playerDamage = run->player.shotDamage;
                 run->debugNotice("PLAYER / base health " + std::to_string(int(playerHealth)) +
@@ -828,9 +837,11 @@ Game::Menu Game::menuContext() const {
 std::vector<Action> Game::menuActions() const {
     const auto context=menuContext();
     if(context==Menu::Balance) {
-        std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceEnemiesTab};
+        std::vector<Action> actions{Action::CloseBalance,Action::BalanceWorldTab,Action::BalanceShootingTab,Action::BalanceCombatTab,Action::BalanceEnemiesTab};
         if(balanceEnemiesOpen){actions.push_back(Action::BalanceChasersTab);actions.push_back(Action::BalancePooterTab);}
-        const std::vector<Action> page=balanceEnemiesOpen&&balancePooterOpen?
+        const std::vector<Action> page=balanceCombatOpen?
+            std::vector<Action>{Action::CombatDamageDown,Action::CombatDamageUp,Action::RegularHealthDown,Action::RegularHealthUp,Action::ResetCombat}:
+            balanceEnemiesOpen&&balancePooterOpen?
             std::vector<Action>{Action::PooterMovementDown,Action::PooterMovementUp,Action::PooterShotDown,Action::PooterShotUp,Action::PooterDelayDown,Action::PooterDelayUp,Action::ResetPooter}:
             balanceEnemiesOpen?
             std::vector<Action>{Action::GaperMovementDown,Action::GaperMovementUp,Action::GaperMovementReset,Action::SpiderMovementDown,Action::SpiderMovementUp,Action::SpiderMovementReset}:

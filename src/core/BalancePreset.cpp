@@ -19,7 +19,7 @@
 
 namespace dw {
 namespace {
-constexpr const char *Contract = "d06-pooter-v8";
+constexpr const char *Contract = "d07-combat-v9";
 constexpr const char *Source = "The Binding of Isaac: Repentance 1.7.9b";
 constexpr const char *SourceHash = "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6";
 // Deliberately bounded JSON for this schema (objects, strings, finite numbers,
@@ -139,6 +139,9 @@ std::string numericText(float value) {
 }
 }
 void BalancePreset::validate() const {
+    if(!std::isfinite(playerDamage)||playerDamage<MinDamage||playerDamage>MaxDamage||
+       !std::isfinite(regularHealthMultiplier)||regularHealthMultiplier<MinRegularHealth||regularHealthMultiplier>MaxRegularHealth)
+        throw std::runtime_error("Damage must be 0.1-50; regular enemy HP must be 5-400%");
     if(!std::isfinite(pooterMovementMultiplier)||pooterMovementMultiplier<MinPooterMovement||pooterMovementMultiplier>MaxPooterMovement||
        !std::isfinite(pooterShotSpeedMultiplier)||pooterShotSpeedMultiplier<MinPooterShotSpeed||pooterShotSpeedMultiplier>MaxPooterShotSpeed||
        !std::isfinite(pooterAttackIntervalMultiplier)||pooterAttackIntervalMultiplier<MinPooterInterval||pooterAttackIntervalMultiplier>MaxPooterInterval)
@@ -168,14 +171,16 @@ void BalancePreset::validate() const {
 }
 std::string BalancePreset::json() const {
     validate();std::ostringstream out;out.imbue(std::locale::classic());out<<std::setprecision(9);
-    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 8,\n"
+    out<<"{\n  \"format\": \"deathward.balance\",\n  \"schema_version\": 9,\n"
        <<"  \"compatibility\": {\"contract\": "<<quoted(Contract)<<", \"content_version\": "<<quoted(ContentVersion)
        <<", \"mechanics_fingerprint\": "<<quoted(mechanicsFingerprint)<<"},\n"
        <<"  \"reference\": {\"source\": "<<quoted(Source)<<", \"executable_sha256\": "<<quoted(SourceHash)
-       <<", \"coverage\": \"Player, shooting, Gaper, Spider, Pooter, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160, \"tears_per_second\": "<<numericText(ReferenceTears)<<", \"shot_speed\": 1, \"range_tiles\": 6.5, \"shooting_calibration\": \"accepted-independent-v1\", \"gaper_movement_multiplier\": 1, \"gaper_calibration\": \"player-relative-v1\", \"spider_movement_multiplier\": 1, \"spider_calibration\": \"player-relative-burst-v1\", \"pooter_movement_multiplier\": 1, \"pooter_shot_speed_multiplier\": 1, \"pooter_attack_interval_multiplier\": 1, \"pooter_calibration\": \"player-relative-mode0-v1\"},\n"
-       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<", \"tears_per_second\": "<<numericText(tearsPerSecond)<<", \"shot_speed\": "<<numericText(shotSpeed)<<", \"range_tiles\": "<<numericText(rangeTiles)<<", \"gaper_movement_multiplier\": "<<numericText(gaperMovementMultiplier)<<", \"spider_movement_multiplier\": "<<numericText(spiderMovementMultiplier)<<", \"pooter_movement_multiplier\": "<<numericText(pooterMovementMultiplier)<<", \"pooter_shot_speed_multiplier\": "<<numericText(pooterShotSpeedMultiplier)<<", \"pooter_attack_interval_multiplier\": "<<numericText(pooterAttackIntervalMultiplier)<<"},\n  \"overrides\": {";
+       <<", \"coverage\": \"Player, combat, enemy, map and camera configuration; native balance pending\", \"player_speed\": 1, \"walking_pace_at_speed_one\": 4.8, \"room_size_scale\": 1, \"room_size_baseline\": \"larger-compact-v1\", \"route_length_scale\": 1, \"default_zoom_percent\": 160, \"tears_per_second\": "<<numericText(ReferenceTears)<<", \"shot_speed\": 1, \"range_tiles\": 6.5, \"shooting_calibration\": \"accepted-independent-v1\", \"gaper_movement_multiplier\": 1, \"gaper_calibration\": \"player-relative-v1\", \"spider_movement_multiplier\": 1, \"spider_calibration\": \"player-relative-burst-v1\", \"pooter_movement_multiplier\": 1, \"pooter_shot_speed_multiplier\": 1, \"pooter_attack_interval_multiplier\": 1, \"pooter_calibration\": \"player-relative-mode0-v1\", \"player_damage\": 3.5, \"regular_health_multiplier\": 1, \"damage_calibration\": \"source-damage-internal-hp-v1\", \"health_units_per_source\": 3.2},\n"
+       <<"  \"resolved\": {\"player_speed\": "<<numericText(playerSpeed)<<", \"room_size_scale\": "<<numericText(roomSizeScale)<<", \"room_min_half_tiles\": "<<roomMinHalfTiles<<", \"room_max_half_tiles\": "<<roomMaxHalfTiles<<", \"route_length_scale\": "<<numericText(routeLengthScale)<<", \"default_zoom_percent\": "<<numericText(defaultZoomPercent)<<", \"tears_per_second\": "<<numericText(tearsPerSecond)<<", \"shot_speed\": "<<numericText(shotSpeed)<<", \"range_tiles\": "<<numericText(rangeTiles)<<", \"gaper_movement_multiplier\": "<<numericText(gaperMovementMultiplier)<<", \"spider_movement_multiplier\": "<<numericText(spiderMovementMultiplier)<<", \"pooter_movement_multiplier\": "<<numericText(pooterMovementMultiplier)<<", \"pooter_shot_speed_multiplier\": "<<numericText(pooterShotSpeedMultiplier)<<", \"pooter_attack_interval_multiplier\": "<<numericText(pooterAttackIntervalMultiplier)<<", \"player_damage\": "<<numericText(playerDamage)<<", \"regular_health_multiplier\": "<<numericText(regularHealthMultiplier)<<"},\n  \"overrides\": {";
     bool comma=false;
     const auto field=[&](const char *key,float value){out<<(comma?", ":"")<<quoted(key)<<": "<<numericText(value);comma=true;};
+    if(playerDamage!=ReferenceDamage)field("player_damage",playerDamage);
+    if(regularHealthMultiplier!=1)field("regular_health_multiplier",regularHealthMultiplier);
     if(playerSpeed!=1)field("player_speed",playerSpeed);
     if(roomSizeScale!=1)field("room_size_scale",roomSizeScale);
     if(roomMinHalfTiles){field("room_min_half_tiles",float(roomMinHalfTiles));field("room_max_half_tiles",float(roomMaxHalfTiles));}
@@ -224,10 +229,10 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     root.keys({"format","schema_version","compatibility","reference","resolved","overrides","exceptions"});
     root.at("format").equal("deathward.balance");
     const auto version=root.at("schema_version").numeric();
-    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8)throw std::runtime_error("Unsupported balance preset schema");
+    if(version!=1&&version!=2&&version!=3&&version!=4&&version!=5&&version!=6&&version!=7&&version!=8&&version!=9)throw std::runtime_error("Unsupported balance preset schema");
     const bool legacy=version==1;
     const auto &compat=root.at("compatibility");compat.keys({"contract","content_version","mechanics_fingerprint"});
-    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":Contract);compat.at("content_version").equal(ContentVersion);
+    compat.at("contract").equal(legacy?"d01-speed-v1":version==2?"d02-room-size-v2":version==3?"d02-map-v3":version==4?"d02-view-v4":version==5?"d03-shooting-v5":version==6?"d04-gaper-v6":version==7?"d05-spider-v7":version==8?"d06-pooter-v8":Contract);compat.at("content_version").equal(ContentVersion);
     compat.at("mechanics_fingerprint").equal(fingerprint.c_str());
     const auto &ref=root.at("reference");
     if(legacy)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one"});
@@ -241,7 +246,8 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
                     if(version==5)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","shooting_calibration"});
                     else if(version==6)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","shooting_calibration","gaper_movement_multiplier","gaper_calibration"});
                     else if(version==7)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","shooting_calibration","gaper_movement_multiplier","gaper_calibration","spider_movement_multiplier","spider_calibration"});
-                    else ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","shooting_calibration","gaper_movement_multiplier","gaper_calibration","spider_movement_multiplier","spider_calibration","pooter_movement_multiplier","pooter_shot_speed_multiplier","pooter_attack_interval_multiplier","pooter_calibration"});
+                    else if(version==8)ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","shooting_calibration","gaper_movement_multiplier","gaper_calibration","spider_movement_multiplier","spider_calibration","pooter_movement_multiplier","pooter_shot_speed_multiplier","pooter_attack_interval_multiplier","pooter_calibration"});
+                    else ref.keys({"source","executable_sha256","coverage","player_speed","walking_pace_at_speed_one","room_size_scale","room_size_baseline","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","shooting_calibration","gaper_movement_multiplier","gaper_calibration","spider_movement_multiplier","spider_calibration","pooter_movement_multiplier","pooter_shot_speed_multiplier","pooter_attack_interval_multiplier","pooter_calibration","player_damage","regular_health_multiplier","damage_calibration","health_units_per_source"});
                     if(version>=6) {
                         ref.at("gaper_calibration").equal("player-relative-v1");
                         if(ref.at("gaper_movement_multiplier").numeric()!=ReferenceGaperMovement)throw std::runtime_error("Reference Gaper movement cannot be overridden");
@@ -263,8 +269,13 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
             if(ref.at("route_length_scale").numeric()!=1)throw std::runtime_error("Reference route length cannot be overridden");}
         ref.at("room_size_baseline").equal("larger-compact-v1");
         if(ref.at("room_size_scale").numeric()!=1)throw std::runtime_error("Reference room size cannot be overridden");}
+    if(version>=9) {
+        ref.at("damage_calibration").equal("source-damage-internal-hp-v1");
+        if(ref.at("player_damage").numeric()!=ReferenceDamage||ref.at("regular_health_multiplier").numeric()!=1||ref.at("health_units_per_source").numeric()!=3.2)
+            throw std::runtime_error("Reference damage/HP values cannot be overridden");
+    }
     ref.at("source").equal(Source);ref.at("executable_sha256").equal(SourceHash);
-    ref.at("coverage").equal(legacy?"Speed configuration only; native balance pending":version==2?"Speed and room-size configuration; native balance pending":version==3?"Speed and map configuration; native balance pending":version==4?"Speed, map and camera configuration; native balance pending":version==5?"Player, shooting, map and camera configuration; native balance pending":version==6?"Player, shooting, Gaper, map and camera configuration; native balance pending":version==7?"Player, shooting, Gaper, Spider, map and camera configuration; native balance pending":"Player, shooting, Gaper, Spider, Pooter, map and camera configuration; native balance pending");
+    ref.at("coverage").equal(legacy?"Speed configuration only; native balance pending":version==2?"Speed and room-size configuration; native balance pending":version==3?"Speed and map configuration; native balance pending":version==4?"Speed, map and camera configuration; native balance pending":version==5?"Player, shooting, map and camera configuration; native balance pending":version==6?"Player, shooting, Gaper, map and camera configuration; native balance pending":version==7?"Player, shooting, Gaper, Spider, map and camera configuration; native balance pending":version==8?"Player, shooting, Gaper, Spider, Pooter, map and camera configuration; native balance pending":"Player, combat, enemy, map and camera configuration; native balance pending");
     if(ref.at("player_speed").numeric()!=1||ref.at("walking_pace_at_speed_one").numeric()!=4.8)
         throw std::runtime_error("Reference values cannot be overridden; edit resolved and overrides");
     const auto &resolved=root.at("resolved");
@@ -275,7 +286,11 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     else if(version==5)resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles"});
     else if(version==6)resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","gaper_movement_multiplier"});
     else if(version==7)resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","gaper_movement_multiplier","spider_movement_multiplier"});
-    else resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","gaper_movement_multiplier","spider_movement_multiplier","pooter_movement_multiplier","pooter_shot_speed_multiplier","pooter_attack_interval_multiplier"});
+    else if(version==8)resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","gaper_movement_multiplier","spider_movement_multiplier","pooter_movement_multiplier","pooter_shot_speed_multiplier","pooter_attack_interval_multiplier"});
+    else resolved.keys({"player_speed","room_size_scale","room_min_half_tiles","room_max_half_tiles","route_length_scale","default_zoom_percent","tears_per_second","shot_speed","range_tiles","gaper_movement_multiplier","spider_movement_multiplier","pooter_movement_multiplier","pooter_shot_speed_multiplier","pooter_attack_interval_multiplier","player_damage","regular_health_multiplier"});
+    const double damage=version<9?ReferenceDamage:resolved.at("player_damage").numeric();
+    const double health=version<9?ReferenceRegularHealth:resolved.at("regular_health_multiplier").numeric();
+    if(damage<.1||damage>MaxDamage||health<.05||health>MaxRegularHealth)throw std::runtime_error("Damage/HP outside supported ranges");
     const double pooterMove=version<8?1:resolved.at("pooter_movement_multiplier").numeric();
     const double pooterShot=version<8?1:resolved.at("pooter_shot_speed_multiplier").numeric();
     const double pooterInterval=version<8?1:resolved.at("pooter_attack_interval_multiplier").numeric();
@@ -306,7 +321,7 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     const double speed=resolved.at("player_speed").numeric();
     if(speed<.1||speed>2)throw std::runtime_error("Speed must be between 0.10 and 2.00");
     const auto &overrides=root.at("overrides");
-    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)+customTears+(shotSpeed!=ReferenceShotSpeed)+(range!=ReferenceRange)+(gaper!=ReferenceGaperMovement)+(spider!=ReferenceSpiderMovement)+(pooterMove!=1)+(pooterShot!=1)+(pooterInterval!=1)))
+    if(overrides.kind!=Json::Object||overrides.fields.size()!=size_t((speed!=1)+(!legacy&&roomScale!=1)+(minimum!=0?2:0)+(routeScale!=1)+(zoom!=ReferenceZoom)+customTears+(shotSpeed!=ReferenceShotSpeed)+(range!=ReferenceRange)+(gaper!=ReferenceGaperMovement)+(spider!=ReferenceSpiderMovement)+(pooterMove!=1)+(pooterShot!=1)+(pooterInterval!=1)+(damage!=ReferenceDamage)+(health!=1)))
         throw std::runtime_error("Unexpected preset overrides");
     if(speed!=1&&overrides.at("player_speed").numeric()!=speed)throw std::runtime_error("Resolved Speed and override disagree");
     if(!legacy&&roomScale!=1&&overrides.at("room_size_scale").numeric()!=roomScale)throw std::runtime_error("Resolved room size and override disagree");
@@ -329,9 +344,11 @@ BalancePreset BalancePreset::load(const std::filesystem::path &path,const std::s
     if(pooterMove!=1&&overrides.at("pooter_movement_multiplier").numeric()!=pooterMove)throw std::runtime_error("Pooter movement override disagrees");
     if(pooterShot!=1&&overrides.at("pooter_shot_speed_multiplier").numeric()!=pooterShot)throw std::runtime_error("Pooter shot speed override disagrees");
     if(pooterInterval!=1&&overrides.at("pooter_attack_interval_multiplier").numeric()!=pooterInterval)throw std::runtime_error("Pooter attack delay override disagrees");
+    if(damage!=ReferenceDamage&&overrides.at("player_damage").numeric()!=damage)throw std::runtime_error("Damage override disagrees");
+    if(health!=1&&overrides.at("regular_health_multiplier").numeric()!=health)throw std::runtime_error("HP override disagrees");
     const auto &exceptions=root.at("exceptions");exceptions.keys({"isometric","eight_direction_controls","universal_dodge","immediate_stopping"});
     for(const auto &[name,entry]:exceptions.fields)
         if(entry.kind!=Json::Boolean||!entry.flag)throw std::runtime_error("Retained control exception cannot change: "+name);
-    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom),float(tears),float(shotSpeed),float(range),float(gaper),float(spider),float(pooterMove),float(pooterShot),float(pooterInterval)};preset.validate();return preset;
+    BalancePreset preset{float(speed),fingerprint,float(roomScale),int(minimum),int(maximum),float(routeScale),float(zoom),float(tears),float(shotSpeed),float(range),float(gaper),float(spider),float(pooterMove),float(pooterShot),float(pooterInterval),float(damage),float(health)};preset.validate();return preset;
 }
 } // namespace dw

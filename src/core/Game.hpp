@@ -86,6 +86,7 @@ enum class Action {
     BalanceWorldTab,
     BalanceShootingTab,
     BalanceEnemiesTab,
+    BalanceCombatTab, CombatDamageDown, CombatDamageUp, RegularHealthDown, RegularHealthUp, ResetCombat,
     BalanceChasersTab,
     BalancePooterTab,
     PooterMovementDown, PooterMovementUp, PooterShotDown, PooterShotUp, PooterDelayDown, PooterDelayUp, ResetPooter,
@@ -152,7 +153,7 @@ class Game {
     bool controlsOpen = false;
     bool buildOpen = false;
     bool balanceOpen = false, balancePathEditing = false, balanceShootingOpen = false;
-    bool balanceEnemiesOpen = false, balancePooterOpen = false;
+    bool balanceEnemiesOpen = false, balancePooterOpen = false, balanceCombatOpen = false;
     BalancePreset balancePreset, balanceDraft;
     std::optional<BalancePreset> nextBalancePreset;
     std::filesystem::path balanceDirectory;
@@ -162,6 +163,7 @@ class Game {
     void resetShooting();
     void setGaperMovement(float multiplier);
     void setSpiderMovement(float multiplier);
+    void setCombatBalance(float damage,float regularHealth);
     void setPooterTuning(float movement,float shotSpeed,float interval);
     void setDefaultZoom(float percent);
     void setRoomSize(float scale);
@@ -207,7 +209,7 @@ class Game {
     bool debugPanelOpen = false;
     int selectedItem = 0, historyIndex = 0, selectedFlag = 0;
     int selectedMonster = 0;
-    float playerHealth = StartingHealth, playerDamage = RevolverDamage;
+    float playerHealth = StartingHealth, playerDamage = BalancePreset::ReferenceDamage * CombatHealthUnitsPerSource;
     float accumulator = 0;
     float deathTime = 0;
     EntityId hoveredEnemy = 0;

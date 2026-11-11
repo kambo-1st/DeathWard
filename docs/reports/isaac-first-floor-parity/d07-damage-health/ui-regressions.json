@@ -1,0 +1,37 @@
+[
+  {
+    "mode": "combat-balance",
+    "exit_code": 0,
+    "log": "combat-balance-input.log"
+  },
+  {
+    "mode": "shooting-balance",
+    "exit_code": 0,
+    "log": "shooting-balance-input.log"
+  },
+  {
+    "mode": "balance",
+    "exit_code": 0,
+    "log": "balance-input.log"
+  },
+  {
+    "mode": "gaper-balance",
+    "exit_code": 0,
+    "log": "gaper-balance-input.log"
+  },
+  {
+    "mode": "spider-balance",
+    "exit_code": 0,
+    "log": "spider-balance-input.log"
+  },
+  {
+    "mode": "pooter-balance",
+    "exit_code": 0,
+    "log": "pooter-balance-input.log"
+  },
+  {
+    "mode": "starting-hearts",
+    "exit_code": 0,
+    "log": "starting-hearts-input.log"
+  }
+]

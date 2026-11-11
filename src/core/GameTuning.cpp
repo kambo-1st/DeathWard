@@ -35,6 +35,7 @@ void Game::applyBalance(BalancePreset preset) {
     balancePreset=std::move(preset);balanceDraft.playerSpeed=balancePreset.playerSpeed;
     balanceDraft.tearsPerSecond=balancePreset.tearsPerSecond;balanceDraft.shotSpeed=balancePreset.shotSpeed;
     balanceDraft.rangeTiles=balancePreset.rangeTiles;
+    balanceDraft.playerDamage=balancePreset.playerDamage;balanceDraft.regularHealthMultiplier=balancePreset.regularHealthMultiplier;
     balanceDraft.gaperMovementMultiplier=balancePreset.gaperMovementMultiplier;
     balanceDraft.spiderMovementMultiplier=balancePreset.spiderMovementMultiplier;
     balanceDraft.pooterMovementMultiplier=balancePreset.pooterMovementMultiplier;
@@ -44,6 +45,8 @@ void Game::applyBalance(BalancePreset preset) {
     if(resize){resetPointerInput();snapCamera();++audioContext;audioCues.clear();}
     if(zoomChanged)useDefaultZoom();
     if(run) {
+        run->applyCombatBalance(balancePreset.playerDamage,balancePreset.regularHealthMultiplier);
+        playerDamage=run->player.shotDamage;
         run->player.attributes.speed=balancePreset.playerSpeed;
         // New shots resolve these base attributes with owned-item modifiers.
         // Leave existing projectile birth specs and the current cooldown intact.
@@ -76,6 +79,10 @@ void Game::setGaperMovement(float multiplier) {
 void Game::setSpiderMovement(float multiplier) {
     auto preset=balancePreset;preset.spiderMovementMultiplier=multiplier;applyBalance(std::move(preset));
     balanceNotice="Spider drive applies at its next steering tick; current burst target and pause timing are retained.";
+}
+void Game::setCombatBalance(float damage,float regularHealth) {
+    auto preset=balancePreset;preset.playerDamage=damage;preset.regularHealthMultiplier=regularHealth;applyBalance(std::move(preset));
+    balanceNotice="Damage: next attacks. Regular HP: applied proportionally to living enemies and future spawns. Boss HP retained.";
 }
 void Game::setPooterTuning(float movement,float shotSpeed,float interval) {
     auto preset=balancePreset;preset.pooterMovementMultiplier=movement;preset.pooterShotSpeedMultiplier=shotSpeed;
@@ -134,6 +141,7 @@ void Game::loadBalancePreset(const std::filesystem::path &path) {
     const auto filename=path.string();
     auto live=balancePreset;live.playerSpeed=candidate.playerSpeed;live.defaultZoomPercent=candidate.defaultZoomPercent;
     live.tearsPerSecond=candidate.tearsPerSecond;live.shotSpeed=candidate.shotSpeed;live.rangeTiles=candidate.rangeTiles;
+    live.playerDamage=candidate.playerDamage;live.regularHealthMultiplier=candidate.regularHealthMultiplier;
     live.gaperMovementMultiplier=candidate.gaperMovementMultiplier;
     live.spiderMovementMultiplier=candidate.spiderMovementMultiplier;
     live.pooterMovementMultiplier=candidate.pooterMovementMultiplier;
@@ -153,7 +161,7 @@ void Game::rememberBalancePreset() {
 }
 RunSummary Game::configuredSummary() const {
     auto summary=run->summary();
-    summary.mechanicsFingerprint+="/balance-v8:"+balancePreset.revision();
+    summary.mechanicsFingerprint+="/balance-v9:"+balancePreset.revision();
     return summary;
 }
 void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
@@ -161,6 +169,8 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     const auto preset=retry?balancePreset:nextBalancePreset.value_or(BalancePreset{1,candidate->content->fingerprint()});
     preset.validate();archiveBalance(preset);
     candidate->tunePlayer(playerHealth,playerDamage);
+    candidate->applyCombatBalance(preset.playerDamage,preset.regularHealthMultiplier);
+    playerDamage=candidate->player.shotDamage;
     candidate->player.attributes.speed=preset.playerSpeed;
     candidate->player.attributes.tearsPerSecond=preset.tearsPerSecond;
     candidate->player.attributes.shotSpeed=preset.shotSpeed;
@@ -178,7 +188,7 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     missionMenu=walkingToMission=false;town.stop();screen=Screen::Expedition;
     deathTime=0;paused=false;accumulator=0;error.clear();resetArmed=false;
     useDefaultZoom();resetPointerInput();
-    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" revision="<<balancePreset.revision()
+    std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
 }
 bool Game::canRetryExpedition() const {

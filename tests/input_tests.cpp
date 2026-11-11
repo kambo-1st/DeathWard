@@ -37,7 +37,7 @@ void balanceInputCheck(const std::filesystem::path &directory) {
         auto image=LoadImageFromScreen();check(ExportImage(image,name),"capture tuning UI");UnloadImage(image);EndDrawing();
     };
     auto &run=*game.run;
-    check(run.player.attributes.speed==1&&run.player.shotDamage==24&&run.player.hp==6,"D01 preserves baseline combat");
+    check(run.player.attributes.speed==1&&run.player.shotDamage==dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource&&run.player.hp==6,"D01 preserves baseline combat");
     const auto start=run.player.position;
     const auto walk=[&] {
         mouseEvent(KeyDown,KEY_W);
@@ -56,7 +56,7 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     mouseEvent(KeyUp,KEY_W);mouseEvent(KeyUp,KEY_UP);frame();
     click(460,190);click(460,190);
     check(std::abs(run.player.attributes.speed-.8f)<1e-6f&&run.combatRng.state==rng,"Speed buttons apply without advancing combat RNG");
-    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v8:")!=std::string::npos,"checkpoint identifies active tuning revision");
+    check(game.campaign.data().pending->mechanicsFingerprint.find("/balance-v9:")!=std::string::npos,"checkpoint identifies active tuning revision");
     check(std::filesystem::exists(game.balanceDirectory/"revisions"/(game.balancePreset.revision()+".json")),"checkpoint revision retains its resolved preset");
     check(run.canResizeRooms(),"untouched starting room permits live resizing");
     const auto id=run.summary().id, nextId=game.campaign.data().nextRunId;
@@ -167,7 +167,7 @@ void balanceInputCheck(const std::filesystem::path &directory) {
     dw::Game fresh(save);fresh.themeChoice=dw::ThemeChoice::Canyon;fresh.seedText="1866";fresh.launch(true);
     check(fresh.error.empty()&&fresh.run->player.attributes.speed==.8f,"fresh Game session auto-loads remembered preset for next expedition");
     check(fresh.run->routeLengthScale==.65f&&fresh.run->roomSizeScale==1.25f&&fresh.run->roomMinHalfTiles==7&&fresh.run->roomMaxHalfTiles==9&&std::abs(fresh.cameraZoomPercent()-125)<.001f,"fresh session loads size/range before generation");
-    check(fresh.run->player.hp==6&&fresh.run->player.shotDamage==24&&fresh.run->items.empty(),"preset is configuration, not old inventory or damage changes");
+    check(fresh.run->player.hp==6&&fresh.run->player.shotDamage==dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource&&fresh.run->items.empty(),"preset is configuration, not old inventory or damage changes");
     fresh.run->finishDebug(false);fresh.retryExpedition();
     check(fresh.run->routeLengthScale==.65f&&fresh.run->roomSizeScale==1.25f&&std::abs(fresh.cameraZoomPercent()-125)<.001f,"retry retains applied route and room settings");
     fresh.resetBalance();fresh.rememberBalancePreset();fresh.close();
@@ -201,7 +201,7 @@ void shootingBalanceInputCheck(const std::filesystem::path &directory) {
     const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
     near(run.player.attributes.tearsPerSecond,BalancePreset::ReferenceTears,"migrated starting Tears baseline");
     near(run.player.walkingSpeed(),4.8f,"shooting controls preserve accepted walk");near(game.cameraZoomPercent(),165,"chosen zoom retained");
-    click(374,642);click(850,143);check(game.balanceOpen&&game.balanceShootingOpen,"actual HUD opens shooting tab");
+    click(374,642);click(710,143);check(game.balanceOpen&&game.balanceShootingOpen,"actual HUD opens shooting tab");
     game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto duration=run.stats.duration,shots=double(run.stats.shots);
     click(855,189);near(run.player.attributes.tearsPerSecond,BalancePreset::ReferenceTears+.1f,"Tears plus changes only rate");
     click(710,189);check(run.player.attributes.tearsPerSecond==BalancePreset::ReferenceTears,"opposite Tears steps preserve the exact baseline");
@@ -234,7 +234,7 @@ void shootingBalanceInputCheck(const std::filesystem::path &directory) {
     for(int i=0;i<80&&run.stats.shots==shotCount;++i)frame();mouseEvent(KeyUp,KEY_RIGHT);frame();
     check(run.stats.shots==shotCount+1,"next shot follows the retained firing wait");
     const auto &born=run.projectiles.back();near(born.attack.speed,12,"new projectile uses edited shot speed");
-    near(born.attack.maxDistance,11.f*8/6.5f,"new projectile uses edited range");near(born.damage,24,"D03 leaves damage unchanged");
+    near(born.attack.maxDistance,11.f*8/6.5f,"new projectile uses edited range");near(born.damage,11.2f,"shooting controls preserve D07 damage baseline");
     click(374,642);
     run.grant(ItemId::Rail);const auto before=primaryPlayerAttack(run,run.player.shotDamage,false);const float cadence=primaryCadence(run);
     game.setShooting(2,3,4);const auto after=primaryPlayerAttack(run,run.player.shotDamage,false);
@@ -434,6 +434,64 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void combatBalanceInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"combat.save",file=directory/"combat-export.json";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="69";
+    game.loadBalancePreset(source);game.rememberBalancePreset();game.balanceFile=file.string();game.launch(true);
+    auto &run=*game.run;run.godMode=true;Renderer renderer;
+    check(run.player.attributes.damage==3.5f&&std::abs(run.player.shotDamage-11.2f)<.0001f&&run.player.hp==6,"D07 ordinary Game baseline damage and hearts");
+    check(run.player.walkingSpeed()==4.8f&&run.player.attributes.tearsPerSecond==1.9272734f&&game.cameraZoomPercent()==165&&run.routeLengthScale==.26f,"D07 retains accepted movement/shooting/map/view");
+    run.jumpDebug(2);EntityId actor=0;for(auto &e:run.enemies){e.state=EnemyState::Stunned;e.stateTime=100;if(e.monster==monsterId(10,1)&&e.champion<0)actor=e.id;}
+    check(actor,"natural room contains Gaper");auto *e=run.findEnemy(actor);const auto bodyPosition=e->position;
+    bool found=false;
+    for(int n=0;n<8;++n){const auto point=add(bodyPosition,rotateY({3,0,0},float(n)*Pi/4));if(run.arena.roomAt(point)==2&&!run.arena.blocked(point,.48f)&&run.arena.sight(point,bodyPosition)){
+        bool clear=true;for(const auto &other:run.enemies)if(other.id!=actor&&distance(other.position,point)<2)clear=false;
+        if(clear){run.player.position=point;found=true;break;}
+    }}
+    check(found,"legal firing point in generated Gaper encounter");game.updateCamera(10);
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"D07 UI no error");};
+    const auto click=[&](int x,int y){mouseEvent(MousePosition,x,y);frame();mouseEvent(MouseDown,MOUSE_BUTTON_LEFT);frame();mouseEvent(MouseUp,MOUSE_BUTTON_LEFT);frame();};
+    const auto key=[&](int code){mouseEvent(KeyDown,code);frame();mouseEvent(KeyUp,code);frame();};
+    // Mouse firing, actual Game and real canyon geometry. Only AI is held for
+    // deterministic hit counting; no HP override and no injected target.
+    const auto pixel=GetWorldToScreen(add(e->position,{0,.25f,0}),game.camera);mouseEvent(MousePosition,int(pixel.x),int(pixel.y));frame();
+    mouseEvent(MouseDown,MOUSE_BUTTON_RIGHT);float previous=e->hp;int hits=0;
+    for(int n=0;n<600&&e&&e->alive&&e->monster==monsterId(10,1);++n){frame();e=run.findEnemy(actor);if(!e||!e->alive||e->monster!=monsterId(10,1)||e->hp<previous-.001f)++hits;if(e)previous=e->hp;}
+    mouseEvent(MouseUp,MOUSE_BUTTON_RIGHT);frame();check(hits==3,"actual Game mouse primary fire takes three hits for natural Gaper body");
+    std::cout<<"D07 natural Gaper seed=69 room=2 body_hits="<<hits<<'\n';
+    // Use another naturally generated body for proportional living HP changes.
+    EntityId injured=0;for(auto &body:run.enemies)if(body.alive&&body.monster==monsterId(10,1)){injured=body.id;break;}
+    check(injured,"another natural Gaper remains");Event hit;hit.type=EventType::Damage;hit.target=injured;hit.damage=8;run.queueRoot(hit);run.drainEvents();
+    e=run.findEnemy(injured);const float oldHP=e->hp,oldMax=e->maxHp;
+    click(374,642);click(840,143);check(game.balanceOpen&&game.balanceCombatOpen,"Combat tab accessible through actual HUD");
+    game.setRoomSize(1.2f);const auto terrain=run.arena.canyon.get();const auto content=run.content.get();const auto ticks=run.stats.duration;const auto rng=run.combatRng.state;
+    const auto cadence=primaryCadence(run);const auto spec=primaryPlayerAttack(run,run.player.shotDamage,false);
+    const auto wait=run.player.fireCooldown;const auto oldShots=run.projectiles;
+    click(850,244);check(std::abs(run.player.attributes.damage-3.6f)<.0001f,"Damage uses .1 steps");click(710,340);check(run.content->regularHealthMultiplier()==.95f,"HP uses five-percent steps");
+    for(int n=0;n<24&&game.keyboardFocus()!=Action::CombatDamageDown;++n)key(KEY_TAB);
+    check(game.keyboardFocus()==Action::CombatDamageDown,"Damage keyboard focus");key(KEY_ENTER);check(run.player.attributes.damage==3.5f,"keyboard Damage control");
+    game.setCombatBalance(7,.75f);e=run.findEnemy(injured);
+    check(std::abs(e->hp-oldHP*.75f)<.001f&&std::abs(e->maxHp-oldMax*.75f)<.001f,"wounded natural Gaper retains HP fraction");
+    check(run.stats.duration==ticks&&run.combatRng.state==rng&&run.arena.canyon.get()==terrain&&game.hasPendingMapChanges()&&run.content.get()!=content,"combat edits preserve RNG/geometry/time and map draft");
+    check(run.player.fireCooldown==wait&&run.projectiles.size()==oldShots.size(),"combat edits preserve wait and flying shot count");
+    for(size_t n=0;n<oldShots.size();++n)check(run.projectiles[n].damage==oldShots[n].damage&&run.projectiles[n].life==oldShots[n].life,"existing shot birth damage/lifetime retained");
+    const auto updated=primaryPlayerAttack(run,run.player.shotDamage,false);check(std::abs(updated.damage-spec.damage*2)<.001f&&updated.speed==spec.speed&&updated.maxDistance==spec.maxDistance&&primaryCadence(run)==cadence,"Damage independent of shooting and current upgrades");
+    click(320,605);click(900,605);const auto exported=BalancePreset::load(file,defaultMechanics()->fingerprint());check(exported.playerDamage==7&&exported.regularHealthMultiplier==.75f&&exported.defaultZoomPercent==165&&exported.roomSizeScale==1.2f,"all new values export with pending map");
+    click(400,483);check(run.player.attributes.damage==3.5f&&run.content->regularHealthMultiplier()==1&&std::abs(run.findEnemy(injured)->hp-oldHP)<.001f,"reset baseline preserves wounds");click(590,605);check(run.player.attributes.damage==7&&run.content->regularHealthMultiplier()==.75f&&game.hasPendingMapChanges(),"load applies damage/HP without applying map");
+    const auto revision=game.balancePreset.revision(),draft=game.balanceDraft.revision();const auto currentHP=run.findEnemy(injured)->hp;
+    auto bad=exported.json();const std::string field="\"regular_health_multiplier\": 0.75";const auto offset=bad.find(field);check(offset!=bad.npos,"bad HP fixture field");bad.replace(offset,field.size(),"\"regular_health_multiplier\": 0");const auto invalid=directory/"invalid-combat.json";{std::ofstream out(invalid);out<<bad;}
+    game.balanceFile=invalid.string();game.perform(Action::LoadBalance);check(!game.error.empty()&&game.balancePreset.revision()==revision&&game.balanceDraft.revision()==draft&&run.findEnemy(injured)->hp==currentHP,"invalid preset rejects without partial Damage/HP/map effects");game.balanceFile=file.string();game.perform(Action::LoadBalance);
+    std::filesystem::create_directories("artifacts");std::filesystem::copy_file(file,"artifacts/d07-combat-preset.json",std::filesystem::copy_options::overwrite_existing);
+    BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto image=LoadImageFromScreen();check(ExportImage(image,"artifacts/d07-combat-panel.png"),"capture Combat panel");UnloadImage(image);EndDrawing();
+    game.applyMapChanges();check(run.player.attributes.damage==7&&run.content->regularHealthMultiplier()==.75f,"map regeneration retains damage/HP snapshot");key(KEY_ESCAPE);
+    run.jumpDebug(run.finalRoom());run.clearRoomDebug();run.floorExitRequested=true;check(run.advanceFloor()&&run.player.attributes.damage==7&&run.content->regularHealthMultiplier()==.75f,"floor descent retains damage/HP");
+    run.finishDebug(false);game.retryExpedition();check(game.run->player.attributes.damage==7&&game.run->content->regularHealthMultiplier()==.75f&&game.run->player.hp==6,"retry retains tuning and starting hearts");
+    game.close();renderer.unload();Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.launch(true);
+    check(fresh.run->player.attributes.damage==7&&fresh.run->content->regularHealthMultiplier()==.75f&&fresh.cameraZoomPercent()==165&&fresh.run->player.attributes.tearsPerSecond==1.9272734f,"fresh session retains complete preset");fresh.close();
+    std::cout<<"PASS D07 main Game natural hit count, mouse/keyboard controls, proportional living HP, birth/wait retention, reset/export/load/invalid isolation and map/floor/retry/fresh-session persistence\n";
+}
 void pooterBalanceInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/
@@ -492,7 +550,7 @@ void startingHeartsInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"starting-hearts.save");game.debug=true;game.seedText="42";
     game.themeChoice=dw::ThemeChoice::Canyon;game.launch(true);
     check(game.run&&game.error.empty(),"H01 actual game launch succeeds");auto &run=*game.run;
-    check(run.player.hp==6&&run.player.maxHp==6&&run.player.baseHealth==6&&run.player.shotDamage==24,
+    check(run.player.hp==6&&run.player.maxHp==6&&run.player.baseHealth==6&&run.player.shotDamage==dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource,
           "H01 actual launch uses six half-heart units without changing shot damage");
     game.updateCamera(10);dw::Renderer renderer;
     std::filesystem::create_directories("artifacts");
@@ -519,7 +577,7 @@ void startingHeartsInputCheck(const std::filesystem::path &directory) {
     check(run.player.hp==5&&!run.dead,"H01 one damage unit leaves two full red hearts and one half heart");
     run.arena=std::move(originalArena);run.player.position=originalPosition;run.hazards.clear();game.updateCamera(10);
     capture("artifacts/h01-half-heart.png");
-    std::cout<<"PASS H01 launch/reset:three full red hearts;six half-heart units;half-heart loss;24 damage and universal keyboard dodge preserved\n";
+    std::cout<<"PASS H01 launch/reset:three full red hearts;six half-heart units;half-heart loss;D07 damage and universal keyboard dodge preserved\n";
 }
 void hudInputCheck(const std::filesystem::path &directory) {
     dw::Game game(directory/"hud.save");
@@ -1545,6 +1603,10 @@ int main(int argc, char **argv) {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
+        if(mode.empty()||mode=="--combat-balance-only") {
+            combatBalanceInputCheck(directory);
+            if(mode=="--combat-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
         if(mode.empty()||mode=="--pooter-balance-only") {
             pooterBalanceInputCheck(directory);
             if(mode=="--pooter-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
@@ -2071,40 +2133,40 @@ int main(int argc, char **argv) {
         click(1214, 424);
         check(game.run->player.maxHp == dw::StartingHealth + 2 &&
                   game.run->player.hp == dw::StartingHealth + 2 &&
-                  game.run->player.shotDamage == dw::RevolverDamage + 4 && game.paused,
+                  game.run->player.shotDamage == (dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource) + 4 && game.paused,
               "pause controls adjust health and damage immediately without resuming");
         click(1156, 329);
         click(1156, 424);
         check(game.run->player.maxHp == dw::StartingHealth &&
-                  game.run->player.shotDamage == dw::RevolverDamage,
+                  game.run->player.shotDamage == (dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource),
               "pause controls can lower health and damage");
         pressKey(KEY_EQUAL);
         pressKey(KEY_KP_ADD, true);
         check(game.run->player.maxHp == dw::StartingHealth + 2 &&
-                  game.run->player.shotDamage == dw::RevolverDamage + 4,
+                  game.run->player.shotDamage == (dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource) + 4,
               "keyboard and keypad stat controls work while paused");
         click(1050, 494);
         check(game.run->player.maxHp == dw::StartingHealth &&
-                  game.run->player.shotDamage == dw::RevolverDamage && game.run->stats.duration == duration,
+                  game.run->player.shotDamage == (dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource) && game.run->stats.duration == duration,
               "restore defaults changes stats while simulation remains frozen");
         click(620, 445);
         check(!game.paused, "mouse resumes the expedition");
         check(game.run->stats.shots == shots, "HUD and paused clicks never fire the revolver");
         pressKey(KEY_MINUS);
         pressKey(KEY_EQUAL, true);
-        check(game.run->player.shotDamage == dw::RevolverDamage - 4 &&
+        check(game.run->player.shotDamage == (dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource) - 4 &&
                   game.run->player.maxHp == dw::StartingHealth + 2 && !game.debugPanelOpen,
               "live stat hotkeys work while the cheat overlay stays hidden");
         pressKey(KEY_F1);
         pressKey(KEY_EQUAL);
         game.perform(dw::Action::HealthUp);
         pressKey(KEY_HOME);
-        check(game.run->player.shotDamage == dw::RevolverDamage - 4 &&
+        check(game.run->player.shotDamage == (dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource) - 4 &&
                   game.run->player.maxHp == dw::StartingHealth + 2,
               "stat shortcuts and actions are disabled with cheats off");
         pressKey(KEY_F1);
         pressKey(KEY_HOME);
-        check(game.run->player.shotDamage == dw::RevolverDamage &&
+        check(game.run->player.shotDamage == (dw::ReferencePlayerDamage*dw::CombatHealthUnitsPerSource) &&
                   game.run->player.maxHp == dw::StartingHealth,
               "Home restores defaults during play");
         game.run->godMode = true;
@@ -2293,8 +2355,8 @@ int main(int argc, char **argv) {
         game.launch();
         check(game.run->player.hp == dw::StartingHealth + 2 &&
                   game.run->player.maxHp == dw::StartingHealth + 2 &&
-                  game.run->player.shotDamage == dw::RevolverDamage + 4 && game.run->items.empty(),
-              "player settings survive mission completion and hub travel without retaining item penalties");
+                  game.run->player.shotDamage == game.balancePreset.playerDamage*dw::CombatHealthUnitsPerSource && game.run->items.empty(),
+              "new expedition uses its selected Damage preset and retains debug heart capacity without old item penalties");
         pressKey(KEY_HOME);
         game.run->jumpDebug(game.run->arena.roomCount() - 2);
         game.run->player.position = game.run->arena.rooms[game.run->arena.roomCount() - 2].objective;

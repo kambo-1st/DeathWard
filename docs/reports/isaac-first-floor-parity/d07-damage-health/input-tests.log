@@ -1,0 +1,5 @@
+BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 revision=dc1c0be7d1c5eefa profile=custom
+D07 natural Gaper seed=69 room=2 body_hits=3
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=7 regular_hp=0.75 revision=413fd4966eb47535 profile=custom
+BALANCE speed=1 room_size=1.2 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=7 regular_hp=0.75 revision=413fd4966eb47535 profile=custom
+PASS D07 main Game natural hit count, mouse/keyboard controls, proportional living HP, birth/wait retention, reset/export/load/invalid isolation and map/floor/retry/fresh-session persistence
