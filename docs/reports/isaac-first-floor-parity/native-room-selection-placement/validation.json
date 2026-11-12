@@ -1,0 +1,43 @@
+{
+  "status": "developer checks passed; scoped interactive handoff positively acknowledged; full native selection/placement acceptance open",
+  "previous_checkpoint_commit": "b42ef80f",
+  "native": {
+    "filter_cases": 560,
+    "weighted_choices_and_weights": 1024,
+    "spawn_choices_seeds_grid_indices": 1472,
+    "instruction_patches": 0,
+    "selection_rng_hooks": 0
+  },
+  "checks": {
+    "native_reference": "native-check.log",
+    "focused_suites": "tests.log",
+    "actual_doors": "door-gameplay.log",
+    "game_renderer": "input.log",
+    "cli_schema5": "cli-v5.log",
+    "cli_schema13": "cli-v13.log"
+  },
+  "preset_schema": 14,
+  "accepted_preset_and_backup_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "normal_source_layer_witness": {
+    "seed": 56,
+    "displayed_room": 7,
+    "source_template": "1.91.0",
+    "resolved_subtypes": [
+      2,
+      1
+    ]
+  },
+  "full_native_acceptance": false,
+  "unfinished": [
+    "native caller pool/difficulty/shape/door/seed/lifetime rules",
+    "unified source enemies/grid/pickups and source access restrictions",
+    "native pickup factory/physical displacement/collision and room-entry scheduling",
+    "matched live source selection/physical-placement acceptance"
+  ],
+  "next": "Integrate one complete source obstacle/access arrangement for a heart-bearing room, preserving canyon appearance and dynamic sizes.",
+  "human_review": {
+    "date": "2026-11-12",
+    "verdict": "Positive acknowledgment after interactive seed56 handoff; user requested commit",
+    "full_native_acceptance": false
+  }
+}

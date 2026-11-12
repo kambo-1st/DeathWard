@@ -80,6 +80,11 @@ int main() {
             const auto loaded=BalancePreset::load(file,"2ccd5b1c274a302e");
             check(loaded.sourceCombatRoom==enabled&&loaded.revision()==p.revision(),"source room switch round-trips");
         }
+        const auto v13=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
+            "docs/reports/isaac-first-floor-parity/d09a-room-hearts/test-preset.json","2ccd5b1c274a302e");
+        check(v13.roomHeartLayouts==2&&v13.defaultZoomPercent==165&&v13.shotSpeed==.9f&&v13.routeLengthScale==.26f,
+              "schema13 migrates native selection policy while preserving test mode and accepted settings");
+        v13.save(file);check(BalancePreset::load(file,"2ccd5b1c274a302e").revision()==v13.revision(),"migrated schema13 exports and reloads");
         const auto v9=BalancePreset::load(std::filesystem::path(__FILE__).parent_path().parent_path()/
             "docs/reports/isaac-first-floor-parity/d07-damage-health/custom-combat.json","2ccd5b1c274a302e");
         check(v9.sourceCombatRoom&&v9.playerDamage==7&&v9.regularHealthMultiplier==.75f,"schema9 migrates combat plus source room");
@@ -133,7 +138,7 @@ int main() {
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 1.5"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": false"),
             replaceOne(layouts.json(),"\"room_heart_layouts\": 2","\"room_heart_layouts\": 0"),
-            replaceOne(valid,"basement-normal-1to5-heart-layer-v1","invalid-policy"),
+            replaceOne(valid,"basement-normal-1to5-native-selector-v2","invalid-policy"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 0"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 4.01"),
             replaceOne(appearance.json(),"\"red_heart_appearance_speed\": 0.5","\"red_heart_appearance_speed\": 2"),
@@ -151,11 +156,11 @@ int main() {
             replaceOne(valid,"ordinary-normal-rare-gates-off-v1","unsupported-reward-policy"),
             replaceOne(valid,"\"player_luck\": 0","\"player_luck\": 21"),
             valid+"garbage", valid.substr(0,valid.size()-3),
-            replaceOne(valid,"\"schema_version\": 13","\"schema_version\": 14"),
+            replaceOne(valid,"\"schema_version\": 14","\"schema_version\": 15"),
             replaceOne(valid,"\"red_heart_appearance_speed\": 1","\"red_heart_appearance_speed\": 2"),
             replaceOne(valid,"appear33-drop25-collect12-30hz-v1","unverified-timing"),
-            replaceOne(valid,"\"schema_version\": 13","\"schema_version\": 13, \"schema_version\": 13"),
-            replaceOne(valid,"d09a-room-hearts-v13","future-contract"),
+            replaceOne(valid,"\"schema_version\": 14","\"schema_version\": 14, \"schema_version\": 14"),
+            replaceOne(valid,"d09a-room-selection-v14","future-contract"),
             replaceOne(valid,"fixture-content","different-content"),
             replaceOne(valid,"Repentance 1.7.9b","Repentance 1.7.9a"),
             replaceOne(valid,"\"walking_pace_at_speed_one\": 4.8","\"walking_pace_at_speed_one\": 30"),

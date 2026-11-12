@@ -1,5 +1,7 @@
 # D09a continuation — full and half red hearts in room layouts
 
+**Committed checkpoint: b42ef80f.** The user accepted this scoped delivery. The subsequent [native-selection checkpoint](../native-room-selection-placement/README.md) supersedes this page's sampler, schema13 and seed33 witness; the lifecycle/test-mode evidence below remains historical and valid for the committed implementation.
+
 Selected by the user: “Add hearts (both full and half version) already placed in room layouts.” Implemented in the main game. Developer checks pass. The user positively acknowledged the delivery and requested its commit; full native acceptance remains open.
 
 Placed hearts are generated with the opening floor, start idle/collectible before room clear, restore two/one red half-units, refuse full health and remain consumed across revisits. They are independent of room-clear rewards and their appearance-speed setting.

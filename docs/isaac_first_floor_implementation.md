@@ -1,6 +1,12 @@
 # Isaac comparison report and manual difference selection
 
-Updated: 2026-11-11. **Current delivery: scoped health and accepted walking/shooting consumers are enabled; ordinary Gaper, Spider and Pooter movement plus Pooter shots are enabled through selected D04–D06; D07 canonical Damage and shared HP-unit tuning are accepted and committed as `56743a72`; D08 integrates one recorded two-Gaper combat formation, accepted by the user; D09a ordinary red-heart clear rewards and the scoped Luck consumer are enabled, with human review pending. Other native movement candidates remain private reviews. Full 1:1 first-floor acceptance is unfinished.** The wider automatic parity goal remains paused; only individually authorized work proceeds.
+Updated: 2026-11-11. **Selected health, movement, shooting, enemy, combat and red-heart deliveries are integrated in the main game. D08/D09a are committed as `b42ef80f`.** The user positively acknowledged preplaced full/half hearts, then selected native room-selection and placement parity. The current continuation enables verified native selection and spawn-slot rules within the existing heart layer; complete native floor generation, unified room contents, physical placement and human acceptance remain unfinished. Only individually authorized work proceeds; the wider automatic parity goal remains paused.
+
+## Latest selected checkpoint: native room selection and placement
+
+D08 and the D09a reward/timing/preplaced-heart work are committed as `b42ef80f`. The user acknowledged the preplaced-heart delivery and explicitly selected native room-selection and placement parity. The next main-game checkpoint enables verified native numeric/weighted room selection, exact-door preference, reduced weights and original spawn-slot RNG order within the existing opening-floor heart layer. Schema14 preserves/migrates earlier settings. [Evidence and playable check](reports/isaac-first-floor-parity/native-room-selection-placement/README.md). The user positively acknowledged the interactive seed56 handoff on 2026-11-12 and requested a commit; full native selection/physical-placement acceptance remains open.
+
+560 native filters,1,024 selections/weight updates and1,472 spawn decisions match production consumers; five focused suites and actual Game/Renderer/preset checks pass. This is scoped integration, not an increase in fully accepted parity areas. Native floor caller/pool/descriptor generation, unified enemies/grid/pickups, physical access/placement and human acceptance remain unfinished. Next is one complete source obstacle/access arrangement in an ordinary room. Coins remain unselected.
 
 ## Current playable delivery plan
 

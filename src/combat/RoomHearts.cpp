@@ -1,18 +1,11 @@
 #include "combat/Simulation.hpp"
 #include "combat/SourceRoomRewards.hpp"
 #include "world/SourceRoomHeartsData.hpp"
+#include "world/SourceRoomSelection.hpp"
 #include <stdexcept>
 
 namespace dw {
 namespace {
-// A separate DW seed stream selects a source heart layer. This does not claim
-// native floor-template selection, descriptor RNG or complete encounter parity.
-template<class Rows> const auto &weighted(const Rows &rows,int begin,int count,Random &rng) {
-    float total=0;for(int i=0;i<count;++i)total+=rows[size_t(begin+i)].weight;
-    float roll=rng.real(0,total);
-    for(int i=0;i<count-1;++i) {roll-=rows[size_t(begin+i)].weight;if(roll<0)return rows[size_t(begin+i)];}
-    return rows[size_t(begin+count-1)];
-}
 Vector3 heartCell(const RoomLayout &layout,int x,int y) {
     const auto size=sub(layout.bounds.max,layout.bounds.min);
     const float cell=std::min(size.x*.86f/13,size.z*.86f/7);
@@ -29,6 +22,8 @@ void Simulation::prepareRoomHearts() {
            layout.sourceCombatTemplate<0&&!progress.plateObjective&&!progress.trapOnly)eligible.push_back(i);
     }
     std::stable_sort(eligible.begin(),eligible.end(),[&](int a,int b){return arena.rooms[size_t(a)].depth<arena.rooms[size_t(b)].depth;});
+    std::vector<float> weights;weights.reserve(BasementHeartLayouts.size());
+    for(const auto &source:BasementHeartLayouts)weights.push_back(source.weight);
     for(int index:eligible) {
         auto &layout=arena.rooms[size_t(index)];
         Random rng(seed_^0x524f4f4d48454152ULL^(uint64_t(index+1)*0x9e3779b97f4a7c15ULL));
@@ -40,13 +35,36 @@ void Simulation::prepareRoomHearts() {
             // full/half instead of source subtype0 resolution. No frequency claim.
             layout.sourceHeartTemplate=215;append(5,3,0,1,0);append(7,3,0,2,0);
         } else {
-            const auto &selected=weighted(BasementHeartLayouts,0,int(BasementHeartLayouts.size()),rng);
+            SourceRoomQuery query;
+            for(int p:layout.passages) {
+                const auto &passage=arena.passages[size_t(p)];
+                const int other=passage.rooms[passage.rooms[0]==index?1:0];
+                const auto direction=sub(arena.rooms[size_t(other)].center,layout.center);
+                // Explicit canyon-to-source axis adapter; geometry is retained.
+                const int door=std::abs(direction.x)>std::abs(direction.z)?(direction.x<0?0:2):(direction.z<0?1:3);
+                query.doors|=1<<door;
+            }
+            uint32_t selectionSeed=uint32_t(rng.next());if(!selectionSeed)selectionSeed=1;
+            const int selectedIndex=sourceRoomSelect(BasementHeartLayouts,weights,query,selectionSeed);
+            if(selectedIndex<0)continue; // No compatible template: never reroll into hearts.
+            const auto &selected=BasementHeartLayouts[size_t(selectedIndex)];
             layout.sourceHeartTemplate=selected.variant;
-            for(int n=0;n<selected.slotCount;++n) {
-                const auto &slot=BasementHeartSlots[size_t(selected.firstSlot+n)];
-                const auto &choice=weighted(BasementHeartChoices,slot.firstChoice,slot.choiceCount,rng);
+            // Native Room::Init advances once for EVERY source spawn stack,
+            // including omitted obstacles/enemies. Descriptor seed remains an
+            // explicit DW adapter; full spawn-factory mutations are unaccepted.
+            uint32_t spawnState=uint32_t(rng.next());if(!spawnState)spawnState=1;
+            int nextSlot=0;
+            for(int ordinal=0;ordinal<selected.spawnCount;++ordinal) {
+                const float unit=sourceRoomSpawnRandom(spawnState);
+                if(nextSlot>=selected.slotCount)continue;
+                const auto &slot=BasementHeartSlots[size_t(selected.firstSlot+nextSlot)];
+                if(slot.ordinal!=ordinal)continue;
+                ++nextSlot;
+                const int choiceIndex=sourceRoomSpawnChoice(BasementHeartChoices,slot.firstChoice,slot.choiceCount,unit);
+                if(choiceIndex<0)continue;
+                const auto &choice=BasementHeartChoices[size_t(choiceIndex)];
                 if(choice.type!=5||choice.variant!=10)continue;
-                uint32_t seed=uint32_t(rng.next());if(!seed)seed=1;
+                const uint32_t seed=spawnState;
                 const int subtype=choice.subtype==0?sourceOrdinaryPickup(seed,10,{}).subtype:choice.subtype;
                 // Retain unsupported outcomes in the layout for inspection;
                 // only selected full/half red actors are admitted below.

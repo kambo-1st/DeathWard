@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Human preplaced full/half heart check, then propose matched native placement/collection comparison. Other heart outcomes/producers and coins remain unselected; native template selection/seed/grid/lifecycle acceptance open.",
+  "next_work": "Selected native room-selection/placement: integrate one complete source obstacle/access arrangement, then resolve native caller/pool/descriptor generation. First native selector/slot-sequence checkpoint is enabled and developer-verified; full physical/native/human acceptance and coins remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-11",
-    "status": "D07 committed; selected D09a preplaced full/half heart delivery enabled and developer-verified; human/native acceptance pending",
+    "status": "Native room selector and spawn-slot sequence enabled, developer-verified and positively acknowledged after interactive handoff; full native selection/placement remains open",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,7 +47,7 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "Human preplaced-heart review, then matched native placement/collection comparison; coins remain unselected",
+    "next_proposed_delivery": "Selected native room-selection/placement: integrate one complete source obstacle/access arrangement, then resolve native caller/pool/descriptor generation. First native selector/slot-sequence checkpoint is enabled and developer-verified; full physical/native/human acceptance and coins remain open.",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
@@ -61,12 +61,12 @@
       "D08",
       "D09a"
     ],
-    "human_acceptance": "D02 workflow, D03, D04/D05 acknowledgments and D06/D07/D08 scoped playtests accepted; D09a human verdict pending. Full native acceptance remains open. D09a producer positively acknowledged; new timing continuation awaits human review.",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/d09a-room-hearts/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/d09a-room-hearts/validation.json",
+    "human_acceptance": "User positively acknowledged native selector/slot-sequence interactive seed56 handoff on 2026-11-12 and requested commit; full native selection/physical placement acceptance remains open.",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/native-room-selection-placement/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/native-room-selection-placement/validation.json",
     "previous_committed_delivery": {
-      "id": "D07",
-      "commit": "56743a72"
+      "id": "D08/D09a",
+      "commit": "b42ef80f"
     },
     "d03_scope": {
       "enabled": "independent live Tears/Shot Speed/Range controls, exact baseline reset, upgrade-aware display, schema-5 export/load/remember and schemas 1-4 migration",
@@ -77,7 +77,7 @@
       "damage_hp_changed": false,
       "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
     },
-    "implementation_checkpoint": "D08/D09a implementation in working tree; latest committed delivery D07 56743a72",
+    "implementation_checkpoint": "Native room-selection/slot-sequence checkpoint saved with this report; preceding D08/D09a commit b42ef80f",
     "d04_scope": {
       "enemy": "10.1.0 ordinary Gaper",
       "status": "enabled, developer-verified and positively acknowledged",

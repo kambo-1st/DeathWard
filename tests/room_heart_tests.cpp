@@ -1,4 +1,5 @@
 #include "combat/Simulation.hpp"
+#include "world/SourceRoomHeartsData.hpp"
 #include <iostream>
 #include <stdexcept>
 using namespace dw;
@@ -54,6 +55,15 @@ void sourcePool() {
     for(uint64_t seed=1;seed<=90&&!(full&&half&&unsupported&&empty);++seed) {
         auto r=create(seed,1);++generated;
         for(const auto &layout:r.arena.rooms)if(layout.sourceHeartTemplate>=0) {
+            const auto source=std::find_if(BasementHeartLayouts.begin(),BasementHeartLayouts.end(),[&](const auto &s){return s.variant==layout.sourceHeartTemplate;});
+            check(source!=BasementHeartLayouts.end(),"selected layout has preserved source metadata");
+            for(int p:layout.passages) {
+                const auto &passage=r.arena.passages[size_t(p)];
+                const int index=int(&layout-r.arena.rooms.data());
+                const auto direction=sub(r.arena.rooms[size_t(passage.rooms[0]==index?passage.rooms[1]:passage.rooms[0])].center,layout.center);
+                const int door=std::abs(direction.x)>std::abs(direction.z)?(direction.x<0?0:2):(direction.z<0?1:3);
+                check(source->doors&(1<<door),"actual main-game selection permits every connected door");
+            }
             empty|=layout.heartSpawns.empty();
             for(const auto &spawn:layout.heartSpawns)unsupported|=spawn.subtype!=1&&spawn.subtype!=2;
         }

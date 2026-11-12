@@ -1,0 +1,52 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "filter_cases": 560,
+  "selection_cases": 1024,
+  "spawn_cases": 1472,
+  "windows": [
+    {
+      "name": "filter",
+      "start": "0x7e78a4",
+      "end": "0x7e790e",
+      "sha256": "48c7ef1b6afc1bd097ffb418139c03549108748be2462fd2aab475a3e9083978"
+    },
+    {
+      "name": "selection",
+      "start": "0x7e73c8",
+      "end": "0x7e773a",
+      "sha256": "555552cfd882e9c6837003d7b16ffe8e4bda74e1253c7bfc05a7494f9eb232f6"
+    },
+    {
+      "name": "door_nonempty",
+      "start": "0x6b1490",
+      "end": "0x6b14a3",
+      "sha256": "905dd7b29d774e88103a1530c37e6bae3529afe011283110c4a000eac5f75796"
+    },
+    {
+      "name": "spawn_step",
+      "start": "0x7b201a",
+      "end": "0x7b2093",
+      "sha256": "4651d74e37852e93ff4fabad7c1661576f42fabbdf011ab853e0e4cfba6c3d51"
+    },
+    {
+      "name": "spawn_choice",
+      "start": "0x7e7c20",
+      "end": "0x7e7ca3",
+      "sha256": "2f529909045791e88dc6b875bce2140834fe9f2a40503b6936dc2538e7744baa"
+    },
+    {
+      "name": "spawn_loop",
+      "start": "0x7b1fd1",
+      "end": "0x7b2120",
+      "sha256": "06d30b51d8319b2ac60b37f1181c23e4fe9632116540edb49b71e1c53ea6a9fd"
+    },
+    {
+      "name": "spawn_seed",
+      "start": "0x7b1849",
+      "end": "0x7b187e",
+      "sha256": "df3ff843e5c7433654e727983340d6a646ab0d625a2a32cec39bc492f803cf30"
+    }
+  ],
+  "method": "Original x86/SSE instructions and original door-nonempty/spawn-choice helpers; supplied candidates/requests and preallocated vectors. No instruction patches or selection/RNG hooks.",
+  "scope": "Numeric filter, ordinary weighted selection, per-slot RNG/choice/grid index; native caller eligibility, full floor generation, G-Fuel/special modes, seeds, spawn-factory mutations and full layout/grid placement remain open."
+}
