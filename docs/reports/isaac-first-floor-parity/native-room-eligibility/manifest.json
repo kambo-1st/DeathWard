@@ -1,0 +1,47 @@
+{
+  "executable_sha256": "04469d0c3d3581936fcf85bea5f9f4f3a65b2ccf96b36310456c9626bac36dc6",
+  "difficulty_cases": 20,
+  "pool_cases": 12,
+  "query_cases": 1024,
+  "descriptor_cases": 64,
+  "windows": [
+    {
+      "name": "difficulty",
+      "start": "0x70e775",
+      "end": "0x70e85a",
+      "sha256": "255197f2e637f5ce83c6ae54569b30d06cebb7237871d2db21cad82863dafea5"
+    },
+    {
+      "name": "stage-pool",
+      "start": "0x7e79c0",
+      "end": "0x7e7a8e",
+      "sha256": "93e2544e0b346b18f3b390f1da32d5f6b7f1f86ad72b85137ca27ec567905361"
+    },
+    {
+      "name": "ordinary-query",
+      "start": "0x70a5c5",
+      "end": "0x70a70e",
+      "sha256": "be1cfdf423764b56210b5f2174dd84637170bcb571732c7139eecb1976296855"
+    },
+    {
+      "name": "placement-seeds",
+      "start": "0x7066d9",
+      "end": "0x70670d",
+      "sha256": "2fa2873a170391617850913eaaa8b23bf8b499f6bcab5e0b1f3e1017d5530548"
+    },
+    {
+      "name": "descriptor-seeds",
+      "start": "0x705d10",
+      "end": "0x705e23",
+      "sha256": "c7533b374679e43cb131002aa961836113f704bfa8b2857f68350408c36a49ed"
+    },
+    {
+      "name": "floor-call",
+      "start": "0x70ef92",
+      "end": "0x70efb6",
+      "sha256": "fca29316ab70f322200a1a38ca0d117489d30a5936de1a3b268488f766023442"
+    }
+  ],
+  "finding": "Ordinary non-XL Normal Basement I: pool1, type1, subtype0, difficulty1..5, variants0..UINT_MAX, reduceWeight=true. Shape/doors supplied by the retained canyon adapter. Descriptor seeds derive from the selection seed with native2/7/9; spawn is the second advance.",
+  "scope": "Original instructions with supplied stage, difficulty, resolved curse mask, slot and RNG. No live/full floor generator, unlock profile, special modes, graph ordering or Isaac seed-string compatibility accepted. Only the spawn seed consumer is enabled by this delivery; native decoration, award and boss-death consumers remain separate."
+}

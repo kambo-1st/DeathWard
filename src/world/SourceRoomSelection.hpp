@@ -12,6 +12,22 @@ struct SourceRoomQuery {
     uint32_t minVariant=0,maxVariant=0xffffffffu;
     int minDifficulty=1,maxDifficulty=5,doors=0,subtype=-1;
 };
+// Verified ordinary non-XL Normal Basement I caller. Shape/doors remain the
+// explicit canyon compatibility adapter; other stages/modes are not enabled.
+inline SourceRoomQuery sourceBasementFirstFloorQuery(int doors) {
+    return {1,1,0,0xffffffffu,1,5,doors,0};
+}
+struct SourceRoomDescriptorSeeds {uint32_t decoration,spawn,award,bossDeath;};
+inline SourceRoomDescriptorSeeds sourceRoomDescriptorSeeds(uint32_t selectionSeed) {
+    const auto next=[](uint32_t &s){s^=s>>2;s^=s<<7;s^=s>>9;return s;};
+    SourceRoomDescriptorSeeds result{};
+    result.decoration=next(selectionSeed);
+    result.spawn=next(selectionSeed);
+    result.award=next(selectionSeed);
+    auto boss=result.award;boss^=boss>>11;boss^=boss<<7;boss^=boss>>12;
+    result.bossDeath=boss;
+    return result;
+}
 template<class Row> bool sourceRoomEligible(const Row &row,const SourceRoomQuery &q) {
     return row.type==q.type&&(q.shape==13||row.shape==q.shape)&&
         uint32_t(row.variant)>=q.minVariant&&uint32_t(row.variant)<=q.maxVariant&&

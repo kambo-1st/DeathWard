@@ -1,0 +1,46 @@
+[
+  {
+    "args": [
+      "--review-source-room",
+      "91"
+    ],
+    "status": 2,
+    "error": "--review-source-room requires --expedition without other launch modes"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-source-room",
+      "-1"
+    ],
+    "status": 2,
+    "error": "--review-source-room needs a nonnegative source template number"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-source-room",
+      "91x"
+    ],
+    "status": 2,
+    "error": "--review-source-room needs a nonnegative source template number"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-source-room"
+    ],
+    "status": 2,
+    "error": "Unknown or incomplete option: --review-source-room"
+  },
+  {
+    "args": [
+      "--expedition",
+      "--review-source-room",
+      "91",
+      "--smoke"
+    ],
+    "status": 2,
+    "error": "--review-source-room requires --expedition without other launch modes"
+  }
+]

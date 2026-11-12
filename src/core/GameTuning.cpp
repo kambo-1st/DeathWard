@@ -201,6 +201,10 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     candidate->gaperMovementMultiplier=preset.gaperMovementMultiplier;
     candidate->spiderMovementMultiplier=preset.spiderMovementMultiplier;
     candidate->pooterTuning=PooterTuning{preset.pooterMovementMultiplier,preset.pooterShotSpeedMultiplier,preset.pooterAttackIntervalMultiplier};
+    if(reviewSourceRoomTemplate&&!candidate->enterSourceRoomReview(*reviewSourceRoomTemplate)) {
+        if(!retry)throw std::runtime_error("Source room "+std::to_string(*reviewSourceRoomTemplate)+" is absent from this generated floor. Use the recorded review seed and enable SOURCE LAYOUTS or SOURCE COMBAT ROOM.");
+        candidate->announce("ROOM REVIEW / Requested template is absent with these map settings; starting at the entrance.",8);
+    }
     const RetrySetup setup{candidate->expedition.seed,candidate->arena.theme,visualSettings.canyonRiver,
                            candidate->surveyTutorial,candidate->expedition.account,candidate->expedition.pacing};
     campaign.begin(setup.seed,candidate->summary().expedition,setup.pacing);
@@ -213,6 +217,13 @@ void Game::startExpedition(std::unique_ptr<Simulation> candidate,bool retry) {
     useDefaultZoom();resetPointerInput();
     std::cout<<"BALANCE speed="<<balancePreset.playerSpeed<<" room_size="<<balancePreset.roomSizeScale<<" routes="<<balancePreset.routeLengthScale<<" zoom="<<balancePreset.defaultZoomPercent<<" tears="<<balancePreset.tearsPerSecond<<" shot_speed="<<balancePreset.shotSpeed<<" range="<<balancePreset.rangeTiles<<" gaper_movement="<<balancePreset.gaperMovementMultiplier<<" spider_movement="<<balancePreset.spiderMovementMultiplier<<" pooter_movement="<<balancePreset.pooterMovementMultiplier<<" pooter_shot="<<balancePreset.pooterShotSpeedMultiplier<<" pooter_delay="<<balancePreset.pooterAttackIntervalMultiplier<<" damage="<<balancePreset.playerDamage<<" regular_hp="<<balancePreset.regularHealthMultiplier<<" red_heart_rewards="<<balancePreset.redHeartClearRewards<<" heart_appearance="<<balancePreset.redHeartAppearanceSpeed<<" luck="<<balancePreset.playerLuck<<" room_hearts="<<balancePreset.roomHeartLayouts<<" source_room="<<balancePreset.sourceCombatRoom<<" revision="<<balancePreset.revision()
              <<" profile="<<(balancePreset.custom()?"custom":"reference-partial")<<'\n';
+    if(reviewSourceRoomTemplate) {
+        const auto &layout=run->arena.rooms[size_t(run->room)];
+        std::cout<<"ROOM_REVIEW requested="<<*reviewSourceRoomTemplate<<" room="<<run->room+1
+                 <<" template="<<(layout.sourceHeartTemplate>=0?layout.sourceHeartTemplate:layout.sourceCombatTemplate)
+                 <<" selection_seed="<<layout.sourceRoomSelectionSeed<<" spawn_seed="<<layout.sourceRoomSpawnSeed
+                 <<" hp="<<run->player.hp<<" god="<<run->godMode<<'\n';
+    }
 }
 bool Game::canRetryExpedition() const {
     return retrySetup_&&((run&&run->dead)||(screen==Screen::Summary&&lastSummary.reason==EndReason::Death));

@@ -9,7 +9,9 @@
   "accepted_exceptions": [
     "graphics",
     "universal dodge with movement boost and immunity",
-    "current eight-direction firing and existing mouse/keyboard controls"
+    "current eight-direction firing and existing mouse/keyboard controls",
+    "DeathWard canyon room size and shape, including dynamic size/range controls",
+    "DeathWard physical room connections and corridors, including adjustable route length"
   ],
   "uncommitted_parity_attempt_enabled": false,
   "existing_committed_enemy_work": "Preserved at baseline HEAD;not declared fully accepted.",
@@ -35,10 +37,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Verify and integrate native first-floor ordinary-room eligibility: actual pool/difficulty/shape/door inputs; then descriptor seeds and wider complete content coverage. Provide direct room entry for the next review. Full native grid/factory/physics and other reward families remain open.",
+  "next_work": "Expand complete compatible source enemy/obstacle/pickup arrangements in ordinary generation, with direct main-game review. Retain canyon size/shape and physical connections; resolve selection/factory dependencies required by the next layout. Unrelated bulk parity remains paused.",
   "first_floor_delivery_plan_checkpoint": {
-    "recorded_date": "2026-11-11",
-    "status": "Source91 rock/pickup arrangement enabled, developer-verified and positively acknowledged; full native acceptance remains open",
+    "recorded_date": "2026-11-12",
+    "status": "Ordinary caller/descriptor and direct-entry delivery accepted; next complete-room continuation selected",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,7 +49,7 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "Verify and integrate native first-floor ordinary-room eligibility: actual pool/difficulty/shape/door inputs; then descriptor seeds and wider complete content coverage. Provide direct room entry for the next review. Full native grid/factory/physics and other reward families remain open.",
+    "next_proposed_delivery": "Expand complete compatible source enemy/obstacle/pickup arrangements in ordinary generation, with direct main-game review. Retain canyon size/shape and physical connections; resolve selection/factory dependencies required by the next layout. Unrelated bulk parity remains paused.",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
@@ -61,9 +63,9 @@
       "D08",
       "D09a"
     ],
-    "human_acceptance": "User positively acknowledged the source91 interactive delivery on 2026-11-12 and requested commit; full native physical acceptance remains open.",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/native-heart-rock-room/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/native-heart-rock-room/validation.json",
+    "human_acceptance": "User accepted the scoped playtest and requested commit/continuation on 2026-11-12.",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/native-room-eligibility/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/native-room-eligibility/validation.json",
     "previous_committed_delivery": {
       "id": "native-room-selection-slot-sequence",
       "commit": "ca239ff9"
@@ -77,7 +79,7 @@
       "damage_hp_changed": false,
       "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
     },
-    "implementation_checkpoint": "Source91 rock/access checkpoint saved with this report; preceding selector checkpoint ca239ff9",
+    "implementation_checkpoint": "Current native caller/descriptor delivery; preceding source-rock commit37e4c4c2",
     "d04_scope": {
       "enemy": "10.1.0 ordinary Gaper",
       "status": "enabled, developer-verified and positively acknowledged",
@@ -605,5 +607,50 @@
     "production_defaults_changed": false,
     "native_rng_replay_verified": false,
     "full_native_acceptance": false
+  },
+  "room_content_scope_decision": {
+    "recorded_date": "2026-11-12",
+    "user_instruction": "Do not implement Isaac's Size and shape or Connections; do the remaining room work.",
+    "excluded_from_implementation": [
+      "exact source room dimensions and outlines",
+      "exact source door positions and connection geometry"
+    ],
+    "remaining_room_work": [
+      "complete source enemy/obstacle/pickup arrangements",
+      "access restrictions and collision behavior",
+      "native eligibility, selection and compatible content placement"
+    ],
+    "adaptation_boundary": "Retain irregular canyon rooms, dynamic size/range and physical corridors. Source shape/door metadata informs compatible content selection without replacing room geometry or connections.",
+    "gameplay_changed_by_this_decision": false,
+    "remaining_work_implemented_or_accepted": false,
+    "unrelated_bulk_parity_resumed": false,
+    "report": "docs/isaac_first_floor_delivery_plan.md#room-scope-confirmed-on-2026-11-12"
+  },
+  "native_room_eligibility_checkpoint": {
+    "status": "enabled, developer-verified and scoped playtest accepted",
+    "report": "docs/reports/isaac-first-floor-parity/native-room-eligibility/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/native-room-eligibility/validation.json",
+    "production_enabled": true,
+    "source_query_profile": "ordinary non-XL Normal Basement I; shape/door compatibility adapter retained",
+    "native": {
+      "difficulty_cases": 20,
+      "pool_cases": 12,
+      "caller_cases": 1024,
+      "descriptor_cases": 64
+    },
+    "preset_schema": 16,
+    "review": {
+      "seed": 934,
+      "template": 91,
+      "displayed_room": 4,
+      "subtypes": [
+        2,
+        1
+      ],
+      "selection_seed": 1277566494,
+      "spawn_seed": 2844051982
+    },
+    "full_native_acceptance": false,
+    "human_acceptance": "docs/reports/isaac-first-floor-parity/native-room-eligibility/human-acceptance.json"
   }
 }

@@ -13,6 +13,10 @@ std::vector<Vector3> floorPath(const Arena &arena, Vector3 from, Vector3 target,
     auto clear=[&](Vector3 a,Vector3 b){return swimming?arena.swimClear(a,b,radius,flightRoom):flightRoom<0?arena.clear(a,b,radius):arena.flightClear(a,b,radius,flightRoom);};
     auto atCell=[&](FloorCell c){return center(c,from.y,step);};
     const bool targetWasBlocked = blocked(target);
+    // A demolished source-rock pocket can fit the player between coarse grid
+    // nodes. Accept a physically clear segment before requiring grid anchors.
+    // Both endpoints must be valid; blocked-click relocation still runs below.
+    if(!targetWasBlocked&&!blocked(from)&&clear(from,target))return {target};
     auto nearest = [&](Vector3 p, bool requireSight) -> std::optional<FloorCell> {
         std::optional<FloorCell> result;
         float best = std::numeric_limits<float>::infinity();

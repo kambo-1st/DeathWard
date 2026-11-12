@@ -438,11 +438,13 @@ void heartRockRoomInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
     const auto save=directory/"heart-rock-room.save";
-    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="56";game.loadBalancePreset(source);game.rememberBalancePreset();game.launch(true);
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="934";game.reviewSourceRoomTemplate=91;game.loadBalancePreset(source);game.rememberBalancePreset();game.launch(true);
     check(game.run&&game.error.empty(),"source rock room launches with accepted preset");
-    auto &run=*game.run;Renderer renderer;run.godMode=true;
+    auto &run=*game.run;Renderer renderer;
     int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceObstacleTemplate==91)owner=i;
-    check(owner==6,"normal seed56 selects room7 rock arrangement");
+    check(owner==3&&run.room==owner,"native descriptor seed934 launches directly in generated room4");
+    check(!run.godMode&&run.player.hp==6&&run.dynamite==StartingDynamite,"review launch retains normal health, inventory and damage");
+    run.godMode=true;
     auto point=[&](int x,int y) {
         const auto &layout=run.arena.rooms[size_t(owner)];const auto size=sub(layout.bounds.max,layout.bounds.min);
         const float cell=std::min(size.x*.86f/13,size.z*.86f/7);
@@ -450,7 +452,7 @@ void heartRockRoomInputCheck(const std::filesystem::path &directory) {
     };
     const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"source rock room frame has no error");};
     const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"capture source rock room");UnloadImage(im);EndDrawing();};
-    run.jumpDebug(owner);check(!run.arena.blocked(run.player.position,.48f),"debug room travel starts outside rock formation");
+    check(!run.arena.blocked(run.player.position,.48f),"direct review entry starts outside rock formation");
     run.player.position=point(3,3);auto health=run.player.sourceHealth();health.addRed(-3);run.player.setSourceHealth(health);
     game.updateCamera(10);frame();capture("artifacts/source-heart-rock-room-closed.png");
     check(run.roomClear&&run.livingEnemies()==0&&run.heartPickups.size()==2,"ordinary obstacle room has two preplaced pickups and no enemies");
@@ -466,7 +468,18 @@ void heartRockRoomInputCheck(const std::filesystem::path &directory) {
     game.applyMapChanges();check(game.error.empty()&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate<0,"Apply removes source arrangement");
     game.setRoomHeartLayouts(1);game.applyMapChanges();check(game.error.empty()&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate==91&&run.heartPickups.size()==2,"Apply restores complete room and pickup state");
     check(game.cameraZoomPercent()==165&&game.balancePreset.shotSpeed==.9f,"accepted view/shooting retained");
+    const auto exported=directory/"native-room-preset.json";game.balancePreset.save(exported);
+    std::filesystem::copy_file(exported,"artifacts/native-room-eligibility-preset.json",std::filesystem::copy_options::overwrite_existing);
+    run.finishDebug(false);game.retryExpedition();
+    check(game.run->room==owner&&game.run->player.hp==6&&!game.run->godMode&&game.run->dynamite==StartingDynamite,"death retry returns to the generated source room with ordinary starting state");
+    game.setRoomHeartLayouts(0);game.applyMapChanges();game.run->finishDebug(false);game.retryExpedition();
+    check(game.run->room==0,"retry with disabled template explicitly returns to the entrance");
     game.close();renderer.unload();
+    Game fresh(save);fresh.themeChoice=ThemeChoice::Canyon;fresh.seedText="934";fresh.reviewSourceRoomTemplate=91;fresh.loadBalancePreset(exported);fresh.rememberBalancePreset();fresh.launch(true);
+    check(fresh.run&&fresh.run->room==owner&&!fresh.run->godMode&&fresh.cameraZoomPercent()==165,"fresh load keeps settings and direct natural room entry");fresh.close();
+    Game missing(directory/"missing-review.save");missing.themeChoice=ThemeChoice::Canyon;missing.seedText="934";missing.reviewSourceRoomTemplate=999999;
+    const auto previousId=missing.campaign.data().nextRunId;bool rejected=false;try{missing.launch(true);}catch(const std::exception &){rejected=true;}
+    check(rejected&&!missing.run&&missing.campaign.data().nextRunId==previousId,"absent review template cannot fabricate a room or begin the campaign expedition");
     std::cout<<"PASS actual Game/Renderer source91, PLACE action, both pickups, revisit, staged OFF/Apply and accepted settings\n";
 }
 void roomHeartsInputCheck(const std::filesystem::path &directory) {

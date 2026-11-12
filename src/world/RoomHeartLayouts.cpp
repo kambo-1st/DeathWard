@@ -34,7 +34,7 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             // full/half instead of source subtype0 resolution. No frequency claim.
             layout.sourceHeartTemplate=215;append(5,3,0,1,0);append(7,3,0,2,0);
         } else {
-            SourceRoomQuery query;
+            auto query=sourceBasementFirstFloorQuery(0);
             for(int p:layout.passages) {
                 const auto &passage=passages[size_t(p)];
                 const int other=passage.rooms[passage.rooms[0]==index?1:0];
@@ -48,10 +48,14 @@ void Arena::prepareRoomHeartLayouts(uint64_t seed,int mode) {
             if(selectedIndex<0)continue; // No compatible template: never reroll into hearts.
             const auto &selected=BasementHeartLayouts[size_t(selectedIndex)];
             layout.sourceHeartTemplate=selected.variant;
+            layout.sourceRoomSelectionSeed=selectionSeed;
+            layout.sourceRoomSpawnSeed=sourceRoomDescriptorSeeds(selectionSeed).spawn;
             // Native Room::Init advances once for EVERY source spawn stack,
-            // including omitted obstacles/enemies. Descriptor seed remains an
-            // explicit DW adapter; full spawn-factory mutations are unaccepted.
-            uint32_t spawnState=uint32_t(rng.next());if(!spawnState)spawnState=1;
+            // including omitted obstacles/enemies. Native InitSeeds derives the
+            // spawn seed from the SAME seed passed to room selection, not the
+            // selector's local RNG endpoint or a second independent DW draw.
+            // The initial selection seed and floor order remain DW adapters.
+            uint32_t spawnState=layout.sourceRoomSpawnSeed;
             int nextSlot=0;
             for(int ordinal=0;ordinal<selected.spawnCount;++ordinal) {
                 const float unit=sourceRoomSpawnRandom(spawnState);

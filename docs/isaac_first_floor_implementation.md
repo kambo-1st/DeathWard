@@ -1,8 +1,20 @@
 # Isaac comparison report and manual difference selection
 
-Updated: 2026-11-11. **Selected health, movement, shooting, enemy, combat and red-heart deliveries are integrated in the main game. D08/D09a are committed as `b42ef80f`.** The user positively acknowledged preplaced full/half hearts, then selected native room-selection and placement parity. The current continuation integrates template91’s rock/pickup access arrangement; human and broader native floor-generation/content/physical acceptance remain unfinished. Only individually authorized work proceeds; the wider automatic parity goal remains paused.
+Updated: 2026-11-12. **Selected health, movement, shooting, enemy, combat and red-heart deliveries are integrated in the main game. D08/D09a are committed as `b42ef80f`.** The user positively acknowledged preplaced full/half hearts, then selected native room-selection and placement parity. The current continuation integrates template91’s rock/pickup access arrangement; human and broader native floor-generation/content/physical acceptance remain unfinished. Only individually authorized work proceeds; the wider automatic parity goal remains paused.
 
-## Latest selected checkpoint: complete source rock/heart arrangement
+## Current room-scope decision — 2026-11-12
+
+The user explicitly excludes Isaac's **Size and shape** and **Connections** from implementation. DeathWard retains irregular canyon rooms, dynamic size/range controls and physical corridors with adjustable route length. Treat these as deliberate exceptions, not unfinished parity tasks; this supersedes older exact-room-geometry and connection-layout objectives below.
+
+Continue the remaining room work: complete source enemy/obstacle/pickup arrangements, access restrictions, and source eligibility/selection/placement rules adapted to the retained canyon layout. Source shape/door metadata may determine compatible content without replacing our room geometry or connections. Broader complete-content coverage and these rules remain unfinished. This is a scope record only; gameplay and acceptance state are unchanged, and unrelated bulk parity remains paused. The [delivery plan](isaac_first_floor_delivery_plan.md#room-scope-confirmed-on-2026-11-12) carries the revised targets.
+
+## Latest selected checkpoint: ordinary room caller and descriptor seeds
+
+The source91 rock/access delivery is committed as `37e4c4c2`. The next selected continuation verifies ordinary non-XL Normal Basement I pool1/type1/subtype0/difficulty1–5 and integrates the native selection-seed → descriptor spawn-seed relationship into normal generation. The initial DeathWard seed/order and compatible shape/door adapters remain explicit. Schema16 migrates existing presets with the room-geometry/connection exceptions. Direct main-game review entry and death retry are available through `--review-source-room`; seed934/template91 has a natural half/full pair. A reproduced small-room navigation failure after demolition is fixed. Nine suites, nine actual click-navigation size/range cases, actual Game/Renderer/UI and CLI reload checks pass. [Evidence and launch command](reports/isaac-first-floor-parity/native-room-eligibility/README.md).
+
+The user accepted this scoped playtest and requested commit/continuation on 2026-11-12. Full selection wrappers/fallback/unlocks/profile/order, other descriptor consumers, pickup factory/lifecycle and wider complete room contents remain unfinished, including retained DeathWard legacy objective props. Exact source room size/shape and connections are excluded. Next is another compatible complete content arrangement with a direct main-game review; unrelated bulk parity remains paused.
+
+## Previous selected checkpoint: complete source rock/heart arrangement
 
 The native selector/slot-sequence checkpoint was positively acknowledged and committed as `ca239ff9`. The user then selected the source obstacle/access arrangement. Main-game source template1.91.0 now includes its19 rocks and2 heart slots, with no generated enemies. Both hearts retain their enclosed source positions; ordinary dynamite opens access. Nine size/range cases, seven focused suites, actual Game/Renderer and preset checks pass. Schema15 retains/migrates previous settings. [Playable check and exact scope](reports/isaac-first-floor-parity/native-heart-rock-room/README.md).
 

@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-12",
+  "status": "enabled, developer-verified and scoped playtest accepted",
+  "native": {
+    "difficulty_cases": 20,
+    "pool_cases": 12,
+    "caller_cases": 1024,
+    "descriptor_cases": 64
+  },
+  "focused_suites_passed": 9,
+  "dynamic_size_range_click_cases": 9,
+  "actual_game_renderer": true,
+  "tuning_ui_regression": true,
+  "cli_launch_cases": 4,
+  "cli_invalid_cases": 5,
+  "preset_schema": 16,
+  "accepted_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "review": {
+    "seed": 934,
+    "template": 91,
+    "displayed_room": 4,
+    "subtypes": [
+      2,
+      1
+    ],
+    "selection_seed": 1277566494,
+    "spawn_seed": 2844051982
+  },
+  "retained_exceptions": [
+    "canyon room size and shape",
+    "physical corridor connections",
+    "existing controls, stopping and universal dodge"
+  ],
+  "native_full_floor_accepted": false,
+  "remaining": [
+    "full native selection wrappers/fallback/unlocks/special profiles and RNG/order",
+    "other descriptor consumers and pickup factory/lifecycle",
+    "wider complete room contents, including reconciliation of retained legacy objective props",
+    "native physical actor/dynamite/rock-drop acceptance"
+  ],
+  "human_acceptance": "human-acceptance.json"
+}

@@ -559,6 +559,19 @@ void Simulation::clearRoomDebug() {
     checkpointNeeded = true;
     debugNotice("CHEAT / room cleared. All combat seals open.");
 }
+bool Simulation::enterSourceRoomReview(int variant) {
+    // Direct entry is a launch aid, not a fabricated encounter or a heal/clear.
+    if(variant<0||room!=0||floor!=0||stats.duration!=0)return false;
+    for(int i=1;i<arena.roomCount();++i) {
+        const auto &layout=arena.rooms[size_t(i)];
+        if(layout.sourceHeartTemplate!=variant&&layout.sourceCombatTemplate!=variant)continue;
+        cancelMove();player.position=layout.entry;
+        enterRoom(i);player.aim=layout.exit;
+        announce("ROOM REVIEW / Source "+std::to_string(variant)+" / "+roomName(),6);
+        return true;
+    }
+    return false;
+}
 void Simulation::jumpDebug(int index, bool restart) {
     index = std::clamp(index, 0, finalRoom());
     cancelMove();

@@ -1229,6 +1229,7 @@ class Simulation {
     void startBoss(BossKind kind = BossKind::None);
     void killAll();
     void clearRoomDebug();
+    bool enterSourceRoomReview(int variant);
     void jumpDebug(int index, bool restart = false);
     bool collectHeart(HeartKind kind,int amount);
     bool addBrokenHearts(int amount);

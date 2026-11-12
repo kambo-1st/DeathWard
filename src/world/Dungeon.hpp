@@ -41,6 +41,7 @@ struct RoomLayout {
     int sourceCombatTemplate = -1; // Recorded opening-floor encounter, -1 = generated pool.
     int sourceHeartTemplate=-1; // Heart layer only; not a full source encounter.
     int sourceObstacleTemplate=-1; // Selected complete rock/pickup arrangement.
+    uint32_t sourceRoomSelectionSeed=0, sourceRoomSpawnSeed=0;
     std::vector<RoomHeartSpawn> heartSpawns;
     Vector3 reward{};
     std::vector<int> passages;

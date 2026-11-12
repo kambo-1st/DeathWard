@@ -6,12 +6,12 @@
 using namespace dw;
 void check(bool ok,const std::string &why){if(!ok)throw std::runtime_error(why);}
 Simulation create(float scale=1.1f,int minimum=7,int maximum=9,int mode=1) {
-    Simulation r(56,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),scale,minimum,maximum,.26f,true,mode);
+    Simulation r(934,1,{},MissionTheme::Canyon,true,false,WitnessAccount::None,0,ExpeditionPacing::Compact,defaultMechanics(),scale,minimum,maximum,.26f,true,mode);
     r.godMode=true;return r;
 }
 void checkRoom(Simulation &r,bool lifecycle) {
     int owner=-1;for(int i=0;i<r.arena.roomCount();++i)if(r.arena.rooms[size_t(i)].sourceObstacleTemplate==91)owner=i;
-    check(owner>=0,"seed56 selects complete source rock room");
+    check(owner>=0,"seed934 selects complete source rock room");
     const auto &layout=r.arena.rooms[size_t(owner)];const float cell=sourceHeartCellSize(layout);
     const std::string tag=" size="+std::to_string(r.roomSizeScale)+" cell="+std::to_string(cell);
     check(layout.kind==RoomKind::Empty&&r.roomEnemies(owner).empty(),"source room has no generated enemies"+tag);
@@ -55,13 +55,16 @@ void checkRoom(Simulation &r,bool lifecycle) {
     check(r.arena.clear(r.player.position,target,.48f),"destroyed stones leave no invisible collision"+tag);
     const auto moved=r.arena.move(r.player.position,sub(target,r.player.position),.48f);
     check(planarDistance(moved,target)<.001f,"physical movement enters opened pocket"+tag);
-    r.player.position=moved;r.step({});check(r.player.hp>3,"heart can be collected after opening"+tag);
+    Input click;click.moveTarget=target;r.step(click);
+    for(int n=0;n<180;++n)r.step({});
+    check(planarDistance(r.player.position,target)<.15f,"ordinary click-to-move enters the demolished pocket"+tag);
+    check(r.player.hp>3,"heart can be collected after opening"+tag);
     const auto right=sourceHeartCell(layout,7,3);r.player.position=sourceHeartCell(layout,9,3);
     check(!r.arena.blocked(r.player.position,.48f)&&r.placeDynamite(),"right pocket has its own valid demolition approach"+tag);
     for(int n=0;n<240;++n)r.step({});
     check(!r.arena.path(r.player.position,right,.48f).empty(),"right pocket opens after demolition"+tag);
     r.player.position=r.arena.move(r.player.position,sub(right,r.player.position),.48f);r.step({});
-    check(r.player.hp==6&&r.dynamite==StartingDynamite-2,"full and half collected through real openings"+tag);
+    check(r.player.hp==6&&r.dynamite==StartingDynamite-2,"both source hearts collected through real openings"+tag);
     if(lifecycle) {
         const auto destroyed=std::count_if(r.arena.breakables.begin(),r.arena.breakables.end(),[](const auto &b){return b.sourceGridIndex>=0&&b.destroyed;});
         r.jumpDebug(0);r.jumpDebug(owner);

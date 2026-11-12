@@ -1,0 +1,23 @@
+{
+  "pid": 832260,
+  "args": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "934",
+    "--review-source-room",
+    "91",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/native-room-eligibility/campaign.save",
+    "--balance-preset",
+    "/home/kambo/.local/share/deathward/reviews/first-floor-d02/campaign.save.balance/export.json"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/native-room-eligibility/interactive.log",
+  "displayed_room": 4,
+  "source_template": 91,
+  "seed": 934,
+  "ordinary_damage": true,
+  "zoom": 165,
+  "human_acceptance": "pending"
+}

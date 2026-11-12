@@ -213,6 +213,7 @@ class Game {
     AudioCueQueue audioCues;
     uint64_t audioContext = 0;
     std::string seedText = "1866", error;
+    std::optional<int> reviewSourceRoomTemplate; // Launch/retry aid; not a balance override.
     ThemeChoice themeChoice = ThemeChoice::Canyon;
     ExpeditionPacing expeditionPacing = ExpeditionPacing::Compact;
     MissionTheme offeredTheme() const;

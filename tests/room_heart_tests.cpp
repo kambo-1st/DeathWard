@@ -1,5 +1,6 @@
 #include "combat/Simulation.hpp"
 #include "world/SourceRoomHeartsData.hpp"
+#include "world/SourceRoomSelection.hpp"
 #include <iostream>
 #include <stdexcept>
 using namespace dw;
@@ -57,6 +58,16 @@ void sourcePool() {
         for(const auto &layout:r.arena.rooms)if(layout.sourceHeartTemplate>=0) {
             const auto source=std::find_if(BasementHeartLayouts.begin(),BasementHeartLayouts.end(),[&](const auto &s){return s.variant==layout.sourceHeartTemplate;});
             check(source!=BasementHeartLayouts.end(),"selected layout has preserved source metadata");
+            check(sourceRoomEligible(*source,sourceBasementFirstFloorQuery(0)),"actual selection uses the ordinary native first-floor caller");
+            check(layout.sourceRoomSelectionSeed&&layout.sourceRoomSpawnSeed==sourceRoomDescriptorSeeds(layout.sourceRoomSelectionSeed).spawn,"actual generation derives spawn seed from its selection seed");
+            uint32_t slotSeed=layout.sourceRoomSpawnSeed;int ordinal=0;
+            for(const auto &spawn:layout.heartSpawns) {
+                const auto slot=std::find_if(BasementHeartSlots.begin()+source->firstSlot,BasementHeartSlots.begin()+source->firstSlot+source->slotCount,
+                    [&](const auto &s){return s.x==spawn.x&&s.y==spawn.y;});
+                check(slot!=BasementHeartSlots.begin()+source->firstSlot+source->slotCount,"source slot recorded");
+                while(ordinal<=slot->ordinal){sourceRoomSpawnRandom(slotSeed);++ordinal;}
+                check(spawn.pickupSeed==slotSeed,"actual pickup consumes descriptor seed after every preceding source slot");
+            }
             for(int p:layout.passages) {
                 const auto &passage=r.arena.passages[size_t(p)];
                 const int index=int(&layout-r.arena.rooms.data());

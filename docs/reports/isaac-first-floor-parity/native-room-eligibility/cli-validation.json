@@ -1,0 +1,30 @@
+[
+  {
+    "case": "v5",
+    "launch": true,
+    "preset": "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json",
+    "review": "ROOM_REVIEW requested=91 room=4 template=91 selection_seed=1277566494 spawn_seed=2844051982 hp=6 god=0",
+    "alive_after_first_render": true
+  },
+  {
+    "case": "v15",
+    "launch": true,
+    "preset": "docs/reports/isaac-first-floor-parity/native-room-eligibility/previous-v15.json",
+    "review": "ROOM_REVIEW requested=91 room=4 template=91 selection_seed=1277566494 spawn_seed=2844051982 hp=6 god=0",
+    "alive_after_first_render": true
+  },
+  {
+    "case": "v16",
+    "launch": true,
+    "preset": "docs/reports/isaac-first-floor-parity/native-room-eligibility/preset-v16.json",
+    "review": "ROOM_REVIEW requested=91 room=4 template=91 selection_seed=1277566494 spawn_seed=2844051982 hp=6 god=0",
+    "alive_after_first_render": true
+  },
+  {
+    "case": "combat",
+    "launch": true,
+    "preset": "docs/reports/isaac-first-floor-parity/native-room-eligibility/preset-v16.json",
+    "review": "ROOM_REVIEW requested=47 room=3 template=47 selection_seed=0 spawn_seed=0 hp=6 god=0",
+    "alive_after_first_render": true
+  }
+]

@@ -7,12 +7,25 @@
 #include <string>
 using namespace dw;
 void check(bool ok,const char *why){if(!ok)throw std::runtime_error(why);}
-auto read(const char *name) {
-    std::ifstream f(std::string(DEATHWARD_TEST_ROOT)+"/docs/reports/isaac-first-floor-parity/native-room-selection-placement/"+name);
+auto read(const char *name,const char *directory="native-room-selection-placement") {
+    std::ifstream f(std::string(DEATHWARD_TEST_ROOT)+"/docs/reports/isaac-first-floor-parity/"+directory+"/"+name);
     check(bool(f),"native fixture exists");std::string line;std::getline(f,line);std::vector<std::vector<std::string>> rows;
     while(std::getline(f,line)){std::istringstream in(line);std::string v;std::vector<std::string> row;while(std::getline(in,v,','))row.push_back(v);rows.push_back(row);}return rows;
 }
 int main(){try{
+    const auto queries=read("native-queries.csv","native-room-eligibility");
+    for(const auto &r:queries) {
+        const auto q=sourceBasementFirstFloorQuery(std::stoi(r[1]));
+        check(q.type==std::stoi(r[5])&&q.shape==std::stoi(r[6])&&q.minVariant==std::stoul(r[7])&&q.maxVariant==std::stoul(r[8])&&
+              q.minDifficulty==std::stoi(r[9])&&q.maxDifficulty==std::stoi(r[10])&&q.doors==std::stoi(r[11])&&q.subtype==std::stoi(r[12]),"native ordinary first-floor caller arguments");
+    }
+    const auto descriptors=read("native-descriptors.csv","native-room-eligibility");
+    for(const auto &r:descriptors) {
+        const auto s=sourceRoomDescriptorSeeds(uint32_t(std::stoul(r[0])));
+        check(s.decoration==std::stoul(r[1])&&s.spawn==std::stoul(r[2])&&s.award==std::stoul(r[3])&&s.bossDeath==std::stoul(r[4]),"native placement and complete descriptor seed derivation");
+    }
+    check(queries.size()==1024&&descriptors.size()==64,"complete native caller/descriptor fixtures");
+    std::cout<<"PASS "<<queries.size()<<" caller queries and "<<descriptors.size()<<" descriptor seed derivations\n";
     const auto filters=read("native-filters.csv"),selections=read("native-selections.csv");
     for(const auto &r:filters) {
         SourceRoomHeartLayout row{};row.type=std::stoi(r[0]);row.variant=int(std::stoul(r[1]));row.subtype=std::stoi(r[2]);row.difficulty=std::stoi(r[3]);row.shape=std::stoi(r[4]);row.doors=std::stoi(r[5]);
