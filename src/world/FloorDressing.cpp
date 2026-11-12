@@ -39,7 +39,7 @@ void Arena::dressFloor() {
         Random ash(visualSeed^(wet?0x464c4f4f444544ULL:0x53434f5243484544ULL));
         for(int index=1;index<roomCount()-1;++index) {
             auto &room=rooms[size_t(index)];
-            if(room.kind!=RoomKind::Combat||room.story!=StoryRoom::None||room.sourceCombatTemplate>=0)continue;
+            if(room.kind!=RoomKind::Combat||room.story!=StoryRoom::None||room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0)continue;
             room.flooded=wet;
             for(int n=0;n<(wet?7:4);++n)for(int attempt=0;attempt<80;++attempt) {
                 const Vector3 p{ash.real(room.bounds.min.x+3,room.bounds.max.x-3),.035f,
@@ -60,7 +60,7 @@ void Arena::dressFloor() {
     Random rng(visualSeed^0x464c4f4f52445253ULL);
     for(int index=1;index<roomCount()-1;++index) {
         const auto &room=rooms[size_t(index)];
-        if(room.kind!=RoomKind::Combat||room.story!=StoryRoom::None||room.sourceCombatTemplate>=0)continue;
+        if(room.kind!=RoomKind::Combat||room.story!=StoryRoom::None||room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0)continue;
         std::vector<Vector3> routes{room.entry,room.exit,room.objective};
         for(int link:room.passages)routes.push_back(doorApproach(link,passages[size_t(link)].rooms[0]==index?0:1));
         // Small reused railway-work remnants, physically separate from the narrative props.

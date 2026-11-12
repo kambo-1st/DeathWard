@@ -125,6 +125,7 @@ add_library(deathward_core
     src/world/RailArena.cpp
     src/world/FlightNavigation.cpp
     src/world/Breakables.cpp
+    src/world/RoomHeartLayouts.cpp
     src/world/FloorDressing.cpp
     src/combat/FloorEncounters.cpp
     src/combat/CanyonBoss.cpp
@@ -974,6 +975,9 @@ if(BUILD_TESTING)
     add_executable(deathward_room_heart_tests tests/room_heart_tests.cpp)
     target_link_libraries(deathward_room_heart_tests PRIVATE deathward_core)
     add_test(NAME room_heart_layouts COMMAND deathward_room_heart_tests)
+    add_executable(deathward_heart_rock_room_tests tests/heart_rock_room_tests.cpp)
+    target_link_libraries(deathward_heart_rock_room_tests PRIVATE deathward_core)
+    add_test(NAME heart_rock_room COMMAND deathward_heart_rock_room_tests)
     add_executable(deathward_source_room_selection_tests tests/source_room_selection_tests.cpp)
     target_include_directories(deathward_source_room_selection_tests PRIVATE src)
     target_compile_definitions(deathward_source_room_selection_tests PRIVATE DEATHWARD_TEST_ROOT="${CMAKE_CURRENT_SOURCE_DIR}")

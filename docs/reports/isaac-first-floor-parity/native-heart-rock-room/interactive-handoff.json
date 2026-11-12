@@ -1,0 +1,20 @@
+{
+  "time_utc": "2026-11-12T04:41:21.103815+00:00",
+  "pid": 813866,
+  "command": [
+    "build/deathward",
+    "--expedition",
+    "--seed",
+    "56",
+    "--mute",
+    "--save",
+    "/home/kambo/.local/share/deathward/reviews/native-heart-rock-room/campaign.save",
+    "--balance-preset",
+    "docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json"
+  ],
+  "log": "/home/kambo/.local/share/deathward/reviews/native-heart-rock-room/interactive.log",
+  "mode": "interactive normal AI/damage; mute; accepted preset; no cheats",
+  "verified_startup": "BALANCE speed=1 room_size=1.1 routes=0.26 zoom=165 tears=1.92727 shot_speed=0.9 range=6.5 gaper_movement=1 spider_movement=1 pooter_movement=1 pooter_shot=1 pooter_delay=1 damage=3.5 regular_hp=1 red_heart_rewards=1 heart_appearance=1 luck=0 room_hearts=1 source_room=1 revision=62b5e2004de7202d profile=custom",
+  "human_review": "Positive acknowledgment and commit request on 2026-11-12; full native parity remains open",
+  "handoff_issue": "Launch starts at room1; source room7 is labelled E on the minimap. Future review launches should provide direct room entry."
+}

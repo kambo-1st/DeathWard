@@ -1,0 +1,42 @@
+{
+  "status": "enabled in main game; developer checks passed; interactive delivery positively acknowledged; full native acceptance open",
+  "source_template": "1.91.0",
+  "source_rocks": 19,
+  "source_heart_slots": 2,
+  "source_enemy_slots": 0,
+  "previous_checkpoint": "ca239ff9",
+  "gameplay_size_range_cases": 9,
+  "focused_suites": 7,
+  "preset_schema": 15,
+  "source_placement": "Exact source cells within retained dynamic canyon transform; no accessible-floor relocation for template91",
+  "accepted_preset_sha256": "77cc7d6783fb903be3b0aeb88b456c64d6ac1c12b30b09d53ea5d831e1bb40cf",
+  "checks": [
+    "tests.log",
+    "regressions.log",
+    "input.log",
+    "layout-ui-regression.log",
+    "cli-v5.log",
+    "cli-v14.log"
+  ],
+  "witness": {
+    "seed": 56,
+    "displayed_room": 7,
+    "heart_subtypes": [
+      2,
+      1
+    ]
+  },
+  "full_native_acceptance": false,
+  "remaining": [
+    "native caller/pool/shape/difficulty/descriptor seed rules",
+    "complete contents for other templates",
+    "native grid/factory/physical displacement/scheduling and special-rock/drop behavior",
+    "native bomb physics acceptance",
+    "direct entry into the target room for future review launches"
+  ],
+  "human_review": {
+    "date": "2026-11-12",
+    "verdict": "User positively acknowledged the interactive delivery and requested commit",
+    "scope": "rock/pickup arrangement; not full native parity"
+  }
+}

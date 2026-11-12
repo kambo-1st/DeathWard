@@ -434,6 +434,41 @@ void spiderBalanceInputCheck(const std::filesystem::path &directory) {
           "fresh Game restores independent enemy and accepted user settings");fresh.close();
     std::cout<<"PASS D05 actual Game encounter, UI mouse/keyboard, live edit, export/reload/rejection, map/floor/retry/fresh-session persistence\n";
 }
+void heartRockRoomInputCheck(const std::filesystem::path &directory) {
+    using namespace dw;
+    const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
+    const auto save=directory/"heart-rock-room.save";
+    Game game(save);game.themeChoice=ThemeChoice::Canyon;game.seedText="56";game.loadBalancePreset(source);game.rememberBalancePreset();game.launch(true);
+    check(game.run&&game.error.empty(),"source rock room launches with accepted preset");
+    auto &run=*game.run;Renderer renderer;run.godMode=true;
+    int owner=-1;for(int i=0;i<run.arena.roomCount();++i)if(run.arena.rooms[size_t(i)].sourceObstacleTemplate==91)owner=i;
+    check(owner==6,"normal seed56 selects room7 rock arrangement");
+    auto point=[&](int x,int y) {
+        const auto &layout=run.arena.rooms[size_t(owner)];const auto size=sub(layout.bounds.max,layout.bounds.min);
+        const float cell=std::min(size.x*.86f/13,size.z*.86f/7);
+        return add(layout.center,{(x-6)*cell,0,(y-3)*cell});
+    };
+    const auto frame=[&]{game.update(Tick);BeginDrawing();const auto action=renderer.draw(game);EndDrawing();game.perform(action);check(game.error.empty(),"source rock room frame has no error");};
+    const auto capture=[&](const char *path){std::filesystem::create_directories("artifacts");BeginDrawing();renderer.draw(game);rlDrawRenderBatchActive();auto im=LoadImageFromScreen();check(ExportImage(im,path),"capture source rock room");UnloadImage(im);EndDrawing();};
+    run.jumpDebug(owner);check(!run.arena.blocked(run.player.position,.48f),"debug room travel starts outside rock formation");
+    run.player.position=point(3,3);auto health=run.player.sourceHealth();health.addRed(-3);run.player.setSourceHealth(health);
+    game.updateCamera(10);frame();capture("artifacts/source-heart-rock-room-closed.png");
+    check(run.roomClear&&run.livingEnemies()==0&&run.heartPickups.size()==2,"ordinary obstacle room has two preplaced pickups and no enemies");
+    game.dynamiteThrowMode=false;game.perform(Action::Dynamite);frame();
+    check(run.dynamite==StartingDynamite-1,"normal PLACE action spends dynamite");
+    for(int n=0;n<240;++n)frame();capture("artifacts/source-heart-rock-room-open.png");
+    const auto target=point(5,3);check(!run.arena.path(run.player.position,target,.48f).empty(),"rendered room opening has matching navigation");
+    run.player.position=run.arena.move(run.player.position,sub(target,run.player.position),.48f);frame();check(run.player.hp==4,"half heart collects after the opening");
+    run.player.position=point(9,3);game.perform(Action::Dynamite);frame();for(int n=0;n<240;++n)frame();
+    const auto full=point(7,3);run.player.position=run.arena.move(run.player.position,sub(full,run.player.position),.48f);frame();check(run.player.hp==6,"full heart collects after the second opening");
+    for(int n=0;n<30;++n)frame();run.jumpDebug(0);run.jumpDebug(owner);frame();check(run.heartPickups.empty(),"collected hearts remain consumed after revisit");
+    game.setRoomHeartLayouts(0);check(game.hasPendingMapChanges()&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate==91,"OFF stages without removing rocks");
+    game.applyMapChanges();check(game.error.empty()&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate<0,"Apply removes source arrangement");
+    game.setRoomHeartLayouts(1);game.applyMapChanges();check(game.error.empty()&&run.arena.rooms[size_t(owner)].sourceObstacleTemplate==91&&run.heartPickups.size()==2,"Apply restores complete room and pickup state");
+    check(game.cameraZoomPercent()==165&&game.balancePreset.shotSpeed==.9f,"accepted view/shooting retained");
+    game.close();renderer.unload();
+    std::cout<<"PASS actual Game/Renderer source91, PLACE action, both pickups, revisit, staged OFF/Apply and accepted settings\n";
+}
 void roomHeartsInputCheck(const std::filesystem::path &directory) {
     using namespace dw;
     const auto source=std::filesystem::path(__FILE__).parent_path().parent_path()/"docs/reports/isaac-first-floor-parity/d03-shooting/user-preset-2026-11-11.json";
@@ -1750,6 +1785,10 @@ int main(int argc, char **argv) {
         if(mode.empty()||mode=="--shooting-balance-only") {
             shootingBalanceInputCheck(directory);
             if(mode=="--shooting-balance-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
+        }
+        if(mode.empty()||mode=="--heart-rock-room-only") {
+            heartRockRoomInputCheck(directory);
+            if(mode=="--heart-rock-room-only"){CloseWindow();std::filesystem::remove_all(directory);return 0;}
         }
         if(mode.empty()||mode=="--room-hearts-only") {
             roomHeartsInputCheck(directory);

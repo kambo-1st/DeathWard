@@ -79,7 +79,7 @@ void planBoundaryRiver(const Arena &arena, CanyonTerrain &field) {
         for (int i = 0; i < int(arena.rooms.size()); ++i)
             if (dot(arena.rooms[size_t(i)].center, outward) >= outer - .1f &&
                 !(arena.profile.active()&&arena.rooms[size_t(i)].kind==RoomKind::Boss)&&
-                arena.rooms[size_t(i)].sourceCombatTemplate<0)
+                arena.rooms[size_t(i)].sourceCombatTemplate<0&&arena.rooms[size_t(i)].sourceObstacleTemplate<0)
                 rooms.push_back(i);
         if(rooms.empty())continue;
         std::stable_sort(rooms.begin(), rooms.end(), [&](int a, int b) {
@@ -129,7 +129,8 @@ void planInteriorRiver(const Arena &arena, CanyonTerrain &field) {
     auto links = arena.rooms[0].passages;
     std::erase_if(links,[&](int index) {
         const auto &p=arena.passages[size_t(index)];
-        return arena.rooms[size_t(p.rooms[0]==0?p.rooms[1]:p.rooms[0])].sourceCombatTemplate>=0;
+        const auto &room=arena.rooms[size_t(p.rooms[0]==0?p.rooms[1]:p.rooms[0])];
+        return room.sourceCombatTemplate>=0||room.sourceObstacleTemplate>=0;
     });
     if (links.size() < 2)
         return;

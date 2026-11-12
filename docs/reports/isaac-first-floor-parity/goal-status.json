@@ -35,10 +35,10 @@
   "overall_completion_percentage": null,
   "estimated_finish_time": null,
   "next_status_due_utc": null,
-  "next_work": "Selected native room-selection/placement: integrate one complete source obstacle/access arrangement, then resolve native caller/pool/descriptor generation. First native selector/slot-sequence checkpoint is enabled and developer-verified; full physical/native/human acceptance and coins remain open.",
+  "next_work": "Verify and integrate native first-floor ordinary-room eligibility: actual pool/difficulty/shape/door inputs; then descriptor seeds and wider complete content coverage. Provide direct room entry for the next review. Full native grid/factory/physics and other reward families remain open.",
   "first_floor_delivery_plan_checkpoint": {
     "recorded_date": "2026-11-11",
-    "status": "Native room selector and spawn-slot sequence enabled, developer-verified and positively acknowledged after interactive handoff; full native selection/placement remains open",
+    "status": "Source91 rock/pickup arrangement enabled, developer-verified and positively acknowledged; full native acceptance remains open",
     "report": "docs/isaac_first_floor_delivery_plan.md",
     "delivery_location": "main DeathWard executable, ordinary Game/Simulation and expedition paths",
     "cumulative_gameplay_integration_required": true,
@@ -47,7 +47,7 @@
     "preset_format": "versioned self-contained JSON with reference provenance and custom overrides",
     "preset_export_and_fresh_launch_reload_required": true,
     "explicit_application_boundaries_required": true,
-    "next_proposed_delivery": "Selected native room-selection/placement: integrate one complete source obstacle/access arrangement, then resolve native caller/pool/descriptor generation. First native selector/slot-sequence checkpoint is enabled and developer-verified; full physical/native/human acceptance and coins remain open.",
+    "next_proposed_delivery": "Verify and integrate native first-floor ordinary-room eligibility: actual pool/difficulty/shape/door inputs; then descriptor seeds and wider complete content coverage. Provide direct room entry for the next review. Full native grid/factory/physics and other reward families remain open.",
     "new_gameplay_implemented": true,
     "new_bulk_selection": false,
     "selected_deliveries": [
@@ -61,12 +61,12 @@
       "D08",
       "D09a"
     ],
-    "human_acceptance": "User positively acknowledged native selector/slot-sequence interactive seed56 handoff on 2026-11-12 and requested commit; full native selection/physical placement acceptance remains open.",
-    "implementation_report": "docs/reports/isaac-first-floor-parity/native-room-selection-placement/README.md",
-    "validation": "docs/reports/isaac-first-floor-parity/native-room-selection-placement/validation.json",
+    "human_acceptance": "User positively acknowledged the source91 interactive delivery on 2026-11-12 and requested commit; full native physical acceptance remains open.",
+    "implementation_report": "docs/reports/isaac-first-floor-parity/native-heart-rock-room/README.md",
+    "validation": "docs/reports/isaac-first-floor-parity/native-heart-rock-room/validation.json",
     "previous_committed_delivery": {
-      "id": "D08/D09a",
-      "commit": "b42ef80f"
+      "id": "native-room-selection-slot-sequence",
+      "commit": "ca239ff9"
     },
     "d03_scope": {
       "enabled": "independent live Tears/Shot Speed/Range controls, exact baseline reset, upgrade-aware display, schema-5 export/load/remember and schemas 1-4 migration",
@@ -77,7 +77,7 @@
       "damage_hp_changed": false,
       "preset_backup": "docs/reports/isaac-first-floor-parity/d03-shooting/preset-backup.json"
     },
-    "implementation_checkpoint": "Native room-selection/slot-sequence checkpoint saved with this report; preceding D08/D09a commit b42ef80f",
+    "implementation_checkpoint": "Source91 rock/access checkpoint saved with this report; preceding selector checkpoint ca239ff9",
     "d04_scope": {
       "enemy": "10.1.0 ordinary Gaper",
       "status": "enabled, developer-verified and positively acknowledged",

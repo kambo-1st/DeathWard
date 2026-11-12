@@ -190,7 +190,7 @@ void Simulation::prepareDung() {
     Random rng(seed_^0x44554e4750524f50ULL);
     std::vector<int> candidates;
     for(int index=1;index<arena.roomCount()-1;++index)
-        if(arena.rooms[size_t(index)].sourceCombatTemplate<0&&arena.rooms[size_t(index)].kind==RoomKind::Combat&&arena.rooms[size_t(index)].story==StoryRoom::None)candidates.push_back(index);
+        if(arena.rooms[size_t(index)].sourceCombatTemplate<0&&arena.rooms[size_t(index)].sourceObstacleTemplate<0&&arena.rooms[size_t(index)].kind==RoomKind::Combat&&arena.rooms[size_t(index)].story==StoryRoom::None)candidates.push_back(index);
     for(size_t i=0;i<candidates.size();++i)std::swap(candidates[i],candidates[i+rng.bounded(unsigned(candidates.size()-i))]);
     int placed=0;
     for(int index:candidates) {

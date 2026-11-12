@@ -21,7 +21,7 @@ Simulation::Simulation(uint64_t seed, uint64_t runId, const WorldState &world, M
                     dimensions.smallerRooms=true;dimensions.minHalfTiles=roomMinHalfTiles;dimensions.maxHalfTiles=roomMaxHalfTiles;
                 }
                 return dimensions;}(),
-            theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{},sourceCombatRoom),
+            theme==MissionTheme::Canyon?content->configureFloor(expedition.profileOnFloor(level),expedition.floorSeed(level)):FloorProfile{},sourceCombatRoom,roomHeartLayouts),
       encounterRng(expedition.floorSeed(level) ^ 0x454e434f554e5445ULL),
       rewardRng(expedition.floorSeed(level) ^ 0x5245574152445354ULL),
       combatRng(expedition.floorSeed(level) ^ 0x434f4d424154524eULL), seed_(expedition.floorSeed(level)),
@@ -107,8 +107,14 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
         newBounds.min.x+(player.position.x-oldBounds.min.x)*(newBounds.max.x-newBounds.min.x)/(oldBounds.max.x-oldBounds.min.x),
         player.position.y,
         newBounds.min.z+(player.position.z-oldBounds.min.z)*(newBounds.max.z-newBounds.min.z)/(oldBounds.max.z-oldBounds.min.z)};
-    auto safe=[&](Vector3 point) {
+    auto terrainSafe=[&](Vector3 point) {
         if(next.arena.roomAt(point)!=targetRoom||next.arena.blocked(point,.48f))return false;
+        const auto &layout=next.arena.rooms[size_t(targetRoom)];
+        if(layout.sourceObstacleTemplate>=0&&next.arena.path(layout.entry,point,.48f).empty())return false;
+        return true;
+    };
+    auto safe=[&](Vector3 point) {
+        if(!terrainSafe(point))return false;
         for(const auto &enemy:next.roomEnemies(targetRoom))if(enemy.alive&&distance(point,enemy.position)<enemy.radius+1.5f)return false;
         return true;
     };
@@ -124,7 +130,7 @@ void Simulation::resizeRooms(float scale,int minimum,int maximum,float routeScal
         for(auto cell:next.arena.floorCells) {
             const Vector3 point{(cell.first+.5f)*FloorTile,player.position.y,(cell.second+.5f)*FloorTile};
             const float score=distance(point,wanted);
-            if(score<best&&next.arena.roomAt(point)==targetRoom&&!next.arena.blocked(point,.48f)){best=score;position=point;}
+            if(score<best&&terrainSafe(point)){best=score;position=point;}
         }
     }
     if(!std::isfinite(best))throw std::runtime_error("Resized room has no safe player position");
@@ -574,7 +580,7 @@ void Simulation::jumpDebug(int index, bool restart) {
     healDebug();
     // Debug travel must not land inside a group that already occupies the room.
     player.position =
-        index == finalRoom() ? arena.rooms[size_t(index)].entry : arena.rooms[size_t(index)].center;
+        index == finalRoom()||arena.rooms[size_t(index)].sourceObstacleTemplate>=0 ? arena.rooms[size_t(index)].entry : arena.rooms[size_t(index)].center;
     for (const auto &enemy : roomEnemies(index))
         if (enemy.alive && distance(player.position, enemy.position) < 6) {
             player.position = arena.rooms[size_t(index)].entry;

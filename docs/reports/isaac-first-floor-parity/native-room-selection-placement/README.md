@@ -1,5 +1,7 @@
 # Native room selection and placement — first integrated checkpoint
 
+**Committed as ca239ff9.** The selected [rock-room continuation](../native-heart-rock-room/README.md) now imports template91’s complete rock/pickup arrangement. The historical independent-layer/placement notes below still apply to other templates; template91 now awaits its separate human/physical review.
+
 Selected explicitly after the full/half layout-heart delivery. That previous delivery, together with D08 and the D09a clear-reward/timing work, is committed as **b42ef80f**. This continuation is enabled in the main game and developer-verified. On 2026-11-12 the user positively acknowledged the interactive seed56 handoff and requested its commit. That scoped acknowledgment does not establish full native room/placement acceptance.
 
 ## What changed in gameplay

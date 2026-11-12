@@ -40,6 +40,7 @@ struct RoomLayout {
     bool flooded = false;
     int sourceCombatTemplate = -1; // Recorded opening-floor encounter, -1 = generated pool.
     int sourceHeartTemplate=-1; // Heart layer only; not a full source encounter.
+    int sourceObstacleTemplate=-1; // Selected complete rock/pickup arrangement.
     std::vector<RoomHeartSpawn> heartSpawns;
     Vector3 reward{};
     std::vector<int> passages;
@@ -79,6 +80,7 @@ struct Breakable {
     float fuse = -1;
     bool destroyed = false, paid = false;
     int initialHealth = 1;
+    int sourceGridIndex = -1;
     bool solid() const { return !destroyed; }
 };
 struct SupplyCache {
@@ -114,7 +116,9 @@ struct Arena {
     Arena() = default;
     explicit Arena(uint64_t seed, MissionTheme missionTheme = MissionTheme::Mine, bool canyonRiver = true,
                    bool tutorial = false, StoryRoom story = StoryRoom::None, int rooms = RoomCount,
-                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false);
+                   FloorDimensions dimensions = {}, FloorProfile profile = {}, bool sourceCombatRoom = false, int roomHeartLayouts = 0);
+    void prepareRoomHeartLayouts(uint64_t seed,int mode);
+    void prepareSourceHeartRocks();
     void sealRoom(int index);
     Vector3 doorPosition(int passage, int side) const;
     Vector3 doorApproach(int passage, int side) const;

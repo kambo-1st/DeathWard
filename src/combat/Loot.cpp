@@ -6,7 +6,7 @@ void Simulation::prepareMoney() {
     Random rng(seed_ ^ 0x4d4f4e4559475244ULL);
     for (int index = 0; index < arena.roomCount(); ++index) {
         const auto &layout = arena.rooms[size_t(index)];
-        if(layout.sourceCombatTemplate>=0)continue;
+        if(layout.sourceCombatTemplate>=0||layout.sourceObstacleTemplate>=0)continue;
         const int maximum = std::clamp(int(layout.usableArea() / 260), 1, 4);
         const int count = index == 0 ? 1 + int(rng.bounded(2)) : int(rng.bounded(maximum + 1));
         for (int pile = 0; pile < count; ++pile)
